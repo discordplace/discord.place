@@ -1,0 +1,28 @@
+import getServer from '@/lib/request/servers/getServer';
+import Content from '@/app/(servers)/servers/[id]/manage/content';
+import { redirect } from 'next/navigation';
+import AuthProtected from '@/app/components/Providers/Auth/Protected';
+
+export async function generateMetadata({ params }) {
+  const server = await getServer(params.id).catch(error => error);
+  if (typeof server === 'string') return;
+
+  return {
+    title: `Manage ${server.name}`,
+    openGraph: {
+      title: `Discord Place - Manage ${server.name}`
+    }
+  };
+}
+
+export default async function Page({ params }) {
+  const server = await getServer(params.id).catch(error => error);
+  if (typeof server === 'string') return redirect(`/error?message=${encodeURIComponent(server)}`);
+  if (server.permissions.canEdit === false) return redirect('/error?code=60001');
+
+  return (
+    <AuthProtected>
+      <Content server={server} />
+    </AuthProtected>
+  );
+}

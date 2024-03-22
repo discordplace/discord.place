@@ -1,0 +1,113 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-8px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+[data-radix-menu-content][data-state='open'],
+[data-radix-menu-content][data-state='open'] {
+  animation: fadeIn 200ms ease-out, slideDown 200ms ease-out;
+}
+
+[data-radix-menu-content][data-state='closed'],
+[data-radix-menu-content][data-state='closed'] {
+  animation: fadeOut 200ms ease-in, slideUp 200ms ease-in;
+}
+
+[data-radix-menu-content] {
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+}
+
+@keyframes tooltip-top-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltip-left-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tooltip-right-enter {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tooltip-bottom-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'][data-side='top'] {
+  animation: tooltip-top-enter 200ms ease-out;
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'][data-side='left'] {
+  animation: tooltip-left-enter 200ms ease-out;
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'][data-side='right'] {
+  animation: tooltip-right-enter 200ms ease-out;
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'][data-side='bottom'] {
+  animation: tooltip-bottom-enter 200ms ease-out;
+}

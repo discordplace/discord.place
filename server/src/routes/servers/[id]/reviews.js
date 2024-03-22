@@ -1,0 +1,79 @@
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData, body, validationResult } = require('express-validator');
+const Server = require('@/schemas/Server');
+const Review = require('@/schemas/Server/Review');
+const bodyParser = require('body-parser');
+const Discord = require('discord.js');
+
+module.exports = {
+  post: [
+    useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
+    bodyParser.json(),
+    checkAuthentication,
+    param('id'),
+    body('rating')
+      .isInt({ min: 1, max: 5 }).withMessage('Rating must be between 1 and 5.'),
+    body('content')
+      .isLength({ min: 1, max: config.reviewsMaxCharacters }).withMessage(`Content must be between 1 and ${config.reviewsMaxCharacters} characters.`),
+    async (request, response) => {
+      const errors = validationResult(request);
+      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
+
+      const { id, rating, content } = matchedData(request);
+
+      const guild = client.guilds.cache.get(id);
+      if (!guild) return response.sendError('Guild not found.', 404);
+
+      const server = await Server.findOne({ id });
+      if (!server) return response.sendError('Server not found.', 404);
+
+      const userReview = await Review.findOne({ 'user.id': request.user.id, 'server.id': id });
+      if (userReview) return response.sendError('You already reviewed this server.', 400);
+
+      const review = new Review({
+        server: {
+          id: guild.id
+        },
+        user: {
+          id: request.user.id
+        },
+        rating,
+        content
+      });
+
+      const validationErrors = review.validateSync();
+      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+
+      await review.save();
+
+      const embeds = [
+        new Discord.EmbedBuilder()
+          .setAuthor({ name: request.user.username, iconURL: request.member.user.displayAvatarURL() })
+          .setTitle('New Review')
+          .setFields([
+            {
+              name: 'Server',
+              value: guild.name,
+              inline: true
+            },
+            {
+              name: 'Rating',
+              value: rating.toString(),
+              inline: true
+            },
+            {
+              name: 'Content',
+              value: content
+            }
+          ])
+          .setTimestamp()
+          .setColor(Discord.Colors.Purple)
+      ];
+
+      client.channels.cache.get(config.reviewQueueChannelId).send({ embeds });
+
+      return response.sendStatus(204).end();
+    }
+  ]
+};

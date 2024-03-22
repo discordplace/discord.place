@@ -1,0 +1,53 @@
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, validationResult, matchedData } = require('express-validator');
+const Emoji = require('@/src/schemas/Emoji');
+const idValidation = require('@/validations/emojis/id');
+const shuffle = require('lodash.shuffle');
+
+module.exports = {
+  get: [
+    useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
+    param('id')
+      .isString().withMessage('ID must be a string.')
+      .custom(idValidation),
+    async (request, response) => {
+      const errors = validationResult(request);
+      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
+
+      const { id } = matchedData(request);
+      
+      const emoji = await Emoji.findOne({ id });
+      if (!emoji) return response.sendError('Emoji not found.', 404);
+
+      const permissions = {
+        canDelete: request.user && (
+          request.user.id == emoji.user.id ||
+          config.permissions.canDeleteEmojis.includes(request.user.id)
+        ),
+        canApprove: request.user && request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId))
+      };
+
+      if (!emoji.approved && !permissions.canApprove && !permissions.canDelete) return response.sendError('You can\'t view this emoji until confirmed.', 404);
+
+      const similarEmojis = await Emoji.find({
+        categories: { 
+          $in: emoji.categories 
+        },
+        _id: { 
+          $ne: emoji._id
+        }
+      });
+      const shuffledEmojis = shuffle(similarEmojis);
+      const limitedEmojis = shuffledEmojis.slice(0, 4);
+      const publiclySafeEmojis = await Promise.all(limitedEmojis.map(async e => await e.toPubliclySafe()));
+      
+      const publiclySafe = await emoji.toPubliclySafe();
+      Object.assign(publiclySafe, { permissions });
+
+      return response.json({
+        ...publiclySafe,
+        similarEmojis: publiclySafeEmojis
+      });
+    }
+  ]
+};

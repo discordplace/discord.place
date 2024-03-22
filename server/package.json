@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "server",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "dev": "node -r dotenv/config index.js",
+    "start": "node -r dotenv/config index.js --optimize_for_size --production",
+    "register:commands": "node -r dotenv/config startup/registerCommands.js",
+    "unregister:commands": "node -r dotenv/config startup/unregisterCommands.js",
+    "eslint": "eslint ."
+  },
+  "contributors": [
+    "chimpdev <skyhancloud@gmail.com>"
+  ],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/discordplace/discord.place/tree/main/apps/server"
+  },
+  "bugs": {
+    "url": "https://github.com/discordplace/discord.place/issues"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.515.0",
+    "@napi-rs/canvas": "^0.1.51",
+    "axios": "^1.6.1",
+    "body-parser": "^1.20.2",
+    "cli-table3": "^0.6.3",
+    "cloudinary": "^2.0.0",
+    "colorette": "^2.0.20",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cron": "^3.1.6",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "express": "^4.18.2",
+    "express-file-routing": "^3.0.3",
+    "express-rate-limit": "^7.1.4",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "file-type": "^19.0.0",
+    "helmet": "^7.1.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "lodash.shuffle": "^4.2.0",
+    "module-alias": "^2.2.3",
+    "mongoose": "^8.0.0",
+    "multer": "1.4.5-lts.1",
+    "music-metadata": "^7.14.0",
+    "passport": "^0.7.0",
+    "passport-discord": "^0.1.4",
+    "web-push": "^3.6.6",
+    "yaml": "^2.3.4"
+  },
+  "_moduleAliases": {
+    "@": "./",
+    "@/utils": "./src/utils",
+    "@/schemas": "./src/schemas",
+    "@/validations": "./src/utils/validations"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@8.15.5"
+}

@@ -1,0 +1,79 @@
+@import 'tailwind.css';
+@import 'radix-animations.css';
+
+html, body {
+  width: 100%;
+  background-color: rgba(var(--bg-background)) !important;
+  color: rgba(var(--text-primary));
+  --light-bg-background: 238, 238, 238;
+  --light-bg-secondary: 230, 230, 230;
+  --light-bg-tertiary: 220, 220, 220;
+  --light-bg-quaternary: 210, 210, 210;
+  --light-text-primary: 36, 42, 49;
+  --light-text-secondary: 73, 80, 87;
+  --light-text-tertiary: 108, 117, 125;
+  --light-text-placeholder: 133, 138, 141;
+  --light-border-primary: 204, 204, 204;
+  --dark-bg-background: 16, 16, 19;
+  --dark-bg-secondary: 23, 23, 28;
+  --dark-bg-tertiary: 30, 30, 36;
+  --dark-bg-quaternary: 37, 37, 45;
+  --dark-text-primary: 255, 255, 255;
+  --dark-text-secondary: 204, 204, 204;
+  --dark-text-tertiary: 153, 153, 153;
+  --dark-text-placeholder: 128, 128, 128;
+  --dark-border-primary: 46, 46, 56;
+}
+
+html {
+  --bg-background: var(--light-bg-background);
+  --bg-secondary: var(--light-bg-secondary);
+  --bg-tertiary: var(--light-bg-tertiary);
+  --bg-quaternary: var(--light-bg-quaternary);
+  --text-primary: var(--light-text-primary);
+  --text-secondary: var(--light-text-secondary);
+  --text-tertiary: var(--light-text-tertiary);
+  --text-placeholder: var(--light-text-placeholder);
+  --border-primary: var(--light-border-primary);
+}
+
+html.dark {
+  --bg-background: var(--dark-bg-background);
+  --bg-secondary: var(--dark-bg-secondary);
+  --bg-tertiary: var(--dark-bg-tertiary);
+  --bg-quaternary: var(--dark-bg-quaternary);
+  --text-primary: var(--dark-text-primary);
+  --text-secondary: var(--dark-text-secondary);
+  --text-tertiary: var(--dark-text-tertiary);
+  --text-placeholder: var(--dark-text-placeholder);
+  --border-primary: var(--dark-border-primary);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--bg-tertiary));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(var(--bg-background));
+  border-radius: 10px;
+}
+
+::selection {
+  background-color: #4e92ff;
+  color: #e3eeff;
+}
+
+.apexcharts-tooltip {
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.apexcharts-toolbar {
+  display: none !important;
+}

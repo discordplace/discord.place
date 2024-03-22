@@ -1,0 +1,81 @@
+discordClientId: '1207874300070199356'
+discordScopes:
+  - 'identify'
+botPresenceStatus: 'online'
+rateLimitWhitelist:
+  - '957840712404193290'
+trustProxy: 1
+corsOrigin: 
+  - 'https://discord.place'
+  - 'http://localhost:3000'
+session:
+  cookieDomain: '.discord.place'
+frontendUrl: 'https://discord.place'
+backendUrl: 'https://api.discord.place'
+port:
+  frontend: 3000
+  backend: 3001
+guildId: '1200254872059121764'
+commandsExcludeToGlobal:
+  - 'admin'
+permissions:
+  canEditProfiles:
+    - '957840712404193290'
+  canDeleteProfiles:
+    - '957840712404193290'
+  canDeleteServers:
+    - '957840712404193290'
+  canDeleteEmojis:
+    - '957840712404193290'
+  canDeleteReviews:
+    - '957840712404193290'
+  canApproveEmojisRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
+  canCreatePremiumCodes:
+    - '957840712404193290'
+  canEditEmojis:
+    - '957840712404193290'
+  canApproveReviewsRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
+  canEditServersRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
+profilesMaxSocialsLength: 8
+packagesMaxEmojisLength: 9
+packagesMinEmojisLength: 4
+serverKeywordsMaxLength: 5
+serverKeywordsMaxCharacters: 32
+serverDescriptionMaxCharacters: 256
+reviewsMaxCharacters: 256
+roles:
+  moderator: '1206354879321210900'
+emojiCategories:
+  - 'All'
+  - 'Gaming'
+  - 'Anime'
+  - 'Memes'
+  - 'Pepe'
+  - 'Pixel Art'
+  - 'Cute'
+  - 'Logos'
+  - 'Utility'
+  - 'Other'
+  - 'Animated'
+serverCategories:
+  - 'Gaming'
+  - 'Anime'
+  - 'Public'
+  - 'Community'
+  - 'Music'
+  - 'Art'
+  - 'Programming'
+  - 'Science'
+  - 'Technology'
+  - 'Education'
+  - 'Language'
+  - 'Other'
+emojiMaxCategoriesLength: 4
+emojiQueueChannelId: '1210805683751223377'
+reviewQueueChannelId: '1213842162828054538'

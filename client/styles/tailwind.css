@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .animated-h1 {
+    @apply font-bold text-transparent duration-3000 bg-black dark:bg-white cursor-default text-edge-outline animate-title text-4xl sm:text-6xl z-[100000] whitespace-nowrap bg-clip-text 
+  }
+}
+
+.duration-3000 {
+  transition-duration: 3000ms;
+}
+
+.text-edge-outline {
+  -webkit-text-stroke: 1px hsla(0, 0%, 0%, .3);
+}
+
+html.dark .text-edge-outline {
+  -webkit-text-stroke: 1px hsla(0, 0%, 100%, .3);
+}
