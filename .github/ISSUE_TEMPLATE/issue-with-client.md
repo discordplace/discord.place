@@ -1,7 +1,7 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
-title: ''
+name: Issue with Client
+about: Issues that related to client
+title: "(/client)"
 labels: ''
 assignees: chimpdev
 
