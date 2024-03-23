@@ -7,6 +7,15 @@ module.exports = {
   post: [
     bodyParser.json(),
     async (request, response) => {
+      const modifiedServerFiles = request.body.commits.reduce((acc, commit) => {
+        commit.modified.forEach(file => {
+          if (file.startsWith('server/')) acc.push(file);
+        });
+        return acc;
+      }, []);
+
+      if (!modifiedServerFiles.length) return response.sendError('No server files modified', 400);
+
       const signature = request.headers['x-hub-signature-256'];
       if (!signature) return response.sendError('No signature provided', 400);
 
@@ -25,7 +34,7 @@ module.exports = {
       try {
         const { stdout, stderr } = await exec('git pull');
         logger.send(stdout);
-        if (stderr) throw new Error(stderr);
+        if (stderr) logger.send(stderr);
 
         logger.send('Pull successful. Restarting server..');
         response.sendStatus(201);
