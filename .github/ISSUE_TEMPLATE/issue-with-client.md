@@ -1,7 +1,7 @@
 ---
 name: Issue with Client
 about: Issues that related to client
-title: "(/client)"
+title: ''
 labels: ''
 assignees: chimpdev
 

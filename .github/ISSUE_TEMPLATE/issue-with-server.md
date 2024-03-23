@@ -1,7 +1,7 @@
 ---
 name: Issue with Server
 about: Issues that related to server
-title: "(/server)"
+title: ''
 labels: ''
 assignees: chimpdev
 
