@@ -10,6 +10,7 @@ const helmet = require('helmet');
 const ip = require('@/src/utils/middlewares/ip');
 
 const passport = require('passport');
+const useRateLimiter = require('./utils/useRateLimiter');
 const DiscordStrategy = require('passport-discord').Strategy;
 module.exports = class Server {
   constructor() {
@@ -33,7 +34,7 @@ module.exports = class Server {
     this.createDiscordAuth();
 
     this.server.use('/', await router({ directory: path.join(__dirname, 'routes') }));
-    this.server.get('/favicon.ico', (request, response) => response.sendFile(path.join(__dirname, '..', 'public', 'favicon.ico')));
+    this.server.get('/favicon.ico', useRateLimiter({ maxRequests: 30, perMinutes: 1 }), (request, response) => response.sendFile(path.join(__dirname, '..', 'public', 'favicon.ico')));
     this.server.use('*', (request, response) => response.sendError('Not Found', 404));
 
     this.listen(port);
