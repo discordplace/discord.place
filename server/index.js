@@ -31,7 +31,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
 
 const Server = require('@/src/server.js');
 const server = new Server();
-server.create().start(config.port.frontend);
+server.create().start(config.port.backend);
 
 const connectDatabase = require('@/src/database/connect.js');
 connectDatabase(process.env.MONGO_URL);
