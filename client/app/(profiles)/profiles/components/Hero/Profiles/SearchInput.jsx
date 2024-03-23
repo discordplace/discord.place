@@ -45,7 +45,7 @@ export default function SearchInput() {
       <div className='relative flex items-center w-full'>
         <motion.input
           type="text"
-          placeholder="Search for a profile by username, occupation, location, etc."
+          placeholder="Search for a profile by slug, occupation, location, etc."
           value={value}
           disabled={loading}
           className='w-full p-3 font-medium rounded-md outline-none disabled:pointer-events-none disabled:opacity-70 text-secondary placeholder-placeholder bg-secondary hover:bg-tertiary focus-visible:bg-tertiary'
