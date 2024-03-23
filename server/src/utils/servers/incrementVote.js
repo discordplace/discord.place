@@ -24,7 +24,8 @@ async function incrementVote(guildId, userId) {
         lastVoter: {
           user: {
             id: userId
-          }
+          },
+          date: Date.now()
         }
       }
     };
@@ -51,7 +52,8 @@ async function incrementVote(guildId, userId) {
         lastVoter: {
           user: {
             id: userId
-          }
+          },
+          date: Date.now()
         }
       }
     };
