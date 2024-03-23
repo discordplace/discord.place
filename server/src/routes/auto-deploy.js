@@ -17,7 +17,7 @@ module.exports = {
       const hash = Buffer.from(signature, 'utf8');
       
       try {
-        if (hash.length !== digest.lengath || !crypto.timingSafeEqual(digest, hash)) return response.sendError('Invalid signature', 403);
+        if (hash.length !== digest.length || !crypto.timingSafeEqual(digest, hash)) return response.sendError('Invalid signature', 403);
       } catch (error) {
         return response.sendError('Invalid signature', 403);
       }
