@@ -65,18 +65,20 @@ export default function Footer() {
       links: [
         {
           label: 'Twitter',
-          href: 'https://twitter.com',
-          icon: FaTwitter
+          href: '#',
+          icon: FaTwitter,
+          disabled: true
         },
         {
           label: 'Discord',
-          href: 'https://discord.com',
+          href: 'https://invite.discord.place',
           icon: FaDiscord
         },
         {
           label: 'LinkedIn',
-          href: 'https://linkedin.com',
-          icon: FaLinkedin
+          href: '#',
+          icon: FaLinkedin,
+          disabled: true
         }
       ]
     }
