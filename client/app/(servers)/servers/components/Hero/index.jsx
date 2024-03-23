@@ -208,6 +208,7 @@ export default function Hero() {
                       fetchServers('');
                       setCategory('All');
                       setSort('Votes');
+                      setPage(1);
                     }}>
                       Reset Search
                     </button>

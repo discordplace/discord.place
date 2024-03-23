@@ -93,6 +93,7 @@ export default function Profiles() {
                     <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
                       setSearch('');
                       fetchProfiles('');
+                      setPage(1);
                     }}>
                       Reset Search
                     </button>

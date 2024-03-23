@@ -96,6 +96,7 @@ export default function Emojis() {
                   setSort('Newest');
                   setCategory('All');
                   fetchEmojis('');
+                  setPage(1);
                 }}>
                   Reset Search
                 </button>
