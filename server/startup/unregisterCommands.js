@@ -15,6 +15,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     checkDeletedInviteCodes: false,
     updatePanelMessages: false,
     updateClientActivity: false,
+    checkVoteReminderMetadatas: false,
     listenEvents: false
   },
   registerCommands: false,

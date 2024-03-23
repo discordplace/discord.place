@@ -3,8 +3,8 @@ const Discord = require('discord.js');
 const { join } = require('node:path');
 const randomizeArray = require('@/src/utils/randomizeArray');
 const incrementVote = require('@/src/utils/servers/incrementVote');
-const VoteTimeout = require('@/schemas/Server/VoteTimeout');
-const VoteReminder = require('@/schemas/Server/VoteReminder');
+const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
+const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 
 const emojis = ['🌟', '🍕', '🎉', '🚀', '🌈', '🎵', '🏝️', '📚', '🎭', '⚽', '🎲', '🍔', '🚲', '🖥️', '🎨', '🏆', '🔥', '💡', '🛸', '🐶', '🐱', '🐼', '🦁', '🐯', '🐵', '🐙', '🐢', '🐬', '🐳', '🦄', '🐝', '🐞', '🦋', '🐦', '🐧', '🐘', '🦏', '🦒', '🦓'];
 

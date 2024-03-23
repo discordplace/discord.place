@@ -1,5 +1,5 @@
 const Server = require('@/schemas/Server');
-const VoteTimeout = require('@/schemas/Server/VoteTimeout');
+const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const Premium = require('@/schemas/Premium');
 
 async function incrementVote(guildId, userId) {

@@ -5,6 +5,8 @@ const { CronJob } = require('cron');
 const Panel = require('@/schemas/Server/Panel');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
+const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
+const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 
 module.exports = class Client {
   constructor() {
@@ -74,10 +76,12 @@ module.exports = class Client {
       if (options.startup.checkDeletedInviteCodes) this.checkDeletedInviteCodes();
       if (options.startup.updatePanelMessages) this.updatePanelMessages();
       if (options.startup.updateClientActivity) this.updateClientActivity();
+      if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
 
       new CronJob('0 * * * *', this.checkVoiceActivity, null, true, 'Europe/Istanbul');
       new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
       new CronJob('0 0 * * *', this.updateClientActivity, null, true, 'Europe/Istanbul');
+      new CronJob('0 0 * * *', this.checkVoteReminderMetadatas, null, true, 'Europe/Istanbul');
     });
   }
 
@@ -167,5 +171,12 @@ module.exports = class Client {
       name: 'status',
       state: `Members: ${client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')} | Servers: ${client.guilds.cache.size.toLocaleString('en-US')}`
     });
+  }
+
+  async checkVoteReminderMetadatas() {
+    const reminders = await VoteReminder.find();
+    VoteReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
+      .then(deleted => logger.send(`Deleted ${deleted.deletedCount} vote reminder metadata.`))
+      .catch(error => logger.send(`Failed to delete vote reminder metadata:\n${error.stack}`));
   }
 };
