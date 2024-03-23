@@ -3,7 +3,7 @@
 import useThemeStore from '@/stores/theme';
 import { nanoid } from 'nanoid';
 import Link from 'next/link';
-import { FaDiscord, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaDiscord, FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
 import { MdDarkMode } from 'react-icons/md';
 import { HiSun } from 'react-icons/hi';
 import cn from '@/lib/cn';
@@ -73,6 +73,11 @@ export default function Footer() {
           label: 'Discord',
           href: 'https://invite.discord.place',
           icon: FaDiscord
+        },
+        {
+          label: 'GitHub',
+          href: 'https://github.com/discordplace',
+          icon: FaGithub
         },
         {
           label: 'LinkedIn',
