@@ -10,7 +10,7 @@ const helmet = require('helmet');
 const ip = require('@/src/utils/middlewares/ip');
 
 const passport = require('passport');
-const useRateLimiter = require('./utils/useRateLimiter');
+const useRateLimiter = require('@/utils/useRateLimiter');
 const DiscordStrategy = require('passport-discord').Strategy;
 module.exports = class Server {
   constructor() {
