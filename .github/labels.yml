@@ -22,3 +22,6 @@
 - name: 'Backend: Database'
   color: 'FF69B4'
   description: Discussions or problems regarding database management in the backend.
+- name: 'Dependabot: Patch'
+  color: 'FFD700'
+  description: Pull requests opened by Dependabot to update dependencies.
