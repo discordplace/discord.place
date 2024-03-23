@@ -8,7 +8,7 @@
     "start": "node -r dotenv/config index.js --optimize_for_size --production",
     "register:commands": "node -r dotenv/config startup/registerCommands.js",
     "unregister:commands": "node -r dotenv/config startup/unregisterCommands.js",
-    "eslint": "eslint ."
+    "lint": "eslint ."
   },
   "contributors": [
     "chimpdev <skyhancloud@gmail.com>"
