@@ -8,6 +8,7 @@ const nextConfig = withBundleAnalyzer({
 })({
   reactStrictMode: false,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
