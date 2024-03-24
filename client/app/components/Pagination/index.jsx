@@ -2,16 +2,18 @@
 
 import { motion } from 'framer-motion';
 import { CgChevronLeft, CgChevronRight } from 'react-icons/cg';
-import { useEffect, useRef, useState } from 'react';
 import cn from '@/lib/cn';
 
 export default function Pagination({ page, setPage, loading, total, limit }) {
   
   const totalPages = Math.ceil(total / limit);
-  const pagesToShow = 2;
+  const pagesToShow = 1;
   const start = Math.max(1, page - pagesToShow);
   const end = Math.min(totalPages, page + pagesToShow);
   const pages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+
+  if (pages[0] !== 1) pages.unshift(1);
+  if (pages[pages.length - 1] !== totalPages) pages.push(totalPages);
 
   return (
     <motion.div 
