@@ -1,6 +1,4 @@
 
-/* eslint-disable linebreak-style */
-
 module.exports = {
   env: {
     es2021: true,
@@ -29,10 +27,7 @@ module.exports = {
       'error',
       2,
     ],
-    'linebreak-style': [
-      'error',
-      'windows',
-    ],
+    'linebreak-style': 'off',
     quotes: [
       'error',
       'single'
