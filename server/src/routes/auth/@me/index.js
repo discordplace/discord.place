@@ -37,18 +37,16 @@ module.exports = {
     checkAuthentication,
     bodyParser.json(),
     body('premium_code')
-      .isString().withMessage('Premium code should be string.')
+      .isString().withMessage('Premium code should be a string.')
       .custom(premiumCodeValidation),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { premium_code } = matchedData(request);
-      
-      await PremiumCode.findOneAndDelete({ code: premium_code });
-
       const foundPremium = await Premium.findOne({ 'user.id': request.user.id });
       if (foundPremium) return response.sendError('You already have a premium.', 400);
+
+      const { premium_code } = matchedData(request);
 
       const profile = await Profile.findOne({ 'user.id': request.user.id });
       if (profile) await profile.updateOne({ premium: true });
@@ -59,6 +57,8 @@ module.exports = {
           id: request.user.id
         }
       }).save();
+      
+      await PremiumCode.findOneAndDelete({ code: premium_code });
 
       return response.sendStatus(204).end();
     }
