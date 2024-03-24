@@ -3,12 +3,15 @@
 
 module.exports = {
   env: {
+    es2021: true,
+    node: true,
     browser: true
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:react/jsx-runtime', 'next/core-web-vitals', 'next'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:react/jsx-runtime', 'next'],
   plugins: ['react'],
   overrides: [
     {
+      files: ['*.{js,jsx}'],
       parserOptions: {
         ecmaFeatures: {
           jsx: true

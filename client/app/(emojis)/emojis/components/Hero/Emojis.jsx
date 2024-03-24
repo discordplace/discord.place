@@ -12,7 +12,7 @@ import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiPackageCard';
 
 export default function Emojis() {
-  const { page, setPage, search, setSearch, loading, emojis, fetchEmojis, maxReached, setSort, setCategory, totalEmojis, limit } = useSearchStore(useShallow(state => ({
+  const { page, setPage, search, setSearch, loading, emojis, fetchEmojis, setSort, setCategory, totalEmojis, limit } = useSearchStore(useShallow(state => ({
     page: state.page,
     setPage: state.setPage,
     search: state.search,

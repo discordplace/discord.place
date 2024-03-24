@@ -55,5 +55,5 @@ export default function Pagination({ page, setPage, loading, total, limit }) {
         <CgChevronRight />
       </button>
     </motion.div>
-  )
+  );
 }

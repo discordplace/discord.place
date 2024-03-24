@@ -105,7 +105,7 @@ export default function Sidebar() {
           setCategory('All');
           setSort('Newest');
           fetchEmojis('');
-          setPages(1);
+          setPage(1);
         }} 
         disabled={(selectedCategory === 'All' && sort === 'Newest') || loading}
       >
