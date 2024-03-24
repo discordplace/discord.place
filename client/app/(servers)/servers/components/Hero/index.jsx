@@ -27,7 +27,7 @@ const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
 
 export default function Hero() {
 
-  const { category, setCategory, sort, setSort, search, setSearch, loading, servers, fetchServers, page, setPage, maxReached } = useSearchStore(useShallow(state => ({
+  const { category, setCategory, sort, setSort, search, setSearch, loading, servers, fetchServers, page, setPage, totalServers, limit } = useSearchStore(useShallow(state => ({
     category: state.category,
     setCategory: state.setCategory,
     sort: state.sort,
@@ -39,7 +39,8 @@ export default function Hero() {
     fetchServers: state.fetchServers,
     page: state.page,
     setPage: state.setPage,
-    maxReached: state.maxReached
+    totalServers: state.totalServers,
+    limit: state.limit
   })));
 
   const [categoryDrawerOpenState, setCategoryDrawerOpenState] = useState(false);
@@ -70,16 +71,6 @@ export default function Hero() {
   };
 
   const showPagination = !loading && servers.length > 0;
-
-  function next(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page + 1));
-    fetchServers(search);
-  }
-
-  function previous(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page - 1));
-    fetchServers(search);
-  }
 
   return (
     <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 sm:px-0">
@@ -230,7 +221,16 @@ export default function Hero() {
 
             {showPagination && (
               <div className='flex justify-center w-full'>
-                <Pagination page={page} next={next} previous={previous} maxReached={maxReached} loading={loading} />
+                <Pagination 
+                  page={page} 
+                  setPage={newPage => {
+                    setPage(newPage);
+                    fetchServers(search);
+                  }} 
+                  loading={loading} 
+                  total={totalServers} 
+                  limit={limit} 
+                />
               </div>
             )}
           </AnimatePresence>

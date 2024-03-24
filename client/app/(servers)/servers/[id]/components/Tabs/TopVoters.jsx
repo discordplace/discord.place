@@ -6,20 +6,13 @@ import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 
 export default function TopVoters({ server }) {
   const [page, setPage] = useState(1);
-  const maxPages = server.voters.length / 12;
-  const [voters, setVoters] = useState(server.voters.slice(0, 12));
-
-  function next(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page + 1));
-  }
-
-  function previous(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page - 1));
-  }
+  const limit = 12;
+  const maxPages = server.voters.length / limit;
+  const [voters, setVoters] = useState(server.voters.slice(0, limit));
 
   useEffect(() => {
-    const start = (page - 1) * 12;
-    const end = start + 12;
+    const start = (page - 1) * limit;
+    const end = start + limit;
     setVoters(server.voters.slice(start, end));
         
     // eslint-disable-next-line
@@ -76,7 +69,13 @@ export default function TopVoters({ server }) {
 
         {maxPages > 1 && (
           <div className='flex items-center justify-center w-full'>
-            <Pagination page={page} next={next} previous={previous} maxReached={page >= maxPages} loading={false} />
+            <Pagination 
+              page={page} 
+              setPage={setPage}
+              loading={false} 
+              total={server.voters.length} 
+              limit={limit} 
+            />
           </div>
         )}
       </div>
