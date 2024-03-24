@@ -11,14 +11,15 @@ import { Drawer } from 'vaul';
 import CategoriesDrawer from '@/app/(emojis)/emojis/components/CategoriesDrawer';
 
 export default function Sidebar() {
-  const { fetchEmojis, selectedCategory, setCategory, sort, setSort, search, loading } = useSearchStore(useShallow(state => ({
+  const { fetchEmojis, selectedCategory, setCategory, sort, setSort, search, loading, setPage } = useSearchStore(useShallow(state => ({
     fetchEmojis: state.fetchEmojis,
     selectedCategory: state.category,
     setCategory: state.setCategory,
     sort: state.sort,
     setSort: state.setSort,
     search: state.search,
-    loading: state.loading
+    loading: state.loading,
+    setPage: state.setPage
   })));
 
   const sequenceTransition = {
