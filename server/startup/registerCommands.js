@@ -18,6 +18,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     checkVoteReminderMetadatas: false,
     listenEvents: false
   },
+  listenCrons: false,
   registerCommands: true,
   unregisterCommands: false
 });
