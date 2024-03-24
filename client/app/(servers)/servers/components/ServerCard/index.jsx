@@ -8,6 +8,7 @@ import useSearchStore from '@/stores/servers/search';
 import { MdKeyboardVoice } from 'react-icons/md';
 import { HiOutlineStatusOnline, HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
+import { IoHeart } from 'react-icons/io5';
 
 export default function ServerCard({ server, index }) {
   const sort = useSearchStore(state => state.sort);
@@ -20,10 +21,9 @@ export default function ServerCard({ server, index }) {
   return (
     <Link
       className={cn(
-        'relative h-[80px] w-full rounded-xl flex items-center bg-secondary hover:bg-quaternary',
+        'relative h-[80px] overflow-clip w-full rounded-xl flex items-center bg-secondary hover:bg-quaternary',
         index === 0 && 'border-2 border-yellow-500 bg-gradient-to-r from-yellow-500/20',
-        index === 1 && 'border-2 border-gray-500 bg-gradient-to-r from-gray-500/20',
-        server.premium && 'border-2 border-fuchsia-500 bg-gradient-to-r from-fuchsia-500/20'
+        index === 1 && 'border-2 border-gray-500 bg-gradient-to-r from-gray-500/20'
       )} 
       key={index}
       href={`/servers/${server.id}`}
@@ -49,6 +49,12 @@ export default function ServerCard({ server, index }) {
             <span className='flex items-center text-xs font-medium mobile:text-sm text-tertiary gap-x-2'>
               {server.category} <BiSolidCategory />
             </span>
+
+            {server.premium && (
+              <span className='flex items-center text-xs font-medium mobile:text-sm text-tertiary gap-x-2'>
+                Premium <IoHeart />
+              </span>
+            )}
           </div>
         </div>
 
