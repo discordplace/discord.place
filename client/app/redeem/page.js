@@ -45,7 +45,7 @@ export default function Page() {
 
   return (
     <>
-      <div class={cn(
+      <div className={cn(
         'absolute inset-0 z-[10] h-full w-full items-center px-5 py-24',
         theme === 'light' ? '[background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,#00000021_100%)]' : '[background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,#ffffff21_100%)]'
       )}></div>
