@@ -63,7 +63,7 @@ export default function Emojis() {
     },
   };
   
-  const showPagination = !loading && emojis.length > limit;
+  const showPagination = !loading && totalEmojis > limit;
 
   return (
     <div className="flex flex-col flex-1 w-full gap-y-8">

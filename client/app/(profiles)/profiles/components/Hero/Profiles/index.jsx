@@ -24,7 +24,7 @@ export default function Profiles() {
     limit: state.limit
   })));
 
-  const showPagination = !loading && profiles.length > limit;
+  const showPagination = !loading && totalProfiles > limit;
   
   const profileCardTransition = {
     type: 'spring',
