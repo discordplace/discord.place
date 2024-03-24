@@ -70,7 +70,7 @@ export default function Hero() {
     },
   };
 
-  const showPagination = !loading && servers.length > 0;
+  const showPagination = !loading && servers.length > limit;
 
   return (
     <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 sm:px-0">
