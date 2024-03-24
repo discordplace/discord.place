@@ -12,7 +12,7 @@ import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiPackageCard';
 
 export default function Emojis() {
-  const { page, setPage, search, setSearch, loading, emojis, fetchEmojis, maxReached, setSort, setCategory } = useSearchStore(useShallow(state => ({
+  const { page, setPage, search, setSearch, loading, emojis, fetchEmojis, maxReached, setSort, setCategory, totalEmojis, limit } = useSearchStore(useShallow(state => ({
     page: state.page,
     setPage: state.setPage,
     search: state.search,
@@ -22,7 +22,9 @@ export default function Emojis() {
     fetchEmojis: state.fetchEmojis,
     maxReached: state.maxReached,
     setSort: state.setSort,
-    setCategory: state.setCategory
+    setCategory: state.setCategory,
+    totalEmojis: state.totalEmojis,
+    limit: state.limit
   })));
 
   const emojiCardTransition = {
@@ -60,17 +62,7 @@ export default function Emojis() {
       opacity: 0
     },
   };
-
-  function next(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page + 1));
-    fetchEmojis(search);
-  }
-
-  function previous(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page - 1));
-    fetchEmojis(search);
-  }
-
+  
   const showPagination = !loading && emojis.length > 0;
 
   return (
@@ -137,7 +129,16 @@ export default function Emojis() {
 
         <div className='flex items-center justify-center w-full' key='pagination'> 
           {showPagination && (
-            <Pagination page={page} next={next} previous={previous} maxReached={maxReached} loading={loading} />
+            <Pagination 
+              page={page} 
+              setPage={newPage => {
+                setPage(newPage);
+                fetchEmojis(search);
+              }} 
+              loading={loading} 
+              total={totalEmojis} 
+              limit={limit} 
+            />
           )}
         </div>
       </AnimatePresence>

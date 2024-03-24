@@ -12,7 +12,7 @@ import Pagination from '@/app/components/Pagination';
 
 export default function Profiles() {
 
-  const { search, setSearch, profiles, fetchProfiles, loading, page, setPage, maxReached } = useSearchStore(useShallow(state => ({ 
+  const { search, setSearch, profiles, fetchProfiles, loading, page, setPage, totalProfiles, limit } = useSearchStore(useShallow(state => ({ 
     search: state.search,
     setSearch: state.setSearch,
     profiles: state.profiles,
@@ -20,18 +20,9 @@ export default function Profiles() {
     loading: state.loading,
     page: state.page,
     setPage: state.setPage,
-    maxReached: state.maxReached
+    totalProfiles: state.totalProfiles,
+    limit: state.limit
   })));
-
-  function next(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page + 1));
-    fetchProfiles(search);
-  }
-
-  function previous(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page - 1));
-    fetchProfiles(search);
-  }
 
   const showPagination = !loading && profiles.length > 0;
   
@@ -132,7 +123,16 @@ export default function Profiles() {
           )}
 
           {showPagination && (
-            <Pagination page={page} next={next} previous={previous} maxReached={maxReached} loading={loading} />
+            <Pagination 
+              page={page} 
+              setPage={newPage => {
+                setPage(newPage);
+                fetchProfiles(search);
+              }} 
+              loading={loading} 
+              total={totalProfiles} 
+              limit={limit} 
+            />          
           )}
         </AnimatePresence>
       </section>

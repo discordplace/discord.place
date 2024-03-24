@@ -11,8 +11,9 @@ import cn from '@/lib/cn';
 
 export default function Reviews({ server }) {
   const [page, setPage] = useState(1);
-  const maxPages = server.reviews.length / 6;
-  const [reviews, setReviews] = useState(server.reviews.slice(0, 6));
+  const limit = 6;
+  const maxPages = server.reviews.length / limit;
+  const [reviews, setReviews] = useState(server.reviews.slice(0, limit));
   const [loading, setLoading] = useState(false);
   const [selectedRating, setSelectedRating] = useState(0);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
@@ -20,18 +21,10 @@ export default function Reviews({ server }) {
   const [hoveredRating, setHoveredRating] = useState(0);
   const user = useAuthStore(state => state.user);
   const loggedIn = useAuthStore(state => state.loggedIn);
-  
-  function next(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page + 1));
-  }
-
-  function previous(selectedPage) {
-    setPage(selectedPage ? selectedPage : (page - 1));
-  }
 
   useEffect(() => {
-    const start = (page - 1) * 12;
-    const end = start + 12;
+    const start = (page - 1) * limit;
+    const end = start + limit;
     setReviews(server.reviews.slice(start, end));
         
     // eslint-disable-next-line
@@ -229,7 +222,13 @@ export default function Reviews({ server }) {
 
       {maxPages > 1 && (
         <div className='flex items-center justify-center w-full'>
-          <Pagination page={page} next={next} previous={previous} maxReached={page >= maxPages} loading={false} />
+          <Pagination 
+            page={page} 
+            setPage={setPage} 
+            loading={loading} 
+            total={server.reviews.length} 
+            limit={limit} 
+          />
         </div>
       )}
     </div>
