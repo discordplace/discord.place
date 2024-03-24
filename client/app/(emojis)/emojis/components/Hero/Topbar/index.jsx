@@ -88,7 +88,10 @@ export default function Sidebar() {
 
       <button 
         className='flex flex-col items-center justify-center w-full h-full text-xl font-semibold hover:bg-tertiary gap-y-2 disabled:opacity-70 disabled:pointer-events-none sm:text-3xl bg-secondary rounded-3xl'
-        onClick={() => fetchEmojis(search)}
+        onClick={() => {
+          setPage(1);
+          fetchEmojis(search);
+        }}
         disabled={loading}
       >
         <FiSearch />
@@ -101,6 +104,7 @@ export default function Sidebar() {
           setCategory('All');
           setSort('Newest');
           fetchEmojis('');
+          setPages(1);
         }} 
         disabled={(selectedCategory === 'All' && sort === 'Newest') || loading}
       >
