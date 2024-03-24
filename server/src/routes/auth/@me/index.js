@@ -45,8 +45,7 @@ module.exports = {
 
       const { premium_code } = matchedData(request);
       
-      const foundCode = await PremiumCode.findOne({ code: premium_code });
-      await foundCode.deleteOne();
+      await PremiumCode.findOneAndDelete({ code: premium_code });
 
       const foundPremium = await Premium.findOne({ 'user.id': request.user.id });
       if (foundPremium) return response.sendError('You already have a premium.', 400);
