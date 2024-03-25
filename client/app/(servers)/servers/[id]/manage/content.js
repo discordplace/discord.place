@@ -77,19 +77,19 @@ export default function Content({ server }) {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center h-full mt-48 mb-16 gap-y-4'>
+    <div className='flex flex-col items-center justify-center h-full px-8 mt-48 mb-16 gap-y-4 lg:px-0'>
       <div className="flex justify-center w-full gap-y-4 max-w-[800px] flex-col">
         <div className='flex items-center gap-x-4'>
           <Link className="p-1.5 rounded-xl bg-secondary hover:bg-tertiary" href={`/servers/${currentServer.id}`}>
             <MdChevronLeft size={24} />
           </Link>
               
-          <h1 className="flex items-center text-3xl font-bold gap-x-1">
+          <h1 className="flex items-center text-xl font-bold sm:text-3xl gap-x-1">
             Manage <ServerIcon width={32} height={32} icon_url={currentServer.icon_url} name={currentServer.name} /> {currentServer.name}
           </h1>
         </div>
               
-        <p className='max-w-[800px] text-tertiary'>
+        <p className='text-sm sm:text-base max-w-[800px] text-tertiary'>
           You{'\''}re currently managing {currentServer.name}. You can edit the about section, invite link, and more.
         </p>
 
@@ -99,7 +99,7 @@ export default function Content({ server }) {
               Description
             </h2>
                 
-            <p className='text-tertiary'>
+            <p className='text-sm sm:text-basetext-tertiary'>
               This is the description that will be shown to everyone who visits your server on discord.place.<br/>Make sure to include important information about your server.
             </p>
 
@@ -116,7 +116,7 @@ export default function Content({ server }) {
           Invite link
         </h2>
 
-        <p className='text-tertiary'>
+        <p className='text-sm sm:text-basetext-tertiary'>
           Add an invite link to your server. This will be helpful for people who want to join your server.<br/>Make sure to set the invite link to never expire.
         </p>
 
@@ -129,7 +129,7 @@ export default function Content({ server }) {
           onChange={event => setNewInviteLink(event.target.value)}
         />
 
-        <div className='flex mt-8 gap-x-4'>
+        <div className='flex flex-col mt-8 sm:flex-row gap-x-4'>
           <div className='flex flex-col gap-y-2'>
             <h2 className='text-lg font-semibold'>
               Category
@@ -206,11 +206,11 @@ export default function Content({ server }) {
           Are you ready?
         </h2>
 
-        <p className='text-tertiary'>
+        <p className='text-sm sm:text-basetext-tertiary'>
           Make sure to double-check everything before saving. Once you save, the changes will be live on discord.place.
         </p>
                 
-        <div className='flex w-full gap-2 mt-2'>
+        <div className='flex flex-col w-full gap-2 mt-2 sm:flex-row'>
           <button 
             className='flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-full justify-center hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70' 
             disabled={
