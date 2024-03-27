@@ -12,15 +12,15 @@ export default function FaQs({ emoji }) {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: 'How can I download the emoji pack?',
+      label: 'How can I download the emoji?',
       content: <Question1 emoji={emoji} />
     },
     {
-      label: 'How can I add the emoji pack to my Discord server?',
+      label: 'How can I add the emoji to my Discord server?',
       content: <Question2 emoji={emoji} />
     },
     {
-      label: 'This emoji pack is inappropriate. What can I do?',
+      label: 'This emoji is inappropriate. What can I do?',
       content: <Question3 />
     }
   ];
