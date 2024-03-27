@@ -7,7 +7,7 @@ import useAuthStore from '@/stores/auth';
 import config from '@/config';
 import Image from 'next/image';
 import { LuShieldQuestion } from 'react-icons/lu';
-import FaQs from '@/app/(emojis)/emojis/packages/[id]/components/FaQs';
+import FaQs from '@/app/(emojis)/emojis/[id]/components/FaQs';
 import { MdEmojiEmotions } from 'react-icons/md';
 import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import { motion } from 'framer-motion';
