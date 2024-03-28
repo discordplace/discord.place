@@ -82,15 +82,6 @@ To get a local copy of the project up and running, follow these steps:
      ```
      Ensure you fill in the values for each environment variable according to your setup. Take a look to [Secrets Configuration](#secrets-configuration) for more information about .env
 
-4. Install dependencies for the client and server:
-
-   ```bash
-   cd client
-   npm install
-   cd ../server
-   npm install
-   ```
-
 5. Start the development servers:
 
    ```bash
