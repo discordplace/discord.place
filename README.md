@@ -91,7 +91,7 @@ To get a local copy of the project up and running, follow these steps:
 
    # In another terminal tab
    cd ../server
-   npm start
+   npm run dev
    ```
 
 5. Open your browser and visit [http://localhost:3000](http://localhost:3000) to view the website.
