@@ -82,7 +82,7 @@ async function incrementVote(guildId, userId) {
       },
       {
         name: 'Total votes',
-        value: server.votes + incrementCount
+        value: (server.votes + incrementCount).toString()
       }
     ])
     .setFooter({ text: `Voted at ${new Date().toLocaleString()}` });
