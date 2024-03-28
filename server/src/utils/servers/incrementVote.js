@@ -1,6 +1,7 @@
 const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const Premium = require('@/schemas/Premium');
+const Discord = require('discord.js');
 
 async function incrementVote(guildId, userId) {
   const guild = client.guilds.cache.get(guildId);
@@ -69,6 +70,24 @@ async function incrementVote(guildId, userId) {
       id: guild.id
     } 
   }).save();
+
+  const user = client.users.cache.get(userId) || await client.users.fetch(userId);
+  const embed = new Discord.EmbedBuilder()
+    .setColor(Discord.Colors.Purple)
+    .setAuthor({ name: guild.name + ' has received a vote!', iconURL: guild.iconURL() })
+    .setFields([
+      {
+        name: 'Given by',
+        value: `@${user.tag} (${user.id})`,
+      },
+      {
+        name: 'Total votes',
+        value: server.votes + incrementCount
+      }
+    ])
+    .setFooter({ text: `Voted at ${new Date().toLocaleString()}` });
+
+  client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
 
   return true;
 }
