@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const MetadataModel = require('@/schemas/Server/Vote/Metadata');
+const Discord = require('discord.js');
 
 const VoteReminderSchema = new Schema({
   user: {
@@ -39,7 +40,17 @@ Model.watch().on('change', async data => {
     const guild = await client.guilds.fetch(metadata.guildId).catch(() => null);
     if (!guild) return;
 
-    channel.send(`You can vote again for the server **${guild.name}**.`);
+    const components = [
+      new Discord.ActionRowBuilder()
+        .addComponents(
+          new Discord.ButtonBuilder()
+            .setStyle(Discord.ButtonStyle.Secondary)
+            .setLabel((`Quickly vote ${guild.name}`).slice(0, 80))
+            .setCustomId(`vote:${guild.id}`)
+        )
+    ];
+
+    channel.send({ content: `You can vote again for the server **${guild.name}**.`, components });
     await metadata.deleteOne();
   }
 
