@@ -18,6 +18,22 @@ To get a local copy of the project up and running, follow these steps:
    cd discord.place
    ```
 
+## Getting Started
+
+To get a local copy of the project up and running, follow these steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/discordplace/discord.place.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd discord.place
+   ```
+
 3. Install dependencies for the client and server:
 
    ```bash
@@ -27,7 +43,55 @@ To get a local copy of the project up and running, follow these steps:
    npm install
    ```
 
-4. Start the development servers:
+4. Configure Environment Variables:
+
+   - **Client**:
+     - Create a `.env` file in the `client` directory and populate it with the following variables:
+
+     ```plaintext
+     ANALYZE=
+     NEXT_PUBLIC_CF_SITE_KEY=
+     ```
+
+   - **Server**:
+     - Create a `.env` file in the `server` directory and populate it with the following variables:
+
+     ```plaintext
+     # Secrets
+     COOKIE_SECRET=
+     SESSION_SECRET=
+     SESSION_STORE_SECRET=
+     GITHUB_AUTO_DEPLOY_SECRET=
+     
+     # Discord Bot
+     DISCORD_CLIENT_TOKEN=
+     DISCORD_CLIENT_SECRET=
+     
+     # Database
+     MONGO_URL=
+     
+     # Cloudflare R2
+     S3_BUCKET_NAME=
+     S3_ACCESS_KEY_ID=
+     S3_SECRET_ACCESS_KEY=
+     S3_REGION=
+     S3_ENDPOINT=
+     
+     # Cloudflare Turnstile
+     CLOUDFLARE_TURNSTILE_SECRET_KEY=
+     ```
+     Ensure you fill in the values for each environment variable according to your setup. Take a look to [Secrets Configuration](#secrets-configuration) for more information about .env
+
+4. Install dependencies for the client and server:
+
+   ```bash
+   cd client
+   npm install
+   cd ../server
+   npm install
+   ```
+
+5. Start the development servers:
 
    ```bash
    # In one terminal tab
@@ -52,6 +116,28 @@ We welcome contributions from the community! If you'd like to contribute to the 
 5. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
 
 Please make sure to follow the [Code of Conduct](.github/CODE_OF_CONDUCT.md) and [Contributing Guidelines](.github/CONTRIBUTING.md) when contributing to this project.
+
+## Secrets Configuration
+
+Before running the project, you need to set up the following environment variables in the `.env` files for both the client and server. Here's a breakdown of each secret:
+
+| Secret                   | Description                                                 | Required | Example Value          |
+|--------------------------|-------------------------------------------------------------|----------|------------------------|
+| COOKIE_SECRET            | Secret used for cookie encryption                           | Yes      | RandomString           |
+| SESSION_SECRET           | Secret used for session encryption                          | Yes      | RandomString           |
+| SESSION_STORE_SECRET     | Secret used for session store encryption                    | Yes      | RandomString           |
+| GITHUB_AUTO_DEPLOY_SECRET | Secret for GitHub auto-deployment webhook verification     | No      | RandomString           |
+| DISCORD_CLIENT_TOKEN     | Token for Discord bot integration                           | Yes      | DiscordToken           |
+| DISCORD_CLIENT_SECRET    | Secret for Discord bot integration                          | Yes      | DiscordSecret          |
+| MONGO_URL                | URL for MongoDB database connection                         | Yes      | mongodb://localhost:27017/mydatabase |
+| S3_BUCKET_NAME           | Name of the AWS S3 bucket for Cloudflare R2                 | Yes      | BucketName             |
+| S3_ACCESS_KEY_ID         | AWS access key ID for Cloudflare R2                         | Yes      | AccessKeyID            |
+| S3_SECRET_ACCESS_KEY     | AWS secret access key for Cloudflare R2                     | Yes      | SecretAccessKey        |
+| S3_REGION                | AWS region for Cloudflare R2                                | Yes      | Region                 |
+| S3_ENDPOINT              | AWS S3 endpoint for Cloudflare R2                           | Yes      | Endpoint               |
+| CLOUDFLARE_TURNSTILE_SECRET_KEY | Secret key for Cloudflare Turnstile integration         | Yes      | RandomString           |
+| ANALYZE                  | Whether to enable bundle analysis during client build       | No       | true/false             |
+| NEXT_PUBLIC_CF_SITE_KEY  | Public key for Cloudflare integration                      | No       | SiteKey                |
 
 ## Help
 
