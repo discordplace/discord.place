@@ -3,8 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
-const Reminder = require('@/schemas/Server/Vote/Reminder');
-const checkCaptcha = require('@/utils/middlewares/checkCaptcha');
+const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const bodyParser = require('body-parser');
 
 module.exports = {
@@ -12,7 +11,6 @@ module.exports = {
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
     bodyParser.json(),
     checkAuthentication,
-    checkCaptcha,
     param('id'),
     async (request, response) => {
       const { id } = matchedData(request);
@@ -26,17 +24,16 @@ module.exports = {
       const timeout = await VoteTimeout.findOne({ 'user.id': request.user.id, 'guild.id': id });
       if (!timeout) return response.sendError('You can\'t set a reminder for a server you haven\'t voted for.', 400);
 
-      const reminder = await Reminder.findOne({ 'user.id': request.user.id, 'guild.id': id });
+      const reminder = await VoteReminder.findOne({ 'user.id': request.user.id, 'guild.id': id });
       if (reminder) return response.sendError('You already set a reminder for this server.', 400);
 
-      const newReminder = new Reminder({
+      const newReminder = new VoteReminder({
         user: {
           id: request.user.id
         },
         guild: {
           id
-        },
-        date: Date.now() + 86400000
+        }
       });
 
       const validationErrors = newReminder.validateSync();
