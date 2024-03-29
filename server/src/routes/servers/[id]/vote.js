@@ -27,7 +27,10 @@ module.exports = {
       if (timeout) return response.sendError(`You can vote again in ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000)} hours, ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60} minutes.`, 400);
 
       return incrementVote(id, request.user.id)
-        .then(() => response.status(204).end())
+        .then(async () => {
+          const userInGuild = guild.members.cache.get(request.user.id) || await guild.members.fetch(request.user.id).catch(() => false);
+          return response.json({ inGuild: !!userInGuild });
+        })
         .catch(error => response.sendError(error.message, 400));
     }
   ]
