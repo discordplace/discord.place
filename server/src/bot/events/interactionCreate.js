@@ -39,13 +39,11 @@ module.exports = async interaction => {
     if (interaction.customId.startsWith('vote:')) {
       const guildId = interaction.customId.split(':')[1];
 
-      await interaction.deferReply({ ephemeral: true });
-
       const guild = await client.guilds.fetch(guildId).catch(() => null);
-      if (!guild) return interaction.followUp({ content: 'This server no longer exists.' });
+      if (!guild) return interaction.reply({ content: 'This server no longer exists.' });
 
       const member = await guild.members.fetch(interaction.user.id).catch(() => null);
-      if (!member) return interaction.followUp({ content: 'You are no longer in this server.' });
+      if (!member) return interaction.reply({ content: 'You are no longer in this server.' });
 
       interaction.guild = guild;
       interaction.member = member;
