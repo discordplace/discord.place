@@ -7,6 +7,7 @@ const Server = require('@/schemas/Server');
 const Premium = require('@/schemas/Premium');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const VoiceActivity = require('@/schemas/Server/VoiceActivity');
+const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const Review = require('@/schemas/Server/Review');
 const inviteLinkValidation = require('@/validations/servers/inviteLink');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
@@ -57,6 +58,11 @@ module.exports = {
         )
       };
 
+      const voteTimeout = await VoteTimeout.findOne({ 'user.id': request.user?.id, 'guild.id': id });
+      const reminder = await VoteReminder.findOne({ 'user.id': request.user?.id, 'guild.id': id });
+      const memberInGuild = guild.members.cache.get(request.user?.id) || await guild.members.fetch(request.user?.id).catch(() => false);
+      const tenMinutesPassedAfterVote = voteTimeout && Date.now() - voteTimeout.createdAt.getTime() > 600000;
+
       return response.json({
         ...await server.toPubliclySafe(),
         name: guild.name,
@@ -68,12 +74,13 @@ module.exports = {
         vanity_url: guild.vanityURLCode ? `https://discord.com/invite/${guild.vanityURLCode}` : null,
         boost_level: guild.premiumTier,
         total_boosts: guild.premiumSubscriptionCount,
-        vote_timeout: request.user ? (await VoteTimeout.findOne({ 'user.id': request.user.id, 'guild.id': id }) || null) : null,
+        vote_timeout: request.user ? (voteTimeout || null) : null,
         badges,
         voiceActivity: voiceActivity ? voiceActivity.data : null,
         reviews,
         has_reviewed: request.user ? !!reviews.find(review => review.user.id === request.user.id) : null,
-        permissions
+        permissions,
+        can_set_reminder: !!(request.user && !reminder && voteTimeout && memberInGuild && !tenMinutesPassedAfterVote)
       });
     }
   ],
