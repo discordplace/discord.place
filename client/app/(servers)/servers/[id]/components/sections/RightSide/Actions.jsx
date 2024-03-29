@@ -14,15 +14,19 @@ import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import voteServer from '@/lib/request/servers/voteServer';
+import createReminder from '@/lib/request/servers/createReminder';
 import Countdown from '@/app/components/Countdown';
 import Tooltip from '@/app/components/Tooltip';
+import { FaRegBell, FaBell } from 'react-icons/fa';
 
 export default function Actions({ server }) {
   const [serverVotes, setServerVotes] = useState(server.votes);
   const [voteTimeout, setVoteTimeout] = useState(server.vote_timeout);
+  const [canSetReminder, setCanSetReminder] = useState(server.can_set_reminder);
   const loggedIn = useAuthStore(state => state.loggedIn);
   const [showCaptcha, setShowCaptcha] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [createReminderLoading, setCreateReminderLoading] = useState(false);
   
   const formatter = new Intl.NumberFormat('en-US', {
     notation: 'compact',
@@ -48,10 +52,11 @@ export default function Actions({ server }) {
 
           toast.promise(voteServer(server.id, response), {
             loading: `Voting ${server.name}..`,
-            success: () => {
+            success: data => {
               setLoading(false);
               setServerVotes(serverVotes + (server.badges.includes('Premium') ? 2 : 1));
               setVoteTimeout({ createdAt: new Date().getTime() + 86400000 });
+              setCanSetReminder(data.inGuild);
 
               return `Successfully voted for ${server.name}!`;
             },
@@ -67,6 +72,24 @@ export default function Actions({ server }) {
     return () => clearInterval(captchaIntervalRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showCaptcha]);
+
+  function setReminder() {
+    setCreateReminderLoading(true);
+
+    toast.promise(createReminder(server.id), {
+      loading: `Creating reminder for ${server.name}..`,
+      success: () => {
+        setCreateReminderLoading(false);
+        setCanSetReminder(false);
+
+        return `I will remind you to vote for ${server.name} in 24 hours! Please keep your DMs open and don't leave the server.`;
+      },
+      error: error => {
+        setCreateReminderLoading(false);
+        return error;
+      }
+    });
+  }
 
   return (
     <div>
@@ -98,6 +121,35 @@ export default function Actions({ server }) {
             <motion.div className="cf-turnstile [&>iframe]:max-w-[100%]" data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY} ref={captchaRef} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
           )}
         </AnimatePresence>
+
+        {canSetReminder && (
+          <motion.button
+            className={cn(
+              'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-black rounded-lg group gap-x-2 hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70',
+              createReminderLoading && 'cursor-default !opacity-70 hover:bg-black dark:hover:bg-white'
+            )}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+            onClick={() => {
+              if (!loggedIn) return toast.error('You need to be logged in to set a reminder for a server.');
+
+              setReminder();
+            }}
+          >
+            <div className='flex gap-x-1.5 items-center'>
+              {createReminderLoading && <TbLoader className='animate-spin' />}
+              Create Reminder
+            </div>
+
+            <div className='flex items-center font-bold gap-x-1'>
+              <div className='relative'>
+                <FaBell className='absolute transition-transform opacity-0 group-hover:opacity-100 group-hover:scale-[1.2]' />
+                <FaRegBell className='opacity-100 transition-[transform] group-hover:opacity-0' />
+              </div>
+            </div>
+          </motion.button>
+        )}
 
         <motion.button 
           className={cn(
