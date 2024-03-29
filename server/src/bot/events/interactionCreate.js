@@ -45,8 +45,8 @@ module.exports = async interaction => {
       const member = await guild.members.fetch(interaction.user.id).catch(() => null);
       if (!member) return interaction.reply({ content: 'You are no longer in this server.' });
 
-      interaction.guild = guild;
-      interaction.member = member;
+      Object.defineProperty(interaction, 'guild', { value: guild });
+      Object.defineProperty(interaction, 'member', { value: member });
 
       require('@/src/bot/commands/vote').execute(interaction);
     }
