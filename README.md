@@ -66,6 +66,7 @@ To get a local copy of the project up and running, follow these steps:
      # Discord Bot
      DISCORD_CLIENT_TOKEN=
      DISCORD_CLIENT_SECRET=
+     DISCORD_CLIENT_ID=
      
      # Database
      MONGO_URL=
@@ -120,6 +121,7 @@ Before running the project, you need to set up the following environment variabl
 | GITHUB_AUTO_DEPLOY_SECRET | Secret for GitHub auto-deployment webhook verification     | No      | RandomString           |
 | DISCORD_CLIENT_TOKEN     | Token for Discord bot integration                           | Yes      | DiscordToken           |
 | DISCORD_CLIENT_SECRET    | Secret for Discord bot integration                          | Yes      | DiscordSecret          |
+| DISCORD_CLIENT_ID        | Client ID for Discord bot integration                       | Yes      | DiscordClientID        |
 | MONGO_URL                | URL for MongoDB database connection                         | Yes      | mongodb://localhost:27017/mydatabase |
 | S3_BUCKET_NAME           | Name of the AWS S3 bucket for Cloudflare R2                 | Yes      | BucketName             |
 | S3_ACCESS_KEY_ID         | AWS access key ID for Cloudflare R2                         | Yes      | AccessKeyID            |

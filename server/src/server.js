@@ -99,7 +99,7 @@ module.exports = class Server {
 
   createDiscordAuth() {
     const Strategy = new DiscordStrategy({
-      clientID: config.discordClientId,
+      clientID: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
       callbackURL: '/auth/callback',
       scope: config.discordScopes

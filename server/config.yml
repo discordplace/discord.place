@@ -1,4 +1,3 @@
-discordClientId: '1207874300070199356'
 discordScopes:
   - 'identify'
 botPresenceStatus: 'online'
