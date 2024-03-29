@@ -74,8 +74,7 @@ module.exports = {
               },
               guild: {
                 id: interaction.guild.id
-              },
-              date: Date.now() + 86400000
+              }
             }).save();
 
             return reminderCollected.update({ components: [], content: 'You will be reminded in 24 hours.' });
