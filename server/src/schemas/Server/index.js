@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const keywordsValidation = require('@/validations/servers/keywords');
-const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 
 const ServerSchema = new Schema({
   id: {
@@ -104,13 +103,4 @@ const ServerSchema = new Schema({
   }
 });
 
-const Model = mongoose.model('Server', ServerSchema);
-
-Model.watch().on('change', async data => {
-  if (data.operationType === 'update' && data.updateDescription.updatedFields.votes) {
-    const server = await Model.findOne({ _id: data.documentKey._id });
-    await updatePanelMessage(server.id);
-  }
-});
-
-module.exports = Model;
+module.exports = mongoose.model('Server', ServerSchema);

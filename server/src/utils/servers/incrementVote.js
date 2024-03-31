@@ -2,6 +2,7 @@ const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const Premium = require('@/schemas/Premium');
 const Discord = require('discord.js');
+const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 
 async function incrementVote(guildId, userId) {
   const guild = client.guilds.cache.get(guildId);
@@ -70,6 +71,8 @@ async function incrementVote(guildId, userId) {
       id: guild.id
     } 
   }).save();
+
+  updatePanelMessage(guild.id);
 
   const user = client.users.cache.get(userId) || await client.users.fetch(userId);
   const embed = new Discord.EmbedBuilder()
