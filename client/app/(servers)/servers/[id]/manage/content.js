@@ -103,7 +103,7 @@ export default function Content({ server }) {
               This is the description that will be shown to everyone who visits your server on discord.place.<br/>Make sure to include important information about your server.
             </p>
 
-            <span contentEditable suppressContentEditableWarning className='block w-full h-[150px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500' onKeyUp={event => {
+            <span contentEditable suppressContentEditableWarning className='block w-full h-[150px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500 whitespace-pre-wrap' onKeyUp={event => {
               if (event.target.textContent.length > config.serverDescriptionMaxCharacters) return toast.error(`Description can only contain ${config.serverDescriptionMaxCharacters} characters.`);
               setNewDescription(event.target.innerText);
             }}>
