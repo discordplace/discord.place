@@ -47,7 +47,7 @@ module.exports = class Server {
   addMiddlewares() {
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
-      origin: config.corsOrigin,
+      origin: [config.frontendUrl],
       credentials: true
     }));
     this.server.use(helmet({

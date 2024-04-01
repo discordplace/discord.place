@@ -4,9 +4,6 @@ botPresenceStatus: 'online'
 rateLimitWhitelist:
   - '957840712404193290'
 trustProxy: 1
-corsOrigin: 
-  - 'https://discord.place'
-  - 'http://localhost:3000'
 session:
   cookieDomain: '.discord.place'
 frontendUrl: 'https://discord.place'
