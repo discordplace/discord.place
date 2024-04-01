@@ -2,6 +2,8 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
+const CommandsHandler = require('@/src/bot/handlers/commands.js');
+const commandsHandler = new CommandsHandler();
 
 module.exports = {
   post: [
@@ -35,6 +37,31 @@ module.exports = {
         const { stdout, stderr } = await exec('git pull');
         logger.send(stdout);
         if (stderr) logger.send(stderr);
+
+        const registerCommands = request.body.commits.some(commit => commit.message.includes('register:commands'));
+        const unregisterCommands = request.body.commits.some(commit => commit.message.includes('unregister:commands'));
+
+        if (registerCommands || unregisterCommands) {
+          commandsHandler.fetchCommands();
+          
+          if (registerCommands) {
+            commandsHandler.registerCommands()
+              .then(() => process.exit(0))
+              .catch(error => {
+                logger.send(`Failed to register commands: ${error}`);
+                response.sendError('Failed to register commands', 500);
+                process.exit(1);
+              });
+          } else {
+            commandsHandler.unregisterCommands()
+              .then(() => process.exit(0))
+              .catch(error => {
+                logger.send(`Failed to unregister commands: ${error}`);
+                response.sendError('Failed to unregister commands', 500);
+                process.exit(1);
+              });
+          }
+        }
 
         logger.send('Pull successful. Restarting server..');
         response.sendStatus(201);
