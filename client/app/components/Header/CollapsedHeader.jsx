@@ -3,7 +3,7 @@ import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useLockBodyScroll, usePrevious, useWindowScroll } from 'react-use';
+import { useLockBodyScroll } from 'react-use';
 import UserSide from '@/app/components/Header/UserSide';
 import { IoMdMenu } from 'react-icons/io';
 import { useEffect, useState } from 'react';
@@ -14,23 +14,9 @@ import { nanoid } from 'nanoid';
 import { usePathname } from 'next/navigation';
 
 export default function CollapsedHeader() {
-  const { y } = useWindowScroll();
   const theme = useThemeStore(state => state.theme);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  const oldY = usePrevious(y);
-  const [scrollDirection, setScrollDirection] = useState(null);
-
-  useEffect(() => {
-    if (oldY !== null) {
-      if (y > oldY) {
-        setScrollDirection('down');
-      } else if (y < oldY) {
-        setScrollDirection('up');
-      }
-    }
-  }, [y, oldY]);
 
   useLockBodyScroll(open);
 
@@ -39,11 +25,7 @@ export default function CollapsedHeader() {
   }, [open]);
 
   return (
-    <header className={cn(
-      'fixed top-0 flex justify-between w-full px-4 mobile:px-16 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]',
-      scrollDirection === 'down' && '-translate-y-full opacity-0 [transition-timing-function:cubic-bezier(.8,-0.76,.38,1.37)]',
-      scrollDirection === 'up' && 'translate-y-0 opacity-100'
-    )}>
+    <header className='fixed top-0 flex justify-between w-full px-4 mobile:px-16 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]'>
       <div className='mt-6'>
         <Link href='/'>
           <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='w-[48px] h-[48px]' alt='discord.place Logo' />
