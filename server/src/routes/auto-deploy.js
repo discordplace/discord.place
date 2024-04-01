@@ -38,10 +38,12 @@ module.exports = {
         logger.send(stdout);
         if (stderr) logger.send(stderr);
 
-        const registerCommands = request.body.commits.some(commit => commit.message.includes('register:commands'));
-        const unregisterCommands = request.body.commits.some(commit => commit.message.includes('unregister:commands'));
+        const registerCommands = request.body.commits.some(commit => commit.message.includes('(flags:registerCommands)'));
+        const unregisterCommands = request.body.commits.some(commit => commit.message.includes('(flags:unregisterCommands)'));
 
         if (registerCommands || unregisterCommands) {
+          logger.send('There are requests to register/unregister commands. Fetching commands..');
+
           commandsHandler.fetchCommands();
           
           await new Promise(resolve => {
