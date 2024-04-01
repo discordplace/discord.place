@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const CommandsHandler = require('@/src/bot/handlers/commands.js');
+const logger = require('../utils/middlewares/logger');
 const commandsHandler = new CommandsHandler();
 
 module.exports = {
@@ -38,6 +39,8 @@ module.exports = {
         logger.send(stdout);
         if (stderr) logger.send(stderr);
 
+        logger.send('Pull successful.');
+
         const registerCommands = request.body.commits.some(commit => commit.message.includes('(flags:registerCommands)'));
         const unregisterCommands = request.body.commits.some(commit => commit.message.includes('(flags:unregisterCommands)'));
 
@@ -65,7 +68,7 @@ module.exports = {
           });
         }
 
-        logger.send('Pull successful. Restarting server..');
+        logger.send('Auto deploy successful. Exiting process..');
         response.sendStatus(201);
         process.exit(0);
       } catch (error) {
