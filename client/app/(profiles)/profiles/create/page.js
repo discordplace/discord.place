@@ -213,7 +213,7 @@ export default function Page() {
             </span>
           </div>
         
-          <button className='flex items-center gap-x-1.5 w-full py-1.5 text-center bg-tertiary font-medium rounded-md text-secondary hover:text-primary hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70 mt-4' disabled={!slugIsAvailable || profileIsCreating} onClick={continueProfileCreate}>
+          <button className='flex justify-center items-center gap-x-1.5 w-full py-1.5 text-center bg-tertiary font-medium rounded-md text-secondary hover:text-primary hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70 mt-4' disabled={!slugIsAvailable || profileIsCreating} onClick={continueProfileCreate}>
             {profileIsCreating ? (
               <>
                 <TbLoader className='animate-spin' />
