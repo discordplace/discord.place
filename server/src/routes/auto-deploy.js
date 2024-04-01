@@ -44,23 +44,23 @@ module.exports = {
         if (registerCommands || unregisterCommands) {
           commandsHandler.fetchCommands();
           
-          if (registerCommands) {
-            commandsHandler.registerCommands()
-              .then(() => process.exit(0))
-              .catch(error => {
-                logger.send(`Failed to register commands:\n${error.stack}`);
-                response.sendError('Failed to register commands', 500);
-                process.exit(1);
-              });
-          } else {
-            commandsHandler.unregisterCommands()
-              .then(() => process.exit(0))
-              .catch(error => {
-                logger.send(`Failed to unregister commands:\n${error.stack}`);
-                response.sendError('Failed to unregister commands', 500);
-                process.exit(1);
-              });
-          }
+          await new Promise(resolve => {
+            if (registerCommands) {
+              commandsHandler.registerCommands()
+                .catch(error => {
+                  logger.send(`Failed to register commands:\n${error.stack}`);
+                  response.sendError('Failed to register commands', 500);
+                })
+                .finally(resolve);
+            } else {
+              commandsHandler.unregisterCommands()
+                .catch(error => {
+                  logger.send(`Failed to unregister commands:\n${error.stack}`);
+                  response.sendError('Failed to unregister commands', 500);
+                })
+                .finally(resolve);
+            }
+          });
         }
 
         logger.send('Pull successful. Restarting server..');
