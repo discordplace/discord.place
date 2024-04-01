@@ -48,7 +48,7 @@ module.exports = {
             commandsHandler.registerCommands()
               .then(() => process.exit(0))
               .catch(error => {
-                logger.send(`Failed to register commands: ${error}`);
+                logger.send(`Failed to register commands:\n${error.stack}`);
                 response.sendError('Failed to register commands', 500);
                 process.exit(1);
               });
@@ -56,7 +56,7 @@ module.exports = {
             commandsHandler.unregisterCommands()
               .then(() => process.exit(0))
               .catch(error => {
-                logger.send(`Failed to unregister commands: ${error}`);
+                logger.send(`Failed to unregister commands:\n${error.stack}`);
                 response.sendError('Failed to unregister commands', 500);
                 process.exit(1);
               });
