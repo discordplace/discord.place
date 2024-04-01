@@ -51,14 +51,14 @@ dependencies:
     specifier: ^19.0.4
     version: 19.0.4(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.34.1)(eslint@8.57.0)
   express:
-    specifier: ^4.18.2
-    version: 4.19.1
+    specifier: ^4.19.2
+    version: 4.19.2
   express-file-routing:
     specifier: ^3.0.3
-    version: 3.0.3(express@4.19.1)
+    version: 3.0.3(express@4.19.2)
   express-rate-limit:
     specifier: ^7.1.4
-    version: 7.2.0(express@4.19.1)
+    version: 7.2.0(express@4.19.2)
   express-session:
     specifier: ^1.17.3
     version: 1.18.0
@@ -798,7 +798,7 @@ packages:
       discord-api-types: 0.37.61
       magic-bytes.js: 1.10.0
       tslib: 2.6.2
-      undici: 5.27.3
+      undici: 5.27.2
     dev: false
 
   /@discordjs/util@1.0.2:
@@ -2096,7 +2096,7 @@ packages:
       fast-deep-equal: 3.1.3
       lodash.snakecase: 4.1.1
       tslib: 2.6.2
-      undici: 5.27.3
+      undici: 5.27.2
       ws: 8.14.2
     transitivePeerDependencies:
       - bufferutil
@@ -2535,21 +2535,21 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /express-file-routing@3.0.3(express@4.19.1):
+  /express-file-routing@3.0.3(express@4.19.2):
     resolution: {integrity: sha512-0936IhPc64moJHAG1Fz3SLCi0Upt6ahsbocrC6hdPUgmHY2018wjVrbln0HP67JoWFUdmmzypYiIHjF898s0hA==}
     peerDependencies:
       express: '>4.1.2'
     dependencies:
-      express: 4.19.1
+      express: 4.19.2
     dev: false
 
-  /express-rate-limit@7.2.0(express@4.19.1):
+  /express-rate-limit@7.2.0(express@4.19.2):
     resolution: {integrity: sha512-T7nul1t4TNyfZMJ7pKRKkdeVJWa2CqB8NA1P8BwYaoDI5QSBZARv5oMS43J7b7I5P+4asjVXjb7ONuwDKucahg==}
     engines: {node: '>= 16'}
     peerDependencies:
       express: 4 || 5 || ^5.0.0-beta.1
     dependencies:
-      express: 4.19.1
+      express: 4.19.2
     dev: false
 
   /express-session@1.18.0:
@@ -2576,8 +2576,8 @@ packages:
       validator: 13.11.0
     dev: false
 
-  /express@4.19.1:
-    resolution: {integrity: sha512-K4w1/Bp7y8iSiVObmCrtq8Cs79XjJc/RU2YYkZQ7wpUu5ZyZ7MtPHkqoMz4pf+mgXfNvo2qft8D9OnrH2ABk9w==}
+  /express@4.19.2:
+    resolution: {integrity: sha512-5T6nhjsT+EOMzuck8JjBHARTHfMht0POzlA60WV2pMD3gyXw2LZnZ+ueGdNxG+0calOJcWKbpFcuzLZ91YWq9Q==}
     engines: {node: '>= 0.10.0'}
     dependencies:
       accepts: 1.3.8
