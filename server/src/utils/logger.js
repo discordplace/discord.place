@@ -13,10 +13,10 @@ module.exports = class Logger {
   }
  
   format(message) {
-    return `${new Date().toLocaleDateString('en-US', {
+    return `${gray(`${new Date().toLocaleDateString('en-US', {
       dateStyle: 'long',
     })} ${new Date().toLocaleTimeString('en-US', {
       timeStyle: 'medium',
-    })}: ${gray(message)}`;
+    })}`)} | ${message}`;
   }
 };
