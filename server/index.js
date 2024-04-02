@@ -36,7 +36,9 @@ const server = new Server();
 server.create().start(config.port.backend);
 
 const connectDatabase = require('@/src/database/connect.js');
-connectDatabase(process.env.MONGO_URL);
+connectDatabase(process.env.MONGO_URL, {
+  backup: process.env.NODE_ENV === 'production'
+});
 
 process.on('unhandledRejection', (error) => logger.send(error.stack));
 process.on('uncaughtException', (error) => logger.send(error.stack));
