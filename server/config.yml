@@ -76,3 +76,8 @@ emojiMaxCategoriesLength: 4
 emojiQueueChannelId: '1210805683751223377'
 reviewQueueChannelId: '1213842162828054538'
 voteLogsChannelId: '1222817883470434304'
+excludeCollectionsInBackup:
+  - 'sessions'
+  - 'votereminders'
+  - 'voteremindermetadatas'
+  - 'votetimeouts'
