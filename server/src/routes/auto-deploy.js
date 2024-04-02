@@ -3,7 +3,6 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const CommandsHandler = require('@/src/bot/handlers/commands.js');
-const logger = require('../utils/middlewares/logger');
 const commandsHandler = new CommandsHandler();
 
 module.exports = {
