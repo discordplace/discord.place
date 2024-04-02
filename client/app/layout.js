@@ -9,6 +9,7 @@ import ProgressBarProvider from '@/app/components/Providers/ProgressBar';
 import cn from '@/lib/cn';
 import ErrorBoundary from '@/app/components/Providers/Boundary/Error';
 import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
+import Script from 'next/script';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -52,6 +53,17 @@ export default function RootLayout({ children }) {
         GeistSans.className,
         GeistSans.variable
       )}>
+        <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
+        <Script id='google-analytics'>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'G-WEX8LKYTTD');
+          `}
+        </Script>
+
         <ProgressBarProvider>
           <Toaster toastOptions={{
             className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
