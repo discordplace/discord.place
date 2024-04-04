@@ -15,7 +15,7 @@ import { TbLoader, TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
-import CategoriesDrawer from '@/app/(servers)/servers/components/Drawer/Categories';
+import CategoriesDrawer from '@/app/components/Drawer/ServerCategories';
 import { useState } from 'react';
 import SortingDrawer from '../Drawer/Sorting';
 import { MdKeyboardVoice } from 'react-icons/md';

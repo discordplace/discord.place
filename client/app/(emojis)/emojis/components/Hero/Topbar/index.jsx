@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import cn from '@/lib/cn';
 import { Drawer } from 'vaul';
-import CategoriesDrawer from '@/app/(emojis)/emojis/components/CategoriesDrawer';
+import CategoriesDrawer from '@/app/components/Drawer/EmojiCategories';
 
 export default function Sidebar() {
   const { fetchEmojis, selectedCategory, setCategory, sort, setSort, search, loading, setPage } = useSearchStore(useShallow(state => ({

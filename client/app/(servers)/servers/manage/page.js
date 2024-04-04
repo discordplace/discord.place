@@ -13,7 +13,7 @@ import Link from 'next/link';
 import config from '@/config';
 import { RiAddCircleFill } from 'react-icons/ri';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import CategoriesDrawer from '@/app/(servers)/servers/components/Drawer/Categories';
+import CategoriesDrawer from '@/app/components/Drawer/ServerCategories';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { useRouter } from 'next-nprogress-bar';
 import { MdChevronLeft } from 'react-icons/md';

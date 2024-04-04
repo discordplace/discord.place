@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdChevronLeft } from 'react-icons/md';
 import { toast } from 'sonner';
-import CategoriesDrawer from '@/app/(servers)/servers/components/Drawer/Categories';
+import CategoriesDrawer from '@/app/components/Drawer/ServerCategories';
 import { TbLoader } from 'react-icons/tb';
 import editServer from '@/lib/request/servers/editServer';
 import { RiErrorWarningFill } from 'react-icons/ri';
