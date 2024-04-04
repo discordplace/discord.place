@@ -60,6 +60,7 @@ const config = {
     'Animated'
   ],
   serverCategories: [
+    'All',
     'Gaming',
     'Anime',
     'Public',
