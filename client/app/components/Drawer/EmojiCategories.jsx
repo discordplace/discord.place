@@ -13,6 +13,20 @@ export default function EmojiCategoriesDrawer({ openState, setOpenState, state, 
         <Drawer.Content className='gap-y-1 p-4 z-[10001] bg-secondary flex flex-col rounded-t-3xl h-[85%] fixed bottom-0 left-0 right-0'>
           <div className='mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-quaternary mb-8' />
 
+          <button
+            onClick={() => {
+              setState('All');
+              setOpenState(false);
+            }}
+            className={cn(
+              'flex items-center justify-between px-4 py-3 text-base font-medium rounded-lg disabled:pointer-events-none',
+              state === 'All' ? 'pointer-events-none bg-quaternary text-primary' : 'hover:bg-quaternary text-tertiary hover:text-primary'
+            )}
+          >
+            All
+            {state === 'All' && <IoMdCheckmarkCircle />}
+          </button>
+
           {config.emojiCategories.map(category => (
             <button
               key={nanoid()}
@@ -29,20 +43,6 @@ export default function EmojiCategoriesDrawer({ openState, setOpenState, state, 
               {state === category && <IoMdCheckmarkCircle />}
             </button>
           ))}
-
-          <button
-            onClick={() => {
-              setState('All');
-              setOpenState(false);
-            }}
-            className={cn(
-              'flex items-center justify-between px-4 py-3 text-base font-medium rounded-lg disabled:pointer-events-none',
-              state === 'All' ? 'pointer-events-none bg-quaternary text-primary' : 'hover:bg-quaternary text-tertiary hover:text-primary'
-            )}
-          >
-            All
-            {state === 'All' && <IoMdCheckmarkCircle />}
-          </button>
         </Drawer.Content>
         <Drawer.Overlay className='fixed inset-0 bg-white/40 dark:bg-black/40 z-[10000]' />
       </Drawer.Portal>
