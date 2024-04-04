@@ -13,7 +13,7 @@ import Link from 'next/link';
 import config from '@/config';
 import { RiAddCircleFill } from 'react-icons/ri';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import CategoriesDrawer from '@/app/components/Drawer/ServerCategories';
+import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { useRouter } from 'next-nprogress-bar';
 import { MdChevronLeft } from 'react-icons/md';
@@ -170,7 +170,7 @@ export default function Page() {
                       }
                     </button>
 
-                    <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={serverCategory} setState={setServerCategory} />
+                    <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={serverCategory} setState={setServerCategory} categories={config.serverCategories} />
                   </div>
 
                   <div className='flex flex-col gap-y-2'>

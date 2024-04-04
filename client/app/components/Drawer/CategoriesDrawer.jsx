@@ -1,12 +1,11 @@
 'use client';
 
-import config from '@/config';
 import cn from '@/lib/cn';
 import { nanoid } from 'nanoid';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { Drawer } from 'vaul';
 
-export default function ServerCategoriesDrawer({ openState, setOpenState, state, setState }) {
+export default function CategoriesDrawer({ openState, setOpenState, state, setState, categories }) {
   return (
     <Drawer.Root shouldScaleBackground={true} closeThreshold={0.5} open={openState} onOpenChange={setOpenState}>
       <Drawer.Portal>
@@ -27,7 +26,7 @@ export default function ServerCategoriesDrawer({ openState, setOpenState, state,
             {state === 'All' && <IoMdCheckmarkCircle />}
           </button>
 
-          {config.serverCategories.map(category => (
+          {categories.map(category => (
             <button
               key={nanoid()}
               onClick={() => {

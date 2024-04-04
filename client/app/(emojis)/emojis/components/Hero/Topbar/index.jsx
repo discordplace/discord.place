@@ -8,7 +8,8 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import cn from '@/lib/cn';
 import { Drawer } from 'vaul';
-import CategoriesDrawer from '@/app/components/Drawer/EmojiCategories';
+import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
+import config from '@/config';
 
 export default function Sidebar() {
   const { fetchEmojis, selectedCategory, setCategory, sort, setSort, search, loading, setPage } = useSearchStore(useShallow(state => ({
@@ -49,7 +50,7 @@ export default function Sidebar() {
         <p className='text-sm font-medium text-tertiary'>Category</p>
       </button>
 
-      <CategoriesDrawer openState={categoriesDrawerOpen} setOpenState={setCategoriesDrawerOpen} state={selectedCategory} setState={setCategory} />
+      <CategoriesDrawer openState={categoriesDrawerOpen} setOpenState={setCategoriesDrawerOpen} state={selectedCategory} setState={setCategory} categories={config.emojiCategories} />
       
       <Drawer.Root shouldScaleBackground={true} closeThreshold={0.5} open={sortDrawerOpen} onOpenChange={setSortDrawerOpen}>
         <Drawer.Trigger asChild>

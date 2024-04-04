@@ -15,13 +15,14 @@ import { TbLoader, TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
-import CategoriesDrawer from '@/app/components/Drawer/ServerCategories';
+import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
 import { useState } from 'react';
 import SortingDrawer from '../Drawer/Sorting';
 import { MdKeyboardVoice } from 'react-icons/md';
 import { HiOutlineStatusOnline, HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import Pagination from '@/app/components/Pagination';
+import config from '@/config';
 
 const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
 
@@ -114,7 +115,7 @@ export default function Hero() {
           </div>
         </button>
 
-        <CategoriesDrawer state={category} setState={setCategory} openState={categoryDrawerOpenState} setOpenState={setCategoryDrawerOpenState} />
+        <CategoriesDrawer state={category} setState={setCategory} openState={categoryDrawerOpenState} setOpenState={setCategoryDrawerOpenState} categories={config.serverCategories} />
 
         <button className='text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary' onClick={() => setSortingDrawerOpenState(true)}>
           <div className='text-sm font-medium text-tertiary'>

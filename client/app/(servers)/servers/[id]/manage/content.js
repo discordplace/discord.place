@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdChevronLeft } from 'react-icons/md';
 import { toast } from 'sonner';
-import CategoriesDrawer from '@/app/components/Drawer/ServerCategories';
+import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
 import { TbLoader } from 'react-icons/tb';
 import editServer from '@/lib/request/servers/editServer';
 import { RiErrorWarningFill } from 'react-icons/ri';
@@ -144,7 +144,7 @@ export default function Content({ server }) {
               <IoMdCheckmarkCircle />
             </button>
 
-            <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={newCategory} setState={setNewCategory} />
+            <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={newCategory} setState={setNewCategory} categories={config.serverCategories} />
           </div>
 
           <div className='flex flex-col gap-y-2'>
