@@ -29,6 +29,20 @@ export default function CategoriesDrawer({ openState, setOpenState, state, setSt
               {state === category && <IoMdCheckmarkCircle />}
             </button>
           ))}
+
+          <button
+            onClick={() => {
+              setState('All');
+              setOpenState(false);
+            }}
+            className={cn(
+              'flex items-center justify-between px-4 py-3 text-base font-medium rounded-lg disabled:pointer-events-none',
+              state === 'All' ? 'pointer-events-none bg-quaternary text-primary' : 'hover:bg-quaternary text-tertiary hover:text-primary'
+            )}
+          >
+            All
+            {state === 'All' && <IoMdCheckmarkCircle />}
+          </button>
         </Drawer.Content>
         <Drawer.Overlay className='fixed inset-0 bg-white/40 dark:bg-black/40 z-[10000]' />
       </Drawer.Portal>
