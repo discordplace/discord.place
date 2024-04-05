@@ -144,7 +144,7 @@ export default function Content({ server }) {
               <IoMdCheckmarkCircle />
             </button>
 
-            <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={newCategory} setState={setNewCategory} categories={config.serverCategories} />
+            <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={newCategory} setState={setNewCategory} categories={config.serverCategories.filter(({ category }) => category !== 'All')} />
           </div>
 
           <div className='flex flex-col gap-y-2'>

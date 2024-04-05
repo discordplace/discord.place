@@ -170,7 +170,7 @@ export default function Page() {
                       }
                     </button>
 
-                    <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={serverCategory} setState={setServerCategory} categories={config.serverCategories} />
+                    <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={serverCategory} setState={setServerCategory} categories={config.serverCategories.filter(({ category }) => category !== 'All')} />
                   </div>
 
                   <div className='flex flex-col gap-y-2'>
