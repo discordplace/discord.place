@@ -80,11 +80,11 @@ export default function Page() {
 
         <div className="mt-48 mb-16 max-w-[600px] flex flex-col gap-y-2 w-full">
           <h1 className="text-4xl font-bold text-primary">
-          Publish Emoji
+            Publish Emoji
           </h1>
 
           <p className="text-sm text-tertiary">
-          Publish your emoji to the world.
+            Publish your emoji to the world.
           </p>
 
           <div className='flex flex-col mt-6 gap-y-4'>
@@ -92,7 +92,7 @@ export default function Page() {
               {steps.map((step, index) => (
                 <div className='flex flex-col items-center gap-x-2' key={step}>
                   <div className='text-xs uppercase text-tertiary'>
-                  STEP {index + 1}
+                    STEP {index + 1}
                   </div>
                   <h2 className={cn(
                     'text-sm mobile:text-base transition-colors font-medium text-secondary flex items-center',
@@ -108,11 +108,11 @@ export default function Page() {
           {activeStep === 0 && (
             <>
               <h2 className='mt-4 text-lg font-medium sm:text-xl text-primary'>
-              Let{'\''}s start with the details.
+                Let{'\''}s start with the details.
               </h2>
 
               <p className='text-sm text-tertiary'>
-              Choose a one or more categories for your emoji.
+                Choose a one or more categories for your emoji.
               </p>
 
               <div className='flex flex-wrap items-center justify-center gap-4 mt-4'>
@@ -140,10 +140,10 @@ export default function Page() {
 
               <label className='flex flex-col mt-6 gap-y-2' htmlFor='emojiName'>
                 <h2 className='text-xl font-medium text-primary'>
-                Emoji Name
+                  Emoji Name
                 </h2>
                 <p className='text-sm text-tertiary'>
-                Enter a name for your emoji.
+                  Enter a name for your emoji.
                 </p>
               </label>
 
@@ -191,11 +191,11 @@ export default function Page() {
           {activeStep === 2 && (
             <>
               <h2 className='mt-2 text-lg font-medium sm:text-xl text-primary'>
-              Confirm your details and publish your emoji.
+                Confirm your details and publish your emoji.
               </h2>
 
               <p className='text-sm text-tertiary'>
-              Review the details and click on the publish button to publish your emoji.
+                Review the details and click on the publish button to publish your emoji.
               </p>
 
               {emoji.files.length > 1 && (
@@ -212,7 +212,7 @@ export default function Page() {
               <div className='flex flex-col mt-4 gap-y-2'>
                 <div className='flex justify-between'>
                   <h3 className='text-sm text-tertiary'>
-                  Categories
+                    Categories
                   </h3>
                   <h3 className='text-sm text-tertiary'>
                     {selectedCategories.join(', ')}
@@ -221,7 +221,7 @@ export default function Page() {
 
                 <div className='flex justify-between'>
                   <h3 className='text-sm text-tertiary'>
-                  Emoji Name
+                    Emoji Name
                   </h3>
                   <h3 className='text-sm text-tertiary'>
                     {emoji.name}
@@ -230,14 +230,14 @@ export default function Page() {
               </div>
 
               <p className='mt-2 text-xs mobile:text-sm text-tertiary'>
-              By publishing this emoji{emoji.files.length > 1 && ' package'}, you agree to our <Link href='/legal/content-policy' className='hover:text-primary hover:underline'>content policy</Link>.
+                By publishing this emoji{emoji.files.length > 1 && ' package'}, you agree to our <Link href='/legal/content-policy' className='hover:text-primary hover:underline'>content policy</Link>.
               </p>
             </>
           )}
 
           <div className='flex justify-between w-full mt-8'>
             <button className='flex items-center px-3 py-1 text-sm font-semibold text-white bg-black rounded-lg gap-x-1 dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => setActiveStep(activeStep - 1)} disabled={activeStep === 0 || loading}>
-            Previous
+              Previous
             </button>
 
             <button className='flex items-center px-3 py-1 text-sm font-semibold text-white bg-black rounded-lg gap-x-1 dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => {
