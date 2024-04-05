@@ -99,7 +99,7 @@ export default function Content({ server }) {
               Description
             </h2>
                 
-            <p className='text-sm sm:text-basetext-tertiary'>
+            <p className='text-sm sm:text-base text-tertiary'>
               This is the description that will be shown to everyone who visits your server on discord.place.<br/>Make sure to include important information about your server.
             </p>
 
@@ -116,7 +116,7 @@ export default function Content({ server }) {
           Invite link
         </h2>
 
-        <p className='text-sm sm:text-basetext-tertiary'>
+        <p className='text-sm sm:text-base text-tertiary'>
           Add an invite link to your server. This will be helpful for people who want to join your server.<br/>Make sure to set the invite link to never expire.
         </p>
 
@@ -206,7 +206,7 @@ export default function Content({ server }) {
           Are you ready?
         </h2>
 
-        <p className='text-sm sm:text-basetext-tertiary'>
+        <p className='text-sm sm:text-base text-tertiary'>
           Make sure to double-check everything before saving. Once you save, the changes will be live on discord.place.
         </p>
                 
