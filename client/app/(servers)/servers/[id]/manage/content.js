@@ -89,7 +89,7 @@ export default function Content({ server }) {
           </Link>
               
           <h1 className="flex items-center text-xl font-bold sm:text-3xl gap-x-1">
-            Manage <ServerIcon width={32} height={32} icon_url={currentServer.icon_url} name={currentServer.name} /> {currentServer.name}
+            Manage <ServerIcon width={32} height={32} icon_url={currentServer.icon_url} name={currentServer.name} /> <span className='truncate'>{currentServer.name}</span>
           </h1>
         </div>
               

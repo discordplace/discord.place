@@ -108,7 +108,7 @@ export default function Page() {
                 </button>
               
                 <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
-                  Adding <ServerIcon width={32} height={32} icon_url={currentlyAddingServer.icon_url} name={currentlyAddingServer.name} /> {currentlyAddingServer.name}
+                  Adding <ServerIcon width={32} height={32} icon_url={currentlyAddingServer.icon_url} name={currentlyAddingServer.name} /> <span className='truncate'>{currentlyAddingServer.name}</span>
                 </h1>
               </div>
               
