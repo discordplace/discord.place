@@ -35,17 +35,7 @@ module.exports = {
         ]
       } : {};
 
-      const sortedIds = await Profile.aggregate([
-        { $match: findQuery },
-        { $addFields: { likesCount: { $size: '$likes' } } },
-        { $sort: { likesCount: -1 } },
-        { $skip: skip },
-        { $limit: limit },
-        { $project: { _id: 1 } }
-      ]);
-      const sortedProfileIds = sortedIds.map(item => item._id);
-      const profiles = await Profile.find({ _id: { $in: sortedProfileIds } });
-
+      const profiles = await Profile.find(findQuery).sort({ views: -1 }).limit(limit).skip(skip);
       const totalProfiles = await Profile.countDocuments(findQuery);
       const total = await Profile.countDocuments({});
       const totalPages = Math.ceil(totalProfiles / limit);
