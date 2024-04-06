@@ -40,8 +40,22 @@ const QuarantineSchema = new Schema({
       message: 'Invalid restriction for this type'
     }
   },
+  reason: {
+    type: String,
+    required: true
+  },
+  created_by: {
+    type: String,
+    required: true
+  },
+  expire_at: {
+    type: Date,
+    default: null
+  }
 }, {
   timestamps: true
 });
+
+QuarantineSchema.index({ expire_at: 1 }, { expireAfterSeconds: 0 });
 
 module.exports = mongoose.model('Quarantines', QuarantineSchema);
