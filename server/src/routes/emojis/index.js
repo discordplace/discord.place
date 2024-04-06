@@ -60,7 +60,6 @@ module.exports = {
       const { name, categories } = matchedData(request);
       const id = crypto.randomBytes(6).toString('hex');
 
-
       if (request.files.length > 1) {
         if (request.files.length < config.packagesMinEmojisLength) return response.sendError(`If you are going to share a package, there should be a minimum of ${config.packagesMinEmojisLength} emoji in the package.`);
         const packageHasAnimatedEmoji = request.files.some(file => file.mimetype === 'image/gif');
