@@ -38,6 +38,9 @@ permissions:
   canEditServersRoles:
     - '1206354879321210900'
     - '1206355082883371049'
+  canCreateQuarantinesRoles:
+    - '1206032198562742312'
+    - '1206354879321210900'
 profilesMaxSocialsLength: 8
 packagesMaxEmojisLength: 9
 packagesMinEmojisLength: 4
@@ -81,3 +84,32 @@ excludeCollectionsInBackup:
   - 'votereminders'
   - 'voteremindermetadatas'
   - 'votetimeouts'
+quarantineTypes:
+  - 'USER_ID'
+  - 'GUILD_ID'
+quarantineRestrictions:
+  'PROFILES_CREATE':
+    available_to:
+      - 'USER_ID'
+  'PROFILES_LIKE':
+    available_to:
+      - 'USER_ID'
+  'EMOJIS_CREATE':
+    available_to:
+      - 'USER_ID'
+  'EMOJIS_QUICKLY_UPLOAD':
+    available_to:
+      - 'USER_ID'
+      - 'GUILD_ID'
+  'SERVERS_CREATE':
+    available_to:
+      - 'USER_ID'
+      - 'GUILD_ID'
+  'SERVERS_CREATE_REVIEW':
+    available_to:
+      - 'USER_ID'
+  'SERVERS_VOTE':
+    available_to:
+      - 'USER_ID'
+      - 'GUILD_ID'
+quarantineLogsChannelId: '1226257480112406599'
