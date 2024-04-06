@@ -12,9 +12,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import LogoWithText from '@/app/components/Logo/WithText';
 import { nanoid } from 'nanoid';
 import { usePathname } from 'next/navigation';
+import { useNewspaperStore } from '@/stores/newspaper';
 
 export default function CollapsedHeader() {
   const theme = useThemeStore(state => state.theme);
+  const newspaperIsOpen = useNewspaperStore(state => state.isOpen);
+
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -25,7 +28,10 @@ export default function CollapsedHeader() {
   }, [open]);
 
   return (
-    <header className='fixed top-0 flex justify-between w-full px-4 mobile:px-16 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]'>
+    <header className={cn(
+      'fixed top-0 flex justify-between w-full px-4 mobile:px-16 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]',
+      newspaperIsOpen && 'opacity-0'
+    )}>
       <div className='mt-6'>
         <Link href='/'>
           <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='w-[48px] h-[48px]' alt='discord.place Logo' />

@@ -11,6 +11,7 @@ import { IoPeople } from 'react-icons/io5';
 import { RiRobot2Fill } from 'react-icons/ri';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { MdArrowForward } from 'react-icons/md';
+import OpenSourceAnnouncement from '@/app/components/Newspaper/OpenSource';
 
 const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
 
@@ -48,6 +49,8 @@ export default function Page() {
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-center w-full sm:h-[100dvh] my-8 sm:my-0">
+      <OpenSourceAnnouncement />
+      
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
       
       <h1 className={cn(
