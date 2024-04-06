@@ -104,7 +104,7 @@ export default function Content({ server }) {
             </h2>
                 
             <p className='text-sm sm:text-base text-tertiary'>
-              This is the description that will be shown to everyone who visits your server on discord.place.<br/>Make sure to include important information about your currentServer.
+              This is the description that will be shown to everyone who visits your server on discord.place.<br/>Make sure to include important information about your server.
             </p>
 
             <span contentEditable suppressContentEditableWarning className='block w-full h-[150px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500 whitespace-pre-wrap' onKeyUp={event => {
@@ -121,7 +121,7 @@ export default function Content({ server }) {
         </h2>
 
         <p className='text-sm sm:text-base text-tertiary'>
-          Add an invite link to your currentServer. This will be helpful for people who want to join your currentServer.<br/>Make sure to set the invite link to never expire.
+          Add an invite link to your server. This will be helpful for people who want to join your server.<br/>Make sure to set the invite link to never expire.
         </p>
 
         <input
@@ -140,7 +140,7 @@ export default function Content({ server }) {
             </h2>
 
             <p className='text-sm text-tertiary'>
-              Select a base category for your currentServer. This will help people find your server on discord.place.
+              Select a base category for your server. This will help people find your server on discord.place.
             </p>
 
             <button className='flex items-center justify-center w-full h-[40px] mt-4 text-sm font-medium rounded-lg gap-x-2 bg-secondary hover:bg-tertiary text-primary' onClick={() => setCategoriesDrawerIsOpen(true)}>
@@ -157,7 +157,7 @@ export default function Content({ server }) {
             </h2>
 
             <p className='text-sm text-tertiary'>
-              Add keywords to your currentServer. This will help people find your server on discord.place.
+              Add keywords to your server. This will help people find your server on discord.place.
             </p>
 
             <div className='relative'>
@@ -211,7 +211,7 @@ export default function Content({ server }) {
         </h2>
 
         <p className='text-sm sm:text-base text-tertiary'>
-          Check this box if you want to enable voice activity tracking for your currentServer. This will help people see how voice active your server is.
+          Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active your server is.
         </p>
 
         <div 
