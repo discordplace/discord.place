@@ -7,8 +7,8 @@ export default function deleteServer(id, keys) {
     const url = `${config.api.url}/servers/${id}`;
 
     try {
-      await axios.patch(url, keys, { withCredentials: true });
-      resolve();
+      const response = await axios.patch(url, keys, { withCredentials: true });
+      resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
     }
