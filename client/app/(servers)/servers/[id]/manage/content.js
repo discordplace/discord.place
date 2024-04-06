@@ -13,13 +13,15 @@ import editServer from '@/lib/request/servers/editServer';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import deleteServer from '@/lib/request/servers/deleteServer';
 import { useRouter } from 'next-nprogress-bar';
+import { FaCheck } from 'react-icons/fa';
 
 export default function Content({ server }) {
-  const [currentServer] = useState(server);
-  const [newDescription, setNewDescription] = useState(server.description);
-  const [newInviteLink, setNewInviteLink] = useState(server.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (server.invite_code.type === 'Vanity' ? server.vanity_url : `https://discord.com/invite/${server.invite_code.code}`));
-  const [newCategory, setNewCategory] = useState(server.category);
-  const [newKeywords, setNewKeywords] = useState(server.keywords);
+  const [currentServer, setCurrentServer] = useState(server);
+  const [newDescription, setNewDescription] = useState(currentServer.description);
+  const [newInviteLink, setNewInviteLink] = useState(currentServer.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (currentServer.invite_code.type === 'Vanity' ? currentServer.vanity_url : `https://discord.com/invite/${currentServer.invite_code.code}`));
+  const [newCategory, setNewCategory] = useState(currentServer.category);
+  const [newKeywords, setNewKeywords] = useState(currentServer.keywords);
+  const [newVoiceActivityEnabled, setNewVoiceActivityEnabled] = useState(currentServer.voice_activity_enabled);
 
   const [categoriesDrawerIsOpen, setCategoriesDrawerIsOpen] = useState(false);
   const [keywordsInputValue, setKeywordsInputValue] = useState('');
@@ -30,25 +32,27 @@ export default function Content({ server }) {
   
   useEffect(() => {
     setAnyChangesMade(
-      newDescription !== server.description ||
-      newInviteLink !== (server.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (server.invite_code.type === 'Vanity' ? server.vanity_url : `https://discord.com/invite/${server.invite_code.code}`)) ||
-      newCategory !== server.category ||
-      newKeywords.join(' ') !== server.keywords.join(' ')
+      newDescription !== currentServer.description ||
+      newInviteLink !== (currentServer.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (currentServer.invite_code.type === 'Vanity' ? currentServer.vanity_url : `https://discord.com/invite/${currentServer.invite_code.code}`)) ||
+      newCategory !== currentServer.category ||
+      newKeywords.join(' ') !== currentServer.keywords.join(' ') ||
+      newVoiceActivityEnabled !== currentServer.voice_activity_enabled
     );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newDescription, newInviteLink, newCategory, newKeywords]);
+  }, [newDescription, newInviteLink, newCategory, newKeywords, newVoiceActivityEnabled]);
 
   async function save() {
     if (!anyChangesMade) return toast.error('No changes were made.');
     
     setLoading(true);
 
-    toast.promise(editServer(currentServer.id, { newDescription, newInviteLink, newCategory, newKeywords }), {
+    toast.promise(editServer(currentServer.id, { newDescription, newInviteLink, newCategory, newKeywords, newVoiceActivityEnabled }), {
       loading: 'Saving changes..',
-      success: () => {
+      success: newServer => {
         setLoading(false);
         setAnyChangesMade(false);
+        setCurrentServer(oldServer => ({ ...oldServer, ...newServer }));
 
         return 'Successfully saved changes!';
       },
@@ -107,7 +111,7 @@ export default function Content({ server }) {
               if (event.target.textContent.length > config.serverDescriptionMaxCharacters) return toast.error(`Description can only contain ${config.serverDescriptionMaxCharacters} characters.`);
               setNewDescription(event.target.innerText);
             }}>
-              {server.description}
+              {currentServer.description}
             </span>
           </div>
         </div>
@@ -144,7 +148,7 @@ export default function Content({ server }) {
               <IoMdCheckmarkCircle />
             </button>
 
-            <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={newCategory} setState={setNewCategory} categories={config.serverCategories.filter(({ category }) => category !== 'All')} />
+            <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={newCategory} setState={setNewCategory} categories={config.serverCategories.filter(category => category !== 'All')} />
           </div>
 
           <div className='flex flex-col gap-y-2'>
@@ -203,6 +207,26 @@ export default function Content({ server }) {
         )}
 
         <h2 className='mt-8 text-lg font-semibold'>
+          Voice Activity
+        </h2>
+
+        <p className='text-sm sm:text-base text-tertiary'>
+          Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active your server is.
+        </p>
+
+        <div 
+          className='flex items-center mt-4 cursor-pointer gap-x-2 group'
+          onClick={() => setNewVoiceActivityEnabled(!newVoiceActivityEnabled)}
+        >
+          <button className='p-1 bg-quaternary rounded-md group-hover:bg-white group-hover:text-black min-w-[18px] min-h-[18px]'>
+            {newVoiceActivityEnabled ? <FaCheck size={10} /> : null}
+          </button>
+          <span className='text-sm font-medium select-none text-tertiary'>
+            Enable Tracking
+          </span>
+        </div>
+
+        <h2 className='mt-8 text-lg font-semibold'>
           Are you ready?
         </h2>
 
@@ -228,10 +252,11 @@ export default function Content({ server }) {
           </button>
           <button className='flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-secondary disabled:pointer-events-none disabled:opacity-70'
             onClick={() => {
-              setNewDescription(server.description);
-              setNewInviteLink(server.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (server.invite_code.type === 'Vanity' ? server.vanity_url : `https://discord.com/invite/${server.invite_code.code}`));
-              setNewCategory(server.category);
-              setNewKeywords(server.keywords);
+              setNewDescription(currentServer.description);
+              setNewInviteLink(currentServer.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (currentServer.invite_code.type === 'Vanity' ? currentServer.vanity_url : `https://discord.com/invite/${currentServer.invite_code.code}`));
+              setNewCategory(currentServer.category);
+              setNewKeywords(currentServer.keywords);
+              setNewVoiceActivityEnabled(currentServer.voice_activity_enabled);
             }}
             disabled={!anyChangesMade || loading}
           >
@@ -239,7 +264,7 @@ export default function Content({ server }) {
           </button>
         </div>
 
-        {server.permissions.canDelete && (
+        {currentServer.permissions.canDelete && (
           <div className='flex flex-col p-4 mt-8 border border-red-500 gap-y-2 bg-red-500/10 rounded-xl'>
             <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
               <RiErrorWarningFill />

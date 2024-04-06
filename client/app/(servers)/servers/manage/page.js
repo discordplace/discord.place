@@ -20,6 +20,7 @@ import { MdChevronLeft } from 'react-icons/md';
 import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
 import { useMedia } from 'react-use';
+import { FaCheck } from 'react-icons/fa';
 
 export default function Page() {
   const [servers, setServers] = useState([]);
@@ -34,6 +35,8 @@ export default function Page() {
   
   const [keywordsInputValue, setKeywordsInputValue] = useState('');
   const [serverKeywords, setServerKeywords] = useState([]);
+
+  const [serverVoiceActivityEnabled, setServerVoiceActivityEnabled] = useState(false);
   
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -62,7 +65,7 @@ export default function Page() {
 
     setLoading(true);
 
-    toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords }), {
+    toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords, voice_activity_enabled: serverVoiceActivityEnabled }), {
       loading: `Adding ${currentlyAddingServer.name}..`,
       success: () => {
         setTimeout(() => router.push(`/servers/${currentlyAddingServer.id}`), 3000);
@@ -170,7 +173,7 @@ export default function Page() {
                       }
                     </button>
 
-                    <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={serverCategory} setState={setServerCategory} categories={config.serverCategories.filter(({ category }) => category !== 'All')} />
+                    <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={serverCategory} setState={setServerCategory} categories={config.serverCategories.filter(category => category !== 'All')} />
                   </div>
 
                   <div className='flex flex-col gap-y-2'>
@@ -229,6 +232,26 @@ export default function Page() {
                 )}
 
                 <h2 className='mt-8 text-lg font-semibold'>
+                  Voice Activity
+                </h2>
+
+                <p className='text-sm sm:text-base text-tertiary'>
+                  Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active your server is.
+                </p>
+
+                <div 
+                  className='flex items-center mt-4 cursor-pointer gap-x-2 group'
+                  onClick={() => setServerVoiceActivityEnabled(!serverVoiceActivityEnabled)}
+                >
+                  <button className='p-1 bg-quaternary rounded-md group-hover:bg-white group-hover:text-black min-w-[18px] min-h-[18px]'>
+                    {serverVoiceActivityEnabled ? <FaCheck size={10} /> : null}
+                  </button>
+                  <span className='text-sm font-medium select-none text-tertiary'>
+                    Enable Tracking
+                  </span>
+                </div>
+
+                <h2 className='mt-8 text-lg font-semibold'>
                   Content Policy
                 </h2>
                 
@@ -265,6 +288,7 @@ export default function Page() {
                       setServerInviteLink('');
                       setServerCategory('');
                       setServerKeywords([]);
+                      setServerVoiceActivityEnabled(false);
                     }}
                     disabled={loading}
                   >

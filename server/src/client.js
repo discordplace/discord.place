@@ -111,7 +111,7 @@ module.exports = class Client {
   }
 
   async checkVoiceActivity() {
-    const servers = await Server.find();
+    const servers = await Server.find({ voice_activity_enabled: true });
     for (const server of servers) {
       const guild = client.guilds.cache.get(server.id);
       if (!guild) continue;

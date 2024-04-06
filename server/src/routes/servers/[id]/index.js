@@ -103,11 +103,14 @@ module.exports = {
       .isString().withMessage('Invite link must be a string.')
       .trim()
       .custom(inviteLinkValidation),
+    body('voice_activity_enabled')
+      .optional()
+      .isBoolean().withMessage('Voice activity enabled must be a boolean.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, description, category, keywords, invite_link } = matchedData(request);
+      const { id, description, category, keywords, invite_link, voice_activity_enabled } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);
@@ -139,7 +142,8 @@ module.exports = {
           user: {
             id: null
           }
-        }
+        },
+        voice_activity_enabled: voice_activity_enabled || false
       });
 
       const validationErrors = newServer.validateSync();
@@ -202,11 +206,14 @@ module.exports = {
       .optional()
       .isArray().withMessage('Keywords must be an array.')
       .custom(keywordsValidation),
+    body('newVoiceActivityEnabled')
+      .optional()
+      .isBoolean().withMessage('Voice activity enabled must be a boolean.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, newDescription, newCategory, newKeywords, newInviteLink } = matchedData(request);
+      const { id, newDescription, newCategory, newKeywords, newInviteLink, newVoiceActivityEnabled } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);
@@ -236,6 +243,10 @@ module.exports = {
       if (newDescription) server.description = newDescription;
       if (newCategory) server.category = newCategory;
       if (newKeywords) server.keywords = newKeywords;
+      if (typeof newVoiceActivityEnabled === 'boolean') {
+        server.voice_activity_enabled = newVoiceActivityEnabled;
+        if (!newVoiceActivityEnabled) await VoiceActivity.deleteOne({ 'guild.id': id });
+      }
 
       const validationErrors = server.validateSync();
       if (validationErrors) return response.sendError('An unknown error occurred.', 400);
@@ -246,7 +257,7 @@ module.exports = {
 
       await updatePanelMessage(id);
 
-      return response.status(204).end();
+      return response.json(await server.toPubliclySafe());
     }
   ]
 };
