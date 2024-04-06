@@ -297,6 +297,39 @@ module.exports = {
 
         await quarantine.save();
 
+        const embeds = [
+          new Discord.EmbedBuilder()
+            .setAuthor({ name: `Quarantine #${quarantine._id} Created` })
+            .setColor(Discord.Colors.Purple)
+            .setTitle('New Quarantine Entry')
+            .setFields([
+              {
+                name: 'Entry Target',
+                value: `${value} (${type})`,
+                inline: true
+              },
+              {
+                name: 'Reason',
+                value: reason,
+                inline: true
+              },
+              {
+                name: 'Created By',
+                value: `<@${interaction.user.id}>`,
+                inline: true
+              },
+              {
+                name: 'Restriction',
+                value: restriction,
+                inline: true
+              }
+            ])
+            .setFooter({ text: `Expires at: ${quarantineTime ? new Date(Date.now() + quarantineTime).toLocaleString() : 'Never'}` })
+            .setTimestamp(quarantineTime ? Date.now() + quarantineTime : null)
+        ];
+
+        client.channels.cache.get(config.quarantineLogsChannelId).send({ embeds });
+
         return interaction.followUp({ content: `Quarantine created. ID: ${quarantine._id}` });
       }
 
@@ -308,6 +341,38 @@ module.exports = {
         if (!quarantine) return interaction.followUp({ content: 'Quarantine not found.' });
 
         await quarantine.deleteOne();
+
+        const embeds = [
+          new Discord.EmbedBuilder()
+            .setAuthor({ name: `Quarantine #${quarantine._id} Removed` })
+            .setColor(Discord.Colors.Purple)
+            .setTitle('Quarantine Entry Removed')
+            .setFields([
+              {
+                name: 'Entry Target',
+                value: `${quarantine.type === 'USER_ID' ? quarantine.user.id : quarantine.guild.id} (${quarantine.type})`,
+                inline: true
+              },
+              {
+                name: 'Reason',
+                value: quarantine.reason,
+                inline: true
+              },
+              {
+                name: 'Created By',
+                value: `<@${quarantine.created_by}>`,
+                inline: true
+              },
+              {
+                name: 'Restriction',
+                value: quarantine.restriction,
+                inline: true
+              }
+            ])
+            .setFooter({ text: `${interaction.user.username} | Would expire at: ${quarantine.expire_at ? new Date(quarantine.expire_at).toLocaleString() : 'Never'}`, iconURL: interaction.user.displayAvatarURL() })
+        ];
+
+        client.channels.cache.get(config.quarantineLogsChannelId).send({ embeds });
 
         return interaction.followUp({ content: 'Quarantine removed.' });
       }
@@ -471,7 +536,7 @@ ${formattedQuarantinesText}`);
 
       if (subcommand === 'remove') {
         const quarantines = await Quarantine.find();
-        return interaction.customRespond(quarantines.map(quarantine => ({ name: quarantine._id, value: quarantine._id })));
+        return interaction.customRespond(quarantines.map(quarantine => ({ name: String(quarantine._id), value: quarantine._id })));
       }
     }
   }
