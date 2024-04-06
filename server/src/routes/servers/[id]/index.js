@@ -11,6 +11,7 @@ const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const Review = require('@/schemas/Server/Review');
 const inviteLinkValidation = require('@/validations/servers/inviteLink');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 module.exports = {
   get: [
@@ -111,6 +112,12 @@ module.exports = {
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
       const { id, description, category, keywords, invite_link, voice_activity_enabled } = matchedData(request);
+
+      const userOrGuildQuarantined = await findQuarantineEntry.multiple([
+        { type: 'USER_ID', value: request.user.id, restriction: 'SERVERS_CREATE' },
+        { type: 'GUILD_ID', value: id, restriction: 'SERVERS_CREATE' }
+      ]).catch(() => false);
+      if (userOrGuildQuarantined) return response.sendError('You are not allowed to create servers or this server is not allowed to be created.', 403);
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

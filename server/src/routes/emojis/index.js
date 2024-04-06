@@ -9,6 +9,7 @@ const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const crypto = require('node:crypto');
 const Discord = require('discord.js');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 const multer = require('multer');
 const upload = multer({
@@ -50,11 +51,15 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
   
+      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'EMOJIS_CREATE').catch(() => false);
+      if (userQuarantined) return response.sendError('You are not allowed to create emojis.', 403);
+      
       const userEmojiInQueue = await Emoji.findOne({ 'user.id': request.user.id, approved: false });
       if (userEmojiInQueue) return response.sendError(`You are already waiting for approval for emoji ${userEmojiInQueue.name}! Please wait for it to be processed first.`);
 
       const { name, categories } = matchedData(request);
       const id = crypto.randomBytes(6).toString('hex');
+
 
       if (request.files.length > 1) {
         if (request.files.length < config.packagesMinEmojisLength) return response.sendError(`If you are going to share a package, there should be a minimum of ${config.packagesMinEmojisLength} emoji in the package.`);

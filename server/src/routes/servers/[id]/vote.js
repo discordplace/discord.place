@@ -6,6 +6,7 @@ const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const checkCaptcha = require('@/utils/middlewares/checkCaptcha');
 const bodyParser = require('body-parser');
 const incrementVote = require('@/src/utils/servers/incrementVote');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 module.exports = {
   post: [
@@ -16,6 +17,12 @@ module.exports = {
     param('id'),
     async (request, response) => {
       const { id } = matchedData(request);
+
+      const userOrGuildQuarantined = findQuarantineEntry.multiple([
+        { type: 'USER_ID', value: request.user.id, restriction: 'SERVERS_VOTE' },
+        { type: 'GUILD_ID', value: id, restriction: 'SERVERS_VOTE' }
+      ]);
+      if (userOrGuildQuarantined) return response.sendError('You are not allowed to vote for servers or this server is not allowed to receive votes.', 403);
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

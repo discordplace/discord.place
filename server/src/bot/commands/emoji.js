@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const Emoji = require('@/schemas/Emoji');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -13,6 +14,9 @@ module.exports = {
     if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
 
     await interaction.deferReply();
+
+    const userQuarantined = await findQuarantineEntry.single('USER_ID', interaction.user.id, 'EMOJIS_QUICKLY_UPLOAD').catch(() => false);
+    if (userQuarantined) return interaction.followUp({ content: 'You are not allowed to upload emojis.' });
 
     const id = interaction.options.getString('emoji');
     const emoji = await Emoji.findOne({ id });

@@ -5,6 +5,7 @@ const randomizeArray = require('@/src/utils/randomizeArray');
 const incrementVote = require('@/src/utils/servers/incrementVote');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 const emojis = ['🌟', '🍕', '🎉', '🚀', '🌈', '🎵', '🏝️', '📚', '🎭', '⚽', '🎲', '🍔', '🚲', '🖥️', '🎨', '🏆', '🔥', '💡', '🛸', '🐶', '🐱', '🐼', '🦁', '🐯', '🐵', '🐙', '🐢', '🐬', '🐳', '🦄', '🐝', '🐞', '🦋', '🐦', '🐧', '🐘', '🦏', '🦒', '🦓'];
 
@@ -15,6 +16,12 @@ module.exports = {
   },
   execute: async interaction => {
     await interaction.deferReply({ ephemeral: true });
+
+    const userOrGuildQuarantined = await findQuarantineEntry.multiple([
+      { type: 'USER_ID', value: interaction.user.id, restriction: 'SERVERS_VOTE' },
+      { type: 'GUILD_ID', value: interaction.guild.id, restriction: 'SERVERS_VOTE' }
+    ]).catch(() => false);
+    if (userOrGuildQuarantined) return interaction.followUp({ content: 'You are not allowed to vote for servers or this server is not allowed to receive votes.' });
 
     const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': interaction.guild.id });
     if (timeout) return interaction.followUp(`You can vote again in ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000)} hours, ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60} minutes.`);
