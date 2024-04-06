@@ -8,5 +8,8 @@ module.exports = function connectDatabase(url, options = {}) {
   mongoose.connect(url, { dbName: process.env.NODE_ENV === 'production' ? 'api' : 'development' })
     .then(() => logger.send('Connected to database.'));
 
-  if (options.backup) new CronJob('0 0 * * 0', () => createMongoBackup, null, true);
+  if (options.backup) {
+    logger.send('Database backup enabled.');
+    new CronJob('0 0 * * 0', () => createMongoBackup, null, true);
+  }
 };
