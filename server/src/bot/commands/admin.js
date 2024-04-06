@@ -6,6 +6,7 @@ const PremiumCode = require('@/src/schemas/PremiumCode');
 const Premium = require('@/src/schemas/Premium');
 const crypto = require('node:crypto');
 const Review = require('@/schemas/Server/Review');
+const Quarantine = require('@/schemas/Quarantine');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -50,6 +51,14 @@ module.exports = {
         .addStringOption(option => option.setName('reason').setDescription('The reason for denying the review.').setRequired(true)))
       .addSubcommand(subcommand => subcommand.setName('review-delete').setDescription('Deletes a review.')
         .addStringOption(option => option.setName('review').setDescription('Select the review to delete.').setRequired(true).setAutocomplete(true))))
+
+    .addSubcommandGroup(group => group.setName('quarantine').setDescription('quarantine')
+      .addSubcommand(subcommand => subcommand.setName('create').setDescription('Creates a new quarantine entry.')
+        .addStringOption(option => option.setName('type').setDescription('The type of the quarantine entry.').setRequired(true).addChoices(...config.quarantineTypes.map(type => ({ name: type, value: type }))))
+        .addStringOption(option => option.setName('value').setDescription('The value of the quarantine entry. (User ID, Server ID, etc.)').setRequired(true))
+        .addStringOption(option => option.setName('restriction').setDescription('The restriction of the quarantine entry.').setRequired(true).addChoices(...Object.keys(config.quarantineRestrictions).map(restriction => ({ name: restriction, value: restriction })))))
+      .addSubcommand(subcommand => subcommand.setName('remove').setDescription('Removes a quarantine entry.')
+        .addStringOption(option => option.setName('entry').setDescription('Select the quarantine to remove.').setRequired(true).setAutocomplete(true))))
 
     .toJSON(),
   execute: async interaction => {
@@ -245,6 +254,48 @@ module.exports = {
         return interaction.followUp({ content: 'Review deleted.' });
       }
     }
+
+    if (group === 'quarantine') {
+      if (config.permissions.canCreateQuarantinesRoles.some(roleId => !interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+
+      if (subcommand === 'create') {
+        await interaction.deferReply();
+
+        const type = interaction.options.getString('type');
+        const value = interaction.options.getString('value');
+        const restriction = interaction.options.getString('restriction');
+
+        const existingQuarantine = await Quarantine.findOne({ type, restriction, [type === 'USER_ID' ? 'user.id' : 'guild.id']: value });
+        if (existingQuarantine) return interaction.followUp({ content: `There is already a quarantine entry with the same values. ID: ${existingQuarantine._id}` });
+
+        const quarantine = new Quarantine({
+          type,
+          restriction
+        });
+
+        if (type === 'USER_ID') quarantine.user = { id: value };
+        if (type === 'GUILD_ID') quarantine.guild = { id: value };
+
+        const validationErrors = quarantine.validateSync();
+        if (validationErrors) return interaction.followUp({ content: 'There was an error creating the quarantine entry. Most likely the provided values are invalid.' });
+
+        await quarantine.save();
+
+        return interaction.followUp({ content: `Quarantine created. ID: ${quarantine._id}` });
+      }
+
+      if (subcommand === 'remove') {
+        await interaction.deferReply();
+
+        const entry = interaction.options.getString('entry');
+        const quarantine = await Quarantine.findOne({ _id: entry });
+        if (!quarantine) return interaction.followUp({ content: 'Quarantine not found.' });
+
+        await quarantine.deleteOne();
+
+        return interaction.followUp({ content: 'Quarantine removed.' });
+      }
+    }
   },
   autocomplete: async interaction => {
     const subcommand = interaction.options.getSubcommand();
@@ -302,6 +353,18 @@ module.exports = {
         const reviews = await Review.find();
 
         return interaction.customRespond(reviews.map(review => ({ name: `Review to ${client.guilds.cache.get(review.server.id).name} | User: ${review.user.id}`, value: review._id })));
+      }
+    }
+
+    if (group === 'quarantine') {
+      if (config.permissions.canCreateQuarantinesRoles.some(roleId => !interaction.member.roles.cache.has(roleId))) return;
+
+      if (subcommand === 'remove') {
+        const quarantines = await Quarantine.find();
+        return interaction.customRespond(quarantines.map(quarantine => {
+          const value = quarantine.type === 'USER_ID' ? quarantine.user.id : quarantine.guild.id;
+          return { name: `${quarantine._id} | ${quarantine.type}: ${value} | Restriction: ${quarantine.restriction}`, value: quarantine._id };
+        }));
       }
     }
   }
