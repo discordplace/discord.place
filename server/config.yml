@@ -100,7 +100,6 @@ quarantineRestrictions:
   'EMOJIS_QUICKLY_UPLOAD':
     available_to:
       - 'USER_ID'
-      - 'GUILD_ID'
   'SERVERS_CREATE':
     available_to:
       - 'USER_ID'
