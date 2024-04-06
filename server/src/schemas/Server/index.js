@@ -101,7 +101,8 @@ const ServerSchema = new Schema({
                 vote: voter.vote
               }; 
             }))
-        ]
+        ],
+        voice_activity_enabled: this.voice_activity_enabled
       };
     }
   }
