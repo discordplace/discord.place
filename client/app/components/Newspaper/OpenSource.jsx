@@ -73,44 +73,4 @@ export default function OpenSourceAnnouncement() {
       )}
     </AnimatePresence>
   );
-  /*
-  return (
-    <div className={cn(
-      'fixed top-0 left-0 w-full h-full z-[100001] bg-background/70 backdrop-blur-sm transition-all duration-500',
-      !isOpen && 'pointer-events-none opacity-0'
-    )}>
-      <div className={cn(
-        'flex items-center justify-center w-full h-full transition-all duration-500',
-        isOpen ? 'translate-y-[0px] opacity-100' : 'translate-y-[250px] opacity-0'
-      )}>
-        <div className='relative bg-tertiary w-[600px] h-max rounded-md flex flex-col'>
-          <Image
-            src='/newspaper/open-source.png'
-            width={600}
-            height={450}
-            className='rounded-t-md w-full h-[250px] object-cover'
-            alt='Open Source Announcement Banner'
-          />
-
-          <div className='absolute right-4 top-4' onClick={() => setIsOpen(false)}>
-            <button className='p-1 text-black rounded-full bg-white/20'>
-              <IoCloseSharp size={20} />
-            </button>
-          </div>
-
-          <div className='flex flex-col items-center justify-center w-full px-8 my-12 gap-y-2'>
-            <h1 className='text-2xl font-bold text-center text-primary'>discord.place is now open source!</h1>
-            
-            <p className='text-sm font-medium text-center text-secondary'>
-              We have open sourced our codebase on GitHub. Feel free to contribute to our project. We are looking forward to your contributions.
-            </p>
-
-            <button className='px-3 py-1 mt-2.5 text-sm font-semibold dark:text-black text-white dark:bg-white bg-black rounded-lg hover:bg-black/70 dark:hover:bg-white/70'>
-              GitHub Repository
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );*/
 }
