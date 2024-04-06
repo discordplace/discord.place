@@ -257,7 +257,7 @@ module.exports = {
 
       await updatePanelMessage(id);
 
-      return response.status(204).end();
+      return response.json(await server.toPubliclySafe());
     }
   ]
 };
