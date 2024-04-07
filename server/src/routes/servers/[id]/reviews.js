@@ -5,6 +5,7 @@ const Server = require('@/schemas/Server');
 const Review = require('@/schemas/Server/Review');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 module.exports = {
   post: [
@@ -19,6 +20,9 @@ module.exports = {
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
+
+      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SERVERS_CREATE_REVIEW').catch(() => false);
+      if (userQuarantined) return response.sendError('You are not allowed to review servers.', 403);
 
       const { id, rating, content } = matchedData(request);
 

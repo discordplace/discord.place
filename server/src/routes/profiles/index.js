@@ -5,6 +5,7 @@ const { body, validationResult, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const Premium = require('@/schemas/Premium');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 module.exports = {
   post: [
@@ -22,6 +23,9 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
       
+      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'PROFILES_CREATE').catch(() => false);
+      if (userQuarantined) return response.sendError('You are not allowed to create profiles.', 403);
+
       const { slug, preferredHost } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (profile) return response.sendError('Slug is not available.', 400);
