@@ -21,7 +21,7 @@ module.exports = {
       const userOrGuildQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'SERVERS_VOTE' },
         { type: 'GUILD_ID', value: id, restriction: 'SERVERS_VOTE' }
-      ]);
+      ]).catch(() => false);
       if (userOrGuildQuarantined) return response.sendError('You are not allowed to vote for servers or this server is not allowed to receive votes.', 403);
 
       const guild = client.guilds.cache.get(id);
