@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
   return {
     title: `${profile.slug}'s Profile`,
     openGraph: {
-      title: `Discord Place - ${profile.slug} Profile`
+      title: `Discord Place - ${profile.slug}'s Profile`
     }
   };
 }
