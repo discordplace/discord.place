@@ -61,9 +61,9 @@ module.exports = {
             };
           })
         });
-      }
+      } else Object.assign(publiclySafe, { servers: [] });
       
-      return response.json(publiclySafe);
+      return response.json();
     }
   ],
   patch: [
