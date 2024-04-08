@@ -63,7 +63,7 @@ module.exports = {
         });
       } else Object.assign(publiclySafe, { servers: [] });
       
-      return response.json();
+      return response.json(publiclySafe);
     }
   ],
   patch: [
