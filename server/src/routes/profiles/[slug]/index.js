@@ -40,7 +40,7 @@ module.exports = {
       const publiclySafe = await profile.toPubliclySafe();
       Object.assign(publiclySafe, { permissions, isLiked });
 
-      const ownedServers = request?.user ? client.guilds.cache.filter(({ ownerId }) => ownerId === request.user.id) : [];
+      const ownedServers = client.guilds.cache.filter(({ ownerId }) => ownerId === profile.user.id);
       if (ownedServers.size > 0) {
         const listedServers = randomizeArray(await Server.find({ id: { $in: ownedServers.map(({ id }) => id) } })).slice(0, 3);
 
