@@ -48,7 +48,7 @@ export default function Servers({ data }) {
           >
             {server.banner_url ? (
               <Image
-                className='absolute top-0 left-0 z-[1] w-full h-[calc(100%_-_1px)] rounded-3xl'
+                className='absolute top-0 left-0 z-[1] bg-quaternary w-full h-[calc(100%_-_1px)] rounded-3xl'
                 src={server.banner_url}
                 alt={`${server.name}'s banner`}
                 width={350}
@@ -67,7 +67,7 @@ export default function Servers({ data }) {
               />
 
               <div className='flex flex-col px-4 pt-12'>
-                <h3 className='text-lg font-semibold'>{server.name}</h3>
+                <h3 className='text-lg font-semibold truncate'>{server.name}</h3>
                 <p 
                   className='mt-1 overflow-hidden text-sm text-tertiary min-h-[40px]' 
                   style={{
