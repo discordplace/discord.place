@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const birthdayValidation = require('@/validations/profiles/birthday');
 const socialsValidation = require('@/validations/profiles/socials');
+const Server = require('@/schemas/Server');
+const randomizeArray = require('@/utils/randomizeArray');
 
 module.exports = {
   get: [
@@ -38,6 +40,29 @@ module.exports = {
       const publiclySafe = await profile.toPubliclySafe();
       Object.assign(publiclySafe, { permissions, isLiked });
 
+      const ownedServers = request?.user ? client.guilds.cache.filter(({ ownerId }) => ownerId === request.user.id) : [];
+      if (ownedServers.size > 0) {
+        const listedServers = randomizeArray(await Server.find({ id: { $in: ownedServers.map(({ id }) => id) } })).slice(0, 3);
+
+        Object.assign(publiclySafe, { 
+          servers: listedServers.map(server => {
+            const guild = ownedServers.find(({ id }) => id === server.id);
+            return {
+              id: guild.id,
+              name: guild.name,
+              icon_url: guild.iconURL(),
+              banner_url: guild.bannerURL({ format: 'png', size: 2048 }),
+              description: server.description,
+              total_members: guild.memberCount,
+              online_members: guild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size,
+              votes: server.votes,
+              category: server.category,
+              keywords: server.keywords
+            };
+          })
+        });
+      }
+      
       return response.json(publiclySafe);
     }
   ],

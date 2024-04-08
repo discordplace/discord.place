@@ -9,6 +9,7 @@ import incrementViews from '@/lib/request/profiles/incrementViews';
 import { nanoid } from 'nanoid';
 import Tooltip from '@/app/components/Tooltip';
 import { useEffect } from 'react';
+import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers';
 
 export default function Content({ profile }) {
   useEffect(() => {
@@ -84,6 +85,8 @@ export default function Content({ profile }) {
           <About profile={profile} />
           <Social data={profile.socials} />
         </div>
+
+        {profile.servers.length > 0 && <Servers data={profile.servers} />}
       </div>
     </div>
   );
