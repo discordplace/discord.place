@@ -48,7 +48,7 @@ export default function Servers({ data }) {
           >
             {server.banner_url ? (
               <Image
-                className='absolute top-0 left-0 z-[1] bg-quaternary w-full h-[calc(100%_-_1px)] rounded-3xl'
+                className='absolute top-0 left-0 z-[1] w-full h-[calc(100%_-_1px)] rounded-3xl'
                 src={server.banner_url}
                 alt={`${server.name}'s banner`}
                 width={350}
@@ -63,7 +63,7 @@ export default function Servers({ data }) {
                 alt={`${server.name}'s icon`}
                 width={64}
                 height={64}
-                className='absolute top-[-25px] left-4 bg-background border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
+                className='absolute top-[-25px] left-4 bg-quaternary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
               />
 
               <div className='flex flex-col px-4 pt-12'>
