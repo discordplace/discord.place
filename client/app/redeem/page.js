@@ -79,7 +79,7 @@ export default function Page() {
           Don{'\''}t worry if you don{'\''}t have a premium code, buy it now!
         </h2>
 
-        <div className='flex flex-col gap-y-2 p-4 backdrop-blur-lg bg-secondary/5 border border-[rgb(var(--bg-tertiary))] h-max w-[300px] rounded-xl'>
+        <div className='flex flex-col gap-y-2 p-4 backdrop-blur-lg bg-secondary/5 border border-[rgb(var(--bg-tertiary))] h-max w-[330px] rounded-xl'>
           <h1 className='text-base font-bold'>
             Premium
           </h1>
