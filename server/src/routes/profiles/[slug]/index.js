@@ -36,9 +36,11 @@ module.exports = {
         ) || false
       };
       const isLiked = profile.likes.includes(request.user?.id || request.clientIp);
+      const bannerURL = client.users.cache.get(profile.user.id)?.bannerURL?.({ format: 'png', size: 2048 }) || await client.users.fetch(profile.user.id, { force: true }).then(user => user.bannerURL({ format: 'png', size: 2048 })).catch(() => null);
 
       const publiclySafe = await profile.toPubliclySafe();
-      Object.assign(publiclySafe, { permissions, isLiked });
+      
+      Object.assign(publiclySafe, { permissions, isLiked, bannerURL });
 
       const ownedServers = client.guilds.cache.filter(({ ownerId }) => ownerId === profile.user.id);
       if (ownedServers.size > 0) {
