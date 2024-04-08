@@ -11,6 +11,7 @@ import config from '@/config';
 import { FaLink } from 'react-icons/fa6';
 import { LuHeart } from 'react-icons/lu';
 import useThemeStore from '@/stores/theme';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import cn from '@/lib/cn';
 
 export default function Page() {
@@ -104,6 +105,10 @@ export default function Page() {
             <div className='flex items-center text-sm font-medium gap-x-2 text-secondary'>
               <LuHeart />
               Premium badge on your profile.
+            </div>
+            <div className='flex items-center text-sm font-medium gap-x-2 text-secondary'>
+              <TbSquareRoundedChevronUp />
+              All your servers will get double the votes!
             </div>
             <span className='text-xs italic font-medium text-tertiary'>
               Stay tuned for upcoming benefits! 
