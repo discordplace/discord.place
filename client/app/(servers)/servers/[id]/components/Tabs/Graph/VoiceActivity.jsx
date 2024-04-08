@@ -12,7 +12,9 @@ export default function VoiceActivityGraph({ server }) {
     const createdChart = new ApexCharts(document.getElementById('voiceActivityGraph'), {
       series: [{
         name: 'total_members_in_voice',
-        data: server.voiceActivity?.map(activity => activity.data)
+        data: server.voiceActivity
+          ?.filter(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))
+          ?.map(activity => activity.data)
       }],
       chart: {
         type: 'area',
@@ -68,7 +70,9 @@ export default function VoiceActivityGraph({ server }) {
       },
       xaxis: {
         range: 12,
-        categories: server.voiceActivity?.map(activity => new Date(activity.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })),
+        categories: server.voiceActivity
+          ?.filter(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))
+          ?.map(activity => new Date(activity.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })),
         tooltip: {
           enabled: false
         },

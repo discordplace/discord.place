@@ -22,7 +22,7 @@ export default function Tabs({ server }) {
       label: 'Voice Activity',
       id: 'voiceActivityGraph',
       component: <VoiceActivityGraph server={server} />,
-      disabled: server.voiceActivity === null
+      disabled: server.voiceActivity?.filter?.(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000)).length === 0
     }
   ];
   
