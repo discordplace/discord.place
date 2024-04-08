@@ -40,7 +40,7 @@ module.exports = {
 
       const publiclySafe = await profile.toPubliclySafe();
       
-      Object.assign(publiclySafe, { permissions, isLiked, bannerURL });
+      Object.assign(publiclySafe, { permissions, isLiked, banner_url: bannerURL });
 
       const ownedServers = client.guilds.cache.filter(({ ownerId }) => ownerId === profile.user.id);
       if (ownedServers.size > 0) {
