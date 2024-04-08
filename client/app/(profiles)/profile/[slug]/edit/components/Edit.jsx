@@ -144,7 +144,7 @@ export default function Edit({ profileData }) {
                     <>
                       <div className='flex flex-col w-full p-4 mt-4 border border-yellow-500 rounded-xl bg-yellow-500/10 gap-y-2'>
                         <h2 className='flex items-center text-lg font-bold gap-x-2 text-primary'>
-                          <PiWarningCircleFill /> You can{'\''} do that!
+                          <PiWarningCircleFill /> You can{'\''}t do that!
                         </h2>
                         <p className='text-sm font-medium text-tertiary'>
                           You have to be Premium to change that. For more information about Premium prices, you can come to <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>our support server</Link> to contact us.
