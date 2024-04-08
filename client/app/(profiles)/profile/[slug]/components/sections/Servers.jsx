@@ -63,7 +63,7 @@ export default function Servers({ data }) {
                 alt={`${server.name}'s icon`}
                 width={64}
                 height={64}
-                className='absolute top-[-25px] left-4 bg-quaternary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
+                className='absolute top-[-25px] left-4 bg-secondary group-hover:bg-tertiary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
               />
 
               <div className='flex flex-col px-4 pt-12'>
