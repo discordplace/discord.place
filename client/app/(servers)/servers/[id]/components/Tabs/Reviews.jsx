@@ -1,11 +1,12 @@
 import Pagination from '@/app/components/Pagination';
 import useAuthStore from '@/stores/auth';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
 import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline } from 'react-icons/ti';
 import { toast } from 'sonner';
 import createReview from '@/lib/request/servers/createReview';
+import LoginButton from '@/app/(servers)/servers/[id]/components/Tabs/LoginButton';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import cn from '@/lib/cn';
 
@@ -106,87 +107,90 @@ export default function Reviews({ server }) {
         </div>
       )}
 
-      <div className="flex flex-col w-full mt-8 gap-y-8 sm:gap-y-0 sm:flex-row">        
-        {loggedIn ? (
-          server.has_reviewed ? (
-            <span className='text-sm font-medium text-tertiary'>
-              You have already left a review for this server.
-            </span>
-          ) : (
-            <>
-              <div className="flex gap-x-4 w-[35%]">
-                <Image
-                  src={user.avatar_url}
-                  width={48}
-                  height={48}
-                  alt={`${user.username}'s Avatar`}
-                  className='rounded-2xl w-[48px] h-[48px]'
-                />
+      <div className="flex flex-col w-full mt-8 gap-y-8 sm:gap-y-0 sm:flex-row">
+        {server.has_reviewed ? (
+          <span className='text-sm font-medium text-tertiary'>
+            You have already left a review for this server.
+          </span>
+        ) : (
+          <>
+            <div className="flex gap-x-4 w-[35%]">
+              <Image
+                src={user?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}
+                width={48}
+                height={48}
+                alt={`${user?.username || 'Unknown'}'s Avatar`}
+                className='rounded-2xl w-[48px] h-[48px]'
+              />
 
-                <div className='flex flex-col gap-y-1'>
-                  <h3 className='text-base font-semibold'>
-                    {user.username}
-                  </h3>
-                  <div className={cn(
-                    'flex items-center text-lg text-tertiary',
-                    loading || reviewSubmitted ? 'pointer-events-none' : 'cursor-pointer'
-                  )}>
-                    {[...Array(5)].map((_, index) => (
-                      hoveredRating >= index + 1 || (selectedRating >= index + 1) ? (
-                        <TiStarFullOutline
-                          key={index} 
-                          className='text-yellow-500 cursor-pointer'
-                          onClick={() => setSelectedRating(index + 1)} 
-                          onMouseEnter={() => setHoveredRating(index + 1)}
-                          onMouseLeave={() => setHoveredRating(0)}
-                        />
-                      ) : (
-                        <TiStarOutline 
-                          key={index} 
-                          className='cursor-pointer text-tertiary'
-                          onClick={() => setSelectedRating(index + 1)} 
-                          onMouseEnter={() => setHoveredRating(index + 1)}
-                          onMouseLeave={() => setHoveredRating(0)}
-                        />
-                      )
-                    ))}
-                  </div>
+              <div className='flex flex-col gap-y-1'>
+                <h3 className='text-base font-semibold'>
+                  {user?.username || 'Unknown'}
+                </h3>
+                <div className={cn(
+                  'flex items-center text-lg text-tertiary',
+                  loading || reviewSubmitted ? 'pointer-events-none' : 'cursor-pointer'
+                )}>
+                  {[...Array(5)].map((_, index) => (
+                    hoveredRating >= index + 1 || (selectedRating >= index + 1) ? (
+                      <TiStarFullOutline
+                        key={index} 
+                        className='text-yellow-500 cursor-pointer'
+                        onClick={() => {
+                          if (selectedRating === index + 1) setSelectedRating(0);
+                          else setSelectedRating(index + 1);
+                        }} 
+                        onMouseEnter={() => setHoveredRating(index + 1)}
+                        onMouseLeave={() => setHoveredRating(0)}
+                      />
+                    ) : (
+                      <TiStarOutline 
+                        key={index} 
+                        className='cursor-pointer text-tertiary'
+                        onClick={() => setSelectedRating(index + 1)} 
+                        onMouseEnter={() => setHoveredRating(index + 1)}
+                        onMouseLeave={() => setHoveredRating(0)}
+                      />
+                    )
+                  ))}
                 </div>
               </div>
+            </div>
               
-              <div className="flex flex-col flex-1 w-full font-medium whitespace-pre-wrap gap-y-1 text-secondary">
-                <h3 className='font-medium text-primary'>
-                  Your Review
-                </h3>
-                <p className='text-xs sm:text-sm text-tertiary'>
-                  Let others know what you think about this server.
-                </p>
+            <div className="flex flex-col flex-1 w-full font-medium whitespace-pre-wrap gap-y-1 text-secondary">
+              <h3 className='font-medium text-primary'>
+                Your Review
+              </h3>
+              <p className='text-xs sm:text-sm text-tertiary'>
+                {loggedIn ? 'Let others know what you think about this server.' : 'You must be logged in to leave a review.'}
+              </p>
               
-                <span 
-                  contentEditable={!loading && !reviewSubmitted}
-                  suppressContentEditableWarning 
-                  className={cn(
-                    'text-sm sm:text-base block w-full lg:max-w-[450px] min-h-[100px] max-h-[200px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500',
-                    loading || reviewSubmitted ? 'pointer-events-none' : 'cursor-text'
-                  )} 
-                  onKeyUp={event => setReview(event.target.textContent)}
-                />
+              <span 
+                contentEditable={!loading && !reviewSubmitted && loggedIn}
+                suppressContentEditableWarning 
+                className={cn(
+                  'text-sm sm:text-base block w-full lg:max-w-[450px] min-h-[100px] max-h-[200px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500',
+                  loading || reviewSubmitted || !loggedIn ? 'pointer-events-none opacity-80' : 'cursor-text'
+                )} 
+                onKeyUp={event => setReview(event.target.textContent)}
+              />
 
+              {loggedIn ? (
                 <button
                   onClick={submitReview}
                   className='flex gap-x-1.5 items-center justify-center px-4 py-2 mt-4 text-sm font-semibold text-white bg-black rounded-lg dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70'
                   disabled={review.length === 0 || selectedRating === 0 || loading || reviewSubmitted}
                 >
                   {loading && <TbLoader className='animate-spin' />}
-                    Submit Review {selectedRating !== 0 && `(${selectedRating}/5)`}
+                  Submit Review {selectedRating !== 0 && `(${selectedRating}/5)`}
                 </button>
-              </div>
-            </>
-          )
-        ) : (
-          <span className='text-sm font-medium text-tertiary'>
-            You must be logged in to leave a review.
-          </span>
+              ) : (
+                <Suspense fallback={<></>}>
+                  <LoginButton />
+                </Suspense>
+              )}
+            </div>
+          </>
         )}
       </div>
 
