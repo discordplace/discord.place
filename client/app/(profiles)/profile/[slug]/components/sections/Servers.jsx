@@ -5,6 +5,7 @@ import { FaUsers } from 'react-icons/fa';
 import { HiOutlineStatusOnline } from 'react-icons/hi';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import MotionLink from '@/app/components/Motion/Link';
+import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 
 export default function Servers({ data }) {
   const formatter = new Intl.NumberFormat('en-US', {
@@ -58,9 +59,9 @@ export default function Servers({ data }) {
               <div className='absolute top-0 left-0 z-[1] bg-quaternary w-full h-[calc(100%_-_1px)] rounded-3xl' />
             )}
             <div className='bg-secondary group-hover:bg-tertiary transition-colors w-full h-[calc(100%_-_30px)] z-[2] relative top-[30px] rounded-b-3xl rounded-t-[1.5rem]'>
-              <Image
-                src={server.icon_url}
-                alt={`${server.name}'s icon`}
+              <ServerIcon
+                icon_url={server.icon_url}
+                name={server.name}
                 width={64}
                 height={64}
                 className='absolute top-[-25px] left-4 bg-secondary group-hover:bg-tertiary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'

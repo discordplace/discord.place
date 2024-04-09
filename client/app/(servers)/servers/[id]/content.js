@@ -30,7 +30,7 @@ export default function Content({ server }) {
 
           <div className='absolute w-[calc(100%_-_2.5rem)] -bottom-14 left-10 z-[3]'>
             <MotionImage
-              src={server.icon_url}
+              src={server.icon_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}
               alt={`Guild ${server.name}'s icon`}
               width={150}
               height={150}

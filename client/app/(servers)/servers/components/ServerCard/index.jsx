@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
@@ -9,6 +8,7 @@ import { MdKeyboardVoice } from 'react-icons/md';
 import { HiOutlineStatusOnline, HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import { IoHeart } from 'react-icons/io5';
+import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 
 export default function ServerCard({ server, index }) {
   const sort = useSearchStore(state => state.sort);
@@ -28,11 +28,11 @@ export default function ServerCard({ server, index }) {
       key={index}
       href={`/servers/${server.id}`}
     >
-      <Image
-        src={server.icon_url} 
-        alt={server.name}
+      <ServerIcon 
         width={50}
         height={50}
+        icon_url={server.icon_url}
+        name={server.name}
         className='ml-4 rounded-xl z-[3] w-[32px] h-[32px] mobile:w-[50px] mobile:h-[50px]'
       />
 
