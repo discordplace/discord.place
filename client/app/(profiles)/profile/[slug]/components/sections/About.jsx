@@ -55,7 +55,7 @@ export default function About({ profile }) {
         About
       </motion.h2>
 
-      <motion.p className='mt-2 whitespace-pre-wrap text-tertiary' 
+      <motion.p className='mt-2 break-words whitespace-pre-wrap text-tertiary' 
         initial={{ opacity: 0, y: -10 }} 
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.15 }}
@@ -81,14 +81,14 @@ export default function About({ profile }) {
               {icon}
             </div>
 
-            <div className='flex flex-col'>
+            <div className='flex flex-col w-full'>
               <h3 className='font-semibold'>
                 {label}
               </h3>
 
-              <p className='text-sm text-tertiary'>
+              <span className='text-sm truncate text-tertiary max-w-[80%]'>
                 {value}
-              </p>
+              </span>
             </div>
           </motion.div>
         ))}

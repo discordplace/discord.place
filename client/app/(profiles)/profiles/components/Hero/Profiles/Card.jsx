@@ -34,7 +34,7 @@ export default function Card({ avatar_url, username, occupation, gender, locatio
               </Tooltip>
             )}
           </div>
-          <p className='text-sm text-secondary/60'>{occupation || 'Unknown'}</p>
+          <p className='max-w-[190px] text-sm truncate text-secondary/60'>{occupation || 'Unknown'}</p>
         </div>
       </div>
       
@@ -65,8 +65,11 @@ export default function Card({ avatar_url, username, occupation, gender, locatio
           )}  
         </span>
 
-        <span className='flex items-center px-2 py-2 text-sm font-medium rounded bg-tertiary gap-x-1 text-secondary'>
-          <MdLocationPin color='#ff4343' /> {location || 'Unknown'}
+        <span className='flex items-center max-w-full px-2 py-2 text-sm font-medium rounded bg-tertiary gap-x-1 text-secondary'>
+          <MdLocationPin color='#ff4343' />
+          <span className='truncate max-w-[90%]'>
+            {location || 'Unknown'}
+          </span>
         </span>
 
         <span className='flex items-center px-2 py-2 text-sm font-medium rounded bg-tertiary gap-x-1 text-secondary'>

@@ -14,7 +14,8 @@ const ProfileSchema = new Schema({
     }
   },
   occupation: {
-    type: String
+    type: String,
+    max: 64
   },
   gender: {
     type: String,

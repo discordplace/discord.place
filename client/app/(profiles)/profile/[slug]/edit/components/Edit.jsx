@@ -120,7 +120,7 @@ export default function Edit({ profileData }) {
       <div className='flex flex-col w-full h-full p-6 rounded-2xl bg-secondary gap-y-8'>
         {canBeEditedKeys.map((key, index) => (
           <div className='flex flex-col justify-between gap-4 sm:flex-row' key={key}>
-            <div className='flex flex-col flex-1 gap-y-1'>
+            <div className='flex flex-col flex-1 w-full gap-y-1 max-w-[80%]'>
               <h2 className='font-medium text-tertiary'>{key === 'preferredHost' ? 'Preferred Host' : fuc(key)}</h2>
               {currentlyEditingIndex === index ? (
                 key === 'bio' ? (
@@ -168,7 +168,7 @@ export default function Edit({ profileData }) {
                   />
                 )
               ) : (
-                <p className='font-medium whitespace-pre-wrap text-primary max-h-[300px] overflow-y-auto'>{profile[key] || 'Unknown'}</p>
+                <p className='font-medium whitespace-pre-wrap text-primary max-h-[300px] overflow-y-auto truncate'>{profile[key] || 'Unknown'}</p>
               )}
             </div>
 
