@@ -131,7 +131,7 @@ export default function Edit({ profileData }) {
                     disabled={loading}
                     contentEditable
                     suppressContentEditableWarning
-                    onKeyUp={() => setCurrentlyEditingValue(bioValueSpanRef?.current?.textContent)}
+                    onKeyUp={() => setCurrentlyEditingValue(bioValueSpanRef?.current?.innerText)}
                     ref={bioValueSpanRef}
                     className='w-full break-all overflow-y-auto max-h-[200px] px-2 py-1 font-medium rounded-md outline-none resize-none disabled:pointer-events-none disabled:opacity-70 text-secondary placeholder-placeholder bg-tertiary hover:bg-quaternary focus-visible:bg-quaternary'
                   >
