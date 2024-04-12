@@ -128,10 +128,10 @@ export default function ContentPolicy() {
       </p>
 
       <div className="flex mt-2 gap-x-2">
-        <Link href={config.supportInviteUrl} as='button' className='px-3 py-1 text-sm font-medium !text-white no-underline bg-black rounded-lg dark:bg-white dark:!text-black dark:hover:bg-white/70 hover:bg-black/70'>
+        <Link href={config.supportInviteUrl} className='px-3 py-1 text-sm font-medium !text-white no-underline bg-black rounded-lg dark:bg-white dark:!text-black dark:hover:bg-white/70 hover:bg-black/70'>
           Discord Server
         </Link>
-        <Link href='mailto:legal@discord.place' as='button' className='px-3 py-1 text-sm font-medium !text-white no-underline bg-black rounded-lg dark:bg-white dark:!text-black dark:hover:bg-white/70 hover:bg-black/70'>
+        <Link href='mailto:legal@discord.place' className='px-3 py-1 text-sm font-medium !text-white no-underline bg-black rounded-lg dark:bg-white dark:!text-black dark:hover:bg-white/70 hover:bg-black/70'>
           Email
         </Link>
       </div>
