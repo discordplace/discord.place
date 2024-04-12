@@ -147,7 +147,7 @@ module.exports = {
               
               profile.socials.push({ type: 'custom', link: socials[key] });
             } catch (error) {
-              return response.sendError('Custom social link is not valid.', 400);
+              return response.sendError(error, 400);
             }
           } else {
             const baseUrls = {
