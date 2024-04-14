@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 import Tooltip from '@/app/components/Tooltip';
 import useAuthStore from '@/stores/auth';
 import CopyButton from '@/app/components/CopyButton';
+import revalidateProfile from '@/lib/revalidate/profile';
 
 export default function Actions({ profile }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -28,6 +29,7 @@ export default function Actions({ profile }) {
       success: (isLiked) => {
         setLiked(isLiked);
         setLoading(false);
+        revalidateProfile(profile.slug);
 
         return isLiked ? `Liked ${profile.slug}!` : `Unliked ${profile.slug}!`;
       },

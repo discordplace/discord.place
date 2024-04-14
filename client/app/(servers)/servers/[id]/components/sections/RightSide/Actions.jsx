@@ -18,6 +18,7 @@ import createReminder from '@/lib/request/servers/createReminder';
 import Countdown from '@/app/components/Countdown';
 import Tooltip from '@/app/components/Tooltip';
 import { FaRegBell, FaBell } from 'react-icons/fa';
+import revalidateServer from '@/lib/revalidate/server';
 
 export default function Actions({ server }) {
   const [serverVotes, setServerVotes] = useState(server.votes);
@@ -57,6 +58,7 @@ export default function Actions({ server }) {
               setServerVotes(serverVotes + (server.badges.includes('Premium') ? 2 : 1));
               setVoteTimeout({ createdAt: new Date().getTime() + 86400000 });
               setCanSetReminder(data.inGuild);
+              revalidateServer(server.id);
 
               return `Successfully voted for ${server.name}!`;
             },

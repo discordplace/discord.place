@@ -14,6 +14,7 @@ import GenderDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Drop
 import PreferredHostDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/PreferredHost';
 import Link from 'next/link';
 import { PiWarningCircleFill } from 'react-icons/pi';
+import revalidateProfile from '@/lib/revalidate/profile';
 
 export default function Edit({ profileData }) { 
   const canBeEditedKeys = [
@@ -68,6 +69,7 @@ export default function Edit({ profileData }) {
           setTimeout(() => router.push(config.getProfileURL(changedKeys['newSlug'], newProfile.preferredHost)), 3000);
           return 'Profile updated! You will be redirected to new profile in 3 seconds.';
         } else {
+          revalidateProfile(newProfile.slug);
           setLoading(false);
           return 'Profile updated!';
         }

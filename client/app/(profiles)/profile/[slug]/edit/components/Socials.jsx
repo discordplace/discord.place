@@ -14,6 +14,7 @@ import cn from '@/lib/cn';
 import config from '@/config';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import getIconPath from '@/lib/utils/profiles/getIconPath';
+import revalidateProfile from '@/lib/revalidate/profile';
 
 export default function Socials({ profile }) {
   const [socials, setSocials] = useState(profile.socials);
@@ -83,6 +84,7 @@ export default function Socials({ profile }) {
               setNewSocialValue('');
               setLoading(false);
               setSocials(newSocials);
+              revalidateProfile(profile.slug);
               
               return 'New social added successfully.';
             },
@@ -107,6 +109,7 @@ export default function Socials({ profile }) {
               setNewSocialValue('');
               setLoading(false);
               setSocials(newSocials);
+              revalidateProfile(profile.slug);
 
               return 'New social media added successfully.';
             },
@@ -132,6 +135,7 @@ export default function Socials({ profile }) {
           setNewSocialValue('');
           setLoading(false);
           setSocials(newSocials);
+          revalidateProfile(profile.slug);
 
           return 'Social media deleted successfully.';
         },
