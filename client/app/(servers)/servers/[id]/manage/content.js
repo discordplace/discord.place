@@ -14,7 +14,7 @@ import { RiErrorWarningFill } from 'react-icons/ri';
 import deleteServer from '@/lib/request/servers/deleteServer';
 import { useRouter } from 'next-nprogress-bar';
 import { FaCheck } from 'react-icons/fa';
-import revalidateServer from '@/lib/request/servers/revalidateServer';
+import revalidateServer from '@/lib/revalidate/server';
 
 export default function Content({ server }) {
   const [currentServer, setCurrentServer] = useState(server);
