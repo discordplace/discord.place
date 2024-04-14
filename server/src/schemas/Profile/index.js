@@ -61,6 +61,10 @@ const ProfileSchema = new Schema({
     type: Number,
     default: 0
   },
+  likes_count: {
+    type: Number,
+    default: 0
+  },
   likes: {
     type: Array,
     default: []
@@ -105,7 +109,7 @@ const ProfileSchema = new Schema({
         bio: this.bio,
         socials: this.socials,
         views: this.views,
-        likes: this.likes.length,
+        likes: this.likes_count,
         slug: this.slug,
         verified: this.verified,
         preferredHost: this.preferredHost,
@@ -118,4 +122,20 @@ const ProfileSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Profile', ProfileSchema);
+const Model = mongoose.model('Profile', ProfileSchema);
+
+// watch for likes changes and update likes_count accordingly
+Model.watch().on('change', async change => {
+  if (change.operationType === 'update') {
+    const profile = await Model.findById(change.documentKey._id);
+    if (!profile) return;
+
+    const likes_count = profile.likes.length;
+    if (profile.likes_count === likes_count) return;
+
+    profile.likes_count = likes_count;
+    await profile.save();
+  }
+});
+
+module.exports = Model;

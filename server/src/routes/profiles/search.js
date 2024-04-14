@@ -35,7 +35,7 @@ module.exports = {
         ]
       } : {};
 
-      const profiles = await Profile.find(findQuery).sort({ views: -1 }).limit(limit).skip(skip);
+      const profiles = await Profile.find(findQuery).sort({ likes_count: -1 }).limit(limit).skip(skip);
       const totalProfiles = await Profile.countDocuments(findQuery);
       const total = await Profile.countDocuments({});
       const totalPages = Math.ceil(totalProfiles / limit);
