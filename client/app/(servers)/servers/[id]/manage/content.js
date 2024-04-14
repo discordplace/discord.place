@@ -14,6 +14,7 @@ import { RiErrorWarningFill } from 'react-icons/ri';
 import deleteServer from '@/lib/request/servers/deleteServer';
 import { useRouter } from 'next-nprogress-bar';
 import { FaCheck } from 'react-icons/fa';
+import revalidateServer from '@/lib/request/servers/revalidateServer';
 
 export default function Content({ server }) {
   const [currentServer, setCurrentServer] = useState(server);
@@ -53,6 +54,7 @@ export default function Content({ server }) {
         setLoading(false);
         setAnyChangesMade(false);
         setCurrentServer(oldServer => ({ ...oldServer, ...newServer }));
+        revalidateServer(currentServer.id);
 
         return 'Successfully saved changes!';
       },
