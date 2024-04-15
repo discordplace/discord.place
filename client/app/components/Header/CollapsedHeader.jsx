@@ -75,7 +75,7 @@ export default function CollapsedHeader() {
                       )}
                       onClick={() => setOpen(false)}
                     >
-                      {link.label}
+                      {link.title}
                       {pathname === link.href && <span className='px-2 py-1 ml-auto text-xs font-medium border rounded-full border-primary text-secondary bg-tertiary'>Current</span>}
                     </Link>
                   ))}
