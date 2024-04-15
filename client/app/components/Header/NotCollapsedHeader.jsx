@@ -81,7 +81,7 @@ export default function NotCollapsedHeader() {
           </div>
         </div>
         
-        <UserSide />
+        <UserSide className='justify-end' />
       </header>
     </div>
   );
