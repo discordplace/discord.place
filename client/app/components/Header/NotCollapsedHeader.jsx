@@ -9,11 +9,9 @@ import config from '@/config';
 import { usePrevious, useWindowScroll, useWindowSize } from 'react-use';
 import useThemeStore from '@/stores/theme';
 import UserSide from '@/app/components/Header/UserSide';
-import { useNewspaperStore } from '@/stores/newspaper';
 
 export default function NotCollapsedHeader() {
   const theme = useThemeStore(state => state.theme);
-  const newspaperIsOpen = useNewspaperStore(state => state.isOpen);
   
   const { y } = useWindowScroll();
   const oldY = usePrevious(y);
@@ -51,8 +49,7 @@ export default function NotCollapsedHeader() {
     <header className={cn(
       'fixed top-0 flex justify-between w-full px-12 lg:px-24 2xl:px-48 z-[9999] pb-6 transition-all [transition-duration:750ms]',
       scrollDirection === 'down' && '-translate-y-full opacity-0 [transition-timing-function:cubic-bezier(.8,-0.76,.38,1.37)]',
-      scrollDirection === 'up' && 'translate-y-0 opacity-100',
-      newspaperIsOpen && 'transition-none opacity-0'
+      scrollDirection === 'up' && 'translate-y-0 opacity-100'
     )}>
       <div className='flex mt-6 gap-x-10'>
         <Link href='/' className='hover:animate-logo-spin'>
