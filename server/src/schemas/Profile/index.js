@@ -124,7 +124,6 @@ const ProfileSchema = new Schema({
 
 const Model = mongoose.model('Profile', ProfileSchema);
 
-// watch for likes changes and update likes_count accordingly
 Model.watch().on('change', async change => {
   if (change.operationType === 'update') {
     const profile = await Model.findById(change.documentKey._id);
