@@ -140,7 +140,7 @@ export default function UserSide({ className }) {
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
       ) : (
-        <Link className="relative flex items-center px-4 py-2 overflow-hidden font-medium rounded text-secondary hover:bg-tertiary gap-x-2 group" href={config.getLoginURL(pathname)}>
+        <Link className="relative flex items-center px-4 py-2 overflow-hidden font-medium rounded pointer-events-auto text-secondary hover:bg-tertiary gap-x-2 group" href={config.getLoginURL(pathname)}>
           <span className="relative flex items-center gap-x-2">
             <FaDiscord size={20} />
             Login with Discord
