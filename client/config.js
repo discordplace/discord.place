@@ -1,4 +1,7 @@
-import { LuShieldQuestion } from 'react-icons/lu';
+import { CgProfile } from 'react-icons/cg';
+import { IoPeople } from 'react-icons/io5';
+import { MdEmojiEmotions } from 'react-icons/md';
+import { RiRobot2Fill } from 'react-icons/ri';
 
 const config = {
   supportInviteUrl: 'https://invite.discord.place',
@@ -12,24 +15,29 @@ const config = {
   },
   headerLinks: [
     {
-      label: 'Profiles',
-      href: '/profiles'
+      title: 'Profiles',
+      href: '/profiles',
+      icon: CgProfile,
+      iconColor: '#3b82f6',
     },
     {
-      label: 'Emojis',
-      href: '/emojis'
+      title: 'Servers',
+      href: '/servers',
+      icon: IoPeople,
+      iconColor: '#7c3aed'
     },
     {
-      label: 'Servers',
-      href: '/servers'
+      title: 'Bots',
+      href: '/bots',
+      icon: RiRobot2Fill,
+      iconColor: '#db2777',
+      disabled: true
     },
     {
-      label: <>
-        <LuShieldQuestion />
-        Get In Touch
-      </>,
-      href: 'https://invite.discord.place',
-      target: '_blank'
+      title: 'Emojis',
+      href: '/emojis',
+      icon: MdEmojiEmotions,
+      iconColor: '#14b8a6'
     }
   ],
   errorMessages: {

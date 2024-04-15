@@ -4,16 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cn from '@/lib/cn';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import config from '@/config';
-import { usePrevious, useWindowScroll, useWindowSize } from 'react-use';
+import { usePrevious, useWindowScroll } from 'react-use';
 import useThemeStore from '@/stores/theme';
 import UserSide from '@/app/components/Header/UserSide';
-import { useNewspaperStore } from '@/stores/newspaper';
 
 export default function NotCollapsedHeader() {
   const theme = useThemeStore(state => state.theme);
-  const newspaperIsOpen = useNewspaperStore(state => state.isOpen);
   
   const { y } = useWindowScroll();
   const oldY = usePrevious(y);
@@ -29,60 +27,62 @@ export default function NotCollapsedHeader() {
     }
   }, [y, oldY]);
 
-  const { width } = useWindowSize();
   const pathname = usePathname();
-
-  const [activeLinkWidth, setActiveLinkWidth] = useState(null);
-  const [activeLinkLeft, setActiveLinkLeft] = useState(null);
+  const backgroundRef = useRef(null);
 
   useEffect(() => {
-    const activeLink = document.querySelector(`a[data-href="${pathname}"]`);
+    const activeLink = document.querySelector('header a[data-active="true"]');
     if (activeLink) {
-      const rect = activeLink.getBoundingClientRect();
-      setActiveLinkWidth(rect.width);
-      setActiveLinkLeft(rect.left);
+      const { left, width } = activeLink.getBoundingClientRect();
+      const { left: parentLeft } = activeLink.parentElement.getBoundingClientRect();
+      const x = left - parentLeft;
+      const w = width;
+
+      backgroundRef.current.style.left = `${x}px`;
+      backgroundRef.current.style.width = `${w}px`;
+      backgroundRef.current.style.opacity = 1;
     } else {
-      setActiveLinkWidth(null);
-      setActiveLinkLeft(null);
+      backgroundRef.current.style.opacity = 0;
     }
-  }, [pathname, width]);
+  }, [pathname]);
 
   return (
-    <header className={cn(
-      'fixed top-0 flex justify-between w-full px-12 lg:px-24 2xl:px-48 z-[9999] pb-6 transition-all [transition-duration:750ms]',
-      scrollDirection === 'down' && '-translate-y-full opacity-0 [transition-timing-function:cubic-bezier(.8,-0.76,.38,1.37)]',
-      scrollDirection === 'up' && 'translate-y-0 opacity-100',
-      newspaperIsOpen && 'transition-none opacity-0'
-    )}>
-      <div className='flex mt-6 gap-x-10'>
-        <Link href='/' className='hover:animate-logo-spin'>
-          <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='w-[48px] h-[48px]' alt='discord.place Logo' />
-        </Link>
-
-        <div className='flex items-center gap-x-2'>
-          <div 
-            className={cn(
-              'h-[2px] absolute top-0 left-0 w-0 bg-black dark:bg-white transition-[width,left,opacity,top] duration-500 ease-in-out',
-              activeLinkWidth === null ? 'opacity-0 -top-[50px]' : 'opacity-100'
-            )}
-            style={{
-              width: activeLinkWidth,
-              left: activeLinkLeft
-            }}
-          />
-
-          {config.headerLinks.map(link => (
-            <Link key={link.href} href={link.href || ''} className={cn(
-              'mx-4 my-2 rounded relative flex items-center gap-x-2',
-              link.href === pathname ? 'font-medium pointer-events-none' : 'text-secondary hover:text-primary',
-              !link.href && 'cursor-not-allowed text-secondary/40 hover:text-secondary/40'
-            )} data-href={link.href || ''} target={link.target || '_self'}>
-              {link.label}
-            </Link>
-          ))}
+    <div className='flex items-center justify-center w-full h-full'>
+      <header className={cn(
+        'fixed top-0 grid mt-6 grid-cols-6 w-full max-w-[1200px] z-[9999] pb-6 transition-all [transition-duration:750ms]',
+        scrollDirection === 'down' && '-translate-y-full [transition-timing-function:cubic-bezier(.8,-0.76,.38,1.37)]',
+        scrollDirection === 'up' && 'translate-y-0 opacity-100'
+      )}>
+        <div className='flex gap-x-10'>
+          <Link href='/' className='hover:animate-logo-spin'>
+            <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='w-[48px] h-[48px]' alt='discord.place Logo' />
+          </Link>
         </div>
-      </div>
-      <UserSide className='mt-6' />
-    </header>
+
+        <div className='flex items-center justify-center col-span-4'>
+          <div className='relative flex items-center py-2 border rounded-2xl gap-x-2 border-[rgba(var(--bg-quaternary))] bg-secondary/50 backdrop-blur-lg'>
+            <div className='absolute left-0 h-full rounded-2xl w-0 bg-white z-[5]' ref={backgroundRef} />
+
+            {config.headerLinks.map((link, index) => (
+              <Link
+                key={index}
+                className={cn(
+                  'relative z-[10] px-3 py-1 rounded-xl text-base font-medium gap-x-1.5 items-center flex select-none',
+                  link.disabled && 'pointer-events-none opacity-50',
+                  pathname === link.href && 'text-black pointer-events-none'
+                )}
+                href={link.href}
+                data-active={pathname === link.href}
+              >
+                <link.icon />
+                {link.title}
+              </Link>
+            ))}
+          </div>
+        </div>
+        
+        <UserSide />
+      </header>
+    </div>
   );
 }

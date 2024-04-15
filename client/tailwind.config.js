@@ -47,7 +47,6 @@ module.exports = {
       animation: {
         shine: 'shine 1s infinite ease-in-out',
         loading: 'loading 3s infinite cubic-bezier(.48, -0.03, .12, .97)',
-        title: 'title 3s ease-out forwards',
         'logo-spin': 'logo-spin 1.5s forwards cubic-bezier(.83,-0.16,.04,1.36)'
       },
       keyframes: {
@@ -61,12 +60,6 @@ module.exports = {
           '50%': { transform: 'translateX(205%)', opacity: 0 },
           '99.9%': { opacity: 0 },
           '100%': { opacity: 1, transform: 'translateX(-100%)' }
-        },
-        title: {
-          '0%': { 'line-height': '0%', 'letter-spacing': '.25em', opacity: 0 },
-          '25%': { 'line-height': '0%', opacity: 0 },
-          '80%': { opacity: '100%' },
-          '100%': { 'line-height': '130%', opacity: '100%' }
         },
         'logo-spin': {
           '0%': { transform: 'rotate(0deg)' },

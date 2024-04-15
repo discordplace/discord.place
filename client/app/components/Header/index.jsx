@@ -5,7 +5,7 @@ import CollapsedHeader from '@/app/components/Header/CollapsedHeader';
 import { useMedia } from 'react-use';
 
 export default function Header() {
-  const collapseHeader = useMedia('(max-width: 815px)', false);
+  const collapseHeader = useMedia('(max-width: 1205px)', false);
 
   return collapseHeader ? <CollapsedHeader /> : <NotCollapsedHeader />;
 }
