@@ -3,6 +3,9 @@ require('module-alias/register');
 if (process.argv.includes('--production')) process.env.NODE_ENV = 'production';
 else process.env.NODE_ENV = 'development';
 
+const environmentCheck = require('@/utils/environmentCheck.js');
+environmentCheck();
+
 const fs = require('node:fs');
 const config = require('js-yaml').load(fs.readFileSync('./config.yml', 'utf8'));
 global.config = config;
