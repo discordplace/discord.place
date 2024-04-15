@@ -55,13 +55,13 @@ export default function UserSide({ className }) {
       {loggedIn ? (
         <DropdownMenu.Root modal={false} open={open}>
           <DropdownMenu.Trigger asChild>
-            <button className="flex items-center font-medium rounded outline-none gap-x-2" onClick={() => setOpen(!open)}>
+            <button className="flex items-center font-medium rounded outline-none pointer-events-auto gap-x-2" onClick={() => setOpen(!open)}>
               <Image src={user.avatar_url} width={32} height={32} className='rounded-full' alt='User Avatar' />
             </button>
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Portal>
-            <DropdownMenu.Content className="flex flex-col p-4 min-w-[300px] bg-secondary rounded-xl border border-primary z-[9999] gap-y-2 mr-2 lg:mr-0 sm:mr-4" sideOffset={10}>  
+            <DropdownMenu.Content className="pointer-events-auto flex flex-col p-4 min-w-[300px] bg-secondary rounded-xl border border-primary z-[9999] gap-y-2 mr-2 lg:mr-0 sm:mr-4" sideOffset={10}>  
               <div className='flex flex-col items-center justify-center w-full gap-y-2'>
                 <Image src={user.avatar_url} width={128} height={128} className='rounded-full w-[64px] h-[64px]' alt='User Avatar' />
                 <h2 className='text-xl font-medium'>

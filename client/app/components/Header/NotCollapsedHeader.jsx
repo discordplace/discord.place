@@ -49,18 +49,18 @@ export default function NotCollapsedHeader() {
   return (
     <div className='flex items-center justify-center w-full h-full'>
       <header className={cn(
-        'fixed top-0 grid mt-6 grid-cols-6 w-full max-w-[1200px] z-[9999] pb-6 transition-all [transition-duration:750ms]',
+        'fixed top-0 pointer-events-none grid mt-6 grid-cols-6 w-full max-w-[1200px] z-[9999] pb-6 transition-all [transition-duration:750ms]',
         scrollDirection === 'down' && '-translate-y-full [transition-timing-function:cubic-bezier(.8,-0.76,.38,1.37)]',
         scrollDirection === 'up' && 'translate-y-0 opacity-100'
       )}>
         <div className='flex gap-x-10'>
-          <Link href='/' className='hover:animate-logo-spin'>
+          <Link href='/' className='pointer-events-auto hover:animate-logo-spin'>
             <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='w-[48px] h-[48px]' alt='discord.place Logo' />
           </Link>
         </div>
 
         <div className='flex items-center justify-center col-span-4'>
-          <div className='relative flex items-center py-2 border rounded-2xl gap-x-2 border-[rgba(var(--bg-quaternary))] bg-secondary/50 backdrop-blur-lg'>
+          <div className='relative pointer-events-auto flex items-center py-2 border rounded-2xl gap-x-2 border-[rgba(var(--bg-quaternary))] bg-secondary/50 backdrop-blur-lg'>
             <div className='absolute left-0 h-full rounded-2xl w-0 bg-white z-[5]' ref={backgroundRef} />
 
             {config.headerLinks.map((link, index) => (

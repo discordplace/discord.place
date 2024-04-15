@@ -26,9 +26,9 @@ export default function CollapsedHeader() {
   }, [open]);
 
   return (
-    <header className='fixed top-0 flex justify-between w-full px-4 mobile:px-16 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]'>
+    <header className='pointer-events-none fixed top-0 flex justify-between w-full px-4 mobile:px-16 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]'>
       <div className='mt-6'>
-        <Link href='/'>
+        <Link href='/' className='pointer-events-auto'>
           <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='w-[48px] h-[48px]' alt='discord.place Logo' />
         </Link>
       </div>
@@ -37,7 +37,7 @@ export default function CollapsedHeader() {
         <UserSide />
 
         <button className={cn(
-          'relative z-[9999] transition-all left-0 duration-500 flex items-center px-2 py-2 text-lg font-medium rounded outline-none text-secondary bg-tertiary gap-x-2',
+          'relative z-[9999] pointer-events-auto transition-all left-0 duration-500 flex items-center px-2 py-2 text-lg font-medium rounded outline-none text-secondary bg-tertiary gap-x-2',
           open && 'left-0 mobile:left-8'
         )} onClick={() => setOpen(!open)}>
           {open ? <FiX /> : <IoMdMenu />}
@@ -45,7 +45,7 @@ export default function CollapsedHeader() {
 
         <AnimatePresence>
           {open && (
-            <div className='w-full h-full z-[999] fixed left-0 top-0 flex justify-end'>
+            <div className='pointer-events-auto w-full h-full z-[999] fixed left-0 top-0 flex justify-end'>
               <motion.div 
                 className='bg-[rgba(var(--bg-background),0.8)] backdrop-blur-sm w-full h-[100dvh] absolute' 
                 initial={{ opacity: 0 }}
