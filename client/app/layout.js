@@ -10,6 +10,7 @@ import cn from '@/lib/cn';
 import ErrorBoundary from '@/app/components/Providers/Boundary/Error';
 import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
 import Script from 'next/script';
+import CookieBanner from '@/app/components/CookieBanner';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -79,6 +80,7 @@ export default function RootLayout({ children }) {
                 </ErrorBoundary>
             
                 <Footer />
+                <CookieBanner />
               </VaulWrapperProvider>
             </AuthProvider>
           </ThemeProvider>

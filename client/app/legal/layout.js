@@ -13,7 +13,9 @@ export default function Layout({ children }) {
         'prose-p:text-tertiary prose-p:my-1',
         'prose-a:text-secondary hover:prose-a:text-primary',
         'prose-strong:text-secondary',
-        'prose-li:text-tertiary prose-li:my-0'
+        'prose-li:text-tertiary prose-li:my-0',
+        '[&>ol>li]:marker:text-tertiary',
+        'prose-strong:text-primary'
       )}>
         {children}
       </div>

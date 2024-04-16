@@ -51,8 +51,7 @@ export default function Footer() {
         },
         {
           label: 'Cookie Policy',
-          href: '#',
-          disabled: true
+          href: '/legal/cookie-policy'
         },
         {
           label: 'Content Policy',
