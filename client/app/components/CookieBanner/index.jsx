@@ -15,7 +15,7 @@ export default function CookieBanner() {
 
   return (
     showCookieBanner && (
-      <div className="fixed z-[999] bottom-0 flex items-center justify-center w-full py-3 border-t border-t-primary font-medium gap-x-4 text-secondary bg-tertiary h-max">
+      <div className="flex-wrap text-center fixed z-[999] bottom-0 flex items-center justify-center w-full py-3 border-t border-t-primary font-medium gap-4 text-secondary bg-tertiary h-max">
         This website uses 🍪 cookies to ensure you get the best experience on our website.
         <button 
           className="px-3 py-1 font-semibold text-white bg-black rounded-lg dark:text-black dark:bg-white hover:bg-black/70 dark:hover:bg-white/70" 
