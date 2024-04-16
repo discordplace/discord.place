@@ -41,8 +41,11 @@ export default function NotCollapsedHeader() {
       backgroundRef.current.style.left = `${x}px`;
       backgroundRef.current.style.width = `${w}px`;
       backgroundRef.current.style.opacity = 1;
+      activeLink.style.color = '#000000';
+      document.querySelectorAll('header a[data-active="false"]').forEach(link => link.style.color = 'rgba(var(--text-primary))');
     } else {
       backgroundRef.current.style.opacity = 0;
+      document.querySelectorAll('header a').forEach(link => link.style.color = 'rgba(var(--text-primary))');
     }
   }, [pathname]);
 
@@ -68,8 +71,7 @@ export default function NotCollapsedHeader() {
                 key={index}
                 className={cn(
                   'relative z-[10] px-3 py-1 rounded-xl text-base font-medium gap-x-1.5 items-center flex select-none',
-                  link.disabled && 'pointer-events-none opacity-50',
-                  pathname === link.href && 'text-black pointer-events-none'
+                  link.disabled && 'pointer-events-none opacity-50'
                 )}
                 href={link.href}
                 data-active={pathname === link.href}
