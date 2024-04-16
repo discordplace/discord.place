@@ -41,13 +41,13 @@ export default function NotCollapsedHeader() {
       backgroundRef.current.style.left = `${x}px`;
       backgroundRef.current.style.width = `${w}px`;
       backgroundRef.current.style.opacity = 1;
-      activeLink.style.color = '#000000';
+      activeLink.style.color = theme === 'dark' ? '#000000' : '#ffffff';
       document.querySelectorAll('header a[data-active="false"]').forEach(link => link.style.color = 'rgba(var(--text-primary))');
     } else {
       backgroundRef.current.style.opacity = 0;
       document.querySelectorAll('header a').forEach(link => link.style.color = 'rgba(var(--text-primary))');
     }
-  }, [pathname]);
+  }, [pathname, theme]);
 
   return (
     <div className='flex items-center justify-center w-full h-full'>
@@ -64,7 +64,7 @@ export default function NotCollapsedHeader() {
 
         <div className='flex items-center justify-center col-span-4'>
           <div className='relative pointer-events-auto flex items-center py-2 border rounded-2xl gap-x-2 border-[rgba(var(--bg-quaternary))] bg-secondary/50 backdrop-blur-lg'>
-            <div className='absolute left-0 h-full rounded-2xl w-0 bg-white z-[5]' ref={backgroundRef} />
+            <div className='absolute left-0 h-full rounded-2xl w-0 bg-black dark:bg-white z-[5]' ref={backgroundRef} />
 
             {config.headerLinks.map((link, index) => (
               <Link
