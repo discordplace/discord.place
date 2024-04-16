@@ -13,7 +13,7 @@ export default function Page() {
   const defaultBlockColor = '#ffffff10';
   const [hoveredBlockColor, setHoveredBlockColor] = useState(defaultBlockColor);
 
-  function Block({ title, desc, to, index, color, disabled }) {
+  function Block({ title, desc, to, index, color, disabled, newBadge }) {
     const blockRef = useRef(null);
     const buttonRef = useRef(null);
     
@@ -42,7 +42,18 @@ export default function Page() {
         }}
         href={to}
       >
-        <h1 className='mt-3 text-xl font-semibold text-center sm:text-2xl sm:mt-6 text-primary'>{title}</h1>
+        <h1 className='flex items-center mt-3 text-xl font-semibold text-center gap-x-2 sm:text-2xl sm:mt-6 text-primary'>
+          {title}
+          {newBadge && (
+            <span 
+              className='flex items-center px-2 py-1 text-xs font-semibold text-white rounded-full gap-x-1' 
+              style={{
+                background: `${color}80`
+              }}>
+              New
+            </span>
+          )}
+        </h1>
         <p className='mb-3 text-sm font-medium text-center sm:mb-0 text-tertiary'>{desc}</p>
         <div 
           className={cn(
@@ -58,7 +69,7 @@ export default function Page() {
   }
 
   return (
-    <div className="relative z-10 flex flex-col items-center justify-center w-full sm:h-[100dvh] my-8 sm:my-0">      
+    <div className="relative z-10 flex flex-col items-center justify-center w-full lg:h-[100dvh] my-8 sm:my-0">      
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
       
       <h1 className={cn(
@@ -70,7 +81,7 @@ export default function Page() {
 
       <div className='transition-colors ease-in-out pointer-events-none absolute top-0 max-w-[800px] w-full h-[800px] rounded-full blur-[10rem]' style={{ background: hoveredBlockColor }} />
 
-      <div className='w-full mt-16 max-w-[1000px] px-8 lg:px-0'>
+      <div className='w-full mt-16 lg:mb-0 mb-8 max-w-[1000px] px-8 lg:px-0'>
         <div className='grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:flex'>
           <Block 
             title='Profiles' 
@@ -85,6 +96,7 @@ export default function Page() {
             to='/servers' 
             index={1} 
             color='#7c3aed'
+            newBadge
           />
           <Block
             title='Bots'
