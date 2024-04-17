@@ -78,6 +78,7 @@ module.exports = class Client {
       if (options.startup.updateClientActivity) this.updateClientActivity();
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
 
+      // TODO: Move listenCrons to startup
       if (options.listenCrons) {
         new CronJob('0 * * * *', this.checkVoiceActivity, null, true, 'Europe/Istanbul');
         new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');

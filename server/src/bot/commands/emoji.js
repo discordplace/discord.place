@@ -1,3 +1,5 @@
+// TODO: Allow to upload emoji packages, create a new command named "emoji pack upload"
+
 const Discord = require('discord.js');
 const Emoji = require('@/schemas/Emoji');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
