@@ -81,9 +81,9 @@ export default function Page() {
     });
   }
   
-  const is2xLarge = useMedia('(max-width: 1280px)');
-  const isLarge = useMedia('(min-width: 1024px)');
-  const isMobile = useMedia('(max-width: 640px)');
+  const is2xLarge = useMedia('(max-width: 1280px)', false);
+  const isLarge = useMedia('(min-width: 1024px)', false);
+  const isMobile = useMedia('(max-width: 640px)', false);
   const placeholderServerCardLength = is2xLarge ? (isMobile ? 6 : (isLarge ? 20 : 12)) : 24;
 
   return (

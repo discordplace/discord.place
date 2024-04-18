@@ -6,7 +6,7 @@ import { useMedia } from 'react-use';
 
 export default function Tooltip({ children, content }) {
   const [open, setOpen] = useState(false);
-  const isMobile = useMedia('(max-width: 640px)');
+  const isMobile = useMedia('(max-width: 640px)', false);
   
   return (
     <RadixTooltip.Provider 
