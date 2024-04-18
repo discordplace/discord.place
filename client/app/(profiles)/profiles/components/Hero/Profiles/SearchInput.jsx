@@ -7,10 +7,11 @@ import { useShallow } from 'zustand/react/shallow';
 
 export default function SearchInput() {
   const [value, setValue] = useState('');
-  const { loading, search, fetchProfiles } = useSearchStore(useShallow(state => ({ 
+  const { loading, search, fetchProfiles, setPage } = useSearchStore(useShallow(state => ({ 
     loading: state.loading, 
     search: state.search, 
-    fetchProfiles: state.fetchProfiles 
+    fetchProfiles: state.fetchProfiles,
+    setPage: state.setPage
   })));
 
   function validateValue(throwError = true) {
@@ -56,7 +57,10 @@ export default function SearchInput() {
           onKeyUp={event => {
             if (event.key === 'Enter') {
               const validatedValue = validateValue();
-              if (validatedValue) fetchProfiles(validatedValue);
+              if (validatedValue) {
+                setPage(1);
+                fetchProfiles(validatedValue);
+              }
             }
           }}
           initial={{ opacity: 0, y: -25 }} 
@@ -77,7 +81,10 @@ export default function SearchInput() {
       <motion.button className='p-3 rounded-md bg-secondary text-secondary hover:bg-tertiary disabled:pointer-events-none disabled:opacity-70' 
         onClick={() => {
           const validatedValue = validateValue();
-          if (validatedValue) fetchProfiles(validatedValue);
+          if (validatedValue) {
+            setPage(1);
+            fetchProfiles(validatedValue);
+          }
         }} 
         disabled={loading || validateValue(false) === false}
         initial={{ opacity: 0, y: -25 }}

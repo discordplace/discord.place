@@ -35,7 +35,8 @@ module.exports = {
         ]
       } : {};
 
-      const profiles = await Profile.find(findQuery).sort({ likes_count: -1 }).limit(limit).skip(skip);
+      const profiles = await Profile.find(findQuery).sort({ likes_count: -1 });
+      const paginatedProfiles = profiles.slice(skip, skip + limit);
       const totalProfiles = await Profile.countDocuments(findQuery);
       const total = await Profile.countDocuments({});
       const totalPages = Math.ceil(totalProfiles / limit);
@@ -46,7 +47,8 @@ module.exports = {
         total,
         page,
         limit,
-        profiles: await Promise.all(profiles.map(async profile => await profile.toPubliclySafe()))
+        profiles: await Promise.all(paginatedProfiles.map(async profile => await profile.toPubliclySafe())),
+        count: profiles.length
       });
     }
   ]

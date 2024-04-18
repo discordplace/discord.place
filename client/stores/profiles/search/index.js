@@ -14,6 +14,7 @@ const useSearchStore = create((set, get) => ({
   profiles: [],
   setProfiles: profiles => set({ profiles }),
   totalProfiles: 0,
+  count: 0,
   maxReached: false,
   fetchProfiles: async (search) => {
     const page = get().page;
@@ -22,7 +23,7 @@ const useSearchStore = create((set, get) => ({
     set({ loading: true, search });
     
     fetchProfiles(search, page, limit)
-      .then(data => set({ profiles: data.profiles, loading: false, totalProfiles: data.total, maxReached: data.maxReached }))
+      .then(data => set({ profiles: data.profiles, loading: false, totalProfiles: data.total, maxReached: data.maxReached, count: data.count }))
       .catch(error => {
         toast.error(error);
         set({ loading: false });
