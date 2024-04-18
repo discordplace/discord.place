@@ -9,7 +9,7 @@ export default function CategoriesDrawer({ openState, setOpenState, state, setSt
   return (
     <Drawer.Root shouldScaleBackground={true} closeThreshold={0.5} open={openState} onOpenChange={setOpenState}>
       <Drawer.Portal>
-        <Drawer.Content className='gap-y-1 p-4 z-[10001] bg-secondary flex flex-col rounded-t-3xl h-[85%] fixed bottom-0 left-0 right-0'>
+        <Drawer.Content className='outline-none gap-y-1 p-4 z-[10001] bg-secondary flex flex-col rounded-t-3xl h-[85%] fixed bottom-0 left-0 right-0'>
           <div className='mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-quaternary mb-8' />
           
           {categories.map(category => (

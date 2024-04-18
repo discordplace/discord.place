@@ -63,7 +63,7 @@ export default function Sidebar() {
           </button>
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Content className='gap-y-1 p-4 z-[10001] bg-secondary flex flex-col rounded-t-3xl h-[250px] fixed bottom-0 left-0 right-0'>
+          <Drawer.Content className='outline-none gap-y-1 p-4 z-[10001] bg-secondary flex flex-col rounded-t-3xl h-[250px] fixed bottom-0 left-0 right-0'>
             <div className='mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-quaternary mb-8' />
             
             {sortings.map(sorting => (
