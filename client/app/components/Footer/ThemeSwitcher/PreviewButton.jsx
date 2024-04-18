@@ -15,7 +15,7 @@ export default function ThemePreviewButton({ theme: _theme, imagePath }) {
       height={910}
       alt={`discord.place ${_theme === 'light' ? 'Light' : 'Dark'} Theme Preview`}
       className={cn(
-        'cursor-pointer w-[30%] rounded-xl',
+        'cursor-pointer w-[85%] lg:w-[30%] rounded-xl',
         theme === _theme ? 'ring-2 ring-violet-500 ring-offset-2 ring-offset-[rgba(var(--bg-secondary))] pointer-events-none' : 'hover:ring-2 ring-violet-500 ring-offset-2 ring-offset-[rgba(var(--bg-secondary))]'
       )}
       onClick={() => toggleTheme(_theme)}
