@@ -12,8 +12,8 @@ export default function ThemeSwitcher() {
       open={open} 
       onOpenChange={setOpen}
     >
-      <Drawer.Trigger>
-        <button className='px-3 py-2 text-sm font-semibold rounded-xl text-tertiary bg-tertiary hover:text-primary hover:bg-quaternary' onClick={() => setOpen(true)}>
+      <Drawer.Trigger asChild>
+        <button className='w-full px-3 py-2 text-sm font-semibold sm:w-max rounded-xl text-tertiary bg-tertiary hover:text-primary hover:bg-quaternary' onClick={() => setOpen(true)}>
           Theme Switcher
         </button>
       </Drawer.Trigger>
