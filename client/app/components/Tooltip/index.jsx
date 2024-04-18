@@ -1,10 +1,26 @@
+'use client';
+
 import * as RadixTooltip from '@radix-ui/react-tooltip';
+import { useState } from 'react';
+import { useMedia } from 'react-use';
 
 export default function Tooltip({ children, content }) {
+  const [open, setOpen] = useState(false);
+  const isMobile = useMedia('(max-width: 640px)');
+  
   return (
-    <RadixTooltip.Provider delayDuration='0' skipDelayDuration='0'>
-      <RadixTooltip.Root>
-        <RadixTooltip.Trigger asChild>
+    <RadixTooltip.Provider 
+      delayDuration='0' 
+      skipDelayDuration='0'
+    >
+      <RadixTooltip.Root
+        onOpenChange={setOpen}
+        open={open}
+      >
+        <RadixTooltip.Trigger 
+          onClick={() => isMobile && setOpen(!open)}
+          asChild
+        >
           {children}
         </RadixTooltip.Trigger>
         {content && (
