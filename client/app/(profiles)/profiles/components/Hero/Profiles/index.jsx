@@ -12,7 +12,7 @@ import Pagination from '@/app/components/Pagination';
 
 export default function Profiles() {
 
-  const { search, setSearch, profiles, fetchProfiles, loading, page, setPage, totalProfiles, limit, count } = useSearchStore(useShallow(state => ({ 
+  const { search, setSearch, profiles, fetchProfiles, loading, page, setPage, limit, count } = useSearchStore(useShallow(state => ({ 
     search: state.search,
     setSearch: state.setSearch,
     profiles: state.profiles,
@@ -20,12 +20,11 @@ export default function Profiles() {
     loading: state.loading,
     page: state.page,
     setPage: state.setPage,
-    totalProfiles: state.totalProfiles,
     limit: state.limit,
     count: state.count
   })));
 
-  const showPagination = !loading && totalProfiles > limit;
+  const showPagination = !loading && count > limit;
   
   const profileCardTransition = {
     type: 'spring',
