@@ -4,14 +4,12 @@ import useThemeStore from '@/stores/theme';
 import { nanoid } from 'nanoid';
 import Link from 'next/link';
 import { FaDiscord, FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
-import { MdDarkMode } from 'react-icons/md';
-import { HiSun } from 'react-icons/hi';
 import cn from '@/lib/cn';
 import Image from 'next/image';
+import ThemeSwitcher from '@/app/components/Footer/ThemeSwitcher';
 
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
-  const toggleTheme = useThemeStore(state => state.toggleTheme);
 
   const blocks = [
     {
@@ -141,21 +139,7 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} discord.place. All rights reserved.
         </p>
 
-        <div className='flex gap-x-2'>
-          <button className={cn(
-            'p-2 rounded-full',
-            theme === 'dark' ? 'pointer-events-none bg-quaternary text-primary' : 'text-tertiary hover:bg-quaternary hover:text-primary'
-          )} onClick={() => toggleTheme('dark')}>
-            <MdDarkMode />
-          </button>
-
-          <button className={cn(
-            'p-2 rounded-full',
-            theme === 'light' ? 'pointer-events-none bg-quaternary text-primary' : 'text-tertiary hover:bg-quaternary hover:text-primary'
-          )} onClick={() => toggleTheme('light')}>
-            <HiSun />
-          </button>
-        </div>
+        <ThemeSwitcher />
       </div>
     </section>
   );
