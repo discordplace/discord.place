@@ -46,8 +46,7 @@ module.exports = {
         if (!createdEmoji) return message.edit({ content: `Failed uploading ${index}. Emoji. Skipping.. **${pack.emoji_ids.length - index} seconds** estimated.` });
   
         logger.send(`Uploaded emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
-        Emoji.findOneAndUpdate({ id: emoji.id }, { $inc: { downloads: 1 } });
-        createdEmojis.push(createdEmoji);
+        createdEmojis.push({ emoji: createdEmoji, index });
           
         index++;
         await message.edit({ content: `Uploaded ${index} of ${pack.emoji_ids.length} emojis. **${pack.emoji_ids.length - index} seconds** estimated` });
@@ -55,7 +54,11 @@ module.exports = {
         await sleep(1000);
       }
 
-      return message.edit({ content: `Successfully uploaded **${pack.name}**!\n\n${createdEmojis.map((emoji, index) => `${index + 1}. ${emoji}`).join('\n')}` });
+      if (createdEmojis.length === 0) return message.edit({ content: `Pack **${pack.name}** failed to upload.` });
+
+      await Emoji.updateMany({ id: { $in: createdEmojis.map(({ index }) => pack.emoji_ids[index].id) } }, { $inc: { downloads: 1 } });
+
+      return message.edit({ content: `Successfully uploaded **${pack.name}**!\n\n${createdEmojis.map(({ emoji }, index) => `${index + 1}. ${emoji}`).join('\n')}` });
     case null:
       var id = interaction.options.getString('emoji');
       var emoji = await Emoji.findOne({ id });
