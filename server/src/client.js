@@ -47,8 +47,6 @@ module.exports = class Client {
     this.client.once('ready', () => {
       logger.send(`Client logged in as ${this.client.user.tag}`);
 
-      if (options.startup.fetchAllGuildMembers) this.fetchAllGuildMembers();
-
       const CommandsHandler = require('@/src/bot/handlers/commands.js');
       const commandsHandler = new CommandsHandler();
       commandsHandler.fetchCommands();

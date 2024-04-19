@@ -22,7 +22,6 @@ const Client = require('@/src/client.js');
 const client = new Client();
 client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
   startup: {
-    fetchAllGuildMembers: true,
     checkDeletedInviteCodes: true,
     updatePanelMessages: true,
     updateClientActivity: true,
