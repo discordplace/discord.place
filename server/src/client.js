@@ -88,6 +88,7 @@ module.exports = class Client {
     });
   }
 
+  // TODO: Refactor this function instead of fetching all members at startup to fetch only when needed
   async fetchAllGuildMembers() {
     const guildsIdsToFetch = client.guilds.cache.filter(guild => guild.available).map(guild => guild.id);
     logger.send(`Fetching all guild members for ${guildsIdsToFetch.length} guilds...`);
