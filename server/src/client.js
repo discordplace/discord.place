@@ -30,6 +30,7 @@ module.exports = class Client {
     });
 
     this.client.allMembersFetched = false;
+    this.client.fetchedGuilds = new Discord.Collection();
 
     logger.send('Client created.');
     return this;
@@ -85,25 +86,6 @@ module.exports = class Client {
         new CronJob('0 0 * * *', this.checkVoteReminderMetadatas, null, true, 'Europe/Istanbul');
       }
     });
-  }
-
-  // TODO: Refactor this function instead of fetching all members at startup to fetch only when needed
-  async fetchAllGuildMembers() {
-    const guildsIdsToFetch = client.guilds.cache.filter(guild => guild.available).map(guild => guild.id);
-    logger.send(`Fetching all guild members for ${guildsIdsToFetch.length} guilds...`);
-
-    for (const guildId of guildsIdsToFetch) {
-      const guild = client.guilds.cache.get(guildId);
-      if (!guild) continue;
-
-      await guild.members.fetch()
-        .catch(error => logger.send(`Failed to fetch members for guild ${guild.name}. (${guildsIdsToFetch.indexOf(guildId) + 1}/${guildsIdsToFetch.length}): ${error}`))
-        .then(() => logger.send(`Fetched all members for guild ${guild.name}. (${guildsIdsToFetch.indexOf(guildId) + 1}/${guildsIdsToFetch.length})`));
-      await this.sleep(2000);
-    }
-
-    this.client.allMembersFetched = true;
-    logger.send('All guild members fetched.');
   }
 
   async sleep(ms) {

@@ -13,6 +13,7 @@ const inviteLinkValidation = require('@/validations/servers/inviteLink');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 module.exports = {
   get: [
@@ -59,6 +60,8 @@ module.exports = {
           (request.member && config.permissions.canEditServersRoles.some(roleId => request.member.roles.cache.has(roleId)))
         )
       };
+
+      if (!client.fetchedGuilds.has(guild.id)) await fetchGuildsMembers([guild.id]).catch(() => null);
 
       const voteTimeout = await VoteTimeout.findOne({ 'user.id': request.user?.id, 'guild.id': id });
       const reminder = await VoteReminder.findOne({ 'user.id': request.user?.id, 'guild.id': id });
@@ -158,6 +161,8 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await newServer.save();
+
+      if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 
       return response.status(204).end();
     }
@@ -264,6 +269,8 @@ module.exports = {
       await server.save();
 
       await updatePanelMessage(id);
+
+      if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 
       return response.json(await server.toPubliclySafe());
     }
