@@ -56,9 +56,8 @@ module.exports = class Server {
       xFrameOptions: { action: 'sameorigin' },
     }));
     this.server.use(ip);
-    this.server.use(require('@/src/utils/middlewares/error'));
-    this.server.use(require('@/src/utils/middlewares/logger'));
-    this.server.use(require('@/src/utils/middlewares/ensureClientIsReady'));
+    this.server.use(require('@/utils/middlewares/error'));
+    this.server.use(require('@/utils/middlewares/logger'));
     
     this.server.use((request, response, next) => {
       if (request.headers.host === 'dsc.wtf') {
