@@ -7,6 +7,7 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
 const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
+const logger = require('./utils/middlewares/logger');
 
 module.exports = class Client {
   constructor() {
@@ -89,12 +90,25 @@ module.exports = class Client {
   }
 
   async fetchAllGuildMembers() {
-    await Promise.all(client.guilds.cache.filter(guild => guild.available).map(async guild => await guild.members.fetch({ force: true }).catch(error => {
-      logger.send(`Failed to fetch members for guild ${guild.name}: ${error}`);
-    }))).finally(() => {
-      logger.send('Fetched all guild members.');
-      this.client.allMembersFetched = true;
-    });
+    const guildsIdsToFetch = client.guilds.cache.filter(guild => guild.available).map(guild => guild.id);
+    logger.send(`Fetching all guild members for ${guildsIdsToFetch.length} guilds...`);
+
+    for (const guildId of guildsIdsToFetch) {
+      const guild = client.guilds.cache.get(guildId);
+      if (!guild) continue;
+
+      await guild.members.fetch()
+        .catch(error => logger.send(`Failed to fetch members for guild ${guild.name}. (${guildsIdsToFetch.indexOf(guildId) + 1}/${guildsIdsToFetch.length}): ${error}`))
+        .then(() => logger.send(`Fetched all members for guild ${guild.name}. (${guildsIdsToFetch.indexOf(guildId) + 1}/${guildsIdsToFetch.length})`));
+      await this.sleep(2000);
+    }
+
+    this.client.allMembersFetched = true;
+    logger.send('All guild members fetched.');
+  }
+
+  async sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   async checkDeletedInviteCodes() {
