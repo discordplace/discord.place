@@ -22,14 +22,13 @@ const Client = require('@/src/client.js');
 const client = new Client();
 client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
   startup: {
-    fetchAllGuildMembers: true,
     checkDeletedInviteCodes: true,
     updatePanelMessages: true,
     updateClientActivity: true,
     checkVoteReminderMetadatas: true,
-    listenEvents: true
+    listenEvents: true,
+    listenCrons: process.env.NODE_ENV === 'production'
   },
-  listenCrons: process.env.NODE_ENV === 'production',
   registerCommands: false,
   unregisterCommands: false,
 });
@@ -38,7 +37,6 @@ const Server = require('@/src/server.js');
 const server = new Server();
 server.create().start(config.port.backend);
 
-// TODO: change the unknown error message where validateSync is used with the error returned by validateSync
 const connectDatabase = require('@/src/database/connect.js');
 connectDatabase(process.env.MONGO_URL, {
   backup: process.env.NODE_ENV === 'production'

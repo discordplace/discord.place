@@ -9,6 +9,7 @@ const birthdayValidation = require('@/validations/profiles/birthday');
 const socialsValidation = require('@/validations/profiles/socials');
 const Server = require('@/schemas/Server');
 const randomizeArray = require('@/utils/randomizeArray');
+const getValidationError = require('@/utils/getValidationError');
 
 module.exports = {
   get: [
@@ -183,8 +184,8 @@ module.exports = {
       if (newBio) profile.bio = newBio;
       if (newPreferredHost) profile.preferredHost = newPreferredHost;
 
-      const validationErrors = profile.validateSync();
-      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+      const validationError = getValidationError(profile);
+      if (validationError) return response.sendError(validationError, 400);
 
       if (!profile.isModified()) return response.sendError('No changes were made.', 400);
 

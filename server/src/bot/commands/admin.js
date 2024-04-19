@@ -2,12 +2,13 @@ const Discord = require('discord.js');
 const Profile = require('@/schemas/Profile');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
-const PremiumCode = require('@/src/schemas/PremiumCode');
-const Premium = require('@/src/schemas/Premium');
+const PremiumCode = require('@/schemas/PremiumCode');
+const Premium = require('@/schemas/Premium');
 const crypto = require('node:crypto');
 const Review = require('@/schemas/Server/Review');
 const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
+const getValidationError = require('@/utils/getValidationError');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -292,8 +293,8 @@ module.exports = {
         if (type === 'USER_ID') quarantine.user = { id: value };
         if (type === 'GUILD_ID') quarantine.guild = { id: value };
 
-        const validationErrors = quarantine.validateSync();
-        if (validationErrors) return interaction.followUp({ content: 'There was an error creating the quarantine entry. Most likely the provided values are invalid.' });
+        const validationError = getValidationError(quarantine);
+        if (validationError) return interaction.followUp({ content: validationError });
 
         await quarantine.save();
 

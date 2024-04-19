@@ -12,6 +12,8 @@ const Review = require('@/schemas/Server/Review');
 const inviteLinkValidation = require('@/validations/servers/inviteLink');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const getValidationError = require('@/utils/getValidationError');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 module.exports = {
   get: [
@@ -58,6 +60,8 @@ module.exports = {
           (request.member && config.permissions.canEditServersRoles.some(roleId => request.member.roles.cache.has(roleId)))
         )
       };
+
+      if (!client.fetchedGuilds.has(guild.id)) await fetchGuildsMembers([guild.id]).catch(() => null);
 
       const voteTimeout = await VoteTimeout.findOne({ 'user.id': request.user?.id, 'guild.id': id });
       const reminder = await VoteReminder.findOne({ 'user.id': request.user?.id, 'guild.id': id });
@@ -153,10 +157,12 @@ module.exports = {
         voice_activity_enabled: voice_activity_enabled || false
       });
 
-      const validationErrors = newServer.validateSync();
-      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+      const validationError = getValidationError(newServer);
+      if (validationError) return response.sendError(validationError, 400);
 
       await newServer.save();
+
+      if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 
       return response.status(204).end();
     }
@@ -255,14 +261,16 @@ module.exports = {
         if (!newVoiceActivityEnabled) await VoiceActivity.deleteOne({ 'guild.id': id });
       }
 
-      const validationErrors = server.validateSync();
-      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+      const validationError = getValidationError(server);
+      if (validationError) return response.sendError(validationError, 400);
 
       if (!server.isModified()) return response.sendError('No changes were made.', 400);
 
       await server.save();
 
       await updatePanelMessage(id);
+
+      if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 
       return response.json(await server.toPubliclySafe());
     }
