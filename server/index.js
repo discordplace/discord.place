@@ -27,9 +27,9 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     updatePanelMessages: true,
     updateClientActivity: true,
     checkVoteReminderMetadatas: true,
-    listenEvents: true
+    listenEvents: true,
+    listenCrons: process.env.NODE_ENV === 'production'
   },
-  listenCrons: process.env.NODE_ENV === 'production',
   registerCommands: false,
   unregisterCommands: false,
 });
