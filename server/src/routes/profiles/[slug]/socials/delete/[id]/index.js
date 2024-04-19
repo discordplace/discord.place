@@ -3,6 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
 const { param, validationResult, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
+const getValidationError = require('@/utils/getValidationError');
 
 module.exports = {
   post: [
@@ -29,8 +30,8 @@ module.exports = {
 
       profile.socials = profile.socials.filter(social => social._id != id);
 
-      const validationErrors = profile.validateSync();
-      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+      const validationError = getValidationError(profile);
+      if (validationError) return response.sendError(validationError, 400);
 
       await profile.save();
 

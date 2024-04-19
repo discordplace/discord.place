@@ -6,6 +6,7 @@ const Review = require('@/schemas/Server/Review');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const getValidationError = require('@/utils/getValidationError');
 
 module.exports = {
   post: [
@@ -46,8 +47,8 @@ module.exports = {
         content
       });
 
-      const validationErrors = review.validateSync();
-      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+      const validationError = getValidationError(review);
+      if (validationError) return response.sendError(validationError, 400);
 
       await review.save();
 

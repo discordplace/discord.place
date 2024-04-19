@@ -12,6 +12,7 @@ const Review = require('@/schemas/Server/Review');
 const inviteLinkValidation = require('@/validations/servers/inviteLink');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const getValidationError = require('@/utils/getValidationError');
 
 module.exports = {
   get: [
@@ -153,8 +154,8 @@ module.exports = {
         voice_activity_enabled: voice_activity_enabled || false
       });
 
-      const validationErrors = newServer.validateSync();
-      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+      const validationError = getValidationError(newServer);
+      if (validationError) return response.sendError(validationError, 400);
 
       await newServer.save();
 
@@ -255,8 +256,8 @@ module.exports = {
         if (!newVoiceActivityEnabled) await VoiceActivity.deleteOne({ 'guild.id': id });
       }
 
-      const validationErrors = server.validateSync();
-      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+      const validationError = getValidationError(server);
+      if (validationError) return response.sendError(validationError, 400);
 
       if (!server.isModified()) return response.sendError('No changes were made.', 400);
 

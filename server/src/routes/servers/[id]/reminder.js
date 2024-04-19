@@ -5,6 +5,7 @@ const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const bodyParser = require('body-parser');
+const getValidationError = require('@/utils/getValidationError');
 
 module.exports = {
   post: [
@@ -36,8 +37,8 @@ module.exports = {
         }
       });
 
-      const validationErrors = newReminder.validateSync();
-      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+      const validationError = getValidationError(newReminder);
+      if (validationError) return response.sendError(validationError, 400);
 
       await newReminder.save();
 

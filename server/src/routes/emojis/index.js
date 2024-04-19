@@ -5,11 +5,12 @@ const { body, validationResult, matchedData } = require('express-validator');
 const nameValidation = require('@/validations/emojis/name');
 const categoriesValidation = require('@/validations/emojis/categories');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
-const Emoji = require('@/src/schemas/Emoji');
-const EmojiPack = require('@/src/schemas/Emoji/Pack');
+const Emoji = require('@/schemas/Emoji');
+const EmojiPack = require('@/schemas/Emoji/Pack');
 const crypto = require('node:crypto');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const getValidationError = require('@/utils/getValidationError');
 
 const multer = require('multer');
 const upload = multer({
@@ -80,8 +81,8 @@ module.exports = {
           }))
         });
 
-        const validationErrors = emojiPack.validateSync();
-        if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+        const validationError = getValidationError(emojiPack);
+        if (validationError) return response.sendError(validationError, 400);
 
         await emojiPack.save();
 
@@ -161,8 +162,8 @@ module.exports = {
           approved: false
         });
 
-        const validationErrors = emoji.validateSync();
-        if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+        const validationError = getValidationError(emoji);
+        if (validationError) return response.sendError(validationError, 400);
 
         await emoji.save();
 

@@ -6,6 +6,7 @@ const Profile = require('@/schemas/Profile');
 const Premium = require('@/schemas/Premium');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const getValidationError = require('@/utils/getValidationError');
 
 module.exports = {
   post: [
@@ -46,8 +47,8 @@ module.exports = {
         preferredHost
       });
 
-      const validationErrors = newProfile.validateSync();
-      if (validationErrors) return response.sendError('An unknown error occurred.', 400);
+      const validationError = getValidationError(newProfile);
+      if (validationError) return response.sendError(validationError, 400);
 
       await newProfile.save();
 
