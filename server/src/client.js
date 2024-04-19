@@ -7,7 +7,6 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
 const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
-const logger = require('./utils/middlewares/logger');
 
 module.exports = class Client {
   constructor() {
