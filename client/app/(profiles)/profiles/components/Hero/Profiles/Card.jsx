@@ -23,7 +23,7 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
               alt='Banner'
             />
 
-            <div className='bg-gradient-to-t from-secondary via-secondary/90 absolute left-0 top-0 w-full h-[100px]' />
+            <div className='bg-gradient-to-t from-secondary via-secondary/80 absolute left-0 top-0 w-full h-[100px]' />
           </>
         )}
 
