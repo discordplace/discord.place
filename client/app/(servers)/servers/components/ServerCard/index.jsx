@@ -94,12 +94,14 @@ export default function ServerCard(props) {
             className='absolute top-[-25px] left-4 bg-secondary group-hover:bg-tertiary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
           />
 
-          <div className={cn(
-            'flex items-center justify-center text-secondary text-sm absolute top-[20px] font-bold rounded-full transition-colors w-[20px] h-[20px] left-[60px]',
-            props.index === 0 ? 'bg-yellow-600/10 text-yellow-500 backdrop-blur-lg' : 'bg-secondary group-hover:bg-tertiary'
-          )}>
-            {props.index + 1}.
-          </div>
+          {typeof props.index === 'number' && (
+            <div className={cn(
+              'flex items-center justify-center text-secondary text-sm absolute top-[20px] font-bold rounded-full transition-colors w-[20px] h-[20px] left-[60px]',
+              props.index === 0 ? 'bg-yellow-600/10 text-yellow-500 backdrop-blur-lg' : 'bg-secondary group-hover:bg-tertiary'
+            )}>
+              {props.index + 1}.
+            </div>
+          )}
         </div>
 
         <div className='flex flex-col px-4 pt-12'>
