@@ -102,6 +102,7 @@ export default function Profiles() {
                     >
                       <ProfileCard 
                         avatar_url={profile.avatar_url}
+                        banner_url={profile.banner_url}
                         username={profile.username}
                         occupation={profile.occupation || null}
                         gender={profile.gender || null}

@@ -7,11 +7,26 @@ import { AiFillHeart } from 'react-icons/ai';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import CopyButton from '@/app/components/CopyButton';
+import cn from '@/lib/cn';
 
-export default function Card({ avatar_url, username, occupation, gender, location, birthday, bio, views, likes, verified, preferredHost, slug, badges }) {
+export default function Card({ banner_url, avatar_url, username, occupation, gender, location, birthday, bio, views, likes, verified, preferredHost, slug, badges }) {
   return (
     <div className='bg-secondary w-[300px] h-[350px] rounded-md flex flex-col'>
-      <div className='flex items-center px-4 pt-4 gap-x-4'>
+      <div className='relative flex items-center px-4 pt-4 gap-x-4'>
+        {banner_url && (
+          <>
+            <Image
+              className='rounded-t-md w-full object-cover pointer-events-none h-[100px] z-0 absolute left-0 top-0'
+              width={300}
+              height={100}
+              src={banner_url || '/profile-banners/default.png'}
+              alt='Banner'
+            />
+
+            <div className='bg-gradient-to-t from-secondary via-secondary/90 absolute left-0 top-0 w-full h-[100px]' />
+          </>
+        )}
+
         <Image 
           className='rounded-full w-[64px] h-[64px] z-10'
           width={300}
@@ -38,7 +53,10 @@ export default function Card({ avatar_url, username, occupation, gender, locatio
         </div>
       </div>
       
-      <div className='block w-full h-[2px] bg-tertiary my-4' />
+      <div className={cn(
+        'block my-4',
+        !banner_url && 'w-full h-[2px] bg-tertiary'
+      )} />
 
       <div className='flex flex-wrap gap-2 px-4'>
         <span className='flex items-center px-2 py-2 text-sm font-medium rounded bg-tertiary gap-x-1 text-secondary'>

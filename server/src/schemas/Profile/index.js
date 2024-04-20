@@ -92,10 +92,16 @@ const ProfileSchema = new Schema({
     async toPubliclySafe() {
       const newProfile = {};
   
-      const user = client.users.cache.get(this.user.id) || await client.users.fetch(this.user.id).catch(() => null);
+      if (!client.forceFetchedUsers.has(this.user.id)) {
+        await client.users.fetch(this.user.id, { force: true }).catch(() => null);
+        client.forceFetchedUsers.set(this.user.id, true);
+      }
+
+      const user = client.users.cache.get(this.user.id);      
       if (user) Object.assign(newProfile, {
         username: user.username,
-        avatar_url: user.displayAvatarURL({ size: 256 })
+        avatar_url: user.displayAvatarURL({ size: 256 }),
+        banner_url: user.bannerURL({ size: 512, format: 'png' })
       });
 
       const premium = await Premium.findOne({ 'user.id': this.user.id });
