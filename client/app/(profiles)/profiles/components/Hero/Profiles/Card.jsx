@@ -24,6 +24,12 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
             />
 
             <div className='bg-gradient-to-t from-secondary via-secondary/80 absolute left-0 top-0 w-full h-[100px]' />
+          
+            {banner_url.includes('.gif') && (
+              <div className='absolute top-1.5 right-1.5 pointer-events-none text-white backdrop-blur-2xl shadow-xl shadow-black px-2 py-0.5 rounded-full font-bold text-xs'>
+                GIF
+              </div>
+            )}
           </>
         )}
 
