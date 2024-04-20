@@ -19,7 +19,7 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
               className='rounded-t-md w-full object-cover pointer-events-none h-[100px] z-0 absolute left-0 top-0'
               width={300}
               height={100}
-              src={banner_url || '/profile-banners/default.png'}
+              src={banner_url}
               alt='Banner'
             />
 
