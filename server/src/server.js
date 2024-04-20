@@ -82,6 +82,7 @@ module.exports = class Server {
     });
 
     this.server.use(session({
+      name: 'discordplace.sid',
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
