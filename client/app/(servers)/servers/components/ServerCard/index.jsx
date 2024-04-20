@@ -2,112 +2,147 @@ import Link from 'next/link';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import cn from '@/lib/cn';
 import useSearchStore from '@/stores/servers/search';
 import { MdKeyboardVoice } from 'react-icons/md';
 import { HiOutlineStatusOnline, HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import { IoHeart } from 'react-icons/io5';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import Image from 'next/image';
+import { useMedia } from 'react-use';
+import cn from '@/lib/cn';
 
-export default function ServerCard({ server, index }) {
-  const sort = useSearchStore(state => state.sort);
+export default function ServerCard(props) {
+  const isMobile = useMedia('(max-width: 420px)', false);
+  const storedSort = useSearchStore(state => state.sort);
+  const sort = props.overridedSort || storedSort;
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
     notation: 'compact'
   });
 
+  const infos = [
+    {
+      icon: IoHeart,
+      value: null,
+      condition: props.server.premium === true && !isMobile,
+      transform: () => 'Premium'
+    },
+    {
+      icon: FaUsers,
+      value: props.server.data.members,
+      condition: true
+    },
+    {
+      icon: TbSquareRoundedChevronUp,
+      value: props.server.data.votes,
+      condition: sort === 'Votes'
+    },
+    {
+      icon: MdKeyboardVoice,
+      value: props.server.data.voice,
+      condition: sort === 'Voice'
+    },
+    {
+      icon: HiOutlineStatusOnline,
+      value: props.server.data.online,
+      condition: sort === 'Online'
+    },
+    {
+      icon: HiSortAscending,
+      value: props.server.joined_at,
+      condition: sort === 'Newest',
+      transform: date => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    },
+    {
+      icon: HiSortDescending,
+      value: props.server.joined_at,
+      condition: sort === 'Oldest',
+      transform: date => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    },
+    {
+      icon: TiStar,
+      value: props.server.data.boosts,
+      condition: sort === 'Boosts'
+    }
+  ];
+
   return (
-    <Link
-      className={cn(
-        'relative h-[80px] overflow-clip w-full rounded-xl flex items-center bg-secondary hover:bg-quaternary',
-        index === 0 && 'border-2 border-yellow-500 bg-gradient-to-r from-yellow-500/20',
-        index === 1 && 'border-2 border-gray-500 bg-gradient-to-r from-gray-500/20'
-      )} 
-      key={index}
-      href={`/servers/${server.id}`}
+    <Link 
+      className='w-full h-[240px] relative overflow-y-clip group cursor-pointer border border-primary rounded-3xl' 
+      href={`/servers/${props.server.id}`}
     >
-      <ServerIcon 
-        width={50}
-        height={50}
-        icon_url={server.icon_url}
-        name={server.name}
-        className='ml-4 rounded-xl z-[3] w-[32px] h-[32px] mobile:w-[50px] mobile:h-[50px]'
-      />
+      {props.server.banner_url ? (
+        <Image
+          className='absolute top-0 left-0 z-[1] w-full h-[calc(100%_-_1px)] rounded-3xl'
+          src={props.server.banner_url}
+          alt={`${props.server.name}'s banner`}
+          width={350}
+          height={200}
+        />
+      ) : (
+        <div className='absolute top-0 left-0 z-[1] bg-quaternary w-full h-[calc(100%_-_1px)] rounded-3xl' />
+      )}
+      <div className='bg-secondary group-hover:bg-tertiary transition-colors w-full h-[calc(100%_-_30px)] z-[2] relative top-[30px] rounded-b-3xl rounded-t-[1.5rem]'>
+        <div className='relative'>
+          <ServerIcon
+            icon_url={props.server.icon_url}
+            name={props.server.name}
+            width={64}
+            height={64}
+            className='absolute top-[-25px] left-4 bg-secondary group-hover:bg-tertiary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
+          />
 
-      <div className='flex flex-1 w-full h-full mx-4 z-[3] justify-between'>
-        <div className='flex flex-col justify-center'>
-          <h1 className='text-base max-w-[130px] mobile:max-w-[200px] sm:max-w-[400px] lg:max-w-[500px] font-bold truncate mobile:text-xl text-primary'>
-            {server.name}
-          </h1>
-          <div className='flex gap-x-2 sm:gap-x-4'>
-            <span className='flex items-center text-xs font-medium mobile:text-sm text-tertiary gap-x-2'>
-              {formatter.format(server.data.members)} <FaUsers />
-            </span>
-                
-            <span className='flex items-center text-xs font-medium mobile:text-sm text-tertiary gap-x-2'>
-              {server.category} <BiSolidCategory />
-            </span>
-
-            {server.premium && (
-              <span className='flex items-center text-xs font-medium mobile:text-sm text-tertiary gap-x-2'>
-                Premium <IoHeart />
-              </span>
-            )}
+          <div className={cn(
+            'flex items-center justify-center text-secondary text-sm absolute top-[20px] font-bold rounded-full transition-colors w-[20px] h-[20px] left-[60px]',
+            props.index === 0 && 'bg-yellow-600/10 text-yellow-500 backdrop-blur-lg',
+            props.index === 1 && 'bg-gray-600/20 text-gray-500 backdrop-blur-lg',
+            props.index > 2 && 'bg-secondary group-hover:bg-tertiary'
+          )}>
+            {props.index + 1}.
           </div>
         </div>
 
-        <div className='flex items-center'>
-          <div className='h-[40px] text-primary text-sm mobile:text-xl gap-x-2 font-bold items-center flex justify-center'>
-            {sort === 'Votes' && (
-              <>
-                {server.data.votes}
-                <TbSquareRoundedChevronUp />
-              </>
-            )}
+        <div className='flex flex-col px-4 pt-12'>
+          <div className='flex items-center gap-x-2'>
+            <h3 className='text-lg font-semibold truncate'>
+              {props.server.name}
+            </h3>
 
-            {sort === 'Voice' && (
-              <>
-                {server.data.voice}
-                <MdKeyboardVoice />
-              </>
+            {props.server.premium && (
+              <Image
+                src='/profile-badges/premium.svg'
+                alt='Premium badge'
+                width={20}
+                height={20}
+                className='w-[14px] h-[14px]'
+              />
             )}
+          </div>
+          <p 
+            className='mt-1 overflow-hidden text-sm text-tertiary min-h-[40px]' 
+            style={{
+              display: '-webkit-box',
+              WebkitLineClamp: '2',
+              WebkitBoxOrient: 'vertical'
+            }}
+          >
+            {props.server.description || 'This server does not have a description. We can only imagine how beautiful it is inside.'}
+          </p>
 
-            {sort === 'Members' && (
-              <>
-                {server.data.members}
-                <FaUsers />
-              </>
-            )}
+          <div className='flex items-center mt-3 gap-x-3'>
+            {infos.filter(info => info.condition === true).map(info => (
+              <div key={info.icon} className='flex gap-x-1.5 items-center text-sm'>
+                <info.icon className='text-tertiary' />
+                <span className='text-secondary'>{info.transform ? info.transform(info.value) : formatter.format(info.value)}</span>
+              </div>
+            ))}
+          </div>
 
-            {sort === 'Online' && (
-              <>
-                {server.data.online}
-                <HiOutlineStatusOnline />
-              </>
-            )}
-
-            {sort === 'Newest' && (
-              <>
-                {new Date(server.joined_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                <HiSortAscending />
-              </>
-            )}
-
-            {sort === 'Oldest' && (
-              <>
-                {new Date(server.joined_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                <HiSortDescending />
-              </>
-            )}
-
-            {sort === 'Boosts' && (
-              <>
-                {server.data.boosts}
-                <TiStar />
-              </>
-            )}
+          <div className='flex items-center px-2.5 py-1 mt-3 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
+            <BiSolidCategory />
+            {props.server.category}
           </div>
         </div>
       </div>

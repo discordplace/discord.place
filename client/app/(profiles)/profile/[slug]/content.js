@@ -86,7 +86,7 @@ export default function Content({ profile }) {
           <Social data={profile.socials} />
         </div>
 
-        {profile.servers.length > 0 && <Servers data={profile.servers} />}
+        {profile.servers.length > 0 && <Servers profile={profile} />}
       </div>
     </div>
   );

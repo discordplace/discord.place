@@ -27,7 +27,6 @@ import config from '@/config';
 const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
 
 export default function Hero() {
-
   const { category, setCategory, sort, setSort, search, setSearch, loading, servers, fetchServers, page, setPage, totalServers, limit } = useSearchStore(useShallow(state => ({
     category: state.category,
     setCategory: state.setCategory,
@@ -74,7 +73,7 @@ export default function Hero() {
   const showPagination = !loading && totalServers > limit;
 
   return (
-    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 sm:px-0">
+    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 lg:px-0">
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
       <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
@@ -178,7 +177,10 @@ export default function Hero() {
       </motion.div>
 
       <div className='max-w-[800px] w-full flex flex-col my-8 gap-y-2'>
-        <div className='flex flex-col flex-1 w-full gap-y-2'>
+        <div className={cn(
+          'w-full',
+          (loading || servers.length <= 0) ? 'flex items-center justify-center' : 'grid grid-cols-1 sm:grid-cols-2 gap-4'
+        )}>
           <AnimatePresence>
             {loading ? (
               <motion.div variants={stateVariants} initial='hidden' animate='visible' exit='hidden'>
@@ -207,11 +209,12 @@ export default function Hero() {
                   </motion.div>
                 ) : (
                   servers.map(server => (
-                    <motion.div 
+                    <motion.div
                       key={server.id}
                       initial={{ opacity: 0, y: -25 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ ...sequenceTransition, delay: servers.indexOf(server) * 0.2 }}
+                      transition={{ ...sequenceTransition, delay: (servers.indexOf(server) * 0.2) }}
+                      className='flex'
                     >
                       <ServerCard server={server} index={servers.indexOf(server)} />
                     </motion.div>

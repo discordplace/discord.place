@@ -3,6 +3,7 @@
 
 html, body {
   width: 100%;
+  min-width: 320px !important;
   background-color: rgba(var(--bg-background)) !important;
   color: rgba(var(--text-primary));
   --light-bg-background: 238, 238, 238;

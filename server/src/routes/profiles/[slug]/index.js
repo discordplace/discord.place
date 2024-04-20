@@ -60,7 +60,8 @@ module.exports = {
               online_members: guild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size,
               votes: server.votes,
               category: server.category,
-              keywords: server.keywords
+              keywords: server.keywords,
+              joined_at: guild.joinedTimestamp
             };
           })
         });
