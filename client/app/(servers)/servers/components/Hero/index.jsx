@@ -213,7 +213,7 @@ export default function Hero() {
                       key={server.id}
                       initial={{ opacity: 0, y: -25 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ ...sequenceTransition, delay: (servers.indexOf(server) * 0.2) }}
+                      transition={{ ...sequenceTransition, delay: (servers.indexOf(server) * 0.1) }}
                       className='flex'
                     >
                       <ServerCard server={server} index={servers.indexOf(server)} />
