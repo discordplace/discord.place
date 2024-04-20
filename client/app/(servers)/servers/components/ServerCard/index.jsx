@@ -96,8 +96,7 @@ export default function ServerCard(props) {
 
           <div className={cn(
             'flex items-center justify-center text-secondary text-sm absolute top-[20px] font-bold rounded-full transition-colors w-[20px] h-[20px] left-[60px]',
-            props.index === 0 && 'bg-yellow-600/10 text-yellow-500 backdrop-blur-lg',
-            props.index > 2 && 'bg-secondary group-hover:bg-tertiary'
+            props.index === 0 ? 'bg-yellow-600/10 text-yellow-500 backdrop-blur-lg' : 'bg-secondary group-hover:bg-tertiary'
           )}>
             {props.index + 1}.
           </div>
