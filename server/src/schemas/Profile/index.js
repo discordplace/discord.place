@@ -101,7 +101,7 @@ const ProfileSchema = new Schema({
       if (user) Object.assign(newProfile, {
         username: user.username,
         avatar_url: user.displayAvatarURL({ size: 256 }),
-        banner_url: user.bannerURL({ size: 512, format: 'png' })
+        banner_url: user.bannerURL({ size: 256, format: 'png' })
       });
 
       const premium = await Premium.findOne({ 'user.id': this.user.id });
