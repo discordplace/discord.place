@@ -95,6 +95,7 @@ module.exports = {
               icon_url: guild.iconURL({ dynamic: true }),
               banner_url: guild.bannerURL({ format: 'png', size: 512 }),
               category: server.category,
+              description: server.description,
               premium: premiumUserIds.some(premium => premium.user.id === guild.ownerId),
               joined_at: guild.joinedTimestamp,
               data
