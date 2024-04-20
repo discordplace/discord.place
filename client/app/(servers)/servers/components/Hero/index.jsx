@@ -208,15 +208,15 @@ export default function Hero() {
                     </button>
                   </motion.div>
                 ) : (
-                  servers.map(server => (
+                  servers.map((server, index) => (
                     <motion.div
                       key={server.id}
                       initial={{ opacity: 0, y: -25 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ ...sequenceTransition, delay: (servers.indexOf(server) * 0.1) }}
+                      transition={{ ...sequenceTransition, delay: (index * 0.1) }}
                       className='flex'
                     >
-                      <ServerCard server={server} index={servers.indexOf(server)} />
+                      <ServerCard server={server} index={index} />
                     </motion.div>
                   ))
                 )}
