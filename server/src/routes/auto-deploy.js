@@ -10,9 +10,10 @@ module.exports = {
     bodyParser.json(),
     async (request, response) => {
       const modifiedServerFiles = request.body.commits.reduce((acc, commit) => {
-        commit.modified.forEach(file => {
-          if (file.startsWith('server/')) acc.push(file);
-        });
+        commit.modified.filter(file => file.startsWith('server/')).forEach(file => acc.push(file));
+        commit.added.filter(file => file.startsWith('server/')).forEach(file => acc.push(file));
+        commit.removed.filter(file => file.startsWith('server/')).forEach(file => acc.push(file));
+        
         return acc;
       }, []);
 
