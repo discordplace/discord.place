@@ -25,7 +25,7 @@ module.exports = {
       
       var reminderTime = parseTimeDuration(when);
       if (!reminderTime) return interaction.reply({ content: 'Invalid time duration. You can use `1d`, `1h`, `1m`, `1s` for days, hours, minutes, and seconds respectively.', ephemeral: true });
-      if (reminderTime < 60000) return interaction.reply({ content: 'The reminder time must be at least 1 minute.', ephemeral: true });
+      if (reminderTime < (60000 * 5)) return interaction.reply({ content: 'The reminder time must be at least 5 minutes.', ephemeral: true });
 
       await interaction.deferReply({ ephemeral: true });
 
