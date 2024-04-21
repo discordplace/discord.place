@@ -31,6 +31,8 @@ Model.watch().on('change', async data => {
     const metadata = await MetadataModel.findOne({ documentId: documentKey._id });
     if (!metadata) return;
 
+    await metadata.deleteOne();
+
     const user = await client.users.fetch(metadata.userId).catch(() => null);
     if (!user) return;
 
@@ -51,7 +53,6 @@ Model.watch().on('change', async data => {
     ];
 
     channel.send({ content: `You can vote again for the server **${guild.name}**.`, components });
-    await metadata.deleteOne();
   }
 
   if (operationType === 'insert') {
