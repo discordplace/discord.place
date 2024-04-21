@@ -7,6 +7,8 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
 const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
+const ReminderMetadata = require('@/schemas/Reminder/Metadata');
+const Reminder = require('@/schemas/Reminder');
 
 module.exports = class Client {
   constructor() {
@@ -77,6 +79,7 @@ module.exports = class Client {
       if (options.startup.updatePanelMessages) this.updatePanelMessages();
       if (options.startup.updateClientActivity) this.updateClientActivity();
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
+      if (options.startup.checkReminerMetadatas) this.checkReminerMetadatas();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', this.checkVoiceActivity, null, true, 'Europe/Istanbul');
@@ -175,5 +178,12 @@ module.exports = class Client {
     VoteReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
       .then(deleted => logger.send(`Deleted ${deleted.deletedCount} vote reminder metadata.`))
       .catch(error => logger.send(`Failed to delete vote reminder metadata:\n${error.stack}`));
+  }
+
+  async checkReminerMetadatas() {
+    const reminders = await Reminder.find();
+    ReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
+      .then(deleted => logger.send(`Deleted ${deleted.deletedCount} reminder metadata.`))
+      .catch(error => logger.send(`Failed to delete reminder metadata:\n${error.stack}`));
   }
 };
