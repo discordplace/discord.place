@@ -19,7 +19,10 @@ module.exports = async interaction => {
         data.filter(option => {
           if (interaction.options.getFocused() === '') return true;
           else return option.name.toLowerCase().includes(interaction.options.getFocused().toLowerCase());
-        }).slice(0, 25)
+        }).slice(0, 25).map(option => {
+          if (option.name.length >= 100) option.name = option.name.slice(0, 97) + '...';
+          return option;
+        })
       );
     };
 
