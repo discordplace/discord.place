@@ -44,7 +44,7 @@ Model.watch().on('change', async data => {
     const embeds = new Discord.EmbedBuilder()
       .setTitle(`Reminder | ID: ${metadata.documentId}`)
       .setColor('Random')
-      .setDescription(`You created a reminder on ${new Date(metadata.createdAt).toLocaleDateString('en-US', { dateStyle: 'full', timeStyle: 'short' })}.`)
+      .setDescription(`You created a reminder on ${new Date(metadata.createdAt).toLocaleDateString('en-US', { dateStyle: 'medium' })}.`)
       .setFields([
         {
           name: 'About',
