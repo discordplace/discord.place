@@ -41,16 +41,18 @@ Model.watch().on('change', async data => {
     const channel = user.dmChannel || await user.createDM().catch(() => null);
     if (!channel) return;
 
-    const embeds = new Discord.EmbedBuilder()
-      .setTitle(`Reminder | ID: ${metadata.documentId}`)
-      .setColor('Random')
-      .setDescription(`You created a reminder on ${new Date(metadata.createdAt).toLocaleDateString('en-US', { dateStyle: 'medium' })}.`)
-      .setFields([
-        {
-          name: 'About',
-          value: metadata.about
-        }
-      ]);
+    const embeds = [
+      new Discord.EmbedBuilder()
+        .setTitle(`Reminder | ID: ${metadata.documentId}`)
+        .setColor('Random')
+        .setDescription(`You created a reminder on ${new Date(metadata.createdAt).toLocaleDateString('en-US', { dateStyle: 'medium' })}.`)
+        .setFields([
+          {
+            name: 'About',
+            value: metadata.about
+          }
+        ])
+    ];
 
     channel.send({ embeds });
   }
