@@ -18,22 +18,6 @@ To get a local copy of the project up and running, follow these steps:
    cd discord.place
    ```
 
-## Getting Started
-
-To get a local copy of the project up and running, follow these steps:
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/discordplace/discord.place.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd discord.place
-   ```
-
 3. Install dependencies for the client and server:
 
    ```bash
