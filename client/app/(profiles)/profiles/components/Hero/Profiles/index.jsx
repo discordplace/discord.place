@@ -26,27 +26,33 @@ export default function Profiles() {
 
   const showPagination = !loading && count > limit;
   
-  const profileCardTransition = {
-    type: 'spring',
-    stiffness: 260,
-    damping: 20
+  const profileCardTransition = index => {
+    return {
+      type: 'spring',
+      stiffness: 260,
+      damping: 20,
+      delay: index * 0.15
+    };
   };
-  const profileCardVariants = {
-    hidden: { 
-      opacity: 0,
-      y: -50,
-      transition: profileCardTransition
-    },
-    visible: { 
-      opacity: 1,
-      y: 0,
-      transition: profileCardTransition
-    },
-    exit: { 
-      opacity: 0,
-      y: -50,
-      transition: profileCardTransition
-    }
+
+  const profileCardVariants = index => {
+    return {
+      hidden: { 
+        opacity: 0,
+        y: -50,
+        transition: profileCardTransition(index)
+      },
+      visible: { 
+        opacity: 1,
+        y: 0,
+        transition: profileCardTransition(index)
+      },
+      exit: { 
+        opacity: 0,
+        y: -50,
+        transition: profileCardTransition(index)
+      }
+    };
   };
   
   const stateVariants = {
@@ -95,7 +101,7 @@ export default function Profiles() {
                   {profiles.map(profile => (
                     <motion.div 
                       key={nanoid()} 
-                      variants={profileCardVariants}
+                      variants={profileCardVariants(profiles.indexOf(profile))}
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
