@@ -69,12 +69,12 @@ module.exports = {
         'scroll-based-appear': {
           from: {
             filter: 'blur(2px)',
-            scale: 0.95,
+            transform: 'scale(0.85)',
           },
           to: {
             opacity: 1,
             filter: 'blur(0)',
-            scale: 1,
+            transform: 'scale(1)',
           },
         }
       }
