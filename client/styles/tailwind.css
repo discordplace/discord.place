@@ -4,5 +4,5 @@
 
 .animate-scroll-based-appear {
   animation-timeline: view();
-  animation-range: entry cover 20%;
+  animation-range: entry cover 25%;
 }
