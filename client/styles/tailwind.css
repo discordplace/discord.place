@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.animate-scroll-based-appear {
+  animation-timeline: view();
+  animation-range: entry cover 20%;
+}

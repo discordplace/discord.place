@@ -47,7 +47,8 @@ module.exports = {
       animation: {
         shine: 'shine 1s infinite ease-in-out',
         loading: 'loading 3s infinite cubic-bezier(.48, -0.03, .12, .97)',
-        'logo-spin': 'logo-spin 1.5s forwards cubic-bezier(.83,-0.16,.04,1.36)'
+        'logo-spin': 'logo-spin 1.5s forwards cubic-bezier(.83,-0.16,.04,1.36)',
+        'scroll-based-appear': 'scroll-based-appear linear both'
       },
       keyframes: {
         shine: {
@@ -64,6 +65,17 @@ module.exports = {
         'logo-spin': {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' }
+        },
+        'scroll-based-appear': {
+          from: {
+            filter: 'blur(2px)',
+            scale: 0.95,
+          },
+          to: {
+            opacity: 1,
+            filter: 'blur(0)',
+            scale: 1,
+          },
         }
       }
     }

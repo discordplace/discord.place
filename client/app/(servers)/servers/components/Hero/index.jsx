@@ -214,7 +214,7 @@ export default function Hero() {
                       initial={{ opacity: 0, y: -25 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ ...sequenceTransition, delay: (index * 0.1) }}
-                      className='flex'
+                      className='flex animate-scroll-based-appear'
                     >
                       <ServerCard server={server} index={index} />
                     </motion.div>
