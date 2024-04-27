@@ -8,6 +8,7 @@ import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import CopyButton from '@/app/components/CopyButton';
 import cn from '@/lib/cn';
+import forceFetchProfile from '@/lib/request/profiles/forceFetchProfile';
 
 export default function Card({ banner_url, avatar_url, username, occupation, gender, location, birthday, bio, views, likes, verified, preferredHost, slug, badges }) {
   return (
@@ -21,6 +22,12 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
               height={100}
               src={banner_url}
               alt='Banner'
+              onError={async () => {
+                console.error(`Failed to load banner for ${slug}`);
+
+                const newBanner = await forceFetchProfile(slug);
+                if (newBanner) document.querySelector(`img[src="${banner_url}"]`).src = newBanner;
+              }}
             />
 
             <div className='bg-gradient-to-t from-secondary via-secondary/80 absolute left-0 top-0 w-full h-[100px]' />
