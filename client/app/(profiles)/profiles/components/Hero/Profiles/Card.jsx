@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { MdOutlineMale, MdOutlineFemale, MdLocationPin } from 'react-icons/md';
 import { LiaBirthdayCakeSolid } from 'react-icons/lia';
@@ -9,12 +11,15 @@ import config from '@/config';
 import CopyButton from '@/app/components/CopyButton';
 import cn from '@/lib/cn';
 import forceFetchProfile from '@/lib/request/profiles/forceFetchProfile';
+import { useState } from 'react';
 
 export default function Card({ banner_url, avatar_url, username, occupation, gender, location, birthday, bio, views, likes, verified, preferredHost, slug, badges }) {
+  const [isBannerFailed, setIsBannerFailed] = useState(false);
+  
   return (
     <div className='bg-secondary w-[300px] h-[350px] rounded-md flex flex-col'>
       <div className='relative flex items-center px-4 pt-4 gap-x-4'>
-        {banner_url && (
+        {!isBannerFailed && banner_url && (
           <>
             <Image
               className='rounded-t-md w-full object-cover pointer-events-none h-[100px] z-0 absolute left-0 top-0'
@@ -27,6 +32,7 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
 
                 const newBanner = await forceFetchProfile(slug);
                 if (newBanner) document.querySelector(`img[src="${banner_url}"]`).src = newBanner;
+                else setIsBannerFailed(true);
               }}
             />
 
