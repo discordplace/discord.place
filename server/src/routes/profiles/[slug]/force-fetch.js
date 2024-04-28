@@ -1,12 +1,10 @@
 const Profile = require('@/schemas/Profile');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
 const { param, validationResult, matchedData } = require('express-validator');
 
 module.exports = {
   get: [
-    checkAuthentication,
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('slug')
       .isString().withMessage('Slug must be a string.')
