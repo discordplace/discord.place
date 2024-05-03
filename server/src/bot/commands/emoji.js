@@ -43,7 +43,14 @@ module.exports = {
           name: `${pack.name}_${pack.emoji_ids.indexOf(emoji) + 1}`,
           reason: `Uploaded by @${interaction.user.username} (${interaction.user.id}) from pack ${packId}. ${index} of ${pack.emoji_ids.length} emojis.`
         }).catch(() => null);
-        if (!createdEmoji) return message.edit({ content: `Failed uploading ${index}. Emoji. Skipping.. **${pack.emoji_ids.length - index} seconds** estimated.` });
+        if (!createdEmoji) {
+          message.edit({ content: `Failed uploading ${index}. Emoji. Skipping.. **${pack.emoji_ids.length - index} seconds** estimated.` });
+          logger.send(`Failed to upload emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
+          
+          await sleep(1000);
+          
+          continue;
+        }
   
         logger.send(`Uploaded emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
         createdEmojis.push({ emoji: createdEmoji, index });
