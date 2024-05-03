@@ -6,7 +6,6 @@ import Social from '@/app/(profiles)/profile/[slug]/components/sections/Social';
 import About from '@/app/(profiles)/profile/[slug]/components/sections/About';
 import Actions from '@/app/(profiles)/profile/[slug]/components/sections/Actions';
 import incrementViews from '@/lib/request/profiles/incrementViews';
-import { nanoid } from 'nanoid';
 import Tooltip from '@/app/components/Tooltip';
 import { useEffect } from 'react';
 import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers';
@@ -66,7 +65,7 @@ export default function Content({ profile }) {
           {profile.badges.length > 0 && (
             <div className='flex items-center ml-4 gap-x-2'>
               {profile.badges.map(badge => (
-                <Tooltip key={nanoid()} content={badge}>
+                <Tooltip key={badge} content={badge}>
                   <MotionImage 
                     src={`/profile-badges/${badge.toLowerCase()}.svg`} 
                     width={24} 
