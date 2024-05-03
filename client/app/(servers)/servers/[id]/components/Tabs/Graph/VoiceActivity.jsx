@@ -17,6 +17,9 @@ export default function VoiceActivityGraph({ server }) {
           ?.map(activity => activity.data)
       }],
       chart: {
+        animations: {
+          enabled: false
+        },
         type: 'area',
         height: 350,
         zoom: {
