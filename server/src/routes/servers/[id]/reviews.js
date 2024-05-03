@@ -54,7 +54,7 @@ module.exports = {
 
       const embeds = [
         new Discord.EmbedBuilder()
-          .setAuthor({ name: request.user.username, iconURL: request.member.user.displayAvatarURL() })
+          .setAuthor({ name: request.user.username, iconURL: request.user.displayAvatarURL() })
           .setTitle('New Review')
           .setFields([
             {
