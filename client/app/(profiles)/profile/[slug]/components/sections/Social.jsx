@@ -1,7 +1,6 @@
 'use client';
 
 import useThemeStore from '@/stores/theme';
-import { nanoid } from 'nanoid';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoEarth } from 'react-icons/io5';
@@ -53,7 +52,7 @@ export default function Social({ data }) {
         {data.map((social, index) => (
           <motion.div 
             className='flex w-full h-10 rounded-lg px-2 text-sm font-semibold bg-[rgb(var(--brand-color))]/10 items-center justify-between gap-x-2 text-secondary'
-            key={nanoid()}
+            key={social.link}
             style={{
               '--brand-color': colors[social.type]
             }}
