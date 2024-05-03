@@ -1,8 +1,9 @@
 import { MdOutlineMale, MdOutlineFemale } from 'react-icons/md';
 import { LiaBirthdayCakeSolid } from 'react-icons/lia';
 import { FaGenderless } from 'react-icons/fa';
-import { BsEye, BsGeoAlt, BsHeartFill, BsSuitcaseLg } from 'react-icons/bs';
+import { BsEye, BsGeoAlt, BsSuitcaseLg } from 'react-icons/bs';
 import { motion } from 'framer-motion';
+import { IoMdHeartEmpty } from 'react-icons/io';
 
 export default function About({ profile }) {
   const keys = [
@@ -39,7 +40,7 @@ export default function About({ profile }) {
     {
       key: 'likes',
       label: 'Likes',
-      icon: <BsHeartFill />,
+      icon: <IoMdHeartEmpty />,
       value: profile.likes
     }
   ];
