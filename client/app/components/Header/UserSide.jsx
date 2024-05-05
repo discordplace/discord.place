@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { useWindowScroll } from 'react-use';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { TiHome } from 'react-icons/ti';
-import { RiPencilFill } from 'react-icons/ri';
+import { RiPencilFill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCircleUser } from 'react-icons/fa6';
 
 export default function UserSide({ className }) {
@@ -100,6 +100,33 @@ export default function UserSide({ className }) {
                     </DropdownMenu.Item>
                   )}
                 </div>
+                
+                <div className='flex flex-col gap-y-2'>
+                  <h2 className='text-xs font-semibold select-none text-tertiary'>
+                    Servers
+                  </h2>
+
+                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
+                    <Link href='/servers/manage' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
+                      My Servers
+                      <TiHome />
+                    </Link>
+                  </DropdownMenu.Item>
+                </div>
+
+                
+                <div className='flex flex-col gap-y-2'>
+                  <h2 className='text-xs font-semibold select-none text-tertiary'>
+                    Bots
+                  </h2>
+
+                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
+                    <Link href='/bots/manage' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
+                      My Bots
+                      <RiRobot2Fill />
+                    </Link>
+                  </DropdownMenu.Item>
+                </div>
 
                 <div className='flex flex-col gap-y-2'>
                   <h2 className='text-xs font-semibold select-none text-tertiary'>
@@ -110,19 +137,6 @@ export default function UserSide({ className }) {
                     <Link href='/emojis/create' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
                       Publish Emoji
                       <MdEmojiEmotions />
-                    </Link>
-                  </DropdownMenu.Item>
-                </div>
-
-                <div className='flex flex-col gap-y-2'>
-                  <h2 className='text-xs font-semibold select-none text-tertiary'>
-                    Servers
-                  </h2>
-
-                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                    <Link href='/servers/manage' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                      My Servers
-                      <TiHome />
                     </Link>
                   </DropdownMenu.Item>
                 </div>

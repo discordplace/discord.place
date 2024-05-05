@@ -16,6 +16,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     updateClientActivity: false,
     checkVoteReminderMetadatas: false,
     checkReminerMetadatas: false,
+    checkQuittedBots: false,
     listenEvents: false,
     listenCrons: false
   },

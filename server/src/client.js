@@ -9,6 +9,7 @@ const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
 const Reminder = require('@/schemas/Reminder');
+const Bot = require('@/schemas/Bot');
 
 module.exports = class Client {
   constructor() {
@@ -80,6 +81,7 @@ module.exports = class Client {
       if (options.startup.updateClientActivity) this.updateClientActivity();
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
       if (options.startup.checkReminerMetadatas) this.checkReminerMetadatas();
+      if (options.startup.checkQuittedBots) this.checkQuittedBots();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', this.checkVoiceActivity, null, true, 'Europe/Istanbul');
@@ -185,5 +187,17 @@ module.exports = class Client {
     ReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
       .then(deleted => logger.send(`Deleted ${deleted.deletedCount} reminder metadata.`))
       .catch(error => logger.send(`Failed to delete reminder metadata:\n${error.stack}`));
+  }
+
+  async checkQuittedBots() {
+    const bots = await Bot.find({ verified: true });
+    const members = await client.guilds.cache.get(config.guildId).members.fetch();
+
+    for (const bot of bots) {
+      if (!members.has(bot.id)) {
+        await bot.deleteOne();
+        logger.send(`Bot ${bot.id} is no longer in the server. Removed from the database.`);
+      }
+    }
   }
 };

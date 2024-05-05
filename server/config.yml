@@ -23,9 +23,14 @@ permissions:
     - '957840712404193290'
   canDeleteEmojis:
     - '957840712404193290'
+  canDeleteBots:
+    - '957840712404193290'
   canDeleteReviews:
     - '957840712404193290'
   canApproveEmojisRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
+  canApproveBotsRoles:
     - '1206354879321210900'
     - '1206355082883371049'
   canCreatePremiumCodes:
@@ -38,6 +43,9 @@ permissions:
   canEditServersRoles:
     - '1206354879321210900'
     - '1206355082883371049'
+  canEditBotsRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
   canCreateQuarantinesRoles:
     - '1206032198562742312'
     - '1206354879321210900'
@@ -48,6 +56,10 @@ serverKeywordsMaxLength: 5
 serverKeywordsMaxCharacters: 32
 serverDescriptionMaxCharacters: 256
 reviewsMaxCharacters: 256
+botShortDescriptionMinLength: 16
+botShortDescriptionMaxLength: 150
+botDescriptionMinLength: 32
+botDescriptionMaxLength: 2048
 roles:
   moderator: '1206354879321210900'
 emojiCategories:
@@ -75,9 +87,23 @@ serverCategories:
   - 'Education'
   - 'Language'
   - 'Other'
+botCategories:
+  - 'Moderation'
+  - 'Utility'
+  - 'Fun & Games'
+  - 'Music'
+  - 'Economy'
+  - 'Roleplay'
+  - 'Technology'
+  - 'Art & Design'
+  - 'Virtual Assistants'
+  - 'Social Media Integration'
+  - 'Anime & Manga'
+  - 'Other'
 emojiMaxCategoriesLength: 4
 emojiQueueChannelId: '1210805683751223377'
 reviewQueueChannelId: '1213842162828054538'
+botQueueChannelId: '1236369862259900566'
 voteLogsChannelId: '1222817883470434304'
 excludeCollectionsInBackup:
   - 'sessions'
@@ -111,4 +137,10 @@ quarantineRestrictions:
     available_to:
       - 'USER_ID'
       - 'GUILD_ID'
+  'BOTS_CREATE':
+    available_to:
+      - 'USER_ID'
+  'BOTS_VOTE':
+    available_to:
+      - 'USER_ID'
 quarantineLogsChannelId: '1226257480112406599'

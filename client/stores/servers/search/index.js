@@ -26,7 +26,7 @@ const useSearchStore = create((set, get) => ({
   servers: [],
   setServers: servers => set({ servers }),
   maxReached: false,
-  fetchServers: async (search) => {
+  fetchServers: async search => {
     const page = get().page;
     const limit = get().limit;
     const category = get().category;

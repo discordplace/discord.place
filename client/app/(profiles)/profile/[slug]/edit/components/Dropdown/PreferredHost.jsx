@@ -2,7 +2,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import cn from '@/lib/cn';
 
-export default function PreferredHostDropdown({ profile, currentlyEditingValue, setCurrentlyEditingValue }) {
+export default function PreferredHostDropdown({ currentlyEditingValue, setCurrentlyEditingValue }) {
   return (
     <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild>
@@ -16,23 +16,23 @@ export default function PreferredHostDropdown({ profile, currentlyEditingValue, 
           <DropdownMenu.Item 
             className={cn(
               'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
-              (currentlyEditingValue === 'discord.place/p' || profile.preferredHost === 'discord.place/p') ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
+              currentlyEditingValue === 'discord.place/p' ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
             )} 
             onSelect={() => setCurrentlyEditingValue('discord.place/p')}
           >
             discord.place/p
-            {(currentlyEditingValue === 'discord.place/p' || profile.preferredHost === 'discord.place/p') && <IoMdCheckmarkCircle />}
+            {currentlyEditingValue === 'discord.place/p' && <IoMdCheckmarkCircle />}
           </DropdownMenu.Item>
 
           <DropdownMenu.Item 
             className={cn(
               'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
-              (currentlyEditingValue === 'dsc.wtf' || profile.preferredHost === 'dsc.wtf') ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
+              currentlyEditingValue === 'dsc.wtf' ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
             )} 
             onSelect={() => setCurrentlyEditingValue('dsc.wtf')}
           >
             dsc.wtf
-            {(currentlyEditingValue === 'dsc.wtf' || profile.preferredHost === 'dsc.wtf') && <IoMdCheckmarkCircle />}
+            {currentlyEditingValue === 'dsc.wtf' && <IoMdCheckmarkCircle />}
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

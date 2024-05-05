@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const VoteTimeoutSchema = new Schema({
+const ServerVoteTimeoutSchema = new Schema({
   user: {
     id: {
       type: String,
@@ -18,6 +18,6 @@ const VoteTimeoutSchema = new Schema({
   timestamps: true
 });
 
-VoteTimeoutSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 });
+ServerVoteTimeoutSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 });
 
-module.exports = mongoose.model('VoteTimeouts', VoteTimeoutSchema);
+module.exports = mongoose.model('ServerVoteTimeouts', ServerVoteTimeoutSchema);

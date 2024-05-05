@@ -25,8 +25,7 @@ export default function Footer() {
         },
         {
           label: 'Bots',
-          href: '#',
-          disabled: true
+          href: '/bots'
         },
         {
           label: 'Emojis',

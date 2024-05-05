@@ -9,6 +9,7 @@ const Review = require('@/schemas/Server/Review');
 const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
 const getValidationError = require('@/utils/getValidationError');
+const Bot = require('@/schemas/Bot');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -20,7 +21,8 @@ const S3 = new S3Client({
   }
 });
 
-const denyReasons = ['Reposted Emoji', 'Background Transparency', 'Whitespace', 'Incoherent Emoji Package Content', 'Offensive or Inappropriate Content', 'Copyright Infringement', 'Clear Representation'];
+const emojisDenyReasons = ['Reposted Emoji', 'Background Transparency', 'Whitespace', 'Incoherent Emoji Package Content', 'Offensive or Inappropriate Content', 'Copyright Infringement', 'Clear Representation'];
+const botsDenyReasons = ['Reposted Bot', 'Offensive or Inappropriate Content', 'Against to Discord Terms of Service', 'Not Online or Inviteable', 'Base Functionality is Broken', 'Copied Bot', 'Has Vulnerability', 'Support for Slash Commands'];
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -38,7 +40,7 @@ module.exports = {
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected emoji.')
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...denyReasons.map(reason => ({ name: reason, value: reason }))))))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...emojisDenyReasons.map(reason => ({ name: reason, value: reason }))))))
 
     .addSubcommandGroup(group => group.setName('premium').setDescription('premium')
       .addSubcommand(subcommand => subcommand.setName('generate-code').setDescription('Generates new premium code.'))
@@ -67,6 +69,13 @@ module.exports = {
       .addSubcommand(subcommand => subcommand.setName('find').setDescription('Finds a quarantine entry.')
         .addStringOption(option => option.setName('type').setDescription('The type of the quarantine entry.').setRequired(true).addChoices(...config.quarantineTypes.map(type => ({ name: type, value: type }))))
         .addStringOption(option => option.setName('value').setDescription('The value of the quarantine entry. (User ID, Server ID, etc.)').setRequired(true))))
+
+    .addSubcommandGroup(group => group.setName('bots').setDescription('bots')
+      .addSubcommand(subcommand => subcommand.setName('approve').setDescription('Approves the selected bot.')
+        .addStringOption(option => option.setName('bot').setDescription('Bot to approve.').setRequired(true).setAutocomplete(true)))
+      .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected bot.')
+        .addStringOption(option => option.setName('bot').setDescription('Bot to deny.').setRequired(true).setAutocomplete(true))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...botsDenyReasons.map(reason => ({ name: reason, value: reason }))))))
 
     .toJSON(),
   execute: async interaction => {
@@ -121,7 +130,7 @@ module.exports = {
   
         await emoji.updateOne({ approved: true });
   
-        const publisher = await interaction.guild.members.fetch(emoji.user.id, { force: true }).catch(() => null);
+        const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been approved!` });
@@ -151,7 +160,7 @@ module.exports = {
           .then(async () => {
             await emoji.deleteOne();
   
-            const publisher = await interaction.guild.members.fetch(emoji.user.id, { force: true }).catch(() => null);
+            const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
             if (publisher) {
               const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
               if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.username}\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` });
@@ -163,6 +172,61 @@ module.exports = {
             logger.send(`There was an error during delete the emoji ${emoji.id}:\n${error.stack}`); 
             return interaction.followUp({ content: 'An error occurred during the emoji deletion process.' });
           });
+      }
+    }
+
+    if (group === 'bots') {
+      if (subcommand === 'approve') {
+        if (!config.permissions.canApproveBotsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+
+        await interaction.deferReply();
+
+        const id = interaction.options.getString('bot');
+
+        const botUser = await client.users.fetch(id).catch(() => null);
+        if (!botUser) return interaction.followUp({ content: 'Bot not found.' });
+
+        const bot = await Bot.findOne({ id });
+        if (!bot) return interaction.followUp({ content: 'Bot not found.' });
+
+        if (bot.verified === true) return interaction.followUp({ content: 'Bot is already verified.' });
+        
+        await bot.updateOne({ verified: true });
+
+        const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
+        if (publisher) {
+          const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour bot **${botUser.username}** has been approved!` });
+        }
+
+        return interaction.followUp({ content: 'Bot approved.' });
+      }
+
+      if (subcommand === 'deny') {
+        if (!config.permissions.canApproveBotsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+
+        await interaction.deferReply();
+
+        const id = interaction.options.getString('bot');
+        const reason = interaction.options.getString('reason');
+
+        const botUser = await client.users.fetch(bot.id).catch(() => null);
+        if (!botUser) return interaction.followUp({ content: 'Bot not found.' });
+
+        const bot = await Bot.findOne({ id });
+        if (!bot) return interaction.followUp({ content: 'Bot not found.' });
+
+        if (bot.verified === true) return interaction.followUp({ content: 'Bot is already verified.' });
+
+        await bot.deleteOne();
+
+        const publisher = await interaction.guild.members.fetch(bot.user.id).catch(() => null);
+        if (publisher) {
+          const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` });
+        }
+
+        return interaction.followUp({ content: 'Bot denied.' });
       }
     }
 
@@ -214,7 +278,7 @@ module.exports = {
         const guild = client.guilds.cache.get(review.server.id);
         if (!guild) return interaction.followUp({ content: 'Server not found.' });
 
-        const publisher = await interaction.guild.members.fetch(review.user.id, { force: true }).catch(() => null);
+        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${guild.name}** has been approved!` });
@@ -239,7 +303,7 @@ module.exports = {
         const guild = client.guilds.cache.get(review.server.id);
         if (!guild) return interaction.followUp({ content: 'Server not found.' });
 
-        const publisher = await interaction.guild.members.fetch(review.user.id, { force: true }).catch(() => null);
+        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${interaction.options.getString('reason')}` });
@@ -497,6 +561,15 @@ ${formattedQuarantinesText}`);
   
         const emojis = (await Emoji.find({ approved: false })).concat(await EmojiPack.find({ approved: false }));
         return interaction.customRespond(emojis.map(emoji => ({ name: `${emoji.name}${emoji.emoji_ids ? '' : `.${emoji.animated ? 'gif' : 'png'}`} | ID: ${emoji.id} | Pack: ${emoji.emoji_ids ? 'Yes' : 'No'}`, value: emoji.id })));
+      }
+    }
+
+    if (group === 'bots') {
+      if (subcommand === 'approve' || subcommand === 'deny') {
+        if (!config.permissions.canApproveBotsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return;
+
+        const bots = await Bot.find({ verified: false });
+        return interaction.customRespond(bots.map(bot => ({ name: `${bot.id}`, value: bot.id })));
       }
     }
 

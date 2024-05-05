@@ -231,7 +231,7 @@ module.exports = {
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);
 
-      const canEdit = request.user.id === guild.ownerId || config.permissions.canEditServersRoles.some(roleId => request.member.roles.cache.has(roleId));
+      const canEdit = request.user.id === guild.ownerId || (request.member && config.permissions.canEditServersRoles.some(roleId => request.member.roles.cache.has(roleId)));
       if (!canEdit) return response.sendError('You can\'t edit this server.', 403);
 
       const server = await Server.findOne({ id });
