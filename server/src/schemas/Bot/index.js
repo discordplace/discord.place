@@ -61,7 +61,7 @@ const BotSchema = new Schema({
       default: Date.now
     }
   },
-  commands_count: {
+  command_count: {
     value: {
       type: Number,
       default: 0
@@ -164,8 +164,8 @@ const BotSchema = new Schema({
         categories: this.categories,
         servers: this.server_count.value,
         servers_updated_at: this.server_count.updatedAt,
-        commands: this.commands_count.value,
-        commands_updated_at: this.commands_count.updatedAt,
+        commands: this.command_count.value,
+        commands_updated_at: this.command_count.updatedAt,
         votes: this.votes,
         verified: this.verified,
         voters: [

@@ -11,16 +11,16 @@ module.exports = {
     body('server_count')
       .isInt({ min: 0 }).withMessage('Server count must be a positive integer.')
       .optional(),
-    body('commands_count')
+    body('command_count')
       .isInt({ min: 0 }).withMessage('Commands count must be a positive integer.')
       .optional(),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
       
-      const { id, server_count, commands_count } = matchedData(request);
+      const { id, server_count, command_count } = matchedData(request);
 
-      if (!server_count && !commands_count) return response.sendError('Server count or commands count is required.', 400);
+      if (!server_count && !command_count) return response.sendError('Server count or commands count is required.', 400);
 
       const apiKey = request.headers['authorization'];
       if (!apiKey) return response.sendError('Authorization header is required.', 401);
@@ -35,7 +35,7 @@ module.exports = {
       if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
 
       if (server_count) bot.server_count = { value: server_count, updatedAt: new Date() };
-      if (commands_count) bot.commands_count = { value: commands_count, updatedAt: new Date() };
+      if (command_count) bot.command_count = { value: command_count, updatedAt: new Date() };
 
       await bot.save();
 

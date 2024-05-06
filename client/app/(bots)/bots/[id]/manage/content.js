@@ -402,7 +402,7 @@ export default function Content({ bot }) {
                       </h3>
  
                       <code className='p-2 mt-2 text-sm font-medium whitespace-pre-wrap rounded-lg text-tertiary bg-secondary'>
-                        {'{\n  "server_count": 0,\n  "commands_count": 0\n}'}
+                        {'{\n  "server_count": 0,\n  "command_count": 0\n}'}
                       </code>
                     </div>
                   </div>
