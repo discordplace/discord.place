@@ -26,7 +26,7 @@ export default function TopVoters({ server }) {
       .catch(error => toast.error(error))
       .finally(() => setLoading(false));
         
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (
