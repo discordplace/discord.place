@@ -42,7 +42,16 @@ export default function NewBot({ owned_servers }) {
   function addBot() {
     setLoading(true);
 
-    toast.promise(createBot(botId, { short_description: botShortDescription, description: botDescription, invite_url: botInviteUrl, categories: botCategories, support_server_id: botSupportServerId }), {
+    const botData = {
+      short_description: botShortDescription,
+      description: botDescription,
+      invite_url: botInviteUrl,
+      categories: botCategories
+    };
+
+    if (botSupportServerId) botData.support_server_id = botSupportServerId;
+
+    toast.promise(createBot(botId, botData), {
       loading: `Adding ${botId}..`,
       success: () => {
         setTimeout(() => router.push(`/bots/${botId}`), 3000);

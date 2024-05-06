@@ -80,7 +80,16 @@ export default function Content({ bot }) {
     
     setLoading(true);
 
-    toast.promise(editBot(currentBot.id, { newDescription, newShortDescription, newInviteUrl, newCategories, newSupportServerId }), {
+    const newBotData = {
+      newDescription,
+      newShortDescription,
+      newInviteUrl,
+      newCategories
+    };
+
+    if (newSupportServerId) newBotData.newSupportServerId = newSupportServerId;
+
+    toast.promise(editBot(currentBot.id, newBotData), {
       loading: 'Saving changes..',
       success: newBot => {
         setLoading(false);
