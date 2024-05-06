@@ -16,7 +16,7 @@ export default function Tabs({ server }) {
       label: 'Top Voters',
       id: 'topVoters',
       component: <TopVoters server={server} />,
-      disabled: server.voters.length === 0
+      disabled: server.votes <= 0
     },
     {
       label: 'Voice Activity',
