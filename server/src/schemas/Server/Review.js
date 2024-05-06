@@ -31,4 +31,4 @@ const ServerReviewSchema = new Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Reviews', ServerReviewSchema);
+module.exports = mongoose.model('ServerReviews', ServerReviewSchema);
