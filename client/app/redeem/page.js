@@ -108,7 +108,7 @@ export default function Page() {
             </div>
             <div className='flex items-center text-sm font-medium gap-x-2 text-secondary'>
               <TbSquareRoundedChevronUp />
-              All your servers will get double the votes!
+              All your servers/bots will get double the votes!
             </div>
             <span className='text-xs italic font-medium text-tertiary'>
               Stay tuned for upcoming benefits! 
