@@ -3,6 +3,7 @@
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 import { useState } from 'react';
 import getOwnedBots from '@/lib/request/auth/getOwnedBots';
+import getOwnedServers from '@/lib/request/auth/getOwnedServers';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 import BotCard from '@/app/(bots)/bots/manage/components/BotCard';
@@ -13,11 +14,17 @@ import useManageStore from '@/stores/bots/manage';
 
 export default function Page() {
   const [bots, setBots] = useState([]);
+  const [servers, setServers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getOwnedBots()
       .then(data => setBots(data))
+      .finally(() => setLoading(false))
+      .catch(toast.error);
+
+    getOwnedServers()
+      .then(data => setServers(data))
       .finally(() => setLoading(false))
       .catch(toast.error);
   }, []);
@@ -65,7 +72,7 @@ export default function Page() {
             </div>
           </>
         ) : (
-          selectedBot === 'new' && <NewBot />
+          selectedBot === 'new' && <NewBot owned_servers={servers} />
         )}
       </div>
     </AuthProtected>

@@ -14,8 +14,9 @@ import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
 import { TbLoader } from 'react-icons/tb';
 import Markdown from '@/app/components/Markdown';
+import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 
-export default function NewBot() {
+export default function NewBot({ owned_servers }) {
   const setSelectedBot = useManageStore(state => state.setSelectedBot);
 
   const descriptionRef = useRef(null);
@@ -28,6 +29,7 @@ export default function NewBot() {
   const [botDescription, setBotDescription] = useState('');
   const [botInviteUrl, setBotInviteUrl] = useState('');
   const [botCategories, setBotCategories] = useState([]);
+  const [botSupportServerId, setBotSupportServerId] = useState('');
 
   useEffect(() => {
     if (markdownPreviewing === false) descriptionRef.current.innerText = botDescription;
@@ -40,7 +42,7 @@ export default function NewBot() {
   function addBot() {
     setLoading(true);
 
-    toast.promise(createBot(botId, { short_description: botShortDescription, description: botDescription, invite_url: botInviteUrl, categories: botCategories }), {
+    toast.promise(createBot(botId, { short_description: botShortDescription, description: botDescription, invite_url: botInviteUrl, categories: botCategories, support_server_id: botSupportServerId }), {
       loading: `Adding ${botId}..`,
       success: () => {
         setTimeout(() => router.push(`/bots/${botId}`), 3000);
@@ -69,6 +71,7 @@ export default function NewBot() {
             setBotShortDescription('');
             setBotDescription('');
             setBotCategories([]);
+            setBotSupportServerId('');
             setSelectedBot(null);
           }}>
             <MdChevronLeft size={24} />
@@ -197,6 +200,43 @@ export default function NewBot() {
               ))}
             </div>
 
+            <h2 className='flex items-center mt-8 text-lg font-semibold gap-x-2'>
+              Support Server <span className='text-xs font-normal select-none text-tertiary'>(optional)</span>
+            </h2>
+
+            <p className='text-sm sm:text-base text-tertiary'>
+              You can select a server that users can join to get support for your bot. This is optional.<br/>
+              You can only select servers that you listed on discord.place.
+            </p>
+            
+            {owned_servers.filter(server => server.is_created).length <= 0 ? (
+              <p className='mt-4 text-sm text-tertiary'>
+                You don{'\''}t have any servers listed on discord.place.
+              </p>
+            ) : (
+              <div className='grid grid-cols-1 gap-4 mt-4 mobile:grid-cols-2 sm:grid-cols-4 lg:grid-cols-5'>
+                {owned_servers.filter(server => server.is_created).map(server => (
+                  <button 
+                    className="flex flex-col bg-tertiary hover:bg-quaternary p-2 rounded-xl w-full h-[180px] items-center cursor-pointer overflow-clip relative"
+                    key={server.id}
+                    onClick={() => setBotSupportServerId(oldServerId => oldServerId === server.id ? '' : server.id)}
+                  >
+                    <div className='relative'>
+                      <ServerIcon width={128} height={128} icon_url={server.icon_url} name={server.name} />
+                      <div className={cn(
+                        'absolute w-full h-full text-3xl text-primary transition-opacity rounded-lg flex items-center justify-center bg-secondary/60 z-[0] top-0 left-0',
+                        botSupportServerId !== server.id && 'opacity-0'
+                      )}>
+                        <IoMdCheckmarkCircle />
+                      </div>
+                    </div>
+                
+                    <h1 className="w-full max-w-full mt-2 text-base font-medium text-center truncate">{server.name}</h1>
+                  </button>
+                ))}
+              </div>
+            )}
+            
             <h2 className='mt-8 text-lg font-semibold'>
               Content Policy
             </h2>
@@ -234,6 +274,7 @@ export default function NewBot() {
                   setBotShortDescription('');
                   setBotDescription('');
                   setBotCategories([]);
+                  setBotSupportServerId('');
                   setSelectedBot(null);
                 }}
                 disabled={loading}

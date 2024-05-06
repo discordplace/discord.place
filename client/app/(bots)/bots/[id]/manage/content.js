@@ -14,6 +14,7 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import deleteBot from '@/lib/request/bots/deleteBot';
 import createApiKey from '@/lib/request/bots/createApiKey';
 import deleteApiKey from '@/lib/request/bots/deleteApiKey';
+import getOwnedServers from '@/lib/request/auth/getOwnedServers';
 import { useRouter } from 'next-nprogress-bar';
 import revalidateBot from '@/lib/revalidate/bot';
 import Image from 'next/image';
@@ -21,6 +22,7 @@ import Markdown from '@/app/components/Markdown';
 import cn from '@/lib/cn';
 import CopyButton from '@/app/components/CopyButton';
 import Tooltip from '@/app/components/Tooltip';
+import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 
 export default function Content({ bot }) {
   const [currentBot, setCurrentBot] = useState(bot);
@@ -28,13 +30,22 @@ export default function Content({ bot }) {
   const [newDescription, setNewDescription] = useState(currentBot.description);
   const [newInviteUrl, setNewInviteUrl] = useState(currentBot.invite_url);
   const [newCategories, setNewCategories] = useState(currentBot.categories);
+  const [newSupportServerId, setNewSupportServerId] = useState(currentBot.support_server?.id || '');
 
   const descriptionRef = useRef(null);
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
   const [domLoaded, setDomLoaded] = useState(false);
+  const [ownedServersLoading, setOwnedServersLoading] = useState(true);
+  const [ownedServers, setOwnedServers] = useState([]);
 
   useEffect(() => {
     setDomLoaded(true);
+    setOwnedServersLoading(true);
+
+    getOwnedServers()
+      .then(data => setOwnedServers(data))
+      .catch(toast.error)
+      .finally(() => setOwnedServersLoading(false));
 
     return () => setDomLoaded(false);
   }, []);
@@ -57,18 +68,19 @@ export default function Content({ bot }) {
       newShortDescription !== currentBot.short_description ||
       newDescription !== currentBot.description ||
       newInviteUrl !== currentBot.invite_url ||
-      newCategories.length !== currentBot.categories.length
+      newCategories.length !== currentBot.categories.length ||
+      newSupportServerId !== (currentBot.support_server?.id || '')
     );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newDescription, newShortDescription, newInviteUrl, newCategories]);
+  }, [newDescription, newShortDescription, newInviteUrl, newCategories, newSupportServerId]);
 
   async function save() {
     if (!anyChangesMade) return toast.error('No changes were made.');
     
     setLoading(true);
 
-    toast.promise(editBot(currentBot.id, { newDescription, newShortDescription, newInviteUrl, newCategories }), {
+    toast.promise(editBot(currentBot.id, { newDescription, newShortDescription, newInviteUrl, newCategories, newSupportServerId }), {
       loading: 'Saving changes..',
       success: newBot => {
         setLoading(false);
@@ -270,6 +282,49 @@ export default function Content({ bot }) {
             ))}
           </div>
 
+          <h2 className='flex items-center mt-8 text-lg font-semibold gap-x-2'>
+            Support Server <span className='text-xs font-normal select-none text-tertiary'>(optional)</span>
+          </h2>
+
+          <p className='text-sm sm:text-base text-tertiary'>
+            You can select a server that users can join to get support for your bot. This is optional.<br/>
+            You can only select servers that you listed on discord.place.
+          </p>
+          
+          {ownedServersLoading ? (
+            <div className='mt-4 rounded-lg flex items-center justify-center w-full h-[100px] bg-secondary'>
+              <TbLoader className='text-2xl text-tertiary animate-spin' />
+            </div>
+          ) : (
+            ownedServers.filter(server => server.is_created).length <= 0 ? (
+              <p className='mt-4 text-sm text-tertiary'>
+                You don{'\''}t have any servers listed on discord.place.
+              </p>
+            ) : (
+              <div className='grid grid-cols-1 gap-4 mt-4 mobile:grid-cols-2 sm:grid-cols-4 lg:grid-cols-5'>
+                {ownedServers.filter(server => server.is_created).map(server => (
+                  <button 
+                    className="flex flex-col bg-tertiary hover:bg-quaternary p-2 rounded-xl w-full h-[180px] items-center cursor-pointer overflow-clip relative"
+                    key={server.id}
+                    onClick={() => setNewSupportServerId(oldServerId => oldServerId === server.id ? '' : server.id)}
+                  >                     
+                    <div className='relative'>
+                      <ServerIcon width={128} height={128} icon_url={server.icon_url} name={server.name} />
+                      <div className={cn(
+                        'absolute w-full h-full text-3xl text-primary transition-opacity rounded-lg flex items-center justify-center bg-secondary/60 z-[0] top-0 left-0',
+                        newSupportServerId !== server.id && 'opacity-0'
+                      )}>
+                        <IoMdCheckmarkCircle />
+                      </div>
+                    </div>
+                
+                    <h1 className="w-full max-w-full mt-2 text-base font-medium text-center truncate">{server.name}</h1>
+                  </button>
+                ))}
+              </div>
+            )
+          )}
+
           {bot.permissions.canEditAPIKey && (
             <>
               <h2 className='mt-8 text-lg font-semibold'>
@@ -457,6 +512,7 @@ export default function Content({ bot }) {
                 setNewDescription(currentBot.description);
                 setNewInviteUrl(currentBot.invite_url);
                 setNewCategories(currentBot.categories);
+                setNewSupportServerId(currentBot.support_server?.id || '');
               }}
               disabled={!anyChangesMade || loading}
             >

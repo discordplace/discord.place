@@ -51,6 +51,10 @@ const BotSchema = new Schema({
       message: error => error.message
     }
   },
+  support_server_id: {
+    type: String,
+    required: false
+  },
   server_count: {
     value: {
       type: Number,

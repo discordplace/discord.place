@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const keywordsValidation = require('@/validations/servers/keywords');
+const Bot = require('@/schemas/Bot');
 
 const ServerSchema = new Schema({
   id: {
@@ -90,6 +91,10 @@ const ServerSchema = new Schema({
       };
     }
   }
+});
+
+ServerSchema.post('remove', async function (doc) {
+  await Bot.updateMany({ support_server_id: doc.id }, { support_server_id: null });
 });
 
 module.exports = mongoose.model('Server', ServerSchema);

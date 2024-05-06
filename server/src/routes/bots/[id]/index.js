@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { param, body, validationResult, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Bot = require('@/schemas/Bot');
+const Server = require('@/schemas/Server');
 const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
@@ -75,6 +76,19 @@ module.exports = {
         responseData.api_key = apiKey;
       }
 
+      if (bot.support_server_id) {
+        const server = await Server.findOne({ id: bot.support_server_id });
+        if (server) {
+          const guild = client.guilds.cache.get(bot.support_server_id);
+          if (guild) responseData.support_server = {
+            id: guild.id,
+            name: guild.name,
+            icon_url: guild.iconURL({ format: 'png', size: 128 }),
+            category: server.category
+          };
+        }
+      }
+
       return response.json(responseData);
     }
   ],
@@ -99,11 +113,15 @@ module.exports = {
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
+    body('support_server_id')
+      .optional()
+      .isString().withMessage('Support server ID should be a string.')
+      .isLength({ min: 17, max: 19 }).withMessage('Support server ID must be between 17 and 19 characters.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
   
-      const { id, short_description, description, invite_url, categories } = matchedData(request);
+      const { id, short_description, description, invite_url, categories, support_server_id } = matchedData(request);
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE' },
@@ -118,6 +136,17 @@ module.exports = {
 
       const botFound = await Bot.findOne({ id: user.id });
       if (botFound) return response.sendError('Bot already exists.', 400);
+
+      if (support_server_id) {
+        const botWithExactSupportServerId = await Bot.findOne({ support_server_id });
+        if (botWithExactSupportServerId) return response.sendError(`${support_server_id} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
+        
+        const server = await Server.findOne({ id: support_server_id });
+        if (!server) return response.sendError('Support server should be listed on discord.place.', 400);
+
+        const guild = client.guilds.cache.get(support_server_id);
+        if (guild.ownerId !== request.user.id) return response.sendError(`You are not the owner of ${support_server_id}.`, 400);
+      }
       
       const bot = new Bot({
         id: user.id,
@@ -128,6 +157,7 @@ module.exports = {
         description,
         invite_url,
         categories,
+        support_server_id,
         server_count: 0,
         votes: 0,
         verified: false
@@ -225,11 +255,15 @@ module.exports = {
     body('newCategories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
+    body('newSupportServerId')
+      .optional()
+      .isString().withMessage('Support server ID should be a string.')
+      .isLength({ min: 17, max: 19 }).withMessage('Support server ID must be between 17 and 19 characters.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, newShortDescription, newDescription, newInviteUrl, newCategories } = matchedData(request);
+      const { id, newShortDescription, newDescription, newInviteUrl, newCategories, newSupportServerId } = matchedData(request);
 
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
@@ -241,6 +275,19 @@ module.exports = {
 
       const canEdit = request.user.id === bot.owner.id || (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId)));
       if (!canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
+
+      if (newSupportServerId) {
+        const botWithExactSupportServerId = await Bot.findOne({ support_server_id: newSupportServerId });
+        if (botWithExactSupportServerId) return response.sendError(`${newSupportServerId} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
+
+        const server = await Server.findOne({ id: newSupportServerId });
+        if (!server) return response.sendError('Support server should be listed on discord.place.', 400);
+
+        const guild = client.guilds.cache.get(newSupportServerId);
+        if (guild.ownerId !== request.user.id) return response.sendError(`You are not the owner of ${newSupportServerId}.`, 400);
+
+        bot.support_server_id = newSupportServerId;
+      }
 
       if (newShortDescription) bot.short_description = newShortDescription;
       if (newDescription) bot.description = newDescription;

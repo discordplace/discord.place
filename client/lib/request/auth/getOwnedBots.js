@@ -1,7 +1,7 @@
 import config from '@/config';
 import axios from 'axios';
 
-export default function getOwnedServers() {
+export default function getOwnedBots() {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const url = `${config.api.url}/auth/@me/bots`;
