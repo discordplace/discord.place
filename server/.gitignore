@@ -1,4 +1,4 @@
 .vscode
 node_modules/
 .env
-src/database/backup/
+src/database/backups/
