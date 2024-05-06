@@ -210,7 +210,7 @@ module.exports = class Client {
     const url = `https://api.discord.place/bots/${client.user.id}/stats`;
     const data = {
       server_count: client.guilds.cache.size,
-      command_count: Object.keys(client.commands).length
+      command_count: client.commands.size
     };
     
     try {
