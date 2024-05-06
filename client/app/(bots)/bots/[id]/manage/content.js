@@ -278,15 +278,15 @@ export default function Content({ bot }) {
 
               {currentBot.api_key ? (
                 <>
-                  <div className='flex items-center mt-4 gap-x-4'>
-                    <div className='relative flex items-center py-1 pl-3 text-sm font-medium border-2 rounded-lg border-primary gap-x-2 bg-secondary text-tertiary'>
+                  <div className='flex flex-col-reverse gap-4 mt-4 lg:items-center lg:flex-row'>
+                    <div className='relative flex items-center py-1 text-sm font-medium border-2 rounded-lg sm:pl-3 border-primary gap-x-2 bg-secondary text-tertiary'>
                       <Tooltip 
                         content={apiKeyBlurred ? 'Click to show API Key' : 'Click to hide API Key'} 
                         side='left'
                       >
                         <span 
                           className={cn(
-                            '-mr-3 cursor-pointer select-none transition-all',
+                            'px-2 lg:px-0 lg:-mr-3 cursor-pointer select-none transition-all break-words w-full',
                             apiKeyBlurred && 'blur-[4px]'
                           )}
                           onClick={() => setApiKeyBlurred(old => !old)}
@@ -298,6 +298,7 @@ export default function Content({ bot }) {
                       <CopyButton
                         successText='Copied API Key!'
                         copyText={currentBot.api_key}
+                        className='justify-end'
                       />
                     </div>
 
@@ -371,8 +372,8 @@ export default function Content({ bot }) {
                         You can check if a user has voted for your bot using the following endpoint.
                       </p>
 
-                      <div className='flex items-center p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
-                        <span className='px-2 py-0.5 mr-1 text-xs text-white bg-green-700 rounded-lg'>GET</span> /bots/{bot.id}/voters/<span className='font-semibold text-primary'>:user_id</span>
+                      <div className='flex flex-wrap items-center p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
+                        <span className='px-2 py-0.5 mr-1 text-xs text-white bg-green-700 rounded-lg'>GET</span><span className='truncate'>/bots/{bot.id}/voters/</span><span className='font-semibold text-primary'>:user_id</span>
                       </div>
 
                       <p className='text-sm text-tertiary'>
@@ -389,8 +390,8 @@ export default function Content({ bot }) {
                         You should update your bot stats approximately every day. This will help us keep the your bot{'\''}s stats in sync with the actual stats. Do not abuse this endpoint. Abuse of this endpoint will result in your bot being quarantined.
                       </p>
 
-                      <div className='flex items-center p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
-                        <span className='px-2 py-0.5 mr-1 text-xs text-white bg-purple-600 rounded-lg'>PATCH</span> /bots/{bot.id}/stats
+                      <div className='flex flex-wrap items-center p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
+                        <span className='px-2 py-0.5 mr-1 text-xs text-white bg-purple-600 rounded-lg'>PATCH</span> <span>/bots/{bot.id}/stats</span>
                       </div>
 
                       <p className='text-sm text-tertiary'>
