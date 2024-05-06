@@ -10,6 +10,7 @@ const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
 const Reminder = require('@/schemas/Reminder');
 const Bot = require('@/schemas/Bot');
+const axios = require('axios');
 
 module.exports = class Client {
   constructor() {
@@ -89,6 +90,7 @@ module.exports = class Client {
         new CronJob('0 0 * * *', () => {
           this.checkReminerMetadatas();
           this.checkQuittedBots();
+          this.updateBotStats();
         }, null, true, 'Europe/Istanbul');
       }
     });
@@ -200,6 +202,27 @@ module.exports = class Client {
         await bot.deleteOne();
         logger.send(`Bot ${bot.id} is no longer in the server. Removed from the database.`);
       }
+    }
+  }
+
+  async updateBotStats() {
+    const url = `https://api.discord.place/bots/${client.user.id}/stats`;
+    const data = {
+      server_count: client.guilds.cache.size,
+      command_count: Object.keys(client.commands).length
+    };
+    
+    try {
+      const response = await axios.post(url, data, {
+        headers: {
+          authorization: process.env.DISCORD_PLACE_API_KEY
+        }
+      });
+
+      if (response.status === 200) logger.send('Bot stats updated on Discord Place.');
+      else logger.send(`Failed to update bot stats: ${response.data}`);
+    } catch (error) {
+      logger.send(`Failed to update bot stats:\n${error.stack}`);
     }
   }
 };
