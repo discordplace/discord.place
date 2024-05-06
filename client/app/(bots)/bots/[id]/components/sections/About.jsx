@@ -37,7 +37,7 @@ export default function About({ bot }) {
       icon: <TbBoxMultiple />,
       component: (
         <>
-          {formatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date(bot.servers_updated_at).toLocaleDateString('en-US')})</span>
+          {formatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
       )
     },
@@ -53,7 +53,7 @@ export default function About({ bot }) {
       icon: <RiSlashCommands2 />,
       component: (
         <>
-          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date(bot.commands_updated_at).toLocaleDateString('en-US')})</span>
+          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
       )
     }
