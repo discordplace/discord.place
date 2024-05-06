@@ -73,7 +73,8 @@ export default function TopVoters({ server }) {
 
                 {[0, 1, 2].includes(voters.indexOf(voter)) && (
                   <div className={cn(
-                    'absolute top-0 left-0 w-full h-full rounded-full border-2',
+                    'absolute top-0 left-0 w-full h-full rounded-full',
+                    page === 1 && 'border-2',
                     page === 1 && voters.indexOf(voter) === 0 && 'border-yellow-500',
                     page === 1 && voters.indexOf(voter) === 1 && 'border-gray-500',
                     page === 1 && voters.indexOf(voter) === 2 && 'border-yellow-900'
