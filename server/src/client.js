@@ -83,6 +83,7 @@ module.exports = class Client {
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
       if (options.startup.checkReminerMetadatas) this.checkReminerMetadatas();
       if (options.startup.checkQuittedBots) this.checkQuittedBots();
+      if (options.startup.updateBotStats) this.updateBotStats();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', this.checkVoiceActivity, null, true, 'Europe/Istanbul');
