@@ -200,7 +200,7 @@ module.exports = {
         const bot = await Bot.findOne({ id: review.bot.id });
         if (!bot) return interaction.followUp({ content: 'Bot not found.' });
 
-        const user = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
+        const user = client.users.cache.get(review.bot.id) || await client.users.fetch(review.bot.id).catch(() => null);
         if (!user) return interaction.followUp({ content: 'Bot not found.' });
   
         const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
@@ -230,7 +230,7 @@ module.exports = {
         const bot = await Bot.findOne({ id: review.bot.id });
         if (!bot) return interaction.followUp({ content: 'Bot not found.' });
 
-        const user = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
+        const user = client.users.cache.get(review.bot.id) || await client.users.fetch(review.bot.id).catch(() => null);
         if (!user) return interaction.followUp({ content: 'Bot not found.' });
 
         const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
