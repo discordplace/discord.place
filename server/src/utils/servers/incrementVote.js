@@ -40,7 +40,7 @@ async function incrementVote(guildId, userId) {
       { 'element.user.id': userId }
     ];
 
-    await server.updateOne({ id: guild.id }, updateQuery, { arrayFilters });
+    await server.updateOne(updateQuery, { arrayFilters });
   } else {
     const updateQuery = {
       $inc: {
@@ -64,7 +64,7 @@ async function incrementVote(guildId, userId) {
       }
     };
 
-    await server.updateOne({ id: guild.id }, updateQuery);
+    await server.updateOne(updateQuery);
   }
 
   await new VoteTimeout({ 
