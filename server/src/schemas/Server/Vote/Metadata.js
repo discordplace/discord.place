@@ -16,4 +16,4 @@ const MetadataSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('VoteReminderMetadata', MetadataSchema);
+module.exports = mongoose.model('ServerVoteReminderMetadata', MetadataSchema);

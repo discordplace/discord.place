@@ -23,7 +23,7 @@ const VoteReminderSchema = new Schema({
 
 VoteReminderSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 });
 
-const Model = mongoose.model('VoteReminder', VoteReminderSchema);
+const Model = mongoose.model('ServerVoteReminder', VoteReminderSchema);
 
 Model.watch().on('change', async data => {
   const { operationType, documentKey, fullDocument } = data;
