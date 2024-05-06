@@ -214,7 +214,7 @@ module.exports = class Client {
     };
     
     try {
-      const response = await axios.post(url, data, {
+      const response = await axios.patch(url, data, {
         headers: {
           authorization: process.env.DISCORD_PLACE_API_KEY
         }
