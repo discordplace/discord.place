@@ -115,6 +115,7 @@ Before running the project, you need to set up the following environment variabl
 | S3_REGION                | AWS region for Cloudflare R2                                | Yes      | Region                 |
 | S3_ENDPOINT              | AWS S3 endpoint for Cloudflare R2                           | Yes      | Endpoint               |
 | CLOUDFLARE_TURNSTILE_SECRET_KEY | Secret key for Cloudflare Turnstile integration         | Yes      | RandomString           |
+| DISCORD_PLACE_API_KEY | API key for Discord Place API | Yes | RandomString |
 | ANALYZE                  | Whether to enable bundle analysis during client build       | No       | true/false             |
 | NEXT_PUBLIC_CF_SITE_KEY  | Public key for Cloudflare integration                      | No       | SiteKey                |
 
