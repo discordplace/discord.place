@@ -143,4 +143,10 @@ quarantineRestrictions:
   'BOTS_VOTE':
     available_to:
       - 'USER_ID'
+  'BOTS_CREATE_REVIEW':
+    available_to:
+      - 'USER_ID'
+  'BOTS_CREATE_API_KEY':
+    available_to:
+      - 'USER_ID'
 quarantineLogsChannelId: '1226257480112406599'

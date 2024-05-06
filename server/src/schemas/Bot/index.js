@@ -91,6 +91,10 @@ const BotSchema = new Schema({
         vote: {
           type: Number,
           required: true
+        },
+        lastVote: {
+          type: Date,
+          default: Date.now
         }
       }
     ] 
@@ -164,30 +168,33 @@ const BotSchema = new Schema({
         commands_updated_at: this.commands_count.updatedAt,
         votes: this.votes,
         verified: this.verified,
-        voters: this.voters
+        voters: [
+          ...await Promise.all(this.voters
+            .sort((a, b) => b.vote - a.vote)
+            .map(async voter => {
+              const user = client.users.cache.get(voter.user.id) || await client.users.fetch(voter.user.id).catch(() => null);
+              
+              return {
+                user: {
+                  id: voter.user.id,
+                  username: user.username || 'Unknown',
+                  avatar_url: user.displayAvatarURL({ format: 'png', size: 256 }) || 'https://cdn.discordapp.com/embed/avatars/0.png'
+                },
+                vote: voter.vote
+              }; 
+            }))
+        ],
       };
+    },
+    encryptApiKey(apiKey) {
+      return encrypt(apiKey, process.env.BOT_API_KEY_ENCRYPT_SECRET);
     },
     getDecryptedApiKey() {
       if (!this.api_key) return null;
 
-      return decrypt(this.api_key, process.env.BOT_API_KEY_SECRET);
+      return decrypt(this.api_key, process.env.BOT_API_KEY_ENCRYPT_SECRET);
     },
   }
-});
-
-BotSchema.pre('save', function(next) {
-  if (typeof this.api_key === 'string') {
-    const secret = process.env.BOT_API_KEY_SECRET;
-    const encrypted = encrypt(this.api_key, secret);
-
-    this.api_key = {
-      iv: encrypted.iv,
-      encryptedText: encrypted.encryptedText,
-      tag: encrypted.tag
-    };
-  }
-
-  next();
 });
 
 module.exports = mongoose.model('Bot', BotSchema);

@@ -4,17 +4,23 @@ import config from '@/config';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
+import { IoReload } from 'react-icons/io5';
 import { MdChevronLeft } from 'react-icons/md';
 import { toast } from 'sonner';
 import { TbLoader } from 'react-icons/tb';
 import editBot from '@/lib/request/bots/editBot';
-import { RiErrorWarningFill, RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+import { RiErrorWarningFill, RiEyeFill, RiEyeOffFill, RiKey2Line } from 'react-icons/ri';
+import { FaRegTrashAlt } from 'react-icons/fa';
 import deleteBot from '@/lib/request/bots/deleteBot';
+import createApiKey from '@/lib/request/bots/createApiKey';
+import deleteApiKey from '@/lib/request/bots/deleteApiKey';
 import { useRouter } from 'next-nprogress-bar';
 import revalidateBot from '@/lib/revalidate/bot';
 import Image from 'next/image';
 import Markdown from '@/app/components/Markdown';
 import cn from '@/lib/cn';
+import CopyButton from '@/app/components/CopyButton';
+import Tooltip from '@/app/components/Tooltip';
 
 export default function Content({ bot }) {
   const [currentBot, setCurrentBot] = useState(bot);
@@ -40,6 +46,8 @@ export default function Content({ bot }) {
   }, [markdownPreviewing]);
   
   const [loading, setLoading] = useState(false);
+  const [apiKeyLoading, setApiKeyLoading] = useState(false);
+  const [apiKeyBlurred, setApiKeyBlurred] = useState(true);
   const [anyChangesMade, setAnyChangesMade] = useState(false);
   const [showDeleteConsent, setShowDeleteConsent] = useState(false);
   const router = useRouter();
@@ -89,6 +97,47 @@ export default function Content({ bot }) {
       },
       error: error => {
         setLoading(false);
+        return error;
+      }
+    });
+  }
+
+  async function createNewApiKey(isNew) {
+    setApiKeyLoading(true);
+
+    toast.promise(createApiKey(currentBot.id, isNew), {
+      loading: 'Creating new API key..',
+      success: apiKey => {
+        setApiKeyLoading(false);
+        setCurrentBot(oldBot => ({ ...oldBot, api_key: apiKey }));
+
+        if ('clipboard' in navigator) {
+          navigator.clipboard.writeText(apiKey);
+          return 'Successfully created new API key and copied it to clipboard!';
+        }
+
+        return 'Successfully created new API key!';
+      },
+      error: error => {
+        setApiKeyLoading(false);
+        return error;
+      }
+    });
+  }
+
+  async function continueDeleteApiKey() {
+    setApiKeyLoading(true);
+
+    toast.promise(deleteApiKey(currentBot.id), {
+      loading: 'Deleting API key..',
+      success: () => {
+        setApiKeyLoading(false);
+        setCurrentBot(oldBot => ({ ...oldBot, api_key: null }));
+
+        return 'Successfully deleted API key!';
+      },
+      error: error => {
+        setApiKeyLoading(false);
         return error;
       }
     });
@@ -220,6 +269,162 @@ export default function Content({ bot }) {
               </button>
             ))}
           </div>
+
+          {bot.permissions.canEditAPIKey && (
+            <>
+              <h2 className='mt-8 text-lg font-semibold'>
+                API Key
+              </h2>
+
+              {currentBot.api_key ? (
+                <>
+                  <div className='flex items-center mt-4 gap-x-4'>
+                    <div className='relative flex items-center py-1 pl-3 text-sm font-medium border-2 rounded-lg border-primary gap-x-2 bg-secondary text-tertiary'>
+                      <Tooltip 
+                        content={apiKeyBlurred ? 'Click to show API Key' : 'Click to hide API Key'} 
+                        side='left'
+                      >
+                        <span 
+                          className={cn(
+                            '-mr-3 cursor-pointer select-none transition-all',
+                            apiKeyBlurred && 'blur-[4px]'
+                          )}
+                          onClick={() => setApiKeyBlurred(old => !old)}
+                        >
+                          {currentBot.api_key}
+                        </span>
+                      </Tooltip>
+
+                      <CopyButton
+                        successText='Copied API Key!'
+                        copyText={currentBot.api_key}
+                      />
+                    </div>
+
+                    <div className='flex gap-x-1'>
+                      <button 
+                        className='flex items-center gap-x-1.5 px-3 py-2 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70' 
+                        onClick={() => createNewApiKey(false)}
+                        disabled={apiKeyLoading}
+                      >
+                        {apiKeyLoading ? <TbLoader className='animate-spin' /> : <IoReload />}
+                        Change API Key
+                      </button>
+
+                      <button
+                        className='flex items-center gap-x-1.5 px-3 py-[0.69rem] rounded-lg font-semibold text-white bg-red-500 w-max h-max hover:bg-red-500/70 text-sm disabled:pointer-events-none disabled:opacity-70'
+                        onClick={continueDeleteApiKey}
+                        disabled={apiKeyLoading}
+                      >
+                        {apiKeyLoading ? <TbLoader className='animate-spin' /> : <FaRegTrashAlt />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <p className='mt-2 text-sm text-tertiary'>
+                    This key should be kept secret and should not be shared with anyone.
+                  </p>
+
+                  <h2 className='mt-8 text-lg font-semibold'>
+                    API Key Usage
+                  </h2>
+
+                  <p className='text-sm text-tertiary'>
+                    You can use this key to access the API endpoints that require authentication.
+                  </p>
+
+                  <div className='flex flex-col mt-4 gap-y-6'>
+                    <div className='flex flex-col gap-y-1'>
+                      <h3 className='text-sm font-semibold'>
+                        Base API URL
+                      </h3>
+
+                      <p className='text-sm text-tertiary'>
+                        The base URL for discord.place API is as follows.
+                      </p>
+
+                      <code className='p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
+                        {config.api.url}
+                      </code>
+                    </div>
+
+                    <div className='flex flex-col gap-y-1'>
+                      <h3 className='text-sm font-semibold'>
+                        Authorization
+                      </h3>
+
+                      <p className='text-sm text-tertiary'>
+                        To authorize your bot with discord.place API, you need to send the API key in the Authorization header.
+                      </p>
+
+                      <code className='p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
+                        authorization: <span className='font-semibold text-primary'>API_KEY_HERE</span>
+                      </code>
+                    </div>
+
+                    <div className='flex flex-col gap-y-1'>
+                      <h3 className='text-sm font-semibold'>
+                        User Vote Check
+                      </h3>
+
+                      <p className='text-sm text-tertiary'>
+                        You can check if a user has voted for your bot using the following endpoint.
+                      </p>
+
+                      <div className='flex items-center p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
+                        <span className='px-2 py-0.5 mr-1 text-xs text-white bg-green-700 rounded-lg'>GET</span> /bots/{bot.id}/voters/<span className='font-semibold text-primary'>:user_id</span>
+                      </div>
+
+                      <p className='text-sm text-tertiary'>
+                        This endpoint will return a 200 status code if the user has voted for your bot. Otherwise, it will return a 404 status code.
+                      </p>
+                    </div>
+
+                    <div className='flex flex-col gap-y-1'>
+                      <h3 className='text-sm font-semibold'>
+                        Update Bot Stats
+                      </h3>
+
+                      <p className='text-sm text-tertiary'>
+                        You should update your bot stats approximately every day. This will help us keep the your bot{'\''}s stats in sync with the actual stats. Do not abuse this endpoint. Abuse of this endpoint will result in your bot being quarantined.
+                      </p>
+
+                      <div className='flex items-center p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
+                        <span className='px-2 py-0.5 mr-1 text-xs text-white bg-purple-600 rounded-lg'>PATCH</span> /bots/{bot.id}/stats
+                      </div>
+
+                      <p className='text-sm text-tertiary'>
+                        This endpoint will return a 200 status code if the stats were successfully updated.<br/>
+                      </p>
+
+                      <h3 className='mt-2 text-sm font-semibold'>
+                        Request Body
+                      </h3>
+ 
+                      <code className='p-2 mt-2 text-sm font-medium whitespace-pre-wrap rounded-lg text-tertiary bg-secondary'>
+                        {'{\n  "server_count": 0,\n  "commands_count": 0\n}'}
+                      </code>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className='text-sm text-tertiary'>
+                    You can create a new API key for your bot. This key can be used to authenticate your bot with discord.place API.
+                  </p>
+
+                  <button 
+                    className='mt-4 flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70' 
+                    onClick={() => createNewApiKey(true)}
+                    disabled={apiKeyLoading}
+                  >
+                    {apiKeyLoading ? <TbLoader className='animate-spin' /> : <RiKey2Line />}
+                    Create New API Key
+                  </button>
+                </>
+              )}
+            </>
+          )}
 
           <h2 className='mt-8 text-lg font-semibold'>
             Are you ready?

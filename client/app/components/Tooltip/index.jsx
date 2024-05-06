@@ -25,7 +25,7 @@ export default function Tooltip({ children, content, side }) {
         </RadixTooltip.Trigger>
         {content && (
           <RadixTooltip.Portal>
-            <RadixTooltip.Content 
+            <RadixTooltip.Content
               className='text-sm z-[10000] px-3 py-1 font-semibold dark:bg-white dark:text-black text-white bg-black rounded-lg [transform-origin:var(--radix-tooltip-content-transform-origin)]' 
               sideOffset={5}
               side={side || 'top'}

@@ -5,11 +5,12 @@ const EmojiPack = require('@/schemas/Emoji/Pack');
 const PremiumCode = require('@/schemas/PremiumCode');
 const Premium = require('@/schemas/Premium');
 const crypto = require('node:crypto');
-const Review = require('@/schemas/Server/Review');
+const ServerReview = require('@/schemas/Server/Review');
 const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
 const getValidationError = require('@/utils/getValidationError');
 const Bot = require('@/schemas/Bot');
+const BotReview = require('@/schemas/Bot/Review');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -70,7 +71,14 @@ module.exports = {
         .addStringOption(option => option.setName('type').setDescription('The type of the quarantine entry.').setRequired(true).addChoices(...config.quarantineTypes.map(type => ({ name: type, value: type }))))
         .addStringOption(option => option.setName('value').setDescription('The value of the quarantine entry. (User ID, Server ID, etc.)').setRequired(true))))
 
-    .addSubcommandGroup(group => group.setName('bots').setDescription('bots')
+    .addSubcommandGroup(group => group.setName('bot').setDescription('bot')
+      .addSubcommand(subcommand => subcommand.setName('review-approve').setDescription('Approves the selected bot review.')
+        .addStringOption(option => option.setName('review').setDescription('Review to approve.').setRequired(true).setAutocomplete(true)))
+      .addSubcommand(subcommand => subcommand.setName('review-deny').setDescription('Denies the selected bot review.')
+        .addStringOption(option => option.setName('review').setDescription('Review to deny.').setRequired(true).setAutocomplete(true))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...botsDenyReasons.map(reason => ({ name: reason, value: reason })))))
+      .addSubcommand(subcommand => subcommand.setName('review-delete').setDescription('Deletes the selected bot review.')
+        .addStringOption(option => option.setName('review').setDescription('Review to delete.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('approve').setDescription('Approves the selected bot.')
         .addStringOption(option => option.setName('bot').setDescription('Bot to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected bot.')
@@ -175,7 +183,79 @@ module.exports = {
       }
     }
 
-    if (group === 'bots') {
+    if (group === 'bot') {
+      if (subcommand === 'review-approve') {
+        if (!config.permissions.canApproveReviewsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+  
+        await interaction.deferReply();
+  
+        const reviewId = interaction.options.getString('review');
+        const review = await BotReview.findOne({ _id: reviewId });
+        if (!review) return interaction.followUp({ content: 'Review not found.' });
+  
+        if (review.approved === true) return interaction.followUp({ content: 'Review is already approved.' });
+  
+        await review.updateOne({ approved: true });
+  
+        const bot = await Bot.findOne({ id: review.bot.id });
+        if (!bot) return interaction.followUp({ content: 'Bot not found.' });
+
+        const user = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
+        if (!user) return interaction.followUp({ content: 'Bot not found.' });
+  
+        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
+        if (publisher) {
+          const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${user.username}** has been approved!` });
+        }
+  
+        return interaction.followUp({ content: 'Review approved.' });
+      }
+
+      if (subcommand === 'review-deny') {
+        if (!config.permissions.canApproveReviewsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+
+        await interaction.deferReply();
+
+        const reviewId = interaction.options.getString('review');
+        const reason = interaction.options.getString('reason');
+
+        const review = await BotReview.findOne({ _id: reviewId });
+        if (!review) return interaction.followUp({ content: 'Review not found.' });
+
+        if (review.approved === true) return interaction.followUp({ content: 'You can\'t deny a review that already approved.' });
+
+        await review.deleteOne();
+
+        const bot = await Bot.findOne({ id: review.bot.id });
+        if (!bot) return interaction.followUp({ content: 'Bot not found.' });
+
+        const user = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
+        if (!user) return interaction.followUp({ content: 'Bot not found.' });
+
+        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
+        if (publisher) {
+          const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your review to **${user.username}** has been denied.\n**Reason**: ${reason || 'No reason provided.'}` });
+        }
+
+        return interaction.followUp({ content: 'Review denied.' });
+      }
+
+      if (subcommand === 'review-delete') {
+        if (!config.permissions.canDeleteReviews.includes(interaction.user.id)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+
+        await interaction.deferReply();
+
+        const reviewId = interaction.options.getString('review');
+        const review = await BotReview.findOne({ _id: reviewId });
+        if (!review) return interaction.followUp({ content: 'Review not found.' });
+
+        await review.deleteOne();
+
+        return interaction.followUp({ content: 'Review deleted.' });
+      }
+
       if (subcommand === 'approve') {
         if (!config.permissions.canApproveBotsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
 
@@ -268,7 +348,7 @@ module.exports = {
         await interaction.deferReply();
 
         const reviewId = interaction.options.getString('review');
-        const review = await Review.findOne({ _id: reviewId });
+        const review = await ServerReview.findOne({ _id: reviewId });
         if (!review) return interaction.followUp({ content: 'Review not found.' });
 
         if (review.approved === true) return interaction.followUp({ content: 'Review is already approved.' });
@@ -293,7 +373,7 @@ module.exports = {
         await interaction.deferReply();
 
         const reviewId = interaction.options.getString('review');
-        const review = await Review.findOne({ _id: reviewId });
+        const review = await ServerReview.findOne({ _id: reviewId });
         if (!review) return interaction.followUp({ content: 'Review not found.' });
 
         if (review.approved === true) return interaction.followUp({ content: 'You can\'t deny a review that already approved.' });
@@ -318,7 +398,7 @@ module.exports = {
         await interaction.deferReply();
 
         const reviewId = interaction.options.getString('review');
-        const review = await Review.findOne({ _id: reviewId });
+        const review = await ServerReview.findOne({ _id: reviewId });
         if (!review) return interaction.followUp({ content: 'Review not found.' });
 
         await review.deleteOne();
@@ -564,7 +644,23 @@ ${formattedQuarantinesText}`);
       }
     }
 
-    if (group === 'bots') {
+    if (group === 'bot') {
+      if (subcommand === 'review-approve' || subcommand === 'review-deny') {
+        if (!config.permissions.canApproveReviewsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return;
+
+        const reviews = await BotReview.find({ approved: false });
+
+        return interaction.customRespond(reviews.map(review => ({ name: `Review to ${review.bot.id} | User: ${review.user.id}`, value: review._id })));
+      }
+
+      if (subcommand === 'review-delete') {
+        if (!config.permissions.canDeleteReviews.includes(interaction.user.id)) return;
+
+        const reviews = await BotReview.find();
+
+        return interaction.customRespond(reviews.map(review => ({ name: `Review to ${review.bot.id} | User: ${review.user.id}`, value: review._id })));
+      }
+
       if (subcommand === 'approve' || subcommand === 'deny') {
         if (!config.permissions.canApproveBotsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return;
 
@@ -591,7 +687,7 @@ ${formattedQuarantinesText}`);
       if (subcommand === 'review-approve' || subcommand === 'review-deny') {
         if (!config.permissions.canApproveReviewsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return;
 
-        const reviews = await Review.find({ approved: false });
+        const reviews = await ServerReview.find({ approved: false });
 
         return interaction.customRespond(reviews.map(review => ({ name: `Review to ${client.guilds.cache.get(review.server.id).name} | User: ${review.user.id}`, value: review._id })));
       }
@@ -599,7 +695,7 @@ ${formattedQuarantinesText}`);
       if (subcommand === 'review-delete') {
         if (!config.permissions.canDeleteReviews.includes(interaction.user.id)) return;
 
-        const reviews = await Review.find();
+        const reviews = await ServerReview.find();
 
         return interaction.customRespond(reviews.map(review => ({ name: `Review to ${client.guilds.cache.get(review.server.id).name} | User: ${review.user.id}`, value: review._id })));
       }

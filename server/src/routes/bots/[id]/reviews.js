@@ -1,8 +1,8 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, body, validationResult } = require('express-validator');
-const Server = require('@/schemas/Server');
-const Review = require('@/schemas/Server/Review');
+const Bot = require('@/schemas/Bot');
+const Review = require('@/schemas/Bot/Review');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
@@ -22,23 +22,25 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SERVERS_CREATE_REVIEW').catch(() => false);
-      if (userQuarantined) return response.sendError('You are not allowed to review servers.', 403);
+      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'BOTS_CREATE_REVIEW').catch(() => false);
+      if (userQuarantined) return response.sendError('You are not allowed to review bots.', 403);
 
       const { id, rating, content } = matchedData(request);
 
-      const guild = client.guilds.cache.get(id);
-      if (!guild) return response.sendError('Guild not found.', 404);
+      const user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
+      if (!user) return response.sendError('User not found.', 404);
 
-      const server = await Server.findOne({ id });
-      if (!server) return response.sendError('Server not found.', 404);
+      if (!user.bot) return response.sendError('User is not a bot.', 400);
 
-      const userReview = await Review.findOne({ 'user.id': request.user.id, 'server.id': id });
-      if (userReview) return response.sendError('You already reviewed this server.', 400);
+      const bot = await Bot.findOne({ id });
+      if (!bot) return response.sendError('Bot not found.', 404);
+
+      const userReview = await Review.findOne({ 'user.id': request.user.id, 'bot.id': id });
+      if (userReview) return response.sendError('You already reviewed this bot.', 400);
 
       const review = new Review({
-        server: {
-          id: guild.id
+        bot: {
+          id: bot.id
         },
         user: {
           id: request.user.id
@@ -60,8 +62,8 @@ module.exports = {
           .setTitle('New Review')
           .setFields([
             {
-              name: 'Server',
-              value: `${guild.name} (${guild.id})`,
+              name: 'Bot',
+              value: `${user.tag} (${user.id})`,
               inline: true
             },
             {

@@ -7,10 +7,6 @@ function decrypt(encryptedData, secret) {
   decipher.setAuthTag(Buffer.from(encryptedData.tag, 'hex'));
   const decrypted = Buffer.concat([decipher.update(Buffer.from(encryptedData.encryptedText, 'hex')), decipher.final()]);
   
-  if (!crypto.timingSafeEqual(decipher.getAuthTag(), Buffer.from(encryptedData.tag, 'hex'))) {
-    throw new Error('Authentication failed');
-  }
-  
   return decrypted.toString('utf-8');
 }
 

@@ -9,6 +9,7 @@ const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const inviteUrlValidation = require('@/utils/validations/bots/inviteUrl');
+const Review = require('@/schemas/Bot/Review');
 
 module.exports = {
   get: [
@@ -23,15 +24,30 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
+      const reviews = await Promise.all(
+        (await Review.find({ 'bot.id': id, approved: true }).sort({ createdAt: -1 }))
+          .map(async review => {
+            const user = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
+            if (user) return {
+              ...review.toJSON(),
+              user: {
+                id: user.id,
+                username: user.username,
+                avatar_url: user.displayAvatarURL({ format: 'png', size: 64 })
+              }
+            };
+          }));
+
       const permissions = {
         canDelete: request.user && (
           request.user.id === bot.owner.id ||
           config.permissions.canDeleteBots.includes(request.user.id)
         ),
         canEdit: request.user && (
-          request.user.id === bot.ownerId ||
+          request.user.id === bot.owner.id ||
           (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId)))
-        )
+        ),
+        canEditAPIKey: request.user && request.user.id === bot.owner.id
       };
 
       let vote_timeout = null;
@@ -44,12 +60,20 @@ module.exports = {
       if (botUser.flags.toArray().includes('VerifiedBot')) badges.push('Verified');
       if (publiclySafeBot.owner?.premium) badges.push('Premium');
 
-      return response.json({
+      const responseData = {
         ...publiclySafeBot,
         permissions,
         badges,
-        vote_timeout: vote_timeout
-      });
+        vote_timeout,
+        reviews
+      };
+      
+      if (permissions.canEditAPIKey && bot.api_key?.iv) {
+        const apiKey = bot.getDecryptedApiKey();
+        responseData.api_key = apiKey;
+      }
+
+      return response.json(responseData);
     }
   ],
   post: [

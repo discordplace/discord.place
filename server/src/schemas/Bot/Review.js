@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ServerReviewSchema = new Schema({
-  server: {
+const BotReviewSchema = new Schema({
+  bot: {
     id: {
       type: String,
       required: true
@@ -31,4 +31,4 @@ const ServerReviewSchema = new Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Reviews', ServerReviewSchema);
+module.exports = mongoose.model('BotReviews', BotReviewSchema);

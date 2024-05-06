@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import About from '@/app/(bots)/bots/[id]/components/sections/About';
 import RightSide from '@/app/(bots)/bots/[id]/components/sections/RightSide';
 import Tooltip from '@/app/components/Tooltip';
+import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';
 import { nanoid } from 'nanoid';
 
 export default function Content({ bot }) {
@@ -69,6 +70,14 @@ export default function Content({ bot }) {
           <About bot={bot} />
           <RightSide bot={bot} />
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay:  .8 }}
+        >
+          <Tabs bot={bot} />
+        </motion.div>
       </div>
     </div>
   );
