@@ -3,6 +3,7 @@ discordScopes:
 botPresenceStatus: 'online'
 rateLimitWhitelist:
   - '957840712404193290'
+  - '1207874300070199356'
 trustProxy: 1
 session:
   cookieDomain: '.discord.place'
