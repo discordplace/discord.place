@@ -5,10 +5,12 @@ const EmojiPack = require('@/schemas/Emoji/Pack');
 const PremiumCode = require('@/schemas/PremiumCode');
 const Premium = require('@/schemas/Premium');
 const crypto = require('node:crypto');
-const Review = require('@/schemas/Server/Review');
+const ServerReview = require('@/schemas/Server/Review');
 const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
 const getValidationError = require('@/utils/getValidationError');
+const Bot = require('@/schemas/Bot');
+const BotReview = require('@/schemas/Bot/Review');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -20,7 +22,8 @@ const S3 = new S3Client({
   }
 });
 
-const denyReasons = ['Reposted Emoji', 'Background Transparency', 'Whitespace', 'Incoherent Emoji Package Content', 'Offensive or Inappropriate Content', 'Copyright Infringement', 'Clear Representation'];
+const emojisDenyReasons = ['Reposted Emoji', 'Background Transparency', 'Whitespace', 'Incoherent Emoji Package Content', 'Offensive or Inappropriate Content', 'Copyright Infringement', 'Clear Representation'];
+const botsDenyReasons = ['Reposted Bot', 'Offensive or Inappropriate Content', 'Against to Discord Terms of Service', 'Not Online or Inviteable', 'Base Functionality is Broken', 'Copied Bot', 'Has Vulnerability', 'Support for Slash Commands'];
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -38,7 +41,7 @@ module.exports = {
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected emoji.')
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...denyReasons.map(reason => ({ name: reason, value: reason }))))))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...emojisDenyReasons.map(reason => ({ name: reason, value: reason }))))))
 
     .addSubcommandGroup(group => group.setName('premium').setDescription('premium')
       .addSubcommand(subcommand => subcommand.setName('generate-code').setDescription('Generates new premium code.'))
@@ -67,6 +70,20 @@ module.exports = {
       .addSubcommand(subcommand => subcommand.setName('find').setDescription('Finds a quarantine entry.')
         .addStringOption(option => option.setName('type').setDescription('The type of the quarantine entry.').setRequired(true).addChoices(...config.quarantineTypes.map(type => ({ name: type, value: type }))))
         .addStringOption(option => option.setName('value').setDescription('The value of the quarantine entry. (User ID, Server ID, etc.)').setRequired(true))))
+
+    .addSubcommandGroup(group => group.setName('bot').setDescription('bot')
+      .addSubcommand(subcommand => subcommand.setName('review-approve').setDescription('Approves the selected bot review.')
+        .addStringOption(option => option.setName('review').setDescription('Review to approve.').setRequired(true).setAutocomplete(true)))
+      .addSubcommand(subcommand => subcommand.setName('review-deny').setDescription('Denies the selected bot review.')
+        .addStringOption(option => option.setName('review').setDescription('Review to deny.').setRequired(true).setAutocomplete(true))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...botsDenyReasons.map(reason => ({ name: reason, value: reason })))))
+      .addSubcommand(subcommand => subcommand.setName('review-delete').setDescription('Deletes the selected bot review.')
+        .addStringOption(option => option.setName('review').setDescription('Review to delete.').setRequired(true).setAutocomplete(true)))
+      .addSubcommand(subcommand => subcommand.setName('approve').setDescription('Approves the selected bot.')
+        .addStringOption(option => option.setName('bot').setDescription('Bot to approve.').setRequired(true).setAutocomplete(true)))
+      .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected bot.')
+        .addStringOption(option => option.setName('bot').setDescription('Bot to deny.').setRequired(true).setAutocomplete(true))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...botsDenyReasons.map(reason => ({ name: reason, value: reason }))))))
 
     .toJSON(),
   execute: async interaction => {
@@ -121,7 +138,7 @@ module.exports = {
   
         await emoji.updateOne({ approved: true });
   
-        const publisher = await interaction.guild.members.fetch(emoji.user.id, { force: true }).catch(() => null);
+        const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been approved!` });
@@ -151,7 +168,7 @@ module.exports = {
           .then(async () => {
             await emoji.deleteOne();
   
-            const publisher = await interaction.guild.members.fetch(emoji.user.id, { force: true }).catch(() => null);
+            const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
             if (publisher) {
               const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
               if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.username}\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` });
@@ -163,6 +180,133 @@ module.exports = {
             logger.send(`There was an error during delete the emoji ${emoji.id}:\n${error.stack}`); 
             return interaction.followUp({ content: 'An error occurred during the emoji deletion process.' });
           });
+      }
+    }
+
+    if (group === 'bot') {
+      if (subcommand === 'review-approve') {
+        if (!config.permissions.canApproveReviewsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+  
+        await interaction.deferReply();
+  
+        const reviewId = interaction.options.getString('review');
+        const review = await BotReview.findOne({ _id: reviewId });
+        if (!review) return interaction.followUp({ content: 'Review not found.' });
+  
+        if (review.approved === true) return interaction.followUp({ content: 'Review is already approved.' });
+  
+        await review.updateOne({ approved: true });
+  
+        const bot = await Bot.findOne({ id: review.bot.id });
+        if (!bot) return interaction.followUp({ content: 'Bot not found.' });
+
+        const user = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
+        if (!user) return interaction.followUp({ content: 'Bot not found.' });
+  
+        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
+        if (publisher) {
+          const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${user.username}** has been approved!` });
+        }
+  
+        return interaction.followUp({ content: 'Review approved.' });
+      }
+
+      if (subcommand === 'review-deny') {
+        if (!config.permissions.canApproveReviewsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+
+        await interaction.deferReply();
+
+        const reviewId = interaction.options.getString('review');
+        const reason = interaction.options.getString('reason');
+
+        const review = await BotReview.findOne({ _id: reviewId });
+        if (!review) return interaction.followUp({ content: 'Review not found.' });
+
+        if (review.approved === true) return interaction.followUp({ content: 'You can\'t deny a review that already approved.' });
+
+        await review.deleteOne();
+
+        const bot = await Bot.findOne({ id: review.bot.id });
+        if (!bot) return interaction.followUp({ content: 'Bot not found.' });
+
+        const user = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
+        if (!user) return interaction.followUp({ content: 'Bot not found.' });
+
+        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
+        if (publisher) {
+          const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your review to **${user.username}** has been denied.\n**Reason**: ${reason || 'No reason provided.'}` });
+        }
+
+        return interaction.followUp({ content: 'Review denied.' });
+      }
+
+      if (subcommand === 'review-delete') {
+        if (!config.permissions.canDeleteReviews.includes(interaction.user.id)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+
+        await interaction.deferReply();
+
+        const reviewId = interaction.options.getString('review');
+        const review = await BotReview.findOne({ _id: reviewId });
+        if (!review) return interaction.followUp({ content: 'Review not found.' });
+
+        await review.deleteOne();
+
+        return interaction.followUp({ content: 'Review deleted.' });
+      }
+
+      if (subcommand === 'approve') {
+        if (!config.permissions.canApproveBotsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+
+        await interaction.deferReply();
+
+        const id = interaction.options.getString('bot');
+
+        const botUser = await client.users.fetch(id).catch(() => null);
+        if (!botUser) return interaction.followUp({ content: 'Bot not found.' });
+
+        const bot = await Bot.findOne({ id });
+        if (!bot) return interaction.followUp({ content: 'Bot not found.' });
+
+        if (bot.verified === true) return interaction.followUp({ content: 'Bot is already verified.' });
+        
+        await bot.updateOne({ verified: true });
+
+        const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
+        if (publisher) {
+          const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour bot **${botUser.username}** has been approved!` });
+        }
+
+        return interaction.followUp({ content: 'Bot approved.' });
+      }
+
+      if (subcommand === 'deny') {
+        if (!config.permissions.canApproveBotsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+
+        await interaction.deferReply();
+
+        const id = interaction.options.getString('bot');
+        const reason = interaction.options.getString('reason');
+
+        const botUser = await client.users.fetch(bot.id).catch(() => null);
+        if (!botUser) return interaction.followUp({ content: 'Bot not found.' });
+
+        const bot = await Bot.findOne({ id });
+        if (!bot) return interaction.followUp({ content: 'Bot not found.' });
+
+        if (bot.verified === true) return interaction.followUp({ content: 'Bot is already verified.' });
+
+        await bot.deleteOne();
+
+        const publisher = await interaction.guild.members.fetch(bot.user.id).catch(() => null);
+        if (publisher) {
+          const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` });
+        }
+
+        return interaction.followUp({ content: 'Bot denied.' });
       }
     }
 
@@ -204,7 +348,7 @@ module.exports = {
         await interaction.deferReply();
 
         const reviewId = interaction.options.getString('review');
-        const review = await Review.findOne({ _id: reviewId });
+        const review = await ServerReview.findOne({ _id: reviewId });
         if (!review) return interaction.followUp({ content: 'Review not found.' });
 
         if (review.approved === true) return interaction.followUp({ content: 'Review is already approved.' });
@@ -214,7 +358,7 @@ module.exports = {
         const guild = client.guilds.cache.get(review.server.id);
         if (!guild) return interaction.followUp({ content: 'Server not found.' });
 
-        const publisher = await interaction.guild.members.fetch(review.user.id, { force: true }).catch(() => null);
+        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${guild.name}** has been approved!` });
@@ -229,7 +373,7 @@ module.exports = {
         await interaction.deferReply();
 
         const reviewId = interaction.options.getString('review');
-        const review = await Review.findOne({ _id: reviewId });
+        const review = await ServerReview.findOne({ _id: reviewId });
         if (!review) return interaction.followUp({ content: 'Review not found.' });
 
         if (review.approved === true) return interaction.followUp({ content: 'You can\'t deny a review that already approved.' });
@@ -239,7 +383,7 @@ module.exports = {
         const guild = client.guilds.cache.get(review.server.id);
         if (!guild) return interaction.followUp({ content: 'Server not found.' });
 
-        const publisher = await interaction.guild.members.fetch(review.user.id, { force: true }).catch(() => null);
+        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${interaction.options.getString('reason')}` });
@@ -254,7 +398,7 @@ module.exports = {
         await interaction.deferReply();
 
         const reviewId = interaction.options.getString('review');
-        const review = await Review.findOne({ _id: reviewId });
+        const review = await ServerReview.findOne({ _id: reviewId });
         if (!review) return interaction.followUp({ content: 'Review not found.' });
 
         await review.deleteOne();
@@ -500,6 +644,31 @@ ${formattedQuarantinesText}`);
       }
     }
 
+    if (group === 'bot') {
+      if (subcommand === 'review-approve' || subcommand === 'review-deny') {
+        if (!config.permissions.canApproveReviewsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return;
+
+        const reviews = await BotReview.find({ approved: false });
+
+        return interaction.customRespond(reviews.map(review => ({ name: `Review to ${review.bot.id} | User: ${review.user.id}`, value: review._id })));
+      }
+
+      if (subcommand === 'review-delete') {
+        if (!config.permissions.canDeleteReviews.includes(interaction.user.id)) return;
+
+        const reviews = await BotReview.find();
+
+        return interaction.customRespond(reviews.map(review => ({ name: `Review to ${review.bot.id} | User: ${review.user.id}`, value: review._id })));
+      }
+
+      if (subcommand === 'approve' || subcommand === 'deny') {
+        if (!config.permissions.canApproveBotsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return;
+
+        const bots = await Bot.find({ verified: false });
+        return interaction.customRespond(bots.map(bot => ({ name: `${bot.id}`, value: bot.id })));
+      }
+    }
+
     if (group === 'premium') {
       if (!config.permissions.canCreatePremiumCodes.includes(interaction.user.id)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
 
@@ -518,7 +687,7 @@ ${formattedQuarantinesText}`);
       if (subcommand === 'review-approve' || subcommand === 'review-deny') {
         if (!config.permissions.canApproveReviewsRoles.some(roleId => interaction.member.roles.cache.has(roleId))) return;
 
-        const reviews = await Review.find({ approved: false });
+        const reviews = await ServerReview.find({ approved: false });
 
         return interaction.customRespond(reviews.map(review => ({ name: `Review to ${client.guilds.cache.get(review.server.id).name} | User: ${review.user.id}`, value: review._id })));
       }
@@ -526,7 +695,7 @@ ${formattedQuarantinesText}`);
       if (subcommand === 'review-delete') {
         if (!config.permissions.canDeleteReviews.includes(interaction.user.id)) return;
 
-        const reviews = await Review.find();
+        const reviews = await ServerReview.find();
 
         return interaction.customRespond(reviews.map(review => ({ name: `Review to ${client.guilds.cache.get(review.server.id).name} | User: ${review.user.id}`, value: review._id })));
       }

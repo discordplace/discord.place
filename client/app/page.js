@@ -96,15 +96,14 @@ export default function Page() {
             to='/servers' 
             index={1} 
             color='#7c3aed'
-            newBadge
           />
           <Block
             title='Bots'
-            desc='This page is currently under development.'
+            desc='Find the best Discord bots for your server.'
             to='/bots'
             index={2}
             color='#db2777'
-            disabled
+            newBadge
           />
           <Block
             title='Emojis'

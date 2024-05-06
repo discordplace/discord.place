@@ -90,6 +90,29 @@ export default function ContentPolicy() {
           </li>
         </ul>
       </p>
+
+      <h3>
+        Bots
+      </h3>
+
+      <p>
+        All Discord bots listed on this website are created by users, discord.place provides a platform for users to publish their Discord bots publicly.
+
+        <ul>
+          <li>
+            By adding a bot you agree that you are the owner of the Discord bot or have permission to add the bot on the owners behalf.
+          </li>
+          <li>
+            By adding a bot you agree to giving us unrevokable permission to display, license and redistribute the bot in any manner we see fit.
+          </li>
+          <li>
+            By adding a bot you agree that the content of the bot is not illegal, hateful, discriminatory or otherwise harmful to any person or group.
+          </li>
+          <li>
+            discord.place reserves the right to remove bots from the website at any time, without notice, for any reason, or for no reason, in its sole discretion.
+          </li>
+        </ul>
+      </p>
       
       <h2>
         2. Reporting Content
@@ -117,6 +140,14 @@ export default function ContentPolicy() {
 
       <p>
         discord.place takes harmful content very seriously. If any server is lited on this website that is harmful or copying your server without permission, we will take action to ensure the server is removed as soon as possible.
+      </p>
+
+      <h3>
+        Bots
+      </h3>
+
+      <p>
+        discord.place takes harmful content very seriously. If any bot is lited on this website that is harmful or copying your bot without permission, we will take action to ensure the bot is removed as soon as possible.
       </p>
 
       <h2>

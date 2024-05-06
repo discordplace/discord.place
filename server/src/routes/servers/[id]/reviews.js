@@ -52,14 +52,16 @@ module.exports = {
 
       await review.save();
 
+      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
+
       const embeds = [
         new Discord.EmbedBuilder()
-          .setAuthor({ name: request.user.username, iconURL: request.user.displayAvatarURL() })
+          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
           .setTitle('New Review')
           .setFields([
             {
               name: 'Server',
-              value: guild.name,
+              value: `${guild.name} (${guild.id})`,
               inline: true
             },
             {

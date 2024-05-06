@@ -154,7 +154,7 @@ export default function Edit({ profileData }) {
                       </div>
                     </>
                   ) : (
-                    <PreferredHostDropdown  profile={profile} currentlyEditingValue={currentlyEditingValue} setCurrentlyEditingValue={setCurrentlyEditingValue} />
+                    <PreferredHostDropdown profile={profile} currentlyEditingValue={currentlyEditingValue} setCurrentlyEditingValue={setCurrentlyEditingValue} />
                   )
                 ) : (
                   <input

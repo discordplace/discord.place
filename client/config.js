@@ -2,6 +2,17 @@ import { CgProfile } from 'react-icons/cg';
 import { IoPeople } from 'react-icons/io5';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { RiRobot2Fill } from 'react-icons/ri';
+import { FaShieldAlt } from 'react-icons/fa';
+import { AiFillTool } from 'react-icons/ai';
+import { BiSolidHappy } from 'react-icons/bi';
+import { IoMusicalNotesSharp } from 'react-icons/io5';
+import { GiTwoCoins } from 'react-icons/gi';
+import { ImUser } from 'react-icons/im';
+import { HiDesktopComputer } from 'react-icons/hi';
+import { HiMiniPaintBrush } from 'react-icons/hi2';
+import { RiInstagramFill } from 'react-icons/ri';
+import { MdMenuBook } from 'react-icons/md';
+import { TiPlus } from 'react-icons/ti';
 
 const config = {
   supportInviteUrl: 'https://invite.discord.place',
@@ -30,8 +41,7 @@ const config = {
       title: 'Bots',
       href: '/bots',
       icon: RiRobot2Fill,
-      iconColor: '#db2777',
-      disabled: true
+      iconColor: '#db2777'
     },
     {
       title: 'Emojis',
@@ -82,6 +92,20 @@ const config = {
     'Language',
     'Other'
   ],
+  botCategories: [
+    'Moderation',
+    'Utility',
+    'Fun & Games',
+    'Music',
+    'Economy',
+    'Roleplay',
+    'Technology',
+    'Art & Design',
+    'Virtual Assistants',
+    'Social Media Integration',
+    'Anime & Manga',
+    'Other'
+  ],
   emojiMaxCategoriesLength: 4,
   packagesMinEmojisLength: 4,
   packagesMaxEmojisLength: 9,
@@ -89,9 +113,27 @@ const config = {
   serverKeywordsMaxCharacters: 32,
   serverDescriptionMaxCharacters: 256,
   reviewsMaxCharacters: 256,
+  botShortDescriptionMinLength: 16,
+  botShortDescriptionMaxLength: 150,
+  botDescriptionMinLength: 32,
+  botDescriptionMaxLength: 2048,
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,
-  botInviteURL: 'https://bot.discord.place'
+  botInviteURL: 'https://bot.discord.place',
+  botCategoriesIcons: {
+    'Moderation': <FaShieldAlt />,
+    'Utility': <AiFillTool />,
+    'Fun & Games': <BiSolidHappy />,
+    'Music': <IoMusicalNotesSharp />,
+    'Economy': <GiTwoCoins />,
+    'Roleplay': <ImUser />,
+    'Technology': <HiDesktopComputer />,
+    'Art & Design': <HiMiniPaintBrush />,
+    'Virtual Assistants': <RiRobot2Fill />,
+    'Social Media Integration': <RiInstagramFill />,
+    'Anime & Manga': <MdMenuBook />,
+    'Other': <TiPlus />
+  }
 };
 
 export default config;

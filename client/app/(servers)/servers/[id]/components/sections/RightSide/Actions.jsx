@@ -192,7 +192,7 @@ export default function Actions({ server }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
             >
-              <s>Join Server</s>
+              <s>Join</s>
               <BiSolidEnvelope />
             </motion.div>
           </Tooltip>

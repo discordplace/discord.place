@@ -5,16 +5,20 @@ const Discord = require('discord.js');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 
 async function incrementVote(guildId, userId) {
+  const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
+  if (!user) throw new Error(`User ${userId} not found.`);
+  
   const guild = client.guilds.cache.get(guildId);
   if (!guild) throw new Error(`Guild ${guildId} not found.`);
 
   const server = await Server.findOne({ id: guild.id });
+  if (!server) throw new Error(`Server ${guild.id} not found.`);
+
   const timeout = await VoteTimeout.findOne({ 'user.id': userId, 'guild.id': guild.id });
+  if (timeout) throw new Error(`User ${userId} has already voted for server ${guild.id}.`);
+
   const ownerHasPremium = await Premium.findOne({ 'user.id': guild.ownerId });
   const incrementCount = ownerHasPremium ? 2 : 1;
-
-  if (!server) throw new Error(`Server ${guild.id} not found.`);
-  if (timeout) throw new Error(`User ${userId} has already voted for server ${guild.id}.`);
 
   if (server.voters.some(voter => voter.user.id === userId)) {
     const updateQuery = {
@@ -36,7 +40,7 @@ async function incrementVote(guildId, userId) {
       { 'element.user.id': userId }
     ];
 
-    await Server.updateOne({ id: guild.id }, updateQuery, { arrayFilters });
+    await server.updateOne({ id: guild.id }, updateQuery, { arrayFilters });
   } else {
     const updateQuery = {
       $inc: {
@@ -60,7 +64,7 @@ async function incrementVote(guildId, userId) {
       }
     };
 
-    await Server.updateOne({ id: guild.id }, updateQuery);
+    await server.updateOne({ id: guild.id }, updateQuery);
   }
 
   await new VoteTimeout({ 
@@ -74,7 +78,6 @@ async function incrementVote(guildId, userId) {
 
   updatePanelMessage(guild.id);
 
-  const user = client.users.cache.get(userId) || await client.users.fetch(userId);
   const embed = new Discord.EmbedBuilder()
     .setColor(Discord.Colors.Purple)
     .setAuthor({ name: guild.name + ' has received a vote!', iconURL: guild.iconURL() })

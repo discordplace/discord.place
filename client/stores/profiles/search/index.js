@@ -16,7 +16,7 @@ const useSearchStore = create((set, get) => ({
   totalProfiles: 0,
   count: 0,
   maxReached: false,
-  fetchProfiles: async (search) => {
+  fetchProfiles: async search => {
     const page = get().page;
     const limit = get().limit;
 

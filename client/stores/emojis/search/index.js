@@ -16,7 +16,7 @@ const useSearchStore = create((set, get) => ({
   totalEmojis: 0,
   total: 0,
   maxReached: false,
-  fetchEmojis: async (search) => {
+  fetchEmojis: async search => {
     const page = get().page;
     const limit = get().limit;
     const category = get().category;

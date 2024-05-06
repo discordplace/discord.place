@@ -124,7 +124,7 @@ export default function Page() {
                 </h2>
                 
                 <p className='text-sm sm:text-base text-tertiary'>
-                  This is the description that will be shown to everyone who visits your server on discord.place.<br/><br/>Make sure to include important information about your server.
+                  This is the description that will be shown to everyone who visits your server on discord.place.<br/>Make sure to include important information about your server.
                 </p>
 
                 <span contentEditable suppressContentEditableWarning className='block w-full h-[150px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500' onKeyUp={event => {
@@ -137,7 +137,7 @@ export default function Page() {
                 </h2>
 
                 <p className='text-sm sm:text-base text-tertiary'>
-                  Add an invite link to your server. This will be helpful for people who want to join your server.<br/><br/>Make sure to set the invite link to never expire.
+                  Add an invite link to your server. This will be helpful for people who want to join your server.<br/>Make sure to set the invite link to never expire.
                 </p>
 
                 <input
