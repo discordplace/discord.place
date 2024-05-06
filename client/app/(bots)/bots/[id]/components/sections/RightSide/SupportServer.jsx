@@ -10,7 +10,7 @@ export default function SupportServer({ bot }) {
         className='mt-4 text-xl font-semibold' 
         initial={{ opacity: 0, y: -10 }} 
         animate={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .5 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .7 }}
       >
         Support Server
       </motion.h2>
@@ -19,7 +19,7 @@ export default function SupportServer({ bot }) {
         className='flex w-full p-2 mt-4 rounded-lg hover:bg-tertiary bg-secondary gap-x-3'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .7 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .9 }}
         href={`/servers/${bot.support_server.id}`}
       >
         <ServerIcon
