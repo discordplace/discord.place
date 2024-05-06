@@ -26,7 +26,7 @@ module.exports = {
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404);
 
-      const voters = server.voters.sort((a, b) => b.votes - a.votes);
+      const voters = server.voters.sort((a, b) => b.vote - a.vote);
 
       const skip = (page - 1) * limit;
       const paginatedVoters = voters.slice(skip, skip + limit);

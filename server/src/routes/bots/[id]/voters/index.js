@@ -28,7 +28,7 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      const voters = bot.voters.sort((a, b) => b.votes - a.votes);
+      const voters = bot.voters.sort((a, b) => b.vote - a.vote);
 
       const skip = (page - 1) * limit;
       const paginatedVoters = voters.slice(skip, skip + limit);
