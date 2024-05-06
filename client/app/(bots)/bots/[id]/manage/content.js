@@ -40,7 +40,7 @@ export default function Content({ bot }) {
   }, []);
 
   useEffect(() => {
-    if (markdownPreviewing === false) descriptionRef.current.innerText = currentBot.description;
+    if (markdownPreviewing === false) descriptionRef.current.innerText = newDescription;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markdownPreviewing]);
