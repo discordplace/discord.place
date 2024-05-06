@@ -139,7 +139,7 @@ module.exports = {
 
       if (support_server_id) {
         const botWithExactSupportServerId = await Bot.findOne({ support_server_id });
-        if (botWithExactSupportServerId) return response.sendError(`${support_server_id} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
+        if (botWithExactSupportServerId && botWithExactSupportServerId.id != id) return response.sendError(`Support server ${support_server_id} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
         
         const server = await Server.findOne({ id: support_server_id });
         if (!server) return response.sendError('Support server should be listed on discord.place.', 400);
@@ -278,7 +278,7 @@ module.exports = {
 
       if (newSupportServerId) {
         const botWithExactSupportServerId = await Bot.findOne({ support_server_id: newSupportServerId });
-        if (botWithExactSupportServerId) return response.sendError(`${newSupportServerId} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
+        if (botWithExactSupportServerId && botWithExactSupportServerId.id != id) return response.sendError(`${newSupportServerId} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
 
         const server = await Server.findOne({ id: newSupportServerId });
         if (!server) return response.sendError('Support server should be listed on discord.place.', 400);
