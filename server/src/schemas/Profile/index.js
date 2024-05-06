@@ -104,7 +104,7 @@ const ProfileSchema = new Schema({
         banner_url: user.bannerURL({ size: 256, format: 'png' })
       });
 
-      const premium = await Premium.findOne({ 'user.id': this.user.id });
+      const premium = false;//await Premium.findOne({ 'user.id': this.user.id });
 
       return {
         ...newProfile,
