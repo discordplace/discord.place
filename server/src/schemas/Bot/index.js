@@ -167,23 +167,7 @@ const BotSchema = new Schema({
         commands: this.command_count.value,
         commands_updated_at: this.command_count.updatedAt,
         votes: this.votes,
-        verified: this.verified,
-        voters: [
-          ...await Promise.all(this.voters
-            .sort((a, b) => b.vote - a.vote)
-            .map(async voter => {
-              const user = client.users.cache.get(voter.user.id) || await client.users.fetch(voter.user.id).catch(() => null);
-              
-              return {
-                user: {
-                  id: voter.user.id,
-                  username: user.username || 'Unknown',
-                  avatar_url: user.displayAvatarURL({ format: 'png', size: 256 }) || 'https://cdn.discordapp.com/embed/avatars/0.png'
-                },
-                vote: voter.vote
-              }; 
-            }))
-        ],
+        verified: this.verified
       };
     },
     encryptApiKey(apiKey) {

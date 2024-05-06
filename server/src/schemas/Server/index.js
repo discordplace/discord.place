@@ -86,22 +86,6 @@ const ServerSchema = new Schema({
         keywords: this.keywords,
         invite_code: this.invite_code,
         votes: this.votes,
-        voters: [
-          ...await Promise.all(this.voters
-            .sort((a, b) => b.vote - a.vote)
-            .map(async voter => {
-              const user = client.users.cache.get(voter.user.id) || await client.users.fetch(voter.user.id).catch(() => null);
-              
-              return {
-                user: {
-                  id: voter.user.id,
-                  username: user.username || 'Unknown',
-                  avatar_url: user.displayAvatarURL({ format: 'png', size: 256 }) || 'https://cdn.discordapp.com/embed/avatars/0.png'
-                },
-                vote: voter.vote
-              }; 
-            }))
-        ],
         voice_activity_enabled: this.voice_activity_enabled
       };
     }
