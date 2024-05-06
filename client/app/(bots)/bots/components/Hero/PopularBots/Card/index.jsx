@@ -60,10 +60,13 @@ export default function Card({ data }) {
         />
 
         <div className='flex flex-col px-4 pt-12'>
-          <div className='flex items-center gap-x-2'>
-            <h3 className='text-lg font-semibold truncate'>
+          <div className='flex items-center'>
+            <span className='text-lg font-semibold truncate'>
               {data.username}
-            </h3>
+            </span>
+            <span className='ml-0.5 text-xs text-tertiary'>
+              #{data.discriminator}
+            </span>
 
             {data.owner?.premium && (
               <Image
@@ -71,7 +74,7 @@ export default function Card({ data }) {
                 alt='Premium badge'
                 width={20}
                 height={20}
-                className='w-[14px] h-[14px]'
+                className='w-[14px] h-[14px] ml-2'
               />
             )}
           </div>

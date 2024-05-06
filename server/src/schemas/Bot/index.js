@@ -155,6 +155,7 @@ const BotSchema = new Schema({
       const bot = client.users.cache.get(this.id);      
       if (bot) Object.assign(newBot, {
         username: bot.username,
+        discriminator: bot.discriminator,
         avatar_url: bot.displayAvatarURL({ size: 256 }),
         banner_url: bot.bannerURL({ size: 1024, format: 'png' })
       });

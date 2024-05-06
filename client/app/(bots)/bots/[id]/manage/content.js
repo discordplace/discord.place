@@ -173,7 +173,7 @@ export default function Content({ bot }) {
           </Link>
               
           <h1 className="flex items-center text-xl font-bold sm:text-3xl gap-x-1">
-            Manage <Image width={32} height={32} src={currentBot.avatar_url} alt={`${currentBot.username}'s avatar`} className='rounded-lg' /> <span className='truncate'>{currentBot.username}</span>
+            Manage <Image width={32} height={32} src={currentBot.avatar_url} alt={`${currentBot.username}'s avatar`} className='rounded-lg' /> <span className='truncate'>{currentBot.username}#{currentBot.discriminator}</span>
           </h1>
         </div>
               

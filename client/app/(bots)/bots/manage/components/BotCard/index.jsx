@@ -19,7 +19,7 @@ export default function ServerCard({ data }) {
           className='rounded-lg'
         />
 
-        <h1 className="w-full max-w-full mt-2 text-base font-medium text-center truncate">{data.username}</h1>
+        <h1 className="w-full max-w-full mt-2 text-base font-medium text-center truncate">{data.username}#{data.discriminator}</h1>
       </Link>
     ) : (
       <Link href={`/bots/${data.id}`} className="flex flex-col bg-tertiary hover:bg-quaternary p-2 rounded-xl w-full h-[180px] items-center cursor-pointer relative overflow-clip">
@@ -35,7 +35,7 @@ export default function ServerCard({ data }) {
           className='rounded-lg'
         />
 
-        <h1 className="w-full max-w-full mt-2 text-base font-medium text-center truncate">{data.username}</h1>
+        <h1 className="w-full max-w-full mt-2 text-base font-medium text-center truncate">{data.username}#{data.discriminator}</h1>
       </Link>
     )
   );
