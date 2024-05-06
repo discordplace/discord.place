@@ -71,7 +71,7 @@ export default function TopVoters({ bot }) {
                   className='rounded-full'
                 />
 
-                {[0, 1, 2].includes(bot.voters.indexOf(voter)) && (
+                {[0, 1, 2].includes(voters.indexOf(voter)) && (
                   <div className={cn(
                     'absolute top-0 left-0 w-full h-full rounded-full',
                     page === 1 && 'border-2',
