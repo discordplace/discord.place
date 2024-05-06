@@ -57,9 +57,9 @@ export default function TopVoters({ bot }) {
                 'flex items-center w-full gap-4 p-4 odd:bg-secondary even:bg-tertiary',
                 index === 0 && 'rounded-t-xl',
                 index === voters.length - 1 && 'rounded-b-xl',
-                voters.length > 3 && bot.voters.indexOf(voter) === 0 && 'border-x-2 border-t-2 border-yellow-500 odd:bg-yellow-500/10',
-                voters.length > 3 && bot.voters.indexOf(voter) === 1 && 'border-x-2 border-gray-500 odd:bg-gray-500/10',
-                voters.length > 3 && bot.voters.indexOf(voter) === 2 && 'border-x-2 border-b-2 border-yellow-900 odd:bg-yellow-900/10'
+                page === 1 && voters.length > 3 && voters.indexOf(voter) === 0 && 'border-x-2 border-t-2 border-yellow-500 odd:bg-yellow-500/10',
+                page === 1 && voters.length > 3 && voters.indexOf(voter) === 1 && 'border-x-2 border-gray-500 odd:bg-gray-500/10',
+                page === 1 && voters.length > 3 && voters.indexOf(voter) === 2 && 'border-x-2 border-b-2 border-yellow-900 odd:bg-yellow-900/10'
               )}
             >
               <div className='relative'>
@@ -74,9 +74,9 @@ export default function TopVoters({ bot }) {
                 {[0, 1, 2].includes(bot.voters.indexOf(voter)) && (
                   <div className={cn(
                     'absolute top-0 left-0 w-full h-full rounded-full border-2',
-                    bot.voters.indexOf(voter) === 0 && 'border-yellow-500',
-                    bot.voters.indexOf(voter) === 1 && 'border-gray-500',
-                    bot.voters.indexOf(voter) === 2 && 'border-yellow-900'
+                    page === 1 && voters.indexOf(voter) === 0 && 'border-yellow-500',
+                    page === 1 && voters.indexOf(voter) === 1 && 'border-gray-500',
+                    page === 1 && voters.indexOf(voter) === 2 && 'border-yellow-900'
                   )} />
                 )}
               </div>
