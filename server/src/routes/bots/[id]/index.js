@@ -56,6 +56,7 @@ module.exports = {
       const publiclySafeBot = await bot.toPubliclySafe();
       const botUser = client.users.cache.get(bot.id);
       const badges = [];
+      const has_reviewed = reviews.some(review => review.user.id === request.user?.id);
 
       if (botUser.flags.toArray().includes('VerifiedBot')) badges.push('Verified');
       if (publiclySafeBot.owner?.premium) badges.push('Premium');
@@ -65,7 +66,8 @@ module.exports = {
         permissions,
         badges,
         vote_timeout,
-        reviews
+        reviews,
+        has_reviewed
       };
       
       if (permissions.canEditAPIKey && bot.api_key?.iv) {
