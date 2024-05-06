@@ -28,7 +28,7 @@ module.exports = {
       if (!bot) return response.sendError('Bot not found.', 404);
 
       if (bot.owner.id !== request.user.id) return response.sendError('You are not allowed to create API keys for this bot.', 403);
-      if (bot.api_key) return response.sendError('API key already exists.', 400);
+      if (bot.api_key?.iv) return response.sendError('API key already exists.', 400);
 
       const apiKey = crypto.randomBytes(32).toString('hex');
 
