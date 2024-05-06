@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const slugValidation = require('@/validations/profiles/slug');
 const birthdayValidation = require('@/validations/profiles/birthday');
 const getBadges = require('@/utils/profiles/getBadges');
-const Premium = require('@/schemas/Premium');
 
 const ProfileSchema = new Schema({
   user: {
@@ -90,6 +89,7 @@ const ProfileSchema = new Schema({
   timestamps: true,
   methods: {
     async toPubliclySafe() {
+      const Premium = require('@/schemas/Premium');
       const newProfile = {};
   
       if (!client.forceFetchedUsers.has(this.user.id)) {
@@ -104,7 +104,7 @@ const ProfileSchema = new Schema({
         banner_url: user.bannerURL({ size: 256, format: 'png' })
       });
 
-      const premium = false;//await Premium.findOne({ 'user.id': this.user.id });
+      const premium = await Premium.findOne({ 'user.id': this.user.id });
 
       return {
         ...newProfile,
