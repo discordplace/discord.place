@@ -7,11 +7,26 @@ import RightSide from '@/app/(bots)/bots/[id]/components/sections/RightSide';
 import Tooltip from '@/app/components/Tooltip';
 import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';
 import { nanoid } from 'nanoid';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import Link from 'next/link';
+import config from '@/config';
 
 export default function Content({ bot }) {
   return (
     <div className='flex justify-center w-full mt-32'>      
       <div className='flex flex-col max-w-[1000px] w-full mb-8 px-2 lg:px-0'>
+        {!bot.verified && (
+          <div className='flex flex-col p-4 mb-4 border border-yellow-500 gap-y-2 bg-yellow-500/10 rounded-xl'>
+            <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
+              <RiErrorWarningFill />
+              Beep beep!
+            </h1>
+            <p className='text-sm font-medium text-tertiary'>
+              For the moment, only you can see the bot. Once the bot is verified, it will become public. Until then, you can come to <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>our support server</Link> and get a notification from our bot when your bot is approved. Make sure you open your DMs.
+            </p>
+          </div>
+        )}
+
         <div className='relative bg-secondary w-full h-[300px] rounded-xl'>
           {bot.banner_url && (
             <MotionImage
