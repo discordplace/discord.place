@@ -15,7 +15,7 @@ export default function Content({ bot }) {
   return (
     <div className='flex justify-center w-full mt-32'>      
       <div className='flex flex-col max-w-[1000px] w-full mb-8 px-2 lg:px-0'>
-        {bot.verified == false && (
+        {!bot.verified && (
           <div className='flex flex-col p-4 mb-4 border border-yellow-500 gap-y-2 bg-yellow-500/10 rounded-xl'>
             <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
               <RiErrorWarningFill />
