@@ -9,10 +9,10 @@ module.exports = {
     bodyParser.json(),
     param('id'),
     body('server_count')
-      .isInt({ min: 0 }).withMessage('Server count must be a positive integer.')
+      .isInt({ min: 0, max: 10000000 }).withMessage('Server count must be between 0 and 10,000,000.')
       .optional(),
     body('command_count')
-      .isInt({ min: 0 }).withMessage('Commands count must be a positive integer.')
+      .isInt({ min: 0, max: 1000 }).withMessage('Commands count must be between 0 and 1,000.')
       .optional(),
     async (request, response) => {
       const errors = validationResult(request);
