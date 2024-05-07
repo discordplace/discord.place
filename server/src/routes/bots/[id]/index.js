@@ -25,6 +25,20 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
+      const permissions = {
+        canDelete: request.user && (
+          request.user.id === bot.owner.id ||
+          config.permissions.canDeleteBots.includes(request.user.id)
+        ),
+        canEdit: request.user && (
+          request.user.id === bot.owner.id ||
+          (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId)))
+        ),
+        canEditAPIKey: request.user && request.user.id === bot.owner.id
+      };
+
+      if (!bot.verified && !permissions.canDelete && !permissions.canEdit) return response.sendError('This bot is not verified yet.', 403);
+
       const reviews = await Promise.all(
         (await Review.find({ 'bot.id': id, approved: true }).sort({ createdAt: -1 }))
           .map(async review => {
@@ -38,18 +52,6 @@ module.exports = {
               }
             };
           }));
-
-      const permissions = {
-        canDelete: request.user && (
-          request.user.id === bot.owner.id ||
-          config.permissions.canDeleteBots.includes(request.user.id)
-        ),
-        canEdit: request.user && (
-          request.user.id === bot.owner.id ||
-          (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId)))
-        ),
-        canEditAPIKey: request.user && request.user.id === bot.owner.id
-      };
 
       let vote_timeout = null;
       if (request.user) vote_timeout = await VoteTimeout.findOne({ 'user.id': request.user.id, 'bot.id': bot.id }) || null;
