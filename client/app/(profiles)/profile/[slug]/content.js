@@ -11,6 +11,7 @@ import { useEffect, useState, useRef } from 'react';
 import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers';
 import Script from 'next/script';
 import cn from '@/lib/cn';
+import { nanoid } from 'nanoid';
 
 export default function Content({ profile }) {
   const [showCaptcha, setShowCaptcha] = useState(false);
@@ -58,6 +59,7 @@ export default function Content({ profile }) {
         async={true}
         defer={true}
         onLoad={() => setCaptchaScriptLoaded(true)}
+        key={nanoid()}
       />
           
       <div className='flex flex-col max-w-[1000px] w-full mb-8 px-2 lg:px-0'>
