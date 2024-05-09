@@ -15,6 +15,8 @@ import cn from '@/lib/cn';
 export default function Content({ profile }) {
   const [showCaptcha, setShowCaptcha] = useState(false);
   const [showCaptchaFrame, setShowCaptchaFrame] = useState(false); 
+  const [captchaScriptLoaded, setCaptchaScriptLoaded] = useState(false);
+
   const captchaRef = useRef(null);
   const captchaIntervalRef = useRef(null);
 
@@ -42,13 +44,20 @@ export default function Content({ profile }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showCaptcha]);
 
+
+  useEffect(() => {
+    if (!captchaScriptLoaded) return;
+
+    setShowCaptcha(true);
+  }, [captchaScriptLoaded]);
+
   return (
     <div className='flex justify-center w-full mt-32'>
       <Script
         src="https://challenges.cloudflare.com/turnstile/v0/api.js"
         async={true}
         defer={true}
-        onLoad={() => setShowCaptcha(true)}
+        onLoad={() => setCaptchaScriptLoaded(true)}
       />
           
       <div className='flex flex-col max-w-[1000px] w-full mb-8 px-2 lg:px-0'>
