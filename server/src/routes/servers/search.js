@@ -24,7 +24,7 @@ module.exports = {
       .isIn(['Votes', 'Voice', 'Members', 'Online', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, Voice, Members, Online, Newest, Oldest, Boosts.'),
     query('limit')
       .optional()
-      .isInt({ min: 1, max: 9 }).withMessage('Limit must be an integer between 1 and 9.')
+      .isInt({ min: 1, max: 10 }).withMessage('Limit must be an integer between 1 and 10.')
       .toInt(),
     query('page')
       .optional()
@@ -34,7 +34,7 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { query, category = 'All', sort = 'Votes', limit = 9, page = 1 } = matchedData(request);
+      const { query, category = 'All', sort = 'Votes', limit = 10, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
       const baseFilter = { 
         id: { $in: Array.from(client.guilds.cache.filter(guild => guild.available).keys()) },
