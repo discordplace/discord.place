@@ -222,23 +222,25 @@ export default function Hero() {
                 )}
               </>
             )}
-
-            {showPagination && (
-              <div className='flex justify-center w-full'>
-                <Pagination 
-                  page={page} 
-                  setPage={newPage => {
-                    setPage(newPage);
-                    fetchServers(search);
-                  }} 
-                  loading={loading} 
-                  total={totalServers} 
-                  limit={limit} 
-                />
-              </div>
-            )}
           </AnimatePresence>
         </div>
+
+        <AnimatePresence>
+          {showPagination && (
+            <div className='flex justify-center w-full'>
+              <Pagination 
+                page={page} 
+                setPage={newPage => {
+                  setPage(newPage);
+                  fetchServers(search);
+                }} 
+                loading={loading} 
+                total={totalServers} 
+                limit={limit} 
+              />
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
