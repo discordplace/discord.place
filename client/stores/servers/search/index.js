@@ -9,7 +9,7 @@ const useSearchStore = create((set, get) => ({
   setSearch: search => set({ search }),
   page: 1,
   setPage: page => set({ page }),
-  limit: 9,
+  limit: 10,
   setLimit: limit => set({ limit }),
   category: 'All',
   setCategory: category => {
@@ -26,6 +26,8 @@ const useSearchStore = create((set, get) => ({
   servers: [],
   setServers: servers => set({ servers }),
   maxReached: false,
+  totalServers: 0,
+  setTotalServers: totalServers => set({ totalServers }),
   fetchServers: async search => {
     const page = get().page;
     const limit = get().limit;
@@ -35,7 +37,7 @@ const useSearchStore = create((set, get) => ({
     set({ loading: true, search });
     
     fetchServers(search, page, limit, category, sort)
-      .then(data => set({ servers: data.servers, loading: false, maxReached: data.maxReached }))
+      .then(data => set({ servers: data.servers, loading: false, maxReached: data.maxReached, totalServers: data.total }))
       .catch(error => {
         toast.error(error);
         set({ loading: false });
