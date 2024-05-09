@@ -216,7 +216,7 @@ export default function Hero() {
                       transition={{ ...sequenceTransition, delay: (index * 0.1) }}
                       className='flex animate-scroll-based-appear'
                     >
-                      <ServerCard server={server} index={index} />
+                      <ServerCard server={server} index={page > 1 ? (index + 1) + ((page - 1) * limit) : index} />
                     </motion.div>
                   ))
                 )}
