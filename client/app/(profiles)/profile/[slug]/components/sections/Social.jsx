@@ -27,7 +27,7 @@ export default function Social({ data }) {
   const theme = useThemeStore(state => state.theme);
 
   return (
-    <div className='w-full lg:w-[30%] flex flex-col'>
+    <div className='flex flex-col w-full'>
       <motion.h2 
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
