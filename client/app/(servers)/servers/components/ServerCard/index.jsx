@@ -12,10 +12,47 @@ import Image from 'next/image';
 import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
 
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 export default function ServerCard(props) {
   const isMobile = useMedia('(max-width: 420px)', false);
   const storedSort = useSearchStore(state => state.sort);
   const sort = props.overridedSort || storedSort;
+
+  if (props.loading) {
+    return (
+      <div className='relative h-[240px] w-full animate-pulse bg-secondary rounded-3xl  border-primary'>
+        <div className='absolute top-0 left-0 z-[1] bg-quaternary w-full h-[calc(100%_-_1px)] rounded-3xl' />
+        <div className='bg-secondary transition-colors w-full h-[calc(100%_-_30px)] z-[2] relative top-[30px] rounded-b-3xl rounded-t-[1.5rem]'>
+          <div className='w-[64px] h-[64px] absolute top-[-25px] left-4 bg-tertiary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl' />
+        
+          <div className='flex flex-col px-4 pt-12'>
+            <div className='h-4 rounded-lg bg-tertiary' style={{ width: random(25, 100) + '%' }} />
+            <div className='mt-4 flex flex-col min-h-[40px] gap-y-2'>
+              {new Array(random(1, 2)).fill().map((_, index) => (
+                <div className='h-4 rounded-lg bg-tertiary' key={index} />
+              ))}
+            </div>
+            
+            <div className='flex mt-3 gap-x-4'>
+              <div className='flex gap-x-1'>
+                <div className='w-4 h-4 rounded-full bg-tertiary' />
+                <div className='w-[70px] h-4 rounded-lg bg-tertiary' />
+              </div>
+              <div className='flex gap-x-1'>
+                <div className='w-4 h-4 rounded-full bg-tertiary' />
+                <div className='w-[70px] h-4 rounded-lg bg-tertiary' />
+              </div>
+            </div>
+
+            <div className='h-5 mt-3 rounded-full bg-tertiary' style={{ width: random(20, 30) + '%' }} />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
