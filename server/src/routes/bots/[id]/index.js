@@ -170,14 +170,13 @@ module.exports = {
 
       await bot.save();
 
+      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
+
       const embeds = [
         new Discord.EmbedBuilder()
           .setTitle('New Bot Submitted')
+          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
           .setFields([
-            {
-              name: 'Submitter',
-              value: request.user.id
-            },
             {
               name: 'Bot',
               value: `${user.tag} (${user.id})`,

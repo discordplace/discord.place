@@ -61,6 +61,8 @@ module.exports = {
       const { name, categories } = matchedData(request);
       const id = crypto.randomBytes(6).toString('hex');
 
+      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
+
       if (request.files.length > 1) {
         if (request.files.length < config.packagesMinEmojisLength) return response.sendError(`If you are going to share a package, there should be a minimum of ${config.packagesMinEmojisLength} emoji in the package.`);
         const packageHasAnimatedEmoji = request.files.some(file => file.mimetype === 'image/gif');
@@ -106,7 +108,7 @@ module.exports = {
           .then(async () => {
             const embeds = [
               new Discord.EmbedBuilder()
-                .setAuthor({ name: request.user.username, iconURL: request.member.user.displayAvatarURL() })
+                .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
                 .setTitle('New Emoji Package')
                 .setFields([
                   {
@@ -180,11 +182,8 @@ module.exports = {
             const embeds = [
               new Discord.EmbedBuilder()
                 .setTitle('New Emoji')
+                .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
                 .setFields([
-                  {
-                    name: 'Submitter',
-                    value: request.user.id,
-                  },
                   {
                     name: 'Name',
                     value: `${name}.${emojiIsAnimated ? 'gif' : 'png'}`,
