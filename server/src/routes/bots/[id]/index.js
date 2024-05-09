@@ -172,9 +172,12 @@ module.exports = {
 
       const embeds = [
         new Discord.EmbedBuilder()
-          .setAuthor({ name: request.user.username, iconURL: request.member.user.displayAvatarURL() })
           .setTitle('New Bot Submitted')
           .setFields([
+            {
+              name: 'Submitter',
+              value: request.user.id
+            },
             {
               name: 'Bot',
               value: `${user.tag} (${user.id})`,

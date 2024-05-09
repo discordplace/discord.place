@@ -179,9 +179,12 @@ module.exports = {
           .then(async () => {
             const embeds = [
               new Discord.EmbedBuilder()
-                .setAuthor({ name: request.user.username, iconURL: request.member.user.displayAvatarURL() })
                 .setTitle('New Emoji')
                 .setFields([
+                  {
+                    name: 'Submitter',
+                    value: request.user.id,
+                  },
                   {
                     name: 'Name',
                     value: `${name}.${emojiIsAnimated ? 'gif' : 'png'}`,
