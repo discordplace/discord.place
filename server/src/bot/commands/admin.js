@@ -424,7 +424,7 @@ module.exports = {
 
         const quarantineTime = time ? ms(time) : null;
         if (time && typeof quarantineTime !== 'number') return interaction.followUp({ content: 'Invalid time.' });
-        if (quarantineTime && quarantineTime > 31556952000) return interaction.followUp({ content: 'The maximum quarantine time is 1 year.' });
+        if (quarantineTime && quarantineTime > 31557600000) return interaction.followUp({ content: 'The maximum quarantine time is 1 year.' });
 
         const quarantine = new Quarantine({
           type,
