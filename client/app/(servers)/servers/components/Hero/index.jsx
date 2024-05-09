@@ -11,7 +11,7 @@ import useSearchStore from '@/stores/servers/search';
 import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence } from 'framer-motion';
 import ErrorState from '@/app/components/ErrorState';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { TbLoader, TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
@@ -177,25 +177,21 @@ export default function Hero() {
       </motion.div>
 
       <div className='max-w-[800px] w-full flex flex-col my-8 gap-y-2'>
-        <div className='grid w-full grid-cols-1 gap-4 sm:grid-cols-2'>
+        <div className={cn(
+          'w-full',
+          (loading || servers.length <= 0) ? 'flex items-center justify-center' : 'grid grid-cols-1 sm:grid-cols-2 gap-4'
+        )}>
           <AnimatePresence>
             {loading ? (
-              new Array(10).fill(0).map((_, index) => (
-                <motion.div
-                  key={`loading-${index}`}
-                  variants={stateVariants} 
-                  initial='hidden' 
-                  animate='visible' 
-                  exit='hidden' 
-                  className='flex animate-scroll-based-appear'
-                >
-                  <ServerCard loading />
-                </motion.div>
-              ))
+              <motion.div variants={stateVariants} initial='hidden' animate='visible' exit='hidden'>
+                <ErrorState title={<div className='flex items-center gap-x-1.5'>
+                  <TbLoader className='animate-spin' />
+                </div>} message='' />
+              </motion.div>
             ) : (
               <>
                 {servers.length <= 0 ? (
-                  <motion.div className='flex flex-col col-span-2 gap-y-2' variants={stateVariants} initial='hidden' animate='visible' exit='hidden'>
+                  <motion.div className='flex flex-col gap-y-2' variants={stateVariants} initial='hidden' animate='visible' exit='hidden'>
                     <ErrorState title={<div className='flex items-center gap-x-2'>
                       <BsEmojiAngry />
                       It{'\''}s quiet in here...
@@ -220,30 +216,31 @@ export default function Hero() {
                       transition={{ ...sequenceTransition, delay: (index * 0.1) }}
                       className='flex animate-scroll-based-appear'
                     >
-                      <ServerCard server={server} index={page > 1 ? (index + 1) + ((page - 1) * limit) : index} />
+                      <ServerCard server={server} index={index} />
                     </motion.div>
                   ))
                 )}
               </>
             )}
-
-            {showPagination && (
-              <div className='flex justify-center w-full col-span-2'>
-                <Pagination 
-                  page={page} 
-                  setPage={newPage => {
-                    setPage(newPage);
-                    fetchServers(search);
-                  }} 
-                  loading={loading} 
-                  total={totalServers} 
-                  limit={limit}
-                  disableAnimation
-                />
-              </div>
-            )}
           </AnimatePresence>
         </div>
+
+        <AnimatePresence>
+          {showPagination && (
+            <div className='flex justify-center w-full'>
+              <Pagination 
+                page={page} 
+                setPage={newPage => {
+                  setPage(newPage);
+                  fetchServers(search);
+                }} 
+                loading={loading} 
+                total={totalServers} 
+                limit={limit} 
+              />
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
