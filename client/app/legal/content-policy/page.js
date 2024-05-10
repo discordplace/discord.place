@@ -131,7 +131,7 @@ export default function ContentPolicy() {
       </h3>
 
       <p>
-        discord.place takes harmful content very seriously. If any profile is lited on this website that is harmful or copying your profile without permission, we will take action to ensure the profile is removed as soon as possible.
+        discord.place takes harmful content very seriously. If any profile is listed on this website that is harmful or copying your profile without permission, we will take action to ensure the profile is removed as soon as possible.
       </p>
 
       <h3>
@@ -139,7 +139,7 @@ export default function ContentPolicy() {
       </h3>
 
       <p>
-        discord.place takes harmful content very seriously. If any server is lited on this website that is harmful or copying your server without permission, we will take action to ensure the server is removed as soon as possible.
+        discord.place takes harmful content very seriously. If any server is listed on this website that is harmful or copying your server without permission, we will take action to ensure the server is removed as soon as possible.
       </p>
 
       <h3>
@@ -147,7 +147,7 @@ export default function ContentPolicy() {
       </h3>
 
       <p>
-        discord.place takes harmful content very seriously. If any bot is lited on this website that is harmful or copying your bot without permission, we will take action to ensure the bot is removed as soon as possible.
+        discord.place takes harmful content very seriously. If any bot is listed on this website that is harmful or copying your bot without permission, we will take action to ensure the bot is removed as soon as possible.
       </p>
 
       <h2>
