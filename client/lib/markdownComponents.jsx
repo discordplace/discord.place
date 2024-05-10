@@ -1,5 +1,8 @@
+/* eslint-disable */
+
 import Link from 'next/link';
 import cn from './cn';
+import Zoom from 'react-medium-image-zoom';
 
 const Heading = ({ level, children }) => {
   const Tag = `h${level}`;
@@ -46,10 +49,22 @@ const markdownComponents = {
   a: ({ children, href }) => <Link href={href} className='hover:underline text-secondary'>
     {children}
   </Link>,
-  image: () => <></>,
-  ul: () => <></>,
-  ol: () => <></>,
-  li: () => <></>,
+  img: ({ src, alt }) => {
+    return (
+      <Zoom>
+        <img
+          src={src}
+          alt={alt}
+          width={'100%'}
+          height={'auto'}
+          className="my-4 rounded-xl"
+        />
+      </Zoom>
+    );
+  },
+  ul: ({ children }) => <ul className="my-4 text-tertiary" style={{ paddingLeft: '12px', listStyleType: 'disc', listStylePosition: 'inside' }}>{children}</ul>,
+  ol: ({ children }) => <ol className="my-4 text-tertiary" style={{ paddingLeft: '12px', listStyleType: 'decimal', listStylePosition: 'inside' }}>{children}</ol>,
+  li: ({ children }) => <li>{children}</li>,
   p: ({ children }) => <p className="my-4 text-tertiary">{children}</p>,
   hr: () => <hr className="my-4" style={{ borderTop: '1px solid rgba(var(--border-primary))' }} />
 };
