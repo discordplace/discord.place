@@ -290,7 +290,7 @@ module.exports = {
         const id = interaction.options.getString('bot');
         const reason = interaction.options.getString('reason');
 
-        const botUser = await client.users.fetch(bot.id).catch(() => null);
+        const botUser = await client.users.fetch(id).catch(() => null);
         if (!botUser) return interaction.followUp({ content: 'Bot not found.' });
 
         const bot = await Bot.findOne({ id });
