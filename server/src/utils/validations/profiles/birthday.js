@@ -1,4 +1,6 @@
 function birthdayValidation(value) {
+  if (!value) return true;
+
   const regexp = /^(\d{2}\/\d{2}\/\d{4})$/;
   if (!regexp.test(value)) throw new Error('Birthday must be in the format MM/DD/YYYY.');
 
