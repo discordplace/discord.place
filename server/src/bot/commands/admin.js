@@ -300,7 +300,7 @@ module.exports = {
 
         await bot.deleteOne();
 
-        const publisher = await interaction.guild.members.fetch(bot.user.id).catch(() => null);
+        const publisher = await interaction.guild.members.fetch(bot.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` });
