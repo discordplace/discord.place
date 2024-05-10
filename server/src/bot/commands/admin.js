@@ -76,7 +76,7 @@ module.exports = {
         .addStringOption(option => option.setName('review').setDescription('Review to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('review-deny').setDescription('Denies the selected bot review.')
         .addStringOption(option => option.setName('review').setDescription('Review to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...botsDenyReasons.map(reason => ({ name: reason, value: reason })))))
+        .addStringOption(option => option.setName('reason').setDescription('The reason for denying the review.').setRequired(true)))
       .addSubcommand(subcommand => subcommand.setName('review-delete').setDescription('Deletes the selected bot review.')
         .addStringOption(option => option.setName('review').setDescription('Review to delete.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('approve').setDescription('Approves the selected bot.')
