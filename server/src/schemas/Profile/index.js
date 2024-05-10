@@ -29,7 +29,7 @@ const ProfileSchema = new Schema({
     max: 32,
     validate: {
       validator: value => birthdayValidation(value),
-      message: ({ value }) => `${value} should be a valid date in the format of MM/DD/YYYY.`
+      message: ({ reason }) => reason.message
     }
   },
   bio: {
@@ -73,7 +73,7 @@ const ProfileSchema = new Schema({
     required: true,
     validate: {
       validator: slugValidation,
-      message: ({ value }) => `${value} is not a valid slug.`,
+      message: ({ reason }) => reason.message
     },
   },
   verified: {

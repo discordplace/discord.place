@@ -19,7 +19,7 @@ const EmojiSchema = new Schema({
     required: true,
     validate: {
       validator: value => nameValidation(value),
-      message: ({ value }) => `${value} should be a valid emoji name.`
+      message: ({ reason }) => reason.message
     }
   },
   categories: {

@@ -24,7 +24,7 @@ const ServerSchema = new Schema({
     required: true,
     validate: {
       validator: keywordsValidation,
-      message: 'Keywords is not valid.'
+      message: ({ reason }) => reason.message
     }
   },
   invite_code: {

@@ -19,7 +19,7 @@ const EmojiPackSchema = new Schema({
     required: true,
     validate: {
       validator: value => nameValidation(value),
-      message: ({ value }) => `${value} should be a valid emoji name.`
+      message: ({ reason }) => reason.message
     }
   },
   categories: {
@@ -60,7 +60,7 @@ const EmojiPackSchema = new Schema({
         if (value.length < config.packagesMinEmojisLength) return false;
         return true;
       },
-      message: () => 'Emoji packs support a minimum of 4 and a maximum of 9 emoji.'
+      message: ({ reason }) => reason.message
     }
   }
 }, {

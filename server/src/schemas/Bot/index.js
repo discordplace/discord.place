@@ -35,7 +35,7 @@ const BotSchema = new Schema({
     required: true,
     validate: {
       validator: inviteURLValidation,
-      message: error => error.message
+      message: ({ reason }) => reason.message
     }
   },
   categories: {
@@ -48,7 +48,7 @@ const BotSchema = new Schema({
     required: true,
     validate: {
       validator: categoriesValidation,
-      message: error => error.message
+      message: ({ reason }) => reason.message
     }
   },
   support_server_id: {
