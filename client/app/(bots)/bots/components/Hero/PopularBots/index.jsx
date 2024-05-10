@@ -48,7 +48,7 @@ export default function PopularBots() {
         >
           {loading ? (
             new Array(12).fill(0).map((_, index) => (
-              <div key={index} className='w-full h-[400px] bg-secondary rounded-3xl animate-pulse' />
+              <div key={index} className='w-full h-[240px] bg-secondary rounded-3xl animate-pulse' />
             ))
           ) : (
             bots.map(bot => (
