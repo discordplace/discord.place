@@ -11,6 +11,7 @@ import ErrorBoundary from '@/app/components/Providers/Boundary/Error';
 import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
 import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
+import 'react-medium-image-zoom/dist/styles.css';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
