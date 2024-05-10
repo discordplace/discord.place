@@ -11,6 +11,7 @@ const ms = require('ms');
 const getValidationError = require('@/utils/getValidationError');
 const Bot = require('@/schemas/Bot');
 const BotReview = require('@/schemas/Bot/Review');
+const BotDeny = require('@/src/schemas/Bot/Deny');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -300,10 +301,23 @@ module.exports = {
 
         await bot.deleteOne();
 
-        const publisher = await interaction.guild.members.fetch(bot.id).catch(() => null);
+        new BotDeny({
+          bot: {
+            id: bot.id
+          },
+          user: {
+            id: bot.owner.id
+          },
+          reviewer: {
+            id: interaction.user.id
+          },
+          reason
+        }).save();
+
+        const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` });
+          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}.\nReason: **${reason || 'No reason provided.'}**` });
         }
 
         return interaction.followUp({ content: 'Bot denied.' });

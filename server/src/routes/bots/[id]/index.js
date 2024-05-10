@@ -11,6 +11,7 @@ const Discord = require('discord.js');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const inviteUrlValidation = require('@/utils/validations/bots/inviteUrl');
 const Review = require('@/schemas/Bot/Review');
+const Deny = require('@/schemas/Bot/Deny');
 
 module.exports = {
   get: [
@@ -138,6 +139,9 @@ module.exports = {
 
       const botFound = await Bot.findOne({ id: user.id });
       if (botFound) return response.sendError('Bot already exists.', 400);
+
+      const denyExists = await Deny.findOne({ 'bot.id': user.id, createdAt: { $gte: new Date(Date.now() - 6 * 60 * 60 * 1000) } });
+      if (denyExists) return response.sendError(`This bot has been denied by ${denyExists.reviewer.id} in the past 6 hours. You can't submit this bot again until 6 hours pass.`, 400);
 
       if (support_server_id) {
         const botWithExactSupportServerId = await Bot.findOne({ support_server_id });

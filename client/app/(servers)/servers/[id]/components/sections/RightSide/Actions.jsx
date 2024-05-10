@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import voteServer from '@/lib/request/servers/voteServer';
 import createReminder from '@/lib/request/servers/createReminder';
-import Countdown from '@/app/components/Countdown';
+import Countdown from '@/app/components/Countdown/Vote';
 import Tooltip from '@/app/components/Tooltip';
 import { FaRegBell, FaBell } from 'react-icons/fa';
 import revalidateServer from '@/lib/revalidate/server';

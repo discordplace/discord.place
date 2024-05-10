@@ -11,15 +11,22 @@ import NewBot from '@/app/(bots)/bots/manage/components/NewBot';
 import { RiAddCircleFill } from 'react-icons/ri';
 import { useMedia } from 'react-use';
 import useManageStore from '@/stores/bots/manage';
+import { BsQuestionCircleFill } from 'react-icons/bs';
+import Image from 'next/image';
+import Countdown from '@/app/components/Countdown';
 
 export default function Page() {
   const [bots, setBots] = useState([]);
+  const [denies, setDenies] = useState([]);
   const [servers, setServers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getOwnedBots()
-      .then(data => setBots(data))
+      .then(data => {
+        setBots(data.bots);
+        setDenies(data.denies);
+      })
       .finally(() => setLoading(false))
       .catch(toast.error);
 
@@ -49,6 +56,58 @@ export default function Page() {
             <p className='max-w-[400px] text-tertiary text-center'>
               Here you can add new bots, edit existing ones and manage your bot{'\''}s settings.
             </p>
+
+            {denies.length > 0 && (
+              denies.map(deny => (
+                <div 
+                  className='relative flex flex-col gap-y-2 w-full max-w-[1000px] bg-red-500/10 border border-red-500 p-4 rounded-xl mt-8 transition-[margin,opacity] duration-1000 ease-in-out' 
+                  key={deny.bot.id}
+                >
+                  <h2 className='flex flex-wrap items-center text-lg font-semibold gap-x-2'>
+                    <BsQuestionCircleFill /> 
+                    Your bot 
+                    <Image
+                      src={deny.bot.avatar_url}
+                      alt={`${deny.bot.username}'s avatar`}
+                      width={24}
+                      height={24}
+                      className='rounded-full'
+                    />
+                    {deny.bot.username}#{deny.bot.discriminator} was denied
+                  </h2>
+  
+                  <p className='flex flex-wrap text-sm font-medium text-tertiary gap-x-1'>
+                    The bot was denied by
+                    <Image
+                      src={deny.reviewer.avatar_url}
+                      alt={`${deny.reviewer.username}'s avatar`}
+                      width={20}
+                      height={20}
+                      className='rounded-full'
+                    />
+                    <span className='text-secondary'>
+                      @{deny.reviewer.username}
+                    </span>
+                    for the following reason: <span className='text-secondary'>{deny.reason}</span>
+                  </p>
+
+                  <div className='text-xs text-tertiary'>
+                    {new Date(deny.createdAt).getTime() + 21600000 > Date.now() ? (
+                      <span>
+                        This denial will expire in <Countdown date={new Date(deny.createdAt).getTime() + 21600000} renderer={({ hours, minutes, seconds, completed }) => {
+                          if (completed) return 'now';
+                          return `${hours} hours ${minutes} minutes ${seconds} seconds.`;
+                        }} /> You can{'\''}t add the bot again until then.
+                      </span>
+                    ) : (
+                      <>
+                        You can add the bot again now.
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
 
             <div className='max-w-[1000px] grid grid-cols-1 mobile:grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 w-full min-h-[600px] relative mt-4'>
               {!loading && (
