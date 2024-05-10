@@ -6,7 +6,6 @@ import About from '@/app/(bots)/bots/[id]/components/sections/About';
 import RightSide from '@/app/(bots)/bots/[id]/components/sections/RightSide';
 import Tooltip from '@/app/components/Tooltip';
 import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';
-import { nanoid } from 'nanoid';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import Link from 'next/link';
 import config from '@/config';
@@ -67,7 +66,7 @@ export default function Content({ bot }) {
           {bot.badges.length > 0 && (
             <div className='flex items-center ml-4 gap-x-2'>
               {bot.badges.map(badge => (
-                <Tooltip key={nanoid()} content={badge}>
+                <Tooltip key={badge} content={badge}>
                   <MotionImage 
                     src={`/profile-badges/${badge.toLowerCase()}.svg`} 
                     width={24} 

@@ -54,7 +54,7 @@ export default function Content({ server }) {
           {server.badges.length > 0 && (
             <div className='flex items-center ml-4 gap-x-2'>
               {server.badges.map(badge => (
-                <Tooltip key={nanoid()} content={badge}>
+                <Tooltip key={badge} content={badge}>
                   <MotionImage 
                     src={`/profile-badges/${badge.toLowerCase()}.svg`} 
                     width={24} 
