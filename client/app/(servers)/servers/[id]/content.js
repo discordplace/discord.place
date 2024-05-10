@@ -6,7 +6,6 @@ import About from '@/app/(servers)/servers/[id]/components/sections/About';
 import RightSide from '@/app/(servers)/servers/[id]/components/sections/RightSide';
 import Tabs from '@/app/(servers)/servers/[id]/components/Tabs';
 import Tooltip from '@/app/components/Tooltip';
-import { nanoid } from 'nanoid';
 import Script from 'next/script';
 
 export default function Content({ server }) {
