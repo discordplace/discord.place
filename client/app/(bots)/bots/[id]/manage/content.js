@@ -229,7 +229,7 @@ export default function Content({ bot }) {
           ) : (
             <div className='relative'>
               <span 
-                contentEditable 
+                contentEditable='plaintext-only' 
                 suppressContentEditableWarning 
                 className={cn(
                   'block w-full h-[250px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500',
