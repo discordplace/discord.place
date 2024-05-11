@@ -2,8 +2,6 @@
 
 This repository contains the source code for the discord.place website. The project is divided into two main components: the Next.js client application located in the `/client` folder and the Express server located in the `/server` folder.
 
-Also contains the API documentation for the discord.place API. The API documentation is located in the `/docs` folder.
-
 ## Getting Started
 
 To get a local copy of the project up and running, follow these steps:
@@ -83,8 +81,6 @@ To get a local copy of the project up and running, follow these steps:
    ```
 
 5. Open your browser and visit [http://localhost:3000](http://localhost:3000) to view the website.
-
-6. (optional) If you want to build the documentation locally, please follow the instructions in the [Getting Started | VitePress](https://vitepress.dev/guide/getting-started) guide.
 
 ## Contributing
 
