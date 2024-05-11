@@ -144,6 +144,32 @@ module.exports = {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been approved!` });
         }
+
+        const embeds = [
+          new Discord.EmbedBuilder()
+            .setColor(Discord.Colors.Green)
+            .setAuthor({ name: `Emoji Approved | ${emoji.name}` })
+            .setTimestamp()
+            .setFields([
+              {
+                name: 'Reviewer',
+                value: interaction.user.toString(),
+              }
+            ])
+            .setThumbnail(emoji.emoji_ids ? null : `${config.cdnUrl}/emojis/${emoji.id}.${emoji.animated ? 'gif' : 'png'}`)
+        ];
+
+        const components = [
+          new Discord.ActionRowBuilder()
+            .addComponents(
+              new Discord.ButtonBuilder()
+                .setStyle(Discord.ButtonStyle.Link)
+                .setURL(`${config.frontendUrl}/emojis/${emoji.id}`)
+                .setLabel('View Emoji on discord.place')
+            )
+        ];
+
+        client.channels.cache.get(config.portalChannelId).send({ embeds, components });
   
         return interaction.followUp({ content: `Emoji${emoji.emoji_ids ? ' pack' : ''} ${emoji.id} approved.` });
       }
@@ -174,6 +200,25 @@ module.exports = {
               const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
               if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.username}\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` });
             }
+
+            const embeds = [
+              new Discord.EmbedBuilder()
+                .setColor(Discord.Colors.Red)
+                .setAuthor({ name: `Emoji Denied | ${emoji.name}` })
+                .setTimestamp()
+                .setFields([
+                  {
+                    name: 'Reviewer',
+                    value: interaction.user.toString(),
+                  },
+                  {
+                    name: 'Reason',
+                    value: reason || 'No reason provided.'
+                  }
+                ])
+            ];
+
+            client.channels.cache.get(config.portalChannelId).send({ embeds });
       
             return interaction.followUp({ content: `Emoji${emoji.emoji_ids ? ' pack' : ''} ${emoji.id} denied.` });
           })
@@ -280,6 +325,31 @@ module.exports = {
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour bot **${botUser.username}** has been approved!` });
         }
 
+        const embeds = [
+          new Discord.EmbedBuilder()
+            .setColor(Discord.Colors.Green)
+            .setAuthor({ name: `Bot Approved | ${botUser.username}`, iconURL: botUser.displayAvatarURL() })
+            .setTimestamp()
+            .setFields([
+              {
+                name: 'Reviewer',
+                value: interaction.user.toString(),
+              }
+            ])
+        ];
+
+        const components = [
+          new Discord.ActionRowBuilder()
+            .addComponents(
+              new Discord.ButtonBuilder()
+                .setStyle(Discord.ButtonStyle.Link)
+                .setURL(`${config.frontendUrl}/bots/${id}`)
+                .setLabel('View Bot on discord.place')
+            )
+        ];
+
+        client.channels.cache.get(config.portalChannelId).send({ embeds, components });
+
         return interaction.followUp({ content: 'Bot approved.' });
       }
 
@@ -319,6 +389,25 @@ module.exports = {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}.\nReason: **${reason || 'No reason provided.'}**` });
         }
+
+        const embeds = [
+          new Discord.EmbedBuilder()
+            .setColor(Discord.Colors.Red)
+            .setAuthor({ name: `Bot Denied | ${botUser.username}`, iconURL: botUser.displayAvatarURL() })
+            .setTimestamp()
+            .setFields([
+              {
+                name: 'Reviewer',
+                value: interaction.user.toString(),
+              },
+              {
+                name: 'Reason',
+                value: reason || 'No reason provided.'
+              }
+            ])
+        ];
+
+        client.channels.cache.get(config.portalChannelId).send({ embeds });
 
         return interaction.followUp({ content: 'Bot denied.' });
       }
