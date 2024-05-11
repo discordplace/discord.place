@@ -148,7 +148,7 @@ module.exports = {
         const embeds = [
           new Discord.EmbedBuilder()
             .setColor(Discord.Colors.Green)
-            .setAuthor({ name: `Emoji Approved | ${emoji.name}` })
+            .setAuthor({ name: `Emoji${emoji.emoji_ids ? ' Pack' : ''} Approved | ${emoji.name}` })
             .setTimestamp()
             .setFields([
               {
@@ -165,7 +165,7 @@ module.exports = {
               new Discord.ButtonBuilder()
                 .setStyle(Discord.ButtonStyle.Link)
                 .setURL(`${config.frontendUrl}/emojis/${emoji.id}`)
-                .setLabel('View Emoji on discord.place')
+                .setLabel(`View Emoji${emoji.emoji_ids ? ' Pack' : ''} on discord.place`)
             )
         ];
 
