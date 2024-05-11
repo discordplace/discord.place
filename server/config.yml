@@ -9,6 +9,7 @@ session:
   cookieDomain: '.discord.place'
 frontendUrl: 'https://discord.place'
 backendUrl: 'https://api.discord.place'
+cdnUrl: 'https://cdn.discord.place'
 port:
   frontend: 3000
   backend: 3001
@@ -109,6 +110,7 @@ emojiQueueChannelId: '1210805683751223377'
 reviewQueueChannelId: '1213842162828054538'
 botQueueChannelId: '1236369862259900566'
 voteLogsChannelId: '1222817883470434304'
+portalChannelId: '1238654829916585984'
 excludeCollectionsInBackup:
   - 'sessions'
   - 'votereminders'
