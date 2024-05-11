@@ -7,11 +7,25 @@ import { FaDiscord, FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
 import cn from '@/lib/cn';
 import Image from 'next/image';
 import ThemeSwitcher from '@/app/components/Footer/ThemeSwitcher';
+import config from '@/config';
 
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
 
   const blocks = [
+    {
+      title: 'Pages',
+      links: [
+        {
+          label: 'Home',
+          href: '/home'
+        },
+        {
+          label: 'API Documentation',
+          href: config.docsUrl
+        }
+      ]
+    },
     {
       title: 'Our Services',
       links: [
