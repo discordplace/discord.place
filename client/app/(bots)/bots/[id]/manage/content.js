@@ -23,6 +23,7 @@ import cn from '@/lib/cn';
 import CopyButton from '@/app/components/CopyButton';
 import Tooltip from '@/app/components/Tooltip';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import { HiExternalLink } from 'react-icons/hi';
 
 export default function Content({ bot }) {
   const [currentBot, setCurrentBot] = useState(bot);
@@ -389,88 +390,6 @@ export default function Content({ bot }) {
                   <p className='mt-2 text-sm text-tertiary'>
                     This key should be kept secret and should not be shared with anyone.
                   </p>
-
-                  <h2 className='mt-8 text-lg font-semibold'>
-                    API Key Usage
-                  </h2>
-
-                  <p className='text-sm text-tertiary'>
-                    You can use this key to access the API endpoints that require authentication.
-                  </p>
-
-                  <div className='flex flex-col mt-4 gap-y-6'>
-                    <div className='flex flex-col gap-y-1'>
-                      <h3 className='text-sm font-semibold'>
-                        Base API URL
-                      </h3>
-
-                      <p className='text-sm text-tertiary'>
-                        The base URL for discord.place API is as follows.
-                      </p>
-
-                      <code className='p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
-                        {config.api.url}
-                      </code>
-                    </div>
-
-                    <div className='flex flex-col gap-y-1'>
-                      <h3 className='text-sm font-semibold'>
-                        Authorization
-                      </h3>
-
-                      <p className='text-sm text-tertiary'>
-                        To authorize your bot with discord.place API, you need to send the API key in the Authorization header.
-                      </p>
-
-                      <code className='p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
-                        authorization: <span className='font-semibold text-primary'>API_KEY_HERE</span>
-                      </code>
-                    </div>
-
-                    <div className='flex flex-col gap-y-1'>
-                      <h3 className='text-sm font-semibold'>
-                        User Vote Check
-                      </h3>
-
-                      <p className='text-sm text-tertiary'>
-                        You can check if a user has voted for your bot using the following endpoint.
-                      </p>
-
-                      <div className='flex flex-wrap items-center p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
-                        <span className='px-2 py-0.5 mr-1 text-xs text-white bg-green-700 rounded-lg'>GET</span><span className='truncate'>/bots/{bot.id}/voters/</span><span className='font-semibold text-primary'>:user_id</span>
-                      </div>
-
-                      <p className='text-sm text-tertiary'>
-                        This endpoint will return a 200 status code if the user has voted for your bot. Otherwise, it will return a 404 status code.
-                      </p>
-                    </div>
-
-                    <div className='flex flex-col gap-y-1'>
-                      <h3 className='text-sm font-semibold'>
-                        Update Bot Stats
-                      </h3>
-
-                      <p className='text-sm text-tertiary'>
-                        You should update your bot stats approximately every day. This will help us keep the your bot{'\''}s stats in sync with the actual stats. Do not abuse this endpoint. Abuse of this endpoint will result in your bot being quarantined.
-                      </p>
-
-                      <div className='flex flex-wrap items-center p-2 mt-2 text-sm font-medium rounded-lg text-tertiary bg-secondary'>
-                        <span className='px-2 py-0.5 mr-1 text-xs text-white bg-purple-600 rounded-lg'>PATCH</span> <span>/bots/{bot.id}/stats</span>
-                      </div>
-
-                      <p className='text-sm text-tertiary'>
-                        This endpoint will return a 200 status code if the stats were successfully updated.<br/>
-                      </p>
-
-                      <h3 className='mt-2 text-sm font-semibold'>
-                        Request Body
-                      </h3>
- 
-                      <code className='p-2 mt-2 text-sm font-medium whitespace-pre-wrap rounded-lg text-tertiary bg-secondary'>
-                        {'{\n  "server_count": 0,\n  "command_count": 0\n}'}
-                      </code>
-                    </div>
-                  </div>
                 </>
               ) : (
                 <>
@@ -488,6 +407,16 @@ export default function Content({ bot }) {
                   </button>
                 </>
               )}
+
+              <Link
+                href={config.docsUrl}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='mt-4 flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm'
+              >
+                API Documentation
+                <HiExternalLink />
+              </Link>
             </>
           )}
 
