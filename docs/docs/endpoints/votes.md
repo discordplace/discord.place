@@ -1,7 +1,7 @@
 # Retrieve Vote Status
 
 ```http
-GET /bots/123456789012345678/votes/123456789012345678
+GET /bots/:id/votes/:user_id
 Authorization: YOUR_API_KEY
 ```
 

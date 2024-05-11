@@ -20,7 +20,7 @@ const mockData = { // This is just a mock data to demonstrate the usage
   command_count: 0
 }
 
-axios.post('https://api.discord.place/v1/bot/stats', mockData, {
+axios.post('https://api.discord.place/bots/YOUR_BOT_ID/stats', mockData, {
   headers: {
     'Authorization': apiKey
   }
@@ -44,7 +44,7 @@ mock_data = { # This is just a mock data to demonstrate the usage
 }
 
 response = requests.post(
-  'https://api.discord.place/v1/bot/stats',
+  'https://api.discord.place/bots/YOUR_BOT_ID/stats',
   json=mock_data, 
   headers={'Authorization': api_key}
 )
@@ -52,11 +52,9 @@ response = requests.post(
 print(response.json())
 ```
 
-```bash{1} [cURL]
-API_KEY="YOUR_API_KEY" # Replace YOUR_API_KEY with your actual API key
-
-curl -X POST https://api.discord.place/v1/bot/stats \
-  -H "Authorization: $API_KEY" \
+```bash [cURL]
+curl -X POST https://api.discord.place/bots/YOUR_BOT_ID/stats \
+  -H "Authorization: YOUR_API_KEY_HERE" \
   -H "Content-Type: application/json" \
   -d '{"server_count": 0, "command_count": 0}'
 ```

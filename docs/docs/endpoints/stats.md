@@ -1,7 +1,7 @@
 # Update Bot Stats
 
 ```http
-PATCH /bots/123456789012345678/stats
+PATCH /bots/:id/stats
 Authorization: YOUR_API_KEY
 ```
 
