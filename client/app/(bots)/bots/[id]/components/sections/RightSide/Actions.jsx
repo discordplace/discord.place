@@ -14,7 +14,7 @@ import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import voteBot from '@/lib/request/bots/voteBot';
-import Countdown from '@/app/components/Countdown';
+import Countdown from '@/app/components/Countdown/Vote';
 import revalidateBot from '@/lib/revalidate/bot';
 
 export default function Actions({ bot }) {
