@@ -147,7 +147,7 @@ export default function Content({ profile }) {
               <div 
                 className={cn(
                   'cf-turnstile mt-4',
-                  showCaptcha ? 'block' : 'hidden'
+                  showCaptcha ? 'block max-w-0' : 'hidden'
                 )} 
                 data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY} 
                 ref={captchaRef}
