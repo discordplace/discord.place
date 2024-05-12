@@ -23,6 +23,10 @@ export default function Footer() {
         {
           label: 'API Documentation',
           href: config.docsUrl
+        },
+        {
+          label: 'Redeem Premium',
+          href: '/redeem'
         }
       ]
     },
