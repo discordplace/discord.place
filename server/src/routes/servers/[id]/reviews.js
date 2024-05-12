@@ -33,7 +33,7 @@ module.exports = {
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404);
 
-      if (guild.ownerId == request.user.id) return response.sendError('You can\'t review your own server.', 400);
+      if (guild.ownerId == request.user.id) return response.sendError('You can\'t leave a review for your own server.', 400);
 
       const userReview = await Review.findOne({ 'user.id': request.user.id, 'server.id': id });
       if (userReview) return response.sendError('You already reviewed this server.', 400);

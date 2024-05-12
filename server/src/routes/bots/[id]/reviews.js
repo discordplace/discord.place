@@ -35,7 +35,7 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      if (bot.owner.id == request.user.id) return response.sendError('You can\'t review your own bot.', 400);
+      if (bot.owner.id == request.user.id) return response.sendError('You can\'t leave a review for your own bot.', 400);
 
       const userReview = await Review.findOne({ 'user.id': request.user.id, 'bot.id': id });
       if (userReview) return response.sendError('You already reviewed this bot.', 400);
