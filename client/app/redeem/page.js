@@ -100,7 +100,7 @@ export default function Page() {
           <div className='flex flex-col mt-2 gap-y-2'>
             <div className='flex items-center text-sm font-medium gap-x-2 text-secondary'>
               <FaLink />
-              Ability to use dsc.wtf on your profile.
+              Ability to use custom hostnames for your profile.
             </div>
             <div className='flex items-center text-sm font-medium gap-x-2 text-secondary'>
               <LuHeart />

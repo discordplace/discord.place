@@ -1,6 +1,7 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import cn from '@/lib/cn';
+import config from '@/config';
 
 export default function PreferredHostDropdown({ currentlyEditingValue, setCurrentlyEditingValue }) {
   return (
@@ -24,16 +25,19 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
             {currentlyEditingValue === 'discord.place/p' && <IoMdCheckmarkCircle />}
           </DropdownMenu.Item>
 
-          <DropdownMenu.Item 
-            className={cn(
-              'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
-              currentlyEditingValue === 'dsc.wtf' ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
-            )} 
-            onSelect={() => setCurrentlyEditingValue('dsc.wtf')}
-          >
-            dsc.wtf
-            {currentlyEditingValue === 'dsc.wtf' && <IoMdCheckmarkCircle />}
-          </DropdownMenu.Item>
+          {config.customHostnames.map(hostname => (
+            <DropdownMenu.Item 
+              key={hostname}
+              className={cn(
+                'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
+                currentlyEditingValue === hostname ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
+              )} 
+              onSelect={() => setCurrentlyEditingValue(hostname)}
+            >
+              {hostname}
+              {currentlyEditingValue === hostname && <IoMdCheckmarkCircle />}
+            </DropdownMenu.Item>
+          ))}
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>   

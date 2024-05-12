@@ -110,7 +110,7 @@ module.exports = {
     body('preferredHost')
       .optional()
       .isString().withMessage('Preferred host must be a string.')
-      .isIn(['discord.place/p', 'dsc.wtf']).withMessage('Preferred host is not valid.'),
+      .isIn(['discord.place/p', ...config.customHostnames]).withMessage('Preferred host is not valid.'),
     body('socials')
       .optional()
       .isObject().withMessage('Socials must be an object.')
@@ -126,9 +126,9 @@ module.exports = {
       const canEdit = request.user.id == profile.user.id || config.permissions.canEditProfiles.includes(request.user.id);
       if (!canEdit) return response.sendError('You do not have permission to edit this profile.', 403);
 
-      if (newPreferredHost === 'dsc.wtf') {
+      if (config.customHostnames.includes(newPreferredHost)) {
         const foundPremium = await Premium.findOne({ 'user.id': profile.user.id });
-        if (!foundPremium) return response.sendError('You must be premium to use this host.', 403);
+        if (!foundPremium) return response.sendError(`You must be premium to use ${newPreferredHost}.`, 400);
       }
 
       if (newSlug) {

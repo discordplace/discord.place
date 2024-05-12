@@ -82,7 +82,7 @@ const ProfileSchema = new Schema({
   },
   preferredHost: {
     type: String,
-    enum: ['discord.place/p', 'dsc.wtf'],
+    enum: ['discord.place/p', ...config.customHostnames],
     default: 'discord.place/p'
   }
 }, {

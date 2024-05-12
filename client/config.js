@@ -134,7 +134,8 @@ const config = {
     'Social Media Integration': <RiInstagramFill />,
     'Anime & Manga': <MdMenuBook />,
     'Other': <TiPlus />
-  }
+  },
+  customHostnames: ['dsc.wtf', 'dsc.dog']
 };
 
 export default config;

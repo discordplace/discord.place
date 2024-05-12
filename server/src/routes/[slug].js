@@ -11,7 +11,7 @@ Profile.watch().on('change', async change => {
   if (change.operationType === 'update') {
     const updatedProfile = await Profile.findById(change.documentKey._id);
     const cachedUrl = urlCache.find(url => url._id.toString() === change.documentKey._id.toString());
-    if (cachedUrl && updatedProfile.preferredHost !== 'dsc.wtf') {
+    if (cachedUrl && !config.customHostnames.includes(updatedProfile.preferredHost)) {
       urlCache.splice(urlCache.indexOf(cachedUrl), 1);
     }
   }
@@ -20,7 +20,7 @@ Profile.watch().on('change', async change => {
 module.exports = {
   get: [
     async (request, response, next) => {
-      if (request.headers.host === 'dsc.wtf') {
+      if (config.customHostnames.includes(request.headers.host)) {
         const { slug } = request.params;
         const slugIsValid = /^(?!-)(?!.*--)(?!.*-$)[a-zA-Z0-9-]{3,32}$/.test(slug);
         if (!slugIsValid) return response.redirect(config.frontendUrl + '/error?code=404');
@@ -37,7 +37,7 @@ module.exports = {
       
         const foundPremium = await Premium.findOne({ 'user.id': foundProfile.user.id });
         if (!foundPremium) return response.redirect(config.frontendUrl + '/error?code=50002');
-        if (foundProfile.preferredHost !== 'dsc.wtf') return response.redirect(config.frontendUrl + '/error?code=404');
+        if (!config.customHostnames.includes(foundProfile.preferredHost)) return response.redirect(config.frontendUrl + '/error?code=404');
       
         urlCache.push({ 
           slug, 
