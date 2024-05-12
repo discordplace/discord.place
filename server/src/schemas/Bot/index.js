@@ -140,9 +140,10 @@ const BotSchema = new Schema({
 
         Object.assign(newBot, {
           owner: {
+            id: user.id,
             username: user.username,
             avatar_url: user.displayAvatarURL({ size: 256 }),
-            premium: ownerHasPremium ? true : false
+            premium: !!ownerHasPremium
           }
         });
       }

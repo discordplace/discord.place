@@ -85,7 +85,8 @@ module.exports = {
         reviews,
         has_reviewed: request.user ? !!reviews.find(review => review.user.id === request.user.id) : null,
         permissions,
-        can_set_reminder: !!(request.user && !reminder && voteTimeout && memberInGuild && !tenMinutesPassedAfterVote)
+        can_set_reminder: !!(request.user && !reminder && voteTimeout && memberInGuild && !tenMinutesPassedAfterVote),
+        ownerId: guild.ownerId
       });
     }
   ],
