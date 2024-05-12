@@ -4,7 +4,7 @@
       "@/*": ["./*"],
       "@/utils/*": ["./src/utils/*"],
       "@/schemas/*": ["./src/schemas/*"],
-      "@/validations/*": ["./src/utils/validations/*"],
+      "@/validations/*": ["./src/utils/validations/*"]
     }
   }
 }
