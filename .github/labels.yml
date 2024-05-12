@@ -25,12 +25,3 @@
 - name: 'Dependabot: Patch'
   color: 'FFD700'
   description: Pull requests opened by Dependabot to update dependencies.
-- name: 'Documentation: Bug'
-  color: 'FF6347'
-  description: Issues related to bugs specifically in the documentation.
-- name: 'Documentation: Feature'
-  color: '4682B4'
-  description: Requests or discussions related to new features in the documentation.
-- name: 'Documentation: Improvement'
-  color: '32CD32'
-  description: Discussions or problems regarding improvements to the documentation.
