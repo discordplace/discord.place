@@ -173,7 +173,7 @@ const BotSchema = new Schema({
         commands: this.command_count.value,
         commands_updated_at: this.command_count.updatedAt,
         votes: this.votes,
-        verified: this.verified,
+        verified: this.verified
       };
     },
     encryptApiKey(apiKey) {
