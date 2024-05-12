@@ -16,7 +16,7 @@ import { TiPlus } from 'react-icons/ti';
 
 const config = {
   supportInviteUrl: 'https://invite.discord.place',
-  docsUrl: 'https://docs.discord.place',
+  docsUrl: 'https://documentation.discord.place',
   headerBackgroundThresholdY: 50,
   api: {
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place',
