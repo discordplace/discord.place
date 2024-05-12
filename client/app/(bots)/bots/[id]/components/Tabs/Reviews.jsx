@@ -112,6 +112,10 @@ export default function Reviews({ bot }) {
           <span className='text-sm font-medium text-tertiary'>
             You have already left a review for this bot.
           </span>
+        ) : bot.owner.id === user.id ? (
+          <span className='text-sm font-medium text-tertiary'>
+            You can{'\''}t leave a review for your own bot.
+          </span>
         ) : (
           <>
             <div className="flex gap-x-4 w-[35%]">

@@ -140,9 +140,10 @@ const BotSchema = new Schema({
 
         Object.assign(newBot, {
           owner: {
+            id: user.id,
             username: user.username,
             avatar_url: user.displayAvatarURL({ size: 256 }),
-            premium: ownerHasPremium ? true : false
+            premium: !!ownerHasPremium
           }
         });
       }
@@ -172,7 +173,7 @@ const BotSchema = new Schema({
         commands: this.command_count.value,
         commands_updated_at: this.command_count.updatedAt,
         votes: this.votes,
-        verified: this.verified
+        verified: this.verified,
       };
     },
     encryptApiKey(apiKey) {
