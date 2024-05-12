@@ -19,7 +19,7 @@ module.exports = {
       .custom(slugValidation).withMessage('Slug is not valid.'),
     body('preferredHost')
       .isString().withMessage('Preferred host must be a string.')
-      .isIn(['discord.place/p', 'dsc.wtf']).withMessage('Preferred host is not valid.'),
+      .isIn(['discord.place/p', ...config.customHostnames]).withMessage('Preferred host is not valid.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
@@ -34,9 +34,9 @@ module.exports = {
       const userHasProfile = await Profile.findOne({ 'user.id': request.user.id });
       if (userHasProfile) return response.sendError('You already have a profile.', 400);
 
-      if (preferredHost === 'dsc.wtf') {
+      if (config.customHostnames.includes(preferredHost)) {
         const foundPremium = await Premium.findOne({ 'user.id': request.user.id });
-        if (!foundPremium) return response.sendError('You must be premium to use this host.', 403);
+        if (!foundPremium) return response.sendError(`You must be premium to use ${preferredHost}.`, 400);
       }
       
       const newProfile = new Profile({

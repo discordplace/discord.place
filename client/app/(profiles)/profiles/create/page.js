@@ -15,6 +15,7 @@ import { redirect } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { MdWorkspacePremium } from 'react-icons/md';
 import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
 
 export default function Page() {
   const user = useAuthStore(state => state.user);
@@ -158,7 +159,11 @@ export default function Page() {
                       <div className='bg-quaternary w-full h-[1px]' />
 
                       <div className='flex flex-col gap-y-1.5'>
-                        <DropdownMenu.Item className='outline-none' asChild onSelect={() => setPreferredHost('discord.place/p')}>
+                        <DropdownMenu.Item 
+                          className='outline-none' 
+                          asChild 
+                          onSelect={() => setPreferredHost('discord.place/p')}
+                        >
                           <button className={cn(
                             'flex items-center select-none justify-between px-2 py-1 text-sm border rounded-lg border-primary',
                             preferredHost === 'discord.place/p' ? 'pointer-events-none bg-quaternary text-primary' : 'hover:text-pretty text-secondary bg-tertiary hover:bg-quaternary'
@@ -167,24 +172,31 @@ export default function Page() {
                           </button>
                         </DropdownMenu.Item>
 
-                        <DropdownMenu.Item className='outline-none' asChild onSelect={() => setPreferredHost('dsc.wtf')}>
-                          {user.premium ? (
-                            <button className={cn(
-                              'font-medium flex items-center select-none justify-between px-2 py-1 text-sm border rounded-lg border-primary',
-                              preferredHost === 'dsc.wtf' ? 'pointer-events-none bg-quaternary text-primary' : 'hover:text-pretty text-secondary bg-tertiary hover:bg-quaternary'
-                            )}>
-                              dsc.wtf
-                              <MdWorkspacePremium />
-                            </button>
-                          ) : (
-                            <Tooltip content='Premium Only'>
-                              <button className='flex items-center justify-between px-2 py-1 text-sm font-medium border border-yellow-500 rounded-lg cursor-default select-none text-secondary border-primary hover:bg-yellow-500/10 bg-yellow-500/10'>
-                                dsc.wtf
+                        {config.customHostnames.map(hostname => (
+                          <DropdownMenu.Item 
+                            key={hostname} 
+                            className='outline-none' 
+                            asChild 
+                            onSelect={() => setPreferredHost(hostname)}
+                          >
+                            {user.premium ? (
+                              <button className={cn(
+                                'font-medium flex items-center select-none justify-between px-2 py-1 text-sm border rounded-lg border-primary',
+                                preferredHost === hostname ? 'pointer-events-none bg-quaternary text-primary' : 'hover:text-pretty text-secondary bg-tertiary hover:bg-quaternary'
+                              )}>
+                                {hostname}
                                 <MdWorkspacePremium />
                               </button>
-                            </Tooltip>
-                          )}
-                        </DropdownMenu.Item>
+                            ) : (
+                              <Tooltip content='Premium Only'>
+                                <button className='flex items-center justify-between px-2 py-1 text-sm font-medium border border-yellow-500 rounded-lg cursor-default select-none text-secondary border-primary hover:bg-yellow-500/10 bg-yellow-500/10'>
+                                  {hostname}
+                                  <MdWorkspacePremium />
+                                </button>
+                              </Tooltip>
+                            )}
+                          </DropdownMenu.Item>
+                        ))}
                       </div>
                     </div>
                   </DropdownMenu.Content>

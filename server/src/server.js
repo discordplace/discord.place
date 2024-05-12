@@ -60,7 +60,7 @@ module.exports = class Server {
     this.server.use(require('@/utils/middlewares/logger'));
     
     this.server.use((request, response, next) => {
-      if (request.headers.host === 'dsc.wtf') {
+      if (config.customHostnames.includes(request.headers.host)) {
         const slashLength = request.url.split('/').filter(Boolean).length;
         if (slashLength > 1) return response.redirect(`${config.frontendUrl}/profiles`);
       }
