@@ -1,3 +1,5 @@
+import AuthProtected from '@/app/components/Providers/Auth/Protected';
+
 export const metadata = {
   title: 'Redeem',
   openGraph: {
@@ -7,8 +9,10 @@ export const metadata = {
 
 export default function Layout({ children }) {
   return (
-    <div className='flex w-full h-full min-h-[100dvh] flex-col'>
-      {children}
-    </div>
+    <AuthProtected>
+      <div className='flex w-full h-full min-h-[100dvh] flex-col'>
+        {children}
+      </div>
+    </AuthProtected>
   );
 }
