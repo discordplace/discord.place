@@ -11,9 +11,9 @@ import NewBot from '@/app/(bots)/bots/manage/components/NewBot';
 import { RiAddCircleFill } from 'react-icons/ri';
 import { useMedia } from 'react-use';
 import useManageStore from '@/stores/bots/manage';
-import { BsQuestionCircleFill } from 'react-icons/bs';
 import Image from 'next/image';
 import Countdown from '@/app/components/Countdown';
+import { CgDanger } from 'react-icons/cg';
 
 export default function Page() {
   const [bots, setBots] = useState([]);
@@ -65,7 +65,7 @@ export default function Page() {
                     key={deny.bot.id}
                   >
                     <h2 className='flex flex-wrap items-center text-lg font-semibold gap-x-2'>
-                      <BsQuestionCircleFill /> 
+                      <CgDanger /> 
                       Your bot 
                       <Image
                         src={deny.bot.avatar_url}
@@ -89,10 +89,19 @@ export default function Page() {
                       <span className='text-secondary'>
                         @{deny.reviewer.username}
                       </span>
-                      for the following reason: <span className='text-secondary'>{deny.reason}</span>
                     </p>
 
-                    <div className='text-xs text-tertiary'>
+                    <div className='flex flex-col gap-y-1'>
+                      <h3 className='text-lg font-semibold text-secondary'>
+                        {deny.reason.title}
+                      </h3>
+
+                      <p className='text-sm text-tertiary'>
+                        {deny.reason.description}
+                      </p>
+                    </div>
+
+                    <div className='mt-2 text-xs text-tertiary'>
                       {new Date(deny.createdAt).getTime() + 21600000 > Date.now() ? (
                         <span>
                           This denial will expire in <Countdown date={new Date(deny.createdAt).getTime() + 21600000} renderer={({ hours, minutes, seconds, completed }) => {
