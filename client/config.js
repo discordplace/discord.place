@@ -135,7 +135,7 @@ const config = {
     'Anime & Manga': <MdMenuBook />,
     'Other': <TiPlus />
   },
-  customHostnames: ['dsc.wtf', 'dsc.dog']
+  customHostnames: ['dsc.wtf', 'dsc.dog', 'dsc.mom']
 };
 
 export default config;
