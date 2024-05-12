@@ -23,8 +23,27 @@ const S3 = new S3Client({
   }
 });
 
-const emojisDenyReasons = ['Reposted Emoji', 'Background Transparency', 'Whitespace', 'Incoherent Emoji Package Content', 'Offensive or Inappropriate Content', 'Copyright Infringement', 'Clear Representation'];
-const botsDenyReasons = ['Reposted Bot', 'Offensive or Inappropriate Content', 'Against to Discord Terms of Service', 'Not Online or Inviteable', 'Base Functionality is Broken', 'Copied Bot', 'Has Vulnerability', 'Support for Slash Commands'];
+const emojisDenyReasons = {
+  'reposted-emoji': { name: 'Reposted Emoji', description: 'If the emoji you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.' },
+  'background-transparency': { name: 'Background Transparency', description: 'Emojis should feature a transparent background. Emojis with opaque backgrounds may not blend well with different message backgrounds and could disrupt visual coherence.' },
+  'whitespace': { name: 'Whitespace', description: 'Emojis containing excess whitespace around the edges may appear disproportionately small when used in messages. To ensure optimal visibility and legibility, please crop your emojis appropriately before submission.' },
+  'incoherent-emoji-package-content': { name: 'Incoherent Emoji Package Content', description: 'Emojis within a package must be compatible with each other to ensure coherence and meaningful usage.' },
+  'offensive-or-inappropriate-content': { name: 'Offensive or Inappropriate Content', description: 'Emojis depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.' },
+  'copyright-infringement': { name: 'Copyright Infringement', description: 'Ensure that your emoji submissions do not violate any copyright or intellectual property rights. Avoid using copyrighted characters, logos, or designs without proper authorization.' },
+  'clear-representation': { name: 'Clear Representation', description: 'Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users.' }
+};
+
+const botsDenyReasons = {
+  'reposted-bot': { name: 'Reposted Bot', description: 'If the bot you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.' },
+  'offensive-or-inappropriate-content': { name: 'Offensive or Inappropriate Content', description: 'Bots depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.' },
+  'against-discord-terms-of-service': { name: 'Against Discord Terms of Service', description: 'Bots that violate Discord\'s Terms of Service will not be accepted.' },
+  'not-online-or-inviteable': { name: 'Not Online or Inviteable', description: 'Bots must be online and inviteable for usage.' },
+  'base-functionality-is-broken': { name: 'Base Functionality is Broken', description: 'Bots must have functional base features to be considered.' },
+  'copied-bot': { name: 'Copied Bot', description: 'Bots that are direct copies of existing bots will not be accepted.' },
+  'has-vulnerability': { name: 'Has Vulnerability', description: 'Bots with security vulnerabilities will not be accepted.' },
+  'support-for-slash-commands': { name: 'Support for Slash Commands', description: 'Bots must support slash commands for improved user experience and functionality.' }
+};
+
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -42,7 +61,7 @@ module.exports = {
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected emoji.')
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...emojisDenyReasons.map(reason => ({ name: reason, value: reason }))))))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(emojisDenyReasons).map(reason => ({ name: reason, value: reason }))))))
 
     .addSubcommandGroup(group => group.setName('premium').setDescription('premium')
       .addSubcommand(subcommand => subcommand.setName('generate-code').setDescription('Generates new premium code.'))
@@ -84,7 +103,7 @@ module.exports = {
         .addStringOption(option => option.setName('bot').setDescription('Bot to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected bot.')
         .addStringOption(option => option.setName('bot').setDescription('Bot to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...botsDenyReasons.map(reason => ({ name: reason, value: reason }))))))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(botsDenyReasons).map(reason => ({ name: reason, value: reason }))))))
 
     .toJSON(),
   execute: async interaction => {
@@ -213,7 +232,7 @@ module.exports = {
                   },
                   {
                     name: 'Reason',
-                    value: reason || 'No reason provided.'
+                    value: reason ? emojisDenyReasons[reason].description : 'No reason provided.'
                   }
                 ])
             ];
@@ -360,6 +379,7 @@ module.exports = {
 
         const id = interaction.options.getString('bot');
         const reason = interaction.options.getString('reason');
+        if (!botsDenyReasons[reason]) return interaction.followUp({ content: 'Invalid reason.' });
 
         const botUser = await client.users.fetch(id).catch(() => null);
         if (!botUser) return interaction.followUp({ content: 'Bot not found.' });
@@ -381,7 +401,10 @@ module.exports = {
           reviewer: {
             id: interaction.user.id
           },
-          reason
+          reason: {
+            title: botsDenyReasons[reason].name,
+            description: botsDenyReasons[reason].description
+          }
         }).save();
 
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
@@ -402,7 +425,7 @@ module.exports = {
               },
               {
                 name: 'Reason',
-                value: reason || 'No reason provided.'
+                value: botsDenyReasons[reason].description
               }
             ])
         ];
