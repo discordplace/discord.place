@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 module.exports = {
   data: {
     name: 'reminders',
-    description: 'List currently active reminders for vote system',
+    description: 'List currently active reminders for vote system'
   },
   execute: async interaction => {
     await interaction.deferReply({ ephemeral: true });

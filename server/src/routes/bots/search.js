@@ -37,7 +37,7 @@ module.exports = {
         total,
         page,
         limit,
-        bots: publiclySafeBots,
+        bots: publiclySafeBots
       });
     }
   ]

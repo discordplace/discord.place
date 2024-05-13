@@ -32,7 +32,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     listenCrons: process.env.NODE_ENV === 'production'
   },
   registerCommands: false,
-  unregisterCommands: false,
+  unregisterCommands: false
 });
 
 const Server = require('@/src/server.js');

@@ -3,7 +3,7 @@
 module.exports = {
   env: {
     node: true,
-    es2021: true,
+    es2021: true
   },
   globals: {
     client: 'readonly',
@@ -15,36 +15,40 @@ module.exports = {
   overrides: [
     {
       env: {
-        node: true,
+        node: true
       },
       files: [
-        '.eslintrc.{js,cjs}',
+        '.eslintrc.{js,cjs}'
       ],
       parserOptions: {
-        sourceType: 'module',
-      },
-    },
+        sourceType: 'module'
+      }
+    }
   ],
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module',
+    sourceType: 'module'
   },
   rules: {
     indent: [
       'error',
-      2,
+      2
     ],
     'linebreak-style': [
       'error',
-      'windows',
+      'windows'
     ],
     quotes: [
       'error',
-      'single',
+      'single'
     ],
     semi: [
       'error',
-      'always',
+      'always'
     ],
-  },
+    'comma-dangle': [
+      'error',
+      'never'
+    ]
+  }
 };

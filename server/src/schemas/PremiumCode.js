@@ -7,7 +7,7 @@ const PremiumCodeSchema = new Schema({
     required: true
   }
 }, {
-  timestamps: true,
+  timestamps: true
 });
 
 module.exports = mongoose.model('PremiumCode', PremiumCodeSchema);

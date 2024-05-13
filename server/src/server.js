@@ -53,7 +53,7 @@ module.exports = class Server {
     this.server.use(helmet({
       xXssProtection: false,
       xPoweredBy: false,
-      xFrameOptions: { action: 'sameorigin' },
+      xFrameOptions: { action: 'sameorigin' }
     }));
     this.server.use(ip);
     this.server.use(require('@/utils/middlewares/error'));

@@ -12,7 +12,7 @@ const emojis = ['🌟', '🍕', '🎉', '🚀', '🌈', '🎵', '📚', '🎭', 
 module.exports = {
   data: {
     name: 'vote',
-    description: 'Vote for the server you are on.',
+    description: 'Vote for the server you are on.'
   },
   execute: async interaction => {
     await interaction.deferReply({ ephemeral: true });

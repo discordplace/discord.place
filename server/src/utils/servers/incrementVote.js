@@ -84,7 +84,7 @@ async function incrementVote(guildId, userId) {
     .setFields([
       {
         name: 'Given by',
-        value: `@${user.tag} (${user.id})`,
+        value: `@${user.tag} (${user.id})`
       },
       {
         name: 'Total votes',

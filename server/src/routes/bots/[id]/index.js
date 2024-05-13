@@ -190,7 +190,7 @@ module.exports = {
               name: 'Short Description',
               value: short_description,
               inline: true
-            },
+            }
           ])
           .setTimestamp()
           .setColor(Discord.Colors.Purple)
