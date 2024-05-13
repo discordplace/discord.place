@@ -37,8 +37,9 @@ module.exports = {
       
         const foundPremium = await Premium.findOne({ 'user.id': foundProfile.user.id });
         if (!foundPremium) return response.redirect(config.frontendUrl + '/error?code=50002');
-        if (!config.customHostnames.includes(foundProfile.preferredHost) || request.headers.host !== foundProfile.preferredHost) return response.redirect(config.frontendUrl + '/error?code=404');
-
+        if (!config.customHostnames.includes(foundProfile.preferredHost)) return response.redirect(config.frontendUrl + '/error?code=404');
+        if (request.headers.host !== foundProfile.preferredHost) return response.redirect(config.frontendUrl + '/error?code=404');
+          
         urlCache.push({ 
           slug, 
           url: config.frontendUrl + '/profile/' + slug, 
