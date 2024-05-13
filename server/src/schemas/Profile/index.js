@@ -53,7 +53,7 @@ const ProfileSchema = new Schema({
         type: String,
         required: true,
         max: 256
-      },
+      }
     }
   ],
   views: {
@@ -74,7 +74,7 @@ const ProfileSchema = new Schema({
     validate: {
       validator: slugValidation,
       message: ({ reason }) => reason.message
-    },
+    }
   },
   verified: {
     type: Boolean,

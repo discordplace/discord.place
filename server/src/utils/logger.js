@@ -14,9 +14,9 @@ module.exports = class Logger {
  
   format(message) {
     return `${gray(`${new Date().toLocaleDateString('en-US', {
-      dateStyle: 'long',
+      dateStyle: 'long'
     })} ${new Date().toLocaleTimeString('en-US', {
-      timeStyle: 'medium',
+      timeStyle: 'medium'
     })}`)} | ${message}`;
   }
 };

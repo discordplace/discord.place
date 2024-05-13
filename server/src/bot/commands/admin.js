@@ -172,7 +172,7 @@ module.exports = {
             .setFields([
               {
                 name: 'Reviewer',
-                value: interaction.user.toString(),
+                value: interaction.user.toString()
               }
             ])
             .setThumbnail(emoji.emoji_ids ? null : `${config.cdnUrl}/emojis/${emoji.id}.${emoji.animated ? 'gif' : 'png'}`)
@@ -228,7 +228,7 @@ module.exports = {
                 .setFields([
                   {
                     name: 'Reviewer',
-                    value: interaction.user.toString(),
+                    value: interaction.user.toString()
                   },
                   {
                     name: 'Reason',
@@ -352,7 +352,7 @@ module.exports = {
             .setFields([
               {
                 name: 'Reviewer',
-                value: interaction.user.toString(),
+                value: interaction.user.toString()
               }
             ])
         ];
@@ -421,7 +421,7 @@ module.exports = {
             .setFields([
               {
                 name: 'Reviewer',
-                value: interaction.user.toString(),
+                value: interaction.user.toString()
               },
               {
                 name: 'Reason',

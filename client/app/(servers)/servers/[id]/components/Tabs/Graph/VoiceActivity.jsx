@@ -28,7 +28,7 @@ export default function VoiceActivityGraph({ server }) {
       },
       grid: {
         show: true,
-        borderColor: theme === 'dark' ? '#333' : '#6c757d',
+        borderColor: theme === 'dark' ? '#333' : '#6c757d'
       },
       fill: {
         colors: ['#9c84ef'],
@@ -85,7 +85,7 @@ export default function VoiceActivityGraph({ server }) {
           stroke: {
             color: theme === 'dark' ? '#666' : '#242a31',
             width: 1,
-            dashArray: 5,
+            dashArray: 5
           }
         },
         show: false,

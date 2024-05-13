@@ -64,7 +64,7 @@ export default function Profiles() {
     },
     exit: { 
       opacity: 0
-    },
+    }
   };
   
   return (

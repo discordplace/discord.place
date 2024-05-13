@@ -183,7 +183,7 @@ const BotSchema = new Schema({
       if (!this.api_key) return null;
 
       return decrypt(this.api_key, process.env.BOT_API_KEY_ENCRYPT_SECRET);
-    },
+    }
   }
 });
 

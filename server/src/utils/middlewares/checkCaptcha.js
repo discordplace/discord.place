@@ -7,7 +7,7 @@ module.exports = async function checkCaptcha(request, response, next) {
   const baseURL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
   const data = {
     response: captchaResponse,
-    secret: process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY,
+    secret: process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY
   };
 
   try {

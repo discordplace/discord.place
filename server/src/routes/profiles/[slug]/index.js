@@ -197,5 +197,5 @@ module.exports = {
         profile: await profile.toPubliclySafe()
       });
     }
-  ],
+  ]
 };

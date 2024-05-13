@@ -62,7 +62,7 @@ async function createPanelMessageOptions(guild) {
       'right': '' , 
       'right-mid': ' ', 
       'middle': ' '
-    },
+    }
   };
 
   const topVotersTable = new Table({ 
@@ -115,7 +115,7 @@ async function createPanelMessageOptions(guild) {
         },
         {
           name: 'View on discord.place',
-          value: `[${guild.name}](${config.frontendUrl}/servers/${guild.id})`,
+          value: `[${guild.name}](${config.frontendUrl}/servers/${guild.id})`
         }
       ])
   ];
