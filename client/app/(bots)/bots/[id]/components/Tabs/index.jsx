@@ -9,7 +9,7 @@ export default function Tabs({ bot }) {
     {
       label: 'Reviews',
       id: 'reviews',
-      component: <Reviews bot={bot} />,
+      component: <Reviews bot={bot} />
     },
     {
       label: 'Top Voters',

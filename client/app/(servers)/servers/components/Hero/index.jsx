@@ -67,7 +67,7 @@ export default function Hero() {
     },
     exit: { 
       opacity: 0
-    },
+    }
   };
 
   const showPagination = !loading && totalServers > limit;

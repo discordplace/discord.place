@@ -60,7 +60,7 @@ export default function Emojis() {
     },
     exit: { 
       opacity: 0
-    },
+    }
   };
   
   const showPagination = !loading && totalEmojis > limit;

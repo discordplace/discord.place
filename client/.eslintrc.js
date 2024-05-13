@@ -25,7 +25,7 @@ module.exports = {
     'react/prop-types': 'off',
     indent: [
       'error',
-      2,
+      2
     ],
     'linebreak-style': 'off',
     quotes: [
@@ -35,6 +35,10 @@ module.exports = {
     semi: [
       'error',
       'always'
+    ],
+    'comma-dangle': [
+      'error',
+      'never'
     ]
   }
 };
