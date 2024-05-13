@@ -157,7 +157,7 @@ export default function NewBot({ owned_servers }) {
               </Markdown>
             ) : (
               <span 
-                contentEditable 
+                contentEditable='plaintext-only'
                 suppressContentEditableWarning 
                 className='block w-full h-[250px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500' 
                 onKeyUp={event => {
