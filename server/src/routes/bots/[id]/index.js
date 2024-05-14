@@ -167,7 +167,7 @@ module.exports = {
         if (guild.ownerId !== request.user.id) return response.sendError(`You are not the owner of ${support_server_id}.`, 400);
       }
 
-      const documentData = {
+      const bot = new Bot({
         id: user.id,
         owner: {
           id: request.user.id
@@ -177,13 +177,14 @@ module.exports = {
         invite_url,
         categories,
         support_server_id,
+        webhook: {
+          url: webhook?.url || null,
+          token: webhook?.token || null
+        },
         server_count: 0,
         votes: 0,
         verified: false
-      };
-      if (webhook?.url && webhook?.token) documentData.webhook = { url: webhook.url, token: webhook.token };
-
-      const bot = new Bot(documentData);
+      });
 
       const validationError = getValidationError(bot);
       if (validationError) return response.sendError(validationError, 400);
