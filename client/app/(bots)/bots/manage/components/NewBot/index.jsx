@@ -47,7 +47,6 @@ export default function NewBot({ owned_servers }) {
   const router = useRouter();
 
   function addBot() {
-    if (botWebhookUrl && !botWebhookToken) return toast.error('If you set Webhook URL, you must set Webhook Token too.');
     if (!botWebhookUrl && botWebhookToken) return toast.error('If you set Webhook Token, you must set Webhook URL too.');
 
     setLoading(true);
@@ -60,7 +59,9 @@ export default function NewBot({ owned_servers }) {
     };
 
     if (botSupportServerId) botData.support_server_id = botSupportServerId;
-    if (botWebhookUrl && botWebhookToken) botData.webhook = { url: botWebhookUrl, token: botWebhookToken };
+    if (botWebhookUrl || botWebhookToken) botData.webhook = {};
+    if (botWebhookUrl) botData.webhook.url = botWebhookUrl;
+    if (botWebhookToken) botData.webhook.token = botWebhookToken;
 
     toast.promise(createBot(botId, botData), {
       loading: `Adding ${botId}..`,
