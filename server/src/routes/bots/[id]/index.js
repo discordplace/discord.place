@@ -10,7 +10,7 @@ const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const inviteUrlValidation = require('@/utils/validations/bots/inviteUrl');
-const webhookUrlValidation = require('@/utils/validations/bots/webhookUrl');
+const webhookValidation = require('@/utils/validations/bots/webhook');
 const Review = require('@/schemas/Bot/Review');
 const Deny = require('@/schemas/Bot/Deny');
 
@@ -124,15 +124,7 @@ module.exports = {
     body('webhook')
       .optional()
       .isObject().withMessage('Webhook should be an object.')
-      .custom((webhook) => {
-        if (!webhook.url || !webhook.token) {
-          throw new Error('Webhook should have url and token properties.');
-        }
-        if (!webhookUrlValidation(webhook.url)) {
-          throw new Error('Invalid webhook URL.');
-        }
-        return true;
-      }),
+      .custom(webhookValidation),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
@@ -287,15 +279,7 @@ module.exports = {
     body('newWebhook')
       .optional()
       .isObject().withMessage('newWebhook should be an object.')
-      .custom((newWebhook) => {
-        if (!newWebhook.url || !newWebhook.token) {
-          throw new Error('Webhook should have url and token properties.');
-        }
-        if (!webhookUrlValidation(newWebhook.url)) {
-          throw new Error('Invalid webhook URL.');
-        }
-        return true;
-      }),
+      .custom(webhookValidation),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

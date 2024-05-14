@@ -37,8 +37,7 @@ module.exports = {
         if (bot.webhook.url && bot.webhook.token) {
           await axios.post(bot.webhook.url, {
             bot: bot.id,
-            user: request.user.id,
-            type: 'VOTE'
+            user: request.user.id
           }, {
             headers: {
               'Authorization': bot.webhook.token

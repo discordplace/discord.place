@@ -1,4 +1,4 @@
-const { URL } = require('url');
+const { URL } = require('node:url');
 
 function inviteUrlValidation(text) {
   try {
