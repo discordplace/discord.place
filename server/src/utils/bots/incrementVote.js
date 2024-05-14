@@ -24,6 +24,7 @@ async function incrementVote(botId, userId) {
         'voters.$[element].vote': 1
       },
       $set: {
+        'voters.$[element].lastVote': Date.now(),
         lastVoter: {
           user: {
             id: userId
