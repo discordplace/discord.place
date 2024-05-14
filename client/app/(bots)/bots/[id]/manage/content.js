@@ -32,8 +32,8 @@ export default function Content({ bot }) {
   const [newInviteUrl, setNewInviteUrl] = useState(currentBot.invite_url);
   const [newCategories, setNewCategories] = useState(currentBot.categories);
   const [newSupportServerId, setNewSupportServerId] = useState(currentBot.support_server?.id || '');
-  const [newWebhookUrl, setNewWebhookUrl] = useState(currentBot.webhook?.url);
-  const [newWebhookToken, setNewWebhookToken] = useState(currentBot.webhook?.token);
+  const [newWebhookUrl, setNewWebhookUrl] = useState(currentBot.webhook?.url || '');
+  const [newWebhookToken, setNewWebhookToken] = useState(currentBot.webhook?.token || '');
 
   const descriptionRef = useRef(null);
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
@@ -74,8 +74,8 @@ export default function Content({ bot }) {
       newInviteUrl !== currentBot.invite_url ||
       newCategories.length !== currentBot.categories.length ||
       newSupportServerId !== (currentBot.support_server?.id || '') ||
-      newWebhookUrl !== currentBot.webhook?.url ||
-      newWebhookToken !== currentBot.webhook?.token
+      newWebhookUrl !== (currentBot.webhook?.url || '') ||
+      newWebhookToken !== (currentBot.webhook?.token || '')
     );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -94,13 +94,21 @@ export default function Content({ bot }) {
       newInviteUrl,
       newCategories,
       newWebhook: {
-        url: currentBot.webhook?.url,
-        token: currentBot.webhook?.token
+        url: currentBot?.url || null,
+        token: currentBot.webhook?.token || null
       }
     };
 
+    console.log(newBotData);
+
     if (newSupportServerId) newBotData.newSupportServerId = newSupportServerId;
-    if (!newWebhookUrl) newBotData.newWebhook = null;
+    if (!newWebhookUrl) newBotData.newWebhook = { url: null, token: null };
+    else {
+      newBotData.newWebhook = {
+        url: newWebhookUrl,
+        token: newWebhookToken || null
+      };
+    }
 
     toast.promise(editBot(currentBot.id, newBotData), {
       loading: 'Saving changes..',

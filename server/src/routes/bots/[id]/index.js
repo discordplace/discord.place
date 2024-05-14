@@ -124,7 +124,11 @@ module.exports = {
     body('webhook')
       .optional()
       .isObject().withMessage('Webhook should be an object.')
-      .custom(webhookValidation),
+      .custom(value => {
+        if (!value.url && !value.token) return true;
+
+        return webhookValidation(value);
+      }),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
@@ -281,7 +285,11 @@ module.exports = {
     body('newWebhook')
       .optional()
       .isObject().withMessage('newWebhook should be an object.')
-      .custom(webhookValidation),
+      .custom(value => {
+        if (!value.url && !value.token) return true;
+
+        return webhookValidation(value);
+      }),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
@@ -316,9 +324,10 @@ module.exports = {
       if (newDescription) bot.description = newDescription;
       if (newInviteUrl) bot.invite_url = newInviteUrl;
       if (newCategories) bot.categories = newCategories;
-      if (bot.webhook && !newWebhook) bot.webhook = null;
-      if (newWebhook) {
+      if (newWebhook.url === null && newWebhook.token === null) bot.webhook = { url: null, token: null };
+      else {
         if (!newWebhook.url && newWebhook.token) return response.sendError('If you provide a Webhook Token, you should also provide a Webhook URL.', 400);
+        
         bot.webhook = {
           url: newWebhook.url || null,
           token: newWebhook.token || null

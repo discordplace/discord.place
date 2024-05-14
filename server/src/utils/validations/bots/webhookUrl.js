@@ -1,6 +1,8 @@
 const { URL } = require('node:url');
 
 function webhookUrlValidation(text) {
+  if (!text) return true;
+  
   try {
     const url = new URL(text);
 
