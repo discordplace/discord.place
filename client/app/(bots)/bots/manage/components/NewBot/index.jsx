@@ -6,6 +6,7 @@ import { MdChevronLeft } from 'react-icons/md';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import cn from '@/lib/cn';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import createBot from '@/lib/request/bots/createBot';
@@ -16,6 +17,8 @@ import { TbLoader } from 'react-icons/tb';
 import Markdown from '@/app/components/Markdown';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import Link from 'next/link';
+import Tooltip from '@/app/components/Tooltip';
+import CopyButton from '@/app/components/CopyButton';
 
 export default function NewBot({ owned_servers }) {
   const setSelectedBot = useManageStore(state => state.setSelectedBot);
@@ -33,6 +36,7 @@ export default function NewBot({ owned_servers }) {
   const [botSupportServerId, setBotSupportServerId] = useState('');
   const [newWebhookUrl, setNewWebhookUrl] = useState('');
   const [newWebhookToken, setNewWebhookToken] = useState('');
+  const [webhookTokenBlurred, setWebhookTokenBlurred] = useState(true);
 
   useEffect(() => {
     if (markdownPreviewing === false) descriptionRef.current.innerText = botDescription;
@@ -258,19 +262,56 @@ export default function NewBot({ owned_servers }) {
               You can use webhooks to get notified when someone votes for your bot. Documentation can be found <Link href={config.docsUrl} target="_blank" rel="noopener noreferrer" className="text-primary">here</Link>.
             </p>
 
+            <h3 className="mt-4 text-sm font-medium text-secondary">
+              Webhook URL
+            </h3>
+
             <input
-              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
-              placeholder="Webhook URL"
+              className="block w-full p-2 mt-2 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
               value={newWebhookUrl}
               onChange={event => setNewWebhookUrl(event.target.value)}
             />
 
-            <input
-              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
-              placeholder="Webhook Token"
-              value={newWebhookToken}
-              onChange={event => setNewWebhookToken(event.target.value)}
-            />
+            <h3 className="mt-4 text-sm font-medium text-secondary">
+              Webhook Token
+            </h3>
+
+            <div className='relative flex items-center justify-center mt-2'>
+              <input
+                className='block w-full p-2 pr-16 text-sm border-2 rounded-lg outline-none border-primary bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+                value={newWebhookToken}
+                onChange={event => setNewWebhookToken(event.target.value)}
+                type={webhookTokenBlurred ? 'password' : 'text'}
+              />
+
+              <div className='absolute right-0 flex items-center gap-x-1'>
+                <Tooltip content={webhookTokenBlurred ? 'Click to show Webhook Token' : 'Click to hide Webhook Token'}>
+                  <div className='flex items-center text-sm text-secondary hover:text-tertiary'>
+                    <FaEye 
+                      className={cn(
+                        'cursor-pointer transition-all',
+                        !webhookTokenBlurred && 'opacity-0 scale-0'
+                      )} 
+                      onClick={() => setWebhookTokenBlurred(old => !old)} 
+                    />
+                  
+                    <FaEyeSlash
+                      className={cn(
+                        'cursor-pointer transition-all absolute',
+                        webhookTokenBlurred && 'opacity-0 scale-0'
+                      )}
+                      onClick={() => setWebhookTokenBlurred(old => !old)}
+                    />
+                  </div>
+                </Tooltip>
+            
+                <CopyButton
+                  successText='Copied Webhook Token!'
+                  copyText={newWebhookToken}
+                  className='justify-end'
+                />
+              </div>
+            </div>
 
             <h2 className="mt-8 text-lg font-semibold">
               Content Policy

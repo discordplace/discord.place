@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 import { TbLoader } from 'react-icons/tb';
 import editBot from '@/lib/request/bots/editBot';
 import { RiErrorWarningFill, RiEyeFill, RiEyeOffFill, RiKey2Line } from 'react-icons/ri';
-import { FaRegTrashAlt } from 'react-icons/fa';
+import { FaEyeSlash, FaRegTrashAlt, FaEye } from 'react-icons/fa';
 import deleteBot from '@/lib/request/bots/deleteBot';
 import createApiKey from '@/lib/request/bots/createApiKey';
 import deleteApiKey from '@/lib/request/bots/deleteApiKey';
@@ -62,6 +62,7 @@ export default function Content({ bot }) {
   const [loading, setLoading] = useState(false);
   const [apiKeyLoading, setApiKeyLoading] = useState(false);
   const [apiKeyBlurred, setApiKeyBlurred] = useState(true);
+  const [webhookTokenBlurred, setWebhookTokenBlurred] = useState(true);
   const [anyChangesMade, setAnyChangesMade] = useState(false);
   const [showDeleteConsent, setShowDeleteConsent] = useState(false);
   const router = useRouter();
@@ -348,19 +349,57 @@ export default function Content({ bot }) {
             You can use webhooks to get notified when someone votes for your bot. Documentation can be found <Link href={config.docsUrl} target="_blank" rel="noopener noreferrer" className="text-primary">here</Link>.
           </p>
 
+
+          <h3 className="mt-4 text-sm font-medium text-secondary">
+            Webhook URL
+          </h3>
+          
           <input
-            className='block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
-            placeholder="Webhook URL"
+            className='block w-full p-2 mt-2 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
             value={newWebhookUrl}
             onChange={event => setNewWebhookUrl(event.target.value)}
           />
 
-          <input
-            className='block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
-            placeholder="Webhook Token"
-            value={newWebhookToken}
-            onChange={event => setNewWebhookToken(event.target.value)}
-          />
+          <h3 className="mt-4 text-sm font-medium text-secondary">
+            Webhook Token
+          </h3>
+
+          <div className='relative flex items-center justify-center mt-2'>
+            <input
+              className='block w-full p-2 pr-16 text-sm border-2 rounded-lg outline-none border-primary bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              value={newWebhookToken}
+              onChange={event => setNewWebhookToken(event.target.value)}
+              type={webhookTokenBlurred ? 'password' : 'text'}
+            />
+
+            <div className='absolute right-0 flex items-center gap-x-1'>
+              <Tooltip content={webhookTokenBlurred ? 'Click to show Webhook Token' : 'Click to hide Webhook Token'}>
+                <div className='flex items-center text-sm text-secondary hover:text-tertiary'>
+                  <FaEye 
+                    className={cn(
+                      'cursor-pointer transition-all',
+                      !webhookTokenBlurred && 'opacity-0 scale-0'
+                    )} 
+                    onClick={() => setWebhookTokenBlurred(old => !old)} 
+                  />
+                  
+                  <FaEyeSlash
+                    className={cn(
+                      'cursor-pointer transition-all absolute',
+                      webhookTokenBlurred && 'opacity-0 scale-0'
+                    )}
+                    onClick={() => setWebhookTokenBlurred(old => !old)}
+                  />
+                </div>
+              </Tooltip>
+            
+              <CopyButton
+                successText='Copied Webhook Token!'
+                copyText={newWebhookToken}
+                className='justify-end'
+              />
+            </div>
+          </div>
 
           {bot.permissions.canEditAPIKey && (
             <>
