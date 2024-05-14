@@ -314,7 +314,14 @@ module.exports = {
       if (newDescription) bot.description = newDescription;
       if (newInviteUrl) bot.invite_url = newInviteUrl;
       if (newCategories) bot.categories = newCategories;
-      if (newWebhook?.url || newWebhook?.server) bot.webhook = { url: newWebhook.url || bot.webhook?.url, token: newWebhook.token || bot.webhook?.token };
+      if (bot.webhook && !newWebhook) bot.webhook = null;
+      if (newWebhook) {
+        if (!newWebhook.url && newWebhook.token) return response.sendError('If you provide a Webhook Token, you should also provide a Webhook URL.', 400);
+        bot.webhook = {
+          url: newWebhook.url || null,
+          token: newWebhook.token || null
+        };
+      }
 
       const validationError = getValidationError(bot);
       if (validationError) return response.sendError(validationError, 400);

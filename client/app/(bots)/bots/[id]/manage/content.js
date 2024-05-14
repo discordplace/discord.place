@@ -82,6 +82,8 @@ export default function Content({ bot }) {
   }, [newDescription, newShortDescription, newInviteUrl, newCategories, newSupportServerId, newWebhookUrl, newWebhookToken]);
 
   async function save() {
+    if (!newWebhookUrl && newWebhookToken) return toast.error('You need to provide a Webhook URL if you want to use a Webhook Token.');
+
     if (!anyChangesMade) return toast.error('No changes were made.');
     
     setLoading(true);
@@ -90,11 +92,15 @@ export default function Content({ bot }) {
       newDescription,
       newShortDescription,
       newInviteUrl,
-      newCategories
+      newCategories,
+      newWebhook: {
+        url: currentBot.webhook?.url,
+        token: currentBot.webhook?.token
+      }
     };
 
     if (newSupportServerId) newBotData.newSupportServerId = newSupportServerId;
-    if (newWebhookUrl || newWebhookToken) newBotData.newWebhook = { url: newWebhookUrl || currentBot.webhook?.url, token: newWebhookToken || currentBot.webhook?.token };
+    if (!newWebhookUrl) newBotData.newWebhook = null;
 
     toast.promise(editBot(currentBot.id, newBotData), {
       loading: 'Saving changes..',
