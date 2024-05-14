@@ -7,10 +7,10 @@ import { motion } from 'framer-motion';
 
 export default function PackagePreview({ image_urls, setImageURLs, setIsPackage, setEmojiURL, ableToChange }) {
   const theme = useThemeStore(state => state.theme);
-  const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark' ? true : false);
+  const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark');
 
   useEffect(() => {
-    setPatternDarkMode(theme === 'dark' ? true : false);
+    setPatternDarkMode(theme === 'dark');
   }, [theme]);
 
   useEffect(() => {

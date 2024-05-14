@@ -119,8 +119,8 @@ const ProfileSchema = new Schema({
         slug: this.slug,
         verified: this.verified,
         preferredHost: this.preferredHost,
-        premium: premium ? true : false,
-        badges: getBadges(this, premium ? true : false),
+        premium: !!premium,
+        badges: getBadges(this, !!premium),
         createdAt: this.createdAt,
         updatedAt: this.updatedAt
       };

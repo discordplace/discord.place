@@ -9,10 +9,10 @@ import cn from '@/lib/cn';
 export default function EmojiPreview({ image_url, ableToChange, defaultSize }) {
   const [previewSize, setPreviewSize] = useState(defaultSize === 'shrink' ? 32 : 96);
   const theme = useThemeStore(state => state.theme);
-  const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark' ? true : false);
+  const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark');
 
   useEffect(() => {
-    setPatternDarkMode(theme === 'dark' ? true : false);
+    setPatternDarkMode(theme === 'dark');
   }, [theme]);
 
   return (
