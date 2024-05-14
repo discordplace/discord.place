@@ -74,8 +74,8 @@ export default function Content({ bot }) {
       newInviteUrl !== currentBot.invite_url ||
       newCategories.length !== currentBot.categories.length ||
       newSupportServerId !== (currentBot.support_server?.id || '') ||
-      newWebhookUrl !== currentBot.webhook_url ||
-      newWebhookToken !== currentBot.webhook_token
+      newWebhookUrl !== currentBot.webhook?.url ||
+      newWebhookToken !== currentBot.webhook?.token
     );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
