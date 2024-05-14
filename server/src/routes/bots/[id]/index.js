@@ -183,6 +183,8 @@ module.exports = {
 
       await bot.save();
 
+      await Deny.deleteMany({ 'bot.id': user.id });
+
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
       const embeds = [
