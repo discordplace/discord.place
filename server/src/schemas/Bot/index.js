@@ -59,7 +59,7 @@ const BotSchema = new Schema({
   webhook: {
     url: {
       type: String,
-      required: false,
+      required: true,
       validate: {
         validator: webhookUrlValidation,
         message: ({ reason }) => reason.message
