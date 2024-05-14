@@ -9,8 +9,8 @@ const Server = require('@/schemas/Server');
 const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
-const inviteUrlValidation = require('@/utils/validations/bots/inviteUrl');
-const webhookValidation = require('@/utils/validations/bots/webhook');
+const inviteUrlValidation = require('@/validations/bots/inviteUrl');
+const webhookValidation = require('@/validations/bots/webhook');
 const Review = require('@/schemas/Bot/Review');
 const Deny = require('@/schemas/Bot/Deny');
 
