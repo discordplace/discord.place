@@ -100,7 +100,7 @@ export default function TopVoters({ bot }) {
           <Pagination 
             page={page} 
             setPage={setPage}
-            loading={false} 
+            loading={false}
             total={totalVoters}
             limit={limit}
             disableAnimation
