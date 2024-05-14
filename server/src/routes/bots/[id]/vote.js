@@ -34,15 +34,16 @@ module.exports = {
       try {
         await incrementVote(id, request.user.id);
 
-        if (bot.webhook.url && bot.webhook.token) {
+        if (bot.webhook?.url) {
           await axios.post(bot.webhook.url, {
             bot: bot.id,
             user: request.user.id
-          }, {
+          },
+          bot.webhook.token ? {
             headers: {
               'Authorization': bot.webhook.token
             }
-          }).catch(() => null);
+          } : null).catch(() => null);
         }
 
         return response.sendStatus(204).end();
