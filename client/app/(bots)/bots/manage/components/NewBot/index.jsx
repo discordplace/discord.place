@@ -34,8 +34,8 @@ export default function NewBot({ owned_servers }) {
   const [botInviteUrl, setBotInviteUrl] = useState('');
   const [botCategories, setBotCategories] = useState([]);
   const [botSupportServerId, setBotSupportServerId] = useState('');
-  const [newWebhookUrl, setNewWebhookUrl] = useState('');
-  const [newWebhookToken, setNewWebhookToken] = useState('');
+  const [botWebhookUrl, setBotWebhookUrl] = useState('');
+  const [botWebhookToken, setBotWebhookToken] = useState('');
   const [webhookTokenBlurred, setWebhookTokenBlurred] = useState(true);
 
   useEffect(() => {
@@ -47,6 +47,9 @@ export default function NewBot({ owned_servers }) {
   const router = useRouter();
 
   function addBot() {
+    if (botWebhookUrl && !botWebhookToken) return toast.error('If you set Webhook URL, you must set Webhook Token too.');
+    if (!botWebhookUrl && botWebhookToken) return toast.error('If you set Webhook Token, you must set Webhook URL too.');
+
     setLoading(true);
 
     const botData = {
@@ -57,7 +60,7 @@ export default function NewBot({ owned_servers }) {
     };
 
     if (botSupportServerId) botData.support_server_id = botSupportServerId;
-    if (newWebhookUrl && newWebhookToken) botData.webhook = { url: newWebhookUrl, token: newWebhookToken };
+    if (botWebhookUrl && botWebhookToken) botData.webhook = { url: botWebhookUrl, token: botWebhookToken };
 
     toast.promise(createBot(botId, botData), {
       loading: `Adding ${botId}..`,
@@ -268,8 +271,8 @@ export default function NewBot({ owned_servers }) {
 
             <input
               className="block w-full p-2 mt-2 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
-              value={newWebhookUrl}
-              onChange={event => setNewWebhookUrl(event.target.value)}
+              value={botWebhookUrl}
+              onChange={event => setBotWebhookUrl(event.target.value)}
             />
 
             <h3 className="mt-4 text-sm font-medium text-secondary">
@@ -279,8 +282,8 @@ export default function NewBot({ owned_servers }) {
             <div className='relative flex items-center justify-center mt-2'>
               <input
                 className='block w-full p-2 pr-16 text-sm border-2 rounded-lg outline-none border-primary bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
-                value={newWebhookToken}
-                onChange={event => setNewWebhookToken(event.target.value)}
+                value={botWebhookToken}
+                onChange={event => setBotWebhookToken(event.target.value)}
                 type={webhookTokenBlurred ? 'password' : 'text'}
               />
 
@@ -307,7 +310,7 @@ export default function NewBot({ owned_servers }) {
             
                 <CopyButton
                   successText='Copied Webhook Token!'
-                  copyText={newWebhookToken}
+                  copyText={botWebhookToken}
                   className='justify-end'
                 />
               </div>
