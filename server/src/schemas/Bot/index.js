@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const categoriesValidation = require('@/validations/bots/categories');
 const inviteURLValidation = require('@/validations/bots/inviteUrl');
+const webhookUrlValidation = require('@/validations/bots/webhookUrl');
 const Premium = require('@/schemas/Premium');
 const encrypt = require('@/utils/encryption/encrypt');
 const decrypt = require('@/utils/encryption/decrypt');
@@ -54,6 +55,20 @@ const BotSchema = new Schema({
   support_server_id: {
     type: String,
     required: false
+  },
+  webhook: {
+    url: {
+      type: String,
+      required: true,
+      validate: {
+        validator: webhookUrlValidation,
+        message: ({ reason }) => reason.message
+      }
+    },
+    token: {
+      type: String,
+      required: true
+    }
   },
   server_count: {
     value: {
@@ -168,6 +183,7 @@ const BotSchema = new Schema({
         description: this.description,
         invite_url: this.invite_url,
         categories: this.categories,
+        webhook: this.webhook,
         servers: this.server_count.value,
         servers_updated_at: this.server_count.updatedAt,
         commands: this.command_count.value,

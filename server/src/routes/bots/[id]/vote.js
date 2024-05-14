@@ -7,6 +7,7 @@ const checkCaptcha = require('@/utils/middlewares/checkCaptcha');
 const bodyParser = require('body-parser');
 const incrementVote = require('@/src/utils/bots/incrementVote');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const axios = require('axios');
 
 module.exports = {
   post: [
@@ -32,7 +33,19 @@ module.exports = {
 
       try {
         await incrementVote(id, request.user.id);
-        
+
+        if (bot.webhook.url && bot.webhook.token) {
+          await axios.post(bot.webhook.url, {
+            bot: bot.id,
+            user: request.user.id,
+            type: 'VOTE'
+          }, {
+            headers: {
+              'Authorization': bot.webhook.token
+            }
+          }).catch(() => null);
+        }
+
         return response.sendStatus(204).end();
       } catch (error) {
         return response.sendError(error.message, 400);

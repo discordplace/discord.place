@@ -10,6 +10,7 @@ const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const inviteUrlValidation = require('@/utils/validations/bots/inviteUrl');
+const webhookUrlValidation = require('@/utils/validations/bots/webhookUrl');
 const Review = require('@/schemas/Bot/Review');
 const Deny = require('@/schemas/Bot/Deny');
 
@@ -120,18 +121,30 @@ module.exports = {
       .optional()
       .isString().withMessage('Support server ID should be a string.')
       .isLength({ min: 17, max: 19 }).withMessage('Support server ID must be between 17 and 19 characters.'),
+    body('webhook')
+      .optional()
+      .isObject().withMessage('Webhook should be an object.')
+      .custom((webhook) => {
+        if (!webhook.url || !webhook.token) {
+          throw new Error('Webhook should have url and token properties.');
+        }
+        if (!webhookUrlValidation(webhook.url)) {
+          throw new Error('Invalid webhook URL.');
+        }
+        return true;
+      }),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-  
-      const { id, short_description, description, invite_url, categories, support_server_id } = matchedData(request);
+
+      const { id, short_description, description, invite_url, categories, support_server_id, webhook } = matchedData(request);
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE' },
         { type: 'USER_ID', value: id, restriction: 'BOTS_CREATE' }
       ]).catch(() => false);
       if (userOrBotQuarantined) return response.sendError('You are not allowed to create bots or this bot is not allowed to be created.', 403);
-      
+
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
 
@@ -146,15 +159,15 @@ module.exports = {
       if (support_server_id) {
         const botWithExactSupportServerId = await Bot.findOne({ support_server_id });
         if (botWithExactSupportServerId && botWithExactSupportServerId.id != id) return response.sendError(`Support server ${support_server_id} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
-        
+
         const server = await Server.findOne({ id: support_server_id });
         if (!server) return response.sendError('Support server should be listed on discord.place.', 400);
 
         const guild = client.guilds.cache.get(support_server_id);
         if (guild.ownerId !== request.user.id) return response.sendError(`You are not the owner of ${support_server_id}.`, 400);
       }
-      
-      const bot = new Bot({
+
+      const documentData = {
         id: user.id,
         owner: {
           id: request.user.id
@@ -167,7 +180,10 @@ module.exports = {
         server_count: 0,
         votes: 0,
         verified: false
-      });
+      };
+      if (webhook?.url && webhook?.token) documentData.webhook = { url: webhook.url, token: webhook.token };
+
+      const bot = new Bot(documentData);
 
       const validationError = getValidationError(bot);
       if (validationError) return response.sendError(validationError, 400);
@@ -267,11 +283,23 @@ module.exports = {
       .optional()
       .isString().withMessage('Support server ID should be a string.')
       .isLength({ min: 17, max: 19 }).withMessage('Support server ID must be between 17 and 19 characters.'),
+    body('newWebhook')
+      .optional()
+      .isObject().withMessage('newWebhook should be an object.')
+      .custom((newWebhook) => {
+        if (!newWebhook.url || !newWebhook.token) {
+          throw new Error('Webhook should have url and token properties.');
+        }
+        if (!webhookUrlValidation(newWebhook.url)) {
+          throw new Error('Invalid webhook URL.');
+        }
+        return true;
+      }),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, newShortDescription, newDescription, newInviteUrl, newCategories, newSupportServerId } = matchedData(request);
+      const { id, newShortDescription, newDescription, newInviteUrl, newCategories, newSupportServerId, newWebhook } = matchedData(request);
 
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
@@ -301,6 +329,7 @@ module.exports = {
       if (newDescription) bot.description = newDescription;
       if (newInviteUrl) bot.invite_url = newInviteUrl;
       if (newCategories) bot.categories = newCategories;
+      if (newWebhook?.url || newWebhook?.server) bot.webhook = { url: newWebhook.url || bot.webhook?.url, token: newWebhook.token || bot.webhook?.token };
 
       const validationError = getValidationError(bot);
       if (validationError) return response.sendError(validationError, 400);

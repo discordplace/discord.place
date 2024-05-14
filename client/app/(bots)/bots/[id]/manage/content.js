@@ -32,6 +32,8 @@ export default function Content({ bot }) {
   const [newInviteUrl, setNewInviteUrl] = useState(currentBot.invite_url);
   const [newCategories, setNewCategories] = useState(currentBot.categories);
   const [newSupportServerId, setNewSupportServerId] = useState(currentBot.support_server?.id || '');
+  const [newWebhookUrl, setNewWebhookUrl] = useState(currentBot.webhook?.url);
+  const [newWebhookToken, setNewWebhookToken] = useState(currentBot.webhook?.token);
 
   const descriptionRef = useRef(null);
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
@@ -70,11 +72,13 @@ export default function Content({ bot }) {
       newDescription !== currentBot.description ||
       newInviteUrl !== currentBot.invite_url ||
       newCategories.length !== currentBot.categories.length ||
-      newSupportServerId !== (currentBot.support_server?.id || '')
+      newSupportServerId !== (currentBot.support_server?.id || '') ||
+      newWebhookUrl !== currentBot.webhook_url ||
+      newWebhookToken !== currentBot.webhook_token
     );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newDescription, newShortDescription, newInviteUrl, newCategories, newSupportServerId]);
+  }, [newDescription, newShortDescription, newInviteUrl, newCategories, newSupportServerId, newWebhookUrl, newWebhookToken]);
 
   async function save() {
     if (!anyChangesMade) return toast.error('No changes were made.');
@@ -89,6 +93,7 @@ export default function Content({ bot }) {
     };
 
     if (newSupportServerId) newBotData.newSupportServerId = newSupportServerId;
+    if (newWebhookUrl || newWebhookToken) newBotData.newWebhook = { url: newWebhookUrl || currentBot.webhook?.url, token: newWebhookToken || currentBot.webhook?.token };
 
     toast.promise(editBot(currentBot.id, newBotData), {
       loading: 'Saving changes..',
@@ -334,6 +339,28 @@ export default function Content({ bot }) {
               </div>
             )
           )}
+
+          <h2 className="mt-8 text-lg font-semibold">
+            Webhook <span className="text-xs font-normal select-none text-tertiary">(optional)</span>
+          </h2>
+
+          <p className="text-sm text-tertiary">
+            You can use webhooks to get notified when someone votes for your bot. Documentation can be found <Link href={config.docsUrl} target="_blank" rel="noopener noreferrer" className="text-primary">here</Link>.
+          </p>
+
+          <input
+            className='block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+            placeholder="Webhook URL"
+            value={newWebhookUrl}
+            onChange={event => setNewWebhookUrl(event.target.value)}
+          />
+
+          <input
+            className='block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+            placeholder="Webhook Token"
+            value={newWebhookToken}
+            onChange={event => setNewWebhookToken(event.target.value)}
+          />
 
           {bot.permissions.canEditAPIKey && (
             <>
