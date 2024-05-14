@@ -2,8 +2,9 @@ const Bot = require('@/schemas/Bot');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const Premium = require('@/schemas/Premium');
 const Discord = require('discord.js');
+const axios = require('axios');
 
-async function incrementVote(botId, userId) {
+async function incrementVote(botId, userId, botWebhook) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
   if (!user) throw new Error(`User ${userId} not found.`);
 
@@ -90,6 +91,13 @@ async function incrementVote(botId, userId) {
     .setFooter({ text: `Voted at ${new Date().toLocaleString()}` });
 
   client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
+
+  if (botWebhook?.url) {
+    const headers = {};
+    if (botWebhook.token) headers['Authorization'] = botWebhook.token;
+
+    await axios.post(botWebhook.url, { bot: bot.id, user: user.id }, { headers }).catch(() => null);
+  }
 
   return true;
 }

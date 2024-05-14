@@ -7,7 +7,6 @@ const checkCaptcha = require('@/utils/middlewares/checkCaptcha');
 const bodyParser = require('body-parser');
 const incrementVote = require('@/src/utils/bots/incrementVote');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const axios = require('axios');
 
 module.exports = {
   post: [
@@ -32,19 +31,7 @@ module.exports = {
       if (timeout) return response.sendError(`You can vote again in ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000)} hours, ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60} minutes.`, 400);
 
       try {
-        await incrementVote(id, request.user.id);
-
-        if (bot.webhook?.url) {
-          await axios.post(bot.webhook.url, {
-            bot: bot.id,
-            user: request.user.id
-          },
-          bot.webhook.token ? {
-            headers: {
-              'Authorization': bot.webhook.token
-            }
-          } : null).catch(() => null);
-        }
+        await incrementVote(id, request.user.id, bot.webhook);
 
         return response.sendStatus(204).end();
       } catch (error) {
