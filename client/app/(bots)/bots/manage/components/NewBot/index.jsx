@@ -15,6 +15,7 @@ import confetti from '@/lib/lotties/confetti.json';
 import { TbLoader } from 'react-icons/tb';
 import Markdown from '@/app/components/Markdown';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import Link from 'next/link';
 
 export default function NewBot({ owned_servers }) {
   const setSelectedBot = useManageStore(state => state.setSelectedBot);
@@ -59,12 +60,12 @@ export default function NewBot({ owned_servers }) {
       success: () => {
         setTimeout(() => router.push(`/bots/${botId}`), 3000);
         setRenderConfetti(true);
-        
+
         return `${botId} added! You will be redirected to Bot page in a few seconds..`;
       },
       error: error => {
         setLoading(false);
-        
+
         return error;
       }
     });
@@ -72,12 +73,12 @@ export default function NewBot({ owned_servers }) {
 
   return (
     <>
-      <div className='fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100dvh]'>
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%' />
+      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100dvh]">
+        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
       </div>
-      
+
       <div className="flex justify-center w-full gap-y-4 max-w-[800px] flex-col">
-        <div className='flex items-center gap-x-4'>
+        <div className="flex items-center gap-x-4">
           <button className="p-1.5 rounded-xl bg-secondary hover:bg-tertiary" onClick={() => {
             setBotId('');
             setBotShortDescription('');
@@ -86,59 +87,59 @@ export default function NewBot({ owned_servers }) {
             setBotSupportServerId('');
             setSelectedBot(null);
           }}>
-            <MdChevronLeft size={24} />
+            <MdChevronLeft size={24}/>
           </button>
-    
+
           <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
             Adding a new bot
           </h1>
         </div>
-    
-        <p className='text-sm sm:text-base max-w-[800px] text-tertiary'>
+
+        <p className="text-sm sm:text-base max-w-[800px] text-tertiary">
           You{'\''}re about to add new bot to discord.place. This means your bot will be listed on discord.place and everyone will be able to see it. You can remove your bot from discord.place at any time.
         </p>
 
-        <div className='flex items-center justify-center w-full mt-12'>
-          <div className='max-w-[800px] w-full flex flex-col gap-y-1'>
-            <h2 className='text-lg font-semibold'>
+        <div className="flex items-center justify-center w-full mt-12">
+          <div className="max-w-[800px] w-full flex flex-col gap-y-1">
+            <h2 className="text-lg font-semibold">
               Bot ID
             </h2>
 
-            <p className='text-sm sm:text-base text-tertiary'>
+            <p className="text-sm sm:text-base text-tertiary">
               This is the ID of your bot on Discord. You can find it in the developer portal.
             </p>
 
             <input
-              className='block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
               onChange={event => setBotId(event.target.value)}
               value={botId}
             />
 
-            <h2 className='mt-8 text-lg font-semibold'>
+            <h2 className="mt-8 text-lg font-semibold">
               Add a short description
             </h2>
 
-            <p className='text-sm sm:text-base text-tertiary'>
+            <p className="text-sm sm:text-base text-tertiary">
               This is the short description that will be shown to everyone who visits your bot on discord.place.
             </p>
 
             <input
-              className='block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
               maxLength={config.botShortDescriptionMaxLength}
               value={botShortDescription}
               onChange={event => setBotShortDescription(event.target.value)}
             />
 
-            <h2 className='mt-8 text-lg font-semibold'>
+            <h2 className="mt-8 text-lg font-semibold">
               Add a description
             </h2>
 
-            <p className='text-sm sm:text-base text-tertiary'>
+            <p className="text-sm sm:text-base text-tertiary">
               This is the more detailed description of your bot. You can use this to tell everyone what your bot does and how it works. You can use markdown here.
             </p>
 
             <button
-              className='mt-4 flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70'
+              className="mt-4 flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70"
               onClick={() => setMarkdownPreviewing(!markdownPreviewing)}
             >
               {markdownPreviewing ? (
@@ -155,14 +156,14 @@ export default function NewBot({ owned_servers }) {
             </button>
 
             {markdownPreviewing ? (
-              <Markdown className='mt-4 h-[250px] overflow-y-auto rounded-lg border-2 border-transparent'>
+              <Markdown className="mt-4 h-[250px] overflow-y-auto rounded-lg border-2 border-transparent">
                 {botDescription}
               </Markdown>
             ) : (
               <span
-                contentEditable='plaintext-only'
+                contentEditable="plaintext-only"
                 suppressContentEditableWarning
-                className='block w-full h-[250px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+                className="block w-full h-[250px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
                 onKeyUp={event => {
                   if (event.target.textContent.length > config.botDescriptionMaxCharacters) return toast.error(`Description can only contain ${config.serverDescriptionMaxCharacters} characters.`);
                   setBotDescription(event.target.innerText);
@@ -171,29 +172,29 @@ export default function NewBot({ owned_servers }) {
               />
             )}
 
-            <h2 className='mt-8 text-lg font-semibold'>
+            <h2 className="mt-8 text-lg font-semibold">
               Add a invite url
             </h2>
 
-            <p className='text-sm sm:text-base text-tertiary'>
+            <p className="text-sm sm:text-base text-tertiary">
               This is the invite URL of your bot. This is the link that users will use to add your bot to their server. You can use default Discord authorization link or custom one.
             </p>
 
             <input
-              className='block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
               value={botInviteUrl}
               onChange={event => setBotInviteUrl(event.target.value)}
             />
 
-            <h2 className='mt-8 text-lg font-semibold'>
+            <h2 className="mt-8 text-lg font-semibold">
               Category
             </h2>
 
-            <p className='text-sm text-tertiary'>
+            <p className="text-sm text-tertiary">
               Select all categories that your bot belongs to. This will help users find your bot.
             </p>
 
-            <div className='flex flex-wrap mt-4 gap-x-2 gap-y-2'>
+            <div className="flex flex-wrap mt-4 gap-x-2 gap-y-2">
               {config.botCategories.map(category => (
                 <button
                   key={category}
@@ -212,28 +213,28 @@ export default function NewBot({ owned_servers }) {
               ))}
             </div>
 
-            <h2 className='flex items-center mt-8 text-lg font-semibold gap-x-2'>
-              Support Server <span className='text-xs font-normal select-none text-tertiary'>(optional)</span>
+            <h2 className="flex items-center mt-8 text-lg font-semibold gap-x-2">
+              Support Server <span className="text-xs font-normal select-none text-tertiary">(optional)</span>
             </h2>
 
-            <p className='text-sm sm:text-base text-tertiary'>
+            <p className="text-sm sm:text-base text-tertiary">
               You can select a server that users can join to get support for your bot. This is optional.<br/>
               You can only select servers that you listed on discord.place.
             </p>
 
             {owned_servers.filter(server => server.is_created).length <= 0 ? (
-              <p className='mt-4 text-sm text-tertiary'>
+              <p className="mt-4 text-sm text-tertiary">
                 You don{'\''}t have any servers listed on discord.place.
               </p>
             ) : (
-              <div className='grid grid-cols-1 gap-4 mt-4 mobile:grid-cols-2 sm:grid-cols-4 lg:grid-cols-5'>
+              <div className="grid grid-cols-1 gap-4 mt-4 mobile:grid-cols-2 sm:grid-cols-4 lg:grid-cols-5">
                 {owned_servers.filter(server => server.is_created).map(server => (
                   <button
                     className="flex flex-col bg-tertiary hover:bg-quaternary p-2 rounded-xl w-full h-[180px] items-center cursor-pointer overflow-clip relative"
                     key={server.id}
                     onClick={() => setBotSupportServerId(oldServerId => oldServerId === server.id ? '' : server.id)}
                   >
-                    <div className='relative'>
+                    <div className="relative">
                       <ServerIcon width={128} height={128} icon_url={server.icon_url} name={server.name}/>
                       <div className={cn(
                         'absolute w-full h-full text-3xl text-primary transition-opacity rounded-lg flex items-center justify-center bg-secondary/60 z-[0] top-0 left-0',
@@ -258,37 +259,37 @@ export default function NewBot({ owned_servers }) {
             </p>
 
             <input
-              className='block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
               placeholder="Webhook URL"
               value={newWebhookUrl}
               onChange={event => setNewWebhookUrl(event.target.value)}
             />
 
             <input
-              className='block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
               placeholder="Webhook Token"
               value={newWebhookToken}
               onChange={event => setNewWebhookToken(event.target.value)}
             />
 
-            <h2 className='mt-8 text-lg font-semibold'>
+            <h2 className="mt-8 text-lg font-semibold">
               Content Policy
             </h2>
 
-            <p className='flex flex-col text-sm sm:text-base gap-y-1 text-tertiary'>
+            <p className="flex flex-col text-sm sm:text-base gap-y-1 text-tertiary">
               By adding your bot to discord.place, you agree to our Bot Submission Guidelines.
-              <span className='mt-2 text-xs text-tertiary'>
+              <span className="mt-2 text-xs text-tertiary">
                 * Can be found in our Discord server.
               </span>
             </p>
 
-            <h2 className='mt-8 text-lg font-semibold'>
+            <h2 className="mt-8 text-lg font-semibold">
               Are you ready?
             </h2>
 
-            <div className='flex flex-col w-full gap-2 mt-2 sm:flex-row'>
+            <div className="flex flex-col w-full gap-2 mt-2 sm:flex-row">
               <button
-                className='flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-full justify-center hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70'
+                className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-full justify-center hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70"
                 disabled={
                   loading ||
                   !botId ||
@@ -299,10 +300,10 @@ export default function NewBot({ owned_servers }) {
                 }
                 onClick={addBot}
               >
-                {loading && <TbLoader className='animate-spin'/>}
+                {loading && <TbLoader className="animate-spin"/>}
                 Add Bot
               </button>
-              <button className='flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-secondary disabled:pointer-events-none disabled:opacity-70'
+              <button className="flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-secondary disabled:pointer-events-none disabled:opacity-70"
                 onClick={() => {
                   setBotId('');
                   setBotShortDescription('');
