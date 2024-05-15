@@ -26,7 +26,7 @@ export default function CollapsedHeader() {
   }, [open]);
 
   return (
-    <header className='pointer-events-none fixed top-0 flex justify-between w-full px-4 mobile:px-16 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]'>
+    <header className='pointer-events-none fixed top-0 flex justify-between w-full px-4 sm:px-16 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]'>
       <div className='mt-6'>
         <Link href='/' className='pointer-events-auto'>
           <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='w-[48px] h-[48px]' alt='discord.place Logo' />
