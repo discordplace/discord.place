@@ -4,18 +4,56 @@ import cn from '@/lib/cn';
 import { Source_Serif_4 } from 'next/font/google';
 import Square from './components/Background/Square';
 import { MdArrowForward } from 'react-icons/md';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useMedia } from 'react-use';
 
 const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
 
 export default function Page() {
   const defaultBlockColor = '#ffffff10';
   const [hoveredBlockColor, setHoveredBlockColor] = useState(defaultBlockColor);
+  const isMobile = useMedia('(max-width: 640px)', false);  
 
   function Block({ title, desc, to, index, color, disabled, newBadge }) {
     const blockRef = useRef(null);
     const buttonRef = useRef(null);
+
+    useEffect(() => {
+      if (!blockRef.current || !buttonRef.current) return;
+
+      function onMouseEnter() {
+        setHoveredBlockColor(`${color}15`);
+        blockRef.current.style.backgroundColor = `${color}10`;
+        buttonRef.current.style.backgroundColor = `${color}80`;
+        buttonRef.current.style.color = '#ffffff';
+      }
+
+      function onMouseLeave() {        
+        setHoveredBlockColor(defaultBlockColor);
+        blockRef.current.style.backgroundColor = 'transparent';
+        buttonRef.current.style.backgroundColor = '#ffffff';
+        buttonRef.current.style.color = '#000000';
+      }
+
+      if (isMobile) {
+        blockRef.current.removeEventListener('mouseenter', onMouseEnter);
+        blockRef.current.removeEventListener('mouseleave', onMouseLeave);
+      } else {
+        blockRef.current.addEventListener('mouseenter', onMouseEnter);
+        blockRef.current.addEventListener('mouseleave', onMouseLeave);
+      }
+
+      return () => {
+        if (!blockRef.current) return;
+        
+        blockRef.current.removeEventListener('mouseenter', onMouseEnter);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        blockRef.current.removeEventListener('mouseleave', onMouseLeave);
+      };
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isMobile]);
     
     return (
       <Link 
@@ -28,18 +66,6 @@ export default function Page() {
           disabled && 'pointer-events-none bg-secondary/30 select-none'
         )}
         ref={blockRef}
-        onMouseEnter={() => {
-          setHoveredBlockColor(`${color}15`);
-          blockRef.current.style.backgroundColor = `${color}10`;
-          buttonRef.current.style.backgroundColor = `${color}80`;
-          buttonRef.current.style.color = '#ffffff';
-        }}
-        onMouseLeave={() => {
-          setHoveredBlockColor(defaultBlockColor);
-          blockRef.current.style.backgroundColor = 'transparent';
-          buttonRef.current.style.backgroundColor = '#ffffff';
-          buttonRef.current.style.color = '#000000';
-        }}
         href={to}
       >
         <h1 className='flex items-center mt-3 text-xl font-semibold text-center gap-x-2 sm:text-2xl sm:mt-6 text-primary'>
