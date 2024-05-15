@@ -7,10 +7,11 @@ import { useShallow } from 'zustand/react/shallow';
 
 export default function SearchInput() {
   const [value, setValue] = useState('');
-  const { loading, search, fetchEmojis } = useSearchStore(useShallow(state => ({ 
+  const { loading, search, fetchEmojis, setPage } = useSearchStore(useShallow(state => ({ 
     loading: state.loading, 
     search: state.search, 
-    fetchEmojis: state.fetchEmojis 
+    fetchEmojis: state.fetchEmojis,
+    setPage: state.setPage
   })));
 
   function validateValue(throwError = true) {
@@ -56,7 +57,10 @@ export default function SearchInput() {
           onKeyUp={event => {
             if (event.key === 'Enter') {
               const validatedValue = validateValue();
-              if (validatedValue) fetchEmojis(validatedValue);
+              if (validatedValue) {
+                setPage(1);
+                fetchEmojis(validatedValue);
+              }
             }
           }}
           initial={{ opacity: 0, y: -25 }} 
@@ -67,6 +71,7 @@ export default function SearchInput() {
         {search && (
           <motion.button  className='absolute right-2 p-1.5 rounded-md text-secondary hover:bg-tertiary'  onClick={() => {
             setValue('');
+            setPage(1);
             fetchEmojis('');
           }}  disabled={loading}>
             <FiX className='text-xl' />
@@ -77,7 +82,10 @@ export default function SearchInput() {
       <motion.button className='p-3 rounded-md bg-secondary text-secondary hover:bg-tertiary disabled:pointer-events-none disabled:opacity-70' 
         onClick={() => {
           const validatedValue = validateValue();
-          if (validatedValue) fetchEmojis(validatedValue);
+          if (validatedValue) {
+            setPage(1);
+            fetchEmojis(validatedValue);
+          }
         }} 
         disabled={loading || validateValue(false) === false}
         initial={{ opacity: 0, y: -25 }}
