@@ -34,7 +34,7 @@ const useSearchStore = create((set, get) => ({
   category: 'All',
   setCategory: category => set({ category }),
   sort: 'Newest',
-  setSort: sort => set({ sort }),
+  setSort: sort => set({ sort })
 }));
 
 export default useSearchStore;
