@@ -10,6 +10,10 @@ import CopyButton from '@/app/components/CopyButton';
 import cn from '@/lib/cn';
 import forceFetchProfile from '@/lib/request/profiles/forceFetchProfile';
 import { useState } from 'react';
+import { MdOutlineMale, MdOutlineFemale } from 'react-icons/md';
+import { LiaBirthdayCakeSolid } from 'react-icons/lia';
+import { FaGenderless } from 'react-icons/fa';
+import { BsGeoAlt } from 'react-icons/bs';
 
 export default function Card({ banner_url, avatar_url, username, occupation, gender, location, birthday, bio, views, likes, verified, preferredHost, slug, badges }) {
   const [isBannerFailed, setIsBannerFailed] = useState(false);
@@ -78,6 +82,9 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
       <div className='flex flex-wrap justify-start gap-4 px-4'>
         <div className='flex flex-col gap-y-1'>
           <h2 className='text-xs font-bold text-tertiary'>
+            {gender === 'Male' && <MdOutlineMale className='inline mr-1' />}
+            {gender === 'Female' && <MdOutlineFemale className='inline mr-1' />}
+            {!gender && <FaGenderless className='inline mr-1' />}
             Gender
           </h2>
           <p className='text-xs font-medium text-secondary'>
@@ -87,6 +94,7 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
 
         <div className='flex flex-col gap-y-1'>
           <h2 className='text-xs font-bold text-tertiary'>
+            <LiaBirthdayCakeSolid className='inline mr-1' />
             Birthday
           </h2>
           <p className='text-xs font-medium text-secondary'>
@@ -96,6 +104,7 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
 
         <div className='flex flex-col gap-y-1'>
           <h2 className='text-xs font-bold text-tertiary'>
+            <BsGeoAlt className='inline mr-1' />
             Location
           </h2>
           <p className='text-xs font-medium text-secondary'>
