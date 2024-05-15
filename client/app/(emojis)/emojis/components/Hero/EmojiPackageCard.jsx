@@ -33,7 +33,7 @@ export default function EmojiCard({ id, name, categories, downloads, emoji_ids }
                 width={containerHovered ? 32 : 64}
                 height={containerHovered ? 32 : 64}
                 style={{
-                  zIndex: 4 - index
+                  zIndex: containerHovered ? 0 : 4 - index
                 }}
               />
             </>
