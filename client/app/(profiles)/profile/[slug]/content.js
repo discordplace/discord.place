@@ -12,8 +12,10 @@ import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers
 import Script from 'next/script';
 import cn from '@/lib/cn';
 import sleep from '@/lib/sleep';
+import useThemeStore from '@/stores/theme';
 
 export default function Content({ profile }) {
+  const theme = useThemeStore(state => state.theme);
   const [showCaptcha, setShowCaptcha] = useState(false);
   const [showCaptchaFrame, setShowCaptchaFrame] = useState(false); 
 
@@ -151,6 +153,7 @@ export default function Content({ profile }) {
                 )} 
                 data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY} 
                 ref={captchaRef}
+                data-theme={theme === 'dark' ? 'dark' : 'light'}
               />
             </div>
           </div>

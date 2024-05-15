@@ -16,8 +16,10 @@ import { toast } from 'sonner';
 import voteBot from '@/lib/request/bots/voteBot';
 import Countdown from '@/app/components/Countdown/Vote';
 import revalidateBot from '@/lib/revalidate/bot';
+import useThemeStore from '@/stores/theme';
 
 export default function Actions({ bot }) {
+  const theme = useThemeStore(state => state.theme);
   const [voteTimeout, setVoteTimeout] = useState(bot.vote_timeout);
   const loggedIn = useAuthStore(state => state.loggedIn);
   const [showCaptcha, setShowCaptcha] = useState(false);
@@ -94,7 +96,15 @@ export default function Actions({ bot }) {
         
         <AnimatePresence>
           {showCaptcha && (
-            <motion.div className="cf-turnstile [&>iframe]:max-w-[100%]" data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY} ref={captchaRef} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
+            <motion.div 
+              className="cf-turnstile [&>iframe]:max-w-[100%]" 
+              data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY} 
+              ref={captchaRef} 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }}
+              data-theme={theme === 'dark' ? 'dark' : 'light'}
+            />
           )}
         </AnimatePresence>
 
