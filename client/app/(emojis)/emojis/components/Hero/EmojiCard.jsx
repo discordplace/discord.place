@@ -19,7 +19,7 @@ export default function EmojiCard({ id, name, animated, categories, downloads })
         />
 
         {animated && (
-          <div className='absolute px-2 text-xs font-semibold uppercase group-hover:bg-secondary bg-quaternary rounded-full right-2 top-1.5'>
+          <div className='absolute px-2 text-xs font-semibold uppercase transition-colors group-hover:bg-secondary bg-quaternary rounded-full right-2 top-1.5'>
             GIF
           </div>
         )}
