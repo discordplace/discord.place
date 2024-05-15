@@ -1,8 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { MdOutlineMale, MdOutlineFemale, MdLocationPin } from 'react-icons/md';
-import { LiaBirthdayCakeSolid } from 'react-icons/lia';
 import { LuEye } from 'react-icons/lu';
 import Link from 'next/link';
 import { AiFillHeart } from 'react-icons/ai';
@@ -77,41 +75,35 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
         !banner_url && 'w-full h-[2px] bg-tertiary'
       )} />
 
-      <div className='flex flex-wrap gap-2 px-4'>
-        <span className='flex items-center px-2 py-2 text-sm font-medium rounded bg-tertiary gap-x-1 text-secondary'>
-          {gender === 'Male' && (
-            <>
-              <MdOutlineMale color='#3b9cff' />
-              Male
-            </>
-          )}
+      <div className='flex flex-wrap justify-start gap-4 px-4'>
+        <div className='flex flex-col gap-y-1'>
+          <h2 className='text-xs font-bold text-tertiary'>
+            Gender
+          </h2>
+          <p className='text-xs font-medium text-secondary'>
+            {gender || 'Unknown'}
+          </p>
+        </div>
 
-          {gender === 'Female' && (
-            <>
-              <MdOutlineFemale color='#ff97ec' />
-              Female
-            </>
-          )}
+        <div className='flex flex-col gap-y-1'>
+          <h2 className='text-xs font-bold text-tertiary'>
+            Birthday
+          </h2>
+          <p className='text-xs font-medium text-secondary'>
+            {birthday || 'Unknown'}
+          </p>
+        </div>
 
-          {gender === null && (
-            <>
-              <MdOutlineMale color='#3b9cff' />
-              <MdOutlineFemale color='#ff97ec' />
-              Unknown
-            </>
-          )}  
-        </span>
-
-        <span className='flex items-center max-w-full px-2 py-2 text-sm font-medium rounded bg-tertiary gap-x-1 text-secondary'>
-          <MdLocationPin color='#ff4343' />
-          <span className='truncate max-w-[90%]'>
-            {location || 'Unknown'}
-          </span>
-        </span>
-
-        <span className='flex items-center px-2 py-2 text-sm font-medium rounded bg-tertiary gap-x-1 text-secondary'>
-          <LiaBirthdayCakeSolid color='#62ff67' /> {birthday || 'Unknown'}
-        </span>
+        <div className='flex flex-col gap-y-1'>
+          <h2 className='text-xs font-bold text-tertiary'>
+            Location
+          </h2>
+          <p className='text-xs font-medium text-secondary'>
+            <span className='truncate max-w-[0%]'>
+              {location || 'Unknown'}
+            </span>
+          </p>
+        </div>
       </div>
 
       <div className='relative h-full mt-4'>
