@@ -123,7 +123,7 @@ export default function Footer() {
         </span>
       </div>
 
-      <div className='flex flex-wrap mobile:justify-between 2xl:w-[calc(100%_-_400px_-_12rem)] gap-8 sm:gap-16'>
+      <div className='flex flex-wrap justify-between 2xl:w-[calc(100%_-_400px_-_12rem)] gap-8 sm:gap-16'>
         {blocks.map(block => (
           <div className='flex flex-col gap-y-6' key={nanoid()}>
             <h2 className='text-sm font-medium text-tertiary'>
