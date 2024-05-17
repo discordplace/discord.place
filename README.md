@@ -65,6 +65,16 @@ To get a local copy of the project up and running, follow these steps:
      
      # Cloudflare Turnstile
      CLOUDFLARE_TURNSTILE_SECRET_KEY=
+
+     # Cloudflare Secrets for global rate limiting
+
+     CLOUDFLARE_API_KEY=
+     CLOUDFLARE_EMAIL=
+     CLOUDFLARE_ACCOUNT_ID=
+     CLOUDFLARE_BLOCK_IP_LIST_ID=
+
+     # Discord Place API
+     DISCORD_PLACE_API_KEY=
      ```
      Ensure you fill in the values for each environment variable according to your setup. Take a look to [Secrets Configuration](#secrets-configuration) for more information about .env
 
@@ -115,6 +125,10 @@ Before running the project, you need to set up the following environment variabl
 | S3_REGION                | AWS region for Cloudflare R2                                | Yes      | Region                 |
 | S3_ENDPOINT              | AWS S3 endpoint for Cloudflare R2                           | Yes      | Endpoint               |
 | CLOUDFLARE_TURNSTILE_SECRET_KEY | Secret key for Cloudflare Turnstile integration         | Yes      | RandomString           |
+| CLOUDFLARE_API_KEY       | API key for Cloudflare integration                         | Yes      | CloudflareAPIKey       |
+| CLOUDFLARE_EMAIL         | Email for Cloudflare integration                           | Yes      | CloudflareEmail        |
+| CLOUDFLARE_ACCOUNT_ID    | Account ID for Cloudflare integration                      | Yes      | CloudflareAccountID    |
+| CLOUDFLARE_BLOCK_IP_LIST_ID | ID for the Cloudflare IP list used for global rate limiting | Yes | CloudflareBlockIPListID |
 | DISCORD_PLACE_API_KEY | API key for Discord Place API | Yes | RandomString |
 | ANALYZE                  | Whether to enable bundle analysis during client build       | No       | true/false             |
 | NEXT_PUBLIC_CF_SITE_KEY  | Public key for Cloudflare integration                      | No       | SiteKey                |
