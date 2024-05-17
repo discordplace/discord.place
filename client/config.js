@@ -19,7 +19,7 @@ const config = {
   docsUrl: 'https://docs.discord.place',
   headerBackgroundThresholdY: 50,
   api: {
-    url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place',
+    url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place'
   },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;
@@ -30,7 +30,7 @@ const config = {
       title: 'Profiles',
       href: '/profiles',
       icon: CgProfile,
-      iconColor: '#3b82f6',
+      iconColor: '#3b82f6'
     },
     {
       title: 'Servers',

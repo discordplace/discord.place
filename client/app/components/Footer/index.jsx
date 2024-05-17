@@ -3,11 +3,12 @@
 import useThemeStore from '@/stores/theme';
 import { nanoid } from 'nanoid';
 import Link from 'next/link';
-import { FaDiscord, FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
+import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa';
 import cn from '@/lib/cn';
 import Image from 'next/image';
 import ThemeSwitcher from '@/app/components/Footer/ThemeSwitcher';
 import config from '@/config';
+import { FaXTwitter } from 'react-icons/fa6';
 
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
@@ -78,9 +79,9 @@ export default function Footer() {
       title: 'Socials',
       links: [
         {
-          label: 'Twitter',
+          label: 'X',
           href: '#',
-          icon: FaTwitter,
+          icon: FaXTwitter,
           disabled: true
         },
         {
