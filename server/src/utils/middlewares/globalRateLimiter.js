@@ -1,8 +1,8 @@
 const BlockedIp = require('@/schemas/BlockedIp');
 
-const RATE_LIMIT = config.globalRateLimiter.maxRequests;
-const TIME_FRAME = config.globalRateLimiter.perMinutes * 60 * 1000;
-const CLEANUP_INTERVAL = config.globalRateLimiter.cleanUpIntervalInMinutes * 60 * 1000;
+const RATE_LIMIT = config.globalRateLimit.maxRequests;
+const TIME_FRAME = config.globalRateLimit.perMinutes * 60 * 1000;
+const CLEANUP_INTERVAL = config.globalRateLimit.cleanUpIntervalInMinutes * 60 * 1000;
 
 const ipRequests = new Map();
 
