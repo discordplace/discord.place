@@ -164,3 +164,7 @@ customHostnames:
   - 'dsc.wtf'
   - 'dsc.dog'
   - 'dsc.mom'
+globalRateLimit:
+  maxRequests: 60
+  perMinutes: 2
+  cleanUpIntervalInMinutes: 2.5
