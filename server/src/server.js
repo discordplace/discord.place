@@ -58,6 +58,7 @@ module.exports = class Server {
     this.server.use(ip);
     this.server.use(require('@/utils/middlewares/error'));
     this.server.use(require('@/utils/middlewares/logger'));
+    if (process.env.NODE_ENV === 'production') this.server.use(require('@/utils/middlewares/globalRateLimiter'));
     
     this.server.use((request, response, next) => {
       if (config.customHostnames.includes(request.headers.host)) {
