@@ -236,15 +236,17 @@ module.exports = class Client {
         account_id: CLOUDFLARE_ACCOUNT_ID
       });
 
+      let deletedCount = 0;
+
       for (const { ip } of blockedIps) {
         const item = response.result.find(item => item?.ip === ip);
         if (!item) {
           await BlockedIp.deleteOne({ _id: ip });
-          logger.send(`IP address ${ip} has been unblocked.`);
+          deletedCount++;
         }
       }
 
-      logger.send('Checked expired blocked IPs.');
+      logger.send(`Deleted ${deletedCount} expired blocked IPs.`);
     } catch (error) {
       logger.send(`Failed to check expired blocked IPs:\n${error.stack}`);
     }
