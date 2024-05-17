@@ -1,5 +1,7 @@
 module.exports = async interaction => {
   if (interaction.isCommand()) {
+    if (!interaction.guild) return interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
+    
     const foundCommand = client.commands.find(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON().name === interaction.commandName : command.data.name === interaction.commandName);
     if (!foundCommand) return;
 
@@ -25,6 +27,8 @@ module.exports = async interaction => {
         })
       );
     };
+
+    if (!interaction.guild) return;
 
     const foundCommand = client.commands.find(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON().name === interaction.commandName : command.data.name === interaction.commandName);
     if (!foundCommand) return;
