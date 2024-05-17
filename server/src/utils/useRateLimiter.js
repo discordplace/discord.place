@@ -16,7 +16,7 @@ module.exports = function ({ maxRequests, perMinutes }) {
       status: 429
     },
     skipFailedRequests: false,
-    skip: request => config.rateLimitWhitelist.includes(request.user?.id)
+    skip: request => process.env.NODE_ENV === 'development' || config.rateLimitWhitelist.includes(request.user?.id)
   });
 
   return limiter;
