@@ -15,7 +15,7 @@ module.exports = function ({ maxRequests, perMinutes }) {
       error: 'You are being rate limited.',
       status: 429
     },
-    skipFailedRequests: true,
+    skipFailedRequests: false,
     skip: request => config.rateLimitWhitelist.includes(request.user?.id)
   });
 
