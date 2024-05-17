@@ -1,15 +1,31 @@
+// Modules
 const Discord = require('discord.js');
+const { CronJob } = require('cron');
+const axios = require('axios');
+const CloudflareAPI = require('cloudflare');
+const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
+
+// Schemas
 const Server = require('@/schemas/Server');
 const VoiceActivity = require('@/schemas/Server/VoiceActivity');
-const { CronJob } = require('cron');
 const Panel = require('@/schemas/Server/Panel');
-const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
 const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
 const Reminder = require('@/schemas/Reminder');
-const axios = require('axios');
+const BlockedIp = require('@/schemas/BlockedIp');
+
+// Cloudflare Setup
+const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
+const CLOUDFLARE_EMAIL = process.env.CLOUDFLARE_EMAIL;
+const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
+const CLOUDFLARE_BLOCK_IP_LIST_ID = process.env.CLOUDFLARE_BLOCK_IP_LIST_ID;
+
+const cloudflare = new CloudflareAPI({
+  email: CLOUDFLARE_EMAIL,
+  key: CLOUDFLARE_API_KEY
+});
 
 module.exports = class Client {
   constructor() {
@@ -81,6 +97,7 @@ module.exports = class Client {
       if (options.startup.updateClientActivity) this.updateClientActivity();
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
       if (options.startup.checkReminerMetadatas) this.checkReminerMetadatas();
+      if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
       if (options.startup.updateBotStats) this.updateBotStats();
 
       if (options.startup.listenCrons) {
@@ -209,6 +226,27 @@ module.exports = class Client {
       else logger.send(`Failed to update bot stats: ${response.data}`);
     } catch (error) {
       logger.send(`Failed to update bot stats:\n${error.stack}`);
+    }
+  }
+
+  async checkExpiredBlockedIPs() {
+    try {
+      const blockedIps = await BlockedIp.find();
+      const response = await cloudflare.rules.lists.items.list(CLOUDFLARE_BLOCK_IP_LIST_ID, {
+        account_id: CLOUDFLARE_ACCOUNT_ID
+      });
+
+      for (const { ip } of blockedIps) {
+        const item = response.result.find(item => item?.ip === ip);
+        if (!item) {
+          await BlockedIp.deleteOne({ _id: ip });
+          logger.send(`IP address ${ip} has been unblocked.`);
+        }
+      }
+
+      logger.send('Checked expired blocked IPs.');
+    } catch (error) {
+      logger.send(`Failed to check expired blocked IPs:\n${error.stack}`);
     }
   }
 };
