@@ -41,6 +41,7 @@ Model.watch().on('change', async data => {
         }
       ]
     });
+    client.blockedIps.set(fullDocument.ip, true);
 
     logger.send(`IP address ${fullDocument.ip} has been blocked.`);
   }
@@ -49,6 +50,8 @@ Model.watch().on('change', async data => {
     const response = await cloudflare.rules.lists.items.list(CLOUDFLARE_BLOCK_IP_LIST_ID, {
       account_id: CLOUDFLARE_ACCOUNT_ID
     });
+
+    client.blockedIps.delete(documentKey._id);
 
     const item = response.result.find(item => item?.ip === documentKey._id);
     if (!item) return;

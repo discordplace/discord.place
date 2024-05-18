@@ -58,6 +58,12 @@ module.exports = class Server {
     this.server.use(ip);
     this.server.use(require('@/utils/middlewares/error'));
     this.server.use(require('@/utils/middlewares/logger'));
+    
+    this.server.use((request, response, next) => {
+      if (client.blockedIps.has(request.clientIp)) return response.sendError('Forbidden', 403);
+      next();
+    });
+
     if (process.env.NODE_ENV === 'production') this.server.use(require('@/utils/middlewares/globalRateLimiter'));
     
     this.server.use((request, response, next) => {
