@@ -25,7 +25,7 @@ const BlockedIpSchema = new Schema({
   timestamps: true
 });
 
-BlockedIpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 21600000 });
+BlockedIpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 21600 });
 
 const Model = mongoose.model('BlockedIps', BlockedIpSchema);
 
