@@ -89,6 +89,9 @@ export default function Reviews({ server }) {
                 <div className='flex w-full h-[5px] rounded-lg bg-tertiary'>
                   <div className='bg-yellow-500 rounded-lg' style={{ width: calcRating(5 - index) }} />
                 </div>
+                <span className='text-sm font-medium text-tertiary'>
+                  {server.reviews.filter(review => review.rating === 5 - index).length}
+                </span>
               </div>
             ))}
           </div>
