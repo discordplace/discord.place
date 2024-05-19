@@ -105,7 +105,10 @@ module.exports = class Client {
         new CronJob('0 * * * *', this.checkVoiceActivity, null, true, 'Europe/Istanbul');
         new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
         new CronJob('0 0 * * *', () => {
+          this.checkVoteReminderMetadatas();
           this.checkReminerMetadatas();
+          this.checkExpiredBlockedIPs();
+          this.checkDeletedInviteCodes();
           this.updateBotStats();
         }, null, true, 'Europe/Istanbul');
       }
