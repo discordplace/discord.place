@@ -115,7 +115,7 @@ export default function Reviews({ server }) {
           <span className='text-sm font-medium text-tertiary'>
             You have already left a review for this server.
           </span>
-        ) : server.ownerId === user.id ? (
+        ) : server.ownerId === user?.id ? (
           <span className='text-sm font-medium text-tertiary'>
             You can{'\''}t leave a review for your own server.
           </span>
