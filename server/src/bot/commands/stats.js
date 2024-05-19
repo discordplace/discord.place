@@ -79,8 +79,7 @@ module.exports = {
       .setFields([
         {
           name: 'System',
-          value: `- Type: **${os.type()}**
-- Platform: **${os.platform()}**
+          value: `- Platform: **${os.platform()}**
 - Arch: **${os.arch()}**
 - Memory
  - Total: **${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)} GB**
