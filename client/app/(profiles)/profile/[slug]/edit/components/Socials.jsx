@@ -29,6 +29,7 @@ export default function Socials({ profile }) {
     github: '0 3 51',
     twitch: '145 70 255',
     youtube: '255 0 0',
+    telegram: '36 161 222',
     custom: '0 0 0',
     unknown: '0 0 0'
   };
@@ -43,6 +44,7 @@ export default function Socials({ profile }) {
     github: /(?:http(?:s)?:\/\/)?(?:www\.)?github\.com\/([a-zA-Z0-9_]+)/,
     twitch: /(?:http(?:s)?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/,
     youtube: /(?:http(?:s)?:\/\/)?(?:www\.)?youtube\.com\/@([a-zA-Z0-9_]+)/,
+    telegram: /(?:http(?:s)?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]+)/,
     custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/
   };
 

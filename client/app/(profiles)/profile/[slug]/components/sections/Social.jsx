@@ -20,6 +20,7 @@ export default function Social({ data }) {
     github: '0 3 51',
     twitch: '145 70 255',
     youtube: '255 0 0',
+    telegram: '36 161 222',
     custom: '0 0 0',
     unknown: '0 0 0'
   };

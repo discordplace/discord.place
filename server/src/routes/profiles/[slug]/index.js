@@ -160,6 +160,7 @@ module.exports = {
               github: 'https://github.com/',
               twitch: 'https://twitch.tv/',
               youtube: 'https://youtube.com/@',
+              telegram: 'https://t.me/',
               x: 'https://x.com/',
               twitter: 'https://twitter.com/'
             };

@@ -42,7 +42,7 @@ const ProfileSchema = new Schema({
     {
       type: {
         type: String,
-        enum: ['instagram', 'x', 'twitter', 'tiktok', 'facebook', 'steam', 'github', 'twitch', 'youtube', 'custom'],
+        enum: ['instagram', 'x', 'twitter', 'tiktok', 'facebook', 'steam', 'github', 'twitch', 'youtube', 'telegram', 'custom'],
         required: true
       },
       handle: {
