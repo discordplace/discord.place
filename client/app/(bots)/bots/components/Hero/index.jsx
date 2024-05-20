@@ -3,11 +3,10 @@
 import { motion } from 'framer-motion';
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
-import { Source_Serif_4 } from 'next/font/google';
-import TopCategories from '@/app/(bots)/bots/components/Hero/TopCategories';
+import { Bricolage_Grotesque } from 'next/font/google';import TopCategories from '@/app/(bots)/bots/components/Hero/TopCategories';
 import PopularBots from '@/app/(bots)/bots/components/Hero/PopularBots';
 
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
   const sequenceTransition = {
@@ -27,7 +26,7 @@ export default function Hero() {
         <motion.h1 
           className={cn(
             'text-5xl font-medium max-w-[700px] text-center text-primary',
-            SourceSerif4.className
+            BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
           animate={{ opacity: 1, y: 0 }}

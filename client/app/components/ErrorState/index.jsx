@@ -1,13 +1,12 @@
 import cn from '@/lib/cn';
-import { Source_Serif_4 } from 'next/font/google';
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
+import { Bricolage_Grotesque } from 'next/font/google';const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function ErrorState({ title, message }) {
   return (
     <div className='flex flex-col items-center gap-y-2'>
       <h2 className={cn(
         'text-xl font-semibold text-center text-primary',
-        SourceSerif4.className
+        BricolageGrotesque.className
       )}>
         {title}
       </h2>

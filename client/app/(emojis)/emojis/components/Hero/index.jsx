@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Source_Serif_4 } from 'next/font/google';
-import cn from '@/lib/cn';
+import { Bricolage_Grotesque } from 'next/font/google';import cn from '@/lib/cn';
 import Square from '@/app/components/Background/Square';
 import SearchInput from '@/app/(emojis)/emojis/components/Hero/SearchInput';
 import AnimatedCount from '@/app/components/AnimatedCount';
@@ -11,7 +10,7 @@ import { motion } from 'framer-motion';
 import Emojis from '@/app/(emojis)/emojis/components/Hero/Emojis';
 import Topbar from '@/app/(emojis)/emojis/components/Hero/Topbar';
 
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
   const fetchEmojis = useSearchStore(state => state.fetchEmojis);
@@ -41,7 +40,7 @@ export default function Hero() {
         <motion.h1 
           className={cn(
             'text-5xl font-medium max-w-[700px] text-center text-primary',
-            SourceSerif4.className
+            BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
           animate={{ opacity: 1, y: 0 }}

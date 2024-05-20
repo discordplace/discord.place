@@ -3,8 +3,7 @@
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 import cn from '@/lib/cn';
 import checkSlugAvailability from '@/lib/request/profiles/checkSlugAvailability';
-import { Source_Serif_4 } from 'next/font/google';
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
+import { Bricolage_Grotesque } from 'next/font/google';const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 import { useEffect, useRef, useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
 import { useDebounce } from 'react-use';
@@ -116,7 +115,7 @@ export default function Page() {
           <div className='z-10 flex flex-col items-center gap-y-2'>
             <h2 className={cn(
               'text-xl font-semibold text-center text-primary',
-              SourceSerif4.className
+              BricolageGrotesque.className
             )}>
               Before we get started..
             </h2>

@@ -3,8 +3,7 @@
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
-import { Source_Serif_4 } from 'next/font/google';
-import ServerCard from '@/app/(servers)/servers/components/ServerCard';
+import { Bricolage_Grotesque } from 'next/font/google';import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import SearchInput from '@/app/(servers)/servers/components/Hero/SearchInput';
 import { useEffect } from 'react';
 import useSearchStore from '@/stores/servers/search';
@@ -24,7 +23,7 @@ import { TiStar } from 'react-icons/ti';
 import Pagination from '@/app/components/Pagination';
 import config from '@/config';
 
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
   const { category, setCategory, sort, setSort, search, setSearch, loading, servers, fetchServers, page, setPage, totalServers, limit } = useSearchStore(useShallow(state => ({
@@ -82,7 +81,7 @@ export default function Hero() {
         <motion.h1 
           className={cn(
             'text-5xl font-medium max-w-[700px] text-center text-primary',
-            SourceSerif4.className
+            BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
           animate={{ opacity: 1, y: 0 }}

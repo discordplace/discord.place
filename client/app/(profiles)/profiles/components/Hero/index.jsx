@@ -1,15 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Source_Serif_4 } from 'next/font/google';
-import cn from '@/lib/cn';
+import { Bricolage_Grotesque } from 'next/font/google';import cn from '@/lib/cn';
 import Square from '@/app/components/Background/Square';
 import SearchInput from '@/app/(profiles)/profiles/components/Hero/Profiles/SearchInput';
 import AnimatedCount from '@/app/components/AnimatedCount';
 import useSearchStore from '@/stores/profiles/search';
 import { motion } from 'framer-motion';
 
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
   const fetchProfiles = useSearchStore(state => state.fetchProfiles);
@@ -38,7 +37,7 @@ export default function Hero() {
           <motion.h1 
             className={cn(
               'text-5xl font-medium max-w-[700px] text-center text-primary',
-              SourceSerif4.className
+              BricolageGrotesque.className
             )}
             initial={{ opacity: 0, y: -25 }}
             animate={{ opacity: 1, y: 0 }}

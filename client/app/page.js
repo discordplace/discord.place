@@ -1,14 +1,14 @@
 'use client';
 
 import cn from '@/lib/cn';
-import { Source_Serif_4 } from 'next/font/google';
+import { Bricolage_Grotesque } from 'next/font/google';
 import Square from './components/Background/Square';
 import { MdArrowForward } from 'react-icons/md';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useMedia } from 'react-use';
 
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Page() {
   const defaultBlockColor = '#ffffff10';
@@ -100,7 +100,7 @@ export default function Page() {
       
       <h1 className={cn(
         'font-bold cursor-default text-4xl sm:text-7xl mt-32 select-none sm:mt-10',
-        SourceSerif4.className
+        BricolageGrotesque.className
       )}>
         discord.place
       </h1>
