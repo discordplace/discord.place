@@ -2,6 +2,7 @@ import cn from '@/lib/cn';
 import { useState } from 'react';
 import TopVoters from '@/app/(bots)/bots/[id]/components/Tabs/TopVoters';
 import Reviews from '@/app/(bots)/bots/[id]/components/Tabs/Reviews';
+import { motion } from 'framer-motion';
 
 export default function Tabs({ bot }) {
   const [activeTab, setActiveTab] = useState('reviews');
@@ -21,22 +22,24 @@ export default function Tabs({ bot }) {
   
   return (
     <>
-      <div className='flex px-8 my-8 lg:px-0'>
-        {tabs.map((tab, index) => (
-          <button 
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={cn(
-              'px-4 font-semibold truncate py-2 text-sm disabled:pointer-events-none disabled:opacity-70',
-              activeTab === tab.id ? 'min-w-max bg-black pointer-events-none text-white dark:bg-white dark:text-black' : 'hover:bg-quaternary text-secondary bg-tertiary',
-              index === 0 && 'rounded-l-xl',
-              index === tabs.length - 1 && 'rounded-r-xl',
-              index !== 0 && index !== tabs.length - 1 && 'border-l border-r border-primary'
+      <div className='flex mx-8 my-8 rounded-full lg:mx-0 w-max bg-tertiary'>
+        {tabs.map(tab => (
+          <div className='relative cursor-pointer select-none group' key={tab.id} onClick={() => !tab.disabled && setActiveTab(tab.id)}>
+            <div className={cn(
+              'px-4 py-2 font-semibold text-sm z-10 relative transition-colors',
+              activeTab === tab.id ? 'text-white dark:text-black duration-500' : 'group-hover:text-tertiary',
+              tab.disabled && 'opacity-50 cursor-not-allowed group-hover:text-primary'
+            )}>
+              {tab.label}
+            </div>
+
+            {activeTab === tab.id && (
+              <motion.div
+                layoutId='tabIndicator'
+                className='absolute bottom-0 left-0 w-full h-full bg-black rounded-full pointer-events-none dark:bg-white'
+              />
             )}
-            disabled={tab.disabled}
-          >
-            {tab.label}
-          </button>
+          </div>
         ))}
       </div>
         

@@ -4,11 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cn from '@/lib/cn';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import config from '@/config';
 import { usePrevious, useWindowScroll } from 'react-use';
 import useThemeStore from '@/stores/theme';
 import UserSide from '@/app/components/Header/UserSide';
+import { motion } from 'framer-motion';
 
 export default function NotCollapsedHeader() {
   const theme = useThemeStore(state => state.theme);
@@ -28,26 +29,6 @@ export default function NotCollapsedHeader() {
   }, [y, oldY]);
 
   const pathname = usePathname();
-  const backgroundRef = useRef(null);
-
-  useEffect(() => {
-    const activeLink = document.querySelector('header a[data-active="true"]');
-    if (activeLink) {
-      const { left, width } = activeLink.getBoundingClientRect();
-      const { left: parentLeft } = activeLink.parentElement.getBoundingClientRect();
-      const x = left - parentLeft;
-      const w = width;
-
-      backgroundRef.current.style.left = `${x}px`;
-      backgroundRef.current.style.width = `${w}px`;
-      backgroundRef.current.style.opacity = 1;
-      activeLink.style.color = theme === 'dark' ? '#000000' : '#ffffff';
-      document.querySelectorAll('header a[data-active="false"]').forEach(link => link.style.color = 'rgba(var(--text-primary))');
-    } else {
-      backgroundRef.current.style.opacity = 0;
-      document.querySelectorAll('header a').forEach(link => link.style.color = 'rgba(var(--text-primary))');
-    }
-  }, [pathname, theme]);
 
   return (
     <div className='flex items-center justify-center w-full h-full'>
@@ -63,21 +44,27 @@ export default function NotCollapsedHeader() {
         </div>
 
         <div className='flex items-center justify-center col-span-4'>
-          <div className='relative pointer-events-auto flex items-center py-2 border rounded-2xl gap-x-2 border-[rgba(var(--bg-quaternary))] bg-secondary/50 backdrop-blur-lg'>
-            <div className='absolute left-0 h-full rounded-2xl w-0 bg-black dark:bg-white z-[5]' ref={backgroundRef} />
-
+          <div className='relative pointer-events-auto flex items-center border rounded-2xl gap-x-2 border-[rgba(var(--bg-quaternary))] bg-secondary/50 backdrop-blur-lg'>
             {config.headerLinks.map((link, index) => (
               <Link
                 key={index}
                 className={cn(
-                  'relative z-[10] px-3 py-1 rounded-xl text-base font-medium gap-x-1.5 items-center flex select-none',
-                  link.disabled && 'pointer-events-none opacity-50'
+                  'relative z-[10] py-2.5 px-4 text-base font-semibold gap-x-1.5 items-center flex select-none transition-colors duration-500',
+                  link.disabled && 'pointer-events-none opacity-50',
+                  pathname === link.href && 'text-white dark:text-black pointer-events-none'
                 )}
                 href={link.href}
                 data-active={pathname === link.href}
               >
                 <link.icon />
                 {link.title}
+
+                {pathname === link.href && (
+                  <motion.div
+                    layoutId='headerLinkIndicator'
+                    className='absolute -z-[1] bottom-0 left-0 w-full h-full bg-black rounded-full pointer-events-none dark:bg-white'
+                  />
+                )}
               </Link>
             ))}
           </div>
