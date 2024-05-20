@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
-import { Bricolage_Grotesque } from 'next/font/google';import TopCategories from '@/app/(bots)/bots/components/Hero/TopCategories';
+import { Bricolage_Grotesque } from 'next/font/google';
+import TopCategories from '@/app/(bots)/bots/components/Hero/TopCategories';
 import PopularBots from '@/app/(bots)/bots/components/Hero/PopularBots';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
