@@ -12,7 +12,11 @@ function environmentCheck() {
     'S3_SECRET_ACCESS_KEY',
     'S3_REGION',
     'S3_ENDPOINT',
-    'CLOUDFLARE_TURNSTILE_SECRET_KEY'
+    'CLOUDFLARE_TURNSTILE_SECRET_KEY',
+    'CLOUDFLARE_API_KEY',
+    'CLOUDFLARE_EMAIL',
+    'CLOUDFLARE_ACCOUNT_ID',
+    'CLOUDFLARE_BLOCK_IP_LIST_ID'
   ];
   
   if (requiredEnvironmentVariables.some(key => !process.env[key])) throw new Error(`Some environment variables are missing: ${requiredEnvironmentVariables.filter(key => !process.env[key]).join(', ')}`);  
