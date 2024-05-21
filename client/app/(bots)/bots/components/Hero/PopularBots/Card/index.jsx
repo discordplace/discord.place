@@ -25,7 +25,16 @@ export default function Card({ data }) {
     {
       icon: TbBoxMultiple,
       value: data.servers,
-      condition: true
+      condition: true,
+      transform: value => {
+        const serversFormatter = new Intl.NumberFormat('en-US', {
+          style: 'decimal',
+          notation: 'compact',
+          maximumFractionDigits: 2
+        });
+
+        return serversFormatter.format(value);
+      }
     },
     {
       icon: TbSquareRoundedChevronUp,

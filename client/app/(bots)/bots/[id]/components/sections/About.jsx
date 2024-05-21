@@ -9,6 +9,12 @@ const formatter = new Intl.NumberFormat('en-US', {
   compactDisplay: 'short'
 });
 
+const serversFormatter = new Intl.NumberFormat('en-US', {
+  style: 'decimal',
+  notation: 'compact',
+  maximumFractionDigits: 2
+});
+
 export default function About({ bot }) {
   const keys = [
     {
@@ -37,7 +43,7 @@ export default function About({ bot }) {
       icon: <TbBoxMultiple />,
       component: (
         <>
-          {formatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })})</span>
+          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
       )
     },
