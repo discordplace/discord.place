@@ -8,9 +8,6 @@ module.exports = {
     useRateLimiter({ maxRequests: 2, perMinutes: 120 }),
     bodyParser.json(),
     param('id'),
-    body('server_count')
-      .isInt({ min: 0, max: 10000000 }).withMessage('Server count must be between 0 and 10,000,000.')
-      .optional(),
     body('command_count')
       .isInt({ min: 0, max: 1000 }).withMessage('Commands count must be between 0 and 1,000.')
       .optional(),
@@ -18,9 +15,9 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
       
-      const { id, server_count, command_count } = matchedData(request);
+      const { id, command_count } = matchedData(request);
 
-      if (!server_count && !command_count) return response.sendError('Server count or commands count is required.', 400);
+      if (!command_count) return response.sendError('Server count or commands count is required.', 400);
 
       const apiKey = request.headers['authorization'];
       if (!apiKey) return response.sendError('Authorization header is required.', 401);
@@ -34,7 +31,6 @@ module.exports = {
       const decryptedApiKey = bot.getDecryptedApiKey(apiKey);
       if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
 
-      if (server_count) bot.server_count = { value: server_count, updatedAt: new Date() };
       if (command_count) bot.command_count = { value: command_count, updatedAt: new Date() };
 
       await bot.save();

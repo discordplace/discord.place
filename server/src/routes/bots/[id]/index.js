@@ -177,7 +177,6 @@ module.exports = {
           url: webhook?.url || null,
           token: webhook?.token || null
         },
-        server_count: 0,
         votes: 0,
         verified: false
       });

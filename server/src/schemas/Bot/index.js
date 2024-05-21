@@ -7,6 +7,7 @@ const webhookUrlValidation = require('@/validations/bots/webhookUrl');
 const Premium = require('@/schemas/Premium');
 const encrypt = require('@/utils/encryption/encrypt');
 const decrypt = require('@/utils/encryption/decrypt');
+const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
 
 const BotSchema = new Schema({
   id: {
@@ -68,16 +69,6 @@ const BotSchema = new Schema({
     token: {
       type: String,
       required: false
-    }
-  },
-  server_count: {
-    value: {
-      type: Number,
-      default: 0
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now
     }
   },
   command_count: {
@@ -176,6 +167,12 @@ const BotSchema = new Schema({
         banner_url: bot.bannerURL({ size: 1024, format: 'png' })
       });
 
+      const approximate_guild_count_data = await getApproximateGuildCount(this.id).catch(() => null);
+      if (approximate_guild_count_data) Object.assign(newBot, {
+        servers: approximate_guild_count_data.approximate_guild_count,
+        servers_updated_at: approximate_guild_count_data.fetchedAt
+      });
+
       return {
         ...newBot,
         id: this.id,
@@ -184,8 +181,6 @@ const BotSchema = new Schema({
         invite_url: this.invite_url,
         categories: this.categories,
         webhook: this.webhook,
-        servers: this.server_count.value,
-        servers_updated_at: this.server_count.updatedAt,
         commands: this.command_count.value,
         commands_updated_at: this.command_count.updatedAt,
         votes: this.votes,
