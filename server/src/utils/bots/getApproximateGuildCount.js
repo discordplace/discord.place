@@ -1,6 +1,9 @@
 const axios = require('axios');
 
 async function getApproximateGuildCount(botId) {
+  if (!process.env.DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL) throw new Error('DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL environment variable is missing');
+  if (!process.env.DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET) throw new Error('DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET environment variable is missing');
+
   if (client.approximateGuildCountFetchedBots.has(botId)) return client.approximateGuildCountFetchedBots.get(botId);
   
   try {
