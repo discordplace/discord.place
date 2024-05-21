@@ -75,6 +75,11 @@ To get a local copy of the project up and running, follow these steps:
 
      # Discord Place API
      DISCORD_PLACE_API_KEY=
+
+     # Other
+
+     DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL=
+     DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
      ```
      Ensure you fill in the values for each environment variable according to your setup. Take a look to [Secrets Configuration](#secrets-configuration) for more information about .env
 
@@ -130,6 +135,8 @@ Before running the project, you need to set up the following environment variabl
 | CLOUDFLARE_ACCOUNT_ID    | Account ID for Cloudflare integration                      | Yes      | CloudflareAccountID    |
 | CLOUDFLARE_BLOCK_IP_LIST_ID | ID for the Cloudflare IP list used for global rate limiting | Yes | CloudflareBlockIPListID |
 | DISCORD_PLACE_API_KEY | API key for Discord Place API | Yes | RandomString |
+| DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL | Base API URL to get approximate guild count for bots | False | URL |
+| DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET | Secret for the API to get approximate guild count for bots (used in the Authorization header) | False | RandomString |
 | ANALYZE                  | Whether to enable bundle analysis during client build       | No       | true/false             |
 | NEXT_PUBLIC_CF_SITE_KEY  | Public key for Cloudflare integration                      | No       | SiteKey                |
 
