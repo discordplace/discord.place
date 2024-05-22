@@ -10,7 +10,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 module.exports = {
   post: [
-    useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
+    useRateLimiter({ maxRequests: 1, overrideWindowMs: 5000 }),
     bodyParser.json(),
     checkAuthentication,
     checkCaptcha,

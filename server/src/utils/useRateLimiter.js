@@ -1,8 +1,8 @@
 const { rateLimit } = require('express-rate-limit');
 
-module.exports = function ({ maxRequests, perMinutes }) {
+module.exports = function ({ maxRequests, perMinutes, overrideWindowMs }) {
   const limiter = rateLimit({
-    windowMs: perMinutes * 60 * 1000,
+    windowMs: overrideWindowMs || (perMinutes * 60 * 1000),
     max: maxRequests,
     standardHeaders: true,
     legacyHeaders: false,
