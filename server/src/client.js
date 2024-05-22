@@ -53,6 +53,7 @@ module.exports = class Client {
     this.client.forceFetchedUsers = new Discord.Collection();
     this.client.blockedIps = new Discord.Collection();
     this.client.approximateGuildCountFetchedBots = new Discord.Collection();
+    this.client.currentlyUploadingEmojiPack = new Discord.Collection();
 
     logger.send('Client created.');
     return this;
