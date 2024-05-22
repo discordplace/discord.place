@@ -173,11 +173,14 @@ export default function NewBot({ owned_servers }) {
                 suppressContentEditableWarning
                 className="block w-full h-[250px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
                 onKeyUp={event => {
-                  if (event.target.textContent.length > config.botDescriptionMaxCharacters) {
-                    event.target.textContent = event.target.textContent.slice(0, config.botDescriptionMaxCharacters);
+                  if (event.target.innerText.length > config.botDescriptionMaxLength) {
+                    event.target.innerText = event.target.innerText.slice(0, config.botDescriptionMaxLength);
                     event.preventDefault();
-                    return toast.error(`Description can only contain ${config.serverDescriptionMaxCharacters} characters.`);
+                    event.stopPropagation();
+                    
+                    return toast.error(`Description can be maximum ${config.botDescriptionMaxLength} characters long.`);
                   }
+
                   setBotDescription(event.target.innerText);
                 }}
                 ref={descriptionRef}

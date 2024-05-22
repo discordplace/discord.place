@@ -128,10 +128,12 @@ export default function Page() {
                 </p>
 
                 <span contentEditable suppressContentEditableWarning className='block w-full h-[150px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500' onKeyUp={event => {
-                  if (event.target.textContent.length > config.serverDescriptionMaxCharacters) {
-                    event.target.textContent = event.target.textContent.slice(0, config.serverDescriptionMaxCharacters);
+                  if (event.target.innerText.length > config.serverDescriptionMaxCharacters) {
+                    event.target.innerText = event.target.innerText.slice(0, config.serverDescriptionMaxCharacters);
                     event.preventDefault();
-                    return toast.error(`Description can only contain ${config.serverDescriptionMaxCharacters} characters.`);
+                    event.stopPropagation();
+                    
+                    return toast.error(`Description can be maximum ${config.serverDescriptionMaxCharacters} characters long.`);
                   }
 
                   setServerDescription(event.target.textContent);
