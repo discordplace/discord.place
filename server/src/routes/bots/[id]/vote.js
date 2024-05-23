@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const incrementVote = require('@/src/utils/bots/incrementVote');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
-const userVotesInProgressMap = new Map();
+const userVotesInProgress = new Set();
 
 module.exports = {
   post: [
@@ -20,7 +20,7 @@ module.exports = {
     async (request, response) => {
       const { id } = matchedData(request);
 
-      const isVoteInProgress = userVotesInProgressMap.get(request.user.id);
+      const isVoteInProgress = userVotesInProgress.has(request.user.id);
       if (isVoteInProgress) return response.sendError('You already have a vote in progress.', 429);
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
@@ -38,12 +38,12 @@ module.exports = {
         return response.sendError(`You can vote again in ${Math.floor(nextVoteTime / 3600000)} hours, ${Math.floor(nextVoteTime / 60000) % 60} minutes.`, 400);
       }
 
-      userVotesInProgressMap.set(request.user.id, true);
+      userVotesInProgress.add(request.user.id);
 
       return incrementVote(id, request.user.id, bot.webhook)
         .then(() => response.sendStatus(204))
         .catch(error => response.sendError(error.message, 400))
-        .finally(() => userVotesInProgressMap.delete(request.user.id));
+        .finally(() => userVotesInProgress.delete(request.user.id));
     }
   ]
 };
