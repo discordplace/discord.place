@@ -167,6 +167,7 @@ export default function Actions({ server }) {
             
             setShowCaptcha(true);
           }}
+          disabled={loading || voteTimeout}
         >
           <div className='flex gap-x-1.5 items-center'>
             {loading && <TbLoader className='animate-spin' />}
