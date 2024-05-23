@@ -99,8 +99,6 @@ export default function Content({ bot }) {
       }
     };
 
-    console.log(newBotData);
-
     if (newSupportServerId) newBotData.newSupportServerId = newSupportServerId;
     if (!newWebhookUrl) newBotData.newWebhook = { url: null, token: null };
     else {
