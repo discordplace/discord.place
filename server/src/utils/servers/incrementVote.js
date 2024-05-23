@@ -3,6 +3,8 @@ const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const Premium = require('@/schemas/Premium');
 const Discord = require('discord.js');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
+const sendLog = require('@/utils/servers/sendLog');
+const Reward = require('@/schemas/Server/Vote/Reward');
 
 async function incrementVote(guildId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -94,6 +96,50 @@ async function incrementVote(guildId, userId) {
     .setFooter({ text: `Voted at ${new Date().toLocaleString()}` });
 
   client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
+
+  sendLog(guild.id, `**@${Discord.escapeMarkdown(user.username)}** (${user.id}) has voted for the server!`)
+    .catch(() => null);
+
+  const rewards = await Reward.find({ 'guild.id': guild.id });
+  const voterVotes = (server.voters.find(voter => voter.user.id === userId)?.vote || 0) + 1;
+
+  for (const reward of rewards.sort((a, b) => b.required_votes - a.required_votes)) {
+    if (voterVotes >= reward.required_votes) {
+      const role = guild.roles.cache.get(reward.role.id);
+      if (!role) {
+        await Reward.deleteOne({ 'role.id': reward.role.id });
+
+        sendLog(guild.id, `Role with ID ${reward.role.id} has been deleted from the database because it was not found in the server.`)
+          .catch(() => null);
+        
+        logger.send(`Role with ID ${reward.role.id} has been deleted from the database because it was not found in server ${guild.id}.`);
+
+        continue;
+      }
+
+      const member = guild.members.cache.get(userId);
+      if (!member) continue;
+
+      if (member.roles.cache.has(role.id)) break;
+
+      member.roles.add(role)
+        .then(() => {
+          sendLog(guild.id, `**@${Discord.escapeMarkdown(user.username)}** (${user.id}) has been given the reward role **${role.name}** for voting ${voterVotes} times.`)
+            .catch(() => null);
+
+          const dmChannel = user.dmChannel || user.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYou have been given the reward role **${role.name}** in **${guild.name}** for voting ${voterVotes} times!` }).catch(() => null);
+        })
+        .catch(error => {
+          sendLog(guild.id, `Failed to give the reward role **${role.name}** to **@${Discord.escapeMarkdown(user.username)}** (${user.id}). (Error: ${error.message})`)
+            .catch(() => null);
+        });
+
+      logger.send(`User ${user.id} has been given the reward role ${role.name} for voting ${voterVotes} times in server ${guild.id}.`);
+
+      break;
+    }
+  }
 
   return true;
 }
