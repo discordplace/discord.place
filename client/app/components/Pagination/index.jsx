@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CgChevronLeft, CgChevronRight } from 'react-icons/cg';
 import cn from '@/lib/cn';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 export default function Pagination({ page, setPage, loading, total, limit, disableAnimation }) {
   
@@ -44,7 +44,7 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
         onClick={() => setPage(page - 1)}
         disabled={loading || page === 1}
       >
-        <CgChevronLeft />
+        <MdKeyboardArrowLeft />
       </button>
 
       {pages.map(pageNumber => (
@@ -66,7 +66,7 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
         onClick={() => setPage(page + 1)}
         disabled={loading || page === totalPages}
       >
-        <CgChevronRight />
+        <MdKeyboardArrowRight />
       </button>
     </motion.div>
   );
