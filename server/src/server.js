@@ -7,7 +7,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
-const ip = require('@/src/utils/middlewares/ip');
+const ip = require('@/utils/middlewares/ip');
+const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
 
 const passport = require('passport');
 const useRateLimiter = require('@/utils/useRateLimiter');
@@ -74,6 +75,8 @@ module.exports = class Server {
 
       next();
     });
+
+    this.server.use(blockSimultaneousRequests);
 
     logger.send('Middlewares added.');
   }

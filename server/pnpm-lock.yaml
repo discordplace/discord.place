@@ -11,6 +11,9 @@ dependencies:
   '@napi-rs/canvas':
     specifier: ^0.1.51
     version: 0.1.51
+  async-lock:
+    specifier: ^1.4.1
+    version: 1.4.1
   axios:
     specifier: ^1.6.1
     version: 1.6.8
@@ -1741,6 +1744,10 @@ packages:
 
   /ast-types-flow@0.0.8:
     resolution: {integrity: sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==}
+    dev: false
+
+  /async-lock@1.4.1:
+    resolution: {integrity: sha512-Az2ZTpuytrtqENulXwO3GGv1Bztugx6TT37NIo7imr/Qo0gsYiGtSdBa2B6fsXhTpVZDNfu1Qn3pk531e3q+nQ==}
     dev: false
 
   /asynckit@0.4.0:
