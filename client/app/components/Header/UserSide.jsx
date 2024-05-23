@@ -1,7 +1,7 @@
 import useAuthStore from '@/stores/auth';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Image from 'next/image';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { CgLogOut } from 'react-icons/cg';
 import { FaDiscord } from 'react-icons/fa';
 import config from '@/config';

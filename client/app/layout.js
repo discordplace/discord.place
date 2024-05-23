@@ -12,7 +12,6 @@ import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
 import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
 import 'react-medium-image-zoom/dist/styles.css';
-import { ViewTransitions } from 'next-view-transitions';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -50,46 +49,44 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <ViewTransitions>
-      <html lang="en" className='dark'>
-        <body className={cn(
-          'flex flex-col',
-          GeistSans.className,
-          GeistSans.variable
-        )}>
-          <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
-          <Script id='google-analytics'>
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-            
-              gtag('config', 'G-WEX8LKYTTD');
-            `}
-          </Script>
+    <html lang="en" className='dark'>
+      <body className={cn(
+        'flex flex-col',
+        GeistSans.className,
+        GeistSans.variable
+      )}>
+        <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
+        <Script id='google-analytics'>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'G-WEX8LKYTTD');
+          `}
+        </Script>
 
-          <ProgressBarProvider>
-            <Toaster toastOptions={{
-              className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
-            }} />
+        <ProgressBarProvider>
+          <Toaster toastOptions={{
+            className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
+          }} />
         
-            <ThemeProvider>
-              <AuthProvider>
-                <VaulWrapperProvider>
-                  <Header />
+          <ThemeProvider>
+            <AuthProvider>
+              <VaulWrapperProvider>
+                <Header />
 
-                  <ErrorBoundary>
-                    {children}
-                  </ErrorBoundary>
+                <ErrorBoundary>
+                  {children}
+                </ErrorBoundary>
             
-                  <Footer />
-                  <CookieBanner />
-                </VaulWrapperProvider>
-              </AuthProvider>
-            </ThemeProvider>
-          </ProgressBarProvider>
-        </body>
-      </html>
-    </ViewTransitions>
+                <Footer />
+                <CookieBanner />
+              </VaulWrapperProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </ProgressBarProvider>
+      </body>
+    </html>
   );
 }

@@ -2,7 +2,7 @@
 
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import config from '@/config';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdChevronLeft } from 'react-icons/md';

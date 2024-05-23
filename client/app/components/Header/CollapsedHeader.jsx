@@ -2,7 +2,7 @@ import config from '@/config';
 import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { useLockBodyScroll } from 'react-use';
 import UserSide from '@/app/components/Header/UserSide';
 import { IoMdMenu } from 'react-icons/io';

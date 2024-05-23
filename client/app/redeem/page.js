@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import useAuthStore from '@/stores/auth';
 import { useRouter } from 'next-nprogress-bar';
 import Square from '@/app/components/Background/Square';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import config from '@/config';
 import { FaLink } from 'react-icons/fa6';
 import { LuHeart } from 'react-icons/lu';

@@ -16,7 +16,7 @@ import confetti from '@/lib/lotties/confetti.json';
 import { TbLoader } from 'react-icons/tb';
 import Markdown from '@/app/components/Markdown';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import Tooltip from '@/app/components/Tooltip';
 import CopyButton from '@/app/components/CopyButton';
 

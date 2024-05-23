@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { nanoid } from 'nanoid';
 import cn from '@/lib/cn';
 import config from '@/config';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import createEmoji from '@/lib/request/emojis/createEmoji';
 import { useRouter } from 'next-nprogress-bar';
 import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';

@@ -2,7 +2,7 @@
 
 import useThemeStore from '@/stores/theme';
 import { nanoid } from 'nanoid';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa';
 import cn from '@/lib/cn';
 import Image from 'next/image';

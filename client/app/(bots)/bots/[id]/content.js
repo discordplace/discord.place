@@ -7,7 +7,7 @@ import RightSide from '@/app/(bots)/bots/[id]/components/sections/RightSide';
 import Tooltip from '@/app/components/Tooltip';
 import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';
 import { RiErrorWarningFill } from 'react-icons/ri';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import config from '@/config';
 
 export default function Content({ bot }) {

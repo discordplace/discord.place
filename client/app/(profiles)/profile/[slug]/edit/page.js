@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { MdChevronLeft } from 'react-icons/md';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 import getProfile from '@/lib/request/profiles/getProfile';

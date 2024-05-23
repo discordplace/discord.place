@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'react-use';
 

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { TbBoxMultiple, TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { IoHeart } from 'react-icons/io5';
 import { useMedia } from 'react-use';

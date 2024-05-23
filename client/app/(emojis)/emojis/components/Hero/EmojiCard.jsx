@@ -1,5 +1,5 @@
 import MotionImage from '@/app/components/Motion/Image';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { HiDocumentDownload } from 'react-icons/hi';
 import config from '@/config';
 

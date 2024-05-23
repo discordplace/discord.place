@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { forwardRef } from 'react';
 
 // eslint-disable-next-line react/display-name

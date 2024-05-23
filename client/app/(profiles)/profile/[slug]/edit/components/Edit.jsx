@@ -12,7 +12,7 @@ import config from '@/config';
 import { useRouter } from 'next-nprogress-bar';
 import GenderDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/Gender';
 import PreferredHostDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/PreferredHost';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { PiWarningCircleFill } from 'react-icons/pi';
 import revalidateProfile from '@/lib/revalidate/profile';
 

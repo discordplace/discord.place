@@ -2,7 +2,7 @@ import { IoEarth } from 'react-icons/io5';
 import { FaQuestion } from 'react-icons/fa6';
 import { nanoid } from 'nanoid';
 import Image from 'next/image';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { MdOpenInNew } from 'react-icons/md';
 import { useState, useEffect } from 'react';
 import useThemeStore from '@/stores/theme';
