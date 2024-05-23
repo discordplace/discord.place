@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 const incrementVote = require('@/src/utils/servers/incrementVote');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
+const userVotesInProgressMap = new Map();
+
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
@@ -17,6 +19,9 @@ module.exports = {
     param('id'),
     async (request, response) => {
       const { id } = matchedData(request);
+
+      const isVoteInProgress = userVotesInProgressMap.get(request.user.id);
+      if (isVoteInProgress) return response.sendError('You already have a vote in progress.', 429);
 
       const userOrGuildQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'SERVERS_VOTE' },
@@ -31,7 +36,12 @@ module.exports = {
       if (!server) return response.sendError('Server not found.', 404);
 
       const timeout = await VoteTimeout.findOne({ 'user.id': request.user.id, 'guild.id': id });
-      if (timeout) return response.sendError(`You can vote again in ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000)} hours, ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60} minutes.`, 400);
+      if (timeout) {
+        const nextVoteTime = timeout.createdAt.getTime() + 86400000 - Date.now();
+        return response.sendError(`You can vote again in ${Math.floor(nextVoteTime / 3600000)} hours, ${Math.floor(nextVoteTime / 60000) % 60} minutes.`, 400);
+      }
+
+      userVotesInProgressMap.set(request.user.id, true);
 
       return incrementVote(id, request.user.id)
         .then(async () => {
