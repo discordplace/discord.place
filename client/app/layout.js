@@ -12,7 +12,7 @@ import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
 import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
 import 'react-medium-image-zoom/dist/styles.css';
-import PageTransitions from '@/app/components/Wrapper/PageTransitions';
+import { ViewTransitions } from 'next-view-transitions';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -50,7 +50,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <PageTransitions>
+    <ViewTransitions>
       <html lang="en" className='dark'>
         <body className={cn(
           'flex flex-col',
@@ -90,6 +90,6 @@ export default function RootLayout({ children }) {
           </ProgressBarProvider>
         </body>
       </html>
-    </PageTransitions>
+    </ViewTransitions>
   );
 }
