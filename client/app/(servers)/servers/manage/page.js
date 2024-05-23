@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import ServerCard from '@/app/(servers)/servers/manage/components/ServerCard';
 import { BsQuestionCircleFill } from 'react-icons/bs';
 import cn from '@/lib/cn';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import config from '@/config';
 import { RiAddCircleFill } from 'react-icons/ri';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';

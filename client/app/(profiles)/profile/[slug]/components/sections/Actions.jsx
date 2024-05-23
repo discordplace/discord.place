@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { BsPencil, BsPencilFill } from 'react-icons/bs';
 import config from '@/config';
 import { AiOutlineFlag, AiFillFlag} from 'react-icons/ai';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { motion } from 'framer-motion';
 import Tooltip from '@/app/components/Tooltip';
 import useAuthStore from '@/stores/auth';

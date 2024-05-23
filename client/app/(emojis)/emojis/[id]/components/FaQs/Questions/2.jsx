@@ -1,7 +1,7 @@
 'use client';
 
 import config from '@/config';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { useState } from 'react';
 import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
 

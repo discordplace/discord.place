@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { LuEye } from 'react-icons/lu';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { AiFillHeart } from 'react-icons/ai';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';

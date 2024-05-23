@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import cn from './cn';
 import Zoom from 'react-medium-image-zoom';
 

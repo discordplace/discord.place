@@ -1,7 +1,7 @@
 'use client';
 
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 
 export default function ServerCard({ data, setCurrentlyAddingServer }) {
   return (

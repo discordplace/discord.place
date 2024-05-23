@@ -1,5 +1,5 @@
 import config from '@/config';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 
 export const metadata = {
   title: 'Content Policy',

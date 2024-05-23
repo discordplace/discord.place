@@ -1,6 +1,6 @@
 import { usePathname } from 'next/navigation';
 import config from '@/config';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { FaDiscord } from 'react-icons/fa';
 
 export default function LoginButton() {

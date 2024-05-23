@@ -1,7 +1,7 @@
 'use client';
 
 import config from '@/config';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { useEffect, useState, useRef } from 'react';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { IoReload } from 'react-icons/io5';

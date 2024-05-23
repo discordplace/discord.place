@@ -5,7 +5,7 @@ import { Bricolage_Grotesque } from 'next/font/google';
 import Square from './components/Background/Square';
 import { MdArrowForward } from 'react-icons/md';
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { useMedia } from 'react-use';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });

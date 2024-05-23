@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';

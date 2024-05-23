@@ -2,7 +2,7 @@
 
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { IoEarth } from 'react-icons/io5';
 import { MdOpenInNew } from 'react-icons/md';
 import { motion } from 'framer-motion';

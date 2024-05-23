@@ -10,7 +10,7 @@ import { MdEmojiEmotions } from 'react-icons/md';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiPackageCard';
 import { motion } from 'framer-motion';
 import { RiErrorWarningFill } from 'react-icons/ri';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
