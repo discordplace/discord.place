@@ -1,5 +1,5 @@
 'use client';
-
+ 
 import config from '@/config';
 import { useSearchParams } from 'next/navigation';
 import Square from '@/app/components/Background/Square';
@@ -18,7 +18,7 @@ export default function Page() {
         error
       </span>
 
-      <h1 className='text-center mt-4 text-4xl font-medium text-primary'>
+      <h1 className='mt-4 text-4xl font-medium text-center text-primary'>
         We{'\''}re sorry, an error occurred.
       </h1>
 
