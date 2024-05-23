@@ -1,3 +1,5 @@
+'use client';
+
 import { ViewTransitions } from 'next-view-transitions';
 import { useMedia } from 'react-use';
 
