@@ -122,7 +122,7 @@ async function incrementVote(guildId, userId) {
 
       if (member.roles.cache.has(role.id)) break;
 
-      member.roles.add(role)
+      member.roles.add(role, `Voted ${voterVotes} times for the server. This role was given as a reward.`)
         .then(() => {
           sendLog(guild.id, `**@${Discord.escapeMarkdown(user.username)}** (${user.id}) has been given the reward role **${role.name}** for voting ${voterVotes} times.`)
             .catch(() => null);
