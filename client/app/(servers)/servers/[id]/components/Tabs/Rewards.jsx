@@ -4,6 +4,7 @@ import fetchRewards from '@/lib/request/servers/fetchRewards';
 import cn from '@/lib/cn';
 import Image from 'next/image';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { IoMdLock, IoMdUnlock } from 'react-icons/io';
 
 export default function Rewards({ server }) {
   const [rewards, setRewards] = useState([]);
@@ -81,11 +82,30 @@ export default function Rewards({ server }) {
                 </svg>
               )}
 
-              <h2 className='relative text-lg font-semibold truncate'>
-                {reward.role.name}
+              <h2 className='flex items-center text-base font-semibold sm:text-lg gap-x-2'>
+                <span className='truncate max-w-[100px] mobile:max-w-[150px] sm:max-w-[250px] md:max-w-[400px]'>
+                  {reward.role.name}asdfmlkasdmflk;asdmflk;asdmflk;amsdf
+                </span>
+                
+                <span className={cn(
+                  'flex items-center text-xs font-medium gap-x-1 text-tertiary top-6',
+                  reward.unlocked ? 'text-green-500' : 'text-yellow-500'
+                )}>
+                  {reward.unlocked ? (
+                    <>
+                      <span className='hidden mobile:block'>Unlocked</span>
+                      <IoMdUnlock />
+                    </>
+                  ) : (
+                    <>
+                      <span className='hidden mobile:block'>Locked</span>
+                      <IoMdLock />
+                    </>
+                  )}
+                </span>
               </h2>
 
-              <div className='flex items-center ml-auto text-xl font-bold gap-x-2'>
+              <div className='flex items-center ml-auto text-base font-bold sm:text-xl gap-x-2'>
                 {reward.required_votes}
                 <TbSquareRoundedChevronUp />
               </div>
