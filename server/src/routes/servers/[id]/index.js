@@ -32,8 +32,7 @@ module.exports = {
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404);
 
-      const existedReward = await Reward.exists({ 'guild.id': id });
-      const has_rewards = existedReward ? true : false;
+      const rewards = await Reward.find({ 'guild.id': id });
 
       const voiceActivity = await VoiceActivity.findOne({ 'guild.id': id });
       const reviews = await Promise.all(
@@ -91,7 +90,19 @@ module.exports = {
         permissions,
         can_set_reminder: !!(request.user && !reminder && voteTimeout && memberInGuild && !tenMinutesPassedAfterVote),
         ownerId: guild.ownerId,
-        has_rewards
+        rewards: rewards.map(reward => {
+          const role = guild.roles.cache.get(reward.role.id);
+          if (role) return {
+            id: reward._id,
+            role: {
+              id: role.id,
+              name: role.name,
+              icon_url: role.iconURL({ format: 'webp', size: 128, dynamic: true })
+            },
+            required_votes: reward.required_votes,
+            unlocked: request.user && (server.voters.find(voter => voter.user.id === request.user.id)?.vote || 0) >= reward.required_votes
+          };
+        })
       });
     }
   ],

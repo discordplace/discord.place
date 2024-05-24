@@ -25,7 +25,7 @@ export default function Tabs({ server }) {
       label: 'Rewards',
       id: 'rewards',
       component: <Rewards server={server} />,
-      disabled: !server.has_rewards
+      disabled: server.rewards.length === 0
     },
     {
       label: 'Voice Activity',
