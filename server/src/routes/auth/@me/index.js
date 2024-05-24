@@ -51,14 +51,17 @@ module.exports = {
       const profile = await Profile.findOne({ 'user.id': request.user.id });
       if (profile) await profile.updateOne({ premium: true });
 
+      const foundCode = await PremiumCode.findOne({ code: premium_code }).select('expire_at');
+
       await new Premium({
-        used_code: premium_code,
+        used_code: foundCode.code,
         user: {
           id: request.user.id
-        }
+        },
+        expire_at: foundCode.expire_at
       }).save();
       
-      await PremiumCode.findOneAndDelete({ code: premium_code });
+      await foundCode.deleteOne();
 
       return response.sendStatus(204).end();
     }

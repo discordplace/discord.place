@@ -12,12 +12,16 @@ const PremiumSchema = new Schema({
       type: String,
       required: true
     }
+  },
+  expire_at: {
+    type: Date,
+    default: null
   }
 }, {
   timestamps: true
 });
 
-PremiumSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 * 30 });
+PremiumSchema.index({ expire_at: 1 }, { expireAfterSeconds: 0 });
 
 const Model = mongoose.model('Premiums', PremiumSchema);
 

@@ -64,7 +64,8 @@ module.exports = {
         .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(emojisDenyReasons).map(reason => ({ name: reason, value: reason }))))))
 
     .addSubcommandGroup(group => group.setName('premium').setDescription('premium')
-      .addSubcommand(subcommand => subcommand.setName('generate-code').setDescription('Generates new premium code.'))
+      .addSubcommand(subcommand => subcommand.setName('generate-code').setDescription('Generates new premium code.')
+        .addStringOption(option => option.setName('time').setDescription('Expiration time for the premium. (Optional, 20m, 6h, 3d, 1w, 1m, 1y)')))
       .addSubcommand(subcommand => subcommand.setName('revoke-code').setDescription('Revokes selected premium code.')
         .addStringOption(option => option.setName('code').setDescription('Code to revoke.').setRequired(true).setAutocomplete(true))))
 
@@ -442,11 +443,20 @@ module.exports = {
       if (subcommand === 'generate-code') {
         await interaction.deferReply({ ephemeral: true });
 
+        const time = interaction.options.getString('time');
+
+        const expireTime = time ? ms(time) : null;
+        if (time && typeof expireTime !== 'number') return interaction.followUp({ content: 'Invalid time.' });
+        if (time && expireTime > 31557600000) return interaction.followUp({ content: 'The maximum premium time is 1 year.' });
+
         const codeLength = 32;
         const buffer = crypto.randomBytes(Math.ceil(codeLength * 3 / 4));
         const generatedCode = `discordplace-${buffer.toString('base64').slice(0, codeLength)}`;
 
-        const code = new PremiumCode({ code: generatedCode });
+        const code = new PremiumCode({ 
+          code: generatedCode,
+          expire_at: expireTime ? new Date(Date.now() + expireTime) : null
+        });
         await code.save();
 
         return interaction.followUp({ content: `Premium code generated: \`${generatedCode}\`` });
@@ -803,8 +813,8 @@ ${formattedQuarantinesText}`);
         const usedCodes = await Premium.find();
         
         return interaction.customRespond([
-          ...unusedCodes.map(({ code }) => ({ name: `${code} | Not Used`, value: code })),
-          ...usedCodes.map(({ used_code, user }) => ({ name: `${used_code} | Used by ${user.id}`, value: used_code }))
+          ...unusedCodes.map(({ code, expire_at }) => ({ name: `${code} | Not Used | Expires at: ${expire_at ? new Date(expire_at).toLocaleDateString('en-US') : 'Never'}`, value: code })),
+          ...usedCodes.map(({ used_code, expire_at, user }) => ({ name: `${used_code} | Used by ${user.id} | Expires at: ${expire_at ? new Date(expire_at).toLocaleDateString('en-US') : 'Never'}`, value: used_code }))
         ]);
       }
     }
