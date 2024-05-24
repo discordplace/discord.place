@@ -59,9 +59,9 @@ module.exports = {
     .toJSON(),
   execute: async interaction => {
     if (cooldowns.has(interaction.user.id)) {
-      const expirationTime = cooldowns.get(interaction.user.id) + 300000;
+      const expirationTime = cooldowns.get(interaction.user.id) + 60000;
 
-      if (Date.now() < expirationTime) return interaction.reply({ content: 'You are on cooldown! Please wait a 5 minutes before using this command again.' });
+      if (Date.now() < expirationTime) return interaction.reply({ content: 'You are on cooldown! Please wait 1 minute before using this command again.' });
     }
 
     cooldowns.set(interaction.user.id, Date.now());
@@ -96,17 +96,15 @@ module.exports = {
  - Discord.js: **${Discord.version}**
 - Uptime: **${botUptimeHumanized}**
 - Servers: **${client.guilds.cache.size}**
-- Users: **${client.users.cache.size}**`
+- Users: **${client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')}**`
         },
         {
-          name: 'Database',
+          name: 'Statistics',
           value: `- Bots: **${await Bot.countDocuments({ verified: true })}**
 - Emojis: **${await Emoji.countDocuments({ approved: true })}**
 - Emoji Packs: **${await EmojiPack.countDocuments({ approved: true })}**
 - Profiles: **${await Profile.countDocuments()}**
-- Servers: **${await Server.countDocuments()}**
-- Reminders Created: **${await Reminder.countDocuments()}**
-- Reviews Submitted: **${await ServerReview.countDocuments({ approved: true }) + await BotReview.countDocuments({ approved: true })}**`
+- Servers: **${await Server.countDocuments()}**`
         }
       ]);
     
