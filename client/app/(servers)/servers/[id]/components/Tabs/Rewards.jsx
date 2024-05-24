@@ -5,10 +5,12 @@ import cn from '@/lib/cn';
 import Image from 'next/image';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { IoMdLock, IoMdUnlock } from 'react-icons/io';
+import useAuthStore from '@/stores/auth';
 
 export default function Rewards({ server }) {
   const [rewards, setRewards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const loggedIn = useAuthStore(state => state.loggedIn);
 
   useEffect(() => {
     setLoading(true);
@@ -87,22 +89,24 @@ export default function Rewards({ server }) {
                   {reward.role.name}
                 </span>
                 
-                <span className={cn(
-                  'flex items-center text-xs font-medium gap-x-1 text-tertiary top-6',
-                  reward.unlocked ? 'text-green-500' : 'text-yellow-500'
-                )}>
-                  {reward.unlocked ? (
-                    <>
-                      <span className='hidden mobile:block'>Unlocked</span>
-                      <IoMdUnlock />
-                    </>
-                  ) : (
-                    <>
-                      <span className='hidden mobile:block'>Locked</span>
-                      <IoMdLock />
-                    </>
-                  )}
-                </span>
+                {loggedIn && (
+                  <span className={cn(
+                    'flex items-center text-xs font-medium gap-x-1 text-tertiary',
+                    reward.unlocked ? 'text-green-500' : 'text-yellow-500'
+                  )}>
+                    {reward.unlocked ? (
+                      <>
+                        <span className='hidden mobile:block'>Unlocked</span>
+                        <IoMdUnlock />
+                      </>
+                    ) : (
+                      <>
+                        <span className='hidden mobile:block'>Locked</span>
+                        <IoMdLock />
+                      </>
+                    )}
+                  </span>
+                )}
               </h2>
 
               <div className='flex items-center ml-auto text-base font-bold sm:text-xl gap-x-2'>
