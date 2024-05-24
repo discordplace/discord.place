@@ -123,11 +123,11 @@ async function incrementVote(guildId, userId) {
       if (member.roles.cache.has(role.id)) break;
 
       member.roles.add(role, `Voted ${voterVotes} times for the server. This role was given as a reward.`)
-        .then(() => {
+        .then(async () => {
           sendLog(guild.id, `**@${Discord.escapeMarkdown(user.username)}** (${user.id}) has been given the reward role **${role.name}** for voting ${voterVotes} times.`)
             .catch(() => null);
 
-          const dmChannel = user.dmChannel || user.createDM().catch(() => null);
+          const dmChannel = user.dmChannel || await user.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYou have been given the reward role **${role.name}** in **${guild.name}** for voting ${voterVotes} times!` }).catch(() => null);
         })
         .catch(error => {
