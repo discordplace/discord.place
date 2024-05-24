@@ -9,9 +9,11 @@ import Image from 'next/image';
 import ThemeSwitcher from '@/app/components/Footer/ThemeSwitcher';
 import config from '@/config';
 import { FaXTwitter } from 'react-icons/fa6';
+import useAuthStore from '@/stores/auth';
 
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
+  const loggedIn = useAuthStore(state => state.loggedIn);
 
   const blocks = [
     {
@@ -24,10 +26,6 @@ export default function Footer() {
         {
           label: 'API Documentation',
           href: config.docsUrl
-        },
-        {
-          label: 'Redeem Premium',
-          href: '/redeem'
         }
       ]
     },
@@ -103,6 +101,8 @@ export default function Footer() {
       ]
     }
   ];
+
+  if (loggedIn) blocks[0].links.push({ label: 'Redeem Premium', href: '/redeem' });
 
   return (
     <section className="flex flex-col 2xl:max-h-[566px] flex-wrap flex-1 w-full gap-16 px-6 py-16 mt-auto border-t 2xl:flex-row 2xl:gap-x-48 sm:px-24 xl:px-48 bg-secondary border-primary">
