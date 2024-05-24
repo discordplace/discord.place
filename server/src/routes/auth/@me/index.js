@@ -51,7 +51,7 @@ module.exports = {
       const profile = await Profile.findOne({ 'user.id': request.user.id });
       if (profile) await profile.updateOne({ premium: true });
 
-      const foundCode = await PremiumCode.findOne({ code: premium_code }).select('expire_at');
+      const foundCode = await PremiumCode.findOne({ code: premium_code });
 
       await new Premium({
         used_code: foundCode.code,
