@@ -84,7 +84,7 @@ export default function Rewards({ server }) {
 
               <h2 className='flex items-center text-base font-semibold sm:text-lg gap-x-2'>
                 <span className='truncate max-w-[100px] mobile:max-w-[150px] sm:max-w-[250px] md:max-w-[400px]'>
-                  {reward.role.name}asdfmlkasdmflk;asdmflk;asdmflk;amsdf
+                  {reward.role.name}
                 </span>
                 
                 <span className={cn(
