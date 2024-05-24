@@ -47,6 +47,16 @@ export default function UserSide({ className }) {
     setOpen(false);
   }, [y]);
 
+  function calculatePremiumTime(expire_at) {
+    const now = new Date();
+    const expireAt = new Date(expire_at);
+
+    const diffTime = Math.abs(expireAt - now);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return `${diffDays} day${diffDays > 1 ? 's' : ''}`;
+  }
+
   return (
     <div className={cn(
       'flex items-center gap-x-2',
@@ -69,7 +79,21 @@ export default function UserSide({ className }) {
                 </h2>
               </div>
 
-              <div className='flex flex-col mt-2 gap-y-3'>
+              {user.premium && (
+                <span className='flex items-center justify-center text-sm gap-x-1.5 text-tertiary'>
+                  <Image
+                    src='/profile-badges/premium.svg'
+                    width={14}
+                    height={14}
+                    alt='Premium Badge'
+                  />
+                  You have premium {user.premium.expire_at ? `for ${calculatePremiumTime(user.premium.expire_at)}` : 'forever'}.
+                </span>
+              )}
+
+              <div className='bg-quaternary w-full h-[1px] my-2' />
+
+              <div className='flex flex-col gap-y-3'>
                 <div className='flex flex-col gap-y-2'>
                   <h2 className='text-xs font-semibold select-none text-tertiary'>
                     Profiles

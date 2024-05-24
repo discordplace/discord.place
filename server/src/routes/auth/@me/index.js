@@ -27,7 +27,8 @@ module.exports = {
         avatar_url: user.displayAvatarURL({ size: 512 }),
         profile: typeof profile === 'object' ? profile : null,
         premium: premium ? {
-          created_at: new Date(premium.createdAt)
+          created_at: new Date(premium.createdAt),
+          expire_at: premium.expire_at ? new Date(premium.expire_at) : null
         } : null
       });
     }
