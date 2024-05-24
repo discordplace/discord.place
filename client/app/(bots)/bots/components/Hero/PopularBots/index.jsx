@@ -35,9 +35,10 @@ export default function PopularBots() {
         title={
           <div className='flex items-center gap-x-2'>
             <BsEmojiAngry />
-          It{'\''}s quiet in here...
+            It{'\''}s quiet in here...
           </div>
-        } message='We couldn’t find any bots.' 
+        } 
+        message='We couldn’t find any bots.' 
       />
     ) : (
       <>

@@ -14,6 +14,7 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
+const Reward = require('@/schemas/Server/Vote/Reward');
 
 module.exports = {
   get: [
@@ -30,6 +31,9 @@ module.exports = {
 
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404);
+
+      const existedReward = await Reward.exists({ 'guild.id': id });
+      const has_rewards = existedReward ? true : false;
 
       const voiceActivity = await VoiceActivity.findOne({ 'guild.id': id });
       const reviews = await Promise.all(
@@ -86,7 +90,8 @@ module.exports = {
         has_reviewed: request.user ? !!reviews.find(review => review.user.id === request.user.id) : null,
         permissions,
         can_set_reminder: !!(request.user && !reminder && voteTimeout && memberInGuild && !tenMinutesPassedAfterVote),
-        ownerId: guild.ownerId
+        ownerId: guild.ownerId,
+        has_rewards
       });
     }
   ],

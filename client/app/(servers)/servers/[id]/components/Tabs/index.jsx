@@ -3,6 +3,7 @@ import { useState } from 'react';
 import TopVoters from '@/app/(servers)/servers/[id]/components/Tabs/TopVoters';
 import VoiceActivityGraph from '@/app/(servers)/servers/[id]/components/Tabs/Graph/VoiceActivity';
 import Reviews from '@/app/(servers)/servers/[id]/components/Tabs/Reviews';
+import Rewards from '@/app/(servers)/servers/[id]/components/Tabs/Rewards';
 import { motion } from 'framer-motion';
 
 export default function Tabs({ server }) {
@@ -18,6 +19,12 @@ export default function Tabs({ server }) {
       id: 'topVoters',
       component: <TopVoters server={server} />,
       disabled: server.votes <= 0
+    },
+    {
+      label: 'Rewards',
+      id: 'rewards',
+      component: <Rewards server={server} />,
+      disabled: !server.has_rewards
     },
     {
       label: 'Voice Activity',
