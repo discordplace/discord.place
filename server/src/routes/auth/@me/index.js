@@ -63,7 +63,9 @@ module.exports = {
       
       await foundCode.deleteOne();
 
-      return response.sendStatus(204).end();
+      return response.json({
+        expire_at: foundCode.expire_at
+      });
     }
   ]
 };

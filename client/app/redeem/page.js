@@ -27,7 +27,7 @@ export default function Page() {
 
     toast.promise(redeemPremiumCode(code), {
       loading: 'Please wait..',
-      success: () => {
+      success: expire_at => {
         setUser({
           ...user,
           premium: true
@@ -35,7 +35,7 @@ export default function Page() {
 
         setTimeout(() => router.push('/'), 3000);
 
-        return 'You have successfully redeemed your code! You will be redirected to home page in 3 seconds.';
+        return `You have successfully redeemed the code! ${expire_at ? `Your premium will expire at ${new Date(expire_at).toLocaleString()}.` : 'You have premium forever!'}`;
       },
       error: error => {
         setLoading(false);

@@ -7,8 +7,8 @@ export default function redeemPremiumCode(code) {
     const url = `${config.api.url}/auth/@me`;
 
     try {
-      await axios.patch(url, { premium_code: code }, { withCredentials: true });
-      resolve();
+      const response = await axios.patch(url, { premium_code: code }, { withCredentials: true });
+      resolve(response.data.expire_at);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
     }
