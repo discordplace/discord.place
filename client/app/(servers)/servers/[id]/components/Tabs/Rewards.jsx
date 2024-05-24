@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { IoMdLock, IoMdUnlock } from 'react-icons/io';
 import useAuthStore from '@/stores/auth';
+import Tooltip from '@/app/components/Tooltip';
 
 export default function Rewards({ server }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -60,22 +61,24 @@ export default function Rewards({ server }) {
               </span>
               
               {loggedIn && (
-                <span className={cn(
-                  'flex items-center text-xs font-medium gap-x-1 text-tertiary',
-                  reward.unlocked ? 'text-green-500' : 'text-yellow-500'
-                )}>
-                  {reward.unlocked ? (
-                    <>
-                      <span className='hidden mobile:block'>Unlocked</span>
-                      <IoMdUnlock />
-                    </>
-                  ) : (
-                    <>
-                      <span className='hidden mobile:block'>Locked</span>
-                      <IoMdLock />
-                    </>
-                  )}
-                </span>
+                <Tooltip content={reward.unlocked ? 'You have unlocked this reward!' : 'You need to vote to unlock this reward.'}>
+                  <span className={cn(
+                    'flex items-center text-xs font-medium gap-x-1 text-tertiary select-none',
+                    reward.unlocked ? 'text-green-500' : 'text-yellow-500'
+                  )}>
+                    {reward.unlocked ? (
+                      <>
+                        <span className='hidden mobile:block'>Unlocked</span>
+                        <IoMdUnlock />
+                      </>
+                    ) : (
+                      <>
+                        <span className='hidden mobile:block'>Locked</span>
+                        <IoMdLock />
+                      </>
+                    )}
+                  </span>
+                </Tooltip>
               )}
             </h2>
 
