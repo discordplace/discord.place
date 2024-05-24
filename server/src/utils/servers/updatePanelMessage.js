@@ -2,6 +2,7 @@ const Panel = require('@/schemas/Server/Panel');
 const Discord = require('discord.js');
 const Table = require('cli-table3');
 const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
+const Reward = require('@/schemas/Server/Vote/Reward');
 
 async function updatePanelMessage(guildId) {
   const panel = await Panel.findOne({ guildId });
@@ -38,6 +39,8 @@ async function updatePanelMessage(guildId) {
 async function createPanelMessageOptions(guild) {
   const Server = require('@/schemas/Server');
   const server = await Server.findOne({ id: guild.id });
+
+  const rewards = await Reward.find({ 'guild.id': guild.id });
 
   const tableBaseOptions = {
     style: { 
@@ -114,8 +117,8 @@ async function createPanelMessageOptions(guild) {
           inline: true
         },
         {
-          name: 'View on discord.place',
-          value: `[${guild.name}](${config.frontendUrl}/servers/${guild.id})`
+          name: 'Rewards',
+          value: `${!rewards.length ? 'No rewards found.' : rewards.map(reward => `- ***${reward.required_votes}*** votes for <@&${reward.role.id}>`).join('\n')}`
         }
       ])
   ];
@@ -134,7 +137,11 @@ async function createPanelMessageOptions(guild) {
         new Discord.ButtonBuilder()
           .setCustomId('vote')
           .setLabel('Vote')
-          .setStyle(Discord.ButtonStyle.Secondary)
+          .setStyle(Discord.ButtonStyle.Secondary),
+        new Discord.ButtonBuilder()
+          .setLabel('View on discord.place')
+          .setStyle(Discord.ButtonStyle.Link)
+          .setURL(`${config.frontendUrl}/servers/${guild.id}`)
       )
   ];
 
