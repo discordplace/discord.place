@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { TbBoxMultiple, TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { TbUsers, TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { IoHeart } from 'react-icons/io5';
 import { useMedia } from 'react-use';
 import { BiSolidCategory } from 'react-icons/bi';
@@ -23,7 +23,7 @@ export default function Card({ data }) {
       transform: () => 'Premium'
     },
     {
-      icon: TbBoxMultiple,
+      icon: TbUsers,
       value: data.servers,
       condition: true,
       transform: value => {
