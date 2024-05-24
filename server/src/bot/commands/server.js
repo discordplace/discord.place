@@ -188,6 +188,9 @@ module.exports = {
 
         await interaction.deferReply();
 
+        const foundServer = await Server.findOne({ id: interaction.guild.id });
+        if (!foundServer) return interaction.followUp({ content: `You can't add a reward without listing your server. Visit [here](<${config.frontendUrl}/servers/manage>) to list this server.` });
+
         const foundRewards = await Reward.find({ guild: { id: interaction.guild.id } });
         if (foundRewards.length >= 5) return interaction.followUp({ content: 'You can\'t have more than 5 rewards.' });
 
