@@ -161,7 +161,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been approved!` });
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been approved!` }).catch(() => null);
         }
 
         const embeds = [
@@ -217,7 +217,7 @@ module.exports = {
             const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
             if (publisher) {
               const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-              if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.username}\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` });
+              if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.username}\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` }).catch(() => null);
             }
 
             const embeds = [
@@ -271,7 +271,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${user.username}** has been approved!` });
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${user.username}** has been approved!` }).catch(() => null);
         }
   
         return interaction.followUp({ content: 'Review approved.' });
@@ -341,7 +341,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour bot **${botUser.username}** has been approved!` });
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour bot **${botUser.username}** has been approved!` }).catch(() => null);
         }
 
         const embeds = [
@@ -410,7 +410,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}.\nReason: **${reason || 'No reason provided.'}**` });
+          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}.\nReason: **${reason || 'No reason provided.'}**` }).catch(() => null);
         }
 
         const embeds = [
@@ -487,7 +487,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${guild.name}** has been approved!` });
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${guild.name}** has been approved!` }).catch(() => null);
         }
 
         return interaction.followUp({ content: 'Review approved.' });
@@ -512,7 +512,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${interaction.options.getString('reason')}` });
+          if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${interaction.options.getString('reason')}` }).catch(() => null);
         }
 
         return interaction.followUp({ content: 'Review denied.' });
