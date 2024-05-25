@@ -66,6 +66,11 @@ module.exports = {
           })
         });
       } else Object.assign(publiclySafe, { servers: [] });
+
+      if (!publiclySafe.premium && config.customHostnames.includes(publiclySafe.preferredHost)) {
+        await Profile.updateOne({ preferredHost: 'discord.place/p' });
+        publiclySafe.preferredHost = 'discord.place/p';
+      }
       
       return response.json(publiclySafe);
     }
