@@ -126,7 +126,7 @@ export default function UserSide({ className }) {
 
                   <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
                     <Link href={`/profile/u/${user.id}`} className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                      Your User Profile
+                      My User Profile
                       <FaUser />
                     </Link>
                   </DropdownMenu.Item>

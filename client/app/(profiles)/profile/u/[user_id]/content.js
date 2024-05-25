@@ -24,7 +24,7 @@ function StatBlock({ fields, index }) {
           <>
             <div className={cn(
               'flex items-center gap-x-2',
-              disabled && 'opacity-20'
+              disabled && 'opacity-20 select-none'
             )} key={label}>
               <span className='bg-quaternary rounded-full p-0.5 w-[32px] h-[32px] flex items-center justify-center'>
                 <Icon />
@@ -56,7 +56,7 @@ function StatBlock({ fields, index }) {
 
 export default function Content({ user }) {
   return (
-    <div className='flex flex-col items-center w-full px-8 mt-32 gap-y-8 lg:px-0'>          
+    <div className='flex flex-col items-center w-full px-8 mt-32 mb-8 gap-y-8 lg:px-0'>          
       <div className="relative p-3 rounded-[2rem] bg-secondary h-max w-full max-w-[600px]">
         {user.bannerURL ? (
           <div className='relative'>
@@ -77,7 +77,7 @@ export default function Content({ user }) {
           <div className="h-[200px] bg-tertiary rounded-[2.5rem]" />
         )}
 
-        <div className='relative flex items-center w-full -mb-[3rem] sm:-mb-[7.5rem] left-8 bottom-16'>
+        <div className='pointer-events-none relative flex items-center w-full -mb-[3rem] sm:-mb-[7.5rem] left-8 bottom-16'>
           <Image
             src={user.avatarURL}
             alt={`${user.username}'s avatar`}
@@ -88,25 +88,58 @@ export default function Content({ user }) {
           />
         </div>
 
-        <h1 className='ml-2 sm:ml-[30%] text-sm font-medium text-tertiary'>
-          @{user.username}
-        </h1>
+        <div className='flex justify-between w-full'>
+          <div className='flex sm:ml-[30%] flex-col gap-y-1'>
+            <h1 className='ml-2 text-sm font-medium sm:ml-0 text-tertiary'>
+              @{user.username}
+            </h1>
 
-        <h2 className='ml-2 sm:ml-[30%] text-lg font-semibold text-primary flex gap-x-2 items-center'>
-          {user.globalName || user.username}
-          {user.bot && (
-            <span className='flex items-center gap-x-1 px-1.5 py-0.5 rounded-full text-xs font-semibold text-white uppercase bg-[#5865F2]'>
-              {user.bot_verified && (
-                <HiCheck />
-              )}
+            <h2 className='flex items-center ml-2 text-lg font-semibold sm:ml-0 text-primary gap-x-2'>
+              {user.globalName || user.username}
+              {user.bot && (
+                <span className='select-none flex items-center gap-x-1 px-1.5 py-0.5 rounded-full text-xs font-semibold text-white uppercase bg-[#5865F2]'>
+                  {user.bot_verified && (
+                    <Tooltip content='Verified App'>
+                      <div>
+                        <HiCheck />
+                      </div>
+                    </Tooltip>
+                  )}
               
-              App
-            </span>
-          )}
-        </h2>
+                  App
+                </span>
+              )}
+            </h2>
+          </div>
+
+          <div className='flex flex-col items-end sm:hidden gap-y-2'>
+            <h3 className='font-semibold text-primary'>
+              Badges
+            </h3>
+
+            <div className='grid grid-cols-3 grid-rows-2 gap-y-2 gap-x-4'>
+              {(user.profile?.badges || []).map(badge => (
+                <Tooltip content={badge.tooltip} key={badge.name}>
+                  <Image
+                    src={`/profile-badges/${badge.name.toLowerCase()}.svg`}
+                    alt={`${badge.name} Badge`}
+                    width={20}
+                    height={20}
+                  />
+                </Tooltip>
+              ))}
+              {new Array(6 - (user.profile?.badges || []).length).fill(null).map((_, index) => (
+                <div className='w-[20px] h-[20px] bg-tertiary rounded-full' key={index} />
+              ))}
+            </div>
+          </div>
+        </div>
 
         <div className='grid grid-cols-1 gap-4 mx-2 mt-4 sm:grid-cols-2'>
-          <div className='flex flex-col gap-y-2'>
+          <div className={cn(
+            'flex flex-col gap-y-2',
+            user.bot && 'opacity-20 select-none'
+          )}>
             <h3 className='font-semibold text-primary'>
               About
             </h3>
@@ -116,7 +149,10 @@ export default function Content({ user }) {
             </p>
           </div>
 
-          <div className='flex flex-col w-max sm:w-full sm:items-end gap-y-2'>
+          <div className={cn(
+            'hidden sm:flex flex-col w-full items-end gap-y-2',
+            user.bot && 'opacity-20 select-none'
+          )}>
             <h3 className='font-semibold text-primary'>
               Badges
             </h3>
@@ -187,7 +223,7 @@ export default function Content({ user }) {
       </div>
 
       {((user.servers || []).length > 0 || (user.bots || []).length > 0) && (
-        <div className='flex flex-col w-full mb-8 gap-y-2 max-w-[600px]'>
+        <div className='flex flex-col w-full gap-y-2 max-w-[600px]'>
           {(user.servers || []).length > 0 && (
             <>
               <h3 className='text-lg font-semibold text-primary'>
