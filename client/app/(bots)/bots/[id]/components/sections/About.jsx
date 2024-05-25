@@ -3,6 +3,7 @@ import { TbSquareRoundedChevronUp, TbBoxMultiple } from 'react-icons/tb';
 import Markdown from '@/app/components/Markdown';
 import { RiSlashCommands2, RiUserAddLine } from 'react-icons/ri';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -22,7 +23,10 @@ export default function About({ bot }) {
       label: 'Owner',
       icon: <RiUserAddLine />,
       component: (
-        <div className='flex items-center gap-x-2'>
+        <Link 
+          className='flex items-center transition-opacity gap-x-2 hover:opacity-50'
+          href={`/profile/u/${bot.owner.id}`}
+        >
           <span className='font-medium truncate'>
             @{bot.owner.username}
           </span>
@@ -34,7 +38,7 @@ export default function About({ bot }) {
             height={16}
             className='rounded-full w-[16px] h-[16px]'
           />
-        </div>
+        </Link>
       )
     },
     {

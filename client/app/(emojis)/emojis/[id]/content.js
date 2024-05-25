@@ -116,7 +116,10 @@ export default function Content({ emoji }) {
               <h1 className='text-base font-semibold text-tertiary'>
                 Publisher
               </h1>
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <Link 
+                className='flex items-center text-sm text-center transition-opacity hover:opacity-50 text-primary gap-x-1'
+                href={`/profile/u/${emoji.user.id}`}
+              >
                 <Image
                   src={emoji.user.avatar_url}
                   width={18}
@@ -125,7 +128,7 @@ export default function Content({ emoji }) {
                   className='rounded-full'
                 />
                 {emoji.user.username}
-              </span>
+              </Link>
             </div>
           </div>
         </div>
