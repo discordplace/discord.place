@@ -46,7 +46,7 @@ To get a local copy of the project up and running, follow these steps:
      SESSION_SECRET=
      SESSION_STORE_SECRET=
      GITHUB_AUTO_DEPLOY_SECRET=
-     BOT_API_KEY_SECRET=
+     BOT_API_KEY_ENCRYPT_SECRET=
      
      # Discord Bot
      DISCORD_CLIENT_TOKEN=
