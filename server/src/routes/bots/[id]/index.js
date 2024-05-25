@@ -93,6 +93,8 @@ module.exports = {
         }
       }
 
+      if (permissions.canEdit) responseData.webhook = bot.webhook;
+
       return response.json(responseData);
     }
   ],
