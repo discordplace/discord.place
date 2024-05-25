@@ -51,17 +51,21 @@ module.exports = {
       Object.assign(responseData, { votesGiven });
 
       const profile = await Profile.findOne({ 'user.id': id });
-      const premium = await Premium.findOne({ 'user.id': id });
-
-      const profileBadges = profile ? getBadges(profile, !!premium).map(badgeName => ({ name: badgeName, tooltip: badgeName })) : [];
-      Object.assign(responseData, profile ? { 
-        bio: profile.bio,
-        badges: profileBadges,
-        slug: profile.slug,
-        preferredHost: profile.preferredHost,
-        likesCount: profile.likes_count
-      } : null);
-
+      if (profile) {
+        const premium = await Premium.findOne({ 'user.id': id });
+        const profileBadges = profile ? getBadges(profile, !!premium).map(badgeName => ({ name: badgeName, tooltip: badgeName })) : [];
+        
+        Object.assign(responseData, {
+          profile: {
+            bio: profile.bio,
+            badges: profileBadges,
+            slug: profile.slug,
+            preferredHost: profile.preferredHost,
+            likesCount: profile.likes_count
+          }
+        });  
+      } 
+      
       const ownedServers = client.guilds.cache.filter(({ ownerId }) => ownerId === id);
       if (ownedServers.size > 0) {
         const listedServers = randomizeArray(await Server.find({ id: { $in: ownedServers.map(({ id }) => id) } })).slice(0, 2);
