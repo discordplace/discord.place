@@ -1,9 +1,11 @@
 function getBadges(profile, isPremium) {
+  const guild = client.guilds.cache.get(config.guildId);
+
   const badges = [
     {
       name: 'Moderator',
       condition: () => {
-        const member = client.guilds.cache.get(config.guildId).members.cache.get(profile.user.id);
+        const member = guild.members.cache.get(profile.user.id); 
         return member && member.roles.cache.has(config.roles.moderator);
       }
     },
