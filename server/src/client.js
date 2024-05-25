@@ -105,7 +105,10 @@ module.exports = class Client {
       if (options.startup.updateBotStats) this.updateBotStats();
 
       if (options.startup.listenCrons) {
-        new CronJob('0 * * * *', this.checkVoiceActivity, null, true, 'Europe/Istanbul');
+        new CronJob('0 * * * *', () => {
+          this.updateBotStats();
+          this.checkVoiceActivity();
+        }, null, true, 'Europe/Istanbul');
         new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
         new CronJob('0 0 * * *', () => {
           this.checkVoteReminderMetadatas();
@@ -113,7 +116,6 @@ module.exports = class Client {
           this.checkExpiredBlockedIPs();
           this.checkExpiredApproximateGuildCountFetchedBots();
           this.checkDeletedInviteCodes();
-          this.updateBotStats();
         }, null, true, 'Europe/Istanbul');
       }
     });
