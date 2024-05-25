@@ -186,9 +186,9 @@ export default function Content({ user }) {
         </div>
       </div>
 
-      {(user.servers.length > 0 || user.bots.length > 0) && (
+      {((user.servers || []).length > 0 || (user.bots || []).length > 0) && (
         <div className='flex flex-col w-full mb-8 gap-y-2 max-w-[600px]'>
-          {user.servers.length > 0 && (
+          {(user.servers || []).length > 0 && (
             <>
               <h3 className='text-lg font-semibold text-primary'>
                 Servers
@@ -225,7 +225,7 @@ export default function Content({ user }) {
           )}
 
         
-          {user.bots.length > 0 && (
+          {(user.bots || []).length > 0 && (
             <>
               <h3 className='mt-4 text-lg font-semibold text-primary'>
                 Bots
