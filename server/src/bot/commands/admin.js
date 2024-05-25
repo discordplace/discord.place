@@ -218,7 +218,7 @@ module.exports = {
             const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
             if (publisher) {
               const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-              if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.username}\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` }).catch(() => null);
+              if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.username}\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by ${interaction.user}. Reason: **${reason || 'No reason provided.'}**` }).catch(() => null);
             }
 
             const embeds = [
@@ -411,7 +411,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}.\nReason: **${reason || 'No reason provided.'}**` }).catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by ${interaction.user}.\nReason: **${reason || 'No reason provided.'}**` }).catch(() => null);
         }
 
         const embeds = [
