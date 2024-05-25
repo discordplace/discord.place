@@ -35,7 +35,7 @@ const markdownComponents = {
   blockquote: ({ children }) => <blockquote className="pl-4 my-4 text-sm font-medium text-tertiary" style={{ borderLeft: '4px solid rgba(var(--border-primary))' }}>{children}</blockquote>,
   code: ({ children }) => {
     const color = children.match(/#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)|hsl\((\d{1,3}), (\d{1,3})%, (\d{1,3})%\)/g);
-    if (!color) return <code className="px-2 py-0.5 mx-2 border rounded-md border-primary bg-tertiary text-primary">{children}</code>;
+    if (!color) return <code className="px-1 py-0.5 mx-2 border rounded-md border-primary bg-tertiary text-primary">{children}</code>;
 
     return (
       <>
