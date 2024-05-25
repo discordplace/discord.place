@@ -112,21 +112,16 @@ export default function Content({ emoji }) {
               <h1 className='text-base font-semibold text-tertiary'>
                 Publisher
               </h1>
-              <Link 
-                className='flex items-center text-sm text-center transition-opacity hover:opacity-50 text-primary gap-x-1'
-                href={`/profile/u/${emoji.user.id}`}
-              >
-                <div className='flex items-center gap-x-1'>
-                  <Image
-                    src={emoji.user.avatar_url}
-                    width={18}
-                    height={18}
-                    alt={`@${emoji.user.username} Avatar's`}
-                    className='rounded-full'
-                  />
-                  {emoji.user.username}
-                </div>
-              </Link>
+              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+                <Image
+                  src={emoji.user.avatar_url}
+                  width={18}
+                  height={18}
+                  alt={`@${emoji.user.username} Avatar's`}
+                  className='rounded-full'
+                />
+                {emoji.user.username}
+              </span>
             </div>
           </div>
         </div>
