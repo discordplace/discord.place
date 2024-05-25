@@ -39,7 +39,6 @@ module.exports = class Client {
         Discord.GatewayIntentBits.GuildPresences,
         Discord.GatewayIntentBits.GuildMembers,
         Discord.GatewayIntentBits.GuildMessages,
-        Discord.GatewayIntentBits.MessageContent,
         Discord.GatewayIntentBits.GuildInvites,
         Discord.GatewayIntentBits.GuildVoiceStates
       ],
