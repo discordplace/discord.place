@@ -65,7 +65,7 @@ module.exports = {
 
     .addSubcommandGroup(group => group.setName('premium').setDescription('premium')
       .addSubcommand(subcommand => subcommand.setName('generate-code').setDescription('Generates new premium code.')
-        .addStringOption(option => option.setName('time').setDescription('Expiration time for the premium. (Optional, 20m, 6h, 3d, 1w, 1m, 1y)')))
+        .addStringOption(option => option.setName('time').setDescription('Expiration time for the premium. (Optional, 20m, 6h, 3d, 1w, 30d, 1y)')))
       .addSubcommand(subcommand => subcommand.setName('revoke-code').setDescription('Revokes selected premium code.')
         .addStringOption(option => option.setName('code').setDescription('Code to revoke.').setRequired(true).setAutocomplete(true))))
 
@@ -84,7 +84,7 @@ module.exports = {
         .addStringOption(option => option.setName('value').setDescription('The value of the quarantine entry. (User ID, Server ID, etc.)').setRequired(true))
         .addStringOption(option => option.setName('restriction').setDescription('The restriction of the quarantine entry.').setRequired(true).addChoices(...Object.keys(config.quarantineRestrictions).map(restriction => ({ name: restriction, value: restriction }))))
         .addStringOption(option => option.setName('reason').setDescription('The reason for the quarantine entry.').setRequired(true))
-        .addStringOption(option => option.setName('time').setDescription('Expiration time for the quarantine entry. (Optional, 20m, 6h, 3d, 1w, 1m, 1y)')))
+        .addStringOption(option => option.setName('time').setDescription('Expiration time for the quarantine entry. (Optional, 20m, 6h, 3d, 1w, 30d, 1y)')))
       .addSubcommand(subcommand => subcommand.setName('remove').setDescription('Removes a quarantine entry.')
         .addStringOption(option => option.setName('entry').setDescription('Select the quarantine to remove.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('list').setDescription('Lists all quarantine entries.'))
