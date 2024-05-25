@@ -15,7 +15,7 @@ import { useWindowScroll } from 'react-use';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { TiHome } from 'react-icons/ti';
 import { RiPencilFill, RiRobot2Fill } from 'react-icons/ri';
-import { FaCircleUser } from 'react-icons/fa6';
+import { FaCircleUser, FaUser } from 'react-icons/fa6';
 
 export default function UserSide({ className }) {
   const { loggedIn, setLoggedIn, setUser } = useAuthStore(useShallow(state => ({
@@ -123,6 +123,13 @@ export default function UserSide({ className }) {
                       </Link>
                     </DropdownMenu.Item>
                   )}
+
+                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
+                    <Link href={`/profile/u/${user.id}`} className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
+                      Your User Profile
+                      <FaUser />
+                    </Link>
+                  </DropdownMenu.Item>
                 </div>
                 
                 <div className='flex flex-col gap-y-2'>
