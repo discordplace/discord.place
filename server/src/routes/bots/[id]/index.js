@@ -74,7 +74,7 @@ module.exports = {
         reviews,
         has_reviewed
       };
-      
+      delete responseData.webhook;
       if (permissions.canEditAPIKey && bot.api_key?.iv) {
         const apiKey = bot.getDecryptedApiKey();
         responseData.api_key = apiKey;
