@@ -64,8 +64,8 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
                 <Image src='/profile-badges/verified.svg' width={20} height={20} alt='Verified Badge' />
               </Tooltip>
             )}
-            {badges.includes('Premium') && (
-              <Tooltip content='Premium'>
+            {badges.some(({ name }) => name === 'Premium') && (
+              <Tooltip content={badges.find(({ name }) => name === 'Premium').tooltip}>
                 <Image src='/profile-badges/premium.svg' width={20} height={20} alt='Premium Badge' />
               </Tooltip>
             )}

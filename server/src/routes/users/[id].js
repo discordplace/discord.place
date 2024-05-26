@@ -53,7 +53,7 @@ module.exports = {
       const profile = await Profile.findOne({ 'user.id': id });
       if (profile) {
         const premium = await Premium.findOne({ 'user.id': id });
-        const profileBadges = profile ? getBadges(profile, !!premium).map(badgeName => ({ name: badgeName, tooltip: badgeName })) : [];
+        const profileBadges = profile ? getBadges(profile, premium ? premium.createdAt : null).map(badgeName => ({ name: badgeName, tooltip: badgeName })) : [];
         
         Object.assign(responseData, {
           profile: {
