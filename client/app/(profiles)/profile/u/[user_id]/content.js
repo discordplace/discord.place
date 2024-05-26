@@ -119,7 +119,7 @@ export default function Content({ user }) {
 
             <div className='grid grid-cols-3 grid-rows-2 gap-y-2 gap-x-4'>
               {(user.profile?.badges || []).map(badge => (
-                <Tooltip content={badge.tooltip} key={badge.name}>
+                <Tooltip content={badge.tooltip || badge.name} key={badge.name}>
                   <Image
                     src={`/profile-badges/${badge.name.toLowerCase()}.svg`}
                     alt={`${badge.name} Badge`}
