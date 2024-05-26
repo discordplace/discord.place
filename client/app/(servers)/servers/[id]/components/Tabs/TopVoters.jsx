@@ -53,7 +53,7 @@ export default function TopVoters({ server }) {
         <div className='grid w-full grid-cols-1 mt-4' key='voters'>
           {voters.map((voter, index) => (
             <Link 
-              href={`/profile/u/${voter.id}`}
+              href={`/profile/u/${voter.user_id}`}
               key={voter.id} 
               className={cn(
                 'flex items-center w-full gap-4 p-4 odd:bg-secondary even:bg-tertiary hover:opacity-70 transition-opacity',
