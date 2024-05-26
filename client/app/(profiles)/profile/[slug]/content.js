@@ -109,7 +109,7 @@ export default function Content({ profile }) {
           {profile.badges.length > 0 && (
             <div className='flex items-center ml-4 gap-x-2'>
               {profile.badges.map(badge => (
-                <Tooltip key={badge.name} content={badge.tooltip || badge.name}>
+                <Tooltip key={badge.name} content={badge.tooltip}>
                   <MotionImage 
                     src={`/profile-badges/${badge.name.toLowerCase()}.svg`} 
                     width={24} 
