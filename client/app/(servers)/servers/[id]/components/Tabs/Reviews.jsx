@@ -9,6 +9,7 @@ import createReview from '@/lib/request/servers/createReview';
 import LoginButton from '@/app/(servers)/servers/[id]/components/Tabs/LoginButton';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import cn from '@/lib/cn';
+import Link from 'next/link';
 
 export default function Reviews({ server }) {
   const [page, setPage] = useState(1);
@@ -204,18 +205,27 @@ export default function Reviews({ server }) {
       {reviews.map(review => (
         <div className="flex flex-col w-full mt-8 sm:flex-row gap-y-4" key={review._id}>
           <div className="flex gap-x-4 w-[35%]">
-            <Image
-              src={review.user.avatar_url}
-              width={48}
-              height={48}
-              alt={`${review.user.username}'s Avatar`}
-              className='rounded-2xl w-[48px] h-[48px]'
-            />
+            <Link 
+              href={`/profile/u/${review.user.id}`} 
+              className='transition-opacity hover:opacity-70'
+            >
+              <Image
+                src={review.user.avatar_url}
+                width={48}
+                height={48}
+                alt={`${review.user.username}'s Avatar`}
+                className='rounded-2xl w-[48px] h-[48px]'
+              />
+            </Link>
 
             <div className='flex flex-col gap-y-1'>
-              <h3 className='flex items-center text-base font-semibold'>
+              <Link 
+                href={`/profile/u/${review.user.id}`}
+                className='flex items-center text-base font-semibold transition-opacity hover:opacity-70'
+              >
                 {review.user.username}
-              </h3>
+              </Link>
+
               <div className='flex items-center text-sm font-semibold text-tertiary'>
                 <span className='text-xl text-primary'>{review.rating}</span>/5
               </div>
