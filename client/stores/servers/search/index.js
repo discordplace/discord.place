@@ -28,15 +28,15 @@ const useSearchStore = create((set, get) => ({
   maxReached: false,
   totalServers: 0,
   setTotalServers: totalServers => set({ totalServers }),
-  fetchServers: async search => {
-    const page = get().page;
-    const limit = get().limit;
-    const category = get().category;
-    const sort = get().sort;
+  fetchServers: async (search, page, limit, category, sort) => {
+    if (page) set({ page });
+    if (limit) set({ limit });
+    if (category) set({ category });
+    if (sort) set({ sort });
 
     set({ loading: true, search });
     
-    fetchServers(search, page, limit, category, sort)
+    fetchServers(search, get().page, get().limit, get().category, get().sort)
       .then(data => set({ servers: data.servers, loading: false, maxReached: data.maxReached, totalServers: data.total }))
       .catch(error => {
         toast.error(error);

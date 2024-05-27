@@ -10,7 +10,7 @@ import Pagination from '@/app/components/Pagination';
 import { AnimatePresence } from 'framer-motion';
 
 export default function PopularBots() {
-  const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, setSearch, setCategory, setSort, search } = useSearchStore(useShallow(state => ({
+  const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
     loading: state.loading,
     bots: state.bots,
     fetchBots: state.fetchBots,
@@ -18,9 +18,6 @@ export default function PopularBots() {
     limit: state.limit,
     page: state.page,
     setPage: state.setPage,
-    setSearch: state.setSearch,
-    setCategory: state.setCategory,
-    setSort: state.setSort,
     search: state.search
   })));
 
@@ -66,11 +63,7 @@ export default function PopularBots() {
           />
 
           <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
-            setSearch('');
-            fetchBots('');
-            setCategory('All');
-            setSort('Votes');
-            setPage(1);
+            fetchBots('', 1, limit, 'All', 'Votes');
           }}>
             Reset Search
           </button>

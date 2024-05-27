@@ -3,7 +3,8 @@
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
-import { Bricolage_Grotesque } from 'next/font/google';import ServerCard from '@/app/(servers)/servers/components/ServerCard';
+import { Bricolage_Grotesque } from 'next/font/google';
+import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import SearchInput from '@/app/(servers)/servers/components/Hero/SearchInput';
 import { useEffect } from 'react';
 import useSearchStore from '@/stores/servers/search';
@@ -26,18 +27,16 @@ import config from '@/config';
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
-  const { category, setCategory, sort, setSort, search, setSearch, loading, servers, fetchServers, page, setPage, totalServers, limit } = useSearchStore(useShallow(state => ({
+  const { category, setCategory, sort, setSort, search, loading, servers, fetchServers, page, totalServers, limit } = useSearchStore(useShallow(state => ({
     category: state.category,
     setCategory: state.setCategory,
     sort: state.sort,
     setSort: state.setSort,
     search: state.search,
-    setSearch: state.setSearch,
     loading: state.loading,
     servers: state.servers,
     fetchServers: state.fetchServers,
     page: state.page,
-    setPage: state.setPage,
     totalServers: state.totalServers,
     limit: state.limit
   })));
@@ -197,11 +196,7 @@ export default function Hero() {
                     </div>} message={'There are no servers to display. Maybe that\'s a sign to create one?'} />
 
                     <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
-                      setSearch('');
-                      fetchServers('');
-                      setCategory('All');
-                      setSort('Votes');
-                      setPage(1);
+                      fetchServers('', 1, limit, 'All', 'Votes');
                     }}>
                       Reset Search
                     </button>
@@ -230,8 +225,7 @@ export default function Hero() {
               <Pagination 
                 page={page} 
                 setPage={newPage => {
-                  setPage(newPage);
-                  fetchServers(search);
+                  fetchServers(search, newPage);
                 }} 
                 loading={loading} 
                 total={totalServers} 

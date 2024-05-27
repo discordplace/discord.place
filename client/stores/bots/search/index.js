@@ -28,15 +28,15 @@ const useSearchStore = create((set, get) => ({
   total: 0,
   setTotal: total => set({ total }),
   maxReached: false,
-  fetchBots: async search => {
-    const page = get().page;
-    const limit = get().limit;
-    const category = get().category;
-    const sort = get().sort;
+  fetchBots: async (search, page, limit, category, sort) => {
+    if (page) set({ page });
+    if (limit) set({ limit });
+    if (category) set({ category });
+    if (sort) set({ sort });
 
     set({ loading: true, search });
     
-    fetchBots(search, page, limit, category, sort)
+    fetchBots(search, get().page, get().limit, get().category, get().sort)
       .then(data => set({ bots: data.bots, loading: false, maxReached: data.maxReached, total: data.total }))
       .catch(error => {
         toast.error(error);
