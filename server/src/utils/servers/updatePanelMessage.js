@@ -5,6 +5,8 @@ const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
 const Reward = require('@/schemas/Server/Vote/Reward');
 
 async function updatePanelMessage(guildId) {
+  logger.send(`Request to update panel message in guild ${guildId}.`);
+
   const panel = await Panel.findOne({ guildId });
   if (!panel) return logger.send(`Request to update panel message in guild ${guildId} but panel not found.`);
 
