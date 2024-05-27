@@ -7,9 +7,10 @@ import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
+import { AnimatePresence } from 'framer-motion';
 
 export default function PopularBots() {
-  const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, category } = useSearchStore(useShallow(state => ({
+  const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, category, setSearch, setCategory, setSort } = useSearchStore(useShallow(state => ({
     loading: state.loading,
     bots: state.bots,
     fetchBots: state.fetchBots,
@@ -17,7 +18,10 @@ export default function PopularBots() {
     limit: state.limit,
     page: state.page,
     setPage: state.setPage,
-    category: state.category
+    category: state.category,
+    setSearch: state.setSearch,
+    setCategory: state.setCategory,
+    setSort: state.setSort
   })));
 
   useEffect(() => {
@@ -28,18 +32,50 @@ export default function PopularBots() {
   }, []);
 
   const showPagination = !loading && totalBots > limit;
-  
+
+  const stateVariants = {
+    hidden: { 
+      opacity: 0
+    },
+    visible: { 
+      opacity: 1
+    },
+    exit: { 
+      opacity: 0
+    }
+  };
+
   return (
     !loading && bots.length <= 0 ? (
-      <ErrorState 
-        title={
-          <div className='flex items-center gap-x-2'>
-            <BsEmojiAngry />
-            It{'\''}s quiet in here...
-          </div>
-        } 
-        message='We couldn’t find any bots.' 
-      />
+      <AnimatePresence>
+        <motion.div 
+          className='flex flex-col gap-y-2'
+          variants={stateVariants}
+          initial='hidden'
+          animate='visible'
+          exit='hidden'
+        >
+          <ErrorState 
+            title={
+              <div className='flex items-center gap-x-2'>
+                <BsEmojiAngry />
+                It{'\''}s quiet in here...
+              </div>
+            }
+            message={'There are no bots to display. Maybe that\'s a sign to create one?'}
+          />
+
+          <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
+            setSearch('');
+            fetchBots('');
+            setCategory('All');
+            setSort('Votes');
+            setPage(1);
+          }}>
+            Reset Search
+          </button>
+        </motion.div>
+      </AnimatePresence>
     ) : (
       <>
         <motion.div 

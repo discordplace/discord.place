@@ -94,6 +94,7 @@ const config = {
     'Other'
   ],
   botCategories: [
+    'All',
     'Moderation',
     'Utility',
     'Fun & Games',

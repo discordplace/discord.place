@@ -5,11 +5,19 @@ import fetchBots from '@/lib/request/bots/fetchBots';
 const useSearchStore = create((set, get) => ({
   loading: true,
   setLoading: loading => set({ loading }),
-  category: null,
+  search: '',
+  setSearch: search => set({ search }),
+  sort: 'Votes',
+  setSort: sort => {
+    set({ sort, page: 1 });
+
+    get().fetchBots(get().search);
+  },
+  category: 'All',
   setCategory: category => {
     set({ category, page: 1 });
-
-    get().fetchBots(category);
+  
+    get().fetchBots(get().search);
   },
   page: 1,
   setPage: page => set({ page }),
@@ -20,13 +28,15 @@ const useSearchStore = create((set, get) => ({
   total: 0,
   setTotal: total => set({ total }),
   maxReached: false,
-  fetchBots: async category => {
+  fetchBots: async search => {
     const page = get().page;
     const limit = get().limit;
+    const category = get().category;
+    const sort = get().sort;
 
-    set({ loading: true });
+    set({ loading: true, search });
     
-    fetchBots(category, page, limit)
+    fetchBots(search, page, limit, category, sort)
       .then(data => set({ bots: data.bots, loading: false, maxReached: data.maxReached, total: data.total }))
       .catch(error => {
         toast.error(error);
