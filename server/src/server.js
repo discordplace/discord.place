@@ -52,7 +52,7 @@ module.exports = class Server {
       credentials: true
     }));
     this.server.use(helmet({
-      xXssProtection: false,
+      xXssProtection: true,
       xPoweredBy: false,
       xFrameOptions: { action: 'sameorigin' }
     }));
