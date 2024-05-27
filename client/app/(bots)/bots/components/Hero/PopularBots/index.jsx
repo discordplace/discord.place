@@ -10,7 +10,7 @@ import Pagination from '@/app/components/Pagination';
 import { AnimatePresence } from 'framer-motion';
 
 export default function PopularBots() {
-  const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, category, setSearch, setCategory, setSort } = useSearchStore(useShallow(state => ({
+  const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, setSearch, setCategory, setSort, search } = useSearchStore(useShallow(state => ({
     loading: state.loading,
     bots: state.bots,
     fetchBots: state.fetchBots,
@@ -18,10 +18,10 @@ export default function PopularBots() {
     limit: state.limit,
     page: state.page,
     setPage: state.setPage,
-    category: state.category,
     setSearch: state.setSearch,
     setCategory: state.setCategory,
-    setSort: state.setSort
+    setSort: state.setSort,
+    search: state.search
   })));
 
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function PopularBots() {
               page={page} 
               setPage={newPage => {
                 setPage(newPage);
-                fetchBots(category);
+                fetchBots(search);
               }} 
               loading={loading} 
               total={totalBots}
