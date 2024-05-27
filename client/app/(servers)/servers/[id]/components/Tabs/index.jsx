@@ -35,7 +35,7 @@ export default function Tabs({ server }) {
     }
   ];
 
-  const isMobile = useMedia('(max-width: 640px)');
+  const isMobile = useMedia('(max-width: 640px)', false);
   
   return (
     <>
