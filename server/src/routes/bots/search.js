@@ -56,8 +56,8 @@ module.exports = {
         case 'Votes': return b.votes - a.votes;
         case 'Servers': return (b.servers || 0) - (a.servers || 0);
         case 'Most Reviewed': return reviews.filter(review => review.bot.id === b.id).length - reviews.filter(review => review.bot.id === a.id).length;
-        case 'Newest': return new Date(b.createdAt) - new Date(a.createdAt);
-        case 'Oldest': return new Date(a.createdAt) - new Date(b.createdAt);
+        case 'Newest': return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        case 'Oldest': return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
         }
       }).slice(skip, skip + limit);
        
