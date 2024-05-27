@@ -5,8 +5,12 @@ import { IoHeart } from 'react-icons/io5';
 import { useMedia } from 'react-use';
 import { BiSolidCategory } from 'react-icons/bi';
 import useSearchStore from '@/stores/bots/search';
+import { TiStar } from 'react-icons/ti';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 
-export default function Card({ data }) {
+export default function Card({ data, overridedSort }) {
+  const storedSort = useSearchStore(state => state.sort);
+  const sort = overridedSort || storedSort;
   const category = useSearchStore(state => state.category);
   const isMobile = useMedia('(max-width: 420px)', false);
 
@@ -23,9 +27,14 @@ export default function Card({ data }) {
       transform: () => 'Premium'
     },
     {
+      icon: TbSquareRoundedChevronUp,
+      value: data.votes,
+      condition: sort === 'Votes'
+    },
+    {
       icon: TbBoxMultiple,
       value: data.servers,
-      condition: true,
+      condition: sort === 'Servers',
       transform: value => {
         const serversFormatter = new Intl.NumberFormat('en-US', {
           style: 'decimal',
@@ -37,9 +46,22 @@ export default function Card({ data }) {
       }
     },
     {
-      icon: TbSquareRoundedChevronUp,
-      value: data.votes,
-      condition: true
+      icon: TiStar,
+      value: data.reviews,
+      condition: sort === 'Most Reviewed',
+      transform: value => `${formatter.format(value)} Time Reviewed`
+    },
+    {
+      icon: HiSortAscending,
+      value: data.created_at,
+      condition: sort === 'Newest',
+      transform: date => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    },
+    {
+      icon: HiSortDescending,
+      value: data.created_at,
+      condition: sort === 'Oldest',
+      transform: date => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
     }
   ];
 
@@ -67,7 +89,7 @@ export default function Card({ data }) {
           height={64}
           className='absolute top-[-25px] left-4 bg-secondary group-hover:bg-tertiary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
         />
-
+        
         <div className='flex flex-col px-4 pt-12'>
           <div className='flex items-center'>
             <span className='text-lg font-semibold truncate'>
@@ -109,7 +131,7 @@ export default function Card({ data }) {
 
           <div className='flex items-center px-2.5 py-1 mt-3 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
             <BiSolidCategory />
-            {category || data.categories[0]}
+            {category === 'All' ? data.categories[0] : category}
           </div>
         </div>
       </div>

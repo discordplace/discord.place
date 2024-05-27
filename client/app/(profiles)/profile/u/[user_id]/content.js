@@ -273,7 +273,11 @@ export default function Content({ user }) {
 
               <div className='grid grid-cols-1 gap-4 mt-4 lg:grid-cols-2'>
                 {user.bots.map(bot => (
-                  <BotCard data={bot} key={bot.id} />
+                  <BotCard
+                    data={bot}
+                    key={bot.id}
+                    overridedSort='Votes'
+                  />
                 ))}
               </div>
             </>

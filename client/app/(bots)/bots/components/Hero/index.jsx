@@ -4,12 +4,32 @@ import { motion } from 'framer-motion';
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
-import TopCategories from '@/app/(bots)/bots/components/Hero/TopCategories';
 import PopularBots from '@/app/(bots)/bots/components/Hero/PopularBots';
+import SearchInput from '@/app/(bots)/bots/components/Hero/SearchInput';
+import useSearchStore from '@/stores/bots/search';
+import { useShallow } from 'zustand/react/shallow';
+import { BiSolidCategory } from 'react-icons/bi';
+import { useState } from 'react';
+import config from '@/config';
+import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
+import SortingDrawer from '@/app/(bots)/bots/components/Hero/Drawer/Sorting';
+import { TbBoxMultiple, TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { TiStar } from 'react-icons/ti';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
+  const [categoryDrawerOpenState, setCategoryDrawerOpenState] = useState(false);
+  const [sortingDrawerOpenState, setSortingDrawerOpenState] = useState(false);
+
+  const { category, setCategory, sort, setSort } = useSearchStore(useShallow(state => ({
+    category: state.category,
+    setCategory: state.setCategory,
+    sort: state.sort,
+    setSort: state.setSort
+  })));
+
   const sequenceTransition = {
     duration: 0.25,
     type: 'spring',
@@ -33,21 +53,97 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...sequenceTransition, delay: 0.1 }}
         >
-            Discover the bots
+          Discover the bots
         </motion.h1>
         
         <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
           Explore most popular bots and find the perfect one for your Discord server!<br/>Make your server more fun and interactive with the best bots available.
         </motion.span>
 
-        <TopCategories />
+        <SearchInput />
       </div>
+
+      <motion.div
+        className='flex mobile:flex-row flex-col gap-4 mt-6 max-w-[800px] w-full'
+        initial={{ opacity: 0, y: -25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...sequenceTransition, delay: 0.4 }}
+      >
+        <button className='text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary' onClick={() => setCategoryDrawerOpenState(true)}>
+          <div className='text-sm font-medium text-tertiary'>
+            Category
+          </div>
+          
+          <div className='flex items-center gap-x-2'>
+            <BiSolidCategory />
+            {category !== 'All' ? category : 'All'}
+          </div>
+        </button>
+
+        <CategoriesDrawer 
+          state={category}
+          setState={setCategory}
+          openState={categoryDrawerOpenState}
+          setOpenState={setCategoryDrawerOpenState}
+          categories={config.botCategories}
+        />
+
+        <button className='text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary' onClick={() => setSortingDrawerOpenState(true)}>
+          <div className='text-sm font-medium text-tertiary'>
+            Sorting
+          </div>
+          
+          <div className='flex items-center gap-x-2'>
+            {sort === 'Votes' && (
+              <>
+                <TbSquareRoundedChevronUp />
+                Votes
+              </>
+            )}
+
+            {sort === 'Servers' && (
+              <>
+                <TbBoxMultiple />
+                Servers
+              </>
+            )}
+
+            {sort === 'Most Reviewed' && (
+              <>
+                <TiStar />
+                Most Reviewed
+              </>
+            )}
+
+            {sort === 'Newest' && (
+              <>
+                <HiSortAscending />
+                Newest
+              </>
+            )}
+
+            {sort === 'Oldest' && (
+              <>
+                <HiSortDescending />
+                Oldest
+              </>
+            )}
+          </div>
+        </button>
+
+        <SortingDrawer
+          state={sort}
+          setState={setSort}
+          openState={sortingDrawerOpenState}
+          setOpenState={setSortingDrawerOpenState}
+        />
+      </motion.div>
 
       <motion.div 
         className='my-16 max-w-[1200px] w-full'
         initial={{ opacity: 0, y: -25 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ ...sequenceTransition, delay: 0.4 }}
+        transition={{ ...sequenceTransition, delay: 0.5 }}
       >
         <PopularBots />
       </motion.div>
