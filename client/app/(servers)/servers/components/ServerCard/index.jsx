@@ -91,7 +91,10 @@ export default function ServerCard(props) {
             name={props.server.name}
             width={64}
             height={64}
-            className='absolute top-[-25px] left-4 bg-secondary group-hover:bg-tertiary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
+            className={cn(
+              props.server.icon_url ? 'bg-secondary group-hover:bg-tertiary' : '[&>h2]:text-xl',
+              'absolute top-[-25px] left-4 border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
+            )}
           />
 
           {typeof props.index === 'number' && (

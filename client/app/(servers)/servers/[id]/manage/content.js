@@ -15,6 +15,7 @@ import deleteServer from '@/lib/request/servers/deleteServer';
 import { useRouter } from 'next-nprogress-bar';
 import { FaCheck } from 'react-icons/fa';
 import revalidateServer from '@/lib/revalidate/server';
+import cn from '@/lib/cn';
 
 export default function Content({ server }) {
   const [currentServer, setCurrentServer] = useState(server);
@@ -91,7 +92,19 @@ export default function Content({ server }) {
           </Link>
               
           <h1 className="flex items-center text-xl font-bold sm:text-3xl gap-x-1">
-            Manage <ServerIcon width={32} height={32} icon_url={currentServer.icon_url} name={currentServer.name} /> <span className='truncate'>{currentServer.name}</span>
+            Manage
+            <ServerIcon
+              width={32}
+              height={32}
+              icon_url={currentServer.icon_url}
+              name={currentServer.name}
+              className={cn(
+                !currentServer.icon_url && '[&>h2]:text-xs'
+              )}
+            />
+            <span className='truncate'>
+              {currentServer.name}
+            </span>
           </h1>
         </div>
               
