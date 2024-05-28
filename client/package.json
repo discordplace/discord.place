@@ -38,6 +38,7 @@
     "react": "^18",
     "react-animate-height": "^3.2.3",
     "react-animated-numbers": "^0.18.0",
+    "react-apexcharts": "^1.4.1",
     "react-countdown": "^2.3.5",
     "react-dom": "^18",
     "react-icons": "^5.0.1",

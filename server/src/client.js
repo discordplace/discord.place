@@ -15,6 +15,7 @@ const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
 const Reminder = require('@/schemas/Reminder');
 const BlockedIp = require('@/schemas/BlockedIp');
+const DashboardData = require('@/schemas/DashboardData');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -107,6 +108,7 @@ module.exports = class Client {
         new CronJob('0 * * * *', () => {
           this.updateBotStats();
           this.checkVoiceActivity();
+          this.createNewDashboardData();
         }, null, true, 'Europe/Istanbul');
         new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
         new CronJob('0 0 * * *', () => {
@@ -271,5 +273,19 @@ module.exports = class Client {
     }
 
     logger.send(`Deleted ${deletedCount} expired approximate guild count fetched bots collections.`);
+  }
+
+  async createNewDashboardData() {
+    const lastData = await DashboardData.findOne().sort({ createdAt: -1 });
+    
+    await new DashboardData({
+      servers: lastData?.servers || 0,
+      profiles: lastData?.profiles || 0,
+      bots: lastData?.bots || 0,
+      emojis: lastData?.emojis || 0,
+      users: lastData?.users || 0
+    }).save();
+
+    logger.send('Created new dashboard data.');
   }
 };

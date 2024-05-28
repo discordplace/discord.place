@@ -23,28 +23,6 @@ const S3 = new S3Client({
   }
 });
 
-const emojisDenyReasons = {
-  'reposted-emoji': { name: 'Reposted Emoji', description: 'If the emoji you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.' },
-  'background-transparency': { name: 'Background Transparency', description: 'Emojis should feature a transparent background. Emojis with opaque backgrounds may not blend well with different message backgrounds and could disrupt visual coherence.' },
-  'whitespace': { name: 'Whitespace', description: 'Emojis containing excess whitespace around the edges may appear disproportionately small when used in messages. To ensure optimal visibility and legibility, please crop your emojis appropriately before submission.' },
-  'incoherent-emoji-package-content': { name: 'Incoherent Emoji Package Content', description: 'Emojis within a package must be compatible with each other to ensure coherence and meaningful usage.' },
-  'offensive-or-inappropriate-content': { name: 'Offensive or Inappropriate Content', description: 'Emojis depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.' },
-  'copyright-infringement': { name: 'Copyright Infringement', description: 'Ensure that your emoji submissions do not violate any copyright or intellectual property rights. Avoid using copyrighted characters, logos, or designs without proper authorization.' },
-  'clear-representation': { name: 'Clear Representation', description: 'Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users.' }
-};
-
-const botsDenyReasons = {
-  'reposted-bot': { name: 'Reposted Bot', description: 'If the bot you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.' },
-  'offensive-or-inappropriate-content': { name: 'Offensive or Inappropriate Content', description: 'Bots depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.' },
-  'against-discord-terms-of-service': { name: 'Against Discord Terms of Service', description: 'Bots that violate Discord\'s Terms of Service will not be accepted.' },
-  'not-online-or-inviteable': { name: 'Not Online or Inviteable', description: 'Bots must be online and inviteable for usage.' },
-  'base-functionality-is-broken': { name: 'Base Functionality is Broken', description: 'Bots must have functional base features to be considered.' },
-  'copied-bot': { name: 'Copied Bot', description: 'Bots that are direct copies of existing bots will not be accepted.' },
-  'has-vulnerability': { name: 'Has Vulnerability', description: 'Bots with security vulnerabilities will not be accepted.' },
-  'support-for-slash-commands': { name: 'Support for Slash Commands', description: 'Bots must support slash commands for improved user experience and functionality.' }
-};
-
-
 module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('admin')
@@ -61,7 +39,7 @@ module.exports = {
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected emoji.')
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(emojisDenyReasons).map(reason => ({ name: reason, value: reason }))))))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(config.emojisDenyReasons).map(reason => ({ name: reason, value: reason }))))))
 
     .addSubcommandGroup(group => group.setName('premium').setDescription('premium')
       .addSubcommand(subcommand => subcommand.setName('generate-code').setDescription('Generates new premium code.')
@@ -74,7 +52,7 @@ module.exports = {
         .addStringOption(option => option.setName('review').setDescription('Select the review to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('review-deny').setDescription('Denies a review.')
         .addStringOption(option => option.setName('review').setDescription('Select the review to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('The reason for denying the review.').setRequired(true)))
+        .addStringOption(option => option.setName('reason').setDescription('The reason for denying the review.')))
       .addSubcommand(subcommand => subcommand.setName('review-delete').setDescription('Deletes a review.')
         .addStringOption(option => option.setName('review').setDescription('Select the review to delete.').setRequired(true).setAutocomplete(true))))
 
@@ -104,7 +82,7 @@ module.exports = {
         .addStringOption(option => option.setName('bot').setDescription('Bot to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected bot.')
         .addStringOption(option => option.setName('bot').setDescription('Bot to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(botsDenyReasons).map(reason => ({ name: reason, value: reason }))))))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(config.botsDenyReasons).map(reason => ({ name: reason, value: reason }))))))
 
     .toJSON(),
   execute: async interaction => {
@@ -233,7 +211,7 @@ module.exports = {
                   },
                   {
                     name: 'Reason',
-                    value: reason ? emojisDenyReasons[reason].description : 'No reason provided.'
+                    value: reason ? config.emojisDenyReasons[reason].description : 'No reason provided.'
                   }
                 ])
             ];
@@ -380,7 +358,7 @@ module.exports = {
 
         const id = interaction.options.getString('bot');
         const reason = interaction.options.getString('reason');
-        if (!botsDenyReasons[reason]) return interaction.followUp({ content: 'Invalid reason.' });
+        if (!config.botsDenyReasons[reason]) return interaction.followUp({ content: 'Invalid reason.' });
 
         const botUser = await client.users.fetch(id).catch(() => null);
         if (!botUser) return interaction.followUp({ content: 'Bot not found.' });
@@ -403,8 +381,8 @@ module.exports = {
             id: interaction.user.id
           },
           reason: {
-            title: botsDenyReasons[reason].name,
-            description: botsDenyReasons[reason].description
+            title: config.botsDenyReasons[reason].name,
+            description: config.botsDenyReasons[reason].description
           }
         }).save();
 
@@ -426,7 +404,7 @@ module.exports = {
               },
               {
                 name: 'Reason',
-                value: botsDenyReasons[reason].description
+                value: config.botsDenyReasons[reason].description
               }
             ])
         ];
@@ -522,7 +500,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${interaction.options.getString('reason')}` }).catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${interaction.options.getString('reason') || 'No reason provided.'}` });
         }
 
         return interaction.followUp({ content: 'Review denied.' });

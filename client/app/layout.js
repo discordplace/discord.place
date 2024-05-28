@@ -83,7 +83,10 @@ export default function RootLayout({ children }) {
                   {children}
                 </ErrorBoundary>
             
-                <Footer />
+                <Suspense fallback={<></>}>
+                  <Footer />
+                </Suspense>
+                
                 <CookieBanner />
               </VaulWrapperProvider>
             </AuthProvider>

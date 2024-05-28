@@ -56,6 +56,9 @@ dependencies:
   react-animated-numbers:
     specifier: ^0.18.0
     version: 0.18.0(react-dom@18.2.0)(react@18.2.0)
+  react-apexcharts:
+    specifier: ^1.4.1
+    version: 1.4.1(apexcharts@3.48.0)(react@18.2.0)
   react-countdown:
     specifier: ^2.3.5
     version: 2.3.5(react-dom@18.2.0)(react@18.2.0)
@@ -4419,6 +4422,17 @@ packages:
       framer-motion: 10.18.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-apexcharts@1.4.1(apexcharts@3.48.0)(react@18.2.0):
+    resolution: {integrity: sha512-G14nVaD64Bnbgy8tYxkjuXEUp/7h30Q0U33xc3AwtGFijJB9nHqOt1a6eG0WBn055RgRg+NwqbKGtqPxy15d0Q==}
+    peerDependencies:
+      apexcharts: ^3.41.0
+      react: '>=0.13'
+    dependencies:
+      apexcharts: 3.48.0
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /react-countdown@2.3.5(react-dom@18.2.0)(react@18.2.0):

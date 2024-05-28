@@ -11,13 +11,11 @@ import { FiX } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 import LogoWithText from '@/app/components/Logo/WithText';
 import { nanoid } from 'nanoid';
-import { usePathname } from 'next/navigation';
 
-export default function CollapsedHeader() {
+export default function CollapsedHeader({ pathname }) {
   const theme = useThemeStore(state => state.theme);
 
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
 
   useLockBodyScroll(open);
 

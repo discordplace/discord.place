@@ -5,7 +5,7 @@ const { CronJob } = require('cron');
 module.exports = function connectDatabase(url, options = {}) {
   if (!url) throw new Error('Missing database URL.');
 
-  mongoose.connect(url, { dbName: process.env.NODE_ENV === 'production' ? 'api' : 'development' })
+  mongoose.connect(url, { dbName: process.env.NODE_ENV !== 'production' ? 'api' : 'development' })
     .then(() => logger.send('Connected to database.'));
 
   if (options.backup) {

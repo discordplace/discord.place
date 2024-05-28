@@ -16,6 +16,7 @@ import { MdEmojiEmotions } from 'react-icons/md';
 import { TiHome } from 'react-icons/ti';
 import { RiPencilFill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCircleUser, FaUser } from 'react-icons/fa6';
+import { FaShieldAlt } from 'react-icons/fa';
 
 export default function UserSide({ className }) {
   const { loggedIn, setLoggedIn, setUser } = useAuthStore(useShallow(state => ({
@@ -71,7 +72,10 @@ export default function UserSide({ className }) {
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Portal>
-            <DropdownMenu.Content className="pointer-events-auto flex flex-col p-4 min-w-[300px] bg-secondary rounded-xl border border-primary z-[9999] gap-y-2 mr-2 lg:mr-0 sm:mr-4" sideOffset={10}>  
+            <DropdownMenu.Content
+              className="pointer-events-auto flex flex-col p-4 min-w-[300px] bg-secondary rounded-xl border border-primary z-[9999] gap-y-2 mr-2 lg:mr-0 sm:mr-4" 
+              sideOffset={10}
+            >  
               <div className='flex flex-col items-center justify-center w-full gap-y-2'>
                 <Image src={user.avatar_url} width={128} height={128} className='rounded-full w-[64px] h-[64px]' alt='User Avatar' />
                 <h2 className='text-xl font-medium'>
@@ -172,8 +176,23 @@ export default function UserSide({ className }) {
                   </DropdownMenu.Item>
                 </div>
 
-                <div className='bg-quaternary w-full h-[1px]' />
+                {user.can_view_dashboard && (
+                  <div className='flex flex-col gap-y-2'>
+                    <h2 className='text-xs font-semibold select-none text-tertiary'>
+                      Admin
+                    </h2>
 
+                    <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
+                      <Link href='/dashboard' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
+                        Dashboard
+                        <FaShieldAlt />
+                      </Link>
+                    </DropdownMenu.Item>
+                  </div>
+                )}
+
+                <div className='bg-quaternary w-full h-[1px]' />
+                
                 <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
                   <button className='flex items-center justify-between text-sm text-secondary hover:text-primary' onClick={logOut}>
                     Log Out
