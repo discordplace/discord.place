@@ -15,7 +15,7 @@ export default function Page() {
   const [hoveredBlockColor, setHoveredBlockColor] = useState(defaultBlockColor);
   const isMobile = useMedia('(max-width: 640px)', false);  
 
-  function Block({ title, desc, to, index, color, disabled, newBadge }) {
+  function Block({ title, desc, to, index, color, disabled }) {
     const blockRef = useRef(null);
     const buttonRef = useRef(null);
 
@@ -70,15 +70,6 @@ export default function Page() {
       >
         <h1 className='flex items-center mt-3 text-xl font-semibold text-center gap-x-2 sm:text-2xl sm:mt-6 text-primary'>
           {title}
-          {newBadge && (
-            <span 
-              className='flex items-center px-2 py-1 text-xs font-semibold text-white rounded-full gap-x-1' 
-              style={{
-                background: `${color}80`
-              }}>
-              New
-            </span>
-          )}
         </h1>
         <p className='mb-3 text-sm font-medium text-center sm:mb-0 text-tertiary'>{desc}</p>
         <div 
@@ -129,7 +120,6 @@ export default function Page() {
             to='/bots'
             index={2}
             color='#db2777'
-            newBadge
           />
           <Block
             title='Emojis'
