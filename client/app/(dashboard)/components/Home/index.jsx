@@ -24,6 +24,7 @@ export default function Home() {
     const isEqual = current === previous;
     const diffInPercent = ((current - previous) / previous) * 100;
     const diffInPercentClean = diffInPercent === Infinity ? 100 : isNaN(diffInPercent) ? 0 : diffInPercent;
+    const diffInText = isIncreased ? current - previous : isDecreased ? previous - current : 0;
 
     return (
       <div className='flex flex-col p-6 border rounded-xl border-primary bg-secondary gap-y-4'>
@@ -48,7 +49,7 @@ export default function Home() {
           {!loading && (
             <Tooltip
               side={tooltipSide}
-              content={`${isIncreased ? 'Increased' : isDecreased ? 'Decreased' : 'No change'} since yesterday`}
+              content={`${isIncreased ? 'Increased' : isDecreased ? 'Decreased' : 'No change'} since yesterday (${diffInText})`}
             >
               <div className={cn(
                 'select-none flex w-max gap-x-1 px-2 items-center py-1 text-xs font-semibold rounded-lg',
