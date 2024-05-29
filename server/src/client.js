@@ -108,15 +108,15 @@ module.exports = class Client {
         new CronJob('0 * * * *', () => {
           this.updateBotStats();
           this.checkVoiceActivity();
-          this.createNewDashboardData();
-        }, null, true, 'Europe/Istanbul');
-        new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
-        new CronJob('0 0 * * *', () => {
           this.checkVoteReminderMetadatas();
           this.checkReminerMetadatas();
           this.checkExpiredBlockedIPs();
           this.checkExpiredApproximateGuildCountFetchedBots();
           this.checkDeletedInviteCodes();
+        }, null, true, 'Europe/Istanbul');
+        new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
+        new CronJob('0 0 * * *', () => {
+          this.checkVoteReminderMetadatas();
         }, null, true, 'Europe/Istanbul');
       }
     });
