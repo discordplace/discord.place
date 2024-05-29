@@ -15,6 +15,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const Reward = require('@/schemas/Server/Vote/Reward');
+const DashboardData = require('@/schemas/DashboardData');
 
 module.exports = {
   get: [
@@ -178,6 +179,12 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await newServer.save();
+
+      const lastData = await DashboardData.findOne().sort({ createdAt: -1 });
+      if (lastData) {
+        lastData.servers += 1;
+        await lastData.save();
+      }
 
       if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 

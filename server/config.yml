@@ -54,6 +54,17 @@ permissions:
   canCreateQuarantinesRoles:
     - '1206032198562742312'
     - '1206354879321210900'
+  canViewDashboardRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
+    - '1238588360193216695'
+  canViewBlockedIps:
+    - '957840712404193290'
+  canDeleteBlockedIps:
+    - '957840712404193290'
+  canDeleteBotDeniesRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
 profilesMaxSocialsLength: 8
 packagesMaxEmojisLength: 9
 packagesMinEmojisLength: 4
@@ -168,3 +179,50 @@ globalRateLimit:
   maxRequests: 60
   perMinutes: 2
   cleanUpIntervalInMinutes: 2.5
+emojisDenyReasons:
+  reposted-emoji:
+    name: "Reposted Emoji"
+    description: "If the emoji you're submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety."
+  background-transparency:
+    name: "Background Transparency"
+    description: "Emojis should feature a transparent background. Emojis with opaque backgrounds may not blend well with different message backgrounds and could disrupt visual coherence."
+  whitespace:
+    name: "Whitespace"
+    description: "Emojis containing excess whitespace around the edges may appear disproportionately small when used in messages. To ensure optimal visibility and legibility, please crop your emojis appropriately before submission."
+  incoherent-emoji-package-content:
+    name: "Incoherent Emoji Package Content"
+    description: "Emojis within a package must be compatible with each other to ensure coherence and meaningful usage."
+  offensive-or-inappropriate-content:
+    name: "Offensive or Inappropriate Content"
+    description: "Emojis depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures."
+  copyright-infringement:
+    name: "Copyright Infringement"
+    description: "Ensure that your emoji submissions do not violate any copyright or intellectual property rights. Avoid using copyrighted characters, logos, or designs without proper authorization."
+  clear-representation:
+    name: "Clear Representation"
+    description: "Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users."
+botsDenyReasons:
+  reposted-bot:
+    name: "Reposted Bot"
+    description: "If the bot you're submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety."
+  offensive-or-inappropriate-content:
+    name: "Offensive or Inappropriate Content"
+    description: "Bots depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures."
+  against-discord-terms-of-service:
+    name: "Against Discord Terms of Service"
+    description: "Bots that violate Discord's Terms of Service will not be accepted."
+  not-online-or-inviteable:
+    name: "Not Online or Inviteable"
+    description: "Bots must be online and inviteable for usage."
+  base-functionality-is-broken:
+    name: "Base Functionality is Broken"
+    description: "Bots must have functional base features to be considered."
+  copied-bot:
+    name: "Copied Bot"
+    description: "Bots that are direct copies of existing bots will not be accepted."
+  has-vulnerability:
+    name: "Has Vulnerability"
+    description: "Bots with security vulnerabilities will not be accepted."
+  support-for-slash-commands:
+    name: "Support for Slash Commands"
+    description: "Bots must support slash commands for improved user experience and functionality."

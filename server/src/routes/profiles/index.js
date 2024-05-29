@@ -7,6 +7,7 @@ const Premium = require('@/schemas/Premium');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
+const DashboardData = require('@/schemas/DashboardData');
 
 module.exports = {
   post: [
@@ -51,6 +52,12 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await newProfile.save();
+
+      const lastData = await DashboardData.findOne().sort({ createdAt: -1 });
+      if (lastData) {
+        lastData.profiles += 1;
+        await lastData.save();
+      }
 
       return response.status(204).end();
     }

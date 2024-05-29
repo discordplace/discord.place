@@ -3,32 +3,33 @@ const Discord = require('discord.js');
 const Table = require('cli-table3');
 const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
 const Reward = require('@/schemas/Server/Vote/Reward');
+const Server = require('@/schemas/Server');
 
 async function updatePanelMessage(guildId) {
   logger.send(`Request to update panel message in guild ${guildId}.`);
 
+  const guild = client.guilds.cache.get(guildId);
+  if (!guild) return logger.send(`Guild ${guildId} not found.`);
+
   const panel = await Panel.findOne({ guildId });
   if (!panel) return logger.send(`Request to update panel message in guild ${guildId} but panel not found.`);
 
-  const guild = client.guilds.cache.get(guildId);
-  if (!guild) {
-    logger.send(`Panel message found in database for ${guildId} but guild not found. Deleting the panel..`);
-    return panel.deleteOne();
-  }
-
   const channel = guild.channels.cache.get(panel.channelId);
-  if (!channel) {
-    logger.send(`Panel message found in database for guild ${guild.name} (${guild.id}) but channel not found. Deleting the panel..`);
-    return panel.deleteOne();
-  }
+  if (!channel) return logger.send(`Panel channel not found in guild ${guild.name} (${guild.id}). Deleting the panel..`);
 
   if (!channel.permissionsFor(guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) {
     logger.send(`Panel message found in guild ${guild.name} (${guild.id}) but I don't have permission to send messages in the channel. Deleting the panel..`);
     return panel.deleteOne();
   }
 
+  const server = await Server.findOne({ id: guild.id });
+  if (!server) {
+    logger.send(`Panel message found in guild ${guild.name} (${guild.id}) but server not found in database. Deleting the panel..`);
+    return panel.deleteOne();
+  }
+
   if (!panel.messageId) {
-    const message = await channel.send(await createPanelMessageOptions(guild));
+    const message = await channel.send(await createPanelMessageOptions(guild, server));
     if (!message) return panel.deleteOne();
 
     await panel.updateOne({ messageId: message.id });
@@ -39,18 +40,15 @@ async function updatePanelMessage(guildId) {
   if (!message) {
     logger.send(`Panel message not found in guild ${guild.name} (${guild.id}). Creating a new one.`);
     
-    const message = await channel.send(await createPanelMessageOptions(guild));
+    const message = await channel.send(await createPanelMessageOptions(guild, server));
     if (!message) return panel.deleteOne();
 
     await panel.updateOne({ messageId: message.id });
     logger.send(`Panel message created in guild ${guild.name} (${guild.id}).`);
-  } else await message.edit(await createPanelMessageOptions(guild));
+  } else await message.edit(await createPanelMessageOptions(guild, server));
 }
 
-async function createPanelMessageOptions(guild) {
-  const Server = require('@/schemas/Server');
-  const server = await Server.findOne({ id: guild.id });
-
+async function createPanelMessageOptions(guild, server) {
   const rewards = await Reward.find({ 'guild.id': guild.id });
 
   const tableBaseOptions = {

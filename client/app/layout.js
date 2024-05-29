@@ -12,6 +12,7 @@ import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
 import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
 import 'react-medium-image-zoom/dist/styles.css';
+import { Suspense } from 'react';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -74,13 +75,18 @@ export default function RootLayout({ children }) {
           <ThemeProvider>
             <AuthProvider>
               <VaulWrapperProvider>
-                <Header />
+                <Suspense fallback={<></>}>
+                  <Header />
+                </Suspense>
 
                 <ErrorBoundary>
                   {children}
                 </ErrorBoundary>
             
-                <Footer />
+                <Suspense fallback={<></>}>
+                  <Footer />
+                </Suspense>
+                
                 <CookieBanner />
               </VaulWrapperProvider>
             </AuthProvider>
