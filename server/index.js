@@ -29,7 +29,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     checkReminerMetadatas: true,
     checkExpiredBlockedIPs: true,
     checkExpiredApproximateGuildCountFetchedBots: true,
-    updateBotStats: true,
+    updateBotStats: false,
     createNewDashboardData: false,
     listenEvents: true,
     listenCrons: process.env.NODE_ENV === 'production'
