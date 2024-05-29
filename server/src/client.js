@@ -106,7 +106,6 @@ module.exports = class Client {
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', () => {
-          this.updateBotStats();
           this.checkVoiceActivity();
           this.checkVoteReminderMetadatas();
           this.checkReminerMetadatas();
@@ -117,6 +116,7 @@ module.exports = class Client {
         new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
         new CronJob('0 0 * * *', () => {
           this.checkVoteReminderMetadatas();
+          this.updateBotStats();
         }, null, true, 'Europe/Istanbul');
       }
     });
