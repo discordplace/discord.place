@@ -16,6 +16,10 @@ const ReminderMetadata = require('@/schemas/Reminder/Metadata');
 const Reminder = require('@/schemas/Reminder');
 const BlockedIp = require('@/schemas/BlockedIp');
 const DashboardData = require('@/schemas/DashboardData');
+const Profile = require('@/schemas/Profile');
+const Bot = require('@/schemas/Bot');
+const Emoji = require('@/schemas/Emoji');
+const EmojiPack = require('@/schemas/Emoji/Pack');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -278,13 +282,16 @@ module.exports = class Client {
   }
 
   async createNewDashboardData() {
-    const lastData = await DashboardData.findOne().sort({ createdAt: -1 });
+    const totalServers = await Server.countDocuments();
+    const totalProfiles = await Profile.countDocuments();
+    const totalBots = await Bot.countDocuments();
+    const totalEmojis = await Emoji.countDocuments() + await EmojiPack.countDocuments();    
     
     await new DashboardData({
-      servers: lastData?.servers || 0,
-      profiles: lastData?.profiles || 0,
-      bots: lastData?.bots || 0,
-      emojis: lastData?.emojis || 0,
+      servers: totalServers,
+      profiles: totalProfiles,
+      bots: totalBots,
+      emojis: totalEmojis,
       users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
       guilds: client.guilds.cache.size
     }).save();
