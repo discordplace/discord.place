@@ -22,14 +22,14 @@ const Client = require('@/src/client.js');
 const client = new Client();
 client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
   startup: {
-    checkDeletedInviteCodes: false,
-    updatePanelMessages: false,
-    updateClientActivity: false,
-    checkVoteReminderMetadatas: false,
-    checkReminerMetadatas: false,
-    checkExpiredBlockedIPs: false,
-    checkExpiredApproximateGuildCountFetchedBots: false,
-    updateBotStats: false,
+    checkDeletedInviteCodes: true,
+    updatePanelMessages: true,
+    updateClientActivity: true,
+    checkVoteReminderMetadatas: true,
+    checkReminerMetadatas: true,
+    checkExpiredBlockedIPs: true,
+    checkExpiredApproximateGuildCountFetchedBots: true,
+    updateBotStats: true,
     listenEvents: true,
     listenCrons: process.env.NODE_ENV === 'production'
   },
