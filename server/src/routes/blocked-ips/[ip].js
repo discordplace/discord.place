@@ -1,10 +1,12 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BlockedIp = require('@/schemas/BlockedIp');
 const { param, validationResult, matchedData } = require('express-validator');
+const useRateLimiter = require('@/utils/useRateLimiter');
 
 module.exports = {
   delete: [
     checkAuthentication,
+    useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('ip')
       .isIP().withMessage('Invalid IP address'),
     async (request, response) => {

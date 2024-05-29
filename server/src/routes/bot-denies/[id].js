@@ -16,7 +16,7 @@ module.exports = {
 
       const { id } = matchedData(request);
       
-      await BotDeny.findOneAndDelete({ _id: id })
+      BotDeny.findOneAndDelete({ _id: id })
         .then(() => response.sendStatus(204).end())
         .catch(error => {
           logger.send(`There was an error while trying to delete a bot deny record:\n${error.stack}`);

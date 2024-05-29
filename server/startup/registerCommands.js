@@ -19,6 +19,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     checkExpiredBlockedIPs: false,
     checkExpiredApproximateGuildCountFetchedBots: false,
     updateBotStats: false,
+    createNewDashboardData: false,
     listenEvents: false,
     listenCrons: false
   },

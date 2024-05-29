@@ -7,9 +7,21 @@ const Bot = require('@/schemas/Bot');
 const BotReview = require('@/schemas/Bot/Review');
 const BotDeny = require('@/schemas/Bot/Deny');
 const ServerReview = require('@/schemas/Server/Review');
+const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
+const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
 const BlockedIp = require('@/schemas/BlockedIp');
 const bodyParser = require('body-parser');
 const { body, validationResult, matchedData } = require('express-validator');
+
+const validKeys = [
+  'stats',
+  'emojis',
+  'bots',
+  'reviews',
+  'blockedips',
+  'botdenies',
+  'timeouts'
+];
 
 module.exports = {
   post: [
@@ -18,9 +30,7 @@ module.exports = {
     checkAuthentication,
     body('keys')
       .optional()
-      .isArray({ min: 1, max: 5 }).withMessage('Keys must be an array with a minimum of 1 and a maximum of 6 items.')
-      .custom(keys => keys.every(key => ['stats', 'emojis', 'bots', 'reviews', 'blockedips', 'botdenies'].includes(key)))
-      .withMessage('Invalid key provided.'),
+      .custom(keys => keys.every(key => validKeys.includes(key))).withMessage('Invalid key provided.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
@@ -35,7 +45,9 @@ module.exports = {
         canDeleteReviews: config.permissions.canDeleteReviews.includes(request.user.id),
         canViewBlockedIps: config.permissions.canViewBlockedIps.includes(request.user.id),
         canDeleteBlockedIps: config.permissions.canDeleteBlockedIps.includes(request.user.id),
-        canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId))
+        canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canViewTimeouts: request.member && config.permissions.canViewTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId))
       };
 
       if (!permissions.canViewDashboard) return response.sendError('You do not have permission to view the dashboard.', 403);
@@ -139,6 +151,51 @@ module.exports = {
               avatar_url: reviewer.displayAvatarURL({ dynamic: true, size: 256 })
             } : botDeny.reviewer.id
           };
+        }));
+      }
+
+      if (keys?.includes('timeouts')) {
+        if (!permissions.canViewTimeouts && !permissions.canDeleteTimeouts) return response.sendError('You do not have permission to view or delete timeouts.', 403);
+
+        const botTimeouts = await BotTimeout.find().sort({ createdAt: -1 });
+        const serverTimeouts = await ServerTimeout.find().sort({ createdAt: -1 });
+        const concatenatedTimeouts = botTimeouts.concat(serverTimeouts);
+        const sortedTimeouts = concatenatedTimeouts.sort((a, b) => b.createdAt - a.createdAt);
+
+        responseData.timeouts = await Promise.all(sortedTimeouts.map(async timeout => {
+          const user = client.users.cache.get(timeout.user.id) || await client.users.fetch(timeout.user.id).catch(() => null);
+
+          if (timeout.bot) {
+            const bot = client.users.cache.get(timeout.bot.id) || await client.users.fetch(timeout.bot.id).catch(() => null);
+            return {
+              ...timeout.toJSON(),
+              user: user ? {
+                id: user.id,
+                username: user.username,
+                avatar_url: user.displayAvatarURL({ dynamic: true, size: 256 })
+              } : timeout.user.id,
+              bot: bot ? {
+                id: bot.id,
+                username: bot.username,
+                avatar_url: bot.displayAvatarURL({ dynamic: true, size: 256 })
+              } : timeout.bot.id
+            };
+          } else {
+            const server = client.guilds.cache.get(timeout.guild.id);
+            return {
+              ...timeout.toJSON(),
+              user: user ? {
+                id: user.id,
+                username: user.username,
+                avatar_url: user.displayAvatarURL({ dynamic: true, size: 256 })
+              } : timeout.user.id,
+              guild: server ? {
+                id: server.id,
+                name: server.name,
+                icon_url: server.iconURL({ dynamic: true, size: 256 })
+              } : timeout.guild.id
+            };
+          }
         }));
       }
 

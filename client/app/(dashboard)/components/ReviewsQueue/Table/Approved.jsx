@@ -84,7 +84,7 @@ export default function Approved({ data }) {
                   <td className='px-6 py-4'>
                     <Link 
                       className='transition-opacity hover:opacity-70'
-                      href={review.bot ? `/bots/${review.bot.id}` : `/servers/${review.server.id}`}
+                      href={review.bot ? `/bots/${review.bot?.id || review.bot}` : `/servers/${review.server?.id || review.server}`}
                     >
                       {review.bot?.id || review.server?.id}
                     </Link>
@@ -130,7 +130,7 @@ export default function Approved({ data }) {
                           'flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1',
                           loading && 'pointer-events-none opacity-70'
                         )}
-                        onClick={() => continueDeleteReview(review.bot ? review.bot.id : review.server.id, review._id, review.bot ? 'bot' : 'server')}
+                        onClick={() => continueDeleteReview(review.bot ? review.bot?.id || review.bot : review.server?.id || review.server, review._id, review.bot ? 'bot' : 'server')}
                       >
                         Delete <LuTrash2 />
                       </button>

@@ -15,10 +15,11 @@ import { motion } from 'framer-motion';
 import { RiRobot2Fill } from 'react-icons/ri';
 import { FaEye } from 'react-icons/fa';
 import { MdMyLocation } from 'react-icons/md';
-import { IoTime } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { useMedia } from 'react-use';
 import { useEffect } from 'react';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { FaUserTimes } from 'react-icons/fa';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -74,8 +75,14 @@ export default function Sidebar() {
         {
           id: 'botDenies',
           name: `Bot Denies${data?.botDenies?.length ? ` (${data.botDenies.length})` : ''}`,
-          icon: IoTime,
+          icon: FaUserTimes,
           disabled: data?.permissions?.canDeleteBotDenies === false
+        },
+        {
+          id: 'timeouts',
+          name: 'Timeouts',
+          icon: TbSquareRoundedChevronUp,
+          disabled: data?.permissions?.canViewTimeouts === false || data?.permissions?.canDeleteTimeouts === false
         }
       ]
     }

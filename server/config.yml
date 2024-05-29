@@ -65,6 +65,12 @@ permissions:
   canDeleteBotDeniesRoles:
     - '1206354879321210900'
     - '1206355082883371049'
+  canViewTimeoutsRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
+  canDeleteTimeoutsRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
 profilesMaxSocialsLength: 8
 packagesMaxEmojisLength: 9
 packagesMinEmojisLength: 4

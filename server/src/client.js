@@ -103,6 +103,7 @@ module.exports = class Client {
       if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
       if (options.startup.checkExpiredApproximateGuildCountFetchedBots) this.checkExpiredApproximateGuildCountFetchedBots();
       if (options.startup.updateBotStats) this.updateBotStats();
+      if (options.startup.createNewDashboardData) this.createNewDashboardData();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', () => {
@@ -117,6 +118,7 @@ module.exports = class Client {
         new CronJob('0 0 * * *', () => {
           this.checkVoteReminderMetadatas();
           this.updateBotStats();
+          this.createNewDashboardData();
         }, null, true, 'Europe/Istanbul');
       }
     });
