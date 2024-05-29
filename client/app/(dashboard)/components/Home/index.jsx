@@ -11,10 +11,12 @@ import { RiRobot2Fill } from 'react-icons/ri';
 import { MdEmojiEmotions } from 'react-icons/md';
 import GraphBlock from '@/app/(dashboard)/components/Home/Graph/Block';
 import { FaUsers } from 'react-icons/fa';
+import { useMedia } from 'react-use';
 
 export default function Home() {
   const data = useDashboardStore(state => state.data);
   const loading = useDashboardStore(state => state.loading);
+  const tooltipSide = useMedia('(max-width: 640px)', false) ? 'bottom' : 'right';
 
   function StatsBlock({ icon, label, tooltip, current = 0, previous = 0 }) {
     const isIncreased = current > previous;
@@ -45,7 +47,7 @@ export default function Home() {
           
           {!loading && (
             <Tooltip
-              side='right'
+              side={tooltipSide}
               content={`${isIncreased ? 'Increased' : isDecreased ? 'Decreased' : 'No change'} since yesterday`}
             >
               <div className={cn(
@@ -78,7 +80,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col my-8 gap-y-4">
-      <div className='grid grid-cols-4 mr-6 gap-x-6'>
+      <div className='grid grid-cols-1 gap-6 mr-6 sm:grid-cols-2 xl:grid-cols-4'>
         <StatsBlock
           icon={<TbBoxMultiple />}
           label='Servers'

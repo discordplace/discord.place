@@ -16,6 +16,9 @@ import { RiRobot2Fill } from 'react-icons/ri';
 import { FaEye } from 'react-icons/fa';
 import { MdMyLocation } from 'react-icons/md';
 import { IoTime } from 'react-icons/io5';
+import { IoChevronBackOutline } from 'react-icons/io5';
+import { useMedia } from 'react-use';
+import { useEffect } from 'react';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -43,7 +46,7 @@ export default function Sidebar() {
       ]
     },
     {
-      name: 'Queue\'s',
+      name: 'Queues',
       tabs: [
         {
           id: 'emojisQueue',
@@ -100,52 +103,126 @@ export default function Sidebar() {
     });
   }
 
-  return (
-    <div className='bg-secondary sticky left-0 top-0 h-[100dvh] z-[10] border-r border-r-[rgba(var(--bg-quaternary))] min-w-[300px] flex flex-col gap-y-8 p-6'>
-      <Link 
-        className='flex items-center transition-opacity gap-x-6 hover:opacity-70 w-max'
-        href='/'
-      >
-        <Image 
-          src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-          width={200} 
-          height={200} 
-          className='w-[48px] h-[48px]' 
-          alt='discord.placeLogo' 
-        />
+  const isCollapsed = useDashboardStore(state => state.isCollapsed);
+  const setIsCollapsed = useDashboardStore(state => state.setIsCollapsed);
+  const isMobile = useMedia('(max-width: 768px)', false);
 
-        <h1 className='text-lg font-semibold'>Dashboard</h1>
-      </Link>
+  useEffect(() => {
+    if (isMobile) setIsCollapsed(true);
+
+    // eslint-disable-next-line
+  }, [isMobile]);
+
+  return (
+    <div className={cn(
+      'bg-secondary sticky left-0 top-0 h-[100dvh] z-[10] border-r border-r-[rgba(var(--bg-quaternary))] min-w-[300px] flex flex-col gap-y-8 p-6',
+      isCollapsed && 'min-w-[60px] max-w-[120px]',
+      isMobile && isCollapsed && 'min-w-[0px] max-w-[0px] p-3',
+      isMobile && !isCollapsed && 'scrollbar-hide fixed'
+    )}>
+      <div  className={cn(
+        'flex items-center w-full',
+        isCollapsed ? 'justify-center' : 'justify-between'
+      )}>
+        <Link 
+          href='/'
+          className='relative flex items-center transition-opacity gap-x-6 hover:opacity-70'
+        >
+          <Image 
+            src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
+            width={200} 
+            height={200} 
+            className='w-[48px] h-[48px]' 
+            alt='discord.placeLogo' 
+          />
+
+          <h1 className={cn(
+            'text-lg font-semibold',
+            isCollapsed && 'hidden'
+          )}>Dashboard</h1>
+        </Link>
+
+        <div
+          className='absolute ml-auto -right-[1rem] cursor-pointer bg-secondary p-1.5 hover:bg-quaternary text-secondary hover:text-primary rounded-full border border-[rgba(var(--bg-quaternary))]'
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
+          <IoChevronBackOutline className={cn(
+            'transition-transform transform duration-200 ease-in-out',
+            isCollapsed && 'rotate-180'
+          )} />
+        </div>
+      </div>
 
       {blocks.map(block => (
-        <div className='flex flex-col gap-y-2' key={block.name}>
-          <h2 className='text-sm font-semibold select-none text-tertiary'>{block.name}</h2>
+        <div className={cn(
+          'flex flex-col gap-y-2',
+          isMobile && isCollapsed && 'hidden'
+        )} key={block.name}>
+          <h2 className={cn(
+            'text-sm font-semibold select-none text-tertiary',
+            isCollapsed && 'text-xs truncate'
+          )}>{block.name}</h2>
 
           {block.tabs.map(link => (
-            <div
-              key={link.name}
-              className={cn(
-                'relative transition-all cursor-pointer flex items-center px-3 py-2 rounded-lg hover:bg-tertiary font-medium gap-x-2 select-noe text-secondary hover:text-primary',
-                activeTab === link.id && 'bg-quaternary text-primary pointer-events-none',
-                (loading || link.disabled) && 'opacity-50 pointer-events-none'
-              )}
-              onClick={() => setActiveTab(link.id)}
-            >
-              <link.icon size={20} />
-              {link.name}
+            isCollapsed ? (
+              <Tooltip
+                content={link.name}
+                key={link.name}
+                side='right'
+              >
+                <div
+                  className={cn(
+                    'relative transition-all cursor-pointer flex items-center justify-center px-3 py-2 rounded-lg hover:bg-tertiary font-medium gap-x-2 select-noe text-secondary hover:text-primary',
+                    activeTab === link.id && 'bg-quaternary text-primary pointer-events-none',
+                    (loading || link.disabled) && 'opacity-50 pointer-events-none'
+                  )}
+                  onClick={() => {
+                    setActiveTab(link.id);
+                    if (isMobile) setIsCollapsed(true);
+                  }}
+                >
+                  <link.icon size={20} />
 
-              {activeTab === link.id && (
-                <motion.div
-                  layoutId='activeTabIndicator'
-                  className='absolute -left-6 bg-black dark:bg-white w-[3px] h-[50%] rounded-lg'
-                />
-              )}
-            </div>
+                  {activeTab === link.id && (
+                    <motion.div
+                      layoutId='activeTabIndicator'
+                      className='absolute -left-6 bg-black dark:bg-white w-[3px] h-[50%] rounded-lg'
+                    />
+                  )}
+                </div>
+              </Tooltip>
+            ) : (
+              <div
+                key={link.name}
+                className={cn(
+                  'relative transition-all cursor-pointer flex items-center px-3 py-2 rounded-lg hover:bg-tertiary font-medium gap-x-2 select-noe text-secondary hover:text-primary',
+                  activeTab === link.id && 'bg-quaternary text-primary pointer-events-none',
+                  (loading || link.disabled) && 'opacity-50 pointer-events-none'
+                )}
+                onClick={() => {
+                  setActiveTab(link.id);
+                  if (isMobile) setIsCollapsed(true);
+                }}
+              >
+                <link.icon size={20} />
+                {link.name}
+
+                {activeTab === link.id && (
+                  <motion.div
+                    layoutId='activeTabIndicator'
+                    className='absolute -left-6 bg-black dark:bg-white w-[3px] h-[50%] rounded-lg'
+                  />
+                )}
+              </div>
+            )
           ))}
         </div>
       ))}
 
-      <div className='flex justify-between pt-6 mt-auto mb-6 border-t border-t-primary'>
+      <div className={cn(
+        'flex justify-between pt-6 mt-auto mb-6 border-t border-t-primary',
+        isMobile && isCollapsed && 'hidden'
+      )}>
         <div className='flex items-center gap-x-4'>          
           {loggedIn && (
             <>
@@ -157,7 +234,10 @@ export default function Sidebar() {
                 alt={`${user.username}'s avatar`}
               />
 
-              <div className='flex flex-col select-none'>
+              <div className={cn(
+                'flex flex-col select-none',
+                isCollapsed && 'hidden'
+              )}>
                 <h2 className='text-lg font-semibold'>
                   {user.global_name}
                 </h2>

@@ -17,7 +17,9 @@ export const useDashboardStore = create(set => ({
         toast.error(error);
         set({ loading: false });
       });
-  }
+  },
+  isCollapsed: false,
+  setIsCollapsed: isCollapsed => set({ isCollapsed })
 }));
 
 export default useDashboardStore;

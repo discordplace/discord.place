@@ -15,6 +15,8 @@ import { CgFormatSlash } from 'react-icons/cg';
 import useThemeStore from '@/stores/theme';
 import { motion, AnimatePresence } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
+import cn from '@/lib/cn';
+import { useMedia } from 'react-use';
 
 export default function Page() {
   const user = useAuthStore(state => state.user);
@@ -102,11 +104,18 @@ export default function Page() {
     return () => document.body.style.overflow = 'auto';
   }, [loading]);
 
+  const isCollapsed = useDashboardStore(state => state.isCollapsed);
+  const isMobile = useMedia('(max-width: 768px)', false);
+
   return (
     <div className='relative flex'>
       <Sidebar />
       
-      <div className='relative z-[5] flex flex-1 w-full min-h-[100dvh] max-w-[calc(100%_-_300px)]'>
+      <div className={cn(
+        'relative z-[5] flex flex-1 w-full min-h-[100dvh] max-w-[calc(100%_-_300px)]',
+        isCollapsed && 'max-w-[90%]',
+        isMobile && !isCollapsed && 'max-w-full'
+      )}>
         <div className='flex-1 w-full'>
           <div className='flex items-center mt-6 ml-6 text-sm font-medium'>
             <span className='text-tertiary'>
@@ -119,6 +128,17 @@ export default function Page() {
               {tabs.find(tab => tab.id === activeTab)?.name}
             </span>
           </div>
+
+          <AnimatePresence>
+            {isMobile && !isCollapsed && (
+              <motion.div
+                className='absolute top-0 left-0 w-full h-full dark:bg-black/70 bg-white/70 z-[1]'
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              />
+            )}
+          </AnimatePresence>
 
           <div className='mt-6 ml-6'>
             {tabs.find(tab => tab.id === activeTab)?.component}

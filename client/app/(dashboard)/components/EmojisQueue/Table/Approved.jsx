@@ -109,7 +109,7 @@ export default function Approved({ data }) {
                   <td className='px-6 py-4'>
                     <div className='flex gap-x-2'>
                       <Link
-                        href={`/emojis/${emoji.id}`}
+                        href={`/emojis/${emoji.emoji_ids ? `packages/${emoji.id}` : emoji.id}`}
                         className='flex items-center px-4 py-1 text-sm font-semibold rounded-lg text-primary w-max gap-x-1 bg-quaternary hover:bg-tertiary'
                       >
                         View

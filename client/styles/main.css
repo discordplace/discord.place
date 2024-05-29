@@ -89,3 +89,14 @@ html.dark {
   background-color: rgba(var(--bg-secondary), 0.85) !important;
   backdrop-filter: blur(5px) !important;
 }
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
