@@ -53,11 +53,7 @@ module.exports = {
 
       await newProfile.save();
 
-      const lastData = await DashboardData.findOne().sort({ createdAt: -1 });
-      if (lastData) {
-        lastData.profiles += 1;
-        await lastData.save();
-      }
+      await DashboardData.findOneAndUpdate({}, { $inc: { profiles: 1 } }, { sort: { createdAt: -1 } });
 
       return response.status(204).end();
     }

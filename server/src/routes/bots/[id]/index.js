@@ -189,11 +189,7 @@ module.exports = {
 
       await bot.save();
 
-      const lastData = await DashboardData.findOne().sort({ createdAt: -1 });
-      if (lastData) {
-        lastData.bots += 1;
-        await lastData.save();
-      }
+      await DashboardData.findOneAndUpdate({}, { $inc: { bots: 1 } }, { sort: { createdAt: -1 } });
 
       await Deny.deleteMany({ 'bot.id': user.id });
 

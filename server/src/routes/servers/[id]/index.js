@@ -180,11 +180,7 @@ module.exports = {
 
       await newServer.save();
 
-      const lastData = await DashboardData.findOne().sort({ createdAt: -1 });
-      if (lastData) {
-        lastData.servers += 1;
-        await lastData.save();
-      }
+      await DashboardData.findOneAndUpdate({}, { $inc: { servers: 1 } }, { sort: { createdAt: -1 } });
 
       if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 

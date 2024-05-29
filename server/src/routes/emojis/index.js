@@ -107,11 +107,7 @@ module.exports = {
           }
         })
           .then(async () => {
-            const lastData = await DashboardData.findOne().sort({ createdAt: -1 });
-            if (lastData) {
-              lastData.emojis += 1;
-              await lastData.save();
-            }
+            await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
 
             const embeds = [
               new Discord.EmbedBuilder()
@@ -186,11 +182,7 @@ module.exports = {
 
         S3.send(command)
           .then(async () => {
-            const lastData = await DashboardData.findOne().sort({ createdAt: -1 });
-            if (lastData) {
-              lastData.emojis += 1;
-              await lastData.save();
-            }
+            await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
 
             const embeds = [
               new Discord.EmbedBuilder()
