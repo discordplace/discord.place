@@ -29,9 +29,9 @@ export default function WaitingApproval({ data }) {
 
     toast.promise(approveBot(id), {
       loading: 'Approving bot..',
-      success: async () => {
-        await fetchData();
-        setLoading(false);
+      success: () => {
+        fetchData('bots')
+          .then(() => setLoading(false));
 
         return 'Bot approved successfully!';
       },
@@ -47,9 +47,9 @@ export default function WaitingApproval({ data }) {
 
     toast.promise(denyBot(id, reason), {
       loading: 'Denying bot..',
-      success: async () => {
-        await fetchData();
-        setLoading(false);
+      success: () => {
+        fetchData('bots')
+          .then(() => setLoading(false));
 
         return 'Bot denied successfully!';
       },
@@ -83,6 +83,7 @@ export default function WaitingApproval({ data }) {
                 <th scope='col' className='px-6 py-4 font-semibold'>Owner</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Description</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Categories</th>
+                <th scope='col' className='px-6 py-4 font-semibold'>Date</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>
                   <div className='flex gap-x-1.5 items-center'>
                     Actions
@@ -139,6 +140,10 @@ export default function WaitingApproval({ data }) {
 
                   <td className='px-6 py-4'>
                     {bot.categories.join(', ')}
+                  </td>
+
+                  <td className='px-6 py-4'>
+                    {new Date(bot.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
                   </td>
 
                   <td className='px-6 py-4'>

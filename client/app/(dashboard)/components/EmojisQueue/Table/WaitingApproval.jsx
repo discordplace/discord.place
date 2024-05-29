@@ -29,9 +29,9 @@ export default function WaitingApproval({ data }) {
 
     toast.promise(approveEmoji(id, isPack), {
       loading: 'Approving emoji..',
-      success: async () => {
-        await fetchData();
-        setLoading(false);
+      success: () => {
+        fetchData('emojis')
+          .then(() => setLoading(false));
 
         return 'Emoji approved successfully!';
       },
@@ -47,9 +47,9 @@ export default function WaitingApproval({ data }) {
 
     toast.promise(denyEmoji(id, isPack, reason), {
       loading: 'Denying emoji..',
-      success: async () => {
-        await fetchData();
-        setLoading(false);
+      success: () => {
+        fetchData('emojis')
+          .then(() => setLoading(false));
 
         return 'Emoji denied successfully!';
       },
@@ -83,6 +83,7 @@ export default function WaitingApproval({ data }) {
                 <th scope='col' className='px-6 py-4 font-semibold'>Image(s)</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Categories</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Publisher</th>
+                <th scope='col' className='px-6 py-4 font-semibold'>Date</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>
                   <div className='flex gap-x-1.5 items-center'>
                     Actions
@@ -145,6 +146,10 @@ export default function WaitingApproval({ data }) {
                         {emoji.user.username}
                       </span>
                     </Link>
+                  </td>
+
+                  <td className='px-6 py-4'>
+                    {new Date(emoji.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
                   </td>
 
                   <td className='px-6 py-4'>

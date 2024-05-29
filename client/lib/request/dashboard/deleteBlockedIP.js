@@ -1,14 +1,14 @@
 import config from '@/config';
 import axios from 'axios';
 
-export default function getData(keys) {
+export default function deleteBlockedIP(ip) {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/dashboard`;
+    const url = `${config.api.url}/blocked-ips/${ip}`;
 
     try {
-      const response = await axios.post(url, { keys }, { withCredentials: true });
-      resolve(response.data);
+      await axios.delete(url, { withCredentials: true });
+      resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
     }

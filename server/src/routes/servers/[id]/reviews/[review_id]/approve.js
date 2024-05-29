@@ -8,7 +8,8 @@ module.exports = {
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
     checkAuthentication,
     param('id'),
-    param('review_id'),
+    param('review_id')
+      .isMongoId().withMessage('Invalid review ID'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

@@ -3,7 +3,7 @@
 import useThemeStore from '@/stores/theme';
 import dynamic from 'next/dynamic';
 
-export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltipLabel, extraGraphOptions = {} }) {
+export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltipLabel, color, extraGraphOptions = {} }) {
   const DynamicApexCharts = dynamic(() => import('react-apexcharts'), {
     ssr: false
   });
@@ -34,10 +34,10 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
         },
         grid: {
           show: true,
-          borderColor: theme === 'dark' ? '#333' : '#6c757d'
+          borderColor: theme === 'dark' ? '#333' : '#c5c5c5'
         },
         fill: {
-          colors: ['#9c84ef'],
+          colors: [color],
           gradient: {
             enabled: true,
             opacityFrom: 0.6,
@@ -50,8 +50,8 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
           hover: {
             size: 6
           },
-          colors: ['#9c84ef'],
-          strokeColors: ['#574a83'],
+          colors: [theme === 'dark' ? '#333' : '#c5c5c5'],
+          strokeColors: [color],
           strokeWidth: 4,
           shape: 'circle'
         },
@@ -60,7 +60,7 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
         },
         stroke: {
           curve: 'smooth', 
-          colors: ['#9c84ef'],
+          colors: [color],
           width: 4
         },
         tooltip: {
@@ -110,7 +110,7 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
           },
           axisBorder: {
             show: true,
-            color: theme === 'dark' ? '#333' : '#6c757d'
+            color: theme === 'dark' ? '#333' : '#c5c5c5'
           },
           axisTicks: {
             show: true,

@@ -3,7 +3,7 @@ import Tooltip from '@/app/components/Tooltip';
 import cn from '@/lib/cn';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 
-export default function GraphBlock({ icon, label, description, data, tooltipFormatter, tooltipIcon, tooltipLabel }) {
+export default function GraphBlock({ icon, label, description, data, tooltipFormatter, tooltipIcon, tooltipLabel, color }) {
   const current = data?.[0]?.value || 0;
   const previous = data?.[1]?.value || 0;
   const isIncreased = current > previous;
@@ -46,6 +46,7 @@ export default function GraphBlock({ icon, label, description, data, tooltipForm
           tooltipFormatter={tooltipFormatter}
           tooltipIcon={tooltipIcon}
           tooltipLabel={tooltipLabel}
+          color={color}
         />
       </div>
     </div>

@@ -38,6 +38,7 @@ export default function Approved({ data }) {
                 <th scope='col' className='px-6 py-4 font-semibold'>Categories</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Publisher</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Downloads</th>
+                <th scope='col' className='px-6 py-4 font-semibold'>Date</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Actions</th>
               </tr>
             </thead>
@@ -99,6 +100,10 @@ export default function Approved({ data }) {
 
                   <td className='px-6 py-4'>
                     {emoji.downloads}
+                  </td>
+
+                  <td className='px-6 py-4'>
+                    {new Date(emoji.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
                   </td>
 
                   <td className='px-6 py-4'>

@@ -14,6 +14,8 @@ import Tooltip from '@/app/components/Tooltip';
 import { motion } from 'framer-motion';
 import { RiRobot2Fill } from 'react-icons/ri';
 import { FaEye } from 'react-icons/fa';
+import { MdMyLocation } from 'react-icons/md';
+import { IoTime } from 'react-icons/io5';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -31,6 +33,12 @@ export default function Sidebar() {
           id: 'home',
           name: 'Home',
           icon: MdHome
+        },
+        {
+          id: 'blockedIPs',
+          name: `Blocked IPs${data?.blockedIps?.length ? ` (${data.blockedIps.length})` : ''}`,
+          icon: MdMyLocation,
+          disabled: data?.permissions?.canViewBlockedIPs === false || data?.permissions?.canDeleteBlockedIPs === false
         }
       ]
     },
@@ -40,17 +48,31 @@ export default function Sidebar() {
         {
           id: 'emojisQueue',
           name: `Emojis Queue${unapprovedEmojis ? ` (${unapprovedEmojis})` : ''}`,
-          icon: MdEmojiEmotions
+          icon: MdEmojiEmotions,
+          disabled: data?.permissions?.canApproveEmojis === false
         },
         {
           id: 'botsQueue',
           name: `Bots Queue${unapprovedBots ? ` (${unapprovedBots})` : ''}`,
-          icon: RiRobot2Fill
+          icon: RiRobot2Fill,
+          disabled: data?.permissions?.canApproveBots === false
         },
         {
           id: 'reviewsQueue',
           name: `Reviews Queue${unapprovedReviews ? ` (${unapprovedReviews})` : ''}`,
-          icon: FaEye
+          icon: FaEye,
+          disabled: data?.permissions?.canApproveReviews === false && data?.permissions?.canDeleteReviews === false
+        }
+      ]
+    },
+    {
+      name: 'Extra',
+      tabs: [
+        {
+          id: 'botDenies',
+          name: `Bot Denies${data?.botDenies?.length ? ` (${data.botDenies.length})` : ''}`,
+          icon: IoTime,
+          disabled: data?.permissions?.canDeleteBotDenies === false
         }
       ]
     }
@@ -58,6 +80,7 @@ export default function Sidebar() {
 
   const activeTab = useDashboardStore(state => state.activeTab);
   const setActiveTab = useDashboardStore(state => state.setActiveTab);
+  const loading = useDashboardStore(state => state.loading);
 
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
@@ -102,8 +125,9 @@ export default function Sidebar() {
             <div
               key={link.name}
               className={cn(
-                'relative transition-colors cursor-pointer flex items-center px-3 py-2 rounded-lg hover:bg-tertiary font-medium gap-x-2 select-noe text-secondary hover:text-primary',
-                activeTab === link.id && 'bg-quaternary text-primary pointer-events-none'
+                'relative transition-all cursor-pointer flex items-center px-3 py-2 rounded-lg hover:bg-tertiary font-medium gap-x-2 select-noe text-secondary hover:text-primary',
+                activeTab === link.id && 'bg-quaternary text-primary pointer-events-none',
+                (loading || link.disabled) && 'opacity-50 pointer-events-none'
               )}
               onClick={() => setActiveTab(link.id)}
             >

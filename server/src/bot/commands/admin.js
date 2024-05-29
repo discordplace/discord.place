@@ -389,7 +389,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by ${interaction.user}.\nReason: **${reason || 'No reason provided.'}**` }).catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by ${interaction.user}.\nReason: **${config.botsDenyReasons[reason].description}**` }).catch(() => null);
         }
 
         const embeds = [

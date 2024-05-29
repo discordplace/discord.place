@@ -11,7 +11,8 @@ module.exports = {
     checkAuthentication,
     bodyParser.json(),
     param('id'),
-    param('review_id'),
+    param('review_id')
+      .isMongoId().withMessage('Invalid review ID.'),
     body('reason')
       .optional()
       .isString().withMessage('Reason must be a string.')

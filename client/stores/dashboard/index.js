@@ -8,10 +8,10 @@ export const useDashboardStore = create(set => ({
   data: {},
   setData: data => set({ data }),
   loading: true,
-  fetchData: async () => {
+  fetchData: async keys => {
     set({ loading: true });
     
-    fetchData()
+    fetchData(keys)
       .then(data => set({ data, loading: false }))
       .catch(error => {
         toast.error(error);
