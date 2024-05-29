@@ -18,6 +18,15 @@ export default function GraphBlock({ icon, label, description, data, tooltipForm
         <h2 className='flex items-center text-lg font-semibold gap-x-2 text-primary'>
           {icon}
           {label}
+        </h2>
+
+        <p className='text-sm text-tertiary'>
+          {description}
+        </p>
+
+        <h2 className='flex items-center mt-4 text-3xl font-bold text-primary gap-x-2'>
+          {current.toLocaleString('en-US')}
+          
           <Tooltip
             side='right'
             content={`${isIncreased ? 'Increased' : isDecreased ? 'Decreased' : 'No change'} since yesterday`}
@@ -36,9 +45,7 @@ export default function GraphBlock({ icon, label, description, data, tooltipForm
           </Tooltip>
         </h2>
 
-        <p className='text-sm text-tertiary'>
-          {description}
-        </p>
+        <div className='w-full h-[1px] bg-quaternary my-4' />
 
         <Graph
           id={`graph-${label}`}
