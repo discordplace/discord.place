@@ -205,10 +205,10 @@ export default function Timeouts() {
         {showPagination && (
           <Pagination
             page={page}
-            totalPages={Math.ceil(data?.length / 10)}
+            totalPages={Math.ceil(data?.timeouts?.length / 10)}
             setPage={setPage}
             loading={false}
-            total={data?.length}
+            total={data?.timeouts?.length}
             limit={10}
             disableAnimation
           />
