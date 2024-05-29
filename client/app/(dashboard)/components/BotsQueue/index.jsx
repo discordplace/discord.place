@@ -44,8 +44,8 @@ export default function BotsQueue() {
           <div
             key={tab.label}
             className={cn(
-              'font-medium relative text-sm cursor-pointer text-tertiary transition-colors hover:text-primary',
-              currentTab === tab.value && 'text-primary pointer-events-none'
+              'font-medium relative text-sm cursor-pointer text-tertiary px-3 py-1.5 transition-colors hover:text-primary hover:bg-tertiary rounded-lg',
+              currentTab === tab.value && 'text-primary pointer-events-none bg-quaternary'
             )}
             onClick={() => setCurrentTab(tab.value)}
           >
@@ -54,7 +54,7 @@ export default function BotsQueue() {
             {currentTab === tab.value && (
               <motion.div
                 layoutId='botsQueueCurrentTabIndicator'
-                className='absolute w-full h-[1px] bg-black rounded-lg dark:bg-white -bottom-[13px]'
+                className='absolute w-full left-0 h-[1px] bg-black rounded-lg dark:bg-white -bottom-[13px]'
               />
             )}
           </div>
