@@ -283,7 +283,8 @@ module.exports = class Client {
       profiles: lastData?.profiles || 0,
       bots: lastData?.bots || 0,
       emojis: lastData?.emojis || 0,
-      users: lastData?.users || 0
+      users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
+      guilds: client.guilds.cache.size
     }).save();
 
     logger.send('Created new dashboard data.');
