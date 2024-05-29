@@ -285,13 +285,14 @@ module.exports = class Client {
     const totalServers = await Server.countDocuments();
     const totalProfiles = await Profile.countDocuments();
     const totalBots = await Bot.countDocuments();
-    const totalEmojis = await Emoji.countDocuments() + await EmojiPack.countDocuments();    
+    const totalEmojis = await Emoji.countDocuments();
+    const totalEmojiPacks = (await EmojiPack.find()).reduce((a, b) => a + b.emojis_ids.length, 0);
     
     await new DashboardData({
       servers: totalServers,
       profiles: totalProfiles,
       bots: totalBots,
-      emojis: totalEmojis,
+      emojis: totalEmojis + totalEmojiPacks,
       users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
       guilds: client.guilds.cache.size
     }).save();
