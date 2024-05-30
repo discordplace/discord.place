@@ -48,8 +48,8 @@ export default function ModalProvider({ children }) {
                           onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}
                           className={cn(
                             'w-full rounded-full justify-center py-2 px-4 flex select-none items-center gap-x-1 font-medium outline-none',
-                            button.variant === 'solid' && button.color === 'purple' && 'bg-purple-500 hover:bg-purple-600',
-                            button.variant === 'solid' && button.color === 'primary' && 'font-semibold dark:bg-white dark:text-black dark:hover:bg-white/70 text-white bg-black hover:bg-black/70',
+                            button.variant === 'solid' && 'bg-purple-500 hover:bg-purple-600',
+                            button.variant === 'solid' && 'font-semibold dark:bg-white dark:text-black dark:hover:bg-white/70 text-white bg-black hover:bg-black/70',
                             button.variant === 'ghost' && 'text-secondary hover:bg-quaternary hover:text-primary',
                             button.variant === 'outlined' && 'border border-[rgba(var(--bg-quaternary))] text-secondary hover:text-primary',
                             button.disabled && 'opacity-50 pointer-events-none'
