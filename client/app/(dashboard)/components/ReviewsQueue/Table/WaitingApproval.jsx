@@ -9,8 +9,6 @@ import denyBotReview from '@/lib/request/bots/denyReview';
 import deleteBotReview from '@/lib/request/bots/deleteReview';
 import { toast } from 'sonner';
 import useDashboardStore from '@/stores/dashboard';
-import { TbLoader } from 'react-icons/tb';
-import cn from '@/lib/cn';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import Link from 'next/link';
@@ -19,6 +17,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { FaPencil } from 'react-icons/fa6';
 import { LuTrash2 } from 'react-icons/lu';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function WaitingApproval({ data }) {
   const [page, setPage] = useState(1);
@@ -26,11 +26,19 @@ export default function WaitingApproval({ data }) {
   
   const showPagination = data?.length > 10;
 
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [denyReason, setDenyReason] = useState('');
   const fetchData = useDashboardStore(state => state.fetchData);
 
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal
+  })));
+
   function continueApproveReview(id, reviewId, type) {
+    disableButton('approve-review', 'confirm');
     setLoading(true);
 
     const approveReview = type === 'server' ? approveServerReview : approveBotReview;
@@ -38,13 +46,16 @@ export default function WaitingApproval({ data }) {
     toast.promise(approveReview(id, reviewId), {
       loading: 'Approving review..',
       success: () => {
+        closeModal('approve-review');
         fetchData('reviews')
           .then(() => setLoading(false));
 
         return 'Review approved successfully!';
       },
       error: () => {
+        enableButton('approve-review', 'confirm');
         setLoading(false);
+
         return `Failed to approve review ${reviewId}.`;
       }
     });
@@ -71,6 +82,7 @@ export default function WaitingApproval({ data }) {
   }
 
   function continueDeleteReview(id, reviewId, type) {
+    disableButton('delete-review', 'confirm');
     setLoading(true);
   
     const deleteReview = type === 'server' ? deleteServerReview : deleteBotReview;
@@ -78,13 +90,16 @@ export default function WaitingApproval({ data }) {
     toast.promise(deleteReview(id, reviewId), {
       loading: 'Deleting review..',
       success: () => {
+        closeModal('delete-review');
         fetchData('reviews')
           .then(() => setLoading(false));
 
         return 'Review deleted successfully!';
       },
       error: () => {
+        enableButton('delete-review', 'confirm');
         setLoading(false);
+
         return `Failed to delete review ${reviewId}.`;
       }
     });
@@ -116,12 +131,7 @@ export default function WaitingApproval({ data }) {
                 <th scope='col' className='px-6 py-4 font-semibold'>Rating</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Review</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Date</th>
-                <th scope='col' className='px-6 py-4 font-semibold'>
-                  <div className='flex gap-x-1.5 items-center'>
-                    Actions
-                    {loading && <TbLoader className='animate-spin' />}
-                  </div>
-                </th>
+                <th scope='col' className='px-6 py-4 font-semibold'>Actions</th>
               </tr>
             </thead>
 
@@ -173,23 +183,39 @@ export default function WaitingApproval({ data }) {
                   <td className='px-6 py-4'>
                     <div className='flex gap-x-2'>
                       <button
-                        className={cn(
-                          'flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1',
-                          loading && 'pointer-events-none opacity-70'
-                        )}
-                        onClick={() => continueApproveReview(review.bot ? review.bot.id : review.server.id, review._id, review.bot ? 'bot' : 'server')}
+                        className='flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'
+                        onClick={() => 
+                          openModal('approve-review', {
+                            title: 'Approve Review',
+                            description: 'Are you sure you want to approve this review?',
+                            content: (
+                              <p className='text-sm text-tertiary'>
+                                Please note that approving this review will make it public and visible to everyone.
+                              </p>
+                            ),
+                            buttons: [
+                              {
+                                id: 'cancel',
+                                label: 'Cancel',
+                                variant: 'ghost',
+                                actionType: 'close'
+                              },
+                              {
+                                id: 'confirm',
+                                label: 'Confirm',
+                                variant: 'solid',
+                                action: () => continueApproveReview(review.bot ? review.bot.id : review.server.id, review._id, review.bot ? 'bot' : 'server')
+                              }
+                            ]
+                          })
+                        }
                       >
                         Approve <IoCheckmarkCircle />
                       </button>
 
-                      <Dialog.Root
-                        onOpenChange={open => !open && setDenyReason('')}
-                      >
+                      <Dialog.Root onOpenChange={open => !open && setDenyReason('')}>
                         <Dialog.Trigger asChild>
-                          <button className={cn(
-                            'outline-none flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1',
-                            loading && 'pointer-events-none opacity-70'
-                          )}>
+                          <button className='outline-none flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'>
                             Deny <IoMdCloseCircle />
                           </button>
                         </Dialog.Trigger>
@@ -208,6 +234,7 @@ export default function WaitingApproval({ data }) {
                                   <IoMdCloseCircle className='cursor-pointer hover:opacity-70' />
                                 </Dialog.Close>
                               </div>
+
                               <Dialog.Description className='text-sm text-tertiary'>
                                 Please provide a reason for denying this review.
                               </Dialog.Description>
@@ -220,21 +247,14 @@ export default function WaitingApproval({ data }) {
 
                               <div className='flex mt-2 gap-x-2'>
                                 <button
-                                  className={cn(
-                                    'flex justify-center items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-full gap-x-1',
-                                    loading && 'pointer-events-none opacity-70'
-                                  )}
+                                  className='flex justify-center items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-full gap-x-1'
                                   onClick={() => continueDenyReview(review.bot ? review.bot.id : review.server.id, review._id, review.bot ? 'bot' : 'server')}
                                 >
                                   Confirm
-                                  {loading && <TbLoader className='animate-spin' />}
                                 </button>
 
                                 <Dialog.Close asChild>
-                                  <button className={cn(
-                                    'flex justify-center items-center px-4 py-1.5 text-sm font-semibold hover:bg-tertiary rounded-lg text-primary w-full gap-x-1',
-                                    loading && 'pointer-events-none opacity-70'
-                                  )}>
+                                  <button className='flex justify-center items-center px-4 py-1.5 text-sm font-semibold hover:bg-tertiary rounded-lg text-primary w-full gap-x-1'>
                                     Cancel
                                   </button>
                                 </Dialog.Close>
@@ -246,11 +266,32 @@ export default function WaitingApproval({ data }) {
 
                       {dashboardData?.permissions?.canDeleteReviews && (
                         <button
-                          className={cn(
-                            'flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1',
-                            loading && 'pointer-events-none opacity-70'
-                          )}
-                          onClick={() => continueDeleteReview(review.bot ? review.bot?.id || review.bot : review.server?.id || review.server, review._id, review.bot ? 'bot' : 'server')}
+                          className='flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'
+                          onClick={() =>
+                            openModal('delete-review', {
+                              title: 'Delete Review',
+                              description: 'Are you sure you want to delete this review?',
+                              content: (
+                                <p className='text-sm text-tertiary'>
+                                  Please note that deleting this review will remove it from the queue and it will not be visible to anyone.
+                                </p>
+                              ),
+                              buttons: [
+                                {
+                                  id: 'cancel',
+                                  label: 'Cancel',
+                                  variant: 'ghost',
+                                  actionType: 'close'
+                                },
+                                {
+                                  id: 'confirm',
+                                  label: 'Confirm',
+                                  variant: 'solid',
+                                  action: () => continueDeleteReview(review.bot ? review.bot.id : review.server.id, review._id, review.bot ? 'bot' : 'server')
+                                }
+                              ]
+                            })
+                          }
                         >
                           Delete <LuTrash2 />
                         </button>
