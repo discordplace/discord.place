@@ -17,27 +17,39 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
 import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
-import { TbLoader } from 'react-icons/tb';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Content({ emoji }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
   
-  const [showDeleteConsent, setShowDeleteConsent] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const router = useRouter();
 
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal
+  })));
+
   function continueDeleteEmoji() {
+    disableButton('delete-emoji', 'confirm');
     setLoading(true);
 
     toast.promise(deleteEmoji(emoji.id), {
       loading: `${emoji.name} is deleting..`,
       success: () => {
+        closeModal('delete-emoji');
         setTimeout(() => router.push('/'), 3000);
+        
         return `${emoji.name} successfully deleted. You will be redirected to home page after 3 seconds.`;
       },
       error: error => {
+        enableButton('delete-emoji', 'confirm');
         setLoading(false);
+
         return error;
       }
     });
@@ -193,36 +205,41 @@ export default function Content({ emoji }) {
               Danger Zone
             </h1>
             <p className='text-sm font-medium text-tertiary'>
-              {showDeleteConsent ? (
-                <>
-                  Are you sure you really want to delete this emoji?
-                </>
-              ) : (
-                <>
                   You can delete the emoji using the button below, but be careful not to delete it by mistake :)
-                </>
-              )}
             </p>
             
             <div className='flex mt-1 gap-x-2'>
-              {showDeleteConsent ? (
-                <>
-                  <button className='flex items-center gap-x-1.5 px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={continueDeleteEmoji} disabled={loading}>
-                    {loading && (
-                      <TbLoader className='animate-spin' />
-                    )}
-                    Confirm
-                  </button>
-
-                  <button className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => setShowDeleteConsent(false)} disabled={loading}>
-                    Cancel
-                  </button>
-                </>
-              ) : (
-                <button className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70' onClick={() => setShowDeleteConsent(true)}>
-                  Delete
-                </button>
-              )}
+              <button 
+                className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
+                onClick={() =>
+                  openModal('delete-emoji', {
+                    title: 'Delete Emoji',
+                    description: `Are you sure you want to delete ${emoji.name}?`,
+                    content: (
+                      <p className='text-sm text-tertiary'>
+                        Please note that deleting the emoji will remove all the downloads that the emoji has received.<br/><br/>
+                        This action cannot be undone.
+                      </p>
+                    ),
+                    buttons: [
+                      {
+                        id: 'cancel',
+                        label: 'Cancel',
+                        variant: 'ghost',
+                        actionType: 'close'
+                      },
+                      {
+                        id: 'confirm',
+                        label: 'Confirm',
+                        variant: 'solid',
+                        action: continueDeleteEmoji
+                      }
+                    ]
+                  })
+                }
+              >
+                Delete
+              </button>
             </div>
           </div>
         )}

@@ -13,6 +13,7 @@ import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
 import 'react-medium-image-zoom/dist/styles.css';
 import { Suspense } from 'react';
+import ModalProvider from '@/app/components/Providers/Modal';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -75,19 +76,21 @@ export default function RootLayout({ children }) {
           <ThemeProvider>
             <AuthProvider>
               <VaulWrapperProvider>
-                <Suspense fallback={<></>}>
-                  <Header />
-                </Suspense>
+                <ModalProvider>
+                  <Suspense fallback={<></>}>
+                    <Header />
+                  </Suspense>
 
-                <ErrorBoundary>
-                  {children}
-                </ErrorBoundary>
+                  <ErrorBoundary>
+                    {children}
+                  </ErrorBoundary>
             
-                <Suspense fallback={<></>}>
-                  <Footer />
-                </Suspense>
+                  <Suspense fallback={<></>}>
+                    <Footer />
+                  </Suspense>
                 
-                <CookieBanner />
+                  <CookieBanner />
+                </ModalProvider>
               </VaulWrapperProvider>
             </AuthProvider>
           </ThemeProvider>

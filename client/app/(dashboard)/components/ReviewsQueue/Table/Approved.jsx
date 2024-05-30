@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Pagination from '@/app/components/Pagination';
 import Link from 'next/link';
-import { TbLoader } from 'react-icons/tb';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import deleteServerReview from '@/lib/request/servers/deleteReview';
@@ -10,7 +9,8 @@ import useDashboardStore from '@/stores/dashboard';
 import { toast } from 'sonner';
 import { TiStarFullOutline, TiStarOutline } from 'react-icons/ti';
 import { LuTrash2 } from 'react-icons/lu';
-import cn from '@/lib/cn';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Approved({ data }) {
   const [page, setPage] = useState(1);
@@ -18,10 +18,18 @@ export default function Approved({ data }) {
 
   const showPagination = data?.length > 10;
 
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const fetchData = useDashboardStore(state => state.fetchData);
+  
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal
+  })));
 
   function continueDeleteReview(id, reviewId, type) {
+    disableButton('delete-review', 'confirm');
     setLoading(true);
   
     const deleteReview = type === 'server' ? deleteServerReview : deleteBotReview;
@@ -29,13 +37,16 @@ export default function Approved({ data }) {
     toast.promise(deleteReview(id, reviewId), {
       loading: 'Deleting review..',
       success: () => {
+        closeModal('delete-review');
         fetchData('reviews')
           .then(() => setLoading(false));
 
         return 'Review deleted successfully!';
       },
       error: () => {
+        enableButton('delete-review', 'confirm');
         setLoading(false);
+
         return `Failed to delete review ${reviewId}.`;
       }
     });
@@ -67,14 +78,7 @@ export default function Approved({ data }) {
                 <th scope='col' className='px-6 py-4 font-semibold'>Rating</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Review</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Date</th>
-                {dashboardData?.permissions?.canDeleteReviews && (
-                  <th scope='col' className='px-6 py-4 font-semibold'>
-                    <div className='flex gap-x-1.5 items-center'>
-                      Actions
-                      {loading && <TbLoader className='animate-spin' />}
-                    </div>
-                  </th>
-                )}
+                {dashboardData?.permissions?.canDeleteReviews && <th scope='col' className='px-6 py-4 font-semibold'>Actions</th>}
               </tr>
             </thead>
 
@@ -126,11 +130,32 @@ export default function Approved({ data }) {
                   {dashboardData?.permissions?.canDeleteReviews && (
                     <td className='px-6 py-4'>
                       <button
-                        className={cn(
-                          'flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1',
-                          loading && 'pointer-events-none opacity-70'
-                        )}
-                        onClick={() => continueDeleteReview(review.bot ? review.bot?.id || review.bot : review.server?.id || review.server, review._id, review.bot ? 'bot' : 'server')}
+                        className='flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'
+                        onClick={() => 
+                          openModal('delete-review', {
+                            title: 'Delete Review',
+                            description: 'Are you sure you want to delete this review?',
+                            content: (
+                              <p className='text-sm text-tertiary'>
+                                Please note that deleting this review will completely remove it from the database and it cannot be recovered.
+                              </p>
+                            ),
+                            buttons: [
+                              {
+                                id: 'cancel',
+                                label: 'Cancel',
+                                variant: 'ghost',
+                                actionType: 'close'
+                              },
+                              {
+                                id: 'confirm',
+                                label: 'Confirm',
+                                variant: 'solid',
+                                action: () => continueDeleteReview(review.bot ? review.bot?.id || review.bot : review.server?.id || review.server, review._id, review.bot ? 'bot' : 'server')
+                              }
+                            ]
+                          })
+                        }
                       >
                         Delete <LuTrash2 />
                       </button>

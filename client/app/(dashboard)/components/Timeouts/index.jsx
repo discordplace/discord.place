@@ -4,7 +4,6 @@ import cn from '@/lib/cn';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { useState } from 'react';
-import { TbLoader } from 'react-icons/tb';
 import Countdown from '@/app/components/Countdown';
 import { LuTrash2 } from 'react-icons/lu';
 import { toast } from 'sonner';
@@ -13,6 +12,8 @@ import deleteServerTimeout from '@/lib/request/servers/deleteTimeout';
 import Image from 'next/image';
 import Link from 'next/link';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Timeouts() {
   const data = useDashboardStore(state => state.data);
@@ -22,10 +23,18 @@ export default function Timeouts() {
   
   const showPagination = data?.timeouts?.length > 10;
 
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const fetchData = useDashboardStore(state => state.fetchData);
 
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal
+  })));
+
   function continueDeleteTimeout(id, userId, type) {
+    disableButton('delete-timeout', 'confirm');
     setLoading(true);
 
     const deleteTimeout = type === 'server' ? deleteServerTimeout : deleteBotTimeout;
@@ -33,13 +42,16 @@ export default function Timeouts() {
     toast.promise(deleteTimeout(id, userId), {
       loading: 'Deleting the timeout...',
       success: () => {
+        closeModal('delete-timeout');
         fetchData(['timeouts'])
           .then(() => setLoading(false));
 
         return 'The timeout has been deleted successfully.';
       },
       error: () => {
+        enableButton('delete-timeout', 'confirm');
         setLoading(false);
+
         return 'An error occurred while deleting the timeout.';
       }
     });
@@ -84,14 +96,7 @@ export default function Timeouts() {
                   <th scope='col' className='px-6 py-4 font-semibold'>User</th>
                   <th scope='col' className='px-6 py-4 font-semibold'>Date</th>
                   <th scope='col' className='px-6 py-4 font-semibold'>Expire In</th>
-                  {data.permissions.canDeleteTimeouts && (
-                    <th scope='col' className='px-6 py-4 font-semibold'>
-                      <div className='flex gap-x-1.5 items-center'>
-                      Actions
-                        {loading && <TbLoader className='animate-spin' />}
-                      </div>
-                    </th>
-                  )}
+                  {data.permissions.canDeleteTimeouts && <th scope='col' className='px-6 py-4 font-semibold'>Actions</th>}
                 </tr>
               </thead>
 
@@ -185,11 +190,32 @@ export default function Timeouts() {
                     {data.permissions.canDeleteTimeouts && (
                       <td className='px-6 py-4'>
                         <button
-                          className={cn(
-                            'flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1',
-                            loading && 'pointer-events-none opacity-70'
-                          )}
-                          onClick={() => continueDeleteTimeout(timeout.bot ? timeout.bot?.id || timeout.bot : timeout.guild?.id || timeout.guild, timeout.user.id, timeout.bot ? 'bot' : 'server')}
+                          className='flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'
+                          onClick={() => 
+                            openModal('delete-timeout', {
+                              title: 'Delete Timeout',
+                              description: `Are you sure you want to delete the timeout for ${timeout.bot ? (timeout.bot.username || timeout.bot) : (timeout.guild?.name || timeout.guild)} by ${timeout.user?.username || timeout.user}?`,
+                              content: (
+                                <p className='text-sm text-tertiary'>
+                                  Please note that deleting the timeout will remove the vote timeout for the user.
+                                </p>
+                              ),
+                              buttons: [
+                                {
+                                  id: 'cancel',
+                                  label: 'Cancel',
+                                  variant: 'ghost',
+                                  actionType: 'close'
+                                },
+                                {
+                                  id: 'confirm',
+                                  label: 'Confirm',
+                                  variant: 'solid',
+                                  action: () => continueDeleteTimeout(timeout.bot ? timeout.bot?.id || timeout.bot : timeout.guild?.id || timeout.guild, timeout.user.id, timeout.bot ? 'bot' : 'server')
+                                }
+                              ]
+                            })
+                          }
                         >
                           Delete <LuTrash2 />
                         </button>

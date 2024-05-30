@@ -24,6 +24,8 @@ import CopyButton from '@/app/components/CopyButton';
 import Tooltip from '@/app/components/Tooltip';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import { HiExternalLink } from 'react-icons/hi';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Content({ bot }) {
   const [currentBot, setCurrentBot] = useState(bot);
@@ -64,7 +66,6 @@ export default function Content({ bot }) {
   const [apiKeyBlurred, setApiKeyBlurred] = useState(true);
   const [webhookTokenBlurred, setWebhookTokenBlurred] = useState(true);
   const [anyChangesMade, setAnyChangesMade] = useState(false);
-  const [showDeleteConsent, setShowDeleteConsent] = useState(false);
   const router = useRouter();
   
   useEffect(() => {
@@ -125,18 +126,29 @@ export default function Content({ bot }) {
     });
   }
 
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal
+  })));
+
   async function continueDeleteBot() {
+    disableButton('delete-bot', 'confirm');
     setLoading(true);
 
     toast.promise(deleteBot(currentBot.id), {
       loading: `Deleting ${currentBot.username}..`,
       success: () => {
+        closeModal('delete-bot');
         setTimeout(() => router.push('/'), 3000);
         
         return `Successfully deleted ${currentBot.username}. You will be redirected to the home page in a few seconds.`;
       },
       error: error => {
+        enableButton('delete-bot', 'confirm');
         setLoading(false);
+
         return error;
       }
     });
@@ -543,36 +555,41 @@ export default function Content({ bot }) {
                 Danger Zone
               </h1>
               <p className='text-sm font-medium text-tertiary'>
-                {showDeleteConsent ? (
-                  <>
-                    Are you sure you really want to delete this bot?
-                  </>
-                ) : (
-                  <>
-                    You can delete the bot using the button below, but be careful not to delete it by mistake :)
-                  </>
-                )}
+                You can delete the bot using the button below, but be careful not to delete it by mistake :)
               </p>
               
               <div className='flex mt-1 gap-x-2'>
-                {showDeleteConsent ? (
-                  <>
-                    <button className='flex items-center gap-x-1.5 px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={continueDeleteBot} disabled={loading}>
-                      {loading && (
-                        <TbLoader className='animate-spin' />
-                      )}
-                      Confirm
-                    </button>
-
-                    <button className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => setShowDeleteConsent(false)} disabled={loading}>
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <button className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70' onClick={() => setShowDeleteConsent(true)}>
-                    Delete
-                  </button>
-                )}
+                <button
+                  className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
+                  onClick={() => 
+                    openModal('delete-bot', {
+                      title: 'Delete Bot',
+                      description: `Are you sure you want to delete ${currentBot.username}?`,
+                      content: (
+                        <p className='text-sm text-tertiary'>
+                          Please note that deleting your bot will remove all votes and reviews that your bot has received.<br/><br/>
+                          This action cannot be undone.
+                        </p>
+                      ),
+                      buttons: [
+                        {
+                          id: 'cancel',
+                          label: 'Cancel',
+                          variant: 'ghost',
+                          actionType: 'close'
+                        },
+                        {
+                          id: 'confirm',
+                          label: 'Confirm',
+                          variant: 'solid',
+                          action: continueDeleteBot
+                        }
+                      ]
+                    })
+                  }
+                >
+                  Delete
+                </button>
               </div>
             </div>
           )}

@@ -1,25 +1,40 @@
 'use client';
+
 import { useState } from 'react';
 import { toast } from 'sonner';
 import deleteProfile from '@/lib/request/profiles/deleteProfile';
 import { RiErrorWarningFill } from 'react-icons/ri';
-import { TbLoader } from 'react-icons/tb';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
+import { useRouter } from 'next-nprogress-bar';
 
 export default function DangerZone({ profile }) {
-  const [areYouSure, setAreYouSure] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [, setLoading] = useState(false);
+
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal
+  })));
 
   function continueDeleteProfile() {
+    disableButton('delete-profile', 'confirm');
     setLoading(true);
     
     toast.promise(deleteProfile(profile.slug), {
       loading: 'Deleting profile..',
       success: () => {
-        window.location.href = '/profiles';
-        return 'Profile has been deleted! We are redirecting you to the homepage..';
+        closeModal();
+        setTimeout(() => router.push('/'), 3000);
+
+        return 'Profile has been deleted! You will be redirected to home page after 3 seconds.'; 
       },
       error: message => {
+        enableButton('delete-profile', 'confirm');
         setLoading(false);
+
         return message;
       }
     });
@@ -31,37 +46,42 @@ export default function DangerZone({ profile }) {
         <RiErrorWarningFill />
         Danger Zone
       </h1>
-      <p className='text-sm font-medium text-tertiary'>
-        {areYouSure ? (
-          <>
-            Are you sure you really want to delete your profile?
-          </>
-        ) : (
-          <>
-            You can delete the your profile using the button below, but be careful not to delete it by mistake :)
-          </>
-        )}
+      <p className='text-sm font-medium text-tertiary'> 
+        You can delete the your profile using the button below, but be careful not to delete it by mistake :)
       </p>
     
       <div className='flex mt-1 gap-x-2'>
-        {areYouSure ? (
-          <>
-            <button className='flex items-center gap-x-1.5 px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={continueDeleteProfile} disabled={loading}>
-              {loading && (
-                <TbLoader className='animate-spin' />
-              )}
-              Confirm
-            </button>
-
-            <button className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => setAreYouSure(false)} disabled={loading}>
-              Cancel
-            </button>
-          </>
-        ) : (
-          <button className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70' onClick={() => setAreYouSure(true)}>
-            Delete
-          </button>
-        )}
+        <button
+          className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
+          onClick={() =>
+            openModal('delete-profile', {
+              title: 'Delete Profile',
+              description: 'Are you sure you want to delete your profile?',
+              content: (
+                <p className='text-sm text-tertiary'>
+                  Please note that deleting your profile will remove all your social links and likes that your profile has received.<br/><br/>
+                  This action cannot be undone.
+                </p>
+              ),
+              buttons: [
+                {
+                  id: 'cancel',
+                  label: 'Cancel',
+                  variant: 'ghost',
+                  actionType: 'close'
+                },
+                {
+                  id: 'confirm',
+                  label: 'Confirm',
+                  variant: 'solid',
+                  action: continueDeleteProfile
+                }
+              ]
+            })
+          }
+        >
+          Delete
+        </button>
       </div>
     </div>
   );
