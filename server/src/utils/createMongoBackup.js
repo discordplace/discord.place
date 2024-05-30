@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const moment = require('moment');
+const createActivity = require('@/utils/createActivity');
 
 async function createMongoBackup() {
   try {
@@ -17,6 +18,13 @@ async function createMongoBackup() {
     await executeBackupCommand(cmd);
 
     logger.send('Database backup taken successfully.');
+
+    createActivity({
+      type: 'MODERATOR_ACTIVITY',
+      user_id: client.user.id,
+      target: client.user,
+      message: 'Database backup taken successfully.'
+    });
   } catch (error) {
     logger.send(`Failed to take backup: ${error.message}`);
   }

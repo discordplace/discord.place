@@ -2,6 +2,7 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
+const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   delete: [
@@ -21,6 +22,18 @@ module.exports = {
 
       const review = await Review.findOne({ 'server.id': id, _id: review_id });
       if (!review) return response.sendError('Review not found.', 404);
+
+      const guild = client.guilds.cache.get(id);
+
+      createActivity({
+        type: 'MODERATOR_ACTIVITY',
+        user_id: request.user.id,
+        target_type: 'USER',
+        target: { 
+          id: review.user.id
+        },
+        message: `Review to ${guild?.name ? `${guild.name} (${guild.id})` : id} has been deleted.`
+      });
 
       await review.deleteOne();
 

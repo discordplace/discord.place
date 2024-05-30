@@ -1,6 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BotDeny = require('@/schemas/Bot/Deny');
 const { param, validationResult, matchedData } = require('express-validator');
+const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   delete: [
@@ -16,6 +17,14 @@ module.exports = {
 
       const { id } = matchedData(request);
       
+      new createActivity({
+        type: 'MODERATOR_ACTIVITY',
+        user_id: request.user.id,
+        target_type: 'USER',
+        target: { id },
+        message: 'Bot deny record has been deleted.'
+      });
+
       BotDeny.findOneAndDelete({ _id: id })
         .then(() => response.sendStatus(204).end())
         .catch(error => {

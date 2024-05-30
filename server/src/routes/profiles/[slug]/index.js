@@ -10,6 +10,7 @@ const socialsValidation = require('@/validations/profiles/socials');
 const Server = require('@/schemas/Server');
 const randomizeArray = require('@/utils/randomizeArray');
 const getValidationError = require('@/utils/getValidationError');
+const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   get: [
@@ -195,6 +196,18 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       if (!profile.isModified()) return response.sendError('No changes were made.', 400);
+
+      const updatedFields = Object.keys(profile._doc).filter(key => profile.isModified(key));
+
+      createActivity({
+        type: 'USER_ACTIVITY',
+        user_id: request.user.id,
+        target_type: 'USER',
+        target: { 
+          id: profile.user.id 
+        },
+        message: `Profile ${profile.slug} fields updated: ${updatedFields.join(', ')}`
+      });
 
       await profile.save();
 

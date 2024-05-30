@@ -7,7 +7,7 @@ const Premium = require('@/schemas/Premium');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
-const DashboardData = require('@/schemas/DashboardData');
+const DashboardData = require('@/schemas/Dashboard/Data');
 
 module.exports = {
   post: [

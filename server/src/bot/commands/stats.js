@@ -6,9 +6,6 @@ const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const Profile = require('@/schemas/Profile');
 const Server = require('@/schemas/Server');
-const Reminder = require('@/schemas/Reminder');
-const ServerReview = require('@/schemas/Server/Review');
-const BotReview = require('@/schemas/Bot/Review');
 
 function getCpuTimes() {
   const cpus = os.cpus();

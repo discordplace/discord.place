@@ -71,6 +71,9 @@ permissions:
   canDeleteTimeoutsRoles:
     - '1206354879321210900'
     - '1206355082883371049'
+  canViewRecentActivityRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
 profilesMaxSocialsLength: 8
 packagesMaxEmojisLength: 9
 packagesMinEmojisLength: 4

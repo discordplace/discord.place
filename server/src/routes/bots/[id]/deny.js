@@ -5,6 +5,7 @@ const Bot = require('@/schemas/Bot');
 const BotDeny = require('@/schemas/Bot/Deny');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
+const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -50,6 +51,13 @@ module.exports = {
           description: config.botsDenyReasons[reason].description
         }
       }).save();
+
+      new createActivity({
+        type: 'MODERATOR_ACTIVITY',
+        user_id: request.user.id,
+        target: botUser,
+        message: `Bot has been denied with reason: ${config.botsDenyReasons[reason].name}`
+      });
 
       const guild = client.guilds.cache.get(config.guildId);
 

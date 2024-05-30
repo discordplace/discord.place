@@ -3,6 +3,7 @@ const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const Premium = require('@/schemas/Premium');
 const Discord = require('discord.js');
 const axios = require('axios');
+const createActivity = require('@/utils/createActivity');
 
 async function incrementVote(botId, userId, botWebhook) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -74,6 +75,13 @@ async function incrementVote(botId, userId, botWebhook) {
       id: botId
     } 
   }).save();
+
+  createActivity({
+    type: 'USER_ACTIVITY',
+    user_id: userId,
+    target: bot,
+    message: 'Voted for the bot.'
+  });
 
   const embed = new Discord.EmbedBuilder()
     .setColor(Discord.Colors.Purple)

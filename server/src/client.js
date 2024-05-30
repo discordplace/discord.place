@@ -4,6 +4,7 @@ const { CronJob } = require('cron');
 const axios = require('axios');
 const CloudflareAPI = require('cloudflare');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
+const createActivity = require('@/utils/createActivity');
 
 // Schemas
 const Server = require('@/schemas/Server');
@@ -15,7 +16,7 @@ const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
 const Reminder = require('@/schemas/Reminder');
 const BlockedIp = require('@/schemas/BlockedIp');
-const DashboardData = require('@/schemas/DashboardData');
+const DashboardData = require('@/schemas/Dashboard/Data');
 const Profile = require('@/schemas/Profile');
 const Bot = require('@/schemas/Bot');
 const Emoji = require('@/schemas/Emoji');
@@ -141,6 +142,14 @@ module.exports = class Client {
       const invite = await guild.invites.fetch().catch(() => null);
       if (!invite || !invite.find(invite => invite.code === server.invite_code.code)) {
         await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
+
+        createActivity({
+          type: 'MODERATOR_ACTIVITY',
+          user_id: client.user.id,
+          target: guild,
+          message: `Invite code ${server.invite_code.code} was deleted.`
+        });
+
         logger.send(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
       }
     }
@@ -204,10 +213,19 @@ module.exports = class Client {
   }
 
   updateClientActivity() {
+    const state = `Members: ${client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')} | Servers: ${client.guilds.cache.size.toLocaleString('en-US')}`;
+
     client.user.setActivity({
       type: Discord.ActivityType.Custom,
       name: 'status',
-      state: `Members: ${client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')} | Servers: ${client.guilds.cache.size.toLocaleString('en-US')}`
+      state
+    });
+
+    createActivity({
+      type: 'MODERATOR_ACTIVITY',
+      user_id: client.user.id,
+      target: client.user,
+      message: `Client activity state updated to: ${state}`
     });
   }
 
@@ -286,7 +304,7 @@ module.exports = class Client {
     const totalProfiles = await Profile.countDocuments();
     const totalBots = await Bot.countDocuments();
     const totalEmojis = await Emoji.countDocuments();
-    const totalEmojiPacks = (await EmojiPack.find()).reduce((a, b) => a + b.emojis_ids.length, 0);
+    const totalEmojiPacks = (await EmojiPack.find()).reduce((a, b) => a + b.emojis_ids?.length, 0);
     
     await new DashboardData({
       servers: totalServers,
@@ -296,6 +314,13 @@ module.exports = class Client {
       users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
       guilds: client.guilds.cache.size
     }).save();
+
+    createActivity({
+      type: 'MODERATOR_ACTIVITY',
+      user_id: client.user.id,
+      target: client.user,
+      message: 'Created new dashboard data.'
+    });
 
     logger.send('Created new dashboard data.');
   }

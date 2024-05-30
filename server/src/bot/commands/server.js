@@ -5,6 +5,7 @@ const LogChannel = require('@/schemas/Server/LogChannel');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
+const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -61,6 +62,13 @@ module.exports = {
           await Server.findOneAndUpdate({ id: interaction.guild.id }, { invite_code: { type: 'Invite', code: newInviteCode } });
         }
 
+        createActivity({
+          type: 'USER_ACTIVITY',
+          user_id: interaction.user.id,
+          target: interaction.guild,
+          message: `Invite code updated to ${newInviteCode}`
+        });
+
         sendLog(interaction.guild.id, `Invite code updated to ${newInviteCode} by ${interaction.user}.`)
           .catch(() => null);
 
@@ -74,6 +82,13 @@ module.exports = {
         if (!channel.permissionsFor(interaction.guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) return interaction.reply({ content: 'I don\'t have permission to send messages in that channel.' });
 
         await interaction.deferReply();
+
+        createActivity({
+          type: 'USER_ACTIVITY',
+          user_id: interaction.user.id,
+          target: interaction.guild,
+          message: `Log channel updated to ${channel.name} (${channel.id})`
+        });
 
         const logChannel = await LogChannel.findOne({ guildId: interaction.guild.id });
         if (logChannel) {
@@ -100,6 +115,13 @@ module.exports = {
 
         const server = await Server.findOne({ id: interaction.guild.id });
         if (!server) return interaction.followUp({ content: `You can't set a panel channel without creating a server first. Visit [here](${config.frontendUrl}/servers/manage) to create one.` });
+
+        createActivity({
+          type: 'USER_ACTIVITY',
+          user_id: interaction.user.id,
+          target: interaction.guild,
+          message: `Panel channel updated to ${channel.name} (${channel.id})`
+        });
 
         const panel = await Panel.findOne({ guildId: interaction.guild.id });
         if (panel) {
@@ -136,6 +158,13 @@ module.exports = {
 
         await panel.deleteOne();
 
+        createActivity({
+          type: 'USER_ACTIVITY',
+          user_id: interaction.user.id,
+          target: interaction.guild,
+          message: 'Panel channel has been unset.'
+        });
+
         sendLog(interaction.guild.id, `Panel channel successfully unset by ${interaction.user}.`)
           .catch(() => null);
 
@@ -152,6 +181,13 @@ module.exports = {
 
         await logChannel.deleteOne();
 
+        createActivity({
+          type: 'USER_ACTIVITY',
+          user_id: interaction.user.id,
+          target: interaction.guild,
+          message: 'Log channel has been unset.'
+        });
+
         return interaction.followUp({ content: 'Log channel successfully unset.' });
       }
     }
@@ -166,6 +202,13 @@ module.exports = {
         if (!panel) return interaction.followUp({ content: 'Panel channel is not set.' });
 
         await updatePanelMessage(interaction.guild.id);
+
+        createActivity({
+          type: 'USER_ACTIVITY',
+          user_id: interaction.user.id,
+          target: interaction.guild,
+          message: 'Panel message manually refreshed.'
+        });
 
         sendLog(interaction.guild.id, `Panel message refreshed by ${interaction.user}.`)
           .catch(() => null);
@@ -207,6 +250,13 @@ module.exports = {
           required_votes: requiredVotes
         }).save();
 
+        createActivity({
+          type: 'USER_ACTIVITY',
+          user_id: interaction.user.id,
+          target: interaction.guild,
+          message: `New reward added with role ${role.name} (${role.id}) and required votes ${requiredVotes}.`
+        });
+
         sendLog(interaction.guild.id, `New reward <@&${role.id}> added by ${interaction.user}. The role will be given to users who reach **${requiredVotes}** votes.`)
           .catch(() => null);
 
@@ -225,6 +275,13 @@ module.exports = {
         await interaction.deferReply();
 
         await reward.deleteOne();
+
+        createActivity({
+          type: 'USER_ACTIVITY',
+          user_id: interaction.user.id,
+          target: interaction.guild,
+          message: `Reward role ${roleId} removed.`
+        });
 
         sendLog(interaction.guild.id, `Vote reward <@&${roleId}> removed by ${interaction.user}.`)
           .catch(() => null);

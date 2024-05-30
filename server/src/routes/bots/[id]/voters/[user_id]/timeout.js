@@ -2,6 +2,7 @@ const { param, validationResult, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const checkAuthentication = require('@/src/utils/middlewares/checkAuthentication');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
+const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   delete: [
@@ -17,6 +18,14 @@ module.exports = {
       if (!canDelete) return response.sendError('You do not have permission to delete timeouts.', 403);
 
       const { id, user_id } = matchedData(request);
+
+      new createActivity({
+        type: 'MODERATOR_ACTIVITY',
+        user_id: request.user.id,
+        target_type: 'USER',
+        target: { id: user_id },
+        message: `Timeout record for bot ${id} has been deleted.`
+      });
 
       BotTimeout.findOneAndDelete({ 'bot.id': id, 'user.id': user_id })
         .then(() => response.sendStatus(204).end())

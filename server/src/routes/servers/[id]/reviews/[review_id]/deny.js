@@ -3,6 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult, body } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
 const bodyParser = require('body-parser');
+const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -30,18 +31,28 @@ module.exports = {
 
       if (review.approved === true) return response.sendError('Review already approved.', 400);
 
-      await review.delete();
-
-      response.sendStatus(204).end();
-
       const guild = client.guilds.cache.get(review.server.id);
-      if (!guild) return;
-
-      const publisher = await client.guilds.cache.get(config.guildId).members.fetch(review.user.id).catch(() => null);
-      if (publisher) {
-        const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-        if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${reason || 'No reason provided.'}` });
+      if (guild) {
+        const publisher = await client.guilds.cache.get(config.guildId).members.fetch(review.user.id).catch(() => null);
+        if (publisher) {
+          const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${reason || 'No reason provided.'}` });
+        }
       }
+
+      createActivity({
+        type: 'MODERATOR_ACTIVITY',
+        user_id: request.user.id,
+        target_type: 'USER',
+        target: { 
+          id: review.user.id
+        },
+        message: `Review to ${guild?.name ? `${guild.name} (${guild.id})` : id} has been denied.`
+      });
+
+      await review.deleteOne();
+      
+      return response.sendStatus(204).end();
     }
   ]
 };

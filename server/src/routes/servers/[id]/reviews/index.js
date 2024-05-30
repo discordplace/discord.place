@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
+const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -55,6 +56,13 @@ module.exports = {
       await review.save();
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
+
+      createActivity({
+        type: 'USER_ACTIVITY',
+        user_id: request.user.id,
+        target: guild,
+        message: 'Created a review.'
+      });
 
       const embeds = [
         new Discord.EmbedBuilder()

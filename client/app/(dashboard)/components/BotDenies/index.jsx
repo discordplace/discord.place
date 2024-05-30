@@ -43,7 +43,7 @@ export default function BotDenies() {
 
   return (
     <div className="flex flex-col my-8 mr-6 gap-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col justify-between gap-y-4 sm:items-center sm:flex-row">
         <div className="flex flex-col gap-y-1.5">
           <h1 className="flex items-center text-2xl font-semibold gap-x-2">
             Bot Denies

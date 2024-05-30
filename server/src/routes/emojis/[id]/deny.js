@@ -5,6 +5,7 @@ const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const Discord = require('discord.js');
+const createActivity = require('@/utils/createActivity');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const bodyParser = require('body-parser');
@@ -51,6 +52,16 @@ module.exports = {
 
       S3.send(command)
         .then(async () => {
+          createActivity({
+            type: 'MODERATOR_ACTIVITY',
+            user_id: request.user.id,
+            target_type: 'USER',
+            target: { 
+              id: emoji.user.id
+            },
+            message: `Emoji${isPack ? ' pack' : ''} ${emoji.id} has been denied.`
+          });
+
           await emoji.deleteOne();
 
           const guild = client.guilds.cache.get(config.guildId);

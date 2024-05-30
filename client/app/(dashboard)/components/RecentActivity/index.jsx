@@ -2,26 +2,23 @@ import useDashboardStore from '@/stores/dashboard';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import cn from '@/lib/cn';
-import Approved from '@/app/(dashboard)/components/ReviewsQueue/Table/Approved';
-import WaitingApproval from '@/app/(dashboard)/components/ReviewsQueue/Table/WaitingApproval';
+import ModeratorActivity from '@/app/(dashboard)/components/RecentActivity/Table/ModeratorActivity';
+import UserActivity from '@/app/(dashboard)/components/RecentActivity/Table/UserActivity';
 
-export default function ReviewsQueue() {
+export default function RecentActivity() {
   const data = useDashboardStore(state => state.data);
-
-  const unapprovedReviews = data?.queue?.reviews?.filter(review => !review.approved).length || 0;
-  const approvedReviews = data?.queue?.reviews?.filter(review => review.approved).length || 0;
 
   const [currentTab, setCurrentTab] = useState('waiting-approval');
   const tabs = [
     {
-      label: `Waiting Approval (${unapprovedReviews})`,
-      value: 'waiting-approval',
-      component: <WaitingApproval data={data?.queue?.reviews?.filter(review => !review.approved)} />
+      label: `Moderator Activity (${data?.recentActivity?.filter(activity => activity.type === 'MODERATOR_ACTIVITY').length})`,
+      value: 'moderator-activity',
+      component: <ModeratorActivity data={data?.recentActivity?.filter(activity => activity.type === 'MODERATOR_ACTIVITY')} />
     },
     {
-      label: `Approved (${approvedReviews})`,
-      value: 'approved',
-      component: <Approved data={data?.queue?.reviews?.filter(review => review.approved)} />
+      label: `User Activity (${data?.recentActivity?.filter(activity => activity.type === 'USER_ACTIVITY').length})`,
+      value: 'user-activity',
+      component: <UserActivity data={data?.recentActivity?.filter(activity => activity.type === 'USER_ACTIVITY')} />
     }
   ];
 
@@ -30,14 +27,14 @@ export default function ReviewsQueue() {
       <div className="flex flex-col justify-between gap-y-4 sm:items-center sm:flex-row">
         <div className="flex flex-col gap-y-1.5">
           <h1 className="flex items-center text-2xl font-semibold gap-x-2">
-            Reviews Queue
+            Recent Activity
             <span className="text-base font-normal text-tertiary">
-              {data?.queue?.reviews?.length || 0}
+              {data?.recentActivity?.length}
             </span>
           </h1>
 
           <p className="text-sm text-tertiary">
-            Here you can see the all the reviews that listed on discord.place.
+            Here you can see the all the recent activity that has been happening on the discord.place.
           </p>
         </div>
       </div>
@@ -56,7 +53,7 @@ export default function ReviewsQueue() {
 
             {currentTab === tab.value && (
               <motion.div
-                layoutId='botsQueueCurrentTabIndicator'
+                layoutId='emojisQueueCurrentTabIndicator'
                 className='absolute w-full left-0 h-[1px] bg-black rounded-lg dark:bg-white -bottom-[13px]'
               />
             )}

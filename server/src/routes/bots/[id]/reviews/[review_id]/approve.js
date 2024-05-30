@@ -3,6 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
+const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -26,6 +27,16 @@ module.exports = {
       if (review.approved === true) return response.sendError('Review already approved.', 400);
 
       await review.updateOne({ approved: true });
+
+      new createActivity({
+        type: 'MODERATOR_ACTIVITY',
+        user_id: request.user.id,
+        target_type: 'USER',
+        target: { 
+          id: review.user.id 
+        },
+        message: `Review to bot ${id} has been approved.`
+      });
 
       response.sendStatus(204).end();
 
