@@ -304,7 +304,10 @@ module.exports = class Client {
     const totalProfiles = await Profile.countDocuments();
     const totalBots = await Bot.countDocuments();
     const totalEmojis = await Emoji.countDocuments();
-    const totalEmojiPacks = (await EmojiPack.find()).reduce((a, b) => a + b.emojis_ids?.length || 0, 0);
+    const emojiPacks = await EmojiPack.find();
+    let totalEmojiPacks = 0;
+
+    for (const pack of emojiPacks) totalEmojiPacks += pack.emoji_ids.length;
     
     await new DashboardData({
       servers: totalServers,
