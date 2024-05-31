@@ -81,6 +81,8 @@ module.exports = {
 
       client.currentlyUploadingEmojiPack.delete(interaction.guild.id);
 
+      if (createdEmojis.length === 0) return message.edit({ content: `Pack **${pack.name}** failed to upload.` });
+
       createActivity({
         type: 'USER_ACTIVITY',
         user_id: interaction.user.id,
@@ -88,9 +90,7 @@ module.exports = {
         message: `Uploaded emoji pack ${pack.name} to the server.`
       });
 
-      if (createdEmojis.length === 0) return message.edit({ content: `Pack **${pack.name}** failed to upload.` });
-
-      await Emoji.updateMany({ id: { $in: createdEmojis.map(({ index }) => pack.emoji_ids[index].id) } }, { $inc: { downloads: 1 } });
+      await EmojiPack.updateOne({ id: packId }, { $inc: { downloads: 1 } });
 
       return message.edit({ content: `Successfully uploaded **${pack.name}**!\n\n${createdEmojis.map(({ emoji }, index) => `${index + 1}. ${emoji}`).join('\n')}` });
     case null:
@@ -98,16 +98,17 @@ module.exports = {
       var emoji = await Emoji.findOne({ id });
       if (!emoji) return interaction.followUp({ content: 'Emoji not found.' });
 
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: interaction.user.id,
-        target: interaction.guild,
-        message: `Uploaded emoji ${emoji.name} to the server.`
-      });
-
       interaction.guild.emojis.create({ attachment: getEmojiURL(emoji.id, emoji.animated), name: emoji.name })
         .then(createdEmoji => {
           emoji.updateOne({ $inc: { downloads: 1 } });
+
+          createActivity({
+            type: 'USER_ACTIVITY',
+            user_id: interaction.user.id,
+            target: interaction.guild,
+            message: `Uploaded emoji ${emoji.name} to the server.`
+          });
+
           return interaction.followUp({ content: `Emoji uploaded! ${createdEmoji}` });
         })
         .catch(error => {
