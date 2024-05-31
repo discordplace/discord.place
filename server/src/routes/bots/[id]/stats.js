@@ -37,7 +37,7 @@ module.exports = {
       await bot.save();
 
       createActivity({
-        type: 'MODERATOR_ACTIVITY',
+        type: 'USER_ACTIVITY',
         user_id: bot.owner.id,
         target_type: 'USER',
         target: { 
