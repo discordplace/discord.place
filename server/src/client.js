@@ -118,6 +118,7 @@ module.exports = class Client {
           this.checkExpiredBlockedIPs();
           this.checkExpiredApproximateGuildCountFetchedBots();
           this.checkDeletedInviteCodes();
+          this.updateClientActivity();
         }, null, true, 'Europe/Istanbul');
         new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
         new CronJob('0 0 * * *', () => {
