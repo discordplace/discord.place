@@ -41,7 +41,6 @@ module.exports = class Client {
     this.client = new Discord.Client({
       intents: [
         Discord.GatewayIntentBits.Guilds,
-        Discord.GatewayIntentBits.GuildPresences,
         Discord.GatewayIntentBits.GuildMembers,
         Discord.GatewayIntentBits.GuildMessages,
         Discord.GatewayIntentBits.GuildInvites,
