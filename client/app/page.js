@@ -71,7 +71,9 @@ export default function Page() {
         <h1 className='flex items-center mt-3 text-xl font-semibold text-center gap-x-2 sm:text-2xl sm:mt-6 text-primary'>
           {title}
         </h1>
+        
         <p className='mb-3 text-sm font-medium text-center sm:mb-0 text-tertiary'>{desc}</p>
+
         <div 
           className={cn(
             'hidden sm:block px-4 py-2 mt-4 text-sm font-semibold text-secondary bg-tertiary rounded-full w-max transition-all duration-200',
