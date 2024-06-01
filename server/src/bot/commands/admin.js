@@ -248,8 +248,6 @@ module.exports = {
         const user = client.users.cache.get(review.bot.id) || await client.users.fetch(review.bot.id).catch(() => null);
         if (!user) return interaction.followUp({ content: 'Bot not found.' });
 
-        if (!client.fetchedGuilds.has(config.guildId)) await fetchGuildsMembers([config.guildId]);
-
         const publisher = await client.users.fetch(review.user.id).catch(() => null);
         const isPublisherFoundInGuild = publisher ? interaction.guild.members.cache.has(publisher.id) : false;
 

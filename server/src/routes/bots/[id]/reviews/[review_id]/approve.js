@@ -39,8 +39,6 @@ module.exports = {
 
       const guild = client.guilds.cache.get(config.guildId);
 
-      if (!client.fetchedGuilds.has(config.guildId)) await fetchGuildsMembers([config.guildId]);
-
       const publisher = await client.users.fetch(review.user.id).catch(() => null);
       const isPublisherFoundInGuild = publisher ? guild.members.cache.has(publisher.id) : false;
 
