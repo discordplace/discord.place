@@ -49,20 +49,30 @@ module.exports = {
       } : baseFilter;
 
       const servers = await Server.find(findQuery);
-      const sortedServers = servers.sort((a, b) => {
-        const aGuild = client.guilds.cache.get(a.id);
-        const bGuild = client.guilds.cache.get(b.id);
+      const sortedServers = (await Promise.all(servers.sort(async (a, b) => {
+        let aGuild = client.guilds.cache.get(a.id);
+        let bGuild = client.guilds.cache.get(b.id);
+
+        if (!client.fetchedGuilds.has(a.id)) {
+          await fetchGuildsMembers([a.id]).catch(() => null);
+          aGuild = client.guilds.cache.get(a.id);
+        }
+
+        if (!client.fetchedGuilds.has(b.id)) {
+          await fetchGuildsMembers([b.id]).catch(() => null);
+          bGuild = client.guilds.cache.get(b.id);
+        }
 
         switch (sort) {
         case 'Votes': return b.votes - a.votes;
         case 'Voice': return bGuild.members.cache.filter(member => !member.bot && member.voice.channel).size - aGuild.members.cache.filter(member => !member.bot && member.voice.channel).size;
         case 'Members': return bGuild.memberCount - aGuild.memberCount;
-        case 'Online': return bGuild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size - aGuild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size;
+        case 'Online': return bGuild.approximate_presence_count - aGuild.approximate_presence_count;
         case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
         case 'Oldest': return aGuild.joinedTimestamp - bGuild.joinedTimestamp;
         case 'Boosts': return bGuild.premiumSubscriptionCount - aGuild.premiumSubscriptionCount;
         }
-      }).slice(skip, skip + limit);
+      }))).slice(skip, skip + limit);
       const total = await Server.countDocuments(findQuery);
       const maxReached = skip + servers.length >= total;
       const premiumUserIds = await Premium.find({ 'user.id': { $in: servers.map(server => client.guilds.cache.get(server.id)).map(guild => guild.ownerId) } }).select('user.id');
@@ -85,7 +95,7 @@ module.exports = {
             switch (sort) {
             case 'Votes': data.votes = server.votes; break;
             case 'Voice': data.voice = guild.members.cache.filter(member => !member.bot && member.voice.channel).size; break;
-            case 'Online': data.online = guild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size; break;
+            case 'Online': data.online = guild.approximate_presence_count; break;
             case 'Boosts': data.boosts = guild.premiumSubscriptionCount; break;
             }
 

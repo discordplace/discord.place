@@ -6,6 +6,7 @@ const Profile = require('@/schemas/Profile');
 const Premium = require('@/schemas/Premium');
 const getBadges = require('@/utils/profiles/getBadges');
 const randomizeArray = require('@/utils/randomizeArray');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 module.exports = {
   get: [
@@ -76,8 +77,14 @@ module.exports = {
         const listedServers = randomizeArray(await Server.find({ id: { $in: ownedServers.map(({ id }) => id) } })).slice(0, 2);
 
         Object.assign(responseData, { 
-          servers: listedServers.map(server => {
-            const guild = ownedServers.find(({ id }) => id === server.id);
+          servers: await Promise.all(listedServers.map(async server => {
+            let guild = ownedServers.find(({ id }) => id === server.id);
+
+            if (!client.fetchedGuilds.has(guild.id)) {
+              await fetchGuildsMembers([server.id]).catch(() => null);
+              guild = client.guilds.cache.get(server.id);
+            }
+
             return {
               id: guild.id,
               name: guild.name,
@@ -85,13 +92,13 @@ module.exports = {
               banner_url: guild.bannerURL({ format: 'png', size: 2048 }),
               description: server.description,
               total_members: guild.memberCount,
-              online_members: guild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size,
+              online_members: guild.approximate_presence_count,
               votes: server.votes,
               category: server.category,
               keywords: server.keywords,
               joined_at: guild.joinedTimestamp
             };
-          })
+          }))
         });
       } else Object.assign(responseData, { servers: [] });
 
