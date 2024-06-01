@@ -49,10 +49,9 @@ module.exports = {
       } : baseFilter;
 
       const servers = await Server.find(findQuery);
-      
-      await Promise.all(servers.map(async server => {
-        if (!client.fetchedGuilds.has(server.id)) await fetchGuildsMembers([server.id]).catch(() => null);
-      }));
+
+      const shouldBeFetchedServers = servers.filter(({ id }) => !client.fetchedGuilds.has(id));
+      if (shouldBeFetchedServers.length > 0) await fetchGuildsMembers(shouldBeFetchedServers.map(server => server.id)).catch(() => null);
 
       const sortedServers = servers.sort((a, b) => {
         let aGuild = client.guilds.cache.get(a.id);
@@ -71,9 +70,6 @@ module.exports = {
       const total = await Server.countDocuments(findQuery);
       const maxReached = skip + servers.length >= total;
       const premiumUserIds = await Premium.find({ 'user.id': { $in: servers.map(server => client.guilds.cache.get(server.id)).map(guild => guild.ownerId) } }).select('user.id');
-
-      const shouldBeFetchedServers = sortedServers.filter(({ id }) => !client.fetchedGuilds.has(id));
-      if (shouldBeFetchedServers.length > 0) await fetchGuildsMembers(shouldBeFetchedServers.map(server => server.id)).catch(() => null);
 
       return response.json({
         maxReached,
