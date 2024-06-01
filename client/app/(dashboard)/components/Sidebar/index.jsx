@@ -20,6 +20,9 @@ import { useMedia } from 'react-use';
 import { useEffect } from 'react';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { FaUserTimes } from 'react-icons/fa';
+import config from '@/config';
+import { SiGoogleanalytics } from 'react-icons/si';
+import { MdArrowOutward } from 'react-icons/md';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -77,6 +80,13 @@ export default function Sidebar() {
           name: `Bot Denies${data?.botDenies?.length ? ` (${data.botDenies.length})` : ''}`,
           icon: FaUserTimes,
           disabled: data?.permissions?.canDeleteBotDenies === false
+        },
+        {
+          type: 'redirect',
+          id: 'analytics',
+          href: config.analytics.url,
+          name: 'Analytics',
+          icon: SiGoogleanalytics
         },
         {
           id: 'timeouts',
@@ -179,16 +189,23 @@ export default function Sidebar() {
               >
                 <div
                   className={cn(
-                    'relative transition-all cursor-pointer flex items-center justify-center px-3 py-2 rounded-lg hover:bg-tertiary font-medium gap-x-2 select-noe text-secondary hover:text-primary',
+                    'relative group transition-all cursor-pointer flex items-center justify-center px-3 py-2 rounded-lg hover:bg-tertiary font-medium gap-x-2 select-noe text-secondary hover:text-primary',
                     activeTab === link.id && 'bg-quaternary text-primary pointer-events-none',
                     (loading || link.disabled) && 'opacity-50 pointer-events-none'
                   )}
                   onClick={() => {
+                    if (link.type === 'redirect') return window.open(link.href, '_blank');
+
                     setActiveTab(link.id);
                     if (isMobile) setIsCollapsed(true);
                   }}
                 >
-                  <link.icon size={20} />
+                  <div className='relative'>
+                    <link.icon size={20} />
+                    {link.type === 'redirect' && (
+                      <MdArrowOutward size={18} className='absolute p-0.5 -right-3 rounded-full bg-[rgba(var(--bg-secondary))] group-hover:bg-[rgba(var(--bg-tertiary))] -bottom-2 text-tertiary' />
+                    )}
+                  </div>
 
                   {activeTab === link.id && (
                     <motion.div
@@ -207,12 +224,18 @@ export default function Sidebar() {
                   (loading || link.disabled) && 'opacity-50 pointer-events-none'
                 )}
                 onClick={() => {
+                  if (link.type === 'redirect') return window.open(link.href, '_blank');
+                  
                   setActiveTab(link.id);
                   if (isMobile) setIsCollapsed(true);
                 }}
               >
                 <link.icon size={20} />
                 {link.name}
+
+                {link.type === 'redirect' && (
+                  <MdArrowOutward size={18} className='ml-auto text-tertiary' />
+                )}
 
                 {activeTab === link.id && (
                   <motion.div
