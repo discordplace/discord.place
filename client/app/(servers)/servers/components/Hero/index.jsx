@@ -19,7 +19,7 @@ import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
 import { useState } from 'react';
 import SortingDrawer from '../Drawer/Sorting';
 import { MdKeyboardVoice } from 'react-icons/md';
-import { HiOutlineStatusOnline, HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import Pagination from '@/app/components/Pagination';
 import config from '@/config';
@@ -138,13 +138,6 @@ export default function Hero() {
               <>
                 <FaUsers />
                 Members
-              </>
-            )}
-
-            {sort === 'Online' && (
-              <>
-                <HiOutlineStatusOnline />
-                Online
               </>
             )}
 

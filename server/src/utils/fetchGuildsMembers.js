@@ -13,8 +13,6 @@ async function fetchGuildsMembers(guildIdsToFetch) {
         return;
       }
 
-      await guild.fetch();
-
       const members = await guild.members.fetch();
       client.fetchedGuilds.set(guild.id, true);
       logger.send(`Fetched members for guild ${guild.name} (${guild.id}) with ${members.size} members`);

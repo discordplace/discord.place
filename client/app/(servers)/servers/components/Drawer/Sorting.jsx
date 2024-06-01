@@ -7,7 +7,7 @@ import { Drawer } from 'vaul';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { MdKeyboardVoice } from 'react-icons/md';
 import { FaUsers } from 'react-icons/fa';
-import { HiOutlineStatusOnline, HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 
 export default function SortingDrawer({ openState, setOpenState, state, setState }) {
@@ -15,7 +15,6 @@ export default function SortingDrawer({ openState, setOpenState, state, setState
     'Votes': <TbSquareRoundedChevronUp />,
     'Voice': <MdKeyboardVoice />,
     'Members': <FaUsers />,
-    'Online': <HiOutlineStatusOnline />,
     'Newest': <HiSortAscending />,
     'Oldest': <HiSortDescending />,
     'Boosts': <TiStar />

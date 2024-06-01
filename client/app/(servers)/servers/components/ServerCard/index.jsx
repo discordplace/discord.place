@@ -4,7 +4,7 @@ import { FaUsers } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import useSearchStore from '@/stores/servers/search';
 import { MdKeyboardVoice } from 'react-icons/md';
-import { HiOutlineStatusOnline, HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import { IoHeart } from 'react-icons/io5';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
@@ -45,11 +45,6 @@ export default function ServerCard(props) {
       icon: MdKeyboardVoice,
       value: props.server.data.voice,
       condition: sort === 'Voice'
-    },
-    {
-      icon: HiOutlineStatusOnline,
-      value: props.server.data.online,
-      condition: sort === 'Online'
     },
     {
       icon: HiSortAscending,

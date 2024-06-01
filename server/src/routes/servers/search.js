@@ -21,7 +21,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Sort must be a string.')
       .trim()
-      .isIn(['Votes', 'Voice', 'Members', 'Online', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, Voice, Members, Online, Newest, Oldest, Boosts.'),
+      .isIn(['Votes', 'Voice', 'Members', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, Voice, Members, Newest, Oldest, Boosts.'),
     query('limit')
       .optional()
       .isInt({ min: 1, max: 10 }).withMessage('Limit must be an integer between 1 and 10.')
@@ -49,10 +49,7 @@ module.exports = {
       } : baseFilter;
 
       const servers = await Server.find(findQuery);
-
-      const shouldBeFetchedServers = servers.filter(({ id }) => !client.fetchedGuilds.has(id));
-      if (shouldBeFetchedServers.length > 0) await fetchGuildsMembers(shouldBeFetchedServers.map(server => server.id)).catch(() => null);
-
+      
       const sortedServers = servers.sort((a, b) => {
         let aGuild = client.guilds.cache.get(a.id);
         let bGuild = client.guilds.cache.get(b.id);
@@ -61,7 +58,6 @@ module.exports = {
         case 'Votes': return b.votes - a.votes;
         case 'Voice': return bGuild.members.cache.filter(member => !member.bot && member.voice.channel).size - aGuild.members.cache.filter(member => !member.bot && member.voice.channel).size;
         case 'Members': return bGuild.memberCount - aGuild.memberCount;
-        case 'Online': return bGuild.approximatePresenceCount - aGuild.approximatePresenceCount;
         case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
         case 'Oldest': return aGuild.joinedTimestamp - bGuild.joinedTimestamp;
         case 'Boosts': return bGuild.premiumSubscriptionCount - aGuild.premiumSubscriptionCount;
@@ -70,6 +66,9 @@ module.exports = {
       const total = await Server.countDocuments(findQuery);
       const maxReached = skip + servers.length >= total;
       const premiumUserIds = await Premium.find({ 'user.id': { $in: servers.map(server => client.guilds.cache.get(server.id)).map(guild => guild.ownerId) } }).select('user.id');
+
+      const shouldBeFetchedServers = sortedServers.filter(({ id }) => !client.fetchedGuilds.has(id));
+      if (shouldBeFetchedServers.length > 0) await fetchGuildsMembers(shouldBeFetchedServers.map(server => server.id)).catch(() => null);
 
       return response.json({
         maxReached,
@@ -86,7 +85,6 @@ module.exports = {
             switch (sort) {
             case 'Votes': data.votes = server.votes; break;
             case 'Voice': data.voice = guild.members.cache.filter(member => !member.bot && member.voice.channel).size; break;
-            case 'Online': data.online = guild.approximatePresenceCount; break;
             case 'Boosts': data.boosts = guild.premiumSubscriptionCount; break;
             }
 
