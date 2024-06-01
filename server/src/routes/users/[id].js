@@ -92,7 +92,7 @@ module.exports = {
               banner_url: guild.bannerURL({ format: 'png', size: 2048 }),
               description: server.description,
               total_members: guild.memberCount,
-              online_members: guild.approximate_presence_count,
+              online_members: guild.approximatePresenceCount,
               votes: server.votes,
               category: server.category,
               keywords: server.keywords,

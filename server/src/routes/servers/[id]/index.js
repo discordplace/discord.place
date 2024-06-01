@@ -78,7 +78,7 @@ module.exports = {
         icon_url: guild.iconURL(),
         banner_url: guild.bannerURL({ format: 'png', size: 2048 }),
         total_members: guild.memberCount,
-        online_members: guild.approximate_presence_count,
+        online_members: guild.approximatePresenceCount,
         total_members_in_voice: guild.members.cache.filter(member => !member.bot && member.voice.channel).size,
         vanity_url: guild.vanityURLCode ? `https://discord.com/invite/${guild.vanityURLCode}` : null,
         boost_level: guild.premiumTier,
