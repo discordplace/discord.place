@@ -21,6 +21,11 @@ const config = {
   api: {
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place'
   },
+  analytics: {
+    url: 'https://analytics.discord.place',
+    script: 'https://analytics.discord.place/script.js',
+    websiteId: 'b8fea5b8-7789-4381-97a0-0b474d9bb87a'
+  },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;
     return url;
