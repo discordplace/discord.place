@@ -38,7 +38,7 @@ export default function Approved({ data }) {
       loading: 'Deleting review..',
       success: () => {
         closeModal('delete-review');
-        fetchData('reviews')
+        fetchData(['reviews'])
           .then(() => setLoading(false));
 
         return 'Review deleted successfully!';

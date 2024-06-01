@@ -30,7 +30,7 @@ export default function WaitingApproval({ data }) {
     toast.promise(approveBot(id), {
       loading: 'Approving bot..',
       success: () => {
-        fetchData('bots')
+        fetchData(['bots'])
           .then(() => setLoading(false));
 
         return 'Bot approved successfully!';
@@ -48,7 +48,7 @@ export default function WaitingApproval({ data }) {
     toast.promise(denyBot(id, reason), {
       loading: 'Denying bot..',
       success: () => {
-        fetchData('bots')
+        fetchData(['bots'])
           .then(() => setLoading(false));
 
         return 'Bot denied successfully!';

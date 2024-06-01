@@ -30,7 +30,7 @@ export default function WaitingApproval({ data }) {
     toast.promise(approveEmoji(id, isPack), {
       loading: 'Approving emoji..',
       success: () => {
-        fetchData('emojis')
+        fetchData(['emojis'])
           .then(() => setLoading(false));
 
         return 'Emoji approved successfully!';
@@ -48,7 +48,7 @@ export default function WaitingApproval({ data }) {
     toast.promise(denyEmoji(id, isPack, reason), {
       loading: 'Denying emoji..',
       success: () => {
-        fetchData('emojis')
+        fetchData(['emojis'])
           .then(() => setLoading(false));
 
         return 'Emoji denied successfully!';

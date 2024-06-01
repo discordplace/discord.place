@@ -47,7 +47,7 @@ export default function WaitingApproval({ data }) {
       loading: 'Approving review..',
       success: () => {
         closeModal('approve-review');
-        fetchData('reviews')
+        fetchData(['reviews'])
           .then(() => setLoading(false));
 
         return 'Review approved successfully!';
@@ -69,7 +69,7 @@ export default function WaitingApproval({ data }) {
     toast.promise(denyReview(id, reviewId, reason), {
       loading: 'Denying review..',
       success: () => {
-        fetchData('reviews')
+        fetchData(['reviews'])
           .then(() => setLoading(false));
 
         return 'Review denied successfully!';
@@ -91,7 +91,7 @@ export default function WaitingApproval({ data }) {
       loading: 'Deleting review..',
       success: () => {
         closeModal('delete-review');
-        fetchData('reviews')
+        fetchData(['reviews'])
           .then(() => setLoading(false));
 
         return 'Review deleted successfully!';
