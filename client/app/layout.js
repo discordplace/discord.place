@@ -62,6 +62,7 @@ export default function RootLayout({ children }) {
           defer={true}
           src={config.analytics.script} 
           data-website-id={config.analytics.websiteId}
+          data-domains={config.analytics.domains.join(',')}
         />
         <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
         <Script id='google-analytics'>
