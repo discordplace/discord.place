@@ -84,7 +84,7 @@ export default function Sidebar() {
         {
           type: 'redirect',
           id: 'analytics',
-          href: config.analytics.url,
+          href: `${config.analytics.url}/websites/${config.analytics.websiteId}`,
           name: 'Analytics',
           icon: SiGoogleanalytics
         },
@@ -149,7 +149,7 @@ export default function Sidebar() {
             src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
             width={200} 
             height={200} 
-            className='w-[48px] h-[48px]' 
+            className='w-[32px] h-[32px]' 
             alt='discord.placeLogo' 
           />
 
@@ -253,7 +253,7 @@ export default function Sidebar() {
         'flex justify-between pt-6 mt-auto mb-6 border-t border-t-primary',
         isMobile && isCollapsed && 'hidden'
       )}>
-        <div className='flex items-center gap-x-4'>          
+        <div className='flex items-center gap-x-4'>        
           {loggedIn && (
             <>
               <Image
