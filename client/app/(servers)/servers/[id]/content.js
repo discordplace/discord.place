@@ -10,8 +10,10 @@ import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import Script from 'next/script';
 import { forwardRef } from 'react';
 import cn from '@/lib/cn';
+import useThemeStore from '@/stores/theme';
 
 export default function Content({ server }) {
+  const theme = useThemeStore(state => state.theme);
 
   // eslint-disable-next-line react/display-name
   const ForwardedServerIcon = forwardRef((props, ref) => (
@@ -68,7 +70,7 @@ export default function Content({ server }) {
               {server.badges.map(badge => (
                 <Tooltip key={badge} content={badge}>
                   <MotionImage 
-                    src={`/profile-badges/${badge.toLowerCase()}.svg`} 
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.toLowerCase()}.svg`} 
                     width={24} 
                     height={24} 
                     alt={`${badge} Badge`}

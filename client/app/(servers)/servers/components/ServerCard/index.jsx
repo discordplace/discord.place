@@ -11,8 +11,10 @@ import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import Image from 'next/image';
 import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
+import useThemeStore from '@/stores/theme';
 
 export default function ServerCard(props) {
+  const theme = useThemeStore(state => state.theme);
   const isMobile = useMedia('(max-width: 420px)', false);
   const storedSort = useSearchStore(state => state.sort);
   const sort = props.overridedSort || storedSort;
@@ -115,7 +117,7 @@ export default function ServerCard(props) {
 
             {props.server.premium && (
               <Image
-                src='/profile-badges/premium.svg'
+                src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_premium.svg`}
                 alt='Premium badge'
                 width={20}
                 height={20}

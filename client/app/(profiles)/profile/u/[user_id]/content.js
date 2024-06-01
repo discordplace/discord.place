@@ -13,6 +13,7 @@ import { HiCheck } from 'react-icons/hi';
 import cn from '@/lib/cn';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import BotCard from '@/app/(bots)/bots/components/Hero/PopularBots/Card';
+import useThemeStore from '@/stores/theme';
 
 function StatBlock({ fields, index }) {
   return (
@@ -55,6 +56,8 @@ function StatBlock({ fields, index }) {
 }
 
 export default function Content({ user }) {
+  const theme = useThemeStore(state => state.theme);
+
   return (
     <div className='flex flex-col items-center w-full px-8 mt-32 mb-8 gap-y-8 lg:px-0'>          
       <div className="relative p-3 rounded-[2rem] bg-secondary h-max w-full max-w-[600px]">
@@ -121,7 +124,7 @@ export default function Content({ user }) {
               {(user.profile?.badges || []).map(badge => (
                 <Tooltip content={badge.tooltip} key={badge.name}>
                   <Image
-                    src={`/profile-badges/${badge.name.toLowerCase()}.svg`}
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.name.toLowerCase()}.svg`}
                     alt={`${badge.name} Badge`}
                     width={20}
                     height={20}
@@ -161,7 +164,7 @@ export default function Content({ user }) {
               {(user.profile?.badges || []).map(badge => (
                 <Tooltip content={badge.tooltip} key={badge.name}>
                   <Image
-                    src={`/profile-badges/${badge.name.toLowerCase()}.svg`}
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.name.toLowerCase()}.svg`}
                     alt={`${badge.name} Badge`}
                     width={20}
                     height={20}

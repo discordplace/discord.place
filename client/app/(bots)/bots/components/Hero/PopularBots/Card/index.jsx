@@ -7,8 +7,10 @@ import { BiSolidCategory } from 'react-icons/bi';
 import useSearchStore from '@/stores/bots/search';
 import { TiStar } from 'react-icons/ti';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import useThemeStore from '@/stores/theme';
 
 export default function Card({ data, overridedSort }) {
+  const theme = useThemeStore(state => state.theme);
   const storedSort = useSearchStore(state => state.sort);
   const sort = overridedSort || storedSort;
   const category = useSearchStore(state => state.category);
@@ -101,7 +103,7 @@ export default function Card({ data, overridedSort }) {
 
             {data.owner?.premium && (
               <Image
-                src='/profile-badges/premium.svg'
+                src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_premium.svg`}
                 alt='Premium badge'
                 width={20}
                 height={20}

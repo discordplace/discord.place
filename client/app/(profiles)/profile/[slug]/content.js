@@ -111,9 +111,9 @@ export default function Content({ profile }) {
               {profile.badges.map(badge => (
                 <Tooltip key={badge.name} content={badge.tooltip}>
                   <MotionImage 
-                    src={`/profile-badges/${badge.name.toLowerCase()}.svg`} 
-                    width={24} 
-                    height={24} 
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.name.toLowerCase()}.svg`} 
+                    width={24}
+                    height={24}
                     alt={`${badge.name} Badge`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

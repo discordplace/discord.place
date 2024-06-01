@@ -17,8 +17,11 @@ import { TiHome } from 'react-icons/ti';
 import { RiPencilFill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCircleUser, FaUser } from 'react-icons/fa6';
 import { FaShieldAlt } from 'react-icons/fa';
+import useThemeStore from '@/stores/theme';
 
 export default function UserSide({ className }) {
+  const theme = useThemeStore(state => state.theme);
+
   const { loggedIn, setLoggedIn, setUser } = useAuthStore(useShallow(state => ({
     loggedIn: state.loggedIn,
     setLoggedIn: state.setLoggedIn,
@@ -86,7 +89,7 @@ export default function UserSide({ className }) {
               {user.premium && (
                 <span className='flex items-center justify-center text-sm gap-x-1.5 text-tertiary'>
                   <Image
-                    src='/profile-badges/premium.svg'
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_premium.svg`}
                     width={14}
                     height={14}
                     alt='Premium Badge'
