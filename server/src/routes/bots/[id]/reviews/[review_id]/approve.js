@@ -3,6 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
+const Discord = require('discord.js');
 
 module.exports = {
   post: [
@@ -41,6 +42,42 @@ module.exports = {
       if (publisher) {
         const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
         if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${user.username}** has been approved!` }).catch(() => null);
+      
+        const embeds = [
+          new Discord.EmbedBuilder()
+            .setColor(Discord.Colors.Green)
+            .setAuthor({ name: `Review Approved | ${user.tag}`, iconURL: user.displayAvatarURL() })
+            .setTimestamp()
+            .setFields([
+              {
+                name: 'Review',
+                value: review.content,
+                inline: true
+              },
+              {
+                name: 'Rating',
+                value: '⭐'.repeat(review.rating),
+                inline: true
+              },
+              {
+                name: 'Reviewer',
+                value: `<@${review.user.id}>`
+              }
+            ])
+            .setFooter({ text: `Review from @${publisher.username}`, iconURL: publisher.displayAvatarURL() })
+        ];
+
+        const components = [
+          new Discord.ActionRowBuilder()
+            .addComponents(
+              new Discord.ButtonBuilder()
+                .setStyle(Discord.ButtonStyle.Link)
+                .setURL(`${config.frontendUrl}/bot/${review.bot.id}`)
+                .setLabel('View Bot on discord.place')
+            )
+        ];
+
+        client.channels.cache.get(config.portalChannelId).send({ embeds, components });
       }
     }
   ]

@@ -259,6 +259,16 @@ module.exports = {
               .setTimestamp()
               .setFields([
                 {
+                  name: 'Review',
+                  value: review.content,
+                  inline: true
+                },
+                {
+                  name: 'Rating',
+                  value: '⭐'.repeat(review.rating),
+                  inline: true
+                },
+                {
                   name: 'Reviewer',
                   value: interaction.user.toString()
                 }
@@ -345,13 +355,13 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour bot **${botUser.username}** has been approved!` }).catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour bot **${botUser.tag}** has been approved!` }).catch(() => null);
         }
 
         const embeds = [
           new Discord.EmbedBuilder()
             .setColor(Discord.Colors.Green)
-            .setAuthor({ name: `Bot Approved | ${botUser.username}`, iconURL: botUser.displayAvatarURL() })
+            .setAuthor({ name: `Bot Approved | ${botUser.tag}`, iconURL: botUser.displayAvatarURL() })
             .setTimestamp()
             .setFields([
               {
@@ -414,13 +424,13 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by ${interaction.user}.\nReason: **${config.botsDenyReasons[reason].description}**` }).catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.tag}** has been denied by ${interaction.user}.\nReason: **${config.botsDenyReasons[reason].description}**` }).catch(() => null);
         }
 
         const embeds = [
           new Discord.EmbedBuilder()
             .setColor(Discord.Colors.Red)
-            .setAuthor({ name: `Bot Denied | ${botUser.username}`, iconURL: botUser.displayAvatarURL() })
+            .setAuthor({ name: `Bot Denied | ${botUser.tag}`, iconURL: botUser.displayAvatarURL() })
             .setTimestamp()
             .setFields([
               {
@@ -508,6 +518,16 @@ module.exports = {
               .setAuthor({ name: `Review Approved | ${guild.name}`, iconURL: guild.iconURL() })
               .setTimestamp()
               .setFields([
+                {
+                  name: 'Review',
+                  value: review.content,
+                  inline: true
+                },
+                {
+                  name: 'Rating',
+                  value: '⭐'.repeat(review.rating),
+                  inline: true
+                },
                 {
                   name: 'Reviewer',
                   value: interaction.user.toString()
