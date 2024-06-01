@@ -2,7 +2,6 @@ const Reward = require('@/schemas/Server/Vote/Reward');
 const Server = require('@/schemas/Server');
 const sendLog = require('@/src/utils/servers/sendLog');
 const Discord = require('discord.js');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = async member => {
   if (member.user.bot) return;
@@ -21,13 +20,6 @@ module.exports = async member => {
       const role = member.guild.roles.cache.get(reward.role.id);
       if (!role) {
         await Reward.deleteOne({ 'role.id': reward.role.id });
-
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: client.user.id,
-          target: member.guild,
-          message: `Role with ID ${reward.role.id} has been deleted from the database because it was not found in the server.`
-        });
 
         sendLog(member.guild.id, `Role with ID ${reward.role.id} has been deleted from the database because it was not found in the server.`)
           .catch(() => null);
@@ -51,14 +43,6 @@ module.exports = async member => {
           sendLog(member.guild.id, `Failed to give the reward role **${role.name}** to **@${Discord.escapeMarkdown(member.user.username)}** (${member.user.id}). (Error: ${error.message})`)
             .catch(() => null);
         });
-        
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: member.user.id,
-        target: member.guild,
-        message: `Given the reward role @${role.name} for voting ${voter.vote} times.`
-      });
-  
 
       logger.send(`User ${member.user.id} has been given the reward role ${role.name} for voting ${voter.vote} times in server ${member.guild.id}. (Newly joined)`);
 

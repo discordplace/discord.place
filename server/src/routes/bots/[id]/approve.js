@@ -4,7 +4,6 @@ const { param, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -27,14 +26,7 @@ module.exports = {
       if (bot.verified === true) return response.sendError('Bot is already verified.', 400);
 
       await bot.updateOne({ verified: true });
-
-      new createActivity({
-        type: 'MODERATOR_ACTIVITY',
-        user_id: request.user.id,
-        target: botUser,
-        message: 'Bot has been approved.'
-      });
-
+      
       const guild = client.guilds.cache.get(config.guildId);
 
       const publisher = await guild.members.fetch(bot.owner.id).catch(() => null);

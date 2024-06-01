@@ -12,7 +12,6 @@ const getValidationError = require('@/utils/getValidationError');
 const Bot = require('@/schemas/Bot');
 const BotReview = require('@/schemas/Bot/Review');
 const BotDeny = require('@/src/schemas/Bot/Deny');
-const createActivity = require('@/utils/createActivity');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -104,16 +103,6 @@ module.exports = {
   
         profile.verified = true;
         await profile.save();
-
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: 'USER',
-          target: {
-            id: profile.user.id
-          },
-          message: `Profile ${profile.slug} has been verified.`
-        });
   
         return interaction.followUp({ content: 'Profile has been verified.' });
       }
@@ -130,16 +119,6 @@ module.exports = {
         profile.verified = false;
         await profile.save();
 
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: 'USER',
-          target: {
-            id: profile.user.id
-          },
-          message: `Profile ${profile.slug} has been unverified.`
-        });
-  
         return interaction.followUp({ content: 'Profile has been unverified.' });
       }
     }
@@ -157,16 +136,6 @@ module.exports = {
         if (emoji.approved === true) return interaction.followUp({ content: `Emoji${emoji.emoji_ids ? ' pack' : ''} is already approved.` });
   
         await emoji.updateOne({ approved: true });
-  
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: 'USER',
-          target: {
-            id: emoji.user.id
-          },
-          message: `Emoji${emoji.emoji_ids ? ' pack' : ''} ${emoji.name} has been approved.`
-        });
 
         const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
         if (publisher) {
@@ -223,16 +192,6 @@ module.exports = {
         S3.send(command)
           .then(async () => {
             await emoji.deleteOne();
-  
-            createActivity({
-              type: 'MODERATOR_ACTIVITY',
-              user_id: interaction.user.id,
-              target_type: 'USER',
-              target: {
-                id: emoji.user.id
-              },
-              message: `Emoji${emoji.emoji_ids ? ' pack' : ''} ${emoji.name} has been denied${reason ? ` with reason ${config.emojisDenyReasons[reason].title}` : ''}.`
-            });
 
             const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
             if (publisher) {
@@ -281,16 +240,6 @@ module.exports = {
         if (review.approved === true) return interaction.followUp({ content: 'Review is already approved.' });
   
         await review.updateOne({ approved: true });
-  
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: 'USER',
-          target: {
-            id: review.user.id
-          },
-          message: `Review to bot ${review.bot.id} has been approved.`
-        });
 
         const bot = await Bot.findOne({ id: review.bot.id });
         if (!bot) return interaction.followUp({ content: 'Bot not found.' });
@@ -322,16 +271,6 @@ module.exports = {
 
         await review.deleteOne();
 
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: 'USER',
-          target: {
-            id: review.user.id
-          },
-          message: `Review to bot ${review.bot.id} has been denied.`
-        });
-
         const bot = await Bot.findOne({ id: review.bot.id });
         if (!bot) return interaction.followUp({ content: 'Bot not found.' });
 
@@ -357,17 +296,6 @@ module.exports = {
         if (!review) return interaction.followUp({ content: 'Review not found.' });
 
         await review.deleteOne();
-
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: 'USER',
-          target: {
-            id: review.user.id
-          },
-          message: `Review to bot ${review.bot.id} has been deleted.`
-        });
-
         return interaction.followUp({ content: 'Review deleted.' });
       }
 
@@ -387,13 +315,6 @@ module.exports = {
         if (bot.verified === true) return interaction.followUp({ content: 'Bot is already verified.' });
         
         await bot.updateOne({ verified: true });
-
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target: botUser,
-          message: 'Bot has been approved.'
-        });
 
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
@@ -447,13 +368,6 @@ module.exports = {
         if (bot.verified === true) return interaction.followUp({ content: 'Bot is already verified.' });
 
         await bot.deleteOne();
-
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target: botUser,
-          message: `Bot has been denied with reason ${config.botsDenyReasons[reason].title}.`
-        });
 
         new BotDeny({
           bot: {
@@ -557,16 +471,6 @@ module.exports = {
         const guild = client.guilds.cache.get(review.server.id);
         if (!guild) return interaction.followUp({ content: 'Server not found.' });
 
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: 'USER',
-          target: {
-            id: review.user.id
-          },
-          message: `Review to ${guild.name} (${guild.id}) has been approved.`
-        });
-
         const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
@@ -592,16 +496,6 @@ module.exports = {
         const guild = client.guilds.cache.get(review.server.id);
         if (!guild) return interaction.followUp({ content: 'Server not found.' });
 
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: 'USER',
-          target: {
-            id: review.user.id
-          },
-          message: `Review to ${guild.name} (${guild.id}) has been denied.`
-        });
-
         const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
@@ -621,18 +515,6 @@ module.exports = {
         if (!review) return interaction.followUp({ content: 'Review not found.' });
 
         await review.deleteOne();
-
-        const guild = client.guilds.cache.get(review.server.id);
-
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: 'USER',
-          target: {
-            id: review.user.id
-          },
-          message: `Review to ${guild ? `${guild.name} (${guild.id})` : review.server.id} has been deleted.`
-        });
 
         return interaction.followUp({ content: 'Review deleted.' });
       }
@@ -672,16 +554,6 @@ module.exports = {
         if (validationError) return interaction.followUp({ content: validationError });
 
         await quarantine.save();
-
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: type === 'USER_ID' ? 'USER' : 'GUILD',
-          target: {
-            id: value
-          },
-          message: `Quarantine with ${restriction} restriction has been created. Reason: ${reason || 'No reason provided.'}`
-        });
 
         const embeds = [
           new Discord.EmbedBuilder()
@@ -727,16 +599,6 @@ module.exports = {
         if (!quarantine) return interaction.followUp({ content: 'Quarantine not found.' });
 
         await quarantine.deleteOne();
-
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: interaction.user.id,
-          target_type: quarantine.type === 'USER_ID' ? 'USER' : 'GUILD',
-          target: {
-            id: quarantine.type === 'USER_ID' ? quarantine.user.id : quarantine.guild.id
-          },
-          message: `Quarantine with ${quarantine.restriction} restriction has been removed. Reason: ${quarantine.reason || 'No reason provided.'}`
-        });
 
         const embeds = [
           new Discord.EmbedBuilder()

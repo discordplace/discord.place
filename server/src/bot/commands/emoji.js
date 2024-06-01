@@ -4,7 +4,6 @@ const EmojiPack = require('@/schemas/Emoji/Pack');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const sleep = require('@/utils/sleep');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -83,13 +82,6 @@ module.exports = {
 
       if (createdEmojis.length === 0) return message.edit({ content: `Pack **${pack.name}** failed to upload.` });
 
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: interaction.user.id,
-        target: interaction.guild,
-        message: `Uploaded emoji pack ${pack.name} to the server.`
-      });
-
       await EmojiPack.updateOne({ id: packId }, { $inc: { downloads: 1 } });
 
       return message.edit({ content: `Successfully uploaded **${pack.name}**!\n\n${createdEmojis.map(({ emoji }, index) => `${index + 1}. ${emoji}`).join('\n')}` });
@@ -101,13 +93,6 @@ module.exports = {
       interaction.guild.emojis.create({ attachment: getEmojiURL(emoji.id, emoji.animated), name: emoji.name })
         .then(createdEmoji => {
           emoji.updateOne({ $inc: { downloads: 1 } });
-
-          createActivity({
-            type: 'USER_ACTIVITY',
-            user_id: interaction.user.id,
-            target: interaction.guild,
-            message: `Uploaded emoji ${emoji.name} to the server.`
-          });
 
           return interaction.followUp({ content: `Emoji uploaded! ${createdEmoji}` });
         })

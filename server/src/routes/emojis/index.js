@@ -12,7 +12,6 @@ const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const DashboardData = require('@/schemas/Dashboard/Data');
-const createActivity = require('@/utils/createActivity');
 
 const multer = require('multer');
 const upload = multer({
@@ -110,16 +109,6 @@ module.exports = {
           .then(async () => {
             await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
 
-            createActivity({
-              type: 'USER_ACTIVITY',
-              user_id: request.user.id,
-              target_type: 'USER',
-              target: {
-                id: request.user.id
-              },
-              message: `Created a new emoji package named ${name}.`
-            });
-
             const embeds = [
               new Discord.EmbedBuilder()
                 .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
@@ -194,16 +183,6 @@ module.exports = {
         S3.send(command)
           .then(async () => {
             await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
-
-            createActivity({
-              type: 'USER_ACTIVITY',
-              user_id: request.user.id,
-              target_type: 'USER',
-              target: {
-                id: request.user.id
-              },
-              message: `Created a new emoji named ${name}.`
-            });
 
             const embeds = [
               new Discord.EmbedBuilder()

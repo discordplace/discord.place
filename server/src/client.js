@@ -4,7 +4,6 @@ const { CronJob } = require('cron');
 const axios = require('axios');
 const CloudflareAPI = require('cloudflare');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
-const createActivity = require('@/utils/createActivity');
 
 // Schemas
 const Server = require('@/schemas/Server');
@@ -144,13 +143,6 @@ module.exports = class Client {
       if (!invite || !invite.find(invite => invite.code === server.invite_code.code)) {
         await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
 
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: client.user.id,
-          target: guild,
-          message: `Invite code ${server.invite_code.code} was deleted.`
-        });
-
         logger.send(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
       }
     }
@@ -220,13 +212,6 @@ module.exports = class Client {
       type: Discord.ActivityType.Custom,
       name: 'status',
       state
-    });
-
-    createActivity({
-      type: 'MODERATOR_ACTIVITY',
-      user_id: client.user.id,
-      target: client.user,
-      message: `Client activity state updated to: ${state}`
     });
   }
 
@@ -318,13 +303,6 @@ module.exports = class Client {
       users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
       guilds: client.guilds.cache.size
     }).save();
-
-    createActivity({
-      type: 'MODERATOR_ACTIVITY',
-      user_id: client.user.id,
-      target: client.user,
-      message: 'Created new dashboard data.'
-    });
 
     logger.send('Created new dashboard data.');
   }

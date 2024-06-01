@@ -2,7 +2,6 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -35,16 +34,6 @@ module.exports = {
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${guild.name}** has been approved!` }).catch(() => null);
         }
       }
-
-      createActivity({
-        type: 'MODERATOR_ACTIVITY',
-        user_id: request.user.id,
-        target_type: 'USER',
-        target: { 
-          id: review.user.id
-        },
-        message: `Review to ${guild?.name ? `${guild.name} (${guild.id})` : id} has been approved.`
-      });
 
       return response.sendStatus(204).end();
     }

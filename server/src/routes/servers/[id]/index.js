@@ -16,7 +16,6 @@ const getValidationError = require('@/utils/getValidationError');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const DashboardData = require('@/schemas/Dashboard/Data');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   get: [
@@ -183,15 +182,6 @@ module.exports = {
 
       await DashboardData.findOneAndUpdate({}, { $inc: { servers: 1 } }, { sort: { createdAt: -1 } });
 
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user: {
-          id: request.user.id
-        },
-        target: guild,
-        message: 'Listed a server.'
-      });
-
       if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 
       return response.status(204).end();
@@ -223,15 +213,6 @@ module.exports = {
       ];
 
       await Promise.all(bulkOperations);
-
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user: {
-          id: request.user.id
-        },
-        target: guild,
-        message: 'Unlisted a server.'
-      });
 
       return response.status(204).end();
     }
@@ -305,20 +286,9 @@ module.exports = {
 
       if (!server.isModified()) return response.sendError('No changes were made.', 400);
 
-      const updatedFields = Object.keys(server._doc).filter(key => server.isModified(key));
-
       await server.save();
 
       await updatePanelMessage(id);
-
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user: {
-          id: request.user.id
-        },
-        target: guild,
-        message: `Server fields updated: ${updatedFields.join(', ')}`
-      });
 
       if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 

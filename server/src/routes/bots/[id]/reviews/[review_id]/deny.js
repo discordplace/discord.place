@@ -4,7 +4,6 @@ const { param, matchedData, validationResult, body } = require('express-validato
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const bodyParser = require('body-parser');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -33,16 +32,6 @@ module.exports = {
       if (review.approved === true) return response.sendError('Review already approved.', 400);
 
       await review.delete();
-
-      new createActivity({
-        type: 'MODERATOR_ACTIVITY',
-        user_id: request.user.id,
-        target_type: 'USER',
-        target: { 
-          id: review.user.id 
-        },
-        message: `Review to bot ${id} has been denied.`
-      });
 
       response.sendStatus(204).end();
 

@@ -2,7 +2,6 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, body, matchedData, validationResult } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   patch: [
@@ -35,16 +34,6 @@ module.exports = {
       if (command_count) bot.command_count = { value: command_count, updatedAt: new Date() };
 
       await bot.save();
-
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: bot.owner.id,
-        target_type: 'USER',
-        target: { 
-          id: bot.id
-        },
-        message: `Commands count has been updated to ${command_count}.`
-      });
 
       return response.json({ success: true });
     }

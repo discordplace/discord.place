@@ -3,7 +3,6 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const slugValidation = require('@/validations/profiles/slug');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -23,16 +22,6 @@ module.exports = {
 
       const canDelete = request.user.id == profile.user.id || config.permissions.canDeleteProfiles.includes(request.user.id);
       if (!canDelete) return response.sendError('You are not allowed to delete this profile.', 403);
-    
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: request.user.id,
-        target_type: 'USER',
-        target: { 
-          id: profile.user.id 
-        },
-        message: `Profile ${profile.slug} has been deleted.`
-      }).save();
 
       await profile.deleteOne();
 

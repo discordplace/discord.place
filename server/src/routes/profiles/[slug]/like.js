@@ -4,7 +4,6 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
 const { param, validationResult, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   patch: [
@@ -28,16 +27,6 @@ module.exports = {
       const isLiked = profile.likes.includes(request.user.id);
       if (isLiked) await Profile.updateOne({ slug }, { $pull: { likes: request.user.id } });
       else await Profile.updateOne({ slug }, { $push: { likes: request.user.id } });
-      
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: request.user.id,
-        target_type: 'USER',
-        target: { 
-          id: profile.user.id 
-        },
-        message: `Profile ${profile.user.id} has been ${isLiked ? 'unliked' : 'liked'}.`
-      });
 
       return response.json({ isLiked: !isLiked });
     }

@@ -5,7 +5,6 @@ const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const Discord = require('discord.js');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -30,16 +29,6 @@ module.exports = {
       if (emoji.approved === true) return response.sendError(`Emoji${isPack ? ' pack' : ''} already approved.`, 400);
 
       await emoji.updateOne({ approved: true });
-
-      createActivity({
-        type: 'MODERATOR_ACTIVITY',
-        user_id: request.user.id,
-        target_type: 'USER',
-        target: { 
-          id: emoji.user.id
-        },
-        message: `Emoji${isPack ? ' pack' : ''} ${emoji.id} has been approved.`
-      });
 
       const guild = client.guilds.cache.get(config.guildId);
 

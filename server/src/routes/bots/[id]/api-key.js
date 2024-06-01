@@ -4,7 +4,6 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const Bot = require('@/schemas/Bot');
 const crypto = require('node:crypto');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -36,13 +35,6 @@ module.exports = {
       bot.api_key = bot.encryptApiKey(apiKey);
 
       await bot.save();
-
-      new createActivity({
-        type: 'MODERATOR_ACTIVITY',
-        user_id: request.user.id,
-        target: user,
-        message: 'Bot API key has been created.'
-      });
 
       return response.json({ apiKey });
     }
@@ -77,13 +69,6 @@ module.exports = {
 
       await bot.save();
 
-      new createActivity({
-        type: 'MODERATOR_ACTIVITY',
-        user_id: request.user.id,
-        target: user,
-        message: 'Bot API key has been regenerated.'
-      });
-
       return response.json({ apiKey });
     }
   ],
@@ -114,13 +99,6 @@ module.exports = {
       bot.api_key = undefined;
 
       await bot.save();
-
-      new createActivity({
-        type: 'MODERATOR_ACTIVITY',
-        user_id: request.user.id,
-        target: user,
-        message: 'Bot API key has been deleted.'
-      });
 
       return response.sendStatus(204).end();
     }

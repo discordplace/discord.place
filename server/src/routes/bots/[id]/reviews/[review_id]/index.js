@@ -2,7 +2,6 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult } = require('express-validator');
 const Review = require('@/schemas/Bot/Review');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   delete: [
@@ -24,16 +23,6 @@ module.exports = {
       if (!review) return response.sendError('Review not found.', 404);
 
       await review.deleteOne();
-
-      new createActivity({
-        type: 'MODERATOR_ACTIVITY',
-        user_id: request.user.id,
-        target_type: 'USER',
-        target: { 
-          id: review.user.id 
-        },
-        message: `Review to bot ${id} has been deleted.`
-      });
 
       return response.sendStatus(204).end();
     }

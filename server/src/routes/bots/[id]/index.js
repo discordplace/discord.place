@@ -14,7 +14,6 @@ const webhookValidation = require('@/validations/bots/webhook');
 const Review = require('@/schemas/Bot/Review');
 const Deny = require('@/schemas/Bot/Deny');
 const DashboardData = require('@/schemas/Dashboard/Data');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   get: [
@@ -194,13 +193,6 @@ module.exports = {
 
       await Deny.deleteMany({ 'bot.id': user.id });
 
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: request.user.id,
-        target: user,
-        message: 'Listed a bot.'
-      });
-
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
       const embeds = [
@@ -265,13 +257,6 @@ module.exports = {
       ];
 
       await Promise.all(bulkOperations);
-
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: request.user.id,
-        target: user,
-        message: 'Deleted a bot.'
-      });
 
       return response.status(204).end();
     }
@@ -355,15 +340,6 @@ module.exports = {
 
       const validationError = getValidationError(bot);
       if (validationError) return response.sendError(validationError, 400);
-
-      const updatedFields = Object.keys(bot._doc).filter(key => bot.isModified(key));
-
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: request.user.id,
-        target: user,
-        message: `Updated bot fields: ${updatedFields.join(', ')}`
-      });
 
       await bot.save();
 

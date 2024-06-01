@@ -20,7 +20,6 @@ import { useMedia } from 'react-use';
 import { useEffect } from 'react';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { FaUserTimes } from 'react-icons/fa';
-import { TbActivityHeartbeat } from 'react-icons/tb';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -44,12 +43,6 @@ export default function Sidebar() {
           name: `Blocked IPs${data?.blockedIps?.length ? ` (${data.blockedIps.length})` : ''}`,
           icon: MdMyLocation,
           disabled: data?.permissions?.canViewBlockedIPs === false || data?.permissions?.canDeleteBlockedIPs === false
-        },
-        {
-          id: 'recentActivity',
-          name: `Recent Activity${data?.recentActivity?.length ? ` (${data.recentActivity.length})` : ''}`,
-          icon: TbActivityHeartbeat,
-          disabled: data?.permissions?.canViewRecentActivity === false
         }
       ]
     },

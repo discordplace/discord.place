@@ -2,8 +2,6 @@ const { param, validationResult, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const checkAuthentication = require('@/src/utils/middlewares/checkAuthentication');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
-const createActivity = require('@/utils/createActivity');
-
 module.exports = {
   delete: [
     checkAuthentication,
@@ -18,18 +16,6 @@ module.exports = {
       if (!canDelete) return response.sendError('You do not have permission to delete timeouts.', 403);
 
       const { id, user_id } = matchedData(request);
-
-      const guild = client.guilds.cache.get(id);
-
-      createActivity({
-        type: 'MODERATOR_ACTIVITY',
-        user_id: request.user.id,
-        target_type: 'USER',
-        target: { 
-          id: user_id
-        },
-        message: `Timeout record for ${guild?.name ? `${guild.name} (${guild.id})` : id} has been deleted.`
-      });
 
       ServerTimeout.findOneAndDelete({ 'guild.id': id, 'user.id': user_id })
         .then(() => response.sendStatus(204).end())

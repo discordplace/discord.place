@@ -5,7 +5,6 @@ const Discord = require('discord.js');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
 const Reward = require('@/schemas/Server/Vote/Reward');
-const createActivity = require('@/utils/createActivity');
 
 async function incrementVote(guildId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -79,13 +78,6 @@ async function incrementVote(guildId, userId) {
     } 
   }).save();
 
-  createActivity({
-    type: 'USER_ACTIVITY',
-    user_id: userId,
-    target: guild,
-    message: 'Voted for the server.'
-  });
-
   updatePanelMessage(guild.id);
 
   const embed = new Discord.EmbedBuilder()
@@ -117,13 +109,6 @@ async function incrementVote(guildId, userId) {
       if (!role) {
         await Reward.deleteOne({ 'role.id': reward.role.id });
 
-        createActivity({
-          type: 'MODERATOR_ACTIVITY',
-          user_id: client.user.id,
-          target: guild,
-          message: `Role with ID ${reward.role.id} has been deleted from the database because it was not found in the server.`
-        });
-
         sendLog(guild.id, `Role with ID ${reward.role.id} has been deleted from the database because it was not found in the server.`)
           .catch(() => null);
         
@@ -149,13 +134,6 @@ async function incrementVote(guildId, userId) {
           sendLog(guild.id, `Failed to give the reward role **${role.name}** to **@${Discord.escapeMarkdown(user.username)}** (${user.id}). (Error: ${error.message})`)
             .catch(() => null);
         });
-
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: userId,
-        target: guild,
-        message: `Given the reward role @${role.name} for voting ${voterVotes} times.`
-      });
 
       logger.send(`User ${user.id} has been given the reward role ${role.name} for voting ${voterVotes} times in server ${guild.id}.`);
 

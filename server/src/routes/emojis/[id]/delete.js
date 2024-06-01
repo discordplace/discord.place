@@ -3,7 +3,6 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Emoji = require('@/src/schemas/Emoji');
 const idValidation = require('@/validations/emojis/id');
-const createActivity = require('@/utils/createActivity');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -39,16 +38,6 @@ module.exports = {
       });
 
       S3.send(command).catch(() => null);
-
-      createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: request.user.id,
-        target_type: 'USER',
-        target: { 
-          id: emoji.user.id
-        },
-        message: `Emoji ${emoji.id} has been deleted.`
-      });
 
       await emoji.deleteOne();
 

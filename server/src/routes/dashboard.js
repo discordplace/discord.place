@@ -9,7 +9,6 @@ const BotDeny = require('@/schemas/Bot/Deny');
 const ServerReview = require('@/schemas/Server/Review');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
-const DashboardActivity = require('@/schemas/Dashboard/Activity');
 const BlockedIp = require('@/schemas/BlockedIp');
 const bodyParser = require('body-parser');
 const { body, validationResult, matchedData } = require('express-validator');
@@ -21,8 +20,7 @@ const validKeys = [
   'reviews',
   'blockedips',
   'botdenies',
-  'timeouts',
-  'recentactivity'
+  'timeouts'
 ];
 
 module.exports = {
@@ -49,8 +47,7 @@ module.exports = {
         canDeleteBlockedIps: config.permissions.canDeleteBlockedIps.includes(request.user.id),
         canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canViewTimeouts: request.member && config.permissions.canViewTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canViewRecentActivity: request.member && config.permissions.canViewRecentActivityRoles.some(roleId => request.member.roles.cache.has(roleId))
+        canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId))
       };
 
       if (!permissions.canViewDashboard) return response.sendError('You do not have permission to view the dashboard.', 403);
@@ -199,42 +196,6 @@ module.exports = {
               } : timeout.guild.id
             };
           }
-        }));
-      }
-
-      if (keys?.includes('recentactivity')) {
-        if (!permissions.canViewRecentActivity) return response.sendError('You do not have permission to view recent activity.', 403);
-
-        const activity = await DashboardActivity.find().sort({ createdAt: -1 });
-
-        responseData.recentActivity = await Promise.all(activity.map(async activity => {
-          const user = client.users.cache.get(activity.user.id) || await client.users.fetch(activity.user.id).catch(() => null);
-          const target = activity.target.type === 'USER' ? client.users.cache.get(activity.target.id) || await client.users.fetch(activity.target.id).catch(() => null) : client.guilds.cache.get(activity.target.id);
-          const targetData = {
-            id: activity.target.id
-          };
-
-          if (target && activity.target.type === 'USER') {
-            Object.assign(targetData, {
-              username: target.username,
-              avatar_url: target.displayAvatarURL({ dynamic: true, size: 256 })
-            });
-          } else if (target && activity.target.type === 'GUILD') {
-            Object.assign(targetData, {
-              name: target.name,
-              icon_url: target.iconURL({ dynamic: true, size: 256 })
-            });
-          }
-
-          return {
-            ...activity.toJSON(),
-            user: user ? {
-              id: user.id,
-              username: user.username,
-              avatar_url: user.displayAvatarURL({ dynamic: true, size: 256 })
-            } : activity.user.id,
-            target: targetData
-          };
         }));
       }
 

@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
-const createActivity = require('@/utils/createActivity');
 
 module.exports = {
   post: [
@@ -56,13 +55,6 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await review.save();
-
-      new createActivity({
-        type: 'USER_ACTIVITY',
-        user_id: request.user.id,
-        target: user,
-        message: 'Created a review.'
-      });
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
