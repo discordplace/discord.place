@@ -20,6 +20,7 @@ const Profile = require('@/schemas/Profile');
 const Bot = require('@/schemas/Bot');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -70,7 +71,9 @@ module.exports = class Client {
       process.exit(1);
     });
 
-    this.client.once('ready', () => {
+    this.client.once('ready', async () => {
+      await fetchGuildsMembers([config.guildId]);
+
       logger.send(`Client logged in as ${this.client.user.tag}`);
 
       const CommandsHandler = require('@/src/bot/handlers/commands.js');
