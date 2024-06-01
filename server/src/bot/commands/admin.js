@@ -251,6 +251,32 @@ module.exports = {
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${user.username}** has been approved!` }).catch(() => null);
+        
+          const embeds = [
+            new Discord.EmbedBuilder()
+              .setColor(Discord.Colors.Green)
+              .setAuthor({ name: `Review Approved | ${user.username}`, iconURL: user.displayAvatarURL() })
+              .setTimestamp()
+              .setFields([
+                {
+                  name: 'Reviewer',
+                  value: interaction.user.toString()
+                }
+              ])
+              .setFooter({ text: `Review from @${publisher.username}`, iconURL: publisher.displayAvatarURL() })
+          ];
+  
+          const components = [
+            new Discord.ActionRowBuilder()
+              .addComponents(
+                new Discord.ButtonBuilder()
+                  .setStyle(Discord.ButtonStyle.Link)
+                  .setURL(`${config.frontendUrl}/bots/${review.bot.id}`)
+                  .setLabel('View Bot on discord.place')
+              )
+          ];
+  
+          client.channels.cache.get(config.portalChannelId).send({ embeds, components });
         }
   
         return interaction.followUp({ content: 'Review approved.' });
@@ -475,6 +501,32 @@ module.exports = {
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${guild.name}** has been approved!` }).catch(() => null);
+        
+          const embeds = [
+            new Discord.EmbedBuilder()
+              .setColor(Discord.Colors.Green)
+              .setAuthor({ name: `Review Approved | ${guild.name}`, iconURL: guild.iconURL() })
+              .setTimestamp()
+              .setFields([
+                {
+                  name: 'Reviewer',
+                  value: interaction.user.toString()
+                }
+              ])
+              .setFooter({ text: `Review from @${publisher.username}`, iconURL: publisher.displayAvatarURL() })
+          ];
+  
+          const components = [
+            new Discord.ActionRowBuilder()
+              .addComponents(
+                new Discord.ButtonBuilder()
+                  .setStyle(Discord.ButtonStyle.Link)
+                  .setURL(`${config.frontendUrl}/servers/${review.server.id}`)
+                  .setLabel('View Server on discord.place')
+              )
+          ];
+  
+          client.channels.cache.get(config.portalChannelId).send({ embeds, components });
         }
 
         return interaction.followUp({ content: 'Review approved.' });
