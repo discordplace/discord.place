@@ -28,6 +28,10 @@ module.exports = {
         user = client.users.cache.get(id);
       }
 
+      const isHaveNitro = user.banner?.startsWith('a_') || user.avatar?.startsWith('a_');
+      const userFlags = user.flags.toArray();
+      if (isHaveNitro) userFlags.push('Nitro');
+
       const responseData = {
         id: user.id,
         username: user.username,
@@ -36,11 +40,12 @@ module.exports = {
         avatarURL: user.avatarURL({ size: 128 }),
         createdAt: new Date(user.createdTimestamp).getTime(),
         bot: user.bot,
-        bot_verified: false
+        bot_verified: false,
+        flags: userFlags
       };
 
       if (user.bot) {
-        if (user.flags.toArray().includes('VerifiedBot')) responseData.bot_verified = true;
+        if (responseData.flags.includes('VerifiedBot')) responseData.bot_verified = true;
         
         return response.json(responseData);
       }

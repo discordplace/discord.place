@@ -58,6 +58,38 @@ function StatBlock({ fields, index }) {
 export default function Content({ user }) {
   const theme = useThemeStore(state => state.theme);
 
+  const userFlags = {
+    'Staff': 'Discord Staff',
+    'Partner': 'Partnered Server Owner',
+    'Hypesquad': 'HypeSquad Events Member',
+    'BugHunterLevel1': 'Discord Bug Hunter',
+    'BugHunterLevel2': 'Discord Bug Hunter',
+    'HypeSquadOnlineHouse1': 'HypeSquad Bravery',
+    'HypeSquadOnlineHouse2': 'HypeSquad Brilliance',
+    'HypeSquadOnlineHouse3': 'HypeSquad Balance',
+    'PremiumEarlySupporter': 'Early Supporter',
+    'VerifiedDeveloper': 'Verified App Developer',
+    'CertifiedModerator': '	Moderator Programs Alumni',
+    'ActiveDeveloper': 'Active Developer',
+    'Nitro': 'Nitro Subscriber'
+  };
+
+  const flagsPositions = [
+    'Staff',
+    'Partner',
+    'CertifiedModerator',
+    'Hypesquad',
+    'HypeSquadOnlineHouse1',
+    'HypeSquadOnlineHouse2',
+    'HypeSquadOnlineHouse3',
+    'BugHunterLevel1',
+    'BugHunterLevel2',
+    'ActiveDeveloper',
+    'PremiumEarlySupporter',
+    'VerifiedDeveloper',
+    'Nitro'
+  ];
+
   return (
     <div className='flex flex-col items-center w-full px-8 mt-32 mb-8 gap-y-8 lg:px-0'>          
       <div className="relative p-3 rounded-[2rem] bg-secondary h-max w-full max-w-[600px]">
@@ -93,9 +125,31 @@ export default function Content({ user }) {
 
         <div className='flex justify-between w-full'>
           <div className='flex sm:ml-[30%] flex-col gap-y-1'>
-            <h1 className='ml-2 text-sm font-medium sm:ml-0 text-tertiary'>
-              @{user.username}
-            </h1>
+            <div className='flex items-center ml-2 gap-x-2 sm:ml-0'>
+              <h1 className='text-sm font-medium text-tertiary'>
+                @{user.username}
+              </h1>
+              
+              {user.flags.length > 0 && (
+                <div className='hidden sm:flex items-center gap-x-1.5'>
+                  {user.flags
+                    .sort((a, b) => flagsPositions.indexOf(a) - flagsPositions.indexOf(b))
+                    .map(flag => (
+                      <Tooltip
+                        key={flag}
+                        content={userFlags[flag]}
+                      >
+                        <Image
+                          src={`/user-flags/${flag}.svg`}
+                          alt={`${flag} Badge`}
+                          width={18}
+                          height={18}
+                        />
+                      </Tooltip>
+                    ))}
+                </div>
+              )}
+            </div>
 
             <h2 className='flex items-center ml-2 text-lg font-semibold sm:ml-0 text-primary gap-x-2'>
               {user.globalName || user.username}
@@ -113,6 +167,26 @@ export default function Content({ user }) {
                 </span>
               )}
             </h2>
+
+            {user.flags.length > 0 && (
+              <div className='ml-2 sm:hidden grid grid-cols-4 items-center gap-1.5'>
+                {user.flags
+                  .sort((a, b) => flagsPositions.indexOf(a) - flagsPositions.indexOf(b))
+                  .map(flag => (
+                    <Tooltip
+                      key={flag}
+                      content={userFlags[flag]}
+                    >
+                      <Image
+                        src={`/user-flags/${flag}.svg`}
+                        alt={`${flag} Badge`}
+                        width={18}
+                        height={18}
+                      />
+                    </Tooltip>
+                  ))}
+              </div>
+            )}
           </div>
 
           <div className='flex flex-col items-end sm:hidden gap-y-2'>
