@@ -3,6 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
 const Discord = require('discord.js');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 module.exports = {
   post: [
@@ -28,48 +29,52 @@ module.exports = {
       await review.updateOne({ approved: true });
 
       const guild = client.guilds.cache.get(review.server.id);
-      if (guild) { 
-        const publisher = await client.channels.cache.get(config.guildId).guild.members.fetch(review.user.id).catch(() => null);
-        if (publisher) {
+      if (guild) {
+        if (!client.fetchedGuilds.has(review.server.id)) await fetchGuildsMembers([review.server.id]);
+        
+        const publisher = await client.users.fetch(review.user.id).catch(() => null);
+        const isPublisherFoundInGuild = publisher ? guild.members.cache.has(publisher.id) : false;
+        
+        if (isPublisherFoundInGuild) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${guild.name}** has been approved!` }).catch(() => null);
-        
-          const embeds = [
-            new Discord.EmbedBuilder()
-              .setColor(Discord.Colors.Green)
-              .setAuthor({ name: `Review Approved | ${guild.name}`, iconURL: guild.iconURL() })
-              .setTimestamp()
-              .setFields([
-                {
-                  name: 'Review',
-                  value: review.content,
-                  inline: true
-                },
-                {
-                  name: 'Rating',
-                  value: '⭐'.repeat(review.rating),
-                  inline: true
-                },
-                {
-                  name: 'Reviewer',
-                  value: `<@${review.user.id}>`
-                }
-              ])
-              .setFooter({ text: `Review from @${publisher.username}`, iconURL: publisher.displayAvatarURL() })
-          ];
-  
-          const components = [
-            new Discord.ActionRowBuilder()
-              .addComponents(
-                new Discord.ButtonBuilder()
-                  .setStyle(Discord.ButtonStyle.Link)
-                  .setURL(`${config.frontendUrl}/servers/${review.server.id}`)
-                  .setLabel('View Server on discord.place')
-              )
-          ];
-  
-          client.channels.cache.get(config.portalChannelId).send({ embeds, components });
         }
+
+        const embeds = [
+          new Discord.EmbedBuilder()
+            .setColor(Discord.Colors.Green)
+            .setAuthor({ name: `Review Approved | ${guild.name}`, iconURL: guild.iconURL() })
+            .setTimestamp()
+            .setFields([
+              {
+                name: 'Review',
+                value: review.content,
+                inline: true
+              },
+              {
+                name: 'Rating',
+                value: '⭐'.repeat(review.rating),
+                inline: true
+              },
+              {
+                name: 'Reviewer',
+                value: `<@${review.user.id}>`
+              }
+            ])
+            .setFooter({ text: `Review from @${publisher.username}`, iconURL: publisher.displayAvatarURL() })
+        ];
+
+        const components = [
+          new Discord.ActionRowBuilder()
+            .addComponents(
+              new Discord.ButtonBuilder()
+                .setStyle(Discord.ButtonStyle.Link)
+                .setURL(`${config.frontendUrl}/servers/${review.server.id}`)
+                .setLabel('View Server on discord.place')
+            )
+        ];
+
+        client.channels.cache.get(config.portalChannelId).send({ embeds, components });
       }
 
       return response.sendStatus(204).end();
