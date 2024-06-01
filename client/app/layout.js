@@ -57,6 +57,11 @@ export default function RootLayout({ children }) {
         GeistSans.className,
         GeistSans.variable
       )}>
+        <Script 
+          defer={true}
+          src="https://analytics.discord.place/script.js" 
+          data-website-id="b8fea5b8-7789-4381-97a0-0b474d9bb87a"
+        />
         <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
         <Script id='google-analytics'>
           {`
