@@ -30,6 +30,10 @@ export default function Footer() {
         {
           label: 'API Documentation',
           href: config.docsUrl
+        },
+        {
+          label: 'Service Status',
+          href: config.instatus.baseUrl
         }
       ]
     },
