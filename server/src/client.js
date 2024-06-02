@@ -64,7 +64,6 @@ module.exports = class Client {
   }
 
   start(token, options = {}) {
-    this.postNewMetric();
     global.client = this.client;
 
     this.client.login(token).catch(error => {
