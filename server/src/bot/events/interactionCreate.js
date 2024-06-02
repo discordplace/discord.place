@@ -43,19 +43,5 @@ module.exports = async interaction => {
 
   if (interaction.isMessageComponent()) {
     if (interaction.customId === 'vote') require('@/src/bot/commands/vote').execute(interaction);
-    if (interaction.customId.startsWith('vote:')) {
-      const guildId = interaction.customId.split(':')[1];
-
-      const guild = await client.guilds.fetch(guildId).catch(() => null);
-      if (!guild) return interaction.reply({ content: 'This server no longer exists.' });
-
-      const member = await guild.members.fetch(interaction.user.id).catch(() => null);
-      if (!member) return interaction.reply({ content: 'You are no longer in this server.' });
-
-      Object.defineProperty(interaction, 'guild', { value: guild });
-      Object.defineProperty(interaction, 'member', { value: member });
-
-      require('@/src/bot/commands/vote').execute(interaction);
-    }
   }
 };

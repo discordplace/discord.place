@@ -236,6 +236,8 @@ module.exports = class Client {
   }
 
   async updateBotStats() {
+    if (!process.env.DISCORD_PLACE_API_KEY) return logger.send('API key is not defined. Please define DISCORD_PLACE_API_KEY in your environment variables.');
+
     const url = `https://api.discord.place/bots/${client.user.id}/stats`;
     const data = {
       command_count: client.commands.size
@@ -328,6 +330,9 @@ module.exports = class Client {
   }
       
   async postNewMetric() {
+    if (!config.instatus.page_id || !config.instatus.metric_id) return logger.send('[Instatus] Page ID or Metric ID is not defined.');
+    if (!process.env.DISCORD_PLACE_INSTATUS_API_KEY) return logger.send('[Instatus] API key is not defined. Please define DISCORD_PLACE_INSTATUS_API_KEY in your environment variables.');
+
     const baseUrl = 'https://api.instatus.com';
     const responseTime = await this.getResponseTime();
 
