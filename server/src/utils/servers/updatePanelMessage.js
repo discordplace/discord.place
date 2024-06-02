@@ -90,14 +90,9 @@ async function createPanelMessageOptions(guild, server) {
   const monthlyVotes = await MonthlyVotes.findOne({ guildId: guild.id });
   if (monthlyVotes) {
     for (const [, month] of monthlyVotes.data.sort((a, b) => b.created_at - a.created_at).slice(0, 6).entries()) {
-      monthlyVotesTable.push([new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' }), formatter.format(month.votes)]);
+      const index = monthlyVotes.data.findIndex(m => m.month === month.month);
+      monthlyVotesTable.push([new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' }), formatter.format(month.votes - (monthlyVotes.data[index - 1]?.votes || 0))]);
     }
-  }
-
-  const currentMonth = new Date().getMonth() + 1;
-  if (!monthlyVotes || !monthlyVotes.data.some(month => month.month === currentMonth)) {
-    const newItem = [new Date().toLocaleString('en-US', { year: 'numeric', month: 'short' }), `${formatter.format(server.votes)} (current)`];
-    monthlyVotesTable.splice(0, 0, newItem);
   }
 
   const embeds = [
@@ -113,7 +108,7 @@ async function createPanelMessageOptions(guild, server) {
         },
         {
           name: 'Monthly Votes',
-          value: `${!monthlyVotes ? 'Uh, there is no data for previous months.' : `The server has received ***${formatter.format(monthlyVotes.data.reduce((acc, month) => acc + month.votes, 0))}*** votes in the last ${monthlyVotes.data.length > 6 ? '6' : monthlyVotes.data.length} months.`}
+          value: `${!monthlyVotes ? 'Uh, there is no data for previous months.' : 'Here is the votes for the last 6 months.'}
 \`\`\`ansi\n${monthlyVotesTable.toString()}\`\`\``,
           inline: true
         },
