@@ -14,13 +14,16 @@ const useModalsStore = create((set, get) => ({
   closeModal: modalId => {
     const openedModals = get().openedModals;
     const activeModalId = get().activeModalId;
+    const modal = openedModals.find(modal => modal.id === modalId);
 
     if (modalId === activeModalId && openedModals.length > 1) {
       const lastModal = openedModals[openedModals.length - 2];
       set({ activeModalId: lastModal.id });
     }
 
-    set({ openedModals: openedModals.filter(modal => modal.id !== modalId) });
+    modal.data?.events?.onClose?.();
+
+    set({ openedModals: openedModals.filter(({ id }) => id !== modalId) });
   },
   disableButton: (modalId, buttonId) => {
     const openedModals = get().openedModals;
