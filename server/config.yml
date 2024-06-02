@@ -232,3 +232,6 @@ botsDenyReasons:
   support-for-slash-commands:
     name: "Support for Slash Commands"
     description: "Bots must support slash commands for improved user experience and functionality."
+instatus:
+  page_id: 'clwx1az6k27335bhobasj52b6y'
+  metric_id: 'clwx1tevy38905bhobroucjm8j'

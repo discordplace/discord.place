@@ -64,6 +64,7 @@ module.exports = class Client {
   }
 
   start(token, options = {}) {
+    this.postNewMetric();
     global.client = this.client;
 
     this.client.login(token).catch(error => {
@@ -121,12 +122,16 @@ module.exports = class Client {
           this.checkDeletedInviteCodes();
           this.updateClientActivity();
         }, null, true, 'Europe/Istanbul');
+
         new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
+
         new CronJob('0 0 * * *', () => {
           this.checkVoteReminderMetadatas();
           this.updateBotStats();
           this.createNewDashboardData();
         }, null, true, 'Europe/Istanbul');
+
+        new CronJob('*/5 * * * *', this.postNewMetric, null, true, 'Europe/Istanbul');
       }
     });
   }
@@ -307,5 +312,39 @@ module.exports = class Client {
     }).save();
 
     logger.send('Created new dashboard data.');
+  }
+
+  async getResponseTime() {
+    const baseUrl = config.backendUrl;
+
+    try {
+      await axios.post(`${baseUrl}/response-time`);
+
+      const response = await axios.get(`${baseUrl}/response-time`);
+
+      return response.data.responseTime;
+    } catch (error) {
+      logger.send(`Failed to get response time:\n${error.stack}`);
+    }
+  }
+      
+  async postNewMetric() {
+    const baseUrl = 'https://api.instatus.com';
+    const responseTime = await this.getResponseTime();
+
+    try {
+      const response = await axios.post(`${baseUrl}/v1/${config.instatus.page_id}/metrics/${config.instatus.metric_id}`, {
+        timestamp: new Date().getTime(),
+        value: responseTime
+      }, {
+        headers: {
+          Authorization: `Bearer ${process.env.DISCORD_PLACE_INSTATUS_API_KEY}`
+        }
+      });
+
+      if (response.status === 200) logger.send('Posted new metric to Instatus.');
+    } catch (error) {
+      logger.send(`Failed to post new metric to Instatus:\n${error.stack}`);
+    }
   }
 };

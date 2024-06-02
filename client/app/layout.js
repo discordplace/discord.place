@@ -15,6 +15,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 import { Suspense } from 'react';
 import ModalProvider from '@/app/components/Providers/Modal';
 import config from '@/config';
+import Status from '@/app/components/Providers/Status';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -79,6 +80,8 @@ export default function RootLayout({ children }) {
           <Toaster toastOptions={{
             className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
           }} />
+
+          <Status />
         
           <ThemeProvider>
             <AuthProvider>
