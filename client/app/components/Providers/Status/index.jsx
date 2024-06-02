@@ -23,7 +23,7 @@ export default function Status() {
     if (!summary) return;
 
     const { activeIncidents } = summary;
-    if (activeIncidents.length === 0) return;
+    if ((activeIncidents || []).length === 0) return;
 
     activeIncidents
       .filter(incident => !closedIncidents.includes(incident.id))
