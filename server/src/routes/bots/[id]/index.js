@@ -152,6 +152,8 @@ module.exports = {
       const botFound = await Bot.findOne({ id: user.id });
       if (botFound) return response.sendError('Bot already exists.', 400);
 
+      if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
+
       const denyExists = await Deny.findOne({ 'bot.id': user.id, createdAt: { $gte: new Date(Date.now() - 6 * 60 * 60 * 1000) } });
       if (denyExists) return response.sendError(`This bot has been denied by ${denyExists.reviewer.id} in the past 6 hours. You can't submit this bot again until 6 hours pass.`, 400);
 

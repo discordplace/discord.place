@@ -148,6 +148,8 @@ module.exports = {
       const server = await Server.findOne({ id });
       if (server) return response.sendError('Server already exists.', 400);
 
+      if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
+
       const inviteLinkMatch = invite_link.match(/(https?:\/\/|http?:\/\/)?(www.)?(discord.(gg)|discordapp.com\/invite|discord.com\/invite)\/[^\s/]+?(?=$|Z)/g);
       if (!inviteLinkMatch || !inviteLinkMatch?.[0]) return response.sendError('Invite link is not valid.', 400);
 

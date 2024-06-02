@@ -59,6 +59,8 @@ module.exports = {
       const userEmojiInQueue = await Emoji.findOne({ 'user.id': request.user.id, approved: false });
       if (userEmojiInQueue) return response.sendError(`You are already waiting for approval for emoji ${userEmojiInQueue.name}! Please wait for it to be processed first.`);
 
+      if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
+
       const { name, categories } = matchedData(request);
       const id = crypto.randomBytes(6).toString('hex');
 
