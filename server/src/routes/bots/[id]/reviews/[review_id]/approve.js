@@ -64,8 +64,8 @@ module.exports = {
               inline: true
             },
             {
-              name: 'Reviewer',
-              value: `<@${review.user.id}>`
+              name: 'Moderator',
+              value: `<@${request.user.id}>`
             }
           ])
           .setFooter({ text: `Review from @${publisher.username}`, iconURL: publisher.displayAvatarURL() })

@@ -273,7 +273,7 @@ module.exports = {
                 inline: true
               },
               {
-                name: 'Reviewer',
+                name: 'Moderator',
                 value: interaction.user.toString()
               }
             ])
@@ -537,7 +537,7 @@ module.exports = {
                 inline: true
               },
               {
-                name: 'Reviewer',
+                name: 'Moderator',
                 value: interaction.user.toString()
               }
             ])
