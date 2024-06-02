@@ -108,7 +108,7 @@ async function createPanelMessageOptions(guild, server) {
         },
         {
           name: 'Monthly Votes',
-          value: `${!monthlyVotes ? 'Uh, there is no data for previous months.' : `***${formatter.format(monthlyVotes.data[0].votes)}*** votes has given to this server in the last month.`}
+          value: `${!monthlyVotes ? 'Uh, there is no data for previous months.' : `***${formatter.format(monthlyVotes.data[0].votes - (monthlyVotes.data[1]?.votes || 0))}*** votes has given to this server in the last month.`}
 \`\`\`ansi\n${monthlyVotesTable.toString()}\`\`\``,
           inline: true
         },
