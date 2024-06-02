@@ -27,6 +27,10 @@ const config = {
     websiteId: 'b8fea5b8-7789-4381-97a0-0b474d9bb87a',
     domains: ['discord.place', 'www.discord.place']
   },
+  instatus: {
+    summaryUrl: 'https://discordplace.instatus.com/summary.json',
+    baseUrl: 'https://discordplace.instatus.com'
+  },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;
     return url;
