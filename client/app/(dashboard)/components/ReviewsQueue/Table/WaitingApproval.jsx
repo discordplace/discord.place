@@ -13,9 +13,7 @@ import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import Link from 'next/link';
 import { TiStarFullOutline, TiStarOutline } from 'react-icons/ti';
-import * as Dialog from '@radix-ui/react-dialog';
 import { IoMdCloseCircle } from 'react-icons/io';
-import { FaPencil } from 'react-icons/fa6';
 import { LuTrash2 } from 'react-icons/lu';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
@@ -62,6 +60,7 @@ export default function WaitingApproval({ data }) {
   }
 
   function continueDenyReview(id, reviewId, type, reason) {
+    disableButton('deny-review', 'confirm');
     setLoading(true);
 
     const denyReview = type === 'server' ? denyServerReview : denyBotReview;
@@ -69,13 +68,16 @@ export default function WaitingApproval({ data }) {
     toast.promise(denyReview(id, reviewId, reason), {
       loading: 'Denying review..',
       success: () => {
+        closeModal('deny-review');
         fetchData(['reviews'])
           .then(() => setLoading(false));
 
         return 'Review denied successfully!';
       },
       error: () => {
+        enableButton('deny-review', 'confirm');
         setLoading(false);
+        
         return `Failed to deny review ${reviewId}.`;
       }
     });
@@ -213,56 +215,39 @@ export default function WaitingApproval({ data }) {
                         Approve <IoCheckmarkCircle />
                       </button>
 
-                      <Dialog.Root onOpenChange={open => !open && setDenyReason('')}>
-                        <Dialog.Trigger asChild>
-                          <button className='outline-none flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'>
-                            Deny <IoMdCloseCircle />
-                          </button>
-                        </Dialog.Trigger>
-
-                        <Dialog.Portal>
-                          <Dialog.Overlay className='radix-overlay fixed z-[9999] inset-0 bg-white/50 dark:bg-black/50' />
-                          <Dialog.Content className="radix-dialog-content fixed focus:outline-none z-[9999] flex items-center justify-center w-full h-full">
-                            <div className='bg-secondary rounded-2xl flex flex-col gap-y-2 p-6 max-h-[85vh] w-[90vw] max-w-[450px]'>
-                              <div className='flex items-center justify-between'>
-                                <Dialog.Title className='flex items-center text-lg font-semibold text-primary gap-x-2'>
-                                  <FaPencil />
-                                  Add Reason
-                                </Dialog.Title>
-
-                                <Dialog.Close asChild>
-                                  <IoMdCloseCircle className='cursor-pointer hover:opacity-70' />
-                                </Dialog.Close>
-                              </div>
-
-                              <Dialog.Description className='text-sm text-tertiary'>
-                                Please provide a reason for denying this review.
-                              </Dialog.Description>
-
+                      <button
+                        className='flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'
+                        onClick={() => 
+                          openModal('deny-review', {
+                            title: 'Deny Review',
+                            description: 'Please provide a reason for denying this review.',
+                            content: (
                               <textarea
                                 className='w-full h-24 p-2 mt-2 text-sm font-medium transition-all rounded-lg outline-none resize-none focus:ring-2 ring-purple-500 bg-quaternary text-secondary'
-                                value={denyReason}
                                 onChange={event => setDenyReason(event.target.value)}
-                              />
-
-                              <div className='flex mt-2 gap-x-2'>
-                                <button
-                                  className='flex justify-center items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-full gap-x-1'
-                                  onClick={() => continueDenyReview(review.bot ? review.bot.id : review.server.id, review._id, review.bot ? 'bot' : 'server')}
-                                >
-                                  Confirm
-                                </button>
-
-                                <Dialog.Close asChild>
-                                  <button className='flex justify-center items-center px-4 py-1.5 text-sm font-semibold hover:bg-tertiary rounded-lg text-primary w-full gap-x-1'>
-                                    Cancel
-                                  </button>
-                                </Dialog.Close>
-                              </div>
-                            </div>
-                          </Dialog.Content>
-                        </Dialog.Portal>
-                      </Dialog.Root>
+                              >
+                                test
+                              </textarea>
+                            ),
+                            buttons: [
+                              {
+                                id: 'cancel',
+                                label: 'Cancel',
+                                variant: 'ghost',
+                                actionType: 'close'
+                              },
+                              {
+                                id: 'confirm',
+                                label: 'Confirm',
+                                variant: 'solid',
+                                action: () => continueDenyReview(review.bot ? review.bot.id : review.server.id, review._id, review.bot ? 'bot' : 'server', denyReason)
+                              }
+                            ]
+                          })
+                        }
+                      >
+                        Deny <IoMdCloseCircle />
+                      </button>
 
                       {dashboardData?.permissions?.canDeleteReviews && (
                         <button

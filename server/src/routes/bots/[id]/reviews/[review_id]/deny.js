@@ -31,7 +31,7 @@ module.exports = {
 
       if (review.approved === true) return response.sendError('Review already approved.', 400);
 
-      await review.delete();
+      await review.deleteOne();
 
       response.sendStatus(204).end();
 
