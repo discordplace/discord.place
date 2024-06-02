@@ -91,7 +91,7 @@ async function createPanelMessageOptions(guild, server) {
   if (monthlyVotes) {
     for (const [, month] of monthlyVotes.data.sort((a, b) => b.created_at - a.created_at).slice(0, 6).entries()) {
       const index = monthlyVotes.data.findIndex(m => m.month === month.month);
-      monthlyVotesTable.push([new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' }), formatter.format(month.votes - monthlyVotes.data[index + 1]?.votes || 0)]);
+      monthlyVotesTable.push([new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' }), formatter.format(month.votes - (monthlyVotes.data[index + 1]?.votes || 0))]);
     }
   }
 
