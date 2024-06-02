@@ -130,7 +130,7 @@ module.exports = class Client {
           this.createNewDashboardData();
         }, null, true, 'Europe/Istanbul');
 
-        new CronJob('*/5 * * * *', this.postNewMetric, null, true, 'Europe/Istanbul');
+        new CronJob('*/5 * * * *', this.postNewMetric.bind(this), null, true, 'Europe/Istanbul');
       }
     });
   }
