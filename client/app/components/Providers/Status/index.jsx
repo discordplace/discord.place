@@ -9,6 +9,7 @@ import { useLocalStorage } from 'react-use';
 
 export default function Status() {
   const openModal = useModalsStore(state => state.openModal);
+  const closeModal = useModalsStore(state => state.closeModal);
   
   const [summary, setSummary] = useState(null);
   const [closedIncidents, setClosedIncidents] = useLocalStorage('closed-incidents', []);
@@ -32,20 +33,23 @@ export default function Status() {
           title: incident.name,
           description: 'We are currently experiencing some issues. Please check back later for updates.',
           content: <>
-          This incident is started at {new Date(incident.started).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}.
+            This incident is started at {new Date(incident.started).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}.
           </>,
           buttons: [
             {
               id: 'cancel',
               label: 'Cancel',
               variant: 'ghost',
-              actionType: 'cancel'
+              action: () => closeModal(`incident-${incident.id}`)
             },
             {
               id: 'open-incident',
               label: 'Open Incident',
               variant: 'solid',
-              action: () => window.open(`${config.instatus.baseUrl}/${incident.id}`, '_blank')
+              action: () => {
+                window.open(`${config.instatus.baseUrl}/${incident.id}`, '_blank');
+                closeModal(`incident-${incident.id}`);
+              }
             }
           ],
           events: {
