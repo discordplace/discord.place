@@ -4,7 +4,6 @@ const { param, matchedData, validationResult } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const Discord = require('discord.js');
-const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 module.exports = {
   post: [
