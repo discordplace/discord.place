@@ -1,5 +1,5 @@
 import cn from '@/lib/cn';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import TopVoters from '@/app/(servers)/servers/[id]/components/Tabs/TopVoters';
 import VoiceActivityGraph from '@/app/(servers)/servers/[id]/components/Tabs/Graph/VoiceActivity';
 import Reviews from '@/app/(servers)/servers/[id]/components/Tabs/Reviews';
@@ -30,9 +30,7 @@ export default function Tabs({ server }) {
     {
       label: 'Voice Activity',
       id: 'voiceActivityGraph',
-      component: <Suspense fallback={<div className='h-[350px] block rounded-xl bg-tertiary animate-pulse w-full ' />}>
-        <VoiceActivityGraph server={server} />
-      </Suspense>,
+      component: <VoiceActivityGraph server={server} />,
       disabled: !server.voiceActivity || server.voiceActivity.filter?.(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))?.length === 0
     }
   ];
