@@ -8,12 +8,14 @@ export default function VoiceActivityGraph({ server }) {
 
   const theme = useThemeStore(state => state.theme);
 
+  const reversedData = [...server.voiceActivity].reverse();
+
   return <DynamicApexCharts
     type='area'
     height={350}
     series={[{
       name: 'total_members_in_voice',
-      data: server.voiceActivity
+      data: reversedData
         ?.filter(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))
         ?.map(activity => activity.data)
     }]}
@@ -75,7 +77,7 @@ export default function VoiceActivityGraph({ server }) {
       },
       xaxis: {
         range: 12,
-        categories: server.voiceActivity
+        categories: reversedData
           ?.filter(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))
           ?.map(activity => new Date(activity.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })),
         tooltip: {
