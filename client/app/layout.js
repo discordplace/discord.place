@@ -12,6 +12,10 @@ import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
 import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
 import 'react-medium-image-zoom/dist/styles.css';
+import { Suspense } from 'react';
+import ModalProvider from '@/app/components/Providers/Modal';
+import config from '@/config';
+import Status from '@/app/components/Providers/Status';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -55,6 +59,12 @@ export default function RootLayout({ children }) {
         GeistSans.className,
         GeistSans.variable
       )}>
+        <Script 
+          defer={true}
+          src={config.analytics.script} 
+          data-website-id={config.analytics.websiteId}
+          data-domains={config.analytics.domains.join(',')}
+        />
         <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
         <Script id='google-analytics'>
           {`
@@ -70,18 +80,27 @@ export default function RootLayout({ children }) {
           <Toaster toastOptions={{
             className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
           }} />
+
+          <Status />
         
           <ThemeProvider>
             <AuthProvider>
               <VaulWrapperProvider>
-                <Header />
+                <ModalProvider>
+                  <Suspense fallback={<></>}>
+                    <Header />
+                  </Suspense>
 
-                <ErrorBoundary>
-                  {children}
-                </ErrorBoundary>
+                  <ErrorBoundary>
+                    {children}
+                  </ErrorBoundary>
             
-                <Footer />
-                <CookieBanner />
+                  <Suspense fallback={<></>}>
+                    <Footer />
+                  </Suspense>
+                
+                  <CookieBanner />
+                </ModalProvider>
               </VaulWrapperProvider>
             </AuthProvider>
           </ThemeProvider>

@@ -27,7 +27,7 @@ module.exports = {
       const isLiked = profile.likes.includes(request.user.id);
       if (isLiked) await Profile.updateOne({ slug }, { $pull: { likes: request.user.id } });
       else await Profile.updateOne({ slug }, { $push: { likes: request.user.id } });
-      
+
       return response.json({ isLiked: !isLiked });
     }
   ]

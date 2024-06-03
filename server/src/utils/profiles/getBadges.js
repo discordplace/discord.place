@@ -1,9 +1,11 @@
-function getBadges(profile, isPremium) {
+function getBadges(profile, premiumSince) {
+  const guild = client.guilds.cache.get(config.guildId);
+
   const badges = [
     {
       name: 'Moderator',
       condition: () => {
-        const member = client.guilds.cache.get(config.guildId).members.cache.get(profile.user.id);
+        const member = guild.members.cache.get(profile.user.id); 
         return member && member.roles.cache.has(config.roles.moderator);
       }
     },
@@ -13,11 +15,12 @@ function getBadges(profile, isPremium) {
     },
     {
       name: 'Premium',
-      condition: () => isPremium
+      tooltip: `Premium since ${new Date(premiumSince).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`,
+      condition: () => premiumSince
     }
   ];
 
-  return badges.filter(badge => badge.condition()).map(badge => badge.name);
+  return badges.filter(badge => badge.condition()).map(badge => ({ name: badge.name, tooltip: badge.tooltip || badge.name }));
 }
 
 module.exports = getBadges;

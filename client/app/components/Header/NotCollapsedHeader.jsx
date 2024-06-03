@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import cn from '@/lib/cn';
-import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import config from '@/config';
 import { usePrevious, useWindowScroll } from 'react-use';
@@ -11,7 +10,7 @@ import useThemeStore from '@/stores/theme';
 import UserSide from '@/app/components/Header/UserSide';
 import { motion } from 'framer-motion';
 
-export default function NotCollapsedHeader() {
+export default function NotCollapsedHeader({ pathname }) {
   const theme = useThemeStore(state => state.theme);
   
   const { y } = useWindowScroll();
@@ -27,8 +26,6 @@ export default function NotCollapsedHeader() {
       }
     }
   }, [y, oldY]);
-
-  const pathname = usePathname();
 
   return (
     <div className='flex items-center justify-center w-full h-full'>

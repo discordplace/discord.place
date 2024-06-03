@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const MetadataModel = require('@/schemas/Server/Vote/Metadata');
 const Discord = require('discord.js');
+const createAutoVoteToken = require('@/utils/servers/createAutoVoteToken');
 
 const VoteReminderSchema = new Schema({
   user: {
@@ -42,13 +43,15 @@ Model.watch().on('change', async data => {
     const guild = await client.guilds.fetch(metadata.guildId).catch(() => null);
     if (!guild) return;
 
+    const autoVoteToken = createAutoVoteToken(guild.id, user.id, Date.now() + 3600000);
+
     const components = [
       new Discord.ActionRowBuilder()
         .addComponents(
           new Discord.ButtonBuilder()
-            .setStyle(Discord.ButtonStyle.Secondary)
+            .setStyle(Discord.ButtonStyle.Link)
             .setLabel((`Quickly vote ${guild.name}`).slice(0, 80))
-            .setCustomId(`vote:${guild.id}`)
+            .setURL(`${config.frontendUrl}/servers/${guild.id}?autoVoteToken=${encodeURIComponent(autoVoteToken)}`)
         )
     ];
 

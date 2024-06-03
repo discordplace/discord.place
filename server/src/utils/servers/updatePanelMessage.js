@@ -3,30 +3,25 @@ const Discord = require('discord.js');
 const Table = require('cli-table3');
 const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
 const Reward = require('@/schemas/Server/Vote/Reward');
+const Server = require('@/schemas/Server');
 
 async function updatePanelMessage(guildId) {
-  const panel = await Panel.findOne({ guildId });
-  if (!panel) return logger.send(`Request to update panel message in guild ${guildId} but panel not found.`);
-
   const guild = client.guilds.cache.get(guildId);
-  if (!guild) {
-    logger.send(`Panel message found in database for ${guildId} but guild not found. Deleting the panel..`);
-    return panel.deleteOne();
-  }
+  if (!guild) return;
+
+  const panel = await Panel.findOne({ guildId });
+  if (!panel) return;
 
   const channel = guild.channels.cache.get(panel.channelId);
-  if (!channel) {
-    logger.send(`Panel message found in database for guild ${guild.name} (${guild.id}) but channel not found. Deleting the panel..`);
-    return panel.deleteOne();
-  }
+  if (!channel) return;
 
-  if (!channel.permissionsFor(guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) {
-    logger.send(`Panel message found in guild ${guild.name} (${guild.id}) but I don't have permission to send messages in the channel. Deleting the panel..`);
-    return panel.deleteOne();
-  }
+  if (!channel.permissionsFor(guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) return panel.deleteOne();
+
+  const server = await Server.findOne({ id: guild.id });
+  if (!server) return panel.deleteOne();
 
   if (!panel.messageId) {
-    const message = await channel.send(await createPanelMessageOptions(guild));
+    const message = await channel.send(await createPanelMessageOptions(guild, server));
     if (!message) return panel.deleteOne();
 
     await panel.updateOne({ messageId: message.id });
@@ -37,18 +32,15 @@ async function updatePanelMessage(guildId) {
   if (!message) {
     logger.send(`Panel message not found in guild ${guild.name} (${guild.id}). Creating a new one.`);
     
-    const message = await channel.send(await createPanelMessageOptions(guild));
+    const message = await channel.send(await createPanelMessageOptions(guild, server));
     if (!message) return panel.deleteOne();
 
     await panel.updateOne({ messageId: message.id });
     logger.send(`Panel message created in guild ${guild.name} (${guild.id}).`);
-  } else await message.edit(await createPanelMessageOptions(guild));
+  } else await message.edit(await createPanelMessageOptions(guild, server));
 }
 
-async function createPanelMessageOptions(guild) {
-  const Server = require('@/schemas/Server');
-  const server = await Server.findOne({ id: guild.id });
-
+async function createPanelMessageOptions(guild, server) {
   const rewards = await Reward.find({ 'guild.id': guild.id });
 
   const tableBaseOptions = {
@@ -98,14 +90,9 @@ async function createPanelMessageOptions(guild) {
   const monthlyVotes = await MonthlyVotes.findOne({ guildId: guild.id });
   if (monthlyVotes) {
     for (const [, month] of monthlyVotes.data.sort((a, b) => b.created_at - a.created_at).slice(0, 6).entries()) {
-      monthlyVotesTable.push([new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' }), formatter.format(month.votes)]);
+      const index = monthlyVotes.data.findIndex(m => m.month === month.month);
+      monthlyVotesTable.push([new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' }), formatter.format(month.votes - (monthlyVotes.data[index + 1]?.votes || 0))]);
     }
-  }
-
-  const currentMonth = new Date().getMonth() + 1;
-  if (!monthlyVotes || !monthlyVotes.data.some(month => month.month === currentMonth)) {
-    const newItem = [new Date().toLocaleString('en-US', { year: 'numeric', month: 'short' }), `${formatter.format(server.votes)} (current)`];
-    monthlyVotesTable.splice(0, 0, newItem);
   }
 
   const embeds = [
@@ -121,7 +108,7 @@ async function createPanelMessageOptions(guild) {
         },
         {
           name: 'Monthly Votes',
-          value: `${!monthlyVotes ? 'Uh, there is no data for previous months.' : `The server has received ***${formatter.format(monthlyVotes.data.reduce((acc, month) => acc + month.votes, 0))}*** votes in the last ${monthlyVotes.data.length > 6 ? '6' : monthlyVotes.data.length} months.`}
+          value: `${!monthlyVotes ? 'Uh, there is no data for previous months.' : `***${formatter.format(monthlyVotes.data[0].votes - (monthlyVotes.data[1]?.votes || 0))}*** votes has given to this server in the last month.`}
 \`\`\`ansi\n${monthlyVotesTable.toString()}\`\`\``,
           inline: true
         },

@@ -7,6 +7,7 @@ module.exports = {
     './components/**/*.{js,jsx}',
     './app/**/*.{js,jsx}',
     './src/**/*.{js,jsx}',
+    './public/profile-badges/*.svg'
   ],
   theme: {
     extend: {
@@ -18,7 +19,7 @@ module.exports = {
         'emojis-cols-3': '838px'
       },
       colors: {
-        placeholder: 'rgba(var(--text-placeholder))',
+        placeholder: 'rgba(var(--text-placeholder))'
       },
       textColor: {
         primary: 'rgba(var(--text-primary))',
@@ -69,13 +70,13 @@ module.exports = {
         'scroll-based-appear': {
           from: {
             filter: 'blur(2px)',
-            transform: 'scale(0.85)',
+            transform: 'scale(0.85)'
           },
           to: {
             opacity: 1,
             filter: 'blur(0)',
-            transform: 'scale(1)',
-          },
+            transform: 'scale(1)'
+          }
         }
       }
     }

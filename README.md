@@ -46,7 +46,7 @@ To get a local copy of the project up and running, follow these steps:
      SESSION_SECRET=
      SESSION_STORE_SECRET=
      GITHUB_AUTO_DEPLOY_SECRET=
-     BOT_API_KEY_SECRET=
+     BOT_API_KEY_ENCRYPT_SECRET=
      
      # Discord Bot
      DISCORD_CLIENT_TOKEN=
@@ -75,6 +75,7 @@ To get a local copy of the project up and running, follow these steps:
 
      # Discord Place API
      DISCORD_PLACE_API_KEY=
+     DISCORD_PLACE_INSTATUS_API_KEY=
 
      # Other
 
@@ -120,6 +121,7 @@ Before running the project, you need to set up the following environment variabl
 | SESSION_STORE_SECRET     | Secret used for session store encryption                    | Yes      | RandomString           |
 | GITHUB_AUTO_DEPLOY_SECRET | Secret for GitHub auto-deployment webhook verification     | No      | RandomString           |
 | BOT_API_KEY_ENCRYPT_SECRET       | Secret for discord.place API key encryption                   | Yes      | RandomString           |
+| AUTO_VOTE_TOKEN_SECRET   | Secret for auto-vote token generation                       | Yes      | RandomString           |
 | DISCORD_CLIENT_TOKEN     | Token for Discord bot integration                           | Yes      | DiscordToken           |
 | DISCORD_CLIENT_SECRET    | Secret for Discord bot integration                          | Yes      | DiscordSecret          |
 | DISCORD_CLIENT_ID        | Client ID for Discord bot integration                       | Yes      | DiscordClientID        |
@@ -135,6 +137,7 @@ Before running the project, you need to set up the following environment variabl
 | CLOUDFLARE_ACCOUNT_ID    | Account ID for Cloudflare integration                      | Yes      | CloudflareAccountID    |
 | CLOUDFLARE_BLOCK_IP_LIST_ID | ID for the Cloudflare IP list used for global rate limiting | Yes | CloudflareBlockIPListID |
 | DISCORD_PLACE_API_KEY | API key for Discord Place API | Yes | RandomString |
+| DISCORD_PLACE_INSTATUS_API_KEY | API key for Instatus integration | Yes | RandomString |
 | DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL | Base API URL to get approximate guild count for bots | False | URL |
 | DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET | Secret for the API to get approximate guild count for bots (used in the Authorization header) | False | RandomString |
 | ANALYZE                  | Whether to enable bundle analysis during client build       | No       | true/false             |

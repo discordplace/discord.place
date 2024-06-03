@@ -10,6 +10,7 @@ const socialsValidation = require('@/validations/profiles/socials');
 const Server = require('@/schemas/Server');
 const randomizeArray = require('@/utils/randomizeArray');
 const getValidationError = require('@/utils/getValidationError');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 module.exports = {
   get: [
@@ -48,8 +49,13 @@ module.exports = {
         const listedServers = randomizeArray(await Server.find({ id: { $in: ownedServers.map(({ id }) => id) } })).slice(0, 3);
 
         Object.assign(publiclySafe, { 
-          servers: listedServers.map(server => {
-            const guild = ownedServers.find(({ id }) => id === server.id);
+          servers: await Promise.all(listedServers.map(async server => {
+            let guild = ownedServers.find(({ id }) => id === server.id);
+            if (!client.fetchedGuilds.has(guild.id)) {
+              await fetchGuildsMembers([server.id]).catch(() => null);
+              guild = client.guilds.cache.get(server.id);
+            }
+
             return {
               id: guild.id,
               name: guild.name,
@@ -57,15 +63,19 @@ module.exports = {
               banner_url: guild.bannerURL({ format: 'png', size: 2048 }),
               description: server.description,
               total_members: guild.memberCount,
-              online_members: guild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size,
               votes: server.votes,
               category: server.category,
               keywords: server.keywords,
               joined_at: guild.joinedTimestamp
             };
-          })
+          }))
         });
       } else Object.assign(publiclySafe, { servers: [] });
+
+      if (!publiclySafe.premium && config.customHostnames.includes(publiclySafe.preferredHost)) {
+        await profile.updateOne({ preferredHost: 'discord.place/p' });
+        publiclySafe.preferredHost = 'discord.place/p';
+      }
       
       return response.json(publiclySafe);
     }

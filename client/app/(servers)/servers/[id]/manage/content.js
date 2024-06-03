@@ -15,6 +15,9 @@ import deleteServer from '@/lib/request/servers/deleteServer';
 import { useRouter } from 'next-nprogress-bar';
 import { FaCheck } from 'react-icons/fa';
 import revalidateServer from '@/lib/revalidate/server';
+import cn from '@/lib/cn';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Content({ server }) {
   const [currentServer, setCurrentServer] = useState(server);
@@ -28,7 +31,6 @@ export default function Content({ server }) {
   const [keywordsInputValue, setKeywordsInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [anyChangesMade, setAnyChangesMade] = useState(false);
-  const [showDeleteConsent, setShowDeleteConsent] = useState(false);
   const router = useRouter();
   
   useEffect(() => {
@@ -65,18 +67,29 @@ export default function Content({ server }) {
     });
   }
 
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal
+  })));
+
   async function continueDeleteServer() {
+    disableButton('delete-server', 'confirm');
     setLoading(true);
 
     toast.promise(deleteServer(currentServer.id), {
       loading: `Deleting ${currentServer.name}..`,
       success: () => {
+        closeModal('delete-server');
         setTimeout(() => router.push('/'), 3000);
         
         return `Successfully deleted ${currentServer.name}. You will be redirected to the home page in a few seconds.`;
       },
       error: error => {
+        enableButton('delete-server', 'confirm');
         setLoading(false);
+
         return error;
       }
     });
@@ -91,7 +104,19 @@ export default function Content({ server }) {
           </Link>
               
           <h1 className="flex items-center text-xl font-bold sm:text-3xl gap-x-1">
-            Manage <ServerIcon width={32} height={32} icon_url={currentServer.icon_url} name={currentServer.name} /> <span className='truncate'>{currentServer.name}</span>
+            Manage
+            <ServerIcon
+              width={32}
+              height={32}
+              icon_url={currentServer.icon_url}
+              name={currentServer.name}
+              className={cn(
+                !currentServer.icon_url && '[&>h2]:text-xs'
+              )}
+            />
+            <span className='truncate'>
+              {currentServer.name}
+            </span>
           </h1>
         </div>
               
@@ -273,36 +298,41 @@ export default function Content({ server }) {
               Danger Zone
             </h1>
             <p className='text-sm font-medium text-tertiary'>
-              {showDeleteConsent ? (
-                <>
-                  Are you sure you really want to delete this server?
-                </>
-              ) : (
-                <>
-                  You can delete the server using the button below, but be careful not to delete it by mistake :)
-                </>
-              )}
+              You can delete the server using the button below, but be careful not to delete it by mistake :)
             </p>
             
             <div className='flex mt-1 gap-x-2'>
-              {showDeleteConsent ? (
-                <>
-                  <button className='flex items-center gap-x-1.5 px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={continueDeleteServer} disabled={loading}>
-                    {loading && (
-                      <TbLoader className='animate-spin' />
-                    )}
-                    Confirm
-                  </button>
-
-                  <button className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => setShowDeleteConsent(false)} disabled={loading}>
-                    Cancel
-                  </button>
-                </>
-              ) : (
-                <button className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70' onClick={() => setShowDeleteConsent(true)}>
-                  Delete
-                </button>
-              )}
+              <button
+                className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
+                onClick={() => 
+                  openModal('delete-server', {
+                    title: 'Delete Server',
+                    description: `Are you sure you want to delete ${currentServer.name}?`,
+                    content: (
+                      <p className='text-sm text-tertiary'>
+                        Please note that deleting your server will remove all votes and reviews that your server has received.<br/><br/>
+                        This action cannot be undone.
+                      </p>
+                    ),
+                    buttons: [
+                      {
+                        id: 'cancel',
+                        label: 'Cancel',
+                        variant: 'ghost',
+                        actionType: 'close'
+                      },
+                      {
+                        id: 'confirm',
+                        label: 'Confirm',
+                        variant: 'solid',
+                        action: continueDeleteServer
+                      }
+                    ]
+                  })
+                }
+              >
+                Delete
+              </button>
             </div>
           </div>
         )}

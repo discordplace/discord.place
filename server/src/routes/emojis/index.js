@@ -11,6 +11,7 @@ const crypto = require('node:crypto');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
+const DashboardData = require('@/schemas/Dashboard/Data');
 
 const multer = require('multer');
 const upload = multer({
@@ -57,6 +58,8 @@ module.exports = {
       
       const userEmojiInQueue = await Emoji.findOne({ 'user.id': request.user.id, approved: false });
       if (userEmojiInQueue) return response.sendError(`You are already waiting for approval for emoji ${userEmojiInQueue.name}! Please wait for it to be processed first.`);
+
+      if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
 
       const { name, categories } = matchedData(request);
       const id = crypto.randomBytes(6).toString('hex');
@@ -106,6 +109,8 @@ module.exports = {
           }
         })
           .then(async () => {
+            await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
+
             const embeds = [
               new Discord.EmbedBuilder()
                 .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
@@ -179,6 +184,8 @@ module.exports = {
 
         S3.send(command)
           .then(async () => {
+            await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
+
             const embeds = [
               new Discord.EmbedBuilder()
                 .setTitle('New Emoji')

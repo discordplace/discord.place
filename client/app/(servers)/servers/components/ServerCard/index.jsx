@@ -4,15 +4,17 @@ import { FaUsers } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import useSearchStore from '@/stores/servers/search';
 import { MdKeyboardVoice } from 'react-icons/md';
-import { HiOutlineStatusOnline, HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import { IoHeart } from 'react-icons/io5';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import Image from 'next/image';
 import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
+import useThemeStore from '@/stores/theme';
 
 export default function ServerCard(props) {
+  const theme = useThemeStore(state => state.theme);
   const isMobile = useMedia('(max-width: 420px)', false);
   const storedSort = useSearchStore(state => state.sort);
   const sort = props.overridedSort || storedSort;
@@ -43,11 +45,6 @@ export default function ServerCard(props) {
       icon: MdKeyboardVoice,
       value: props.server.data.voice,
       condition: sort === 'Voice'
-    },
-    {
-      icon: HiOutlineStatusOnline,
-      value: props.server.data.online,
-      condition: sort === 'Online'
     },
     {
       icon: HiSortAscending,
@@ -91,7 +88,10 @@ export default function ServerCard(props) {
             name={props.server.name}
             width={64}
             height={64}
-            className='absolute top-[-25px] left-4 bg-secondary group-hover:bg-tertiary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
+            className={cn(
+              props.server.icon_url ? 'bg-secondary group-hover:bg-tertiary' : '[&>h2]:text-xl',
+              'absolute top-[-25px] left-4 border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
+            )}
           />
 
           {typeof props.index === 'number' && (
@@ -112,7 +112,7 @@ export default function ServerCard(props) {
 
             {props.server.premium && (
               <Image
-                src='/profile-badges/premium.svg'
+                src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_premium.svg`}
                 alt='Premium badge'
                 width={20}
                 height={20}

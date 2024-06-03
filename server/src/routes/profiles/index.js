@@ -7,6 +7,7 @@ const Premium = require('@/schemas/Premium');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
+const DashboardData = require('@/schemas/Dashboard/Data');
 
 module.exports = {
   post: [
@@ -51,6 +52,8 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await newProfile.save();
+
+      await DashboardData.findOneAndUpdate({}, { $inc: { profiles: 1 } }, { sort: { createdAt: -1 } });
 
       return response.status(204).end();
     }

@@ -35,13 +35,28 @@
 }
 
 [data-radix-menu-content][data-state='open'],
-[data-radix-menu-content][data-state='open'] {
+.radix-overlay[data-state='open'] {
   animation: fadeIn 200ms ease-out, slideDown 200ms ease-out;
 }
 
 [data-radix-menu-content][data-state='closed'],
-[data-radix-menu-content][data-state='closed'] {
+.radix-overlay[data-state='closed'] {
   animation: fadeOut 200ms ease-in, slideUp 200ms ease-in;
+}
+
+@keyframes dialogContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(100px) scale(0.80);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.radix-dialog-content[data-state='open'] {
+  animation: dialogContentIn 250ms cubic-bezier(0.165, 0.84, 0.44, 1)
 }
 
 [data-radix-menu-content] {

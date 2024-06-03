@@ -18,6 +18,8 @@ module.exports = {
       const profile = await Profile.findOne({ 'user.id': user.id });
       const premium = await Premium.findOne({ 'user.id': user.id });
 
+      const canViewDashboard = request.member && config.permissions.canViewDashboardRoles.some(roleId => request.member.roles.cache.has(roleId));
+
       return response.json({
         id: user.id,
         username: user.username,
@@ -29,7 +31,8 @@ module.exports = {
         premium: premium ? {
           created_at: new Date(premium.createdAt),
           expire_at: premium.expire_at ? new Date(premium.expire_at) : null
-        } : null
+        } : null,
+        can_view_dashboard: canViewDashboard
       });
     }
   ],

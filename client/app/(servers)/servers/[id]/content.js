@@ -6,9 +6,21 @@ import About from '@/app/(servers)/servers/[id]/components/sections/About';
 import RightSide from '@/app/(servers)/servers/[id]/components/sections/RightSide';
 import Tabs from '@/app/(servers)/servers/[id]/components/Tabs';
 import Tooltip from '@/app/components/Tooltip';
+import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import Script from 'next/script';
+import { forwardRef } from 'react';
+import cn from '@/lib/cn';
+import useThemeStore from '@/stores/theme';
 
 export default function Content({ server }) {
+  const theme = useThemeStore(state => state.theme);
+
+  // eslint-disable-next-line react/display-name
+  const ForwardedServerIcon = forwardRef((props, ref) => (
+    <ServerIcon {...props} ref={ref} />
+  ));
+  const MotionServerIcon = motion(ForwardedServerIcon);
+
   return (
     <div className='flex justify-center w-full mt-32'>
       <Script id='apexChart' src='https://cdn.jsdelivr.net/npm/apexcharts' />
@@ -28,14 +40,17 @@ export default function Content({ server }) {
           )}
 
           <div className='absolute w-[calc(100%_-_2.5rem)] -bottom-14 left-10 z-[3]'>
-            <MotionImage
-              src={server.icon_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}
-              alt={`Guild ${server.name}'s icon`}
+            <MotionServerIcon
+              icon_url={server.icon_url}
+              name={server.name}
               width={150}
               height={150}
+              className={cn(
+                server.icon_url ? 'bg-background' : '[&>h2]:text-[3rem]',
+                'border-[10px] border-[rgb(var(--bg-background))] rounded-3xl w-[128px] h-[128px]'
+              )}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className='bg-background border-[10px] border-[rgb(var(--bg-background))] rounded-3xl w-[128px] h-[128px]'
             />
           </div>
         </div>
@@ -55,7 +70,7 @@ export default function Content({ server }) {
               {server.badges.map(badge => (
                 <Tooltip key={badge} content={badge}>
                   <MotionImage 
-                    src={`/profile-badges/${badge.toLowerCase()}.svg`} 
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.toLowerCase()}.svg`} 
                     width={24} 
                     height={24} 
                     alt={`${badge} Badge`}

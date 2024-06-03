@@ -30,7 +30,7 @@ export default function ServerIcon({ width, height, className, icon_url, name })
     ) : (
       <div 
         className={cn(
-          'bg-quaternary rounded-lg flex items-center justify-center',
+          'select-none bg-quaternary rounded-lg flex items-center justify-center',
           className
         )} 
         style={{

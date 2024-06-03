@@ -21,7 +21,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Sort must be a string.')
       .trim()
-      .isIn(['Votes', 'Voice', 'Members', 'Online', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, Voice, Members, Online, Newest, Oldest, Boosts.'),
+      .isIn(['Votes', 'Voice', 'Members', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, Voice, Members, Newest, Oldest, Boosts.'),
     query('limit')
       .optional()
       .isInt({ min: 1, max: 10 }).withMessage('Limit must be an integer between 1 and 10.')
@@ -49,15 +49,15 @@ module.exports = {
       } : baseFilter;
 
       const servers = await Server.find(findQuery);
+      
       const sortedServers = servers.sort((a, b) => {
-        const aGuild = client.guilds.cache.get(a.id);
-        const bGuild = client.guilds.cache.get(b.id);
+        let aGuild = client.guilds.cache.get(a.id);
+        let bGuild = client.guilds.cache.get(b.id);
 
         switch (sort) {
         case 'Votes': return b.votes - a.votes;
         case 'Voice': return bGuild.members.cache.filter(member => !member.bot && member.voice.channel).size - aGuild.members.cache.filter(member => !member.bot && member.voice.channel).size;
         case 'Members': return bGuild.memberCount - aGuild.memberCount;
-        case 'Online': return bGuild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size - aGuild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size;
         case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
         case 'Oldest': return aGuild.joinedTimestamp - bGuild.joinedTimestamp;
         case 'Boosts': return bGuild.premiumSubscriptionCount - aGuild.premiumSubscriptionCount;
@@ -85,7 +85,6 @@ module.exports = {
             switch (sort) {
             case 'Votes': data.votes = server.votes; break;
             case 'Voice': data.voice = guild.members.cache.filter(member => !member.bot && member.voice.channel).size; break;
-            case 'Online': data.online = guild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size; break;
             case 'Boosts': data.boosts = guild.premiumSubscriptionCount; break;
             }
 

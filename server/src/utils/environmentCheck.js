@@ -16,7 +16,9 @@ function environmentCheck() {
     'CLOUDFLARE_API_KEY',
     'CLOUDFLARE_EMAIL',
     'CLOUDFLARE_ACCOUNT_ID',
-    'CLOUDFLARE_BLOCK_IP_LIST_ID'
+    'CLOUDFLARE_BLOCK_IP_LIST_ID',
+    'AUTO_VOTE_TOKEN_SECRET',
+    'BOT_API_KEY_ENCRYPT_SECRET'
   ];
   
   if (requiredEnvironmentVariables.some(key => !process.env[key])) throw new Error(`Some environment variables are missing: ${requiredEnvironmentVariables.filter(key => !process.env[key]).join(', ')}`);  

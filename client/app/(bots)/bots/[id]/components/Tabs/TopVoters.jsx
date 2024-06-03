@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import fetchVoters from '@/lib/request/bots/fetchVoters';
 import { toast } from 'sonner';
+import Link from 'next/link';
 
 export default function TopVoters({ bot }) {
   const [loading, setLoading] = useState(false);
@@ -51,10 +52,11 @@ export default function TopVoters({ bot }) {
       ) : (
         <div className='grid w-full grid-cols-1 mt-4' key='voters'>
           {voters.map((voter, index) => (
-            <div 
+            <Link 
+              href={`/profile/u/${voter.user_id}`}
               key={voter.id} 
               className={cn(
-                'flex items-center w-full gap-4 p-4 odd:bg-secondary even:bg-tertiary',
+                'flex items-center w-full gap-4 p-4 odd:bg-secondary even:bg-tertiary hover:opacity-70 transition-opacity',
                 index === 0 && 'rounded-t-xl',
                 index === voters.length - 1 && 'rounded-b-xl',
                 page === 1 && voters.length > 3 && voters.indexOf(voter) === 0 && 'border-x-2 border-t-2 border-yellow-500 odd:bg-yellow-500/10',
@@ -90,7 +92,7 @@ export default function TopVoters({ bot }) {
                 {voter.votes}
                 <TbSquareRoundedChevronUp />
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

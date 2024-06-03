@@ -42,7 +42,7 @@ module.exports = {
       });
 
       S3.send(command).catch(() => null);
-
+      
       await emojiPack.deleteOne();
 
       return response.status(204).end();

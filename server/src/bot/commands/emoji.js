@@ -16,8 +16,9 @@ module.exports = {
         .addStringOption(option => option.setName('pack').setDescription('Pack to upload.').setRequired(true).setAutocomplete(true))))
     .toJSON(),
   execute: async interaction => {
-    if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
-
+    if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+    if (!interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions) && !interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply({ content: 'I don\'t have permission to upload emojis. Please make sure I have the "Manage Guild Expressions" and "Create Guild Expressions" permissions.' });
+    
     await interaction.deferReply();
 
     const userQuarantined = await findQuarantineEntry.single('USER_ID', interaction.user.id, 'EMOJIS_QUICKLY_UPLOAD').catch(() => false);
@@ -82,7 +83,7 @@ module.exports = {
 
       if (createdEmojis.length === 0) return message.edit({ content: `Pack **${pack.name}** failed to upload.` });
 
-      await Emoji.updateMany({ id: { $in: createdEmojis.map(({ index }) => pack.emoji_ids[index].id) } }, { $inc: { downloads: 1 } });
+      await EmojiPack.updateOne({ id: packId }, { $inc: { downloads: 1 } });
 
       return message.edit({ content: `Successfully uploaded **${pack.name}**!\n\n${createdEmojis.map(({ emoji }, index) => `${index + 1}. ${emoji}`).join('\n')}` });
     case null:
@@ -93,6 +94,7 @@ module.exports = {
       interaction.guild.emojis.create({ attachment: getEmojiURL(emoji.id, emoji.animated), name: emoji.name })
         .then(createdEmoji => {
           emoji.updateOne({ $inc: { downloads: 1 } });
+
           return interaction.followUp({ content: `Emoji uploaded! ${createdEmoji}` });
         })
         .catch(error => {

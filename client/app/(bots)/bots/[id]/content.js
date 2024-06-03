@@ -9,8 +9,11 @@ import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import Link from 'next/link';
 import config from '@/config';
+import useThemeStore from '@/stores/theme';
 
 export default function Content({ bot }) {
+  const theme = useThemeStore(state => state.theme);
+
   return (
     <div className='flex justify-center w-full mt-32'>      
       <div className='flex flex-col max-w-[1000px] w-full mb-8 px-2 lg:px-0'>
@@ -68,7 +71,7 @@ export default function Content({ bot }) {
               {bot.badges.map(badge => (
                 <Tooltip key={badge} content={badge}>
                   <MotionImage 
-                    src={`/profile-badges/${badge.toLowerCase()}.svg`} 
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.toLowerCase()}.svg`} 
                     width={24} 
                     height={24} 
                     alt={`${badge} Badge`}

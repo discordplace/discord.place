@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
-import { HiOutlineStatusOnline } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import { MdKeyboardVoice } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { ImTrophy } from 'react-icons/im';
 
 const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -26,10 +26,10 @@ export default function About({ server }) {
       value: formatter.format(server.total_members)
     },
     {
-      key: 'online',
-      label: 'Online Members',
-      icon: <HiOutlineStatusOnline />,
-      value: formatter.format(server.online_members)
+      key: 'rewards',
+      label: 'Rewards',
+      icon: <ImTrophy />,
+      value: server.rewards.length > 0 ? `${server.rewards.length} vote rewards available.` : 'No vote rewards available.'
     },
     {
       key: 'boosts',

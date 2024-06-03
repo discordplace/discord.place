@@ -120,7 +120,7 @@ const ProfileSchema = new Schema({
         verified: this.verified,
         preferredHost: this.preferredHost,
         premium: !!premium,
-        badges: getBadges(this, !!premium),
+        badges: getBadges(this, premium ? premium.createdAt : null),
         createdAt: this.createdAt,
         updatedAt: this.updatedAt
       };

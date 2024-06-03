@@ -108,7 +108,21 @@ export default function Page() {
                 </button>
               
                 <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
-                  Adding <ServerIcon width={32} height={32} icon_url={currentlyAddingServer.icon_url} name={currentlyAddingServer.name} /> <span className='truncate'>{currentlyAddingServer.name}</span>
+                  Adding
+
+                  <ServerIcon
+                    width={32}
+                    height={32}
+                    icon_url={currentlyAddingServer.icon_url}
+                    name={currentlyAddingServer.name}
+                    className={cn(
+                      !currentlyAddingServer.icon_url && '[&>h2]:text-xs'
+                    )}
+                  />
+
+                  <span className='truncate'>
+                    {currentlyAddingServer.name}
+                  </span>
                 </h1>
               </div>
               
@@ -286,7 +300,19 @@ export default function Page() {
                     onClick={addServer}
                   >
                     {loading && <TbLoader className='animate-spin' />}
-                    Add <ServerIcon width={20} height={20} icon_url={currentlyAddingServer.icon_url} name={currentlyAddingServer.name} /> <span className='truncate'>{currentlyAddingServer.name}</span>
+                    Add
+                    <ServerIcon
+                      width={20}
+                      height={20}
+                      icon_url={currentlyAddingServer.icon_url}
+                      name={currentlyAddingServer.name}
+                      className={cn(
+                        !currentlyAddingServer.icon_url && '[&>h2]:text-xs [&>h2]:text-primary'
+                      )}
+                    />
+                    <span className='truncate'>
+                      {currentlyAddingServer.name}
+                    </span>
                   </button>
                   <button className='flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-secondary disabled:pointer-events-none disabled:opacity-70'
                     onClick={() => {

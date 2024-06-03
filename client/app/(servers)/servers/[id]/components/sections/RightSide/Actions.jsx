@@ -19,12 +19,15 @@ import Countdown from '@/app/components/Countdown/Vote';
 import Tooltip from '@/app/components/Tooltip';
 import { FaRegBell, FaBell } from 'react-icons/fa';
 import revalidateServer from '@/lib/revalidate/server';
+import { useSearchParams } from 'next/navigation';
+import checkAutoVoteToken from '@/lib/request/servers/checkAutoVoteToken';
 
 export default function Actions({ server }) {
   const [serverVotes, setServerVotes] = useState(server.votes);
   const [voteTimeout, setVoteTimeout] = useState(server.vote_timeout);
   const [canSetReminder, setCanSetReminder] = useState(server.can_set_reminder);
   const loggedIn = useAuthStore(state => state.loggedIn);
+  const user = useAuthStore(state => state.user);
   const [showCaptcha, setShowCaptcha] = useState(false);
   const [loading, setLoading] = useState(false);
   const [createReminderLoading, setCreateReminderLoading] = useState(false);
@@ -92,6 +95,30 @@ export default function Actions({ server }) {
       }
     });
   }
+
+  const searchParams = useSearchParams();
+  const autoVoteToken = searchParams.get('autoVoteToken');
+
+  useEffect(() => {
+    if (!autoVoteToken || user === 'loading') return;
+    
+    if (!loggedIn) {
+      toast.error('You need to be logged in to vote for a server.');
+      return;
+    }
+
+    if (voteTimeout) {
+      const voteTimeoutExpire = new Date(server.vote_timeout.createdAt).getTime() + 86400000;
+      toast.error(`You can vote again in ${Math.floor((voteTimeoutExpire - Date.now()) / 3600000)} hours, ${Math.floor((voteTimeoutExpire - Date.now()) / 60000) % 60} minutes.`);
+      return;
+    }
+    
+    checkAutoVoteToken(server.id, autoVoteToken)
+      .then(() => setShowCaptcha(true))
+      .catch(toast.error);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, loggedIn, autoVoteToken]);
 
   return (
     <div>

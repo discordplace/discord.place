@@ -15,6 +15,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const Reward = require('@/schemas/Server/Vote/Reward');
+const DashboardData = require('@/schemas/Dashboard/Data');
 
 module.exports = {
   get: [
@@ -77,7 +78,6 @@ module.exports = {
         icon_url: guild.iconURL(),
         banner_url: guild.bannerURL({ format: 'png', size: 2048 }),
         total_members: guild.memberCount,
-        online_members: guild.members.cache.filter(member => !member.bot && member.presence && member.presence.status !== 'offline').size,
         total_members_in_voice: guild.members.cache.filter(member => !member.bot && member.voice.channel).size,
         vanity_url: guild.vanityURLCode ? `https://discord.com/invite/${guild.vanityURLCode}` : null,
         boost_level: guild.premiumTier,
@@ -148,6 +148,8 @@ module.exports = {
       const server = await Server.findOne({ id });
       if (server) return response.sendError('Server already exists.', 400);
 
+      if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
+
       const inviteLinkMatch = invite_link.match(/(https?:\/\/|http?:\/\/)?(www.)?(discord.(gg)|discordapp.com\/invite|discord.com\/invite)\/[^\s/]+?(?=$|Z)/g);
       if (!inviteLinkMatch || !inviteLinkMatch?.[0]) return response.sendError('Invite link is not valid.', 400);
 
@@ -178,6 +180,8 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await newServer.save();
+
+      await DashboardData.findOneAndUpdate({}, { $inc: { servers: 1 } }, { sort: { createdAt: -1 } });
 
       if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 

@@ -76,8 +76,8 @@ module.exports = class Server {
       next();
     });
 
-    this.server.use(blockSimultaneousRequests);
-
+    if (process.env.NODE_ENV === 'production') this.server.use(blockSimultaneousRequests);
+    
     logger.send('Middlewares added.');
   }
 

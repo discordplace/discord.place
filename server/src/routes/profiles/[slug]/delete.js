@@ -22,7 +22,7 @@ module.exports = {
 
       const canDelete = request.user.id == profile.user.id || config.permissions.canDeleteProfiles.includes(request.user.id);
       if (!canDelete) return response.sendError('You are not allowed to delete this profile.', 403);
-    
+
       await profile.deleteOne();
 
       return response.status(204).end();

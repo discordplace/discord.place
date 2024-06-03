@@ -11,7 +11,8 @@ const ms = require('ms');
 const getValidationError = require('@/utils/getValidationError');
 const Bot = require('@/schemas/Bot');
 const BotReview = require('@/schemas/Bot/Review');
-const BotDeny = require('@/src/schemas/Bot/Deny');
+const BotDeny = require('@/schemas/Bot/Deny');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -22,28 +23,6 @@ const S3 = new S3Client({
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
   }
 });
-
-const emojisDenyReasons = {
-  'reposted-emoji': { name: 'Reposted Emoji', description: 'If the emoji you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.' },
-  'background-transparency': { name: 'Background Transparency', description: 'Emojis should feature a transparent background. Emojis with opaque backgrounds may not blend well with different message backgrounds and could disrupt visual coherence.' },
-  'whitespace': { name: 'Whitespace', description: 'Emojis containing excess whitespace around the edges may appear disproportionately small when used in messages. To ensure optimal visibility and legibility, please crop your emojis appropriately before submission.' },
-  'incoherent-emoji-package-content': { name: 'Incoherent Emoji Package Content', description: 'Emojis within a package must be compatible with each other to ensure coherence and meaningful usage.' },
-  'offensive-or-inappropriate-content': { name: 'Offensive or Inappropriate Content', description: 'Emojis depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.' },
-  'copyright-infringement': { name: 'Copyright Infringement', description: 'Ensure that your emoji submissions do not violate any copyright or intellectual property rights. Avoid using copyrighted characters, logos, or designs without proper authorization.' },
-  'clear-representation': { name: 'Clear Representation', description: 'Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users.' }
-};
-
-const botsDenyReasons = {
-  'reposted-bot': { name: 'Reposted Bot', description: 'If the bot you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.' },
-  'offensive-or-inappropriate-content': { name: 'Offensive or Inappropriate Content', description: 'Bots depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.' },
-  'against-discord-terms-of-service': { name: 'Against Discord Terms of Service', description: 'Bots that violate Discord\'s Terms of Service will not be accepted.' },
-  'not-online-or-inviteable': { name: 'Not Online or Inviteable', description: 'Bots must be online and inviteable for usage.' },
-  'base-functionality-is-broken': { name: 'Base Functionality is Broken', description: 'Bots must have functional base features to be considered.' },
-  'copied-bot': { name: 'Copied Bot', description: 'Bots that are direct copies of existing bots will not be accepted.' },
-  'has-vulnerability': { name: 'Has Vulnerability', description: 'Bots with security vulnerabilities will not be accepted.' },
-  'support-for-slash-commands': { name: 'Support for Slash Commands', description: 'Bots must support slash commands for improved user experience and functionality.' }
-};
-
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -61,11 +40,11 @@ module.exports = {
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected emoji.')
         .addStringOption(option => option.setName('emoji').setDescription('Emoji to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(emojisDenyReasons).map(reason => ({ name: reason, value: reason }))))))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(config.emojisDenyReasons).map(reason => ({ name: reason, value: reason }))))))
 
     .addSubcommandGroup(group => group.setName('premium').setDescription('premium')
       .addSubcommand(subcommand => subcommand.setName('generate-code').setDescription('Generates new premium code.')
-        .addStringOption(option => option.setName('time').setDescription('Expiration time for the premium. (Optional, 20m, 6h, 3d, 1w, 1m, 1y)')))
+        .addStringOption(option => option.setName('time').setDescription('Expiration time for the premium. (Optional, 20m, 6h, 3d, 1w, 30d, 1y)')))
       .addSubcommand(subcommand => subcommand.setName('revoke-code').setDescription('Revokes selected premium code.')
         .addStringOption(option => option.setName('code').setDescription('Code to revoke.').setRequired(true).setAutocomplete(true))))
 
@@ -74,7 +53,7 @@ module.exports = {
         .addStringOption(option => option.setName('review').setDescription('Select the review to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('review-deny').setDescription('Denies a review.')
         .addStringOption(option => option.setName('review').setDescription('Select the review to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('The reason for denying the review.').setRequired(true)))
+        .addStringOption(option => option.setName('reason').setDescription('The reason for denying the review.')))
       .addSubcommand(subcommand => subcommand.setName('review-delete').setDescription('Deletes a review.')
         .addStringOption(option => option.setName('review').setDescription('Select the review to delete.').setRequired(true).setAutocomplete(true))))
 
@@ -84,7 +63,7 @@ module.exports = {
         .addStringOption(option => option.setName('value').setDescription('The value of the quarantine entry. (User ID, Server ID, etc.)').setRequired(true))
         .addStringOption(option => option.setName('restriction').setDescription('The restriction of the quarantine entry.').setRequired(true).addChoices(...Object.keys(config.quarantineRestrictions).map(restriction => ({ name: restriction, value: restriction }))))
         .addStringOption(option => option.setName('reason').setDescription('The reason for the quarantine entry.').setRequired(true))
-        .addStringOption(option => option.setName('time').setDescription('Expiration time for the quarantine entry. (Optional, 20m, 6h, 3d, 1w, 1m, 1y)')))
+        .addStringOption(option => option.setName('time').setDescription('Expiration time for the quarantine entry. (Optional, 20m, 6h, 3d, 1w, 30d, 1y)')))
       .addSubcommand(subcommand => subcommand.setName('remove').setDescription('Removes a quarantine entry.')
         .addStringOption(option => option.setName('entry').setDescription('Select the quarantine to remove.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('list').setDescription('Lists all quarantine entries.'))
@@ -104,7 +83,7 @@ module.exports = {
         .addStringOption(option => option.setName('bot').setDescription('Bot to approve.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('deny').setDescription('Denies the selected bot.')
         .addStringOption(option => option.setName('bot').setDescription('Bot to deny.').setRequired(true).setAutocomplete(true))
-        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(botsDenyReasons).map(reason => ({ name: reason, value: reason }))))))
+        .addStringOption(option => option.setName('reason').setDescription('Deny reason.').setRequired(true).addChoices(...Object.keys(config.botsDenyReasons).map(reason => ({ name: reason, value: reason }))))))
 
     .toJSON(),
   execute: async interaction => {
@@ -140,7 +119,7 @@ module.exports = {
   
         profile.verified = false;
         await profile.save();
-  
+
         return interaction.followUp({ content: 'Profile has been unverified.' });
       }
     }
@@ -158,7 +137,7 @@ module.exports = {
         if (emoji.approved === true) return interaction.followUp({ content: `Emoji${emoji.emoji_ids ? ' pack' : ''} is already approved.` });
   
         await emoji.updateOne({ approved: true });
-  
+
         const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
@@ -214,11 +193,11 @@ module.exports = {
         S3.send(command)
           .then(async () => {
             await emoji.deleteOne();
-  
+
             const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
             if (publisher) {
               const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-              if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.username}\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by @${interaction.user}. Reason: **${reason || 'No reason provided.'}**` }).catch(() => null);
+              if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.username}\nYour emoji${emoji.emoji_ids ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by ${interaction.user}. Reason: **${reason || 'No reason provided.'}**` }).catch(() => null);
             }
 
             const embeds = [
@@ -233,7 +212,7 @@ module.exports = {
                   },
                   {
                     name: 'Reason',
-                    value: reason ? emojisDenyReasons[reason].description : 'No reason provided.'
+                    value: reason ? config.emojisDenyReasons[reason].description : 'No reason provided.'
                   }
                 ])
             ];
@@ -262,18 +241,56 @@ module.exports = {
         if (review.approved === true) return interaction.followUp({ content: 'Review is already approved.' });
   
         await review.updateOne({ approved: true });
-  
+
         const bot = await Bot.findOne({ id: review.bot.id });
         if (!bot) return interaction.followUp({ content: 'Bot not found.' });
 
         const user = client.users.cache.get(review.bot.id) || await client.users.fetch(review.bot.id).catch(() => null);
         if (!user) return interaction.followUp({ content: 'Bot not found.' });
-  
-        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
-        if (publisher) {
+
+        const publisher = await client.users.fetch(review.user.id).catch(() => null);
+        const isPublisherFoundInGuild = publisher ? interaction.guild.members.cache.has(publisher.id) : false;
+
+        if (isPublisherFoundInGuild) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${user.username}** has been approved!` }).catch(() => null);
         }
+
+        const embeds = [
+          new Discord.EmbedBuilder()
+            .setColor(Discord.Colors.Green)
+            .setAuthor({ name: `Review Approved | ${user.username}`, iconURL: user.displayAvatarURL() })
+            .setTimestamp()
+            .setFields([
+              {
+                name: 'Review',
+                value: review.content,
+                inline: true
+              },
+              {
+                name: 'Rating',
+                value: '⭐'.repeat(review.rating),
+                inline: true
+              },
+              {
+                name: 'Moderator',
+                value: interaction.user.toString()
+              }
+            ])
+            .setFooter({ text: `Review from @${publisher.username}`, iconURL: publisher.displayAvatarURL() })
+        ];
+
+        const components = [
+          new Discord.ActionRowBuilder()
+            .addComponents(
+              new Discord.ButtonBuilder()
+                .setStyle(Discord.ButtonStyle.Link)
+                .setURL(`${config.frontendUrl}/bots/${review.bot.id}`)
+                .setLabel('View Bot on discord.place')
+            )
+        ];
+
+        client.channels.cache.get(config.portalChannelId).send({ embeds, components });
   
         return interaction.followUp({ content: 'Review approved.' });
       }
@@ -318,7 +335,6 @@ module.exports = {
         if (!review) return interaction.followUp({ content: 'Review not found.' });
 
         await review.deleteOne();
-
         return interaction.followUp({ content: 'Review deleted.' });
       }
 
@@ -342,13 +358,13 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour bot **${botUser.username}** has been approved!` }).catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour bot **${botUser.tag}** has been approved!` }).catch(() => null);
         }
 
         const embeds = [
           new Discord.EmbedBuilder()
             .setColor(Discord.Colors.Green)
-            .setAuthor({ name: `Bot Approved | ${botUser.username}`, iconURL: botUser.displayAvatarURL() })
+            .setAuthor({ name: `Bot Approved | ${botUser.tag}`, iconURL: botUser.displayAvatarURL() })
             .setTimestamp()
             .setFields([
               {
@@ -380,7 +396,7 @@ module.exports = {
 
         const id = interaction.options.getString('bot');
         const reason = interaction.options.getString('reason');
-        if (!botsDenyReasons[reason]) return interaction.followUp({ content: 'Invalid reason.' });
+        if (!config.botsDenyReasons[reason]) return interaction.followUp({ content: 'Invalid reason.' });
 
         const botUser = await client.users.fetch(id).catch(() => null);
         if (!botUser) return interaction.followUp({ content: 'Bot not found.' });
@@ -403,21 +419,21 @@ module.exports = {
             id: interaction.user.id
           },
           reason: {
-            title: botsDenyReasons[reason].name,
-            description: botsDenyReasons[reason].description
+            title: config.botsDenyReasons[reason].name,
+            description: config.botsDenyReasons[reason].description
           }
         }).save();
 
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by @${interaction.user}.\nReason: **${reason || 'No reason provided.'}**` }).catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.tag}** has been denied by ${interaction.user}.\nReason: **${config.botsDenyReasons[reason].description}**` }).catch(() => null);
         }
 
         const embeds = [
           new Discord.EmbedBuilder()
             .setColor(Discord.Colors.Red)
-            .setAuthor({ name: `Bot Denied | ${botUser.username}`, iconURL: botUser.displayAvatarURL() })
+            .setAuthor({ name: `Bot Denied | ${botUser.tag}`, iconURL: botUser.displayAvatarURL() })
             .setTimestamp()
             .setFields([
               {
@@ -426,7 +442,7 @@ module.exports = {
               },
               {
                 name: 'Reason',
-                value: botsDenyReasons[reason].description
+                value: config.botsDenyReasons[reason].description
               }
             ])
         ];
@@ -494,11 +510,51 @@ module.exports = {
         const guild = client.guilds.cache.get(review.server.id);
         if (!guild) return interaction.followUp({ content: 'Server not found.' });
 
-        const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
-        if (publisher) {
+        if (!client.fetchedGuilds.has(review.server.id)) await fetchGuildsMembers([review.server.id]);
+
+        const publisher = await client.users.fetch(review.user.id).catch(() => null);
+        const isPublisherFoundInGuild = publisher ? guild.members.cache.has(publisher.id) : false;
+
+        if (isPublisherFoundInGuild) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${guild.name}** has been approved!` }).catch(() => null);
         }
+
+        const embeds = [
+          new Discord.EmbedBuilder()
+            .setColor(Discord.Colors.Green)
+            .setAuthor({ name: `Review Approved | ${guild.name}`, iconURL: guild.iconURL() })
+            .setTimestamp()
+            .setFields([
+              {
+                name: 'Review',
+                value: review.content,
+                inline: true
+              },
+              {
+                name: 'Rating',
+                value: '⭐'.repeat(review.rating),
+                inline: true
+              },
+              {
+                name: 'Moderator',
+                value: interaction.user.toString()
+              }
+            ])
+            .setFooter({ text: `Review from @${publisher.username}`, iconURL: publisher.displayAvatarURL() })
+        ];
+
+        const components = [
+          new Discord.ActionRowBuilder()
+            .addComponents(
+              new Discord.ButtonBuilder()
+                .setStyle(Discord.ButtonStyle.Link)
+                .setURL(`${config.frontendUrl}/servers/${review.server.id}`)
+                .setLabel('View Server on discord.place')
+            )
+        ];
+
+        client.channels.cache.get(config.portalChannelId).send({ embeds, components });
 
         return interaction.followUp({ content: 'Review approved.' });
       }
@@ -522,7 +578,7 @@ module.exports = {
         const publisher = await interaction.guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${interaction.options.getString('reason')}` }).catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${interaction.options.getString('reason') || 'No reason provided.'}` });
         }
 
         return interaction.followUp({ content: 'Review denied.' });

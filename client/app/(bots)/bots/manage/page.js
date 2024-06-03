@@ -58,7 +58,7 @@ export default function Page() {
             </p>
 
             {denies.length > 0 && (
-              <div className='flex flex-col gap-y-4'>
+              <div className='flex flex-col items-center w-full gap-y-4'>
                 {denies.map(deny => (
                   <div 
                     className='relative flex flex-col gap-y-2 w-full max-w-[1000px] bg-red-500/10 border border-red-500 p-4 rounded-xl mt-8 transition-[margin,opacity] duration-1000 ease-in-out' 

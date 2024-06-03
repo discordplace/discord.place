@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+
 const Profile = require('@/schemas/Profile');
 
 const PremiumSchema = new Schema({

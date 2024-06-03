@@ -39,6 +39,7 @@ module.exports = {
 
         return {
           id: voter.id,
+          user_id: voter.user.id,
           username: user?.username || 'Unknown',
           avatar_url: user?.displayAvatarURL({ format: 'png', size: 256 }) || 'https://cdn.discordapp.com/embed/avatars/0.png',
           votes: voter.vote

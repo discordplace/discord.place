@@ -15,6 +15,12 @@ const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
 const Reminder = require('@/schemas/Reminder');
 const BlockedIp = require('@/schemas/BlockedIp');
+const DashboardData = require('@/schemas/Dashboard/Data');
+const Profile = require('@/schemas/Profile');
+const Bot = require('@/schemas/Bot');
+const Emoji = require('@/schemas/Emoji');
+const EmojiPack = require('@/schemas/Emoji/Pack');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -36,10 +42,8 @@ module.exports = class Client {
     this.client = new Discord.Client({
       intents: [
         Discord.GatewayIntentBits.Guilds,
-        Discord.GatewayIntentBits.GuildPresences,
         Discord.GatewayIntentBits.GuildMembers,
         Discord.GatewayIntentBits.GuildMessages,
-        Discord.GatewayIntentBits.MessageContent,
         Discord.GatewayIntentBits.GuildInvites,
         Discord.GatewayIntentBits.GuildVoiceStates
       ],
@@ -67,7 +71,9 @@ module.exports = class Client {
       process.exit(1);
     });
 
-    this.client.once('ready', () => {
+    this.client.once('ready', async () => {
+      await fetchGuildsMembers([config.guildId]);
+
       logger.send(`Client logged in as ${this.client.user.tag}`);
 
       const CommandsHandler = require('@/src/bot/handlers/commands.js');
@@ -103,18 +109,28 @@ module.exports = class Client {
       if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
       if (options.startup.checkExpiredApproximateGuildCountFetchedBots) this.checkExpiredApproximateGuildCountFetchedBots();
       if (options.startup.updateBotStats) this.updateBotStats();
+      if (options.startup.createNewDashboardData) this.createNewDashboardData();
 
       if (options.startup.listenCrons) {
-        new CronJob('0 * * * *', this.checkVoiceActivity, null, true, 'Europe/Istanbul');
-        new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
-        new CronJob('0 0 * * *', () => {
+        new CronJob('0 * * * *', () => {
+          this.checkVoiceActivity();
           this.checkVoteReminderMetadatas();
           this.checkReminerMetadatas();
           this.checkExpiredBlockedIPs();
           this.checkExpiredApproximateGuildCountFetchedBots();
           this.checkDeletedInviteCodes();
-          this.updateBotStats();
+          this.updateClientActivity();
         }, null, true, 'Europe/Istanbul');
+
+        new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
+
+        new CronJob('0 0 * * *', () => {
+          this.checkVoteReminderMetadatas();
+          this.updateBotStats();
+          this.createNewDashboardData();
+        }, null, true, 'Europe/Istanbul');
+
+        new CronJob('*/5 * * * *', this.postNewMetric.bind(this), null, true, 'Europe/Istanbul');
       }
     });
   }
@@ -132,6 +148,7 @@ module.exports = class Client {
       const invite = await guild.invites.fetch().catch(() => null);
       if (!invite || !invite.find(invite => invite.code === server.invite_code.code)) {
         await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
+
         logger.send(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
       }
     }
@@ -195,10 +212,12 @@ module.exports = class Client {
   }
 
   updateClientActivity() {
+    const state = `Members: ${client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')} | Servers: ${client.guilds.cache.size.toLocaleString('en-US')}`;
+
     client.user.setActivity({
       type: Discord.ActivityType.Custom,
       name: 'status',
-      state: `Members: ${client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')} | Servers: ${client.guilds.cache.size.toLocaleString('en-US')}`
+      state
     });
   }
 
@@ -217,6 +236,8 @@ module.exports = class Client {
   }
 
   async updateBotStats() {
+    if (!process.env.DISCORD_PLACE_API_KEY) return logger.send('API key is not defined. Please define DISCORD_PLACE_API_KEY in your environment variables.');
+
     const url = `https://api.discord.place/bots/${client.user.id}/stats`;
     const data = {
       command_count: client.commands.size
@@ -270,5 +291,64 @@ module.exports = class Client {
     }
 
     logger.send(`Deleted ${deletedCount} expired approximate guild count fetched bots collections.`);
+  }
+
+  async createNewDashboardData() {
+    const totalServers = await Server.countDocuments();
+    const totalProfiles = await Profile.countDocuments();
+    const totalBots = await Bot.countDocuments();
+    const totalEmojis = await Emoji.countDocuments();
+    const emojiPacks = await EmojiPack.find();
+    let totalEmojiPacks = 0;
+
+    for (const pack of emojiPacks) totalEmojiPacks += pack.emoji_ids.length;
+    
+    await new DashboardData({
+      servers: totalServers,
+      profiles: totalProfiles,
+      bots: totalBots,
+      emojis: totalEmojis + totalEmojiPacks,
+      users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
+      guilds: client.guilds.cache.size
+    }).save();
+
+    logger.send('Created new dashboard data.');
+  }
+
+  async getResponseTime() {
+    const baseUrl = config.backendUrl;
+
+    try {
+      await axios.post(`${baseUrl}/response-time`);
+
+      const response = await axios.get(`${baseUrl}/response-time`);
+
+      return response.data.responseTime;
+    } catch (error) {
+      logger.send(`Failed to get response time:\n${error.stack}`);
+    }
+  }
+      
+  async postNewMetric() {
+    if (!config.instatus.page_id || !config.instatus.metric_id) return logger.send('[Instatus] Page ID or Metric ID is not defined.');
+    if (!process.env.DISCORD_PLACE_INSTATUS_API_KEY) return logger.send('[Instatus] API key is not defined. Please define DISCORD_PLACE_INSTATUS_API_KEY in your environment variables.');
+
+    const baseUrl = 'https://api.instatus.com';
+    const responseTime = await this.getResponseTime();
+
+    try {
+      const response = await axios.post(`${baseUrl}/v1/${config.instatus.page_id}/metrics/${config.instatus.metric_id}`, {
+        timestamp: new Date().getTime(),
+        value: responseTime
+      }, {
+        headers: {
+          Authorization: `Bearer ${process.env.DISCORD_PLACE_INSTATUS_API_KEY}`
+        }
+      });
+
+      if (response.status === 200) logger.send('Posted new metric to Instatus.');
+    } catch (error) {
+      logger.send(`Failed to post new metric to Instatus:\n${error.stack}`);
+    }
   }
 };

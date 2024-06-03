@@ -14,10 +14,13 @@ import { MdOutlineMale, MdOutlineFemale } from 'react-icons/md';
 import { LiaBirthdayCakeSolid } from 'react-icons/lia';
 import { FaGenderless } from 'react-icons/fa';
 import { BsGeoAlt } from 'react-icons/bs';
+import useThemeStore from '@/stores/theme';
 
 export default function Card({ banner_url, avatar_url, username, occupation, gender, location, birthday, bio, views, likes, verified, preferredHost, slug, badges }) {
   const [isBannerFailed, setIsBannerFailed] = useState(false);
-  
+
+  const theme = useThemeStore(state => state.theme);
+
   return (
     <div className='bg-secondary w-[300px] h-[350px] rounded-md flex flex-col'>
       <div className='relative flex items-center px-4 pt-4 gap-x-4'>
@@ -61,12 +64,23 @@ export default function Card({ banner_url, avatar_url, username, occupation, gen
             <h2 className='text-xl font-bold truncate max-w-[170px]'>@{username || 'unknown'}</h2>
             {verified && (
               <Tooltip content='Verified'>
-                <Image src='/profile-badges/verified.svg' width={20} height={20} alt='Verified Badge' />
+                <Image
+                  src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_verified.svg`}
+                  width={20}
+                  height={20}
+                  alt='Verified Badge'
+                />
               </Tooltip>
             )}
-            {badges.includes('Premium') && (
-              <Tooltip content='Premium'>
-                <Image src='/profile-badges/premium.svg' width={20} height={20} alt='Premium Badge' />
+
+            {badges.some(({ name }) => name === 'Premium') && (
+              <Tooltip content={badges.find(({ name }) => name === 'Premium').tooltip}>
+                <Image
+                  src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_premium.svg`}
+                  width={20}
+                  height={20}
+                  alt='Premium Badge'
+                />
               </Tooltip>
             )}
           </div>

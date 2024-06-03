@@ -40,17 +40,16 @@ module.exports = {
         if (stderr) logger.send(stderr);
 
         logger.send('Pull successful.');
-
-        const registerCommands = request.body.commits.some(commit => commit.message.includes('(flags:registerCommands)'));
-        const unregisterCommands = request.body.commits.some(commit => commit.message.includes('(flags:unregisterCommands)'));
-
-        if (registerCommands || unregisterCommands) {
+        
+        const isFlagPresent = flag => request.body.commits.some(commit => commit.message.includes(`(flags:${flag})`));
+        
+        if (isFlagPresent('registerCommands') || isFlagPresent('unregisterCommands')) {
           logger.send('There are requests to register/unregister commands. Fetching commands..');
 
           commandsHandler.fetchCommands();
           
           await new Promise(resolve => {
-            if (registerCommands) {
+            if (isFlagPresent('registerCommands')) {
               commandsHandler.registerCommands()
                 .catch(error => {
                   logger.send(`Failed to register commands:\n${error.stack}`);
@@ -66,6 +65,14 @@ module.exports = {
                 .finally(resolve);
             }
           });
+        }
+
+        if (isFlagPresent('installDependencies')) {
+          logger.send('There are requests to install dependencies. Installing..');
+
+          const { stdout, stderr } = await exec('npm install');
+          logger.send(stdout);
+          if (stderr) logger.send(stderr);
         }
 
         logger.send('Auto deploy successful. Exiting process..');

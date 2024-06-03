@@ -180,11 +180,11 @@ const BotSchema = new Schema({
         description: this.description,
         invite_url: this.invite_url,
         categories: this.categories,
-        webhook: this.webhook,
         commands: this.command_count.value,
         commands_updated_at: this.command_count.updatedAt,
         votes: this.votes,
-        verified: this.verified
+        verified: this.verified,
+        created_at: this.createdAt
       };
     },
     encryptApiKey(apiKey) {
