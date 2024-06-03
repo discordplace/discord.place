@@ -1,21 +1,23 @@
 import useThemeStore from '@/stores/theme';
-import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 
 export default function VoiceActivityGraph({ server }) {
+  const DynamicApexCharts = dynamic(() => import('react-apexcharts'), {
+    ssr: false
+  });
+
   const theme = useThemeStore(state => state.theme);
 
-  useEffect(() => {
-    // eslint-disable-next-line no-undef
-    if (!ApexCharts) return;
-
-    // eslint-disable-next-line no-undef
-    const createdChart = new ApexCharts(document.getElementById('voiceActivityGraph'), {
-      series: [{
-        name: 'total_members_in_voice',
-        data: server.voiceActivity
-          ?.filter(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))
-          ?.map(activity => activity.data)
-      }],
+  return <DynamicApexCharts
+    type='area'
+    height={350}
+    series={[{
+      name: 'total_members_in_voice',
+      data: server.voiceActivity
+        ?.filter(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))
+        ?.map(activity => activity.data)
+    }]}
+    options={{
       chart: {
         animations: {
           enabled: false
@@ -28,7 +30,7 @@ export default function VoiceActivityGraph({ server }) {
       },
       grid: {
         show: true,
-        borderColor: theme === 'dark' ? '#333' : '#6c757d'
+        borderColor: theme === 'dark' ? '#333' : '#c5c5c5'
       },
       fill: {
         colors: ['#9c84ef'],
@@ -44,8 +46,8 @@ export default function VoiceActivityGraph({ server }) {
         hover: {
           size: 6
         },
-        colors: ['#9c84ef'],
-        strokeColors: ['#574a83'],
+        colors: [theme === 'dark' ? '#333' : '#c5c5c5'],
+        strokeColors: ['#9c84ef'],
         strokeWidth: 4,
         shape: 'circle'
       },
@@ -119,15 +121,6 @@ export default function VoiceActivityGraph({ server }) {
           }
         }
       }
-    });
-
-    createdChart.render();
-
-    return () => document.getElementById('voiceActivityGraph')?.firstChild?.remove?.();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
-
-  return (
-    <div id='voiceActivityGraph' className='px-8 lg:px-0 [&_tspan]:!font-sans' />
-  );
+    }}
+  />;
 }
