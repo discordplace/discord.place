@@ -3,7 +3,7 @@
 import Tooltip from '@/app/components/Tooltip';
 import useDashboardStore from '@/stores/dashboard';
 import { BiInfoCircle } from 'react-icons/bi';
-import { FaCompass } from "react-icons/fa";
+import { FaCompass } from 'react-icons/fa';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import cn from '@/lib/cn';
 import { BiSolidUserCircle } from 'react-icons/bi';

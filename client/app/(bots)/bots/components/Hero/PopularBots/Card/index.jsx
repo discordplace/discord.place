@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaCompass } from "react-icons/fa";
+import { FaCompass } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { IoHeart } from 'react-icons/io5';
 import { useMedia } from 'react-use';
