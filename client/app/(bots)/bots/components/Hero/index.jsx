@@ -13,7 +13,8 @@ import { useState } from 'react';
 import config from '@/config';
 import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
 import SortingDrawer from '@/app/(bots)/bots/components/Hero/Drawer/Sorting';
-import { TbBoxMultiple, TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { FaCompass } from "react-icons/fa";
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 
@@ -103,7 +104,7 @@ export default function Hero() {
 
             {sort === 'Servers' && (
               <>
-                <TbBoxMultiple />
+                <FaCompass />
                 Servers
               </>
             )}
