@@ -13,7 +13,6 @@ const inviteUrlValidation = require('@/validations/bots/inviteUrl');
 const webhookValidation = require('@/validations/bots/webhook');
 const Review = require('@/schemas/Bot/Review');
 const Deny = require('@/schemas/Bot/Deny');
-const DashboardData = require('@/schemas/Dashboard/Data');
 
 module.exports = {
   get: [
@@ -190,8 +189,6 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await bot.save();
-
-      await DashboardData.findOneAndUpdate({}, { $inc: { bots: 1 } }, { sort: { createdAt: -1 } });
 
       await Deny.deleteMany({ 'bot.id': user.id });
 

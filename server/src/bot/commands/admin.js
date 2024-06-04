@@ -13,6 +13,7 @@ const Bot = require('@/schemas/Bot');
 const BotReview = require('@/schemas/Bot/Review');
 const BotDeny = require('@/schemas/Bot/Deny');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
+const DashboardData = require('@/schemas/Dashboard/Data');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -137,6 +138,8 @@ module.exports = {
         if (emoji.approved === true) return interaction.followUp({ content: `Emoji${emoji.emoji_ids ? ' pack' : ''} is already approved.` });
   
         await emoji.updateOne({ approved: true });
+
+        await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
 
         const publisher = await interaction.guild.members.fetch(emoji.user.id).catch(() => null);
         if (publisher) {
@@ -354,6 +357,8 @@ module.exports = {
         if (bot.verified === true) return interaction.followUp({ content: 'Bot is already verified.' });
         
         await bot.updateOne({ verified: true });
+
+        await DashboardData.findOneAndUpdate({}, { $inc: { bots: 1 } }, { sort: { createdAt: -1 } });
 
         const publisher = await interaction.guild.members.fetch(bot.owner.id).catch(() => null);
         if (publisher) {

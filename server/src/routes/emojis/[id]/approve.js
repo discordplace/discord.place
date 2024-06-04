@@ -5,6 +5,7 @@ const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const Discord = require('discord.js');
+const DashboardData = require('@/schemas/Dashboard/Data');
 
 module.exports = {
   post: [
@@ -29,6 +30,8 @@ module.exports = {
       if (emoji.approved === true) return response.sendError(`Emoji${isPack ? ' pack' : ''} already approved.`, 400);
 
       await emoji.updateOne({ approved: true });
+      
+      await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
 
       const guild = client.guilds.cache.get(config.guildId);
 
