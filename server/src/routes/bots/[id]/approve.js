@@ -4,6 +4,7 @@ const { param, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
+const DashboardData = require('@/schemas/Dashboard/Data');
 
 module.exports = {
   post: [
@@ -26,6 +27,8 @@ module.exports = {
       if (bot.verified === true) return response.sendError('Bot is already verified.', 400);
 
       await bot.updateOne({ verified: true });
+
+      await DashboardData.findOneAndUpdate({}, { $inc: { bots: 1 } }, { sort: { createdAt: -1 } });
       
       const guild = client.guilds.cache.get(config.guildId);
 

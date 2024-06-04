@@ -10,7 +10,7 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
   
   const theme = useThemeStore(state => state.theme);
 
-  const servers = [...data].reverse();
+  const reversedData = [...data].reverse();
 
   return (
     <DynamicApexCharts
@@ -19,7 +19,7 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
       width='100%'
       series={[{
         name: id,
-        data: servers.filter(({ createdAt }) => new Date(createdAt)).map(({ value }) => value)
+        data: reversedData.filter(({ createdAt }) => new Date(createdAt)).map(({ value }) => value)
       }]}
       options={{
         chart: {
@@ -79,7 +79,7 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
         },
         xaxis: {
           range: 6,
-          categories: servers.map(({ createdAt }) => {
+          categories: reversedData.map(({ createdAt }) => {
             const date = new Date(createdAt);
             const day = date.getDate();
             const month = date.toLocaleString('default', { month: 'short' });

@@ -11,7 +11,6 @@ const crypto = require('node:crypto');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
-const DashboardData = require('@/schemas/Dashboard/Data');
 
 const multer = require('multer');
 const upload = multer({
@@ -109,8 +108,6 @@ module.exports = {
           }
         })
           .then(async () => {
-            await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
-
             const embeds = [
               new Discord.EmbedBuilder()
                 .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
@@ -184,8 +181,6 @@ module.exports = {
 
         S3.send(command)
           .then(async () => {
-            await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
-
             const embeds = [
               new Discord.EmbedBuilder()
                 .setTitle('New Emoji')
