@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { TbSquareRoundedChevronUp, TbBoxMultiple } from 'react-icons/tb';
+import { TbSquareRoundedChevronUp, TbUsers } from 'react-icons/tb';
 import Markdown from '@/app/components/Markdown';
 import { RiSlashCommands2, RiUserAddLine } from 'react-icons/ri';
 import Image from 'next/image';
@@ -44,7 +44,7 @@ export default function About({ bot }) {
     {
       key: 'servers',
       label: 'Total Servers',
-      icon: <TbBoxMultiple />,
+      icon: <TbUsers />,
       component: (
         <>
           {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })})</span>

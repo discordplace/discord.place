@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { TbBoxMultiple, TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { FaCompass } from "react-icons/fa";
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { IoHeart } from 'react-icons/io5';
 import { useMedia } from 'react-use';
 import { BiSolidCategory } from 'react-icons/bi';
@@ -34,7 +35,7 @@ export default function Card({ data, overridedSort }) {
       condition: sort === 'Votes'
     },
     {
-      icon: TbBoxMultiple,
+      icon: FaCompass,
       value: data.servers,
       condition: sort === 'Servers',
       transform: value => {

@@ -3,7 +3,7 @@
 import Tooltip from '@/app/components/Tooltip';
 import useDashboardStore from '@/stores/dashboard';
 import { BiInfoCircle } from 'react-icons/bi';
-import { TbBoxMultiple } from 'react-icons/tb';
+import { FaCompass } from "react-icons/fa";
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import cn from '@/lib/cn';
 import { BiSolidUserCircle } from 'react-icons/bi';
@@ -83,7 +83,7 @@ export default function Home() {
     <div className="flex flex-col my-8 gap-y-4">
       <div className='grid grid-cols-1 gap-6 mr-6 sm:grid-cols-2 xl:grid-cols-4'>
         <StatsBlock
-          icon={<TbBoxMultiple />}
+          icon={<FaCompass />}
           label='Servers'
           tooltip='Total number of servers created on discord.place.'
           current={data.servers?.[0]?.value}
@@ -116,7 +116,7 @@ export default function Home() {
       </div>
 
       <GraphBlock
-        icon={<TbBoxMultiple />}
+        icon={<FaCompass />}
         label='Total Servers'
         description='Total number of servers that are invited discord.place bot to their server.'
         data={data.guilds}

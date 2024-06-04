@@ -4,14 +4,15 @@ import cn from '@/lib/cn';
 import { nanoid } from 'nanoid';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { Drawer } from 'vaul';
-import { TbBoxMultiple, TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { FaCompass } from "react-icons/fa";
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 
 export default function SortingDrawer({ openState, setOpenState, state, setState }) {
   const sortings = {
     'Votes': <TbSquareRoundedChevronUp />,
-    'Servers': <TbBoxMultiple />,
+    'Servers': <FaCompass />,
     'Most Reviewed': <TiStar />,
     'Newest': <HiSortAscending />,
     'Oldest': <HiSortDescending />
