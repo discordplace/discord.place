@@ -1,8 +1,7 @@
 import { CgProfile } from 'react-icons/cg';
-import { IoPeople } from 'react-icons/io5';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { RiRobot2Fill } from 'react-icons/ri';
-import { FaShieldAlt } from 'react-icons/fa';
+import { FaCompass, FaShieldAlt } from 'react-icons/fa';
 import { AiFillTool } from 'react-icons/ai';
 import { BiSolidHappy } from 'react-icons/bi';
 import { IoMusicalNotesSharp } from 'react-icons/io5';
@@ -45,7 +44,7 @@ const config = {
     {
       title: 'Servers',
       href: '/servers',
-      icon: IoPeople,
+      icon: FaCompass,
       iconColor: '#7c3aed'
     },
     {
@@ -129,7 +128,7 @@ const config = {
   botShortDescriptionMaxLength: 150,
   botDescriptionMinLength: 32,
   botDescriptionMaxLength: 2048,
-  botTestGuildId: "1239320384441159751",
+  botTestGuildId: '1239320384441159751',
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,
   botInviteURL: 'https://bot.discord.place',
