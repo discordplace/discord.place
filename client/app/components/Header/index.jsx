@@ -9,7 +9,10 @@ export default function Header() {
   const collapseHeader = useMedia('(max-width: 1205px)', false);
   const pathname = usePathname();
 
-  if (pathname === '/dashboard') return null;
+  const isDashboard = pathname === '/dashboard';
+  const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview'); 
+  
+  if (isDashboard || isTemplatePreview) return null;
 
   return collapseHeader ? <CollapsedHeader pathname={pathname} /> : <NotCollapsedHeader pathname={pathname} />;
 }

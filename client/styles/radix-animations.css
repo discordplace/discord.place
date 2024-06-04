@@ -190,3 +190,40 @@
 [data-radix-popper-content-wrapper] [data-state='closed'][data-side='bottom'] {
   animation: tooltip-bottom-exit 100ms ease-in;
 }
+
+@keyframes discord-tooltip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes discord-tooltip-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.discord-theme {
+  box-shadow: 0 8px 16px hsl(0, 0%, 0% / 0.24);
+  will-change: transform, opacity;
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'].discord-theme {
+  animation: discord-tooltip-in 35ms ease-out;
+}
+
+[data-radix-popper-content-wrapper] [data-state='closed'].discord-theme {
+  animation: discord-tooltip-out 35ms ease-in;
+}

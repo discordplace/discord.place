@@ -1,17 +1,19 @@
 'use client';
 
+import cn from '@/lib/cn';
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { useState } from 'react';
 import { useMedia } from 'react-use';
 
-export default function Tooltip({ children, content, side }) {
+export default function Tooltip({ children, content, side, sideOffset, size }) {
   const [open, setOpen] = useState(false);
   const isMobile = useMedia('(max-width: 640px)', false);
   
   return (
     <RadixTooltip.Provider 
-      delayDuration='0'
+      delayDuration='0' 
       skipDelayDuration='0'
+      disableHoverableContent={true}
     >
       <RadixTooltip.Root
         onOpenChange={setOpen}
@@ -26,12 +28,15 @@ export default function Tooltip({ children, content, side }) {
         {content && (
           <RadixTooltip.Portal>
             <RadixTooltip.Content
-              className='[transform-origin:var(--radix-tooltip-content-transform-origin)] text-sm max-w-[300px] sm:max-w-[unset] text-center z-[10000] px-3 py-1 font-semibold rounded-lg dark:bg-white dark:text-black text-white bg-black'
-              sideOffset={5}
+              className={cn(
+                'max-w-[200px] font-semibold [transform-origin:var(--radix-tooltip-content-transform-origin)] discord-theme bg-[#111214] px-4 py-1.5 rounded-lg',
+                size === 'small' && 'text-xs px-2.5'
+              )}
+              sideOffset={sideOffset || 18}
               side={side || 'top'}
             >
               {content}
-              <RadixTooltip.Arrow className='dark:fill-white fill-black'/>
+              <RadixTooltip.Arrow className='fill-[#111214]' />
             </RadixTooltip.Content>
           </RadixTooltip.Portal>
         )}

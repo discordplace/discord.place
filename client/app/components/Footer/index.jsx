@@ -17,7 +17,11 @@ export default function Footer() {
   const loggedIn = useAuthStore(state => state.loggedIn);
   
   const pathname = usePathname();
-  if (pathname === '/dashboard') return null;
+  
+  const isDashboard = pathname === '/dashboard';
+  const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview'); 
+  
+  if (isDashboard || isTemplatePreview) return null;
 
   const blocks = [
     {
