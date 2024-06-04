@@ -129,6 +129,7 @@ const config = {
   botShortDescriptionMaxLength: 150,
   botDescriptionMinLength: 32,
   botDescriptionMaxLength: 2048,
+  botTestGuildId: "1239320384441159751",
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,
   botInviteURL: 'https://bot.discord.place',
