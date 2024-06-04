@@ -149,7 +149,7 @@ export default function WaitingApproval({ data }) {
                   <td className='px-6 py-4'>
                     <div className='flex gap-x-2'>
                       <Link
-                        href={bot.invite_url}
+                        href={`https://discord.com/api/oauth2/authorize?client_id=${bot.id}&permissions=0&scope=bot%20applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`}
                         className='flex items-center px-4 py-1 text-sm font-semibold rounded-lg text-primary w-max gap-x-1 bg-quaternary hover:bg-tertiary'
                       >
                         Invite
