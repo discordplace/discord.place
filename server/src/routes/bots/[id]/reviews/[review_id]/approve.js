@@ -75,7 +75,7 @@ module.exports = {
           .addComponents(
             new Discord.ButtonBuilder()
               .setStyle(Discord.ButtonStyle.Link)
-              .setURL(`${config.frontendUrl}/bot/${review.bot.id}`)
+              .setURL(`${config.frontendUrl}/bots/${review.bot.id}`)
               .setLabel('View Bot on discord.place')
           )
       ];
