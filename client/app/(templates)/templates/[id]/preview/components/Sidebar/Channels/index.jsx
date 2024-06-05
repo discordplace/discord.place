@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { FaChevronDown } from 'react-icons/fa';
+import HomeIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Home';
 import EventsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Events';
 import BrowseChannelsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/BrowseChannels';
 import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';
@@ -44,6 +45,11 @@ export default function Channels({ data, focusedChannel, setFocusedChannel, curr
       />
 
       <div className='flex flex-col items-center px-2.5 mt-4 gap-y-0.5'>
+        <div className='flex select-none cursor-pointer text-[#949ba4] hover:text-[#dbdee1] items-center w-full gap-x-1.5 rounded-md font-medium text-sm hover:bg-[#35373c] py-[6px] px-[8px]'>
+          <HomeIcon className='min-w-5 min-h-5 w-5 h-5 text-[#80848e]' />
+          Home
+        </div>
+
         <div className='flex select-none cursor-pointer text-[#949ba4] hover:text-[#dbdee1] items-center w-full gap-x-1.5 rounded-md font-medium text-sm hover:bg-[#35373c] py-[6px] px-[8px]'>
           <EventsIcon className='min-w-5 min-h-5 w-5 h-5 text-[#80848e]' />
           Events
