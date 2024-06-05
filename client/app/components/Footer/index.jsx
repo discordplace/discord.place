@@ -94,7 +94,7 @@ export default function Footer() {
       links: [
         {
           label: 'X',
-          href: '#',
+          href: 'https://x.com/discord_place',
           icon: FaXTwitter,
           disabled: true
         },
