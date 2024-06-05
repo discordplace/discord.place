@@ -5,6 +5,7 @@ const sleep = require('@/utils/sleep');
 const DashboardData = require('@/schemas/Dashboard/Data');
 
 const currentlyApplyingTemplates = new Discord.Collection();
+const latestUses = new Discord.Collection();
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -18,8 +19,13 @@ module.exports = {
     if (interaction.guild.ownerId !== interaction.user.id) return interaction.reply({ content: 'You must be the owner of the server to use this command.' });
     
     if (currentlyApplyingTemplates.size >= 5) return interaction.reply({ content: 'There are too many templates being applied at the moment. Please wait for the current templates to be applied before using another template.' });
-
     if (currentlyApplyingTemplates.has(interaction.guild.id)) return interaction.reply({ content: 'This server is currently applying a template. Please wait for the current template to be applied before using another template.' });
+
+    const guildLatestUse = latestUses.get(interaction.guild.id);
+    if (guildLatestUse && guildLatestUse > Date.now()) return interaction.reply({ content: `Please wait ${Math.ceil((guildLatestUse - Date.now()) / 60000)} minutes before using another template in this server.` });
+
+    const userLatestUse = latestUses.get(interaction.user.id);
+    if (userLatestUse && userLatestUse > Date.now()) return interaction.reply({ content: `Please wait ${Math.ceil((userLatestUse - Date.now()) / 60000)} minutes before using another template.` });
 
     await interaction.deferReply();
 
@@ -121,6 +127,9 @@ module.exports = {
     const botHighestRole = interaction.guild.members.me.roles.highest;
     if (botHighestRole.position !== interaction.guild.roles.cache.map(role => role.position).sort((a, b) => b - a)[0]) return sendError('I do not have the highest role in this server. Please make sure I have the highest role in the server and try again.');
     if (!botHighestRole.permissions.has(Discord.PermissionFlagsBits.Administrator)) return sendError('My highest role does not have the `Administrator` permission. Please make sure my highest role has the `Administrator` permission and try again.');
+
+    latestUses.set(interaction.guild.id, Date.now() + 1800000);
+    latestUses.set(interaction.user.id, Date.now() + 1800000);
 
     await template.updateOne({ $inc: { uses: 1 } });
 
