@@ -75,7 +75,6 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
           side='bottom'
           sideOffset={5}
           size='small'
-          doNotHideOnClick={true}
         >
           <div
             className='cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]'
