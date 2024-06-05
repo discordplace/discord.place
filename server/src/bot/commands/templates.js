@@ -154,7 +154,7 @@ module.exports = {
     const categoriesLength = template.data.channels.filter(channel => channel.type === Discord.ChannelType.GuildCategory).length;
     const channelsLength = template.data.channels.filter(channel => channel.type !== Discord.ChannelType.GuildCategory).length;
     const rolesLength = template.data.roles.length;
-    
+
     await dmMessage.edit({ content: `${config.emojis.loading} Creating channels and roles.. This may take a while. Estimated time: **${humanizeMs((categoriesLength * 500) + (channelsLength * 1000) + (rolesLength * 500))}**.`, components: [] });
 
     const createdChannels = [];
@@ -246,8 +246,6 @@ module.exports = {
 
       await sleep(1000);
     }
-
-    await sleep(1000);
 
     await dmMessage.edit({ content: `${config.emojis.loading} Applying settings..`, components: [] });
 
