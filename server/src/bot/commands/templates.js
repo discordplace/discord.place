@@ -111,7 +111,7 @@ module.exports = {
     async function sendError(message) {
       currentlyApplyingTemplates.delete(interaction.guild.id);
 
-      await collectedMessage.edit({ content: message, components: [] });
+      await collectedMessage.reply({ content: message, components: [] });
       return dmMessage.edit({ content: message, components: [] });
     }
     
