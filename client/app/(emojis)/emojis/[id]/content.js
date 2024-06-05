@@ -13,7 +13,6 @@ import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import { motion } from 'framer-motion';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import Link from 'next/link';
-import { useState } from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
 import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
