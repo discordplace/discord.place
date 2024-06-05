@@ -3,6 +3,7 @@ const Template = require('@/schemas/Template');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const sleep = require('@/utils/sleep');
 const DashboardData = require('@/schemas/Dashboard/Data');
+const humanizeMs = require('@/src/utils/humanizeMs');
 
 const currentlyApplyingTemplates = new Discord.Collection();
 const latestUses = new Discord.Collection();
@@ -137,17 +138,24 @@ module.exports = {
   
     await sleep(1000);
 
-    await dmMessage.edit({ content: `${config.emojis.loading} Removing all channels and roles..`, components: [] });
-
     const guildChannels = await interaction.guild.channels.fetch();
     const guildRoles = await interaction.guild.roles.fetch();
-    
-    await guildChannels.filter(channel => channel.deletable).map(channel => channel.delete());
-    await guildRoles.filter(role => role.id !== interaction.guild.id && role.id !== botHighestRole.id).map(role => role.delete());
+
+    await dmMessage.edit({ content: `${config.emojis.loading} Removing all channels and roles.. This may take a while. Estimated time: **${humanizeMs((guildChannels.size * 500) + (guildRoles.size * 500))}**.`, components: [] });
+
+    await Promise.all(guildChannels.filter(channel => channel.deletable).map(async channel => {
+      await channel.delete().catch(() => null);
+      await sleep(500);
+    }));
+    await Promise.all(guildRoles.filter(role => role.id !== interaction.guild.id && role.id !== botHighestRole.id).map(role => role.delete().catch(() => null)));
     
     await sleep(1000);
-
-    await dmMessage.edit({ content: `${config.emojis.loading} Creating channels and roles..`, components: [] });
+  
+    const categoriesLength = template.data.channels.filter(channel => channel.type === Discord.ChannelType.GuildCategory).length;
+    const channelsLength = template.data.channels.filter(channel => channel.type !== Discord.ChannelType.GuildCategory).length;
+    const rolesLength = template.data.roles.length;
+    
+    await dmMessage.edit({ content: `${config.emojis.loading} Creating channels and roles.. This may take a while. Estimated time: **${humanizeMs((categoriesLength * 500) + (channelsLength * 1000) + (rolesLength * 500))}**.`, components: [] });
 
     const createdChannels = [];
     const createdRoles = [];
@@ -169,7 +177,7 @@ module.exports = {
         role: createdRole
       });
 
-      await sleep(250);
+      await sleep(500);
     }
 
     for (const category of template.data.channels.sort((a, b) => a.position - b.position).filter(channel => channel.type === Discord.ChannelType.GuildCategory)) {
@@ -200,7 +208,7 @@ module.exports = {
         channel: createdCategory
       });
 
-      await sleep(250);
+      await sleep(500);
     }
 
     for (const channel of template.data.channels.sort((a, b) => a.position - b.position).filter(channel => channel.type !== Discord.ChannelType.GuildCategory)) {
@@ -236,7 +244,7 @@ module.exports = {
         channel: createdChannel
       });
 
-      await sleep(250);
+      await sleep(1000);
     }
 
     await sleep(1000);
