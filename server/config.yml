@@ -30,6 +30,8 @@ permissions:
     - '957840712404193290'
   canDeleteReviews:
     - '957840712404193290'
+  canDeleteTemplates:
+    - '957840712404193290'
   canApproveEmojisRoles:
     - '1206354879321210900'
     - '1206355082883371049'
@@ -72,6 +74,9 @@ permissions:
   canDeleteTimeoutsRoles:
     - '1206354879321210900'
     - '1206355082883371049'
+  canApproveTemplatesRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
 profilesMaxSocialsLength: 8
 packagesMaxEmojisLength: 9
 packagesMinEmojisLength: 4
@@ -83,6 +88,10 @@ botShortDescriptionMinLength: 16
 botShortDescriptionMaxLength: 150
 botDescriptionMinLength: 32
 botDescriptionMaxLength: 2048
+templateMaxNameLength: 32
+templateMinDescriptionLength: 32
+templateMaxDescriptionLength: 256
+templateMaxCategoriesLength: 3
 roles:
   moderator: '1206354879321210900'
 emojiCategories:
@@ -123,10 +132,23 @@ botCategories:
   - 'Social Media Integration'
   - 'Anime & Manga'
   - 'Other'
+templateCategories: 
+  - 'All'
+  - 'Chat'
+  - 'Design'
+  - 'Music'
+  - 'Education'
+  - 'Gaming'
+  - 'Anime'
+  - 'Tech'
+  - 'Roleplay'
+  - 'Event'
+  - 'Other'
 emojiMaxCategoriesLength: 4
 emojiQueueChannelId: '1210805683751223377'
 reviewQueueChannelId: '1213842162828054538'
 botQueueChannelId: '1236369862259900566'
+templateQueueChannelId: '1247743275914366987'
 voteLogsChannelId: '1222817883470434304'
 portalChannelId: '1238654829916585984'
 excludeCollectionsInBackup:
@@ -177,6 +199,9 @@ quarantineRestrictions:
   'BOTS_CREATE_API_KEY':
     available_to:
       - 'USER_ID'
+  'TEMPLATES_CREATE':
+    available_to:
+      - 'USER_ID'
 quarantineLogsChannelId: '1226257480112406599'
 customHostnames:
   - 'dsc.wtf'
@@ -188,51 +213,79 @@ globalRateLimit:
   cleanUpIntervalInMinutes: 2.5
 emojisDenyReasons:
   reposted-emoji:
-    name: "Reposted Emoji"
+    name: 'Reposted Emoji'
     description: "If the emoji you're submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety."
   background-transparency:
-    name: "Background Transparency"
-    description: "Emojis should feature a transparent background. Emojis with opaque backgrounds may not blend well with different message backgrounds and could disrupt visual coherence."
+    name: 'Background Transparency'
+    description: 'Emojis should feature a transparent background. Emojis with opaque backgrounds may not blend well with different message backgrounds and could disrupt visual coherence.'
   whitespace:
-    name: "Whitespace"
-    description: "Emojis containing excess whitespace around the edges may appear disproportionately small when used in messages. To ensure optimal visibility and legibility, please crop your emojis appropriately before submission."
+    name: 'Whitespace'
+    description: 'Emojis containing excess whitespace around the edges may appear disproportionately small when used in messages. To ensure optimal visibility and legibility, please crop your emojis appropriately before submission.'
   incoherent-emoji-package-content:
-    name: "Incoherent Emoji Package Content"
-    description: "Emojis within a package must be compatible with each other to ensure coherence and meaningful usage."
+    name: 'Incoherent Emoji Package Content'
+    description: 'Emojis within a package must be compatible with each other to ensure coherence and meaningful usage.'
   offensive-or-inappropriate-content:
-    name: "Offensive or Inappropriate Content"
-    description: "Emojis depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures."
+    name: 'Offensive or Inappropriate Content'
+    description: 'Emojis depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.'
   copyright-infringement:
-    name: "Copyright Infringement"
-    description: "Ensure that your emoji submissions do not violate any copyright or intellectual property rights. Avoid using copyrighted characters, logos, or designs without proper authorization."
+    name: 'Copyright Infringement'
+    description: 'Ensure that your emoji submissions do not violate any copyright or intellectual property rights. Avoid using copyrighted characters, logos, or designs without proper authorization.'
   clear-representation:
-    name: "Clear Representation"
-    description: "Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users."
+    name: 'Clear Representation'
+    description: 'Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users.'
 botsDenyReasons:
   reposted-bot:
-    name: "Reposted Bot"
+    name: 'Reposted Bot'
     description: "If the bot you're submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety."
   offensive-or-inappropriate-content:
-    name: "Offensive or Inappropriate Content"
-    description: "Bots depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures."
+    name: 'Offensive or Inappropriate Content'
+    description: 'Bots depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.'
   against-discord-terms-of-service:
-    name: "Against Discord Terms of Service"
+    name: 'Against Discord Terms of Service'
     description: "Bots that violate Discord's Terms of Service will not be accepted."
   not-online-or-inviteable:
-    name: "Not Online or Inviteable"
-    description: "Bots must be online and inviteable for usage."
+    name: 'Not Online or Inviteable'
+    description: 'Bots must be online and inviteable for usage.'
   base-functionality-is-broken:
-    name: "Base Functionality is Broken"
-    description: "Bots must have functional base features to be considered."
+    name: 'Base Functionality is Broken'
+    description: 'Bots must have functional base features to be considered.'
   copied-bot:
-    name: "Copied Bot"
-    description: "Bots that are direct copies of existing bots will not be accepted."
+    name: 'Copied Bot'
+    description: 'Bots that are direct copies of existing bots will not be accepted.'
   has-vulnerability:
-    name: "Has Vulnerability"
-    description: "Bots with security vulnerabilities will not be accepted."
+    name: 'Has Vulnerability'
+    description: 'Bots with security vulnerabilities will not be accepted.'
   support-for-slash-commands:
-    name: "Support for Slash Commands"
-    description: "Bots must support slash commands for improved user experience and functionality."
+    name: 'Support for Slash Commands'
+    description: 'Bots must support slash commands for improved user experience and functionality.'
+templateDenyReasons:
+  duplicate-template:
+    name: 'Duplicate Template'
+    description: "If the template you're submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety."
+  offensive-or-inappropriate-content:
+    name: 'Offensive or Inappropriate Content'
+    description: 'Templates featuring offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Ensure your template is suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+  against-discord-terms-of-service:
+    name: 'Against Discord Terms of Service'
+    description: "Templates that violate Discord's Terms of Service will not be accepted."
+  poor-quality-or-incomplete-template:
+    name: 'Poor Quality or Incomplete Template'
+    description: 'Templates should be well-organized and complete. Submissions with poor structure, missing key elements, or that are not user-friendly may be rejected.'
+  misleading-or-inaccurate-information:
+    name: 'Misleading or Inaccurate Information'
+    description: "Templates with misleading titles, descriptions, or information may be rejected. Provide clear and accurate details about your template's purpose and features."
+  lacks-clear-focus-or-purpose:
+    name: 'Lacks Clear Focus or Purpose'
+    description: 'Templates should have a clear focus or purpose. Submissions that are overly broad or lack a specific theme may not be accepted.'
+  advertising-and-self-promotion:
+    name: 'Advertising and Self-Promotion'
+    description: 'Templates primarily focused on advertising or self-promotion without providing genuine value to users may not be accepted.'
+  quality-and-presentation:
+    name: 'Quality and Presentation'
+    description: 'Templates should be well-organized and present a professional appearance. Low-quality or poorly managed templates may not be accepted.'
+  proper-categorization:
+    name: 'Proper Categorization'
+    description: 'Ensure your template is categorized correctly. Misleading categorization can result in rejection.'
 instatus:
   page_id: 'clwx1az6k27335bhobasj52b6y'
   metric_id: 'clwx1tevy38905bhobroucjm8j'

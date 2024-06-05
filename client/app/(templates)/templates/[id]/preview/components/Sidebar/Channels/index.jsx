@@ -19,7 +19,7 @@ export default function Channels({ data, focusedChannel, setFocusedChannel, curr
   
   return (
     <div className={cn(
-      'overflow-y-auto min-h-full flex flex-col w-full max-w-[240px] bg-[#2b2d31]',
+      'overflow-y-auto max-h-[100dvh] scrollbar-hide pb-4 min-h-full flex flex-col w-full max-w-[240px] bg-[#2b2d31]',
       isMobile && 'max-w-[unset]',
       currentlyOpenedSection !== 'channels' && 'hidden'
     )}>
@@ -69,7 +69,7 @@ export default function Channels({ data, focusedChannel, setFocusedChannel, curr
               className='flex flex-col w-full pt-4 select-none gap-y-0.5'
             >
               <span
-                className='-ml-1.5 text-[11px] text-[#949ba4] hover:text-[#dbdee1] cursor-pointer flex items-center gap-x-1 font-semibold'
+                className='uppercase -ml-1.5 text-[11px] text-[#949ba4] hover:text-[#dbdee1] cursor-pointer flex items-center gap-x-1 font-semibold'
                 onClick={() => setCollapsedCategories(old => old.includes(index) ? old.filter(i => i !== index) : [...old, index])}
               >
                 <IoChevronDown 

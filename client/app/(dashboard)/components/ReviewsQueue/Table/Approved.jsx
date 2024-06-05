@@ -18,7 +18,6 @@ export default function Approved({ data }) {
 
   const showPagination = data?.length > 10;
 
-  const [, setLoading] = useState(false);
   const fetchData = useDashboardStore(state => state.fetchData);
   
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -30,7 +29,6 @@ export default function Approved({ data }) {
 
   function continueDeleteReview(id, reviewId, type) {
     disableButton('delete-review', 'confirm');
-    setLoading(true);
   
     const deleteReview = type === 'server' ? deleteServerReview : deleteBotReview;
 
@@ -38,15 +36,12 @@ export default function Approved({ data }) {
       loading: 'Deleting review..',
       success: () => {
         closeModal('delete-review');
-        fetchData(['reviews'])
-          .then(() => setLoading(false));
+        fetchData(['reviews']);
 
         return 'Review deleted successfully!';
       },
       error: () => {
         enableButton('delete-review', 'confirm');
-        setLoading(false);
-
         return `Failed to delete review ${reviewId}.`;
       }
     });

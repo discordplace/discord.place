@@ -23,6 +23,7 @@ import { FaUserTimes } from 'react-icons/fa';
 import config from '@/config';
 import { SiGoogleanalytics } from 'react-icons/si';
 import { MdArrowOutward } from 'react-icons/md';
+import { HiTemplate } from 'react-icons/hi';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -30,6 +31,7 @@ export default function Sidebar() {
 
   const unapprovedEmojis = data?.queue?.emojis?.filter(emoji => !emoji.approved).length;
   const unapprovedBots = data?.queue?.bots?.filter(bot => !bot.verified).length;
+  const unapprovedTemplates = data?.queue?.templates?.filter(template => !template.approved).length;
   const unapprovedReviews = data?.queue?.reviews?.filter(review => !review.approved).length;
 
   const blocks = [
@@ -63,6 +65,12 @@ export default function Sidebar() {
           name: `Bots Queue${unapprovedBots ? ` (${unapprovedBots})` : ''}`,
           icon: RiRobot2Fill,
           disabled: data?.permissions?.canApproveBots === false
+        },
+        {
+          id: 'templatesQueue',
+          name: `Templates Queue${unapprovedTemplates ? ` (${unapprovedTemplates})` : ''}`,
+          icon: HiTemplate,
+          disabled: data?.permissions?.canApproveTemplates === false
         },
         {
           id: 'reviewsQueue',

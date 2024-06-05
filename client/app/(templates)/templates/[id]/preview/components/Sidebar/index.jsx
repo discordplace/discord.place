@@ -14,11 +14,52 @@ import { FaPenFancy } from 'react-icons/fa';
 import useModalsStore from '@/stores/modals';
 import cn from '@/lib/cn';
 import { toast } from 'sonner';
+import { FaTrashAlt } from 'react-icons/fa';
+import { useShallow } from 'zustand/react/shallow';
+import deleteTemplate from '@/lib/request/templates/deleteTemplate';
+import { BiSolidCopy } from 'react-icons/bi';
+import { useEffect, useRef, useState } from 'react';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 
-export default function Sidebar({ focusedChannel, currentlyOpenedSection, setCurrentlyOpenedSection, isMobile, setMemberListCollapsed }) {
+export default function Sidebar({ template, focusedChannel, currentlyOpenedSection, setCurrentlyOpenedSection, isMobile, setMemberListCollapsed }) {
   const router = useRouter();
 
-  const openModal = useModalsStore(state => state.openModal);
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal
+  })));
+
+  async function continueDeleteTemplate() {
+    disableButton('delete-template', 'confirm');
+
+    toast.promise(deleteTemplate(template.id), {
+      loading: `Deleting ${template.name}..`,
+      success: () => {
+        closeModal('delete-template');
+        setTimeout(() => router.push('/'), 3000);
+        
+        return `Successfully deleted ${template.name}. You will be redirected to the home page in a few seconds.`;
+      },
+      error: error => {
+        enableButton('delete-template', 'confirm');
+        return error;
+      }
+    });
+  }
+
+  const [templateIdCopied, setTemplateIdCopied] = useState(false);
+  const templateIdCopyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    if (!templateIdCopied) return;
+
+    const timeout = setTimeout(() => setTemplateIdCopied(false), 3000);
+    templateIdCopyTimeoutRef.current = timeout;
+
+    return () => clearTimeout(timeout);
+  }, [templateIdCopied]);
 
   return (
     <div className="flex items-center flex-col gap-y-2 bg-[#1e1f22] w-max min-h-full pt-4 px-[14px]">
@@ -70,18 +111,6 @@ export default function Sidebar({ focusedChannel, currentlyOpenedSection, setCur
         </div>
       </Tooltip>
 
-      <Tooltip
-        content='Back to discord.place'
-        side='right'
-      >
-        <div
-          className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl"
-          onClick={() => router.back()}
-        >
-          <IoMdArrowRoundBack size={24} />
-        </div>
-      </Tooltip>
-
       {isMobile && (
         <>
           <div
@@ -102,39 +131,119 @@ export default function Sidebar({ focusedChannel, currentlyOpenedSection, setCur
           </div>
 
           {currentlyOpenedSection === 'channels' && (
-            <>
-              <div className='w-[65%] h-[2px] bg-[#35363c] rounded-[1px]' />
-
-              <div
-                className={cn(
-                  'bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl',
-                  !focusedChannel.topic && 'opacity-50'
-                )}
-                onClick={() => 
-                  !focusedChannel.topic ? 
-                    toast.error(`#${focusedChannel.name} does not have a topic set.`) :
-                    openModal('view-topic', {
-                      title: 'View Topic',
-                      description: `You are currently viewing the topic of the channel: ${focusedChannel.name}.`,
-                      content: <>
-                        <p className='text-[#dbdee1] text-sm font-medium break-words'>{focusedChannel.topic}</p>
-                      </>,
-                      buttons: [
-                        {
-                          id: 'cancel',
-                          label: 'Cancel',
-                          variant: 'ghost',
-                          actionType: 'close'
-                        }
-                      ]
-                    })
-                }
-              >
-                <FaPenFancy size={24} />
-              </div>
-            </>
+            <div
+              className={cn(
+                'bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl',
+                !focusedChannel.topic && 'opacity-50'
+              )}
+              onClick={() => 
+                !focusedChannel.topic ? 
+                  toast.error(`#${focusedChannel.name} does not have a topic set.`) :
+                  openModal('view-topic', {
+                    title: 'View Topic',
+                    description: `You are currently viewing the topic of the channel: ${focusedChannel.name}.`,
+                    content: <>
+                      <p className='text-[#dbdee1] text-sm font-medium break-words'>{focusedChannel.topic}</p>
+                    </>,
+                    buttons: [
+                      {
+                        id: 'cancel',
+                        label: 'Cancel',
+                        variant: 'ghost',
+                        actionType: 'close'
+                      }
+                    ]
+                  })
+              }
+            >
+              <FaPenFancy size={24} />
+            </div>
           )}
         </>
+      )}
+
+      <Tooltip
+        content='Back to discord.place'
+        side='right'
+      >
+        <div
+          className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl"
+          onClick={() => router.back()}
+        >
+          <IoMdArrowRoundBack size={24} />
+        </div>
+      </Tooltip>
+
+      <Tooltip
+        content='Copy Template ID'
+        side='right'
+      >
+        <div
+          className={cn(
+            'bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl',
+            templateIdCopied && 'opacity-70 pointer-events-none'
+          )}
+          onClick={() => {
+            if ('clipboard' in navigator === false) return toast.error('Your browser does not support the clipboard API.');
+
+            setTemplateIdCopied(true);
+            navigator.clipboard.writeText(template.id);
+            toast.success(`Template ID ${template.id} copied to clipboard. You can now use "/template use <id>" to use this template on Discord. Don't forget invite our Discord bot to your server!`);
+          }}
+        >
+          <IoCheckmarkCircle 
+            size={20} 
+            className={cn(
+              'transition-[opacity] ease-in-out absolute',
+              !templateIdCopied && 'opacity-0'
+            )} 
+          />
+          <BiSolidCopy
+            size={20}
+            className={cn(
+              'transition-[opacity] ease-in-out',
+              templateIdCopied && 'opacity-0'
+            )}
+          />
+        </div>
+      </Tooltip>
+
+      {template.permissions.canDelete && (
+        <Tooltip
+          content='Delete Template'
+          side='right'
+        >
+          <div
+            className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#ff4d4d] text-[#ff4d4d] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl"
+            onClick={() => 
+              openModal('delete-template', {
+                title: 'Delete Template',
+                description: `Are you sure you want to delete ${template.name}?`,
+                content: (
+                  <p className='text-sm text-tertiary'>
+                    Please note that deleting your template cannot be undone.
+                  </p>
+                ),
+                buttons: [
+                  {
+                    id: 'cancel',
+                    label: 'Cancel',
+                    variant: 'ghost',
+                    actionType: 'close'
+                  },
+                  {
+                    id: 'confirm',
+                    label: 'Confirm',
+                    variant: 'solid',
+                    action: continueDeleteTemplate
+                  }
+                ]
+              })
+            }
+          >
+            <FaTrashAlt size={20} />
+          </div>
+        </Tooltip>
       )}
     </div>
   );

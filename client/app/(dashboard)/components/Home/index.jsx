@@ -12,13 +12,14 @@ import { MdEmojiEmotions } from 'react-icons/md';
 import GraphBlock from '@/app/(dashboard)/components/Home/Graph/Block';
 import { FaUsers } from 'react-icons/fa';
 import { useMedia } from 'react-use';
+import { HiTemplate } from 'react-icons/hi';
 
 export default function Home() {
   const data = useDashboardStore(state => state.data);
   const loading = useDashboardStore(state => state.loading);
   const tooltipSide = useMedia('(max-width: 640px)', false) ? 'bottom' : 'right';
 
-  function StatsBlock({ icon, label, tooltip, current = 0, previous = 0 }) {
+  function StatsBlock({ icon, label, tooltip, current = 0, previous = 0, className }) {
     const isIncreased = current > previous;
     const isDecreased = current < previous;
     const isEqual = current === previous;
@@ -27,7 +28,10 @@ export default function Home() {
     const diffInText = isIncreased ? current - previous : isDecreased ? previous - current : 0;
 
     return (
-      <div className='flex flex-col p-6 border rounded-xl border-primary bg-secondary gap-y-4'>
+      <div className={cn(
+        'flex flex-col p-6 border rounded-xl border-primary bg-secondary gap-y-4',
+        className
+      )}>
         <div className='flex justify-between'>
           <h2 className='flex items-center gap-x-2'>
             <div className='p-2 text-lg rounded-full bg-quaternary'>
@@ -81,7 +85,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col my-8 gap-y-4">
-      <div className='grid grid-cols-1 gap-6 mr-6 sm:grid-cols-2 xl:grid-cols-4'>
+      <div className='grid grid-cols-1 gap-6 mr-6 sm:grid-cols-2 xl:grid-cols-5'>
         <StatsBlock
           icon={<FaCompass />}
           label='Servers'
@@ -112,6 +116,15 @@ export default function Home() {
           tooltip='Total number of emojis created on discord.place.'
           current={data.emojis?.[0]?.value}
           previous={data.emojis?.[1]?.value}
+        />
+
+        <StatsBlock
+          icon={<HiTemplate />}
+          label='Templates'
+          tooltip='Total number of templates created on discord.place.'
+          current={data.templates?.[0]?.value}
+          previous={data.templates?.[1]?.value}
+          className='sm:col-span-2 xl:col-span-1'
         />
       </div>
 

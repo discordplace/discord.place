@@ -20,6 +20,7 @@ const Profile = require('@/schemas/Profile');
 const Bot = require('@/schemas/Bot');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
+const Template = require('@/schemas/Template');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 // Cloudflare Setup
@@ -298,6 +299,7 @@ module.exports = class Client {
     const totalProfiles = await Profile.countDocuments();
     const totalBots = await Bot.countDocuments();
     const totalEmojis = await Emoji.countDocuments();
+    const totalTemplates = await Template.countDocuments();
     const emojiPacks = await EmojiPack.find();
     let totalEmojiPacks = 0;
 
@@ -308,6 +310,7 @@ module.exports = class Client {
       profiles: totalProfiles,
       bots: totalBots,
       emojis: totalEmojis + totalEmojiPacks,
+      templates: totalTemplates,
       users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
       guilds: client.guilds.cache.size
     }).save();

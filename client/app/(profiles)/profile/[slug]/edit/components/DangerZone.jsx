@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { toast } from 'sonner';
 import deleteProfile from '@/lib/request/profiles/deleteProfile';
 import { RiErrorWarningFill } from 'react-icons/ri';
@@ -10,7 +9,6 @@ import { useRouter } from 'next-nprogress-bar';
 
 export default function DangerZone({ profile }) {
   const router = useRouter();
-  const [, setLoading] = useState(false);
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
     openModal: state.openModal,
@@ -21,7 +19,6 @@ export default function DangerZone({ profile }) {
 
   function continueDeleteProfile() {
     disableButton('delete-profile', 'confirm');
-    setLoading(true);
     
     toast.promise(deleteProfile(profile.slug), {
       loading: 'Deleting profile..',
@@ -33,8 +30,6 @@ export default function DangerZone({ profile }) {
       },
       error: message => {
         enableButton('delete-profile', 'confirm');
-        setLoading(false);
-
         return message;
       }
     });

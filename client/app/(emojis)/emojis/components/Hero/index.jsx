@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Bricolage_Grotesque } from 'next/font/google';import cn from '@/lib/cn';
+import { Bricolage_Grotesque } from 'next/font/google';
+import cn from '@/lib/cn';
 import Square from '@/app/components/Background/Square';
 import SearchInput from '@/app/(emojis)/emojis/components/Hero/SearchInput';
 import AnimatedCount from '@/app/components/AnimatedCount';

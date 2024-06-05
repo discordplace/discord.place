@@ -1,19 +1,19 @@
-import useSearchStore from '@/stores/bots/search';
+import useSearchStore from '@/stores/templates/search';
 import { useShallow } from 'zustand/react/shallow';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
-import Card from '@/app/(bots)/bots/components/Hero/PopularBots/Card';
+import Card from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence } from 'framer-motion';
 
-export default function PopularBots() {
-  const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
+export default function SearchResults() {
+  const { loading, templates, fetchTemplates, total: totalTemplates, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
     loading: state.loading,
-    bots: state.bots,
-    fetchBots: state.fetchBots,
+    templates: state.templates,
+    fetchTemplates: state.fetchTemplates,
     total: state.total,
     limit: state.limit,
     page: state.page,
@@ -22,13 +22,13 @@ export default function PopularBots() {
   })));
 
   useEffect(() => {
-    fetchBots()
+    fetchTemplates()
       .catch(toast.error);
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const showPagination = !loading && totalBots > limit;
+  const showPagination = !loading && totalTemplates > limit;
 
   const stateVariants = {
     hidden: { 
@@ -43,10 +43,10 @@ export default function PopularBots() {
   };
 
   return (
-    !loading && bots.length <= 0 ? (
+    !loading && templates.length <= 0 ? (
       <AnimatePresence>
         <motion.div 
-          className='flex flex-col gap-y-2'
+          className='flex flex-col px-4 sm:px-0 gap-y-2'
           variants={stateVariants}
           initial='hidden'
           animate='visible'
@@ -59,11 +59,11 @@ export default function PopularBots() {
                 It{'\''}s quiet in here...
               </div>
             }
-            message={'There are no bots to display. Maybe that\'s a sign to create one?'}
+            message={'There are no templates to display. Maybe that\'s a sign to create one?'}
           />
 
           <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
-            fetchBots('', 1, limit, 'All', 'Votes');
+            fetchTemplates('', 1, limit, 'All', 'Popular');
           }}>
             Reset Search
           </button>
@@ -72,17 +72,17 @@ export default function PopularBots() {
     ) : (
       <>
         <motion.div 
-          className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'
+          className='grid grid-cols-1 gap-4 sm:px-4 xl:px-0 sm:grid-cols-2 xl:grid-cols-3'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           {loading ? (
-            new Array(12).fill(0).map((_, index) => (
-              <div key={index} className='w-full h-[240px] bg-secondary rounded-3xl animate-pulse' />
+            new Array(9).fill(0).map((_, index) => (
+              <div key={index} className='w-full h-[164px] bg-secondary rounded-3xl animate-pulse' />
             ))
           ) : (
-            bots.map(bot => (
-              <Card key={bot.id} data={bot} />
+            templates.map(template => (
+              <Card key={template.id} data={template} />
             ))
           )}
         </motion.div>
@@ -93,10 +93,10 @@ export default function PopularBots() {
               page={page} 
               setPage={newPage => {
                 setPage(newPage);
-                fetchBots(search);
+                fetchTemplates(search);
               }} 
               loading={loading} 
-              total={totalBots}
+              total={totalTemplates}
               limit={limit} 
             />
           )}

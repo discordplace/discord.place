@@ -12,7 +12,7 @@ import { IoMdHeart } from 'react-icons/io';
 import { HiCheck } from 'react-icons/hi';
 import cn from '@/lib/cn';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
-import BotCard from '@/app/(bots)/bots/components/Hero/PopularBots/Card';
+import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
 import useThemeStore from '@/stores/theme';
 
 function StatBlock({ fields, index }) {

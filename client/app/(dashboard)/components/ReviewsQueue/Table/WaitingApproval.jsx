@@ -24,7 +24,6 @@ export default function WaitingApproval({ data }) {
   
   const showPagination = data?.length > 10;
 
-  const [, setLoading] = useState(false);
   const [denyReason, setDenyReason] = useState('');
   const fetchData = useDashboardStore(state => state.fetchData);
 
@@ -37,7 +36,6 @@ export default function WaitingApproval({ data }) {
 
   function continueApproveReview(id, reviewId, type) {
     disableButton('approve-review', 'confirm');
-    setLoading(true);
 
     const approveReview = type === 'server' ? approveServerReview : approveBotReview;
 
@@ -45,14 +43,12 @@ export default function WaitingApproval({ data }) {
       loading: 'Approving review..',
       success: () => {
         closeModal('approve-review');
-        fetchData(['reviews'])
-          .then(() => setLoading(false));
+        fetchData(['reviews']);
 
         return 'Review approved successfully!';
       },
       error: () => {
         enableButton('approve-review', 'confirm');
-        setLoading(false);
 
         return `Failed to approve review ${reviewId}.`;
       }
@@ -61,7 +57,6 @@ export default function WaitingApproval({ data }) {
 
   function continueDenyReview(id, reviewId, type, reason) {
     disableButton('deny-review', 'confirm');
-    setLoading(true);
 
     const denyReview = type === 'server' ? denyServerReview : denyBotReview;
 
@@ -69,14 +64,12 @@ export default function WaitingApproval({ data }) {
       loading: 'Denying review..',
       success: () => {
         closeModal('deny-review');
-        fetchData(['reviews'])
-          .then(() => setLoading(false));
+        fetchData(['reviews']);
 
         return 'Review denied successfully!';
       },
       error: () => {
         enableButton('deny-review', 'confirm');
-        setLoading(false);
         
         return `Failed to deny review ${reviewId}.`;
       }
@@ -85,7 +78,6 @@ export default function WaitingApproval({ data }) {
 
   function continueDeleteReview(id, reviewId, type) {
     disableButton('delete-review', 'confirm');
-    setLoading(true);
   
     const deleteReview = type === 'server' ? deleteServerReview : deleteBotReview;
 
@@ -93,15 +85,12 @@ export default function WaitingApproval({ data }) {
       loading: 'Deleting review..',
       success: () => {
         closeModal('delete-review');
-        fetchData(['reviews'])
-          .then(() => setLoading(false));
+        fetchData(['reviews']);
 
         return 'Review deleted successfully!';
       },
       error: () => {
         enableButton('delete-review', 'confirm');
-        setLoading(false);
-
         return `Failed to delete review ${reviewId}.`;
       }
     });

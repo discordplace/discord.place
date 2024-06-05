@@ -179,6 +179,19 @@ export default function UserSide({ className }) {
                   </DropdownMenu.Item>
                 </div>
 
+                <div className='flex flex-col gap-y-2'>
+                  <h2 className='text-xs font-semibold select-none text-tertiary'>
+                    Templates
+                  </h2>
+
+                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
+                    <Link href='/templates/create' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
+                      Publish Template
+                      <MdEmojiEmotions />
+                    </Link>
+                  </DropdownMenu.Item>
+                </div>
+   
                 {user.can_view_dashboard && (
                   <div className='flex flex-col gap-y-2'>
                     <h2 className='text-xs font-semibold select-none text-tertiary'>

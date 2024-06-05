@@ -20,7 +20,6 @@ import { useShallow } from 'zustand/react/shallow';
 
 export default function Content({ emoji }) {
   const [imageURLs, setImageURLs] = useState(emoji.emoji_ids.map(({ id, animated }) => config.getEmojiURL(`packages/${emoji.id}/${id}`, animated)));
-  const [, setLoading] = useState(false);
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -32,7 +31,6 @@ export default function Content({ emoji }) {
 
   function continueDeleteEmojiPackage() {
     disableButton('delete-emoji-package', 'confirm');
-    setLoading(true);
 
     toast.promise(deleteEmoji(emoji.id, true), {
       loading: `${emoji.name} is deleting..`,
@@ -43,9 +41,7 @@ export default function Content({ emoji }) {
         return `${emoji.name} successfully deleted. You will be redirected to home page after 3 seconds.`;
       },
       error: error => {
-        enableButton('delete-emoji-package', 'confirm');
-        setLoading(false);
-        
+        enableButton('delete-emoji-package', 'confirm');        
         return error;
       }
     });

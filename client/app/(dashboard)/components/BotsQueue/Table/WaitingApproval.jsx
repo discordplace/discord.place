@@ -97,7 +97,10 @@ export default function WaitingApproval({ data }) {
               {displayedData?.map(bot => (
                 <tr key={bot.id} className='text-sm text-secondary'>
                   <td className='px-6 py-4'>
-                    <div className='flex items-center gap-x-4'>
+                    <Link
+                      className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
+                      href={`/bots/${bot.id}`}
+                    >
                       <Image
                         src={bot.avatar_url}
                         alt={`${bot.username}'s avatar`}
@@ -110,7 +113,7 @@ export default function WaitingApproval({ data }) {
                         <h2 className='text-base font-semibold'>{bot.username}</h2>
                         <span className='text-xs font-medium text-tertiary'>{bot.id}</span>
                       </div>
-                    </div>
+                    </Link>
                   </td>
 
                   <td className='px-6 py-4'>
@@ -167,7 +170,7 @@ export default function WaitingApproval({ data }) {
                       </button>
 
                       <DenyDropdown
-                        description='Please select a reason to deny this emoji.'
+                        description='Please select a reason to deny this bot.'
                         reasons={config.botsDenyReasons}
                         onDeny={reason => continueDenyBot(bot.id, reason)}
                       >

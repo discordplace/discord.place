@@ -12,6 +12,7 @@ import { HiMiniPaintBrush } from 'react-icons/hi2';
 import { RiInstagramFill } from 'react-icons/ri';
 import { MdMenuBook } from 'react-icons/md';
 import { TiPlus } from 'react-icons/ti';
+import { HiTemplate } from 'react-icons/hi';
 
 const config = {
   supportInviteUrl: 'https://invite.discord.place',
@@ -58,6 +59,11 @@ const config = {
       href: '/emojis',
       icon: MdEmojiEmotions,
       iconColor: '#14b8a6'
+    },
+    {
+      title: 'Templates',
+      href: '/templates',
+      icon: HiTemplate
     }
   ],
   errorMessages: {
@@ -117,6 +123,19 @@ const config = {
     'Anime & Manga',
     'Other'
   ],
+  templateCategories: [
+    'All',
+    'Chat',
+    'Design',
+    'Music',
+    'Education',
+    'Gaming',
+    'Anime',
+    'Tech',
+    'Roleplay',
+    'Event',
+    'Other'
+  ],
   emojiMaxCategoriesLength: 4,
   packagesMinEmojisLength: 4,
   packagesMaxEmojisLength: 9,
@@ -128,6 +147,9 @@ const config = {
   botShortDescriptionMaxLength: 150,
   botDescriptionMinLength: 32,
   botDescriptionMaxLength: 2048,
+  templateMaxCategoriesLength: 3,
+  templateDescriptionMinLength: 32,
+  templateDescriptionMaxLength: 256,
   botTestGuildId: '1239320384441159751',
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,
@@ -148,23 +170,102 @@ const config = {
   },
   customHostnames: ['dsc.wtf', 'dsc.dog', 'dsc.mom'],
   emojisDenyReasons: {
-    'reposted-emoji': { name: 'Reposted Emoji', description: 'If the emoji you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.' },
-    'background-transparency': { name: 'Background Transparency', description: 'Emojis should feature a transparent background. Emojis with opaque backgrounds may not blend well with different message backgrounds and could disrupt visual coherence.' },
-    'whitespace': { name: 'Whitespace', description: 'Emojis containing excess whitespace around the edges may appear disproportionately small when used in messages. To ensure optimal visibility and legibility, please crop your emojis appropriately before submission.' },
-    'incoherent-emoji-package-content': { name: 'Incoherent Emoji Package Content', description: 'Emojis within a package must be compatible with each other to ensure coherence and meaningful usage.' },
-    'offensive-or-inappropriate-content': { name: 'Offensive or Inappropriate Content', description: 'Emojis depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.' },
-    'copyright-infringement': { name: 'Copyright Infringement', description: 'Ensure that your emoji submissions do not violate any copyright or intellectual property rights. Avoid using copyrighted characters, logos, or designs without proper authorization.' },
-    'clear-representation': { name: 'Clear Representation', description: 'Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users.' }
+    'reposted-emoji': {
+      name: 'Reposted Emoji',
+      description: 'If the emoji you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.'
+    },
+    'background-transparency': {
+      name: 'Background Transparency',
+      description: 'Emojis should feature a transparent background. Emojis with opaque backgrounds may not blend well with different message backgrounds and could disrupt visual coherence.'
+    },
+    'whitespace': {
+      name: 'Whitespace',
+      description: 'Emojis containing excess whitespace around the edges may appear disproportionately small when used in messages. To ensure optimal visibility and legibility, please crop your emojis appropriately before submission.'
+    },
+    'incoherent-emoji-package-content': {
+      name: 'Incoherent Emoji Package Content',
+      description: 'Emojis within a package must be compatible with each other to ensure coherence and meaningful usage.'
+    },
+    'offensive-or-inappropriate-content': {
+      name: 'Offensive or Inappropriate Content',
+      description: 'Emojis depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+    },
+    'copyright-infringement': {
+      name: 'Copyright Infringement',
+      description: 'Ensure that your emoji submissions do not violate any copyright or intellectual property rights. Avoid using copyrighted characters, logos, or designs without proper authorization.'
+    },
+    'clear-representation': {
+      name: 'Clear Representation',
+      description: 'Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users.'
+    }
   },
   botsDenyReasons: {
-    'reposted-bot': { name: 'Reposted Bot', description: 'If the bot you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.' },
-    'offensive-or-inappropriate-content': { name: 'Offensive or Inappropriate Content', description: 'Bots depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.' },
-    'against-discord-terms-of-service': { name: 'Against Discord Terms of Service', description: 'Bots that violate Discord\'s Terms of Service will not be accepted.' },
-    'not-online-or-inviteable': { name: 'Not Online or Inviteable', description: 'Bots must be online and inviteable for usage.' },
-    'base-functionality-is-broken': { name: 'Base Functionality is Broken', description: 'Bots must have functional base features to be considered.' },
-    'copied-bot': { name: 'Copied Bot', description: 'Bots that are direct copies of existing bots will not be accepted.' },
-    'has-vulnerability': { name: 'Has Vulnerability', description: 'Bots with security vulnerabilities will not be accepted.' },
-    'support-for-slash-commands': { name: 'Support for Slash Commands', description: 'Bots must support slash commands for improved user experience and functionality.' }
+    'reposted-bot': {
+      name: 'Reposted Bot',
+      description: 'If the bot you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.'
+    },
+    'offensive-or-inappropriate-content': {
+      name: 'Offensive or Inappropriate Content',
+      description: 'Bots depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+    },
+    'against-discord-terms-of-service': {
+      name: 'Against Discord Terms of Service',
+      description: 'Bots that violate Discord\'s Terms of Service will not be accepted.'
+    },
+    'not-online-or-inviteable': {
+      name: 'Not Online or Inviteable',
+      description: 'Bots must be online and inviteable for usage.'
+    },
+    'base-functionality-is-broken': {
+      name: 'Base Functionality is Broken',
+      description: 'Bots must have functional base features to be considered.'
+    },
+    'copied-bot': {
+      name: 'Copied Bot',
+      description: 'Bots that are direct copies of existing bots will not be accepted.'
+    },
+    'has-vulnerability': {
+      name: 'Has Vulnerability',
+      description: 'Bots with security vulnerabilities will not be accepted.'
+    },
+    'support-for-slash-commands': {
+      name: 'Support for Slash Commands',
+      description: 'Bots must support slash commands for improved user experience and functionality.'
+    }
+  },
+  templatesDenyReasons: {
+    'duplicate-template': {
+      name: 'Duplicate Template',
+      description: 'If the template you\'re submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety.'
+    },
+    'offensive-or-inappropriate-content': {
+      name: 'Offensive or Inappropriate Content',
+      description: 'Templates featuring offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Ensure your template is suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+    },
+    'against-discord-terms-of-service': {
+      name: 'Against Discord Terms of Service',
+      description: 'Templates that violate Discord\'s Terms of Service will not be accepted.'
+    },
+    'poor-quality-or-incomplete-template': {
+      name: 'Poor Quality or Incomplete Template',
+      description: 'Templates should be well-organized and complete. Submissions with poor structure, missing key elements, or that are not user-friendly may be rejected.'
+    },
+    'misleading-or-inaccurate-information': {
+      name: 'Misleading or Inaccurate Information',
+      description: 'Templates with misleading titles, descriptions, or information may be rejected. Provide clear and accurate details about your template\'s purpose and features.'
+    },
+    'lacks-clear-focus-or-purpose': {
+      name: 'Advertising and Self-Promotion',
+      description: 'Templates primarily focused on advertising or self-promotion without providing genuine value to users may not be accepted.'
+    },
+    'quality-and-presentation': {
+      name: 'Quality and Presentation',
+      description: 'Templates should be well-organized and present a professional appearance. Low-quality or poorly managed templates may not be accepted.'
+    },
+    'proper-categorization': {
+      name: 'Proper Categorization',
+      description: 'Ensure your template is categorized correctly. Misleading categorization can result in rejection.'
+    }
   }
 };
 

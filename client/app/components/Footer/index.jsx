@@ -59,6 +59,10 @@ export default function Footer() {
         {
           label: 'Emojis',
           href: '/emojis'
+        },
+        {
+          label: 'Templates',
+          href: '/templates'
         }
       ]
     },

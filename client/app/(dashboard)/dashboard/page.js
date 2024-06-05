@@ -7,6 +7,7 @@ import Sidebar from '@/app/(dashboard)/components/Sidebar';
 import Home from '@/app/(dashboard)/components/Home';
 import EmojisQueue from '@/app/(dashboard)/components/EmojisQueue';
 import BotsQueue from '@/app/(dashboard)/components/BotsQueue';
+import TemplatesQueue from '@/app/(dashboard)/components/TemplatesQueue';
 import ReviewsQueue from '@/app/(dashboard)/components/ReviewsQueue';
 import BlockedIps from '@/app/(dashboard)/components/BlockedIps';
 import BotDenies from '@/app/(dashboard)/components/BotDenies';
@@ -50,6 +51,11 @@ export default function Page() {
       component: <BotsQueue />
     },
     {
+      id: 'templatesQueue',
+      name: 'Templates Queue',
+      component: <TemplatesQueue />
+    },
+    {
       id: 'reviewsQueue',
       name: 'Reviews Queue',
       component: <ReviewsQueue />
@@ -83,6 +89,9 @@ export default function Page() {
       break;
     case 'botsQueue':
       fetchData(['bots']);
+      break;
+    case 'templatesQueue':
+      fetchData(['templates']);
       break;
     case 'reviewsQueue':
       fetchData(['reviews']);

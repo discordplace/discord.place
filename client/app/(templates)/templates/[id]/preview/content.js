@@ -5,40 +5,16 @@ import Channels from '@/app/(templates)/templates/[id]/preview/components/Sideba
 import Header from '@/app/(templates)/templates/[id]/preview/components/Header';
 import Chat from '@/app/(templates)/templates/[id]/preview/components/Chat';
 import Members from '@/app/(templates)/templates/[id]/preview/components/Members';
-import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import FullPageLoading from '@/app/components/FullPageLoading';
 import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
 
-export default function Page() {
-  const [searchQuery, setSearchQuery] = useState({
-    channels: [],
-    roles: []
-  });
-
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    try { 
-      const channels = JSON.parse(decodeURIComponent(params.get('channels') || []));
-      const roles = JSON.parse(decodeURIComponent(params.get('roles') || []));
-
-      setSearchQuery({
-        channels: channels,
-        roles: roles
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }, [searchParams]);
-
-  const [focusedChannel, setFocusedChannel] = useState(null);
-
-  useEffect(() => {
-    setFocusedChannel(searchQuery.channels.find(channel => channel.defaultFocused));
-  }, [searchQuery]);
+export default function Content({ template }) {
+  const [focusedChannel, setFocusedChannel] = useState(
+    template.data.channels.find(({ defaultFocused }) => defaultFocused) ||
+    template.data.channels.find(({ type }) => type === 'category').channels.find(({ defaultFocused }) => defaultFocused)
+  );
 
   const [memberListCollapsed, setMemberListCollapsed] = useState(false);
   const [currentlyOpenedSection, setCurrentlyOpenedSection] = useState('channels');
@@ -56,6 +32,7 @@ export default function Page() {
   return (
     <div className="w-full h-full min-h-[100dvh] flex">
       <Sidebar
+        template={template}
         focusedChannel={focusedChannel}
         currentlyOpenedSection={currentlyOpenedSection}
         setCurrentlyOpenedSection={setCurrentlyOpenedSection}
@@ -64,7 +41,7 @@ export default function Page() {
       />
 
       <Channels
-        data={searchQuery.channels}
+        data={template.data.channels}
         focusedChannel={focusedChannel}
         setFocusedChannel={setFocusedChannel}
         currentlyOpenedSection={currentlyOpenedSection}
@@ -86,11 +63,13 @@ export default function Page() {
             focusedChannel={focusedChannel}
           />
 
-          {!memberListCollapsed && <Members
-            searchQuery={searchQuery}
-            isMobile={isMobile}
-            currentlyOpenedSection={currentlyOpenedSection}
-          />}
+          {!memberListCollapsed && (
+            <Members
+              template={template}
+              isMobile={isMobile}
+              currentlyOpenedSection={currentlyOpenedSection}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -1,0 +1,103 @@
+const categoriesValidation = require('@/utils/validations/templates/categories');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const bodyParser = require('body-parser');
+const { body, validationResult, matchedData } = require('express-validator');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const Template = require('@/schemas/Template');
+const getValidationError = require('@/utils/getValidationError');
+const Discord = require('discord.js');
+const fetchTemplateDetails = require('@/utils/templates/fetchTemplateDetails');
+
+module.exports = {
+  post: [
+    useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
+    checkAuthentication,
+    bodyParser.json(),
+    body('id')
+      .isString().withMessage('ID should be a string.')
+      .isLength({ min: 12, max: 12 }).withMessage('ID must be 12 characters.'),
+    body('name')
+      .isString().withMessage('Name should be a string.')
+      .trim()
+      .isLength({ max: config.templateNameMaxLength }).withMessage(`Name must be less than ${config.templateNameMaxLength} characters.`),
+    body('description')
+      .isString().withMessage('Description should be a string.')
+      .trim()
+      .isLength({ min: config.templateDescriptionMinLength, max: config.templateDescriptionMaxLength }).withMessage(`Description must be between ${config.templateDescriptionMinLength} and ${config.templateDescriptionMaxLength} characters.`),
+    body('categories')
+      .isArray().withMessage('Categories should be an array.')
+      .custom(categoriesValidation),
+    async (request, response) => {
+      const errors = validationResult(request);
+      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
+
+      const { id, name, description, categories } = matchedData(request);
+
+      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'TEMPLATES_CREATE').catch(() => false);
+      if (userQuarantined) return response.sendError('You are not allowed to create templates.', 403);
+
+      const templateFound = await Template.findOne({ id });
+      if (templateFound) return response.sendError('Template already exists.', 400);
+
+      if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
+
+      const templateDetails = await fetchTemplateDetails(id).catch(() => null);
+      if (!templateDetails) return response.sendError('Invalid template ID.', 400);
+
+      const template = new Template({
+        id: id,
+        data: templateDetails.serialized_source_guild,
+        user: {
+          id: request.user.id
+        },
+        name,
+        description,
+        categories,
+        uses: 0,
+        approved: false
+      });
+
+      const validationError = getValidationError(template);
+      if (validationError) return response.sendError(validationError, 400);
+
+      await template.save();
+
+      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
+
+      const embeds = [
+        new Discord.EmbedBuilder()
+          .setTitle('New Template Submitted')
+          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
+          .setFields([
+            {
+              name: 'Template',
+              value: `${name} (ID: ${id})`,
+              inline: true
+            },
+            {
+              name: 'Description',
+              value: description,
+              inline: true
+            }
+          ])
+          .setTimestamp()
+          .setColor(Discord.Colors.Purple)
+      ];
+
+      const components = [
+        new Discord.ActionRowBuilder()
+          .addComponents(
+            new Discord.ButtonBuilder()
+              .setStyle(Discord.ButtonStyle.Link)
+              .setURL(`${config.frontendUrl}/templates/${id}`)
+              .setLabel('View Template on discord.place')
+          )
+      ];
+
+      client.channels.cache.get(config.templateQueueChannelId).send({ embeds, components });
+
+      return response.json(template);
+    }
+  ]
+};

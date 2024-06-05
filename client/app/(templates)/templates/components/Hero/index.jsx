@@ -1,0 +1,137 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import Square from '@/app/components/Background/Square';
+import cn from '@/lib/cn';
+import { Bricolage_Grotesque } from 'next/font/google';
+import SearchResults from '@/app/(templates)/templates/components/Hero/SearchResults';
+import SearchInput from '@/app/(templates)/templates/components/Hero/SearchInput';
+import useSearchStore from '@/stores/templates/search';
+import { useShallow } from 'zustand/react/shallow';
+import { BiSolidCategory } from 'react-icons/bi';
+import { useState } from 'react';
+import config from '@/config';
+import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
+import SortingDrawer from '@/app/(templates)/templates/components/Hero/Drawer/Sorting';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { TiStar } from 'react-icons/ti';
+
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
+
+export default function Hero() {
+  const [categoryDrawerOpenState, setCategoryDrawerOpenState] = useState(false);
+  const [sortingDrawerOpenState, setSortingDrawerOpenState] = useState(false);
+
+  const { category, setCategory, sort, setSort } = useSearchStore(useShallow(state => ({
+    category: state.category,
+    setCategory: state.setCategory,
+    sort: state.sort,
+    setSort: state.setSort
+  })));
+
+  const sequenceTransition = {
+    duration: 0.25,
+    type: 'spring',
+    stiffness: 260,
+    damping: 20
+  };
+
+  return (
+    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 sm:px-0">
+      <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
+  
+      <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
+  
+      <div className='max-w-[700px] flex flex-col w-full'>
+        <motion.h1 
+          className={cn(
+            'text-5xl font-medium max-w-[700px] text-center text-primary',
+            BricolageGrotesque.className
+          )}
+          initial={{ opacity: 0, y: -25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...sequenceTransition, delay: 0.1 }}
+        >
+          Discover the templates
+        </motion.h1>
+        
+        <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+          Explore most popular templates and find the perfect one for your Discord server!<br/>Don{'\''}t waste your time to create your own server, just use one of the templates!
+        </motion.span>
+
+        <SearchInput />
+      </div>
+
+      <motion.div
+        className='flex mobile:flex-row flex-col gap-4 mt-6 max-w-[800px] w-full'
+        initial={{ opacity: 0, y: -25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...sequenceTransition, delay: 0.4 }}
+      >
+        <button className='text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary' onClick={() => setCategoryDrawerOpenState(true)}>
+          <div className='text-sm font-medium text-tertiary'>
+            Category
+          </div>
+          
+          <div className='flex items-center gap-x-2'>
+            <BiSolidCategory />
+            {category !== 'All' ? category : 'All'}
+          </div>
+        </button>
+
+        <CategoriesDrawer 
+          state={category}
+          setState={setCategory}
+          openState={categoryDrawerOpenState}
+          setOpenState={setCategoryDrawerOpenState}
+          categories={config.templateCategories}
+        />
+
+        <button className='text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary' onClick={() => setSortingDrawerOpenState(true)}>
+          <div className='text-sm font-medium text-tertiary'>
+            Sorting
+          </div>
+          
+          <div className='flex items-center gap-x-2'>
+            {sort === 'Popular' && (
+              <>
+                <TiStar />
+                Popular
+              </>
+            )}
+
+            {sort === 'Newest' && (
+              <>
+                <HiSortAscending />
+                Newest
+              </>
+            )}
+
+            {sort === 'Oldest' && (
+              <>
+                <HiSortDescending />
+                Oldest
+              </>
+            )}
+          </div>
+        </button>
+
+        <SortingDrawer
+          state={sort}
+          setState={setSort}
+          openState={sortingDrawerOpenState}
+          setOpenState={setSortingDrawerOpenState}
+        />
+      </motion.div>
+
+      <motion.div 
+        className='my-16 max-w-[1200px] w-full'
+        initial={{ opacity: 0, y: -25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...sequenceTransition, delay: 0.5 }}
+      >
+        <SearchResults />
+      </motion.div>
+    </div>
+  );
+}

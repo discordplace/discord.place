@@ -18,6 +18,10 @@ const DashboardDataSchema = new Schema({
     type: Number,
     default: 0
   },
+  templates: {
+    type: Number,
+    default: 0
+  },
   users: {
     type: Number,
     default: 0

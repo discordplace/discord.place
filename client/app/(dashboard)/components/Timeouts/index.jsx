@@ -23,7 +23,6 @@ export default function Timeouts() {
   
   const showPagination = data?.timeouts?.length > 10;
 
-  const [, setLoading] = useState(false);
   const fetchData = useDashboardStore(state => state.fetchData);
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -35,7 +34,6 @@ export default function Timeouts() {
 
   function continueDeleteTimeout(id, userId, type) {
     disableButton('delete-timeout', 'confirm');
-    setLoading(true);
 
     const deleteTimeout = type === 'server' ? deleteServerTimeout : deleteBotTimeout;
   
@@ -43,15 +41,12 @@ export default function Timeouts() {
       loading: 'Deleting the timeout...',
       success: () => {
         closeModal('delete-timeout');
-        fetchData(['timeouts'])
-          .then(() => setLoading(false));
+        fetchData(['timeouts']);
 
         return 'The timeout has been deleted successfully.';
       },
       error: () => {
         enableButton('delete-timeout', 'confirm');
-        setLoading(false);
-
         return 'An error occurred while deleting the timeout.';
       }
     });

@@ -15,7 +15,7 @@ export default function Page() {
   const [hoveredBlockColor, setHoveredBlockColor] = useState(defaultBlockColor);
   const isMobile = useMedia('(max-width: 640px)', false);  
 
-  function Block({ title, desc, to, index, color, disabled }) {
+  function Block({ title, desc, to, index, color, disabled, newBadge }) {
     const blockRef = useRef(null);
     const buttonRef = useRef(null);
 
@@ -59,10 +59,11 @@ export default function Page() {
       <Link 
         className={cn(
           'w-full sm:h-[200px] bg-secondary/70 flex-col px-4 rounded-lg cursor-pointer transition-colors hover:bg-secondary flex items-center py-3 gap-y-1.5',
-          index === 0 && 'rounded-md sm:rounded-l-[2.5rem] sm:rounded-b-md lg:rounded-bl-[2.5rem]',
+          index === 0 && 'rounded-md sm:rounded-tl-[2.5rem] sm:rounded-b-md lg:rounded-bl-[2.5rem]',
           index === 1 && 'rounded-md sm:rounded-tr-[2.5rem] lg:rounded-r-md',
-          index === 2 && 'rounded-md sm:rounded-bl-[2.5rem] lg:rounded-bl-md',
-          index === 3 && 'rounded-md sm:rounded-r-[2.5rem] sm:rounded-t-md lg:rounded-tr-[2.5rem]',
+          index === 2 && 'rounded-md lg:rounded-bl-md',
+          index === 3 && 'rounded-md lg:rounded-l-md',
+          index === 4 && 'rounded-md sm:rounded-b-[2.5rem] lg:rounded-br-[2.5rem] lg:rounded-bl-md lg:rounded-tr-[2.5rem] col-span-1 sm:col-span-2 lg:col-span-1',
           disabled && 'pointer-events-none bg-secondary/30 select-none'
         )}
         ref={blockRef}
@@ -70,6 +71,16 @@ export default function Page() {
       >
         <h1 className='flex items-center mt-3 text-xl font-semibold text-center gap-x-2 sm:text-2xl sm:mt-6 text-primary'>
           {title}
+
+          {newBadge && (
+            <span 
+              className='flex items-center px-2 py-1 text-xs font-semibold text-white rounded-full gap-x-1' 
+              style={{
+                background: `${color}80`
+              }}>
+              New
+            </span>
+          )}
         </h1>
         
         <p className='mb-3 text-sm font-medium text-center sm:mb-0 text-tertiary'>{desc}</p>
@@ -100,7 +111,7 @@ export default function Page() {
 
       <div className='transition-colors ease-in-out pointer-events-none absolute top-0 max-w-[800px] w-full h-[800px] rounded-full blur-[10rem]' style={{ background: hoveredBlockColor }} />
 
-      <div className='w-full mt-16 lg:mb-0 mb-8 max-w-[1000px] px-8 lg:px-0'>
+      <div className='w-full mt-16 lg:mb-0 mb-8 max-w-[1200px] px-8 lg:px-0'>
         <div className='grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:flex'>
           <Block 
             title='Profiles' 
@@ -129,6 +140,14 @@ export default function Page() {
             to='/emojis'
             index={3}
             color='#14b8a6'
+          />
+          <Block
+            title='Templates'
+            desc='Discord server templates for everyone.'
+            to='/templates'
+            index={4}
+            color='#9c84ef'
+            newBadge={true}
           />
         </div>
       </div>

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
-import PopularBots from '@/app/(bots)/bots/components/Hero/PopularBots';
+import SearchResults from '@/app/(bots)/bots/components/Hero/SearchResults';
 import SearchInput from '@/app/(bots)/bots/components/Hero/SearchInput';
 import useSearchStore from '@/stores/bots/search';
 import { useShallow } from 'zustand/react/shallow';
@@ -146,7 +146,7 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...sequenceTransition, delay: 0.5 }}
       >
-        <PopularBots />
+        <SearchResults />
       </motion.div>
     </div>
   );

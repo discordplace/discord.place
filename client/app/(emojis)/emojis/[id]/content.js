@@ -24,7 +24,6 @@ export default function Content({ emoji }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
   
-  const [, setLoading] = useState(false);
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -36,7 +35,6 @@ export default function Content({ emoji }) {
 
   function continueDeleteEmoji() {
     disableButton('delete-emoji', 'confirm');
-    setLoading(true);
 
     toast.promise(deleteEmoji(emoji.id), {
       loading: `${emoji.name} is deleting..`,
@@ -48,8 +46,6 @@ export default function Content({ emoji }) {
       },
       error: error => {
         enableButton('delete-emoji', 'confirm');
-        setLoading(false);
-
         return error;
       }
     });

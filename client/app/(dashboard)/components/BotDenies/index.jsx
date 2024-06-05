@@ -1,16 +1,17 @@
 import useDashboardStore from '@/stores/dashboard';
 import Pagination from '@/app/components/Pagination';
-import cn from '@/lib/cn';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
 import Countdown from '@/app/components/Countdown';
-import { LuTrash2 } from 'react-icons/lu';
 import { toast } from 'sonner';
 import deleteBotDenyRecord from '@/lib/request/bots/deleteBotDenyRecord';
 import Image from 'next/image';
 import Link from 'next/link';
+import { IoMdCloseCircle } from 'react-icons/io';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function BotDenies() {
   const data = useDashboardStore(state => state.data);
@@ -23,19 +24,30 @@ export default function BotDenies() {
   const [loading, setLoading] = useState(false);
   const fetchData = useDashboardStore(state => state.fetchData);
 
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal
+  })));
+
   function continueDeleteBotDenyRecord(id) {
+    disableButton('delete-deny-record', 'confirm'); 
     setLoading(true);
   
     toast.promise(deleteBotDenyRecord(id), {
       loading: 'Deleting bot deny record..',
       success: () => {
+        closeModal('delete-deny-record');
         fetchData(['blockedips'])
           .then(() => setLoading(false));
 
         return 'Bot deny record has been deleted successfully.';
       },
       error: () => {
+        enableButton('delete-deny-record', 'confirm');
         setLoading(false);
+        
         return 'An error occurred while deleting the bot deny record.';
       }
     });
@@ -190,17 +202,31 @@ export default function BotDenies() {
                       />
                     </td>
 
-                    <td className='px-6 py-4'>
-                      <button
-                        className={cn(
-                          'flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1',
-                          loading && 'pointer-events-none opacity-70'
-                        )}
-                        onClick={() => continueDeleteBotDenyRecord(record._id)}
-                      >
-                        Delete <LuTrash2 />
-                      </button>
-                    </td>
+                    <button
+                      className='flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'
+                      onClick={() => 
+                        openModal('delete-deny-record', {
+                          title: 'Delete Deny Record',
+                          description: 'Are you sure you want to delete this deny record?',
+                          buttons: [
+                            {
+                              id: 'cancel',
+                              label: 'Cancel',
+                              variant: 'ghost',
+                              actionType: 'close'
+                            },
+                            {
+                              id: 'confirm',
+                              label: 'Confirm',
+                              variant: 'solid',
+                              action: () => continueDeleteBotDenyRecord(record._id)
+                            }
+                          ]
+                        })
+                      }
+                    >
+                      Delete <IoMdCloseCircle />
+                    </button>
                   </tr>
                 ))}
               </tbody>

@@ -1,6 +1,6 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
-const Emoji = require('@/src/schemas/Emoji');
+const Emoji = require('@/schemas/Emoji');
 const idValidation = require('@/validations/emojis/id');
 const shuffle = require('lodash.shuffle');
 

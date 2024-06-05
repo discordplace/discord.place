@@ -6,6 +6,7 @@ const EmojiPack = require('@/schemas/Emoji/Pack');
 const Bot = require('@/schemas/Bot');
 const BotReview = require('@/schemas/Bot/Review');
 const BotDeny = require('@/schemas/Bot/Deny');
+const Template = require('@/schemas/Template');
 const ServerReview = require('@/schemas/Server/Review');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
@@ -17,6 +18,7 @@ const validKeys = [
   'stats',
   'emojis',
   'bots',
+  'templates',
   'reviews',
   'blockedips',
   'botdenies',
@@ -41,6 +43,7 @@ module.exports = {
         canViewDashboard: request.member && config.permissions.canViewDashboardRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveEmojis: request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveBots: request.member && config.permissions.canApproveBotsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canApproveTemplates: request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveReviews: request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteReviews: config.permissions.canDeleteReviews.includes(request.user.id),
         canViewBlockedIps: config.permissions.canViewBlockedIps.includes(request.user.id),
@@ -77,6 +80,10 @@ module.exports = {
             value: dashboardData.emojis,
             createdAt: dashboardData.createdAt
           })),
+          templates: Object.values(data).map(dashboardData => ({
+            value: dashboardData.templates,
+            createdAt: dashboardData.createdAt
+          })),
           guilds: Object.values(data).map(dashboardData => ({
             value: dashboardData.guilds,
             createdAt: dashboardData.createdAt
@@ -104,6 +111,13 @@ module.exports = {
 
         const bots = await Bot.find().sort({ createdAt: -1 });
         responseData.queue.bots = await Promise.all(bots.map(async bot => await bot.toPubliclySafe()));
+      }
+
+      if (keys?.includes('templates')) {
+        if (!permissions.canApproveTemplates) return response.sendError('You do not have permission to approve templates.', 403);
+
+        const templates = await Template.find().sort({ createdAt: -1 });
+        responseData.queue.templates = await Promise.all(templates.map(async template => await template.toPubliclySafe()));
       }
 
       if (keys?.includes('reviews')) {
