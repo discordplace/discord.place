@@ -17,6 +17,8 @@ module.exports = {
     if (!interaction.guild) return interaction.reply({ content: 'This command can only be used in servers.' });
     if (interaction.guild.ownerId !== interaction.user.id) return interaction.reply({ content: 'You must be the owner of the server to use this command.' });
     
+    if (currentlyApplyingTemplates.size >= 5) return interaction.reply({ content: 'There are too many templates being applied at the moment. Please wait for the current templates to be applied before using another template.' });
+
     if (currentlyApplyingTemplates.has(interaction.guild.id)) return interaction.reply({ content: 'This server is currently applying a template. Please wait for the current template to be applied before using another template.' });
 
     await interaction.deferReply();
