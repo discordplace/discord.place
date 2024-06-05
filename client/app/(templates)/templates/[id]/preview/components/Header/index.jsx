@@ -10,36 +10,27 @@ import InboxIcon from '@/app/(templates)/templates/[id]/preview/components/Icons
 import HelpIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Help';
 import SearchIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Search';
 import Tooltip from '@/app/components/Tooltip/Discord';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
-export default function Header({ focusedChannel }) {
+export default function Header({ focusedChannel, memberListCollapsed, setMemberListCollapsed }) {
   return (
-    <div className='flex bg-[#313338] justify-between w-full px-[8px] py-[12px] border-b border-b-[#26282c]'>
+    <div className='hidden lg:flex bg-[#313338] justify-between w-full px-[8px] py-[12px] border-b border-b-[#26282c]'>
       <div className='flex items-center ml-2 text-sm gap-x-2'>
         {focusedChannel.type === 'text' && (
           focusedChannel.nsfw ? (
-            <TextChannelNSFWIcon className='w-6 h-6 text-[#80848e]' />
+            <TextChannelNSFWIcon className='min-w-6 min-h-6 w-6 h-6 text-[#80848e]' />
           ) : (
-            <TextChannelIcon className='w-6 h-6 text-[#80848e]' />
+            <TextChannelIcon className='min-w-6 min-h-6 w-6 h-6 text-[#80848e]' />
           )
         )}
 
-        <span className='text-[#dbdee1] font-semibold'>{focusedChannel.name}</span>
+        <span className='text-[#dbdee1] font-semibold truncate'>{focusedChannel.name}</span>
 
         {focusedChannel.topic && (
           <>
             <div className='w-[1px] h-full mx-[8px] bg-[#3f4147]' />
 
-            <span className='text-[#b5bac1]'>
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  a: ({ ...props }) => <a {...props} className='text-[#00b0fd] hover:underline' />
-                }}
-              >
-                {focusedChannel.topic}
-              </ReactMarkdown>
+            <span className='text-[#b5bac1] mr-4 truncate max-w-[100px] xl:max-w-full'>
+              {focusedChannel.topic.length > 50 ? `${focusedChannel.topic.slice(0, 50)}...` : focusedChannel.topic}
             </span>
           </>
         )}
@@ -80,12 +71,16 @@ export default function Header({ focusedChannel }) {
         </Tooltip>
 
         <Tooltip
-          content='Hide Member List'
+          content={memberListCollapsed ? 'Show Member List' : 'Hide Member List'}
           side='bottom'
           sideOffset={5}
           size='small'
+          doNotHideOnClick={true}
         >
-          <div className='cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]'>
+          <div
+            className='cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]'
+            onClick={() => setMemberListCollapsed(!memberListCollapsed)}
+          >
             <MemberListIcon className='w-6 h-6' />
           </div>
         </Tooltip>

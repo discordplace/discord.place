@@ -4,7 +4,7 @@ import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { useState } from 'react';
 import { useMedia } from 'react-use';
 
-export default function Tooltip({ children, content, side }) {
+export default function Tooltip({ children, content, side, hide, doNotHideOnClick }) {
   const [open, setOpen] = useState(false);
   const isMobile = useMedia('(max-width: 640px)', false);
   
@@ -14,11 +14,19 @@ export default function Tooltip({ children, content, side }) {
       skipDelayDuration='0'
     >
       <RadixTooltip.Root
-        onOpenChange={setOpen}
-        open={open}
+        onOpenChange={newOpenState => {
+          if (newOpenState === false && doNotHideOnClick) return;
+          if (hide) return;
+
+          setOpen(newOpenState);
+        }}        open={open}
       >
         <RadixTooltip.Trigger 
-          onClick={() => isMobile && setOpen(!open)}
+          onClick={() => {
+            if (hide) return;
+            
+            if (isMobile) setOpen(!open);
+          }}
           asChild
         >
           {children}
