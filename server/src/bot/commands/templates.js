@@ -120,7 +120,7 @@ module.exports = {
 
     const botHighestRole = interaction.guild.members.me.roles.highest;
     if (botHighestRole.position !== interaction.guild.roles.cache.map(role => role.position).sort((a, b) => b - a)[0]) return sendError('I do not have the highest role in this server. Please make sure I have the highest role in the server and try again.');
-    if (!botHighestRole.permissions.has(Discord.PermissionFlagsBits.Administrator)) return sendError('I do not have the `Administrator` permission in this server. Please make sure I have the `Administrator` permission in the server and try again.');
+    if (!botHighestRole.permissions.has(Discord.PermissionFlagsBits.Administrator)) return sendError('My highest role does not have the `Administrator` permission. Please make sure my highest role has the `Administrator` permission and try again.');
 
     await template.updateOne({ $inc: { uses: 1 } });
 
