@@ -16,7 +16,7 @@ export default function ContentPolicy() {
       </h1>
 
       <p>
-        Last updated: 03/19/2024
+        Last updated: 06/05/2024
       </p>
 
       <h2>
@@ -113,6 +113,29 @@ export default function ContentPolicy() {
           </li>
         </ul>
       </p>
+
+      <h3>
+        Templates
+      </h3>
+
+      <p>
+        All templates listed on this website are created by users, discord.place provides a platform for users to publish their templates publicly.
+
+        <ul>
+          <li>
+            By adding a template you agree that you are the owner of the template or have permission to add the template on the owners behalf.
+          </li>
+          <li>
+            By adding a template you agree to giving us unrevokable permission to display, license and redistribute the template in any manner we see fit.
+          </li>
+          <li>
+            By adding a template you agree that the content of the template is not illegal, hateful, discriminatory or otherwise harmful to any person or group.
+          </li>
+          <li>
+            discord.place reserves the right to remove templates from the website at any time, without notice, for any reason, or for no reason, in its sole discretion.
+          </li>
+        </ul>
+      </p>
       
       <h2>
         2. Reporting Content
@@ -150,6 +173,14 @@ export default function ContentPolicy() {
         discord.place takes harmful content very seriously. If any bot is listed on this website that is harmful or copying your bot without permission, we will take action to ensure the bot is removed as soon as possible.
       </p>
 
+      <h3>
+        Templates
+      </h3>
+
+      <p>
+        discord.place takes harmful content very seriously. If any template is listed on this website that is harmful or copying your server without permission, we will take action to ensure the template is removed as soon as possible.
+      </p>
+      
       <h2>
         3. Contact Us
       </h2>
