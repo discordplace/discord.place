@@ -10,6 +10,9 @@ session:
 frontendUrl: 'https://discord.place'
 backendUrl: 'https://api.discord.place'
 cdnUrl: 'https://cdn.discord.place'
+emojis:
+  loading: '<a:loading:1247786499076915252>'
+  checkmark: '<:yes:1226129515718381568>'
 port:
   frontend: 3000
   backend: 3001
@@ -150,6 +153,7 @@ reviewQueueChannelId: '1213842162828054538'
 botQueueChannelId: '1236369862259900566'
 templateQueueChannelId: '1247743275914366987'
 voteLogsChannelId: '1222817883470434304'
+templateApplyLogsChannelId: '1247797537780531235'
 portalChannelId: '1238654829916585984'
 excludeCollectionsInBackup:
   - 'sessions'
@@ -202,6 +206,10 @@ quarantineRestrictions:
   'TEMPLATES_CREATE':
     available_to:
       - 'USER_ID'
+  'TEMPLATES_USE':
+    available_to:
+      - 'USER_ID'
+      - 'GUILD_ID'
 quarantineLogsChannelId: '1226257480112406599'
 customHostnames:
   - 'dsc.wtf'

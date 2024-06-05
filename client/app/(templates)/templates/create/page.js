@@ -46,7 +46,7 @@ export default function Page() {
     }), {
       loading: 'Publishing template...',
       success: () => {
-        router.push(`/templates/${templateId}`);
+        router.push(`/templates/${templateId}/preview`);
         return 'Template published successfully.';
       },
       error: error => {
