@@ -8,7 +8,7 @@ import EmojiIcon from '@/app/(templates)/templates/[id]/preview/components/Icons
 
 export default function Chat({ focusedChannel }) {
   return (
-    <div className='pt-4 relative gap-y-6 hidden lg:flex w-full overflow-y-hidden h-[calc(100dvh_-_48px)] flex-1 bg-[#313338] flex-col'>
+    <div className='pt-4 relative gap-y-6 hidden lg:flex w-full overflow-y-hidden h-[calc(100dvh_-_49px)] flex-1 bg-[#313338] flex-col'>
       <div className='flex px-4 gap-x-4'>
         <div className='w-[48px] h-[48px] rounded-full bg-[#3f4146] flex-shrink-0' />
         <div className='flex flex-col flex-wrap gap-2'>
