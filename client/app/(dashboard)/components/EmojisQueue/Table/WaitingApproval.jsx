@@ -24,10 +24,10 @@ export default function WaitingApproval({ data }) {
   const [loading, setLoading] = useState(false);
   const fetchData = useDashboardStore(state => state.fetchData);
 
-  function continueApproveEmoji(id, isPack) {
+  function continueApproveEmoji(id) {
     setLoading(true);
 
-    toast.promise(approveEmoji(id, isPack), {
+    toast.promise(approveEmoji(id), {
       loading: 'Approving emoji..',
       success: () => {
         fetchData(['emojis'])
@@ -42,10 +42,10 @@ export default function WaitingApproval({ data }) {
     });
   }
 
-  function continueDenyEmoji(id, isPack, reason) {
+  function continueDenyEmoji(id, reason) {
     setLoading(true);
 
-    toast.promise(denyEmoji(id, isPack, reason), {
+    toast.promise(denyEmoji(id, reason), {
       loading: 'Denying emoji..',
       success: () => {
         fetchData(['emojis'])
@@ -159,7 +159,7 @@ export default function WaitingApproval({ data }) {
                           'flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1',
                           loading && 'pointer-events-none opacity-70'
                         )}
-                        onClick={() => continueApproveEmoji(emoji.id, emoji.emoji_ids ? true : false)}
+                        onClick={() => continueApproveEmoji(emoji.id)}
                       >
                         Approve <IoCheckmarkCircle />
                       </button>
@@ -167,7 +167,7 @@ export default function WaitingApproval({ data }) {
                       <DenyDropdown
                         description='Please select a reason to deny this emoji.'
                         reasons={config.emojisDenyReasons}
-                        onDeny={reason => continueDenyEmoji(emoji.id, emoji.emoji_ids ? true : false, reason)}
+                        onDeny={reason => continueDenyEmoji(emoji.id, reason)}
                       >
                         <button
                           className={cn(

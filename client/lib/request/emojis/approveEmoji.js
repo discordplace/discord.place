@@ -1,10 +1,10 @@
 import config from '@/config';
 import axios from 'axios';
 
-export default function approveEmoji(id, isPack) {
+export default function approveEmoji(id) {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/emojis/${isPack ? 'packages/' : ''}${id}/approve`;
+    const url = `${config.api.url}/emojis/${id}/approve`;
 
     try {
       await axios.post(url, {}, { withCredentials: true });

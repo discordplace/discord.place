@@ -34,7 +34,7 @@ module.exports = {
     
       const command = new DeleteObjectCommand({
         Bucket: process.env.S3_BUCKET_NAME,
-        Key: `emojis/${emoji.id}.${emoji.animated ? 'gif' : 'png'}`
+        Key: `emojis/${emoji.emoji_ids ? `packages/${emoji.id}/` : `.${emoji.animated ? 'gif' : 'png'}`}`
       });
 
       S3.send(command).catch(() => null);

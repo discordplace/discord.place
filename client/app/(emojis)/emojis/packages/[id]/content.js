@@ -32,7 +32,7 @@ export default function Content({ emoji }) {
   function continueDeleteEmojiPackage() {
     disableButton('delete-emoji-package', 'confirm');
 
-    toast.promise(deleteEmoji(emoji.id, true), {
+    toast.promise(deleteEmoji(emoji.id), {
       loading: `${emoji.name} is deleting..`,
       success: () => {
         closeModal('emoji-package');

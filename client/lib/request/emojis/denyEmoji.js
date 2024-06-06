@@ -1,10 +1,10 @@
 import config from '@/config';
 import axios from 'axios';
 
-export default function denyEmoji(id, isPack, reason) {
+export default function denyEmoji(id, reason) {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/emojis/${isPack ? 'packages/' : ''}${id}/deny`;
+    const url = `${config.api.url}/emojis/${id}/deny`;
 
     try {
       await axios.post(url, { reason }, { withCredentials: true });
