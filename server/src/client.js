@@ -57,7 +57,6 @@ module.exports = class Client {
     this.client.fetchedGuilds = new Discord.Collection();
     this.client.forceFetchedUsers = new Discord.Collection();
     this.client.blockedIps = new Discord.Collection();
-    this.client.approximateGuildCountFetchedBots = new Discord.Collection();
     this.client.currentlyUploadingEmojiPack = new Discord.Collection();
 
     logger.send('Client created.');
@@ -108,7 +107,6 @@ module.exports = class Client {
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
       if (options.startup.checkReminerMetadatas) this.checkReminerMetadatas();
       if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
-      if (options.startup.checkExpiredApproximateGuildCountFetchedBots) this.checkExpiredApproximateGuildCountFetchedBots();
       if (options.startup.updateBotStats) this.updateBotStats();
       if (options.startup.createNewDashboardData) this.createNewDashboardData();
 
@@ -118,7 +116,6 @@ module.exports = class Client {
           this.checkVoteReminderMetadatas();
           this.checkReminerMetadatas();
           this.checkExpiredBlockedIPs();
-          this.checkExpiredApproximateGuildCountFetchedBots();
           this.checkDeletedInviteCodes();
           this.updateClientActivity();
         }, null, true, 'Europe/Istanbul');
@@ -279,19 +276,6 @@ module.exports = class Client {
     } catch (error) {
       logger.send(`Failed to check expired blocked IPs collections:\n${error.stack}`);
     }
-  }
-
-  checkExpiredApproximateGuildCountFetchedBots() {
-    let deletedCount = 0;
-
-    for (const [id, { fetchedAt }] of client.approximateGuildCountFetchedBots) {
-      if (Date.now() - fetchedAt > 1000 * 60 * 60 * 24) {
-        client.approximateGuildCountFetchedBots.delete(id);
-        deletedCount++;
-      }
-    }
-
-    logger.send(`Deleted ${deletedCount} expired approximate guild count fetched bots collections.`);
   }
 
   async createNewDashboardData() {

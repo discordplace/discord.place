@@ -28,7 +28,6 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     checkVoteReminderMetadatas: true,
     checkReminerMetadatas: true,
     checkExpiredBlockedIPs: true,
-    checkExpiredApproximateGuildCountFetchedBots: true,
     updateBotStats: false,
     createNewDashboardData: false,
     listenEvents: true,
