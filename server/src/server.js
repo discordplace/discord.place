@@ -48,9 +48,8 @@ module.exports = class Server {
   }
 
   addMiddlewares() {
+    if (process.env.NODE_ENV === 'production') this.server.use(pino);
     
-
-    this.server.use(pino);
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
       origin: [config.frontendUrl],
