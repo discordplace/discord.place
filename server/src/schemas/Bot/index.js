@@ -178,7 +178,7 @@ const BotSchema = new Schema({
       });
 
 
-      if (this.server_count?.updatedAt && Date.now() - this.server_count.updatedAt.getTime() >= 86400000) {
+      if (Date.now() - (this.server_count?.updatedAt || new Date()).getTime() >= 86400000) {
         const approximate_guild_count_data = await getApproximateGuildCount(this.id).catch(() => null);
         if (approximate_guild_count_data) {
           this.server_count.value = approximate_guild_count_data.approximate_guild_count;
