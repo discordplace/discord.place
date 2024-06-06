@@ -6,6 +6,7 @@ const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const Profile = require('@/schemas/Profile');
 const Server = require('@/schemas/Server');
+const Template = require('@/schemas/Template');
 
 function getCpuTimes() {
   const cpus = os.cpus();
@@ -101,7 +102,8 @@ module.exports = {
 - Emojis: **${await Emoji.countDocuments({ approved: true })}**
 - Emoji Packs: **${await EmojiPack.countDocuments({ approved: true })}**
 - Profiles: **${await Profile.countDocuments()}**
-- Servers: **${await Server.countDocuments()}**`
+- Servers: **${await Server.countDocuments()}**
+- Templates: **${await Template.countDocuments()}**`
         }
       ]);
     
