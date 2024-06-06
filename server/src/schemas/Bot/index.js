@@ -81,6 +81,16 @@ const BotSchema = new Schema({
       default: Date.now
     }
   },
+  server_count: {
+    value: {
+      type: Number,
+      default: 0
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now
+    }
+  },
   votes: {
     type: Number,
     default: 0
@@ -167,11 +177,15 @@ const BotSchema = new Schema({
         banner_url: bot.bannerURL({ size: 1024, format: 'png' })
       });
 
-      const approximate_guild_count_data = await getApproximateGuildCount(this.id).catch(() => null);
-      if (approximate_guild_count_data) Object.assign(newBot, {
-        servers: approximate_guild_count_data.approximate_guild_count,
-        servers_updated_at: approximate_guild_count_data.fetchedAt
-      });
+
+      if (this.server_count?.updatedAt && Date.now() - this.server_count.updatedAt.getTime() >= 86400000) {
+        const approximate_guild_count_data = await getApproximateGuildCount(this.id).catch(() => null);
+        if (approximate_guild_count_data) {
+          this.server_count.value = approximate_guild_count_data.approximate_guild_count;
+          this.server_count.updatedAt = approximate_guild_count_data.fetchedAt;
+          await this.save();
+        }
+      }
 
       return {
         ...newBot,
@@ -182,6 +196,8 @@ const BotSchema = new Schema({
         categories: this.categories,
         commands: this.command_count.value,
         commands_updated_at: this.command_count.updatedAt,
+        servers: this.server_count.value,
+        servers_updated_at: this.server_count.updatedAt,
         votes: this.votes,
         verified: this.verified,
         created_at: this.createdAt
