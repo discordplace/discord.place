@@ -51,7 +51,7 @@ export default function Page() {
           Redeem
         </h1>
         <p className="font-medium text-tertiary max-w-[500px] text-center">
-          Insert the code provided below to access premium features for 1 month. After 1 month you will lose all your premium features.
+          Insert the code provided below to access premium features.
         </p>
 
         <div className="flex max-w-[500px] gap-x-2 w-full">
