@@ -202,31 +202,34 @@ export default function BotDenies() {
                       />
                     </td>
 
-                    <button
-                      className='flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'
-                      onClick={() => 
-                        openModal('delete-deny-record', {
-                          title: 'Delete Deny Record',
-                          description: 'Are you sure you want to delete this deny record?',
-                          buttons: [
-                            {
-                              id: 'cancel',
-                              label: 'Cancel',
-                              variant: 'ghost',
-                              actionType: 'close'
-                            },
-                            {
-                              id: 'confirm',
-                              label: 'Confirm',
-                              variant: 'solid',
-                              action: () => continueDeleteBotDenyRecord(record._id)
-                            }
-                          ]
-                        })
-                      }
-                    >
-                      Delete <IoMdCloseCircle />
-                    </button>
+                    <td className='px-6 py-4'>
+
+                      <button
+                        className='flex items-center px-4 py-1.5 text-sm font-semibold bg-quaternary rounded-lg hover:bg-tertiary text-primary w-max gap-x-1'
+                        onClick={() => 
+                          openModal('delete-deny-record', {
+                            title: 'Delete Deny Record',
+                            description: 'Are you sure you want to delete this deny record?',
+                            buttons: [
+                              {
+                                id: 'cancel',
+                                label: 'Cancel',
+                                variant: 'ghost',
+                                actionType: 'close'
+                              },
+                              {
+                                id: 'confirm',
+                                label: 'Confirm',
+                                variant: 'solid',
+                                action: () => continueDeleteBotDenyRecord(record._id)
+                              }
+                            ]
+                          })
+                        }
+                      >
+                        Delete <IoMdCloseCircle />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
