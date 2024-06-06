@@ -9,10 +9,12 @@ const cors = require('cors');
 const helmet = require('helmet');
 const ip = require('@/utils/middlewares/ip');
 const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
+const pino = require('pino-http')();
 
 const passport = require('passport');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const DiscordStrategy = require('passport-discord').Strategy;
+
 module.exports = class Server {
   constructor() {
     return this;
@@ -46,6 +48,9 @@ module.exports = class Server {
   }
 
   addMiddlewares() {
+    
+
+    this.server.use(pino);
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
       origin: [config.frontendUrl],
@@ -58,7 +63,6 @@ module.exports = class Server {
     }));
     this.server.use(ip);
     this.server.use(require('@/utils/middlewares/error'));
-    this.server.use(require('@/utils/middlewares/logger'));
     
     this.server.use((request, response, next) => {
       if (client.blockedIps.has(request.clientIp)) return response.sendError('Forbidden', 403);

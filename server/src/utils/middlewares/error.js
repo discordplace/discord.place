@@ -5,7 +5,6 @@ module.exports = function (request, response, next) {
       error: message,
       status: status || 500
     });
-    logger.send(`<-- ${response.statusCode} ${message}`);
   };
   
   next();
