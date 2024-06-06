@@ -186,7 +186,7 @@ module.exports = {
         },
         server_count: {
           value: approximate_guild_count_data?.approximate_guild_count || 0,
-          updatedAt: approximate_guild_count_data?.fetchedAt || new Date()
+          updatedAt: new Date()
         },
         votes: 0,
         verified: false

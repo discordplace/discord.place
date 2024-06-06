@@ -179,12 +179,22 @@ const BotSchema = new Schema({
 
 
       if (Date.now() - (this.server_count?.updatedAt || new Date()).getTime() >= 86400000) {
-        const approximate_guild_count_data = await getApproximateGuildCount(this.id).catch(() => null);
-        if (approximate_guild_count_data) {
-          this.server_count.value = approximate_guild_count_data.approximate_guild_count;
-          this.server_count.updatedAt = approximate_guild_count_data.fetchedAt;
-          await this.save();
-        }
+        logger.send(`Bot with ID ${this.id} has not been updated in 24 hours. Fetching new server count...`);
+
+        await getApproximateGuildCount(this.id)
+          .then(async approximate_guild_count_data => {
+            if (!approximate_guild_count_data) logger.send(`Bot with ID ${this.id} could not be updated with new server count.`);
+
+            this.server_count = {
+              value: approximate_guild_count_data.approximate_guild_count,
+              updatedAt: new Date()
+            };
+
+            await this.save();
+
+            logger.send(`Bot with ID ${this.id} has been updated with new server count.`);
+          })
+          .catch(error => logger.send(`There was an error while updating bot with ID ${this.id} with new server count:\n${error.stack}`));
       }
 
       return {
