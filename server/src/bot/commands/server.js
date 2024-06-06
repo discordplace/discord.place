@@ -106,7 +106,8 @@ module.exports = {
           await panel.updateOne({ channelId: channel.id });
           await updatePanelMessage(interaction.guild.id);
 
-          sendLog(interaction.guild.id, `Panel channel updated to <#${channel.id}> by ${interaction.user}.`);
+          sendLog(interaction.guild.id, `Panel channel updated to <#${channel.id}> by ${interaction.user}.`)
+            .catch(() => null);
 
           return interaction.followUp({ content: 'Panel channel was updated.' });
         } else {
