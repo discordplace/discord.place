@@ -90,8 +90,8 @@ module.exports = {
           .addComponents(
             new Discord.ButtonBuilder()
               .setStyle(Discord.ButtonStyle.Link)
-              .setURL(`${config.frontendUrl}/templates/${id}`)
-              .setLabel('View Template on discord.place')
+              .setURL(`${config.frontendUrl}/templates/${id}/preview`)
+              .setLabel('Preview Template on discord.place')
           )
       ];
 
