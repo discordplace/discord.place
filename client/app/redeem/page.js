@@ -46,10 +46,6 @@ export default function Page() {
 
   return (
     <>
-      <div className={cn(
-        'absolute inset-0 z-[10] h-full w-full items-center px-5 py-24',
-        theme === 'light' ? '[background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,#00000021_100%)]' : '[background:radial-gradient(125%_125%_at_50%_10%,transparent_40%,#ffffff21_100%)]'
-      )}></div>
       <Square zIndex={8} column='20' row='20' transparentEffectDirection='leftRightBottomTop' blockColor={theme === 'light' ? '#00000021' : '#ffffff21'} />
       <div className="flex flex-col items-center w-full mt-48 relative z-[11] gap-y-6 mb-8 px-4 lg:px-0">
         <h1 className="text-6xl font-bold">
@@ -79,7 +75,7 @@ export default function Page() {
           Don{'\''}t worry if you don{'\''}t have a premium code, buy it now!
         </h2>
 
-        <div className='flex flex-col gap-y-2 p-4 backdrop-blur-lg bg-secondary/5 border border-[rgb(var(--bg-tertiary))] h-max w-[330px] rounded-xl'>
+        <div className='flex flex-col gap-y-2 p-4 backdrop-blur-lg bg-secondary border border-[rgb(var(--bg-quaternary))] h-max w-[380px] rounded-xl'>
           <h1 className='text-base font-bold'>
             Premium
           </h1>
