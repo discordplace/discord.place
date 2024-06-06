@@ -48,13 +48,12 @@ module.exports = {
       } : baseFilter;
 
       const foundBots = await Bot.find(findQuery);
-      const publiclySafeBots = await Promise.all(foundBots.map(async bot => await bot.toPubliclySafe()));
-      const reviews = await Review.find({ 'bot.id': { $in: publiclySafeBots.map(bot => bot.id) } });
-          
-      const sortedBots = publiclySafeBots.sort((a, b) => {
+      const reviews = await Review.find({ 'bot.id': { $in: foundBots.map(bot => bot.id) } });    
+
+      const sortedBots = foundBots.sort((a, b) => {
         switch (sort) {
         case 'Votes': return b.votes - a.votes;
-        case 'Servers': return (b.servers || 0) - (a.servers || 0);
+        case 'Servers': return b.server_count.value - a.server_count.value;
         case 'Most Reviewed': return reviews.filter(review => review.bot.id === b.id).length - reviews.filter(review => review.bot.id === a.id).length;
         case 'Newest': return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
         case 'Oldest': return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
@@ -69,12 +68,12 @@ module.exports = {
         total,
         page,
         limit,
-        bots: sortedBots.map(bot => {
+        bots: await Promise.all(sortedBots.map(async bot => {
           return { 
-            ...bot, 
+            ...await bot.toPubliclySafe(), 
             reviews: reviews.filter(review => review.bot.id === bot.id).length
           };
-        })
+        }))
       });
     }
   ]
