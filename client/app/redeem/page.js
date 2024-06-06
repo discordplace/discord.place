@@ -12,7 +12,6 @@ import { FaLink } from 'react-icons/fa6';
 import { LuHeart } from 'react-icons/lu';
 import useThemeStore from '@/stores/theme';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import cn from '@/lib/cn';
 
 export default function Page() {
   const theme = useThemeStore(state => state.theme);
