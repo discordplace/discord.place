@@ -178,7 +178,7 @@ const BotSchema = new Schema({
       });
 
 
-      if (Date.now() - (this.server_count?.updatedAt || 0).getTime() >= 86400000) {
+      if (!this.server_count || (Date.now() - new Date(this.server_count.updatedAt)) >= 86400000) {
         logger.send(`Bot with ID ${this.id} has not been updated in 24 hours. Fetching new server count...`);
 
         await getApproximateGuildCount(this.id)
