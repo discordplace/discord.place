@@ -231,6 +231,10 @@ const config = {
     'support-for-slash-commands': {
       name: 'Support for Slash Commands',
       description: 'Bots must support slash commands for improved user experience and functionality.'
+    },
+    'misleading-or-inaccurate-information': {
+      name: 'Misleading or Inaccurate Information',
+      description: 'Bot with misleading descriptions or information may be removed. Provide clear and accurate details about your bot\'s purpose and content.'
     }
   },
   templatesDenyReasons: {
