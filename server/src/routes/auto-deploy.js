@@ -41,7 +41,7 @@ module.exports = {
 
         logger.send('Pull successful.');
         
-        const isFlagPresent = flag => request.body.commits.some(commit => commit.message.includes(`(flags:${flag})`));
+        const isFlagPresent = flag => request.body.commits.some(commit => commit.message.includes(`flags:${flag}`));
         
         if (isFlagPresent('registerCommands') || isFlagPresent('unregisterCommands')) {
           logger.send('There are requests to register/unregister commands. Fetching commands..');
@@ -71,6 +71,19 @@ module.exports = {
           logger.send('There are requests to install dependencies. Installing..');
 
           const { stdout, stderr } = await exec('npm install');
+          logger.send(stdout);
+          if (stderr) logger.send(stderr);
+        }
+
+        if (isFlagPresent('installGlobalDependencies')) {
+          logger.send('There are requests to install global dependencies. Installing..');
+
+          const shouldBeInstalled = request.body.commits.filter(commit => commit.message.includes('flags:installGlobalDependencies')).map(commit => {
+            const dependencies = commit.message.match(/installGlobalDependencies:([\w\s-]+)/)[1].split(' ');
+            return dependencies;
+          }).flat();
+
+          const { stdout, stderr } = await exec(`npm install -g ${shouldBeInstalled.join(' ')}`);
           logger.send(stdout);
           if (stderr) logger.send(stderr);
         }
