@@ -13,6 +13,7 @@ const inviteUrlValidation = require('@/validations/bots/inviteUrl');
 const webhookValidation = require('@/validations/bots/webhook');
 const Review = require('@/schemas/Bot/Review');
 const Deny = require('@/schemas/Bot/Deny');
+const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
 
 module.exports = {
   get: [
@@ -167,6 +168,8 @@ module.exports = {
         if (guild.ownerId !== request.user.id) return response.sendError(`You are not the owner of ${support_server_id}.`, 400);
       }
 
+      const approximate_guild_count_data = await getApproximateGuildCount(user.id).catch(() => null);
+
       const bot = new Bot({
         id: user.id,
         owner: {
@@ -180,6 +183,10 @@ module.exports = {
         webhook: {
           url: webhook?.url || null,
           token: webhook?.token || null
+        },
+        server_count: {
+          value: approximate_guild_count_data?.approximate_guild_count || 0,
+          updatedAt: approximate_guild_count_data?.fetchedAt || new Date()
         },
         votes: 0,
         verified: false
