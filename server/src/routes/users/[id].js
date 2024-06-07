@@ -20,7 +20,7 @@ module.exports = {
 
       const { id } = matchedData(request);
 
-      let user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
+      let user;
 
       if (!client.forceFetchedUsers.has(id)) {
         await client.users.fetch(id, { force: true }).catch(() => null);
@@ -28,6 +28,8 @@ module.exports = {
         
         user = client.users.cache.get(id);
       }
+
+      if (!user) return response.sendError('User not found.', 404);
 
       const isHaveNitro = user.banner?.startsWith('a_') || user.avatar?.startsWith('a_');
       const userFlags = user.flags.toArray();

@@ -12,7 +12,15 @@ module.exports = {
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     checkAuthentication,
     async (request, response) => {
-      const user = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
+      let user;
+      
+      if (!client.forceFetchedUsers.has(request.user.id)) {
+        await client.users.fetch(request.user.id, { force: true }).catch(() => null);
+        client.forceFetchedUsers.set(request.user.id, true);
+        
+        user = client.users.cache.get(request.user.id);
+      }
+
       if (!user) return response.sendError('User not found.', 404);
 
       const profile = await Profile.findOne({ 'user.id': user.id });
