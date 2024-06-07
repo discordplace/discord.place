@@ -32,9 +32,6 @@ dependencies:
   geist:
     specifier: ^1.2.2
     version: 1.2.2(next@14.2.3)
-  install:
-    specifier: ^0.13.0
-    version: 0.13.0
   jszip:
     specifier: ^3.10.1
     version: 3.10.1
@@ -3116,11 +3113,6 @@ packages:
     dependencies:
       css-in-js-utils: 3.1.0
       fast-loops: 1.1.3
-    dev: false
-
-  /install@0.13.0:
-    resolution: {integrity: sha512-zDml/jzr2PKU9I8J/xyZBQn8rPCAY//UOYNmR01XwNwyfhEWObo2SWfSl1+0tm1u6PhxLwDnfsT/6jB7OUxqFA==}
-    engines: {node: '>= 0.10'}
     dev: false
 
   /internal-slot@1.0.7:
