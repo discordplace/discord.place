@@ -9,6 +9,7 @@ import { BsQuestionCircleFill } from 'react-icons/bs';
 import config from '@/config';
 import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiPackageCard';
+import { VList } from 'virtua';
 
 export default function MyEmojis() {
   const data = useAccountStore(state => state.data);
@@ -53,7 +54,9 @@ export default function MyEmojis() {
             />
           </div>
         ) : (
-          <div className='gap-4 max-w-[800px] mt-2 grid grid-cols-1 mobile:grid-cols-2 2xl:grid-cols-3'>
+          <VList
+            className='[&>div>div>div]:my-4 [&>div>div>div]:max-w-[98%] !h-[500px] gap-4 max-w-[800px] mt-2 grid grid-cols-1 mobile:grid-cols-2 2xl:grid-cols-3'
+          >
             {concatenatedEmojis.map(emoji => (
               emoji.emoji_ids ? (
                 <EmojiPackageCard
@@ -77,7 +80,7 @@ export default function MyEmojis() {
                 />
               )
             ))}
-          </div>
+          </VList>
         )}
       </div>
 
