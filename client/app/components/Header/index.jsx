@@ -10,9 +10,10 @@ export default function Header() {
   const pathname = usePathname();
 
   const isDashboard = pathname === '/dashboard';
-  const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview'); 
+  const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview');
+  const isAccount = pathname === '/account'; 
   
-  if (isDashboard || isTemplatePreview) return null;
+  if (isDashboard || isTemplatePreview || isAccount) return null;
 
   return collapseHeader ? <CollapsedHeader pathname={pathname} /> : <NotCollapsedHeader pathname={pathname} />;
 }

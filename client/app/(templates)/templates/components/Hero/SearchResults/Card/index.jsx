@@ -10,7 +10,7 @@ import { HiSortAscending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import Ripples from 'react-ripples';
 
-export default function Card({ data }) {
+export default function Card({ data, className }) {
   const theme = useThemeStore(state => state.theme);
   const sort = useSearchStore(state => state.sort);
 
@@ -39,8 +39,9 @@ export default function Card({ data }) {
   return (
     <div 
       className={cn(
-        'inline-flex overflow-hidden rounded-3xl w-full [&>div]:w-full',
-        isClicked && 'pointer-events-none'
+        'inline-flex rounded-3xl w-full [&>div]:w-full',
+        isClicked && 'pointer-events-none',
+        className
       )}
     >
       <Ripples
@@ -57,7 +58,7 @@ export default function Card({ data }) {
           </div>
 
           <div className="flex flex-col gap-y-2">
-            <h2 className="mt-2 text-lg font-semibold truncate max-w-[230px] text-primary">
+            <h2 className="mt-2 text-lg font-semibold truncate max-w-[130px] mobile:max-w-[230px] text-primary">
               {data.name}
             </h2>
     
@@ -69,16 +70,16 @@ export default function Card({ data }) {
               ))}
             </div>
 
-            <p className="text-sm break-all whitespace-pre-wrap text-tertiary line-clamp-2 min-h-[40px]">
+            <p className="text-xs mobile:text-sm break-all whitespace-pre-wrap text-tertiary line-clamp-2 min-h-[40px]">
               {data.description}
             </p>
 
-            <div className='flex gap-x-3'>
+            <div className='flex gap-x-1 mobile:gap-x-3'>
               <div className='flex items-center gap-x-1'>
                 {sort === 'Popular' && (
                   <>
                     <TiStar className='text-tertiary' />
-                    <span className='text-xs font-medium text-secondary'>
+                    <span className='text-xs font-medium text-secondary truncate max-w-[50px] mobile:max-w-[unset]'>
                       {data.uses} uses
                     </span>
                   </>
@@ -112,7 +113,7 @@ export default function Card({ data }) {
                   className='rounded-full'
                 />
 
-                <span className='text-xs font-medium text-tertiary'>
+                <span className='text-xs font-medium text-tertiary truncate max-w-[50px] mobile:max-w-[unset]'>
                   {data.user.username}
                 </span>
               </div>

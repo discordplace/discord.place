@@ -20,8 +20,9 @@ export default function Footer() {
   
   const isDashboard = pathname === '/dashboard';
   const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview'); 
-  
-  if (isDashboard || isTemplatePreview) return null;
+  const isAccount = pathname === '/account'; 
+
+  if (isDashboard || isTemplatePreview || isAccount) return null;
 
   const blocks = [
     {

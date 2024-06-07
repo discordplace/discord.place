@@ -6,11 +6,14 @@ import cn from '@/lib/cn';
 import { LuPackage } from 'react-icons/lu';
 import { useState } from 'react';
 
-export default function EmojiCard({ id, name, categories, downloads, emoji_ids }) {
+export default function EmojiCard({ id, name, categories, downloads, emoji_ids, className }) {
   const [containerHovered, setContainerHovered] = useState(false);
 
   return (
-    <div className='flex flex-col w-full min-w-[155px]'>
+    <div className={cn(
+      'flex flex-col w-full min-w-[155px]',
+      className
+    )}>
       <Link 
         className='group relative p-2 flex items-center justify-center h-[110px] rounded-t-2xl bg-secondary lg:hover:bg-quaternary transition-colors group overflow-clip w-full' 
         href={`/emojis/packages/${id}`}

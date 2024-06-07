@@ -1,7 +1,6 @@
 'use client';
 
 import config from '@/config';
-import useManageStore from '@/stores/bots/manage';
 import { MdChevronLeft } from 'react-icons/md';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -19,9 +18,11 @@ import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import Link from 'next/link';
 import Tooltip from '@/app/components/Tooltip';
 import CopyButton from '@/app/components/CopyButton';
+import useAccountStore from '@/stores/account';
 
-export default function NewBot({ owned_servers }) {
-  const setSelectedBot = useManageStore(state => state.setSelectedBot);
+export default function NewBot() {
+  const data = useAccountStore(state => state.data);
+  const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
 
   const descriptionRef = useRef(null);
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
@@ -93,7 +94,7 @@ export default function NewBot({ owned_servers }) {
             setBotDescription('');
             setBotCategories([]);
             setBotSupportServerId('');
-            setSelectedBot(null);
+            setCurrentlyAddingBot(false);
           }}>
             <MdChevronLeft size={24}/>
           </button>
@@ -237,15 +238,15 @@ export default function NewBot({ owned_servers }) {
               You can only select servers that you listed on discord.place.
             </p>
 
-            {owned_servers.filter(server => server.is_created).length <= 0 ? (
+            {data.servers.filter(server => server.is_created).length <= 0 ? (
               <p className="mt-4 text-sm text-tertiary">
                 You don{'\''}t have any servers listed on discord.place.
               </p>
             ) : (
               <div className="grid grid-cols-1 gap-4 mt-4 mobile:grid-cols-2 sm:grid-cols-4 lg:grid-cols-5">
-                {owned_servers.filter(server => server.is_created).map(server => (
+                {data.servers.filter(server => server.is_created).map(server => (
                   <button
-                    className="flex flex-col bg-tertiary hover:bg-quaternary p-2 rounded-xl w-full h-[180px] items-center cursor-pointer overflow-clip relative"
+                    className="flex flex-col bg-secondary hover:bg-quaternary p-2 rounded-xl w-full h-[180px] items-center cursor-pointer overflow-clip relative"
                     key={server.id}
                     onClick={() => setBotSupportServerId(oldServerId => oldServerId === server.id ? '' : server.id)}
                   >
@@ -355,14 +356,14 @@ export default function NewBot({ owned_servers }) {
                 {loading && <TbLoader className="animate-spin"/>}
                 Add Bot
               </button>
-              <button className="flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-secondary disabled:pointer-events-none disabled:opacity-70"
+              <button className="flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
                 onClick={() => {
                   setBotId('');
                   setBotShortDescription('');
                   setBotDescription('');
                   setBotCategories([]);
                   setBotSupportServerId('');
-                  setSelectedBot(null);
+                  setCurrentlyAddingBot(false);
                 }}
                 disabled={loading}
               >

@@ -1,48 +1,18 @@
 import useAuthStore from '@/stores/auth';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CgLogOut } from 'react-icons/cg';
 import { FaDiscord } from 'react-icons/fa';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
-import logout from '@/lib/request/auth/logout';
-import { useShallow } from 'zustand/react/shallow';
-import { toast } from 'sonner';
 import cn from '@/lib/cn';
 import { useEffect, useState } from 'react';
 import { useWindowScroll } from 'react-use';
-import { MdEmojiEmotions } from 'react-icons/md';
-import { TiHome } from 'react-icons/ti';
-import { RiPencilFill, RiRobot2Fill } from 'react-icons/ri';
-import { FaCircleUser, FaUser } from 'react-icons/fa6';
-import { FaShieldAlt } from 'react-icons/fa';
-import useThemeStore from '@/stores/theme';
 
 export default function UserSide({ className }) {
-  const theme = useThemeStore(state => state.theme);
-
-  const { loggedIn, setLoggedIn, setUser } = useAuthStore(useShallow(state => ({
-    loggedIn: state.loggedIn,
-    setLoggedIn: state.setLoggedIn,
-    setUser: state.setUser
-  })));
+  const loggedIn = useAuthStore(state => state.loggedIn);
 
   const user = useAuthStore(state => state.user);
   const pathname = usePathname();
-
-  function logOut() {
-    toast.promise(logout(), {
-      loading: 'Please wait while we log you out..',
-      success: () => {
-        setLoggedIn(false);
-        setUser(null);
-
-        return 'Logged out successfully.';
-      },
-      error: message => message
-    });
-  }
 
   const [open, setOpen] = useState(false);
   const { y } = useWindowScroll();
@@ -51,174 +21,19 @@ export default function UserSide({ className }) {
     setOpen(false);
   }, [y]);
 
-  function calculatePremiumTime(expire_at) {
-    const now = new Date();
-    const expireAt = new Date(expire_at);
-
-    const diffTime = Math.abs(expireAt - now);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    return `${diffDays} day${diffDays > 1 ? 's' : ''}`;
-  }
-
   return (
     <div className={cn(
       'flex items-center gap-x-2',
       className
     )}>
       {loggedIn ? (
-        <DropdownMenu.Root modal={false} open={open}>
-          <DropdownMenu.Trigger asChild>
-            <button className="flex items-center font-medium rounded outline-none pointer-events-auto gap-x-2" onClick={() => setOpen(!open)}>
-              <Image src={user.avatar_url} width={32} height={32} className='rounded-full' alt='User Avatar' />
-            </button>
-          </DropdownMenu.Trigger>
-
-          <DropdownMenu.Portal>
-            <DropdownMenu.Content
-              className="pointer-events-auto flex flex-col p-4 min-w-[300px] bg-secondary rounded-xl border border-primary z-[9999] gap-y-2 mr-2 lg:mr-0 sm:mr-4" 
-              sideOffset={10}
-            >  
-              <div className='flex flex-col items-center justify-center w-full gap-y-2'>
-                <Image src={user.avatar_url} width={128} height={128} className='rounded-full w-[64px] h-[64px]' alt='User Avatar' />
-                <h2 className='text-xl font-medium'>
-                  {user.username}
-                </h2>
-              </div>
-
-              {user.premium && (
-                <span className='flex items-center justify-center text-sm gap-x-1.5 text-tertiary'>
-                  <Image
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_premium.svg`}
-                    width={14}
-                    height={14}
-                    alt='Premium Badge'
-                  />
-                  You have premium {user.premium.expire_at ? `for ${calculatePremiumTime(user.premium.expire_at)}` : 'forever'}.
-                </span>
-              )}
-
-              <div className='bg-quaternary w-full h-[1px] my-2' />
-
-              <div className='flex flex-col gap-y-3'>
-                <div className='flex flex-col gap-y-2'>
-                  <h2 className='text-xs font-semibold select-none text-tertiary'>
-                    Profiles
-                  </h2>
-
-                  {user?.profile ? (
-                    <>
-                      <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                        <Link href={`/profile/${user.profile.slug}`} className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                          My Profile
-                          <FaCircleUser />
-                        </Link>
-                      </DropdownMenu.Item>
-
-                      <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                        <Link href={`/profile/${user.profile.slug}/edit`} className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                          Edit Profile
-                          <RiPencilFill />
-                        </Link>
-                      </DropdownMenu.Item>
-                    </>
-                  ) : (
-                    <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                      <Link href='/profiles/create' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                        Create Profile
-                        <FaCircleUser />
-                      </Link>
-                    </DropdownMenu.Item>
-                  )}
-
-                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                    <Link href={`/profile/u/${user.id}`} className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                      My User Profile
-                      <FaUser />
-                    </Link>
-                  </DropdownMenu.Item>
-                </div>
-                
-                <div className='flex flex-col gap-y-2'>
-                  <h2 className='text-xs font-semibold select-none text-tertiary'>
-                    Servers
-                  </h2>
-
-                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                    <Link href='/servers/manage' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                      My Servers
-                      <TiHome />
-                    </Link>
-                  </DropdownMenu.Item>
-                </div>
-
-                
-                <div className='flex flex-col gap-y-2'>
-                  <h2 className='text-xs font-semibold select-none text-tertiary'>
-                    Bots
-                  </h2>
-
-                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                    <Link href='/bots/manage' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                      My Bots
-                      <RiRobot2Fill />
-                    </Link>
-                  </DropdownMenu.Item>
-                </div>
-
-                <div className='flex flex-col gap-y-2'>
-                  <h2 className='text-xs font-semibold select-none text-tertiary'>
-                    Emojis
-                  </h2>
-
-                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                    <Link href='/emojis/create' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                      Publish Emoji
-                      <MdEmojiEmotions />
-                    </Link>
-                  </DropdownMenu.Item>
-                </div>
-
-                <div className='flex flex-col gap-y-2'>
-                  <h2 className='text-xs font-semibold select-none text-tertiary'>
-                    Templates
-                  </h2>
-
-                  <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                    <Link href='/templates/create' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                      Publish Template
-                      <MdEmojiEmotions />
-                    </Link>
-                  </DropdownMenu.Item>
-                </div>
-   
-                {user.can_view_dashboard && (
-                  <div className='flex flex-col gap-y-2'>
-                    <h2 className='text-xs font-semibold select-none text-tertiary'>
-                      Admin
-                    </h2>
-
-                    <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                      <Link href='/dashboard' className='flex items-center justify-between text-sm text-secondary hover:text-primary'>
-                        Dashboard
-                        <FaShieldAlt />
-                      </Link>
-                    </DropdownMenu.Item>
-                  </div>
-                )}
-
-                <div className='bg-quaternary w-full h-[1px]' />
-                
-                <DropdownMenu.Item className='outline-none' asChild onSelect={() => setOpen(false)}>
-                  <button className='flex items-center justify-between text-sm text-secondary hover:text-primary' onClick={logOut}>
-                    Log Out
-                    <CgLogOut />
-                  </button>
-                </DropdownMenu.Item>
-              </div>
-            </DropdownMenu.Content>
-          </DropdownMenu.Portal>
-        </DropdownMenu.Root>
+        <Link
+          className="flex items-center font-medium rounded outline-none pointer-events-auto gap-x-2"
+          onClick={() => setOpen(!open)}
+          href='/account'  
+        >
+          <Image src={user.avatar_url} width={32} height={32} className='rounded-full' alt='User Avatar' />
+        </Link>
       ) : (
         <Link className="relative flex items-center px-4 py-2 overflow-hidden font-medium rounded pointer-events-auto text-secondary hover:bg-tertiary gap-x-2 group" href={config.getLoginURL(pathname)}>
           <span className="relative flex items-center gap-x-2">

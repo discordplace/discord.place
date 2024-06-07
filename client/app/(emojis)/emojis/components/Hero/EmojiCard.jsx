@@ -2,10 +2,14 @@ import MotionImage from '@/app/components/Motion/Image';
 import Link from 'next/link';
 import { HiDocumentDownload } from 'react-icons/hi';
 import config from '@/config';
+import cn from '@/lib/cn';
 
-export default function EmojiCard({ id, name, animated, categories, downloads }) {
+export default function EmojiCard({ id, name, animated, categories, downloads, className }) {
   return (
-    <div className='flex flex-col w-full min-w-[155px]'>
+    <div className={cn(
+      'flex flex-col w-full min-w-[155px]',
+      className
+    )}>
       <Link 
         className='group relative flex items-center justify-center h-[110px] rounded-t-2xl bg-secondary lg:hover:bg-quaternary transition-colors group overflow-clip' 
         href={`/emojis/${id}`}

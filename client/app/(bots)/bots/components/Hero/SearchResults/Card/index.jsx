@@ -2,20 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaCompass } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { IoHeart } from 'react-icons/io5';
-import { useMedia } from 'react-use';
 import { BiSolidCategory } from 'react-icons/bi';
 import useSearchStore from '@/stores/bots/search';
 import { TiStar } from 'react-icons/ti';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import useThemeStore from '@/stores/theme';
 
 export default function Card({ data, overridedSort }) {
-  const theme = useThemeStore(state => state.theme);
   const storedSort = useSearchStore(state => state.sort);
   const sort = overridedSort || storedSort;
   const category = useSearchStore(state => state.category);
-  const isMobile = useMedia('(max-width: 420px)', false);
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
@@ -23,12 +18,6 @@ export default function Card({ data, overridedSort }) {
   });
 
   const infos = [
-    {
-      icon: IoHeart,
-      value: null,
-      condition: data.owner?.premium === true && !isMobile,
-      transform: () => 'Premium'
-    },
     {
       icon: TbSquareRoundedChevronUp,
       value: data.votes,
@@ -101,16 +90,6 @@ export default function Card({ data, overridedSort }) {
             <span className='ml-0.5 text-xs text-tertiary'>
               #{data.discriminator}
             </span>
-
-            {data.owner?.premium && (
-              <Image
-                src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_premium.svg`}
-                alt='Premium badge'
-                width={20}
-                height={20}
-                className='w-[14px] h-[14px] ml-2'
-              />
-            )}
           </div>
           <p 
             className='mt-1 overflow-hidden text-sm text-tertiary min-h-[40px]' 
