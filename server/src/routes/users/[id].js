@@ -20,7 +20,7 @@ module.exports = {
 
       const { id } = matchedData(request);
 
-      let user;
+      let user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
 
       if (!client.forceFetchedUsers.has(id)) {
         await client.users.fetch(id, { force: true }).catch(() => null);

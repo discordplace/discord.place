@@ -12,7 +12,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     checkAuthentication,
     async (request, response) => {
-      let user;
+      let user = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
       
       if (!client.forceFetchedUsers.has(request.user.id)) {
         await client.users.fetch(request.user.id, { force: true }).catch(() => null);
