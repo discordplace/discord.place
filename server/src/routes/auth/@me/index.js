@@ -27,6 +27,7 @@ module.exports = {
         discriminator: user.discriminator,
         avatar_hash: user.avatar,
         avatar_url: user.displayAvatarURL({ size: 512 }),
+        banner_url: user.bannerURL({ size: 1024 }),
         profile: typeof profile === 'object' ? profile : null,
         premium: premium ? {
           created_at: new Date(premium.createdAt),
