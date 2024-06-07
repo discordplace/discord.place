@@ -9,7 +9,7 @@ export default function MyAccount() {
   const user = useAuthStore(state => state.user);
 
   return (
-    <div className='flex flex-col px-6 mt-16 lg:px-16 gap-y-6'>
+    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
           My Account
