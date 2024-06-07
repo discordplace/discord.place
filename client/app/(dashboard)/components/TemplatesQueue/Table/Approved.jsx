@@ -93,7 +93,7 @@ export default function Approved({ data }) {
 
                         <div className='flex flex-col gap-y-1'>
                           <h2 className='text-base font-semibold'>{template.username}</h2>
-                          <span className='text-xs font-medium text-tertiary'>{template.id}</span>
+                          <span className='text-xs font-medium text-tertiary'>{template.user.id}</span>
                         </div>
                       </Link>
                     ) : template.user.id}
