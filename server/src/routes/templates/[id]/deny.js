@@ -53,7 +53,7 @@ module.exports = {
             },
             {
               name: 'Reason',
-              value: config.botsDenyReasons[reason].description
+              value: config.templateDenyReasons[reason].description
             }
           ])
       ];
