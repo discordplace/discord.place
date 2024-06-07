@@ -14,7 +14,7 @@ import { FaEyeSlash, FaRegTrashAlt, FaEye } from 'react-icons/fa';
 import deleteBot from '@/lib/request/bots/deleteBot';
 import createApiKey from '@/lib/request/bots/createApiKey';
 import deleteApiKey from '@/lib/request/bots/deleteApiKey';
-import getOwnedServers from '@/lib/request/auth/getOwnedServers';
+import getData from '@/lib/request/auth/getData';
 import { useRouter } from 'next-nprogress-bar';
 import revalidateBot from '@/lib/revalidate/bot';
 import Image from 'next/image';
@@ -47,7 +47,7 @@ export default function Content({ bot }) {
     setDomLoaded(true);
     setOwnedServersLoading(true);
 
-    getOwnedServers()
+    getData(['servers'])
       .then(data => setOwnedServers(data))
       .catch(toast.error)
       .finally(() => setOwnedServersLoading(false));
