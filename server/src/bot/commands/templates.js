@@ -183,10 +183,7 @@ module.exports = {
     for (const category of template.data.channels.sort((a, b) => a.position - b.position).filter(channel => channel.type === Discord.ChannelType.GuildCategory)) {
       const createdCategory = await interaction.guild.channels.create({
         name: category.name,
-        type: Discord.ChannelType.GuildCategory
-      });
-
-      await createdCategory.edit({
+        type: Discord.ChannelType.GuildCategory,
         position: category.position,
         permissionOverwrites: category.permission_overwrites
           .filter(overwrite => overwrite.type === '0')
@@ -214,10 +211,7 @@ module.exports = {
     for (const channel of template.data.channels.sort((a, b) => a.position - b.position).filter(channel => channel.type !== Discord.ChannelType.GuildCategory)) {
       const createdChannel = await interaction.guild.channels.create({
         name: channel.name,
-        type: channel.type
-      });
-
-      await createdChannel.edit({
+        type: channel.type,
         parent: createdChannels.find(category => category.id === channel.parent_id)?.channel,
         position: channel.position,
         permissionOverwrites: channel.permission_overwrites
@@ -236,9 +230,9 @@ module.exports = {
         topic: channel.topic,
         nsfw: channel.nsfw,
         rateLimitPerUser: channel.rate_limit_per_user,
-        userLimit: channel.user_limit
+        userLimit: channel.user_limit 
       });
-
+      
       createdChannels.push({
         id: channel.id,
         channel: createdChannel
