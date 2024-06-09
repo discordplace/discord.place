@@ -48,7 +48,7 @@ export default function Content({ bot }) {
     setOwnedServersLoading(true);
 
     getData(['servers'])
-      .then(data => setOwnedServers(data))
+      .then(data => setOwnedServers(data.servers))
       .catch(toast.error)
       .finally(() => setOwnedServersLoading(false));
 
