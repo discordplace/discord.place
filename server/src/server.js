@@ -10,6 +10,7 @@ const helmet = require('helmet');
 const ip = require('@/utils/middlewares/ip');
 const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
 const pino = require('pino-http')();
+const compression = require('compression');
 
 const passport = require('passport');
 const useRateLimiter = require('@/utils/useRateLimiter');
@@ -50,6 +51,7 @@ module.exports = class Server {
   addMiddlewares() {
     if (process.env.NODE_ENV === 'production') this.server.use(pino);
     
+    this.server.use(compression());
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
       origin: [config.frontendUrl],
