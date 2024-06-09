@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node -r dotenv/config index.js | pino-pretty -t \"UTC:yyyy-mm-dd HH:MM:ss.l\"",
-    "start": "node -r dotenv/config index.js --optimize_for_size --production",
+    "start": "node -r dotenv/config index.js --optimize_for_size --production | pino-pretty -t \"UTC:yyyy-mm-dd HH:MM:ss.l\"",
     "register:commands": "node -r dotenv/config startup/registerCommands.js",
     "unregister:commands": "node -r dotenv/config startup/unregisterCommands.js",
     "lint": "eslint ."
