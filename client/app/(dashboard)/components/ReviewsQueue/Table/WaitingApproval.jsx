@@ -214,9 +214,7 @@ export default function WaitingApproval({ data }) {
                               <textarea
                                 className='w-full h-24 p-2 mt-2 text-sm font-medium transition-all rounded-lg outline-none resize-none focus:ring-2 ring-purple-500 bg-quaternary text-secondary'
                                 onChange={event => setDenyReason(event.target.value)}
-                              >
-                                test
-                              </textarea>
+                              />
                             ),
                             buttons: [
                               {
