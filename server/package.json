@@ -29,6 +29,7 @@
     "cli-table3": "^0.6.3",
     "cloudflare": "^3.2.0",
     "colorette": "^2.0.20",
+    "compression": "^1.7.4",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
