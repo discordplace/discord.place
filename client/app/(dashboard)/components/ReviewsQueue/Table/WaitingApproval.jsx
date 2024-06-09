@@ -229,7 +229,7 @@ export default function WaitingApproval({ data }) {
                                 id: 'confirm',
                                 label: 'Confirm',
                                 variant: 'solid',
-                                action: () => continueDenyReview(review.bot ? review.bot.id : review.server.id, review._id, review.bot ? 'bot' : 'server', denyReason)
+                                action: () => continueDenyReview(review.bot ? review.bot.id : review.server.id, review._id, review.bot ? 'bot' : 'server')
                               }
                             ]
                           })
