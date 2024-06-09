@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Pagination from '@/app/components/Pagination';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import approveServerReview from '@/lib/request/servers/approveReview';
@@ -24,7 +24,7 @@ export default function WaitingApproval({ data }) {
   
   const showPagination = data?.length > 10;
 
-  const [denyReason, setDenyReason] = useState('');
+  const denyReasonInputRef = useRef(null);
   const fetchData = useDashboardStore(state => state.fetchData);
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -55,12 +55,13 @@ export default function WaitingApproval({ data }) {
     });
   }
 
-  function continueDenyReview(id, reviewId, type, reason) {
+  function continueDenyReview(id, reviewId, type) {
     disableButton('deny-review', 'confirm');
 
     const denyReview = type === 'server' ? denyServerReview : denyBotReview;
+    const denyReason = denyReasonInputRef.current.value;
 
-    toast.promise(denyReview(id, reviewId, reason), {
+    toast.promise(denyReview(id, reviewId, denyReason), {
       loading: 'Denying review..',
       success: () => {
         closeModal('deny-review');
@@ -212,8 +213,9 @@ export default function WaitingApproval({ data }) {
                             description: 'Please provide a reason for denying this review.',
                             content: (
                               <textarea
+                                id='denyReason'
                                 className='w-full h-24 p-2 mt-2 text-sm font-medium transition-all rounded-lg outline-none resize-none focus:ring-2 ring-purple-500 bg-quaternary text-secondary'
-                                onKeyUp={event => setDenyReason(event.target.value)}
+                                ref={denyReasonInputRef}
                               />
                             ),
                             buttons: [
