@@ -2,9 +2,9 @@ import config from '@/config';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Content Policy',
+  title: 'Cookie Policy',
   openGraph: {
-    title: 'Discord Place - Content Policy'
+    title: 'Discord Place - Cookie Policy'
   }
 };
 
