@@ -49,7 +49,7 @@ module.exports = class Server {
   }
 
   addMiddlewares() {
-    const morganMiddleware = morgan(':method :url :status - :response-time ms', {
+    const morganMiddleware = morgan(':status :method :url from :remote-addr :res[content-length] bytes in :response-time ms', {
       stream: {
         write: message => logger.http(message.trim())
       }
