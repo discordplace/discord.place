@@ -32,7 +32,7 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
   return (
     <motion.div 
       className={cn(
-        'flex items-center mt-6 gap-x-2 py-2 px-2 rounded-3xl bg-white/5',
+        'flex items-center mt-6 gap-x-2 py-2 px-2 rounded-3xl bg-black/5 dark:bg-white/5',
         pages.length === 0 && 'hidden'
       )} 
       initial={initial}
