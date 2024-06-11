@@ -42,6 +42,7 @@ To get a local copy of the project up and running, follow these steps:
 
      ```plaintext
      # Secrets
+     
      COOKIE_SECRET=
      SESSION_SECRET=
      SESSION_STORE_SECRET=
@@ -49,11 +50,13 @@ To get a local copy of the project up and running, follow these steps:
      BOT_API_KEY_ENCRYPT_SECRET=
      
      # Discord Bot
+
      DISCORD_CLIENT_TOKEN=
      DISCORD_CLIENT_SECRET=
      DISCORD_CLIENT_ID=
      
      # Database
+
      MONGO_URL=
      
      # Cloudflare R2
@@ -64,6 +67,7 @@ To get a local copy of the project up and running, follow these steps:
      S3_ENDPOINT=
      
      # Cloudflare Turnstile
+
      CLOUDFLARE_TURNSTILE_SECRET_KEY=
 
      # Cloudflare Secrets for global rate limiting
@@ -74,8 +78,13 @@ To get a local copy of the project up and running, follow these steps:
      CLOUDFLARE_BLOCK_IP_LIST_ID=
 
      # Discord Place API
+
      DISCORD_PLACE_API_KEY=
      DISCORD_PLACE_INSTATUS_API_KEY=
+
+     # Logtail
+
+     LOGTAIL_SOURCE_TOKEN=
 
      # Other
 
