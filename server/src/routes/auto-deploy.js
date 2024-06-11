@@ -52,14 +52,14 @@ module.exports = {
             if (isFlagPresent('registerCommands')) {
               commandsHandler.registerCommands()
                 .catch(error => {
-                  logger.error('Failed to register commands:', error.stack);
+                  logger.error('Failed to register commands:', error);
                   response.sendError('Failed to register commands', 500);
                 })
                 .finally(resolve);
             } else {
               commandsHandler.unregisterCommands()
                 .catch(error => {
-                  logger.error('Failed to unregister commands:', error.stack);
+                  logger.error('Failed to unregister commands:', error);
                   response.sendError('Failed to unregister commands', 500);
                 })
                 .finally(resolve);
@@ -92,8 +92,8 @@ module.exports = {
         response.sendStatus(201);
         process.exit(0);
       } catch (error) {
-        logger.error('Error while pulling from GitHub:', error.stack);
-        response.sendError(`Error while pulling from GitHub:\n${error.stack}`, 500);
+        logger.error('Error while pulling from GitHub:', error);
+        response.sendError(`Error while pulling from GitHub:\n${error}`, 500);
       }
     }
   ]
