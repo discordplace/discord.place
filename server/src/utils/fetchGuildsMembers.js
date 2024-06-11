@@ -22,7 +22,7 @@ async function fetchGuildsMembers(guildIdsToFetch) {
 
     logger.info(`Finished fetching members for guild(s) ${guildIdsToFetch.join(', ')}`);
   } catch (error) {
-    logger.error('Error fetching members:', error);
+    logger.error('Error fetching members:', error.stack);
     throw error;
   }
 }

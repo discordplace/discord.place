@@ -18,7 +18,7 @@ async function createMongoBackup() {
 
     logger.info('Database backup taken successfully.');
   } catch (error) {
-    logger.error('Failed to take backup:', error);
+    logger.error('Failed to take backup:', error.stack);
   }
 }
 

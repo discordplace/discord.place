@@ -19,7 +19,7 @@ module.exports = {
       BotDeny.findOneAndDelete({ _id: id })
         .then(() => response.sendStatus(204).end())
         .catch(error => {
-          logger.error('There was an error while trying to delete a bot deny record:', error);
+          logger.error('There was an error while trying to delete a bot deny record:', error.stack);
           return response.sendError('Failed to delete bot deny record.', 500);
         });
     }

@@ -1,7 +1,7 @@
 const winston = require('winston');
 require('winston-daily-rotate-file');
 
-const { combine, errors, printf, timestamp } = winston.format;
+const { combine, printf, timestamp } = winston.format;
 const { Console, File, DailyRotateFile } = winston.transports;
 
 const { Logtail } = require('@logtail/node');
@@ -62,12 +62,8 @@ module.exports = class Logger {
       },
       level: 'info',
       format: combine(
-        errors({ stack: true }),
         timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
-        printf(({ level, message, timestamp, stack }) => {
-          if (stack) return `${timestamp} ${level}: ${stack}`;
-          return `${timestamp} ${level}: ${message}`;
-        })
+        printf(({ level, message, timestamp }) => `${timestamp} ${level}: ${message}`)
       ),
       transports: loggerTransports
     });

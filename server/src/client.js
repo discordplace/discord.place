@@ -67,7 +67,7 @@ module.exports = class Client {
     global.client = this.client;
 
     this.client.login(token).catch(error => {
-      logger.error('Client failed to login:', error);
+      logger.error('Client failed to login:', error.stack);
       process.exit(1);
     });
 
@@ -81,13 +81,13 @@ module.exports = class Client {
       commandsHandler.fetchCommands();
       if (options.registerCommands) {
         commandsHandler.registerCommands().then(() => process.exit(0)).catch(error => {
-          logger.error('Failed to register commands:', error);
+          logger.error('Failed to register commands:', error.stack);
           process.exit(1);
         });
       }
       if (options.unregisterCommands) {
         commandsHandler.unregisterCommands().then(() => process.exit(0)).catch(error => {
-          logger.error('Failed to unregister commands:', error);
+          logger.error('Failed to unregister commands:', error.stack);
           process.exit(1);
         });
       }
@@ -223,14 +223,14 @@ module.exports = class Client {
     const reminders = await VoteReminder.find();
     VoteReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
       .then(deleted => logger.info(`Deleted ${deleted.deletedCount} vote reminder metadata.`))
-      .catch(error => logger.error('Failed to delete vote reminder metadata:', error));
+      .catch(error => logger.error('Failed to delete vote reminder metadata:', error.stack));
   }
 
   async checkReminerMetadatas() {
     const reminders = await Reminder.find();
     ReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
       .then(deleted => logger.info(`Deleted ${deleted.deletedCount} reminder metadata.`))
-      .catch(error => logger.error('Failed to delete reminder metadata:', error));
+      .catch(error => logger.error('Failed to delete reminder metadata:', error.stack));
   }
 
   async updateBotStats() {
@@ -251,7 +251,7 @@ module.exports = class Client {
       if (response.status === 200) logger.info('Bot stats updated on Discord Place.');
       else logger.error(`Failed to update bot stats: ${response.data}`);
     } catch (error) {
-      logger.error('Failed to update bot stats:', error);
+      logger.error('Failed to update bot stats:', error.stack);
     }
   }
 
@@ -274,7 +274,7 @@ module.exports = class Client {
 
       logger.info(`Deleted ${deletedCount} expired blocked IPs.`);
     } catch (error) {
-      logger.error('Failed to check expired blocked IPs collections:', error);
+      logger.error('Failed to check expired blocked IPs collections:', error.stack);
     }
   }
 
@@ -335,7 +335,7 @@ module.exports = class Client {
 
       if (response.status === 200) logger.info('Posted new metric to Instatus.');
     } catch (error) {
-      logger.error('Failed to post new metric to Instatus:', error);
+      logger.error('Failed to post new metric to Instatus:', error.stack);
     }
   }
 };

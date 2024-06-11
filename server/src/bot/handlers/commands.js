@@ -39,7 +39,7 @@ module.exports = class Commands {
         logger.info('Successfully reloaded application (/) commands.');
         resolve();
       } catch (error) {
-        logger.error('Failed to register commands:', error);
+        logger.error('Failed to register commands:', error.stack);
         reject(error);
       }
     });
@@ -60,7 +60,7 @@ module.exports = class Commands {
         logger.info('Successfully unregistered application (/) commands.');
         resolve();
       } catch (error) {
-        logger.error('Failed to unregister commands:', error);
+        logger.error('Failed to unregister commands:', error.stack);
         reject(error);
       }
     });
