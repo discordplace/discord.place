@@ -24,7 +24,7 @@ module.exports = async member => {
         sendLog(member.guild.id, `Role with ID ${reward.role.id} has been deleted from the database because it was not found in the server.`)
           .catch(() => null);
         
-        logger.send(`Role with ID ${reward.role.id} has been deleted from the database because it was not found in server ${member.guild.id}.`);
+        logger.warn(`Role with ID ${reward.role.id} has been deleted from the database because it was not found in server ${member.guild.id}.`);
 
         continue;
       }
@@ -44,7 +44,7 @@ module.exports = async member => {
             .catch(() => null);
         });
 
-      logger.send(`User ${member.user.id} has been given the reward role ${role.name} for voting ${voter.vote} times in server ${member.guild.id}. (Newly joined)`);
+      logger.info(`User ${member.user.id} has been given the reward role ${role.name} for voting ${voter.vote} times in server ${member.guild.id}. (Newly joined)`);
 
       break;
     }

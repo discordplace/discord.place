@@ -16,7 +16,7 @@ async function getApproximateGuildCount(botId) {
       fetchedAt: response.data.fetchedAt
     };
   } catch (error) {
-    logger.send(`There was an error while fetching approximate guild count for bot with ID ${botId}:\n${error.stack}`);
+    logger.error(`There was an error while fetching approximate guild count for bot with ID ${botId}:`, error);
     
     return null;
   }

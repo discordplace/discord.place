@@ -21,7 +21,7 @@ module.exports = class Events {
     }
 
     eventsFolders.map(folderOrFile => readRecursive(folderOrFile, this.events));
-    logger.send(`Fetched ${this.events.size} events.`);
+    logger.info(`Fetched ${this.events.size} events.`);
   }
 
   listenEvents() {

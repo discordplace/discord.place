@@ -8,8 +8,7 @@ module.exports = async interaction => {
     try {
       await foundCommand.execute(interaction);
     } catch (error) {
-      logger.send(`Error executing command ${interaction.commandName}`);
-      logger.send(error.stack);
+      logger.info(`Error executing command ${interaction.commandName}:`, error);
       if (interaction.deferred) interaction.followUp({ content: 'There was an error while executing this command.' });
       else interaction.reply({ content: 'There was an error while executing this command.', ephemeral: true });
     }
@@ -36,8 +35,7 @@ module.exports = async interaction => {
     try {
       await foundCommand.autocomplete(interaction);
     } catch (error) {
-      logger.send(`Error executing autocomplete for command ${interaction.commandName}`);
-      logger.send(error.stack);
+      logger.error(`Error executing autocomplete for command ${interaction.commandName}:`, error);
     }
   }
 

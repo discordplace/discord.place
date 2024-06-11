@@ -29,7 +29,7 @@ const Model = mongoose.model('Premiums', PremiumSchema);
 Model.watch().on('change', async data => {
   const { operationType, fullDocument } = data;
   if (operationType === 'delete') {
-    logger.send(`Premium for user ${fullDocument.user.id} has expired.`);
+    logger.info(`Premium for user ${fullDocument.user.id} has expired.`);
 
     const profile = await Profile.findOne({ 'user.id': fullDocument.user.id });
     if (profile) {

@@ -21,7 +21,7 @@ module.exports = {
       client.users.fetch(profile.user.id, { force: true })
         .then(user => response.json({ banner_url: user.bannerURL({ size: 256, format: 'png' }) }))
         .catch(error => {
-          logger.send(`Failed to fetch user ${profile.user.id} (force-fetch requested): ${error.stack}`);
+          logger.error(`Failed to fetch user ${profile.user.id} (force-fetch requested):`, error);
           return response.sendError('Failed to fetch user.', 500);
         });
     }

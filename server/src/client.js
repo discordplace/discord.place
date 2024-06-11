@@ -59,7 +59,7 @@ module.exports = class Client {
     this.client.blockedIps = new Discord.Collection();
     this.client.currentlyUploadingEmojiPack = new Discord.Collection();
 
-    logger.send('Client created.');
+    logger.info('Client created.');
     return this;
   }
 
@@ -67,27 +67,27 @@ module.exports = class Client {
     global.client = this.client;
 
     this.client.login(token).catch(error => {
-      logger.send(`Client failed to login: ${error}`);
+      logger.error('Client failed to login:', error);
       process.exit(1);
     });
 
     this.client.once('ready', async () => {
       await fetchGuildsMembers([config.guildId]);
 
-      logger.send(`Client logged in as ${this.client.user.tag}`);
+      logger.info(`Client logged in as ${this.client.user.tag}`);
 
       const CommandsHandler = require('@/src/bot/handlers/commands.js');
       const commandsHandler = new CommandsHandler();
       commandsHandler.fetchCommands();
       if (options.registerCommands) {
         commandsHandler.registerCommands().then(() => process.exit(0)).catch(error => {
-          logger.send(`Failed to register commands: ${error}`);
+          logger.error('Failed to register commands:', error);
           process.exit(1);
         });
       }
       if (options.unregisterCommands) {
         commandsHandler.unregisterCommands().then(() => process.exit(0)).catch(error => {
-          logger.send(`Failed to unregister commands: ${error}`);
+          logger.error('Failed to unregister commands:', error);
           process.exit(1);
         });
       }
@@ -147,7 +147,7 @@ module.exports = class Client {
       if (!invite || !invite.find(invite => invite.code === server.invite_code.code)) {
         await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
 
-        logger.send(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
+        logger.info(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
       }
     }
   }
@@ -178,7 +178,7 @@ module.exports = class Client {
         }]
       }).save();
 
-      logger.send(`Voice activity for server ${server.id} updated.`);
+      logger.info(`Voice activity for server ${server.id} updated.`);
     }
   }
 
@@ -222,19 +222,19 @@ module.exports = class Client {
   async checkVoteReminderMetadatas() {
     const reminders = await VoteReminder.find();
     VoteReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
-      .then(deleted => logger.send(`Deleted ${deleted.deletedCount} vote reminder metadata.`))
-      .catch(error => logger.send(`Failed to delete vote reminder metadata:\n${error.stack}`));
+      .then(deleted => logger.info(`Deleted ${deleted.deletedCount} vote reminder metadata.`))
+      .catch(error => logger.error('Failed to delete vote reminder metadata:', error));
   }
 
   async checkReminerMetadatas() {
     const reminders = await Reminder.find();
     ReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
-      .then(deleted => logger.send(`Deleted ${deleted.deletedCount} reminder metadata.`))
-      .catch(error => logger.send(`Failed to delete reminder metadata:\n${error.stack}`));
+      .then(deleted => logger.info(`Deleted ${deleted.deletedCount} reminder metadata.`))
+      .catch(error => logger.error('Failed to delete reminder metadata:', error));
   }
 
   async updateBotStats() {
-    if (!process.env.DISCORD_PLACE_API_KEY) return logger.send('API key is not defined. Please define DISCORD_PLACE_API_KEY in your environment variables.');
+    if (!process.env.DISCORD_PLACE_API_KEY) return logger.warn('API key is not defined. Please define DISCORD_PLACE_API_KEY in your environment variables.');
 
     const url = `https://api.discord.place/bots/${client.user.id}/stats`;
     const data = {
@@ -248,10 +248,10 @@ module.exports = class Client {
         }
       });
 
-      if (response.status === 200) logger.send('Bot stats updated on Discord Place.');
-      else logger.send(`Failed to update bot stats: ${response.data}`);
+      if (response.status === 200) logger.info('Bot stats updated on Discord Place.');
+      else logger.error(`Failed to update bot stats: ${response.data}`);
     } catch (error) {
-      logger.send(`Failed to update bot stats:\n${error.stack}`);
+      logger.error('Failed to update bot stats:', error);
     }
   }
 
@@ -272,9 +272,9 @@ module.exports = class Client {
         }
       }
 
-      logger.send(`Deleted ${deletedCount} expired blocked IPs.`);
+      logger.info(`Deleted ${deletedCount} expired blocked IPs.`);
     } catch (error) {
-      logger.send(`Failed to check expired blocked IPs collections:\n${error.stack}`);
+      logger.error('Failed to check expired blocked IPs collections:', error);
     }
   }
 
@@ -299,7 +299,7 @@ module.exports = class Client {
       guilds: client.guilds.cache.size
     }).save();
 
-    logger.send('Created new dashboard data.');
+    logger.info('Created new dashboard data.');
   }
 
   async getResponseTime() {
@@ -312,13 +312,13 @@ module.exports = class Client {
 
       return response.data.responseTime;
     } catch (error) {
-      logger.send(`Failed to get response time:\n${error.stack}`);
+      logger.info(`Failed to get response time:\n${error.stack}`);
     }
   }
       
   async postNewMetric() {
-    if (!config.instatus.page_id || !config.instatus.metric_id) return logger.send('[Instatus] Page ID or Metric ID is not defined.');
-    if (!process.env.DISCORD_PLACE_INSTATUS_API_KEY) return logger.send('[Instatus] API key is not defined. Please define DISCORD_PLACE_INSTATUS_API_KEY in your environment variables.');
+    if (!config.instatus.page_id || !config.instatus.metric_id) return logger.warn('[Instatus] Page ID or Metric ID is not defined.');
+    if (!process.env.DISCORD_PLACE_INSTATUS_API_KEY) return logger.warn('[Instatus] API key is not defined. Please define DISCORD_PLACE_INSTATUS_API_KEY in your environment variables.');
 
     const baseUrl = 'https://api.instatus.com';
     const responseTime = await this.getResponseTime();
@@ -333,9 +333,9 @@ module.exports = class Client {
         }
       });
 
-      if (response.status === 200) logger.send('Posted new metric to Instatus.');
+      if (response.status === 200) logger.info('Posted new metric to Instatus.');
     } catch (error) {
-      logger.send(`Failed to post new metric to Instatus:\n${error.stack}`);
+      logger.error('Failed to post new metric to Instatus:', error);
     }
   }
 };

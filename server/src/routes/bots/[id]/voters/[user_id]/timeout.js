@@ -21,7 +21,7 @@ module.exports = {
       BotTimeout.findOneAndDelete({ 'bot.id': id, 'user.id': user_id })
         .then(() => response.sendStatus(204).end())
         .catch(error => {
-          logger.send(`There was an error while trying to delete a timeout record:\n${error.stack}`);
+          logger.error('There was an error while trying to delete a timeout record:', error);
           return response.sendError('Failed to delete timeout record.', 500);
         });
     }

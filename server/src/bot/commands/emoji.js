@@ -63,14 +63,14 @@ module.exports = {
         }).catch(() => null);
         if (!createdEmoji) {
           message.edit({ content: `Failed uploading ${index}. Emoji. Skipping.. **${pack.emoji_ids.length - index} seconds** remaining.` });
-          logger.send(`Failed to upload emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
+          logger.error(`Failed to upload emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
           
           await sleep(1000);
           
           continue;
         }
   
-        logger.send(`Uploaded emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
+        logger.info(`Uploaded emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
         createdEmojis.push({ emoji: createdEmoji, index });
           
         index++;
@@ -98,7 +98,7 @@ module.exports = {
           return interaction.followUp({ content: `Emoji uploaded! ${createdEmoji}` });
         })
         .catch(error => {
-          logger.send(`Failed to upload emoji ${emoji.id} to ${interaction.guild.id}: ${error.message}`);
+          logger.error(`Failed to upload emoji ${emoji.id} to ${interaction.guild.id}: ${error.message}`);
           return interaction.followUp({ content: 'Failed to upload emoji.' });
         });
 

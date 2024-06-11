@@ -28,7 +28,7 @@ module.exports = class Server {
     this.server.disable('x-powered-by');
     this.server.disable('etag');
 
-    logger.send('Server created.');
+    logger.info('Server created.');
     return this;
   }
 
@@ -45,7 +45,7 @@ module.exports = class Server {
   }
 
   listen(port) {
-    this.server.listen(port, () => logger.send(`Server listening on port ${port}.`));
+    this.server.listen(port, () => logger.info(`Server listening on port ${port}.`));
   }
 
   addMiddlewares() {
@@ -89,7 +89,7 @@ module.exports = class Server {
 
     if (process.env.NODE_ENV === 'production') this.server.use(blockSimultaneousRequests);
     
-    logger.send('Middlewares added.');
+    logger.info('Middlewares added.');
   }
 
   configureSessions() {

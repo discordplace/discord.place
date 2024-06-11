@@ -21,11 +21,11 @@ module.exports = class Commands {
     }
 
     commandsFolders.map(folderOrFile => readRecursive(folderOrFile, this.commands));
-    logger.send(`Fetched ${this.commands.size} commands.`);
+    logger.info(`Fetched ${this.commands.size} commands.`);
   }
 
   registerCommands() {
-    logger.send('Started refreshing application (/) commands.');
+    logger.info('Started refreshing application (/) commands.');
 
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve, reject) => {
@@ -36,17 +36,17 @@ module.exports = class Commands {
         // Admin commands
         await this.pushToDiscord(this.commands.filter(command => config.commandsExcludeToGlobal.includes(command.data.name)).map(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON() : command.data), Discord.Routes.applicationGuildCommands(client.user.id, config.guildId));
 
-        logger.send('Successfully reloaded application (/) commands.');
+        logger.info('Successfully reloaded application (/) commands.');
         resolve();
       } catch (error) {
-        logger.send(`Failed to register commands:\n${error.stack}`);
+        logger.error('Failed to register commands:', error);
         reject(error);
       }
     });
   }
 
   unregisterCommands() {
-    logger.send('Started unregister application (/) commands.');
+    logger.info('Started unregister application (/) commands.');
 
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve, reject) => {
@@ -57,10 +57,10 @@ module.exports = class Commands {
         // Admin commands
         await this.pushToDiscord([], Discord.Routes.applicationGuildCommands(client.user.id, config.guildId));
 
-        logger.send('Successfully unregistered application (/) commands.');
+        logger.info('Successfully unregistered application (/) commands.');
         resolve();
       } catch (error) {
-        logger.send(`Failed to unregister commands:\n${error.stack}`);
+        logger.error('Failed to unregister commands:', error);
         reject(error);
       }
     });

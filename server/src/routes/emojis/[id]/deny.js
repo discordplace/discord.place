@@ -83,7 +83,7 @@ module.exports = {
           return response.status(204).end();
         })
         .catch(error => {
-          logger.send(`There was an error during delete the emoji ${emoji.id}:\n${error.stack}`); 
+          logger.error(`There was an error during delete the emoji ${emoji.id}:`, error); 
           return response.sendError('There was an error during delete the emoji.', 500);
         });
     }

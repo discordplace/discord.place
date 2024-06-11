@@ -36,15 +36,15 @@ module.exports = {
 
       try {
         const { stdout, stderr } = await exec('git pull');
-        logger.send(stdout);
-        if (stderr) logger.send(stderr);
+        logger.info(stdout);
+        if (stderr) logger.info(stderr);
 
-        logger.send('Pull successful.');
+        logger.info('Pull successful.');
         
         const isFlagPresent = flag => request.body.commits.some(commit => commit.message.includes(`flags:${flag}`));
         
         if (isFlagPresent('registerCommands') || isFlagPresent('unregisterCommands')) {
-          logger.send('There are requests to register/unregister commands. Fetching commands..');
+          logger.info('There are requests to register/unregister commands. Fetching commands..');
 
           commandsHandler.fetchCommands();
           
@@ -52,14 +52,14 @@ module.exports = {
             if (isFlagPresent('registerCommands')) {
               commandsHandler.registerCommands()
                 .catch(error => {
-                  logger.send(`Failed to register commands:\n${error.stack}`);
+                  logger.error('Failed to register commands:', error);
                   response.sendError('Failed to register commands', 500);
                 })
                 .finally(resolve);
             } else {
               commandsHandler.unregisterCommands()
                 .catch(error => {
-                  logger.send(`Failed to unregister commands:\n${error.stack}`);
+                  logger.error('Failed to unregister commands:', error);
                   response.sendError('Failed to unregister commands', 500);
                 })
                 .finally(resolve);
@@ -68,15 +68,15 @@ module.exports = {
         }
 
         if (isFlagPresent('installDependencies')) {
-          logger.send('There are requests to install dependencies. Installing..');
+          logger.info('There are requests to install dependencies. Installing..');
 
           const { stdout, stderr } = await exec('npm install');
-          logger.send(stdout);
-          if (stderr) logger.send(stderr);
+          logger.info(stdout);
+          if (stderr) logger.info(stderr);
         }
 
         if (isFlagPresent('installGlobalDependencies')) {
-          logger.send('There are requests to install global dependencies. Installing..');
+          logger.info('There are requests to install global dependencies. Installing..');
 
           const shouldBeInstalled = request.body.commits.filter(commit => commit.message.includes('flags:installGlobalDependencies')).map(commit => {
             const dependencies = commit.message.match(/installGlobalDependencies:([\w\s-]+)/)[1].split(' ');
@@ -84,15 +84,15 @@ module.exports = {
           }).flat();
 
           const { stdout, stderr } = await exec(`npm install -g ${shouldBeInstalled.join(' ')}`);
-          logger.send(stdout);
-          if (stderr) logger.send(stderr);
+          logger.info(stdout);
+          if (stderr) logger.info(stderr);
         }
 
-        logger.send('Auto deploy successful. Exiting process..');
+        logger.info('Auto deploy successful. Exiting process..');
         response.sendStatus(201);
         process.exit(0);
       } catch (error) {
-        logger.send(`Error while pulling from GitHub:\n${error.stack}`);
+        logger.error('Error while pulling from GitHub:', error);
         response.sendError(`Error while pulling from GitHub:\n${error.stack}`, 500);
       }
     }
