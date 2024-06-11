@@ -9,8 +9,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const ip = require('@/utils/middlewares/ip');
 const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
-const pino = require('pino-http')();
 const compression = require('compression');
+const morgan = require('morgan');
 
 const passport = require('passport');
 const useRateLimiter = require('@/utils/useRateLimiter');
@@ -28,7 +28,7 @@ module.exports = class Server {
     this.server.disable('x-powered-by');
     this.server.disable('etag');
 
-    logger.send('Server created.');
+    logger.info('Server created.');
     return this;
   }
 
@@ -45,12 +45,18 @@ module.exports = class Server {
   }
 
   listen(port) {
-    this.server.listen(port, () => logger.send(`Server listening on port ${port}.`));
+    this.server.listen(port, () => logger.info(`Server listening on port ${port}.`));
   }
 
   addMiddlewares() {
-    if (process.env.NODE_ENV === 'production') this.server.use(pino);
-    
+    const morganMiddleware = morgan(':method :url :status - :response-time ms', {
+      stream: {
+        write: message => logger.http(message.trim())
+      }
+    });
+
+    this.server.use(morganMiddleware);
+
     this.server.use(compression());
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
@@ -83,7 +89,7 @@ module.exports = class Server {
 
     if (process.env.NODE_ENV === 'production') this.server.use(blockSimultaneousRequests);
     
-    logger.send('Middlewares added.');
+    logger.info('Middlewares added.');
   }
 
   configureSessions() {

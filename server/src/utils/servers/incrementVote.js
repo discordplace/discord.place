@@ -112,7 +112,7 @@ async function incrementVote(guildId, userId) {
         sendLog(guild.id, `Role with ID ${reward.role.id} has been deleted from the database because it was not found in the server.`)
           .catch(() => null);
         
-        logger.send(`Role with ID ${reward.role.id} has been deleted from the database because it was not found in server ${guild.id}.`);
+        logger.warn(`Role with ID ${reward.role.id} has been deleted from the database because it was not found in server ${guild.id}.`);
 
         continue;
       }
@@ -135,7 +135,7 @@ async function incrementVote(guildId, userId) {
             .catch(() => null);
         });
 
-      logger.send(`User ${user.id} has been given the reward role ${role.name} for voting ${voterVotes} times in server ${guild.id}.`);
+      logger.info(`User ${user.id} has been given the reward role ${role.name} for voting ${voterVotes} times in server ${guild.id}.`);
 
       break;
     }

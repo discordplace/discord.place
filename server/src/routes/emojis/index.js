@@ -147,7 +147,7 @@ module.exports = {
           })
           .catch(error => {
             emojiPack.deleteOne();
-            logger.send(`There was an error uploading the emoji ${id}:\n${error.stack}`);
+            logger.error(`There was an error uploading the emoji ${id}:`, error);
             return response.sendError('There was an error uploading the emojis.', 500);
           });
       } else {
@@ -221,7 +221,7 @@ module.exports = {
           })
           .catch(error => {
             emoji.deleteOne();
-            logger.send(`There was an error uploading the emoji ${id}:\n${error.stack}`);
+            logger.error(`There was an error uploading the emoji ${id}:`, error);
             return response.sendError('There was an error uploading the emoji.', 500);
           });
       }

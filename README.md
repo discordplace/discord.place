@@ -42,6 +42,7 @@ To get a local copy of the project up and running, follow these steps:
 
      ```plaintext
      # Secrets
+     
      COOKIE_SECRET=
      SESSION_SECRET=
      SESSION_STORE_SECRET=
@@ -49,11 +50,13 @@ To get a local copy of the project up and running, follow these steps:
      BOT_API_KEY_ENCRYPT_SECRET=
      
      # Discord Bot
+
      DISCORD_CLIENT_TOKEN=
      DISCORD_CLIENT_SECRET=
      DISCORD_CLIENT_ID=
      
      # Database
+
      MONGO_URL=
      
      # Cloudflare R2
@@ -64,6 +67,7 @@ To get a local copy of the project up and running, follow these steps:
      S3_ENDPOINT=
      
      # Cloudflare Turnstile
+
      CLOUDFLARE_TURNSTILE_SECRET_KEY=
 
      # Cloudflare Secrets for global rate limiting
@@ -74,8 +78,13 @@ To get a local copy of the project up and running, follow these steps:
      CLOUDFLARE_BLOCK_IP_LIST_ID=
 
      # Discord Place API
+
      DISCORD_PLACE_API_KEY=
      DISCORD_PLACE_INSTATUS_API_KEY=
+
+     # Logtail
+
+     LOGTAIL_SOURCE_TOKEN=
 
      # Other
 
@@ -138,6 +147,7 @@ Before running the project, you need to set up the following environment variabl
 | CLOUDFLARE_BLOCK_IP_LIST_ID | ID for the Cloudflare IP list used for global rate limiting | Yes | CloudflareBlockIPListID |
 | DISCORD_PLACE_API_KEY | API key for Discord Place API | Yes | RandomString |
 | DISCORD_PLACE_INSTATUS_API_KEY | API key for Instatus integration | Yes | RandomString |
+| LOGTAIL_SOURCE_TOKEN | Logtail source token | No | RandomString |
 | DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL | Base API URL to get approximate guild count for bots | No | URL |
 | DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET | Secret for the API to get approximate guild count for bots (used in the Authorization header) | No | RandomString |
 | ANALYZE                  | Whether to enable bundle analysis during client build       | No       | true/false             |

@@ -43,7 +43,7 @@ Model.watch().on('change', async data => {
     });
     client.blockedIps.set(fullDocument.ip, true);
 
-    logger.send(`IP address ${fullDocument.ip} has been blocked.`);
+    logger.info(`IP address ${fullDocument.ip} has been blocked.`);
   }
 
   if (operationType === 'delete') {
@@ -66,7 +66,7 @@ Model.watch().on('change', async data => {
       }
     });
 
-    logger.send(`IP address ${documentKey._id} has been unblocked.`);
+    logger.info(`IP address ${documentKey._id} has been unblocked.`);
   }
 });
 

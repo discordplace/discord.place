@@ -25,7 +25,7 @@ const blockSimultaneousRequests = async (request, response, next) => {
     });
   } catch (error) {
     response.sendError(error.message, 500);
-    logger.send(`There was an error while processing the request:\n${error.stack}`);
+    logger.error('There was an error while processing the request:', error);
   }
 };
 

@@ -7,7 +7,7 @@ async function createMongoBackup() {
   try {
     if (!mongoose?.connection?.client?.s?.url) throw new Error('Database connection not established.');
 
-    logger.send('Taking backup of database..');
+    logger.info('Taking backup of database..');
 
     const url = mongoose.connection.client.s.url;
     const formattedDate = moment().format('YYYY/MM/DD');
@@ -16,9 +16,9 @@ async function createMongoBackup() {
 
     await executeBackupCommand(cmd);
 
-    logger.send('Database backup taken successfully.');
+    logger.info('Database backup taken successfully.');
   } catch (error) {
-    logger.send(`Failed to take backup: ${error.message}`);
+    logger.error('Failed to take backup:', error);
   }
 }
 

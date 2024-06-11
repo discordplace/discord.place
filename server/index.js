@@ -46,11 +46,11 @@ connectDatabase(process.env.MONGO_URL, {
   backup: process.env.NODE_ENV === 'production'
 });
 
-process.on('unhandledRejection', error => logger.send(error.stack));
-process.on('uncaughtException', error => logger.send(error.stack));
+process.on('unhandledRejection', error => logger.error(error));
+process.on('uncaughtException', error => logger.error(error));
 
 process.removeAllListeners('warning');
 process.on('warning', warning => {
   if (warning.toString().includes('The `punycode` module is deprecated.')) return;
-  logger.send(warning);
+  logger.warn(warning);
 });

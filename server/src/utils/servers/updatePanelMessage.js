@@ -25,18 +25,18 @@ async function updatePanelMessage(guildId) {
     if (!message) return panel.deleteOne();
 
     await panel.updateOne({ messageId: message.id });
-    return logger.send(`Panel message created in guild ${guild.name} (${guild.id}).`);
+    return logger.info(`Panel message created in guild ${guild.name} (${guild.id}).`);
   }
 
   const message = await channel.messages.fetch(panel.messageId).catch(() => null);
   if (!message) {
-    logger.send(`Panel message not found in guild ${guild.name} (${guild.id}). Creating a new one.`);
+    logger.info(`Panel message not found in guild ${guild.name} (${guild.id}). Creating a new one.`);
     
     const message = await channel.send(await createPanelMessageOptions(guild, server));
     if (!message) return panel.deleteOne();
 
     await panel.updateOne({ messageId: message.id });
-    logger.send(`Panel message created in guild ${guild.name} (${guild.id}).`);
+    logger.info(`Panel message created in guild ${guild.name} (${guild.id}).`);
   } else await message.edit(await createPanelMessageOptions(guild, server));
 }
 
