@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import cn from '@/lib/cn';
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 
 export default function Pagination({ page, setPage, loading, total, limit, disableAnimation }) {
   
@@ -32,41 +32,42 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
   return (
     <motion.div 
       className={cn(
-        'flex items-center p-2 mt-6 overflow-hidden rounded-lg bg-secondary gap-x-2',
+        'flex items-center mt-6 gap-x-2 py-2 px-2 rounded-3xl bg-white/5',
         pages.length === 0 && 'hidden'
       )} 
       initial={initial}
       animate={animate}
       exit={exit}
     >
-      <button 
-        className='select-none items-center w-[28px] h-[28px] flex justify-center text-lg font-semibold rounded bg-quaternary disabled:pointer-events-none dark:hover:text-black dark:hover:bg-white hover:bg-black hover:text-white'
+      <button
+        className='flex items-center px-3 py-1 text-sm font-semibold text-black uppercase transition-colors cursor-pointer rounded-2xl active:bg-black/30 hover:bg-black/15 dark:active:bg-white/30 dark:text-white dark:hover:bg-white/15 gap-x-1'
         onClick={() => setPage(page - 1)}
         disabled={loading || page === 1}
       >
-        <MdKeyboardArrowLeft />
+        <FiArrowLeft />
+        PREV
       </button>
 
       {pages.map(pageNumber => (
-        <button
+        <div
           key={pageNumber}
           className={cn(
-            'select-none items-center flex justify-center w-[28px] h-[28px] text-sm font-semibold rounded text-tertiary hover:text-primary',
-            pageNumber === page && 'bg-quaternary text-primary'
+            'rounded-full px-3 py-1 items-center flex text-sm font-semibold cursor-pointer transition-colors text-black dark:text-white active:bg-black/30 hover:bg-black/15 dark:active:bg-white/30 dark:hover:bg-white/15',
+            pageNumber === page && 'bg-black/30 dark:bg-white/30 pointer-events-none'
           )}
           onClick={() => setPage(pageNumber)}
-          disabled={loading || pageNumber === page}
         >
           {pageNumber}
-        </button>
+        </div>
       ))}
 
       <button
-        className='select-none items-center w-[28px] h-[28px] flex justify-center text-lg font-semibold rounded bg-quaternary disabled:pointer-events-none dark:hover:text-black dark:hover:bg-white hover:bg-black hover:text-white'
+        className='flex items-center px-3 py-1 text-sm font-semibold text-black uppercase transition-colors cursor-pointer rounded-2xl active:bg-black/30 hover:bg-black/15 dark:active:bg-white/30 dark:text-white dark:hover:bg-white/15 gap-x-1'
         onClick={() => setPage(page + 1)}
         disabled={loading || page === totalPages}
       >
-        <MdKeyboardArrowRight />
+        NEXT
+        <FiArrowRight />
       </button>
     </motion.div>
   );
