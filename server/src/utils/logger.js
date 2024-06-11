@@ -85,23 +85,23 @@ module.exports = class Logger {
     global.logger = this;
   }
 
-  info(messages) {
-    this.logger.info(messages);
+  info(...messages) {
+    this.logger.info(messages.join(' '));
   }
 
-  error(messages) {
-    this.logger.error(messages);
+  error(...messages) {
+    this.logger.error(messages.join(' '));
   }
 
-  warn(messages) {
-    this.logger.warn(messages);
+  warn(...messages) {
+    this.logger.warn(messages.join(' '));
   }
 
-  debug(messages) {
-    this.logger.debug(messages);
+  debug(...messages) {
+    this.logger.debug(messages.join(' '));
   }
 
-  http(message) {
-    this.httpLogger.log('http', message);
+  http(...messages) {
+    this.httpLogger.log('http', messages.join(' '));
   }
 };
