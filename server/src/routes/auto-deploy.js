@@ -70,7 +70,7 @@ module.exports = {
         if (isFlagPresent('installDependencies')) {
           logger.info('There are requests to install dependencies. Installing..');
 
-          const { stdout, stderr } = await exec('npm install');
+          const { stdout, stderr } = await exec('pnpm install');
           logger.info(stdout);
           if (stderr) logger.info(stderr);
         }
