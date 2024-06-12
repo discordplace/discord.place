@@ -21,7 +21,7 @@ module.exports = {
         name: template.name
       };
 
-      const user = await client.users.fetch(this.user.id).catch(() => null);
+      const user = await client.users.fetch(template.user.id).catch(() => null);
       if (user) Object.assign(responseData, {
         user: {
           username: user.username
