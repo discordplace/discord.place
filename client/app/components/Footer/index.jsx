@@ -72,13 +72,11 @@ export default function Footer() {
       links: [
         {
           label: 'Privacy Policy',
-          href: '#',
-          disabled: true
+          href: '/legal/privacy'
         },
         {
           label: 'Terms of Service',
-          href: '#',
-          disabled: true
+          href: '/legal/terms'
         },
         {
           label: 'Cookie Policy',
