@@ -101,7 +101,13 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...sequenceTransition, delay: 0.4 }}
       >
-        <button className='text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary' onClick={() => setCategoryDrawerOpenState(true)}>
+        <button
+          className={cn(
+            'text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary',
+            loading && 'opacity-60 pointer-events-none transition-opacity'
+          )}
+          onClick={() => setCategoryDrawerOpenState(true)}
+        >
           <div className='text-sm font-medium text-tertiary'>
             Category
           </div>
@@ -114,7 +120,13 @@ export default function Hero() {
 
         <CategoriesDrawer state={category} setState={setCategory} openState={categoryDrawerOpenState} setOpenState={setCategoryDrawerOpenState} categories={config.serverCategories} />
 
-        <button className='text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary' onClick={() => setSortingDrawerOpenState(true)}>
+        <button
+          className={cn(
+            'text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary',
+            loading && 'opacity-60 pointer-events-none transition-opacity'
+          )}
+          onClick={() => setSortingDrawerOpenState(true)}
+        >
           <div className='text-sm font-medium text-tertiary'>
             Sorting
           </div>
