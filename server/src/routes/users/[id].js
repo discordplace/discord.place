@@ -48,7 +48,12 @@ module.exports = {
       };
 
       if (user.bot) {
-        if (responseData.flags.includes('VerifiedBot')) responseData.bot_verified = true;
+        if (responseData.flags.includes('VerifiedBot')) {
+          Object.assign(responseData, { 
+            bot_verified: true,
+            flags: responseData.flags.filter(flag => flag !== 'VerifiedBot')
+          });
+        }
         
         return response.json(responseData);
       }
