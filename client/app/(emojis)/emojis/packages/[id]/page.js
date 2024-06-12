@@ -1,9 +1,10 @@
 import getEmoji from '@/lib/request/emojis/getEmoji';
+import getEmojiMetadata from '@/lib/request/emojis/getEmojiMetadata';
 import { redirect } from 'next/navigation';
 import Content from '@/app/(emojis)/emojis/packages/[id]/content';
 
 export async function generateMetadata({ params }) {
-  const emoji = await getEmoji(params.id, true).catch(error => error);
+  const emoji = await getEmojiMetadata(params.id, true).catch(error => error);
   if (typeof emoji === 'string') return;
 
   return {

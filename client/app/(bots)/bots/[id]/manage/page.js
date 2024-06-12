@@ -1,10 +1,11 @@
 import getBot from '@/lib/request/bots/getBot';
+import getBotMetadata from '@/lib/request/bots/getBotMetadata';
 import Content from '@/app/(bots)/bots/[id]/manage/content';
 import { redirect } from 'next/navigation';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 
 export async function generateMetadata({ params }) {
-  const bot = await getBot(params.id).catch(error => error);
+  const bot = await getBotMetadata(params.id).catch(error => error);
   if (typeof bot === 'string') return;
 
   return {

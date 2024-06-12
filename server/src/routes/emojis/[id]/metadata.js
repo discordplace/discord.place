@@ -1,6 +1,6 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
-const EmojiPack = require('@/schemas/EmojiPack');
+const Emoji = require('@/schemas/Emoji');
 const idValidation = require('@/validations/emojis/id');
 
 module.exports = {
@@ -15,10 +15,13 @@ module.exports = {
 
       const { id } = matchedData(request);
       
-      const emoji = await EmojiPack.findOne({ id });
-      if (!emoji) return response.sendError('Emoji pack not found.', 404);
+      const emoji = await Emoji.findOne({ id });
+      if (!emoji) return response.sendError('Emoji not found.', 404);
 
-      return response.json({ name: emoji.name });
+      return response.json({
+        name: emoji.name,
+        animated: emoji.animated
+      });
     }
   ]
 };

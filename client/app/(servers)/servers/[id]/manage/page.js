@@ -1,10 +1,11 @@
 import getServer from '@/lib/request/servers/getServer';
+import getServerMetadata from '@/lib/request/servers/getServerMetadata';
 import Content from '@/app/(servers)/servers/[id]/manage/content';
 import { redirect } from 'next/navigation';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 
 export async function generateMetadata({ params }) {
-  const server = await getServer(params.id).catch(error => error);
+  const server = await getServerMetadata(params.id).catch(error => error);
   if (typeof server === 'string') return;
 
   return {

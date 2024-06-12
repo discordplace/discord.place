@@ -2,14 +2,11 @@ import getUser from '@/lib/request/getUser';
 import Content from '@/app/(profiles)/profile/u/[user_id]/content';
 import { redirect } from 'next/navigation';
 
-export async function generateMetadata({ params }) {
-  const user = await getUser(params.user_id).catch(error => error);
-  if (typeof user === 'string') return;
-
+export function generateMetadata({ params }) {
   return {
-    title: `User @${user.username}`,
+    title: `User ${params.user_id}`,
     openGraph: {
-      title: `Discord Place - User @${user.username}`
+      title: `Discord Place - User ${params.user_id}`
     }
   };
 }

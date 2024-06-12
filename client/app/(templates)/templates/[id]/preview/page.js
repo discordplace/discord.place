@@ -1,9 +1,10 @@
 import getTemplate from '@/lib/request/templates/getTemplate';
+import getTemplateMetadata from '@/lib/request/templates/getTemplateMetadata';
 import { redirect } from 'next/navigation';
 import Content from '@/app/(templates)/templates/[id]/preview/content';
 
 export async function generateMetadata({ params }) {
-  const template = await getTemplate(params.id).catch(error => error);
+  const template = await getTemplateMetadata(params.id).catch(error => error);
   if (typeof template === 'string') return;
 
   return {
