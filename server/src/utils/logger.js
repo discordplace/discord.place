@@ -4,12 +4,55 @@ require('winston-daily-rotate-file');
 const { combine, errors, printf, timestamp } = winston.format;
 const { Console, File, DailyRotateFile } = winston.transports;
 
-const { Logtail } = require('@logtail/node');
-const { LogtailTransport } = require('@logtail/winston');
-const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
-
 module.exports = class Logger {
   constructor() {
+    const transports = [
+      new Console(),
+      new File({
+        filename: 'logs/error.log',
+        level: 'error',
+        zippedArchive: true
+      }),
+      new File({
+        filename: 'logs/combined.log',
+        zippedArchive: true
+      }),
+      new DailyRotateFile({
+        filename: 'logs/%DATE%-error.log',
+        datePattern: 'YYYY-MM-DD',
+        maxFiles: '14d',
+        level: 'error'
+      }),
+      new DailyRotateFile({
+        filename: 'logs/%DATE%-combined.log',
+        datePattern: 'YYYY-MM-DD',
+        maxFiles: '14d'
+      })
+    ];
+
+    const httpTransports = [
+      new Console(),
+      new File({
+        filename: 'logs/http.log',
+        zippedArchive: true
+      }),
+      new DailyRotateFile({
+        filename: 'logs/%DATE%-http.log',
+        datePattern: 'YYYY-MM-DD',
+        maxFiles: '14d'
+      })
+    ];
+
+    if (process.env.NODE_ENV === 'production') {
+      const { Logtail } = require('@logtail/node');
+      const { LogtailTransport } = require('@logtail/winston');
+      const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
+      const transport = new LogtailTransport(logtail);
+
+      transports.push(transport);
+      httpTransports.push(transport);
+    }
+
     this.logger = winston.createLogger({
       levels: {
         error: 0,
@@ -26,30 +69,7 @@ module.exports = class Logger {
           return `${timestamp} ${level}: ${message}`;
         })
       ),
-      transports: [
-        new Console(),
-        new LogtailTransport(logtail),
-        new File({
-          filename: 'logs/error.log',
-          level: 'error',
-          zippedArchive: true
-        }),
-        new File({
-          filename: 'logs/combined.log',
-          zippedArchive: true
-        }),
-        new DailyRotateFile({
-          filename: 'logs/%DATE%-error.log',
-          datePattern: 'YYYY-MM-DD',
-          maxFiles: '14d',
-          level: 'error'
-        }),
-        new DailyRotateFile({
-          filename: 'logs/%DATE%-combined.log',
-          datePattern: 'YYYY-MM-DD',
-          maxFiles: '14d'
-        })
-      ]
+      transports: transports
     });
 
     this.httpLogger = winston.createLogger({
@@ -63,19 +83,7 @@ module.exports = class Logger {
         }),
         printf(({ level, message, timestamp }) => `${timestamp} ${level}: ${message}`)
       ),
-      transports: [
-        new Console(),
-        new LogtailTransport(logtail),
-        new File({
-          filename: 'logs/http.log',
-          zippedArchive: true
-        }),
-        new DailyRotateFile({
-          filename: 'logs/%DATE%-http.log',
-          datePattern: 'YYYY-MM-DD',
-          maxFiles: '14d'
-        })
-      ]
+      transports: httpTransports
     });
 
     global.logger = this;
