@@ -204,7 +204,7 @@ export default function Reviews({ bot }) {
 
       {reviews.map(review => (
         <div className="flex flex-col w-full mt-8 sm:flex-row gap-y-4" key={review._id}>
-          <div className="flex gap-x-4 w-[35%]">
+          <div className="flex gap-x-4 w-full sm:w-[35%]">
             <Link 
               href={`/profile/u/${review.user.id}`} 
               className='transition-opacity hover:opacity-70'
@@ -223,7 +223,9 @@ export default function Reviews({ bot }) {
                 href={`/profile/u/${review.user.id}`}
                 className='flex items-center text-base font-semibold transition-opacity hover:opacity-70'
               >
-                {review.user.username}
+                <span className='max-w-[100px] mobile:max-w-[150px] sm:max-w-[100px] lg:max-w-[160px] truncate'>
+                  {review.user.username}
+                </span>
               </Link>
 
               <div className='flex items-center text-sm font-semibold text-tertiary'>
