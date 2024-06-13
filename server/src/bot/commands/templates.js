@@ -244,9 +244,7 @@ module.exports = {
     await dmMessage.edit({ content: `${config.emojis.loading} Applying settings..`, components: [] });
 
     await interaction.guild.edit({
-      verificationLevel: template.data.verification_level,
       defaultMessageNotifications: template.data.default_message_notifications,
-      explicitContentFilter: template.data.explicit_content_filter,
       preferredLocale: template.data.preferred_locale,
       afkChannel: createdChannels.find(channel => channel.id === template.data.afk_channel_id)?.channel,
       afkTimeout: template.data.afk_timeout,
