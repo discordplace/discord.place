@@ -53,7 +53,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className='dark'>
+    <html lang="en" translate="no" className='dark'>
       <body className={cn(
         'flex flex-col',
         GeistSans.className,
