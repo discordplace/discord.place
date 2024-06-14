@@ -7,7 +7,6 @@ module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('reminder')
     .setDescription('reminder')
-    .setDMPermission(false)
     .addSubcommand(subcommand => subcommand.setName('create').setDescription('Create a reminder about something.')
       .addStringOption(option => option.setName('about').setDescription('What is the reminder about?').setRequired(true))
       .addStringOption(option => option.setName('when').setDescription('When should the reminder be sent?').setRequired(true)))
