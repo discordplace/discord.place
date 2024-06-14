@@ -133,10 +133,6 @@ module.exports = class Client {
     });
   }
 
-  async sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   async checkDeletedInviteCodes() {
     const servers = await Server.find({ 'invite_code.type': 'Invite' });
     for (const server of servers) {
