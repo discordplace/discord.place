@@ -8,46 +8,6 @@ const Profile = require('@/schemas/Profile');
 const Server = require('@/schemas/Server');
 const Template = require('@/schemas/Template');
 
-function getCpuTimes() {
-  const cpus = os.cpus();
-  let user = 0, nice = 0, sys = 0, idle = 0, irq = 0;
-
-  cpus.forEach(cpu => {
-    user += cpu.times.user;
-    nice += cpu.times.nice;
-    sys += cpu.times.sys;
-    idle += cpu.times.idle;
-    irq += cpu.times.irq;
-  });
-
-  return { user, nice, sys, idle, irq };
-}
-
-function calculateCpuUsage(startTimes, endTimes) {
-  const startTotal = Object.values(startTimes).reduce((acc, val) => acc + val, 0);
-  const endTotal = Object.values(endTimes).reduce((acc, val) => acc + val, 0);
-
-  const totalDiff = endTotal - startTotal;
-  const idleDiff = endTimes.idle - startTimes.idle;
-
-  const usage = (1 - idleDiff / totalDiff) * 100;
-
-  return usage;
-}
-
-function getCpuUsage() {
-  const startCpuTimes = getCpuTimes();
-  
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const endCpuTimes = getCpuTimes();
-      const cpuUsage = calculateCpuUsage(startCpuTimes, endCpuTimes);
-
-      resolve(cpuUsage);
-    }, 1000);
-  });
-}
-
 const cooldowns = new Discord.Collection();
 
 module.exports = {
@@ -66,7 +26,15 @@ module.exports = {
 
     await interaction.deferReply();
 
-    const cpuUsage = await getCpuUsage();
+    const [botsCount, emojisCount, emojiPacksCount, profilesCount, serversCount, templatesCount] = await Promise.all([
+      Bot.countDocuments({ verified: true }),
+      Emoji.countDocuments({ approved: true }),
+      EmojiPack.countDocuments({ approved: true }),
+      Profile.countDocuments(),
+      Server.countDocuments(),
+      Template.countDocuments()
+    ]);
+
     const uptimeHumanized = moment.duration(os.uptime() * 1000).humanize();
     const botUptimeHumanized = moment.duration(process.uptime() * 1000).humanize();
 
@@ -84,7 +52,6 @@ module.exports = {
  - Free: **${(os.freemem() / 1024 / 1024 / 1024).toFixed(2)} GB**
 - CPU
  - Model: **${os.cpus()[0].model}**
- - Load: **${cpuUsage.toFixed(2)}%**
  - Uptime: **${uptimeHumanized}**`
         },
         {
@@ -98,12 +65,12 @@ module.exports = {
         },
         {
           name: 'Statistics',
-          value: `- Bots: **${await Bot.countDocuments({ verified: true })}**
-- Emojis: **${await Emoji.countDocuments({ approved: true })}**
-- Emoji Packs: **${await EmojiPack.countDocuments({ approved: true })}**
-- Profiles: **${await Profile.countDocuments()}**
-- Servers: **${await Server.countDocuments()}**
-- Templates: **${await Template.countDocuments()}**`
+          value: `- Bots: **${botsCount}**
+- Emojis: **${emojisCount}**
+- Emoji Packs: **${emojiPacksCount}**
+- Profiles: **${profilesCount}**  
+- Servers: **${serversCount}**
+- Templates: **${templatesCount}**`
         }
       ]);
     
