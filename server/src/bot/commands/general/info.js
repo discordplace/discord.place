@@ -74,6 +74,8 @@ module.exports = {
           value: `This server is the support server for Bot [${botUser?.tag || bot.id}](${config.frontendUrl}/profile/u/${bot.id}).`
         }
       ]);
+
+      if (guild.banner) embeds[0].setImage(guild.bannerURL({ format: 'png', size: 4096 }));
         
       var components = [
         new Discord.ActionRowBuilder()
