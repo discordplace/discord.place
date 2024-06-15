@@ -72,7 +72,8 @@ module.exports = {
         bots: await Promise.all(sortedBots.map(async bot => {
           return { 
             ...await bot.toPubliclySafe(), 
-            reviews: reviews.filter(review => review.bot.id === bot.id).length
+            reviews: reviews.filter(review => review.bot.id === bot.id).length,
+            latest_voted_at: bot.lastVoter?.date || null
           };
         }))
       });

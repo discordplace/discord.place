@@ -41,7 +41,7 @@ export default function SortingDrawer({ openState, setOpenState, state, setState
             >
               <span className='flex items-center gap-x-2'>
                 {sortings[sort]}
-                {sort}
+                {sort === 'LatestVoted' ? 'Latest Voted' : sort}
               </span>
               {state === sort && <IoMdCheckmarkCircle />}
             </button>

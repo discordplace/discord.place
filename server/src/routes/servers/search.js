@@ -80,7 +80,8 @@ module.exports = {
           const guild = client.guilds.cache.get(server.id);
           if (guild) {
             const data = {
-              members: guild.memberCount
+              members: guild.memberCount,
+              latest_voted_at: server.lastVoter?.date || null
             };
 
             switch (sort) {
