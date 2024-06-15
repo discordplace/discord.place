@@ -13,6 +13,11 @@ cdnUrl: 'https://cdn.discord.place'
 emojis:
   loading: '<a:loading:1247786499076915252>'
   checkmark: '<:yes:1226129515718381568>'
+  badges:
+    moderator: '<:white_moderator:1251538987592712345>'
+    premium: '<:white_premium:1251538989312249947>'
+    verified: '<:white_verified:1251538990524403793>'
+  empty_badge_slot: '<:empty_badge_slot:1251541500282798090>'
 port:
   frontend: 3000
   backend: 3001
