@@ -3,7 +3,7 @@ import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import useSearchStore from '@/stores/servers/search';
-import { MdKeyboardVoice } from 'react-icons/md';
+import { MdKeyboardVoice, MdUpdate } from 'react-icons/md';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import { IoHeart } from 'react-icons/io5';
@@ -40,6 +40,11 @@ export default function ServerCard(props) {
       icon: TbSquareRoundedChevronUp,
       value: props.server.data.votes,
       condition: sort === 'Votes'
+    },
+    {
+      icon: MdUpdate,
+      value: new Date(props.server.data.latest_voted_at).getTime(),
+      condition: sort === 'LatestVoted'
     },
     {
       icon: MdKeyboardVoice,

@@ -21,7 +21,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Sort must be a string.')
       .trim()
-      .isIn(['Votes', 'Servers', 'Most Reviewed', 'Newest', 'Oldest']).withMessage('Sort must be one of: Votes, Servers, Most Reviewed, Newest, Oldest.'),
+      .isIn(['Votes', 'LatestVoted', 'Servers', 'Most Reviewed', 'Newest', 'Oldest']).withMessage('Sort must be one of: Votes, LatestVoted, Servers, Most Reviewed, Newest, Oldest.'),
     query('limit')
       .optional()
       .isInt({ min: 1, max: 12 }).withMessage('Limit must be an integer between 1 and 12.')
@@ -53,6 +53,7 @@ module.exports = {
       const sortedBots = foundBots.sort((a, b) => {
         switch (sort) {
         case 'Votes': return b.votes - a.votes;
+        case 'LatestVoted': return new Date(b.lastVoter?.date || 0).getTime() - new Date(a.lastVoter?.date || 0).getTime();
         case 'Servers': return b.server_count.value - a.server_count.value;
         case 'Most Reviewed': return reviews.filter(review => review.bot.id === b.id).length - reviews.filter(review => review.bot.id === a.id).length;
         case 'Newest': return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();

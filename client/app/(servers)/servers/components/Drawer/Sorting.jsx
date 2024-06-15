@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { Drawer } from 'vaul';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { MdKeyboardVoice } from 'react-icons/md';
+import { MdKeyboardVoice, MdUpdate } from 'react-icons/md';
 import { FaUsers } from 'react-icons/fa';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
@@ -13,6 +13,7 @@ import { TiStar } from 'react-icons/ti';
 export default function SortingDrawer({ openState, setOpenState, state, setState }) {
   const sortings = {
     'Votes': <TbSquareRoundedChevronUp />,
+    'LatestVoted': <MdUpdate />,
     'Voice': <MdKeyboardVoice />,
     'Members': <FaUsers />,
     'Newest': <HiSortAscending />,

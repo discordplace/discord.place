@@ -6,6 +6,7 @@ import { BiSolidCategory } from 'react-icons/bi';
 import useSearchStore from '@/stores/bots/search';
 import { TiStar } from 'react-icons/ti';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { MdUpdate } from 'react-icons/md';
 
 export default function Card({ data, overridedSort }) {
   const storedSort = useSearchStore(state => state.sort);
@@ -22,6 +23,11 @@ export default function Card({ data, overridedSort }) {
       icon: TbSquareRoundedChevronUp,
       value: data.votes,
       condition: sort === 'Votes'
+    },
+    {
+      icon: MdUpdate,
+      value: new Date(data.latest_voted_at).getTime(),
+      condition: sort === 'LatestVoted'
     },
     {
       icon: FaCompass,

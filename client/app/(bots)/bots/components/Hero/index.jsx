@@ -17,6 +17,7 @@ import { FaCompass } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
+import { MdUpdate } from 'react-icons/md';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -112,6 +113,13 @@ export default function Hero() {
               <>
                 <TbSquareRoundedChevronUp />
                 Votes
+              </>
+            )}
+
+            {sort === 'LatestVoted' && (
+              <>
+                <MdUpdate />
+                Latest Voted
               </>
             )}
 

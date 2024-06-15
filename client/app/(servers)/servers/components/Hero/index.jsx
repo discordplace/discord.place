@@ -18,7 +18,7 @@ import { FaUsers } from 'react-icons/fa';
 import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
 import { useState } from 'react';
 import SortingDrawer from '../Drawer/Sorting';
-import { MdKeyboardVoice } from 'react-icons/md';
+import { MdKeyboardVoice, MdUpdate } from 'react-icons/md';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import Pagination from '@/app/components/Pagination';
@@ -136,6 +136,13 @@ export default function Hero() {
               <>
                 <TbSquareRoundedChevronUp />
                 Votes
+              </>
+            )}
+
+            {sort === 'LatestVoted' && (
+              <>
+                <MdUpdate />
+                Latest Voted
               </>
             )}
 

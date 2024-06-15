@@ -21,7 +21,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Sort must be a string.')
       .trim()
-      .isIn(['Votes', 'Voice', 'Members', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, Voice, Members, Newest, Oldest, Boosts.'),
+      .isIn(['Votes', 'LatestVoted', 'Voice', 'Members', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, LatestVoted, Voice, Members, Newest, Oldest, Boosts.'),
     query('limit')
       .optional()
       .isInt({ min: 1, max: 10 }).withMessage('Limit must be an integer between 1 and 10.')
@@ -56,6 +56,7 @@ module.exports = {
 
         switch (sort) {
         case 'Votes': return b.votes - a.votes;
+        case 'LatestVoted': return new Date(b.lastVoter?.date || 0).getTime() - new Date(a.lastVoter?.date || 0).getTime();
         case 'Voice': return bGuild.members.cache.filter(member => !member.bot && member.voice.channel).size - aGuild.members.cache.filter(member => !member.bot && member.voice.channel).size;
         case 'Members': return bGuild.memberCount - aGuild.memberCount;
         case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
