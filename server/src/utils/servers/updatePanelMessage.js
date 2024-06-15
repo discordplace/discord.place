@@ -71,7 +71,7 @@ async function createPanelMessageOptions(guild, server) {
 
   const topVotersTable = new Table({ 
     head: ['##', 'Vote', 'User'],
-    colWidths: [4, 6, 15],
+    colWidths: [4, 6, 13],
     ...tableBaseOptions
   });
   const formatter = new Intl.NumberFormat('en-US');

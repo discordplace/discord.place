@@ -40,6 +40,6 @@ module.exports = async interaction => {
   }
 
   if (interaction.isMessageComponent()) {
-    if (interaction.customId === 'vote') require('@/src/bot/commands/vote').execute(interaction);
+    if (interaction.customId === 'vote') require('@/src/bot/commands/features/vote').execute(interaction);
   }
 };
