@@ -43,8 +43,9 @@ export default function ServerCard(props) {
     },
     {
       icon: MdUpdate,
-      value: new Date(props.server.data.latest_voted_at).getTime(),
-      condition: sort === 'LatestVoted'
+      value: props.server.data.latest_voted_at,
+      condition: sort === 'LatestVoted',
+      transform: date => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })
     },
     {
       icon: MdKeyboardVoice,
