@@ -15,20 +15,20 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: false
   },
   accessToken: {
     iv: {
       type: String,
-      required: true
+      required: false
     },
     encryptedText: {
       type: String,
-      required: true
+      required: false
     },
     tag: {
       type: String,
-      required: true
+      required: false
     }
   }
 }, {
