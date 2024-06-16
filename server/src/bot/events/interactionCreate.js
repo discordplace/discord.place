@@ -1,4 +1,6 @@
 const Server = require('@/schemas/Server');
+const User = require('@/schemas/User');
+const Discord = require('discord.js');
 
 module.exports = async interaction => {
   if (interaction.isCommand()) {
@@ -7,11 +9,48 @@ module.exports = async interaction => {
     const foundCommand = client.commands.find(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON().name === interaction.commandName : command.data.name === interaction.commandName);
     if (!foundCommand) return;
 
+    const user = await User.findOne({ id: interaction.user.id });
+
+    if (!user.acceptedPolicies) {
+      const embeds = [
+        new Discord.EmbedBuilder()
+          .setTitle('About Our Policies')
+          .setDescription('Before you can use the bot, you need to accept our policies.\nAfter you accept them, you can use the bot as you wish.\n\n- [Privacy Policy](https://discord.place/legal/privacy)\n- [Terms of Service](https://discord.place/legal/terms)\n- [Cookie Policy](https://discord.place/legal/cookie)\n\nIf you have any questions, you can contact us at **legal@discord.place**.')
+          .setColor(Discord.Colors.Blurple)
+          .setFooter({ text: 'discord.place', iconURL: client.user.displayAvatarURL() })
+      ];
+
+      const components = [
+        new Discord.ActionRowBuilder()
+          .addComponents(
+            new Discord.ButtonBuilder()
+              .setCustomId('accept-policies')
+              .setLabel('Accept Policies')
+              .setStyle(Discord.ButtonStyle.Secondary)
+              .setEmoji(config.emojis.checkmark)
+          )
+      ];
+
+      const message = await interaction.reply({ embeds, components, fetchReply: true });
+      const collected = await message.awaitMessageComponent({ time: 60000 }).catch(() => null);
+      if (!collected) return message.edit({ content: 'You didn\'t accept the policies in time.', embeds: [], components: [] });
+
+      if (collected.customId === 'accept-policies') {
+        user.acceptedPolicies = true;
+        await user.save();
+
+        await message.edit({ content: 'You accepted the policies.', embeds: [], components: [] });
+
+        await collected.deferUpdate();
+      }
+    }
+
     try {
       await foundCommand.execute(interaction);
     } catch (error) {
       logger.info(`Error executing command ${interaction.commandName}:`, error);
-      if (interaction.deferred) interaction.followUp({ content: 'There was an error while executing this command.' });
+
+      if (interaction.deferred || interaction.replied) interaction.followUp({ content: 'There was an error while executing this command.' });
       else interaction.reply({ content: 'There was an error while executing this command.', ephemeral: true });
     }
   }

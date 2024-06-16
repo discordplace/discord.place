@@ -47,7 +47,7 @@ module.exports = {
       if (!interaction.member.roles.cache.has(config.roles.moderator)) return;
 
       if (subcommand === 'verify') {
-        await interaction.deferReply();
+              if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
   
         const slug = interaction.options.getString('slug');
         const profile = await Profile.findOne({ slug });
@@ -62,7 +62,7 @@ module.exports = {
       }
       
       if (subcommand === 'unverify') {
-        await interaction.deferReply();
+              if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
   
         const slug = interaction.options.getString('slug');
         const profile = await Profile.findOne({ slug });
@@ -121,7 +121,7 @@ module.exports = {
       if (config.permissions.canCreateQuarantinesRoles.some(roleId => !interaction.member.roles.cache.has(roleId))) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
 
       if (subcommand === 'create') {
-        await interaction.deferReply();
+              if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const type = interaction.options.getString('type');
         const value = interaction.options.getString('value');
@@ -189,7 +189,7 @@ module.exports = {
       }
 
       if (subcommand === 'remove') {
-        await interaction.deferReply();
+              if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const entry = interaction.options.getString('entry');
         const quarantine = await Quarantine.findOne({ _id: entry });
@@ -233,7 +233,7 @@ module.exports = {
       }
 
       if (subcommand === 'list') {
-        await interaction.deferReply();
+              if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const quarantines = await Quarantine.find();
         if (!quarantines.length) return interaction.followUp({ content: 'There are no quarantine entries.' });
@@ -304,7 +304,7 @@ ${formattedQuarantinesText}`);
       }
 
       if (subcommand === 'find') {
-        await interaction.deferReply();
+              if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const type = interaction.options.getString('type');
         const value = interaction.options.getString('value');

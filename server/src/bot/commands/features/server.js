@@ -46,7 +46,7 @@ module.exports = {
       if (subcommand === 'invite') {
         if (interaction.user.id !== interaction.guild.ownerId) return interaction.reply({ content: 'You must be the owner of the server to use this command.' });
 
-        await interaction.deferReply();
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const server = await Server.findOne({ id: interaction.guild.id });
         const newInviteCode = interaction.options.getString('code');
@@ -73,7 +73,7 @@ module.exports = {
         const channel = interaction.options.getChannel('channel');
         if (!channel.permissionsFor(interaction.guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) return interaction.reply({ content: 'I don\'t have permission to send messages in that channel.' });
 
-        await interaction.deferReply();
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const logChannel = await LogChannel.findOne({ guildId: interaction.guild.id });
         if (logChannel) {
@@ -96,7 +96,7 @@ module.exports = {
         const channel = interaction.options.getChannel('channel');
         if (!channel.permissionsFor(interaction.guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) return interaction.reply({ content: 'I don\'t have permission to send messages in that channel.' });
 
-        await interaction.deferReply();
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const server = await Server.findOne({ id: interaction.guild.id });
         if (!server) return interaction.followUp({ content: `You can't set a panel channel without creating a server first. Visit [here](${config.frontendUrl}/servers/manage) to create one.` });
@@ -130,7 +130,7 @@ module.exports = {
       if (subcommand === 'panel') {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
 
-        await interaction.deferReply();
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const panel = await Panel.findOne({ guildId: interaction.guild.id });
         if (!panel) return interaction.followUp({ content: 'Panel channel is not set.' });
@@ -146,7 +146,7 @@ module.exports = {
       if (subcommand === 'log') {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
 
-        await interaction.deferReply();
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const logChannel = await LogChannel.findOne({ guildId: interaction.guild.id });
         if (!logChannel) return interaction.followUp({ content: 'Log channel is not set.' });
@@ -161,7 +161,7 @@ module.exports = {
       if (subcommand === 'panel') {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
 
-        await interaction.deferReply();
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const panel = await Panel.findOne({ guildId: interaction.guild.id });
         if (!panel) return interaction.followUp({ content: 'Panel channel is not set.' });
@@ -187,7 +187,7 @@ module.exports = {
         const requiredVotes = interaction.options.getInteger('required-votes');
         if (requiredVotes < 1) return interaction.reply({ content: 'Required votes must be greater than 0.' });
 
-        await interaction.deferReply();
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const foundServer = await Server.findOne({ id: interaction.guild.id });
         if (!foundServer) return interaction.followUp({ content: `You can't add a reward without listing your server. Visit [here](<${config.frontendUrl}/servers/manage>) to list this server.` });
@@ -223,7 +223,7 @@ module.exports = {
         const reward = await Reward.findOne({ guild: { id: interaction.guild.id }, role: { id: roleId } });
         if (!reward) return interaction.reply({ content: 'Reward not found.' });
 
-        await interaction.deferReply();
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         await reward.deleteOne();
 
@@ -236,7 +236,7 @@ module.exports = {
 
     if (group === 'list') {
       if (subcommand === 'rewards') {
-        await interaction.deferReply();
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         const rewards = await Reward.find({ guild: { id: interaction.guild.id } });
         if (!rewards.length) return interaction.followUp({ content: 'No rewards found.' });

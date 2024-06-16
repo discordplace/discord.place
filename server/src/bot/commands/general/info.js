@@ -23,7 +23,7 @@ module.exports = {
 
     switch (subcommand) {
     case 'server':
-      await interaction.deferReply();
+      if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
       var serverId = interaction.options.getString('server_id') || interaction.guild.id;
 
@@ -98,7 +98,7 @@ module.exports = {
 
       break;
     case 'user':
-      await interaction.deferReply();
+      if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
       var user = interaction.options.getUser('user') || interaction.user;
       
