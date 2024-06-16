@@ -4,6 +4,9 @@ require('winston-daily-rotate-file');
 const { combine, errors, printf, timestamp } = winston.format;
 const { Console, File, DailyRotateFile } = winston.transports;
 
+const { Logtail } = require('@logtail/node');
+const { LogtailTransport } = require('@logtail/winston');
+
 module.exports = class Logger {
   constructor() {
     const transports = [
@@ -44,13 +47,15 @@ module.exports = class Logger {
     ];
 
     if (process.env.NODE_ENV === 'production') {
-      const { Logtail } = require('@logtail/node');
-      const { LogtailTransport } = require('@logtail/winston');
       const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
       const transport = new LogtailTransport(logtail);
 
       transports.push(transport);
-      httpTransports.push(transport);
+
+      const httpLogtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
+      const httpTransport = new LogtailTransport(httpLogtail);
+
+      httpTransports.push(httpTransport);
     }
 
     this.logger = winston.createLogger({
