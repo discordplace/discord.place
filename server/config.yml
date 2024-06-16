@@ -1,5 +1,6 @@
 discordScopes:
   - 'identify'
+  - 'email'
 botPresenceStatus: 'online'
 rateLimitWhitelist:
   - '957840712404193290'
