@@ -17,7 +17,6 @@ function environmentCheck() {
     'CLOUDFLARE_EMAIL',
     'CLOUDFLARE_ACCOUNT_ID',
     'CLOUDFLARE_BLOCK_IP_LIST_ID',
-    'AUTO_VOTE_TOKEN_SECRET',
     'BOT_API_KEY_ENCRYPT_SECRET'
   ];
   

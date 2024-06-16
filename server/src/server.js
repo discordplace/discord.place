@@ -39,6 +39,7 @@ module.exports = class Server {
 
     this.server.use('/', await router({ directory: path.join(__dirname, 'routes') }));
     this.server.get('/favicon.ico', useRateLimiter({ maxRequests: 30, perMinutes: 1 }), (request, response) => response.sendFile(path.join(__dirname, '..', 'public', 'favicon.ico')));
+    this.server.use('/public', express.static(path.join(__dirname, '..', 'public')));
     this.server.use('*', (request, response) => response.sendError('Not Found', 404));
 
     this.listen(port);

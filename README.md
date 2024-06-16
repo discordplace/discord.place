@@ -130,7 +130,6 @@ Before running the project, you need to set up the following environment variabl
 | SESSION_STORE_SECRET     | Secret used for session store encryption                    | Yes      | RandomString           |
 | GITHUB_AUTO_DEPLOY_SECRET | Secret for GitHub auto-deployment webhook verification     | No      | RandomString           |
 | BOT_API_KEY_ENCRYPT_SECRET       | Secret for discord.place API key encryption                   | Yes      | RandomString           |
-| AUTO_VOTE_TOKEN_SECRET   | Secret for auto-vote token generation                       | Yes      | RandomString           |
 | DISCORD_CLIENT_TOKEN     | Token for Discord bot integration                           | Yes      | DiscordToken           |
 | DISCORD_CLIENT_SECRET    | Secret for Discord bot integration                          | Yes      | DiscordSecret          |
 | DISCORD_CLIENT_ID        | Client ID for Discord bot integration                       | Yes      | DiscordClientID        |

@@ -58,6 +58,8 @@ module.exports = class Client {
     this.client.forceFetchedUsers = new Discord.Collection();
     this.client.blockedIps = new Discord.Collection();
     this.client.currentlyUploadingEmojiPack = new Discord.Collection();
+    this.client.humanVerificationData = new Discord.Collection();
+    this.client.humanVerificationTimeouts = new Discord.Collection();
 
     logger.info('Client created.');
     return this;
