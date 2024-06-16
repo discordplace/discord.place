@@ -9,7 +9,7 @@ module.exports = async interaction => {
     const foundCommand = client.commands.find(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON().name === interaction.commandName : command.data.name === interaction.commandName);
     if (!foundCommand) return;
 
-    const user = await User.findOne({ id: interaction.user.id });
+    const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, new: true });
 
     if (!user.acceptedPolicies) {
       const embeds = [
