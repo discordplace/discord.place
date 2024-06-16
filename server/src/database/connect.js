@@ -10,7 +10,7 @@ module.exports = function connectDatabase(url, options = {}) {
 
   if (options.backup) {
     logger.info('Database backup enabled.');
-    // every midnight
+
     new CronJob('0 0 * * *', createMongoBackup, null, true);
   }
 };
