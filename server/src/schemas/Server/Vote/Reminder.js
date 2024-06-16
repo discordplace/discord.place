@@ -48,7 +48,7 @@ Model.watch().on('change', async data => {
           new Discord.ButtonBuilder()
             .setStyle(Discord.ButtonStyle.Secondary)
             .setLabel((`Quickly vote ${guild.name}`).slice(0, 80))
-            .setCustomId('vote')
+            .setCustomId(`quick-vote-${guild.id}`)
         )
     ];
 

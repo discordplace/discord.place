@@ -1,3 +1,5 @@
+const Server = require('@/schemas/Server');
+
 module.exports = async interaction => {
   if (interaction.isCommand()) {
     if (!interaction.guild) return interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
@@ -41,9 +43,34 @@ module.exports = async interaction => {
 
   if (interaction.isMessageComponent()) {
     if (interaction.customId === 'vote') require('@/src/bot/commands/features/vote').execute(interaction);
+    if (interaction.customId.startsWith('quick-vote-')) {
+      const guildId = interaction.customId.split('-')[2];
+      const guild = client.guilds.cache.get(guildId);
+      if (!guild) return interaction.reply({ content: 'I couldn\'t find the server.' });
+      
+      const member = await guild.members.fetch(interaction.user.id).catch(() => null);
+      if (!member) return interaction.reply({ content: 'You are not in the server.' });
+
+      const server = await Server.findOne({ id: guild.id });
+      if (!server) return interaction.reply({ content: 'I couldn\'t find the server.' });
+      Object.defineProperty(interaction, 'member', { value: member });
+      Object.defineProperty(interaction, 'guild', { value: guild });
+      
+      const voteCommand = require('@/src/bot/commands/features/vote');
+      return voteCommand.execute(interaction);
+    }
 
     if (interaction.customId.startsWith('hv-')) {
       const guildId = interaction.customId.split('-')[1];
+      const guild = client.guilds.cache.get(guildId);
+      if (!guild) return interaction.reply({ content: 'I couldn\'t find the server.' });
+
+      const member = await guild.members.fetch(interaction.user.id).catch(() => null);
+      if (!member) return interaction.reply({ content: 'You are not in the server.' });
+
+      const server = await Server.findOne({ id: guild.id });
+      if (!server) return interaction.reply({ content: 'I couldn\'t find the server.' });
+
       const numbers = interaction.customId.split('-')[2].split('');
       const selectNumber = interaction.customId.split('-')[3];
 
@@ -70,6 +97,10 @@ module.exports = async interaction => {
         await interaction.update({ content: 'You successfully verified yourself.', components: [], embeds: [], files: [] });
 
         const continueVote = require('@/src/bot/commands/features/vote').continueVote;
+
+        Object.defineProperty(interaction, 'member', { value: member });
+        Object.defineProperty(interaction, 'guild', { value: guild });
+
         return continueVote(interaction);
       } else {
         await interaction.deferReply({ ephemeral: true });
