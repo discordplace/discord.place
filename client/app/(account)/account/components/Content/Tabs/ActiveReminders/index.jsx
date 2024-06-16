@@ -72,9 +72,9 @@ export default function ActiveReminders() {
                         <div className='text-base font-semibold text-center text-primary'>
                           <Countdown
                             date={new Date(reminder.expire_at).getTime()}
-                            renderer={({ hours, minutes, seconds, completed }) => {
+                            renderer={({ days, hours, minutes, seconds, completed }) => {
                               if (completed) return 'Expired';
-                              return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+                              return `${days} day${days > 1 ? 's' : ''} ${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
                             }}
                           />
                         </div>
