@@ -71,7 +71,11 @@ module.exports = async interaction => {
 
         const continueVote = require('@/src/bot/commands/features/vote').continueVote;
         return continueVote(interaction);
-      } else interaction.followUp({ content: `You selected: **${data.join('')}** (${data.length}/3)` });
+      } else {
+        await interaction.deferReply({ ephemeral: true });
+
+        return interaction.followUp({ content: `You selected: **${data.join('')}** (${data.length}/3)` });
+      }
     }
   }
 };
