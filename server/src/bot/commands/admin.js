@@ -81,7 +81,7 @@ module.exports = {
       if (!config.permissions.canCreatePremiumCodes.includes(interaction.user.id)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
 
       if (subcommand === 'generate-code') {
-        await interaction.deferReply({ ephemeral: true });
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });;
 
         const time = interaction.options.getString('time');
 
@@ -103,7 +103,7 @@ module.exports = {
       } 
 
       if (subcommand === 'revoke-code') {
-        await interaction.deferReply({ ephemeral: true });
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });;
 
         const codeToRevoke = interaction.options.getString('code');
         const code = await PremiumCode.findOne({ code: codeToRevoke });

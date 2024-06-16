@@ -7,7 +7,7 @@ module.exports = {
     description: 'List currently active reminders for vote system'
   },
   execute: async interaction => {
-    await interaction.deferReply({ ephemeral: true });
+    if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });;
 
     const reminders = await VoteReminder.find({ 'user.id': interaction.user.id });
     if (!reminders.length) return interaction.followUp({ content: 'You have no active reminders.' });

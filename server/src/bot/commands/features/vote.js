@@ -11,7 +11,7 @@ module.exports = {
     description: 'Vote for the server you are on.'
   },
   execute: async function (interaction) {
-    await interaction.deferReply({ ephemeral: true });
+    if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
 
     const userOrGuildQuarantined = await findQuarantineEntry.multiple([
       { type: 'USER_ID', value: interaction.user.id, restriction: 'SERVERS_VOTE' },

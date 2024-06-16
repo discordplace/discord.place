@@ -142,7 +142,7 @@ module.exports = async interaction => {
 
         return continueVote(interaction);
       } else {
-        await interaction.deferReply({ ephemeral: true });
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
 
         return interaction.followUp({ content: `You selected: **${data.join('')}** (${data.length}/3)` });
       }
