@@ -24,7 +24,7 @@ export default function Page() {
         <li><strong>Usage Data:</strong> We may collect information about how you interact with the bot, such as commands used and messages sent.</li>
         <li><strong>Device Information:</strong> We may collect information about your device, such as IP address, browser type, and operating system.</li>
         <li><strong>Cookies:</strong> We may use cookies to store information about your preferences and settings. For more information, please see our Cookie Policy.</li>
-        <li><strong>Third-Party Services:</strong> We may collect information from third-party services, such as Discord, to provide our services.</li>
+        <li><strong>Third-Party Services:</strong> We may collect information from third-party services, such as Discord, to provide our services, such as user IDs and email addresses.</li>
       </ul>
     
       <h2>3. How We Use Your Information</h2>
