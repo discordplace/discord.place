@@ -19,7 +19,7 @@ module.exports = {
     if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
     if (!interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions) && !interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply({ content: 'I don\'t have permission to upload emojis. Please make sure I have the "Manage Guild Expressions" and "Create Guild Expressions" permissions.' });
     
-          if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+    if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
     const userQuarantined = await findQuarantineEntry.single('USER_ID', interaction.user.id, 'EMOJIS_QUICKLY_UPLOAD').catch(() => false);
     if (userQuarantined) return interaction.followUp({ content: 'You are not allowed to upload emojis.' });

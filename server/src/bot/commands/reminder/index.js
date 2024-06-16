@@ -26,7 +26,7 @@ module.exports = {
       if (!reminderTime) return interaction.reply({ content: 'Invalid time duration. You can use `1d`, `1h`, `1m`, `1s` for days, hours, minutes, and seconds respectively.', ephemeral: true });
       if (reminderTime < (60000 * 5)) return interaction.reply({ content: 'The reminder time must be at least 5 minutes.', ephemeral: true });
 
-      if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });;
+      if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
 
       var totalReminders = await Reminder.countDocuments({ 'user.id': interaction.user.id });
       if (totalReminders >= 5) return interaction.followUp({ content: 'You can only have up to 5 reminders at a time.' });
