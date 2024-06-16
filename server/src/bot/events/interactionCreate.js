@@ -84,8 +84,6 @@ module.exports = async interaction => {
 
         await interaction.update({ content: 'You successfully verified yourself.', components: [], embeds: [], files: [] });
 
-        await interaction.deferReply({ ephemeral: true });
-
         const continueVote = require('@/src/bot/commands/features/vote').continueVote;
         return continueVote(interaction);
       } else await interaction.update({ components: newComponents });
