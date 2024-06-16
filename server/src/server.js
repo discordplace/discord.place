@@ -14,7 +14,9 @@ const morgan = require('morgan');
 
 const passport = require('passport');
 const useRateLimiter = require('@/utils/useRateLimiter');
+const User = require('@/schemas/User');
 const DiscordStrategy = require('passport-discord').Strategy;
+const encrypt = require('@/utils/encryption/encrypt');
 
 module.exports = class Server {
   constructor() {
@@ -136,7 +138,21 @@ module.exports = class Server {
     this.server.use(passport.initialize());
     this.server.use(passport.session());
 
-    passport.serializeUser((user, done) => done(null, user));
+    passport.serializeUser(async (user, done) => {
+      if (!user.email) throw new Error('User email not found.');
+
+      return User.findOneAndUpdate({ id: user.id },
+        {
+          id: user.id,
+          email: user.email,
+          accessToken: encrypt(user.accessToken, process.env.USER_TOKEN_ENCRYPT_SECRET)
+        }, 
+        { upsert: true, new: true }
+      ).then(user => done(null, user)).catch(error => {
+        logger.error('Error while serializing user:', error);
+        throw new Error('Error while logging in. Please try again.');
+      });
+    });
     passport.deserializeUser((obj, done) => done(null, obj));
 
     global.passport = passport;
