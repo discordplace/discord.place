@@ -1,5 +1,3 @@
-const Discord = require('discord.js');
-
 module.exports = async interaction => {
   if (interaction.isCommand()) {
     if (!interaction.guild) return interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
@@ -62,19 +60,6 @@ module.exports = async interaction => {
       data.push(selectNumber);
       client.humanVerificationData.set(interaction.user.id, data);
 
-      const newComponents = interaction.message.components.map(row => {
-        return new Discord.ActionRowBuilder().addComponents(
-          row.components.map(button => {
-            if (button.customId === interaction.customId) return new Discord.ButtonBuilder()
-              .setCustomId(interaction.customId)
-              .setStyle(Discord.ButtonStyle.Success)
-              .setLabel(button.label);
-
-            return button;
-          })
-        );
-      });
-
       if (data.length === 3) {
         client.humanVerificationData.delete(interaction.user.id);
         client.humanVerificationTimeouts.set(interaction.user.id, { guild: guildId, expiresAt: Date.now() + 60000 });
@@ -86,7 +71,7 @@ module.exports = async interaction => {
 
         const continueVote = require('@/src/bot/commands/features/vote').continueVote;
         return continueVote(interaction);
-      } else await interaction.update({ components: newComponents });
+      } else interaction.followUp({ content: `You selected: **${data.join('')}** (${data.length}/3)` });
     }
   }
 };
