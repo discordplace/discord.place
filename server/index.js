@@ -30,6 +30,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     checkExpiredBlockedIPs: true,
     updateBotStats: false,
     createNewDashboardData: false,
+    syncPremiumRoles: true,
     listenEvents: true,
     listenCrons: process.env.NODE_ENV === 'production'
   },

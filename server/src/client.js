@@ -4,6 +4,8 @@ const { CronJob } = require('cron');
 const axios = require('axios');
 const CloudflareAPI = require('cloudflare');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
+const sleep = require('@/utils/sleep');
 
 // Schemas
 const Server = require('@/schemas/Server');
@@ -21,7 +23,7 @@ const Bot = require('@/schemas/Bot');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const Template = require('@/schemas/Template');
-const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
+const Premium = require('@/schemas/Premium');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -74,6 +76,11 @@ module.exports = class Client {
     });
 
     this.client.once('ready', async () => {
+      if (!client.guilds.cache.get(config.guildId)) {
+        logger.error(`Guild with ID ${config.guildId} not found. You can change this guild ID in the config file.`);
+        process.exit(1);
+      }
+
       await fetchGuildsMembers([config.guildId]);
 
       logger.info(`Client logged in as ${this.client.user.tag}`);
@@ -111,6 +118,7 @@ module.exports = class Client {
       if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
       if (options.startup.updateBotStats) this.updateBotStats();
       if (options.startup.createNewDashboardData) this.createNewDashboardData();
+      if (options.startup.syncPremiumRoles) this.syncPremiumRoles();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', () => {
@@ -120,6 +128,7 @@ module.exports = class Client {
           this.checkExpiredBlockedIPs();
           this.checkDeletedInviteCodes();
           this.updateClientActivity();
+          this.syncPremiumRoles();
         }, null, true, 'Europe/Istanbul');
 
         new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
@@ -334,6 +343,36 @@ module.exports = class Client {
       if (response.status === 200) logger.info('Posted new metric to Instatus.');
     } catch (error) {
       logger.error('Failed to post new metric to Instatus:', error);
+    }
+  }
+
+  async syncPremiumRoles() {
+    const guild = client.guilds.cache.get(config.guildId);
+
+    try {
+      const premiums = await Premium.find();
+      const members = await guild.members.fetch();
+      const premiumMembersWithoutRole = members.filter(member => !member.roles.cache.has(config.roles.premium) && premiums.find(premium => premium.user.id === member.user.id));
+      const nonPremiumMembersWithRole = members.filter(member => member.roles.cache.has(config.roles.premium) && !premiums.find(premium => premium.user.id === member.user.id));
+
+      if (premiumMembersWithoutRole.size <= 0 && nonPremiumMembersWithRole.size <= 0) return;
+
+      const estimatedTime = (premiumMembersWithoutRole.size + nonPremiumMembersWithRole.size) * 1000;
+      logger.info(`Syncing premium roles for ${premiumMembersWithoutRole.size} premium members without role and ${nonPremiumMembersWithRole.size} non-premium members with role. Estimated time: ${estimatedTime / 1000} seconds.`);
+
+      for (const member of premiumMembersWithoutRole.values()) {
+        await member.roles.add(config.roles.premium);
+        await sleep(1000);
+      }
+
+      for (const member of nonPremiumMembersWithRole.values()) {
+        await member.roles.remove(config.roles.premium);
+        await sleep(1000);
+      }
+
+      logger.info('Successfully synced premium roles.');
+    } catch (error) {
+      logger.error('Failed to sync premium roles:', error);
     }
   }
 };

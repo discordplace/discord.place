@@ -104,6 +104,7 @@ templateMaxDescriptionLength: 256
 templateMaxCategoriesLength: 3
 roles:
   moderator: '1206354879321210900'
+  premium: '1252335063123628084'
 emojiCategories:
   - 'All'
   - 'Gaming'
