@@ -149,12 +149,12 @@ module.exports = {
       
       if (premium) {
         const isForever = premium.expire_at === null;
-        const remainingDays = Math.ceil((premium.expire_at - Date.now()) / 86400000);
+        const premiumSince = new Date(premium.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
         embeds[0].addFields([
           {
             name: 'Premium',
-            value: `This user has premium.${isForever ? ' Forever.' : ` Expires in **${remainingDays}** days.`}`
+            value: `This user has premium ${isForever ? 'forever' : `since **${premiumSince}**`}.`
           }
         ]);
       }
