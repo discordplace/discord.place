@@ -229,14 +229,22 @@ module.exports = class Client {
   async checkVoteReminderMetadatas() {
     const reminders = await VoteReminder.find();
     VoteReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
-      .then(deleted => logger.info(`Deleted ${deleted.deletedCount} vote reminder metadata.`))
+      .then(deleted => {
+        if (deleted.deletedCount <= 0) return;
+
+        logger.info(`Deleted ${deleted.deletedCount} vote reminder metadata.`);
+      })
       .catch(error => logger.error('Failed to delete vote reminder metadata:', error));
   }
 
   async checkReminerMetadatas() {
     const reminders = await Reminder.find();
     ReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
-      .then(deleted => logger.info(`Deleted ${deleted.deletedCount} reminder metadata.`))
+      .then(deleted => {
+        if (deleted.deletedCount <= 0) return;
+
+        logger.info(`Deleted ${deleted.deletedCount} reminder metadata.`);
+      })
       .catch(error => logger.error('Failed to delete reminder metadata:', error));
   }
 
@@ -278,6 +286,8 @@ module.exports = class Client {
           deletedCount++;
         }
       }
+
+      if (deletedCount <= 0) return;
 
       logger.info(`Deleted ${deletedCount} expired blocked IPs.`);
     } catch (error) {
