@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const Profile = require('@/schemas/Profile');
-const PremiumCode = require('@/schemas/PremiumCode');
+const PremiumCode = require('@/schemas/Premium/Code');
 const Premium = require('@/schemas/Premium');
 const crypto = require('node:crypto');
 const Quarantine = require('@/schemas/Quarantine');

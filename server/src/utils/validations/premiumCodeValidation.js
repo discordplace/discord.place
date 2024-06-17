@@ -1,4 +1,4 @@
-const PremiumCode = require('@/schemas/PremiumCode');
+const PremiumCode = require('@/schemas/Premium/Code');
 
 async function premiumCodeValidation(code) {
   const foundCode = await PremiumCode.findOne({ code });

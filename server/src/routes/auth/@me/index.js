@@ -1,11 +1,7 @@
 const Profile = require('@/schemas/Profile');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const premiumCodeValidation = require('@/utils/validations/premiumCodeValidation');
-const { body, validationResult, matchedData } = require('express-validator');
 const Premium = require('@/schemas/Premium');
-const PremiumCode = require('@/schemas/PremiumCode');
-const bodyParser = require('body-parser');
 
 module.exports = {
   get: [
@@ -44,39 +40,6 @@ module.exports = {
           expire_at: premium.expire_at ? new Date(premium.expire_at) : null
         } : null,
         can_view_dashboard: canViewDashboard
-      });
-    }
-  ],
-  patch: [
-    useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
-    checkAuthentication,
-    bodyParser.json(),
-    body('premium_code')
-      .isString().withMessage('Premium code should be a string.')
-      .custom(premiumCodeValidation),
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
-      const foundPremium = await Premium.findOne({ 'user.id': request.user.id });
-      if (foundPremium) return response.sendError('You already have a premium.', 400);
-
-      const { premium_code } = matchedData(request);
-
-      const foundCode = await PremiumCode.findOne({ code: premium_code });
-
-      await new Premium({
-        used_code: foundCode.code,
-        user: {
-          id: request.user.id
-        },
-        expire_at: foundCode.expire_at
-      }).save();
-      
-      await foundCode.deleteOne();
-
-      return response.json({
-        expire_at: foundCode.expire_at
       });
     }
   ]

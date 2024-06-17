@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const Premium = require('@/schemas/Premium');
-const PremiumCode = require('@/schemas/PremiumCode');
+const PremiumCode = require('@/schemas/Premium/Code');
 const premiumCodeValidation = require('@/utils/validations/premiumCodeValidation');
 
 module.exports = {
