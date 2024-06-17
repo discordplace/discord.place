@@ -75,8 +75,10 @@ export default function ServerCard(props) {
       className='w-full p-0.5 h-[250px] relative z-[1] overflow-hidden group cursor-pointer rounded-3xl'
       href={`/servers/${props.server.id}`}
     >
-      <div class="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none"></div>
-      
+      {props.server.premium === true && (
+        <div class="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none"></div>
+      )}
+
       <div className='flex w-full h-full z-[20] relative border-4 border-primary rounded-3xl'>
         {props.server.banner_url ? (
           <Image

@@ -79,7 +79,9 @@ export default function Card({ data, overridedSort }) {
       className='w-full p-0.5 h-[250px] relative z-[1] overflow-hidden group cursor-pointer rounded-3xl'
       href={`/bots/${data.id}`}
     >
-      <div class="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_65deg)] pointer-events-none"></div>
+      {data.owner.premium && (
+        <div class="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_65deg)] pointer-events-none"></div>
+      )}
 
       <div className='flex w-full h-full z-[20] relative border-4 border-primary rounded-3xl'>
         {data.banner_url ? (
