@@ -141,15 +141,17 @@ module.exports = class Server {
     passport.serializeUser(async (user, done) => {
       if (!user.email) throw new Error('User email not found.');
 
-      return User.findOneAndUpdate({ id: user.id },
+      done(null, user);
+
+      User.findOneAndUpdate({ id: user.id },
         {
           id: user.id,
           email: user.email,
           accessToken: encrypt(user.accessToken, process.env.USER_TOKEN_ENCRYPT_SECRET)
         }, 
         { upsert: true, new: true }
-      ).then(user => done(null, user)).catch(error => {
-        logger.error('Error while serializing user:', error);
+      ).catch(error => {
+        logger.error('Error while saving user:', error);
         throw new Error('Error while logging in. Please try again.');
       });
     });
