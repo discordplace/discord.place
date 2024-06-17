@@ -36,7 +36,9 @@ module.exports = {
         avatar_hash: user.avatar,
         avatar_url: user.displayAvatarURL({ size: 512 }),
         banner_url: user.bannerURL({ size: 1024 }),
-        profile: typeof profile === 'object' ? profile : null,
+        profile: typeof profile === 'object' ? {
+          slug: profile.slug
+        } : null,
         premium: premium ? {
           created_at: new Date(premium.createdAt),
           expire_at: premium.expire_at ? new Date(premium.expire_at) : null
@@ -60,9 +62,6 @@ module.exports = {
       if (foundPremium) return response.sendError('You already have a premium.', 400);
 
       const { premium_code } = matchedData(request);
-
-      const profile = await Profile.findOne({ 'user.id': request.user.id });
-      if (profile) await profile.updateOne({ premium: true });
 
       const foundCode = await PremiumCode.findOne({ code: premium_code });
 
