@@ -16,7 +16,7 @@ module.exports = {
 
     const code = interaction.options.getString('code');
     
-    const validationResult = premiumCodeValidation(code).catch(error => error);
+    const validationResult = await premiumCodeValidation(code).catch(error => error);
     if (validationResult instanceof Error) return interaction.followUp({ content: validationResult.message });
 
     const foundCode = await PremiumCode.findOne({ code });
