@@ -211,22 +211,24 @@ export default function NewBot() {
             </p>
 
             <div className="flex flex-wrap mt-4 gap-x-2 gap-y-2">
-              {config.botCategories.map(category => (
-                <button
-                  key={category}
-                  className={cn(
-                    'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-quaternary',
-                    botCategories.includes(category) && 'bg-quaternary'
-                  )}
-                  onClick={() => {
-                    if (botCategories.includes(category)) setBotCategories(oldCategories => oldCategories.filter(oldCategory => oldCategory !== category));
-                    else setBotCategories(oldCategories => [...oldCategories, category]);
-                  }}
-                >
-                  {botCategories.includes(category) ? <IoMdCheckmarkCircle/> : config.botCategoriesIcons[category]}
-                  {category}
-                </button>
-              ))}
+              {config.botCategories
+                .filter(category => category !== 'All')
+                .map(category => (
+                  <button
+                    key={category}
+                    className={cn(
+                      'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-quaternary',
+                      botCategories.includes(category) && 'bg-quaternary'
+                    )}
+                    onClick={() => {
+                      if (botCategories.includes(category)) setBotCategories(oldCategories => oldCategories.filter(oldCategory => oldCategory !== category));
+                      else setBotCategories(oldCategories => [...oldCategories, category]);
+                    }}
+                  >
+                    {botCategories.includes(category) ? <IoMdCheckmarkCircle/> : config.botCategoriesIcons[category]}
+                    {category}
+                  </button>
+                ))}
             </div>
 
             <h2 className="flex items-center mt-8 text-lg font-semibold gap-x-2">
