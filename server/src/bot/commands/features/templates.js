@@ -15,8 +15,8 @@ module.exports = {
     .addSubcommand(subcommand => subcommand.setName('use').setDescription('Use a template.')
       .addStringOption(option => option.setName('template').setDescription('Template to use.').setRequired(true).setAutocomplete(true)))
     .toJSON(),
+  isGuildOnly: true,
   execute: async interaction => {
-    if (!interaction.guild) return interaction.reply({ content: 'This command can only be used in servers.' });
     if (interaction.guild.ownerId !== interaction.user.id) return interaction.reply({ content: 'You must be the owner of the server to use this command.' });
     
     if (currentlyApplyingTemplates.size >= 5) return interaction.reply({ content: 'There are too many templates being applied at the moment. Please wait for the current templates to be applied before using another template.' });

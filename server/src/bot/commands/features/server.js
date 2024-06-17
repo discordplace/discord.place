@@ -38,6 +38,7 @@ module.exports = {
       .addSubcommand(subcommand => subcommand.setName('rewards').setDescription('Lists all the vote rewards of the server.')))
 
     .toJSON(),
+  isGuildOnly: true,
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
     const group = interaction.options.getSubcommandGroup();

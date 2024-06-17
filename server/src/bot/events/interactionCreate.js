@@ -3,11 +3,11 @@ const User = require('@/schemas/User');
 const Discord = require('discord.js');
 
 module.exports = async interaction => {
-  if (interaction.isCommand()) {
-    if (!interaction.guild) return interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
-    
+  if (interaction.isCommand()) {    
     const foundCommand = client.commands.find(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON().name === interaction.commandName : command.data.name === interaction.commandName);
     if (!foundCommand) return;
+
+    if (!foundCommand.isGuildOnly) return interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
 
     const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, new: true });
 

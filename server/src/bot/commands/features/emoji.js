@@ -15,6 +15,7 @@ module.exports = {
       .addSubcommand(subcommand => subcommand.setName('upload').setDescription('Uploads the selected emoji pack to the server.')
         .addStringOption(option => option.setName('pack').setDescription('Pack to upload.').setRequired(true).setAutocomplete(true))))
     .toJSON(),
+  isGuildOnly: true,
   execute: async interaction => {
     if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
     if (!interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions) && !interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply({ content: 'I don\'t have permission to upload emojis. Please make sure I have the "Manage Guild Expressions" and "Create Guild Expressions" permissions.' });

@@ -10,6 +10,7 @@ module.exports = {
     name: 'vote',
     description: 'Vote for the server you are on.'
   },
+  isGuildOnly: true,
   execute: async function (interaction) {
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
 
