@@ -15,7 +15,7 @@ module.exports = async interaction => {
       const embeds = [
         new Discord.EmbedBuilder()
           .setTitle('About Our Policies')
-          .setDescription('Before you can use the bot, you need to accept our policies.\nAfter you accept them, you can use the bot as you wish.\n\n- [Privacy Policy](https://discord.place/legal/privacy)\n- [Terms of Service](https://discord.place/legal/terms)\n- [Cookie Policy](https://discord.place/legal/cookie)\n- (Content Policy)[https://discord.place/legal/content-policy]\n\nIf you have any questions, you can contact us at **legal@discord.place**.')
+          .setDescription('Before you can use the bot, you need to accept our policies.\nAfter you accept them, you can use the bot as you wish.\n\n- [Privacy Policy](https://discord.place/legal/privacy)\n- [Terms of Service](https://discord.place/legal/terms)\n- [Cookie Policy](https://discord.place/legal/cookie)\n- [Content Policy](https://discord.place/legal/content-policy)\n\nIf you have any questions, you can contact us at **legal@discord.place**.')
           .setColor(Discord.Colors.Blurple)
           .setFooter({ text: 'discord.place', iconURL: client.user.displayAvatarURL() })
       ];
