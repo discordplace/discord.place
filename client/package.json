@@ -28,6 +28,7 @@
     "apexcharts": "^3.46.0",
     "axios": "^1.6.7",
     "clsx": "^2.1.0",
+    "date-fns": "^3.6.0",
     "framer-motion": "^11.0.3",
     "geist": "^1.2.2",
     "jszip": "^3.10.1",
