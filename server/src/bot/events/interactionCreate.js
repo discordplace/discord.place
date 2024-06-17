@@ -48,7 +48,7 @@ module.exports = async interaction => {
     try {
       await foundCommand.execute(interaction);
     } catch (error) {
-      logger.info(`Error executing command ${interaction.commandName}:`, error);
+      logger.error(`Error executing command ${interaction.commandName}:`, error);
 
       if (interaction.deferred || interaction.replied) interaction.followUp({ content: 'There was an error while executing this command.' });
       else interaction.reply({ content: 'There was an error while executing this command.', ephemeral: true });
