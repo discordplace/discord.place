@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const categoriesValidation = require('@/validations/bots/categories');
 const inviteURLValidation = require('@/validations/bots/inviteUrl');
 const webhookUrlValidation = require('@/validations/bots/webhookUrl');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 const encrypt = require('@/utils/encryption/encrypt');
 const decrypt = require('@/utils/encryption/decrypt');
 const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
@@ -152,7 +152,7 @@ const BotSchema = new Schema({
 
       const user = client.users.cache.get(this.owner.id) || await client.users.fetch(this.owner.id).catch(() => null);   
       if (user) {
-        const ownerHasPremium = await Premium.findOne({ 'user.id': user.id });
+        const ownerHasPremium = await User.exists({ id: user.id, subscription: { $ne: null } }); 
 
         Object.assign(newBot, {
           owner: {

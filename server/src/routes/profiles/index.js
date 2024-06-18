@@ -3,7 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
 const { body, validationResult, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
@@ -36,7 +36,7 @@ module.exports = {
       if (userHasProfile) return response.sendError('You already have a profile.', 400);
 
       if (config.customHostnames.includes(preferredHost)) {
-        const foundPremium = await Premium.findOne({ 'user.id': request.user.id });
+        const foundPremium = await User.findOne({ id: request.user.id, subscription: { $ne: null } });
         if (!foundPremium) return response.sendError(`You must be premium to use ${preferredHost}.`, 400);
       }
       

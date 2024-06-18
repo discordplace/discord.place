@@ -24,6 +24,8 @@ import config from '@/config';
 import { SiGoogleanalytics } from 'react-icons/si';
 import { MdArrowOutward } from 'react-icons/md';
 import { HiTemplate } from 'react-icons/hi';
+import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
+import { MdSync } from 'react-icons/md';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -101,6 +103,21 @@ export default function Sidebar() {
           name: 'Timeouts',
           icon: TbSquareRoundedChevronUp,
           disabled: data?.permissions?.canViewTimeouts === false || data?.permissions?.canDeleteTimeouts === false
+        }
+      ]
+    },
+    {
+      name: 'Lemon Squeezy',
+      tabs: [
+        {
+          id: 'syncPlans',
+          name: 'Sync Plans',
+          icon: MdSync,
+          onClick: () => toast.promise(syncLemonSqueezyPlans(), {
+            loading: 'Syncing Lemon Squeezy plans..',
+            success: () => 'Successfully synced Lemon Squeezy plans.',
+            error: message => message
+          })
         }
       ]
     }
@@ -202,6 +219,7 @@ export default function Sidebar() {
                     (loading || link.disabled) && 'opacity-50 pointer-events-none'
                   )}
                   onClick={() => {
+                    if (link.onClick) return link.onClick();
                     if (link.type === 'redirect') return window.open(link.href, '_blank');
 
                     setActiveTab(link.id);
@@ -232,6 +250,7 @@ export default function Sidebar() {
                   (loading || link.disabled) && 'opacity-50 pointer-events-none'
                 )}
                 onClick={() => {
+                  if (link.onClick) return link.onClick();
                   if (link.type === 'redirect') return window.open(link.href, '_blank');
                   
                   setActiveTab(link.id);

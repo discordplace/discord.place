@@ -1,9 +1,9 @@
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 
 export const metadata = {
-  title: 'Redeem',
+  title: 'Premium',
   openGraph: {
-    title: 'Discord Place - Redeem'
+    title: 'Discord Place - Premium'
   }
 };
 

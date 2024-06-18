@@ -4,7 +4,7 @@ const keywordsValidation = require('@/validations/servers/keywords');
 const bodyParser = require('body-parser');
 const { param, body, validationResult, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const VoiceActivity = require('@/schemas/Server/VoiceActivity');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
@@ -51,7 +51,7 @@ module.exports = {
           }));
 
       const badges = [];
-      const foundPremium = await Premium.findOne({ 'user.id': guild.ownerId });
+      const foundPremium = await User.findOne({ 'id': guild.ownerId, subscription: { $ne: null } });
       if (foundPremium) badges.push('Premium');
 
       const permissions = {

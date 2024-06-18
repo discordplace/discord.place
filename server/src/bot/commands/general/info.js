@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const Profile = require('@/schemas/Profile');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 const getBadges = require('@/utils/profiles/getBadges');
 const VoiceActivity = require('@/schemas/Server/VoiceActivity');
 
@@ -11,13 +11,10 @@ module.exports = {
     .setName('info')
     .setDescription('info')
     .setDMPermission(false)
-
     .addSubcommand(subcommand => subcommand.setName('server').setDescription('Get information about the server.')
       .addStringOption(option => option.setName('server_id').setDescription('Server ID to get information about.')))
     .addSubcommand(subcommand => subcommand.setName('user').setDescription('Get information about the user.')
-      .addUserOption(option => option.setName('user').setDescription('User to get information about.')))
-      
-  ,
+      .addUserOption(option => option.setName('user').setDescription('User to get information about.'))),
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
 
@@ -121,7 +118,7 @@ module.exports = {
       var totalVotes = votedServersCount.length > 0 ? votedServersCount[0].totalVotes : 0;
 
       var profile = await Profile.findOne({ 'user.id': user.id });
-      var premium = await Premium.findOne({ 'user.id': user.id });
+      var userData = await User.findOne({ id: user.id });
       var currentServer = await Server.findOne({ id: interaction.guild.id });
 
       // eslint-disable-next-line no-redeclare
@@ -147,14 +144,13 @@ module.exports = {
 
       if (user.banner) embeds[0].setImage(user.bannerURL({ format: 'png', size: 4096 }));
       
-      if (premium) {
-        const isForever = premium.expire_at === null;
-        const premiumSince = new Date(premium.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      if (userData?.subscription) {
+        const premiumSince = new Date(userData.subscription.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
         embeds[0].addFields([
           {
             name: 'Premium',
-            value: `This user has premium ${isForever ? 'forever' : `since **${premiumSince}**`}.`
+            value: `This user has premium since **${premiumSince}**.`
           }
         ]);
       }

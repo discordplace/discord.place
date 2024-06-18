@@ -89,7 +89,7 @@ const ProfileSchema = new Schema({
   timestamps: true,
   methods: {
     async toPubliclySafe() {
-      const Premium = require('@/schemas/Premium');
+      const User = require('@/schemas/User');
       const newProfile = {};
   
       if (!client.forceFetchedUsers.has(this.user.id)) {
@@ -104,7 +104,7 @@ const ProfileSchema = new Schema({
         banner_url: user.bannerURL({ size: 256, format: 'png' })
       });
 
-      const premium = await Premium.findOne({ 'user.id': this.user.id });
+      const premium = await User.exists({ id: this.user.id, subscription: { $ne: null } });
 
       return {
         ...newProfile,

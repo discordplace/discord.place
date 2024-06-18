@@ -3,7 +3,7 @@ const { param, matchedData, validationResult } = require('express-validator');
 const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const Profile = require('@/schemas/Profile');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 const getBadges = require('@/utils/profiles/getBadges');
 const randomizeArray = require('@/utils/randomizeArray');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
@@ -65,8 +65,8 @@ module.exports = {
 
       const profile = await Profile.findOne({ 'user.id': id });
       if (profile) {
-        const premium = await Premium.findOne({ 'user.id': id });
-        const profileBadges = profile ? getBadges(profile, premium ? premium.createdAt : null) : [];
+        const userData = await User.findOne({ id });
+        const profileBadges = profile ? getBadges(profile, userData?.subscription?.createdAt || null) : [];
         
         Object.assign(responseData, {
           profile: {

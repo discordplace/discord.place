@@ -49,8 +49,6 @@ permissions:
     - '1206354879321210900'
     - '1206355082883371049'
     - '1238588360193216695'
-  canCreatePremiumCodes:
-    - '957840712404193290'
   canEditEmojis:
     - '957840712404193290'
   canApproveReviewsRoles:
@@ -87,6 +85,8 @@ permissions:
     - '1206354879321210900'
     - '1206355082883371049'
     - '1238588360193216695'
+  canSyncLemonSqueezyPlans:
+    - '957840712404193290'
 profilesMaxSocialsLength: 8
 packagesMaxEmojisLength: 9
 packagesMinEmojisLength: 4

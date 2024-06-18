@@ -2,7 +2,7 @@ const slugValidation = require('@/validations/profiles/slug');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData, body } = require('express-validator');
 const Profile = require('@/schemas/Profile');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const birthdayValidation = require('@/validations/profiles/birthday');
@@ -137,7 +137,7 @@ module.exports = {
       if (!canEdit) return response.sendError('You do not have permission to edit this profile.', 403);
 
       if (config.customHostnames.includes(newPreferredHost)) {
-        const foundPremium = await Premium.findOne({ 'user.id': profile.user.id });
+        const foundPremium = await User.findOne({ id: request.user.id, subscription: { $ne: null } });
         if (!foundPremium) return response.sendError(`You must be premium to use ${newPreferredHost}.`, 400);
       }
 

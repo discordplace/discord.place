@@ -30,6 +30,28 @@ const UserSchema = new Schema({
       type: String,
       required: false
     }
+  },
+  subscription: {
+    id: {
+      type: String,
+      required: false
+    },
+    orderId: {
+      type: String,
+      required: false
+    },
+    productId: {
+      type: String,
+      required: false
+    },
+    planId: {
+      type: Number,
+      required: false
+    },
+    createdAt: {
+      type: Date,
+      required: false
+    }
   }
 }, {
   timestamps: true,

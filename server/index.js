@@ -47,6 +47,15 @@ connectDatabase(process.env.MONGO_URL, {
   backup: process.env.NODE_ENV === 'production'
 });
 
+if (process.env.LEMON_SQUEEZY_API_KEY) {
+  const { lemonSqueezySetup } = require('@lemonsqueezy/lemonsqueezy.js');
+
+  lemonSqueezySetup({
+    apiKey: process.env.LEMON_SQUEEZY_API_KEY,
+    onError: error => logger.error('[Lemon Squeezy] Error:', error)
+  });
+}
+
 process.on('unhandledRejection', error => logger.error(error));
 process.on('uncaughtException', error => logger.error(error));
 

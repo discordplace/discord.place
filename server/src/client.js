@@ -6,6 +6,7 @@ const CloudflareAPI = require('cloudflare');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const sleep = require('@/utils/sleep');
+const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 
 // Schemas
 const Server = require('@/schemas/Server');
@@ -23,7 +24,7 @@ const Bot = require('@/schemas/Bot');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const Template = require('@/schemas/Template');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -129,6 +130,7 @@ module.exports = class Client {
           this.checkDeletedInviteCodes();
           this.updateClientActivity();
           this.syncPremiumRoles();
+          this.syncLemonSqueezyPlans();
         }, null, true, 'Europe/Istanbul');
 
         new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
@@ -360,10 +362,10 @@ module.exports = class Client {
     const guild = client.guilds.cache.get(config.guildId);
 
     try {
-      const premiums = await Premium.find();
+      const premiumUsers = await User.find({ subscription: { $ne: null } }); 
       const members = await guild.members.fetch();
-      const premiumMembersWithoutRole = members.filter(member => !member.roles.cache.has(config.roles.premium) && premiums.find(premium => premium.user.id === member.user.id));
-      const nonPremiumMembersWithRole = members.filter(member => member.roles.cache.has(config.roles.premium) && !premiums.find(premium => premium.user.id === member.user.id));
+      const premiumMembersWithoutRole = members.filter(member => !member.roles.cache.has(config.roles.premium) && premiumUsers.find(premium => premium.id === member.user.id));
+      const nonPremiumMembersWithRole = members.filter(member => member.roles.cache.has(config.roles.premium) && premiumUsers.find(premium => premium.id !== member.user.id));
 
       if (premiumMembersWithoutRole.size <= 0 && nonPremiumMembersWithRole.size <= 0) return;
 
@@ -384,5 +386,12 @@ module.exports = class Client {
     } catch (error) {
       logger.error('Failed to sync premium roles:', error);
     }
+  }
+
+  async syncLemonSqueezyPlans() {
+    if (!process.env.LEMON_SQUEEZY_API_KEY) return logger.warn('[Lemon Squeezy] API key is not defined. Please define LEMON_SQUEEZY_API_KEY in your environment variables.');
+
+    return syncLemonSqueezyPlans()
+      .catch(error => logger.error('There was an error while syncing Lemon Squeezy plans:', error));
   }
 };

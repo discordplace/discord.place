@@ -1,6 +1,6 @@
 const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 const Discord = require('discord.js');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
@@ -19,7 +19,7 @@ async function incrementVote(guildId, userId) {
   const timeout = await VoteTimeout.findOne({ 'user.id': userId, 'guild.id': guild.id });
   if (timeout) throw new Error(`User ${userId} has already voted for server ${guild.id}.`);
 
-  const ownerHasPremium = await Premium.findOne({ 'user.id': guild.ownerId });
+  const ownerHasPremium = await User.exists({ id: guild.ownerId, subscription: { $ne: null } });
   const incrementCount = ownerHasPremium ? 2 : 1;
 
   if (server.voters.some(voter => voter.user.id === userId)) {

@@ -1,6 +1,6 @@
 const Bot = require('@/schemas/Bot');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 const Discord = require('discord.js');
 const axios = require('axios');
 
@@ -14,7 +14,7 @@ async function incrementVote(botId, userId, botWebhook) {
   const timeout = await VoteTimeout.findOne({ 'user.id': userId, 'bot.id': botId });
   if (timeout) throw new Error(`User ${userId} has already voted for bot ${botId}.`);
 
-  const ownerHasPremium = await Premium.findOne({ 'user.id': bot.owner.id });
+  const ownerHasPremium = await User.exists({ id: bot.owner.id, subscription: { $ne: null } });
   const botUser = client.users.cache.get(bot.id) || await client.users.fetch(bot.id).catch(() => null);
   const incrementCount = ownerHasPremium ? 2 : 1;
 

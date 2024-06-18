@@ -2,7 +2,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const { query, validationResult, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 
 module.exports = {
   get: [
@@ -66,7 +66,14 @@ module.exports = {
       }).slice(skip, skip + limit);
       const total = await Server.countDocuments(findQuery);
       const maxReached = skip + servers.length >= total;
-      const premiumUserIds = await Premium.find({ 'user.id': { $in: servers.map(server => client.guilds.cache.get(server.id)).map(guild => guild.ownerId) } }).select('user.id');
+      const premiumUserIds = await User.find({ 
+        id: {
+          $in: servers.map(server => client.guilds.cache.get(server.id)).map(guild => guild.ownerId)
+        },
+        subscription: { 
+          $ne: null
+        }
+      }).select('id');
 
       const shouldBeFetchedServers = sortedServers.filter(({ id }) => !client.fetchedGuilds.has(id));
       if (shouldBeFetchedServers.length > 0) await fetchGuildsMembers(shouldBeFetchedServers.map(server => server.id)).catch(() => null);

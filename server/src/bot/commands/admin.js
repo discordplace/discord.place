@@ -1,8 +1,5 @@
 const Discord = require('discord.js');
 const Profile = require('@/schemas/Profile');
-const PremiumCode = require('@/schemas/Premium/Code');
-const Premium = require('@/schemas/Premium');
-const crypto = require('node:crypto');
 const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
 const getValidationError = require('@/utils/getValidationError');
@@ -17,12 +14,6 @@ module.exports = {
         .addStringOption(option => option.setName('slug').setDescription('The slug of the profile to verify.').setRequired(true).setAutocomplete(true)))
       .addSubcommand(subcommand => subcommand.setName('unverify').setDescription('Unverify a profile.')
         .addStringOption(option => option.setName('slug').setDescription('The slug of the profile to unverify.').setRequired(true).setAutocomplete(true))))
-
-    .addSubcommandGroup(group => group.setName('premium').setDescription('premium')
-      .addSubcommand(subcommand => subcommand.setName('generate-code').setDescription('Generates new premium code.')
-        .addStringOption(option => option.setName('time').setDescription('Expiration time for the premium. (Optional, 20m, 6h, 3d, 1w, 30d, 1y)')))
-      .addSubcommand(subcommand => subcommand.setName('revoke-code').setDescription('Revokes selected premium code.')
-        .addStringOption(option => option.setName('code').setDescription('Code to revoke.').setRequired(true).setAutocomplete(true))))
 
     .addSubcommandGroup(group => group.setName('quarantine').setDescription('quarantine')
       .addSubcommand(subcommand => subcommand.setName('create').setDescription('Creates a new quarantine entry.')
@@ -74,46 +65,6 @@ module.exports = {
         await profile.save();
 
         return interaction.followUp({ content: 'Profile has been unverified.' });
-      }
-    }
-
-    if (group === 'premium') {
-      if (!config.permissions.canCreatePremiumCodes.includes(interaction.user.id)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
-
-      if (subcommand === 'generate-code') {
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
-
-        const time = interaction.options.getString('time');
-
-        const expireTime = time ? ms(time) : null;
-        if (time && typeof expireTime !== 'number') return interaction.followUp({ content: 'Invalid time.' });
-        if (time && expireTime > 31557600000) return interaction.followUp({ content: 'The maximum premium time is 1 year.' });
-
-        const codeLength = 32;
-        const buffer = crypto.randomBytes(Math.ceil(codeLength * 3 / 4));
-        const generatedCode = `discordplace-${buffer.toString('base64').slice(0, codeLength)}`;
-
-        const code = new PremiumCode({ 
-          code: generatedCode,
-          expire_at: expireTime ? new Date(Date.now() + expireTime) : null
-        });
-        await code.save();
-
-        return interaction.followUp({ content: `Premium code generated: \`${generatedCode}\`` });
-      } 
-
-      if (subcommand === 'revoke-code') {
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
-
-        const codeToRevoke = interaction.options.getString('code');
-        const code = await PremiumCode.findOne({ code: codeToRevoke });
-        const premium = await Premium.findOne({ used_code: codeToRevoke });
-        if (!code && !premium) if (!code) return interaction.followUp({ content: 'Provided premium code doesn\'t exists.' });
-
-        if (premium) await premium.deleteOne();
-        if (code) await code.deleteOne();
-
-        return interaction.followUp({ content: `\`${codeToRevoke}\` has been revoked!` });
       }
     }
 
@@ -342,20 +293,6 @@ ${formattedQuarantinesText}`);
       if (subcommand === 'unverify') {
         const verifiedProfiles = await Profile.find({ verified: true });
         return interaction.customRespond(verifiedProfiles.map(profile => ({ name: profile.slug, value: profile.slug })));
-      }
-    }
-
-    if (group === 'premium') {
-      if (!config.permissions.canCreatePremiumCodes.includes(interaction.user.id)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
-
-      if (subcommand === 'revoke-code') {
-        const unusedCodes = await PremiumCode.find();
-        const usedCodes = await Premium.find();
-        
-        return interaction.customRespond([
-          ...unusedCodes.map(({ code, expire_at }) => ({ name: `${code} | Not Used | Expires at: ${expire_at ? new Date(expire_at).toLocaleDateString('en-US') : 'Never'}`, value: code })),
-          ...usedCodes.map(({ used_code, expire_at, user }) => ({ name: `${used_code} | Used by ${user.id} | Expires at: ${expire_at ? new Date(expire_at).toLocaleDateString('en-US') : 'Never'}`, value: used_code }))
-        ]);
       }
     }
 

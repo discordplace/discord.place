@@ -1,7 +1,7 @@
 const Profile = require('@/schemas/Profile');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const Premium = require('@/schemas/Premium');
+const User = require('@/schemas/User');
 
 module.exports = {
   get: [
@@ -20,8 +20,7 @@ module.exports = {
       if (!user) return response.sendError('User not found.', 404);
 
       const profile = await Profile.findOne({ 'user.id': user.id });
-      const premium = await Premium.findOne({ 'user.id': user.id });
-
+      const userData = await User.findOne({ id: user.id });
       const canViewDashboard = request.member && config.permissions.canViewDashboardRoles.some(roleId => request.member.roles.cache.has(roleId));
 
       return response.json({
@@ -32,13 +31,10 @@ module.exports = {
         avatar_hash: user.avatar,
         avatar_url: user.displayAvatarURL({ size: 512 }),
         banner_url: user.bannerURL({ size: 1024 }),
-        profile: typeof profile === 'object' ? {
+        profile: profile?.slug ? {
           slug: profile.slug
         } : null,
-        premium: premium ? {
-          created_at: new Date(premium.createdAt),
-          expire_at: premium.expire_at ? new Date(premium.expire_at) : null
-        } : null,
+        premium: userData.subscription,
         can_view_dashboard: canViewDashboard
       });
     }

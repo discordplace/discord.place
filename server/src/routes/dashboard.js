@@ -50,7 +50,8 @@ module.exports = {
         canDeleteBlockedIps: config.permissions.canDeleteBlockedIps.includes(request.user.id),
         canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canViewTimeouts: request.member && config.permissions.canViewTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId))
+        canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canSyncLemonSqueezyPlans: config.permissions.canSyncLemonSqueezyPlans.includes(request.user.id)
       };
 
       if (!permissions.canViewDashboard) return response.sendError('You do not have permission to view the dashboard.', 403);

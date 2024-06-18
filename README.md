@@ -86,6 +86,11 @@ To get a local copy of the project up and running, follow these steps:
 
      LOGTAIL_SOURCE_TOKEN=
 
+     # Lemon Squeezy (Payment Gateway)
+
+     LEMON_SQUEEZY_WEBHOOK_SECRET=
+     LEMON_SQUEEZY_API_KEY=
+
      # Other
 
      DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL=
@@ -147,6 +152,8 @@ Before running the project, you need to set up the following environment variabl
 | CLOUDFLARE_BLOCK_IP_LIST_ID | ID for the Cloudflare IP list used for global rate limiting | Yes | CloudflareBlockIPListID |
 | DISCORD_PLACE_API_KEY | API key for Discord Place API | Yes | RandomString |
 | DISCORD_PLACE_INSTATUS_API_KEY | API key for Instatus integration | Yes | RandomString |
+| LEMON_SQUEEZY_WEBHOOK_SECRET | Secret for Lemon Squeezy webhook verification | Yes | RandomString |
+| LEMON_SQUEEZY_API_KEY | API key for Lemon Squeezy integration | Yes | RandomString |
 | LOGTAIL_SOURCE_TOKEN | Logtail source token | No | RandomString |
 | DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL | Base API URL to get approximate guild count for bots | No | URL |
 | DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET | Secret for the API to get approximate guild count for bots (used in the Authorization header) | No | RandomString |
