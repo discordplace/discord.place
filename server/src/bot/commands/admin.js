@@ -45,7 +45,7 @@ module.exports = {
 
       const filter = message => message.author.id === interaction.user.id;
       const collected = await interaction.channel.awaitMessages({ filter, time: 60000, max: 1 }).catch(() => null);
-      if (!collected?.first?.()?.content) return interaction.error('Çalıştırılacak kod parçası bulunamadı.');
+      if (!collected?.first?.()?.content) return interaction.followUp({ content: 'You didn\'t send any code in time.' });
 
       const code = collected.first().content;
       const { result, hasError, id } = await evaluate(code);
@@ -63,11 +63,11 @@ module.exports = {
         new Discord.ActionRowBuilder()
           .addComponents(
             new Discord.ButtonBuilder()
-              .setCustomId(`deleteEvalResultMessage:${id}:${interaction.user.id}`)
+              .setCustomId(`deleteEvalResultMessage-${id}-${interaction.user.id}`)
               .setLabel('Delete')
               .setStyle(Discord.ButtonStyle.Secondary),
             new Discord.ButtonBuilder()
-              .setCustomId(`repeatEval:${id}:${interaction.user.id}`)
+              .setCustomId(`repeatEval-${id}-${interaction.user.id}`)
               .setLabel('Repeat')
               .setStyle(Discord.ButtonStyle.Secondary)
           )
