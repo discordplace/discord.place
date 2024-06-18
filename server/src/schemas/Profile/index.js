@@ -104,7 +104,7 @@ const ProfileSchema = new Schema({
         banner_url: user.bannerURL({ size: 256, format: 'png' })
       });
 
-      const premium = await User.exists({ id: this.user.id, subscription: { $ne: null } });
+      const premium = await User.findOne({ id: this.user.id, subscription: { $ne: null } });
 
       return {
         ...newProfile,
