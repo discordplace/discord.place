@@ -3,6 +3,7 @@
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
+import { Source_Serif_4 } from 'next/font/google';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { FaCheck, FaXmark } from 'react-icons/fa6';
@@ -16,6 +17,7 @@ import { TbLoader } from 'react-icons/tb';
 import fuc from '@/lib/fuc';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
+const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
 
 export default function Page({ plans }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -128,6 +130,9 @@ export default function Page({ plans }) {
   const annualPlan = plans.find(plan => plan.price_formatted.includes('year'));
   const monthlyPlan = plans.find(plan => plan.price_formatted.includes('month'));  
 
+  const actualAnnualPrice = monthlyPlan.price * 12;
+  const savePercentage = `${(((actualAnnualPrice - annualPlan.price) / actualAnnualPrice) * 100).toFixed(1)}%`;
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -203,9 +208,21 @@ export default function Page({ plans }) {
                 {fuc(cycle)}
               </h2>
 
-              <span className='text-xs font-medium text-tertiary'>
-                {cycle === 'monthly' ? monthlyPlan.price_formatted : cycle === 'annual' ? annualPlan.price_formatted : lifetimePlan.price_formatted}
-              </span>
+              <div className='flex flex-col text-xs font-medium gap-y-1'>
+                {cycle === 'annual' && (
+                  <span 
+                    className={cn(
+                      'text-purple-500',
+                      SourceSerif4.className
+                    )}
+                  >
+                    Save {savePercentage}
+                  </span>
+                )}
+                <span className='text-tertiary'>
+                  {cycle === 'monthly' ? monthlyPlan.price_formatted : cycle === 'annual' ? annualPlan.price_formatted : lifetimePlan.price_formatted}
+                </span>
+              </div>
             </div>
           </motion.div>
         ))}
