@@ -365,7 +365,7 @@ module.exports = class Client {
       const premiumUsers = await User.find({ subscription: { $ne: null } }); 
       const members = await guild.members.fetch();
       const premiumMembersWithoutRole = members.filter(member => !member.roles.cache.has(config.roles.premium) && premiumUsers.find(premium => premium.id === member.user.id));
-      const nonPremiumMembersWithRole = members.filter(member => member.roles.cache.has(config.roles.premium) && premiumUsers.find(premium => premium.id !== member.user.id));
+      const nonPremiumMembersWithRole = members.filter(member => member.roles.cache.has(config.roles.premium) && !premiumUsers.find(premium => premium.id === member.user.id));
 
       if (premiumMembersWithoutRole.size <= 0 && nonPremiumMembersWithRole.size <= 0) return;
 
