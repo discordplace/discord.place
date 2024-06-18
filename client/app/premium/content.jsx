@@ -16,6 +16,8 @@ import config from '@/config';
 import { TbLoader } from 'react-icons/tb';
 import fuc from '@/lib/fuc';
 import { IoCheckmarkCircle } from 'react-icons/io5';
+import FaQs from '@/app/premium/components/FaQs';
+import { LuShieldQuestion } from 'react-icons/lu';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
@@ -310,6 +312,24 @@ export default function Page({ plans }) {
             )}
           </div>
         )}
+      </motion.div>
+
+      <motion.div 
+        className='flex flex-col w-full mb-12 gap-y-2 max-w-[700px]'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ ...sequenceTransition, duration: 0.5, delay: 1 }}
+      >
+        <h2 className='flex items-center mt-4 text-lg font-semibold sm:text-xl gap-x-1'>
+          <LuShieldQuestion />
+          Frequently Asked Questions
+        </h2>
+
+        <p className='mb-4 text-sm text-tertiary'>
+          Have a question? Check out our FAQ section below.
+        </p>
+
+        <FaQs />
       </motion.div>
     </div>
   );
