@@ -21,18 +21,22 @@ module.exports = {
         return response.sendError('Invalid signature', 403);
       }
 
+      await response.send('OK');
+
       const body = JSON.parse(request.body.toString());
 
       switch (body.meta.event_name) {
       case 'order_created':
         var user_id = body.meta.custom_data?.user_id;
-        if (!user_id) return response.sendError('User ID not found', 400);
+        if (!user_id) return logger.warn('[Lemon Squeezy] User ID not found in custom data:', `\n${JSON.stringify(body, null, 2)}`);
 
         var user = await User.findOne({ id: user_id });
-        if (!user) return response.sendError('User not found', 404);
+        if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
+
+        if (user.subscription) return logger.warn('[Lemon Squeezy] User already has a subscription:', `\n${JSON.stringify(body, null, 2)}`);
 
         var plan = await Plan.findOne({ id: body.data.attributes.first_order_item.product_id });
-        if (!plan) return response.sendError('Plan not found', 404);
+        if (!plan) return logger.warn('[Lemon Squeezy] Plan not found:', `\n${JSON.stringify(body, null, 2)}`);
 
         user.subscription = {
           id: body.data.id,
@@ -52,7 +56,7 @@ module.exports = {
         break;
       case 'order_refunded':
         var user = await User.findOne({ 'subscription.orderId': body.data.attributes.order_number });
-        if (!user) return response.sendError('User not found', 404);
+        if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
 
         user.subscription = null;
 
@@ -66,7 +70,7 @@ module.exports = {
         break;
       case 'subscription_expired':
         var user = await User.findOne({ 'subscription.id': body.data.id });
-        if (!user) return response.sendError('User not found', 404);
+        if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
 
         user.subscription = null;
 
@@ -79,8 +83,6 @@ module.exports = {
 
         break;
       }
-
-      return response.json({ status: 'success' });
     }
   ]
 };
