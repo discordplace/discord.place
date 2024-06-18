@@ -83,6 +83,7 @@ module.exports = {
         user.subscription = null;
 
         await user.save();
+        
         var profile = await Profile.findOne({ id: user.id });
         if (profile) {
           profile.preferredHost = 'discord.place/p',
