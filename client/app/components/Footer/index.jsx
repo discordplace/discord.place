@@ -28,7 +28,7 @@ export default function Footer() {
       links: [
         {
           label: 'Home',
-          href: '/home'
+          href: '/'
         },
         {
           label: 'API Documentation',
