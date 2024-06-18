@@ -104,7 +104,7 @@ module.exports = {
               banner_url: guild.bannerURL({ format: 'png', size: 512 }),
               category: server.category,
               description: server.description,
-              premium: premiumUserIds.some(premium => premium.user.id === guild.ownerId),
+              premium: premiumUserIds.some(premium => premium.id === guild.ownerId),
               joined_at: guild.joinedTimestamp,
               data
             };
