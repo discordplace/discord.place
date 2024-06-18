@@ -181,7 +181,7 @@ export default function Page({ plans }) {
       </div>
 
       <motion.div
-        className='max-w-[700px] grid grid-cols-3 mt-16 gap-4 w-full'
+        className='max-w-[700px] grid grid-cols-1 sm:grid-cols-3 mt-16 gap-4 w-full'
         initial='hidden'
         animate='visible'
         variants={containerVariants}
@@ -234,7 +234,7 @@ export default function Page({ plans }) {
       >
         <div className='flex flex-col w-full gap-y-2'>
           <div className='flex items-center justify-between'>
-            <span className='flex w-full text-lg font-semibold text-primary'>
+            <span className='flex w-full text-sm font-semibold sm:text-lg text-primary'>
               Feature Highlights
             </span>
 
