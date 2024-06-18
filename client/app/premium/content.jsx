@@ -144,8 +144,6 @@ export default function Page({ plans }) {
     toast.promise(createCheckout(planIdToPurchase), {
       loading: 'Creating checkout..',
       success: data => {
-        setLoading(false);
-
         setTimeout(() => window.location.href = data.url, 3000);
 
         return 'Checkout created successfully. You will be redirected to the payment page after a few seconds.';
