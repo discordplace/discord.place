@@ -13,7 +13,7 @@ module.exports = {
         if (!foundProfile) return response.redirect(config.frontendUrl + '/error?code=404');
       
         const userData = await User.findOne({ id: foundProfile.user.id });
-        if (!userData?.subscription) return response.redirect(config.frontendUrl + '/error?code=50002');
+        if (!userData?.subscription?.createdAt) return response.redirect(config.frontendUrl + '/error?code=50002');
         if (!config.customHostnames.includes(foundProfile.preferredHost)) return response.redirect(config.frontendUrl + '/error?code=404');
         if (request.headers.host !== foundProfile.preferredHost) return response.redirect(config.frontendUrl + '/error?code=404');
 

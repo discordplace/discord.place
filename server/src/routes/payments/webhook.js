@@ -34,7 +34,7 @@ module.exports = {
         var user = await User.findOne({ id: user_id });
         if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-        if (user.subscription) return logger.warn('[Lemon Squeezy] User already has a subscription:', `\n${JSON.stringify(body, null, 2)}`);
+        if (user.subscription?.createdAt) return logger.warn('[Lemon Squeezy] User already has a subscription:', `\n${JSON.stringify(body, null, 2)}`);
 
         var plan = await Plan.findOne({ id: body.data.attributes.first_order_item.product_id });
         if (!plan) return logger.warn('[Lemon Squeezy] Plan not found:', `\n${JSON.stringify(body, null, 2)}`);
