@@ -15,12 +15,14 @@ import { useRouter } from 'next-nprogress-bar';
 import config from '@/config';
 import { TbLoader } from 'react-icons/tb';
 import fuc from '@/lib/fuc';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
 
 export default function Page({ plans }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
+  const user = useAuthStore(state => state.user);
 
   const sequenceTransition = {
     duration: 0.25,
@@ -126,6 +128,7 @@ export default function Page({ plans }) {
     }
   ];
 
+  const currentPlanId = loggedIn ? user.premium?.planId : null;
   const lifetimePlan = plans.find(plan => !plan.price_formatted.includes('month') && !plan.price_formatted.includes('year'));
   const annualPlan = plans.find(plan => plan.price_formatted.includes('year'));
   const monthlyPlan = plans.find(plan => plan.price_formatted.includes('month'));  
@@ -191,7 +194,7 @@ export default function Page({ plans }) {
             key={cycle}
             className={cn(
               'select-none flex items-center w-full gap-x-2 p-4 rounded-lg',
-              preferredBillingCycle === cycle ? 'bg-purple-500/5 border-2 border-purple-500' : 'border-2 border-primary bg-secondary hover:bg-tertiary cursor-pointer'
+              preferredBillingCycle === cycle ? 'bg-purple-500/5 border-2 border-purple-500/20' : 'border-2 border-primary bg-secondary hover:bg-tertiary cursor-pointer'
             )}
             onClick={() => setPreferredBillingCycle(cycle)}
             variants={itemVariants}
@@ -217,6 +220,18 @@ export default function Page({ plans }) {
                     Save {savePercentage}
                   </span>
                 )}
+
+                {currentPlanId === (cycle === 'monthly' ? monthlyPlan.id : cycle === 'annual' ? annualPlan.id : lifetimePlan.id) && (
+                  <span 
+                    className={cn(
+                      'text-purple-500 flex items-center gap-x-1',
+                      SourceSerif4.className
+                    )}
+                  >
+                    Current Plan <IoCheckmarkCircle />
+                  </span>
+                )}
+
                 <span className='text-tertiary'>
                   {cycle === 'monthly' ? monthlyPlan.price_formatted : cycle === 'annual' ? annualPlan.price_formatted : lifetimePlan.price_formatted}
                 </span>
@@ -271,28 +286,30 @@ export default function Page({ plans }) {
           </div>
         </div>
 
-        <div
-          className={cn(
-            'flex items-center justify-center w-full py-2 mt-4 font-semibold text-center text-white bg-purple-500 rounded-lg cursor-pointer hover:bg-purple-600 gap-x-2',
-            loading && 'pointer-events-none opacity-70'
-          )}
-          onClick={loggedIn ? purchase : () => router.push(config.getLoginURL('/premium'))}
-        >
-          {loading && (
-            <TbLoader className='animate-spin' size={20} />
-          )}
+        {!currentPlanId && (
+          <div
+            className={cn(
+              'flex items-center justify-center w-full py-2 mt-4 font-semibold text-center text-white bg-purple-500 rounded-lg cursor-pointer hover:bg-purple-600 gap-x-2',
+              loading && 'pointer-events-none opacity-70'
+            )}
+            onClick={loggedIn ? purchase : () => router.push(config.getLoginURL('/premium'))}
+          >
+            {loading && (
+              <TbLoader className='animate-spin' size={20} />
+            )}
 
-          {loggedIn ? (
-            <>
-              Create Checkout
-            </>
-          ) : (
-            <>
-              <FaDiscord size={20} />
-              Login to Purchase
-            </>
-          )}
-        </div>
+            {loggedIn ? (
+              <>
+                Purchase Premium
+              </>
+            ) : (
+              <>
+                <FaDiscord size={20} />
+                Login to Purchase
+              </>
+            )}
+          </div>
+        )}
       </motion.div>
     </div>
   );
