@@ -34,7 +34,7 @@ module.exports = {
         profile: profile?.slug ? {
           slug: profile.slug
         } : null,
-        premium: userData.subscription,
+        premium: userData?.subscription,
         can_view_dashboard: canViewDashboard
       });
     }
