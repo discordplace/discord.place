@@ -87,6 +87,10 @@ export default function Footer() {
         {
           label: 'Content Policy',
           href: '/legal/content-policy'
+        },
+        {
+          label: 'Purchase Policy',
+          href: '/legal/purchase-policy'
         }
       ]
     },
