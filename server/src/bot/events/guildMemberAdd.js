@@ -2,9 +2,13 @@ const Reward = require('@/schemas/Server/Vote/Reward');
 const Server = require('@/schemas/Server');
 const sendLog = require('@/src/utils/servers/sendLog');
 const Discord = require('discord.js');
+const User = require('@/schemas/User');
 
 module.exports = async member => {
   if (member.user.bot) return;
+
+  const userData = await User.findOne({ id: member.user.id });
+  if (userData?.subscription && member.guild.id === config.guild.id && !member.roles.cache.has(config.roles.premium)) await member.roles.add(config.roles.premium);
 
   const rewards = await Reward.find({ 'guild.id': member.guild.id });
   if (!rewards.length) return;

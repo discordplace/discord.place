@@ -5,6 +5,7 @@ const LogChannel = require('@/schemas/Server/LogChannel');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
+const User = require('@/schemas/User');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -193,8 +194,10 @@ module.exports = {
         const foundServer = await Server.findOne({ id: interaction.guild.id });
         if (!foundServer) return interaction.followUp({ content: `You can't add a reward without listing your server. Visit [here](<${config.frontendUrl}/servers/manage>) to list this server.` });
 
+        const ownerHasPremium = await User.findOne({ id: interaction.guild.ownerId, subscription: { $ne: null } });
+
         const foundRewards = await Reward.find({ guild: { id: interaction.guild.id } });
-        if (foundRewards.length >= 5) return interaction.followUp({ content: 'You can\'t have more than 5 rewards.' });
+        if (foundRewards.length >= (ownerHasPremium ? 20 : 5)) return interaction.followUp({ content: `You can't have more than ${ownerHasPremium ? 20 : 5} rewards.` });
 
         const rewardExists = foundRewards.some(reward => reward.role.id === role.id);
         if (rewardExists) return interaction.followUp({ content: 'There is already a reward with that role.' });
