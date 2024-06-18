@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
 const User = require('@/schemas/User');
+const Profile = require('@/schemas/Profile');
 
 module.exports = {
   post: [
@@ -62,6 +63,13 @@ module.exports = {
 
         await user.save();
 
+        var profile = await Profile.findOne({ id: user.id });
+        if (profile) {
+          profile.preferredHost = 'discord.place/p',
+
+          await profile.save();
+        }
+
         var guild = client.guilds.cache.get(config.guildId);
         var member = await guild.members.cache.get(user.id);
 
@@ -75,6 +83,12 @@ module.exports = {
         user.subscription = null;
 
         await user.save();
+        var profile = await Profile.findOne({ id: user.id });
+        if (profile) {
+          profile.preferredHost = 'discord.place/p',
+
+          await profile.save();
+        }
 
         var guild = client.guilds.cache.get(config.guildId);
         var member = await guild.members.cache.get(user.id);
