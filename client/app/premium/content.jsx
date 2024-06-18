@@ -203,12 +203,12 @@ export default function Page({ plans }) {
               preferredBillingCycle === cycle ? 'bg-white border-purple-500' : 'border-primary'
             )} />
         
-            <div className='flex items-center gap-x-1.5'>
+            <div className='flex items-center gap-x-2'>
               <h2 className='text-base font-semibold'>
                 {fuc(cycle)}
               </h2>
 
-              <div className='flex flex-col text-xs font-medium gap-y-1'>
+              <div className='flex flex-col text-xs font-medium gap-y-0.5'>
                 {cycle === 'annual' && (
                   <span 
                     className={cn(
