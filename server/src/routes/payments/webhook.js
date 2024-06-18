@@ -1,3 +1,5 @@
+/* eslint no-redeclare: 0 */
+
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
@@ -42,9 +44,13 @@ module.exports = {
 
         await user.save();
 
+        var guild = client.guilds.cache.get(config.guildId);
+        var member = await guild.members.fetch(user.id).catch(() => null);
+
+        if (member) await member.roles.add(config.roles.premium);
+
         break;
       case 'order_refunded':
-        // eslint-disable-next-line no-redeclare
         var user = await User.findOne({ 'subscription.orderId': body.data.attributes.order_number });
         if (!user) return response.sendError('User not found', 404);
 
@@ -52,15 +58,24 @@ module.exports = {
 
         await user.save();
 
+        var guild = client.guilds.cache.get(config.guildId);
+        var member = await guild.members.cache.get(user.id);
+
+        if (member && member.roles.cache.has(config.roles.premium)) await member.roles.remove(config.roles.premium);
+
         break;
       case 'subscription_expired':
-        // eslint-disable-next-line no-redeclare
         var user = await User.findOne({ 'subscription.id': body.data.id });
         if (!user) return response.sendError('User not found', 404);
 
         user.subscription = null;
 
         await user.save();
+
+        var guild = client.guilds.cache.get(config.guildId);
+        var member = await guild.members.cache.get(user.id);
+
+        if (member && member.roles.cache.has(config.roles.premium)) await member.roles.remove(config.roles.premium);
 
         break;
       }
