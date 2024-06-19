@@ -310,3 +310,8 @@ templateDenyReasons:
 instatus:
   page_id: 'clwx1az6k27335bhobasj52b6y'
   metric_id: 'clwx1tevy38905bhobroucjm8j'
+lemonSqueezy:
+  variantIds:
+    tripledVotes:
+      servers: '421124'
+      bots: '421125'
