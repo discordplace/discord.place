@@ -1,5 +1,6 @@
 const Bot = require('@/schemas/Bot');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
+const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const User = require('@/schemas/User');
 const Discord = require('discord.js');
 const axios = require('axios');
@@ -16,7 +17,9 @@ async function incrementVote(botId, userId, botWebhook) {
 
   const ownerHasPremium = await User.exists({ id: bot.owner.id, subscription: { $ne: null } });
   const botUser = client.users.cache.get(bot.id) || await client.users.fetch(bot.id).catch(() => null);
-  const incrementCount = bot.vote_triple_enabled?.created_at ? 3 : (ownerHasPremium ? 2 : 1);
+ 
+  const isVoteTripleEnabled = await BotVoteTripleEnabled.findOne({ id: bot.id }).then(data => !!data);
+  const incrementCount = isVoteTripleEnabled ? 3 : (ownerHasPremium ? 2 : 1);
 
   if (bot.voters.some(voter => voter.user.id === userId)) {
     const updateQuery = {
