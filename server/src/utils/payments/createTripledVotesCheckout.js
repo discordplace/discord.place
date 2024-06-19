@@ -17,6 +17,7 @@ async function createTripledVotesCheckout(id, type) {
       custom
     },
     productOptions: {
+      name: `Tripled votes for 24 hours - ${type === 'server' ? 'Server' : 'Bot'} ${id}`,
       enabledVariants: [config.lemonSqueezy.variantIds.tripledVotes[type === 'server' ? 'servers' : 'bots']]
     }
   });
