@@ -87,7 +87,9 @@ export default function Content({ bot }) {
                   <>
                     <Countdown
                       date={new Date(bot.vote_triple_enabled.created_at).getTime() + 86400000}
-                      renderer={({ hours, minutes }) => {
+                      renderer={({ completed, hours, minutes }) => {
+                        if (completed) return 'Votes tripled ended!';
+                        
                         return `Votes tripled for ${hours} hours, ${minutes} minutes!`;
                       }}
                     />

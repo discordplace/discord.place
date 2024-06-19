@@ -86,7 +86,9 @@ export default function Content({ server }) {
                   <>
                     <Countdown
                       date={new Date(server.vote_triple_enabled.created_at).getTime() + 86400000}
-                      renderer={({ hours, minutes }) => {
+                      renderer={({ completed, hours, minutes }) => {
+                        if (completed) return 'Votes tripled expired!';
+                        
                         return `Votes tripled for ${hours} hours, ${minutes} minutes!`;
                       }}
                     />
