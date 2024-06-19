@@ -15,10 +15,13 @@ import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import voteServer from '@/lib/request/servers/voteServer';
 import createReminder from '@/lib/request/servers/createReminder';
-import Countdown from '@/app/components/Countdown/Vote';
+import VoteCountdown from '@/app/components/Countdown/Vote';
 import Tooltip from '@/app/components/Tooltip';
 import { FaRegBell, FaBell } from 'react-icons/fa';
 import revalidateServer from '@/lib/revalidate/server';
+import { BsFire } from 'react-icons/bs';
+import createTripledVotesCheckout from '@/lib/request/servers/createTripledVotesCheckout';
+import { useRouter } from 'next-nprogress-bar';
 
 export default function Actions({ server }) {
   const [serverVotes, setServerVotes] = useState(server.votes);
@@ -28,6 +31,8 @@ export default function Actions({ server }) {
   const [showCaptcha, setShowCaptcha] = useState(false);
   const [loading, setLoading] = useState(false);
   const [createReminderLoading, setCreateReminderLoading] = useState(false);
+  const [buyTripledVotesLoading, setBuyTripledVotesLoading] = useState(false);
+  const router = useRouter();
   
   const formatter = new Intl.NumberFormat('en-US', {
     notation: 'compact',
@@ -88,6 +93,24 @@ export default function Actions({ server }) {
       },
       error: error => {
         setCreateReminderLoading(false);
+        return error;
+      }
+    });
+  }
+
+  function buyTripledVotes() {
+    setBuyTripledVotesLoading(true);
+
+    toast.promise(createTripledVotesCheckout(server.id), {
+      loading: 'We are creating a checkout for you..',
+      success: data => {        
+        setTimeout(() => router.push(data.url), 3000);
+
+        return 'Checkout created! Redirecting you to the payment page in few seconds..';
+      },
+      error: error => {
+        setBuyTripledVotesLoading(false);
+        
         return error;
       }
     });
@@ -171,7 +194,7 @@ export default function Actions({ server }) {
           <div className='flex gap-x-1.5 items-center'>
             {loading && <TbLoader className='animate-spin' />}
             {voteTimeout ? (
-              <Countdown date={new Date(voteTimeout.createdAt).getTime() + 86400000} />
+              <VoteCountdown date={new Date(voteTimeout.createdAt).getTime() + 86400000} />
             ) : 'Vote'}
           </div>
 
@@ -233,16 +256,40 @@ export default function Actions({ server }) {
         </MotionLink>
 
         {server.permissions.canEdit && (
-          <MotionLink
-            className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg group disabled:pointer-events-none disabled:opacity-70 hover:text-primary hover:bg-tertiary bg-secondary gap-x-2 text-secondary'
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
-            href={`/servers/${server.id}/manage`}
-          >
-            Manage Server
-            <BiPencil />
-          </MotionLink>
+          <>
+            <MotionLink
+              className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg group disabled:pointer-events-none disabled:opacity-70 hover:text-primary hover:bg-tertiary bg-secondary gap-x-2 text-secondary'
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+              href={`/servers/${server.id}/manage`}
+            >
+              Manage Server
+              <BiPencil />
+            </MotionLink>
+
+            {!server.vote_triple_enabled?.created_at && (
+              <motion.button 
+                className={cn(
+                  'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-orange-500 rounded-lg group gap-x-2 hover:bg-orange-600',
+                  buyTripledVotesLoading && '!opacity-70 pointer-events-none'
+                )}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+                onClick={buyTripledVotes}
+              >
+                <div className='flex gap-x-1.5 items-center'>
+                  {buyTripledVotesLoading && <TbLoader className='animate-spin' />}
+                  Buy Triple Votes
+                </div>
+
+                <div className='flex items-center font-bold gap-x-1'>
+                  <BsFire />
+                </div>
+              </motion.button>
+            )}
+          </>
         )}
       </motion.div>
     </div>

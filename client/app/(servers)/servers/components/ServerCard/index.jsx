@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
 import getRelativeTime from '@/lib/getRelativeTime';
+import { BsFire } from 'react-icons/bs';
 
 export default function ServerCard(props) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -91,6 +92,7 @@ export default function ServerCard(props) {
         ) : (
           <div className='absolute top-0 left-0 z-[1] bg-quaternary w-full h-[calc(100%_-_1px)] rounded-[1.25rem]' />
         )}
+
         <div className='bg-secondary group-hover:bg-tertiary transition-colors w-full h-[calc(100%_-_30px)] z-[10] relative top-[30px] rounded-b-[1.25rem] rounded-t-[1.5rem]'>
           <div className='relative'>
             <ServerIcon
@@ -140,10 +142,23 @@ export default function ServerCard(props) {
               ))}
             </div>
 
-            <div className='flex items-center px-2.5 py-1 mt-3 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
-              <BiSolidCategory />
-              {props.server.category}
+            <div className='flex items-center mt-3 gap-x-2'>
+              <div className='flex items-center px-2.5 py-1 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
+                <BiSolidCategory />
+                {props.server.category}
+              </div>
+
+              {props.server.vote_triple_enabled?.created_at && (
+                <div className='relative z-[1] p-[0.1rem] overflow-hidden rounded-full'>
+                  <div class="animate-rotate absolute inset-0 z-[10] h-full w-full rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)] pointer-events-none"></div>
+
+                  <div className='flex z-[20] relative items-center px-3 py-1 text-xs font-bold text-white rounded-full gap-x-1 bg-orange-500/20 backdrop-blur-md'>
+                    <BsFire /> 3X VOTE!
+                  </div>
+                </div>
+              )}
             </div>
+            
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ async function incrementVote(botId, userId, botWebhook) {
 
   const ownerHasPremium = await User.exists({ id: bot.owner.id, subscription: { $ne: null } });
   const botUser = client.users.cache.get(bot.id) || await client.users.fetch(bot.id).catch(() => null);
-  const incrementCount = ownerHasPremium ? 2 : 1;
+  const incrementCount = bot.vote_triple_enabled?.created_at ? 3 : (ownerHasPremium ? 2 : 1);
 
   if (bot.voters.some(voter => voter.user.id === userId)) {
     const updateQuery = {

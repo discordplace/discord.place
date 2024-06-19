@@ -77,7 +77,16 @@ const ServerSchema = new Schema({
   timestamps: true,
   methods: {
     async toPubliclySafe() {
+      const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
+
       const newServer = {};
+
+      const voteTripleEnabledData = await ServerVoteTripleEnabled.findOne({ id: this.id });
+      if (voteTripleEnabledData) {
+        newServer.vote_triple_enabled = {
+          created_at: voteTripleEnabledData.createdAt
+        };
+      }
 
       return {
         ...newServer,

@@ -11,6 +11,7 @@ import Script from 'next/script';
 import { forwardRef } from 'react';
 import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
+import Countdown from '@/app/components/Countdown';
 
 export default function Content({ server }) {
   const theme = useThemeStore(state => state.theme);
@@ -79,6 +80,28 @@ export default function Content({ server }) {
                   />
                 </Tooltip>
               ))}
+
+              {server.vote_triple_enabled?.created_at && (
+                <Tooltip content={
+                  <>
+                    <Countdown
+                      date={new Date(server.vote_triple_enabled.created_at).getTime() + 86400000}
+                      renderer={({ hours, minutes }) => {
+                        return `Votes tripled for ${hours} hours, ${minutes} minutes!`;
+                      }}
+                    />
+                  </>
+                }>
+                  <MotionImage 
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_votes_tripled.svg`} 
+                    width={24} 
+                    height={24} 
+                    alt={'Votes Tripled Badge'}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  />
+                </Tooltip>       
+              )}
             </div>
           )}
         </div>

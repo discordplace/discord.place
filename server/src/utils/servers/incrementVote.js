@@ -20,7 +20,7 @@ async function incrementVote(guildId, userId) {
   if (timeout) throw new Error(`User ${userId} has already voted for server ${guild.id}.`);
 
   const ownerHasPremium = await User.exists({ id: guild.ownerId, subscription: { $ne: null } });
-  const incrementCount = ownerHasPremium ? 2 : 1;
+  const incrementCount = server.vote_triple_enabled?.created_at ? 3 : (ownerHasPremium ? 2 : 1);
 
   if (server.voters.some(voter => voter.user.id === userId)) {
     const updateQuery = {

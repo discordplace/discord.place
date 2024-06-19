@@ -5,6 +5,10 @@ const crypto = require('crypto');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
 const User = require('@/schemas/User');
 const Profile = require('@/schemas/Profile');
+const Server = require('@/schemas/Server');
+const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
+const Bot = require('@/schemas/Bot');
+const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 
 module.exports = {
   post: [
@@ -28,31 +32,56 @@ module.exports = {
 
       switch (body.meta.event_name) {
       case 'order_created':
-        var user_id = body.meta.custom_data?.user_id;
-        if (!user_id) return logger.warn('[Lemon Squeezy] User ID not found in custom data:', `\n${JSON.stringify(body, null, 2)}`);
+        var isTripledVoteProduct = body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.tripledVotes.servers || body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.tripledVotes.bots;
+        if (isTripledVoteProduct) {
+          var serverId = body.meta.custom_data?.server_id;
+          var botId = body.meta.custom_data?.bot_id;
+          
+          if (!serverId && !botId) return logger.warn('[Lemon Squeezy] Server ID or Bot ID not found in custom data:', `\n${JSON.stringify(body, null, 2)}`);
 
-        var user = await User.findOne({ id: user_id });
-        if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
+          if (serverId) {        
+            var guild = client.guilds.cache.get(serverId);
+            if (!guild) return logger.warn('[Lemon Squeezy] Guild not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-        if (user.subscription?.createdAt) return logger.warn('[Lemon Squeezy] User already has a subscription:', `\n${JSON.stringify(body, null, 2)}`);
+            var server = await Server.findOne({ id: serverId });
+            if (!server) return logger.warn('[Lemon Squeezy] Server not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-        var plan = await Plan.findOne({ id: body.data.attributes.first_order_item.product_id });
-        if (!plan) return logger.warn('[Lemon Squeezy] Plan not found:', `\n${JSON.stringify(body, null, 2)}`);
+            await new ServerVoteTripleEnabled({ id: serverId }).save();
+          }
 
-        user.subscription = {
-          id: body.data.id,
-          orderId: body.data.attributes.order_number,
-          productId: body.data.attributes.first_order_item.product_id,
-          planId: plan.id,
-          createdAt: new Date(body.data.attributes.created_at)
-        };
+          if (botId) {        
+            var bot = await Bot.findOne({ id: botId });
+            if (!bot) return logger.warn('[Lemon Squeezy] Bot not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-        await user.save();
+            await new BotVoteTripleEnabled({ id: botId }).save();
+          }
+        } else {
+          var user_id = body.meta.custom_data?.user_id;
+          if (!user_id) return logger.warn('[Lemon Squeezy] User ID not found in custom data:', `\n${JSON.stringify(body, null, 2)}`);
 
-        var guild = client.guilds.cache.get(config.guildId);
-        var member = await guild.members.fetch(user.id).catch(() => null);
+          var user = await User.findOne({ id: user_id });
+          if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-        if (member) await member.roles.add(config.roles.premium);
+          if (user.subscription?.createdAt) return logger.warn('[Lemon Squeezy] User already has a subscription:', `\n${JSON.stringify(body, null, 2)}`);
+
+          var plan = await Plan.findOne({ id: body.data.attributes.first_order_item.product_id });
+          if (!plan) return logger.warn('[Lemon Squeezy] Plan not found:', `\n${JSON.stringify(body, null, 2)}`);
+
+          user.subscription = {
+            id: body.data.id,
+            orderId: body.data.attributes.order_number,
+            productId: body.data.attributes.first_order_item.product_id,
+            planId: plan.id,
+            createdAt: new Date(body.data.attributes.created_at)
+          };
+
+          await user.save();
+
+          var guild = client.guilds.cache.get(config.guildId);
+          var member = await guild.members.fetch(user.id).catch(() => null);
+
+          if (member) await member.roles.add(config.roles.premium);
+        }
 
         break;
       case 'order_refunded':

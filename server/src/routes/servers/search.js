@@ -3,6 +3,7 @@ const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const { query, validationResult, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
+const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 
 module.exports = {
   get: [
@@ -78,6 +79,8 @@ module.exports = {
       const shouldBeFetchedServers = sortedServers.filter(({ id }) => !client.fetchedGuilds.has(id));
       if (shouldBeFetchedServers.length > 0) await fetchGuildsMembers(shouldBeFetchedServers.map(server => server.id)).catch(() => null);
 
+      const voteTripleEnabledServerIds = await ServerVoteTripleEnabled.find({ id: { $in: sortedServers.map(server => server.id) } });
+
       return response.json({
         maxReached,
         total,
@@ -106,7 +109,10 @@ module.exports = {
               description: server.description,
               premium: premiumUserIds.some(premium => premium.id === guild.ownerId),
               joined_at: guild.joinedTimestamp,
-              data
+              data,
+              vote_triple_enabled: voteTripleEnabledServerIds.find(({ id }) => id === guild.id) ? {
+                created_at: voteTripleEnabledServerIds.find(({ id }) => id === guild.id).createdAt
+              } : null
             };
           }
         })

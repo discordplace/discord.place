@@ -10,6 +10,7 @@ import { MdUpdate } from 'react-icons/md';
 import { IoHeart } from 'react-icons/io5';
 import { useMedia } from 'react-use';
 import getRelativeTime from '@/lib/getRelativeTime';
+import { BsFire } from 'react-icons/bs';
 
 export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -133,9 +134,21 @@ export default function Card({ data, overridedSort }) {
               ))}
             </div>
 
-            <div className='flex items-center px-2.5 py-1 mt-3 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
-              <BiSolidCategory />
-              {category === 'All' ? data.categories[0] : category}
+            <div className='flex items-center mt-3 gap-x-2'>
+              <div className='flex items-center px-2.5 py-1 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
+                <BiSolidCategory />
+                {category === 'All' ? data.categories[0] : category}
+              </div>
+
+              {data.vote_triple_enabled?.created_at && (
+                <div className='relative z-[1] p-[0.1rem] overflow-hidden rounded-full'>
+                  <div class="animate-rotate absolute inset-0 z-[10] h-full w-full rounded-full bg-[conic-gradient(#ab82d3_10deg,transparent_90deg)] pointer-events-none"></div>
+
+                  <div className='flex z-[20] relative items-center px-3 py-1 text-xs font-bold text-white rounded-full gap-x-1 bg-purple-500/20 backdrop-blur-md'>
+                    <BsFire /> 3X VOTE!
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

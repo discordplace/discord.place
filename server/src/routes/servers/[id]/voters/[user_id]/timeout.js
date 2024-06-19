@@ -2,6 +2,8 @@ const { param, validationResult, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const checkAuthentication = require('@/src/utils/middlewares/checkAuthentication');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
+const ServerReminder = require('@/schemas/Server/Vote/Reminder');
+
 module.exports = {
   delete: [
     checkAuthentication,
@@ -18,7 +20,12 @@ module.exports = {
       const { id, user_id } = matchedData(request);
 
       ServerTimeout.findOneAndDelete({ 'guild.id': id, 'user.id': user_id })
-        .then(() => response.sendStatus(204).end())
+        .then(async () => {
+          await ServerReminder.findOneAndDelete({ 'guild.id': id, 'user.id': user_id })
+            .catch(() => null);
+
+          return response.sendStatus(204).end();
+        })
         .catch(error => {
           logger.error('There was an error while trying to delete a timeout record:', error);
           return response.sendError('Failed to delete timeout record.', 500);

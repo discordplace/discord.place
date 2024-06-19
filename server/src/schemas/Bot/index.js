@@ -148,7 +148,16 @@ const BotSchema = new Schema({
   timestamps: true,
   methods: {
     async toPubliclySafe() {
+      const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
+
       const newBot = {};
+
+      const voteTripleEnabledData = await BotVoteTripleEnabled.findOne({ id: this.id });
+      if (voteTripleEnabledData) {
+        newBot.vote_triple_enabled = {
+          created_at: voteTripleEnabledData.createdAt
+        };
+      }
 
       const user = client.users.cache.get(this.owner.id) || await client.users.fetch(this.owner.id).catch(() => null);   
       if (user) {
