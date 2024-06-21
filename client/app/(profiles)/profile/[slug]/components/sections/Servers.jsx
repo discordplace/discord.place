@@ -8,7 +8,7 @@ export default function Servers({ profile }) {
         className='text-xl font-semibold' 
         initial={{ opacity: 0, y: -10 }} 
         animate={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.6 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.7 }}
       >
         Servers
       </motion.h2>
@@ -16,7 +16,7 @@ export default function Servers({ profile }) {
       <motion.p className='mt-2 whitespace-pre-wrap text-tertiary' 
         initial={{ opacity: 0, y: -10 }} 
         animate={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.615 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.715 }}
       >
         The owner of this profile is also the owner of the following servers. If you like the profile, maybe you like the servers also?
       </motion.p>
@@ -25,7 +25,7 @@ export default function Servers({ profile }) {
         className='grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2 lg:grid-cols-3'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.685 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.785 }}
       >
         {profile.servers.map((server, index) => (
           <div 
@@ -33,7 +33,7 @@ export default function Servers({ profile }) {
             key={server.id}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.69 + (index * 0.1) }}
+            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.79 + (index * 0.1) }}
           >
             <ServerCard 
               server={{
