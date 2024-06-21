@@ -31,6 +31,7 @@
     "body-parser": "^1.20.2",
     "cli-table3": "^0.6.3",
     "cloudflare": "^3.2.0",
+    "colord": "^2.9.3",
     "colorette": "^2.0.20",
     "compression": "^1.7.4",
     "connect-mongo": "^5.1.0",

@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const birthdayValidation = require('@/validations/profiles/birthday');
 const socialsValidation = require('@/validations/profiles/socials');
+const colorsValidation = require('@/validations/profiles/colors');
 const Server = require('@/schemas/Server');
 const randomizeArray = require('@/utils/randomizeArray');
 const getValidationError = require('@/utils/getValidationError');
@@ -121,6 +122,10 @@ module.exports = {
       .optional()
       .isString().withMessage('Preferred host must be a string.')
       .isIn(['discord.place/p', ...config.customHostnames]).withMessage('Preferred host is not valid.'),
+    body('colors')
+      .optional()
+      .isObject().withMessage('Colors must be an object.')
+      .custom(colorsValidation),
     body('socials')
       .optional()
       .isObject().withMessage('Socials must be an object.')
@@ -129,7 +134,7 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
       
-      const { slug, newSlug, occupation: newOccupation, gender: newGender, location: newLocation, birthday: newBirthday, bio: newBio, preferredHost: newPreferredHost, socials } = matchedData(request);
+      const { slug, newSlug, occupation: newOccupation, gender: newGender, location: newLocation, birthday: newBirthday, bio: newBio, preferredHost: newPreferredHost, colors: newColors, socials } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 
@@ -195,6 +200,7 @@ module.exports = {
       if (newBirthday) profile.birthday = newBirthday;
       if (newBio) profile.bio = newBio;
       if (newPreferredHost) profile.preferredHost = newPreferredHost;
+      if (newColors) profile.colors = newColors;
 
       const validationError = getValidationError(profile);
       if (validationError) return response.sendError(validationError, 400);
