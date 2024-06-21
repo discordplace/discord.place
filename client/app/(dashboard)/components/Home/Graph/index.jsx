@@ -3,11 +3,11 @@
 import useThemeStore from '@/stores/theme';
 import dynamic from 'next/dynamic';
 
+const DynamicApexCharts = dynamic(() => import('react-apexcharts'), {
+  ssr: false
+});
+
 export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltipLabel, color, extraGraphOptions = {} }) {
-  const DynamicApexCharts = dynamic(() => import('react-apexcharts'), {
-    ssr: false
-  });
-  
   const theme = useThemeStore(state => state.theme);
 
   const reversedData = [...data].reverse();
@@ -82,7 +82,7 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
           categories: reversedData.map(({ createdAt }) => {
             const date = new Date(createdAt);
             const day = date.getDate();
-            const month = date.toLocaleString('default', { month: 'short' });
+            const month = date.toLocaleString('en-US', { month: 'short' });
   
             return `${day} ${month}`;
           }),
