@@ -256,8 +256,8 @@ export default function Card(props) {
               >
                 <button
                   className={cn(
-                    'flex text-white items-center px-2 py-1.5 font-semibold text-sm gap-x-0.5 rounded-lg',
-                    !haveCustomColors ? 'hover:bg-purple-700 bg-purple-600' : 'shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-sm' 
+                    'flex items-center px-2 py-1.5 font-semibold text-sm gap-x-0.5 rounded-lg',
+                    !haveCustomColors ? 'hover:bg-quaternary hover:bg-purple-600 text-tertiary hover:text-white' : 'text-white shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-sm' 
                   )}
                 >
                   <TbWorldShare size={16} />
