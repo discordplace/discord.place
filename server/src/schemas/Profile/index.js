@@ -91,7 +91,7 @@ const ProfileSchema = new Schema({
       type: String,
       default: null,
       validate: {
-        validator: value => colorsValidation({ primary: value, secondary: null }),
+        validator: value => colorsValidation({ primary: value, secondary: null }, true),
         message: ({ reason }) => reason.message
       }
     },
@@ -99,7 +99,7 @@ const ProfileSchema = new Schema({
       type: String,
       default: null,
       validate: {
-        validator: value => colorsValidation({ primary: null, secondary: value }),
+        validator: value => colorsValidation({ primary: null, secondary: value }, true),
         message: ({ reason }) => reason.message
       }
     }

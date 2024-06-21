@@ -1,6 +1,6 @@
 const { colord } = require('colord');
 
-function colorsValidation(value) {
+function colorsValidation(value, isMongoValidation) {
   const colors = Object.keys(value);
   if (colors.length !== 2) throw new Error('Colors must have exactly 2 keys.');
 
@@ -16,11 +16,11 @@ function colorsValidation(value) {
     if (!secondary.isValid()) throw new Error('Secondary color must be a valid hex code.');
   }
 
-  if (value.primary && !value.secondary) {
+  if (!isMongoValidation && value.primary && !value.secondary) {
     throw new Error('Secondary color is required.');
   }
   
-  if (value.secondary && !value.primary) {
+  if (!isMongoValidation && value.secondary && !value.primary) {
     throw new Error('Primary color is required.');
   }
 

@@ -174,6 +174,79 @@ export default function Card(props) {
                 }
               </p>
             </div>
+
+            {(props.servers.length > 0 || props.bots.length > 0) && (
+              <div className='flex flex-col mt-4 gap-y-1'>
+                <h3
+                  className={cn(
+                    'text-sm font-medium',
+                    !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
+                  )}
+                >
+                  Listings
+                </h3>
+
+                <div className='flex w-full gap-x-2'>
+                  {props.servers.length > 0 && (
+                    <div className={cn(
+                      'flex items-center w-full px-2 py-1 text-sm rounded-lg gap-x-1',
+                      !haveCustomColors ? 'bg-quaternary' : 'bg-black/25'
+                    )}>
+                      <div className='flex -space-x-2'>
+                        {props.servers.map(({ id, icon_url }) => (
+                          <Link
+                            key={id}
+                            href={`/servers/${id}`}
+                          >
+                            <Image
+                              src={icon_url}
+                              width={24}
+                              height={24}
+                              className={cn(
+                                'rounded-lg border-[2px] hover:opacity-50 transition-opacity duration-200',
+                                !haveCustomColors ? 'border-[rgba(var(--bg-quaternary))]' : 'border-black/25'
+                              )}
+                              alt={`Server ${id}'s icon`}
+                            />
+                          </Link>
+                        ))}
+                      </div>
+
+                      {props.servers.length} Server{props.servers.length > 1 ? 's' : ''}
+                    </div>
+                  )}
+
+                  {props.bots.length > 0 && (
+                    <div className={cn(
+                      'flex items-center w-full px-2 py-1 text-sm rounded-lg gap-x-1',
+                      !haveCustomColors ? 'bg-quaternary' : 'bg-black/25'
+                    )}>
+                      <div className='flex -space-x-2'>
+                        {props.bots.map(({ id, avatar_url }) => (
+                          <Link
+                            key={id}
+                            href={`/bots/${id}`}
+                          >
+                            <Image
+                              src={avatar_url}
+                              width={24}
+                              height={24}
+                              className={cn(
+                                'rounded-lg border-[2px] hover:opacity-50 transition-opacity duration-200',
+                                !haveCustomColors ? 'border-[rgba(var(--bg-quaternary))]' : 'border-black/25'
+                              )}
+                              alt={`Bot ${id}'s avatar`}
+                            />
+                          </Link>
+                        ))}
+                      </div>
+
+                      {props.bots.length} Bot{props.bots.length > 1 ? 's' : ''}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className={cn(
