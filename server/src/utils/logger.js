@@ -47,15 +47,19 @@ module.exports = class Logger {
     ];
 
     if (process.env.NODE_ENV === 'production') {
-      const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
-      const transport = new LogtailTransport(logtail);
+      if (!process.env.LOGTAIL_SOURCE_TOKEN) {
+        logger.warn('LOGTAIL_SOURCE_TOKEN is not set in production environment.');
+      } else {
+        const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
+        const transport = new LogtailTransport(logtail);
 
-      transports.push(transport);
+        transports.push(transport);
 
-      const httpLogtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
-      const httpTransport = new LogtailTransport(httpLogtail);
+        const httpLogtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
+        const httpTransport = new LogtailTransport(httpLogtail);
 
-      httpTransports.push(httpTransport);
+        httpTransports.push(httpTransport);
+      }
     }
 
     this.logger = winston.createLogger({
