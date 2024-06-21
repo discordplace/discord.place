@@ -76,7 +76,7 @@ export default function MyTemplates() {
             <BsQuestionCircleFill /> Note
           </h2>
 
-          <p className='font-medium tetx-sm text-tertiary'>
+          <p className='text-sm font-medium text-tertiary'>
             Your submitted template will be reviewed by our team before it is listed on discord.place. Please make sure that your template is not violating our template submission guidelines. Our template submission guidelines can be found in our <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>Discord server</Link>.
           </p>
         </div>
