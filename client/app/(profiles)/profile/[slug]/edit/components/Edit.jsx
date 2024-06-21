@@ -327,10 +327,14 @@ export default function Edit({ profileData }) {
 
                 <button 
                   className='h-max px-4 py-1.5 flex items-center gap-x-1.5 text-sm font-semibold rounded-lg text-secondary hover:text-primary hover:bg-quaternary disabled:opacity-70 disabled:pointer-events-none'
-                  onClick={() => 
+                  onClick={() => {
+                    setLoading(true);
+
                     toast.promise(editProfile(profileData.slug, { colors: { primary: null, secondary: null } }), {
                       loading: 'Resetting colors...',
                       success: newProfile => {
+                        setLoading(false);
+
                         setProfile(oldProfile => ({
                           ...oldProfile,
                           colors: newProfile.colors
@@ -344,9 +348,13 @@ export default function Edit({ profileData }) {
 
                         return 'Colors reset!';
                       },
-                      error: error => error
-                    })
-                  }
+                      error: error => {
+                        setLoading(false);
+
+                        return error;
+                      }
+                    });
+                  }}
                   disabled={loading}
                 >
                   {loading && <TbLoader className='animate-spin' />}
