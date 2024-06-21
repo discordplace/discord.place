@@ -44,7 +44,7 @@ export default function Card(props) {
   const classesToGenerate = ['text-[rgba(var(--dark-text-primary))]', 'text-[rgba(var(--dark-text-secondary))]', 'text-[rgba(var(--dark-text-tertiary))]', 'text-[rgba(var(--light-text-primary))]', 'text-[rgba(var(--light-text-secondary))]', 'text-[rgba(var(--light-text-tertiary))]'];
 
   return (
-    <div className='w-[300px] p-0.5 h-[461px] rounded-3xl relative overflow-hidden group z-[1]'>
+    <div className='w-[300px] h-[531px] p-0.5 rounded-3xl relative overflow-hidden group z-[1]'>
       {props.premium === true && (
         <div 
           className={cn(
@@ -164,8 +164,9 @@ export default function Card(props) {
 
               <p
                 className={cn(
-                  'text-sm font-medium whitespace-pre-wrap line-clamp-2',
-                  !haveCustomColors ? 'text-secondary' : `text-[${variables.textSecondary}]`
+                  'text-sm font-medium whitespace-pre-wrap',
+                  !haveCustomColors ? 'text-secondary' : `text-[${variables.textSecondary}]`,
+                  (props.servers.length > 0 || props.bots.length > 0) ? 'line-clamp-2' : 'line-clamp-4'
                 )}
               >
                 {props.bio === 'No bio provided.' ?
@@ -203,7 +204,7 @@ export default function Card(props) {
                               width={24}
                               height={24}
                               className={cn(
-                                'rounded-lg border-[2px] hover:opacity-50 transition-opacity duration-200',
+                                'rounded-lg border-[2px]',
                                 !haveCustomColors ? 'border-[rgba(var(--bg-quaternary))]' : 'border-black/25'
                               )}
                               alt={`Server ${id}'s icon`}
@@ -212,7 +213,9 @@ export default function Card(props) {
                         ))}
                       </div>
 
-                      {props.servers.length} Server{props.servers.length > 1 ? 's' : ''}
+                      <span className='text-sm truncate'>
+                        {props.servers.length} Server{props.servers.length > 1 ? 's' : ''}
+                      </span>
                     </div>
                   )}
 
@@ -232,7 +235,7 @@ export default function Card(props) {
                               width={24}
                               height={24}
                               className={cn(
-                                'rounded-lg border-[2px] hover:opacity-50 transition-opacity duration-200',
+                                'rounded-full border-[2px]',
                                 !haveCustomColors ? 'border-[rgba(var(--bg-quaternary))]' : 'border-black/25'
                               )}
                               alt={`Bot ${id}'s avatar`}
@@ -241,7 +244,9 @@ export default function Card(props) {
                         ))}
                       </div>
 
-                      {props.bots.length} Bot{props.bots.length > 1 ? 's' : ''}
+                      <span className='text-sm truncate'>
+                        {props.bots.length} Bot{props.bots.length > 1 ? 's' : ''}
+                      </span>
                     </div>
                   )}
                 </div>
