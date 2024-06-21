@@ -9,7 +9,7 @@ module.exports = async interaction => {
     const foundCommand = client.commands.find(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON().name === interaction.commandName : command.data.name === interaction.commandName);
     if (!foundCommand) return;
 
-    if (foundCommand.isGuildOnly) return interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
+    if (foundCommand.isGuildOnly && !interaction.guild) return interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
 
     const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, new: true });
 
@@ -70,10 +70,10 @@ module.exports = async interaction => {
       );
     };
 
-    if (!interaction.guild) return;
-
     const foundCommand = client.commands.find(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON().name === interaction.commandName : command.data.name === interaction.commandName);
     if (!foundCommand) return;
+
+    if (foundCommand.isGuildOnly && !interaction.guild) return;
 
     try {
       await foundCommand.autocomplete(interaction);
