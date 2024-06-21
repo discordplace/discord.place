@@ -31,7 +31,7 @@ export default function Card(props) {
       
       <div className="z-[20] relative flex flex-col w-full h-full p-3 bg-tertiary rounded-3xl">
         {!isBannerFailed && props.banner_url ? (
-          <div className='relative w-full h-full'>
+          <div className='relative w-full h-full max-h-[136px]'>
             <Image
               className='object-cover w-full h-full rounded-3xl'
               width={512}
