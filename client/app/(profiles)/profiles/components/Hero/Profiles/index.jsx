@@ -107,20 +107,7 @@ export default function Profiles() {
                       exit='hidden'
                     >
                       <ProfileCard 
-                        avatar_url={profile.avatar_url}
-                        banner_url={profile.banner_url}
-                        username={profile.username}
-                        occupation={profile.occupation || null}
-                        gender={profile.gender || null}
-                        location={profile.location || null}
-                        birthday={profile.birthday || null}
-                        bio={profile.bio}
-                        views={profile.views}
-                        likes={profile.likes}
-                        verified={profile.verified}
-                        preferredHost={profile.preferredHost}
-                        slug={profile.slug}
-                        badges={profile.badges}
+                        {...profile}
                       />
                     </motion.div>
                   ))}

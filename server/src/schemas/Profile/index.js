@@ -100,8 +100,9 @@ const ProfileSchema = new Schema({
       const user = client.users.cache.get(this.user.id);      
       if (user) Object.assign(newProfile, {
         username: user.username,
+        global_name: user.globalName,
         avatar_url: user.displayAvatarURL({ size: 256 }),
-        banner_url: user.bannerURL({ size: 256, format: 'png' })
+        banner_url: user.bannerURL({ size: 512, format: 'png' })
       });
 
       const premium = await User.findOne({ id: this.user.id, subscription: { $ne: null } });

@@ -1,164 +1,174 @@
 'use client';
 
 import Image from 'next/image';
-import { LuEye } from 'react-icons/lu';
-import Link from 'next/link';
-import { AiFillHeart } from 'react-icons/ai';
-import Tooltip from '@/app/components/Tooltip';
+import { FiArrowUpRight } from 'react-icons/fi';
+import { TbWorldShare } from 'react-icons/tb';
+import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
 import config from '@/config';
-import CopyButton from '@/app/components/CopyButton';
-import cn from '@/lib/cn';
-import forceFetchProfile from '@/lib/request/profiles/forceFetchProfile';
 import { useState } from 'react';
-import { MdOutlineMale, MdOutlineFemale } from 'react-icons/md';
-import { LiaBirthdayCakeSolid } from 'react-icons/lia';
-import { FaGenderless } from 'react-icons/fa';
-import { BsGeoAlt } from 'react-icons/bs';
+import forceFetchProfile from '@/lib/request/profiles/forceFetchProfile';
+import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
+import Tooltip from '@/app/components/Tooltip';
+import Link from 'next/link';
 
-export default function Card({ banner_url, avatar_url, username, occupation, gender, location, birthday, bio, views, likes, verified, preferredHost, slug, badges }) {
+export default function Card(props) {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    notation: 'compact',
+    maximumFractionDigits: 2
+  });
+
   const [isBannerFailed, setIsBannerFailed] = useState(false);
 
   const theme = useThemeStore(state => state.theme);
 
   return (
-    <div className='bg-secondary w-[300px] h-[350px] rounded-md flex flex-col'>
-      <div className='relative flex items-center px-4 pt-4 gap-x-4'>
-        {!isBannerFailed && banner_url && (
-          <>
+    <div className='w-[300px] p-0.5 h-[461px] rounded-3xl relative overflow-hidden group z-[1]'>
+      {props.premium === true && (
+        <div class="animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none"></div>
+      )}
+      
+      <div className="z-[20] relative flex flex-col w-full h-full p-3 bg-tertiary rounded-3xl">
+        {!isBannerFailed && props.banner_url ? (
+          <div className='relative w-full h-full'>
             <Image
-              className='rounded-t-md w-full object-cover pointer-events-none h-[100px] z-0 absolute left-0 top-0'
-              width={300}
-              height={100}
-              src={banner_url}
+              className='object-cover w-full h-full rounded-3xl'
+              width={512}
+              height={512}
+              src={props.banner_url}
               alt='Banner'
               onError={async () => {
-                console.error(`Failed to load banner for ${slug}`);
+                console.error(`Failed to load banner for ${props.slug}`);
 
-                const newBanner = await forceFetchProfile(slug);
-                if (newBanner) document.querySelector(`img[src="${banner_url}"]`).src = newBanner;
+                const newBanner = await forceFetchProfile(props.slug);
+                if (newBanner) document.querySelector(`img[src="${props.banner_url}"]`).src = newBanner;
                 else setIsBannerFailed(true);
               }}
             />
 
-            <div className='bg-gradient-to-t from-secondary via-secondary/80 absolute left-0 top-0 w-full h-[100px]' />
-          
-            {banner_url.includes('.gif') && (
-              <div className='absolute top-1.5 right-1.5 pointer-events-none text-white backdrop-blur-2xl shadow-xl shadow-black px-2 py-0.5 rounded-full font-bold text-xs'>
+            {!props.banner_url.includes('.gif') && (
+              <div className='absolute top-3 right-3 pointer-events-none text-white backdrop-blur-2xl border-2 px-2 py-0.5 rounded-full font-bold text-xs'>
                 GIF
               </div>
             )}
-          </>
+          </div>
+        ) : (
+          <div className="w-full h-[140px] bg-secondary rounded-2xl" />
         )}
-
-        <Image 
-          className='rounded-full w-[64px] h-[64px] z-10'
-          width={300}
-          height={300}
-          src={avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}
-          alt='Avatar'
-        />
-
-        <div className='z-10 flex flex-col gap-y-1'>
-          <div className='flex gap-x-2'>
-            <h2 className='text-xl font-bold truncate max-w-[170px]'>@{username || 'unknown'}</h2>
-            {verified && (
-              <Tooltip content='Verified'>
-                <Image
-                  src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_verified.svg`}
-                  width={20}
-                  height={20}
-                  alt='Verified Badge'
-                />
-              </Tooltip>
+        
+        <div className='-mt-[4.5rem] relative left-[10px]'>
+          <Image
+            src={props.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}
+            alt={`${props.username}'s avatar`}
+            width={64}
+            height={64}
+            className={cn(
+              'border-2 rounded-full border-transparent',
+              !isBannerFailed && props.banner_url && 'shadow-lg shadow-black/70'
             )}
-
-            {badges.some(({ name }) => name === 'Premium') && (
-              <Tooltip content={badges.find(({ name }) => name === 'Premium').tooltip}>
-                <Image
-                  src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_premium.svg`}
-                  width={20}
-                  height={20}
-                  alt='Premium Badge'
-                />
-              </Tooltip>
-            )}
-          </div>
-          <p className='max-w-[190px] text-sm truncate text-secondary/60'>{occupation || 'Unknown'}</p>
-        </div>
-      </div>
-      
-      <div className={cn(
-        'block my-4',
-        !banner_url && 'w-full h-[2px] bg-tertiary'
-      )} />
-
-      <div className='flex flex-wrap justify-start gap-4 px-4'>
-        <div className='flex flex-col gap-y-1'>
-          <h2 className='text-xs font-bold text-tertiary'>
-            {gender === 'Male' && <MdOutlineMale className='inline mr-1' />}
-            {gender === 'Female' && <MdOutlineFemale className='inline mr-1' />}
-            {!gender && <FaGenderless className='inline mr-1' />}
-            Gender
-          </h2>
-          <p className='text-xs font-medium text-secondary'>
-            {gender || 'Unknown'}
-          </p>
+          />
         </div>
 
-        <div className='flex flex-col gap-y-1'>
-          <h2 className='text-xs font-bold text-tertiary'>
-            <LiaBirthdayCakeSolid className='inline mr-1' />
-            Birthday
-          </h2>
-          <p className='text-xs font-medium text-secondary'>
-            {birthday || 'Unknown'}
-          </p>
-        </div>
+        <div className='flex flex-col flex-1 w-full mt-6 bg-secondary rounded-2xl'>
+          <div className='px-5 pt-5 mb-auto'>
+            <div className='flex gap-x-1'>
+              <h2 className='text-lg font-medium truncate max-w-[170px] mr-1'>{props.global_name}</h2>
+              
+              {props.verified && (
+                <Tooltip content='Verified'>
+                  <Image
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_verified.svg`}
+                    width={14}
+                    height={14}
+                    alt='Verified Badge'
+                  />
+                </Tooltip>
+              )}
 
-        <div className='flex flex-col gap-y-1'>
-          <h2 className='text-xs font-bold text-tertiary'>
-            <BsGeoAlt className='inline mr-1' />
-            Location
-          </h2>
-          <p className='text-xs font-medium text-secondary'>
-            <span className='truncate max-w-[0%]'>
-              {location || 'Unknown'}
-            </span>
-          </p>
-        </div>
-      </div>
-
-      <div className='relative h-full mt-4'>
-        <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-t from-secondary via-secondary/80 to-secondary/30' />
-
-        <div className='absolute bottom-0 flex justify-between w-full p-4'>
-          <div className='flex gap-x-2'>
-            <div className='flex gap-x-1.5 items-center text-secondary text-sm font-medium'>
-              <LuEye />
-              {views.toLocaleString('en-US')}
+              {props.badges.map(({ name, tooltip }) => (
+                <Tooltip key={name} content={tooltip}>
+                  <Image
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${name.toLowerCase()}.svg`}
+                    width={14}
+                    height={14}
+                    alt={`${name} Badge`}
+                  />
+                </Tooltip>
+              ))}
             </div>
+            <h3 className='-mt-1 text-sm font-medium text-tertiary'>@{props.username}</h3>
 
-            <div className='flex gap-x-1.5 items-center text-secondary text-sm font-medium'>
-              <AiFillHeart />
-              {likes.toLocaleString('en-US')}
+            <div className='flex flex-col mt-4 gap-y-1'>
+              <h3 className='text-sm font-medium text-tertiary'>
+                About me
+              </h3>
+
+              <p className='text-sm font-medium whitespace-pre-wrap text-secondary line-clamp-2'>
+                {props.bio === 'No bio provided.' ?
+                  'This user has not provided a bio yet but we are sure it\'s awesome!'
+                  : props.bio
+                }
+              </p>
             </div>
           </div>
 
-          <div className='flex items-center gap-x-2'>
-            <Tooltip content='Copy Profile URL'>
-              <CopyButton successText='Profile URL copied to clipboard!' copyText={config.getProfileURL(slug, preferredHost)} />
-            </Tooltip>
+          <div className='w-full my-4 h-[1px] bg-quaternary' />
 
-            <Link className='px-3 py-1 text-sm font-semibold text-white bg-black rounded hover:bg-black/70 dark:text-black dark:bg-white dark:hover:bg-white/70' href={`/profile/${slug}`}>
-              Visit
-            </Link>
+          <div className='flex flex-col px-5 pb-3 gap-y-4'>
+            <div className='flex gap-x-4'>
+              <div className='flex flex-col gap-y-1'>
+                <h3 className='text-sm font-medium text-tertiary'>
+                  Likes
+                </h3>
+                
+                <p className='text-sm font-medium text-primary'>
+                  {formatter.format(props.likes)}
+                </p>
+              </div>
+
+              <div className='flex flex-col gap-y-1'>
+                <h3 className='text-sm font-medium text-tertiary'>
+                  Views
+                </h3>
+                
+                <p className='text-sm font-medium text-primary'>
+                  {formatter.format(props.views)}
+                </p>
+              </div>
+
+              <div className='flex flex-col gap-y-1'>
+                <h3 className='text-sm font-medium text-tertiary'>
+                  Created
+                </h3>
+                
+                <p className='text-sm font-medium truncate text-primary w-[130px]'>
+                  {new Date(props.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </p>
+              </div>
+            </div>
+
+            <div className='flex gap-x-2.5'>
+              <Link
+                className='flex text-white items-center px-2 py-1.5 font-semibold text-sm hover:bg-purple-700 bg-purple-600 gap-x-0.5 rounded-lg'
+                href={`/profile/${props.slug}`}
+              >
+                <FiArrowUpRight size={18} />
+                Visit
+              </Link>
+
+              <CopyButtonCustomTrigger
+                successText='Profile URL copied to clipboard!'
+                copyText={config.getProfileURL(props.slug, props.preferredHost)}
+              >
+                <button className='flex items-center px-2 py-1.5 font-semibold text-sm bg-quaternary hover:bg-purple-600 text-tertiary hover:text-white gap-x-1 rounded-lg'>
+                  <TbWorldShare size={16} />
+                Share
+                </button>
+              </CopyButtonCustomTrigger>
+            </div>
           </div>
         </div>
-
-        <p className='px-4 text-sm whitespace-pre-wrap line-clamp-6 text-secondary/60'>
-          {bio}
-        </p>
       </div>
     </div>
   );
