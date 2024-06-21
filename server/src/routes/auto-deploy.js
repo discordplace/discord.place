@@ -9,6 +9,9 @@ module.exports = {
   post: [
     bodyParser.json(),
     async (request, response) => {
+      const signature = request.headers['x-hub-signature-256'];
+      if (!signature) return response.sendError('No signature provided', 400);
+
       const modifiedServerFiles = request.body.commits.reduce((acc, commit) => {
         commit.modified.filter(file => file.startsWith('server/')).forEach(file => acc.push(file));
         commit.added.filter(file => file.startsWith('server/')).forEach(file => acc.push(file));
@@ -18,9 +21,6 @@ module.exports = {
       }, []);
 
       if (!modifiedServerFiles.length) return response.sendError('No server files modified', 400);
-
-      const signature = request.headers['x-hub-signature-256'];
-      if (!signature) return response.sendError('No signature provided', 400);
 
       const hmac = crypto.createHmac('sha256', process.env.GITHUB_AUTO_DEPLOY_SECRET);
       hmac.update(JSON.stringify(request.body));
