@@ -83,7 +83,7 @@ export default function ServerCard(props) {
       <div className='flex w-full h-full z-[20] relative border-4 border-primary rounded-3xl'>
         {props.server.banner_url ? (
           <Image
-            className='absolute top-0 left-0 z-[1] w-full h-[calc(100%_-_1px)] rounded-[1.25rem]'
+            className='bg-quaternary absolute top-0 left-0 z-[1] w-full h-[calc(100%_-_1px)] rounded-[1.25rem]'
             src={props.server.banner_url}
             alt={`${props.server.name}'s banner`}
             width={350}

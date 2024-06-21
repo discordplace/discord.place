@@ -87,7 +87,7 @@ export default function Card({ data, overridedSort }) {
       <div className='flex w-full h-full z-[20] relative border-4 border-primary rounded-3xl'>
         {data.banner_url ? (
           <Image
-            className='absolute top-0 left-0 z-[1] w-full h-[calc(100%_-_1px)] rounded-[1.25rem]'
+            className='bg-quaternary absolute top-0 left-0 z-[1] w-full h-[calc(100%_-_1px)] rounded-[1.25rem]'
             src={data.banner_url}
             alt={`${data.username}'s banner`}
             width={350}
