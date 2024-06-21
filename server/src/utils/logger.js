@@ -48,7 +48,7 @@ module.exports = class Logger {
 
     if (process.env.NODE_ENV === 'production') {
       if (!process.env.LOGTAIL_SOURCE_TOKEN) {
-        logger.warn('LOGTAIL_SOURCE_TOKEN is not set in production environment.');
+        console.warn('LOGTAIL_SOURCE_TOKEN is not set in production environment.');
       } else {
         const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
         const transport = new LogtailTransport(logtail);
