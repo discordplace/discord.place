@@ -82,7 +82,7 @@ module.exports = {
                 };
               })
               .filter(Boolean)
-              .slice(0, 3)
+              .slice(0, 2)
           );
 
           newProfile.bots = shuffle(
@@ -97,6 +97,7 @@ module.exports = {
                 };
               })
               .filter(Boolean)
+              .slice(0, 2)
           );
 
           return newProfile;

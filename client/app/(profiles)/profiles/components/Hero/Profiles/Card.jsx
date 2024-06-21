@@ -205,7 +205,7 @@ export default function Card(props) {
                               height={24}
                               className={cn(
                                 'rounded-lg border-[2px]',
-                                !haveCustomColors ? 'border-[rgba(var(--bg-quaternary))]' : 'border-black/25'
+                                !haveCustomColors ? 'bg-quaternary border-[rgba(var(--bg-quaternary))]' : 'bg-black/25 border-black/25'
                               )}
                               alt={`Server ${id}'s icon`}
                             />
@@ -236,7 +236,7 @@ export default function Card(props) {
                               height={24}
                               className={cn(
                                 'rounded-full border-[2px]',
-                                !haveCustomColors ? 'border-[rgba(var(--bg-quaternary))]' : 'border-black/25'
+                                !haveCustomColors ? 'bg-quaternary border-[rgba(var(--bg-quaternary))]' : 'bg-black/25 border-black/25'
                               )}
                               alt={`Bot ${id}'s avatar`}
                             />
