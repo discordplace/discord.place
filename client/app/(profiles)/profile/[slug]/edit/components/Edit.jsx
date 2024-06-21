@@ -326,10 +326,7 @@ export default function Edit({ profileData }) {
                 </button>
 
                 <button 
-                  className={cn(
-                    'h-max px-4 py-1.5 flex items-center gap-x-1.5 text-sm font-semibold rounded-lg text-secondary hover:text-primary hover:bg-quaternary disabled:opacity-70 disabled:pointer-events-none',
-                    loading && 'pointer-events-none opacity-70'
-                  )}
+                  className='h-max px-4 py-1.5 flex items-center gap-x-1.5 text-sm font-semibold rounded-lg text-secondary hover:text-primary hover:bg-quaternary disabled:opacity-70 disabled:pointer-events-none'
                   onClick={() => 
                     toast.promise(editProfile(profileData.slug, { colors: { primary: null, secondary: null } }), {
                       loading: 'Resetting colors...',
