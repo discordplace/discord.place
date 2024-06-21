@@ -47,8 +47,8 @@ export default function Card(props) {
               }}
             />
 
-            {!props.banner_url.includes('.gif') && (
-              <div className='absolute top-3 right-3 pointer-events-none text-white backdrop-blur-2xl border-2 px-2 py-0.5 rounded-full font-bold text-xs'>
+            {props.banner_url.includes('.gif') && (
+              <div className='absolute top-3 right-3 pointer-events-none text-white backdrop-blur-2xl px-2 py-0.5 rounded-full font-bold text-xs'>
                 GIF
               </div>
             )}
@@ -74,24 +74,13 @@ export default function Card(props) {
           <div className='px-5 pt-5 mb-auto'>
             <div className='flex gap-x-1'>
               <h2 className='text-lg font-medium truncate max-w-[170px] mr-1'>{props.global_name}</h2>
-              
-              {props.verified && (
-                <Tooltip content='Verified'>
-                  <Image
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_verified.svg`}
-                    width={14}
-                    height={14}
-                    alt='Verified Badge'
-                  />
-                </Tooltip>
-              )}
 
               {props.badges.map(({ name, tooltip }) => (
                 <Tooltip key={name} content={tooltip}>
                   <Image
                     src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${name.toLowerCase()}.svg`}
-                    width={14}
-                    height={14}
+                    width={16}
+                    height={16}
                     alt={`${name} Badge`}
                   />
                 </Tooltip>
@@ -163,7 +152,7 @@ export default function Card(props) {
               >
                 <button className='flex items-center px-2 py-1.5 font-semibold text-sm bg-quaternary hover:bg-purple-600 text-tertiary hover:text-white gap-x-1 rounded-lg'>
                   <TbWorldShare size={16} />
-                Share
+                  Share
                 </button>
               </CopyButtonCustomTrigger>
             </div>

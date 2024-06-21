@@ -97,7 +97,7 @@ export default function Profiles() {
                   )}
                 </motion.div>
               ) : (
-                <div className='grid self-center grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3'>
+                <div className='grid self-center grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
                   {profiles.map(profile => (
                     <motion.div 
                       key={nanoid()} 
