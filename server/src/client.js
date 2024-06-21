@@ -120,6 +120,9 @@ module.exports = class Client {
       if (options.startup.updateBotStats) this.updateBotStats();
       if (options.startup.createNewDashboardData) this.createNewDashboardData();
       if (options.startup.syncPremiumRoles) this.syncPremiumRoles();
+      if (options.startup.syncLemonSqueezyPlans) this.syncLemonSqueezyPlans();
+      if (options.startup.saveMonthlyVotes) this.saveMonthlyVotes();
+      if (options.startup.saveDailyProfileStats) this.saveDailyProfileStats();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', () => {
@@ -139,6 +142,7 @@ module.exports = class Client {
           this.checkVoteReminderMetadatas();
           this.updateBotStats();
           this.createNewDashboardData();
+          this.saveDailyProfileStats();
         }, null, true, 'Europe/Istanbul');
 
         new CronJob('*/5 * * * *', this.postNewMetric.bind(this), null, true, 'Europe/Istanbul');
@@ -393,5 +397,39 @@ module.exports = class Client {
 
     return syncLemonSqueezyPlans()
       .catch(error => logger.error('There was an error while syncing Lemon Squeezy plans:', error));
+  }
+
+  async saveDailyProfileStats() {
+    const updatedProfiles = await Profile.updateMany({}, [
+      {
+        $set: {
+          dailyStats: {
+            $let: {
+              vars: {
+                updatedDailyStats: {
+                  $concatArrays: [
+                    {
+                      $ifNull: ['$dailyStats', []] // If dailyLikes doesn't exist, use an empty array
+                    },
+                    [
+                      {
+                        date: new Date(),
+                        likes: Math.floor(Math.random() * 100), // Random value between 0 and 100
+                        views: Math.floor(Math.random() * 1000) // Random value between 0 and 1000
+                      }
+                    ]
+                  ]
+                }
+              },
+              in: {
+                $slice: ['$$updatedDailyStats', -7] // Keep only the last 7 elements
+              }
+            }
+          }
+        }
+      }
+    ]);
+
+    logger.info(`Saved daily stats for ${updatedProfiles.modifiedCount} profiles.`);
   }
 };

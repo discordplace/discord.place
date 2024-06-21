@@ -12,6 +12,7 @@ import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers
 import Script from 'next/script';
 import cn from '@/lib/cn';
 import sleep from '@/lib/sleep';
+import Graph from '@/app/(profiles)/profile/[slug]/components/sections/Graph';
 import useThemeStore from '@/stores/theme';
 
 export default function Content({ profile }) {
@@ -158,6 +159,8 @@ export default function Content({ profile }) {
             </div>
           </div>
         </div>
+
+        <Graph profile={profile} />
 
         {profile.servers.length > 0 && <Servers profile={profile} />}
       </div>

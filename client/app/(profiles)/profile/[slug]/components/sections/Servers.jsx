@@ -23,8 +23,8 @@ export default function Servers({ profile }) {
 
       <motion.div 
         className='grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2 lg:grid-cols-3'
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.685 }}
       >
         {profile.servers.map((server, index) => (

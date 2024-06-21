@@ -31,6 +31,9 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     updateBotStats: false,
     createNewDashboardData: false,
     syncPremiumRoles: process.env.NODE_ENV === 'production',
+    syncLemonSqueezyPlans: process.env.NODE_ENV === 'production',
+    saveMonthlyVotes: false,
+    saveDailyProfileStats: false,
     listenEvents: true,
     listenCrons: process.env.NODE_ENV === 'production'
   },

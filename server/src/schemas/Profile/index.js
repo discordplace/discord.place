@@ -69,6 +69,22 @@ const ProfileSchema = new Schema({
     type: Array,
     default: []
   },
+  dailyStats: [
+    {
+      createdAt: {
+        type: Date,
+        default: Date.now
+      },
+      views: {
+        type: Number,
+        default: 0
+      },
+      likes: {
+        type: Number,
+        default: 0
+      }
+    }
+  ],
   slug: {
     type: String,
     required: true,
@@ -136,6 +152,7 @@ const ProfileSchema = new Schema({
         socials: this.socials,
         views: this.views,
         likes: this.likes_count,
+        dailyStats: this.dailyStats,
         slug: this.slug,
         verified: this.verified,
         preferredHost: this.preferredHost,
