@@ -77,7 +77,7 @@ export default function ServerCard(props) {
       href={`/servers/${props.server.id}`}
     >
       {props.server.premium === true && (
-        <div class="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none"></div>
+        <div className="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none"></div>
       )}
 
       <div className='flex w-full h-full z-[20] relative border-4 border-primary rounded-3xl'>
@@ -150,7 +150,7 @@ export default function ServerCard(props) {
 
               {props.server.vote_triple_enabled?.created_at && (
                 <div className='relative z-[1] p-[0.1rem] overflow-hidden rounded-full'>
-                  <div class="animate-rotate absolute inset-0 z-[10] h-full w-full rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)] pointer-events-none"></div>
+                  <div className="animate-rotate absolute inset-0 z-[10] h-full w-full rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)] pointer-events-none"></div>
 
                   <div className='flex z-[20] relative items-center px-3 py-1 text-xs font-bold text-white rounded-full gap-x-1 bg-orange-500/20 backdrop-blur-md'>
                     <BsFire /> 3X VOTE!

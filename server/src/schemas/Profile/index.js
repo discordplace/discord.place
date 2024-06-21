@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const slugValidation = require('@/validations/profiles/slug');
 const birthdayValidation = require('@/validations/profiles/birthday');
+const colorsValidation = require('@/validations/profiles/colors');
 const getBadges = require('@/utils/profiles/getBadges');
 
 const ProfileSchema = new Schema({
@@ -84,6 +85,24 @@ const ProfileSchema = new Schema({
     type: String,
     enum: ['discord.place/p', ...config.customHostnames],
     default: 'discord.place/p'
+  },
+  colors: {
+    primary: {
+      type: String,
+      default: null,
+      validate: {
+        validator: value => colorsValidation({ primary: value, secondary: null }),
+        message: ({ reason }) => reason.message
+      }
+    },
+    secondary: {
+      type: String,
+      default: null,
+      validate: {
+        validator: value => colorsValidation({ primary: null, secondary: value }),
+        message: ({ reason }) => reason.message
+      }
+    }
   }
 }, {
   timestamps: true,
@@ -120,6 +139,7 @@ const ProfileSchema = new Schema({
         slug: this.slug,
         verified: this.verified,
         preferredHost: this.preferredHost,
+        colors: this.colors,
         premium: !!premium,
         badges: getBadges(this, premium ? premium.createdAt : null),
         createdAt: this.createdAt,

@@ -15,6 +15,9 @@ import PreferredHostDropdown from '@/app/(profiles)/profile/[slug]/edit/componen
 import Link from 'next/link';
 import { PiWarningCircleFill } from 'react-icons/pi';
 import revalidateProfile from '@/lib/revalidate/profile';
+import { HexColorPicker } from 'react-colorful';
+import { FaCrown } from 'react-icons/fa';
+import Tooltip from '@/app/components/Tooltip';
 
 export default function Edit({ profileData }) { 
   const canBeEditedKeys = [
@@ -31,6 +34,7 @@ export default function Edit({ profileData }) {
   const [profile, setProfile] = useState(profileData);
   const [currentlyEditingIndex, setCurrentlyEditingIndex] = useState(-1);
   const [currentlyEditingValue, setCurrentlyEditingValue] = useState('');
+  const [colors, setColors] = useState(profileData.colors || { primary: '#000000', secondary: '#000000' });
   const [changedKeys, setChangedKeys] = useState({});
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -43,15 +47,36 @@ export default function Edit({ profileData }) {
   }, [currentlyEditingIndex]);
 
   function editKey(key) {
+    if (key === 'cardColors') {
+      if (colors.primary === (profile.colors?.primary || '#000000') && colors.secondary === (profile.colors?.secondary || '#000000')) return toast.error('You didn\'t make a change.');
+
+      setChangedKeys(oldChangedKeys => ({
+        ...oldChangedKeys,
+        colors
+      }));
+
+      setProfile(oldProfile => ({
+        ...oldProfile,
+        colors
+      }));
+
+      setCurrentlyEditingIndex(-1);
+
+      return;
+    }
+    
     if (profile[key] === currentlyEditingValue) return toast.error('You didn\'t make a change.');
+
     setChangedKeys(oldChangedKeys => ({
       ...oldChangedKeys,
       [key === 'slug' ? 'newSlug' : key]: currentlyEditingValue
     }));
+    
     setProfile(oldProfile => ({
       ...oldProfile,
       [key]: currentlyEditingValue
     }));
+    
     setCurrentlyEditingIndex(-1);
   }
 
@@ -83,6 +108,19 @@ export default function Edit({ profileData }) {
   }
 
   const bioValueSpanRef = useRef(null);
+
+  function PremiumRequiredBlock() {
+    return (
+      <div className='flex flex-col w-full p-4 mt-4 border border-yellow-500 rounded-xl bg-yellow-500/10 gap-y-2'>
+        <h2 className='flex items-center text-lg font-bold gap-x-2 text-primary'>
+          <PiWarningCircleFill /> You can{'\''}t do that!
+        </h2>
+        <p className='text-sm font-medium text-tertiary'>
+          You have to be Premium to change that. For more information about Premium, visit <Link href='/premium' className='text-secondary hover:text-primary'>Premium page</Link>.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className='flex flex-col my-8 gap-y-4'>
@@ -123,7 +161,19 @@ export default function Edit({ profileData }) {
         {canBeEditedKeys.map((key, index) => (
           <div className='flex flex-col justify-between gap-4 sm:flex-row' key={key}>
             <div className='flex flex-col flex-1 w-full gap-y-1 max-w-[80%]'>
-              <h2 className='font-medium text-tertiary'>{key === 'preferredHost' ? 'Preferred Host' : fuc(key)}</h2>
+              <h2 className='flex items-center font-medium text-tertiary gap-x-2'>
+                {key === 'preferredHost' ? (
+                  <>
+                    Preferred Host
+
+                    <Tooltip content='This feature is only available for Premium users.' side='right'>
+                      <div>
+                        <FaCrown className='text-yellow-500' />
+                      </div>
+                    </Tooltip>
+                  </>
+                ) : fuc(key)}
+              </h2>
               {currentlyEditingIndex === index ? (
                 key === 'bio' ? (
                   <span
@@ -143,16 +193,7 @@ export default function Edit({ profileData }) {
                   <GenderDropdown profile={profile} currentlyEditingValue={currentlyEditingValue} setCurrentlyEditingValue={setCurrentlyEditingValue} />
                 ) : key === 'preferredHost' ? (
                   !profile.premium ? (
-                    <>
-                      <div className='flex flex-col w-full p-4 mt-4 border border-yellow-500 rounded-xl bg-yellow-500/10 gap-y-2'>
-                        <h2 className='flex items-center text-lg font-bold gap-x-2 text-primary'>
-                          <PiWarningCircleFill /> You can{'\''}t do that!
-                        </h2>
-                        <p className='text-sm font-medium text-tertiary'>
-                          You have to be Premium to change that. For more information about Premium prices, you can come to <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>our support server</Link> to contact us.
-                        </p>
-                      </div>
-                    </>
+                    <PremiumRequiredBlock />
                   ) : (
                     <PreferredHostDropdown profile={profile} currentlyEditingValue={currentlyEditingValue} setCurrentlyEditingValue={setCurrentlyEditingValue} />
                   )
@@ -203,6 +244,101 @@ export default function Edit({ profileData }) {
             </div>
           </div>
         ))}
+
+        <div className='flex flex-col justify-between gap-4 sm:flex-row'>
+          <div className='flex flex-col flex-1 w-full gap-y-1 max-w-[80%]'>
+            <h2 className='flex items-center font-medium text-tertiary gap-x-2'>
+              Card Colors
+              
+              <Tooltip content='This feature is only available for Premium users.' side='right'>
+                <div>
+                  <FaCrown className='text-yellow-500' />
+                </div>
+              </Tooltip>
+            </h2>
+            
+            {currentlyEditingIndex === 'cardColors' ? (
+              profile.premium ? (
+                <div className='flex mt-2 gap-x-4'>
+                  <div className='flex flex-col gap-y-2'>
+                    <h2 className='flex items-center text-sm font-medium text-secondary gap-x-2'>
+                      Primary
+
+                      <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.primary }} />
+                    </h2>
+                    <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[15px] [&_.react-colorful\_\_pointer]:h-[15px]'>
+                      <HexColorPicker
+                        color={colors.primary}
+                        onChange={color => setColors(oldColors => ({ ...oldColors, primary: color }))}
+                      />
+                    </div>
+                  </div>
+
+                  <div className='flex flex-col gap-y-2'>
+                    <h2 className='flex items-center text-sm font-medium text-secondary gap-x-2'>
+                      Secondary
+
+                      <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.secondary }} />
+                    </h2>
+                    <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[15px] [&_.react-colorful\_\_pointer]:h-[15px]'>
+                      <HexColorPicker
+                        color={colors.secondary}
+                        onChange={color => setColors(oldColors => ({ ...oldColors, secondary: color }))}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <PremiumRequiredBlock />
+              )
+            ) : (
+              <div className='flex mt-2 gap-x-4'>
+                <div className='flex flex-col gap-y-2'>
+                  <h2 className='text-sm font-medium text-secondary'>Primary</h2>
+
+                  <div
+                    style={{ backgroundColor: profile.colors?.primary || '#000000' }}
+                    className='w-20 h-12 rounded-lg'
+                  />
+                </div>
+
+                <div className='flex flex-col gap-y-2'>
+                  <h2 className='text-sm font-medium text-secondary'>Secondary</h2>
+                  
+                  <div
+                    style={{ backgroundColor: profile.colors?.secondary || '#000000' }}
+                    className='w-20 h-12 rounded-lg'
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className='flex gap-x-2'>
+            {currentlyEditingIndex === 'cardColors' && (
+              <button 
+                className='h-max px-4 py-1.5 text-sm font-semibold rounded-lg text-secondary hover:text-primary hover:bg-quaternary disabled:opacity-70 disabled:pointer-events-none'
+                onClick={() => setCurrentlyEditingIndex(-1)}
+                disabled={loading}
+              >
+                Cancel
+              </button>
+            )}
+            <button 
+              className={cn(
+                'h-max px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none',
+                currentlyEditingIndex === 'cardColors' ? 'text-white dark:text-black dark:bg-white bg-black hover:bg-black/70 dark:hover:bg-white/70' : 'text-secondary bg-tertiary hover:text-primary hover:bg-quaternary'
+              )} 
+              onClick={() => {
+                if (currentlyEditingIndex === 'cardColors') return editKey('cardColors');
+                setCurrentlyEditingIndex('cardColors');
+              }}
+              disabled={loading}
+            >
+              {currentlyEditingIndex === 'cardColors' ? 'Save' : 'Edit'}
+            </button>
+          </div>
+        </div>
       </div>
 
       <Socials profile={profile} />

@@ -83,7 +83,7 @@ export default function Timeouts() {
             />
           </div>
         ) : (
-          <div class="relative w-full overflow-x-auto">
+          <div className="relative w-full overflow-x-auto">
             <table className='w-full table-auto'>
               <thead className='text-left select-none bg-secondary'>
                 <tr>

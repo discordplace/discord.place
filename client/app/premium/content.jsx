@@ -103,6 +103,19 @@ export default function Page({ plans }) {
       ]
     },
     {
+      label: 'Profile Card Colors',
+      available_to: [
+        {
+          id: 'free',
+          value: <FaXmark />
+        },
+        {
+          id: 'premium',
+          value: <FaCheck />
+        }
+      ]
+    },
+    {
       label: 'Doubled Votes',
       available_to: [
         {
