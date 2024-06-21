@@ -2,6 +2,7 @@ import Graph from '@/app/(dashboard)/components/Home/Graph/index';
 import cn from '@/lib/cn';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import Tooltip from '@/app/components/Tooltip';
+import { useMedia } from 'react-use';
 
 export default function ViewsGraph({ profile }) {
   const data = profile.dailyStats || [];
@@ -14,13 +15,15 @@ export default function ViewsGraph({ profile }) {
   const diffInPercent = ((latestValue - previousValue) / previousValue) * 100;
   const diffInPercentClean = diffInPercent === Infinity ? 100 : isNaN(diffInPercent) ? 0 : diffInPercent;
 
+  const isMobile = useMedia('(max-width: 640px)', false);
+
   return (
     <>
       <h2 className='flex items-center text-xl font-semibold gap-x-2'>
         Views Graph
 
         <Tooltip
-          side='right'
+          side={isMobile ? 'bottom' : 'right'}
           content={`${isIncreased ? 'Increased' : isDecreased ? 'Decreased' : 'No change'} since yesterday (${difference})`}
         >
           <div className={cn(
