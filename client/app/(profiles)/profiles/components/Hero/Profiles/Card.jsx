@@ -44,7 +44,7 @@ export default function Card(props) {
   const classesToGenerate = ['text-[rgba(var(--dark-text-primary))]', 'text-[rgba(var(--dark-text-secondary))]', 'text-[rgba(var(--dark-text-tertiary))]', 'text-[rgba(var(--light-text-primary))]', 'text-[rgba(var(--light-text-secondary))]', 'text-[rgba(var(--light-text-tertiary))]'];
 
   return (
-    <div className='w-[300px] h-[531px] p-0.5 rounded-3xl relative overflow-hidden group z-[1]'>
+    <div className='w-[300px] p-0.5 h-[461px] rounded-3xl relative overflow-hidden group z-[1]'>
       {props.premium === true && (
         <div 
           className={cn(
@@ -164,9 +164,8 @@ export default function Card(props) {
 
               <p
                 className={cn(
-                  'text-sm font-medium whitespace-pre-wrap',
-                  !haveCustomColors ? 'text-secondary' : `text-[${variables.textSecondary}]`,
-                  (props.servers.length > 0 || props.bots.length > 0) ? 'line-clamp-2' : 'line-clamp-4'
+                  'text-sm font-medium whitespace-pre-wrap line-clamp-2',
+                  !haveCustomColors ? 'text-secondary' : `text-[${variables.textSecondary}]`
                 )}
               >
                 {props.bio === 'No bio provided.' ?
@@ -175,83 +174,6 @@ export default function Card(props) {
                 }
               </p>
             </div>
-
-            {(props.servers.length > 0 || props.bots.length > 0) && (
-              <div className='flex flex-col mt-4 gap-y-1'>
-                <h3
-                  className={cn(
-                    'text-sm font-medium',
-                    !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
-                  )}
-                >
-                  Listings
-                </h3>
-
-                <div className='flex w-full gap-x-2'>
-                  {props.servers.length > 0 && (
-                    <div className={cn(
-                      'flex items-center w-full px-2 py-1 text-sm rounded-lg gap-x-1',
-                      !haveCustomColors ? 'bg-quaternary' : 'bg-black/25'
-                    )}>
-                      <div className='flex -space-x-2'>
-                        {props.servers.map(({ id, icon_url }) => (
-                          <Link
-                            key={id}
-                            href={`/servers/${id}`}
-                          >
-                            <Image
-                              src={icon_url}
-                              width={24}
-                              height={24}
-                              className={cn(
-                                'rounded-lg border-[2px]',
-                                !haveCustomColors ? 'bg-quaternary border-[rgba(var(--bg-quaternary))]' : 'bg-black/25 border-black/25'
-                              )}
-                              alt={`Server ${id}'s icon`}
-                            />
-                          </Link>
-                        ))}
-                      </div>
-
-                      <span className='text-sm truncate'>
-                        {props.servers.length} Server{props.servers.length > 1 ? 's' : ''}
-                      </span>
-                    </div>
-                  )}
-
-                  {props.bots.length > 0 && (
-                    <div className={cn(
-                      'flex items-center w-full px-2 py-1 text-sm rounded-lg gap-x-1',
-                      !haveCustomColors ? 'bg-quaternary' : 'bg-black/25'
-                    )}>
-                      <div className='flex -space-x-2'>
-                        {props.bots.map(({ id, avatar_url }) => (
-                          <Link
-                            key={id}
-                            href={`/bots/${id}`}
-                          >
-                            <Image
-                              src={avatar_url}
-                              width={24}
-                              height={24}
-                              className={cn(
-                                'rounded-full border-[2px]',
-                                !haveCustomColors ? 'bg-quaternary border-[rgba(var(--bg-quaternary))]' : 'bg-black/25 border-black/25'
-                              )}
-                              alt={`Bot ${id}'s avatar`}
-                            />
-                          </Link>
-                        ))}
-                      </div>
-
-                      <span className='text-sm truncate'>
-                        {props.bots.length} Bot{props.bots.length > 1 ? 's' : ''}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
 
           <div className={cn(
