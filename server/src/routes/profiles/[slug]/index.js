@@ -200,7 +200,10 @@ module.exports = {
       if (newBirthday) profile.birthday = newBirthday;
       if (newBio) profile.bio = newBio;
       if (newPreferredHost) profile.preferredHost = newPreferredHost;
-      if (newColors) profile.colors = newColors;
+      if (newColors) profile.colors = {
+        primary: newColors.primary || null,
+        secondary: newColors.secondary || null
+      };
 
       const validationError = getValidationError(profile);
       if (validationError) return response.sendError(validationError, 400);

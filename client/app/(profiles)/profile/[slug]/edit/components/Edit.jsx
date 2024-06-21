@@ -300,6 +300,31 @@ export default function Edit({ profileData }) {
                     style={{ backgroundColor: profile.colors?.primary || '#000000' }}
                     className='w-20 h-12 rounded-lg'
                   />
+
+                  <button
+                    onClick={() => 
+                      toast.promise(editProfile(profileData.slug, { colors: { primary: null } }), {
+                        loading: 'Resetting primary color...',
+                        success: newProfile => {
+                          setProfile(oldProfile => ({
+                            ...oldProfile,
+                            colors: newProfile.colors
+                          }));
+
+                          setColors(oldColors => ({
+                            ...oldColors,
+                            primary: newProfile.colors?.primary || '#000000'
+                          }));
+
+                          return 'Primary color reset!';
+                        },
+                        error: error => error
+                      })
+                    }
+                    className='px-2 py-1 text-sm font-medium rounded-lg text-primary hover:text-primary hover:bg-secondary'
+                  >
+                    Reset
+                  </button>
                 </div>
 
                 <div className='flex flex-col gap-y-2'>
@@ -309,6 +334,31 @@ export default function Edit({ profileData }) {
                     style={{ backgroundColor: profile.colors?.secondary || '#000000' }}
                     className='w-20 h-12 rounded-lg'
                   />
+
+                  <button
+                    onClick={() => 
+                      toast.promise(editProfile(profileData.slug, { colors: { secondary: null } }), {
+                        loading: 'Resetting secondary color...',
+                        success: newProfile => {
+                          setProfile(oldProfile => ({
+                            ...oldProfile,
+                            colors: newProfile.colors
+                          }));
+
+                          setColors(oldColors => ({
+                            ...oldColors,
+                            secondary: newProfile.colors?.secondary || '#000000'
+                          }));
+
+                          return 'Secondary color reset!';
+                        },
+                        error: error => error
+                      })
+                    }
+                    className='px-2 py-1 text-sm font-medium rounded-lg text-primary hover:text-primary hover:bg-secondary'
+                  >
+                    Reset
+                  </button>
                 </div>
               </div>
             )}
