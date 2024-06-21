@@ -268,7 +268,7 @@ export default function Edit({ profileData }) {
                     </h2>
                     <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[15px] [&_.react-colorful\_\_pointer]:h-[15px]'>
                       <HexColorPicker
-                        color={colors.primary}
+                        color={colors.primary || '#000000'}
                         onChange={color => setColors(oldColors => ({ ...oldColors, primary: color }))}
                       />
                     </div>
@@ -282,7 +282,7 @@ export default function Edit({ profileData }) {
                     </h2>
                     <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[15px] [&_.react-colorful\_\_pointer]:h-[15px]'>
                       <HexColorPicker
-                        color={colors.secondary}
+                        color={colors.secondary || '#000000'}
                         onChange={color => setColors(oldColors => ({ ...oldColors, secondary: color }))}
                       />
                     </div>
