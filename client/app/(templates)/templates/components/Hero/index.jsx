@@ -71,25 +71,23 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...sequenceTransition, delay: 0.3 }}
           >
-            <div>
-              <Select
-                placeholder='Category'
-                options={
-                  config.templateCategories.map(category => ({
-                    label: <div className='flex items-center gap-x-2'>
-                      <span className='text-tertiary'>
-                        {config.templateCategoriesIcons[category]}
-                      </span>
+            <Select
+              placeholder='Category'
+              options={
+                config.templateCategories.map(category => ({
+                  label: <div className='flex items-center gap-x-2'>
+                    <span className='text-tertiary'>
+                      {config.templateCategoriesIcons[category]}
+                    </span>
 
-                      {category}
-                    </div>,
-                    value: category
-                  }))
-                }
-                value={category}
-                onChange={setCategory}
-              />
-            </div>
+                    {category}
+                  </div>,
+                  value: category
+                }))
+              }
+              value={category}
+              onChange={setCategory}
+            />
 
             <Select
               placeholder='Sorting'
