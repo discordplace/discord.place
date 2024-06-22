@@ -18,6 +18,11 @@ import revalidateProfile from '@/lib/revalidate/profile';
 import { HexColorPicker } from 'react-colorful';
 import { FaCrown } from 'react-icons/fa';
 import Tooltip from '@/app/components/Tooltip';
+import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
+import { colord, extend } from 'colord';
+import a11yPlugin from 'colord/plugins/a11y';
+
+extend([a11yPlugin]);
 
 export default function Edit({ profileData }) { 
   const canBeEditedKeys = [
@@ -296,19 +301,53 @@ export default function Edit({ profileData }) {
                 <div className='flex flex-col gap-y-2'>
                   <h2 className='text-sm font-medium text-secondary'>Primary</h2>
 
-                  <div
-                    style={{ backgroundColor: profile.colors?.primary || '#000000' }}
-                    className='w-20 h-12 rounded-lg'
-                  />
+                  <CopyButtonCustomTrigger
+                    timeout={2000}
+                    successText={`Color ${profile.colors?.primary || '#000000'} copied!`}
+                    copyText={profile.colors?.primary || '#000000'}
+                  >
+                    <div className='relative flex items-center justify-center w-20 h-12 cursor-pointer group'>
+                      <div
+                        style={{ backgroundColor: profile.colors?.primary || '#000000' }}
+                        className='w-full h-full rounded-lg'
+                      />
+
+                      <div
+                        className={cn(
+                          'absolute flex items-center justify-center text-xs font-semibold max-w-[50px] text-center transition-opacity duration-200 opacity-0 gap-x-2 group-hover:opacity-100',
+                          colord(profile.colors?.primary || '#000000').isLight() ? 'text-black' : 'text-white'
+                        )}
+                      >
+                        Copy {profile.colors?.primary || '#000000'}
+                      </div>
+                    </div>
+                  </CopyButtonCustomTrigger>
                 </div>
 
                 <div className='flex flex-col gap-y-2'>
                   <h2 className='text-sm font-medium text-secondary'>Secondary</h2>
-                  
-                  <div
-                    style={{ backgroundColor: profile.colors?.secondary || '#000000' }}
-                    className='w-20 h-12 rounded-lg'
-                  />
+
+                  <CopyButtonCustomTrigger
+                    timeout={2000}
+                    successText={`Color ${profile.colors?.secondary || '#000000'} copied!`}
+                    copyText={profile.colors?.secondary || '#000000'}
+                  >
+                    <div className='relative flex items-center justify-center w-20 h-12 cursor-pointer group'>
+                      <div
+                        style={{ backgroundColor: profile.colors?.secondary || '#000000' }}
+                        className='w-full h-full rounded-lg'
+                      />
+
+                      <div
+                        className={cn(
+                          'absolute flex items-center justify-center text-xs font-semibold max-w-[50px] text-center transition-opacity duration-200 opacity-0 gap-x-2 group-hover:opacity-100',
+                          colord(profile.colors?.secondary || '#000000').isLight() ? 'text-black' : 'text-white'
+                        )}
+                      >
+                        Copy {profile.colors?.secondary || '#000000'}
+                      </div>
+                    </div>
+                  </CopyButtonCustomTrigger>
                 </div>
               </div>
             )}
