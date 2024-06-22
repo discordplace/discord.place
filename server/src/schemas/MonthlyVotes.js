@@ -18,7 +18,7 @@ const MonthlyVotesSchema = new Schema({
   timestamps: true
 });
 
-MonthlyVotesSchema.statics.updateMonthlyVotes = async function (identifier, votes) {
+MonthlyVotesSchema.statics.updateMonthlyVotes = async function (identifier, votes, Model) {
   const month = new Date().getMonth() + 1;
   const year = new Date().getFullYear();
 
@@ -39,6 +39,8 @@ MonthlyVotesSchema.statics.updateMonthlyVotes = async function (identifier, vote
       { upsert: true }
     );
   }
+
+  await Model.updateOne({ id: identifier }, { $set: { votes: 0 } });
 };
 
 const ServerMonthlyVotes = mongoose.model('ServerMonthlyVotes', MonthlyVotesSchema);

@@ -6,13 +6,13 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 async function updateMonthlyVotes() {
   const servers = await Server.find();
   for (const server of servers) {
-    await ServerMonthlyVotes.updateMonthlyVotes(server.id, server.votes);
+    await ServerMonthlyVotes.updateMonthlyVotes(server.id, server.votes, Server);
     await updatePanelMessage(server.id);
   }
 
   const bots = await Bot.find();
   for (const bot of bots) {
-    await BotMonthlyVotes.updateMonthlyVotes(bot.id, bot.votes);
+    await BotMonthlyVotes.updateMonthlyVotes(bot.id, bot.votes, Bot);
   }
 }
 
