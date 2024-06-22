@@ -80,7 +80,7 @@ module.exports = {
 
       if (!monthlyVotes.find(data => new Date(data.created_at).getMonth() === currentMonth)) {
         monthlyVotes.push({
-          createdAt: new Date(),
+          created_at: new Date(),
           votes: server.votes
         });
       }
