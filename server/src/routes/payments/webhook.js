@@ -42,7 +42,7 @@ module.exports = {
         var embeds = [
           new Discord.EmbedBuilder()
             .setColor(color)
-            .setAuthor({ text, iconUrl })
+            .setAuthor({ name: text, iconUrl: iconUrl || 'https://cdn.discordapp.com/embed/avatars/0.png' })
             .setFooter({ text: message })
         ];
 
