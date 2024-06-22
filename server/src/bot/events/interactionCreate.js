@@ -168,12 +168,12 @@ module.exports = async interaction => {
       const data = await EvaluateResult.findOne({ id });
       if (!data) return;
 
-      const { result, hasError } = await evaluate(data.code);
+      const { result, hasError } = await evaluate(data.executedCode);
 
       const embed = new Discord.EmbedBuilder()
         .setColor(hasError ? '#f04e51' : '#adadad')
         .setFields([
-          { name: 'Code', value: `\`\`\`js\n${data.code.slice(0, 1000)}\n\`\`\`` },
+          { name: 'Code', value: `\`\`\`js\n${data.executedCode.slice(0, 1000)}\n\`\`\`` },
           { name: 'Repeated At', value: new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) }
         ])
         .setDescription(`### ${hasError ? 'Error' : 'Success'}\n\`\`\`js\n${String(result).slice(0, 4000)}\n\`\`\``);
