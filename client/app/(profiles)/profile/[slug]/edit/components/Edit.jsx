@@ -15,7 +15,7 @@ import PreferredHostDropdown from '@/app/(profiles)/profile/[slug]/edit/componen
 import Link from 'next/link';
 import { PiWarningCircleFill } from 'react-icons/pi';
 import revalidateProfile from '@/lib/revalidate/profile';
-import { HexColorPicker } from 'react-colorful';
+import { HexAlphaColorPicker  } from 'react-colorful';
 import { FaCrown } from 'react-icons/fa';
 import Tooltip from '@/app/components/Tooltip';
 import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
@@ -271,8 +271,8 @@ export default function Edit({ profileData }) {
 
                       <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.primary || '#000000' }} />
                     </h2>
-                    <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[15px] [&_.react-colorful\_\_pointer]:h-[15px]'>
-                      <HexColorPicker
+                    <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[10px] [&_.react-colorful\_\_pointer]:h-[10px] [&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px]'>
+                      <HexAlphaColorPicker 
                         color={colors.primary || '#000000'}
                         onChange={color => setColors(oldColors => ({ ...oldColors, primary: color }))}
                       />
@@ -292,8 +292,8 @@ export default function Edit({ profileData }) {
 
                       <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.secondary || '#000000' }} />
                     </h2>
-                    <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[15px] [&_.react-colorful\_\_pointer]:h-[15px]'>
-                      <HexColorPicker
+                    <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[10px] [&_.react-colorful\_\_pointer]:h-[10px] [&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px]'>
+                      <HexAlphaColorPicker 
                         color={colors.secondary || '#000000'}
                         onChange={color => setColors(oldColors => ({ ...oldColors, secondary: color }))}
                       />
