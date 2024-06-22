@@ -82,7 +82,16 @@ module.exports = {
 
             await new BotVoteTripleEnabled({ id: botId }).save();
 
-            sendPurchaseMessage(colors.tripledVote, bot.tag, bot.avatarURL(), 'Purchased tripled votes.');
+            var botUser;
+      
+            if (!client.forceFetchedUsers.has(botId)) {
+              await client.users.fetch(botId, { force: true }).catch(() => null);
+              client.forceFetchedUsers.set(botId, true);
+              
+              botUser = client.users.cache.get(botId);
+            }
+
+            sendPurchaseMessage(colors.tripledVote, botUser?.tag || botId, botUser?.displayAatarURL?.(), 'Purchased tripled votes.');
           }
         }
         
@@ -114,7 +123,16 @@ module.exports = {
 
             await new StandedOutBot({ identifier: botId }).save();
 
-            sendPurchaseMessage(colors.standedOut, bot.tag, bot.avatarURL(), 'Purchased standed out.');
+            var botUser;
+      
+            if (!client.forceFetchedUsers.has(botId)) {
+              await client.users.fetch(botId, { force: true }).catch(() => null);
+              client.forceFetchedUsers.set(botId, true);
+              
+              botUser = client.users.cache.get(botId);
+            }
+
+            sendPurchaseMessage(colors.standedOut, botUser?.tag || botId, botUser?.displayAatarURL?.(), 'Purchased standed out.');
           }
         }
 
