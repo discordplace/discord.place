@@ -35,7 +35,7 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { query, category = 'All', sort = 'Votes', limit = 10, page = 1 } = matchedData(request);
+      const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
       const baseFilter = { 
         id: { $in: Array.from(client.guilds.cache.filter(guild => guild.available).keys()) },

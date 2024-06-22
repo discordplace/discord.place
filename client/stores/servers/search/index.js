@@ -9,7 +9,7 @@ const useSearchStore = create((set, get) => ({
   setSearch: search => set({ search }),
   page: 1,
   setPage: page => set({ page }),
-  limit: 10,
+  limit: 12,
   setLimit: limit => set({ limit }),
   category: 'All',
   setCategory: category => {
