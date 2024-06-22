@@ -52,6 +52,7 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
         <RadixSelect.Trigger
           className={cn(
             'inline-flex items-center justify-center rounded-lg py-[1rem] w-max leading-none border-2 border-primary px-4 gap-4 bg-secondary hover:bg-tertiary focus-visible:border-purple-500 transition-all focus-visible:bg-quaternary text-tertiary select-none font-medium outline-none data-[state=open]:border-purple-500 data-[state=open]:bg-quaternary',
+            disabled && 'opacity-50 pointer-events-none',
             triggerClassName
           )}
           aria-label={placeholder}
