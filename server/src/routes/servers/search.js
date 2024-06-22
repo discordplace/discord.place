@@ -45,7 +45,8 @@ module.exports = {
         ...baseFilter, 
         $or: [
           { description: { $regex: query, $options: 'i' } },
-          { keywords: { $in: query.split(' ') } }
+          { keywords: { $in: query.split(' ') } },
+          { id: { $in: Array.from(client.guilds.cache.filter(guild => guild.name.toLowerCase().includes(query.toLowerCase())).keys()) } }
         ]
       } : baseFilter;
 
