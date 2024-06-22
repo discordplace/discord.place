@@ -5,7 +5,7 @@ import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
 import { Bricolage_Grotesque } from 'next/font/google';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
-import SearchInput from '@/app/(servers)/servers/components/Hero/SearchInput';
+import SearchInput from '@/app/components/SearchInput';
 import { useEffect } from 'react';
 import useSearchStore from '@/stores/servers/search';
 import { useShallow } from 'zustand/react/shallow';
@@ -27,7 +27,7 @@ import config from '@/config';
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
-  const { category, setCategory, sort, setSort, search, loading, servers, fetchServers, page, totalServers, limit } = useSearchStore(useShallow(state => ({
+  const { category, setCategory, sort, setSort, search, loading, servers, fetchServers, page, totalServers, limit, setPage } = useSearchStore(useShallow(state => ({
     category: state.category,
     setCategory: state.setCategory,
     sort: state.sort,
@@ -38,7 +38,8 @@ export default function Hero() {
     fetchServers: state.fetchServers,
     page: state.page,
     totalServers: state.totalServers,
-    limit: state.limit
+    limit: state.limit,
+    setPage: state.setPage
   })));
 
   const [categoryDrawerOpenState, setCategoryDrawerOpenState] = useState(false);
@@ -92,7 +93,14 @@ export default function Hero() {
           Explore the best servers on Discord and find the perfect community for you. Don{'\''}t forget to vote for your favorite servers!
         </motion.span>
 
-        <SearchInput />
+        <SearchInput
+          placeholder='Search for a server by name, description, tags, etc.'
+          loading={loading}
+          search={search}
+          fetchData={fetchServers}
+          setPage={setPage}
+          animationDelay={0.3}
+        />
       </div>
 
       <motion.div

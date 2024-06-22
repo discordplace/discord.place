@@ -142,9 +142,9 @@ export default function Card({ data, overridedSort }) {
 
               {data.vote_triple_enabled?.created_at && (
                 <div className='relative z-[1] p-[0.1rem] overflow-hidden rounded-full'>
-                  <div className="animate-rotate absolute inset-0 z-[10] h-full w-full rounded-full bg-[conic-gradient(#ab82d3_10deg,transparent_90deg)] pointer-events-none"></div>
+                  <div className="animate-rotate absolute inset-0 z-[10] h-full w-full rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)] pointer-events-none"></div>
 
-                  <div className='flex z-[20] relative items-center px-3 py-1 text-xs font-bold text-white rounded-full gap-x-1 bg-purple-500/20 backdrop-blur-md'>
+                  <div className='flex z-[20] relative items-center px-3 py-1 text-xs font-bold text-white rounded-full gap-x-1 bg-orange-500/20 backdrop-blur-md'>
                     <BsFire /> 3X VOTE!
                   </div>
                 </div>

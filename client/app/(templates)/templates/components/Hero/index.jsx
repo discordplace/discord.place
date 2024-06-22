@@ -5,7 +5,7 @@ import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
 import SearchResults from '@/app/(templates)/templates/components/Hero/SearchResults';
-import SearchInput from '@/app/(templates)/templates/components/Hero/SearchInput';
+import SearchInput from '@/app/components/SearchInput';
 import useSearchStore from '@/stores/templates/search';
 import { useShallow } from 'zustand/react/shallow';
 import { BiSolidCategory } from 'react-icons/bi';
@@ -22,12 +22,15 @@ export default function Hero() {
   const [categoryDrawerOpenState, setCategoryDrawerOpenState] = useState(false);
   const [sortingDrawerOpenState, setSortingDrawerOpenState] = useState(false);
 
-  const { category, setCategory, sort, setSort, loading } = useSearchStore(useShallow(state => ({
+  const { category, setCategory, sort, setSort, loading, search, setPage, fetchTemplates } = useSearchStore(useShallow(state => ({
     category: state.category,
     setCategory: state.setCategory,
     sort: state.sort,
     setSort: state.setSort,
-    loading: state.loading
+    loading: state.loading,
+    search: state.search,
+    setPage: state.setPage,
+    fetchTemplates: state.fetchTemplates
   })));
 
   const sequenceTransition = {
@@ -60,7 +63,14 @@ export default function Hero() {
           Explore most popular templates and find the perfect one for your Discord server!<br/>Don{'\''}t waste your time to create your own server, just use one of the templates!
         </motion.span>
 
-        <SearchInput />
+        <SearchInput
+          placeholder='Search for a template by name, description, etc.'
+          loading={loading}
+          search={search}
+          fetchData={fetchTemplates}
+          setPage={setPage}
+          animationDelay={0.3}
+        />
       </div>
 
       <motion.div

@@ -3,16 +3,22 @@
 import { useEffect } from 'react';
 import { Bricolage_Grotesque } from 'next/font/google';import cn from '@/lib/cn';
 import Square from '@/app/components/Background/Square';
-import SearchInput from '@/app/(profiles)/profiles/components/Hero/Profiles/SearchInput';
+import SearchInput from '@/app/components/SearchInput';
 import AnimatedCount from '@/app/components/AnimatedCount';
 import useSearchStore from '@/stores/profiles/search';
 import { motion } from 'framer-motion';
+import { useShallow } from 'zustand/react/shallow';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
-  const fetchProfiles = useSearchStore(state => state.fetchProfiles);
-  const totalProfiles = useSearchStore(state => state.totalProfiles);
+  const { fetchProfiles, totalProfiles, loading, search, setPage } = useSearchStore(useShallow(state => ({
+    fetchProfiles: state.fetchProfiles,
+    totalProfiles: state.totalProfiles,
+    loading: state.loading,
+    search: state.search,
+    setPage: state.setPage
+  })));
   
   useEffect(() => {
     fetchProfiles('');
@@ -45,11 +51,19 @@ export default function Hero() {
           >
             Discover the profiles
           </motion.h1>
+          
           <motion.p className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
             Find, share and explore the customized page of Discord profiles!<br/>You have <span className='inline-flex'><AnimatedCount data={totalProfiles} /></span> profiles to explore. 
           </motion.p>
 
-          <SearchInput />
+          <SearchInput
+            placeholder='Search for a profile by slug, occupation, location, etc.'
+            loading={loading}
+            search={search}
+            fetchData={fetchProfiles}
+            setPage={setPage}
+            animationDelay={0.3}
+          />
         </div>
       </div>
     </>

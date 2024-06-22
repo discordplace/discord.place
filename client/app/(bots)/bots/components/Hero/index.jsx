@@ -5,7 +5,7 @@ import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
 import SearchResults from '@/app/(bots)/bots/components/Hero/SearchResults';
-import SearchInput from '@/app/(bots)/bots/components/Hero/SearchInput';
+import SearchInput from '@/app/components/SearchInput';
 import useSearchStore from '@/stores/bots/search';
 import { useShallow } from 'zustand/react/shallow';
 import { BiSolidCategory } from 'react-icons/bi';
@@ -25,12 +25,15 @@ export default function Hero() {
   const [categoryDrawerOpenState, setCategoryDrawerOpenState] = useState(false);
   const [sortingDrawerOpenState, setSortingDrawerOpenState] = useState(false);
 
-  const { category, setCategory, sort, setSort, loading } = useSearchStore(useShallow(state => ({
+  const { category, setCategory, sort, setSort, loading, search, fetchBots, setPage } = useSearchStore(useShallow(state => ({
     category: state.category,
     setCategory: state.setCategory,
     sort: state.sort,
     setSort: state.setSort,
-    loading: state.loading
+    loading: state.loading,
+    search: state.search,
+    fetchBots: state.fetchBots,
+    setPage: state.setPage
   })));
 
   const sequenceTransition = {
@@ -63,7 +66,14 @@ export default function Hero() {
           Explore most popular bots and find the perfect one for your Discord server!<br/>Make your server more fun and interactive with the best bots available.
         </motion.span>
 
-        <SearchInput />
+        <SearchInput
+          placeholder='Search for a bot by id, description, or category...'
+          loading={loading}
+          search={search}
+          fetchData={fetchBots}
+          setPage={setPage}
+          animationDelay={0.3}
+        />
       </div>
 
       <motion.div
