@@ -9,12 +9,11 @@ import { toast } from 'sonner';
 import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
 import { TbLoader } from 'react-icons/tb';
-import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdChevronLeft } from 'react-icons/md';
 import cn from '@/lib/cn';
 import config from '@/config';
 import { FaCheck } from 'react-icons/fa';
+import Select from '@/app/components/Select';
 
 export default function NewServer() {
   const currentlyAddingServer = useAccountStore(state => state.currentlyAddingServer);
@@ -25,9 +24,7 @@ export default function NewServer() {
   const [serverDescription, setServerDescription] = useState('');
   const [serverInviteLink, setServerInviteLink] = useState('');
   const [serverCategory, setServerCategory] = useState('');
-  
-  const [categoriesDrawerIsOpen, setCategoriesDrawerIsOpen] = useState(false);
-  
+    
   const [keywordsInputValue, setKeywordsInputValue] = useState('');
   const [serverKeywords, setServerKeywords] = useState([]);
 
@@ -149,21 +146,28 @@ export default function NewServer() {
                 Select a base category for your server. This will help people find your server on discord.place.
               </p>
 
-              <button className={cn(
-                'flex items-center justify-center w-full h-[40px] mt-4 text-sm font-medium rounded-lg gap-x-2 bg-secondary hover:bg-quaternary',
-                serverCategory ? 'text-primary' : 'text-placeholder'
-              )} onClick={() => setCategoriesDrawerIsOpen(true)}>
-                {serverCategory ? (
-                  <>
-                    {serverCategory}
-                    <IoMdCheckmarkCircle />
-                  </>
-                ) :
-                  'Select a category'
-                }
-              </button>
+              <div className='w-full mt-4'>
+                <Select
+                  mobileOverride={true}
+                  triggerClassName='w-full py-2.5'
+                  placeholder='Select'
+                  options={
+                    config.templateCategories.map(category => ({
+                      label: <div className='flex items-center gap-x-2'>
+                        <span className='text-tertiary'>
+                          {config.templateCategoriesIcons[category]}
+                        </span>
 
-              <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={serverCategory} setState={setServerCategory} categories={config.serverCategories.filter(category => category !== 'All')} />
+                        {category}
+                      </div>,
+                      value: category
+                    }))
+                  }
+                  value={serverCategory}
+                  onChange={setServerCategory}
+                  disabled={loading}
+                />
+              </div>
             </div>
 
             <div className='flex flex-col gap-y-2'>

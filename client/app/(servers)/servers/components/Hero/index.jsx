@@ -6,21 +6,14 @@ import { motion } from 'framer-motion';
 import { Bricolage_Grotesque } from 'next/font/google';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import SearchInput from '@/app/components/SearchInput';
+import Select from '@/app/components/Select';
 import { useEffect } from 'react';
 import useSearchStore from '@/stores/servers/search';
 import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence } from 'framer-motion';
 import ErrorState from '@/app/components/ErrorState';
-import { TbLoader, TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { TbLoader } from 'react-icons/tb';
 import { BsEmojiAngry } from 'react-icons/bs';
-import { BiSolidCategory } from 'react-icons/bi';
-import { FaUsers } from 'react-icons/fa';
-import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
-import { useState } from 'react';
-import SortingDrawer from '../Drawer/Sorting';
-import { MdKeyboardVoice, MdUpdate } from 'react-icons/md';
-import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import { TiStar } from 'react-icons/ti';
 import Pagination from '@/app/components/Pagination';
 import config from '@/config';
 
@@ -41,9 +34,6 @@ export default function Hero() {
     limit: state.limit,
     setPage: state.setPage
   })));
-
-  const [categoryDrawerOpenState, setCategoryDrawerOpenState] = useState(false);
-  const [sortingDrawerOpenState, setSortingDrawerOpenState] = useState(false);
 
   useEffect(() => {
     fetchServers('');
@@ -77,10 +67,10 @@ export default function Hero() {
 
       <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
 
-      <div className='max-w-[700px] flex flex-col w-full'>
+      <div className='max-w-[800px] flex flex-col w-full items-center'>
         <motion.h1 
           className={cn(
-            'text-5xl font-medium max-w-[700px] text-center text-primary',
+            'text-5xl font-medium max-w-[800px] text-center text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
@@ -93,111 +83,95 @@ export default function Hero() {
           Explore the best servers on Discord and find the perfect community for you. Don{'\''}t forget to vote for your favorite servers!
         </motion.span>
 
-        <SearchInput
-          placeholder='Search for a server by name, description, tags, etc.'
-          loading={loading}
-          search={search}
-          fetchData={fetchServers}
-          setPage={setPage}
-          animationDelay={0.3}
-        />
+        <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
+          <SearchInput
+            placeholder='Search for a server by name, description, tags, etc.'
+            loading={loading}
+            search={search}
+            fetchData={fetchServers}
+            setPage={setPage}
+            animationDelay={0.3}
+          />
+
+          <motion.div
+            className='flex items-center w-full sm:w-max gap-x-2'
+            initial={{ opacity: 0, y: -25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...sequenceTransition, delay: 0.3 }}
+          >
+            <div>
+              <Select
+                placeholder='Category'
+                options={
+                  config.serverCategories.map(category => ({
+                    label: <div className='flex items-center gap-x-2'>
+                      <span className='text-tertiary'>
+                        {config.serverCategoriesIcons[category]}
+                      </span>
+
+                      {category}
+                    </div>,
+                    value: category
+                  }))
+                }
+                value={category}
+                onChange={setCategory}
+                disabled={loading}
+              />
+            </div>
+
+            <Select
+              placeholder='Sorting'
+              options={[
+                ...[
+                  {
+                    label: 'Votes',
+                    value: 'Votes'
+                  },
+                  {
+                    label: 'Latest Voted',
+                    value: 'LatestVoted'
+                  },
+                  {
+                    label: 'Voice',
+                    value: 'Voice'
+                  },
+                  {
+                    label: 'Members',
+                    value: 'Members'
+                  },
+                  {
+                    label: 'Newest',
+                    value: 'Newest'
+                  },
+                  {
+                    label: 'Oldest',
+                    value: 'Oldest'
+                  },
+                  {
+                    label: 'Boosts',
+                    value: 'Boosts'
+                  }
+                ].map(option => ({
+                  label: <div className='flex items-center gap-x-2'>
+                    {config.sortIcons[option.value.replace(' ', '')]}
+                    {option.label}
+                  </div>,
+                  value: option.value
+                }))
+              ]}
+              value={sort}
+              onChange={setSort}
+              disabled={loading}
+            />
+          </motion.div>
+        </div>
       </div>
 
-      <motion.div
-        className='flex mobile:flex-row flex-col gap-4 mt-6 max-w-[800px] w-full'
-        initial={{ opacity: 0, y: -25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...sequenceTransition, delay: 0.4 }}
-      >
-        <button
-          className={cn(
-            'text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary',
-            loading && 'opacity-60 pointer-events-none transition-opacity'
-          )}
-          onClick={() => setCategoryDrawerOpenState(true)}
-        >
-          <div className='text-sm font-medium text-tertiary'>
-            Category
-          </div>
-          
-          <div className='flex items-center gap-x-2'>
-            <BiSolidCategory />
-            {category !== 'All' ? category : 'All'}
-          </div>
-        </button>
-
-        <CategoriesDrawer state={category} setState={setCategory} openState={categoryDrawerOpenState} setOpenState={setCategoryDrawerOpenState} categories={config.serverCategories} />
-
-        <button
-          className={cn(
-            'text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary',
-            loading && 'opacity-60 pointer-events-none transition-opacity'
-          )}
-          onClick={() => setSortingDrawerOpenState(true)}
-        >
-          <div className='text-sm font-medium text-tertiary'>
-            Sorting
-          </div>
-          
-          <div className='flex items-center gap-x-2'>
-            {sort === 'Votes' && (
-              <>
-                <TbSquareRoundedChevronUp />
-                Votes
-              </>
-            )}
-
-            {sort === 'LatestVoted' && (
-              <>
-                <MdUpdate />
-                Latest Voted
-              </>
-            )}
-
-            {sort === 'Voice' && (
-              <>
-                <MdKeyboardVoice />
-                Voice
-              </>
-            )}
-
-            {sort === 'Members' && (
-              <>
-                <FaUsers />
-                Members
-              </>
-            )}
-
-            {sort === 'Newest' && (
-              <>
-                <HiSortAscending />
-                Newest
-              </>
-            )}
-
-            {sort === 'Oldest' && (
-              <>
-                <HiSortDescending />
-                Oldest
-              </>
-            )}
-
-            {sort === 'Boosts' && (
-              <>
-                <TiStar />
-                Boosts
-              </>
-            )}
-          </div>
-        </button>
-
-        <SortingDrawer state={sort} setState={setSort} openState={sortingDrawerOpenState} setOpenState={setSortingDrawerOpenState} />
-      </motion.div>
-
-      <div className='max-w-[800px] w-full flex flex-col my-8 gap-y-2'>
+      <div className='max-w-[1000px] w-full flex flex-col my-8 gap-y-2'>
         <div className={cn(
           'w-full',
-          (loading || servers.length <= 0) ? 'flex items-center justify-center' : 'grid grid-cols-1 sm:grid-cols-2 gap-4'
+          (loading || servers.length <= 0) ? 'flex items-center justify-center' : 'grid grid-cols-1 sm:grid-cols-3 gap-4'
         )}>
           <AnimatePresence>
             {loading ? (

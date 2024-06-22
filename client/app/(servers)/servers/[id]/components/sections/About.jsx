@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
 import { TiStar } from 'react-icons/ti';
 import { MdKeyboardVoice } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { ImTrophy } from 'react-icons/im';
+import config from '@/config';
 
 const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -16,8 +16,8 @@ export default function About({ server }) {
     {
       key: 'category',
       label: 'Category',
-      icon: <BiSolidCategory />,
-      value: server.category || 'Unknown'
+      icon: config.serverCategoriesIcons[server.category],
+      value: server.category
     },
     {
       key: 'members',

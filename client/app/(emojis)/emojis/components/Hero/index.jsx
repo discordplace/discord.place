@@ -8,18 +8,22 @@ import AnimatedCount from '@/app/components/AnimatedCount';
 import useSearchStore from '@/stores/emojis/search';
 import { motion } from 'framer-motion';
 import Emojis from '@/app/(emojis)/emojis/components/Hero/Emojis';
-import Topbar from '@/app/(emojis)/emojis/components/Hero/Topbar';
 import SearchInput from '@/app/components/SearchInput';
 import { useShallow } from 'zustand/react/shallow';
+import Select from '@/app/components/Select';
+import config from '@/config';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
-  const { fetchEmojis, total, loading, emojis, search, setPage } = useSearchStore(useShallow(state => ({
+  const { fetchEmojis, total, category, setCategory, sort, setSort, loading, search, setPage } = useSearchStore(useShallow(state => ({
     fetchEmojis: state.fetchEmojis,
     total: state.total,
+    category: state.category,
+    setCategory: state.setCategory,
+    sort: state.sort,
+    setSort: state.setSort,
     loading: state.loading,
-    emojis: state.emojis,
     search: state.search,
     setPage: state.setPage
   })));
@@ -58,18 +62,76 @@ export default function Hero() {
           Explore, find and download the perfect emoji for your Discord server!<br/>You have <span className='inline-flex'><AnimatedCount data={total} /></span> emojis to explore. 
         </motion.span>
 
-        <SearchInput
-          placeholder='Search for a emoji by name...'
-          loading={loading}
-          search={search}
-          fetchData={fetchEmojis}
-          setPage={setPage}
-          animationDelay={0.3}
-        />
+        <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
+          <SearchInput
+            placeholder='Search for a emoji by name...'
+            loading={loading}
+            search={search}
+            fetchData={fetchEmojis}
+            setPage={setPage}
+            animationDelay={0.3}
+          />
+
+          <motion.div
+            className='flex items-center w-full sm:w-max gap-x-2'
+            initial={{ opacity: 0, y: -25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...sequenceTransition, delay: 0.3 }}
+          >
+            <div>
+              <Select
+                placeholder='Category'
+                options={
+                  config.emojiCategories.map(category => ({
+                    label: <div className='flex items-center gap-x-2'>
+                      <span className='text-tertiary'>
+                        {config.emojiCategoriesIcons[category]}
+                      </span>
+
+                      {category}
+                    </div>,
+                    value: category
+                  }))
+                }
+                value={category}
+                onChange={setCategory}
+                disabled={loading}
+              />
+            </div>
+
+            <Select
+              placeholder='Sorting'
+              options={[
+                ...[
+                  {
+                    label: 'Popular',
+                    value: 'Popular'
+                  },
+                  {
+                    label: 'Newest',
+                    value: 'Newest'
+                  },
+                  {
+                    label: 'Oldest',
+                    value: 'Oldest'
+                  }
+                ].map(option => ({
+                  label: <div className='flex items-center gap-x-2'>
+                    {config.sortIcons[option.value.replace(' ', '')]}
+                    {option.label}
+                  </div>,
+                  value: option.value
+                }))
+              ]}
+              value={sort}
+              onChange={setSort}
+              disabled={loading}
+            />
+          </motion.div>
+        </div>
       </div>
 
       <div className='max-w-[1000px] my-16 w-full flex flex-col gap-y-8 lg:px-0 px-2 sm:px-4'>
-        {!loading && emojis.length > 0 && <Topbar />}
         <Emojis />
       </div>
     </div>

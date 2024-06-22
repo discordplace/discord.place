@@ -35,7 +35,8 @@ module.exports = {
       gradientColorStops: {
         primary: 'rgba(var(--bg-background))',
         secondary: 'rgba(var(--bg-secondary))',
-        tertiary: 'rgba(var(--bg-tertiary))'
+        tertiary: 'rgba(var(--bg-tertiary))',
+        quaternary: 'rgba(var(--bg-quaternary))'
       },
       fill: {
         primary: 'rgba(var(--bg-background))',

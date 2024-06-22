@@ -56,14 +56,16 @@ export default function Hero() {
             Find, share and explore the customized page of Discord profiles!<br/>You have <span className='inline-flex'><AnimatedCount data={totalProfiles} /></span> profiles to explore. 
           </motion.p>
 
-          <SearchInput
-            placeholder='Search for a profile by slug, occupation, location, etc.'
-            loading={loading}
-            search={search}
-            fetchData={fetchProfiles}
-            setPage={setPage}
-            animationDelay={0.3}
-          />
+          <div className='mt-8'>
+            <SearchInput
+              placeholder='Search for a profile by slug, occupation, location, etc.'
+              loading={loading}
+              search={search}
+              fetchData={fetchProfiles}
+              setPage={setPage}
+              animationDelay={0.3}
+            />
+          </div>
         </div>
       </div>
     </>

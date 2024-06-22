@@ -8,20 +8,12 @@ import SearchResults from '@/app/(templates)/templates/components/Hero/SearchRes
 import SearchInput from '@/app/components/SearchInput';
 import useSearchStore from '@/stores/templates/search';
 import { useShallow } from 'zustand/react/shallow';
-import { BiSolidCategory } from 'react-icons/bi';
-import { useState } from 'react';
 import config from '@/config';
-import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
-import SortingDrawer from '@/app/(templates)/templates/components/Hero/Drawer/Sorting';
-import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import { TiStar } from 'react-icons/ti';
+import Select from '@/app/components/Select';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
-  const [categoryDrawerOpenState, setCategoryDrawerOpenState] = useState(false);
-  const [sortingDrawerOpenState, setSortingDrawerOpenState] = useState(false);
-
   const { category, setCategory, sort, setSort, loading, search, setPage, fetchTemplates } = useSearchStore(useShallow(state => ({
     category: state.category,
     setCategory: state.setCategory,
@@ -63,89 +55,73 @@ export default function Hero() {
           Explore most popular templates and find the perfect one for your Discord server!<br/>Don{'\''}t waste your time to create your own server, just use one of the templates!
         </motion.span>
 
-        <SearchInput
-          placeholder='Search for a template by name, description, etc.'
-          loading={loading}
-          search={search}
-          fetchData={fetchTemplates}
-          setPage={setPage}
-          animationDelay={0.3}
-        />
+        <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
+          <SearchInput
+            placeholder='Search for a template by name, description, etc.'
+            loading={loading}
+            search={search}
+            fetchData={fetchTemplates}
+            setPage={setPage}
+            animationDelay={0.3}
+          />
+        
+          <motion.div
+            className='flex items-center w-full sm:w-max gap-x-2'
+            initial={{ opacity: 0, y: -25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...sequenceTransition, delay: 0.3 }}
+          >
+            <div>
+              <Select
+                placeholder='Category'
+                options={
+                  config.templateCategories.map(category => ({
+                    label: <div className='flex items-center gap-x-2'>
+                      <span className='text-tertiary'>
+                        {config.templateCategoriesIcons[category]}
+                      </span>
+
+                      {category}
+                    </div>,
+                    value: category
+                  }))
+                }
+                value={category}
+                onChange={setCategory}
+              />
+            </div>
+
+            <Select
+              placeholder='Sorting'
+              options={[
+                ...[
+                  {
+                    label: 'Popular',
+                    value: 'Popular'
+                  },
+                  {
+                    label: 'Newest',
+                    value: 'Newest'
+                  },
+                  {
+                    label: 'Oldest',
+                    value: 'Oldest'
+                  }
+                ].map(option => ({
+                  label: <div className='flex items-center gap-x-2'>
+                    {config.sortIcons[option.value.replace(' ', '')]}
+                    {option.label}
+                  </div>,
+                  value: option.value
+                }))
+              ]}
+              value={sort}
+              onChange={setSort}
+              disabled={loading}
+            />
+          </motion.div>
+        </div>
       </div>
-
-      <motion.div
-        className='flex mobile:flex-row flex-col gap-4 mt-6 max-w-[800px] w-full'
-        initial={{ opacity: 0, y: -25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...sequenceTransition, delay: 0.4 }}
-      >
-        <button
-          className={cn(
-            'text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary',
-            loading && 'opacity-60 pointer-events-none transition-opacity'
-          )}
-          onClick={() => setCategoryDrawerOpenState(true)}
-        >
-          <div className='text-sm font-medium text-tertiary'>
-            Category
-          </div>
-          
-          <div className='flex items-center gap-x-2'>
-            <BiSolidCategory />
-            {category !== 'All' ? category : 'All'}
-          </div>
-        </button>
-
-        <CategoriesDrawer 
-          state={category}
-          setState={setCategory}
-          openState={categoryDrawerOpenState}
-          setOpenState={setCategoryDrawerOpenState}
-          categories={config.templateCategories}
-        />
-
-        <button
-          className={cn(
-            'text-secondary hover:text-primary flex flex-col items-center justify-center font-semibold text-lg mobile:w-[50%] h-[70px] rounded-xl bg-secondary hover:bg-tertiary',
-            loading && 'opacity-60 pointer-events-none transition-opacity'
-          )}
-          onClick={() => setSortingDrawerOpenState(true)}
-        >
-          <div className='text-sm font-medium text-tertiary'>
-            Sorting
-          </div>
-          
-          <div className='flex items-center gap-x-2'>
-            {sort === 'Popular' && (
-              <>
-                <TiStar />
-                Popular
-              </>
-            )}
-
-            {sort === 'Newest' && (
-              <>
-                <HiSortAscending />
-                Newest
-              </>
-            )}
-
-            {sort === 'Oldest' && (
-              <>
-                <HiSortDescending />
-                Oldest
-              </>
-            )}
-          </div>
-        </button>
-
-        <SortingDrawer
-          state={sort}
-          setState={setSort}
-          openState={sortingDrawerOpenState}
-          setOpenState={setSortingDrawerOpenState}
-        />
-      </motion.div>
 
       <motion.div 
         className='my-16 max-w-[1200px] w-full'

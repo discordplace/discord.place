@@ -4,10 +4,8 @@ import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import config from '@/config';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdChevronLeft } from 'react-icons/md';
 import { toast } from 'sonner';
-import CategoriesDrawer from '@/app/components/Drawer/CategoriesDrawer';
 import { TbLoader } from 'react-icons/tb';
 import editServer from '@/lib/request/servers/editServer';
 import { RiErrorWarningFill } from 'react-icons/ri';
@@ -18,6 +16,7 @@ import revalidateServer from '@/lib/revalidate/server';
 import cn from '@/lib/cn';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+import Select from '@/app/components/Select';
 
 export default function Content({ server }) {
   const [currentServer, setCurrentServer] = useState(server);
@@ -27,7 +26,6 @@ export default function Content({ server }) {
   const [newKeywords, setNewKeywords] = useState(currentServer.keywords);
   const [newVoiceActivityEnabled, setNewVoiceActivityEnabled] = useState(currentServer.voice_activity_enabled);
 
-  const [categoriesDrawerIsOpen, setCategoriesDrawerIsOpen] = useState(false);
   const [keywordsInputValue, setKeywordsInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [anyChangesMade, setAnyChangesMade] = useState(false);
@@ -170,12 +168,28 @@ export default function Content({ server }) {
               Select a base category for your server. This will help people find your server on discord.place.
             </p>
 
-            <button className='flex items-center justify-center w-full h-[40px] mt-4 text-sm font-medium rounded-lg gap-x-2 bg-secondary hover:bg-tertiary text-primary' onClick={() => setCategoriesDrawerIsOpen(true)}>
-              {newCategory}
-              <IoMdCheckmarkCircle />
-            </button>
+            <div className='w-full mt-4'>
+              <Select
+                mobileOverride={true}
+                triggerClassName='w-full py-2.5'
+                placeholder='Select'
+                options={
+                  config.templateCategories.map(category => ({
+                    label: <div className='flex items-center gap-x-2'>
+                      <span className='text-tertiary'>
+                        {config.templateCategoriesIcons[category]}
+                      </span>
 
-            <CategoriesDrawer openState={categoriesDrawerIsOpen} setOpenState={setCategoriesDrawerIsOpen} state={newCategory} setState={setNewCategory} categories={config.serverCategories.filter(category => category !== 'All')} />
+                      {category}
+                    </div>,
+                    value: category
+                  }))
+                }
+                value={newCategory}
+                onChange={setNewCategory}
+                disabled={loading}
+              />
+            </div>
           </div>
 
           <div className='flex flex-col gap-y-2'>

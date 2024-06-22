@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { BiSolidCategory } from 'react-icons/bi';
 import { FaUsers } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import useSearchStore from '@/stores/servers/search';
@@ -13,6 +12,7 @@ import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
 import getRelativeTime from '@/lib/getRelativeTime';
 import { BsFire } from 'react-icons/bs';
+import config from '@/config';
 
 export default function ServerCard(props) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -144,7 +144,7 @@ export default function ServerCard(props) {
 
             <div className='flex items-center mt-3 gap-x-2'>
               <div className='flex items-center px-2.5 py-1 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
-                <BiSolidCategory />
+                {config.serverCategoriesIcons[props.server.category]}
                 {props.server.category}
               </div>
 

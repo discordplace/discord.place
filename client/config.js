@@ -1,18 +1,22 @@
 import { CgProfile } from 'react-icons/cg';
-import { MdEmojiEmotions } from 'react-icons/md';
-import { RiRobot2Fill } from 'react-icons/ri';
-import { FaCompass, FaShieldAlt } from 'react-icons/fa';
+import { MdEmojiEmotions, MdEvent, MdKeyboardVoice, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
+import { RiCommunityFill, RiRobot2Fill } from 'react-icons/ri';
+import { FaCat, FaCompass, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers } from 'react-icons/fa';
 import { AiFillTool } from 'react-icons/ai';
-import { BiSolidHappy } from 'react-icons/bi';
-import { IoMusicalNotesSharp } from 'react-icons/io5';
+import { BiSolidCategory, BiSolidHappy, BiSolidMusic } from 'react-icons/bi';
+import { IoMusicalNotesSharp, IoGameController, IoLanguage } from 'react-icons/io5';
 import { GiTwoCoins } from 'react-icons/gi';
 import { ImUser } from 'react-icons/im';
-import { HiDesktopComputer } from 'react-icons/hi';
+import { HiDesktopComputer, HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { HiMiniPaintBrush } from 'react-icons/hi2';
 import { RiInstagramFill } from 'react-icons/ri';
 import { MdMenuBook } from 'react-icons/md';
-import { TiPlus } from 'react-icons/ti';
+import { TiPlus, TiStar } from 'react-icons/ti';
 import { HiTemplate } from 'react-icons/hi';
+import { TbBrush, TbCategoryFilled, TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { BsThreeDots } from 'react-icons/bs';
+import { FaRegImage } from 'react-icons/fa6';
+import { IoIosChatboxes } from 'react-icons/io';
 
 const config = {
   supportInviteUrl: 'https://invite.discord.place',
@@ -155,6 +159,7 @@ const config = {
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,
   botInviteURL: 'https://bot.discord.place',
   botCategoriesIcons: {
+    'All': <BiSolidCategory />,
     'Moderation': <FaShieldAlt />,
     'Utility': <AiFillTool />,
     'Fun & Games': <BiSolidHappy />,
@@ -168,6 +173,59 @@ const config = {
     'Anime & Manga': <MdMenuBook />,
     'Other': <TiPlus />
   },
+  serverCategoriesIcons: {
+    'All': <BiSolidCategory />,
+    'Gaming': <IoGameController />,
+    'Anime': <MdMovieFilter />,
+    'Public': <FaCompass />,
+    'Community': <RiCommunityFill />,
+    'Music': <BiSolidMusic />,
+    'Art': <TbBrush />,
+    'Programming': <FaLaptopCode />,
+    'Science': <MdScience />,
+    'Technology': <MdOutlinePhone />,
+    'Education': <FaGraduationCap />,
+    'Language': <IoLanguage />,
+    'Other': <BsThreeDots />
+  },
+  emojiCategoriesIcons: {
+    'All': <BiSolidCategory />,
+    'Gaming': <IoGameController />,
+    'Anime': <MdMovieFilter />,
+    'Memes': <MdEmojiEmotions />,
+    'Pepe': <MdEmojiEmotions />,
+    'Pixel Art': <TbBrush />,
+    'Cute': <FaCat />,
+    'Logos': <TbCategoryFilled />,
+    'Utility': <AiFillTool />,
+    'Other': <BsThreeDots />,
+    'Animated': <FaRegImage />
+  },
+  templateCategoriesIcons: {
+    'All': <BiSolidCategory />,
+    'Chat': <IoIosChatboxes />,
+    'Design': <TbBrush />,
+    'Music': <IoMusicalNotesSharp />,
+    'Education': <FaGraduationCap />,
+    'Gaming': <IoGameController />,
+    'Anime': <MdMovieFilter />,
+    'Tech': <HiDesktopComputer />,
+    'Roleplay': <ImUser />,
+    'Event': <MdEvent />,
+    'Other': <BsThreeDots />
+  },
+  sortIcons: {
+    'Servers': <FaCompass />,
+    'Votes': <TbSquareRoundedChevronUp />,
+    'LatestVoted': <MdUpdate />,
+    'Voice': <MdKeyboardVoice />,
+    'Members': <FaUsers />,
+    'Newest': <HiSortAscending />,
+    'Oldest': <HiSortDescending />,
+    'Boosts': <TiStar />,
+    'MostReviewed': <TiStar />,
+    'Popular': <TiStar />
+  },  
   customHostnames: ['dsc.wtf', 'dsc.dog', 'dsc.mom'],
   emojisDenyReasons: {
     'reposted-emoji': {
