@@ -315,3 +315,6 @@ lemonSqueezy:
     tripledVotes:
       servers: '421124'
       bots: '421125'
+    standedOut:
+      servers: '425980'
+      bots: '425981'

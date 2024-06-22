@@ -25,6 +25,9 @@ const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const Template = require('@/schemas/Template');
 const User = require('@/schemas/User');
+const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
+const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
+const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -123,6 +126,7 @@ module.exports = class Client {
       if (options.startup.syncLemonSqueezyPlans) this.syncLemonSqueezyPlans();
       if (options.startup.saveMonthlyVotes) this.saveMonthlyVotes();
       if (options.startup.saveDailyProfileStats) this.saveDailyProfileStats();
+      if (options.startup.checkExpiredProducts) this.checkExpiredProducts();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', () => {
@@ -134,6 +138,7 @@ module.exports = class Client {
           this.updateClientActivity();
           this.syncPremiumRoles();
           this.syncLemonSqueezyPlans();
+          this.saveMonthlyVotes();
         }, null, true, 'Europe/Istanbul');
         
         new CronJob('59 23 * * *', () => {
@@ -430,5 +435,21 @@ module.exports = class Client {
     ]);
 
     logger.info(`Saved daily stats for ${updatedProfiles.modifiedCount} profiles.`);
+  }
+
+  async checkExpiredProducts() {
+    const expiredBotTripledVotes = await deleteExpiredProducts(BotVoteTripledEnabled, 86400000);
+    const expiredServerTripledVotes = await deleteExpiredProducts(ServerVoteTripledEnabled, 86400000);
+    const expiredStandedOutBots = await deleteExpiredProducts(StandedOutBot, 43200000);
+    const expiredStandedOutServers = await deleteExpiredProducts(StandedOutServer, 43200000);
+    
+    function deleteExpiredProducts(Model, expireTime) {
+      return Model.deleteMany({ createdAt: { $lt: new Date(Date.now() - expireTime) } });
+    }
+
+    if (expiredBotTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredBotTripledVotes.deletedCount} expired bot tripled votes.`);
+    if (expiredServerTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredServerTripledVotes.deletedCount} expired server tripled votes.`);
+    if (expiredStandedOutBots.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutBots.deletedCount} expired standed out bots.`);
+    if (expiredStandedOutServers.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutServers.deletedCount} expired standed out servers.`);
   }
 };

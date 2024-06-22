@@ -78,6 +78,7 @@ const ServerSchema = new Schema({
   methods: {
     async toPubliclySafe() {
       const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
+      const { StandedOutServer } = require('@/schemas/StandedOut');
 
       const newServer = {};
 
@@ -85,6 +86,13 @@ const ServerSchema = new Schema({
       if (voteTripleEnabledData) {
         newServer.vote_triple_enabled = {
           created_at: voteTripleEnabledData.createdAt
+        };
+      }
+
+      const standedOutData = await StandedOutServer.findOne({ identifier: this.id });
+      if (standedOutData) {
+        newServer.standed_out = {
+          created_at: standedOutData.createdAt
         };
       }
 

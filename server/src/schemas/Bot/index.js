@@ -149,6 +149,7 @@ const BotSchema = new Schema({
   methods: {
     async toPubliclySafe() {
       const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
+      const { StandedOutBot } = require('@/schemas/StandedOut');
 
       const newBot = {};
 
@@ -156,6 +157,13 @@ const BotSchema = new Schema({
       if (voteTripleEnabledData) {
         newBot.vote_triple_enabled = {
           created_at: voteTripleEnabledData.createdAt
+        };
+      }
+
+      const standedOutBotData = await StandedOutBot.findOne({ identifier: this.id });
+      if (standedOutBotData) {
+        newBot.standed_out = {
+          created_at: standedOutBotData.createdAt
         };
       }
 
