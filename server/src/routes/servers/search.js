@@ -25,7 +25,7 @@ module.exports = {
       .isIn(['Votes', 'LatestVoted', 'Voice', 'Members', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, LatestVoted, Voice, Members, Newest, Oldest, Boosts.'),
     query('limit')
       .optional()
-      .isInt({ min: 1, max: 10 }).withMessage('Limit must be an integer between 1 and 10.')
+      .isInt({ min: 1, max: 12 }).withMessage('Limit must be an integer between 1 and 12.')
       .toInt(),
     query('page')
       .optional()
