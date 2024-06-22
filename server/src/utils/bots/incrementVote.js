@@ -29,7 +29,7 @@ async function incrementVote(botId, userId, botWebhook) {
       },
       $set: {
         'voters.$[element].lastVote': Date.now(),
-        lastVoter: {
+        last_voter: {
           user: {
             id: userId
           },
@@ -57,7 +57,7 @@ async function incrementVote(botId, userId, botWebhook) {
         }
       },
       $set: {
-        lastVoter: {
+        last_voter: {
           user: {
             id: userId
           },

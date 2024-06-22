@@ -53,7 +53,7 @@ module.exports = {
       const sortedBots = foundBots.sort((a, b) => {
         switch (sort) {
         case 'Votes': return b.votes - a.votes;
-        case 'LatestVoted': return new Date(b.lastVoter?.date || 0).getTime() - new Date(a.lastVoter?.date || 0).getTime();
+        case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
         case 'Servers': return b.server_count.value - a.server_count.value;
         case 'Most Reviewed': return reviews.filter(review => review.bot.id === b.id).length - reviews.filter(review => review.bot.id === a.id).length;
         case 'Newest': return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
@@ -73,7 +73,7 @@ module.exports = {
           return { 
             ...await bot.toPubliclySafe(), 
             reviews: reviews.filter(review => review.bot.id === bot.id).length,
-            latest_voted_at: bot.lastVoter?.date || null
+            latest_voted_at: bot.last_voter?.date || null
           };
         }))
       });

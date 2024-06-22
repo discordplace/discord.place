@@ -58,7 +58,7 @@ const ServerSchema = new Schema({
       }
     ] 
   },
-  lastVoter: {
+  last_voter: {
     user: {
       id: {
         type: String

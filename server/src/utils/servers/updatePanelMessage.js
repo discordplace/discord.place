@@ -118,12 +118,12 @@ async function createPanelMessageOptions(guild, server) {
       ])
   ];
 
-  const lastVoter = server.lastVoter?.user?.id ? (client.users.cache.get(server.lastVoter.user.id) || await client.users.fetch(server.lastVoter.user.id).catch(() => null)) : false;
+  const lastVoter = server.last_voter?.user?.id ? (client.users.cache.get(server.last_voter.user.id) || await client.users.fetch(server.last_voter.user.id).catch(() => null)) : false;
   if (lastVoter) embeds.push(
     new Discord.EmbedBuilder()
       .setColor('#2b2d31')
       .setFooter({ text: `@${lastVoter.username}`, iconURL: lastVoter.displayAvatarURL({ dynamic: true }) })
-      .setTimestamp(server.lastVoter.date)
+      .setTimestamp(server.last_voter.date)
   );
 
   const components = [

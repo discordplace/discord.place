@@ -119,7 +119,7 @@ const BotSchema = new Schema({
       }
     ] 
   },
-  lastVoter: {
+  last_voter: {
     user: {
       id: {
         type: String

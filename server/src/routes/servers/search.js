@@ -58,7 +58,7 @@ module.exports = {
 
         switch (sort) {
         case 'Votes': return b.votes - a.votes;
-        case 'LatestVoted': return new Date(b.lastVoter?.date || 0).getTime() - new Date(a.lastVoter?.date || 0).getTime();
+        case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
         case 'Voice': return bGuild.members.cache.filter(member => !member.bot && member.voice.channel).size - aGuild.members.cache.filter(member => !member.bot && member.voice.channel).size;
         case 'Members': return bGuild.memberCount - aGuild.memberCount;
         case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
@@ -92,7 +92,7 @@ module.exports = {
           if (guild) {
             const data = {
               members: guild.memberCount,
-              latest_voted_at: server.lastVoter?.date || null
+              latest_voted_at: server.last_voter?.date || null
             };
 
             switch (sort) {

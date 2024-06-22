@@ -30,7 +30,7 @@ module.exports = {
       var guild = interaction.client.guilds.cache.get(serverId);
       var owner = interaction.client.users.cache.get(guild.ownerId) || await interaction.client.users.fetch(guild.ownerId).catch(() => null);
       var lastVoter;
-      if (server.lastVoter?.user?.id) lastVoter = interaction.client.users.cache.get(server.lastVoter.user.id) || await interaction.client.users.fetch(server.lastVoter.user.id).catch(() => null);
+      if (server.lastVoter?.user?.id) lastVoter = interaction.client.users.cache.get(server.last_voter.user.id) || await interaction.client.users.fetch(server.last_voter.user.id).catch(() => null);
 
       var voiceActivityEnabled = server.voice_activity_enabled;
       var voiceActivity = voiceActivityEnabled ? (await VoiceActivity.findOne({ 'guild.id': serverId }))?.data || null : null;
