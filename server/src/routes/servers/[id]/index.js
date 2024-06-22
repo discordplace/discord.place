@@ -11,6 +11,7 @@ const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const Review = require('@/schemas/Server/Review');
 const inviteLinkValidation = require('@/validations/servers/inviteLink');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
+const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
@@ -72,6 +73,18 @@ module.exports = {
       const memberInGuild = guild.members.cache.get(request.user?.id) || await guild.members.fetch(request.user?.id).catch(() => false);
       const tenMinutesPassedAfterVote = voteTimeout && Date.now() - voteTimeout.createdAt.getTime() > 600000;
 
+      const monthlyVotes = ((await ServerMonthlyVotes.findOne({ identifier: id }))?.data || [])
+        .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+        .slice(0, 6);
+      const currentMonth = new Date().getMonth();
+
+      if (!monthlyVotes.find(data => new Date(data.created_at).getMonth() === currentMonth)) {
+        monthlyVotes.push({
+          createdAt: new Date(),
+          votes: server.votes
+        });
+      }
+
       return response.json({
         ...await server.toPubliclySafe(),
         name: guild.name,
@@ -84,7 +97,7 @@ module.exports = {
         total_boosts: guild.premiumSubscriptionCount,
         vote_timeout: request.user ? (voteTimeout || null) : null,
         badges,
-        voiceActivity: voiceActivity ? voiceActivity.data : null,
+        voice_activity: voiceActivity ? voiceActivity.data : null,
         reviews,
         has_reviewed: request.user ? !!reviews.find(review => review.user.id === request.user.id) : null,
         permissions,
@@ -102,7 +115,8 @@ module.exports = {
             required_votes: reward.required_votes,
             unlocked: request.user && (server.voters.find(voter => voter.user.id === request.user.id)?.vote || 0) >= reward.required_votes
           };
-        })
+        }),
+        monthly_votes: monthlyVotes
       });
     }
   ],

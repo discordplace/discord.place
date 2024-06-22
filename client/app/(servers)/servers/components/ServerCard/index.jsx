@@ -13,6 +13,7 @@ import cn from '@/lib/cn';
 import getRelativeTime from '@/lib/getRelativeTime';
 import { BsFire } from 'react-icons/bs';
 import config from '@/config';
+import { GiInfinity } from 'react-icons/gi';
 
 export default function ServerCard(props) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -76,8 +77,12 @@ export default function ServerCard(props) {
       className='w-full p-0.5 h-[250px] relative z-[1] overflow-hidden group cursor-pointer rounded-3xl'
       href={`/servers/${props.server.id}`}
     >
-      {props.server.premium === true && (
-        <div className="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none"></div>
+      {props.server.standed_out?.created_at ? (
+        <div className="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#22c55e_20deg,transparent_120deg)] pointer-events-none" />
+      ) : (
+        props.server.premium === true && (
+          <div className="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none" />
+        )
       )}
 
       <div className='flex w-full h-full z-[20] relative border-4 border-primary rounded-3xl'>
@@ -107,12 +112,20 @@ export default function ServerCard(props) {
             />
 
             {typeof props.index === 'number' && (
-              <div className={cn(
-                'flex items-center justify-center text-secondary text-sm absolute top-[20px] font-bold rounded-full transition-colors w-[20px] h-[20px] left-[60px]',
-                props.index === 0 ? 'bg-yellow-600/10 text-yellow-500 backdrop-blur-lg' : 'bg-secondary group-hover:bg-tertiary'
-              )}>
-                {props.index + 1}.
-              </div>
+              props.server.standed_out?.created_at ? (
+                <div className={cn(
+                  'flex items-center justify-center text-secondary text-sm absolute top-[20px] bg-green-500/10 text-green-500 backdrop-blur-lg font-bold rounded-full transition-colors w-[20px] h-[20px] left-[60px]'
+                )}>
+                  <GiInfinity />
+                </div>
+              ) : (
+                <div className={cn(
+                  'flex items-center justify-center text-secondary text-sm absolute top-[20px] font-bold rounded-full transition-colors w-[20px] h-[20px] left-[60px]',
+                  props.index === 0 ? 'bg-yellow-600/10 text-yellow-500 backdrop-blur-lg' : 'bg-secondary group-hover:bg-tertiary'
+                )}>
+                  {props.index + 1}.
+                </div>
+              )
             )}
           </div>
 

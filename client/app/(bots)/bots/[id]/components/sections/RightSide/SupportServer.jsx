@@ -34,6 +34,7 @@ export default function SupportServer({ bot }) {
           <h2 className='text-lg font-semibold truncate'>
             {bot.support_server.name}
           </h2>
+          
           <p className='text-xs text-tertiary flex items-center gap-x-1.5'>
             <BiSolidCategory />
             {bot.support_server.category}

@@ -4,6 +4,7 @@ const { query, validationResult, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
+const { StandedOutServer } = require('@/schemas/StandedOut');
 
 module.exports = {
   get: [
@@ -51,14 +52,21 @@ module.exports = {
       } : baseFilter;
 
       const servers = await Server.find(findQuery);
-      
+      const standedOutServerIds = await StandedOutServer.find({ identifier: { $in: servers.map(server => server.id) } });
+
       const sortedServers = servers.sort((a, b) => {
         let aGuild = client.guilds.cache.get(a.id);
         let bGuild = client.guilds.cache.get(b.id);
+        let aStandedOutData = standedOutServerIds.find(({ identifier }) => identifier === a.id);
+        let bStandedOutData = standedOutServerIds.find(({ identifier }) => identifier === b.id);
+
+        if (aStandedOutData && bStandedOutData) return new Date(bStandedOutData.createdAt).getTime() - new Date(aStandedOutData.createdAt).getTime();
+        if (aStandedOutData) return -1;
+        if (bStandedOutData) return 1;
 
         switch (sort) {
         case 'Votes': return b.votes - a.votes;
-        case 'LatestVoted': return new Date(b.lastVoter?.date || 0).getTime() - new Date(a.lastVoter?.date || 0).getTime();
+        case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
         case 'Voice': return bGuild.members.cache.filter(member => !member.bot && member.voice.channel).size - aGuild.members.cache.filter(member => !member.bot && member.voice.channel).size;
         case 'Members': return bGuild.memberCount - aGuild.memberCount;
         case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
@@ -92,7 +100,7 @@ module.exports = {
           if (guild) {
             const data = {
               members: guild.memberCount,
-              latest_voted_at: server.lastVoter?.date || null
+              latest_voted_at: server.last_voter?.date || null
             };
 
             switch (sort) {
@@ -113,6 +121,9 @@ module.exports = {
               data,
               vote_triple_enabled: voteTripleEnabledServerIds.find(({ id }) => id === guild.id) ? {
                 created_at: voteTripleEnabledServerIds.find(({ id }) => id === guild.id).createdAt
+              } : null,
+              standed_out: standedOutServerIds.find(({ identifier }) => identifier === guild.id) ? {
+                created_at: standedOutServerIds.find(({ identifier }) => identifier === guild.id).createdAt
               } : null
             };
           }

@@ -7,12 +7,12 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const sleep = require('@/utils/sleep');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
+const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
 
 // Schemas
 const Server = require('@/schemas/Server');
 const VoiceActivity = require('@/schemas/Server/VoiceActivity');
 const Panel = require('@/schemas/Server/Panel');
-const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
 const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
@@ -25,6 +25,9 @@ const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const Template = require('@/schemas/Template');
 const User = require('@/schemas/User');
+const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
+const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
+const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -123,6 +126,7 @@ module.exports = class Client {
       if (options.startup.syncLemonSqueezyPlans) this.syncLemonSqueezyPlans();
       if (options.startup.saveMonthlyVotes) this.saveMonthlyVotes();
       if (options.startup.saveDailyProfileStats) this.saveDailyProfileStats();
+      if (options.startup.checkExpiredProducts) this.checkExpiredProducts();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', () => {
@@ -134,9 +138,21 @@ module.exports = class Client {
           this.updateClientActivity();
           this.syncPremiumRoles();
           this.syncLemonSqueezyPlans();
+          this.saveMonthlyVotes();
         }, null, true, 'Europe/Istanbul');
-
-        new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
+        
+        new CronJob('59 23 * * *', () => {
+          // Calculate if the current month has ended
+          const today = new Date();
+          const nextDay = new Date(today);
+          nextDay.setDate(today.getDate() + 1);
+          
+          if (nextDay.getDate() === 1) {
+            logger.info('Reached the end of the month. Saving monthly votes.');
+            
+            this.saveMonthlyVotes();
+          }
+        }, null, true, 'Europe/Istanbul');
 
         new CronJob('0 0 * * *', () => {
           this.checkVoteReminderMetadatas();
@@ -201,24 +217,12 @@ module.exports = class Client {
   }
 
   async saveMonthlyVotes() {
-    const servers = await Server.find();
-    for (const server of servers) {
-      const currentData = await MonthlyVotes.findOne({ guildId: server.id });
-      const month = new Date().getMonth() + 1;
-      const year = new Date().getFullYear();
-      const votes = server.votes;
-       
-      if (currentData) {
-        const data = currentData.data;
-        const monthData = data.find(data => data.month === month && data.year === year);
-        if (monthData) {
-          const index = data.indexOf(monthData);
-          data[index].votes = votes;
-          await currentData.updateOne({ $set: { data } });
-        } else await currentData.updateOne({ $push: { data: { month, year, votes } } });
-      } else await new MonthlyVotes({ guildId: server.id, data: [{ month, year, votes }] }).save();
-
-      await updatePanelMessage(server.id);
+    try {
+      await updateMonthlyVotes();
+    
+      logger.info('Monthly votes saved.');
+    } catch (error) {
+      logger.error('Failed to save monthly votes:', error);
     }
   }
 
@@ -431,5 +435,21 @@ module.exports = class Client {
     ]);
 
     logger.info(`Saved daily stats for ${updatedProfiles.modifiedCount} profiles.`);
+  }
+
+  async checkExpiredProducts() {
+    const expiredBotTripledVotes = await deleteExpiredProducts(BotVoteTripledEnabled, 86400000);
+    const expiredServerTripledVotes = await deleteExpiredProducts(ServerVoteTripledEnabled, 86400000);
+    const expiredStandedOutBots = await deleteExpiredProducts(StandedOutBot, 43200000);
+    const expiredStandedOutServers = await deleteExpiredProducts(StandedOutServer, 43200000);
+    
+    function deleteExpiredProducts(Model, expireTime) {
+      return Model.deleteMany({ createdAt: { $lt: new Date(Date.now() - expireTime) } });
+    }
+
+    if (expiredBotTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredBotTripledVotes.deletedCount} expired bot tripled votes.`);
+    if (expiredServerTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredServerTripledVotes.deletedCount} expired server tripled votes.`);
+    if (expiredStandedOutBots.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutBots.deletedCount} expired standed out bots.`);
+    if (expiredStandedOutServers.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutServers.deletedCount} expired standed out servers.`);
   }
 };

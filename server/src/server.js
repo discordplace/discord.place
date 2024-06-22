@@ -13,7 +13,6 @@ const compression = require('compression');
 const morgan = require('morgan');
 
 const passport = require('passport');
-const useRateLimiter = require('@/utils/useRateLimiter');
 const User = require('@/schemas/User');
 const DiscordStrategy = require('passport-discord').Strategy;
 const encrypt = require('@/utils/encryption/encrypt');
@@ -40,7 +39,6 @@ module.exports = class Server {
     this.createDiscordAuth();
 
     this.server.use('/', await router({ directory: path.join(__dirname, 'routes') }));
-    this.server.get('/favicon.ico', useRateLimiter({ maxRequests: 30, perMinutes: 1 }), (request, response) => response.sendFile(path.join(__dirname, '..', 'public', 'favicon.ico')));
     this.server.use('/public', express.static(path.join(__dirname, '..', 'public')));
     this.server.use('*', (request, response) => response.sendError('Not Found', 404));
 

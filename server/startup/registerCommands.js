@@ -23,6 +23,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     syncLemonSqueezyPlans: process.env.NODE_ENV === 'production',
     saveMonthlyVotes: false,
     saveDailyProfileStats: false,
+    checkExpiredProducts: true,
     listenEvents: false,
     listenCrons: false
   },

@@ -32,7 +32,7 @@ async function incrementVote(guildId, userId) {
         'voters.$[element].vote': 1
       },
       $set: {
-        lastVoter: {
+        last_voter: {
           user: {
             id: userId
           },
@@ -60,7 +60,7 @@ async function incrementVote(guildId, userId) {
         }
       },
       $set: {
-        lastVoter: {
+        last_voter: {
           user: {
             id: userId
           },

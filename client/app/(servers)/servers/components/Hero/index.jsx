@@ -202,7 +202,7 @@ export default function Hero() {
                       transition={{ ...sequenceTransition, delay: (index * 0.1) }}
                       className='flex animate-scroll-based-appear'
                     >
-                      <ServerCard server={server} index={page > 1 ? null : index} />
+                      <ServerCard server={server} index={page > 1 ? null : servers.filter(({ standed_out }) => !standed_out?.created_at).indexOf(server)} />
                     </motion.div>
                   ))
                 )}

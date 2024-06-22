@@ -104,6 +104,30 @@ export default function Content({ server }) {
                   />
                 </Tooltip>       
               )}
+
+              {server.standed_out?.created_at && (
+                <Tooltip content={
+                  <>
+                    <Countdown
+                      date={new Date(server.standed_out.created_at).getTime() + 86400000}
+                      renderer={({ completed, hours, minutes }) => {
+                        if (completed) return 'Standed out expired!';
+                        
+                        return `Standed out for ${hours} hours, ${minutes} minutes!`;
+                      }}
+                    />
+                  </>
+                }>
+                  <MotionImage 
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_standed_out.svg`} 
+                    width={24} 
+                    height={24} 
+                    alt={'Standed Out Badge'}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  />
+                </Tooltip>       
+              )}
             </div>
           )}
         </div>

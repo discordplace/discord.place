@@ -1,7 +1,7 @@
 const Panel = require('@/schemas/Server/Panel');
 const Discord = require('discord.js');
 const Table = require('cli-table3');
-const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
+const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const Server = require('@/schemas/Server');
 
@@ -87,7 +87,7 @@ async function createPanelMessageOptions(guild, server) {
     ...tableBaseOptions
   });
 
-  const monthlyVotes = await MonthlyVotes.findOne({ guildId: guild.id });
+  const monthlyVotes = await ServerMonthlyVotes.findOne({ identifier: guild.id });
   if (monthlyVotes) {
     for (const [, month] of monthlyVotes.data.sort((a, b) => b.created_at - a.created_at).slice(0, 6).entries()) {
       const index = monthlyVotes.data.findIndex(m => m.month === month.month);
@@ -118,12 +118,12 @@ async function createPanelMessageOptions(guild, server) {
       ])
   ];
 
-  const lastVoter = server.lastVoter?.user?.id ? (client.users.cache.get(server.lastVoter.user.id) || await client.users.fetch(server.lastVoter.user.id).catch(() => null)) : false;
+  const lastVoter = server.last_voter?.user?.id ? (client.users.cache.get(server.last_voter.user.id) || await client.users.fetch(server.last_voter.user.id).catch(() => null)) : false;
   if (lastVoter) embeds.push(
     new Discord.EmbedBuilder()
       .setColor('#2b2d31')
       .setFooter({ text: `@${lastVoter.username}`, iconURL: lastVoter.displayAvatarURL({ dynamic: true }) })
-      .setTimestamp(server.lastVoter.date)
+      .setTimestamp(server.last_voter.date)
   );
 
   const components = [

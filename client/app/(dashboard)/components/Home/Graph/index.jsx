@@ -7,7 +7,7 @@ const DynamicApexCharts = dynamic(() => import('react-apexcharts'), {
   ssr: false
 });
 
-export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltipLabel, color, extraGraphOptions = {} }) {
+export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltipLabel, color, extraGraphOptions = {}, xAxisCategories, xaxisRange }) {
   const theme = useThemeStore(state => state.theme);
 
   const reversedData = [...data].reverse();
@@ -78,8 +78,8 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
           }
         },
         xaxis: {
-          range: 6,
-          categories: reversedData.map(({ createdAt }) => {
+          range: xaxisRange || 6,
+          categories: xAxisCategories || reversedData.map(({ createdAt }) => {
             const date = new Date(createdAt);
             const day = date.getDate();
             const month = date.toLocaleString('en-US', { month: 'short' });

@@ -19,7 +19,9 @@ import revalidateBot from '@/lib/revalidate/bot';
 import useThemeStore from '@/stores/theme';
 import { BsFire } from 'react-icons/bs';
 import createTripledVotesCheckout from '@/lib/request/bots/createTripledVotesCheckout';
+import createStandedOutCheckout from '@/lib/request/bots/createStandedOutCheckout';
 import { useRouter } from 'next-nprogress-bar';
+import { AiOutlineRise } from 'react-icons/ai';
 
 export default function Actions({ bot }) {
   const theme = useThemeStore(state => state.theme);
@@ -28,6 +30,7 @@ export default function Actions({ bot }) {
   const [showCaptcha, setShowCaptcha] = useState(false);
   const [loading, setLoading] = useState(false);
   const [buyTripledVotesLoading, setBuyTripledVotesLoading] = useState(false);
+  const [buyStandedOutLoading, setBuyStandedOutLoading] = useState(false);
   const router = useRouter();
 
   const formatter = new Intl.NumberFormat('en-US', {
@@ -86,6 +89,24 @@ export default function Actions({ bot }) {
       },
       error: error => {
         setBuyTripledVotesLoading(false);
+        
+        return error;
+      }
+    });
+  }
+
+  function buyStandedOut() {
+    setBuyStandedOutLoading(true);
+
+    toast.promise(createStandedOutCheckout(bot.id), {
+      loading: 'We are creating a checkout for you..',
+      success: data => {        
+        setTimeout(() => router.push(data.url), 3000);
+
+        return 'Checkout created! Redirecting you to the payment page in few seconds..';
+      },
+      error: error => {
+        setBuyStandedOutLoading(false);
         
         return error;
       }
@@ -229,6 +250,28 @@ export default function Actions({ bot }) {
 
                 <div className='flex items-center font-bold gap-x-1'>
                   <BsFire />
+                </div>
+              </motion.button>
+            )}
+
+            {!bot.standed_out?.created_at && (
+              <motion.button 
+                className={cn(
+                  'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-green-800 rounded-lg group gap-x-2 hover:bg-green-900',
+                  buyStandedOutLoading && '!opacity-70 pointer-events-none'
+                )}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+                onClick={buyStandedOut}
+              >
+                <div className='flex gap-x-1.5 items-center'>
+                  {buyStandedOutLoading && <TbLoader className='animate-spin' />}
+                  Stand Out
+                </div>
+
+                <div className='flex items-center font-bold gap-x-1'>
+                  <AiOutlineRise />
                 </div>
               </motion.button>
             )}
