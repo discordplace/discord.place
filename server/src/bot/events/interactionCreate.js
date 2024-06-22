@@ -166,7 +166,7 @@ module.exports = async interaction => {
       if (interaction.user.id !== userId) return;
 
       const data = await EvaluateResult.findOne({ id });
-      if (!data) return;
+      if (!data || !data.executedCode) return;
 
       const { result, hasError } = await evaluate(data.executedCode);
 
