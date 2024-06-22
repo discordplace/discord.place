@@ -10,6 +10,7 @@ const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const Bot = require('@/schemas/Bot');
 const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
+const Discord = require('discord.js');
 
 module.exports = {
   post: [
@@ -31,6 +32,23 @@ module.exports = {
 
       const body = JSON.parse(request.body.toString());
 
+      const colors = {
+        tripledVote: '#f97316',
+        standedOut: '#166534',
+        premium: '#a855f7'
+      };
+
+      function sendPurchaseMessage(color, text, iconUrl, message) {
+        var embeds = [
+          new Discord.EmbedBuilder()
+            .setColor(color)
+            .setAuthor({ text, iconUrl })
+            .setFooter({ text: message })
+        ];
+
+        client.channels.cache.get(config.purchasesChannelId).send({ embeds });
+      }
+
       switch (body.meta.event_name) {
       case 'order_created':
         var serverId = body.meta.custom_data?.server_id;
@@ -51,6 +69,8 @@ module.exports = {
             if (isTripledVoteEnabled) return logger.warn('[Lemon Squeezy] Tripled vote is already enabled for this server:', `\n${JSON.stringify(body, null, 2)}`);
 
             await new ServerVoteTripleEnabled({ id: serverId }).save();
+
+            sendPurchaseMessage(colors.tripledVote, guild.name, guild.iconURL(), 'Purchased tripled votes.');
           }
 
           if (botId) {        
@@ -61,6 +81,8 @@ module.exports = {
             if (isTripledVoteEnabled) return logger.warn('[Lemon Squeezy] Tripled vote is already enabled for this bot:', `\n${JSON.stringify(body, null, 2)}`);
 
             await new BotVoteTripleEnabled({ id: botId }).save();
+
+            sendPurchaseMessage(colors.tripledVote, bot.tag, bot.avatarURL(), 'Purchased tripled votes.');
           }
         }
         
@@ -79,6 +101,8 @@ module.exports = {
             if (isStandedOut) return logger.warn('[Lemon Squeezy] This server is already standed out:', `\n${JSON.stringify(body, null, 2)}`);
 
             await new StandedOutServer({ identifier: serverId }).save();
+
+            sendPurchaseMessage(colors.standedOut, guild.name, guild.iconURL(), 'Purchased standed out.');
           }
 
           if (botId) {
@@ -89,6 +113,8 @@ module.exports = {
             if (isStandedOut) return logger.warn('[Lemon Squeezy] This bot is already standed out:', `\n${JSON.stringify(body, null, 2)}`);
 
             await new StandedOutBot({ identifier: botId }).save();
+
+            sendPurchaseMessage(colors.standedOut, bot.tag, bot.avatarURL(), 'Purchased standed out.');
           }
         }
 
@@ -118,6 +144,8 @@ module.exports = {
           var member = await guild.members.fetch(user.id).catch(() => null);
 
           if (member) await member.roles.add(config.roles.premium);
+
+          sendPurchaseMessage(colors.premium, `@${member.user.username}`, member.user.displayAvatarURL(), 'Purchased premium.');
         }
 
         break;

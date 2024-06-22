@@ -165,6 +165,7 @@ templateQueueChannelId: '1247743275914366987'
 voteLogsChannelId: '1222817883470434304'
 templateApplyLogsChannelId: '1247797537780531235'
 portalChannelId: '1238654829916585984'
+purchasesChannelId: '1254216137684680745'
 excludeCollectionsInBackup:
   - 'sessions'
   - 'botdenies'
