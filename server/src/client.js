@@ -414,8 +414,8 @@ module.exports = class Client {
                     [
                       {
                         date: new Date(),
-                        likes: Math.floor(Math.random() * 100), // Random value between 0 and 100
-                        views: Math.floor(Math.random() * 1000) // Random value between 0 and 1000
+                        likes: '$likes_count',
+                        views: '$views'
                       }
                     ]
                   ]
