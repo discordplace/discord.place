@@ -7,12 +7,12 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const sleep = require('@/utils/sleep');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
+const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
 
 // Schemas
 const Server = require('@/schemas/Server');
 const VoiceActivity = require('@/schemas/Server/VoiceActivity');
 const Panel = require('@/schemas/Server/Panel');
-const MonthlyVotes = require('@/schemas/Server/MonthlyVotes');
 const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
@@ -135,8 +135,19 @@ module.exports = class Client {
           this.syncPremiumRoles();
           this.syncLemonSqueezyPlans();
         }, null, true, 'Europe/Istanbul');
-
-        new CronJob('59 23 28-31 * *', this.saveMonthlyVotes, null, true, 'Europe/Istanbul');
+        
+        new CronJob('59 23 * * *', () => {
+          // Calculate if the current month has ended
+          const today = new Date();
+          const nextDay = new Date(today);
+          nextDay.setDate(today.getDate() + 1);
+          
+          if (nextDay.getDate() === 1) {
+            logger.info('Reached the end of the month. Saving monthly votes.');
+            
+            this.saveMonthlyVotes();
+          }
+        }, null, true, 'Europe/Istanbul');
 
         new CronJob('0 0 * * *', () => {
           this.checkVoteReminderMetadatas();
@@ -201,24 +212,12 @@ module.exports = class Client {
   }
 
   async saveMonthlyVotes() {
-    const servers = await Server.find();
-    for (const server of servers) {
-      const currentData = await MonthlyVotes.findOne({ guildId: server.id });
-      const month = new Date().getMonth() + 1;
-      const year = new Date().getFullYear();
-      const votes = server.votes;
-       
-      if (currentData) {
-        const data = currentData.data;
-        const monthData = data.find(data => data.month === month && data.year === year);
-        if (monthData) {
-          const index = data.indexOf(monthData);
-          data[index].votes = votes;
-          await currentData.updateOne({ $set: { data } });
-        } else await currentData.updateOne({ $push: { data: { month, year, votes } } });
-      } else await new MonthlyVotes({ guildId: server.id, data: [{ month, year, votes }] }).save();
-
-      await updatePanelMessage(server.id);
+    try {
+      await updateMonthlyVotes();
+    
+      logger.info('Monthly votes saved.');
+    } catch (error) {
+      logger.error('Failed to save monthly votes:', error);
     }
   }
 
