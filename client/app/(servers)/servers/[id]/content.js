@@ -109,7 +109,7 @@ export default function Content({ server }) {
                 <Tooltip content={
                   <>
                     <Countdown
-                      date={new Date(server.standed_out.created_at).getTime() + 86400000}
+                      date={new Date(server.standed_out.created_at).getTime() + 43200000}
                       renderer={({ completed, hours, minutes }) => {
                         if (completed) return 'Standed out expired!';
                         

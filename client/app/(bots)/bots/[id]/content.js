@@ -110,7 +110,7 @@ export default function Content({ bot }) {
                 <Tooltip content={
                   <>
                     <Countdown
-                      date={new Date(bot.standed_out.created_at).getTime() + 86400000}
+                      date={new Date(bot.standed_out.created_at).getTime() + 43200000}
                       renderer={({ completed, hours, minutes }) => {
                         if (completed) return 'Standed out ended!';
                         
