@@ -269,7 +269,7 @@ export default function Edit({ profileData }) {
                     <h2 className='flex items-center text-sm font-medium text-secondary gap-x-2'>
                       Primary
 
-                      <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.primary }} />
+                      <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.primary || '#000000' }} />
                     </h2>
                     <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[15px] [&_.react-colorful\_\_pointer]:h-[15px]'>
                       <HexColorPicker
@@ -290,7 +290,7 @@ export default function Edit({ profileData }) {
                     <h2 className='flex items-center text-sm font-medium text-secondary gap-x-2'>
                       Secondary
 
-                      <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.secondary }} />
+                      <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.secondary || '#000000' }} />
                     </h2>
                     <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[15px] [&_.react-colorful\_\_pointer]:h-[15px]'>
                       <HexColorPicker
