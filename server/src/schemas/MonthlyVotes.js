@@ -11,6 +11,11 @@ const MonthlyVotesSchema = new Schema({
       created_at: {
         type: Date,
         default: Date.now
+      },
+      most_voted: {
+        type: String,
+        default: null,
+        required: false
       }
     }
   ]
@@ -22,13 +27,19 @@ MonthlyVotesSchema.statics.updateMonthlyVotes = async function (identifier, vote
   const month = new Date().getMonth() + 1;
   const year = new Date().getFullYear();
 
+  const mostVoted = await Model.findOne({ id: identifier }).sort({ votes: -1 }).limit(1);
   const query = { identifier: identifier };
-  const updateData = { month, year, votes, created_at: new Date() };
+  const updateData = { month, year, votes, created_at: new Date(), most_voted: mostVoted ? mostVoted.id : null };
 
   // Try to update the existing document
   const result = await this.updateOne(
     { identifier: identifier, 'data.month': month, 'data.year': year },
-    { $set: { 'data.$.votes': votes } }
+    { 
+      $set: {
+        'data.$.votes': votes,
+        'data.$.most_voted': mostVoted ? mostVoted.id : null
+      }
+    }
   );
 
   // If no document was modified, it means we need to add new data for the current month/year
