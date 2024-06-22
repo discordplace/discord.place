@@ -91,7 +91,7 @@ module.exports = {
               botUser = client.users.cache.get(botId);
             }
 
-            sendPurchaseMessage(colors.tripledVote, botUser?.tag || botId, botUser?.displayAatarURL?.(), 'Purchased tripled votes.');
+            sendPurchaseMessage(colors.tripledVote, botUser?.tag || botId, botUser?.displayAvatarURL?.(), 'Purchased tripled votes.');
           }
         }
         
@@ -132,7 +132,7 @@ module.exports = {
               botUser = client.users.cache.get(botId);
             }
 
-            sendPurchaseMessage(colors.standedOut, botUser?.tag || botId, botUser?.displayAatarURL?.(), 'Purchased standed out.');
+            sendPurchaseMessage(colors.standedOut, botUser?.tag || botId, botUser?.displayAvatarURL?.(), 'Purchased standed out.');
           }
         }
 
