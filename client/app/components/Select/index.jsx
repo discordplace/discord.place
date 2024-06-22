@@ -16,7 +16,7 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
       <>
         <div
           className={cn(
-            'inline-flex cursor-pointer items-center justify-center rounded-lg py-[1rem] w-full leading-none border-2 border-primary px-4 gap-4 bg-secondary hover:bg-tertiary focus-visible:border-purple-500 transition-all focus-visible:bg-quaternary text-tertiary select-none font-medium outline-none',
+            'inline-flex cursor-pointer items-center justify-center rounded-lg py-[1rem] w-full leading-none border-2 border-primary px-2 sm:px-4 gap-1 sm:gap-4 bg-secondary transition-all text-tertiary select-none font-medium outline-none',
             openState && 'border-purple-500 bg-quaternary',
             disabled && 'opacity-50 pointer-events-none',
             triggerClassName

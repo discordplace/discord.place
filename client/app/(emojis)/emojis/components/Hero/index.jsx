@@ -73,7 +73,7 @@ export default function Hero() {
           />
 
           <motion.div
-            className='flex items-center w-full sm:w-max gap-x-2'
+            className='flex flex-col items-center w-full gap-2 mobile:flex-row sm:w-max'
             initial={{ opacity: 0, y: -25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...sequenceTransition, delay: 0.3 }}
