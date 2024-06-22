@@ -17,7 +17,7 @@ export default function CustomDrawer({ openState, setOpenState, state, setState,
         <Drawer.Content className='outline-none gap-y-1 p-4 z-[10001] bg-secondary flex flex-col rounded-t-3xl h-max fixed bottom-0 left-0 right-0'>
           <div className='mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-quaternary mb-8' />
           
-          <div className='h-full max-h-[80dvh] overflow-y-auto w-full flex flex-col'>
+          <div className='h-full max-h-[80dvh] gap-y-2 overflow-y-auto w-full flex flex-col'>
             {items.map(item => (
               <button
                 key={nanoid()}
