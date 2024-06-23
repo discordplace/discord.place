@@ -140,8 +140,8 @@ module.exports = class Client {
           this.syncLemonSqueezyPlans();
         }, null, true, 'Europe/Istanbul');
         
+        /* Disabled for now
         new CronJob('59 23 * * *', () => {
-          // Calculate if the current month has ended
           const today = new Date();
           const nextDay = new Date(today);
           nextDay.setDate(today.getDate() + 1);
@@ -152,6 +152,7 @@ module.exports = class Client {
             this.saveMonthlyVotes();
           }
         }, null, true, 'Europe/Istanbul');
+        */
 
         new CronJob('0 0 * * *', () => {
           this.checkVoteReminderMetadatas();
