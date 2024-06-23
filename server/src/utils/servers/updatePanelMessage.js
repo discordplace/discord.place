@@ -102,13 +102,13 @@ async function createPanelMessageOptions(guild, server) {
       .setFields([
         {
           name: 'Vote',
-          value: `***${formatter.format(server.votes)}*** votes has given to this server by ***${server.voters.length}*** users.
+          value: `***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.\n\`
 \`\`\`ansi\n${topVotersTable.toString()}\`\`\``,
           inline: true
         },
         {
           name: 'Monthly Votes',
-          value: `${!monthlyVotes ? 'Uh, there is no data for previous months.' : `***${formatter.format(monthlyVotes.data[0].votes - (monthlyVotes.data[1]?.votes || 0))}*** votes has given to this server in the last month.\n\`\`\`ansi\n${monthlyVotesTable.toString()}\`\`\``}`,
+          value: `${!monthlyVotes ? 'Uh, there is no data for previous months.' : `This server has gained ***${formatter.format(monthlyVotes.data[0].votes - (monthlyVotes.data[1]?.votes || 0))}*** votes in the last month.\n\`\`\`ansi\n${monthlyVotesTable.toString()}\`\`\``}`,
           inline: true
         },
         {
