@@ -138,7 +138,6 @@ module.exports = class Client {
           this.updateClientActivity();
           this.syncPremiumRoles();
           this.syncLemonSqueezyPlans();
-          this.saveMonthlyVotes();
         }, null, true, 'Europe/Istanbul');
         
         new CronJob('59 23 * * *', () => {
