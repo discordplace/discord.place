@@ -182,34 +182,50 @@ module.exports = class Client {
   }
 
   async checkVoiceActivity() {
-    const servers = await Server.find({ voice_activity_enabled: true });
-    for (const server of servers) {
-      const guild = client.guilds.cache.get(server.id);
-      if (!guild) continue;
-
-      const totalMembersInVoice = guild.members.cache.filter(member => member.voice.channel).size;
-      const voiceActivity = await VoiceActivity.findOne({ 'guild.id': server.id });
-
-      if (voiceActivity) {
-        const data = voiceActivity.data;
-        if (data.length === 24) data.shift();
-
-        data.push({
-          createdAt: new Date(),
-          data: totalMembersInVoice
-        });
-        await voiceActivity.updateOne({ $set: { data: data } });
-      } else await new VoiceActivity({
-        guild: { id: server.id },
-        data: [{
-          createdAt: new Date(),
-          data: totalMembersInVoice
-        }]
-      }).save();
-
-      logger.info(`Voice activity for server ${server.id} updated.`);
+    try {
+      const servers = await Server.find({ voice_activity_enabled: true });
+      await Promise.all(servers.map(async server => {
+        const guild = client.guilds.cache.get(server.id);
+        if (!guild) return;
+  
+        const totalMembersInVoice = guild.members.cache.filter(member => member.voice.channel).size;
+        const voiceActivity = await VoiceActivity.findOneAndUpdate(
+          { 'guild.id': server.id },
+          {
+            $push: {
+              data: {
+                $each: [
+                  {
+                    createdAt: new Date(),
+                    data: totalMembersInVoice
+                  }
+                ],
+                $slice: -24
+              }
+            }
+          },
+          { new: true, upsert: true }
+        );
+  
+        if (!voiceActivity) {
+          await new VoiceActivity({
+            guild: { id: server.id },
+            data: [
+              {
+                createdAt: new Date(),
+                data: totalMembersInVoice
+              }
+            ]
+          }).save();
+        }
+  
+        logger.info(`Voice activity for server ${server.id} updated.`);
+      }));
+    } catch (error) {
+      logger.error('Error checking voice activity:', error);
     }
   }
+  
 
   async updatePanelMessages() {
     const panels = await Panel.find();
