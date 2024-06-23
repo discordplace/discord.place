@@ -102,7 +102,7 @@ async function createPanelMessageOptions(guild, server) {
       .setFields([
         {
           name: 'Vote',
-          value: `***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.\n
+          value: `***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.
 \`\`\`ansi\n${topVotersTable.toString()}\`\`\``,
           inline: true
         },
