@@ -129,9 +129,14 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className='max-w-[1000px] my-16 w-full flex flex-col gap-y-8 lg:px-0 px-2 sm:px-4'>
+      <motion.div
+        className='max-w-[1000px] my-16 w-full flex flex-col gap-y-8 lg:px-0 px-2 sm:px-4'
+        initial={{ opacity: 0, y: -25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...sequenceTransition, delay: 0.6 }}
+      >
         <Emojis />
-      </div>
+      </motion.div>
     </div>
   );
 }

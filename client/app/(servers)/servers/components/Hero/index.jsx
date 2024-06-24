@@ -12,7 +12,6 @@ import useSearchStore from '@/stores/servers/search';
 import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence } from 'framer-motion';
 import ErrorState from '@/app/components/ErrorState';
-import { TbLoader } from 'react-icons/tb';
 import { BsEmojiAngry } from 'react-icons/bs';
 import Pagination from '@/app/components/Pagination';
 import config from '@/config';
@@ -166,67 +165,82 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className='max-w-[1000px] w-full flex flex-col my-8 gap-y-2'>
-        <div className={cn(
-          'w-full',
-          (loading || servers.length <= 0) ? 'flex items-center justify-center' : 'grid grid-cols-1 sm:grid-cols-3 gap-4'
-        )}>
+      <motion.div
+        className='max-w-[1000px] w-full flex flex-col my-8 gap-y-2'
+        initial={{ opacity: 0, y: -25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...sequenceTransition, delay: 0.5 }}
+      >
+        {!loading && servers.length <= 0 ? (
           <AnimatePresence>
-            {loading ? (
-              <motion.div variants={stateVariants} initial='hidden' animate='visible' exit='hidden'>
-                <ErrorState title={<div className='flex items-center gap-x-1.5'>
-                  <TbLoader className='animate-spin' />
-                </div>} message='' />
-              </motion.div>
-            ) : (
-              <>
-                {servers.length <= 0 ? (
-                  <motion.div className='flex flex-col gap-y-2' variants={stateVariants} initial='hidden' animate='visible' exit='hidden'>
-                    <ErrorState title={<div className='flex items-center gap-x-2'>
-                      <BsEmojiAngry />
-                      It{'\''}s quiet in here...
-                    </div>} message={'There are no servers to display. Maybe that\'s a sign to create one?'} />
-
-                    <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
-                      fetchServers('', 1, limit, 'All', 'Votes');
-                    }}>
-                      Reset Search
-                    </button>
-                  </motion.div>
-                ) : (
-                  servers.map((server, index) => (
-                    <motion.div
-                      key={server.id}
-                      initial={{ opacity: 0, y: -25 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ ...sequenceTransition, delay: (index * 0.1) }}
-                      className='flex animate-scroll-based-appear'
-                    >
-                      <ServerCard server={server} index={page > 1 ? null : servers.filter(({ standed_out }) => !standed_out?.created_at).indexOf(server)} />
-                    </motion.div>
-                  ))
-                )}
-              </>
-            )}
-          </AnimatePresence>
-        </div>
-
-        <AnimatePresence>
-          {showPagination && (
-            <div className='flex justify-center w-full'>
-              <Pagination 
-                page={page} 
-                setPage={newPage => {
-                  fetchServers(search, newPage);
-                }} 
-                loading={loading} 
-                total={totalServers} 
-                limit={limit} 
+            <motion.div 
+              className='flex flex-col gap-y-2'
+              variants={stateVariants}
+              initial='hidden'
+              animate='visible'
+              exit='hidden'
+            >
+              <ErrorState 
+                title={
+                  <div className='flex items-center gap-x-2'>
+                    <BsEmojiAngry />
+                    It{'\''}s quiet in here...
+                  </div>
+                }
+                message={'There are no servers to display. Maybe that\'s a sign to create one?'}
               />
+
+              <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
+                fetchServers('', 1, limit, 'All', 'Votes');
+              }}>
+                Reset Search
+              </button>
+            </motion.div>
+          </AnimatePresence>
+        ) : (
+          <>
+            <motion.div
+              className='grid grid-cols-1 gap-4 sm:grid-cols-3'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              {loading ? (
+                new Array(limit).fill(0).map((_, index) => (
+                  <div key={index} className='animate-pulse h-[250px] w-[322px] bg-secondary rounded-3xl' />
+                ))
+              ) : (
+                servers.map(server => (
+                  <div
+                    className='flex animate-scroll-based-appear'
+                    key={server.id}
+                  >
+                    <ServerCard
+                      server={server}
+                      index={page > 1 ? null : servers.filter(({ standed_out }) => !standed_out?.created_at).indexOf(server)}
+                    />
+                  </div>
+                ))
+              )}
+            </motion.div>
+
+            <div className='flex items-center justify-center w-full' key='pagination'> 
+              {showPagination && (
+                <div className='flex justify-center w-full'>
+                  <Pagination 
+                    page={page} 
+                    setPage={newPage => {
+                      fetchServers(search, newPage);
+                    }} 
+                    loading={loading} 
+                    total={totalServers} 
+                    limit={limit} 
+                  />
+                </div>
+              )}
             </div>
-          )}
-        </AnimatePresence>
-      </div>
+          </>
+        )}
+      </motion.div>
     </div>
   );
 }

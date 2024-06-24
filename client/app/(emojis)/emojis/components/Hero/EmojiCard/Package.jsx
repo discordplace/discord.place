@@ -6,7 +6,7 @@ import cn from '@/lib/cn';
 import { LuPackage } from 'react-icons/lu';
 import { useState } from 'react';
 
-export default function EmojiCard({ id, name, categories, downloads, emoji_ids, className }) {
+export default function EmojiPackageCard({ id, name, categories, downloads, emoji_ids, className }) {
   const [containerHovered, setContainerHovered] = useState(false);
 
   return (

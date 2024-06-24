@@ -26,7 +26,9 @@ export default function Page() {
   return (
     <>
       <Hero />
-      <Profiles />
+      <div className='flex items-center justify-center'>
+        <Profiles />
+      </div>
     </>
   ); 
 }

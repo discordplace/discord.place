@@ -2,9 +2,7 @@
 
 import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
 import useSearchStore from '@/stores/profiles/search';
-import { nanoid } from 'nanoid';
 import ErrorState from '@/app/components/ErrorState';
-import { TbLoader } from 'react-icons/tb';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -26,35 +24,6 @@ export default function Profiles() {
 
   const showPagination = !loading && count > limit;
   
-  const profileCardTransition = index => {
-    return {
-      type: 'spring',
-      stiffness: 260,
-      damping: 20,
-      delay: index * 0.15
-    };
-  };
-
-  const profileCardVariants = index => {
-    return {
-      hidden: { 
-        opacity: 0,
-        y: -50,
-        transition: profileCardTransition(index)
-      },
-      visible: { 
-        opacity: 1,
-        y: 0,
-        transition: profileCardTransition(index)
-      },
-      exit: { 
-        opacity: 0,
-        y: -50,
-        transition: profileCardTransition(index)
-      }
-    };
-  };
-  
   const stateVariants = {
     hidden: { 
       opacity: 0
@@ -66,70 +35,86 @@ export default function Profiles() {
       opacity: 0
     }
   };
+
+  const sequenceTransition = {
+    duration: 0.25,
+    type: 'spring',
+    stiffness: 260,
+    damping: 20
+  };
   
   return (
-    <>
-      <section className='flex flex-col items-center w-full my-12'>
+    <motion.div 
+      className='flex flex-col my-16'
+      initial={{ opacity: 0, y: -25 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ ...sequenceTransition, delay: 0.5 }}
+    >
+      {!loading && profiles.length <= 0 ? (
         <AnimatePresence>
-          {loading ? (
-            <motion.div variants={stateVariants} initial='hidden' animate='visible' exit='hidden'>
-              <ErrorState title={<div className='flex items-center gap-x-1.5'>
-                <TbLoader className='animate-spin' />
-              </div>} message='' />
-            </motion.div>
-          ) : (
-            <>
-              {profiles.length <= 0 ? (
-                <motion.div className='flex flex-col gap-y-2'  variants={stateVariants} initial='hidden' animate='visible' exit='hidden'>
-                  <ErrorState title={<div className='flex items-center gap-x-2'>
-                    <BsEmojiAngry />
-                    It{'\''}s quiet in here...
-                  </div>} message={'There are no profiles to display. Maybe that\'s a sign to create one?'} />
-
-                  {search.length > 0 && (
-                    <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
-                      setSearch('');
-                      fetchProfiles('');
-                      setPage(1);
-                    }}>
-                      Reset Search
-                    </button>
-                  )}
-                </motion.div>
-              ) : (
-                <div className='grid self-center grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
-                  {profiles.map(profile => (
-                    <motion.div 
-                      key={nanoid()} 
-                      variants={profileCardVariants(profiles.indexOf(profile))}
-                      initial='hidden'
-                      animate='visible'
-                      exit='hidden'
-                    >
-                      <ProfileCard 
-                        {...profile}
-                      />
-                    </motion.div>
-                  ))}
+          <motion.div 
+            className='flex flex-col gap-y-2'
+            variants={stateVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
+          >
+            <ErrorState 
+              title={
+                <div className='flex items-center gap-x-2'>
+                  <BsEmojiAngry />
+                  It{'\''}s quiet in here...
                 </div>
-              )}
-            </>
-          )}
+              }
+              message={'There are no profiles to display. Maybe that\'s a sign to create one?'}
+            />
 
-          {showPagination && (
-            <Pagination 
-              page={page} 
-              setPage={newPage => {
-                setPage(newPage);
-                fetchProfiles(search);
-              }} 
-              loading={loading} 
-              total={count} 
-              limit={limit} 
-            />          
-          )}
+            <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
+              setSearch('');
+              fetchProfiles('');
+              setPage(1);
+            }}>
+              Reset Search
+            </button>
+          </motion.div>
         </AnimatePresence>
-      </section>
-    </>
+      ) : (
+        <>
+          <motion.div 
+            className='grid self-center grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {loading ? (
+              new Array(limit).fill(0).map((_, index) => (
+                <div key={index} className='w-[300px] h-[461px] bg-secondary rounded-3xl animate-pulse' />
+              ))
+            ) : (
+              profiles.map(profile => (
+                <ProfileCard
+                  key={profile.slug}
+                  {...profile}
+                />
+              ))
+            )}
+          </motion.div>
+
+          <div className='flex items-center justify-center w-full' key='pagination'> 
+            {showPagination && (
+              <Pagination 
+                page={page} 
+                setPage={newPage => {
+                  setPage(newPage);
+                  fetchProfiles(search);
+                }} 
+                loading={loading} 
+                total={count} 
+                limit={limit} 
+              />      
+            )}
+          </div>
+        </>
+      )}
+    </motion.div>
   );
 }
