@@ -138,7 +138,7 @@ module.exports = class Client {
           this.updateClientActivity();
           this.syncMemberRoles();
           this.syncLemonSqueezyPlans();
-        }, null, true, 'Europe/Istanbul');
+        }, null, true);
         
         /* Disabled for now
         new CronJob('59 23 * * *', () => {
@@ -151,7 +151,7 @@ module.exports = class Client {
             
             this.saveMonthlyVotes();
           }
-        }, null, true, 'Europe/Istanbul');
+        }, null, true);
         */
 
         new CronJob('0 0 * * *', () => {
@@ -159,9 +159,9 @@ module.exports = class Client {
           this.updateBotStats();
           this.createNewDashboardData();
           this.saveDailyProfileStats();
-        }, null, true, 'Europe/Istanbul');
+        }, null, true);
 
-        new CronJob('*/5 * * * *', this.postNewMetric.bind(this), null, true, 'Europe/Istanbul');
+        new CronJob('*/5 * * * *', this.postNewMetric.bind(this), null, true);
       }
     });
   }
