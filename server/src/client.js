@@ -416,7 +416,7 @@ module.exports = class Client {
           await sleep(1000);
         }
 
-        logger.info(`Successfully ${role.name} synced roles for ${membersToUpdate.length} members.`);
+        logger.info(`Successfully synced ${role.name} roles for ${membersToUpdate.length} members.`);
       })
     )
       .catch(error => logger.error('Failed to sync member roles:', error))
