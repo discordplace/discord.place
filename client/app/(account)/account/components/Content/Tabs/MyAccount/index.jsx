@@ -8,15 +8,20 @@ import { GoHeartFill } from 'react-icons/go';
 import { useEffect, useState } from 'react';
 import getPlans from '@/lib/request/payments/getPlans';
 import { toast } from 'sonner';
+import { TbLoader } from 'react-icons/tb';
 
 export default function MyAccount() {
   const user = useAuthStore(state => state.user);
   const [plans, setPlans] = useState([]);
+  const [plansLoading, setPlansLoading] = useState(true);
 
   useEffect(() => {
+    setPlansLoading(true);
+
     getPlans()
       .then(data => setPlans(data))
-      .catch(toast.error);
+      .catch(toast.error)
+      .finally(() => setPlansLoading(false));
   }, []);
 
   return (
@@ -96,7 +101,14 @@ export default function MyAccount() {
 
                 <div className='flex flex-col'>
                   <h2 className='flex flex-wrap items-center font-semibold gap-x-2'>
-                    {plans.find(plan => plan.id === user.premium.planId)?.name}
+                    {plansLoading ? (
+                      <>
+                        <TbLoader className='animate-spin' />
+                        Plans loading..
+                      </>
+                    ) : (
+                      plans.find(plan => plan.id === user.premium.planId)?.name
+                    )}
 
                     <span className='text-xs text-tertiary'>
                       {new Date(user.premium.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
