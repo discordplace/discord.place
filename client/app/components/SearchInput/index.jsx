@@ -2,7 +2,6 @@ import { FiX } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { IoSearch } from 'react-icons/io5';
-import { TbLoader } from 'react-icons/tb';
 import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
 
@@ -73,19 +72,10 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
         <FiX className='text-xl' />
       </button>
       
-      <div
-        className={cn(
-          'transition-all [transition-duration:_250ms] absolute',
-          loading ? 'left-4' : '-left-[30px] opacity-0'
-        )}
-      >
-        <TbLoader className='w-5 h-5 animate-spin text-secondary' />
-      </div>
-      
       <input
         placeholder={placeholder}
         className={cn(
-          'caret-[rgba(var(--text-secondary))] [transition-duration:_250ms] flex w-full py-3 pl-4 pr-12 transition-all border-2 rounded-lg outline-none disabled:pl-10 disalbed:pointer-events-none bg-secondary peer-hover:bg-secondary border-primary hover:bg-tertiary placeholder-placeholder text-secondary focus-visible:bg-tertiary focus-visible:border-purple-500 active:bg-quaternary',
+          'caret-[rgba(var(--text-secondary))] [transition-duration:_250ms] flex w-full py-3 pl-4 pr-12 transition-all border-2 rounded-lg outline-none disalbed:pointer-events-none bg-secondary peer-hover:bg-secondary border-primary hover:bg-tertiary placeholder-placeholder text-secondary focus-visible:bg-tertiary focus-visible:border-purple-500 active:bg-quaternary',
           (value || (value !== undefined && value !== '')) && 'pr-[4.7rem]'
         )}
         onChange={event => setValue(event.target.value)}
