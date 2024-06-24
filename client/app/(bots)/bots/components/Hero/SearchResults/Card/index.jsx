@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaCompass } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { BiSolidCategory } from 'react-icons/bi';
 import useSearchStore from '@/stores/bots/search';
 import { TiStar } from 'react-icons/ti';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
@@ -11,6 +10,7 @@ import { IoHeart } from 'react-icons/io5';
 import { useMedia } from 'react-use';
 import getRelativeTime from '@/lib/getRelativeTime';
 import { BsFire } from 'react-icons/bs';
+import config from '@/config';
 
 export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -140,7 +140,7 @@ export default function Card({ data, overridedSort }) {
 
             <div className='flex items-center mt-3 gap-x-2'>
               <div className='flex items-center px-2.5 py-1 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
-                <BiSolidCategory />
+                {config.botCategoriesIcons[data.categories[0]]}
                 {category === 'All' ? data.categories[0] : category}
               </div>
 
