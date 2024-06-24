@@ -4,9 +4,20 @@ import useAuthStore from '@/stores/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MdOutlineOpenInNew } from 'react-icons/md';
+import { GoHeartFill } from 'react-icons/go';
+import { useEffect, useState } from 'react';
+import getPlans from '@/lib/request/payments/getPlans';
+import { toast } from 'sonner';
 
 export default function MyAccount() {
   const user = useAuthStore(state => state.user);
+  const [plans, setPlans] = useState([]);
+
+  useEffect(() => {
+    getPlans()
+      .then(data => setPlans(data))
+      .catch(toast.error);
+  }, []);
 
   return (
     <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
@@ -74,6 +85,32 @@ export default function MyAccount() {
             </div>
           </div>
         </div>
+        
+        {user?.premium?.createdAt && (
+          <div className='flex flex-col mt-8 gap-y-2'>
+            <div className='border-2 border-purple-500 p-2.5 max-w-[500px] rounded-xl relative'>
+              <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500/25 via-purple-500/10 rounded-xl'></div>
+            
+              <div className='flex items-center gap-x-4'>
+                <GoHeartFill className='text-xl' />
+
+                <div className='flex flex-col'>
+                  <h2 className='flex flex-wrap items-center font-semibold gap-x-2'>
+                    {plans.find(plan => plan.id === user.premium.planId)?.name}
+
+                    <span className='text-xs text-tertiary'>
+                      {new Date(user.premium.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </span>
+                  </h2>
+
+                  <p className='mt-1.5 text-sm mobile:mt-0 text-tertiary'>
+                    Thank you for supporting us!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className='flex flex-col mt-8 gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
