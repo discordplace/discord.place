@@ -122,7 +122,7 @@ module.exports = class Client {
       if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
       if (options.startup.updateBotStats) this.updateBotStats();
       if (options.startup.createNewDashboardData) this.createNewDashboardData();
-      if (options.startup.syncPremiumRoles) this.syncPremiumRoles();
+      if (options.startup.syncMemberRoles) this.syncMemberRoles();
       if (options.startup.syncLemonSqueezyPlans) this.syncLemonSqueezyPlans();
       if (options.startup.saveMonthlyVotes) this.saveMonthlyVotes();
       if (options.startup.saveDailyProfileStats) this.saveDailyProfileStats();
@@ -136,7 +136,7 @@ module.exports = class Client {
           this.checkExpiredBlockedIPs();
           this.checkDeletedInviteCodes();
           this.updateClientActivity();
-          this.syncPremiumRoles();
+          this.syncMemberRoles();
           this.syncLemonSqueezyPlans();
         }, null, true, 'Europe/Istanbul');
         
@@ -382,34 +382,44 @@ module.exports = class Client {
     }
   }
 
-  async syncPremiumRoles() {
+  async syncMemberRoles() {
     const guild = client.guilds.cache.get(config.guildId);
+    const members = await guild.members.fetch();
+    const currentDate = new Date();
 
-    try {
-      const premiumUsers = await User.find({ subscription: { $ne: null } }); 
-      const members = await guild.members.fetch();
-      const premiumMembersWithoutRole = members.filter(member => !member.roles.cache.has(config.roles.premium) && premiumUsers.find(premium => premium.id === member.user.id));
-      const nonPremiumMembersWithRole = members.filter(member => member.roles.cache.has(config.roles.premium) && !premiumUsers.find(premium => premium.id === member.user.id));
+    const premiumUsers = await User.find({ subscription: { $ne: null } });
 
-      if (premiumMembersWithoutRole.size <= 0 && nonPremiumMembersWithRole.size <= 0) return;
-
-      const estimatedTime = (premiumMembersWithoutRole.size + nonPremiumMembersWithRole.size) * 1000;
-      logger.info(`Syncing premium roles for ${premiumMembersWithoutRole.size} premium members without role and ${nonPremiumMembersWithRole.size} non-premium members with role. Estimated time: ${estimatedTime / 1000} seconds.`);
-
-      for (const member of premiumMembersWithoutRole.values()) {
-        await member.roles.add(config.roles.premium);
-        await sleep(1000);
+    const roles = [
+      {
+        roleId: config.roles.premium,
+        condition: member => !member.roles.cache.has(config.roles.premium) && premiumUsers.find(premium => premium.id === member.user.id)
       }
+    ];
 
-      for (const member of nonPremiumMembersWithRole.values()) {
-        await member.roles.remove(config.roles.premium);
-        await sleep(1000);
-      }
+    await Promise.all(
+      roles.map(async ({ roleId, condition }) => {
+        const role = guild.roles.cache.get(roleId);
+        if (!role) throw new Error(`Role with ID ${roleId} not found.`);
+    
+        const membersToGiveRole = members.filter(member => condition(member));
+        const membersToRemoveRole = members.filter(member => !condition(member) && member.roles.cache.has(roleId));
 
-      logger.info('Successfully synced premium roles.');
-    } catch (error) {
-      logger.error('Failed to sync premium roles:', error);
-    }
+        const membersToUpdate = membersToGiveRole.concat(membersToRemoveRole);
+        if (membersToUpdate.size <= 0) return;
+
+        const estimatedTime = membersToUpdate.size * 1000;
+        logger.info(`Syncing ${role.name} roles for ${membersToUpdate.size} members. Estimated time: ${estimatedTime / 1000} seconds.`);
+
+        for (const member of membersToUpdate) {
+          await member.roles.add(roleId);
+          await sleep(1000);
+        }
+
+        logger.info(`Successfully ${role.name} synced roles for ${membersToUpdate.size} members.`);
+      })
+    )
+      .catch(error => logger.error('Failed to sync member roles:', error))
+      .finally(() => logger.info(`Synced member roles for ${members.size} members in ${new Date() - currentDate}ms.`));
   }
 
   async syncLemonSqueezyPlans() {
@@ -433,7 +443,6 @@ module.exports = class Client {
                     },
                     [
                       {
-                        date: new Date(),
                         likes: '$likes_count',
                         views: '$views'
                       }

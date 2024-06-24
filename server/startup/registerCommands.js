@@ -19,7 +19,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     checkExpiredBlockedIPs: false,
     updateBotStats: false,
     createNewDashboardData: false,
-    syncPremiumRoles: false,
+    syncMemberRoles: false,
     syncLemonSqueezyPlans: process.env.NODE_ENV === 'production',
     saveMonthlyVotes: false,
     saveDailyProfileStats: false,
