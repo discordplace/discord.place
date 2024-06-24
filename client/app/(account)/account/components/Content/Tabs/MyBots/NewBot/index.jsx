@@ -67,7 +67,17 @@ export default function NewBot() {
     toast.promise(createBot(botId, botData), {
       loading: `Adding ${botId}..`,
       success: () => {
-        setTimeout(() => router.push(`/bots/${botId}`), 3000);
+        setTimeout(() => {
+          router.push(`/bots/${botId}`);
+
+          // Reset states
+          setCurrentlyAddingBot(false);
+          setBotId('');
+          setBotShortDescription('');
+          setBotDescription('');
+          setBotCategories([]);
+          setBotSupportServerId('');
+        }, 3000);
         setRenderConfetti(true);
 
         return `${botId} added! You will be redirected to Bot page in a few seconds..`;

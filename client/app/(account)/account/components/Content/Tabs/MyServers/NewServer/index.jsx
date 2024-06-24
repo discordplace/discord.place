@@ -42,7 +42,17 @@ export default function NewServer() {
     toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords, voice_activity_enabled: serverVoiceActivityEnabled }), {
       loading: `Adding ${currentlyAddingServer.name}..`,
       success: () => {
-        setTimeout(() => router.push(`/servers/${currentlyAddingServer.id}`), 3000);
+        setTimeout(() => {
+          router.push(`/servers/${currentlyAddingServer.id}`);
+
+          // Reset states
+          setCurrentlyAddingServer(null);
+          setServerDescription('');
+          setServerInviteLink('');
+          setServerCategory('');
+          setServerKeywords([]);
+          setServerVoiceActivityEnabled(false);
+        }, 3000);
         setRenderConfetti(true);
         
         return `${currentlyAddingServer.name} added! You will be redirected to ${currentlyAddingServer.name} page in a few seconds..`;
