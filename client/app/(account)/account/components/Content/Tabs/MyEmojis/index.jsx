@@ -8,7 +8,7 @@ import { LuPlus } from 'react-icons/lu';
 import { BsQuestionCircleFill } from 'react-icons/bs';
 import config from '@/config';
 import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
-import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiPackageCard';
+import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
 import { VList } from 'virtua';
 
 export default function MyEmojis() {

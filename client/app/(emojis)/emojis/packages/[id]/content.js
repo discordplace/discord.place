@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { LuShieldQuestion } from 'react-icons/lu';
 import FaQs from '@/app/(emojis)/emojis/packages/[id]/components/FaQs';
 import { MdEmojiEmotions } from 'react-icons/md';
-import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiPackageCard';
+import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
 import { motion } from 'framer-motion';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import Link from 'next/link';
