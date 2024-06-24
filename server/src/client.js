@@ -392,7 +392,7 @@ module.exports = class Client {
     const roles = [
       {
         roleId: config.roles.premium,
-        condition: member => !member.roles.cache.has(config.roles.premium) && premiumUsers.find(premium => premium.id === member.user.id)
+        condition: member => premiumUsers.find(premium => premium.id === member.user.id)
       }
     ];
 
