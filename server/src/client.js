@@ -404,13 +404,14 @@ module.exports = class Client {
         const membersToGiveRole = members.filter(member => condition(member));
         const membersToRemoveRole = members.filter(member => !condition(member) && member.roles.cache.has(roleId));
 
-        const membersToUpdate = membersToGiveRole.concat(membersToRemoveRole);
+        const membersToUpdate = membersToGiveRole.concat(membersToRemoveRole).map(member => member.user.id);
         if (membersToUpdate.size <= 0) return;
 
         const estimatedTime = membersToUpdate.size * 1000;
         logger.info(`Syncing ${role.name} roles for ${membersToUpdate.size} members. Estimated time: ${estimatedTime / 1000} seconds.`);
 
-        for (const member of membersToUpdate) {
+        for (const memberId of membersToUpdate) {
+          const member = members.get(memberId);
           await member.roles.add(roleId);
           await sleep(1000);
         }
