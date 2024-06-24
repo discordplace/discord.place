@@ -401,14 +401,14 @@ module.exports = class Client {
         const role = guild.roles.cache.get(roleId);
         if (!role) throw new Error(`Role with ID ${roleId} not found.`);
     
-        const membersToGiveRole = members.filter(member => condition(member));
+        const membersToGiveRole = members.filter(member => condition(member) && !member.roles.cache.has(roleId));
         const membersToRemoveRole = members.filter(member => !condition(member) && member.roles.cache.has(roleId));
 
         const membersToUpdate = membersToGiveRole.concat(membersToRemoveRole).map(member => member.user.id);
-        if (membersToUpdate.size <= 0) return;
+        if (membersToUpdate.length <= 0) return;
 
-        const estimatedTime = membersToUpdate.size * 1000;
-        logger.info(`Syncing ${role.name} roles for ${membersToUpdate.size} members. Estimated time: ${estimatedTime / 1000} seconds.`);
+        const estimatedTime = membersToUpdate.length * 1000;
+        logger.info(`Syncing ${role.name} roles for ${membersToUpdate.length} members. Estimated time: ${estimatedTime / 1000} seconds.`);
 
         for (const memberId of membersToUpdate) {
           const member = members.get(memberId);
@@ -416,7 +416,7 @@ module.exports = class Client {
           await sleep(1000);
         }
 
-        logger.info(`Successfully ${role.name} synced roles for ${membersToUpdate.size} members.`);
+        logger.info(`Successfully ${role.name} synced roles for ${membersToUpdate.length} members.`);
       })
     )
       .catch(error => logger.error('Failed to sync member roles:', error))
