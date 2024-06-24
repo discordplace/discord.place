@@ -2,23 +2,54 @@
 
 import { motion } from 'framer-motion';
 import cn from '@/lib/cn';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
+
+function generateClickableNumbers(currentPage, totalPages, limit) {
+  currentPage = Math.max(1, Math.min(currentPage, totalPages));
+  
+  const halfLimit = Math.floor(limit / 2);
+  let startPage = Math.max(1, currentPage - halfLimit);
+  let endPage = Math.min(totalPages, currentPage + halfLimit);
+
+  if (endPage - startPage + 1 < limit) {
+    if (currentPage - halfLimit < 1) {
+      endPage = Math.min(totalPages, endPage + (limit - (endPage - startPage + 1)));
+    } else if (currentPage + halfLimit > totalPages) {
+      startPage = Math.max(1, startPage - (limit - (endPage - startPage + 1)));
+    }
+  }
+
+  const pages = [];
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
+
+  return pages;
+}
 
 export default function Pagination({ page, setPage, loading, total, limit, disableAnimation }) {
-  
   const totalPages = Math.ceil(total / limit);
-  const pagesToShow = 1;
-  const start = Math.max(1, page - pagesToShow);
-  const end = Math.min(totalPages, page + pagesToShow);
-  const pages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  const pages = generateClickableNumbers(page, totalPages, 4);
 
-  if (pages[0] !== 1) pages.unshift(1);
-  if (pages[pages.length - 1] !== totalPages) pages.push(totalPages);
+  const [inputOpened, setInputOpened] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef?.current) {
+      if (inputOpened) toast.info(`Type a page number between 1 and ${totalPages} and press Enter to navigate to that page.`);
+      inputRef.current.focus();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputOpened]);
 
   let initial;
   let animate;
   let exit;
-  
+
   if (disableAnimation) {
     initial = { opacity: 1, y: 0 };
     animate = { opacity: 1, y: 0 };
@@ -30,44 +61,83 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
   }
 
   return (
-    <motion.div 
-      className={cn(
-        'flex items-center mt-6 gap-x-2 py-2 px-2 rounded-3xl bg-black/5 dark:bg-white/5',
-        pages.length === 0 && 'hidden'
-      )} 
+    <motion.div
+      className='flex my-6 gap-x-2.5'
       initial={initial}
       animate={animate}
       exit={exit}
     >
       <button
-        className='flex items-center px-3 py-1 text-sm font-semibold text-black uppercase transition-colors cursor-pointer rounded-2xl active:bg-black/30 hover:bg-black/15 dark:active:bg-white/30 dark:text-white dark:hover:bg-white/15 gap-x-1'
+        className='outline-none px-1.5 py-1 bg-secondary select-none hover:bg-quaternary rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))] disabled:pointer-events-none disabled:opacity-60'
         onClick={() => setPage(page - 1)}
         disabled={loading || page === 1}
       >
-        <FiArrowLeft />
-        PREV
+        <LuChevronLeft strokeWidth={3} />
       </button>
-
+      
       {pages.map(pageNumber => (
-        <div
-          key={pageNumber}
-          className={cn(
-            'rounded-full px-3 py-1 items-center flex text-sm font-semibold cursor-pointer transition-colors text-black dark:text-white active:bg-black/30 hover:bg-black/15 dark:active:bg-white/30 dark:hover:bg-white/15',
-            pageNumber === page && 'bg-black/30 dark:bg-white/30 pointer-events-none'
+        <>
+          <button
+            key={pageNumber}
+            className={cn(
+              'outline-none px-2.5 py-1 relative overflow-hidden bg-secondary select-none hover:bg-quaternary duration-300 [&:not(:disabled)]:hover:border-purple-500 rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))] disabled:pointer-events-none disabled:opacity-60',
+              pageNumber === page ? '!opacity-100 border-purple-500' : 'transition-[background-color,border-color]'
+            )}
+            onClick={() => setPage(pageNumber)}
+            disabled={loading || pageNumber === page}
+          >
+            {pageNumber}
+          </button>
+
+          {(pages[pages.length - 1] === 4 && pageNumber === 2) && (
+            inputOpened ? (
+              <input
+                ref={inputRef}
+                className='focus-visible:bg-quaternary caret-[rgba(var(--text-secondary))] text-secondary placeholder-[rgba(var(--text-tertiary))] max-w-[50px] text-center outline-none px-2.5 py-1 relative overflow-hidden bg-secondary select-none hover:bg-quaternary duration-300 rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))]'
+                value={inputValue}
+                onChange={event => {
+                  // dont allow to type 0 as the first digit
+                  if (event.target.value.length === 1 && event.target.value === '0') {
+                    setInputValue('');
+                    return;
+                  }
+
+                  // dont allow to type max number of pages + 1
+                  if (parseInt(event.target.value) > totalPages) {
+                    setInputValue(totalPages.toString());
+                    return;
+                  }
+
+                  setInputValue(event.target.value);
+                }}
+                onKeyUp={event => {
+                  if (event.key === 'Enter') {
+                    setPage(Math.max(1, Math.min(totalPages, parseInt(inputValue))));
+                    setInputOpened(false);
+                  }
+                }}
+                maxLength={totalPages.toString().length}
+              />
+            ) : (
+              <button
+                className='outline-none gap-x-0.5 flex items-center justify-center px-2.5 py-1 relative overflow-hidden bg-secondary select-none hover:bg-quaternary duration-300 [&:not(:disabled)]:hover:border-purple-500 rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))]'
+                onClick={() => setInputOpened(true)}
+              >
+                <span className='bg-[rgba(var(--text-primary))] w-[2.5px] h-[2.5px] block rounded-full' />
+                <span className='bg-[rgba(var(--text-primary))] w-[2.5px] h-[2.5px] block rounded-full' />
+                <span className='bg-[rgba(var(--text-primary))] w-[2.5px] h-[2.5px] block rounded-full' />
+              </button>
+            )
           )}
-          onClick={() => setPage(pageNumber)}
-        >
-          {pageNumber}
-        </div>
+        </>
       ))}
 
       <button
-        className='flex items-center px-3 py-1 text-sm font-semibold text-black uppercase transition-colors cursor-pointer rounded-2xl active:bg-black/30 hover:bg-black/15 dark:active:bg-white/30 dark:text-white dark:hover:bg-white/15 gap-x-1'
+        className='outline-none px-1.5 py-1 bg-secondary select-none hover:bg-quaternary rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))] disabled:pointer-events-none disabled:opacity-60'
         onClick={() => setPage(page + 1)}
         disabled={loading || page === totalPages}
       >
-        NEXT
-        <FiArrowRight />
+        <LuChevronRight strokeWidth={3} />
       </button>
     </motion.div>
   );
