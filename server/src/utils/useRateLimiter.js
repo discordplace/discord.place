@@ -13,7 +13,7 @@ module.exports = function ({ maxRequests, perMinutes }) {
     },
     message: {
       success: false,
-      error: 'You are being rate limited.',
+      error: 'Too many requests, please try again later.',
       status: 429
     },
     store: new MongoStore({
@@ -21,7 +21,7 @@ module.exports = function ({ maxRequests, perMinutes }) {
       expireTimeMs: perMinutes * 60 * 1000,
       errorHandler: logger.error.bind(null, '[Rate Limit Mongo Error]')
     }),
-    skipFailedRequests: false,
+    skipFailedRequests: true,
     skip: request => process.env.NODE_ENV === 'development' || config.rateLimitWhitelist.includes(request.user?.id)
   });
 
