@@ -9,11 +9,27 @@ import { useEffect, useState } from 'react';
 import getPlans from '@/lib/request/payments/getPlans';
 import { toast } from 'sonner';
 import { TbLoader } from 'react-icons/tb';
+import useModalsStore from '@/stores/modals';
+import CreateProfile from '@/app/(account)/account/components/Content/Tabs/MyAccount/CreateProfile';
+import createProfile from '@/lib/request/profiles/createProfile';
+import { useShallow } from 'zustand/react/shallow';
+import useGeneralStore from '@/stores/general';
+import { useRouter } from 'next-nprogress-bar';
 
 export default function MyAccount() {
   const user = useAuthStore(state => state.user);
+  const router = useRouter();
+
   const [plans, setPlans] = useState([]);
   const [plansLoading, setPlansLoading] = useState(true);
+    
+  const { openModal, disableButton, enableButton, closeModal, updateModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    closeModal: state.closeModal,
+    updateModal: state.updateModal
+  })));
 
   useEffect(() => {
     setPlansLoading(true);
@@ -24,8 +40,58 @@ export default function MyAccount() {
       .finally(() => setPlansLoading(false));
   }, []);
 
+  const { slug, preferredHost } = useGeneralStore(useShallow(state => ({
+    slug: state.createProfileModal.slug,
+    preferredHost: state.createProfileModal.preferredHost
+  })));
+
+  function continueCreateProfile(slug, preferredHost) {
+    disableButton('create-profile', 'create'); 
+  
+    toast.promise(createProfile(slug, preferredHost), {
+      loading: 'Creating profile..',
+      success: () => {
+        closeModal('create-profile');
+        router.push(`/profile/${slug}`);
+
+        return 'Profile created successfully! Redirecting to your profile..';
+      },
+      error: error => {
+        enableButton('create-profile', 'create');
+        
+        return error;
+      }
+    });
+  }
+
+  useEffect(() => {
+    updateModal('create-profile', {
+      buttons: [
+        {
+          id: 'cancel',
+          label: 'Cancel',
+          variant: 'ghost',
+          actionType: 'close'
+        },
+        {
+          id: 'create',
+          label: 'Create',
+          variant: 'solid',
+          action: () => {
+            const newSlug = useGeneralStore.getState().createProfileModal.slug;
+            const newPreferredHost = useGeneralStore.getState().createProfileModal.preferredHost;
+
+            continueCreateProfile(newSlug, newPreferredHost);
+          }
+        }
+      ]
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug, preferredHost]);
+
   return (
-    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
+    <div className='flex flex-col px-6 mt-16 mb-8 lg:px-16 gap-y-6'>      
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
           My Account
@@ -147,13 +213,33 @@ export default function MyAccount() {
               <>
                 You don{'\''}t have a profile yet. Maybe that{'\''}s sign to create one?
 
-                <Link
-                  className='px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
-                  href='/profiles/create'
+                <button
+                  className='outline-none px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
+                  onClick={() => 
+                    openModal('create-profile', {
+                      title: 'Create Profile',
+                      description: 'Create your customizable profile to show off to your friends!',
+                      content: <CreateProfile />,
+                      buttons: [
+                        {
+                          id: 'cancel',
+                          label: 'Cancel',
+                          variant: 'ghost',
+                          actionType: 'close'
+                        },
+                        {
+                          id: 'create',
+                          label: 'Create',
+                          variant: 'solid',
+                          action: continueCreateProfile
+                        }
+                      ]
+                    })
+                  }
                 >
                   Create Profile
                   <MdOutlineOpenInNew />
-                </Link>
+                </button>
               </>
             )}
           </div>

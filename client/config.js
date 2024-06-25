@@ -84,6 +84,9 @@ const config = {
       (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place') + pathname
     )}`;
   },
+  validateSlug: function slugValidation(value) {
+    return /^(?!-)(?!.*--)(?!.*-$)[a-zA-Z0-9-]{3,32}$/.test(value);
+  },
   emojiCategories: [
     'All',
     'Gaming',

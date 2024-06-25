@@ -42,7 +42,12 @@ export default function ModalProvider({ children }) {
                     </div>
 
                     <div className='flex flex-col mt-4 gap-y-2'>
-                      {(data.buttons || []).reverse().map((button, index) => (
+                      {/*
+                        Using [...new Set(data.buttons || [])] to create a new array with buttons
+                        so when we use data.buttons again, it won't be reversed and will be in the original order
+                      */}
+                      
+                      {([...new Set(data.buttons || [])]).reverse().map((button, index) => (
                         <button
                           key={index}
                           onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}

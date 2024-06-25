@@ -14,6 +14,12 @@ export const useGeneralStore = create(set => ({
     setReason: reason => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, reason } })),
     time: '',
     setTime: time => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, time } }))
+  },
+  createProfileModal: {
+    preferredHost: 'discord.place/p',
+    setPreferredHost: preferredHost => set(state => ({ createProfileModal: { ...state.createProfileModal, preferredHost } })),
+    slug: '',
+    setSlug: slug => set(state => ({ createProfileModal: { ...state.createProfileModal, slug } }))
   }
 }));
 
