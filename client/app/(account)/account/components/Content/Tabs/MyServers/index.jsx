@@ -61,7 +61,7 @@ export default function MyServers() {
                 .filter(server => server.is_created === true)
                 .map(server => (
                   <Link
-                    key={server._id}
+                    key={server.id}
                     className='flex items-center gap-4 p-4 transition-opacity bg-secondary rounded-xl hover:opacity-70'
                     href={`/servers/${server.id}`}
                   >
@@ -130,7 +130,7 @@ export default function MyServers() {
               {data.servers
                 .filter(server => server.is_created === false)
                 .map(server => (
-                  <UnlistedCard key={server._id} server={server} />
+                  <UnlistedCard key={server.id} server={server} />
                 ))}
             </div>
           )}

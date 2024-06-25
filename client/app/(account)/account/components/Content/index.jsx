@@ -26,6 +26,7 @@ import { HiTemplate } from 'react-icons/hi';
 import Link from 'next/link';
 import { useMedia } from 'react-use';
 import { IoChevronBackOutline } from 'react-icons/io5';
+import { nanoid } from 'nanoid';
 
 export default function Content() {
   const user = useAuthStore(state => state.user);
@@ -238,7 +239,7 @@ export default function Content() {
                   .map(({ Icon, IconEnd, name, id, type, action, badge_count }) => (
                     type === 'divider' ? (
                       <div 
-                        key={id} 
+                        key={nanoid()}
                         className='w-[95%] mx-auto h-[2px] bg-quaternary my-2' 
                       />
                     ) : (
