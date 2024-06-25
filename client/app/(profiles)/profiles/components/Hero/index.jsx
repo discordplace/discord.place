@@ -53,9 +53,9 @@ export default function Hero() {
             Discover the profiles
           </motion.h1>
           
-          <motion.p className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+          <motion.div className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
             Find, share and explore the customized page of Discord profiles!<br/>You have <span className='inline-flex'><AnimatedCount data={totalProfiles} /></span> profiles to explore. 
-          </motion.p>
+          </motion.div>
 
           <div className='mt-8'>
             <SearchInput
