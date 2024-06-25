@@ -5,11 +5,8 @@ import deleteProfile from '@/lib/request/profiles/deleteProfile';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import { useRouter } from 'next-nprogress-bar';
 
 export default function DangerZone({ profile }) {
-  const router = useRouter();
-
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
     openModal: state.openModal,
     disableButton: state.disableButton,
@@ -26,7 +23,7 @@ export default function DangerZone({ profile }) {
         closeModal('delete-profile');
 
         // Immediately redirect to /profiles after deleting the profile
-        router.replace('/profiles');
+        window.location.href = '/profiles';
 
         return 'Profile has been deleted!'; 
       },
