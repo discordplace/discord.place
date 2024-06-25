@@ -23,13 +23,16 @@ export default function DangerZone({ profile }) {
     toast.promise(deleteProfile(profile.slug), {
       loading: 'Deleting profile..',
       success: () => {
-        closeModal();
-        setTimeout(() => router.push('/'), 3000);
+        closeModal('delete-profile');
 
-        return 'Profile has been deleted! You will be redirected to home page after 3 seconds.'; 
+        // Immediately redirect to /profiles after deleting the profile
+        router.replace('/profiles');
+
+        return 'Profile has been deleted!'; 
       },
       error: message => {
         enableButton('delete-profile', 'confirm');
+        
         return message;
       }
     });
@@ -41,6 +44,7 @@ export default function DangerZone({ profile }) {
         <RiErrorWarningFill />
         Danger Zone
       </h1>
+      
       <p className='text-sm font-medium text-tertiary'> 
         You can delete the your profile using the button below, but be careful not to delete it by mistake :)
       </p>
