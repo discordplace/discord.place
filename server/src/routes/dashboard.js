@@ -13,6 +13,7 @@ const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
 const BlockedIp = require('@/schemas/BlockedIp');
 const bodyParser = require('body-parser');
 const { body, validationResult, matchedData } = require('express-validator');
+const Quarantine = require('@/schemas/Quarantine');
 
 const validKeys = [
   'stats',
@@ -22,7 +23,8 @@ const validKeys = [
   'reviews',
   'blockedips',
   'botdenies',
-  'timeouts'
+  'timeouts',
+  'quarantines'
 ];
 
 module.exports = {
@@ -51,6 +53,9 @@ module.exports = {
         canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canViewTimeouts: request.member && config.permissions.canViewTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canViewQuarantines: request.member && config.permissions.canViewQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canCreateQuarantines: request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteQuarantines: config.permissions.canDeleteQuarantines.includes(request.user.id),
         canSyncLemonSqueezyPlans: config.permissions.canSyncLemonSqueezyPlans.includes(request.user.id)
       };
 
@@ -212,6 +217,13 @@ module.exports = {
             };
           }
         }));
+      }
+
+      if (keys?.includes('quarantines')) {
+        if (!permissions.canViewQuarantines && !permissions.canCreateQuarantines && !permissions.canDeleteQuarantines) return response.sendError('You do not have permission to view, create, or delete quarantines.', 403);
+
+        const quarantines = await Quarantine.find().sort({ createdAt: -1 });
+        responseData.quarantines = await Promise.all(quarantines.map(async quarantine => await quarantine.toPubliclySafe()));
       }
 
       return response.json(responseData);

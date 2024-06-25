@@ -12,6 +12,7 @@ import ReviewsQueue from '@/app/(dashboard)/components/ReviewsQueue';
 import BlockedIps from '@/app/(dashboard)/components/BlockedIps';
 import BotDenies from '@/app/(dashboard)/components/BotDenies';
 import Timeouts from '@/app/(dashboard)/components/Timeouts';
+import Quarantines from '@/app/(dashboard)/components/Quarantines';
 import useDashboardStore from '@/stores/dashboard';
 import { CgFormatSlash } from 'react-icons/cg';
 import useThemeStore from '@/stores/theme';
@@ -74,6 +75,11 @@ export default function Page() {
       id: 'timeouts',
       name: 'Timeouts',
       component: <Timeouts />
+    },
+    {
+      id: 'quarantines',
+      name: 'Quarantines',
+      component: <Quarantines />
     }
   ];
 
@@ -104,6 +110,9 @@ export default function Page() {
       break;
     case 'timeouts':
       fetchData(['timeouts']);
+      break;
+    case 'quarantines':
+      fetchData(['quarantines']);
       break;
     }
     

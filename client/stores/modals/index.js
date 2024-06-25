@@ -11,6 +11,25 @@ const useModalsStore = create((set, get) => ({
       openedModals: [...openedModals, { id: modalId, data: modalData }]
     });
   },
+  updateModal: (modalId, newModalData) => {
+    const openedModals = get().openedModals;
+
+    set({ 
+      openedModals: openedModals.map(modal => {
+        if (modal.id === modalId) {
+          return {
+            ...modal,
+            data: {
+              ...modal.data,
+              ...newModalData
+            }
+          };
+        }
+
+        return modal;
+      }) 
+    });
+  },
   closeModal: modalId => {
     const openedModals = get().openedModals;
     const activeModalId = get().activeModalId;

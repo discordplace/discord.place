@@ -61,9 +61,14 @@ permissions:
   canEditBotsRoles:
     - '1206354879321210900'
     - '1206355082883371049'
+  canViewQuarantinesRoles:
+    - '1206032198562742312'
+    - '1206354879321210900'
   canCreateQuarantinesRoles:
     - '1206032198562742312'
     - '1206354879321210900'
+  canDeleteQuarantines:
+    - '957840712404193290'
   canViewDashboardRoles:
     - '1206354879321210900'
     - '1206355082883371049'

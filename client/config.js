@@ -328,6 +328,60 @@ const config = {
       name: 'Proper Categorization',
       description: 'Ensure your template is categorized correctly. Misleading categorization can result in rejection.'
     }
+  },
+  quarantineRestrictions: {
+    'PROFILES_CREATE': {
+      available_to: ['USER_ID'],
+      description: 'Creating profiles.'
+    },
+    'PROFILES_LIKE': {
+      available_to: ['USER_ID'],
+      description: 'Liking profiles.'
+    },
+    'EMOJIS_CREATE': {
+      available_to: ['USER_ID'],
+      description: 'Publishing emojis.'
+    },
+    'EMOJIS_QUICKLY_UPLOAD': {
+      available_to: ['USER_ID'],
+      description: 'Uploading emojis.'
+    },
+    'SERVERS_CREATE': {
+      available_to: ['USER_ID', 'GUILD_ID'],
+      description: 'Listing servers.'
+    },
+    'SERVERS_CREATE_REVIEW': {
+      available_to: ['USER_ID'],
+      description: 'Reviewing servers.'
+    },
+    'SERVERS_VOTE': {
+      available_to: ['USER_ID', 'GUILD_ID'],
+      description: 'Voting on servers.'
+    },
+    'BOTS_CREATE': {
+      available_to: ['USER_ID'],
+      description: 'Listing bots.'
+    },
+    'BOTS_VOTE': {
+      available_to: ['USER_ID'],
+      description: 'Voting on bots.'
+    },
+    'BOTS_CREATE_REVIEW': {
+      available_to: ['USER_ID'],
+      description: 'Reviewing bots.'
+    },
+    'BOTS_CREATE_API_KEY': {
+      available_to: ['USER_ID'],
+      description: 'Creating bot API keys.'
+    },
+    'TEMPLATES_CREATE': {
+      available_to: ['USER_ID'],
+      description: 'Listing templates.'
+    },
+    'TEMPLATES_USE': {
+      available_to: ['USER_ID', 'GUILD_ID'],
+      description: 'Using templates.'
+    }
   }
 };
 

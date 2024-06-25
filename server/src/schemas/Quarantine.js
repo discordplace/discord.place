@@ -53,7 +53,70 @@ const QuarantineSchema = new Schema({
     default: null
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  methods: {
+    async toPubliclySafe() {
+      const newQuarantine = {};
+
+      const fetchedUsers = (await Promise.all(
+        // Fetch users if they are not cached
+        [...new Set(this.type === 'USER_ID' ? [this.user.id, this.created_by] : [this.created_by])].map(async id => {
+          if (!id) return;
+
+          if (client.forceFetchedUsers.has(id)) return client.users.cache.get(id);
+
+          await client.users.fetch(id, { force: true }).catch(() => null);
+          client.forceFetchedUsers.set(id, true);
+
+          return client.users.cache.get(id);
+        })
+      )).filter(Boolean); // Filter out undefined values
+
+      const created_by = fetchedUsers.find(user => user.id === this.created_by);
+
+      Object.assign(newQuarantine, {
+        created_by: created_by ? {
+          id: created_by.id,
+          username: created_by.username,
+          avatar_url: created_by.displayAvatarURL({ dynamic: true })
+        } : this.created_by
+      });
+
+      if (this.type === 'USER_ID') {
+        const user = fetchedUsers.find(user => user.id === this.user.id);
+
+        Object.assign(newQuarantine, {
+          user: user ? {
+            id: user.id,
+            username: user.username,
+            avatar_url: user.displayAvatarURL({ dynamic: true })
+          } : this.user.id
+        });
+      }
+
+      if (this.type === 'GUILD_ID') {
+        const guild = client.guilds.cache.get(this.guild.id);
+
+        Object.assign(newQuarantine, {
+          guild: guild ? {
+            id: guild.id,
+            name: guild.name,
+            icon_url: guild.iconURL({ dynamic: true })
+          } : this.guild.id
+        });
+      }
+
+      return {
+        ...newQuarantine,
+        id: this._id,
+        type: this.type,
+        restriction: this.restriction,
+        reason: this.reason,
+        created_at: this.createdAt,
+        expire_at: this.expire_at
+      };
+    }
+  }
 });
 
 QuarantineSchema.index({ expire_at: 1 }, { expireAfterSeconds: 0 });

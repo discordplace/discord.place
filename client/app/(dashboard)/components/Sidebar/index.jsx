@@ -26,6 +26,7 @@ import { MdArrowOutward } from 'react-icons/md';
 import { HiTemplate } from 'react-icons/hi';
 import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
 import { MdSync } from 'react-icons/md';
+import { CgBlock } from 'react-icons/cg';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -103,6 +104,12 @@ export default function Sidebar() {
           name: 'Timeouts',
           icon: TbSquareRoundedChevronUp,
           disabled: data?.permissions?.canViewTimeouts === false || data?.permissions?.canDeleteTimeouts === false
+        },
+        {
+          id: 'quarantines',
+          name: 'Quarantines',
+          icon: CgBlock,
+          disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false
         }
       ]
     },
