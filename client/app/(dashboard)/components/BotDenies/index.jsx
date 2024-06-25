@@ -39,7 +39,7 @@ export default function BotDenies() {
       loading: 'Deleting bot deny record..',
       success: () => {
         closeModal('delete-deny-record');
-        fetchData(['blockedips'])
+        fetchData(['botdenies'])
           .then(() => setLoading(false));
 
         return 'Bot deny record has been deleted successfully.';
