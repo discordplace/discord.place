@@ -62,7 +62,9 @@ export default function Actions({ profile }) {
         </Tooltip>
 
         <Tooltip content='Copy Profile URL'>
-          <CopyButton className='bg-tertiary' successText='Profile URL copied to clipboard!' copyText={config.getProfileURL(profile.slug, profile.preferredHost)} />
+          <div className='flex'>
+            <CopyButton className='bg-tertiary' successText='Profile URL copied to clipboard!' copyText={config.getProfileURL(profile.slug, profile.preferredHost)} />
+          </div>
         </Tooltip>
 
         <Tooltip content='Report Profile'>
