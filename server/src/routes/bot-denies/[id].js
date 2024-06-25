@@ -1,10 +1,12 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BotDeny = require('@/schemas/Bot/Deny');
 const { param, validationResult, matchedData } = require('express-validator');
+const useRateLimiter = require('@/utils/useRateLimiter');
 
 module.exports = {
   delete: [
     checkAuthentication,
+    useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('id')
       .isMongoId().withMessage('Invalid ID.'),
     async (request, response) => {

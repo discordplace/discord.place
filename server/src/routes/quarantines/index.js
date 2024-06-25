@@ -5,6 +5,7 @@ const { body, validationResult, matchedData } = require('express-validator');
 const getValidationError = require('@/utils/getValidationError');
 const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
+const Discord = require('discord.js');
 
 module.exports = {
   post: [
@@ -43,6 +44,9 @@ module.exports = {
       if (!config.quarantineRestrictions[restriction]) return response.sendError('Invalid restriction.', 400);
       if (!config.quarantineRestrictions[restriction].available_to.includes(type)) return response.sendError('Invalid type for this restriction.', 400);
 
+      const existingQuarantine = await Quarantine.findOne({ type, restriction, [type === 'USER_ID' ? 'user.id' : 'guild.id']: value });
+      if (existingQuarantine) return response.sendError(`There is already a quarantine entry with the same values. ID: ${existingQuarantine._id}.`, 400);
+
       const quarantineTime = ms(time);
       
       const quarantineData = {
@@ -78,6 +82,39 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await quarantine.save();
+
+      const embeds = [
+        new Discord.EmbedBuilder()
+          .setAuthor({ name: `Quarantine #${quarantine._id} Created` })
+          .setColor(Discord.Colors.Purple)
+          .setTitle('New Quarantine Entry')
+          .setFields([
+            {
+              name: 'Entry Target',
+              value: `${value} (${type})`,
+              inline: true
+            },
+            {
+              name: 'Reason',
+              value: reason,
+              inline: true
+            },
+            {
+              name: 'Created By',
+              value: `<@${request.user.id}>`,
+              inline: true
+            },
+            {
+              name: 'Restriction',
+              value: restriction,
+              inline: true
+            }
+          ])
+          .setFooter({ text: `Expires at: ${quarantineTime ? new Date(Date.now() + quarantineTime).toLocaleString() : 'Never'}` })
+          .setTimestamp(quarantineTime ? Date.now() + quarantineTime : null)
+      ];
+
+      client.channels.cache.get(config.quarantineLogsChannelId).send({ embeds });
 
       return response.sendStatus(204).end();
     }
