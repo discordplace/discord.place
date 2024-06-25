@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const Profile = require('@/schemas/Profile');
 const EvaluateResult = require('@/schemas/EvaluateResult');
 const evaluate = require('@/utils/evaluate');
 
@@ -7,15 +6,7 @@ module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('admin')
     .setDescription('admin')
-
     .addSubcommand(subcommand => subcommand.setName('eval').setDescription('Evaluate code.'))
-
-    .addSubcommandGroup(group => group.setName('profile').setDescription('profile')
-      .addSubcommand(subcommand => subcommand.setName('verify').setDescription('Verify a profile.')
-        .addStringOption(option => option.setName('slug').setDescription('The slug of the profile to verify.').setRequired(true).setAutocomplete(true)))
-      .addSubcommand(subcommand => subcommand.setName('unverify').setDescription('Unverify a profile.')
-        .addStringOption(option => option.setName('slug').setDescription('The slug of the profile to unverify.').setRequired(true).setAutocomplete(true))))
-
     .toJSON(),
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
@@ -64,60 +55,6 @@ module.exports = {
       }).save();
 
       return interaction.editReply({ embeds, components, content: null });
-    }
-
-    const group = interaction.options.getSubcommandGroup();
-    
-    if (group === 'profile') {
-      if (!interaction.member.roles.cache.has(config.roles.moderator)) return;
-
-      if (subcommand === 'verify') {
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
-  
-        const slug = interaction.options.getString('slug');
-        const profile = await Profile.findOne({ slug });
-        if (!profile) return interaction.followUp({ content: 'Profile not found.' });
-  
-        if (profile.verified) return interaction.followUp({ content: 'Profile already verified.' });
-  
-        profile.verified = true;
-        await profile.save();
-  
-        return interaction.followUp({ content: 'Profile has been verified.' });
-      }
-      
-      if (subcommand === 'unverify') {
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
-  
-        const slug = interaction.options.getString('slug');
-        const profile = await Profile.findOne({ slug });
-        if (!profile) return interaction.followUp({ content: 'Profile not found.' });
-  
-        if (!profile.verified) return interaction.followUp({ content: 'Profile already unverified.' });
-  
-        profile.verified = false;
-        await profile.save();
-
-        return interaction.followUp({ content: 'Profile has been unverified.' });
-      }
-    }
-  },
-  autocomplete: async interaction => {
-    const subcommand = interaction.options.getSubcommand();
-    const group = interaction.options.getSubcommandGroup();
-
-    if (group === 'profile') {
-      if (!interaction.member.roles.cache.has(config.roles.moderator)) return;
-
-      if (subcommand === 'verify') {
-        const unverifiedProfiles = await Profile.find({ verified: false });
-        return interaction.customRespond(unverifiedProfiles.map(profile => ({ name: profile.slug, value: profile.slug })));
-      }
-    
-      if (subcommand === 'unverify') {
-        const verifiedProfiles = await Profile.find({ verified: true });
-        return interaction.customRespond(verifiedProfiles.map(profile => ({ name: profile.slug, value: profile.slug })));
-      }
     }
   }
 };

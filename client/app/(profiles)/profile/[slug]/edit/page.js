@@ -6,6 +6,8 @@ import getProfile from '@/lib/request/profiles/getProfile';
 import { redirect } from 'next/navigation';
 import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
 import DangerZone from '@/app/(profiles)/profile/[slug]/edit/components/DangerZone';
+import VerifiedBadge from '@/app/(profiles)/profile/[slug]/edit/components/VerifiedBadge';
+import PatchVerifyButton from '@/app/(profiles)/profile/[slug]/edit/components/PatchVerifyButton';
 
 export default async function Page({ params }) {
   const profile = await getProfile(params.slug).catch(error => error);
@@ -25,10 +27,18 @@ export default async function Page({ params }) {
               <h1 className="text-3xl font-bold">Edit Profile</h1>
             </div>
 
-            <div className='flex items-center mt-16 gap-x-4'>
+            <div className='flex flex-wrap items-center mt-16 gap-x-4'>
               <Image src={profile.avatar_url} width={128} height={128} className='rounded-full w-[64px] h-[64px]' alt='User Avatar' />
+              
               <div className='flex flex-col'>
-                <h2 className='text-2xl font-semibold'>@{profile.username}</h2>
+                <div className='flex flex-wrap items-center gap-2'>
+                  <h2 className='text-2xl font-semibold'>
+                    @{profile.username}
+                  </h2>
+
+                  {profile.verified && <VerifiedBadge />}
+                </div>
+ 
                 <div className="select-none">
                   <span className='text-sm sm:text-base text-tertiary'>
                     {profile.preferredHost}/
@@ -36,6 +46,8 @@ export default async function Page({ params }) {
                   <span className='text-sm font-medium sm:text-base text-primary'>{profile.slug}</span>
                 </div>
               </div>
+
+              <PatchVerifyButton profile={profile} />
             </div>
 
             <Edit profileData={profile} />

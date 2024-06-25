@@ -36,8 +36,12 @@ module.exports = {
         canDelete: request.user && (
           request.user.id == profile.user.id ||
           config.permissions.canDeleteProfiles.includes(request.user.id)
-        ) || false
+        ) || false,
+        canVerify: request.user && (
+          request.member && config.permissions.canVerifyProfilesRoles.some(role => request.member.roles.cache.has(role))
+        )
       };
+
       const isLiked = profile.likes.includes(request.user?.id || request.clientIp);
       const bannerURL = client.users.cache.get(profile.user.id)?.bannerURL?.({ format: 'png', size: 2048 }) || await client.users.fetch(profile.user.id, { force: true }).then(user => user.bannerURL({ format: 'png', size: 2048 })).catch(() => null);
 
@@ -130,13 +134,26 @@ module.exports = {
       .optional()
       .isObject().withMessage('Socials must be an object.')
       .custom(socialsValidation),
+    body('verified')
+      .optional()
+      .isBoolean().withMessage('Verified must be a boolean.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
       
-      const { slug, newSlug, occupation: newOccupation, gender: newGender, location: newLocation, birthday: newBirthday, bio: newBio, preferredHost: newPreferredHost, colors: newColors, socials } = matchedData(request);
+      const { slug, newSlug, occupation: newOccupation, gender: newGender, location: newLocation, birthday: newBirthday, bio: newBio, preferredHost: newPreferredHost, colors: newColors, socials, verified } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
+
+      if (verified !== undefined) {
+        const canVerify = config.permissions.canVerifyProfilesRoles.some(role => request.member.roles.cache.has(role));
+        if (!canVerify) return response.sendError('You do not have permission to verify this profile.', 403);
+
+        profile.verified = verified;
+        await profile.save();
+
+        return response.status(200).json({ success: true });
+      }
 
       const canEdit = request.user.id == profile.user.id || config.permissions.canEditProfiles.includes(request.user.id);
       if (!canEdit) return response.sendError('You do not have permission to edit this profile.', 403);
