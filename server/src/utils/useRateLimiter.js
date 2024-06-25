@@ -22,7 +22,11 @@ module.exports = function ({ maxRequests, perMinutes }) {
       errorHandler: logger.error.bind(null, '[Rate Limit Mongo Error]')
     }),
     skipFailedRequests: true,
-    skip: request => process.env.NODE_ENV === 'development' || config.rateLimitWhitelist.includes(request.user?.id)
+    skip: request => {
+      if (process.env.NODE_ENV === 'development') return true;
+      if (config.rateLimitWhitelist.includes(request.user?.id)) return true;
+      if (request.method === 'OPTIONS') return true;
+    }
   });
 
   return limiter;
