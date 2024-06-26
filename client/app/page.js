@@ -15,7 +15,6 @@ import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
 import TemplateCard from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useMedia } from 'react-use';
 import SafariDarkNav from '@/public/safari/dark_nav.svg';
 import SafariLightNav from '@/public/safari/light_nav.svg';
 import useThemeStore from '@/stores/theme';
@@ -484,8 +483,6 @@ export default function Page() {
     ]
   });
   
-  const isMobile = useMedia('(max-width: 640px)', false);
-
   return (
     <div className="relative z-10 flex flex-col items-center w-full">      
       <Square column='4' row='4' transparentEffectDirection='leftRightBottomTop' blockColor='rgba(var(--bg-quaternary))' />
@@ -498,21 +495,15 @@ export default function Page() {
         
         {' '}
             
-        {isMobile ? (
-          <>
-            Discord
-          </>
-        ) : (
-          <span className='text-[#5865F2] relative'>
-            <Image
-              src={discordLogoBlue}
-              alt='Discord Logo'
-              className='inline w-[350px]'
-            />
+        <span className='text-[#5865F2] relative'>
+          <Image
+            src={discordLogoBlue}
+            alt='Discord Logo'
+            className='inline w-[150px] sm:w-[200px] lg:w-[350px]'
+          />
 
-            <div className='absolute top-0 w-full h-full rounded-[5rem] bg-[#5865F220] blur-[3rem] left-0' />
-          </span>
-        )}
+          <div className='absolute top-0 w-full h-full rounded-[5rem] bg-[#5865F220] blur-[3rem] left-0' />
+        </span>
         
         {' '}
         
@@ -556,7 +547,7 @@ export default function Page() {
             <AnimatePresence>
               {index === 0 && (
                 <motion.div
-                  className='grid grid-cols-1 sm:grid-cols-3 gap-8 [zoom:0.75]'
+                  className='grid grid-cols-1 sm:grid-cols-3 gap-8 sm:[zoom:0.75]'
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -50 }}
