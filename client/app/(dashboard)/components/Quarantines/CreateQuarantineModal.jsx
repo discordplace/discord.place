@@ -107,7 +107,8 @@ export default function CreateQuarantineModal() {
             id: 'next',
             label: 'Next',
             variant: 'solid',
-            action: () => setStep(1)
+            action: () => setStep(1),
+            disabled: !type || !value || !restriction
           }
         ]
       });
@@ -162,54 +163,56 @@ export default function CreateQuarantineModal() {
           </div>
 
           {(type === 'GUILD_ID' || type === 'USER_ID') && (
-            <div className='flex flex-col'>
-              <h2 className='text-sm font-semibold text-secondary'>{type === 'USER_ID' ? 'User ID' : 'Guild ID'}</h2>
-              <p className='text-xs text-tertiary'>Enter the ID of the {type === 'USER_ID' ? 'user' : 'guild'} you want to quarantine.</p>
+            <>
+              <div className='flex flex-col'>
+                <h2 className='text-sm font-semibold text-secondary'>{type === 'USER_ID' ? 'User ID' : 'Guild ID'}</h2>
+                <p className='text-xs text-tertiary'>Enter the ID of the {type === 'USER_ID' ? 'user' : 'guild'} you want to quarantine.</p>
             
-              <input
-                type="text"
-                placeholder={`${type === 'USER_ID' ? 'User' : 'Guild'} ID`}
-                className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
-                value={value}
-                onChange={event => setValue(event.target.value)}
-              />
-            </div>
-          )}
+                <input
+                  type="text"
+                  placeholder={`${type === 'USER_ID' ? 'User' : 'Guild'} ID`}
+                  className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
+                  value={value}
+                  onChange={event => setValue(event.target.value)}
+                />
+              </div>
 
-          <div className='flex flex-col'>
-            <h2 className='text-sm font-semibold text-secondary'>Restriction</h2>
-            <p className='text-xs text-tertiary'>Select the type of restriction you want to apply to the quarantine.</p>
+              <div className='flex flex-col'>
+                <h2 className='text-sm font-semibold text-secondary'>Restriction</h2>
+                <p className='text-xs text-tertiary'>Select the type of restriction you want to apply to the quarantine.</p>
 
-            <div className='relative grid grid-cols-1 gap-2 mt-4 overflow-y-auto max-h-[20dvh] scrollbar-hide'>
-              {Object.keys(config.quarantineRestrictions)
-                .filter(quarantineRestriction => !type || config.quarantineRestrictions[quarantineRestriction].available_to.includes(type))
-                .map(quarantineRestriction => (
-                  <div
-                    key={quarantineRestriction}
-                    className={cn(
-                      'relative flex transition-all select-none font-bold text-xs gap-x-2 items-center justify-center w-full h-[80px] rounded-xl cursor-pointer bg-secondary hover:bg-background',
-                      restriction === quarantineRestriction && 'pointer-events-none'
-                    )}
-                    onClick={() => setRestriction(quarantineRestriction)}
-                  >
-                    <div className='flex flex-col items-center gap-y-2'>
-                      {quarantineRestriction}
+                <div className='relative grid grid-cols-1 gap-2 mt-4 overflow-y-auto max-h-[20dvh] scrollbar-hide'>
+                  {Object.keys(config.quarantineRestrictions)
+                    .filter(quarantineRestriction => !type || config.quarantineRestrictions[quarantineRestriction].available_to.includes(type))
+                    .map(quarantineRestriction => (
+                      <div
+                        key={quarantineRestriction}
+                        className={cn(
+                          'relative flex transition-all select-none font-bold text-xs gap-x-2 items-center justify-center w-full h-[80px] rounded-xl cursor-pointer bg-secondary hover:bg-background',
+                          restriction === quarantineRestriction && 'pointer-events-none'
+                        )}
+                        onClick={() => setRestriction(quarantineRestriction)}
+                      >
+                        <div className='flex flex-col items-center gap-y-2'>
+                          {quarantineRestriction}
 
-                      <p className='text-xs text-tertiary'>
-                        {config.quarantineRestrictions[quarantineRestriction].description}
-                      </p>
-                    </div>
+                          <p className='text-xs text-tertiary'>
+                            {config.quarantineRestrictions[quarantineRestriction].description}
+                          </p>
+                        </div>
 
-                    {restriction === quarantineRestriction && (
-                      <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-2xl bg-secondary/80 bg-opacity-10 rounded-xl">
-                        <IoMdCheckmarkCircle className="text-primary" />
+                        {restriction === quarantineRestriction && (
+                          <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-2xl bg-secondary/80 bg-opacity-10 rounded-xl">
+                            <IoMdCheckmarkCircle className="text-primary" />
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))
-              }
-            </div>
-          </div>
+                    ))
+                  }
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
 
