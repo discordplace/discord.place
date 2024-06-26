@@ -24,7 +24,7 @@ import TemplateCard from '@/app/(templates)/templates/components/Hero/SearchResu
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
 import getHomeData from '@/lib/request/getHomeData';
-import { useMedia } from 'react-use';
+import { useLocalStorage, useMedia } from 'react-use';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -32,7 +32,7 @@ export default function Page() {
   const texts = ['Profiles', 'Servers', 'Bots', 'Emojis', 'Templates'];
 
   const [index, setIndex] = useState(0);
-  const [cachedData, setCachedData] = useState({});
+  const [cachedData, setCachedData] = useLocalStorage('cachedData', {});
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -50,8 +50,9 @@ export default function Page() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    if (cachedData[texts[index].toLowerCase()]) {
-      setData(cachedData[texts[index].toLowerCase()]);
+    const cachedDataItem = cachedData[texts[index].toLowerCase()];
+    if (cachedDataItem && cachedDataItem.expire_at > Date.now()) {
+      setData(cachedDataItem.data);
       return;
     }
 
@@ -60,7 +61,10 @@ export default function Page() {
         setData(data);
         setCachedData(oldCachedData => ({
           ...oldCachedData,
-          [texts[index].toLowerCase()]: data
+          [texts[index].toLowerCase()]: {
+            expire_at: Date.now() + 3600000,
+            data: data
+          }
         }));
       })
       .catch(toast.error);
