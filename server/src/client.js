@@ -445,7 +445,8 @@ module.exports = class Client {
                     [
                       {
                         likes: '$likes_count',
-                        views: '$views'
+                        views: '$views',
+                        createdAt: new Date()
                       }
                     ]
                   ]
