@@ -1,7 +1,6 @@
 import useAuthStore from '@/stores/auth';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaDiscord } from 'react-icons/fa';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
 import cn from '@/lib/cn';
@@ -64,16 +63,10 @@ export default function UserSide({ className }) {
         </>
       ) : (
         <Link 
-          className="relative flex items-center px-4 py-2 overflow-hidden font-medium rounded pointer-events-auto text-secondary hover:bg-tertiary gap-x-2 group"
+          className='relative flex items-center px-4 py-1.5 overflow-hidden text-sm font-semibold text-white bg-black rounded-full pointer-events-auto dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 gap-x-1'
           href={config.getLoginURL(pathname)}
         >
-          <span className="relative flex items-center gap-x-2">
-            <FaDiscord size={20} />
-            Login with Discord
-          </span>
-          <div className="opacity-0 group-hover:opacity-100 group-hover:animate-shine absolute inset-0 -top-[20px] flex h-[calc(100%+40px)] w-full justify-center blur-[12px]">
-            <div className="relative h-full w-8 bg-white/10 rotate-[45deg]" />
-          </div>
+          Login with Discord
         </Link>
       )}
     </div>

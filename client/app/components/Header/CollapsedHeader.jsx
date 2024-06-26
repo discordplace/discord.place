@@ -1,21 +1,22 @@
 import config from '@/config';
-import cn from '@/lib/cn';
-import useThemeStore from '@/stores/theme';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useLockBodyScroll } from 'react-use';
 import UserSide from '@/app/components/Header/UserSide';
 import { IoMdMenu } from 'react-icons/io';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { FiX } from 'react-icons/fi';
-import { AnimatePresence, motion } from 'framer-motion';
 import LogoWithText from '@/app/components/Logo/WithText';
-import { nanoid } from 'nanoid';
+import useThemeStore from '@/stores/theme';
+import Image from 'next/image';
+import Drawer from '@/app/components/Drawer';
+import { useRouter } from 'next-nprogress-bar';
+import { MdOutlineOpenInNew } from 'react-icons/md';
+import cn from '@/lib/cn';
 
 export default function CollapsedHeader({ pathname }) {
   const theme = useThemeStore(state => state.theme);
-
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   useLockBodyScroll(open);
 
@@ -23,65 +24,70 @@ export default function CollapsedHeader({ pathname }) {
     window.scrollTo(0, 0);
   }, [open]);
 
+  const [statedPathname, setPathname] = useState(pathname);
+
+  useEffect(() => {
+    if (statedPathname === null) return;
+
+    if (statedPathname !== pathname) router.push(statedPathname);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statedPathname]);
+
   return (
-    <header className='pointer-events-none fixed top-0 flex justify-between w-full px-4 sm:px-16 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]'>
+    <header className='pointer-events-none absolute top-0 flex justify-between w-full px-4 sm:px-12 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]'>
       <div className='mt-6'>
-        <Link href='/' className='pointer-events-auto'>
+        <div className='hidden mobile:block'>
+          <LogoWithText />
+        </div>
+
+        <Link href='/' className='block pointer-events-auto mobile:hidden'>
           <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='w-[48px] h-[48px]' alt='discord.place Logo' />
         </Link>
       </div>
 
       <div className='flex items-center mt-6 gap-x-4'>
-        <UserSide />
+        <Suspense fallback={<></>}>
+          <UserSide />
+        </Suspense>
 
-        <button className={cn(
-          'relative z-[9999] pointer-events-auto transition-all left-0 duration-500 flex items-center px-2 py-2 text-lg font-medium rounded outline-none text-secondary bg-tertiary gap-x-2',
-          open && 'left-0 mobile:left-8'
-        )} onClick={() => setOpen(!open)}>
-          {open ? <FiX /> : <IoMdMenu />}
+        <button
+          className='pointer-events-auto'
+          onClick={() => setOpen(!open)}
+        >
+          <FiX
+            className={cn(
+              'text-2xl text-tertiary absolute transition-opacity duration-300',
+              !open && 'opacity-0'
+            )} 
+          />
+          <IoMdMenu 
+            className={cn(
+              'text-2xl text-tertiary transition-opacity duration-300',
+              open && 'opacity-0'
+            )}
+          />
         </button>
 
-        <AnimatePresence>
-          {open && (
-            <div className='pointer-events-auto w-full h-full z-[999] fixed left-0 top-0 flex justify-end'>
-              <motion.div 
-                className='bg-[rgba(var(--bg-background),0.8)] backdrop-blur-sm w-full h-[100dvh] absolute' 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
-              />
+        <Drawer
+          openState={open}
+          setOpenState={setOpen}
+          state={statedPathname}
+          setState={setPathname}
+          items={config.headerLinks.map(headerLink => ({
+            label: <>
+              <div className='flex items-center gap-x-1.5'>
+                <headerLink.icon />
+                {headerLink.title}
 
-              <motion.div
-                className='w-[80%] mobile:w-[60%] h-[100dvh] bg-secondary z-[999] p-8 flex flex-col gap-y-4'
-                initial={{ opacity: 0, x: '100%' }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: '100%' }}
-                transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
-              >
-                <LogoWithText />
-
-                <div className='flex flex-col'>
-                  {config.headerLinks.map((link, index) => (
-                    <Link 
-                      key={nanoid()}
-                      href={link.href}
-                      className={cn(
-                        'flex items-center py-4 text-base border-t font-medium border-y-[rgb(var(--bg-quaternary))] gap-x-2 text-tertiary',
-                        index === config.headerLinks.length - 1 && 'border-b',
-                        pathname === link.href && 'text-primary pointer-events-none'
-                      )}
-                      onClick={() => setOpen(false)}
-                    >
-                      {link.title}
-                      {pathname === link.href && <span className='px-2 py-1 ml-auto text-xs font-medium border rounded-full border-primary text-secondary bg-tertiary'>Current</span>}
-                    </Link>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+                {pathname !== headerLink.href && (
+                  <MdOutlineOpenInNew />
+                )}
+              </div>
+            </>,
+            value: headerLink.href
+          }))}
+        />
       </div>
     </header>
   );

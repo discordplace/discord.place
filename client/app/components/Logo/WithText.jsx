@@ -4,6 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useThemeStore } from '@/stores/theme';
 import cn from '@/lib/cn';
+import { Bricolage_Grotesque } from 'next/font/google';
+
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function WithText({ className}) {
   const theme = useThemeStore(state => state.theme);
@@ -21,8 +24,11 @@ export default function WithText({ className}) {
         className='w-[48px] h-[48px]'
       />
 
-      <div className='flex flex-col'>
-        <h1 className='text-lg font-bold'>
+      <div className={cn(
+        'flex flex-col',
+        BricolageGrotesque.className
+      )}>
+        <h1 className='text-xl font-bold'>
           Discord
         </h1>
         <h2 className='text-sm font-medium'>

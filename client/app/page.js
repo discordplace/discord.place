@@ -487,11 +487,11 @@ export default function Page() {
   const isMobile = useMedia('(max-width: 640px)', false);
 
   return (
-    <div className="relative z-10 flex flex-col items-center w-full lg:h-[100dvh]">      
+    <div className="relative z-10 flex flex-col items-center w-full">      
       <Square column='4' row='4' transparentEffectDirection='leftRightBottomTop' blockColor='rgba(var(--bg-quaternary))' />
       
       <h1 className={cn(
-        'px-3 mobile:px-0 font-bold leading-[2rem] sm:!leading-[5.5rem] cursor-default max-w-[400px] sm:max-w-[800px] text-center text-4xl sm:text-7xl select-none mt-[10rem]',
+        'px-3 mobile:px-0 font-bold leading-[2rem] sm:!leading-[5.5rem] cursor-default max-w-[400px] sm:max-w-[800px] text-center text-4xl sm:text-7xl select-none mt-[14rem]',
         BricolageGrotesque.className
       )}>
         A way to find best
@@ -526,7 +526,7 @@ export default function Page() {
         </div>
       </h1>
 
-      <div className='relative flex items-center justify-center flex-1 w-full px-6 mt-8 overflow-hidden lg:px-0'>
+      <div className='relative flex items-center justify-center flex-1 w-full px-6 mt-24 overflow-hidden lg:px-0'>
         <div className='mt-auto relative max-w-[1000px] max-h-[550px] w-full overflow-hidden h-full z-[5] bg-secondary/50 border-x-2 border-t-2 border-primary rounded-t-3xl'>
           <div className='absolute left-0 w-full h-[900px] bg-black/5 dark:bg-white/5 blur-[3.5rem] rounded-full -top-[50rem]' />
         

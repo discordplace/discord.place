@@ -1,74 +1,58 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
-import cn from '@/lib/cn';
-import { useEffect, useState } from 'react';
+import LogoWithText from '@/app/components/Logo/WithText';
 import config from '@/config';
-import { usePrevious, useWindowScroll } from 'react-use';
-import useThemeStore from '@/stores/theme';
-import UserSide from '@/app/components/Header/UserSide';
+import MotionLink from '@/app/components/Motion/Link';
+import UserSide from './UserSide';
+import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
+import { Suspense } from 'react';
 
 export default function NotCollapsedHeader({ pathname }) {
-  const theme = useThemeStore(state => state.theme);
-  
-  const { y } = useWindowScroll();
-  const oldY = usePrevious(y);
-  const [scrollDirection, setScrollDirection] = useState(null);
-
-  useEffect(() => {
-    if (oldY !== null) {
-      if (y > oldY) {
-        setScrollDirection('down');
-      } else if (y < oldY) {
-        setScrollDirection('up');
-      }
-    }
-  }, [y, oldY]);
-
   return (
-    <div className='flex items-center justify-center w-full h-full'>
-      <header className={cn(
-        'fixed top-0 pointer-events-none grid mt-6 grid-cols-6 w-full max-w-[1200px] z-[9999] pb-6 transition-all [transition-duration:750ms]',
-        scrollDirection === 'down' && '-translate-y-full [transition-timing-function:cubic-bezier(.8,-0.76,.38,1.37)]',
-        scrollDirection === 'up' && 'translate-y-0 opacity-100'
-      )}>
-        <div className='flex gap-x-10'>
-          <Link href='/' className='pointer-events-auto hover:animate-logo-spin'>
-            <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='w-[48px] h-[48px]' alt='discord.place Logo' />
-          </Link>
-        </div>
+    <div className="absolute flex items-center justify-center w-full z-[10000] top-0">
+      <div className='flex justify-between items-center max-w-[1000px] w-full mt-12'>
+        <div className='flex items-center gap-x-8'>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, delay: 0.15, type: 'spring', stiffness: 100, damping: 20 }}
+          >
+            <LogoWithText />
+          </motion.div>
+          
+          <div className='w-[1px] h-[50%] bg-quaternary'>&thinsp;</div>
 
-        <div className='flex items-center justify-center col-span-4'>
-          <div className='relative pointer-events-auto flex items-center border rounded-2xl gap-x-2 border-[rgba(var(--bg-quaternary))] bg-secondary/50 backdrop-blur-lg'>
-            {config.headerLinks.map((link, index) => (
-              <Link
-                key={index}
+          <div className='flex gap-x-6'>
+            {config.headerLinks.map(headerLink => (
+              <MotionLink
+                href={headerLink.href}
+                key={headerLink.href}
                 className={cn(
-                  'relative z-[10] py-2.5 px-4 text-base font-semibold gap-x-1.5 items-center flex select-none transition-colors duration-500',
-                  link.disabled && 'pointer-events-none opacity-50',
-                  pathname === link.href && 'text-white dark:text-black pointer-events-none'
+                  'flex items-center font-medium transition-colors duration-200 outline-none select-none gap-x-1.5 text-tertiary hover:text-secondary',
+                  pathname === headerLink.href && 'text-primary pointer-events-none'
                 )}
-                href={link.href}
-                data-active={pathname === link.href}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, delay: 0.15 * config.headerLinks.indexOf(headerLink), type: 'spring', stiffness: 100, damping: 20 }}
               >
-                <link.icon />
-                {link.title}
-
-                {pathname === link.href && (
-                  <motion.div
-                    layoutId='headerLinkIndicator'
-                    className='absolute -z-[1] bottom-0 left-0 w-full h-full bg-black rounded-full pointer-events-none dark:bg-white'
-                  />
-                )}
-              </Link>
+                <headerLink.icon />
+                {headerLink.title}
+              </MotionLink>
             ))}
           </div>
         </div>
-        
-        <UserSide className='justify-end' />
-      </header>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25, type: 'spring', stiffness: 100, damping: 20 }}
+        >
+          <Suspense fallback={<></>}>
+            <UserSide />
+          </Suspense>
+        </motion.div>
+      </div>
     </div>
   );
 }
