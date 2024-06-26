@@ -37,7 +37,7 @@ export default function CollapsedHeader({ pathname }) {
   return (
     <header className='pointer-events-none absolute top-0 flex justify-between w-full px-4 sm:px-12 lg:px-28 2xl:px-48 z-[9999] pb-6 [transition-duration:750ms]'>
       <div className='mt-6'>
-        <div className='hidden mobile:block'>
+        <div className='hidden transition-colors mobile:block hover:opacity-60'>
           <LogoWithText />
         </div>
 

@@ -14,6 +14,7 @@ export default function NotCollapsedHeader({ pathname }) {
       <div className='flex justify-between items-center max-w-[1000px] w-full mt-12'>
         <div className='flex items-center gap-x-8'>
           <motion.div
+            className='transition-colors hover:opacity-70'
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, delay: 0.15, type: 'spring', stiffness: 100, damping: 20 }}
