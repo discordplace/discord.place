@@ -638,6 +638,7 @@ export default function Page() {
                           <EmojiCard 
                             overridedImage={emoji.overridedImage}
                             id={emoji.id}
+                            name={emoji.name}
                             animated={emoji.animated}
                             categories={emoji.categories}
                             downloads={emoji.downloads}
