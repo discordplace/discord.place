@@ -3,152 +3,306 @@
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
 import Square from './components/Background/Square';
-import { MdArrowForward } from 'react-icons/md';
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { useMedia } from 'react-use';
+import TextTransition, { presets } from 'react-text-transition';
+import Image from 'next/image';
+import discordLogoBlue from '@/public/discord-logo-blue.svg';
+import { FaLock } from 'react-icons/fa';
+import Union from '@/public/safari/Union.svg';
+import Shield from '@/public/safari/Shield.svg';
+import Refresh from '@/public/safari/Refresh.svg';
+import Pages from '@/public/safari/Pages.svg';
+import Newtab from '@/public/safari/Newtab.svg';
+import Download from '@/public/safari/Download.svg';
+import { IoChevronBackOutline, IoChevronForwardOutline  } from 'react-icons/io5';
+import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
+import ServerCard from '@/app/(servers)/servers/components/ServerCard';
+import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
+import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
+import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
+import TemplateCard from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
+import { AnimatePresence, motion } from 'framer-motion';
+import { toast } from 'sonner';
+import getHomeData from '@/lib/request/getHomeData';
+import { useLocalStorage, useMedia } from 'react-use';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Page() {
-  const defaultBlockColor = '#ffffff10';
-  const [hoveredBlockColor, setHoveredBlockColor] = useState(defaultBlockColor);
-  const isMobile = useMedia('(max-width: 640px)', false);  
+  const texts = ['Profiles', 'Servers', 'Bots', 'Emojis', 'Templates'];
 
-  function Block({ title, desc, to, index, color, disabled, newBadge }) {
-    const blockRef = useRef(null);
-    const buttonRef = useRef(null);
+  const [index, setIndex] = useState(0);
+  const [cachedData, setCachedData] = useLocalStorage('cachedData', {});
+  const intervalRef = useRef(null);
 
-    useEffect(() => {
-      if (!blockRef.current || !buttonRef.current) return;
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setIndex(oldIndex => oldIndex >= texts.length - 1 ? 0 : oldIndex + 1);
+    }, 2500);
 
-      function onMouseEnter() {
-        setHoveredBlockColor(`${color}15`);
-        blockRef.current.style.backgroundColor = `${color}10`;
-        buttonRef.current.style.backgroundColor = `${color}80`;
-        buttonRef.current.style.color = '#ffffff';
-      }
+    return () => {
+      clearInterval(intervalRef.current);
+    };
 
-      function onMouseLeave() {        
-        setHoveredBlockColor(defaultBlockColor);
-        blockRef.current.style.backgroundColor = 'transparent';
-        buttonRef.current.style.backgroundColor = '#ffffff';
-        buttonRef.current.style.color = '#000000';
-      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-      if (isMobile) {
-        blockRef.current.removeEventListener('mouseenter', onMouseEnter);
-        blockRef.current.removeEventListener('mouseleave', onMouseLeave);
-      } else {
-        blockRef.current.addEventListener('mouseenter', onMouseEnter);
-        blockRef.current.addEventListener('mouseleave', onMouseLeave);
-      }
+  const [data, setData] = useState(null);
 
-      return () => {
-        if (!blockRef.current) return;
-        
-        blockRef.current.removeEventListener('mouseenter', onMouseEnter);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        blockRef.current.removeEventListener('mouseleave', onMouseLeave);
-      };
+  useEffect(() => {
+    const cachedDataItem = cachedData[texts[index].toLowerCase()];
+    if (cachedDataItem && cachedDataItem.expire_at > Date.now()) {
+      setData(cachedDataItem.data);
+      return;
+    }
 
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isMobile]);
-    
-    return (
-      <Link 
-        className={cn(
-          'w-full sm:h-[200px] bg-secondary/70 flex-col px-4 rounded-lg cursor-pointer transition-colors hover:bg-secondary flex items-center py-3 gap-y-1.5',
-          index === 0 && 'rounded-md sm:rounded-tl-[2.5rem] sm:rounded-b-md lg:rounded-bl-[2.5rem]',
-          index === 1 && 'rounded-md sm:rounded-tr-[2.5rem] lg:rounded-r-md',
-          index === 2 && 'rounded-md lg:rounded-bl-md',
-          index === 3 && 'rounded-md lg:rounded-l-md',
-          index === 4 && 'rounded-md sm:rounded-b-[2.5rem] lg:rounded-br-[2.5rem] lg:rounded-bl-md lg:rounded-tr-[2.5rem] col-span-1 sm:col-span-2 lg:col-span-1',
-          disabled && 'pointer-events-none bg-secondary/30 select-none'
-        )}
-        ref={blockRef}
-        href={to}
-      >
-        <h1 className='flex items-center mt-3 text-xl font-semibold text-center gap-x-2 sm:text-2xl sm:mt-6 text-primary'>
-          {title}
+    getHomeData(texts[index].toLowerCase())
+      .then(data => {
+        setData(data);
+        setCachedData(oldCachedData => ({
+          ...oldCachedData,
+          [texts[index].toLowerCase()]: {
+            expire_at: Date.now() + 3600000,
+            data: data
+          }
+        }));
+      })
+      .catch(toast.error);
 
-          {newBadge && (
-            <span 
-              className='flex items-center px-2 py-1 text-xs font-semibold text-white rounded-full gap-x-1' 
-              style={{
-                background: `${color}80`
-              }}>
-              New
-            </span>
-          )}
-        </h1>
-        
-        <p className='mb-3 text-sm font-medium text-center sm:mb-0 text-tertiary'>{desc}</p>
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index]);
 
-        <div 
-          className={cn(
-            'hidden sm:block px-4 py-2 mt-4 text-sm font-semibold text-secondary bg-tertiary rounded-full w-max transition-all duration-200',
-            disabled && 'bg-secondary text-tertiary'
-          )}
-          ref={buttonRef}
-        >
-          View <MdArrowForward className='inline -rotate-45' />
-        </div>
-      </Link>
-    );
-  }
+  const isMobile = useMedia('(max-width: 640px)', false);
 
   return (
-    <div className="relative z-10 flex flex-col items-center justify-center w-full lg:h-[100dvh] my-8 sm:my-0">      
-      <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
+    <div className="relative z-10 flex flex-col items-center w-full lg:h-[100dvh]">      
+      <Square column='5' row='5' transparentEffectDirection='leftRightBottomTop' blockColor='rgba(var(--bg-quaternary))' />
       
       <h1 className={cn(
-        'font-bold cursor-default text-4xl sm:text-7xl mt-32 select-none sm:mt-10',
+        'px-3 mobile:px-0 font-bold leading-[2rem] sm:!leading-[5.5rem] cursor-default max-w-[400px] sm:max-w-[800px] text-center text-4xl sm:text-7xl select-none mt-[10rem]',
         BricolageGrotesque.className
       )}>
-        discord.place
+        A way to find best
+        
+        {' '}
+            
+        {isMobile ? (
+          <>
+            Discord
+          </>
+        ) : (
+          <span className='text-[#5865F2] relative'>
+            <Image
+              src={discordLogoBlue}
+              alt='Discord Logo'
+              className='inline w-[350px]'
+            />
+
+            <div className='absolute top-0 w-full h-full rounded-[5rem] bg-[#5865F220] blur-[3rem] left-0' />
+          </span>
+        )}
+        
+        {' '}
+        
+        <div className='relative inline'>
+          <TextTransition
+            springConfig={presets.gentle}
+            inline={true}
+          >
+            {texts[index % texts.length]}
+          </TextTransition>
+        </div>
       </h1>
 
-      <div className='transition-colors ease-in-out pointer-events-none absolute top-0 max-w-[800px] w-full h-[800px] rounded-full blur-[10rem]' style={{ background: hoveredBlockColor }} />
+      <div className='relative flex items-center justify-center flex-1 w-full px-6 mt-8 overflow-hidden lg:px-0'>
+        <div className='mt-24 relative max-w-[1000px] min-h-[50dvh] max-h-[1200px] w-full overflow-hidden h-full z-[5] bg-secondary/50 border-x-2 border-t-2 border-primary rounded-t-3xl'>
+          <div className='absolute left-0 w-full h-[900px] bg-black/5 dark:bg-white/5 blur-[3.5rem] rounded-full -top-[50rem]' />
+        
+          <div className='flex items-center justify-between px-6 pt-4'>
+            <div className='flex items-center gap-x-2'>
+              <div className='w-[10px] h-[10px] rounded-full bg-red-500' />
+              <div className='w-[10px] h-[10px] rounded-full bg-yellow-500' />
+              <div className='w-[10px] h-[10px] rounded-full bg-green-500' />
 
-      <div className='w-full mt-16 lg:mb-0 mb-8 max-w-[1200px] px-8 lg:px-0'>
-        <div className='grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:flex'>
-          <Block 
-            title='Profiles' 
-            desc='Customized page of Discord profiles.'
-            to='/profiles' 
-            index={0} 
-            color='#3b82f6'
-          />
-          <Block 
-            title='Servers' 
-            desc='Best servers and communities on Discord.'
-            to='/servers' 
-            index={1} 
-            color='#7c3aed'
-          />
-          <Block
-            title='Bots'
-            desc='Find the best Discord bots for your server.'
-            to='/bots'
-            index={2}
-            color='#db2777'
-          />
-          <Block
-            title='Emojis'
-            desc='Perfect emoji for your Discord servers.'
-            to='/emojis'
-            index={3}
-            color='#14b8a6'
-          />
-          <Block
-            title='Templates'
-            desc='Discord server templates for everyone.'
-            to='/templates'
-            index={4}
-            color='#9c84ef'
-            newBadge={true}
-          />
+              <Image 
+                src={Union}
+                className='relative hidden lg:block left-6'
+                width={20}
+                height={20}
+                alt='Union Icon'
+              />
+
+              <div className='relative hidden lg:flex text-[#575757] left-8 gap-x-0.5'>
+                <IoChevronBackOutline size={20} />
+                <IoChevronForwardOutline size={20} />
+              </div>
+            </div>
+
+            <div className='items-center hidden lg:flex gap-x-2'>
+              <Image
+                src={Shield}
+                width={15}
+                height={15}
+                alt='Shield Icon'
+                className='w-[14px] h-[18px]'
+              />
+              
+              <div className='rounded-lg overflow-hidden text-secondary text-sm py-2 relative font-medium bg-quaternary select-none gap-x-2 flex items-center justify-center w-[450px]'>
+                <FaLock size={12} className='text-tertiary' />
+                discord.place/
+
+                <TextTransition
+                  springConfig={presets.stiff}
+                  inline={true}
+                  className='-ml-2'
+                >
+                  {texts[index % texts.length].toLowerCase()}
+                </TextTransition>
+
+                <Image
+                  src={Refresh}
+                  width={13}
+                  height={13}
+                  alt='Refresh Icon'
+                  className='absolute right-2'
+                />
+              </div>
+            </div>
+
+            <div className='hidden lg:flex gap-x-4'>
+              <Image
+                src={Download}
+                width={15}
+                height={15}
+                alt='Download Icon'
+              />
+
+              <Image
+                src={Newtab}
+                width={15}
+                height={15}
+                alt='Newtab Icon'
+              />
+
+              <Image
+                src={Pages}
+                width={15}
+                height={15}
+                alt='Pages Icon'
+              />
+            </div>
+          </div>
+
+          <div className='flex items-center justify-center w-full px-4 mt-8 pointer-events-none select-none sm:px-0'>
+            <AnimatePresence>
+              {index === 0 && (
+                <motion.div
+                  className='grid grid-cols-1 sm:grid-cols-3 gap-8 [zoom:0.75]'
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  {data?.profiles?.map?.(profile => (
+                    <ProfileCard
+                      key={profile.slug}
+                      {...profile}
+                    />
+                  ))}
+                </motion.div>
+              )}
+
+              {index === 1 && (
+                <div className='w-full max-w-[700px]'>
+                  <motion.div
+                    className='grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-3 gap-8 [zoom:0.75] pointer-events-none'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {data?.servers?.map?.(server => (
+                      <ServerCard
+                        key={server.id}
+                        overridedSort='Votes'
+                        server={server}
+                      />
+                    ))}
+                  </motion.div>
+                </div>
+              )}
+
+              {index === 2 && (
+                <div className='w-full max-w-[700px]'>
+                  <motion.div
+                    className='grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-3 gap-8 [zoom:0.75]'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {data?.bots?.map?.(bot => (
+                      <BotCard
+                        overridedSort='Votes'
+                        key={bot.id}
+                        data={bot}
+                      />
+                    ))}
+                  </motion.div>
+                </div>
+              )}
+
+              {index === 3 && (
+                <div className='w-full max-w-[700px]'>
+                  <motion.div
+                    className='grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-3 gap-8 [zoom:0.75]'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {data?.emojis?.map?.(emoji => (
+                      <div key={emoji.id}>
+                        {(emoji.emoji_ids || []).length > 0 ? (
+                          <EmojiPackageCard
+                            id={emoji.id}
+                            name={emoji.name}
+                            categories={emoji.categories}
+                            downloads={emoji.downloads}
+                            emoji_ids={emoji.emoji_ids}
+                          />
+                        ) : (
+                          <EmojiCard 
+                            id={emoji.id}
+                            name={emoji.name}
+                            animated={emoji.animated}
+                            categories={emoji.categories}
+                            downloads={emoji.downloads}
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </motion.div>
+                </div>
+              )}
+
+              {index === 4 && (
+                <div className='w-full max-w-[700px]'>
+                  <motion.div
+                    className='grid grid-cols-1 mobile:grid-cols-2 gap-8 [zoom:0.75]'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {data?.templates?.map?.(template => (
+                      <TemplateCard
+                        key={template.id}
+                        data={template}
+                      />
+                    ))}
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className='absolute w-full bg-gradient-to-t from-[rgba(var(--bg-background))] via-[rgba(var(--bg-background))]/80 h-[200px] bottom-0 z-[5]' />
         </div>
       </div>
 
