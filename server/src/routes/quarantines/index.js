@@ -16,6 +16,8 @@ module.exports = {
       .isString().withMessage('Type should be a string.')
       .isIn(config.quarantineTypes).withMessage(`Type must be one of: ${config.quarantineTypes.join(', ')}`),
     body('value')
+      .isInt().withMessage('Value should be an integer.')  
+      .isLength({ min: 17, max: 19 }).withMessage('Value should be between 17 and 19 characters.')
       .isString().withMessage('Value should be a string.'),
     body('restriction')
       .isString().withMessage('Restriction should be a string.')
