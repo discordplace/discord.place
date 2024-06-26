@@ -63,10 +63,10 @@ export default function CreateQuarantineModal() {
   
           return 'Created quarantine successfully.';
         },
-        error: () => {
+        error: error => {
           enableButton('create-quarantine-record', 'confirm');
   
-          return 'Failed to create quarantine.';
+          return error;
         }
       });
     } catch (error) {
@@ -161,18 +161,20 @@ export default function CreateQuarantineModal() {
             </div>
           </div>
 
-          <div className='flex flex-col'>
-            <h2 className='text-sm font-semibold text-secondary'>{type === 'USER_ID' ? 'User ID' : 'Guild ID'}</h2>
-            <p className='text-xs text-tertiary'>Enter the ID of the {type === 'USER_ID' ? 'user' : 'guild'} you want to quarantine.</p>
+          {(type === 'GUILD_ID' || type === 'USER_ID') && (
+            <div className='flex flex-col'>
+              <h2 className='text-sm font-semibold text-secondary'>{type === 'USER_ID' ? 'User ID' : 'Guild ID'}</h2>
+              <p className='text-xs text-tertiary'>Enter the ID of the {type === 'USER_ID' ? 'user' : 'guild'} you want to quarantine.</p>
             
-            <input
-              type="text"
-              placeholder={`${type === 'USER_ID' ? 'User' : 'Guild'} ID`}
-              className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
-              value={value}
-              onChange={event => setValue(event.target.value)}
-            />
-          </div>
+              <input
+                type="text"
+                placeholder={`${type === 'USER_ID' ? 'User' : 'Guild'} ID`}
+                className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
+                value={value}
+                onChange={event => setValue(event.target.value)}
+              />
+            </div>
+          )}
 
           <div className='flex flex-col'>
             <h2 className='text-sm font-semibold text-secondary'>Restriction</h2>
