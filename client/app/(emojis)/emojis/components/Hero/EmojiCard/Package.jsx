@@ -6,8 +6,14 @@ import cn from '@/lib/cn';
 import { LuPackage } from 'react-icons/lu';
 import { useState } from 'react';
 
-export default function EmojiPackageCard({ id, name, categories, downloads, emoji_ids, className }) {
+export default function EmojiPackageCard({ overridedImages, id, name, categories, downloads, emoji_ids, className }) {
   const [containerHovered, setContainerHovered] = useState(false);
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    notation: 'compact',
+    maximumFractionDigits: 2
+  });
 
   return (
     <div className={cn(
@@ -27,7 +33,7 @@ export default function EmojiPackageCard({ id, name, categories, downloads, emoj
             <>
               <MotionImage 
                 key={packaged_emoji.id}
-                src={config.getEmojiURL(`packages/${id}/${packaged_emoji.id}`, packaged_emoji.animated)}
+                src={overridedImages?.find(({ id }) => id === packaged_emoji.id)?.image || config.getEmojiURL(`packages/${id}/${packaged_emoji.id}`, packaged_emoji.animated)}
                 alt={`Emoji package ${name} ${index + 1}. emoji`} 
                 className={cn(
                   'transition-all object-contain ease-in-out w-[48px] h-[48px] p-0.5 rounded-3xl bg-quaternary',
@@ -64,7 +70,7 @@ export default function EmojiPackageCard({ id, name, categories, downloads, emoj
             </div>
             <div className='flex items-center text-sm gap-x-0.5 text-tertiary font-medium'>
               <HiDocumentDownload />
-              {downloads}
+              {formatter.format(downloads)}
             </div>
           </div>
         </div>

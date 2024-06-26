@@ -1,5 +1,6 @@
 'use client';
 
+import config from '@/config';
 import cn from '@/lib/cn';
 import useSearchStore from '@/stores/templates/search';
 import useThemeStore from '@/stores/theme';
@@ -19,7 +20,7 @@ export default function Card({ data, className }) {
   
     let compressedName = '';
   
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 3; i++) {
       compressedName += noVowels[i];
       if (compressedName.length === limit) break;
     }
@@ -35,6 +36,12 @@ export default function Card({ data, className }) {
 
     return () => clearTimeout(timeoutRef.current);
   }, [isClicked]);
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    notation: 'compact',
+    maximumFractionDigits: 2
+  });
 
   return (
     <div 
@@ -64,13 +71,14 @@ export default function Card({ data, className }) {
     
             <div className="flex truncate gap-x-1">
               {data.categories.map(category => (
-                <span className="px-2 py-1 text-xs font-medium rounded-md text-secondary bg-quaternary" key={category}>
+                <span className="flex items-center px-2 py-1 text-xs font-medium rounded-md gap-x-1 text-secondary bg-quaternary" key={category}>
+                  {config.templateCategoriesIcons[category]}
                   {category}
                 </span>
               ))}
             </div>
 
-            <p className="text-xs mobile:text-sm break-all whitespace-pre-wrap text-tertiary line-clamp-2 min-h-[40px]">
+            <p className="text-xs break-all whitespace-pre-wrap mobile:text-sm text-tertiary line-clamp-2">
               {data.description}
             </p>
 
@@ -80,7 +88,7 @@ export default function Card({ data, className }) {
                   <>
                     <TiStar className='text-tertiary' />
                     <span className='text-xs font-medium text-secondary truncate max-w-[50px] mobile:max-w-[unset]'>
-                      {data.uses} uses
+                      {formatter.format(data.uses)} uses
                     </span>
                   </>
                 )}

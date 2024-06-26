@@ -4,7 +4,13 @@ import { HiDocumentDownload } from 'react-icons/hi';
 import config from '@/config';
 import cn from '@/lib/cn';
 
-export default function EmojiCard({ id, name, animated, categories, downloads, className }) {
+export default function EmojiCard({ overridedImage, id, name, animated, categories, downloads, className }) {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    notation: 'compact',
+    maximumFractionDigits: 2
+  });
+
   return (
     <div className={cn(
       'flex flex-col w-full min-w-[155px]',
@@ -15,7 +21,7 @@ export default function EmojiCard({ id, name, animated, categories, downloads, c
         href={`/emojis/${id}`}
       >
         <MotionImage 
-          src={config.getEmojiURL(id, animated)}
+          src={overridedImage || config.getEmojiURL(id, animated)}
           alt={`${name} emoji`} 
           className='transition-all ease-in-out group-hover:w-[86px] w-[50px] group-hover:h-[86px] h-[50px]'
           width={128}
@@ -34,7 +40,7 @@ export default function EmojiCard({ id, name, animated, categories, downloads, c
           <h3 className='text-sm font-semibold text-primary max-w-[75%] truncate'>{name}</h3>
           <div className='flex items-center text-sm gap-x-0.5 text-tertiary font-medium'>
             <HiDocumentDownload />
-            {downloads}
+            {formatter.format(downloads)}
           </div>
         </div>
 
