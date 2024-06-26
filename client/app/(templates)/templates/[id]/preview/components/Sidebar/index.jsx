@@ -20,6 +20,7 @@ import deleteTemplate from '@/lib/request/templates/deleteTemplate';
 import { BiSolidCopy } from 'react-icons/bi';
 import { useEffect, useRef, useState } from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
+import Link from 'next/link';
 
 export default function Sidebar({ template, focusedChannel, currentlyOpenedSection, setCurrentlyOpenedSection, isMobile, setMemberListCollapsed }) {
   const router = useRouter();
@@ -92,6 +93,32 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           />
         </Tooltip>
       </div>
+
+      <Link
+        className='relative flex items-center cursor-pointer'
+        href='https://disbot.com.tr'
+        target='_blank'
+      >
+        <Tooltip
+          content={
+            <>
+              <CommunityServerBoostedIcon className='inline mr-2 w-[18px] h-[18px]' />
+
+              Disbot
+            </>
+          }
+          side='right'
+          theme='discord'
+        >
+          <Image
+            src="/templates/disbot_logo.png"
+            alt="Disbot Square Logo"
+            width={48}
+            height={48}
+            className='select-none rounded-2xl'
+          />
+        </Tooltip>
+      </Link>
 
       <Tooltip
         content='Add a Server'
