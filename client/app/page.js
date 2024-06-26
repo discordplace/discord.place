@@ -147,9 +147,17 @@ export default function Page() {
                 className='w-[14px] h-[18px]'
               />
               
-              <div className='rounded-lg text-secondary text-sm py-2 relative font-medium bg-quaternary select-none gap-x-2 flex items-center justify-center w-[450px]'>
+              <div className='rounded-lg overflow-hidden text-secondary text-sm py-2 relative font-medium bg-quaternary select-none gap-x-2 flex items-center justify-center w-[450px]'>
                 <FaLock size={12} className='text-tertiary' />
-                discord.place
+                discord.place/
+
+                <TextTransition
+                  springConfig={presets.stiff}
+                  inline={true}
+                  className='-ml-2'
+                >
+                  {texts[index % texts.length].toLowerCase()}
+                </TextTransition>
 
                 <Image
                   src={Refresh}
