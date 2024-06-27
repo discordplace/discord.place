@@ -107,8 +107,13 @@ export default function CreateQuarantineModal() {
             id: 'next',
             label: 'Next',
             variant: 'solid',
-            action: () => setStep(1),
-            disabled: !type || !value || !restriction
+            action: () => {
+              if (!type) return toast.error('You must select a quarantine type.');
+              if (!value) return toast.error('You must enter a value.');
+              if (!restriction) return toast.error('You must select a restriction.');
+
+              setStep(1);
+            }
           }
         ]
       });
