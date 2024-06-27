@@ -90,6 +90,19 @@ export default function Page({ plans }) {
       ]
     },
     {
+      label: 'Stunning Card Effects',
+      available_to: [
+        {
+          id: 'free',
+          value: <FaXmark />
+        },
+        {
+          id: 'premium',
+          value: <FaCheck />
+        }
+      ]
+    },
+    {
       label: 'Premium Preferred Hosts',
       available_to: [
         {
