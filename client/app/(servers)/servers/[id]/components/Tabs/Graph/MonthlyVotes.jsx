@@ -18,7 +18,7 @@ export default function MonthlyVotesGraph({ server }) {
   const isMobile = useMedia('(max-width: 640px)', false);
 
   return (
-    <>
+    <div className='lg:max-w-[70%] w-full px-8 lg:px-0'>
       <h2 className='flex items-center text-xl font-semibold gap-x-2'>
         Monthly Votes Graph
 
@@ -40,7 +40,7 @@ export default function MonthlyVotesGraph({ server }) {
         </Tooltip>
       </h2>
 
-      <p className='mt-2 whitespace-pre-wrap text-tertiary'>
+      <p className='mt-2 text-sm whitespace-pre-wrap text-tertiary'>
         The amount of votes this server has received over time.
       </p>
 
@@ -60,6 +60,6 @@ export default function MonthlyVotesGraph({ server }) {
           xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }))}
         />
       </div>
-    </>
+    </div>
   );
 }
