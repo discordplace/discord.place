@@ -140,7 +140,7 @@ const ProfileSchema = new Schema({
         banner_url: user.bannerURL({ size: 512, format: 'png' })
       });
 
-      const premium = await User.findOne({ id: this.user.id, subscription: { $ne: null } });
+      const premiumUserData = await User.findOne({ id: this.user.id, subscription: { $ne: null } });
 
       return {
         ...newProfile,
@@ -157,8 +157,8 @@ const ProfileSchema = new Schema({
         verified: this.verified,
         preferredHost: this.preferredHost,
         colors: this.colors,
-        premium: !!premium,
-        badges: getBadges(this, premium ? premium.createdAt : null),
+        premium: !!premiumUserData,
+        badges: getBadges(this, premiumUserData ? premiumUserData.subscription?.createdAt : null),
         createdAt: this.createdAt,
         updatedAt: this.updatedAt
       };
