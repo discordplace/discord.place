@@ -181,7 +181,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
                   <button
                     className={cn(
                       'px-3 py-1.5 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 rounded-lg cursor-pointer',
-                      patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                      patternDarkMode ? 'bg-white text-black' : ' bg-black text-white',
+                      loggedIn && (patternDarkMode ? 'hover:bg-white/70' : 'hover:bg-black/70')
                     )}
                     onClick={() => {
                       if (!loggedIn) return;

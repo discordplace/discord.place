@@ -18,6 +18,7 @@ import confetti from '@/lib/lotties/confetti.json';
 import config from '@/config';
 import Tooltip from '@/app/components/Tooltip';
 import useAuthStore from '@/stores/auth';
+import cn from '@/lib/cn';
 
 export default function PackagePreview({ image_urls, setImageURLs, setIsPackage, setEmojiURL, ableToChange }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -183,7 +184,10 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
               sideOffset={15}
             >
               <div
-                className='absolute p-1 text-sm text-white bg-black rounded-md cursor-pointer disabled:opacity-70 left-1 bottom-1 dark:bg-white dark:hover:bg-white/70 dark:text-black hover:bg-black/70'
+                className={cn(
+                  'absolute p-1 text-sm text-white dark:text-black bg-black dark:bg-white rounded-md cursor-pointer disabled:opacity-70 left-1 bottom-1',
+                  loggedIn && 'dark:hover:bg-white/70 hover:bg-black/70'
+                )}
                 onClick={() => {
                   if (!loggedIn) return;
 
