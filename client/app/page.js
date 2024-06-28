@@ -16,7 +16,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import SafariDarkNav from '@/public/safari/dark_nav.svg';
 import SafariLightNav from '@/public/safari/light_nav.svg';
 import useThemeStore from '@/stores/theme';
-import { FlipWords } from '@/app/components/FlipWords';
+import FlipWords from '@/app/components/FlipWords';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
