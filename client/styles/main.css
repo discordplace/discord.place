@@ -121,3 +121,7 @@ html.dark {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 3px;
 }
+
+[id^="rmiz-modal-img-"] {
+  border-radius: 12px;
+}
