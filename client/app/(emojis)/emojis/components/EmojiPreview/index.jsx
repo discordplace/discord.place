@@ -180,10 +180,14 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
                 <Tooltip content={loggedIn ? 'Upload to Discord' : 'Login with Discord to Upload'}>
                   <button
                     className={cn(
-                      'px-3 py-1.5 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 disabled:pointer-events-none rounded-lg cursor-pointer',
+                      'px-3 py-1.5 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 rounded-lg cursor-pointer',
                       patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
                     )}
-                    onClick={uploadToDiscord}
+                    onClick={() => {
+                      if (!loggedIn) return;
+
+                      uploadToDiscord();
+                    }}
                     disabled={!loggedIn || uploadToDiscordButtonLoading}
                   >
                     {uploadToDiscordButtonLoading ? (

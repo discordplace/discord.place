@@ -183,8 +183,10 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
               sideOffset={15}
             >
               <div
-                className='absolute p-1 text-sm text-white bg-black rounded-md cursor-pointer disabled:pointer-events-none disabled:opacity-70 left-1 bottom-1 dark:bg-white dark:hover:bg-white/70 dark:text-black hover:bg-black/70'
+                className='absolute p-1 text-sm text-white bg-black rounded-md cursor-pointer disabled:opacity-70 left-1 bottom-1 dark:bg-white dark:hover:bg-white/70 dark:text-black hover:bg-black/70'
                 onClick={() => {
+                  if (!loggedIn) return;
+
                   setSelectedEmojiURL(url);
                   uploadToDiscord();
                 }}
