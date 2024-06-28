@@ -10,15 +10,17 @@ import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuild
 import { TbLoader } from 'react-icons/tb';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/EmojiPreview/UploadEmojiToDiscordModal';
+import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
 import useGeneralStore from '@/stores/general';
 import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
 import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
 import config from '@/config';
 import Tooltip from '@/app/components/Tooltip';
+import useAuthStore from '@/stores/auth';
 
 export default function PackagePreview({ image_urls, setImageURLs, setIsPackage, setEmojiURL, ableToChange }) {
+  const loggedIn = useAuthStore(state => state.loggedIn);
   const theme = useThemeStore(state => state.theme);
   const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark');
   const [renderConfetti, setRenderConfetti] = useState(false);
@@ -176,13 +178,17 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
             }} 
             layoutId={url}
           >
-            <Tooltip content='Upload to Discord'>
+            <Tooltip
+              content={loggedIn ? 'Upload to Discord' : 'Login with Discord to Upload'}
+              sideOffset={15}
+            >
               <div
-                className='absolute p-1 text-sm text-white bg-black rounded-md cursor-pointer left-1 bottom-1 dark:bg-white dark:hover:bg-white/70 dark:text-black hover:bg-black/70'
+                className='absolute p-1 text-sm text-white bg-black rounded-md cursor-pointer disabled:pointer-events-none disabled:opacity-70 left-1 bottom-1 dark:bg-white dark:hover:bg-white/70 dark:text-black hover:bg-black/70'
                 onClick={() => {
                   setSelectedEmojiURL(url);
                   uploadToDiscord();
                 }}
+                disabled={!loggedIn || (setSelectedEmojiURL === url && uploadToDiscordButtonLoading)}
               >
                 {(setSelectedEmojiURL === url && uploadToDiscordButtonLoading) ? (
                   <TbLoader className='animate-spin' /> 

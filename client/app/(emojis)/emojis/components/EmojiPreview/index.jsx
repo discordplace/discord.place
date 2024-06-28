@@ -11,14 +11,17 @@ import { toast } from 'sonner';
 import { TbLoader } from 'react-icons/tb';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/EmojiPreview/UploadEmojiToDiscordModal';
+import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
 import Image from 'next/image';
 import useGeneralStore from '@/stores/general';
 import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
 import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
+import useAuthStore from '@/stores/auth';
+import Tooltip from '@/app/components/Tooltip';
 
 export default function EmojiPreview({ id, name, image_url, ableToChange, defaultSize }) {
+  const loggedIn = useAuthStore(state => state.loggedIn);
   const [previewSize, setPreviewSize] = useState(defaultSize === 'shrink' ? 32 : 96);
   const theme = useThemeStore(state => state.theme);
   const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark');
@@ -174,22 +177,22 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
                   Change
                 </label>
               ) : (
-                <button
-                  className={cn(
-                    'px-3 py-1.5 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 disabled:pointer-events-none rounded-lg cursor-pointer',
-                    patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
-                  )}
-                  onClick={uploadToDiscord}
-                  disabled={uploadToDiscordButtonLoading}
-                >
-                  {uploadToDiscordButtonLoading ? (
-                    <TbLoader className='animate-spin' />
-                  ) : (
-                    <FaCloudUploadAlt />
-                  )}
-                  
-                  Upload to Discord
-                </button>
+                <Tooltip content={loggedIn ? 'Upload to Discord' : 'Login with Discord to Upload'}>
+                  <button
+                    className={cn(
+                      'px-3 py-1.5 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 disabled:pointer-events-none rounded-lg cursor-pointer',
+                      patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                    )}
+                    onClick={uploadToDiscord}
+                    disabled={!loggedIn || uploadToDiscordButtonLoading}
+                  >
+                    {uploadToDiscordButtonLoading ? (
+                      <TbLoader className='animate-spin' />
+                    ) : (
+                      <FaCloudUploadAlt />
+                    )}
+                  </button>
+                </Tooltip>
               )}
 
               <button 
