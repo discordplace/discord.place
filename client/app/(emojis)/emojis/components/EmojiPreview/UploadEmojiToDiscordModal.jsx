@@ -41,7 +41,7 @@ export default function UploadEmojiToDiscordModal({ guilds }) {
           </p>
         </div>
       ) : (
-        <div className='flex items-center justify-center w-full gap-4'>
+        <div className='flex flex-wrap items-center justify-center w-full gap-4'>
           {guilds.map(guild => (
             <Tooltip
               content={guild.name}
