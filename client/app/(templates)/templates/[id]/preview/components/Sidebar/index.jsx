@@ -45,6 +45,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       },
       error: error => {
         enableButton('delete-template', 'confirm');
+        
         return error;
       }
     });
