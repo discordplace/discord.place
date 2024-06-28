@@ -31,17 +31,17 @@ export default function Approved({ data }) {
     disableButton('delete-template', 'confirm');
 
     toast.promise(deleteTemplate(id), {
-      loading: 'Deleting review..',
+      loading: 'Deleting template..',
       success: () => {
         closeModal('delete-template');
         fetchData(['templates']);
 
         return 'Template deleted successfully!';
       },
-      error: () => {
-        enableButton('approve-review', 'confirm');
+      error: error => {
+        enableButton('delete-template', 'confirm');
 
-        return `Failed to delete ${id}.`;
+        return error;
       }
     });
   }

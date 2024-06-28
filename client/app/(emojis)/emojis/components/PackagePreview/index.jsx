@@ -4,10 +4,24 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import useThemeStore from '@/stores/theme';
 import { motion } from 'framer-motion';
+import { FaCloudUploadAlt } from 'react-icons/fa';
+import { toast } from 'sonner';
+import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';
+import { TbLoader } from 'react-icons/tb';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
+import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/EmojiPreview/UploadEmojiToDiscordModal';
+import useGeneralStore from '@/stores/general';
+import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
+import Lottie from 'react-lottie';
+import confetti from '@/lib/lotties/confetti.json';
+import config from '@/config';
+import Tooltip from '@/app/components/Tooltip';
 
 export default function PackagePreview({ image_urls, setImageURLs, setIsPackage, setEmojiURL, ableToChange }) {
   const theme = useThemeStore(state => state.theme);
   const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark');
+  const [renderConfetti, setRenderConfetti] = useState(false);
 
   useEffect(() => {
     setPatternDarkMode(theme === 'dark');
@@ -19,8 +33,118 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image_urls]);
 
+  const [uploadToDiscordButtonLoading, setUploadToDiscordButtonLoading] = useState(false);
+  const [uploadableGuilds, setUploadableGuilds] = useState(null);
+
+  function uploadToDiscord() {
+    setUploadToDiscordButtonLoading(true);
+
+    getEmojiUploadableGuilds()
+      .then(setUploadableGuilds)
+      .catch(toast.error)
+      .finally(() => setUploadToDiscordButtonLoading(false));
+  }
+
+  function continueUploadEmojiToGuild(emojiUrl, guildId) {
+    if (!guildId) {
+      toast.error('Please select a server to upload the emoji to.');
+      return;
+    }
+
+    disableButton('upload-emoji-to-discord', 'upload');
+
+    toast.promise(uploadEmojiToGuild(config.getEmojiIdFromURL(emojiUrl), guildId, image_urls.indexOf(emojiUrl)), {
+      loading: 'Emoji is being uploaded to guild...',
+      success: () => {
+        closeModal('upload-emoji-to-discord');
+        setRenderConfetti(true);
+
+        return 'Emoji uploaded successfully!';
+      },
+      error: error => {
+        enableButton('upload-emoji-to-discord', 'upload');
+
+        return error;
+      }
+    });
+  }
+
+  const { openModal, openedModals, updateModal, closeModal, disableButton, enableButton } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    openedModals: state.openedModals,
+    updateModal: state.updateModal,
+    closeModal: state.closeModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton
+  })));
+
+  const selectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.selectedGuildId);
+  const selectedEmojiURL = useGeneralStore(state => state.uploadEmojiToDiscordModal.selectedEmojiURL);
+  const setSelectedEmojiURL = useGeneralStore(state => state.uploadEmojiToDiscordModal.setSelectedEmojiURL);
+
+  useEffect(() => {
+    if (!uploadableGuilds) return;
+    if (openedModals.some(modal => modal.id === 'upload-emoji-to-discord')) {
+      updateModal('upload-emoji-to-discord', {
+        buttons: [
+          {
+            id: 'cancel',
+            label: 'Cancel',
+            variant: 'ghost',
+            actionType: 'close'
+          },
+          {
+            id: 'upload',
+            label: 'Upload',
+            variant: 'solid',
+            action: () => continueUploadEmojiToGuild(selectedEmojiURL, selectedGuildId)
+          }
+        ]
+      });
+
+      return;
+    }
+
+    openModal('upload-emoji-to-discord', {
+      title: <>
+        <Image
+          src={selectedEmojiURL}
+          alt='Emoji Preview'
+          width={48}
+          height={48}
+          className='h-[20px] w-auto inline'
+        />
+
+        Upload to Discord
+      </>,
+      description: 'Quickly upload this emoji to Discord by selecting a server below.',
+      content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
+      buttons: [
+        {
+          id: 'cancel',
+          label: 'Cancel',
+          variant: 'ghost',
+          actionType: 'close'
+        },
+        {
+          id: 'uplaod',
+          label: 'Upload',
+          variant: 'solid',
+          action: () => continueUploadEmojiToGuild(selectedEmojiURL, selectedGuildId)
+        }
+      ]
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uploadableGuilds, selectedGuildId, selectedEmojiURL]);
+
+
   return (
     <div className='flex flex-col gap-y-4'>
+      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100dvh]">
+        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
+      </div>
+      
       {ableToChange && (
         <div className='flex w-full gap-x-2'>
           <button 
@@ -52,6 +176,22 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
             }} 
             layoutId={url}
           >
+            <Tooltip content='Upload to Discord'>
+              <div
+                className='absolute p-1 text-sm text-white bg-black rounded-md cursor-pointer left-1 bottom-1 dark:bg-white dark:hover:bg-white/70 dark:text-black hover:bg-black/70'
+                onClick={() => {
+                  setSelectedEmojiURL(url);
+                  uploadToDiscord();
+                }}
+              >
+                {(setSelectedEmojiURL === url && uploadToDiscordButtonLoading) ? (
+                  <TbLoader className='animate-spin' /> 
+                ) : (
+                  <FaCloudUploadAlt />
+                )}
+              </div>
+            </Tooltip>
+
             <Image
               src={url}
               width={64}

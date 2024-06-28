@@ -45,6 +45,7 @@ export default function Content({ emoji }) {
       },
       error: error => {
         enableButton('delete-emoji', 'confirm');
+        
         return error;
       }
     });
@@ -66,7 +67,9 @@ export default function Content({ emoji }) {
         )}
         <div className='flex flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
-            <EmojiPreview 
+            <EmojiPreview
+              id={emoji.id}
+              name={emoji.name}
               image_url={config.getEmojiURL(emoji.id, emoji.animated)} 
               ableToChange={false} 
               defaultSize='enlarge' 
@@ -186,7 +189,7 @@ export default function Content({ emoji }) {
           <div className='flex flex-col w-full gap-y-4'>
             <h2 className='flex items-center mt-4 text-lg font-semibold sm:text-xl gap-x-1'>
               <LuShieldQuestion />
-              Frequently Asked Questions
+                Frequently Asked Questions
             </h2>
 
             <FaQs emoji={emoji} />

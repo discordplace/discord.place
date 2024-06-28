@@ -10,7 +10,7 @@ import { Suspense } from 'react';
 
 export default function NotCollapsedHeader({ pathname }) {
   return (
-    <div className="absolute flex items-center justify-center w-full z-[10000] top-0">
+    <div className="absolute flex items-center justify-center w-full z-[9998] top-0">
       <div className='flex justify-between items-center max-w-[1000px] w-full mt-12'>
         <div className='flex items-center gap-x-8'>
           <motion.div

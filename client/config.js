@@ -160,6 +160,12 @@ const config = {
   botTestGuildId: '1239320384441159751',
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,
+  getEmojiIdFromURL: url => {
+    const match = url.match(/emojis\/(?:packages\/(?<packageId>[a-zA-Z0-9-]+)\/)?(?<emojiId>[a-zA-Z0-9-]+)\.(?<type>gif|png)/);
+    if (!match) return null;
+
+    return match.groups.packageId;
+  },
   botInviteURL: 'https://bot.discord.place',
   botCategoriesIcons: {
     'All': <BiSolidCategory />,

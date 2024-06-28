@@ -20,6 +20,12 @@ export const useGeneralStore = create(set => ({
     setPreferredHost: preferredHost => set(state => ({ createProfileModal: { ...state.createProfileModal, preferredHost } })),
     slug: '',
     setSlug: slug => set(state => ({ createProfileModal: { ...state.createProfileModal, slug } }))
+  },
+  uploadEmojiToDiscordModal: {
+    selectedGuildId: '',
+    setSelectedGuildId: selectedGuildId => set(state => ({ uploadEmojiToDiscordModal: { ...state.uploadEmojiToDiscordModal, selectedGuildId } })),
+    selectedEmojiURL: '',
+    setSelectedEmojiURL: selectedEmojiURL => set(state => ({ uploadEmojiToDiscordModal: { ...state.uploadEmojiToDiscordModal, selectedEmojiURL } }))
   }
 }));
 
