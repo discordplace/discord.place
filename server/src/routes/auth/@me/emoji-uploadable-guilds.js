@@ -10,8 +10,10 @@ module.exports = {
       const emojiUploadableGuilds = client.guilds.cache
         .filter(guild => 
           guild.ownerId === request.user.id ||
-          guild.members.cache.has(request.user.id) ||
-          guild.members.cache.get(request.user.id).permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions)
+          (
+            guild.members.cache.has(request.user.id) &&
+            guild.members.cache.get(request.user.id).permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions)
+          )
         )
         .map(guild => ({
           id: guild.id,
