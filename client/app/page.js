@@ -3,10 +3,8 @@
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
 import Square from './components/Background/Square';
-import { useEffect, useRef, useState } from 'react';
-import TextTransition, { presets } from 'react-text-transition';
+import { useState } from 'react';
 import Image from 'next/image';
-import discordLogoBlue from '@/public/discord-logo-blue.svg';
 import { FaLock } from 'react-icons/fa';
 import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
@@ -18,27 +16,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import SafariDarkNav from '@/public/safari/dark_nav.svg';
 import SafariLightNav from '@/public/safari/light_nav.svg';
 import useThemeStore from '@/stores/theme';
+import { FlipWords } from '@/app/components/FlipWords';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Page() {
-  const texts = ['Profiles', 'Servers', 'Bots', 'Emojis', 'Templates'];
+  const texts = ['Discord  Profiles', 'Discord  Servers', 'Discord  Bots', 'Discord  Emojis', 'Discord  Templates'];
   const theme = useThemeStore(state => state.theme);
 
   const [index, setIndex] = useState(0);
-  const intervalRef = useRef(null);
-
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setIndex(oldIndex => oldIndex >= texts.length - 1 ? 0 : oldIndex + 1);
-    }, 3500);
-
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const baseProfileData = {
     colors: {
@@ -491,29 +477,13 @@ export default function Page() {
         'px-3 mobile:px-0 font-bold leading-[2rem] sm:!leading-[5.5rem] cursor-default max-w-[400px] sm:max-w-[800px] text-center text-4xl sm:text-7xl select-none mt-[14rem]',
         BricolageGrotesque.className
       )}>
-        A way to find best
-        
-        {' '}
-            
-        <span className='text-[#5865F2] relative'>
-          <Image
-            src={discordLogoBlue}
-            alt='Discord Logo'
-            className='inline w-[150px] sm:w-[200px] lg:w-[350px]'
-          />
-
-          <div className='absolute top-0 w-full h-full rounded-[5rem] bg-[#5865F220] blur-[3rem] left-0' />
-        </span>
-        
-        {' '}
+        A way to find best {' '}
         
         <div className='relative inline'>
-          <TextTransition
-            springConfig={presets.gentle}
-            inline={true}
-          >
-            {texts[index % texts.length]}
-          </TextTransition>
+          <FlipWords
+            words={texts}
+            onStartAnimation={() => setIndex(oldIndex => oldIndex >= texts.length - 1 ? 0 : oldIndex + 1)}
+          />
         </div>
       </h1>
 
@@ -521,37 +491,36 @@ export default function Page() {
         <div className='mt-auto relative max-w-[1000px] max-h-[550px] w-full overflow-hidden h-full z-[5] bg-secondary/50 border-x-2 border-t-2 border-primary rounded-t-3xl'>
           <div className='absolute left-0 w-full h-[900px] bg-black/5 dark:bg-white/5 blur-[3.5rem] rounded-full -top-[50rem]' />
         
-          <div className='relative items-center justify-center hidden xl:flex'>
+          <div className='z-[20] relative items-center justify-center hidden xl:flex'>
             <Image
               src={theme === 'dark' ? SafariDarkNav : SafariLightNav}
               alt='Safari Navigation'
               className='absolute top-0 left-0 z-[10]'
             />
 
-            <div className='absolute text-secondary select-none text-[10px] flex gap-x-1.5 z-[20] top-2 justify-center'>
+            <div className='absolute text-secondary select-none gap-x-1.5 text-[10px] flex z-[20] top-2 justify-center'>
               <FaLock className='relative text-tertiary top-1' size={8} />
 
               <div>
                 discord.place/
-                <TextTransition
-                  springConfig={presets.stiff}
-                  inline={true}
-                >
-                  {texts[index % texts.length].toLowerCase()}
-                </TextTransition>
+                <FlipWords
+                  className='relative inline -ml-2'
+                  words={texts.map(text => text.split('Discord  ')[1].toLowerCase())}
+                />
               </div>
             </div>
           </div>
 
-          <div className='flex items-center justify-center w-full px-4 mt-8 pointer-events-none select-none xl:mt-16 sm:px-0'>
-            <AnimatePresence>
+          <div className='flex items-center relative justify-center w-full z-[10] px-4 mt-8 pointer-events-none select-none xl:mt-16 sm:px-0'>
+            <AnimatePresence mode='wait'>
               {index === 0 && (
                 <motion.div
                   className='grid grid-cols-1 sm:grid-cols-3 gap-8 sm:[zoom:0.75]'
-                  initial={{ opacity: 0, y: 50 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -50 }}
+                  exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
+                  key='profiles'
                 >
                   {data?.profiles?.map?.(profile => (
                     <ProfileCard
@@ -563,102 +532,94 @@ export default function Page() {
               )}
 
               {index === 1 && (
-                <div className='w-full max-w-[700px]'>
-                  <motion.div
-                    className='grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-3 gap-8 [zoom:0.75] pointer-events-none'
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -50 }}
-                    transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
-                    key='servers'
-                  >
-                    {data?.servers?.map?.(server => (
-                      <ServerCard
-                        key={`server-${server.id}`}
-                        overridedSort='Votes'
-                        server={server}
-                      />
-                    ))}
-                  </motion.div>
-                </div>
+                <motion.div
+                  className='w-full max-w-[1000px] grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-3 gap-8 [zoom:0.75] pointer-events-none'
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
+                  key='servers'
+                >
+                  {data?.servers?.map?.(server => (
+                    <ServerCard
+                      key={`server-${server.id}`}
+                      overridedSort='Votes'
+                      server={server}
+                    />
+                  ))}
+                </motion.div>
               )}
 
               {index === 2 && (
-                <div className='w-full max-w-[700px]'>
-                  <motion.div
-                    className='grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-3 gap-8 [zoom:0.75]'
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -50 }}
-                    transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
-                    key='bots'
-                  >
-                    {data?.bots?.map?.(bot => (
-                      <BotCard
-                        overridedSort='Votes'
-                        key={`bot-${bot.id}`}
-                        data={bot}
-                      />
-                    ))}
-                  </motion.div>
-                </div>
+                <motion.div
+                  className='w-full max-w-[1000px] grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-3 gap-8 [zoom:0.75]'
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
+                  key='bots'
+                >
+                  {data?.bots?.map?.(bot => (
+                    <BotCard
+                      overridedSort='Votes'
+                      key={`bot-${bot.id}`}
+                      data={bot}
+                    />
+                  ))}
+                </motion.div>
               )}
 
               {index === 3 && (
-                <div className='w-full max-w-[700px]'>
-                  <motion.div
-                    className='grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-3 gap-8 [zoom:0.75]'
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -50 }}
-                    transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
-                    key='emojis'
-                  >
-                    {data?.emojis?.map?.(emoji => (
-                      <div key={`emoji-${emoji.id}`}>
-                        {(emoji.emoji_ids || []).length > 0 ? (
-                          <EmojiPackageCard
-                            overridedImages={emoji.overridedImages}
-                            alwaysHovered={emoji.alwaysHovered}
-                            name={emoji.name}
-                            categories={emoji.categories}
-                            downloads={emoji.downloads}
-                            emoji_ids={emoji.emoji_ids}
-                          />
-                        ) : (
-                          <EmojiCard 
-                            overridedImage={emoji.overridedImage}
-                            id={emoji.id}
-                            name={emoji.name}
-                            animated={emoji.animated}
-                            categories={emoji.categories}
-                            downloads={emoji.downloads}
-                          />
-                        )}
-                      </div>
-                    ))}
-                  </motion.div>
-                </div>
+                <motion.div
+                  className='w-full max-w-[1000px] grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-3 gap-8 [zoom:0.75]'
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
+                  key='emojis'
+                >
+                  {data?.emojis?.map?.(emoji => (
+                    <div key={`emoji-${emoji.id}`}>
+                      {(emoji.emoji_ids || []).length > 0 ? (
+                        <EmojiPackageCard
+                          overridedImages={emoji.overridedImages}
+                          alwaysHovered={emoji.alwaysHovered}
+                          name={emoji.name}
+                          categories={emoji.categories}
+                          downloads={emoji.downloads}
+                          emoji_ids={emoji.emoji_ids}
+                        />
+                      ) : (
+                        <EmojiCard 
+                          overridedImage={emoji.overridedImage}
+                          id={emoji.id}
+                          name={emoji.name}
+                          animated={emoji.animated}
+                          categories={emoji.categories}
+                          downloads={emoji.downloads}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </motion.div>
               )}
 
               {index === 4 && (
-                <div className='w-full max-w-[700px]'>
-                  <motion.div
-                    className='grid grid-cols-1 mobile:grid-cols-2 gap-8 [zoom:0.75]'
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -50 }}
-                    transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
-                    key='templates'
-                  >
-                    {data?.templates?.map?.(template => (
-                      <TemplateCard
-                        key={template.id}
-                        data={template}
-                      />
-                    ))}
-                  </motion.div>
-                </div>
+                <motion.div
+                  className='w-full max-w-[1000px] grid grid-cols-1 mobile:grid-cols-2 gap-8 [zoom:0.75]'
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
+                  key='templates'
+                >
+                  {data?.templates?.map?.(template => (
+                    <TemplateCard
+                      key={template.id}
+                      data={template}
+                    />
+                  ))}
+                </motion.div>
               )}
             </AnimatePresence>
           </div>
