@@ -5,10 +5,17 @@ import Image from 'next/image';
 
 export default function ServerIcon({ width, height, className, icon_url, name }) {
 
-  function getCompressedName(name) {
-    if (name.length <= 3) return name;
-    if (name.split(' ').length > 1) return name.split(' ').map(word => word[0]).join('').slice(0, 5);
-    return name.slice(0, 3);
+  function getCompressedName(name, limit) {
+    const noVowels = name.replace(/[AEIOUaeiou\s]/g, '');
+  
+    let compressedName = '';
+  
+    for (let i = 0; i < 3; i++) {
+      compressedName += noVowels[i];
+      if (compressedName.length === limit) break;
+    }
+  
+    return compressedName;
   }
   
   return (
