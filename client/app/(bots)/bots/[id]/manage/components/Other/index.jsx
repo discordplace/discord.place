@@ -8,10 +8,8 @@ import getData from '@/lib/request/auth/getData';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import Input from '@/app/(bots)/bots/[id]/manage/components/Input';
-import Link from 'next/link';
 
-export default function Other({ categories, setCategories, canEditSupportServer, supportServerId, setSupportServerId, webhookURL, setWebhookURL, webhookToken, setWebhookToken }) {
+export default function Other({ categories, setCategories, canEditSupportServer, supportServerId, setSupportServerId }) {
   const [ownedServers, setOwnedServers] = useState([]);
   const [ownedServersLoading, setOwnedServersLoading] = useState(true);
 
@@ -124,49 +122,6 @@ export default function Other({ categories, setCategories, canEditSupportServer,
             </div>
           </div>
         )}
-
-        <div className='flex flex-col flex-1 gap-y-2'>
-          <label
-            className='font-medium text-secondary'
-          >
-            Webhook
-
-            <span className='ml-2 text-xs text-white dark:text-white px-2 py-0.5 dark:bg-white/30 bg-black/30 rounded-full'>
-              Optional
-            </span>
-          </label>
-        
-          <p className='text-sm text-tertiary'>
-            You can use webhooks to get notified when someone votes for your bot.
-            Documentation can be found{' '}
-            <Link
-              href={config.docsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-secondary hover:underline hover:text-primary"
-            >
-              here
-            </Link>.
-          </p>
-
-          <div className='flex gap-8 mt-4'>
-            <Input
-              label='URL'
-              description='Enter the URL of your webhook.'
-              placeholder='https://example.com/webhook'
-              value={webhookURL}
-              onChange={event => setWebhookURL(event.target.value)}
-            />
-
-            <Input
-              label='Secret'
-              description='Enter the secret of your webhook.'
-              placeholder='ed5d38a4-a3b3-4cf0-adc6-da128973b865'
-              value={webhookToken}
-              onChange={event => setWebhookToken(event.target.value)}
-            />
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { MdSave } from 'react-icons/md';
 import isEqual from 'lodash/isEqual';
 import EssentialInformation from '@/app/(bots)/bots/[id]/manage/components/EssentialInformation';
 import Other from '@/app/(bots)/bots/[id]/manage/components/Other';
+import Webhook from '@/app/(bots)/bots/[id]/manage/components/Webhook';
 import ApiKey from '@/app/(bots)/bots/[id]/manage/components/ApiKey';
 import DangerZone from '@/app/(bots)/bots/[id]/manage/components/DangerZone';
 import ExtraOwners from '@/app/(bots)/bots/[id]/manage/components/ExtraOwners';
@@ -25,8 +26,6 @@ export default function Content({ bot }) {
   const [inviteURL, setInviteURL] = useState(bot.invite_url);
   const [categories, setCategories] = useState(bot.categories);
   const [supportServerId, setSupportServerId] = useState(bot.support_server?.id || '0');
-  const [webhookURL, setWebhookURL] = useState(bot.webhook?.url || 'none');
-  const [webhookToken, setWebhookToken] = useState(bot.webhook?.token || 'none');
 
   // calculate if any changes made, if so, enable the save button
 
@@ -36,17 +35,13 @@ export default function Content({ bot }) {
     const isInviteURLChanged = !isEqual(inviteURL, bot.invite_url);
     const isCategoriesChanged = !isEqual(categories, bot.categories);
     const isSupportServerIdChanged = !isEqual(supportServerId, bot.support_server?.id || '0');
-    const isWebhookURLChanged = !isEqual(webhookURL, bot.webhook?.url || 'none');
-    const isWebhookTokenChanged = !isEqual(webhookToken, bot.webhook?.token || 'none');
 
     setChangesMade(
       isShortDescriptionChanged ||
       isDescriptionChanged ||
       isInviteURLChanged ||
       isCategoriesChanged ||
-      isSupportServerIdChanged ||
-      isWebhookURLChanged ||
-      isWebhookTokenChanged
+      isSupportServerIdChanged
     );
 
     function pushToChangedKeys(key, value) {
@@ -71,11 +66,9 @@ export default function Content({ bot }) {
     if (isInviteURLChanged) pushToChangedKeys('invite_url', inviteURL);
     if (isCategoriesChanged) pushToChangedKeys('categories', categories);
     if (isSupportServerIdChanged) pushToChangedKeys('support_server_id', supportServerId);
-    if (isWebhookURLChanged) pushToChangedKeys('webhook_url', webhookURL);
-    if (isWebhookTokenChanged) pushToChangedKeys('webhook_token', webhookToken);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shortDescription, description, inviteURL, categories, supportServerId, webhookURL, webhookToken]);
+  }, [shortDescription, description, inviteURL, categories, supportServerId]);
 
   function resetChanges() {    
     changedKeys.forEach(({ key }) => {
@@ -94,12 +87,6 @@ export default function Content({ bot }) {
         break;
       case 'support_server_id':
         setSupportServerId(bot.support_server?.id || '0');
-        break;
-      case 'webhook_url':
-        setWebhookURL(bot.webhook.url || 'none');
-        break;
-      case 'webhook_token':
-        setWebhookToken(bot.webhook.token || 'none');
         break;
       }
     });
@@ -195,10 +182,14 @@ export default function Content({ bot }) {
           canEditSupportServer={bot.permissions.canEditExtraOwners}
           supportServerId={supportServerId}
           setSupportServerId={setSupportServerId}
-          webhookURL={webhookURL}
-          setWebhookURL={setWebhookURL}
-          webhookToken={webhookToken}
-          setWebhookToken={setWebhookToken}
+        />
+        
+        <div className='w-full h-[1px] bg-tertiary' />
+
+        <Webhook
+          botId={bot.id}
+          webhookURL={bot.webhook?.url || null}
+          webhookToken={bot.webhook?.token || null}
         />
 
         <div className='w-full h-[1px] bg-tertiary' />
