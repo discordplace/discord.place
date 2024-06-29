@@ -177,11 +177,13 @@ export default function Content({ bot }) {
         <div className='w-full h-[1px] bg-tertiary' />
 
         <Other
+          botId={bot.id}
           categories={categories}
           setCategories={setCategories}
           canEditSupportServer={bot.permissions.canEditExtraOwners}
           supportServerId={supportServerId}
           setSupportServerId={setSupportServerId}
+          githubRepository={bot.github_repository}
         />
         
         <div className='w-full h-[1px] bg-tertiary' />

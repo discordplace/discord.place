@@ -10,10 +10,11 @@ const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const inviteUrlValidation = require('@/validations/bots/inviteUrl');
-const webhookValidation = require('@/validations/bots/webhook');
 const Review = require('@/schemas/Bot/Review');
 const Deny = require('@/schemas/Bot/Deny');
 const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
+const githubRepositoryValidation = require('@/validations/bots/githubRepository');
+const findRepository = require('@/utils/bots/findRepository');
 
 module.exports = {
   get: [
@@ -72,13 +73,19 @@ module.exports = {
       if (botUser.flags.toArray().includes('VerifiedBot')) badges.push('Verified');
       if (publiclySafeBot.owner?.premium) badges.push('Premium');
 
+      const github_repository = await findRepository(bot.github_repository);
+
       const responseData = {
         ...publiclySafeBot,
         permissions,
         badges,
         vote_timeout,
         reviews,
-        has_reviewed
+        has_reviewed,
+        github_repository: {
+          value: bot.github_repository,
+          data: github_repository
+        }
       };
       
       if (permissions.canEditAPIKey && bot.api_key?.iv) {
@@ -125,23 +132,11 @@ module.exports = {
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
-    body('support_server_id')
-      .optional()
-      .isString().withMessage('Support server ID should be a string.')
-      .isLength({ min: 17, max: 19 }).withMessage('Support server ID must be between 17 and 19 characters.'),
-    body('webhook')
-      .optional()
-      .isObject().withMessage('Webhook should be an object.')
-      .custom(value => {
-        if (!value.url && !value.token) return true;
-
-        return webhookValidation(value);
-      }),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, short_description, description, invite_url, categories, support_server_id, webhook } = matchedData(request);
+      const { id, short_description, description, invite_url, categories } = matchedData(request);
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE' },
@@ -162,17 +157,6 @@ module.exports = {
       const denyExists = await Deny.findOne({ 'bot.id': user.id, createdAt: { $gte: new Date(Date.now() - 6 * 60 * 60 * 1000) } });
       if (denyExists) return response.sendError(`This bot has been denied by ${denyExists.reviewer.id} in the past 6 hours. You can't submit this bot again until 6 hours pass.`, 400);
 
-      if (support_server_id) {
-        const botWithExactSupportServerId = await Bot.findOne({ support_server_id });
-        if (botWithExactSupportServerId && botWithExactSupportServerId.id != id) return response.sendError(`Support server ${support_server_id} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
-
-        const server = await Server.findOne({ id: support_server_id });
-        if (!server) return response.sendError('Support server should be listed on discord.place.', 400);
-
-        const guild = client.guilds.cache.get(support_server_id);
-        if (guild.ownerId !== request.user.id) return response.sendError(`You are not the owner of ${support_server_id}.`, 400);
-      }
-
       const approximate_guild_count_data = await getApproximateGuildCount(user.id).catch(() => null);
 
       const bot = new Bot({
@@ -184,16 +168,17 @@ module.exports = {
         description,
         invite_url,
         categories,
-        support_server_id,
         webhook: {
-          url: webhook?.url || null,
-          token: webhook?.token || null
+          url: null,
+          token: null
         },
         server_count: {
           value: approximate_guild_count_data?.approximate_guild_count || 0,
           updatedAt: new Date()
         },
         votes: 0,
+        voters: [],
+        last_voter: null,
         verified: false
       });
 
@@ -311,11 +296,15 @@ module.exports = {
       .isString().withMessage('Webhook Token should be a string.')
       .isLength({ min: 1, max: config.botWebhookTokenMaxLength }).withMessage(`Webhook Token must be between 1 and ${config.botWebhookTokenMaxLength} characters.`)
       .trim(),
+    body('github_repository')
+      .optional()
+      .isString().withMessage('GitHub Repository should be a string.')
+      .custom(githubRepositoryValidation),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, short_description, description, invite_url, categories, support_server_id, webhook_url, webhook_token } = matchedData(request);
+      const { id, short_description, description, invite_url, categories, support_server_id, webhook_url, webhook_token, github_repository } = matchedData(request);
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
@@ -358,6 +347,14 @@ module.exports = {
         else bot.webhook = { url: webhook_url, token: webhook_token };
       }
 
+      if (!github_repository) bot.github_repository = null;
+      else {
+        const isRepositoryFound = await findRepository(github_repository, true);
+        if (!isRepositoryFound) return response.sendError('Repository not found.', 400);
+
+        bot.github_repository = github_repository;
+      }
+
       const validationError = getValidationError(bot);
       if (validationError) return response.sendError(validationError, 400);
 
@@ -366,119 +363,4 @@ module.exports = {
       return response.json(await bot.toPubliclySafe());
     }   
   ]
-  /*
-  patch: [
-    checkAuthentication,
-    useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
-    bodyParser.json(),
-    param('id'),
-    body('newShortDescription')
-      .isString().withMessage('Short description should be a string.')
-      .trim()
-      .isLength({ min: config.botShortDescriptionMinLength, max: config.botShortDescriptionMaxLength }).withMessage(`Short description must be between ${config.botShortDescriptionMinLength} and ${config.botShortDescriptionMaxLength} characters.`),
-    body('newDescription')
-      .isString().withMessage('Description should be a string.')
-      .trim()
-      .isLength({ min: config.botDescriptionMinLength, max: config.botDescriptionMaxLength }).withMessage(`Description must be between ${config.botDescriptionMinLength} and ${config.botDescriptionMaxLength} characters.`),
-    body('newInviteUrl')
-      .isString().withMessage('Invite URL should be a string.')
-      .trim()
-      .isURL().withMessage('Invite URL should be a valid URL.')
-      .custom(inviteUrlValidation),
-    body('newCategories')
-      .isArray().withMessage('Categories should be an array.')
-      .custom(categoriesValidation),
-    body('newSupportServerId')
-      .optional()
-      .isString().withMessage('Support server ID should be a string.')
-      .isLength({ min: 17, max: 19 }).withMessage('Support server ID must be between 17 and 19 characters.'),
-    body('newWebhook')
-      .optional()
-      .isObject().withMessage('newWebhook should be an object.')
-      .custom(value => {
-        if (!value.url && !value.token) return true;
-
-        return webhookValidation(value);
-      }),
-    body('newExtraOwners')
-      .optional()
-      .isArray().withMessage('Extra owners must be an array.')
-      .custom(extraOwnersValidation),
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
-      const { id, newShortDescription, newDescription, newInviteUrl, newCategories, newSupportServerId, newWebhook, newExtraOwners } = matchedData(request);
-
-      const user = await client.users.fetch(id).catch(() => null);
-      if (!user) return response.sendError('Bot not found.', 404);
-
-      if (!user.bot) return response.sendError(`${user.id} is not a bot.`, 400);
-
-      const bot = await Bot.findOne({ id });
-      if (!bot) return response.sendError('Bot not found.', 404);
-
-      const permissions = {
-        canEdit: request.user.id === bot.owner.id || (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId))) || bot.extra_owners.includes(request.user.id),
-        canEditExtraOwners: request.user.id === bot.owner.id || config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId))
-      };
-
-      if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
-
-      if (newSupportServerId) {
-        if (!permissions.canEditExtraOwners) return response.sendError('You are not allowed to edit support server of this bot.', 403);
-
-        const botWithExactSupportServerId = await Bot.findOne({ support_server_id: newSupportServerId });
-        if (botWithExactSupportServerId && botWithExactSupportServerId.id != id) return response.sendError(`${newSupportServerId} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
-
-        const server = await Server.findOne({ id: newSupportServerId });
-        if (!server) return response.sendError('Support server should be listed on discord.place.', 400);
-
-        const guild = client.guilds.cache.get(newSupportServerId);
-        if (guild.ownerId !== request.user.id) return response.sendError(`You are not the owner of ${newSupportServerId}.`, 400);
-
-        bot.support_server_id = newSupportServerId;
-      }
-
-      if (newShortDescription) bot.short_description = newShortDescription;
-      if (newDescription) bot.description = newDescription;
-      if (newInviteUrl) bot.invite_url = newInviteUrl;
-      if (newCategories) bot.categories = newCategories;
-      if (newWebhook.url === null && newWebhook.token === null) bot.webhook = { url: null, token: null };
-      else {
-        if (!newWebhook.url && newWebhook.token) return response.sendError('If you provide a Webhook Token, you should also provide a Webhook URL.', 400);
-        
-        bot.webhook = {
-          url: newWebhook.url || null,
-          token: newWebhook.token || null
-        };
-      }
-
-      if (newExtraOwners) {
-        if (!permissions.canEditExtraOwners) return response.sendError('You are not allowed to edit extra owners of this bot.', 403);
-
-        const usersToFetch = newExtraOwners.filter(userId => !bot.extra_owners.includes(userId));
-        for (const userId of usersToFetch) {
-          if (bot.extra_owners.includes(userId)) return response.sendError(`Extra owner with ID ${userId} is already added.`, 400);
-          if (userId === bot.owner.id) return response.sendError(`Extra owner with ID ${userId} is already the owner.`, 400);
-          if (userId === bot.id) return response.sendError(`Extra owner with ID ${userId} is the bot itself.`, 400);
-          if (request.user.id === userId) return response.sendError('You can\'t add yourself as an extra owner.', 400);
-
-          const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
-          if (!user) return response.sendError(`Extra owner with ID ${userId} not found.`, 404);
-
-          if (user.bot) return response.sendError(`Extra owner with ID ${userId} is a bot.`, 400);
-        }
-
-        bot.extra_owners = newExtraOwners;
-      }
-
-      const validationError = getValidationError(bot);
-      if (validationError) return response.sendError(validationError, 400);
-
-      await bot.save();
-
-      return response.json(await bot.toPubliclySafe());
-    }
-  ]*/
 };

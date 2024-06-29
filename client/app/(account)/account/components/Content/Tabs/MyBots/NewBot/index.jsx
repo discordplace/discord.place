@@ -5,7 +5,6 @@ import { MdChevronLeft } from 'react-icons/md';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
-import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import cn from '@/lib/cn';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import createBot from '@/lib/request/bots/createBot';
@@ -14,15 +13,10 @@ import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
 import { TbLoader } from 'react-icons/tb';
 import Markdown from '@/app/components/Markdown';
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import Link from 'next/link';
-import Tooltip from '@/app/components/Tooltip';
-import CopyButton from '@/app/components/CopyButton';
 import useAccountStore from '@/stores/account';
 import { useLocalStorage } from 'react-use';
 
 export default function NewBot() {
-  const data = useAccountStore(state => state.data);
   const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
 
   const descriptionRef = useRef(null);
@@ -35,26 +29,19 @@ export default function NewBot() {
   const [botDescription, setBotDescription] = useState('');
   const [botInviteUrl, setBotInviteUrl] = useState('');
   const [botCategories, setBotCategories] = useState([]);
-  const [botSupportServerId, setBotSupportServerId] = useState('');
-  const [botWebhookUrl, setBotWebhookUrl] = useState('');
-  const [botWebhookToken, setBotWebhookToken] = useState('');
-  const [webhookTokenBlurred, setWebhookTokenBlurred] = useState(true);
 
   const [localData, setLocalData] = useLocalStorage('bot-stored-data', {
     botId: '',
     botShortDescription: '',
     botDescription: '',
     botInviteUrl: '',
-    botCategories: [],
-    botSupportServerId: '',
-    botWebhookUrl: '',
-    botWebhookToken: ''
+    botCategories: []
   });
 
   useEffect(() => {
 
     if (localData) {
-      if (localData.botId === '' && localData.botShortDescription === '' && localData.botDescription === '' && localData.botInviteUrl === '' && localData.botCategories.length === 0 && localData.botSupportServerId === '' && localData.botWebhookUrl === '' && localData.botWebhookToken === '') return;
+      if (localData.botId === '' && localData.botShortDescription === '' && localData.botDescription === '' && localData.botInviteUrl === '' && localData.botCategories.length === 0) return;
 
       setBotId(localData.botId);
       setBotShortDescription(localData.botShortDescription);
@@ -62,9 +49,6 @@ export default function NewBot() {
       descriptionRef.current.innerText = localData.botDescription;
       setBotInviteUrl(localData.botInviteUrl);
       setBotCategories(localData.botCategories);
-      setBotSupportServerId(localData.botSupportServerId);
-      setBotWebhookUrl(localData.botWebhookUrl);
-      setBotWebhookToken(localData.botWebhookToken);
 
       toast.info('Previously submitted application restored.');
     }
@@ -73,21 +57,18 @@ export default function NewBot() {
   }, []);
 
   useEffect(() => {
-    if (botId === '' && botShortDescription === '' && botDescription === '' && botInviteUrl === '' && botCategories.length === 0 && botSupportServerId === '' && botWebhookUrl === '' && botWebhookToken === '') return;
+    if (botId === '' && botShortDescription === '' && botDescription === '' && botInviteUrl === '' && botCategories.length === 0) return;
 
     setLocalData({
       botId,
       botShortDescription,
       botDescription,
       botInviteUrl,
-      botCategories,
-      botSupportServerId,
-      botWebhookUrl,
-      botWebhookToken
+      botCategories
     });
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [botId, botShortDescription, botDescription, botInviteUrl, botCategories, botSupportServerId, botWebhookUrl, botWebhookToken]);
+  }, [botId, botShortDescription, botDescription, botInviteUrl, botCategories]);
 
   useEffect(() => {
     if (markdownPreviewing === false) descriptionRef.current.innerText = botDescription;
@@ -98,8 +79,6 @@ export default function NewBot() {
   const router = useRouter();
 
   function addBot() {
-    if (!botWebhookUrl && botWebhookToken) return toast.error('If you set Webhook Token, you must set Webhook URL too.');
-
     setLoading(true);
 
     const botData = {
@@ -108,11 +87,6 @@ export default function NewBot() {
       invite_url: botInviteUrl,
       categories: botCategories
     };
-
-    if (botSupportServerId) botData.support_server_id = botSupportServerId;
-    if (botWebhookUrl || botWebhookToken) botData.webhook = {};
-    if (botWebhookUrl) botData.webhook.url = botWebhookUrl;
-    if (botWebhookToken) botData.webhook.token = botWebhookToken;
 
     toast.promise(createBot(botId, botData), {
       loading: `Adding ${botId}..`,
@@ -126,7 +100,6 @@ export default function NewBot() {
           setBotShortDescription('');
           setBotDescription('');
           setBotCategories([]);
-          setBotSupportServerId('');
         }, 3000);
         setRenderConfetti(true);
 
@@ -153,7 +126,6 @@ export default function NewBot() {
             setBotShortDescription('');
             setBotDescription('');
             setBotCategories([]);
-            setBotSupportServerId('');
             setCurrentlyAddingBot(false);
           }}>
             <MdChevronLeft size={24}/>
@@ -291,102 +263,6 @@ export default function NewBot() {
                 ))}
             </div>
 
-            <h2 className="flex items-center mt-8 text-lg font-semibold gap-x-2">
-              Support Server <span className="text-xs font-normal select-none text-tertiary">(optional)</span>
-            </h2>
-
-            <p className="text-sm sm:text-base text-tertiary">
-              You can select a server that users can join to get support for your bot. This is optional.<br/>
-              You can only select servers that you listed on discord.place.
-            </p>
-
-            {data.servers.filter(server => server.is_created).length <= 0 ? (
-              <p className="mt-4 text-sm text-tertiary">
-                You don{'\''}t have any servers listed on discord.place.
-              </p>
-            ) : (
-              <div className="grid grid-cols-1 gap-4 mt-4 mobile:grid-cols-2 sm:grid-cols-4 lg:grid-cols-5">
-                {data.servers.filter(server => server.is_created).map(server => (
-                  <button
-                    className="flex flex-col bg-secondary hover:bg-quaternary p-2 rounded-xl w-full h-[180px] items-center cursor-pointer overflow-clip relative"
-                    key={server.id}
-                    onClick={() => setBotSupportServerId(oldServerId => oldServerId === server.id ? '' : server.id)}
-                  >
-                    <div className="relative">
-                      <ServerIcon width={128} height={128} icon_url={server.icon_url} name={server.name}/>
-                      <div className={cn(
-                        'absolute w-full h-full text-3xl text-primary transition-opacity rounded-lg flex items-center justify-center bg-secondary/60 z-[0] top-0 left-0',
-                        botSupportServerId !== server.id && 'opacity-0'
-                      )}>
-                        <IoMdCheckmarkCircle/>
-                      </div>
-                    </div>
-
-                    <h1 className="w-full max-w-full mt-2 text-base font-medium text-center truncate">{server.name}</h1>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <h2 className="mt-8 text-lg font-semibold">
-              Webhook <span className="text-xs font-normal select-none text-tertiary">(optional)</span>
-            </h2>
-
-            <p className="text-sm text-tertiary">
-              You can use webhooks to get notified when someone votes for your bot. Documentation can be found <Link href={config.docsUrl} target="_blank" rel="noopener noreferrer" className="text-primary">here</Link>.
-            </p>
-
-            <h3 className="mt-4 text-sm font-medium text-secondary">
-              Webhook URL
-            </h3>
-
-            <input
-              className="block w-full p-2 mt-2 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
-              value={botWebhookUrl}
-              onChange={event => setBotWebhookUrl(event.target.value)}
-            />
-
-            <h3 className="mt-4 text-sm font-medium text-secondary">
-              Webhook Token
-            </h3>
-
-            <div className='relative flex items-center justify-center mt-2'>
-              <input
-                className='block w-full p-2 pr-16 text-sm border-2 rounded-lg outline-none border-primary bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
-                value={botWebhookToken}
-                onChange={event => setBotWebhookToken(event.target.value)}
-                type={webhookTokenBlurred ? 'password' : 'text'}
-              />
-
-              <div className='absolute right-0 flex items-center gap-x-1'>
-                <Tooltip content={webhookTokenBlurred ? 'Click to show Webhook Token' : 'Click to hide Webhook Token'}>
-                  <div className='flex items-center text-sm text-secondary hover:text-tertiary'>
-                    <FaEye 
-                      className={cn(
-                        'cursor-pointer transition-all',
-                        !webhookTokenBlurred && 'opacity-0 scale-0'
-                      )} 
-                      onClick={() => setWebhookTokenBlurred(old => !old)} 
-                    />
-                  
-                    <FaEyeSlash
-                      className={cn(
-                        'cursor-pointer transition-all absolute',
-                        webhookTokenBlurred && 'opacity-0 scale-0'
-                      )}
-                      onClick={() => setWebhookTokenBlurred(old => !old)}
-                    />
-                  </div>
-                </Tooltip>
-            
-                <CopyButton
-                  successText='Copied Webhook Token!'
-                  copyText={botWebhookToken}
-                  className='justify-end'
-                />
-              </div>
-            </div>
-
             <h2 className="mt-8 text-lg font-semibold">
               Content Policy
             </h2>
@@ -424,7 +300,6 @@ export default function NewBot() {
                   setBotShortDescription('');
                   setBotDescription('');
                   setBotCategories([]);
-                  setBotSupportServerId('');
                   setCurrentlyAddingBot(false);
                 }}
                 disabled={loading}

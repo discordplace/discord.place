@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const categoriesValidation = require('@/validations/bots/categories');
 const inviteURLValidation = require('@/validations/bots/inviteUrl');
+const githubRepositoryValidation = require('@/validations/bots/githubRepository');
 const webhookUrlValidation = require('@/validations/bots/webhookUrl');
 const User = require('@/schemas/User');
 const encrypt = require('@/utils/encryption/encrypt');
@@ -65,6 +66,15 @@ const BotSchema = new Schema({
   support_server_id: {
     type: String,
     required: false
+  },
+  github_repository: {
+    type: String,
+    validate: {
+      validator: githubRepositoryValidation,
+      message: ({ reason }) => reason.message
+    },
+    required: false,
+    default: null
   },
   webhook: {
     url: {
@@ -237,6 +247,7 @@ const BotSchema = new Schema({
         servers_updated_at: this.server_count.updatedAt,
         votes: this.votes,
         verified: this.verified,
+        github_repository: this.github_repository,
         created_at: this.createdAt
       };
     },

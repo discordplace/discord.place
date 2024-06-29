@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { FaCompass } from 'react-icons/fa';
+import { FaCompass, FaGithub } from 'react-icons/fa';
+import { TiStarFullOutline } from 'react-icons/ti';
 import Markdown from '@/app/components/Markdown';
 import { RiSlashCommands2, RiUserAddLine } from 'react-icons/ri';
 import Image from 'next/image';
 import Link from 'next/link';
+import cn from '@/lib/cn';
+import { PiGitForkBold } from 'react-icons/pi';
 
 const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -70,6 +73,52 @@ export default function About({ bot }) {
     }
   ];
 
+  if (bot.github_repository?.data) keys.push({
+    key: 'GitHub Repository',
+    label: 'GitHub Repository',
+    icon: <FaGithub />,
+    component: <>
+      <p className='text-tertiary'>
+        This bot is open-source and available on GitHub.
+      </p>
+
+      <Link
+        className='cursor-pointer flex flex-col gap-y-3 max-w-[90%] w-full h-max mt-6 bg-tertiary hover:bg-quaternary rounded-lg border-2 border-primary p-4'
+        href={bot.github_repository.data.html_url}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <span className='px-2 py-0.5 text-xs font-medium dark:bg-white/20 border dark:border-white/40 select-none bg-blasck/20 border-black/40 rounded-full text-primary w-max'>
+          {bot.github_repository.data.language}
+        </span>
+
+        <div className='flex items-center text-secondary'>
+          {bot.github_repository.data.owner.login}/
+
+          <span className='font-semibold text-primary'>
+            {bot.github_repository.data.name}
+          </span>
+        </div>
+
+        <p className='-mt-2 text-xs whitespace-pre-wrap text-tertiary line-clamp-3'>
+          {bot.github_repository.data.description}
+        </p>
+
+        <div className='flex items-center gap-x-2 text-tertiary'>
+          <div className='font-medium text-tertiary text-ms flex gap-x-1.5 items-center'>
+            <TiStarFullOutline />
+            {formatter.format(bot.github_repository.data.stargazers_count)}
+          </div>
+
+          <div className='font-medium text-tertiary text-sm flex gap-x-1.5 items-center'>
+            <PiGitForkBold />
+            {formatter.format(bot.github_repository.data.forks_count)}
+          </div>
+        </div>
+      </Link>
+    </>
+  });
+
   return (
     <div className='w-full lg:w-[70%] flex flex-col'>
       <motion.h2 
@@ -108,7 +157,10 @@ export default function About({ bot }) {
         {keys.map(({ key, label, icon, value, component }, index) => (
           <motion.div 
             key={key} 
-            className='flex items-center h-max gap-x-4'
+            className={cn(
+              'flex items-start h-max gap-x-4',
+              index === keys.length - 1 && index % 2 === 0 && 'sm:col-span-2'
+            )}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.20 + (.05 * index) }}
@@ -117,7 +169,7 @@ export default function About({ bot }) {
               {icon}
             </div>
 
-            <div className='flex flex-col'>
+            <div className='flex flex-col w-full'>
               <h3 className='font-semibold'>
                 {label}
               </h3>
