@@ -13,7 +13,7 @@ export default function EssentialInformation({ shortDescription, setShortDescrip
         Essential Information
       </h3>
 
-      <p className='text-tertiary'>
+      <p className='text-sm sm:text-base text-tertiary'>
         These are the most important settings for bot. Be sure to fill them out correctly.
       </p>
 
@@ -30,24 +30,25 @@ export default function EssentialInformation({ shortDescription, setShortDescrip
           label={
             <div className='flex items-center gap-x-2 w-max'>
               <span>Long Description</span>
-              
-              <button 
-                className='flex items-center gap-x-1.5 py-0.5 px-2 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70' 
-                onClick={() => setMarkdownPreviewing(!markdownPreviewing)}
-              >
-                {markdownPreviewing ? (
-                  <>
-                    <RiEyeOffFill />
-                      Back to Editing
-                  </>
-                ) : (
-                  <>
-                    <RiEyeFill />
-                      Show Markdown Preview
-                  </>
-                )}
-              </button>
             </div>
+          }
+          customLabelPeer={
+            <button 
+              className='flex items-center gap-x-1.5 py-0.5 px-2 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70' 
+              onClick={() => setMarkdownPreviewing(!markdownPreviewing)}
+            >
+              {markdownPreviewing ? (
+                <>
+                  <RiEyeOffFill />
+                  <span className='hidden sm:block'>Back to Editing</span>
+                </>
+              ) : (
+                <>
+                  <RiEyeFill />
+                  <span className='hidden sm:block'>Show Markdown Preview</span>
+                </>
+              )}
+            </button>
           }
           description='A longer description of your bot. This will be shown on your bot page. Markdown is supported.'
           placeholder='A bot that does cool things and more.'

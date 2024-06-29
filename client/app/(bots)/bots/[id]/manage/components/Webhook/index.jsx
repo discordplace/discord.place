@@ -69,7 +69,7 @@ export default function Other({ botId, webhookURL: currentWebhookURL, webhookTok
   
   return (
     <div className='flex flex-col w-full gap-y-4'>
-      <div className='flex items-center justify-between w-full'>
+      <div className='flex flex-col items-center justify-between w-full sm:flex-row'>
         <div className='flex flex-col gap-y-4'>
           <h3 className='flex items-center text-xl font-semibold gap-x-4'>
             <HiBell size={24} className='text-purple-500' />
@@ -93,9 +93,9 @@ export default function Other({ botId, webhookURL: currentWebhookURL, webhookTok
           </p>
         </div>
 
-        <div className='flex justify-end flex-1 w-full gap-x-2'>
+        <div className='flex justify-end flex-1 w-full mt-4 sm:mt-0 gap-x-2'>
           <button
-            className='px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold bg-black/30 hover:bg-black/40 dark:hover:bg-white/40 dark:bg-white/30 rounded-xl'
+            className='px-4 w-full justify-center sm:w-max flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold bg-black/30 hover:bg-black/40 dark:hover:bg-white/40 dark:bg-white/30 rounded-xl'
             disabled={!changesMade || savingChanges}
             onClick={saveChanges}
           >
@@ -105,7 +105,7 @@ export default function Other({ botId, webhookURL: currentWebhookURL, webhookTok
         </div>
       </div>
 
-      <div className='flex gap-8 mt-4'>
+      <div className='flex flex-col gap-8 mt-4 sm:flex-row'>
         <Input
           label='URL'
           description='Enter the URL of your webhook.'

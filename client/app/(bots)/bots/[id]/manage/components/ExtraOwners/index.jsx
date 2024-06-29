@@ -81,13 +81,13 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
 
   return (
     <div className='flex flex-col w-full gap-y-4'>
-      <h3 className='flex items-center text-xl font-semibold gap-x-4'>
+      <h3 className='flex flex-wrap items-center gap-4 text-xl font-semibold'>
         <ImHammer2 size={24} className='text-purple-500' />
         Extra Owners
 
         {canEditExtraOwners && (
           <button
-            className='-ml-2 text-xs bg-purple-500 hover:bg-purple-600 px-2 py-0.5 rounded-full'
+            className='text-white -ml-2 text-xs bg-purple-500 hover:bg-purple-600 px-2 py-0.5 rounded-full'
             onClick={() => 
               openModal('add-extra-owner', {
                 title: 'Add Extra Owner',
@@ -130,6 +130,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
         <p className='text-tertiary'>
           You can add users as extra owners of your bot. Extra owners can manage your bot just like you do.
           <br />
+          <br className='block sm:hidden' />
           <span className='text-secondary'>Note:</span> Extra owners can see and manage all the settings of your bot including API key, so be careful who you add.
         </p>
       )}

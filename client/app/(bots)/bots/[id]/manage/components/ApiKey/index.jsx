@@ -98,9 +98,9 @@ export default function ApiKey({ botId, apiKey }) {
       ) : (
         <>
           <div className='flex flex-col gap-y-2'>
-            <div className='flex items-center gap-x-2'>
+            <div className='flex flex-col items-center gap-2 sm:flex-row'>
               <button
-                className='text-sm w-max px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold bg-gradient-to-r hover:opacity-80 from-red-600 via-red-600 border border-red-600 to-red-900 rounded-xl'
+                className='text-sm w-full sm:w-max px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold bg-gradient-to-r hover:opacity-80 from-red-600 via-red-600 border border-red-600 to-red-900 rounded-xl'
                 onClick={() => {
                   openModal('delete-api-key', {
                     title: 'Delete API Key',
@@ -132,7 +132,7 @@ export default function ApiKey({ botId, apiKey }) {
               </button>
 
               <CopyButton
-                className='text-sm w-max outline-none px-4 flex disabled:opacity-70 disabled:pointer-events-none items-center gap-x-2 py-1.5 font-semibold bg-gradient-to-r bg-quaternary hover:bg-tertiary hover:text-primary border border-primary rounded-xl'
+                className='text-sm w-full sm:w-max outline-none px-4 flex disabled:opacity-70 disabled:pointer-events-none items-center gap-x-2 py-1.5 font-semibold bg-gradient-to-r bg-quaternary hover:bg-tertiary hover:text-primary border border-primary rounded-xl'
                 successText='API Key copied to clipboard!'
                 copyText={currentApiKey}
               >
@@ -143,10 +143,10 @@ export default function ApiKey({ botId, apiKey }) {
                 href={config.docsUrl}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='flex items-center gap-x-1.5 px-4 py-1.5 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm'
+                className='flex w-full sm:w-max items-center gap-x-1.5 px-4 py-1.5 rounded-lg font-semibold text-white bg-black h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm'
               >
                 API Documentation
-                <HiExternalLink />
+                <HiExternalLink className='ml-auto' />
               </Link>
             </div>
           </div>

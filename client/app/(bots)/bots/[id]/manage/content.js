@@ -119,7 +119,7 @@ export default function Content({ bot }) {
   return (
     <div className="flex items-center justify-center w-full h-full px-4 mb-24 sm:px-12">
       <div className="w-full h-full max-w-[1000px] flex flex-col items-start gap-y-8 mt-48">
-        <div className="flex items-center justify-between w-full">
+        <div className="flex flex-col w-full sm:items-center sm:flex-row sm:justify-between">
           <div className="flex flex-col gap-y-1">
             <h2 className="text-3xl font-bold">Manage Bot</h2>
             <p className="text-tertiary">Manage your bot and its settings.</p>
@@ -141,9 +141,9 @@ export default function Content({ bot }) {
             </div>
           </div>
 
-          <div className='flex justify-end flex-1 w-full gap-x-2'>
+          <div className='flex justify-end flex-1 w-full mt-8 sm:mt-0 gap-x-2'>
             <button
-              className='disabled:opacity-70 border border-primary hover:border-[rgba(var(--bg-tertiary))] disabled:pointer-events-none px-4 flex items-center gap-x-1.5 py-1.5 font-semibold hover:bg-tertiary hover:text-primary text-tertiary rounded-xl'
+              className='w-full text-xs sm:text-sm px-2 sm:w-max justify-center disabled:opacity-70 border border-primary hover:border-[rgba(var(--bg-tertiary))] disabled:pointer-events-none sm:px-4 flex items-center gap-x-1.5 py-1.5 font-semibold hover:bg-tertiary hover:text-primary text-tertiary rounded-xl'
               onClick={resetChanges}
               disabled={!changesMade || savingChanges}
             >
@@ -151,7 +151,7 @@ export default function Content({ bot }) {
             </button>
 
             <button
-              className='px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold hover:bg-purple-600 bg-purple-500 rounded-xl'
+              className='w-full text-xs sm:text-sm sm:w-max justify-center px-2 sm:px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold hover:bg-purple-600 bg-purple-500 rounded-xl'
               disabled={!changesMade || savingChanges}
               onClick={saveChanges}
             >

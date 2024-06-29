@@ -1,13 +1,17 @@
 'use client';
 
-export default function Input({ label, description, type, CustomInput, ...props }) {
+export default function Input({ label, customLabelPeer, description, type, CustomInput, ...props }) {
   return (
     <div className='flex flex-col flex-1 gap-y-2'>
-      <label
-        className='font-medium text-secondary'
-      >
-        {label}
-      </label>
+      <div className="flex items-center w-full h-full gap-x-2">
+        <label
+          className='font-medium text-secondary'
+        >
+          {label}
+        </label>
+
+        {customLabelPeer}
+      </div>
 
       <p className='text-sm text-tertiary'>
         {description}

@@ -33,7 +33,7 @@ export default function Other({ categories, setCategories, canEditSupportServer,
         Other
       </h3>
 
-      <p className='text-tertiary'>
+      <p className='text-sm sm:text-base text-tertiary'>
         Settings that you should not worry about too much.
       </p>
 
