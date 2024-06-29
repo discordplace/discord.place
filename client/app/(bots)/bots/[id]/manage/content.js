@@ -183,7 +183,7 @@ export default function Content({ bot }) {
           canEditSupportServer={bot.permissions.canEditExtraOwners}
           supportServerId={supportServerId}
           setSupportServerId={setSupportServerId}
-          githubRepository={bot.github_repository}
+          githubRepository={bot.github_repository?.value || null}
         />
         
         <div className='w-full h-[1px] bg-tertiary' />
