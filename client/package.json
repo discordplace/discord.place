@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "node lib/check-changes.js && next build",
+    "build": "node lib/checkChanges.js && next build",
     "start": "next start",
     "lint": "next lint"
   },
