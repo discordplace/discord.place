@@ -9,7 +9,7 @@ async function findRepository(repository, bypassCache) {
   
   try {
     if (!bypassCache) {
-      const foundCache = await GitHubCache.findOne({ 'data.full_name': repository });
+      const foundCache = await GitHubCache.findOne({ 'data.owner.login': username, 'data.name': repositoryName });
       if (foundCache) return foundCache.data;
     }
     
