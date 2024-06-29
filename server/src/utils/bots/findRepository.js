@@ -16,7 +16,19 @@ async function findRepository(repository, bypassCache) {
     const response = await axios.get(`https://api.github.com/repos/${username}/${repositoryName}`);
     if (response.status !== 200) return null;
 
-    new GitHubCache({ data: response.data }).save();
+    new GitHubCache({
+      data: {
+        html_url: response.data.html_url,
+        language: response.data.language,
+        owner: {
+          login: response.data.owner.login
+        },
+        name: response.data.name,
+        description: response.data.description,
+        stargazers_count: response.data.stargazers_count,
+        forks_count: response.data.forks_count
+      }
+    }).save();
 
     return response.data;
   } catch {
