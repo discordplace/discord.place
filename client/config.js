@@ -76,7 +76,8 @@ const config = {
     '404': 'The page you are looking for does not exist.',
     '50001': 'You are not authorized to edit this profile.',
     '50002': 'The user who created the profile does not currently have a premium.',
-    '60001': 'You are not authorized to edit this server.'
+    '60001': 'You are not authorized to edit this server.',
+    '70001': 'You are not authorized to edit this bot.'
   },
   profilesMaxSocialsLength: 8,
   getLoginURL: function (pathname) {
@@ -157,6 +158,7 @@ const config = {
   templateMaxCategoriesLength: 3,
   templateDescriptionMinLength: 32,
   templateDescriptionMaxLength: 256,
+  botMaxExtraOwners: 4,
   botTestGuildId: '1239320384441159751',
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,

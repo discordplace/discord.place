@@ -30,8 +30,8 @@ export default function ModalProvider({ children }) {
               onOpenChange={open => !open && closeModal(id)}
             >
               <Drawer.Portal>
-                <Drawer.Content className='outline-none gap-y-1 p-6 z-[10001] bg-tertiary dark:bg-secondary flex flex-col rounded-t-3xl h-max fixed bottom-0 left-0 right-0'>
-                  <div className='mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-quaternary mb-8' />
+                <Drawer.Content className='outline-none gap-y-1 p-6 z-[10001] bg-quaternary dark:bg-background flex flex-col rounded-t-3xl h-max fixed bottom-0 left-0 right-0'>
+                  <div className='mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-background dark:bg-quaternary mb-8' />
 
                   <div className='flex flex-col gap-y-2'>
                     <h2 className='text-lg font-semibold text-primary'>{data.title}</h2>

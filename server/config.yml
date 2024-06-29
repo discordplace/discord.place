@@ -107,10 +107,12 @@ botShortDescriptionMinLength: 16
 botShortDescriptionMaxLength: 150
 botDescriptionMinLength: 32
 botDescriptionMaxLength: 2048
+botWebhookTokenMaxLength: 256
 templateMaxNameLength: 32
 templateMinDescriptionLength: 32
 templateMaxDescriptionLength: 256
 templateMaxCategoriesLength: 3
+botMaxExtraOwners: 4
 roles:
   moderator: '1206354879321210900'
   premium: '1252335063123628084'
