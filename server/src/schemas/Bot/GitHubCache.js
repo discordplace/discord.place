@@ -7,7 +7,8 @@ const GitHubCacheSchema = new Schema({
     html_url: String,
     language: String,
     owner: {
-      login: String
+      login: String,
+      avatar_url: String
     },
     name: String,
     description: String,
