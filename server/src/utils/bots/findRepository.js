@@ -21,7 +21,8 @@ async function findRepository(repository, bypassCache) {
         html_url: response.data.html_url,
         language: response.data.language,
         owner: {
-          login: response.data.owner.login
+          login: response.data.owner.login,
+          avatar_url: response.data.owner.avatar_url
         },
         name: response.data.name,
         description: response.data.description,

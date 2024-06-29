@@ -93,6 +93,18 @@ export default function About({ bot }) {
         </span>
 
         <div className='flex items-center text-secondary'>
+          {bot.github_repository.data.owner.avatar_url && (
+            <>
+              <Image
+                src={bot.github_repository.data.owner.avatar_url}
+                alt={`${bot.github_repository.data.owner.login}'s avatar`}
+                width={16}
+                height={16}
+                className='mr-2 rounded-full'
+              />
+              {' '}
+            </>
+          )}
           {bot.github_repository.data.owner.login}/
 
           <span className='font-semibold text-primary'>
