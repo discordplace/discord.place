@@ -3,8 +3,16 @@ const Schema = mongoose.Schema;
 
 const GitHubCacheSchema = new Schema({
   data: {
-    type: Object,
-    required: true
+    // We only need these fields from the GitHub API for now
+    html_url: String,
+    language: String,
+    owner: {
+      login: String
+    },
+    name: String,
+    description: String,
+    stargazers_count: Number,
+    forks_count: Number
   }
 }, {
   timestamps: true
