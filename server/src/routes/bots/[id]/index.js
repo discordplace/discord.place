@@ -35,9 +35,14 @@ module.exports = {
         ),
         canEdit: request.user && (
           request.user.id === bot.owner.id ||
-          (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId)))
+          (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId))) ||
+          bot.extra_owners.includes(request.user.id)
         ),
-        canEditAPIKey: request.user && request.user.id === bot.owner.id
+        canEditAPIKey: request.user && request.user.id === bot.owner.id,
+        canEditExtraOwners: request.user && (
+          request.user.id === bot.owner.id ||
+          config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId))
+        )
       };
 
       if (!bot.verified && !permissions.canDelete && !permissions.canEdit) return response.sendError('This bot is not verified yet.', 403);
@@ -272,6 +277,101 @@ module.exports = {
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     bodyParser.json(),
     param('id'),
+    body('short_description')
+      .optional()
+      .isString().withMessage('Short description should be a string.')
+      .trim()
+      .isLength({ min: config.botShortDescriptionMinLength, max: config.botShortDescriptionMaxLength }).withMessage(`Short description must be between ${config.botShortDescriptionMinLength} and ${config.botShortDescriptionMaxLength} characters.`),
+    body('description')
+      .optional()
+      .isString().withMessage('Description should be a string.')
+      .trim()
+      .isLength({ min: config.botDescriptionMinLength, max: config.botDescriptionMaxLength }).withMessage(`Description must be between ${config.botDescriptionMinLength} and ${config.botDescriptionMaxLength} characters.`),
+    body('invite_url')
+      .optional()
+      .isString().withMessage('Invite URL should be a string.')
+      .trim()
+      .isURL().withMessage('Invite URL should be a valid URL.')
+      .custom(inviteUrlValidation),
+    body('categories')
+      .optional()
+      .isArray().withMessage('Categories should be an array.')
+      .custom(categoriesValidation),
+    body('support_server_id')
+      .optional()
+      .isString().withMessage('Support server ID should be a string.')
+      .isLength({ min: 1, max: 19 }).withMessage('Support server ID must be between 1 and 19 characters.'),
+    body('webhook_url')
+      .optional()
+      .isString().withMessage('Webhook URL should be a string.')
+      .trim()
+      .isURL().withMessage('Webhook URL should be a valid URL.'),
+    body('webhook_token')
+      .optional()
+      .isString().withMessage('Webhook Token should be a string.')
+      .isLength({ min: 1, max: config.botWebhookTokenMaxLength }).withMessage(`Webhook Token must be between 1 and ${config.botWebhookTokenMaxLength} characters.`)
+      .trim(),
+    async (request, response) => {
+      const errors = validationResult(request);
+      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
+
+      const { id, short_description, description, invite_url, categories, support_server_id, webhook_url, webhook_token } = matchedData(request);
+
+      const bot = await Bot.findOne({ id });
+      if (!bot) return response.sendError('Bot not found.', 404);
+
+      const user = await client.users.fetch(id).catch(() => null);
+      if (!user) return response.sendError('Bot not found.', 404);
+
+      const permissions = {
+        canEdit: request.user.id === bot.owner.id ||
+          (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId))) ||
+          bot.extra_owners.includes(request.user.id)
+      };
+
+      if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
+      
+      if (short_description) bot.short_description = short_description;
+      if (description) bot.description = description;
+      if (invite_url) bot.invite_url = invite_url;
+      if (categories) bot.categories = categories;
+
+      if (support_server_id == 0) bot.support_server_id = null;
+      else if (support_server_id) {
+        const botWithExactSupportServerId = await Bot.findOne({ support_server_id });
+        if (botWithExactSupportServerId && botWithExactSupportServerId.id != id) return response.sendError(`Support server ${support_server_id} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
+
+        const server = await Server.findOne({ id: support_server_id });
+        if (!server) return response.sendError('Support server should be listed on discord.place.', 400);
+
+        const guild = client.guilds.cache.get(support_server_id);
+        if (guild.ownerId !== request.user.id) return response.sendError(`You are not the owner of ${support_server_id}.`, 400);
+
+        bot.support_server_id = support_server_id;
+      }
+
+      if ((webhook_url && !webhook_token) || (!webhook_url && webhook_token)) return response.sendError('You should provide both Webhook URL and Webhook Token field if you want to update the webhook settings.', 400);
+      if (webhook_url !== undefined && webhook_token !== undefined) {
+        if (webhook_url === 'none' && webhook_token === 'none') bot.webhook = { url: null, token: null };
+        if (webhook_url === 'none' && webhook_token !== 'none') return response.sendError('If you provide a Webhook Token, you should also provide a Webhook URL.', 400);
+
+        else bot.webhook = { url: webhook_url, token: webhook_token };
+      }
+
+      const validationError = getValidationError(bot);
+      if (validationError) return response.sendError(validationError, 400);
+
+      await bot.save();
+
+      return response.json(await bot.toPubliclySafe());
+    }   
+  ]
+  /*
+  patch: [
+    checkAuthentication,
+    useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
+    bodyParser.json(),
+    param('id'),
     body('newShortDescription')
       .isString().withMessage('Short description should be a string.')
       .trim()
@@ -300,11 +400,15 @@ module.exports = {
 
         return webhookValidation(value);
       }),
+    body('newExtraOwners')
+      .optional()
+      .isArray().withMessage('Extra owners must be an array.')
+      .custom(extraOwnersValidation),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, newShortDescription, newDescription, newInviteUrl, newCategories, newSupportServerId, newWebhook } = matchedData(request);
+      const { id, newShortDescription, newDescription, newInviteUrl, newCategories, newSupportServerId, newWebhook, newExtraOwners } = matchedData(request);
 
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
@@ -314,10 +418,16 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      const canEdit = request.user.id === bot.owner.id || (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId)));
-      if (!canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
+      const permissions = {
+        canEdit: request.user.id === bot.owner.id || (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId))) || bot.extra_owners.includes(request.user.id),
+        canEditExtraOwners: request.user.id === bot.owner.id || config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId))
+      };
+
+      if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
 
       if (newSupportServerId) {
+        if (!permissions.canEditExtraOwners) return response.sendError('You are not allowed to edit support server of this bot.', 403);
+
         const botWithExactSupportServerId = await Bot.findOne({ support_server_id: newSupportServerId });
         if (botWithExactSupportServerId && botWithExactSupportServerId.id != id) return response.sendError(`${newSupportServerId} is already used by another bot. (${botWithExactSupportServerId.id})`, 400);
 
@@ -344,6 +454,25 @@ module.exports = {
         };
       }
 
+      if (newExtraOwners) {
+        if (!permissions.canEditExtraOwners) return response.sendError('You are not allowed to edit extra owners of this bot.', 403);
+
+        const usersToFetch = newExtraOwners.filter(userId => !bot.extra_owners.includes(userId));
+        for (const userId of usersToFetch) {
+          if (bot.extra_owners.includes(userId)) return response.sendError(`Extra owner with ID ${userId} is already added.`, 400);
+          if (userId === bot.owner.id) return response.sendError(`Extra owner with ID ${userId} is already the owner.`, 400);
+          if (userId === bot.id) return response.sendError(`Extra owner with ID ${userId} is the bot itself.`, 400);
+          if (request.user.id === userId) return response.sendError('You can\'t add yourself as an extra owner.', 400);
+
+          const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
+          if (!user) return response.sendError(`Extra owner with ID ${userId} not found.`, 404);
+
+          if (user.bot) return response.sendError(`Extra owner with ID ${userId} is a bot.`, 400);
+        }
+
+        bot.extra_owners = newExtraOwners;
+      }
+
       const validationError = getValidationError(bot);
       if (validationError) return response.sendError(validationError, 400);
 
@@ -351,5 +480,5 @@ module.exports = {
 
       return response.json(await bot.toPubliclySafe());
     }
-  ]
+  ]*/
 };

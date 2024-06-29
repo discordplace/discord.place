@@ -20,6 +20,15 @@ const BotSchema = new Schema({
       required: true
     }
   },
+  extra_owners: {
+    type: [
+      {
+        type: String
+      }
+    ],
+    required: false,
+    default: []
+  },
   short_description: {
     type: String,
     required: true,
@@ -68,6 +77,7 @@ const BotSchema = new Schema({
     },
     token: {
       type: String,
+      max: config.botWebhookTokenMaxLength,
       required: false
     }
   },
