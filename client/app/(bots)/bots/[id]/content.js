@@ -46,7 +46,7 @@ export default function Content({ bot }) {
           <div className='absolute w-[calc(100%_-_2.5rem)] -bottom-14 left-10 z-[3]'>
             <MotionImage
               src={bot.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}
-              alt={`${bot.username}'s icon`}
+              alt={`${bot.username}'s avatar`}
               width={150}
               height={150}
               initial={{ opacity: 0, y: 20 }}
