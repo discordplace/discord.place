@@ -19,6 +19,7 @@ import Link from 'next/link';
 import Tooltip from '@/app/components/Tooltip';
 import CopyButton from '@/app/components/CopyButton';
 import useAccountStore from '@/stores/account';
+import { useLocalStorage } from 'react-use';
 
 export default function NewBot() {
   const data = useAccountStore(state => state.data);
@@ -38,6 +39,55 @@ export default function NewBot() {
   const [botWebhookUrl, setBotWebhookUrl] = useState('');
   const [botWebhookToken, setBotWebhookToken] = useState('');
   const [webhookTokenBlurred, setWebhookTokenBlurred] = useState(true);
+
+  const [localData, setLocalData] = useLocalStorage('bot-stored-data', {
+    botId: '',
+    botShortDescription: '',
+    botDescription: '',
+    botInviteUrl: '',
+    botCategories: [],
+    botSupportServerId: '',
+    botWebhookUrl: '',
+    botWebhookToken: ''
+  });
+
+  useEffect(() => {
+
+    if (localData) {
+      if (localData.botId === '' && localData.botShortDescription === '' && localData.botDescription === '' && localData.botInviteUrl === '' && localData.botCategories.length === 0 && localData.botSupportServerId === '' && localData.botWebhookUrl === '' && localData.botWebhookToken === '') return;
+
+      setBotId(localData.botId);
+      setBotShortDescription(localData.botShortDescription);
+      setBotDescription(localData.botDescription);
+      descriptionRef.current.innerText = localData.botDescription;
+      setBotInviteUrl(localData.botInviteUrl);
+      setBotCategories(localData.botCategories);
+      setBotSupportServerId(localData.botSupportServerId);
+      setBotWebhookUrl(localData.botWebhookUrl);
+      setBotWebhookToken(localData.botWebhookToken);
+
+      toast.info('Previously submitted application restored.');
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (botId === '' && botShortDescription === '' && botDescription === '' && botInviteUrl === '' && botCategories.length === 0 && botSupportServerId === '' && botWebhookUrl === '' && botWebhookToken === '') return;
+
+    setLocalData({
+      botId,
+      botShortDescription,
+      botDescription,
+      botInviteUrl,
+      botCategories,
+      botSupportServerId,
+      botWebhookUrl,
+      botWebhookToken
+    });
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [botId, botShortDescription, botDescription, botInviteUrl, botCategories, botSupportServerId, botWebhookUrl, botWebhookToken]);
 
   useEffect(() => {
     if (markdownPreviewing === false) descriptionRef.current.innerText = botDescription;
