@@ -15,6 +15,9 @@ import ExtraOwners from '@/app/(bots)/bots/[id]/manage/components/ExtraOwners';
 import { toast } from 'sonner';
 import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
+import { useRouter } from 'next-nprogress-bar';
 
 export default function Content({ bot }) {
   const [savingChanges, setSavingChanges] = useState(false);
@@ -115,13 +118,67 @@ export default function Content({ bot }) {
   }
 
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
-  
+
+  const { openModal, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    closeModal: state.closeModal
+  })));
+
+  const router = useRouter();
+
+  useEffect(() => {
+    function handleEscape(event) {
+      if (event.key === 'Escape') {
+
+        if (changesMade) {
+          openModal('confirm-exit', {
+            title: 'Discard Changes?',
+            description: 'Are you sure you want to discard your changes?',
+            content: <p className='text-sm text-tertiary'>Your changes will not be saved.</p>,
+            buttons: [
+              {
+                id: 'cancel',
+                label: 'Cancel',
+                variant: 'ghost',
+                actionType: 'close'
+              },
+              {
+                id: 'discard-changes',
+                label: 'Discard Changes',
+                variant: 'solid',
+                action: () => {
+                  resetChanges();
+                  closeModal('confirm-exit');
+                  router.push(`/bots/${bot.id}`, { shallow: true });
+                }
+              }
+            ]
+          });
+        } else {
+          window.location.href = `/bots/${bot.id}`;
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape);
+
+    return () => document.removeEventListener('keydown', handleEscape); 
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [changesMade]);
+
   return (
     <div className="flex items-center justify-center w-full h-full px-4 mb-24 sm:px-12">
       <div className="w-full h-full max-w-[1000px] flex flex-col items-start gap-y-8 mt-48">
         <div className="flex flex-col w-full sm:items-center sm:flex-row sm:justify-between">
           <div className="flex flex-col gap-y-1">
-            <h2 className="text-3xl font-bold">Manage Bot</h2>
+            <h2 className="flex items-center text-3xl font-bold gap-x-2">
+              Manage Bot
+            
+              <div className='p-2 text-xs font-bold uppercase rounded-lg select-none bg-quaternary'>
+                esc to close
+              </div>
+            </h2>
             <p className="text-tertiary">Manage your bot and its settings.</p>
             
             <div className='flex items-center mt-2 font-medium gap-x-2 text-secondary'>
