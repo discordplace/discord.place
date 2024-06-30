@@ -79,7 +79,10 @@ export default function ModalProvider({ children }) {
           >
             <Dialog.Overlay className='backdrop-blur-sm radix-overlay fixed z-[9999] inset-0 bg-white/50 dark:bg-black/50' />
             <Dialog.Content className="radix-dialog-content fixed focus:outline-none z-[9999] flex items-center justify-center w-full h-full">
-              <div className='border border-primary bg-secondary dark:bg-tertiary rounded-2xl flex flex-col gap-y-2 max-h-[85vh] w-[90vw] max-w-[450px]'>
+              <div
+                className='border border-primary bg-secondary dark:bg-tertiary rounded-2xl flex flex-col gap-y-2 max-h-[85vh] w-[90vw]'
+                style={{ maxWidth: data.maxWidth || '450px' }}
+              >
                 <div className='flex items-center justify-between px-6 pt-6'>
                   <Dialog.Title className='flex items-center text-lg font-semibold text-primary gap-x-2'>
                     {data.title}

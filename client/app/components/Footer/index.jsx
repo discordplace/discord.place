@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa';
 import cn from '@/lib/cn';
 import Image from 'next/image';
-import ThemeSwitcher from '@/app/components/Footer/ThemeSwitcher';
+import AppearanceSettings from '@/app/components/Footer/AppearanceSettings';
 import config from '@/config';
 import { FaXTwitter } from 'react-icons/fa6';
 import { usePathname } from 'next/navigation';
@@ -176,7 +176,7 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} discord.place. All rights reserved.
         </p>
 
-        <ThemeSwitcher />
+        <AppearanceSettings />
       </div>
     </section>
   );
