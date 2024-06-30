@@ -364,6 +364,13 @@ const data = ({
       name: 'discord_logo_yellow',
       categories: ['Other'],
       overridedImage: 'https://cdn.discordapp.com/embed/avatars/3.png'
+    },
+    {
+      ...baseEmojiData,
+      id: '12',
+      name: 'discord_logo_red',
+      categories: ['Other'],
+      overridedImage: 'https://cdn.discordapp.com/embed/avatars/4.png'
     }
   ],
   templates: [
