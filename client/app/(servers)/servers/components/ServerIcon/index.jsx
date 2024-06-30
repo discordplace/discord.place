@@ -1,6 +1,5 @@
 'use client';
 
-import Tooltip from '@/app/components/Tooltip';
 import cn from '@/lib/cn';
 import Image from 'next/image';
 
@@ -20,40 +19,38 @@ export default function ServerIcon({ width, height, className, icon_url, name })
   }
   
   return (
-    <Tooltip content={name} sideOffset={10}>
-      <div>
-        {icon_url ? (
-          <Image
-            src={icon_url}
-            alt={`${name} guild icon`}
-            width={width}
-            height={height}
-            className={cn(
-              'rounded-lg',
-              className
-            )}
-            style={{ 
-              width: `${width}px`, 
-              height: `${height}px` 
-            }}
-          />
-        ) : (
-          <div 
-            className={cn(
-              'select-none bg-quaternary rounded-lg flex items-center justify-center',
-              className
-            )} 
-            style={{
-              width: `${width}px`,
-              height: `${height}px`
-            }}
-          >
-            <h2 className='text-3xl font-bold'>
-              {getCompressedName(name)}
-            </h2>
-          </div>
-        )}
-      </div>
-    </Tooltip>
+    <div>
+      {icon_url ? (
+        <Image
+          src={icon_url}
+          alt={`${name} guild icon`}
+          width={width}
+          height={height}
+          className={cn(
+            'rounded-lg',
+            className
+          )}
+          style={{ 
+            width: `${width}px`, 
+            height: `${height}px` 
+          }}
+        />
+      ) : (
+        <div 
+          className={cn(
+            'select-none bg-quaternary rounded-lg flex items-center justify-center',
+            className
+          )} 
+          style={{
+            width: `${width}px`,
+            height: `${height}px`
+          }}
+        >
+          <h2 className='text-3xl font-bold'>
+            {getCompressedName(name)}
+          </h2>
+        </div>
+      )}
+    </div>
   );
 }
