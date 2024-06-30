@@ -17,9 +17,8 @@ export default function AppearanceSettings() {
     closeModal: state.closeModal
   })));
 
-  const theme = useThemeStore(state => state.theme);
   const setTheme = useThemeStore(state => state.setTheme);
-  const [storedTheme, setStoredTheme] = useState(theme);
+  const [storedTheme, setStoredTheme] = useState('');
   
   function openAppearanceSettings() {
     const id = 'theme-switcher';
@@ -128,6 +127,8 @@ export default function AppearanceSettings() {
   }
 
   useEffect(() => {
+    if (storedTheme === '') return;
+    
     openAppearanceSettings();
   
     // eslint-disable-next-line react-hooks/exhaustive-deps
