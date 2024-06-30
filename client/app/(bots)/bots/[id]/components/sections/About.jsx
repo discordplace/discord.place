@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cn from '@/lib/cn';
 import { PiGitForkBold } from 'react-icons/pi';
+import { useMedia } from 'react-use';
 
 const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -73,17 +74,28 @@ export default function About({ bot }) {
     }
   ];
 
+  const isMobile = useMedia('(max-width: 640px)', false);
+
   if (bot.github_repository?.data) keys.push({
     key: 'GitHub Repository',
     label: 'GitHub Repository',
     icon: <FaGithub />,
     component: <>
-      <p className='text-tertiary'>
+      {isMobile ? (
+        <Link
+          className='underline text-tertiary hover:text-primary'
+          href={bot.github_repository.data.html_url}
+        >
+          This bot is open-source and available on GitHub.
+        </Link>
+      ) : (
+        <p className='text-tertiary'>
         This bot is open-source and available on GitHub.
-      </p>
+        </p>
+      )}
 
       <Link
-        className='cursor-pointer flex flex-col gap-y-3 max-w-[90%] w-full h-max mt-6 bg-tertiary hover:bg-quaternary rounded-lg border-2 border-primary p-4'
+        className='hidden sm:flex flex-col p-4 mt-6 border-2 max-w-[90%] rounded-lg cursor-pointer gap-y-3 h-max bg-tertiary hover:bg-quaternary border-primary'
         href={bot.github_repository.data.html_url}
         target='_blank'
         rel='noopener noreferrer'
@@ -107,7 +119,7 @@ export default function About({ bot }) {
           )}
           {bot.github_repository.data.owner.login}/
 
-          <span className='font-semibold text-primary'>
+          <span className='font-semibold truncate text-primary'>
             {bot.github_repository.data.name}
           </span>
         </div>
@@ -170,7 +182,7 @@ export default function About({ bot }) {
           <motion.div 
             key={key} 
             className={cn(
-              'flex items-start h-max gap-x-4',
+              'flex w-full items-start h-max gap-x-4',
               index === keys.length - 1 && index % 2 === 0 && 'sm:col-span-2'
             )}
             initial={{ opacity: 0, y: -10 }}
