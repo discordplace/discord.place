@@ -42,7 +42,7 @@ module.exports = {
         canEditAPIKey: request.user && request.user.id === bot.owner.id,
         canEditExtraOwners: request.user && (
           request.user.id === bot.owner.id ||
-          config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId))
+          (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId)))
         )
       };
 
