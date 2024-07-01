@@ -8,7 +8,7 @@ module.exports = async member => {
   if (member.user.bot) return;
 
   const userData = await User.findOne({ id: member.user.id });
-  if (userData?.subscription?.createdAt && member.guild.id === config.guild.id && !member.roles.cache.has(config.roles.premium)) await member.roles.add(config.roles.premium);
+  if (userData?.subscription?.createdAt && member.guild.id === config.guildId && !member.roles.cache.has(config.roles.premium)) await member.roles.add(config.roles.premium);
 
   const rewards = await Reward.find({ 'guild.id': member.guild.id });
   if (!rewards.length) return;
