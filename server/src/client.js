@@ -140,7 +140,6 @@ module.exports = class Client {
           this.syncLemonSqueezyPlans();
         }, null, true);
         
-        /* Disabled for now
         new CronJob('59 23 * * *', () => {
           const today = new Date();
           const nextDay = new Date(today);
@@ -152,7 +151,6 @@ module.exports = class Client {
             this.saveMonthlyVotes();
           }
         }, null, true);
-        */
 
         new CronJob('0 0 * * *', () => {
           this.checkVoteReminderMetadatas();
