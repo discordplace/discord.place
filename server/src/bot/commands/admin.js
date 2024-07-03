@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const EvaluateResult = require('@/schemas/EvaluateResult');
 const evaluate = require('@/utils/evaluate');
+const { inspect } = require('util');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -18,8 +19,13 @@ module.exports = {
       await interaction.followUp({ content: 'Please send the code you want to evaluate (reply to this message).', ephemeral: true });
 
       const filter = message => message.author.id === interaction.user.id;
-      const collected = await interaction.channel.awaitMessages({ filter, time: 60000, max: 1 }).catch(() => null);
-      if (!collected?.first?.()?.content) return interaction.followUp({ content: 'You didn\'t send any code in time.' });
+      const collected = await interaction.channel.awaitMessages({ filter, time: 60000, max: 1 }).catch(error => {
+        const errorMessage = inspect(error, { depth: Infinity });
+        logger.error('Error while waiting for the code to evaluate:', error);
+
+        interaction.followUp({ content: `An error occurred while waiting for the code to evaluate: \`\`\`js\n${errorMessage.slice(0, 1900)}\n\`\`\`` });
+      });
+      if (!collected?.first?.()?.content) return;
 
       const code = collected.first().content;
       const { result, hasError, id } = await evaluate(code);
