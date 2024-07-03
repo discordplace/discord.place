@@ -16,6 +16,8 @@ module.exports = class Commands {
         files.forEach(file => readRecursive(`${folderOrFile}/${file}`, collection));
       } else {
         const command = require(`../commands/${folderOrFile}`);
+        command.folderName = folderOrFile.split('/').slice(0, -1).join('/');
+
         collection.set(command.data.name, command);
       }
     }
@@ -31,10 +33,10 @@ module.exports = class Commands {
     return new Promise(async (resolve, reject) => {
       try {
         // Global commands
-        await this.pushToDiscord(this.commands.filter(command => !config.commandsExcludeToGlobal.includes(command.data.name)).map(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON() : command.data), Discord.Routes.applicationCommands(client.user.id));
+        await this.pushToDiscord(this.commands.filter(command => command.folderName !== 'admin').map(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON() : command.data), Discord.Routes.applicationCommands(client.user.id));
 
         // Admin commands
-        await this.pushToDiscord(this.commands.filter(command => config.commandsExcludeToGlobal.includes(command.data.name)).map(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON() : command.data), Discord.Routes.applicationGuildCommands(client.user.id, config.guildId));
+        await this.pushToDiscord(this.commands.filter(command => command.folderName === 'admin').map(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON() : command.data), Discord.Routes.applicationGuildCommands(client.user.id, config.guildId));
 
         logger.info('Successfully reloaded application (/) commands.');
         resolve();

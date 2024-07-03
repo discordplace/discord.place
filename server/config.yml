@@ -24,8 +24,6 @@ port:
   backend: 3001
 guildId: '1200254872059121764'
 guildInviteUrl: 'discord.gg/dotplace'
-commandsExcludeToGlobal:
-  - 'admin'
 permissions:
   canEditProfiles:
     - '957840712404193290'
