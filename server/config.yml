@@ -92,6 +92,8 @@ permissions:
     - '957840712404193290'
   canExecuteEval:
     - '957840712404193290'
+  canExecuteFetch:
+    - '957840712404193290'
   canVerifyProfilesRoles:
     - '1206354879321210900'
 profilesMaxSocialsLength: 8
