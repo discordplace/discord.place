@@ -172,18 +172,20 @@ export default function Content({ server }) {
               <Select
                 mobileOverride={true}
                 triggerClassName='w-full py-2.5'
-                placeholder='Select'
+                placeholder={newCategory}
                 options={
-                  config.templateCategories.map(category => ({
-                    label: <div className='flex items-center gap-x-2'>
-                      <span className='text-tertiary'>
-                        {config.templateCategoriesIcons[category]}
-                      </span>
+                  config.serverCategories
+                    .filter(category => category !== 'All')
+                    .map(category => ({
+                      label: <div className='flex items-center gap-x-2'>
+                        <span className='text-tertiary'>
+                          {config.serverCategoriesIcons[category]}
+                        </span>
 
-                      {category}
-                    </div>,
-                    value: category
-                  }))
+                        {category}
+                      </div>,
+                      value: category
+                    }))
                 }
                 value={newCategory}
                 onChange={setNewCategory}
