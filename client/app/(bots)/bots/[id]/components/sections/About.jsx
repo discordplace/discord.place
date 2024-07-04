@@ -100,9 +100,11 @@ export default function About({ bot }) {
         target='_blank'
         rel='noopener noreferrer'
       >
-        <span className='px-2 py-0.5 text-xs font-medium dark:bg-white/20 border dark:border-white/40 select-none bg-blasck/20 border-black/40 rounded-full text-primary w-max'>
-          {bot.github_repository.data.language}
-        </span>
+        {bot.github_repository.data.language && (
+          <span className='px-2 py-0.5 text-xs font-medium dark:bg-white/20 border dark:border-white/40 select-none bg-blasck/20 border-black/40 rounded-full text-primary w-max'>
+            {bot.github_repository.data.language}
+          </span>
+        )}
 
         <div className='flex items-center text-secondary'>
           {bot.github_repository.data.owner.avatar_url && (
