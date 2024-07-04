@@ -6,6 +6,7 @@ const Discord = require('discord.js');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
 const Reward = require('@/schemas/Server/Vote/Reward');
+const axios = require('axios');
 
 async function incrementVote(guildId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -142,6 +143,13 @@ async function incrementVote(guildId, userId) {
 
       break;
     }
+  }
+
+  if (server.webhook_url) {
+    const headers = {};
+    if (server.webhook_token) headers['Authorization'] = server.webhook_token;
+
+    await axios.post(server.webhook_url, { server: guild.id, user: user.id }, { headers }).catch(() => null);
   }
 
   return true;

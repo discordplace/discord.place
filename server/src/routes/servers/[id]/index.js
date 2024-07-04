@@ -116,7 +116,9 @@ module.exports = {
             unlocked: request.user && (server.voters.find(voter => voter.user.id === request.user.id)?.vote || 0) >= reward.required_votes
           };
         }),
-        monthly_votes: monthlyVotes
+        monthly_votes: monthlyVotes,
+        webhook_url: permissions.canEdit ? server.webhook_url : null,
+        webhook_token: permissions.canEdit ? server.webhook_token : null
       });
     }
   ],
@@ -257,11 +259,21 @@ module.exports = {
     body('newVoiceActivityEnabled')
       .optional()
       .isBoolean().withMessage('Voice activity enabled must be a boolean.'),
+    body('newWebhookUrl')
+      .optional({ values: 'null' })
+      .isString().withMessage('Webhook URL should be a string.')
+      .trim()
+      .isURL().withMessage('Webhook URL should be a valid URL.'),
+    body('newWebhookToken')
+      .optional({ values: 'null' })
+      .isString().withMessage('Webhook Token should be a string.')
+      .isLength({ min: 1, max: config.serverWebhookTokenMaxLength }).withMessage(`Token must be between 1 and ${config.serverWebhookTokenMaxLength} characters.`)
+      .trim(),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, newDescription, newCategory, newKeywords, newInviteLink, newVoiceActivityEnabled } = matchedData(request);
+      const { id, newDescription, newCategory, newKeywords, newInviteLink, newWebhookUrl, newWebhookToken, newVoiceActivityEnabled } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);
@@ -291,6 +303,16 @@ module.exports = {
       if (newDescription) server.description = newDescription;
       if (newCategory) server.category = newCategory;
       if (newKeywords) server.keywords = newKeywords;
+
+      if (!newWebhookUrl && newWebhookToken) return response.sendError('You must provide a webhook URL if you provide a webhook token.', 400);
+      if (!newWebhookUrl && server.webhook_url) {
+        server.webhook_url = null;
+        server.webhook_token = null;
+      } else {
+        server.webhook_url = newWebhookUrl;
+        server.webhook_token = newWebhookToken;
+      }
+
       if (typeof newVoiceActivityEnabled === 'boolean') {
         server.voice_activity_enabled = newVoiceActivityEnabled;
         if (!newVoiceActivityEnabled) await VoiceActivity.deleteOne({ 'guild.id': id });

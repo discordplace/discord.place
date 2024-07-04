@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const keywordsValidation = require('@/validations/servers/keywords');
+const webhookUrlValidation = require('@/validations/servers/webhookUrl');
 const Bot = require('@/schemas/Bot');
 
 const ServerSchema = new Schema({
@@ -72,6 +73,19 @@ const ServerSchema = new Schema({
   voice_activity_enabled: {
     type: Boolean,
     default: false
+  },
+  webhook_url: {
+    type: String,
+    required: false,
+    validate: {
+      validator: webhookUrlValidation,
+      message: ({ reason }) => reason.message
+    }
+  },
+  webhook_token: {
+    type: String,
+    max: config.serverWebhookTokenMaxLength,
+    required: false
   }
 }, {
   timestamps: true,

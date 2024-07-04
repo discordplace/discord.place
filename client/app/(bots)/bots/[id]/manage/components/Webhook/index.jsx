@@ -81,7 +81,7 @@ export default function Other({ botId, webhookURL: currentWebhookURL, webhookTok
           </h3>
 
           <p className='text-tertiary'>
-              Get notified when someone votes for your bot. Documentation can be found{' '}
+            Get notified when someone votes for your bot. Documentation can be found{' '}
             <Link
               href={config.docsUrl}
               target="_blank"

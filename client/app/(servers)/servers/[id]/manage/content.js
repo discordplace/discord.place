@@ -25,6 +25,8 @@ export default function Content({ server }) {
   const [newCategory, setNewCategory] = useState(currentServer.category);
   const [newKeywords, setNewKeywords] = useState(currentServer.keywords);
   const [newVoiceActivityEnabled, setNewVoiceActivityEnabled] = useState(currentServer.voice_activity_enabled);
+  const [newWebhookUrl, setNewWebhookUrl] = useState(currentServer.webhook_url || null);
+  const [newWebhookToken, setNewWebhookToken] = useState(currentServer.webhook_token || null); 
 
   const [keywordsInputValue, setKeywordsInputValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -37,18 +39,28 @@ export default function Content({ server }) {
       newInviteLink !== (currentServer.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (currentServer.invite_code.type === 'Vanity' ? currentServer.vanity_url : `https://discord.com/invite/${currentServer.invite_code.code}`)) ||
       newCategory !== currentServer.category ||
       newKeywords.join(' ') !== currentServer.keywords.join(' ') ||
+      (newWebhookUrl === '' ? null : newWebhookUrl) !== (currentServer.webhook_url || null) ||
+      (newWebhookToken === '' ? null : newWebhookToken) !== (currentServer.webhook_token || null) ||
       newVoiceActivityEnabled !== currentServer.voice_activity_enabled
     );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newDescription, newInviteLink, newCategory, newKeywords, newVoiceActivityEnabled]);
+  }, [newDescription, newInviteLink, newCategory, newKeywords, newWebhookUrl, newWebhookToken, newVoiceActivityEnabled]);
 
   async function save() {
     if (!anyChangesMade) return toast.error('No changes were made.');
     
     setLoading(true);
 
-    toast.promise(editServer(currentServer.id, { newDescription, newInviteLink, newCategory, newKeywords, newVoiceActivityEnabled }), {
+    toast.promise(editServer(currentServer.id, {
+      newDescription, 
+      newInviteLink, 
+      newCategory, 
+      newKeywords, 
+      newVoiceActivityEnabled,
+      newWebhookUrl: newWebhookUrl === '' ? null : newWebhookUrl,
+      newWebhookToken: newWebhookToken === '' ? null : newWebhookToken
+    }), { 
       loading: 'Saving changes..',
       success: newServer => {
         setLoading(false);
@@ -158,7 +170,7 @@ export default function Content({ server }) {
           onChange={event => setNewInviteLink(event.target.value)}
         />
 
-        <div className='flex flex-col mt-8 sm:flex-row gap-x-4'>
+        <div className='flex flex-col gap-4 mt-8 sm:flex-row'>
           <div className='flex flex-col gap-y-2'>
             <h2 className='text-lg font-semibold'>
               Category
@@ -250,6 +262,63 @@ export default function Content({ server }) {
         )}
 
         <h2 className='mt-8 text-lg font-semibold'>
+          Webhook Settings
+        </h2>
+
+        <p className='text-tertiary'>
+          Get notified when someone votes for your bot. Documentation can be found{' '}
+          
+          <Link
+            href={config.docsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-secondary hover:underline hover:text-primary"
+          >
+            here
+          </Link>.
+        </p>
+
+        <div className='flex flex-col gap-4 mt-4 sm:flex-row'>
+          <div className='flex flex-col w-full gap-y-2'>
+            <h3 className='font-medium text-secondary'>
+              URL
+            </h3>
+
+            <p className='text-sm text-tertiary'>
+              Enter the URL of your webhook.
+            </p>
+
+            <input
+              className='block w-full p-2 mt-1 overflow-y-auto text-sm border-2 border-transparent rounded-lg outline-none placeholder-placeholder bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              placeholder='https://example.com/webhook'
+              autoComplete='off'
+              spellCheck='false'
+              value={newWebhookUrl}
+              onChange={event => setNewWebhookUrl(event.target.value)}
+            />
+          </div>
+
+          <div className='flex flex-col w-full gap-y-2'>
+            <h3 className='font-medium text-secondary'>
+              Token
+            </h3>
+
+            <p className='text-sm text-tertiary'>
+              Enter the token of your webhook.
+            </p>
+
+            <input
+              className='block w-full p-2 mt-1 overflow-y-auto text-sm border-2 border-transparent rounded-lg outline-none placeholder-placeholder bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              placeholder='b180eeb5-b982-4c0b-aac3-5ee2394b3120'
+              autoComplete='off'
+              spellCheck='false'
+              value={newWebhookToken}
+              onChange={event => setNewWebhookToken(event.target.value)}
+            />
+          </div>
+        </div>
+
+        <h2 className='mt-8 text-lg font-semibold'>
           Voice Activity
         </h2>
 
@@ -293,13 +362,16 @@ export default function Content({ server }) {
             {loading && <TbLoader className='animate-spin' />}
             Save
           </button>
-          <button className='flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-secondary disabled:pointer-events-none disabled:opacity-70'
+          <button 
+            className='flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-secondary disabled:pointer-events-none disabled:opacity-70'
             onClick={() => {
               setNewDescription(currentServer.description);
               setNewInviteLink(currentServer.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (currentServer.invite_code.type === 'Vanity' ? currentServer.vanity_url : `https://discord.com/invite/${currentServer.invite_code.code}`));
               setNewCategory(currentServer.category);
               setNewKeywords(currentServer.keywords);
               setNewVoiceActivityEnabled(currentServer.voice_activity_enabled);
+              setNewWebhookUrl(currentServer.webhook_url || '');
+              setNewWebhookToken(currentServer.webhook_token || '');
             }}
             disabled={!anyChangesMade || loading}
           >
