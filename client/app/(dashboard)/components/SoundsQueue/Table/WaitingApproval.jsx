@@ -70,7 +70,7 @@ export default function WaitingApproval({ data }) {
                 It{'\''}s quiet in here...
               </div>
             } 
-            message='There are no templates waiting for approval.'
+            message='There are no sounds waiting for approval.'
           />
         </div>
       ) : (
