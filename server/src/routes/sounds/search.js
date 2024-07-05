@@ -43,7 +43,14 @@ module.exports = {
           { name: { $regex: query, $options: 'i' } }
         ]
       } : baseFilter;
-      const sortQuery = sort === 'Downloads' ? { downloads: -1 } : sort === 'Likes' ? { likesCount: -1 } : sort === 'Newest' ? { createdAt: -1 } : { createdAt: 1 };
+      // based on downloads - likers length? - createdAt - createdAt
+      const sortQuery = sort === 'Downloads' ?
+        { downloads: -1 } :
+        sort === 'Likes' ?
+          { 'likers.length': -1 } :
+          sort === 'Newest' ?
+            { createdAt: -1 } :
+            { createdAt: 1 };
 
       const sounds = await Sound.find(findQuery).sort(sortQuery).skip(skip).limit(limit);
       const total = await Sound.countDocuments(findQuery);
