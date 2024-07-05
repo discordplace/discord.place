@@ -10,7 +10,7 @@ export default function fetchSounds(search, page, limit, category, sort) {
     if (page) url.searchParams.append('page', page);
     if (limit) url.searchParams.append('limit', limit);
     if (category !== 'All') url.searchParams.append('category', category);
-    if (sort !== 'Downloads') url.searchParams.append('sort', sort);
+    if (sort !== 'Newest') url.searchParams.append('sort', sort);
 
     try {
       const response = await axios.get(url, { withCredentials: true });
