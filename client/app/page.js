@@ -12,6 +12,7 @@ import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
 import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
 import TemplateCard from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
+import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
 import { AnimatePresence, motion } from 'framer-motion';
 import SafariDarkNav from '@/public/safari/dark_nav.svg';
 import SafariLightNav from '@/public/safari/light_nav.svg';
@@ -22,7 +23,7 @@ import homePageMockData from '@/lib/homePageMockData';
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Page() {
-  const texts = ['Discord  Profiles', 'Discord  Servers', 'Discord  Bots', 'Discord  Emojis', 'Discord  Templates'];
+  const texts = ['Discord  Profiles', 'Discord  Servers', 'Discord  Bots', 'Discord  Emojis', 'Discord  Templates', 'Discord  Sounds'];
   const theme = useThemeStore(state => state.theme);
 
   const [index, setIndex] = useState(0);
@@ -175,6 +176,24 @@ export default function Page() {
                     <TemplateCard
                       key={template.id}
                       data={template}
+                    />
+                  ))}
+                </motion.div>
+              )}
+
+              {index === 5 && (
+                <motion.div
+                  className='w-full max-w-[1000px] grid grid-cols-1 mobile:grid-cols-3 gap-x-8 gap-y-14 [zoom:0.75]'
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20 }}
+                  key='sounds'
+                >
+                  {homePageMockData?.sounds?.map?.(sound => (
+                    <SoundPreview
+                      key={sound.id}
+                      sound={sound}
                     />
                   ))}
                 </motion.div>

@@ -81,16 +81,17 @@ export default function Hero() {
             <Select
               placeholder='Category'
               options={
-                config.emojiCategories.map(category => ({
-                  label: <div className='flex items-center gap-x-2'>
-                    <span className='text-tertiary'>
-                      {config.emojiCategoriesIcons[category]}
-                    </span>
+                config.emojiCategories
+                  .map(category => ({
+                    label: <div className='flex items-center gap-x-2'>
+                      <span className='text-tertiary'>
+                        {config.emojiCategoriesIcons[category]}
+                      </span>
 
-                    {category}
-                  </div>,
-                  value: category
-                }))
+                      {category}
+                    </div>,
+                    value: category
+                  }))
               }
               value={category}
               onChange={setCategory}

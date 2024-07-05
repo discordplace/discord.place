@@ -11,6 +11,7 @@ import MyServers from '@/app/(account)/account/components/Content/Tabs/MyServers
 import MyBots from '@/app/(account)/account/components/Content/Tabs/MyBots';
 import MyEmojis from '@/app/(account)/account/components/Content/Tabs/MyEmojis';
 import MyTemplates from '@/app/(account)/account/components/Content/Tabs/MyTemplates';
+import MySounds from '@/app/(account)/account/components/Content/Tabs/MySounds';
 import useAccountStore from '@/stores/account';
 import useThemeStore from '@/stores/theme';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -27,6 +28,7 @@ import Link from 'next/link';
 import { useMedia } from 'react-use';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { nanoid } from 'nanoid';
+import { PiWaveformBold } from 'react-icons/pi';
 
 export default function Content() {
   const user = useAuthStore(state => state.user);
@@ -103,6 +105,13 @@ export default function Content() {
           badge_count: data.counts?.templates || 0
         },
         {
+          Icon: PiWaveformBold,
+          name: 'My Sounds',
+          id: 'my-sounds',
+          component: <MySounds />,
+          badge_count: data.counts?.sounds || 0
+        },
+        {
           type: 'divider'
         },
         {
@@ -151,6 +160,9 @@ export default function Content() {
       break;
     case 'my-templates':
       fetchData(['templates']);
+      break;
+    case 'my-sounds':
+      fetchData(['sounds']);
       break;
     case 'active-reminders':
       fetchData(['reminders']);

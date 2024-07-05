@@ -1,14 +1,14 @@
 import { CgProfile } from 'react-icons/cg';
-import { MdEmojiEmotions, MdEvent, MdKeyboardVoice, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
+import { MdDownload, MdEmojiEmotions, MdEvent, MdKeyboardVoice, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
 import { RiCommunityFill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCat, FaCompass, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers } from 'react-icons/fa';
-import { AiFillTool } from 'react-icons/ai';
+import { AiFillSound, AiFillTool } from 'react-icons/ai';
 import { BiSolidCategory, BiSolidHappy, BiSolidMusic } from 'react-icons/bi';
-import { IoMusicalNotesSharp, IoGameController, IoLanguage } from 'react-icons/io5';
+import { IoMusicalNotesSharp, IoGameController, IoLanguage, IoHeart } from 'react-icons/io5';
 import { GiTwoCoins } from 'react-icons/gi';
 import { ImUser } from 'react-icons/im';
 import { HiDesktopComputer, HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import { HiMiniPaintBrush } from 'react-icons/hi2';
+import { HiMiniExclamationCircle, HiMiniPaintBrush } from 'react-icons/hi2';
 import { RiInstagramFill } from 'react-icons/ri';
 import { MdMenuBook } from 'react-icons/md';
 import { TiPlus, TiStar } from 'react-icons/ti';
@@ -17,6 +17,7 @@ import { TbBrush, TbCategoryFilled, TbSquareRoundedChevronUp } from 'react-icons
 import { BsThreeDots } from 'react-icons/bs';
 import { FaRegImage } from 'react-icons/fa6';
 import { IoIosChatboxes } from 'react-icons/io';
+import { PiWaveformBold } from 'react-icons/pi';
 
 const config = {
   supportInviteUrl: 'https://invite.discord.place',
@@ -68,6 +69,11 @@ const config = {
       title: 'Templates',
       href: '/templates',
       icon: HiTemplate
+    },
+    {
+      title: 'Sounds',
+      href: '/sounds',
+      icon: PiWaveformBold
     }
   ],
   errorMessages: {
@@ -144,6 +150,12 @@ const config = {
     'Event',
     'Other'
   ],
+  soundCategories: [
+    'Memes',
+    'Loud',
+    'NSFW',
+    'Other'
+  ],
   emojiMaxCategoriesLength: 4,
   packagesMinEmojisLength: 4,
   packagesMaxEmojisLength: 9,
@@ -162,6 +174,7 @@ const config = {
   botTestGuildId: '1239320384441159751',
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,
+  getSoundURL: id => `https://cdn.discord.place/sounds/${id}.mp3`,
   getEmojiIdFromURL: url => {
     const match = url.match(/emojis\/(?:packages\/(?<packageId>[a-zA-Z0-9-]+)\/)?(?<emojiId>[a-zA-Z0-9-]+)\.(?<type>gif|png)/);
     if (!match) return null;
@@ -225,6 +238,13 @@ const config = {
     'Event': <MdEvent />,
     'Other': <BsThreeDots />
   },
+  soundCategoriesIcons: {
+    'All': <BiSolidCategory />,
+    'Memes': <MdEmojiEmotions />,
+    'Loud': <AiFillSound />,
+    'NSFW': <HiMiniExclamationCircle />,
+    'Other': <BsThreeDots />
+  },
   sortIcons: {
     'Servers': <FaCompass />,
     'Votes': <TbSquareRoundedChevronUp />,
@@ -235,7 +255,9 @@ const config = {
     'Oldest': <HiSortDescending />,
     'Boosts': <TiStar />,
     'MostReviewed': <TiStar />,
-    'Popular': <TiStar />
+    'Popular': <TiStar />,
+    'Downloads': <MdDownload />,
+    'Likes': <IoHeart />
   },  
   customHostnames: ['dsc.wtf', 'dsc.dog', 'dsc.mom'],
   emojisDenyReasons: {
@@ -340,6 +362,44 @@ const config = {
       description: 'Ensure your template is categorized correctly. Misleading categorization can result in rejection.'
     }
   },
+  soundsDenyReasons: {
+    'offensive-or-inappropriate-content': {
+      name: 'Offensive or Inappropriate Content',
+      description: 'Sounds featuring offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Ensure your sound is suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+    },
+    'poor-quality-or-incomplete-sound': {
+      name: 'Poor Quality or Incomplete Sound',
+      description: 'Sounds should be clear, high-quality, and complete. Submissions with poor audio quality, missing key elements, or that are not user-friendly may be rejected.'
+    },
+    'misleading-or-inaccurate-information': {
+      name: 'Misleading or Inaccurate Information',
+      description: 'Sounds with misleading titles may be rejected. Provide clear and accurate details about your sound\'s purpose and content.'
+    },
+    'lacks-clear-focus-or-purpose': {
+      name: 'Lacks Clear Focus or Purpose',
+      description: 'Sounds should have a clear focus or purpose. Submissions that are overly broad or lack a specific theme may not be accepted.'
+    },
+    'advertising-and-self-promotion': {
+      name: 'Advertising and Self-Promotion',
+      description: 'Sounds primarily focused on advertising or self-promotion without providing genuine value to users may not be accepted.'
+    },
+    'proper-categorization': {
+      name: 'Proper Categorization',
+      description: 'Ensure your sound is categorized correctly. Misleading categorization can result in rejection.'
+    },
+    'sound-length': {
+      name: 'Sound Length',
+      description: 'Sounds should be of appropriate length. Extremely short or excessively long sounds may not be accepted.'
+    },
+    'sound-volume': {
+      name: 'Sound Volume',
+      description: 'Sounds should be of appropriate volume. Extremely loud or quiet sounds may not be accepted.'
+    },
+    'sound-licensing': {
+      name: 'Sound Licensing',
+      description: 'Ensure your sound does not violate any copyright or intellectual property rights. Avoid using copyrighted audio, music, or sound effects without proper authorization.'
+    }
+  },
   quarantineRestrictions: {
     'PROFILES_CREATE': {
       available_to: ['USER_ID'],
@@ -392,6 +452,14 @@ const config = {
     'TEMPLATES_USE': {
       available_to: ['USER_ID', 'GUILD_ID'],
       description: 'Using templates.'
+    },
+    'SOUNDS_CREATE': {
+      available_to: ['USER_ID'],
+      description: 'Listing sounds.'
+    },
+    'SOUNDS_LIKE': {
+      available_to: ['USER_ID'],
+      description: 'Liking sounds.'
     }
   }
 };

@@ -27,6 +27,7 @@ import { HiTemplate } from 'react-icons/hi';
 import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
 import { MdSync } from 'react-icons/md';
 import { CgBlock } from 'react-icons/cg';
+import { PiWaveformBold } from 'react-icons/pi';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -35,6 +36,7 @@ export default function Sidebar() {
   const unapprovedEmojis = data?.queue?.emojis?.filter(emoji => !emoji.approved).length;
   const unapprovedBots = data?.queue?.bots?.filter(bot => !bot.verified).length;
   const unapprovedTemplates = data?.queue?.templates?.filter(template => !template.approved).length;
+  const unapprovedSounds = data?.queue?.sounds?.filter(sound => !sound.approved).length;
   const unapprovedReviews = data?.queue?.reviews?.filter(review => !review.approved).length;
 
   const blocks = [
@@ -74,6 +76,12 @@ export default function Sidebar() {
           name: `Templates Queue${unapprovedTemplates ? ` (${unapprovedTemplates})` : ''}`,
           icon: HiTemplate,
           disabled: data?.permissions?.canApproveTemplates === false
+        },
+        {
+          id: 'soundsQueue',
+          name: `Sounds Queue${unapprovedSounds ? ` (${unapprovedSounds})` : ''}`,
+          icon: PiWaveformBold,
+          disabled: data?.permissions?.canApproveSounds === false
         },
         {
           id: 'reviewsQueue',
