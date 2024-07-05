@@ -126,6 +126,8 @@ export default function NewSound() {
 
                     audio.src = reader.result;
                   };
+
+                  reader.readAsDataURL(file);
                 }
               }}
             >
