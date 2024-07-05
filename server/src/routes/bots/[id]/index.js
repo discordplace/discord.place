@@ -286,16 +286,6 @@ module.exports = {
       .optional()
       .isString().withMessage('Support server ID should be a string.')
       .isLength({ min: 1, max: 19 }).withMessage('Support server ID must be between 1 and 19 characters.'),
-    body('webhook_url')
-      .optional()
-      .isString().withMessage('Webhook URL should be a string.')
-      .trim()
-      .isURL().withMessage('Webhook URL should be a valid URL.'),
-    body('webhook_token')
-      .optional()
-      .isString().withMessage('Webhook Token should be a string.')
-      .isLength({ min: 1, max: config.botWebhookTokenMaxLength }).withMessage(`Webhook Token must be between 1 and ${config.botWebhookTokenMaxLength} characters.`)
-      .trim(),
     body('github_repository')
       .optional()
       .isString().withMessage('GitHub Repository should be a string.')
@@ -304,7 +294,7 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, short_description, description, invite_url, categories, support_server_id, webhook_url, webhook_token, github_repository } = matchedData(request);
+      const { id, short_description, description, invite_url, categories, support_server_id, github_repository } = matchedData(request);
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
@@ -337,14 +327,6 @@ module.exports = {
         if (guild.ownerId !== request.user.id) return response.sendError(`You are not the owner of ${support_server_id}.`, 400);
 
         bot.support_server_id = support_server_id;
-      }
-
-      if ((webhook_url && !webhook_token) || (!webhook_url && webhook_token)) return response.sendError('You should provide both Webhook URL and Webhook Token field if you want to update the webhook settings.', 400);
-      if (webhook_url !== undefined && webhook_token !== undefined) {
-        if (webhook_url === 'none' && webhook_token === 'none') bot.webhook = { url: null, token: null };
-        if (webhook_url === 'none' && webhook_token !== 'none') return response.sendError('If you provide a Webhook Token, you should also provide a Webhook URL.', 400);
-
-        else bot.webhook = { url: webhook_url, token: webhook_token };
       }
 
       if (!github_repository) bot.github_repository = null;

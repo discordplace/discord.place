@@ -74,18 +74,20 @@ const ServerSchema = new Schema({
     type: Boolean,
     default: false
   },
-  webhook_url: {
-    type: String,
-    required: false,
-    validate: {
-      validator: webhookUrlValidation,
-      message: ({ reason }) => reason.message
+  webhook: {
+    url: {
+      type: String,
+      required: false,
+      validate: {
+        validator: webhookUrlValidation,
+        message: ({ reason }) => reason.message
+      }
+    },
+    token: {
+      type: String,
+      max: config.serverWebhookTokenMaxLength,
+      required: false
     }
-  },
-  webhook_token: {
-    type: String,
-    max: config.serverWebhookTokenMaxLength,
-    required: false
   }
 }, {
   timestamps: true,

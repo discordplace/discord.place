@@ -119,9 +119,10 @@ export default function Content({ bot }) {
 
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
 
-  const { openModal, closeModal } = useModalsStore(useShallow(state => ({
+  const { openModal, closeModal, openedModals } = useModalsStore(useShallow(state => ({
     openModal: state.openModal,
-    closeModal: state.closeModal
+    closeModal: state.closeModal,
+    openedModals: state.openedModals
   })));
 
   const router = useRouter();
@@ -131,6 +132,8 @@ export default function Content({ bot }) {
       if (event.key === 'Escape') {
 
         if (changesMade) {
+          if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
+          
           openModal('confirm-exit', {
             title: 'Discard Changes?',
             description: 'Are you sure you want to discard your changes?',
@@ -165,7 +168,7 @@ export default function Content({ bot }) {
     return () => document.removeEventListener('keydown', handleEscape); 
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changesMade]);
+  }, [changesMade, openedModals]);
 
   return (
     <div className="flex items-center justify-center w-full h-full px-4 mb-24 sm:px-12">

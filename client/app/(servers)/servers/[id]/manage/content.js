@@ -1,428 +1,260 @@
 'use client';
 
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import config from '@/config';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { MdChevronLeft } from 'react-icons/md';
-import { toast } from 'sonner';
 import { TbLoader } from 'react-icons/tb';
+import { MdSave } from 'react-icons/md';
+import { useEffect, useState } from 'react';
+import EssentialInformation from '@/app/(servers)/servers/[id]/manage/components/EssentialInformation';
+import Other from '@/app/(servers)/servers/[id]/manage/components/Other';
+import Webhook from '@/app/(servers)/servers/[id]/manage/components/Webhook';
+import DangerZone from '@/app/(servers)/servers/[id]/manage/components/DangerZone';
+import { isEqual } from 'lodash';
+import { toast } from 'sonner';
 import editServer from '@/lib/request/servers/editServer';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import deleteServer from '@/lib/request/servers/deleteServer';
-import { useRouter } from 'next-nprogress-bar';
-import { FaCheck } from 'react-icons/fa';
 import revalidateServer from '@/lib/revalidate/server';
-import cn from '@/lib/cn';
+import { useRouter } from 'next-nprogress-bar';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import Select from '@/app/components/Select';
 
 export default function Content({ server }) {
-  const [currentServer, setCurrentServer] = useState(server);
-  const [newDescription, setNewDescription] = useState(currentServer.description);
-  const [newInviteLink, setNewInviteLink] = useState(currentServer.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (currentServer.invite_code.type === 'Vanity' ? currentServer.vanity_url : `https://discord.com/invite/${currentServer.invite_code.code}`));
-  const [newCategory, setNewCategory] = useState(currentServer.category);
-  const [newKeywords, setNewKeywords] = useState(currentServer.keywords);
-  const [newVoiceActivityEnabled, setNewVoiceActivityEnabled] = useState(currentServer.voice_activity_enabled);
-  const [newWebhookUrl, setNewWebhookUrl] = useState(currentServer.webhook_url || null);
-  const [newWebhookToken, setNewWebhookToken] = useState(currentServer.webhook_token || null); 
+  const [savingChanges, setSavingChanges] = useState(false);
+  const [changesMade, setChangesMade] = useState(false);
+  const [changedKeys, setChangedKeys] = useState([]);
 
-  const [keywordsInputValue, setKeywordsInputValue] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [anyChangesMade, setAnyChangesMade] = useState(false);
-  const router = useRouter();
+  const [description, setDescription] = useState(server.description);
+
+  const parsedInviteUrl = server.invite_code.type === 'Vanity' ? server.vanity_url : (
+    server.invite_code.type === 'Deleted' ? '' :
+      `https://discord.com/invite/${server.invite_code.code}`
+  );
+
+  const [inviteURL, setInviteURL] = useState(parsedInviteUrl);
+  const [category, setCategory] = useState(server.category);
+  const [keywords, setKeywords] = useState(server.keywords);
+  const [voiceActivityEnabled, setVoiceActivityEnabled] = useState(server.voice_activity_enabled === true);
   
   useEffect(() => {
-    setAnyChangesMade(
-      newDescription !== currentServer.description ||
-      newInviteLink !== (currentServer.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (currentServer.invite_code.type === 'Vanity' ? currentServer.vanity_url : `https://discord.com/invite/${currentServer.invite_code.code}`)) ||
-      newCategory !== currentServer.category ||
-      newKeywords.join(' ') !== currentServer.keywords.join(' ') ||
-      (newWebhookUrl === '' ? null : newWebhookUrl) !== (currentServer.webhook_url || null) ||
-      (newWebhookToken === '' ? null : newWebhookToken) !== (currentServer.webhook_token || null) ||
-      newVoiceActivityEnabled !== currentServer.voice_activity_enabled
+    const isDescriptionChanged = !isEqual(description, server.description);
+    const isInviteURLChanged = !isEqual(inviteURL, parsedInviteUrl);
+    const isCategoryChanged = !isEqual(category, server.category);
+    const isKeywordsChanged = !isEqual(keywords, server.keywords);
+    const isVoiceActivityEnabledChanged = !isEqual(voiceActivityEnabled, server.voice_activity_enabled);
+
+    setChangesMade(
+      isDescriptionChanged ||
+      isInviteURLChanged ||
+      isCategoryChanged ||
+      isKeywordsChanged ||
+      isVoiceActivityEnabledChanged
     );
 
+    function pushToChangedKeys(key, value) {
+      // if the current value is the same as the original value, remove the key from the array
+      if (isEqual(value, server[key])) return setChangedKeys(oldKeys => oldKeys.filter(({ key: oldKey }) => oldKey !== key));
+
+      // if the key already exists, update the value
+      // otherwise, add the key and value to the array
+      
+      setChangedKeys(oldKeys => 
+        oldKeys
+          .filter(({ key: oldKey }) => oldKey !== key)
+          .concat({ 
+            key, 
+            value: isEqual(value, '') ? null : value 
+          })
+      );
+    }
+
+    if (isDescriptionChanged) pushToChangedKeys('description', description);
+    if (isInviteURLChanged) pushToChangedKeys('invite_url', inviteURL);
+    if (isCategoryChanged) pushToChangedKeys('category', category);
+    if (isKeywordsChanged) pushToChangedKeys('keywords', keywords);
+    if (isVoiceActivityEnabledChanged) pushToChangedKeys('voice_activity_enabled', voiceActivityEnabled);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newDescription, newInviteLink, newCategory, newKeywords, newWebhookUrl, newWebhookToken, newVoiceActivityEnabled]);
+  }, [description, inviteURL, category, keywords, voiceActivityEnabled]);
 
-  async function save() {
-    if (!anyChangesMade) return toast.error('No changes were made.');
-    
-    setLoading(true);
+  function resetChanges() {    
+    changedKeys.forEach(({ key }) => {
+      switch (key) {
+      case 'description':
+        setDescription(server[key]);
+        break;
+      case 'invite_url':
+        var parsedInviteUrl = server.invite_code.type === 'Vanity' ? server.vanity_url : (
+          server.invite_code.type === 'Deleted' ? '' :
+            `https://discord.com/invite/${server.invite_code.code}`
+        );
 
-    toast.promise(editServer(currentServer.id, {
-      newDescription, 
-      newInviteLink, 
-      newCategory, 
-      newKeywords, 
-      newVoiceActivityEnabled,
-      newWebhookUrl: newWebhookUrl === '' ? null : newWebhookUrl,
-      newWebhookToken: newWebhookToken === '' ? null : newWebhookToken
-    }), { 
+        setInviteURL(parsedInviteUrl);
+        break;
+      case 'category':
+        setCategory(server[key]);
+        break;
+      case 'keywords':
+        setKeywords(server[key]);
+        break;
+      case 'voice_activity_enabled':
+        setVoiceActivityEnabled(server[key]);
+        break;
+      }
+    });
+
+    setChangedKeys([]);
+  }
+
+  async function saveChanges() {
+    setSavingChanges(true);
+
+    toast.promise(editServer(server.id, changedKeys), {
       loading: 'Saving changes..',
-      success: newServer => {
-        setLoading(false);
-        setAnyChangesMade(false);
-        setCurrentServer(oldServer => ({ ...oldServer, ...newServer }));
-        revalidateServer(currentServer.id);
+      success: () => {
+        setSavingChanges(false);
+        setChangedKeys([]);
+        revalidateServer(server.id);
 
         return 'Successfully saved changes!';
       },
       error: error => {
-        setLoading(false);
+        setSavingChanges(false);
+        
         return error;
       }
     });
   }
 
-  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+  const { openModal, closeModal, openedModals } = useModalsStore(useShallow(state => ({
     openModal: state.openModal,
-    disableButton: state.disableButton,
-    enableButton: state.enableButton,
-    closeModal: state.closeModal
+    closeModal: state.closeModal,
+    openedModals: state.openedModals
   })));
 
-  async function continueDeleteServer() {
-    disableButton('delete-server', 'confirm');
-    setLoading(true);
+  const router = useRouter();
 
-    toast.promise(deleteServer(currentServer.id), {
-      loading: `Deleting ${currentServer.name}..`,
-      success: () => {
-        closeModal('delete-server');
-        setTimeout(() => router.push('/'), 3000);
-        
-        return `Successfully deleted ${currentServer.name}. You will be redirected to the home page in a few seconds.`;
-      },
-      error: error => {
-        enableButton('delete-server', 'confirm');
-        setLoading(false);
+  useEffect(() => {
+    function handleEscape(event) {
+      if (event.key === 'Escape') {
 
-        return error;
+        if (changesMade) {
+          if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
+          
+          openModal('confirm-exit', {
+            title: 'Discard Changes?',
+            description: 'Are you sure you want to discard your changes?',
+            content: <p className='text-sm text-tertiary'>Your changes will not be saved.</p>,
+            buttons: [
+              {
+                id: 'cancel',
+                label: 'Cancel',
+                variant: 'ghost',
+                actionType: 'close'
+              },
+              {
+                id: 'discard-changes',
+                label: 'Discard Changes',
+                variant: 'solid',
+                action: () => {
+                  resetChanges();
+                  closeModal('confirm-exit');
+                  router.push(`/servers/${server.id}`, { shallow: true });
+                }
+              }
+            ]
+          });
+        } else {
+          window.location.href = `/servers/${server.id}`;
+        }
       }
-    });
-  }
+    }
+
+    document.addEventListener('keydown', handleEscape);
+
+    return () => document.removeEventListener('keydown', handleEscape); 
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [changesMade, openedModals]);
 
   return (
-    <div className='flex flex-col items-center justify-center h-full px-8 mt-48 mb-16 gap-y-4 lg:px-0'>
-      <div className="flex justify-center w-full gap-y-4 max-w-[800px] flex-col">
-        <div className='flex items-center gap-x-4'>
-          <Link className="p-1.5 rounded-xl bg-secondary hover:bg-tertiary" href={`/servers/${currentServer.id}`}>
-            <MdChevronLeft size={24} />
-          </Link>
-              
-          <h1 className="flex items-center text-xl font-bold sm:text-3xl gap-x-1">
-            Manage
-            <ServerIcon
-              width={32}
-              height={32}
-              icon_url={currentServer.icon_url}
-              name={currentServer.name}
-              className={cn(
-                !currentServer.icon_url && '[&>h2]:text-xs'
-              )}
-            />
-            <span className='truncate'>
-              {currentServer.name}
-            </span>
-          </h1>
-        </div>
-              
-        <p className='text-sm sm:text-base max-w-[800px] text-tertiary'>
-          You{'\''}re currently managing {currentServer.name}. You can edit the about section, invite link, and more.
-        </p>
-
-        <div className='flex items-center justify-center w-full mt-12'>
-          <div className='max-w-[800px] w-full flex flex-col gap-y-1'>
-            <h2 className='text-lg font-semibold'>
-              Description
+    <div className="flex items-center justify-center w-full h-full px-4 mb-24 sm:px-12">
+      <div className="w-full h-full max-w-[1000px] flex flex-col items-start gap-y-8 mt-48">
+        <div className="flex flex-col w-full sm:items-center sm:flex-row sm:justify-between">
+          <div className="flex flex-col gap-y-1">
+            <h2 className="flex items-center text-3xl font-bold gap-x-2">
+              Manage Server
+            
+              <div className='p-2 text-xs font-bold uppercase rounded-lg select-none bg-quaternary'>
+                esc to close
+              </div>
             </h2>
-                
-            <p className='text-sm sm:text-base text-tertiary'>
-              This is the description that will be shown to everyone who visits your server on discord.place.<br/>Make sure to include important information about your server.
-            </p>
+            <p className="text-tertiary">Manage your server and its settings.</p>
+            
+            <div className='flex items-center mt-2 font-medium gap-x-2 text-secondary'>
+              <ServerIcon
+                name={server.name}
+                icon_url={server.icon_url}
+                width={18}
+                height={18}
+                className='rounded-full bg-quaternary [&>h2]:text-xs'
+              />
 
-            <span contentEditable suppressContentEditableWarning className='block w-full h-[150px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500 whitespace-pre-wrap' onKeyUp={event => {
-              if (event.target.textContent.length > config.serverDescriptionMaxCharacters) return toast.error(`Description can only contain ${config.serverDescriptionMaxCharacters} characters.`);
-              setNewDescription(event.target.innerText);
-            }}>
-              {currentServer.description}
-            </span>
+              {server.name}
+            </div>
+          </div>
+
+          <div className='flex justify-end flex-1 w-full mt-8 sm:mt-0 gap-x-2'>
+            <button
+              className='w-full text-xs sm:text-sm px-2 sm:w-max justify-center disabled:opacity-70 border border-primary hover:border-[rgba(var(--bg-tertiary))] disabled:pointer-events-none sm:px-4 flex items-center gap-x-1.5 py-1.5 font-semibold hover:bg-tertiary hover:text-primary text-tertiary rounded-xl'
+              onClick={resetChanges}
+              disabled={!changesMade || savingChanges}
+            >
+              Cancel
+            </button>
+
+            <button
+              className='w-full text-xs sm:text-sm sm:w-max justify-center px-2 sm:px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold hover:bg-purple-600 bg-purple-500 rounded-xl'
+              disabled={!changesMade || savingChanges}
+              onClick={saveChanges}
+            >
+              {savingChanges ? <TbLoader size={18} className='animate-spin' /> : <MdSave size={18} />}
+              Save Changes
+            </button>
           </div>
         </div>
 
-        <h2 className='mt-8 text-lg font-semibold'>
-          Invite link
-        </h2>
+        <div className='w-full h-[1px] bg-tertiary' />
 
-        <p className='text-sm sm:text-base text-tertiary'>
-          Add an invite link to your server. This will be helpful for people who want to join your server.<br/>Make sure to set the invite link to never expire.
-        </p>
-
-        <input
-          className='block w-full p-2 mt-4 overflow-y-auto text-sm border-2 border-transparent rounded-lg outline-none placeholder-placeholder bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
-          placeholder='https://discord.gg/invite'
-          autoComplete='off'
-          spellCheck='false'
-          value={newInviteLink}
-          onChange={event => setNewInviteLink(event.target.value)}
+        <EssentialInformation
+          description={description}
+          setDescription={setDescription}
+          inviteURL={inviteURL}
+          setInviteURL={setInviteURL}
         />
 
-        <div className='flex flex-col gap-4 mt-8 sm:flex-row'>
-          <div className='flex flex-col gap-y-2'>
-            <h2 className='text-lg font-semibold'>
-              Category
-            </h2>
+        <div className='w-full h-[1px] bg-tertiary' />
 
-            <p className='text-sm text-tertiary'>
-              Select a base category for your server. This will help people find your server on discord.place.
-            </p>
+        <Other
+          category={category}
+          setCategory={setCategory}
+          keywords={keywords}
+          setKeywords={setKeywords}
+          voiceActivityEnabled={voiceActivityEnabled}
+          setVoiceActivityEnabled={setVoiceActivityEnabled}
+        />
 
-            <div className='w-full mt-4'>
-              <Select
-                mobileOverride={true}
-                triggerClassName='w-full py-2.5'
-                placeholder={newCategory}
-                options={
-                  config.serverCategories
-                    .filter(category => category !== 'All')
-                    .map(category => ({
-                      label: <div className='flex items-center gap-x-2'>
-                        <span className='text-tertiary'>
-                          {config.serverCategoriesIcons[category]}
-                        </span>
+        <div className='w-full h-[1px] bg-tertiary' />
+        
+        <Webhook
+          serverId={server.id}
+          webhookURL={server.webhook?.url || null}
+          webhookToken={server.webhook?.token || null}
+        />
 
-                        {category}
-                      </div>,
-                      value: category
-                    }))
-                }
-                value={newCategory}
-                onChange={setNewCategory}
-                disabled={loading}
-              />
-            </div>
-          </div>
-
-          <div className='flex flex-col gap-y-2'>
-            <h2 className='text-lg font-semibold'>
-              Keywords
-            </h2>
-
-            <p className='text-sm text-tertiary'>
-              Add keywords to your server. This will help people find your server on discord.place.
-            </p>
-
-            <div className='relative'>
-              <input
-                className='block w-full h-[40px] px-2 mt-4 overflow-y-auto text-sm border-2 border-transparent rounded-lg outline-none disabled:pointer-events-none disabled:opacity-70 placeholder-placeholder bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
-                autoComplete='off'
-                spellCheck='false'
-                value={keywordsInputValue}
-                placeholder='Type a keyword and press enter or space..'
-                onChange={event => {
-                  const regexp = new RegExp(/[^a-zA-Z0-9-]/g);
-                  if (regexp.test(event.target.value)) return;
-                  if (event.target.value.length > config.serverKeywordsMaxCharacters) return toast.error(`Keyword can only contain ${config.serverKeywordsMaxCharacters} characters.`);
-
-                  setKeywordsInputValue(event.target.value);
-                }}
-                onKeyUp={event => {
-                  if (event.key === ' ' || event.key === 'Enter') {
-                    if (keywordsInputValue.trim().length <= 0) return;
-
-                    setNewKeywords(oldKeywords => [...oldKeywords, keywordsInputValue.trim()]);
-                    setKeywordsInputValue('');
-                  }
-                }}
-                disabled={newKeywords.length >= config.serverKeywordsMaxLength}
-              />
-            </div>
-          </div>
-        </div>
-
-        {newKeywords.filter(keyword => keyword.length > 0).length > 0 && (
+        {server.permissions.canDelete && (
           <>
-            <h3 className='mt-4 text-sm font-medium text-secondary'>
-              {newKeywords.filter(keyword => keyword.length > 0).length} Keywords
-            </h3>
+            <div className='w-full h-[1px] bg-tertiary' />
 
-            <div className='flex flex-wrap mt-2 gap-x-2 gap-y-1'>
-              {newKeywords
-                .filter(keyword => keyword.length > 0)
-                .map((keyword, i) => (
-                  <button key={i} className='flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm' onClick={() => setNewKeywords(oldKeywords => oldKeywords.filter(k => k !== keyword))}>
-                    {keyword}
-                  </button>
-                ))}
-            </div>
+            <DangerZone serverId={server.id} />
           </>
-        )}
-
-        <h2 className='mt-8 text-lg font-semibold'>
-          Webhook Settings
-        </h2>
-
-        <p className='text-tertiary'>
-          Get notified when someone votes for your bot. Documentation can be found{' '}
-          
-          <Link
-            href={config.docsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-secondary hover:underline hover:text-primary"
-          >
-            here
-          </Link>.
-        </p>
-
-        <div className='flex flex-col gap-4 mt-4 sm:flex-row'>
-          <div className='flex flex-col w-full gap-y-2'>
-            <h3 className='font-medium text-secondary'>
-              URL
-            </h3>
-
-            <p className='text-sm text-tertiary'>
-              Enter the URL of your webhook.
-            </p>
-
-            <input
-              className='block w-full p-2 mt-1 overflow-y-auto text-sm border-2 border-transparent rounded-lg outline-none placeholder-placeholder bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
-              placeholder='https://example.com/webhook'
-              autoComplete='off'
-              spellCheck='false'
-              value={newWebhookUrl}
-              onChange={event => setNewWebhookUrl(event.target.value)}
-            />
-          </div>
-
-          <div className='flex flex-col w-full gap-y-2'>
-            <h3 className='font-medium text-secondary'>
-              Token
-            </h3>
-
-            <p className='text-sm text-tertiary'>
-              Enter the token of your webhook.
-            </p>
-
-            <input
-              className='block w-full p-2 mt-1 overflow-y-auto text-sm border-2 border-transparent rounded-lg outline-none placeholder-placeholder bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
-              placeholder='b180eeb5-b982-4c0b-aac3-5ee2394b3120'
-              autoComplete='off'
-              spellCheck='false'
-              value={newWebhookToken}
-              onChange={event => setNewWebhookToken(event.target.value)}
-            />
-          </div>
-        </div>
-
-        <h2 className='mt-8 text-lg font-semibold'>
-          Voice Activity
-        </h2>
-
-        <p className='text-sm sm:text-base text-tertiary'>
-          Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active your server is.
-        </p>
-
-        <div 
-          className='flex items-center mt-4 cursor-pointer gap-x-2 group'
-          onClick={() => setNewVoiceActivityEnabled(!newVoiceActivityEnabled)}
-        >
-          <button className='p-1 bg-quaternary rounded-md group-hover:bg-white group-hover:text-black min-w-[18px] min-h-[18px]'>
-            {newVoiceActivityEnabled ? <FaCheck size={10} /> : null}
-          </button>
-          <span className='text-sm font-medium select-none text-tertiary'>
-            Enable Tracking
-          </span>
-        </div>
-
-        <h2 className='mt-8 text-lg font-semibold'>
-          Are you ready?
-        </h2>
-
-        <p className='text-sm sm:text-base text-tertiary'>
-          Make sure to double-check everything before saving. Once you save, the changes will be live on discord.place.
-        </p>
-                
-        <div className='flex flex-col w-full gap-2 mt-2 sm:flex-row'>
-          <button 
-            className='flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-full justify-center hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70' 
-            disabled={
-              !anyChangesMade ||
-              loading ||
-              newDescription.length < 1 ||
-              newInviteLink.length < 1 ||
-              !newCategory ||
-              newKeywords.length < 1
-            } 
-            onClick={save}
-          >
-            {loading && <TbLoader className='animate-spin' />}
-            Save
-          </button>
-          <button 
-            className='flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-secondary disabled:pointer-events-none disabled:opacity-70'
-            onClick={() => {
-              setNewDescription(currentServer.description);
-              setNewInviteLink(currentServer.invite_code.type === 'Deleted' ? 'Invite link was deleted.' : (currentServer.invite_code.type === 'Vanity' ? currentServer.vanity_url : `https://discord.com/invite/${currentServer.invite_code.code}`));
-              setNewCategory(currentServer.category);
-              setNewKeywords(currentServer.keywords);
-              setNewVoiceActivityEnabled(currentServer.voice_activity_enabled);
-              setNewWebhookUrl(currentServer.webhook_url || '');
-              setNewWebhookToken(currentServer.webhook_token || '');
-            }}
-            disabled={!anyChangesMade || loading}
-          >
-            Cancel
-          </button>
-        </div>
-
-        {currentServer.permissions.canDelete && (
-          <div className='flex flex-col p-4 mt-8 border border-red-500 gap-y-2 bg-red-500/10 rounded-xl'>
-            <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
-              <RiErrorWarningFill />
-              Danger Zone
-            </h1>
-            <p className='text-sm font-medium text-tertiary'>
-              You can delete the server using the button below, but be careful not to delete it by mistake :)
-            </p>
-            
-            <div className='flex mt-1 gap-x-2'>
-              <button
-                className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
-                onClick={() => 
-                  openModal('delete-server', {
-                    title: 'Delete Server',
-                    description: `Are you sure you want to delete ${currentServer.name}?`,
-                    content: (
-                      <p className='text-sm text-tertiary'>
-                        Please note that deleting your server will remove all votes and reviews that your server has received.<br/><br/>
-                        This action cannot be undone.
-                      </p>
-                    ),
-                    buttons: [
-                      {
-                        id: 'cancel',
-                        label: 'Cancel',
-                        variant: 'ghost',
-                        actionType: 'close'
-                      },
-                      {
-                        id: 'confirm',
-                        label: 'Confirm',
-                        variant: 'solid',
-                        action: continueDeleteServer
-                      }
-                    ]
-                  })
-                }
-              >
-                Delete
-              </button>
-            </div>
-          </div>
         )}
       </div>
     </div>

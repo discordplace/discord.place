@@ -4,14 +4,14 @@ import config from '@/config';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { HiBell } from 'react-icons/hi';
-import Input from '@/app/(bots)/bots/[id]/manage/components/Input';
+import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 import { TbLoader } from 'react-icons/tb';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { toast } from 'sonner';
-import deleteWebhookSettings from '@/lib/request/bots/deleteWebhookSettings';
-import setWebhookSettings from '@/lib/request/bots/setWebhookSettings';
+import deleteWebhookSettings from '@/lib/request/servers/deleteWebhookSettings';
+import setWebhookSettings from '@/lib/request/servers/setWebhookSettings';
 
-export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken }) {
+export default function Webhook({ serverId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken }) {
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
   const [defaultWebhookToken, setDefaultWebhookToken] = useState(currentWebhookToken);
   const [webhookURL, setWebhookURL] = useState(currentWebhookURL);
@@ -45,7 +45,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
           : setWebhookSettings
       );
 
-      toast.promise(functionToCall(botId, webhookURL || null, webhookToken || null), {
+      toast.promise(functionToCall(serverId, webhookURL || null, webhookToken || null), {
         loading: 'Saving webhook settings...',
         success: () => {
           setSavingChanges(false);
@@ -81,7 +81,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
           </h3>
 
           <p className='text-tertiary'>
-            Get notified when someone votes for your bot. Documentation can be found{' '}
+            Get notified when someone votes for your server. Documentation can be found{' '}
             <Link
               href={config.docsUrl}
               target="_blank"

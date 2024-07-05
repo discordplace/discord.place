@@ -117,8 +117,7 @@ module.exports = {
           };
         }),
         monthly_votes: monthlyVotes,
-        webhook_url: permissions.canEdit ? server.webhook_url : null,
-        webhook_token: permissions.canEdit ? server.webhook_token : null
+        webhook: permissions.canEdit && server.webhook
       });
     }
   ],
@@ -239,88 +238,71 @@ module.exports = {
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     bodyParser.json(),
     param('id'),
-    body('newDescription')
+    body('description')
       .optional()
-      .isString().withMessage('Description must be a string.')
+      .isString().withMessage('Description should be a string.')
       .trim()
-      .isLength({ min: 1, max: config.serverDescriptionMaxCharacters }).withMessage(`Description must be between 1 and ${config.serverDescriptionMaxCharacters} characters.`),
-    body('newCategory')
+      .isLength({ min: config.serverDescriptionMinLength, max: config.serverDescriptionMaxLength }).withMessage(`Description must be between ${config.serverDescriptionMinLength} and ${config.serverDescriptionMaxLength} characters.`),
+    body('invite_url')
       .optional()
-      .isString().withMessage('Category must be a string.')
-      .isIn(config.serverCategories).withMessage('Category is not valid.'),
-    body('newInviteLink')
-      .optional()
-      .isString().withMessage('Invite link must be a string.')
+      .isString().withMessage('Invite URL should be a string.')
+      .trim()
+      .isURL().withMessage('Invite URL should be a valid URL.')
       .custom(inviteLinkValidation),
-    body('newKeywords')
+    body('category')
       .optional()
-      .isArray().withMessage('Keywords must be an array.')
+      .isString().withMessage('Category should be a string.')
+      .isIn(config.serverCategories).withMessage('Category is not valid.'),
+    body('keywords')
+      .optional()
+      .isArray().withMessage('Keywords should be an array.')
       .custom(keywordsValidation),
-    body('newVoiceActivityEnabled')
+    body('voice_activity_enabled')
       .optional()
-      .isBoolean().withMessage('Voice activity enabled must be a boolean.'),
-    body('newWebhookUrl')
-      .optional({ values: 'null' })
-      .isString().withMessage('Webhook URL should be a string.')
-      .trim()
-      .isURL().withMessage('Webhook URL should be a valid URL.'),
-    body('newWebhookToken')
-      .optional({ values: 'null' })
-      .isString().withMessage('Webhook Token should be a string.')
-      .isLength({ min: 1, max: config.serverWebhookTokenMaxLength }).withMessage(`Token must be between 1 and ${config.serverWebhookTokenMaxLength} characters.`)
-      .trim(),
+      .isBoolean().withMessage('Voice activity enabled should be a boolean.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
-      const { id, newDescription, newCategory, newKeywords, newInviteLink, newWebhookUrl, newWebhookToken, newVoiceActivityEnabled } = matchedData(request);
-
+  
+      const { id, description, invite_url, category, keywords, voice_activity_enabled } = matchedData(request);
+  
       const guild = client.guilds.cache.get(id);
-      if (!guild) return response.sendError('Guild not found.', 404);
+      if (!guild) return response.sendError('Server not found.', 404);
 
-      const canEdit = request.user.id === guild.ownerId || (request.member && config.permissions.canEditServersRoles.some(roleId => request.member.roles.cache.has(roleId)));
-      if (!canEdit) return response.sendError('You can\'t edit this server.', 403);
+      const permissions = {
+        canEdit: request.user.id === guild.ownerId ||
+          request.member && config.permissions.canEditServersRoles.some(roleId => request.member.roles.cache.has(roleId))
+      };
+
+      if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
 
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404);
-
-      if (newInviteLink) {
-        const inviteLinkMatch = newInviteLink.match(/(https?:\/\/|http?:\/\/)?(www.)?(discord.(gg)|discordapp.com\/invite|discord.com\/invite)\/[^\s/]+?(?=\b)/g);
+        
+      if (description) server.description = description;
+      if (invite_url) {
+        const inviteLinkMatch = invite_url.match(/(https?:\/\/|http?:\/\/)?(www.)?(discord.(gg)|discordapp.com\/invite|discord.com\/invite)\/[^\s/]+?(?=\b)/g);
         if (!inviteLinkMatch || !inviteLinkMatch?.[0]) return response.sendError('Invite link is not valid.', 400);
-
+  
         const inviteCode = inviteLinkMatch[0].split('/').pop();
         if (inviteCode !== guild.vanityURLCode) {
           const invite = await guild.invites.fetch(inviteCode).catch(() => null);
           if (!invite) return response.sendError('Invite link is not valid.', 400);
         }
-
+  
         server.invite_code = {
           type: inviteCode === guild.vanityURLCode ? 'Vanity' : 'Invite',
           code: inviteCode === guild.vanityURLCode ? null : inviteCode
         };
       }
-
-      if (newDescription) server.description = newDescription;
-      if (newCategory) server.category = newCategory;
-      if (newKeywords) server.keywords = newKeywords;
-
-      if (!newWebhookUrl && newWebhookToken) return response.sendError('You must provide a webhook URL if you provide a webhook token.', 400);
-      if (!newWebhookUrl && server.webhook_url) {
-        server.webhook_url = null;
-        server.webhook_token = null;
-      } else {
-        server.webhook_url = newWebhookUrl;
-        server.webhook_token = newWebhookToken;
-      }
-
-      if (typeof newVoiceActivityEnabled === 'boolean') {
-        server.voice_activity_enabled = newVoiceActivityEnabled;
-        if (!newVoiceActivityEnabled) await VoiceActivity.deleteOne({ 'guild.id': id });
-      }
-
+      
+      if (category) server.category = category;
+      if (keywords) server.keywords = keywords;
+      if (typeof voice_activity_enabled === 'boolean') server.voice_activity_enabled = voice_activity_enabled;
+  
       const validationError = getValidationError(server);
       if (validationError) return response.sendError(validationError, 400);
-
+  
       if (!server.isModified()) return response.sendError('No changes were made.', 400);
 
       await server.save();
@@ -330,6 +312,6 @@ module.exports = {
       if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 
       return response.json(await server.toPubliclySafe());
-    }
+    }   
   ]
 };
