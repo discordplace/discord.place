@@ -83,7 +83,7 @@ module.exports = {
         Key: `sounds/${id}.mp3`,
         Body: request.files[0].buffer,
         ContentType: 'audio/mpeg',
-        ContentDisposition: 'inline'
+        ContentDisposition: `attachment; filename="${name}.mp3"`
       });
 
       S3.send(command)

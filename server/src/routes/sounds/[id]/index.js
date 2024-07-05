@@ -15,6 +15,36 @@ const S3 = new S3Client({
 });
 
 module.exports = {
+  get: [
+    useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
+    param('id')
+      .isString().withMessage('ID must be a string.')
+      .custom(idValidation),
+    async (request, response) => {
+      const errors = validationResult(request);
+      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
+
+      const { id } = matchedData(request);
+      
+      const sound = await Sound.findOne({ id });
+      if (!sound) return response.sendError('Sound not found.', 404);
+
+      const permissions = {
+        canDelete: request.user && (
+          request.user.id == sound.publisher.id ||
+          config.permissions.canDeleteSounds.includes(request.user.id)
+        ),
+        canApprove: request.user && request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId))
+      };
+
+      if (!sound.approved && !permissions.canApprove && !permissions.canDelete) return response.sendError('You can\'t view this sound until confirmed.', 404);
+
+      const publiclySafe = sound.toPubliclySafe({ isLiked: request.user && sound.likers.includes(request.user.id) });
+      Object.assign(publiclySafe, { permissions });
+
+      return response.json(publiclySafe);
+    }
+  ],
   delete: [
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,

@@ -11,7 +11,7 @@ export default function Question2({ emoji }) {
   return (
     <div className='flex flex-col mt-2 gap-y-1'>
       <p>
-        I{'\''}m glad to hear that! I will tell you 2 methods for this.
+        I{'\''}m glad to hear that! I will tell you 3 methods for this.
       </p>
 
       <div className='flex gap-x-2'>
