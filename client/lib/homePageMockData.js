@@ -32,11 +32,19 @@ const baseTemplateData = {
   created_at: new Date().toISOString()
 };
 
+const baseSoundData = {
+  publisher: {
+    username: 'discord'
+  },
+  downloadsCount: 100000,
+  createdAt: new Date().toISOString()
+};
+
 const data = ({
   profiles: [
     {
       ...baseProfileData,
-      slug: 'discord',
+      slug: 'discord1',
       username: 'Discord',
       global_name: 'Discord',
       bio: 'Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.',
@@ -68,7 +76,7 @@ const data = ({
     },
     {
       ...baseProfileData,
-      slug: 'discord',
+      slug: 'discord2',
       username: 'Discord',
       global_name: 'Discord',
       bio: 'Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.',
@@ -79,7 +87,7 @@ const data = ({
     },
     {
       ...baseProfileData,
-      slug: 'discord',
+      slug: 'discord3',
       username: 'Discord',
       global_name: 'Discord',
       bio: 'Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.',
@@ -90,7 +98,7 @@ const data = ({
     },
     {
       ...baseProfileData,
-      slug: 'discord',
+      slug: 'discord4',
       username: 'Discord',
       global_name: 'Discord',
       bio: 'Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.',
@@ -298,27 +306,27 @@ const data = ({
       name: 'discord_logo_pack',
       categories: ['Other'],
       emoji_ids: [
-        { id: '1' },
-        { id: '2' },
-        { id: '3' },
-        { id: '4' },
-        { id: '5' }
+        { id: 'packagedemoji1' },
+        { id: 'packagedemoji2' },
+        { id: 'packagedemoji3' },
+        { id: 'packagedemoji4' },
+        { id: 'packagedemoji5' }
       ],
       overridedImages: [
         {
-          id: '1',
+          id: 'packagedemoji1',
           image: 'https://cdn.discordapp.com/embed/avatars/0.png'
         },
         {
-          id: '2',
+          id: 'packagedemoji2',
           image: 'https://cdn.discordapp.com/embed/avatars/1.png'
         },
         {
-          id: '3',
+          id: 'packagedemoji3',
           image: 'https://cdn.discordapp.com/embed/avatars/2.png'
         },
         {
-          id: '4',
+          id: 'packagedemoji4',
           image: 'https://cdn.discordapp.com/embed/avatars/3.png'
         }
       ]
@@ -481,6 +489,62 @@ const data = ({
         avatar_url: 'https://cdn.discordapp.com/embed/avatars/1.png'
       },
       categories: ['Design']
+    }
+  ],
+  sounds: [
+    {
+      ...baseSoundData,
+      id: 'example',
+      name: 'Beep Boop',
+      categories: ['Other']
+    },
+    {
+      ...baseSoundData,
+      id: 'example',
+      name: 'Beep Boop',
+      categories: ['Other']
+    },
+    {
+      ...baseSoundData,
+      id: 'example',
+      name: 'Beep Boop',
+      categories: ['Other']
+    },
+    {
+      ...baseSoundData,
+      id: 'example',
+      name: 'Beep Boop',
+      categories: ['Other']
+    },
+    {
+      ...baseSoundData,
+      id: 'example',
+      name: 'Beep Boop',
+      categories: ['Other']
+    },
+    {
+      ...baseSoundData,
+      id: 'example',
+      name: 'Beep Boop',
+      categories: ['Other']
+    },
+    {
+      ...baseSoundData,
+      id: 'example',
+      name: 'Beep Boop',
+      categories: ['Other']
+    },
+    {
+      ...baseSoundData,
+      id: 'example',
+      name: 'Beep Boop',
+      categories: ['Other']
+    },
+    {
+      ...baseSoundData,
+      id: 'example',
+      name: 'Beep Boop',
+      categories: ['Other']
     }
   ]
 });
