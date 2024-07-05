@@ -66,6 +66,7 @@ export default function MySounds() {
                 <SoundPreview
                   key={sound.id}
                   sound={sound}
+                  overridedSort='Newest'
                 />
               ))}
             </div>

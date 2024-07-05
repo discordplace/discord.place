@@ -7,6 +7,7 @@ const Bot = require('@/schemas/Bot');
 const BotReview = require('@/schemas/Bot/Review');
 const BotDeny = require('@/schemas/Bot/Deny');
 const Template = require('@/schemas/Template');
+const Sound = require('@/schemas/Sound');
 const ServerReview = require('@/schemas/Server/Review');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
@@ -20,6 +21,7 @@ const validKeys = [
   'emojis',
   'bots',
   'templates',
+  'sounds',
   'reviews',
   'blockedips',
   'botdenies',
@@ -46,6 +48,7 @@ module.exports = {
         canApproveEmojis: request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveBots: request.member && config.permissions.canApproveBotsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveTemplates: request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canApproveSounds: request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveReviews: request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteReviews: config.permissions.canDeleteReviews.includes(request.user.id),
         canViewBlockedIps: config.permissions.canViewBlockedIps.includes(request.user.id),
@@ -97,6 +100,10 @@ module.exports = {
           users: Object.values(data).map(dashboardData => ({
             value: dashboardData.users,
             createdAt: dashboardData.createdAt
+          })),
+          sounds: Object.values(data).map(dashboardData => ({
+            value: dashboardData.sounds,
+            createdAt: dashboardData.createdAt
           }))
         });
       }
@@ -124,6 +131,13 @@ module.exports = {
 
         const templates = await Template.find().sort({ createdAt: -1 });
         responseData.queue.templates = await Promise.all(templates.map(async template => await template.toPubliclySafe()));
+      }
+
+      if (keys?.includes('sounds')) {
+        if (!permissions.canApproveSounds) return response.sendError('You do not have permission to approve sounds.', 403);
+
+        const sounds = await Sound.find().sort({ createdAt: -1 });
+        responseData.queue.sounds = sounds.map(sound => sound.toPubliclySafe({ isLiked: false }));
       }
 
       if (keys?.includes('reviews')) {

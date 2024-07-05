@@ -13,6 +13,7 @@ import GraphBlock from '@/app/(dashboard)/components/Home/Graph/Block';
 import { FaUsers } from 'react-icons/fa';
 import { useMedia } from 'react-use';
 import { HiTemplate } from 'react-icons/hi';
+import { PiWaveformBold } from 'react-icons/pi';
 
 export default function Home() {
   const data = useDashboardStore(state => state.data);
@@ -85,7 +86,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col my-8 gap-y-4">
-      <div className='grid grid-cols-1 gap-6 mr-6 sm:grid-cols-2 xl:grid-cols-5'>
+      <div className='grid grid-cols-1 gap-6 mr-6 sm:grid-cols-2 2xl:grid-cols-6'>
         <StatsBlock
           icon={<FaCompass />}
           label='Servers'
@@ -124,6 +125,15 @@ export default function Home() {
           tooltip='Total number of templates created on discord.place.'
           current={data.templates?.[0]?.value}
           previous={data.templates?.[1]?.value}
+          className='sm:col-span-2 xl:col-span-1'
+        />
+
+        <StatsBlock
+          icon={<PiWaveformBold />}
+          label='Sounds'
+          tooltip='Total number of sounds created on discord.place.'
+          current={data.sounds?.[0]?.value}
+          previous={data.sounds?.[1]?.value}
           className='sm:col-span-2 xl:col-span-1'
         />
       </div>

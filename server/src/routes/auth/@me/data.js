@@ -168,7 +168,7 @@ module.exports = {
       }
 
       if (keys.includes('sounds')) {
-        const sounds = await Sound.find({ 'publisher.id': request.user.id });
+        const sounds = await Sound.find({ 'publisher.id': request.user.id }).sort({ createdAt: -1 });
 
         Object.assign(responseData, {
           sounds: sounds.map(sound => sound.toPubliclySafe({ isLiked: sound.likers.includes(request.user.id) }))

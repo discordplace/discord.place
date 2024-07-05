@@ -362,6 +362,44 @@ const config = {
       description: 'Ensure your template is categorized correctly. Misleading categorization can result in rejection.'
     }
   },
+  soundsDenyReasons: {
+    'offensive-or-inappropriate-content': {
+      name: 'Offensive or Inappropriate Content',
+      description: 'Sounds featuring offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Ensure your sound is suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+    },
+    'poor-quality-or-incomplete-sound': {
+      name: 'Poor Quality or Incomplete Sound',
+      description: 'Sounds should be clear, high-quality, and complete. Submissions with poor audio quality, missing key elements, or that are not user-friendly may be rejected.'
+    },
+    'misleading-or-inaccurate-information': {
+      name: 'Misleading or Inaccurate Information',
+      description: 'Sounds with misleading titles may be rejected. Provide clear and accurate details about your sound\'s purpose and content.'
+    },
+    'lacks-clear-focus-or-purpose': {
+      name: 'Lacks Clear Focus or Purpose',
+      description: 'Sounds should have a clear focus or purpose. Submissions that are overly broad or lack a specific theme may not be accepted.'
+    },
+    'advertising-and-self-promotion': {
+      name: 'Advertising and Self-Promotion',
+      description: 'Sounds primarily focused on advertising or self-promotion without providing genuine value to users may not be accepted.'
+    },
+    'proper-categorization': {
+      name: 'Proper Categorization',
+      description: 'Ensure your sound is categorized correctly. Misleading categorization can result in rejection.'
+    },
+    'sound-length': {
+      name: 'Sound Length',
+      description: 'Sounds should be of appropriate length. Extremely short or excessively long sounds may not be accepted.'
+    },
+    'sound-volume': {
+      name: 'Sound Volume',
+      description: 'Sounds should be of appropriate volume. Extremely loud or quiet sounds may not be accepted.'
+    },
+    'sound-licensing': {
+      name: 'Sound Licensing',
+      description: 'Ensure your sound does not violate any copyright or intellectual property rights. Avoid using copyrighted audio, music, or sound effects without proper authorization.'
+    }
+  },
   quarantineRestrictions: {
     'PROFILES_CREATE': {
       available_to: ['USER_ID'],
@@ -414,6 +452,14 @@ const config = {
     'TEMPLATES_USE': {
       available_to: ['USER_ID', 'GUILD_ID'],
       description: 'Using templates.'
+    },
+    'SOUNDS_CREATE': {
+      available_to: ['USER_ID'],
+      description: 'Listing sounds.'
+    },
+    'SOUNDS_LIKE': {
+      available_to: ['USER_ID'],
+      description: 'Liking sounds.'
     }
   }
 };

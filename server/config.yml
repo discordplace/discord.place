@@ -41,6 +41,8 @@ permissions:
     - '957840712404193290'
   canDeleteTemplates:
     - '957840712404193290'
+  canDeleteSounds: 
+    - '957840712404193290'
   canApproveEmojisRoles:
     - '1206354879321210900'
     - '1206355082883371049'
@@ -87,6 +89,10 @@ permissions:
     - '1206354879321210900'
     - '1206355082883371049'
   canApproveTemplatesRoles:
+    - '1206354879321210900'
+    - '1206355082883371049'
+    - '1238588360193216695'
+  canApproveSoundsRoles:
     - '1206354879321210900'
     - '1206355082883371049'
     - '1238588360193216695'
@@ -328,6 +334,34 @@ templateDenyReasons:
   proper-categorization:
     name: 'Proper Categorization'
     description: 'Ensure your template is categorized correctly. Misleading categorization can result in rejection.'
+soundDenyReasons:
+  offensive-or-inappropriate-content:
+    name: 'Offensive or Inappropriate Content'
+    description: 'Sounds featuring offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Ensure your sound is suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+  poor-quality-or-incomplete-sound:
+    name: 'Poor Quality or Incomplete Sound'
+    description: 'Sounds should be clear, high-quality, and complete. Submissions with poor audio quality, missing key elements, or that are not user-friendly may be rejected.'
+  misleading-or-inaccurate-information:
+    name: 'Misleading or Inaccurate Information'
+    description: "Sounds with misleading titles may be rejected. Provide clear and accurate details about your sound's purpose and content."
+  lacks-clear-focus-or-purpose:
+    name: 'Lacks Clear Focus or Purpose'
+    description: 'Sounds should have a clear focus or purpose. Submissions that are overly broad or lack a specific theme may not be accepted.'
+  advertising-and-self-promotion:
+    name: 'Advertising and Self-Promotion'
+    description: 'Sounds primarily focused on advertising or self-promotion without providing genuine value to users may not be accepted.'
+  proper-categorization:
+    name: 'Proper Categorization'
+    description: 'Ensure your sound is categorized correctly. Misleading categorization can result in rejection.'
+  sound-length:
+    name: 'Sound Length'
+    description: 'Sounds should be of appropriate length. Extremely short or excessively long sounds may not be accepted.'
+  sound-volume:
+    name: 'Sound Volume'
+    description: 'Sounds should be of appropriate volume. Extremely loud or quiet sounds may not be accepted.'
+  sound-licensing:
+    name: 'Sound Licensing'
+    description: 'Ensure your sound does not violate any copyright or intellectual property rights. Avoid using copyrighted audio, music, or sound effects without proper authorization.'
 instatus:
   page_id: 'clwx1az6k27335bhobasj52b6y'
   metric_id: 'clwx1tevy38905bhobroucjm8j'

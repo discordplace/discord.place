@@ -1,0 +1,48 @@
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, validationResult, matchedData } = require('express-validator');
+const Sound = require('@/schemas/Sound');
+const checkAuthentication = require('@/src/utils/middlewares/checkAuthentication');
+const idValidation = require('@/src/utils/validations/sounds/id');
+
+const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const S3 = new S3Client({
+  region: process.env.S3_REGION,
+  endpoint: process.env.S3_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+  }
+});
+
+module.exports = {
+  delete: [
+    useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
+    checkAuthentication,
+    param('id')
+      .isString().withMessage('ID must be a string.')
+      .custom(idValidation),
+    async (request, response) => {
+      const errors = validationResult(request);
+      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
+
+      const { id } = matchedData(request);
+
+      const sound = await Sound.findOne({ id });
+      if (!sound) return response.sendError('Sound not found.', 404);
+
+      const canDelete = request.user.id === sound.publisher.id || config.permissions.canDeleteSounds.includes(request.user.id);
+      if (!canDelete) return response.sendError('You are not allowed to delete this sounds.', 403);
+
+      const command = new DeleteObjectCommand({
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: `sounds/${sound.id}.mp3`
+      });
+
+      S3.send(command).catch(() => null);
+
+      await sound.deleteOne();
+
+      return response.status(204).end();
+    }
+  ]
+};

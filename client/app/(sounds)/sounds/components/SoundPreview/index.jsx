@@ -4,15 +4,16 @@ import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
 import { PiWaveformBold } from 'react-icons/pi';
-import { MdAccountCircle } from 'react-icons/md';
+import { MdAccountCircle, MdDownload } from 'react-icons/md';
 import { IoMdCalendar } from 'react-icons/io';
 import { toast } from 'sonner';
 import useAuthStore from '@/stores/auth';
 import likeSound from '@/lib/request/sounds/likeSound';
 import revalidateSound from '@/lib/revalidate/sound';
 import { TbLoader } from 'react-icons/tb';
+import useSearchStore from '@/stores/sounds/search';
 
-export default function SoundPreview({ sound }) {
+export default function SoundPreview({ sound, overridedSort }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const [liked, setLiked] = useState(sound.isLiked);
   const [loading, setLoading] = useState(false);
@@ -41,6 +42,32 @@ export default function SoundPreview({ sound }) {
 
   const currentlyPlaying = useGeneralStore(state => state.sounds.currentlyPlaying);
 
+  const storedSort = useSearchStore(state => state.sort);
+  const sort = overridedSort || storedSort;
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    compactDisplay: 'short'
+  });
+
+  const info = [
+    {
+      icon: MdDownload,
+      value: formatter.format(sound.downloadsCount),
+      condition: sort === 'Downloads'
+    },
+    {
+      icon: PiHeartFill,
+      value: formatter.format(sound.likesCount),
+      condition: sort === 'Likes'
+    },
+    {
+      icon: IoMdCalendar,
+      value: new Date(sound.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+      condition: sort === 'Newest' || sort === 'Oldest'
+    }
+  ];
+
   return (
     <div className={cn(
       'flex flex-col gap-y-4 rounded-3xl overflow-hidden w-full h-full bg-secondary border-2 transition-all p-6',
@@ -62,14 +89,18 @@ export default function SoundPreview({ sound }) {
               </span>
             </div>
 
-            <div className='flex items-center gap-x-2'>
-              <IoMdCalendar />
-            
-              <span className='text-xs'>
-                {new Date(sound.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-              </span>
-            </div>
-            
+            {info.filter(({ condition }) => condition === true).map(({ icon: Icon, value }) => (
+              <div
+                className='flex items-center gap-x-2'
+                key={`sound-${sound.id}-info`}
+              >
+                <Icon />
+                
+                <span className='text-xs'>
+                  {value}
+                </span>
+              </div>
+            ))}            
           </div>
         </div>
 

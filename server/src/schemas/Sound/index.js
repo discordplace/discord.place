@@ -65,6 +65,7 @@ const SoundSchema = new Schema({
         name: this.name,
         categories: this.categories,
         likesCount: this.likers.length,
+        downloadsCount: this.downloads,
         isLiked,
         approved: this.approved,
         createdAt: this.createdAt

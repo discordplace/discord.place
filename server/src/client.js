@@ -24,6 +24,7 @@ const Bot = require('@/schemas/Bot');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const Template = require('@/schemas/Template');
+const Sound = require('@/schemas/Sound');
 const User = require('@/schemas/User');
 const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
@@ -327,6 +328,7 @@ module.exports = class Client {
     const totalBots = await Bot.countDocuments();
     const totalEmojis = await Emoji.countDocuments();
     const totalTemplates = await Template.countDocuments();
+    const totalSounds = await Sound.countDocuments();
     const emojiPacks = await EmojiPack.find();
     let totalEmojiPacks = 0;
 
@@ -338,6 +340,7 @@ module.exports = class Client {
       bots: totalBots,
       emojis: totalEmojis + totalEmojiPacks,
       templates: totalTemplates,
+      sounds: totalSounds,
       users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
       guilds: client.guilds.cache.size
     }).save();

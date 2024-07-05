@@ -15,7 +15,9 @@ import { useEffect } from 'react';
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Content() {
-  const { category, setCategory, sort, setSort, loading, fetchSounds } = useSearchStore(useShallow(state => ({
+  const { search, setPage, category, setCategory, sort, setSort, loading, fetchSounds } = useSearchStore(useShallow(state => ({
+    search: state.search,
+    setPage: state.setPage,
     category: state.category,
     setCategory: state.setCategory,
     sort: state.sort,
@@ -70,9 +72,9 @@ export default function Content() {
           <SearchInput
             placeholder='Search for a sound by name...'
             loading={false}
-            search={''}
-            fetchData={() => {}}
-            setPage={() => {}}
+            search={search}
+            fetchData={fetchSounds}
+            setPage={setPage}
             animationDelay={0.3}
           />
 
