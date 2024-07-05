@@ -136,6 +136,29 @@ export default function ContentPolicy() {
           </li>
         </ul>
       </p>
+
+      <h3>
+        Sounds
+      </h3>
+
+      <p>
+        All sounds listed on this website are created by users, discord.place provides a platform for users to publish sound files publicly.
+      </p>
+
+      <ul>
+        <li>
+          By adding a sound you agree that you have permission to add the sound on the copyright holders behalf.
+        </li>
+        <li>
+          By adding a sound you agree to giving us unrevokable permission to display, license and redistribute the sound in any manner we see fit.
+        </li>
+        <li>
+          By adding a sound you agree that the content of the sound is not illegal, hateful, discriminatory or otherwise harmful to any person or group.
+        </li>
+        <li>
+          discord.place reserves the right to remove sounds from the website at any time, without notice, for any reason, or for no reason, in its sole discretion.
+        </li>
+      </ul>
       
       <h2>
         2. Reporting Content
@@ -181,6 +204,14 @@ export default function ContentPolicy() {
         discord.place takes harmful content very seriously. If any template is listed on this website that is harmful or copying your server without permission, we will take action to ensure the template is removed as soon as possible.
       </p>
       
+      <h3>
+        Sounds
+      </h3>
+
+      <p>
+        discord.place takes harmful content very seriously. If any sound is listed on this website that is harmful or copying your sound without permission, we will take action to ensure the sound is removed as soon as possible.
+      </p>
+
       <h2>
         3. Contact Us
       </h2>

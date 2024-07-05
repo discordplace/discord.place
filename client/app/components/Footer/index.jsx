@@ -66,6 +66,10 @@ export default function Footer() {
         {
           label: 'Templates',
           href: '/templates'
+        },
+        {
+          label: 'Sounds',
+          href: '/sounds'
         }
       ]
     },
