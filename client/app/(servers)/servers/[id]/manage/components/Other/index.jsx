@@ -33,7 +33,7 @@ export default function Other({ category, setCategory, keywords, setKeywords, vo
           </label>
 
           <p className='text-sm text-tertiary'>
-            Select the category that your server belongs to. This will help users find your bot.
+            Select the category that your server belongs to. This will help users find your server.
           </p>
 
           <div className='flex flex-wrap items-center gap-2 mt-2'>

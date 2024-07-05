@@ -28,8 +28,8 @@ export default function EssentialInformation({ description, setDescription, invi
 
         <Input
           label='Invite URL'
-          description='The URL that users can use to invite your bot to their server.'
-          placeholder='Paste your bot invite URL here.'
+          description='The URL that users can use to join your server. Make sure it is a valid invite URL.'
+          placeholder='Paste your server invite URL here.'
           onChange={event => setInviteURL(event.target.value)}
           value={inviteURL}
         />
