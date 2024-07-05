@@ -6,9 +6,39 @@ import useGeneralStore from '@/stores/general';
 import { PiWaveformBold } from 'react-icons/pi';
 import { MdAccountCircle } from 'react-icons/md';
 import { IoMdCalendar } from 'react-icons/io';
+import { toast } from 'sonner';
+import useAuthStore from '@/stores/auth';
+import likeSound from '@/lib/request/sounds/likeSound';
+import revalidateSound from '@/lib/revalidate/sound';
+import { TbLoader } from 'react-icons/tb';
 
 export default function SoundPreview({ sound }) {
-  const [isLiked, setIsLiked] = useState(sound.isLiked);
+  const loggedIn = useAuthStore(state => state.loggedIn);
+  const [liked, setLiked] = useState(sound.isLiked);
+  const [loading, setLoading] = useState(false);
+
+  const handleLike = () => {
+    if (!loggedIn) return toast.error('You must be logged in to like profiles!');
+
+    setLoading(true);
+
+    toast.promise(likeSound(sound.id), {
+      loading: liked ? `Unliking sound ${sound.name}...` : `Liking sound ${sound.name}...`,
+      success: isLiked => {
+        setLiked(isLiked);
+        setLoading(false);
+        revalidateSound(sound.id);
+
+        return isLiked ? `Liked sound ${sound.name}!` : `Unliked sound ${sound.name}!`;
+      },
+      error: error => {
+        setLoading(false);
+
+        return error;
+      }
+    });
+  };
+
   const currentlyPlaying = useGeneralStore(state => state.sounds.currentlyPlaying);
 
   return (
@@ -44,10 +74,17 @@ export default function SoundPreview({ sound }) {
         </div>
 
         <button
-          className='text-lg hover:opacity-60'
-          onClick={() => setIsLiked(!isLiked)}
+          className='text-lg hover:opacity-60 disabled:pointer-events-none disabled:opacity-60'
+          onClick={handleLike}
+          disabled={loading}
         >
-          {isLiked ? <PiHeartFill /> : <PiHeart />}
+          {loading ? (
+            <TbLoader className='animate-spin' />
+          ) : liked ? (
+            <PiHeartFill />
+          ) : (
+            <PiHeart />
+          )}
         </button>
       </div>
 

@@ -238,6 +238,9 @@ quarantineRestrictions:
   'SOUNDS_CREATE':
     available_to:
       - 'USER_ID'
+  'SOUNDS_LIKE':
+    available_to:
+      - 'USER_ID'
 quarantineLogsChannelId: '1226257480112406599'
 customHostnames:
   - 'dsc.wtf'

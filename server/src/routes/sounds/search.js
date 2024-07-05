@@ -54,7 +54,7 @@ module.exports = {
         total,
         page,
         limit,
-        sounds: sounds.map(template => template.toPubliclySafe())
+        sounds: sounds.map(sound => sound.toPubliclySafe({ isLiked: request.user ? sound.likers.includes(request.user.id) : false}))
       });
     }
   ]
