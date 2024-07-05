@@ -7,6 +7,7 @@ const EmojiPack = require('@/schemas/Emoji/Pack');
 const Profile = require('@/schemas/Profile');
 const Server = require('@/schemas/Server');
 const Template = require('@/schemas/Template');
+const Sounds = require('@/schemas/Sound');
 
 const cooldowns = new Discord.Collection();
 
@@ -26,13 +27,14 @@ module.exports = {
 
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
-    const [botsCount, emojisCount, emojiPacksCount, profilesCount, serversCount, templatesCount] = await Promise.all([
+    const [botsCount, emojisCount, emojiPacksCount, profilesCount, serversCount, templatesCount, soundsCount] = await Promise.all([
       Bot.countDocuments({ verified: true }),
       Emoji.countDocuments({ approved: true }),
       EmojiPack.countDocuments({ approved: true }),
       Profile.countDocuments(),
       Server.countDocuments(),
-      Template.countDocuments()
+      Template.countDocuments(),
+      Sounds.countDocuments()
     ]);
 
     const uptimeHumanized = moment.duration(os.uptime() * 1000).humanize();
@@ -70,7 +72,8 @@ module.exports = {
 - Emoji Packs: **${emojiPacksCount}**
 - Profiles: **${profilesCount}**  
 - Servers: **${serversCount}**
-- Templates: **${templatesCount}**`
+- Templates: **${templatesCount}**
+- Sounds: **${soundsCount}**`
         }
       ]);
     
