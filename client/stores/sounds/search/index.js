@@ -7,7 +7,7 @@ const useSearchStore = create((set, get) => ({
   setLoading: loading => set({ loading }),
   search: '',
   setSearch: search => set({ search }),
-  sort: 'Downloads',
+  sort: 'Newest',
   setSort: sort => {
     set({ sort, page: 1 });
 

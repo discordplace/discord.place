@@ -32,7 +32,7 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { query, category = 'All', sort = 'Popular', limit = 9, page = 1 } = request.query;
+      const { query, category = 'All', sort = 'Newest', limit = 9, page = 1 } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, approved: true } : { approved: true };
       const findQuery = query ? { 
