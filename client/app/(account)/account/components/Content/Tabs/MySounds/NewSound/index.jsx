@@ -113,7 +113,19 @@ export default function NewSound() {
                 const file = event.dataTransfer.files[0];
                 if (file) {
                   if (file.type !== 'audio/mpeg') return toast.error('Only mp3 files are allowed.');
-                  setFile(file);
+
+                  const reader = new FileReader();
+                  reader.onload = () => {
+                    const audio = new Audio(reader.result);
+                    audio.onloadedmetadata = () => {
+                      if (audio.duration >= 5) return toast.error('Audio file must be less than 5 seconds.');
+                      if (file.size >= 1024 * 1024) return toast.error('Audio file must be less than 1MB.');
+
+                      setFile(file);
+                    };
+
+                    audio.src = reader.result;
+                  };
                 }
               }}
             >
@@ -124,7 +136,24 @@ export default function NewSound() {
                 accept=".mp3"
                 onChange={event => {
                   const file = event.target.files[0];
-                  if (file) setFile(file);
+                  if (file) {
+                    if (file.type !== 'audio/mpeg') return toast.error('Only mp3 files are allowed.');
+
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      const audio = new Audio(reader.result);
+                      audio.onloadedmetadata = () => {
+                        if (audio.duration >= 5) return toast.error('Audio file must be less than 5 seconds.');
+                        if (file.size >= 1024 * 1024) return toast.error('Audio file must be less than 1MB.');
+
+                        setFile(file);
+                      };
+
+                      audio.src = reader.result;
+                    };
+
+                    reader.readAsDataURL(file);
+                  }
                 }}
               />
 
