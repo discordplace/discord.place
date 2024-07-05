@@ -1,5 +1,4 @@
 const { rateLimit } = require('express-rate-limit');
-const MongoStore = require('rate-limit-mongo');
 
 module.exports = function ({ maxRequests, perMinutes }) {
   const limiter = rateLimit({
@@ -16,11 +15,6 @@ module.exports = function ({ maxRequests, perMinutes }) {
       error: 'Too many requests, please try again later.',
       status: 429
     },
-    store: new MongoStore({
-      uri: process.env.MONGO_URL,
-      expireTimeMs: perMinutes * 60 * 1000,
-      errorHandler: logger.error.bind(null, '[Rate Limit Mongo Error]')
-    }),
     skipFailedRequests: true,
     skip: request => {
       if (process.env.NODE_ENV === 'development') return true;

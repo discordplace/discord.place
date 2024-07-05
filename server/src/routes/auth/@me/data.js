@@ -12,6 +12,7 @@ const Reminder = require('@/schemas/Reminder');
 const bodyParser = require('body-parser');
 const { body, validationResult, matchedData } = require('express-validator');
 const Deny = require('@/src/schemas/Bot/Deny');
+const Sound = require('@/schemas/Sound');
 
 const validKeys = [
   'timeouts',
@@ -19,6 +20,7 @@ const validKeys = [
   'bots',
   'emojis',
   'templates',
+  'sounds',
   'reminders'
 ];
 
@@ -48,11 +50,12 @@ module.exports = {
         Emoji.countDocuments({ 'user.id': request.user.id }),
         EmojiPack.countDocuments({ 'user.id': request.user.id }),
         Template.countDocuments({ 'user.id': request.user.id }),
+        Sound.countDocuments({ 'publisher.id': request.user.id }),
         Reminder.countDocuments({ 'user.id': request.user.id }),
         VoteReminder.countDocuments({ 'user.id': request.user.id })
       ];
 
-      const [botTimeouts, serverTimeouts, bots, emojis, emojiPacks, templates, reminders, voteReminders] = await Promise.all(bulkOperations);
+      const [botTimeouts, serverTimeouts, bots, emojis, emojiPacks, templates, sounds, reminders, voteReminders] = await Promise.all(bulkOperations);
       
       responseData.counts = {
         timeouts: botTimeouts + serverTimeouts,
@@ -62,6 +65,7 @@ module.exports = {
         }))).reduce((a, b) => a + b, 0),
         bots,
         emojis: emojis + emojiPacks,
+        sounds,
         templates,
         reminders: reminders + voteReminders
       };
@@ -160,6 +164,14 @@ module.exports = {
 
         Object.assign(responseData, {
           templates: await Promise.all(templates.map(async template => await template.toPubliclySafe()))
+        });
+      }
+
+      if (keys.includes('sounds')) {
+        const sounds = await Sound.find({ 'publisher.id': request.user.id });
+
+        Object.assign(responseData, {
+          sounds: sounds.map(sound => sound.toPubliclySafe({ isLiked: sound.likers.includes(request.user.id) }))
         });
       }
 

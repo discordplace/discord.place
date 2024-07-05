@@ -34,7 +34,7 @@ export default function MyTemplates() {
         </h2>
 
         <p className='text-sm text-tertiary'>
-          Here, you can see the emojis that you have listed on discord.place.
+          Here, you can see the templates that you have listed on discord.place.
         </p>
 
         {(data.templates || []).length === 0 ? (

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const EvaluateResult = new Schema({
+const EvaluateResultSchema = new Schema({
   id: {
     type: String,
     required: true
@@ -22,4 +22,4 @@ const EvaluateResult = new Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('EvaluateResult', EvaluateResult);
+module.exports = mongoose.model('EvaluateResult', EvaluateResultSchema);

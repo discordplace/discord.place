@@ -1,14 +1,14 @@
 import { CgProfile } from 'react-icons/cg';
-import { MdEmojiEmotions, MdEvent, MdKeyboardVoice, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
+import { MdDownload, MdEmojiEmotions, MdEvent, MdKeyboardVoice, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
 import { RiCommunityFill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCat, FaCompass, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers } from 'react-icons/fa';
-import { AiFillTool } from 'react-icons/ai';
+import { AiFillSound, AiFillTool } from 'react-icons/ai';
 import { BiSolidCategory, BiSolidHappy, BiSolidMusic } from 'react-icons/bi';
-import { IoMusicalNotesSharp, IoGameController, IoLanguage } from 'react-icons/io5';
+import { IoMusicalNotesSharp, IoGameController, IoLanguage, IoHeart } from 'react-icons/io5';
 import { GiTwoCoins } from 'react-icons/gi';
 import { ImUser } from 'react-icons/im';
 import { HiDesktopComputer, HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import { HiMiniPaintBrush } from 'react-icons/hi2';
+import { HiMiniExclamationCircle, HiMiniPaintBrush } from 'react-icons/hi2';
 import { RiInstagramFill } from 'react-icons/ri';
 import { MdMenuBook } from 'react-icons/md';
 import { TiPlus, TiStar } from 'react-icons/ti';
@@ -17,6 +17,7 @@ import { TbBrush, TbCategoryFilled, TbSquareRoundedChevronUp } from 'react-icons
 import { BsThreeDots } from 'react-icons/bs';
 import { FaRegImage } from 'react-icons/fa6';
 import { IoIosChatboxes } from 'react-icons/io';
+import { PiWaveformBold } from 'react-icons/pi';
 
 const config = {
   supportInviteUrl: 'https://invite.discord.place',
@@ -68,6 +69,11 @@ const config = {
       title: 'Templates',
       href: '/templates',
       icon: HiTemplate
+    },
+    {
+      title: 'Sounds',
+      href: '/sounds',
+      icon: PiWaveformBold
     }
   ],
   errorMessages: {
@@ -144,6 +150,12 @@ const config = {
     'Event',
     'Other'
   ],
+  soundCategories: [
+    'Memes',
+    'Loud',
+    'NSFW',
+    'Other'
+  ],
   emojiMaxCategoriesLength: 4,
   packagesMinEmojisLength: 4,
   packagesMaxEmojisLength: 9,
@@ -162,6 +174,7 @@ const config = {
   botTestGuildId: '1239320384441159751',
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,
+  getSoundURL: id => `https://cdn.discord.place/sounds/${id}.mp3`,
   getEmojiIdFromURL: url => {
     const match = url.match(/emojis\/(?:packages\/(?<packageId>[a-zA-Z0-9-]+)\/)?(?<emojiId>[a-zA-Z0-9-]+)\.(?<type>gif|png)/);
     if (!match) return null;
@@ -225,6 +238,13 @@ const config = {
     'Event': <MdEvent />,
     'Other': <BsThreeDots />
   },
+  soundCategoriesIcons: {
+    'All': <BiSolidCategory />,
+    'Memes': <MdEmojiEmotions />,
+    'Loud': <AiFillSound />,
+    'NSFW': <HiMiniExclamationCircle />,
+    'Other': <BsThreeDots />
+  },
   sortIcons: {
     'Servers': <FaCompass />,
     'Votes': <TbSquareRoundedChevronUp />,
@@ -235,7 +255,9 @@ const config = {
     'Oldest': <HiSortDescending />,
     'Boosts': <TiStar />,
     'MostReviewed': <TiStar />,
-    'Popular': <TiStar />
+    'Popular': <TiStar />,
+    'Downloads': <MdDownload />,
+    'Likes': <IoHeart />
   },  
   customHostnames: ['dsc.wtf', 'dsc.dog', 'dsc.mom'],
   emojisDenyReasons: {

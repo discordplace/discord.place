@@ -22,6 +22,8 @@ export const useAccountStore = create(set => ({
   setCurrentlyAddingServer: currentlyAddingServer => set({ currentlyAddingServer }),
   currentlyAddingBot: false,
   setCurrentlyAddingBot: currentlyAddingBot => set({ currentlyAddingBot }),
+  currentlyAddingSound: false,
+  setCurrentlyAddingSound: currentlyAddingSound => set({ currentlyAddingSound }),
   isCollapsed: false,
   setIsCollapsed: isCollapsed => set({ isCollapsed })
 }));

@@ -112,12 +112,12 @@ templateMaxNameLength: 32
 templateMinDescriptionLength: 32
 templateMaxDescriptionLength: 256
 templateMaxCategoriesLength: 3
+soundNameMaxLength: 64
 botMaxExtraOwners: 4
 roles:
   moderator: '1206354879321210900'
   premium: '1252335063123628084'
 emojiCategories:
-  - 'All'
   - 'Gaming'
   - 'Anime'
   - 'Memes'
@@ -155,7 +155,6 @@ botCategories:
   - 'Anime & Manga'
   - 'Other'
 templateCategories: 
-  - 'All'
   - 'Chat'
   - 'Design'
   - 'Music'
@@ -166,8 +165,14 @@ templateCategories:
   - 'Roleplay'
   - 'Event'
   - 'Other'
+soundCategories:
+  - 'Memes'
+  - 'Loud'
+  - 'NSFW'
+  - 'Other'
 emojiMaxCategoriesLength: 4
 emojiQueueChannelId: '1210805683751223377'
+soundQueueChannelId: '1258839441020293160'
 reviewQueueChannelId: '1213842162828054538'
 botQueueChannelId: '1236369862259900566'
 templateQueueChannelId: '1247743275914366987'
@@ -230,6 +235,9 @@ quarantineRestrictions:
     available_to:
       - 'USER_ID'
       - 'GUILD_ID'
+  'SOUNDS_CREATE':
+    available_to:
+      - 'USER_ID'
 quarantineLogsChannelId: '1226257480112406599'
 customHostnames:
   - 'dsc.wtf'
