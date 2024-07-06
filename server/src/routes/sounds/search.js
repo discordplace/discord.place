@@ -63,6 +63,8 @@ module.exports = {
         break;
       }
 
+      sounds = sounds.slice(skip, skip + limit);
+      
       const total = await Sound.countDocuments(findQuery);
       const maxReached = skip + sounds.length >= total;
 
