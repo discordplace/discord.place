@@ -35,6 +35,7 @@ module.exports = {
       const { query, category = 'All', sort = 'Newest', limit = 9, page = 1 } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, approved: true } : { approved: true };
+      const baseSort = { createdAt: -1 };
       const findQuery = query ? { 
         ...baseFilter, 
         $or: [
@@ -43,13 +44,7 @@ module.exports = {
           { name: { $regex: query, $options: 'i' } }
         ]
       } : baseFilter;
-      const sortQuery = sort === 'Downloads' ?
-        { downloads: -1 } :
-        sort === 'Likes' ?
-          { 'likers': -1 } :
-          sort === 'Newest' ?
-            { createdAt: -1 } :
-            { createdAt: 1 };
+      const sortQuery = sort === 'Downloads' ? { ...baseSort, downloads: -1 } : sort === 'Likes' ? { ...baseSort, likers: -1 } : sort === 'Oldest' ? { createdAt: 1 } : baseSort;
 
       const sounds = await Sound.find(findQuery).sort(sortQuery).skip(skip).limit(limit);
       const total = await Sound.countDocuments(findQuery);
