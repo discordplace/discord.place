@@ -24,7 +24,7 @@ export default function MonthlyVotesGraph({ server }) {
 
         <Tooltip
           side={isMobile ? 'bottom' : 'right'}
-          content={`${isIncreased ? 'Increased' : isDecreased ? 'Decreased' : 'No change'} since yesterday (${difference})`}
+          content={`${isIncreased ? 'Increased' : isDecreased ? 'Decreased' : 'No change'} since last month (${difference})`}
         >
           <div className={cn(
             'select-none flex w-max gap-x-1 px-2 items-center py-1 text-xs font-semibold rounded-lg',
