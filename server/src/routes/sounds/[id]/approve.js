@@ -58,7 +58,7 @@ module.exports = {
           .addComponents(
             new Discord.ButtonBuilder()
               .setStyle(Discord.ButtonStyle.Link)
-              .setURL(`${config.frontendUrl}/sounds/${id}/preview`)
+              .setURL(`${config.frontendUrl}/sounds/${id}`)
               .setLabel('View Sound on discord.place')
           )
       ];
