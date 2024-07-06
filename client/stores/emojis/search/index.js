@@ -32,9 +32,17 @@ const useSearchStore = create((set, get) => ({
       });
   },
   category: 'All',
-  setCategory: category => set({ category }),
+  setCategory: category => {
+    set({ category, page: 1 });
+  
+    get().fetchEmojis(get().search);
+  },
   sort: 'Newest',
-  setSort: sort => set({ sort })
+  setSort: sort => {
+    set({ sort, page: 1 });
+
+    get().fetchEmojis(get().search);
+  }
 }));
 
 export default useSearchStore;
