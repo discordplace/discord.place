@@ -43,11 +43,10 @@ module.exports = {
           { name: { $regex: query, $options: 'i' } }
         ]
       } : baseFilter;
-      // based on downloads - likers length? - createdAt - createdAt
       const sortQuery = sort === 'Downloads' ?
         { downloads: -1 } :
         sort === 'Likes' ?
-          { 'likers.length': -1 } :
+          { 'likers': -1 } :
           sort === 'Newest' ?
             { createdAt: -1 } :
             { createdAt: 1 };
