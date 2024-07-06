@@ -35,7 +35,6 @@ module.exports = {
       const { query, category = 'All', sort = 'Newest', limit = 9, page = 1 } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, approved: true } : { approved: true };
-      const baseSort = { createdAt: -1 };
       const findQuery = query ? { 
         ...baseFilter, 
         $or: [
@@ -44,9 +43,26 @@ module.exports = {
           { name: { $regex: query, $options: 'i' } }
         ]
       } : baseFilter;
-      const sortQuery = sort === 'Downloads' ? { ...baseSort, downloads: -1 } : sort === 'Likes' ? { ...baseSort, likers: -1 } : sort === 'Oldest' ? { createdAt: 1 } : baseSort;
 
-      const sounds = await Sound.find(findQuery).sort(sortQuery).skip(skip).limit(limit);
+      const foundSounds = await Sound.find(findQuery);
+
+      let sounds;
+
+      switch (sort) {
+      case 'Downloads':
+        sounds = foundSounds.sort((a, b) => b.downloads - a.downloads);
+        break;
+      case 'Likes':
+        sounds = foundSounds.sort((a, b) => b.likers.length - a.likers.length);
+        break;
+      case 'Newest':
+        sounds = foundSounds.sort((a, b) => b.createdAt - a.createdAt);
+        break;
+      case 'Oldest':
+        sounds = foundSounds.sort((a, b) => a.createdAt - b.createdAt);
+        break;
+      }
+
       const total = await Sound.countDocuments(findQuery);
       const maxReached = skip + sounds.length >= total;
 
