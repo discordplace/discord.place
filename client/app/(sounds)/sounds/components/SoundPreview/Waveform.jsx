@@ -77,7 +77,6 @@ export default function Waveform({ id }) {
         cursorWidth={0}
         cursorHeight={20}
         dragToSeek={true}
-        backend='WebAudio'
         url={config.getSoundURL(id)}
         onReady={wavesurfer => {
           setTotalTime(wavesurfer.getDuration());
