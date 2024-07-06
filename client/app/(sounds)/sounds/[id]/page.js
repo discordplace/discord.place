@@ -8,6 +8,14 @@ export async function generateMetadata({ params }) {
 
   return {
     title: `Sound ${sound.name}`,
+    keywords: [
+      sound.name,
+      `discord sound ${sound.name}`,
+      `discord soundboard ${sound.name}`,
+      `discord ${sound.name} download`,
+      `discord ${sound.name} upload`,
+      `${sound.name} download`
+    ],
     openGraph: {
       title: `Discord Place - Sound ${sound.name}`
     }
