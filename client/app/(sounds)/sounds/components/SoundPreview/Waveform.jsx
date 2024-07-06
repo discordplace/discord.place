@@ -41,9 +41,7 @@ export default function Waveform({ id }) {
     if (!wavesurfer) return;
 
     wavesurfer.setVolume(volume);
-  
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [volume]);
+  }, [volume, wavesurfer]);
 
   return (
     <div className='flex flex-col'>
