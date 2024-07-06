@@ -1,9 +1,13 @@
 'use client';
 
+import useGeneralStore from '@/stores/general';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 
-export default function VolumePopover({ volume, setVolume }) {
+export default function VolumePopover() {
+  const volume = useGeneralStore(state => state.sounds.volume);
+  const setVolume = useGeneralStore(state => state.sounds.setVolume);
+  
   return (
     <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger className='text-tertiary hover:text-secondary'>

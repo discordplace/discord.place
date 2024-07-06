@@ -71,7 +71,7 @@ export default function SoundPreview({ sound, overridedSort }) {
   return (
     <div className={cn(
       'flex flex-col gap-y-4 rounded-3xl overflow-hidden w-full h-max bg-secondary border-2 transition-all p-6',
-      currentlyPlaying.includes(sound.id) ? 'border-purple-500' : 'border-primary'
+      currentlyPlaying === sound.id ? 'border-purple-500' : 'border-primary'
     )}>
       <div className="flex items-start justify-between">
         <div className="flex flex-col max-w-[90%]">
