@@ -58,7 +58,7 @@ export default function Content({ sound }) {
           </div>
         )}
 
-        <div className='flex flex-col items-center gap-4 lg:flex-row'>
+        <div className='flex flex-col w-full h-full gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
             <SoundPreview
               sound={sound}
@@ -66,68 +66,62 @@ export default function Content({ sound }) {
             />
           </motion.div>
 
-          <div className='grid w-full grid-cols-2 grid-rows-2 gap-4 sm:grid-cols-3'>
-            <div className='flex flex-col items-center justify-center w-full px-2 rounded-md bg-secondary gap-y-2 h-[82px]'>
-              <h1 className='text-base font-semibold text-tertiary'>
-                Name
-              </h1>
+          <div className='flex flex-col flex-1 w-full gap-y-4'>
+            <h2 className='text-xl font-semibold text-primary'>
+              About {sound.name}
+            </h2>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                {sound.name}
-              </span>
-            </div>
+            <div className='flex flex-col gap-y-2'>
+              <div className='flex items-center justify-between w-full'>
+                <span className='text-sm font-medium text-tertiary'>Uploaded At</span>
 
-            <div className='flex flex-col items-center justify-center w-full px-2 rounded-md bg-secondary gap-y-2 h-[85px]'>
-              <h1 className='text-base font-semibold text-tertiary'>
-                Uploaded
-              </h1>
-              
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                {new Date(sound.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/,/g,'')}
-              </span>
-            </div>
+                <span className='text-sm font-semibold text-primary'>
+                  {new Date(sound.createdAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
+                </span>
+              </div>
 
-            <div className='flex flex-col items-center justify-center w-full px-2 rounded-md bg-secondary gap-y-2 h-[85px]'>
-              <h1 className='text-base font-semibold text-tertiary'>
-                Downloads
-              </h1>
-              
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                <AnimatedCount data={sound.downloadsCount} />
-              </span>
-            </div>
+              <div className='flex items-center justify-between w-full'>
+                <span className='text-sm font-medium text-tertiary'>Downloads</span>
 
-            <div className='flex flex-col items-center justify-center w-full px-2 rounded-md bg-secondary gap-y-2 h-[85px]'>
-              <h1 className='text-base font-semibold text-tertiary'>
-                Likes
-              </h1>
+                <span className='text-sm font-semibold text-primary'>
+                  <AnimatedCount data={sound.downloadsCount} />
+                </span>
+              </div>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                <AnimatedCount data={sound.likesCount} />
-              </span>
-            </div>
+              <div className='flex items-center justify-between w-full'>
+                <span className='text-sm font-medium text-tertiary'>Likes</span>
 
-            <div className='flex flex-col items-center justify-center w-full px-2 rounded-md bg-secondary gap-y-2 h-[85px]'>
-              <h1 className='text-base font-semibold text-tertiary'>
-                Categories
-              </h1>
+                <span className='text-sm font-semibold text-primary'>
+                  <AnimatedCount data={sound.likesCount} />
+                </span>
+              </div>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                {sound.categories.join(', ')}
-              </span>
-            </div>
+              <div className='flex items-center justify-between w-full'>
+                <span className='text-sm font-medium text-tertiary'>Categories</span>
 
-            <div className='flex flex-col items-center justify-center w-full px-2 rounded-md bg-secondary gap-y-2 h-[85px]'>
-              <h1 className='text-base font-semibold text-tertiary'>
-                Publisher
-              </h1>
+                <div className='flex items-center gap-2'>
+                  {sound.categories.map(category => (
+                    <span
+                      key={category}
+                      className='flex items-center text-sm font-semibold rounded-lg select-none gap-x-1 text-tertiary'
+                    >
+                      {config.soundCategoriesIcons[category]}
+                      {category}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-              <Link
-                className='flex items-center text-sm text-center hover:opacity-70 text-primary gap-x-1'
-                href={`/profile/u/${sound.publisher.id}`}
-              >
-                @{sound.publisher.username}
-              </Link>
+              <div className='flex items-center justify-between w-full'>
+                <span className='text-sm font-medium text-tertiary'>Publisher</span>
+
+                <Link
+                  href={`/profile/u/${sound.publisher.id}`}
+                  className='flex items-center text-sm font-semibold transition-opacity gap-x-1 text-primary hover:opacity-70'
+                >
+                  @{sound.publisher.username}
+                </Link>
+              </div>
             </div>
           </div>
         </div>
