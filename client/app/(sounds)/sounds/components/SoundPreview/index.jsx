@@ -19,7 +19,7 @@ export default function SoundPreview({ sound, overridedSort }) {
   const [loading, setLoading] = useState(false);
 
   const handleLike = () => {
-    if (!loggedIn) return toast.error('You must be logged in to like profiles!');
+    if (!loggedIn) return toast.error('You must be logged in to like sounds!');
 
     setLoading(true);
 
