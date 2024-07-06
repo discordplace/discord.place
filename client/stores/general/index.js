@@ -27,6 +27,12 @@ export const useGeneralStore = create(set => ({
     selectedEmojiURL: '',
     setSelectedEmojiURL: selectedEmojiURL => set(state => ({ uploadEmojiToDiscordModal: { ...state.uploadEmojiToDiscordModal, selectedEmojiURL } }))
   },
+  uploadSoundToDiscordModal: {
+    selectedGuildId: '',
+    setSelectedGuildId: selectedGuildId => set(state => ({ uploadSoundToDiscordModal: { ...state.uploadSoundToDiscordModal, selectedGuildId } })),
+    selectedSoundId: '',
+    setSelectedSoundId: selectedSoundId => set(state => ({ uploadSoundToDiscordModal: { ...state.uploadSoundToDiscordModal, selectedSoundId } }))
+  },
   sounds: {
     currentlyPlaying: '',
     setCurrentlyPlaying: soundId => set(state => ({ sounds: { ...state.sounds, currentlyPlaying: soundId } })),

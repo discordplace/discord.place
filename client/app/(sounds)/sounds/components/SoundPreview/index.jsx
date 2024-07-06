@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PiHeart, PiHeartFill } from 'react-icons/pi';
 import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
 import cn from '@/lib/cn';
@@ -12,8 +12,18 @@ import likeSound from '@/lib/request/sounds/likeSound';
 import revalidateSound from '@/lib/revalidate/sound';
 import { TbLoader } from 'react-icons/tb';
 import useSearchStore from '@/stores/sounds/search';
+import Tooltip from '@/app/components/Tooltip';
+import useThemeStore from '@/stores/theme';
+import { FaCloudUploadAlt } from 'react-icons/fa';
+import UploadSoundToDiscordModal from '@/app/(sounds)/sounds/components/SoundPreview/UploadSoundToDiscordModal';
+import getSoundUploadableGuilds from '@/lib/request/auth/getSoundUploadableGuilds';
+import uploadSoundToGuild from '@/lib/request/sounds/uploadSoundToGuild';
+import confetti from '@/lib/lotties/confetti.json';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
+import Lottie from 'react-lottie';
 
-export default function SoundPreview({ sound, overridedSort }) {
+export default function SoundPreview({ sound, overridedSort, showUploadToGuildButton }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const [liked, setLiked] = useState(sound.isLiked);
   const [loading, setLoading] = useState(false);
@@ -68,11 +78,133 @@ export default function SoundPreview({ sound, overridedSort }) {
     }
   ];
 
+  const theme = useThemeStore(state => state.theme);
+
+  const [uploadToDiscordButtonLoading, setUploadToDiscordButtonLoading] = useState(false);
+  const [uploadableGuilds, setUploadableGuilds] = useState(null);
+  const [renderConfetti, setRenderConfetti] = useState(false);
+
+  function uploadToDiscord() {
+    setUploadToDiscordButtonLoading(true);
+
+    getSoundUploadableGuilds()
+      .then(guilds => {
+        setUploadableGuilds(guilds.map(guild => ({
+          id: guild.id,
+          name: guild.name,
+          icon_url: guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.${guild.icon.startsWith('a_') ? 'gif' : 'png'}` : null,
+          bot_in_guild: guild.bot_in_guild
+        })));
+      })
+      .catch(toast.error)
+      .finally(() => setUploadToDiscordButtonLoading(false));
+  }
+
+  function continueUploadSoundToGuild(guildId) {
+    if (!guildId) {
+      toast.error('Please select a server to upload the sound to.');
+      return;
+    }
+
+    disableButton('upload-sound-to-discord', 'upload');
+    console.log(sound.id, guildId);
+
+    toast.promise(uploadSoundToGuild(sound.id, guildId), {
+      loading: `Sound ${sound.name} is being uploaded to guild...`,
+      success: () => {
+        closeModal('upload-sound-to-discord');
+        setRenderConfetti(true);
+        revalidateSound(sound.id);
+
+        return 'Sound uploaded successfully!';
+      },
+      error: error => {
+        enableButton('upload-sound-to-discord', 'upload');
+
+        return error;
+      }
+    });
+  }
+
+  const { openModal, openedModals, updateModal, closeModal, disableButton, enableButton } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    openedModals: state.openedModals,
+    updateModal: state.updateModal,
+    closeModal: state.closeModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton
+  })));
+
+  const selectedGuildId = useGeneralStore(state => state.uploadSoundToDiscordModal.selectedGuildId);
+
+  useEffect(() => {
+    if (!uploadableGuilds) return;
+    if (openedModals.some(modal => modal.id === 'upload-sound-to-discord')) {
+      updateModal('upload-sound-to-discord', {
+        buttons: [
+          {
+            id: 'cancel',
+            label: 'Cancel',
+            variant: 'ghost',
+            actionType: 'close'
+          },
+          {
+            id: 'upload',
+            label: 'Upload',
+            variant: 'solid',
+            action: () => continueUploadSoundToGuild(selectedGuildId)
+          }
+        ]
+      });
+
+      return;
+    }
+
+    openModal('upload-sound-to-discord', {
+      title: <>
+        <PiWaveformBold className='inline mr-1' />
+        {sound.name}
+      </>,
+      description: 'Quickly upload this sound to Discord by selecting a server below.',
+      content: <UploadSoundToDiscordModal guilds={uploadableGuilds} />,
+      buttons: [
+        {
+          id: 'cancel',
+          label: 'Cancel',
+          variant: 'ghost',
+          actionType: 'close'
+        },
+        {
+          id: 'uplaod',
+          label: 'Upload',
+          variant: 'solid',
+          action: () => continueUploadSoundToGuild(selectedGuildId)
+        }
+      ]
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uploadableGuilds, selectedGuildId]);
+
   return (
     <div className={cn(
       'flex flex-col gap-y-4 rounded-3xl overflow-hidden w-full h-max bg-secondary border-2 transition-all p-6',
       currentlyPlaying === sound.id ? 'border-purple-500' : 'border-primary'
     )}>
+      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100dvh]">
+        {renderConfetti && (
+          <Lottie
+            options={{ 
+              loop: false,
+              autoplay: true,
+              animationData: confetti
+            }}
+            height="100%"
+            width="100%"
+          />
+        )}
+      </div>
+      
       <div className="flex items-start justify-between">
         <div className="flex flex-col max-w-[90%]">
           <h2 className="text-base font-semibold truncate text-primary">
@@ -104,19 +236,45 @@ export default function SoundPreview({ sound, overridedSort }) {
           </div>
         </div>
 
-        <button
-          className='text-lg hover:opacity-60 disabled:pointer-events-none disabled:opacity-60'
-          onClick={handleLike}
-          disabled={loading}
-        >
-          {loading ? (
-            <TbLoader className='animate-spin' />
-          ) : liked ? (
-            <PiHeartFill />
-          ) : (
-            <PiHeart />
+        <div className='flex gap-x-2'>
+          <button
+            className='text-lg hover:opacity-60 disabled:pointer-events-none disabled:opacity-60'
+            onClick={handleLike}
+            disabled={loading}
+          >
+            {loading ? (
+              <TbLoader className='animate-spin' />
+            ) : liked ? (
+              <PiHeartFill />
+            ) : (
+              <PiHeart />
+            )}
+          </button>
+
+          {showUploadToGuildButton && (
+            <Tooltip content={loggedIn ? 'Upload to Discord' : 'Login with Discord to Upload'}>
+              <button
+                className={cn(
+                  'px-1.5 py-1 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 rounded-lg cursor-pointer',
+                  theme === 'dark' ? 'bg-white text-black' : ' bg-black text-white',
+                  loggedIn && (theme === 'dark' ? 'hover:bg-white/70' : 'hover:bg-black/70')
+                )}
+                onClick={() => {
+                  if (!loggedIn) return;
+
+                  uploadToDiscord();
+                }}
+                disabled={!loggedIn || uploadToDiscordButtonLoading}
+              >
+                {uploadToDiscordButtonLoading ? (
+                  <TbLoader className='animate-spin' />
+                ) : (
+                  <FaCloudUploadAlt />
+                )}
+              </button>
+            </Tooltip>
           )}
-        </button>
+        </div>
       </div>
 
       <Waveform id={sound.id} />

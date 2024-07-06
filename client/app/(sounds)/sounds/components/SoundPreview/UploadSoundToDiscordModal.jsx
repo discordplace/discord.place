@@ -10,9 +10,9 @@ import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { HiPlus } from 'react-icons/hi';
 
-export default function UploadEmojiToDiscordModal({ guilds }) {
-  const selectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.selectedGuildId);
-  const setSelectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.setSelectedGuildId);
+export default function UploadSoundToDiscordModal({ guilds }) {
+  const selectedGuildId = useGeneralStore(state => state.uploadSoundToDiscordModal.selectedGuildId);
+  const setSelectedGuildId = useGeneralStore(state => state.uploadSoundToDiscordModal.setSelectedGuildId);
 
   return (
     <div className="flex items-center justify-center w-full h-full">
@@ -25,13 +25,13 @@ export default function UploadEmojiToDiscordModal({ guilds }) {
                 It{'\''}s quiet in here...
               </div>
             }
-            message={'There are no servers where you can upload emojis to.'}
+            message={'There are no servers where you can upload sounds to.'}
           />
 
           <div className='w-full bg-quaternary my-4 h-[1px]' />
           
           <p className='text-xs text-tertiary'>
-            * You should have the permission to manage emojis in the server.<br />
+            * You should have the permission to manage sounds in the server.<br />
             * Log out and back in to freshen up the list.
           </p>
         </div>

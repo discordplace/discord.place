@@ -11,7 +11,7 @@ module.exports = {
       const guilds = await getUserGuilds(request.user.id).catch(() => null);
       if (!guilds) return response.sendError('There was an error getting the guilds. Try logging out and back in.', 500);
 
-      const emojiUploadableGuilds = guilds.filter(guild => {
+      const soundUploadableGuilds = guilds.filter(guild => {
         const permissions = new Discord.PermissionsBitField(guild.permissions_new);
         
         return guild.owner === true || permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions);
@@ -19,7 +19,7 @@ module.exports = {
 
       const botGuilds = client.guilds.cache.map(guild => guild.id);
 
-      return response.json(emojiUploadableGuilds.map(guild => ({
+      return response.json(soundUploadableGuilds.map(guild => ({
         id: guild.id,
         name: guild.name,
         icon: guild.icon,

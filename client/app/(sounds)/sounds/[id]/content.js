@@ -60,7 +60,10 @@ export default function Content({ sound }) {
 
         <div className='flex flex-col items-center gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
-            <SoundPreview sound={sound} />
+            <SoundPreview
+              sound={sound}
+              showUploadToGuildButton={true}
+            />
           </motion.div>
 
           <div className='grid w-full grid-cols-2 grid-rows-2 gap-4 sm:grid-cols-3'>

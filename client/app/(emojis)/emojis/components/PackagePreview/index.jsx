@@ -43,7 +43,14 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
     setUploadToDiscordButtonLoading(true);
 
     getEmojiUploadableGuilds()
-      .then(setUploadableGuilds)
+      .then(guilds => {
+        setUploadableGuilds(guilds.map(guild => ({
+          id: guild.id,
+          name: guild.name,
+          icon_url: guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.${guild.icon.startsWith('a_') ? 'gif' : 'png'}` : null,
+          bot_in_guild: guild.bot_in_guild
+        })));
+      })
       .catch(toast.error)
       .finally(() => setUploadToDiscordButtonLoading(false));
   }
@@ -194,9 +201,9 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
                   setSelectedEmojiURL(url);
                   uploadToDiscord();
                 }}
-                disabled={!loggedIn || (setSelectedEmojiURL === url && uploadToDiscordButtonLoading)}
+                disabled={!loggedIn || (selectedEmojiURL === url && uploadToDiscordButtonLoading)}
               >
-                {(setSelectedEmojiURL === url && uploadToDiscordButtonLoading) ? (
+                {(selectedEmojiURL === url && uploadToDiscordButtonLoading) ? (
                   <TbLoader className='animate-spin' /> 
                 ) : (
                   <FaCloudUploadAlt />
