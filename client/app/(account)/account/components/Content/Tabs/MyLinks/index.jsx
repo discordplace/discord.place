@@ -15,6 +15,8 @@ import useGeneralStore from '@/stores/general';
 import createLink from '@/lib/request/links/createLink';
 import useAccountStore from '@/stores/account';
 import { PiWarningCircleFill } from 'react-icons/pi';
+import CopyButton from '@/app/components/CopyButton/CustomTrigger';
+import { MdOutlineCopyAll } from 'react-icons/md';
 
 export default function MyLinks() {
   const user = useAuthStore(state => state.user);
@@ -143,10 +145,10 @@ export default function MyLinks() {
             </div>
           ) : (
             <div className='flex flex-col w-full p-4 mt-4 border border-yellow-500 rounded-xl bg-yellow-500/10 gap-y-2'>
-              <h2 className='flex items-center text-lg font-bold gap-x-2 text-primary'>
+              <h2 className='flex items-center font-bold mobile:text-lg gap-x-2 text-primary'>
                 <PiWarningCircleFill /> Maximum Links Reached
               </h2>
-              <p className='text-sm font-medium text-tertiary'>
+              <p className='text-xs font-medium mobile:text-sm text-tertiary'>
                 You have reached the maximum amount of links that you can create.<br />
                 For more information about Premium, visit <Link href='/premium' className='text-secondary hover:text-primary'>Premium page</Link>.
               </p>
@@ -175,7 +177,7 @@ export default function MyLinks() {
               <span className='flex items-center w-full text-sm font-medium text-secondary'>
                 dsc.ink/{link.name}
 
-                <span className='ml-2 text-xs font-medium truncate text-tertiary max-w-[70%]'>
+                <span className='sm:block hidden ml-2 text-xs font-medium truncate text-tertiary max-w-[70%]'>
                   ({link.redirectTo})
                 </span>
 
@@ -183,6 +185,13 @@ export default function MyLinks() {
                   <span className='flex items-center gap-x-1'>
                     {link.visits} Visits
                   </span>
+
+                  <CopyButton
+                    successText='Link copied!'
+                    copyText={`https://dsc.ink/${link.name}`}
+                  >
+                    <MdOutlineCopyAll size={15} />
+                  </CopyButton>
 
                   <Link
                     href={link.redirectTo}
