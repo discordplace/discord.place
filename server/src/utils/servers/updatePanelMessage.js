@@ -21,7 +21,7 @@ async function updatePanelMessage(guildId) {
   if (!server) return panel.deleteOne();
 
   if (!panel.messageId) {
-    const message = await channel.send(await createPanelMessageOptions(guild, server));
+    const message = await channel.send(await createPanelMessageOptions(guild, server)).catch(() => null);
     if (!message) return panel.deleteOne();
 
     await panel.updateOne({ messageId: message.id });
@@ -32,7 +32,7 @@ async function updatePanelMessage(guildId) {
   if (!message) {
     logger.info(`Panel message not found in guild ${guild.name} (${guild.id}). Creating a new one.`);
     
-    const message = await channel.send(await createPanelMessageOptions(guild, server));
+    const message = await channel.send(await createPanelMessageOptions(guild, server)).catch(() => null);
     if (!message) return panel.deleteOne();
 
     await panel.updateOne({ messageId: message.id });
