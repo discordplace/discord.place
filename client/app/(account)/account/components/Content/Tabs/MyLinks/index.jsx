@@ -190,7 +190,9 @@ export default function MyLinks() {
                     successText='Link copied!'
                     copyText={`https://dsc.ink/${link.name}`}
                   >
-                    <MdOutlineCopyAll size={15} />
+                    <div className='cursor-pointer'>
+                      <MdOutlineCopyAll size={15} />
+                    </div>
                   </CopyButton>
 
                   <Link
