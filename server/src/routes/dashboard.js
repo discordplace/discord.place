@@ -15,9 +15,11 @@ const BlockedIp = require('@/schemas/BlockedIp');
 const bodyParser = require('body-parser');
 const { body, validationResult, matchedData } = require('express-validator');
 const Quarantine = require('@/schemas/Quarantine');
+const Link = require('@/schemas/Link');
 
 const validKeys = [
   'stats',
+  'links',
   'emojis',
   'bots',
   'templates',
@@ -54,6 +56,7 @@ module.exports = {
         canViewBlockedIps: config.permissions.canViewBlockedIps.includes(request.user.id),
         canDeleteBlockedIps: config.permissions.canDeleteBlockedIps.includes(request.user.id),
         canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteLinks: request.member && config.permissions.canDeleteLinksRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canViewTimeouts: request.member && config.permissions.canViewTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canViewQuarantines: request.member && config.permissions.canViewQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
@@ -238,6 +241,13 @@ module.exports = {
 
         const quarantines = await Quarantine.find().sort({ createdAt: -1 });
         responseData.quarantines = await Promise.all(quarantines.map(async quarantine => await quarantine.toPubliclySafe()));
+      }
+
+      if (keys?.includes('links')) {
+        if (!permissions.canDeleteLinks) return response.sendError('You do not have permission to delete links.', 403);
+
+        const links = await Link.find().sort({ createdAt: -1 });
+        responseData.links = links;
       }
 
       return response.json(responseData);

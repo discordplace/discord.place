@@ -28,6 +28,7 @@ import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
 import { MdSync } from 'react-icons/md';
 import { CgBlock } from 'react-icons/cg';
 import { PiWaveformBold } from 'react-icons/pi';
+import { FiLink } from 'react-icons/fi';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -95,6 +96,12 @@ export default function Sidebar() {
       name: 'Extra',
       tabs: [
         {
+          id: 'links',
+          name: 'Links',
+          icon: FiLink,
+          disabled: data?.permissions?.canDeleteLinks === false
+        },
+        {
           id: 'botDenies',
           name: `Bot Denies${data?.botDenies?.length ? ` (${data.botDenies.length})` : ''}`,
           icon: FaUserTimes,
@@ -118,12 +125,7 @@ export default function Sidebar() {
           name: 'Quarantines',
           icon: CgBlock,
           disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false
-        }
-      ]
-    },
-    {
-      name: 'Lemon Squeezy',
-      tabs: [
+        },
         {
           id: 'syncPlans',
           name: 'Sync Plans',

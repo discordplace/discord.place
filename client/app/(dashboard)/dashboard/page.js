@@ -14,6 +14,7 @@ import BlockedIps from '@/app/(dashboard)/components/BlockedIps';
 import BotDenies from '@/app/(dashboard)/components/BotDenies';
 import Timeouts from '@/app/(dashboard)/components/Timeouts';
 import Quarantines from '@/app/(dashboard)/components/Quarantines';
+import Links from '@/app/(dashboard)/components/Links';
 import useDashboardStore from '@/stores/dashboard';
 import { CgFormatSlash } from 'react-icons/cg';
 import useThemeStore from '@/stores/theme';
@@ -73,6 +74,11 @@ export default function Page() {
       component: <BlockedIps />
     },
     {
+      id: 'links',
+      name: 'Links',
+      component: <Links />
+    },
+    {
       id: 'botDenies',
       name: 'Bot Denies',
       component: <BotDenies />
@@ -122,6 +128,9 @@ export default function Page() {
       break;
     case 'quarantines':
       fetchData(['quarantines']);
+      break;
+    case 'links':
+      fetchData(['links']);
       break;
     }
     
