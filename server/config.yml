@@ -69,7 +69,7 @@ permissions:
     - '1206032198562742312'
     - '1206354879321210900'
   canDeleteQuarantines:
-    - '957840712404193290'
+    - '9578407124041s93290'
   canViewDashboardRoles:
     - '1206354879321210900'
     - '1206355082883371049'
@@ -102,6 +102,9 @@ permissions:
   canExecuteFetch:
     - '957840712404193290'
   canVerifyProfilesRoles:
+    - '1206354879321210900'
+  canDeleteLinksRoles: 
+    - '1206032198562742312'
     - '1206354879321210900'
 profilesMaxSocialsLength: 8
 packagesMaxEmojisLength: 9
@@ -186,6 +189,7 @@ botQueueChannelId: '1236369862259900566'
 templateQueueChannelId: '1247743275914366987'
 voteLogsChannelId: '1222817883470434304'
 templateApplyLogsChannelId: '1247797537780531235'
+linksLogsChannelId: '1259541292275208220'
 portalChannelId: '1238654829916585984'
 purchasesChannelId: '1254216137684680745'
 excludeCollectionsInBackup:

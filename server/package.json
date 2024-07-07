@@ -4,8 +4,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "node -r dotenv/config index.js",
-    "start": "node -r dotenv/config index.js --optimize_for_size --production",
+    "dev": "cross-env NODE_ENV=development node -r dotenv/config index.js",
+    "start": "cross-env NODE_ENV=production node -r dotenv/config index.js --optimize_for_size",
     "register:commands": "node -r dotenv/config startup/registerCommands.js",
     "unregister:commands": "node -r dotenv/config startup/unregisterCommands.js",
     "lint": "eslint ."
@@ -66,5 +66,8 @@
     "@/utils": "./src/utils",
     "@/schemas": "./src/schemas",
     "@/validations": "./src/utils/validations"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

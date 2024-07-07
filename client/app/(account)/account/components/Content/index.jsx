@@ -7,6 +7,7 @@ import { MdAccountCircle, MdDarkMode, MdEmojiEmotions, MdSunny } from 'react-ico
 import { MdAccessTimeFilled } from 'react-icons/md';
 import ActiveTimeouts from '@/app/(account)/account/components/Content/Tabs/ActiveTimeouts';
 import ActiveReminders from '@/app/(account)/account/components/Content/Tabs/ActiveReminders';
+import MyLinks from '@/app/(account)/account/components/Content/Tabs/MyLinks';
 import MyServers from '@/app/(account)/account/components/Content/Tabs/MyServers';
 import MyBots from '@/app/(account)/account/components/Content/Tabs/MyBots';
 import MyEmojis from '@/app/(account)/account/components/Content/Tabs/MyEmojis';
@@ -29,6 +30,7 @@ import { useMedia } from 'react-use';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { nanoid } from 'nanoid';
 import { PiWaveformBold } from 'react-icons/pi';
+import { FiLink } from 'react-icons/fi';
 
 export default function Content() {
   const user = useAuthStore(state => state.user);
@@ -76,6 +78,13 @@ export default function Content() {
     {
       name: 'Your Public Content',
       items: [
+        {
+          Icon: FiLink,
+          name: 'My Links',
+          id: 'my-links',
+          component: <MyLinks />,
+          new_badge: true
+        },
         {
           Icon: FaCompass,
           name: 'My Servers',
@@ -148,6 +157,9 @@ export default function Content() {
       break;
     case 'active-timeouts':
       fetchData(['timeouts']);
+      break;
+    case 'my-links':
+      fetchData(['links']);
       break;
     case 'my-servers':
       fetchData(['servers']);
@@ -248,7 +260,7 @@ export default function Content() {
               <div className='flex flex-col gap-y-1.5 items-start'>
                 {item.items
                   .filter(({ condition }) => !condition || condition())
-                  .map(({ Icon, IconEnd, name, id, type, action, badge_count }) => (
+                  .map(({ Icon, IconEnd, name, id, type, action, badge_count, new_badge }) => (
                     type === 'divider' ? (
                       <div 
                         key={nanoid()}
@@ -282,12 +294,20 @@ export default function Content() {
                           {name}
                         </span>
 
-                        <span className={cn(
-                          'px-2 py-0.5 ml-auto text-xs transition-opacity font-semibold rounded-full bg-quaternary text-primary',
-                          ((badge_count || 0) === 0 || (activeTab === id && loading)) ? 'opacity-0' : 'opacity-100'
-                        )}>
-                          {badge_count}
-                        </span>
+                        {new_badge && (
+                          <div className='px-2.5 py-0.5 ml-auto text-xs font-bold text-white bg-purple-500 rounded-full'>
+                            NEW
+                          </div>
+                        )}
+
+                        {badge_count > 0 && (
+                          <span className={cn(
+                            'px-2 py-0.5 ml-auto text-xs transition-opacity font-semibold rounded-full bg-quaternary text-primary',
+                            ((badge_count || 0) === 0 || (activeTab === id && loading)) ? 'opacity-0' : 'opacity-100'
+                          )}>
+                            {badge_count}
+                          </span>
+                        )}
 
                         {IconEnd && <IconEnd className='ml-auto text-tertiary' />}
 
