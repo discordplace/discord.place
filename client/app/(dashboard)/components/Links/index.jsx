@@ -106,7 +106,7 @@ export default function Links() {
                     <td className='px-6 py-4'>
                       <Link 
                         href={`/profile/u/${link.createdBy}`}
-                        className='transition-opacity text-tertiary hover:opacity-70'
+                        className='transition-opacity hover:opacity-70'
                       >
                         {link.createdBy}
                       </Link>
