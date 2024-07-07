@@ -182,43 +182,39 @@ module.exports = class Client {
   async checkVoiceActivity() {
     try {
       const servers = await Server.find({ voice_activity_enabled: true });
-      await Promise.all(servers.map(async server => {
-        const guild = client.guilds.cache.get(server.id);
+
+      const bulkOperations = client.guilds.cache.map(({ id }) => {
+        if (!servers.find(server => server.id === id)) return;
+
+        const guild = client.guilds.cache.get(id);
         if (!guild) return;
-  
+
         const totalMembersInVoice = guild.members.cache.filter(member => member.voice.channel).size;
-        const voiceActivity = await VoiceActivity.findOneAndUpdate(
-          { 'guild.id': server.id },
-          {
-            $push: {
-              data: {
-                $each: [
-                  {
-                    createdAt: new Date(),
-                    data: totalMembersInVoice
-                  }
-                ],
-                $slice: -24
+
+        return {
+          updateOne: {
+            filter: { 'guild.id': id },
+            update: {
+              $push: {
+                data: {
+                  $each: [
+                    {
+                      createdAt: new Date(),
+                      data: totalMembersInVoice
+                    }
+                  ],
+                  $slice: -24
+                }
               }
-            }
-          },
-          { new: true, upsert: true }
-        );
-  
-        if (!voiceActivity) {
-          await new VoiceActivity({
-            guild: { id: server.id },
-            data: [
-              {
-                createdAt: new Date(),
-                data: totalMembersInVoice
-              }
-            ]
-          }).save();
-        }
-  
-        logger.info(`Voice activity for server ${server.id} updated.`);
-      }));
+            },
+            upsert: true
+          }
+        };
+      }).filter(Boolean);
+
+      await VoiceActivity.bulkWrite(bulkOperations);
+
+      logger.info(`Voice activity for ${bulkOperations.length} servers updated.`);
     } catch (error) {
       logger.error('Error checking voice activity:', error);
     }
