@@ -18,6 +18,8 @@ import fuc from '@/lib/fuc';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import FaQs from '@/app/premium/components/FaQs';
 import { LuShieldQuestion } from 'react-icons/lu';
+import Tooltip from '@/app/components/Tooltip';
+import { BiSolidInfoCircle } from 'react-icons/bi';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
@@ -65,6 +67,7 @@ export default function Page({ plans }) {
   const features = [
     {
       label: 'Exclusive Premium Badge',
+      info: 'Show off your Premium status with an exclusive badge on your bots/servers & profile.',
       available_to: [
         {
           id: 'free',
@@ -78,6 +81,7 @@ export default function Page({ plans }) {
     },
     {
       label: 'Exclusive Premium Role',
+      info: 'Unlock the exclusive Premium role in our Discord server.',
       available_to: [
         {
           id: 'free',
@@ -91,6 +95,7 @@ export default function Page({ plans }) {
     },
     {
       label: 'Stunning Card Effects',
+      info: 'Get a exclusive card effects for your servers/bots/profile cards.',
       available_to: [
         {
           id: 'free',
@@ -104,6 +109,7 @@ export default function Page({ plans }) {
     },
     {
       label: 'Premium Preferred Hosts',
+      info: 'Ability to use dsc.wtf, dsc.mom, dsc.dog hostnames for your profile.',
       available_to: [
         {
           id: 'free',
@@ -117,6 +123,7 @@ export default function Page({ plans }) {
     },
     {
       label: 'Profile Card Colors',
+      info: 'Customize your profile card with a variety of colors.',
       available_to: [
         {
           id: 'free',
@@ -130,6 +137,7 @@ export default function Page({ plans }) {
     },
     {
       label: 'Doubled Votes',
+      info: 'When someone votes for your server/bot, votes will be doubled.',
       available_to: [
         {
           id: 'free',
@@ -143,6 +151,7 @@ export default function Page({ plans }) {
     },
     {
       label: 'Vote Rewards Limit (per server)',
+      info: 'Maximum amount of vote rewards you can create per server.',
       available_to: [
         {
           id: 'free',
@@ -151,6 +160,20 @@ export default function Page({ plans }) {
         {
           id: 'premium',
           value: '20'
+        }
+      ]
+    },
+    {
+      label: 'Links Limit',
+      info: 'Maximum amount of links you can create.',
+      available_to: [
+        {
+          id: 'free',
+          value: '1'
+        },
+        {
+          id: 'premium',
+          value: '5'
         }
       ]
     }
@@ -193,10 +216,10 @@ export default function Page({ plans }) {
       
       <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
       
-      <div className='max-w-[700px] flex flex-col w-full'>
+      <div className='max-w-[800px] flex flex-col w-full'>
         <motion.h1 
           className={cn(
-            'text-5xl font-medium max-w-[700px] text-center text-primary',
+            'text-5xl font-medium max-w-[800px] text-center text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
@@ -206,13 +229,13 @@ export default function Page({ plans }) {
           Premium Membership
         </motion.h1>
 
-        <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.1 }}>
+        <motion.span className="sm:text-lg max-w-[800px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.1 }}>
           Unlock exclusive features and benefits by purchasing Premium. With annual & lifetime plans, you can save more!
         </motion.span>
       </div>
 
       <motion.div
-        className='max-w-[700px] grid grid-cols-1 sm:grid-cols-3 mt-16 gap-4 w-full'
+        className='max-w-[800px] grid grid-cols-1 sm:grid-cols-3 mt-16 gap-4 w-full'
         initial='hidden'
         animate='visible'
         variants={containerVariants}
@@ -270,7 +293,7 @@ export default function Page({ plans }) {
       </motion.div>
 
       <motion.div
-        className='w-full max-w-[700px] my-12'
+        className='w-full max-w-[800px] my-12'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ ...sequenceTransition, delay: 0.8 }}
@@ -298,8 +321,22 @@ export default function Page({ plans }) {
                 className='flex items-center justify-between p-4 even:bg-tertiary odd:bg-secondary first:rounded-t-xl last:rounded-b-xl'
                 key={index}
               >
-                <h2 className='w-full text-sm font-semibold text-tertiary'>
+                <h2 className='flex items-center w-full text-sm font-semibold gap-x-2 text-tertiary'>
                   {feature.label}
+
+                  {feature.info && (
+                    <Tooltip
+                      side='left'
+                      content={feature.info}
+                    >
+                      <div>
+                        <BiSolidInfoCircle
+                          className='text-tertiary'
+                          size={18}
+                        />
+                      </div>
+                    </Tooltip>
+                  )}
                 </h2>
                 
                 <div className='flex justify-center w-full text-sm font-medium text-tertiary'>
@@ -341,7 +378,7 @@ export default function Page({ plans }) {
       </motion.div>
 
       <motion.div 
-        className='flex flex-col w-full mb-12 gap-y-2 max-w-[700px]'
+        className='flex flex-col w-full mb-12 gap-y-2 max-w-[800px]'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ ...sequenceTransition, duration: 0.5, delay: 1 }}

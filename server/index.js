@@ -1,8 +1,5 @@
 require('module-alias/register');
 
-if (process.argv.includes('--production')) process.env.NODE_ENV = 'production';
-else process.env.NODE_ENV = 'development';
-
 const environmentCheck = require('@/utils/environmentCheck.js');
 environmentCheck();
 

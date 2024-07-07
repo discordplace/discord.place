@@ -163,7 +163,14 @@ module.exports = class Server {
     });
 
     this.server.use('*', (request, response, next) => {
-      if (request.user) request.member = client.guilds.cache.get(config.guildId).members.cache.get(request.user.id);
+      if (request.user) {
+        const guild = client.guilds.cache.get(config.guildId);
+        if (guild) {
+          const member = guild.members.cache.get(request.user.id);
+          if (member) request.member = member;
+        }
+      }
+      
       next();
     });
   }

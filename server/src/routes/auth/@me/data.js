@@ -13,9 +13,11 @@ const bodyParser = require('body-parser');
 const { body, validationResult, matchedData } = require('express-validator');
 const Deny = require('@/src/schemas/Bot/Deny');
 const Sound = require('@/schemas/Sound');
+const Link = require('@/schemas/Link');
 
 const validKeys = [
   'timeouts',
+  'links',
   'servers',
   'bots',
   'emojis',
@@ -102,6 +104,12 @@ module.exports = {
             })
           }
         });
+      }
+
+      if (keys.includes('links')) {
+        const links = await Link.find({ createdBy: request.user.id });
+
+        Object.assign(responseData, { links });
       }
 
       if (keys.includes('servers') || keys.includes('bots')) {

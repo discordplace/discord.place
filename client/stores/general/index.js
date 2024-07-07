@@ -33,6 +33,12 @@ export const useGeneralStore = create(set => ({
     selectedSoundId: '',
     setSelectedSoundId: selectedSoundId => set(state => ({ uploadSoundToDiscordModal: { ...state.uploadSoundToDiscordModal, selectedSoundId } }))
   },
+  createLinkModal: {
+    name: '',
+    setName: name => set(state => ({ createLinkModal: { ...state.createLinkModal, name } })),
+    destinationURL: '',
+    setDestinationURL: destinationURL => set(state => ({ createLinkModal: { ...state.createLinkModal, destinationURL } }))
+  },
   sounds: {
     currentlyPlaying: '',
     setCurrentlyPlaying: soundId => set(state => ({ sounds: { ...state.sounds, currentlyPlaying: soundId } })),
