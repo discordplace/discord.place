@@ -1,17 +1,14 @@
-const fetchGuildsMembers = require('@/src/utils/fetchGuildsMembers');
 const Discord = require('discord.js');
 
 module.exports = async guild => {
-  logger.info(`Joined guild ${guild.name} (${guild.id}).`);
-
-  fetchGuildsMembers([guild.id]);
+  logger.info(`Kicked from guild ${guild.name} (${guild.id}).`);
 
   const channel = client.guilds.cache.get(config.guildId).channels.cache.get(config.channels.joinLeaveLogsChannelId);
   
   const embeds = [
     new Discord.EmbedBuilder()
-      .setAuthor({ name: 'Joined Guild' })
-      .setColor(Discord.Colors.Green)
+      .setAuthor({ name: 'Kicked from Guild' })
+      .setColor(Discord.Colors.Red)
       .setFields([
         {
           name: 'Guild',

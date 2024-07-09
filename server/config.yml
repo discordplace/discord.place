@@ -192,6 +192,7 @@ templateApplyLogsChannelId: '1247797537780531235'
 linksLogsChannelId: '1259541292275208220'
 portalChannelId: '1238654829916585984'
 purchasesChannelId: '1254216137684680745'
+joinLeaveLogsChannelId: '1260359414972678245'
 excludeCollectionsInBackup:
   - 'sessions'
   - 'botdenies'
