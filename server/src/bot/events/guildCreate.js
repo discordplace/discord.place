@@ -6,7 +6,7 @@ module.exports = async guild => {
 
   fetchGuildsMembers([guild.id]);
 
-  const channel = client.guilds.cache.get(config.guildId).channels.cache.get(config.channels.joinLeaveLogsChannelId);
+  const channel = client.guilds.cache.get(config.guildId).channels.cache.get(config.joinLeaveLogsChannelId);
   
   const embeds = [
     new Discord.EmbedBuilder()
