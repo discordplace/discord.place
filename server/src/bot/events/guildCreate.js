@@ -22,7 +22,7 @@ module.exports = async guild => {
           value: guild.memberCount.toString()
         }
       ])
-      .setFooter({ text: guild.name, iconUrl: guild.iconURL() })
+      .setFooter({ text: guild.name, iconURL: guild.iconURL() })
       .setTimestamp()
   ];
 
