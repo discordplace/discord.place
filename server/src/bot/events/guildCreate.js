@@ -19,7 +19,7 @@ module.exports = async guild => {
         },
         {
           name: 'Members',
-          value: guild.memberCount
+          value: guild.memberCount.toString()
         }
       ])
       .setFooter({ text: guild.name, iconUrl: guild.iconURL() })
