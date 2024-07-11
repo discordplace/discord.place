@@ -147,7 +147,12 @@ module.exports = {
       await channel.delete().catch(() => null);
       await sleep(500);
     }));
-    await Promise.all(guildRoles.filter(role => role.id !== interaction.guild.id && role.id !== botHighestRole.id).map(role => role.delete().catch(() => null)));
+
+    await Promise.all(guildRoles.filter(role => role.id !== interaction.guild.id && role.id !== botHighestRole.id)
+      .map(async role => {
+        await role.delete().catch(() => null);
+        await sleep(500);
+      }));
     
     await sleep(1000);
   
@@ -163,12 +168,11 @@ module.exports = {
     const storedEveryoneRole = template.data.roles.find(role => role.id === 0);
     await interaction.guild.roles.everyone.setPermissions(storedEveryoneRole.permissions_new);
 
-    for (const role of template.data.roles.sort((a, b) => a.position - b.position).filter(role => role.id !== 0)) {
+    for (const role of template.data.roles.reverse().filter(role => role.id !== 0)) {
       const createdRole = await interaction.guild.roles.create({
         name: role.name,
         color: role.color,
         permissions: new Discord.PermissionsBitField(role.permissions_new).freeze(),
-        position: role.position,
         mentionable: role.mentionable
       });
 
