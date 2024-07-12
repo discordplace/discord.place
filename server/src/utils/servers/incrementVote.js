@@ -149,8 +149,14 @@ async function incrementVote(guildId, userId) {
     const headers = {};
     if (server.webhook_token) headers['Authorization'] = server.webhook_token;
 
-    await axios.post(server.webhook_url, { server: guild.id, user: user.id }, { headers }).catch(() => null);
-  }
+    axios({
+      method: 'post',
+      url: server.webhook_url,
+      data: { server: guild.id, user: user.id },
+      headers,
+      timeout: 2000
+    }).catch(() => null);
+  }  
 
   return true;
 }
