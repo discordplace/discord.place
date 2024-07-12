@@ -1,7 +1,10 @@
 const Discord = require('discord.js');
+const updateClientActivity = require('@/utils/updateClientActivity');
 
 module.exports = async guild => {
   logger.info(`Kicked from guild ${guild.name} (${guild.id}).`);
+
+  updateClientActivity();
 
   const channel = client.guilds.cache.get(config.guildId).channels.cache.get(config.joinLeaveLogsChannelId);
   

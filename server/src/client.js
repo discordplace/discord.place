@@ -8,6 +8,7 @@ const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const sleep = require('@/utils/sleep');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
+const updateClientActivity = require('@/utils/updateClientActivity');
 
 // Schemas
 const Server = require('@/schemas/Server');
@@ -116,7 +117,7 @@ module.exports = class Client {
 
       if (options.startup.checkDeletedInviteCodes) this.checkDeletedInviteCodes();
       if (options.startup.updatePanelMessages) this.updatePanelMessages();
-      if (options.startup.updateClientActivity) this.updateClientActivity();
+      if (options.startup.updateClientActivity) updateClientActivity();
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
       if (options.startup.checkReminerMetadatas) this.checkReminerMetadatas();
       if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
@@ -135,7 +136,7 @@ module.exports = class Client {
           this.checkReminerMetadatas();
           this.checkExpiredBlockedIPs();
           this.checkDeletedInviteCodes();
-          this.updateClientActivity();
+          updateClientActivity();
           this.syncMemberRoles();
           this.syncLemonSqueezyPlans();
         }, null, true);
@@ -234,16 +235,6 @@ module.exports = class Client {
     } catch (error) {
       logger.error('Failed to save monthly votes:', error);
     }
-  }
-
-  updateClientActivity() {
-    const state = `Members: ${client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')} | Servers: ${client.guilds.cache.size.toLocaleString('en-US')}`;
-
-    client.user.setActivity({
-      type: Discord.ActivityType.Custom,
-      name: 'status',
-      state
-    });
   }
 
   async checkVoteReminderMetadatas() {

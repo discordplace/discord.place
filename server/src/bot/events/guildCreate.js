@@ -1,10 +1,12 @@
 const fetchGuildsMembers = require('@/src/utils/fetchGuildsMembers');
 const Discord = require('discord.js');
+const updateClientActivity = require('@/utils/updateClientActivity');
 
 module.exports = async guild => {
   logger.info(`Joined guild ${guild.name} (${guild.id}).`);
 
   fetchGuildsMembers([guild.id]);
+  updateClientActivity();
 
   const channel = client.guilds.cache.get(config.guildId).channels.cache.get(config.joinLeaveLogsChannelId);
   
