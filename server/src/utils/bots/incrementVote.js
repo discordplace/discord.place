@@ -98,8 +98,14 @@ async function incrementVote(botId, userId, botWebhook) {
   if (botWebhook?.url) {
     const headers = {};
     if (botWebhook.token) headers['Authorization'] = botWebhook.token;
-
-    axios.post(botWebhook.url, { bot: bot.id, user: user.id }, { headers }).catch(() => null);
+    
+    axios({
+      method: 'post',
+      url: botWebhook.url,
+      data: { bot: bot.id, user: user.id },
+      headers,
+      timeout: 2000
+    }).catch(() => null);
   }
 
   return true;
