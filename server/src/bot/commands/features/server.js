@@ -52,9 +52,8 @@ module.exports = {
 
         const server = await Server.findOne({ id: interaction.guild.id });
         const newInviteCode = interaction.options.getString('code');
-        if (newInviteCode === server.invite_code.code) return interaction.followUp({ content: 'Invite code is the same as the current one.' });
+        if (newInviteCode === server.invite_code?.code) return interaction.followUp({ content: 'Invite code is the same as the current one.' });
 
-        
         if (newInviteCode === interaction.guild.vanityURLCode) await Server.findOneAndUpdate({ id: interaction.guild.id }, { invite_code: { type: 'Vanity' } });
         else {
           const invite = await interaction.guild.invites.fetch(newInviteCode).catch(() => null);
@@ -93,12 +92,12 @@ module.exports = {
       }
 
       if (subcommand === 'panel') {
-        if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply({ content: 'You don\'t have permission to use this command.' });
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+
+        if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.followUp({ content: 'You don\'t have permission to use this command.' });
 
         const channel = interaction.options.getChannel('channel');
-        if (!channel.permissionsFor(interaction.guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) return interaction.reply({ content: 'I don\'t have permission to send messages in that channel.' });
-
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        if (!channel.permissionsFor(interaction.guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) return interaction.followUp({ content: 'I don\'t have permission to send messages in that channel.' });
 
         const server = await Server.findOne({ id: interaction.guild.id });
         if (!server) return interaction.followUp({ content: `You can't set a panel channel without creating a server first. Visit [here](${config.frontendUrl}/servers/manage) to create one.` });
