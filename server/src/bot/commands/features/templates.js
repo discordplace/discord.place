@@ -113,7 +113,14 @@ module.exports = {
               .setStyle(Discord.ButtonStyle.Danger)
           )
       ]
+    }).catch(() => {
+      // Check here also if the user has DMs disabled
+      currentlyApplyingTemplates.delete(interaction.guild.id);
+      
+      collectedMessage.reply({ content: 'I could not send you a DM. Please make sure your DMs are open and try again.' });
     });
+
+    if (!dmMessage) return;
 
     async function sendError(message) {
       currentlyApplyingTemplates.delete(interaction.guild.id);
