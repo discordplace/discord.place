@@ -23,7 +23,7 @@ export default function Content({ server }) {
 
   const [description, setDescription] = useState(server.description);
 
-  const parsedInviteUrl = server.invite_code.type === 'Vanity' ? server.vanity_url : (
+  const parsedInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
     server.invite_code.type === 'Deleted' ? '' :
       `https://discord.com/invite/${server.invite_code.code}`
   );
@@ -81,7 +81,7 @@ export default function Content({ server }) {
         setDescription(server[key]);
         break;
       case 'invite_url':
-        var parsedInviteUrl = server.invite_code.type === 'Vanity' ? server.vanity_url : (
+        var parsedInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
           server.invite_code.type === 'Deleted' ? '' :
             `https://discord.com/invite/${server.invite_code.code}`
         );

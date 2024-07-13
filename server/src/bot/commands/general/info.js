@@ -39,6 +39,9 @@ module.exports = {
       var bot = await Bot.findOne({ support_server_id: serverId });
       var botUser = bot ? (interaction.client.users.cache.get(bot.id) || await interaction.client.users.fetch(bot.id).catch(() => null)) : null;
 
+      // If the invite link is deleted or if the invite link is a vanity URL and currently not available
+      var inviteLinkAvailable = server.invite_code.type !== 'Deleted' || (server.invite_code.type === 'Vanity' && guild.vanityURLCode !== null);
+
       var embeds = [
         new Discord.EmbedBuilder()
           .setAuthor({ name: guild.name })
@@ -48,7 +51,7 @@ module.exports = {
           .setFields([
             {
               name: 'Invite',
-              value: server.invite_code.type !== 'Deleted' ? 
+              value: inviteLinkAvailable ? 
                 server.invite_code.type === 'Vanity' ? 
                   `[Click here to join.](https://discord.gg/${guild.vanityURLCode})` 
                   : `[Click here to join.](https://discord.gg/${server.invite_code.code})`
