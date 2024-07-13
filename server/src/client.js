@@ -307,22 +307,20 @@ module.exports = class Client {
   }
 
   async createNewDashboardData() {
+    const emojiPacks = await EmojiPack.find();
+
     const totalServers = await Server.countDocuments();
     const totalProfiles = await Profile.countDocuments();
     const totalBots = await Bot.countDocuments();
-    const totalEmojis = await Emoji.countDocuments();
+    const totalEmojis = (await Emoji.countDocuments()) + emojiPacks.reduce((acc, pack) => acc + pack.emoji_ids.length, 0);
     const totalTemplates = await Template.countDocuments();
     const totalSounds = await Sound.countDocuments();
-    const emojiPacks = await EmojiPack.find();
-    let totalEmojiPacks = 0;
 
-    for (const pack of emojiPacks) totalEmojiPacks += pack.emoji_ids.length;
-    
     await new DashboardData({
       servers: totalServers,
       profiles: totalProfiles,
       bots: totalBots,
-      emojis: totalEmojis + totalEmojiPacks,
+      emojis: totalEmojis,
       templates: totalTemplates,
       sounds: totalSounds,
       users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
