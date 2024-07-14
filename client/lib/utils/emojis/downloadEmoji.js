@@ -37,12 +37,18 @@ function downloadEmoji(emoji) {
   } else {
     const extension = emoji.animated ? 'gif' : 'png';
     const filename = `${emoji.name}.${extension}`;
-    const link = document.createElement('a');
-    link.href = emoji.image_url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const url = config.getEmojiURL(emoji.id, emoji.animated);
+    
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
 
     incrementDownloads(emoji.id);
   }
