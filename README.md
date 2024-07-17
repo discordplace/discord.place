@@ -246,6 +246,7 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `globalRateLimit.maxRequests`, `globalRateLimit.perMinutes`, and `globalRateLimit.cleanUpIntervalInMinutes` values are used for the global rate limit settings. You can change these values to your own rate limit settings.
 > - The `instatus.page_id` and `instatus.metric_id` values are used for the page ID and metric ID for the Instatus. You can change these values to your own page ID and metric ID.
 > - The `lemonSqueezy.variantIds` value is used for the variant IDs for the Lemon Squeezy. We sell some products on Lemon Squeezy with different variants. You should create these variants on the Lemon Squeezy and get the variant IDs from there.
+> - Make sure to fill all fields that end with `ChannelId` with the correct channel IDs from the base guild.
 
 ## Contributing
 
