@@ -4,11 +4,6 @@ module.exports = function (request, response, next) {
   ];
 
   const ip = headersToCheck.reduce((acc, header) => acc || request.headers[header], null) || request.connection.remoteAddress;
-  request.clientIp = cleanIp(ip);
+  request.clientIp = ip.split(',')[0];
   next();
-
-  function cleanIp(ip) {
-    if (ip.includes(',')) return ip.split(',')[0];
-    return ip;
-  }
 };
