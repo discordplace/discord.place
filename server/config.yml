@@ -6,7 +6,7 @@ botPresenceStatus: 'online'
 rateLimitWhitelist:
   - '957840712404193290'
   - '1207874300070199356'
-trustProxy: 1
+trustProxy: true
 session:
   cookieDomain: '.discord.place'
 frontendUrl: 'https://discord.place'
