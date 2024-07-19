@@ -1,2 +1,10 @@
 User-agent: *
 Allow: /
+
+User-agent: YandexBot
+Disallow: /profile/u/
+Disallow: /emojis/
+Disallow: /servers/
+Disallow: /bots/
+Disallow: /templates/
+Disallow: /sounds/
