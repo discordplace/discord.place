@@ -6,6 +6,14 @@ const withBundleAnalyzer = pgk;
 const nextConfig = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true'
 })({
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: process.env.NODE_ENV === 'development' ? 'http://localhost:3001/:path*' : 'https://api.discord.place/:path*'
+      }
+    ];
+  },
   reactStrictMode: false,
   images: {
     unoptimized: true,
