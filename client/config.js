@@ -23,7 +23,7 @@ const config = {
   supportInviteUrl: 'https://invite.discord.place',
   docsUrl: 'https://docs.discord.place',
   api: {
-    url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place'
+    url: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : 'https://discord.place/api'
   },
   analytics: {
     url: 'https://analytics.discord.place',
