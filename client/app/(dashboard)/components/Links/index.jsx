@@ -165,10 +165,10 @@ export default function Links() {
         {showPagination && (
           <Pagination
             page={page}
-            totalPages={Math.ceil(data?.length / 10)}
+            totalPages={Math.ceil(data?.links?.length / 10)}
             setPage={setPage}
             loading={false}
-            total={data?.length}
+            total={data?.links?.length}
             limit={10}
             disableAnimation
           />
