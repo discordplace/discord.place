@@ -189,7 +189,7 @@ module.exports = {
 
         break;
       case 'subscription_expired':
-        var user = await User.findOne({ 'subscription.id': body.data.id });
+        var user = await User.findOne({ 'subscription.id': body.data.attributes.order_id });
         if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
 
         user.subscription = null;
