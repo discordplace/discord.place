@@ -399,8 +399,8 @@ module.exports = class Client {
           const member = members.get(memberId);
           if (!member) continue;
 
-          if (membersToGiveRole.includes(member.user.id)) await member.roles.add(role);
-          if (membersToRemoveRole.includes(member.user.id)) await member.roles.remove(role);
+          if (Object.keys(membersToGiveRole).some(memberId => memberId == member.user.id)) await member.roles.add(role);
+          if (Object.keys(membersToRemoveRole).some(memberId => memberId == member.user.id)) await member.roles.remove;
 
           await sleep(1000);
         }
