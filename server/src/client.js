@@ -389,7 +389,7 @@ module.exports = class Client {
         const membersToGiveRole = members.filter(member => condition(member) && !member.roles.cache.has(roleId));
         const membersToRemoveRole = members.filter(member => !condition(member) && member.roles.cache.has(roleId));
 
-        const membersToUpdate = membersToGiveRole.concat(membersToRemoveRole).map(member => member.user.id);
+        const membersToUpdate = [...membersToGiveRole, ...membersToRemoveRole].map(member => member.user.id);
         if (membersToUpdate.length <= 0) return;
 
         const estimatedTime = membersToUpdate.length * 1000;
