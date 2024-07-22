@@ -398,8 +398,8 @@ module.exports = class Client {
         for (const memberId of membersToUpdate) {
           const member = members.get(memberId);
 
-          if (membersToGiveRole.includes(member.user.id)) await member.roles.add(role);
-          if (membersToRemoveRole.includes(member.user.id)) await member.roles.remove(role);
+          if (membersToGiveRole.includes(member.id)) await member.roles.add(role);
+          if (membersToRemoveRole.includes(member.id)) await member.roles.remove(role);
 
           await sleep(1000);
         }
