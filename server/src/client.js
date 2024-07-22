@@ -389,7 +389,7 @@ module.exports = class Client {
         const membersToGiveRole = members.filter(member => condition(member) && !member.roles.cache.has(roleId));
         const membersToRemoveRole = members.filter(member => !condition(member) && member.roles.cache.has(roleId));
 
-        const membersToUpdate = [...membersToGiveRole, ...membersToRemoveRole].map(member => member.id);
+        const membersToUpdate = [].concat(membersToGiveRole, membersToRemoveRole).map(member => member.user.id);
         if (membersToUpdate.length <= 0) return;
 
         const estimatedTime = membersToUpdate.length * 1000;
@@ -397,9 +397,10 @@ module.exports = class Client {
 
         for (const memberId of membersToUpdate) {
           const member = members.get(memberId);
+          if (!member) continue;
 
-          if (membersToGiveRole.includes(member.id)) await member.roles.add(role);
-          if (membersToRemoveRole.includes(member.id)) await member.roles.remove(role);
+          if (membersToGiveRole.includes(member)) await member.roles.add(role);
+          if (membersToRemoveRole.includes(member)) await member.roles.remove(role);
 
           await sleep(1000);
         }
