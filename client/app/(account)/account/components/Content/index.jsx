@@ -42,7 +42,7 @@ export default function Content() {
 
   const router = useRouter();
 
-  const [linksPageVisited, setLinksPageVisited] = useLocalStorage('linksPageVisited', false);
+  const [linksPageVisited, setLinksPageVisited] = useLocalStorage('links-page-visited', false);
 
   const sidebar = [
     {
