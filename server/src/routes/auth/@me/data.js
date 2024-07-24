@@ -48,6 +48,7 @@ module.exports = {
       const bulkOperations = [
         BotTimeout.countDocuments({ 'user.id': request.user.id }),
         ServerTimeout.countDocuments({ 'user.id': request.user.id }),
+        Link.countDocuments({ createdBy: request.user.id }),
         Bot.countDocuments({ 'owner.id': request.user.id }),
         Emoji.countDocuments({ 'user.id': request.user.id }),
         EmojiPack.countDocuments({ 'user.id': request.user.id }),
@@ -57,7 +58,7 @@ module.exports = {
         VoteReminder.countDocuments({ 'user.id': request.user.id })
       ];
 
-      const [botTimeouts, serverTimeouts, bots, emojis, emojiPacks, templates, sounds, reminders, voteReminders] = await Promise.all(bulkOperations);
+      const [botTimeouts, serverTimeouts, links, bots, emojis, emojiPacks, templates, sounds, reminders, voteReminders] = await Promise.all(bulkOperations);
       
       responseData.counts = {
         timeouts: botTimeouts + serverTimeouts,
@@ -65,6 +66,7 @@ module.exports = {
           const foundServer = await Server.exists({ id: guild.id });
           return foundServer ? 1 : 0;
         }))).reduce((a, b) => a + b, 0),
+        links,
         bots,
         emojis: emojis + emojiPacks,
         sounds,

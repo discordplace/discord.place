@@ -26,7 +26,7 @@ import useAuthStore from '@/stores/auth';
 import { MdArrowOutward } from 'react-icons/md';
 import { HiTemplate } from 'react-icons/hi';
 import Link from 'next/link';
-import { useMedia } from 'react-use';
+import { useLocalStorage, useMedia } from 'react-use';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { nanoid } from 'nanoid';
 import { PiWaveformBold } from 'react-icons/pi';
@@ -41,6 +41,8 @@ export default function Content() {
   const setIsCollapsed = useAccountStore(state => state.setIsCollapsed);
 
   const router = useRouter();
+
+  const [linksPageVisited, setLinksPageVisited] = useLocalStorage('linksPageVisited', false);
 
   const sidebar = [
     {
@@ -83,7 +85,8 @@ export default function Content() {
           name: 'My Links',
           id: 'my-links',
           component: <MyLinks />,
-          new_badge: true
+          new_badge: !linksPageVisited,
+          badge_count: data.counts?.links || 0
         },
         {
           Icon: FaCompass,
@@ -160,6 +163,7 @@ export default function Content() {
       break;
     case 'my-links':
       fetchData(['links']);
+      setLinksPageVisited(true);
       break;
     case 'my-servers':
       fetchData(['servers']);
@@ -314,7 +318,7 @@ export default function Content() {
                         <TbLoader 
                           className={cn(
                             'absolute right-2 animate-spin transition-opacity text-tertiary',
-                            loading && activeTab === id ? 'opacity-100' : 'opacity-0'
+                            (loading && activeTab === id && !new_badge) ? 'opacity-100' : 'opacity-0'
                           )} 
                         />
                       </button>
