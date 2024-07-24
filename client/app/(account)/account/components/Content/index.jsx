@@ -200,6 +200,15 @@ export default function Content() {
     return () => document.body.style.overflow = 'auto';
   }, [loading]);
 
+  useEffect(() => {
+    if (isCollapsed) {
+      document.body.style.overflow = 'auto';
+    } else {
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+    }
+  }, [isCollapsed]);
+
   const isLaptop = useMedia('(max-width: 1024px)', false);
 
   useEffect(() => {
