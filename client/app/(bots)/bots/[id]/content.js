@@ -61,10 +61,10 @@ export default function Content({ bot }) {
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
             transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
-            className='flex items-center text-3xl font-bold gap-x-2'
+            className='flex items-center text-lg font-bold sm:text-3xl gap-x-2'
           >
             {bot.username}
-            <span className='text-sm font-medium select-none text-tertiary'>#{bot.discriminator}</span>
+            <span className='inline text-sm font-medium select-none text-tertiary'>#{bot.discriminator}</span>
           </motion.h1>
 
           {bot.badges.length > 0 && (
