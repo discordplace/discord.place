@@ -2,7 +2,7 @@
 
 import config from '@/config';
 import { MdChevronLeft } from 'react-icons/md';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import cn from '@/lib/cn';
@@ -19,7 +19,6 @@ import { useLocalStorage } from 'react-use';
 export default function NewBot() {
   const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
 
-  const descriptionRef = useRef(null);
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [renderConfetti, setRenderConfetti] = useState(false);
@@ -38,15 +37,13 @@ export default function NewBot() {
     botCategories: []
   });
 
-  useEffect(() => {
-
+  useLayoutEffect(() => {
     if (localData) {
       if (localData.botId === '' && localData.botShortDescription === '' && localData.botDescription === '' && localData.botInviteUrl === '' && localData.botCategories.length === 0) return;
 
       setBotId(localData.botId);
       setBotShortDescription(localData.botShortDescription);
       setBotDescription(localData.botDescription);
-      descriptionRef.current.innerText = localData.botDescription;
       setBotInviteUrl(localData.botInviteUrl);
       setBotCategories(localData.botCategories);
 
@@ -69,12 +66,6 @@ export default function NewBot() {
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [botId, botShortDescription, botDescription, botInviteUrl, botCategories]);
-
-  useEffect(() => {
-    if (markdownPreviewing === false) descriptionRef.current.innerText = botDescription;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [markdownPreviewing]);
 
   const router = useRouter();
 
@@ -201,22 +192,11 @@ export default function NewBot() {
                 {botDescription}
               </Markdown>
             ) : (
-              <span
-                contentEditable="plaintext-only"
-                suppressContentEditableWarning
-                className="block w-full h-[250px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
-                onKeyUp={event => {
-                  if (event.target.innerText.length > config.botDescriptionMaxLength) {
-                    event.target.innerText = event.target.innerText.slice(0, config.botDescriptionMaxLength);
-                    event.preventDefault();
-                    event.stopPropagation();
-                    
-                    return toast.error(`Description can be maximum ${config.botDescriptionMaxLength} characters long.`);
-                  }
-
-                  setBotDescription(event.target.innerText);
-                }}
-                ref={descriptionRef}
+              <textarea
+                className="block w-full resize-none h-[250px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
+                value={botDescription}
+                onChange={event => setBotDescription(event.target.value)}
+                maxLength={config.botDescriptionMaxLength}
               />
             )}
 
