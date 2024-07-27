@@ -31,6 +31,7 @@ import { IoChevronBackOutline } from 'react-icons/io5';
 import { nanoid } from 'nanoid';
 import { PiWaveformBold } from 'react-icons/pi';
 import { FiLink } from 'react-icons/fi';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Content() {
   const user = useAuthStore(state => state.user);
@@ -151,7 +152,13 @@ export default function Content() {
   ];
 
   const [activeTab, setActiveTab] = useState('my-account');
-  const fetchData = useAccountStore(state => state.fetchData);
+
+  const { fetchData, setCurrentlyAddingBot, setCurrentlyAddingServer, setCurrentlyAddingSound } = useAccountStore(useShallow(state => ({
+    fetchData: state.fetchData,
+    setCurrentlyAddingBot: state.setCurrentlyAddingBot,
+    setCurrentlyAddingServer: state.setCurrentlyAddingServer,
+    setCurrentlyAddingSound: state.setCurrentlyAddingSound
+  })));
 
   useEffect(() => {
     switch (activeTab) {
@@ -184,6 +191,10 @@ export default function Content() {
       fetchData(['reminders']);
       break;
     }
+
+    setCurrentlyAddingServer(null);
+    setCurrentlyAddingBot(false);
+    setCurrentlyAddingSound(false);
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
