@@ -65,7 +65,7 @@ const markdownComponents = {
   ul: ({ children }) => <ul className="my-4 text-tertiary" style={{ paddingLeft: '12px', listStyleType: 'disc', listStylePosition: 'inside' }}>{children}</ul>,
   ol: ({ children }) => <ol className="my-4 text-tertiary" style={{ paddingLeft: '12px', listStyleType: 'decimal', listStylePosition: 'inside' }}>{children}</ol>,
   li: ({ children }) => <li>{children}</li>,
-  p: ({ children }) => <p className="my-4 text-tertiary">{children}</p>,
+  p: ({ children }) => <p className="my-4 break-words text-tertiary">{children}</p>,
   hr: () => <hr className="my-4" style={{ borderTop: '1px solid rgba(var(--border-primary))' }} />
 };
 
