@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import getInstatusSummary from '@/lib/request/getInstatusSummary';
 
 export const useGeneralStore = create(set => ({
   createQuarantineModal: {
@@ -44,6 +45,14 @@ export const useGeneralStore = create(set => ({
     setCurrentlyPlaying: soundId => set(state => ({ sounds: { ...state.sounds, currentlyPlaying: soundId } })),
     volume: 1,
     setVolume: volume => set(state => ({ sounds: { ...state.sounds, volume } }))
+  },
+  status: {
+    summary: null,
+    fetchSummary: async () => {
+      const summary = await getInstatusSummary();
+
+      set(state => ({ status: { ...state.status, summary } }));
+    }
   }
 }));
 

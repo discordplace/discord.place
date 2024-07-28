@@ -1,24 +1,25 @@
 'use client';
 
 import config from '@/config';
-import getInstatusSummary from '@/lib/request/getInstatusSummary';
 import useModalsStore from '@/stores/modals';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { useEffect } from 'react';
 import { useLocalStorage } from 'react-use';
+import useGeneralStore from '@/stores/general';
 
 export default function Status() {
   const openModal = useModalsStore(state => state.openModal);
   const closeModal = useModalsStore(state => state.closeModal);
   
-  const [summary, setSummary] = useState(null);
+  const summary = useGeneralStore(state => state.status.summary);
+  const fetchSummary = useGeneralStore(state => state.status.fetchSummary);
+
   const [closedIncidents, setClosedIncidents] = useLocalStorage('closed-incidents', []);
   const [closedMaintenances, setClosedMaintenances] = useLocalStorage('closed-maintenances', []);
 
   useEffect(() => {
-    getInstatusSummary()
-      .then(setSummary)
-      .catch(toast.error);
+    fetchSummary();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
