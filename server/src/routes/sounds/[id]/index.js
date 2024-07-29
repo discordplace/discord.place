@@ -32,7 +32,7 @@ module.exports = {
       const permissions = {
         canDelete: request.user && (
           request.user.id == sound.publisher.id ||
-          config.permissions.canDeleteSoundsRoles.some(role => request.member.roles.cache.has(role))
+          (request.member && config.permissions.canDeleteSoundsRoles.some(role => request.member.roles.cache.has(role)))
         ),
         canApprove: request.user && request.member && config.permissions.canApproveSoundsRoles.some(role => request.member.roles.cache.has(role))
       };

@@ -21,7 +21,7 @@ module.exports = {
       const permissions = {
         canDelete: request.user && (
           request.user.id == template.user.id ||
-          config.permissions.canDeleteTemplatesRoles.some(role => request.member.roles.cache.has(role))
+          (request.member && config.permissions.canDeleteTemplatesRoles.some(role => request.member.roles.cache.has(role)))
         ),
         canApprove: request.user && request.member && config.permissions.canApproveTemplatesRoles.some(role => request.member.roles.cache.has(role))
       };

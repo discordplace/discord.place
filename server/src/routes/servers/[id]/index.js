@@ -58,7 +58,7 @@ module.exports = {
       const permissions = {
         canDelete: request.user && (
           request.user.id === guild.ownerId ||
-          config.permissions.canDeleteServersRoles.some(role => request.member.roles.cache.has(role))
+          (request.member && config.permissions.canDeleteServersRoles.some(role => request.member.roles.cache.has(role)))
         ),
         canEdit: request.user && (
           request.user.id === guild.ownerId ||
@@ -271,7 +271,7 @@ module.exports = {
 
       const permissions = {
         canEdit: request.user.id === guild.ownerId ||
-          request.member && config.permissions.canEditServersRoles.some(roleId => request.member.roles.cache.has(roleId))
+          (request.member && config.permissions.canEditServersRoles.some(roleId => request.member.roles.cache.has(roleId)))
       };
 
       if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);

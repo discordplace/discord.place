@@ -32,7 +32,7 @@ module.exports = {
       const permissions = {
         canDelete: request.user && (
           request.user.id === bot.owner.id ||
-          config.permissions.canDeleteBotsRoles.some(role => request.member.roles.cache.has(role))
+          (request.member && config.permissions.canDeleteBotsRoles.some(role => request.member.roles.cache.has(role)))
         ),
         canEdit: request.user && (
           request.user.id === bot.owner.id ||
