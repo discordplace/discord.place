@@ -8,7 +8,6 @@ const webhookUrlValidation = require('@/validations/bots/webhookUrl');
 const User = require('@/schemas/User');
 const encrypt = require('@/utils/encryption/encrypt');
 const decrypt = require('@/utils/encryption/decrypt');
-const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
 
 const BotSchema = new Schema({
   id: {
@@ -213,26 +212,6 @@ const BotSchema = new Schema({
         avatar_url: bot.displayAvatarURL({ size: 256 }),
         banner_url: bot.bannerURL({ size: 1024, format: 'png' })
       });
-
-      if ((Date.now() - new Date(this.server_count.updatedAt).getTime()) >= 86400000) {
-        logger.info(`Bot with ID ${this.id} has not been updated in 24 hours. Fetching new server count...`);
-
-        await getApproximateGuildCount(this.id)
-          .then(async approximate_guild_count_data => {
-            if (!approximate_guild_count_data) logger.error(`Bot with ID ${this.id} could not be updated with new server count.`);
-            else {
-              this.server_count = {
-                value: approximate_guild_count_data.approximate_guild_count,
-                updatedAt: new Date()
-              };
-
-              await this.save();
-
-              logger.info(`Bot with ID ${this.id} has been updated with new server count.`);
-            }
-          })
-          .catch(error => logger.error(`There was an error while updating bot with ID ${this.id} with new server count:`, error));
-      }
 
       return {
         ...newBot,

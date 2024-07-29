@@ -217,6 +217,7 @@ We use YML files for the configuration of the server. You can find the configura
 | `guildId` | String | Base guild ID for the Discord bot. |
 | `guildInviteUrl` | String | Invite URL for the base guild. |
 | `permissions` | Object | Permissions for the server. |
+| `maxServerCountDifference` | Number | Allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. |
 | `roles` | Object | Role IDs from the base guild. |
 | `excludeCollectionsInBackup` | Array<String> | Collections to exclude from database backups. |
 | `customHostnames` | Array<String> | Custom hostnames for the profiles. |
@@ -238,6 +239,7 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `port.frontend` and `port.backend` values are used for the client and server ports. You can change these values to your own ports.
 > - The `guildId` and `guildInviteUrl` values are used for the base guild ID and invite URL for the base guild. You can change these values to your own guild ID and invite URL.
 > - The `permissions` value is used for the permissions for the server. If permission name has `Roles` in the end, that means that permission is role-based. Otherwise, that permission is user ID-based. You can change these values to your own permissions.
+> - The `maxServerCountDifference` value is used for the allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. When new requests come to the stats API route, we check the server count of the bot. If the difference between the provided server count and the actual server count is greater than this value, we reject the request.
 > - The `roles` value is used for the role IDs from the base guild. You can change these values to your own role IDs.
 > - The `excludeCollectionsInBackup` value is used for collections to exclude from database backups. We take daily backups of the database. If you don't want to take backups of some collections, you can add those collections to this value. Make sure to add the collection name exactly as it is in the database.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the website with different ports and use a reverse proxy to redirect the requests to the correct port.

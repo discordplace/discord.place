@@ -135,6 +135,7 @@ templateMaxDescriptionLength: 256
 templateMaxCategoriesLength: 3
 soundNameMaxLength: 64
 botMaxExtraOwners: 4
+maxServerCountDifference: 50
 roles:
   jrModerator: '1206355082883371049'
   moderator: '1267549562957205645'
