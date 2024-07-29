@@ -134,7 +134,8 @@ export default function Sidebar() {
             loading: 'Syncing Lemon Squeezy plans..',
             success: () => 'Successfully synced Lemon Squeezy plans.',
             error: message => message
-          })
+          }),
+          disabled: data?.permissions?.canSyncLemonSqueezyPlans === false
         }
       ]
     }
