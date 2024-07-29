@@ -33,7 +33,7 @@ module.exports = {
 
       const isHaveNitro = user.banner?.startsWith('a_') || user.avatar?.startsWith('a_');
       const userFlags = user.flags.toArray();
-      if (isHaveNitro) userFlags.push('Nitro');
+      if (!user.bot && isHaveNitro) userFlags.push('Nitro');
 
       const responseData = {
         id: user.id,
