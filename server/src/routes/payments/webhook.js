@@ -170,7 +170,7 @@ module.exports = {
       case 'order_refunded':
         var user = await User.findOne({ 'subscription.orderId': body.data.attributes.order_number });
         if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
-
+        
         user.subscription = null;
 
         await user.save();
@@ -191,6 +191,15 @@ module.exports = {
       case 'subscription_expired':
         var user = await User.findOne({ 'subscription.id': body.data.attributes.order_id });
         if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
+
+        user.oldSubscriptions.push({
+          id: user.subscription.id,
+          orderId: user.subscription.orderId,
+          productId: user.subscription.productId,
+          planId: user.subscription.planId,
+          createdAt: user.subscription.createdAt,
+          expiredAt: new Date(body.data.attributes.ends_at)
+        });
 
         user.subscription = null;
 
