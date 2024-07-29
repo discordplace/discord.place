@@ -29,7 +29,7 @@ module.exports = {
       const emojiPack = await EmojiPack.findOne({ id });
       if (!emojiPack) return response.sendError('Emoji pack not found.', 404);
 
-      const canDelete = request.user.id == emojiPack.user.id || config.permissions.canDeleteEmojis.includes(request.user.id);
+      const canDelete = request.user.id == emojiPack.user.id || config.permissions.canDeleteEmojisRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete this emoji.', 403);
     
       const command = new DeleteObjectsCommand({

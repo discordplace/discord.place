@@ -53,7 +53,7 @@ module.exports = {
             },
             {
               name: 'Reason',
-              value: config.templateDenyReasons[reason].description
+              value: `${config.templateDenyReasons[reason].name}\n-# - ${config.templateDenyReasons[reason].description}`
             }
           ])
       ];

@@ -32,9 +32,9 @@ module.exports = {
       const permissions = {
         canDelete: request.user && (
           request.user.id == sound.publisher.id ||
-          config.permissions.canDeleteSounds.includes(request.user.id)
+          config.permissions.canDeleteSoundsRoles.some(role => request.member.roles.cache.has(role))
         ),
-        canApprove: request.user && request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId))
+        canApprove: request.user && request.member && config.permissions.canApproveSoundsRoles.some(role => request.member.roles.cache.has(role))
       };
 
       if (!sound.approved && !permissions.canApprove && !permissions.canDelete) return response.sendError('You can\'t view this sound until confirmed.', 404);
@@ -60,7 +60,7 @@ module.exports = {
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);
 
-      const canDelete = request.user.id === sound.publisher.id || config.permissions.canDeleteSounds.includes(request.user.id);
+      const canDelete = request.user.id === sound.publisher.id || config.permissions.canDeleteSoundsRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete this sounds.', 403);
 
       const command = new DeleteObjectCommand({

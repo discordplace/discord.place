@@ -10,7 +10,7 @@ module.exports = {
 
     .toJSON(),
   execute: async interaction => {
-    if (!config.permissions.canExecuteFetch.includes(interaction.user.id)) return interaction.reply({ content: 'You are not allowed to use this command.' });
+    if (!config.permissions.canExecuteFetchRoles.some(role => interaction.member.roles.cache.has(role))) return interaction.reply({ content: 'You are not allowed to use this command.' });
 
     const type = interaction.options.getString('type');
     const id = interaction.options.getString('id');

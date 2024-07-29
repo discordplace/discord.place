@@ -71,7 +71,7 @@ module.exports = {
             },
             {
               name: 'Reason',
-              value: config.botsDenyReasons[reason].description
+              value: `${config.botsDenyReasons[reason].name}\n-# - ${config.botsDenyReasons[reason].description}`
             }
           ])
       ];

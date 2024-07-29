@@ -73,7 +73,7 @@ module.exports = {
                 },
                 {
                   name: 'Reason',
-                  value: reason ? config.emojisDenyReasons[reason].description : 'No reason provided.'
+                  value: reason ? `${config.emojisDenyReasons[reason].name}\n-# - ${config.emojisDenyReasons[reason].description}` : 'No reason provided.'
                 }
               ])
           ];

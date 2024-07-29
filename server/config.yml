@@ -5,7 +5,6 @@ discordScopes:
 botPresenceStatus: 'online'
 rateLimitWhitelist:
   - '957840712404193290'
-  - '1207874300070199356'
 trustProxy: true
 session:
   cookieDomain: '.discord.place'
@@ -26,85 +25,96 @@ port:
 guildId: '1200254872059121764'
 guildInviteUrl: 'discord.gg/dotplace'
 permissions:
-  canEditProfiles:
-    - '957840712404193290'
-  canDeleteProfiles:
-    - '957840712404193290'
-  canDeleteServers:
-    - '957840712404193290'
-  canDeleteEmojis:
-    - '957840712404193290'
-  canDeleteBots:
-    - '957840712404193290'
-  canDeleteReviews:
-    - '957840712404193290'
-  canDeleteTemplates:
-    - '957840712404193290'
-  canDeleteSounds: 
-    - '957840712404193290'
-  canApproveEmojisRoles:
+  canEditProfilesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
     - '1206354879321210900'
-    - '1206355082883371049'
+  canDeleteProfilesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteServersRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteEmojisRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteBotsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteReviewsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteTemplatesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteSoundsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canApproveEmojisRoles:
     - '1238588360193216695'
   canApproveBotsRoles:
-    - '1206354879321210900'
-    - '1206355082883371049'
     - '1238588360193216695'
-  canEditEmojis:
-    - '957840712404193290'
   canApproveReviewsRoles:
-    - '1206354879321210900'
-    - '1206355082883371049'
     - '1238588360193216695'
   canEditServersRoles:
-    - '1206354879321210900'
-    - '1206355082883371049'
+    - '1238588360193216695'
   canEditBotsRoles:
-    - '1206354879321210900'
-    - '1206355082883371049'
+    - '1238588360193216695'
   canViewQuarantinesRoles:
     - '1206032198562742312'
-    - '1206354879321210900'
-  canCreateQuarantinesRoles:
-    - '1206032198562742312'
-    - '1206354879321210900'
-  canDeleteQuarantines:
-    - '9578407124041s93290'
-  canViewDashboardRoles:
+    - '1267549562957205645'
     - '1206354879321210900'
     - '1206355082883371049'
-    - '1238588360193216695'
-  canViewBlockedIps:
-    - '957840712404193290'
+  canCreateQuarantinesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+  canDeleteQuarantinesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+  canViewDashboardRoles:
+    - '1267549977379471403'
+  canViewBlockedIpsRoles:
+    - '1206032198562742312'
+    - '1206354879321210900'
+    - '1267549562957205645'
   canDeleteBlockedIps:
     - '957840712404193290'
   canDeleteBotDeniesRoles:
-    - '1206354879321210900'
-    - '1206355082883371049'
-  canViewTimeoutsRoles:
-    - '1206354879321210900'
-    - '1206355082883371049'
-  canDeleteTimeoutsRoles:
-    - '1206354879321210900'
-    - '1206355082883371049'
-  canApproveTemplatesRoles:
-    - '1206354879321210900'
+    - '1206032198562742312'
+    - '1267549562957205645'
     - '1206355082883371049'
     - '1238588360193216695'
-  canApproveSoundsRoles:
-    - '1206354879321210900'
+  canViewTimeoutsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
     - '1206355082883371049'
+  canDeleteTimeoutsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+  canApproveTemplatesRoles:
+    - '1238588360193216695'
+  canApproveSoundsRoles:
     - '1238588360193216695'
   canSyncLemonSqueezyPlans:
     - '957840712404193290'
   canExecuteEval:
     - '957840712404193290'
-  canExecuteFetch:
+  canExecuteFetchRoles:
     - '957840712404193290'
   canVerifyProfilesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
     - '1206354879321210900'
   canDeleteLinksRoles: 
     - '1206032198562742312'
+    - '1267549562957205645'
     - '1206354879321210900'
 profilesMaxSocialsLength: 8
 packagesMaxEmojisLength: 9
@@ -126,7 +136,9 @@ templateMaxCategoriesLength: 3
 soundNameMaxLength: 64
 botMaxExtraOwners: 4
 roles:
+  jrModerator: '1206355082883371049'
   moderator: '1206354879321210900'
+  headModerator: '1206354879321210900'
   premium: '1252335063123628084'
 emojiCategories:
   - 'Gaming'
@@ -182,17 +194,17 @@ soundCategories:
   - 'NSFW'
   - 'Other'
 emojiMaxCategoriesLength: 4
-emojiQueueChannelId: '1210805683751223377'
-soundQueueChannelId: '1258839441020293160'
-reviewQueueChannelId: '1213842162828054538'
-botQueueChannelId: '1236369862259900566'
-templateQueueChannelId: '1247743275914366987'
-voteLogsChannelId: '1222817883470434304'
-templateApplyLogsChannelId: '1247797537780531235'
-linksLogsChannelId: '1259541292275208220'
+emojiQueueChannelId: '1267552786162389085'
+soundQueueChannelId: '1267552786162389085'
+reviewQueueChannelId: '1267552786162389085'
+botQueueChannelId: '1267552786162389085'
+templateQueueChannelId: '1267552786162389085'
+voteLogsChannelId: '1267553398337572905'
+templateApplyLogsChannelId: '1267553398337572905'
+linksLogsChannelId: '1267553398337572905'
 portalChannelId: '1238654829916585984'
-purchasesChannelId: '1254216137684680745'
-joinLeaveLogsChannelId: '1260359414972678245'
+joinLeaveLogsChannelId: '1267553398337572905'
+quarantineLogsChannelId: '1267553398337572905'
 excludeCollectionsInBackup:
   - 'sessions'
   - 'botdenies'
@@ -254,7 +266,6 @@ quarantineRestrictions:
   'SOUNDS_LIKE':
     available_to:
       - 'USER_ID'
-quarantineLogsChannelId: '1226257480112406599'
 customHostnames:
   - 'dsc.wtf'
   - 'dsc.dog'

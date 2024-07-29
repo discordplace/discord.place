@@ -52,8 +52,8 @@ module.exports = {
         canApproveTemplates: request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveSounds: request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveReviews: request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteReviews: config.permissions.canDeleteReviews.includes(request.user.id),
-        canViewBlockedIps: config.permissions.canViewBlockedIps.includes(request.user.id),
+        canDeleteReviews: request.member && config.permissions.canDeleteReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canViewBlockedIps: request.member && config.permissions.canViewBlockedIpsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteBlockedIps: config.permissions.canDeleteBlockedIps.includes(request.user.id),
         canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteLinks: request.member && config.permissions.canDeleteLinksRoles.some(roleId => request.member.roles.cache.has(roleId)),
@@ -61,7 +61,7 @@ module.exports = {
         canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canViewQuarantines: request.member && config.permissions.canViewQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canCreateQuarantines: request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteQuarantines: config.permissions.canDeleteQuarantines.includes(request.user.id),
+        canDeleteQuarantines: request.member && config.permissions.canDeleteQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canSyncLemonSqueezyPlans: config.permissions.canSyncLemonSqueezyPlans.includes(request.user.id)
       };
 

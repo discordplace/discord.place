@@ -14,7 +14,7 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
       
-      const canDelete = config.permissions.canDeleteReviews.includes(request.user.id);
+      const canDelete = config.permissions.canDeleteReviewsRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete reviews.', 403);
 
       const { id, review_id } = matchedData(request);

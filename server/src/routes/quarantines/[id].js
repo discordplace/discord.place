@@ -14,7 +14,7 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const canDelete = config.permissions.canDeleteQuarantines.includes(request.user.id);
+      const canDelete = config.permissions.canDeleteQuarantinesRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You do not have permission to delete quarantines.', 403);
 
       const { id } = matchedData(request);

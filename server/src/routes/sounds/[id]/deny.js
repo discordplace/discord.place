@@ -73,7 +73,7 @@ module.exports = {
             },
             {
               name: 'Reason',
-              value: config.soundDenyReasons[reason].description
+              value: `${config.soundDenyReasons[reason].name}\n-# - ${config.soundDenyReasons[reason].description}`
             }
           ])
       ];

@@ -20,7 +20,7 @@ module.exports = {
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 
-      const canDelete = request.user.id == profile.user.id || config.permissions.canDeleteProfiles.includes(request.user.id);
+      const canDelete = request.user.id == profile.user.id || config.permissions.canDeleteProfilesRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete this profile.', 403);
 
       await profile.deleteOne();

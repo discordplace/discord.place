@@ -32,7 +32,7 @@ module.exports = {
       const permissions = {
         canDelete: request.user && (
           request.user.id === bot.owner.id ||
-          config.permissions.canDeleteBots.includes(request.user.id)
+          config.permissions.canDeleteBotsRoles.some(role => request.member.roles.cache.has(role))
         ),
         canEdit: request.user && (
           request.user.id === bot.owner.id ||
@@ -244,7 +244,7 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      const canDelete = request.user.id === bot.owner.id || config.permissions.canDeleteBots.includes(request.user.id);
+      const canDelete = request.user.id === bot.owner.id || config.permissions.canDeleteBotsRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete this bot.', 403);
 
       const bulkOperations = [

@@ -43,30 +43,6 @@ module.exports = {
 
     currentlyApplyingTemplates.set(interaction.guild.id, true);
 
-    client.channels.cache.get(config.templateApplyLogsChannelId).send({
-      embeds: [
-        new Discord.EmbedBuilder()
-          .setColor(Discord.Colors.Purple)
-          .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
-          .setTitle('New Template Apply Request Received')
-          .setTimestamp()
-          .setFields([
-            { name: 'Requester', value: `${interaction.user} (${interaction.user.id})`, inline: true }, 
-            { name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true },
-            { name: 'Template', value: `${template.name} (${template.id})`, inline: true }
-          ])
-      ],
-      components: [
-        new Discord.ActionRowBuilder()
-          .addComponents(
-            new Discord.ButtonBuilder()
-              .setStyle(Discord.ButtonStyle.Link)
-              .setLabel('Preview Template on discord.place')
-              .setURL(`${config.frontendUrl}/templates/${template.id}/preview`)
-          )
-      ]
-    });
-
     const embeds = [
       new Discord.EmbedBuilder()
         .setColor('#5865F2')
@@ -136,6 +112,30 @@ module.exports = {
     if (botHighestRole.position !== interaction.guild.roles.cache.map(role => role.position).sort((a, b) => b - a)[0]) return sendError('I do not have the highest role in this server. Please make sure I have the highest role in the server and try again.');
     if (!botHighestRole.permissions.has(Discord.PermissionFlagsBits.Administrator)) return sendError('My highest role does not have the `Administrator` permission. Please make sure my highest role has the `Administrator` permission and try again.');
 
+    client.channels.cache.get(config.templateApplyLogsChannelId).send({
+      embeds: [
+        new Discord.EmbedBuilder()
+          .setColor(Discord.Colors.Purple)
+          .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
+          .setTitle('New Template Apply Request Received')
+          .setTimestamp()
+          .setFields([
+            { name: 'Requester', value: `${interaction.user} (${interaction.user.id})`, inline: true }, 
+            { name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true },
+            { name: 'Template', value: `${template.name} (${template.id})`, inline: true }
+          ])
+      ],
+      components: [
+        new Discord.ActionRowBuilder()
+          .addComponents(
+            new Discord.ButtonBuilder()
+              .setStyle(Discord.ButtonStyle.Link)
+              .setLabel('Preview Template on discord.place')
+              .setURL(`${config.frontendUrl}/templates/${template.id}/preview`)
+          )
+      ]
+    });
+    
     latestUses.set(interaction.guild.id, Date.now() + 1800000);
     latestUses.set(interaction.user.id, Date.now() + 1800000);
 

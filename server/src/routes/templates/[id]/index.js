@@ -21,9 +21,9 @@ module.exports = {
       const permissions = {
         canDelete: request.user && (
           request.user.id == template.user.id ||
-          config.permissions.canDeleteTemplates.includes(request.user.id)
+          config.permissions.canDeleteTemplatesRoles.some(role => request.member.roles.cache.has(role))
         ),
-        canApprove: request.user && request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId))
+        canApprove: request.user && request.member && config.permissions.canApproveTemplatesRoles.some(role => request.member.roles.cache.has(role))
       };
 
       if (!template.approved && !permissions.canApprove && !permissions.canDelete) return response.sendError('You can\'t view this template until confirmed.', 404);
@@ -48,7 +48,7 @@ module.exports = {
       const template = await Template.findOne({ id });
       if (!template) return response.sendError('Template not found.', 404);
 
-      const canDelete = request.user.id === template.user.id || config.permissions.canDeleteTemplates.includes(request.user.id);
+      const canDelete = request.user.id === template.user.id || config.permissions.canDeleteTemplatesRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete this template.', 403);
 
       await template.deleteOne();

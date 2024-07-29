@@ -46,7 +46,7 @@ module.exports = {
             .setFooter({ text: message })
         ];
 
-        client.channels.cache.get(config.purchasesChannelId).send({ embeds });
+        client.channels.cache.get(config.portalChannelId).send({ embeds });
       }
 
       switch (body.meta.event_name) {

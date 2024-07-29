@@ -58,11 +58,11 @@ module.exports = {
       const permissions = {
         canDelete: request.user && (
           request.user.id === guild.ownerId ||
-          config.permissions.canDeleteServers.includes(request.user.id)
+          config.permissions.canDeleteServersRoles.some(role => request.member.roles.cache.has(role))
         ),
         canEdit: request.user && (
           request.user.id === guild.ownerId ||
-          (request.member && config.permissions.canEditServersRoles.some(roleId => request.member.roles.cache.has(roleId)))
+          (request.member && config.permissions.canEditServersRoles.some(role => request.member.roles.cache.has(role)))
         )
       };
 
@@ -216,7 +216,7 @@ module.exports = {
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);
 
-      if (request.user.id !== guild.ownerId && !config.permissions.canDeleteServers.includes(request.user.id)) return response.sendError('You are not the owner of this guild.', 403);
+      if (request.user.id !== guild.ownerId && !config.permissions.canDeleteServersRoles.some(role => request.member.roles.cache.has(role))) return response.sendError('You are not the owner of this guild.', 403);
 
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404);

@@ -22,7 +22,7 @@ module.exports = {
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 
-      const canEdit = request.user.id == profile.user.id || config.permissions.canEditProfiles.includes(request.user.id);
+      const canEdit = request.user.id == profile.user.id || config.permissions.canEditProfilesRoles.some(role => request.member.roles.cache.has(role));
       if (!canEdit) return response.sendError('You are not allowed to edit this profile.', 403);
 
       const social = profile.socials.find(social => social._id == id);

@@ -31,11 +31,11 @@ module.exports = {
       const permissions = {
         canEdit: request.user && (
           request.user.id == profile.user.id ||
-          config.permissions.canEditProfiles.includes(request.user.id)
+          config.permissions.canEditProfilesRoles.some(role => request.member.roles.cache.has(role))
         ) || false,
         canDelete: request.user && (
           request.user.id == profile.user.id ||
-          config.permissions.canDeleteProfiles.includes(request.user.id)
+          config.permissions.canDeleteProfilesRoles.some(role => request.member.roles.cache.has(role))
         ) || false,
         canVerify: request.user && (
           request.member && config.permissions.canVerifyProfilesRoles.some(role => request.member.roles.cache.has(role))
@@ -155,7 +155,7 @@ module.exports = {
         return response.status(200).json({ success: true });
       }
 
-      const canEdit = request.user.id == profile.user.id || config.permissions.canEditProfiles.includes(request.user.id);
+      const canEdit = request.user.id == profile.user.id || config.permissions.canEditProfilesRoles.some(role => request.member.roles.cache.has(role));
       if (!canEdit) return response.sendError('You do not have permission to edit this profile.', 403);
 
       if (config.customHostnames.includes(newPreferredHost)) {

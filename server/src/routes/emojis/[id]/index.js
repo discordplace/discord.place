@@ -22,9 +22,9 @@ module.exports = {
       const permissions = {
         canDelete: request.user && (
           request.user.id == emoji.user.id ||
-          config.permissions.canDeleteEmojis.includes(request.user.id)
+          config.permissions.canDeleteEmojisRoles.some(role => request.member.roles.cache.has(role))
         ),
-        canApprove: request.user && request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId))
+        canApprove: request.user && request.member && config.permissions.canApproveEmojisRoles.some(role => request.member.roles.cache.has(role))
       };
 
       if (!emoji.approved && !permissions.canApprove && !permissions.canDelete) return response.sendError('You can\'t view this emoji until confirmed.', 404);
