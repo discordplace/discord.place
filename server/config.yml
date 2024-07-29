@@ -137,8 +137,9 @@ soundNameMaxLength: 64
 botMaxExtraOwners: 4
 roles:
   jrModerator: '1206355082883371049'
-  moderator: '1206354879321210900'
+  moderator: '1267549562957205645'
   headModerator: '1206354879321210900'
+  admin: '1206032198562742312'
   premium: '1252335063123628084'
 emojiCategories:
   - 'Gaming'
