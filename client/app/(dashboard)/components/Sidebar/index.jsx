@@ -53,7 +53,7 @@ export default function Sidebar() {
           id: 'blockedIPs',
           name: `Blocked IPs${data?.blockedIps?.length ? ` (${data.blockedIps.length})` : ''}`,
           icon: MdMyLocation,
-          disabled: data?.permissions?.canViewBlockedIPs === false || data?.permissions?.canDeleteBlockedIPs === false
+          disabled: data?.permissions?.canViewBlockedIps === false || data?.permissions?.canDeleteBlockedIps === false
         }
       ]
     },
