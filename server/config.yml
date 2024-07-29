@@ -15,6 +15,7 @@ emojis:
   loading: '<a:loading:1247786499076915252>'
   checkmark: '<:yes:1226129515718381568>'
   badges:
+    admin: '<:white_admin:1267620006183571530>'
     moderator: '<:white_moderator:1251538987592712345>'
     premium: '<:white_premium:1251538989312249947>'
     verified: '<:white_verified:1251538990524403793>'
