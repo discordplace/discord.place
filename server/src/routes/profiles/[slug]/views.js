@@ -1,5 +1,4 @@
 const Profile = require('@/schemas/Profile');
-const checkCaptcha = require('@/utils/middlewares/checkCaptcha');
 const useRateLimiter = require('@/src/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
 const { param, validationResult, matchedData } = require('express-validator');
@@ -8,7 +7,6 @@ const bodyParser = require('body-parser');
 module.exports = {
   post: [
     bodyParser.json(),
-    checkCaptcha,
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('slug')
       .isString().withMessage('Slug must be a string.')

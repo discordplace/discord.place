@@ -7,53 +7,19 @@ import About from '@/app/(profiles)/profile/[slug]/components/sections/About';
 import Actions from '@/app/(profiles)/profile/[slug]/components/sections/Actions';
 import incrementViews from '@/lib/request/profiles/incrementViews';
 import Tooltip from '@/app/components/Tooltip';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect } from 'react';
 import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers';
 import Script from 'next/script';
-import cn from '@/lib/cn';
-import sleep from '@/lib/sleep';
 import Graph from '@/app/(profiles)/profile/[slug]/components/sections/Graph';
 import useThemeStore from '@/stores/theme';
 
 export default function Content({ profile }) {
   const theme = useThemeStore(state => state.theme);
-  const [showCaptcha, setShowCaptcha] = useState(false);
-  const [showCaptchaFrame, setShowCaptchaFrame] = useState(false); 
-
-  const captchaRef = useRef(null);
-  const captchaIntervalRef = useRef(null);
 
   useEffect(() => {
-    if (showCaptcha) {
-      if (!window.turnstile) return setShowCaptcha(false);
-      
-      const turnstile = window.turnstile;
-      turnstile?.render('.cf-turnstile');
+    incrementViews(profile.slug);
 
-      captchaIntervalRef.current = setInterval(() => {
-        const response = turnstile?.getResponse();
-        if (response) {
-          setShowCaptcha(false);
-          setShowCaptchaFrame(false);
-          clearInterval(captchaIntervalRef.current);
-          incrementViews(profile.slug, response);
-        } else {
-          if (!showCaptchaFrame) setShowCaptchaFrame(true);
-        }
-      }, 100);
-    } else clearInterval(captchaIntervalRef.current);
-
-    return () => clearInterval(captchaIntervalRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showCaptcha]);
-
-  useEffect(() => {
-    async function checkForCaptchaScript() {
-      while (!window.turnstile) await sleep(100);
-      setShowCaptcha(true);
-    }
-
-    checkForCaptchaScript();
   }, []);
 
   return (
@@ -129,34 +95,6 @@ export default function Content({ profile }) {
           <About profile={profile} />
           <div className='flex flex-col lg:w-[30%] gap-y-8'>
             <Social data={profile.socials} />
-
-            <div className={cn(
-              'w-full flex-col',
-              showCaptchaFrame ? 'flex' : 'hidden'
-            )}>
-              <motion.h2 
-                className='text-xl font-semibold'
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
-              >
-                Captcha
-              </motion.h2>
-
-              <p className='mt-2 text-sm text-tertiary'>
-                Please complete the captcha. This helps us prevent abuse and keep the site secure.
-              </p>
-
-              <div 
-                className={cn(
-                  'cf-turnstile mt-4',
-                  showCaptcha ? 'block max-w-0' : 'hidden'
-                )} 
-                data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY} 
-                ref={captchaRef}
-                data-theme={theme === 'dark' ? 'dark' : 'light'}
-              />
-            </div>
           </div>
         </div>
 
