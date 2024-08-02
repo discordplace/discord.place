@@ -96,6 +96,8 @@ SESSION_SECRET=
 SESSION_STORE_SECRET=
 GITHUB_AUTO_DEPLOY_SECRET=
 BOT_API_KEY_ENCRYPT_SECRET=
+USER_TOKEN_ENCRYPT_SECRET=
+PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY=
 DISCORD_CLIENT_TOKEN=
 DISCORD_CLIENT_SECRET=
 DISCORD_CLIENT_ID=
@@ -127,6 +129,7 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 | `GITHUB_AUTO_DEPLOY_SECRET` | Secret key for GitHub auto-deploy webhook. (not required) |
 | `BOT_API_KEY_ENCRYPT_SECRET` | Secret key for bot API key encryption. |
 | `USER_TOKEN_ENCRYPT_SECRET` | Used for encrypting user access tokens. |
+| `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` | Secret key for encrypting custom data in the payments. |
 | `DISCORD_CLIENT_TOKEN` | Discord bot token. |
 | `DISCORD_CLIENT_SECRET` | Discord OAuth client secret. |
 | `DISCORD_CLIENT_ID` | Discord OAuth client ID. |
@@ -151,7 +154,7 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 
 > [!NOTE]
 > - The `GITHUB_AUTO_DEPLOY_SECRET` is used for auto-deploying the server when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically pull the latest changes from the repository and restart the server.
-> - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET` and `USER_TOKEN_ENCRYPT_SECRET` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
+> - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET`, `USER_TOKEN_ENCRYPT_SECRET` and `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
 > - For the `MONGO_URL` value, you can use a local MongoDB instance or a cloud-based MongoDB service like MongoDB Atlas. Refer to the [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string) for more information on constructing the connection URL.
 > - Values starting with `S3_` are required. This is used for storing emojis & sounds files in S3. We personally use Cloudflare R2 Storage for this. You can use any S3-compatible storage service with the same configuration.
 > - The `CLOUDFLARE_TURNSTILE_SECRET_KEY` is used for verifying the Turnstile token. We use Cloudflare Turnstile for ensuring that the user is a human and not a bot on the website. Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile secret key.

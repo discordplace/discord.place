@@ -11,6 +11,7 @@ const Bot = require('@/schemas/Bot');
 const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
 const Discord = require('discord.js');
+const decrypt = require('@/utils/encryption/decrypt');
 
 module.exports = {
   post: [
@@ -51,94 +52,100 @@ module.exports = {
 
       switch (body.meta.event_name) {
       case 'order_created':
-        var serverId = body.meta.custom_data?.server_id;
-        var botId = body.meta.custom_data?.bot_id;
+        var token = body.meta.custom_data?.token;
+        if (!token) return logger.warn('[Lemon Squeezy] Token not found in custom data:', `\n${JSON.stringify(body, null, 2)}`);
+
+        var type = body.meta.custom_data?.type;
+        if (type && type !== 'server' && type !== 'bot') return logger.warn('[Lemon Squeezy] Invalid type in custom data:', `\n${JSON.stringify(body, null, 2)}`);
+
+        var base64DecodedToken = Buffer.from(token, 'base64').toString('utf-8');
+
+        var [iv, encryptedText, tag] = base64DecodedToken.split(':');
+        if (!iv || !encryptedText || !tag) return logger.warn('[Lemon Squeezy] Invalid token:', `\n${JSON.stringify(body, null, 2)}`);
+
+        var decryptedData = decrypt({ iv, encryptedText, tag }, process.env.PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY);
+        if (!decryptedData) return logger.warn('[Lemon Squeezy] Error decrypting token:', `\n${JSON.stringify(body, null, 2)}`);
 
         var isTripledVoteProduct = body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.tripledVotes.servers || body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.tripledVotes.bots;
         if (isTripledVoteProduct) {
-          if (!serverId && !botId) return logger.warn('[Lemon Squeezy] Server ID or Bot ID not found in custom data:', `\n${JSON.stringify(body, null, 2)}`);
-
-          if (serverId) {        
-            var guild = client.guilds.cache.get(serverId);
+          if (type === 'server') {        
+            var guild = client.guilds.cache.get(decryptedData);
             if (!guild) return logger.warn('[Lemon Squeezy] Guild not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-            var server = await Server.findOne({ id: serverId });
+            var server = await Server.findOne({ id: decryptedData });
             if (!server) return logger.warn('[Lemon Squeezy] Server not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-            var isTripledVoteEnabled = await ServerVoteTripleEnabled.findOne({ id: serverId });
+            var isTripledVoteEnabled = await ServerVoteTripleEnabled.findOne({ id: decryptedData });
             if (isTripledVoteEnabled) return logger.warn('[Lemon Squeezy] Tripled vote is already enabled for this server:', `\n${JSON.stringify(body, null, 2)}`);
 
-            await new ServerVoteTripleEnabled({ id: serverId }).save();
+            await new ServerVoteTripleEnabled({ id: decryptedData }).save();
 
             sendPurchaseMessage(colors.tripledVote, guild.name, guild.iconURL(), 'Purchased tripled votes.');
           }
 
-          if (botId) {        
-            var bot = await Bot.findOne({ id: botId });
+          if (type === 'bot') {        
+            var bot = await Bot.findOne({ id: decryptedData });
             if (!bot) return logger.warn('[Lemon Squeezy] Bot not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-            var isTripledVoteEnabled = await BotVoteTripleEnabled.findOne({ id: botId });
+            var isTripledVoteEnabled = await BotVoteTripleEnabled.findOne({ id: decryptedData });
             if (isTripledVoteEnabled) return logger.warn('[Lemon Squeezy] Tripled vote is already enabled for this bot:', `\n${JSON.stringify(body, null, 2)}`);
 
-            await new BotVoteTripleEnabled({ id: botId }).save();
+            await new BotVoteTripleEnabled({ id: decryptedData }).save();
 
             var botUser;
       
-            if (!client.forceFetchedUsers.has(botId)) {
-              await client.users.fetch(botId, { force: true }).catch(() => null);
-              client.forceFetchedUsers.set(botId, true);
+            if (!client.forceFetchedUsers.has(decryptedData)) {
+              await client.users.fetch(decryptedData, { force: true }).catch(() => null);
+              client.forceFetchedUsers.set(decryptedData, true);
               
-              botUser = client.users.cache.get(botId);
+              botUser = client.users.cache.get(decryptedData);
             }
 
-            sendPurchaseMessage(colors.tripledVote, botUser?.tag || botId, botUser?.displayAvatarURL?.(), 'Purchased tripled votes.');
+            sendPurchaseMessage(colors.tripledVote, botUser?.tag || decryptedData, botUser?.displayAvatarURL?.(), 'Purchased tripled votes.');
           }
         }
         
         var isStandedOutProduct = body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.standedOut.servers || body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.standedOut.bots;
         if (isStandedOutProduct) {
-          if (!serverId && !botId) return logger.warn('[Lemon Squeezy] Server ID or Bot ID not found in custom data:', `\n${JSON.stringify(body, null, 2)}`);
-
-          if (serverId) {        
-            var guild = client.guilds.cache.get(serverId);
+          if (type === 'server') {        
+            var guild = client.guilds.cache.get(decryptedData);
             if (!guild) return logger.warn('[Lemon Squeezy] Guild not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-            var server = await Server.findOne({ id: serverId });
+            var server = await Server.findOne({ id: decryptedData });
             if (!server) return logger.warn('[Lemon Squeezy] Server not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-            var isStandedOut = await StandedOutServer.findOne({ identifier: serverId });
+            var isStandedOut = await StandedOutServer.findOne({ identifier: decryptedData });
             if (isStandedOut) return logger.warn('[Lemon Squeezy] This server is already standed out:', `\n${JSON.stringify(body, null, 2)}`);
 
-            await new StandedOutServer({ identifier: serverId }).save();
+            await new StandedOutServer({ identifier: decryptedData }).save();
 
             sendPurchaseMessage(colors.standedOut, guild.name, guild.iconURL(), 'Purchased standed out.');
           }
 
-          if (botId) {
-            var bot = await Bot.findOne({ id: botId });
+          if (type === 'bot') {
+            var bot = await Bot.findOne({ id: decryptedData });
             if (!bot) return logger.warn('[Lemon Squeezy] Bot not found:', `\n${JSON.stringify(body, null, 2)}`);
 
-            var isStandedOut = await StandedOutBot.findOne({ identifier: botId });
+            var isStandedOut = await StandedOutBot.findOne({ identifier: decryptedData });
             if (isStandedOut) return logger.warn('[Lemon Squeezy] This bot is already standed out:', `\n${JSON.stringify(body, null, 2)}`);
 
-            await new StandedOutBot({ identifier: botId }).save();
+            await new StandedOutBot({ identifier: decryptedData }).save();
 
             var botUser;
       
-            if (!client.forceFetchedUsers.has(botId)) {
-              await client.users.fetch(botId, { force: true }).catch(() => null);
-              client.forceFetchedUsers.set(botId, true);
+            if (!client.forceFetchedUsers.has(decryptedData)) {
+              await client.users.fetch(decryptedData, { force: true }).catch(() => null);
+              client.forceFetchedUsers.set(decryptedData, true);
               
-              botUser = client.users.cache.get(botId);
+              botUser = client.users.cache.get(decryptedData);
             }
 
-            sendPurchaseMessage(colors.standedOut, botUser?.tag || botId, botUser?.displayAvatarURL?.(), 'Purchased standed out.');
+            sendPurchaseMessage(colors.standedOut, botUser?.tag || decryptedData, botUser?.displayAvatarURL?.(), 'Purchased standed out.');
           }
         }
 
         if (!isTripledVoteProduct && !isStandedOutProduct) { 
-          var user_id = body.meta.custom_data?.user_id;
-          if (!user_id) return logger.warn('[Lemon Squeezy] User ID not found in custom data:', `\n${JSON.stringify(body, null, 2)}`);
+          var user_id = decryptedData;
 
           var user = await User.findOne({ id: user_id });
           if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
