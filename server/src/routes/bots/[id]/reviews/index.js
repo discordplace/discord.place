@@ -17,7 +17,7 @@ module.exports = {
     body('rating')
       .isInt({ min: 1, max: 5 }).withMessage('Rating must be between 1 and 5.'),
     body('content')
-      .isLength({ min: 1, max: config.reviewsMaxCharacters }).withMessage(`Content must be between 1 and ${config.reviewsMaxCharacters} characters.`),
+      .isLength({ min: config.reviewsMinCharacters, max: config.reviewsMaxCharacters }).withMessage(`Content must be between ${config.reviewsMinCharacters} and ${config.reviewsMaxCharacters} characters.`),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

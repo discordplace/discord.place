@@ -159,6 +159,7 @@ const config = {
   serverKeywordsMaxCharacters: 32,
   serverDescriptionMaxCharacters: 256,
   reviewsMaxCharacters: 256,
+  reviewsMinCharacters: 64,
   botShortDescriptionMinLength: 16,
   botShortDescriptionMaxLength: 150,
   botDescriptionMinLength: 32,

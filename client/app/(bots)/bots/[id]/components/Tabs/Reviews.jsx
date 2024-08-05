@@ -10,6 +10,7 @@ import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import cn from '@/lib/cn';
 import Link from 'next/link';
+import config from '@/config';
 
 export default function Reviews({ bot }) {
   const [page, setPage] = useState(1);
@@ -172,22 +173,29 @@ export default function Reviews({ bot }) {
               <p className='text-xs sm:text-sm text-tertiary'>
                 {loggedIn ? 'Let others know what you think about this bot.' : 'You must be logged in to leave a review.'}
               </p>
-              
-              <span 
-                contentEditable={!loading && !reviewSubmitted && loggedIn}
-                suppressContentEditableWarning 
-                className={cn(
-                  'text-sm sm:text-base block w-full lg:max-w-[450px] min-h-[100px] max-h-[200px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500',
-                  loading || reviewSubmitted || !loggedIn ? 'pointer-events-none opacity-80' : 'cursor-text'
-                )} 
-                onKeyUp={event => setReview(event.target.textContent)}
-              />
+
+              <div className='relative'>
+                <textarea
+                  disabled={loading || reviewSubmitted || !loggedIn}
+                  className='peer text-sm scrollbar-hide sm:text-base resize-none block w-full lg:max-w-[450px] min-h-[100px] max-h-[200px] p-2 mt-4 border-2 disabled:pointer-events-none disabled:opacity-80 [&:not(:disabled)]:cursor-text border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+                  value={review}
+                  onChange={event => setReview(event.target.value)}
+                  maxLength={config.reviewsMaxCharacters}
+                />
+
+                <span className={cn(
+                  'absolute text-xs transition-opacity opacity-0 peer-focus-visible:opacity-100 -top-2 right-2 text-tertiary',
+                  review.length > 0 && review.length < config.reviewsMinCharacters && 'text-red-400'
+                )}>
+                  {review.length}/{config.reviewsMaxCharacters}
+                </span>
+              </div>
 
               {loggedIn ? (
                 <button
                   onClick={submitReview}
                   className='flex gap-x-1.5 items-center justify-center px-4 py-2 mt-4 text-sm font-semibold text-white bg-black rounded-lg dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70'
-                  disabled={review.length === 0 || selectedRating === 0 || loading || reviewSubmitted}
+                  disabled={selectedRating === 0 || loading || reviewSubmitted || review.length < config.reviewsMinCharacters}
                 >
                   {loading && <TbLoader className='animate-spin' />}
                   Submit Review {selectedRating !== 0 && `(${selectedRating}/5)`}
