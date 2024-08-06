@@ -4,6 +4,7 @@ const categoriesValidation = require('@/validations/bots/categories');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const { StandedOutBot } = require('@/schemas/StandedOut');
+const sleep = require('@/utils/sleep');
 
 module.exports = {
   get: [
@@ -79,8 +80,13 @@ module.exports = {
         page,
         limit,
         bots: await Promise.all(sortedBots.map(async bot => {
+          const publiclySafeBot = await bot.toPubliclySafe();
+
+          // For rate limiting purposes
+          await sleep(1000);
+
           return { 
-            ...await bot.toPubliclySafe(), 
+            ...publiclySafeBot, 
             reviews: reviews.filter(review => review.bot.id === bot.id).length,
             latest_voted_at: bot.last_voter?.date || null
           };
