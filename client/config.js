@@ -20,6 +20,7 @@ import { IoIosChatboxes } from 'react-icons/io';
 import { PiWaveformBold } from 'react-icons/pi';
 
 const config = {
+  __DISABLE_POST_HUG_ON_DEVELOPMENT: true,
   supportInviteUrl: 'https://invite.discord.place',
   docsUrl: 'https://docs.discord.place',
   api: {
