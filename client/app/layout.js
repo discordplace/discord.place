@@ -16,7 +16,6 @@ import { Suspense } from 'react';
 import ModalProvider from '@/app/components/Providers/Modal';
 import config from '@/config';
 import Status from '@/app/components/Providers/Status';
-import PHProvider from '@/app/components/Providers/PHProvider';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -55,60 +54,58 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" translate="no" className='dark'>
-      <PHProvider>
-        <body className={cn(
-          'flex flex-col',
-          GeistSans.className,
-          GeistSans.variable
-        )}>
-          <Script 
-            defer={true}
-            src={config.analytics.script} 
-            data-website-id={config.analytics.websiteId}
-            data-domains={config.analytics.domains.join(',')}
-          />
-          <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
-          <Script id='google-analytics'>
-            {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          
-            gtag('config', 'G-WEX8LKYTTD');
-          `}
-          </Script>
-
-          <ProgressBarProvider>
-            <Toaster toastOptions={{
-              className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
-            }} />
-
-            <Status />
+      <body className={cn(
+        'flex flex-col',
+        GeistSans.className,
+        GeistSans.variable
+      )}>
+        <Script 
+          defer={true}
+          src={config.analytics.script} 
+          data-website-id={config.analytics.websiteId}
+          data-domains={config.analytics.domains.join(',')}
+        />
+        <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
+        <Script id='google-analytics'>
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
         
-            <ThemeProvider>
-              <AuthProvider>
-                <VaulWrapperProvider>
-                  <ModalProvider>
-                    <Suspense fallback={<></>}>
-                      <Header />
-                    </Suspense>
+          gtag('config', 'G-WEX8LKYTTD');
+        `}
+        </Script>
 
-                    <ErrorBoundary>
-                      {children}
-                    </ErrorBoundary>
-            
-                    <Suspense fallback={<></>}>
-                      <Footer />
-                    </Suspense>
-                
-                    <CookieBanner />
-                  </ModalProvider>
-                </VaulWrapperProvider>
-              </AuthProvider>
-            </ThemeProvider>
-          </ProgressBarProvider>
-        </body>
-      </PHProvider>
+        <ProgressBarProvider>
+          <Toaster toastOptions={{
+            className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
+          }} />
+
+          <Status />
+      
+          <ThemeProvider>
+            <AuthProvider>
+              <VaulWrapperProvider>
+                <ModalProvider>
+                  <Suspense fallback={<></>}>
+                    <Header />
+                  </Suspense>
+
+                  <ErrorBoundary>
+                    {children}
+                  </ErrorBoundary>
+          
+                  <Suspense fallback={<></>}>
+                    <Footer />
+                  </Suspense>
+              
+                  <CookieBanner />
+                </ModalProvider>
+              </VaulWrapperProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </ProgressBarProvider>
+      </body>
     </html>
   );
 }
