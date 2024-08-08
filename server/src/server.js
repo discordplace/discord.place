@@ -123,7 +123,7 @@ module.exports = class Server {
     const Strategy = new DiscordStrategy({
       clientID: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      callbackURL: '/auth/callback',
+      callbackURL: `${config.backendUrl}/auth/callback`,
       scope: config.discordScopes
     }, (accessToken, refreshToken, profile, done) => process.nextTick(async () => {
       done(null, profile);
