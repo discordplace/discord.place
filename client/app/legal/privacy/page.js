@@ -58,11 +58,8 @@ export default function Page() {
       <h2>7. Changes to This Privacy Policy</h2>
       <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page. You are advised to review this privacy policy periodically for any changes.</p>
     
-      <h2>8. Contact Us</h2>
-      <p>If you have any questions about this privacy policy, please contact us at <a href="mailto:legal@discord.place">legal@discord.place</a>.</p>
-
       <h2>
-        9. Contact Us
+        8. Contact Us
       </h2>
 
       <p>
