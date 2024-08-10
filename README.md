@@ -74,8 +74,6 @@ Create a `.env` file in the `client` directory with the following environment va
 ```env
 ANALYZE=false
 NEXT_PUBLIC_CF_SITE_KEY=0x0000000000000000000000
-NEXT_PUBLIC_POSTHOG_KEY=phc_000000000000000000000000
-NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 ```
 
 ##### Parameters
@@ -83,13 +81,10 @@ NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 | ---- | ----------- |
 | `ANALYZE` | Set to `true` to enable bundle analysis. |
 | `NEXT_PUBLIC_CF_SITE_KEY` | Cloudflare site key for Turnstile. |
-| `NEXT_PUBLIC_POSTHOG_KEY` | PostHog project API key. |
-| `NEXT_PUBLIC_POSTHOG_HOST` | PostHog host URL. |
 
 > [!NOTE]  
 > - When `ANALYZE` is set to `true`, the client will generate a bundle analysis report. This is useful for debugging and optimizing the client bundle.
 > - Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile site key.
-> - The `NEXT_PUBLIC_POSTHOG_KEY` and `NEXT_PUBLIC_POSTHOG_HOST` values are used for setting up analytics on the website. We use [PostHog](https://posthog.com) for analytics. You can get the project API key from the PostHog dashboard.
 
 ### Environment Variables Configuration (Server)
 
