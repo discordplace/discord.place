@@ -168,9 +168,12 @@ module.exports = {
           var guild = client.guilds.cache.get(config.guildId);
           var member = await guild.members.fetch(user.id).catch(() => null);
 
-          if (member) await member.roles.add(config.roles.premium);
-
-          sendPurchaseMessage(colors.premium, `@${member.user.username}`, member.user.displayAvatarURL(), 'Purchased premium.');
+          if (member) {
+            await member.roles.add(config.roles.premium);
+            sendPurchaseMessage(colors.premium, `@${user.username}`, member.user.displayAvatarURL(), 'Purchased premium.');
+          } else {
+            sendPurchaseMessage(colors.premium, user.id, null, 'Purchased premium.');
+          }
         }
 
         break;
