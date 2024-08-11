@@ -4,6 +4,7 @@ const Table = require('cli-table3');
 const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const Server = require('@/schemas/Server');
+const User = require('@/schemas/User');
 
 async function updatePanelMessage(guildId) {
   const guild = client.guilds.cache.get(guildId);
@@ -74,11 +75,18 @@ async function createPanelMessageOptions(guild, server) {
     colWidths: [4, 6, 10],
     ...tableBaseOptions
   });
+
   const formatter = new Intl.NumberFormat('en-US');
   const topVoters = server.voters.sort((a, b) => b.vote - a.vote).slice(0, 10);
+  const premiumUsers = await User.find({ id: { $in: topVoters.map(voter => voter.user.id) }, subscription: { $ne: null } });
+  
   for (const [index, voter] of topVoters.entries()) {
     const user = client.users.cache.get(voter.user.id) || await client.users.fetch(voter.user.id).catch(() => null);
-    topVotersTable.push([`${index + 1}.`, formatter.format(voter.vote), user ? user.username : user]);
+    const userIsPremium = premiumUsers.some(premiumUser => premiumUser.id === voter.user.id);
+    const username = user ? user.username : user;
+    const usernameText = userIsPremium ? `[1;2m[1;35m✦ ${username}[0m[0m` : username;
+
+    topVotersTable.push([`${index + 1}.`, formatter.format(voter.vote), usernameText]);
   }
 
   const monthlyVotesTable = new Table({ 
