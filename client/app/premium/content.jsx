@@ -176,6 +176,20 @@ export default function Page({ plans }) {
           value: '5'
         }
       ]
+    },
+    {
+      label: 'Colorful Name in Panels',
+      info: 'Stand out with your colorful name on the server panels.',
+      available_to: [
+        {
+          id: 'free',
+          value: <FaXmark />
+        },
+        {
+          id: 'premium',
+          value: <FaCheck />
+        }
+      ]
     }
   ];
 
