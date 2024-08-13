@@ -76,39 +76,41 @@ export default function SearchResults() {
           className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-        >
-          {config.showStandoutProductAds && (
-            <div className='flex animate-scroll-based-appear'>
-              <Card
-                key='bots-standout-ad'
-                data={{
-                  owner: {},
-                  id: 'bots-standout-ad',
-                  username: 'Your bot here',
-                  discriminator: Math.floor(Math.random() * 10000).toString().padStart(4, '0'),
-                  avatar_url: `/placeholder-avatars/${Math.floor(Math.random() * 237) + 1}.png`,
-                  short_description: 'Get your bot featured here and reach thousands of servers! Don\'t miss this.',
-                  standed_out: {
-                    created_at: new Date().toISOString()
-                  },
-                  votes: Math.floor(Math.random() * 10000),
-                  categories: [
-                    config.botCategories.filter(category => category !== 'All')[Math.floor(Math.random() * config.botCategories.filter(category => category !== 'All').length)]
-                  ]
-                }}
-                isAd={true}
-              />
-            </div>
-          )}
-              
+        >              
           {loading ? (
             new Array(12).fill(0).map((_, index) => (
               <div key={index} className='w-full h-[240px] bg-secondary rounded-3xl animate-pulse' />
             ))
           ) : (
-            bots.map(bot => (
-              <Card key={bot.id} data={bot} />
-            ))
+            <>
+              {config.showStandoutProductAds && (
+                <div className='flex animate-scroll-based-appear'>
+                  <Card
+                    key='bots-standout-ad'
+                    data={{
+                      owner: {},
+                      id: 'bots-standout-ad',
+                      username: 'Your bot here',
+                      discriminator: Math.floor(Math.random() * 10000).toString().padStart(4, '0'),
+                      avatar_url: '/placeholder-avatar.png',
+                      short_description: 'Get your bot featured here and reach thousands of servers! Don\'t miss this.',
+                      standed_out: {
+                        created_at: new Date().toISOString()
+                      },
+                      votes: Math.floor(Math.random() * 10000),
+                      categories: [
+                        config.botCategories.filter(category => category !== 'All')[Math.floor(Math.random() * config.botCategories.filter(category => category !== 'All').length)]
+                      ]
+                    }}
+                    isAd={true}
+                  />
+                </div>
+              )}
+              
+              {bots.map(bot => (
+                <Card key={bot.id} data={bot} />
+              ))}
+            </>
           )}
         </motion.div>
 
