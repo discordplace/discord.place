@@ -22,7 +22,7 @@ const useSearchStore = create((set, get) => ({
   },
   page: 1,
   setPage: page => set({ page }),
-  limit: config.showStandoutProductAds ? 12 : 11,
+  limit: config.showStandoutProductAds ? 11 : 12,
   setLimit: limit => set({ limit }),
   bots: [],
   setBots: bots => set({ bots }),
