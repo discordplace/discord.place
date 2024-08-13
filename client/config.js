@@ -21,6 +21,7 @@ import { PiWaveformBold } from 'react-icons/pi';
 
 const config = {
   __DISABLE_POST_HUG_ON_DEVELOPMENT: true,
+  showStandoutProductAds: true,
   supportInviteUrl: 'https://invite.discord.place',
   docsUrl: 'https://docs.discord.place',
   api: {

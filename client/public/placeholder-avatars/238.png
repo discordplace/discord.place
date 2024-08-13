@@ -1,0 +1,12 @@
+const fs = require('node:fs');
+
+// get all files in the current directory
+
+const files = fs.readdirSync(__dirname);
+
+
+// rename all files in the current directory with their index
+
+files.forEach((file, index) => {
+  fs.renameSync(file, `${index}.png`);
+});

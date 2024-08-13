@@ -204,6 +204,28 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
+              {config.showStandoutProductAds && (
+                <div className='flex animate-scroll-based-appear'>
+                  <ServerCard
+                    server={{
+                      id: 'servers-standout-ad',
+                      name: 'Your server here!',
+                      icon_url: `/placeholder-avatars/${Math.floor(Math.random() * 237) + 1}.png`,
+                      description: 'Get your server featured here and reach thousands of users! Don\'t miss this.',
+                      standed_out: {
+                        created_at: new Date().toISOString()
+                      },
+                      data: {
+                        members: Math.floor(Math.random() * 100000),
+                        votes: Math.floor(Math.random() * 10000)
+                      },
+                      category: config.serverCategories.filter(category => category !== 'All')[Math.floor(Math.random() * config.serverCategories.filter(category => category !== 'All').length)]
+                    }}
+                    isAd={true}
+                  />
+                </div>
+              )}
+
               {loading ? (
                 new Array(limit).fill(0).map((_, index) => (
                   <div key={index} className='animate-pulse h-[250px] w-[322px] bg-secondary rounded-3xl' />

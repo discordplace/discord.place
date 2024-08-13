@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { toast } from 'sonner';
 import fetchBots from '@/lib/request/bots/fetchBots';
+import config from '@/config';
 
 const useSearchStore = create((set, get) => ({
   loading: true,
@@ -21,7 +22,7 @@ const useSearchStore = create((set, get) => ({
   },
   page: 1,
   setPage: page => set({ page }),
-  limit: 12,
+  limit: config.showStandoutProductAds ? 12 : 11,
   setLimit: limit => set({ limit }),
   bots: [],
   setBots: bots => set({ bots }),
