@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { toast } from 'sonner';
 import fetchServers from '@/lib/request/servers/fetchServers';
-import config from '@/config';
 
 const useSearchStore = create((set, get) => ({
   loading: true,
@@ -10,7 +9,7 @@ const useSearchStore = create((set, get) => ({
   setSearch: search => set({ search }),
   page: 1,
   setPage: page => set({ page }),
-  limit: config.showStandoutProductAds ? 11 : 12,
+  limit: 12,
   setLimit: limit => set({ limit }),
   category: 'All',
   setCategory: category => {

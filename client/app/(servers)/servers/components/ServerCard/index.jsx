@@ -14,7 +14,6 @@ import getRelativeTime from '@/lib/getRelativeTime';
 import { BsFire } from 'react-icons/bs';
 import config from '@/config';
 import { GiInfinity } from 'react-icons/gi';
-import { toast } from 'sonner';
 
 export default function ServerCard(props) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -76,8 +75,7 @@ export default function ServerCard(props) {
   return (
     <Link 
       className='w-full p-0.5 h-[250px] relative z-[1] overflow-hidden group cursor-pointer rounded-3xl'
-      href={props.isAd ? '/servers' : `/servers/${props.server.id}`}
-      onClick={() => props.isAd && toast.info('You can get your server featured here by clicking on the stand out button on your server page.', { duration: 10000 })}
+      href={`/servers/${props.server.id}`}
     >
       {props.server.standed_out?.created_at ? (
         <div className="group-hover:opacity-0 transition-[opacity] animate-rotate absolute inset-0 z-[20] h-full w-full rounded-full bg-[conic-gradient(#22c55e_20deg,transparent_120deg)] pointer-events-none" />

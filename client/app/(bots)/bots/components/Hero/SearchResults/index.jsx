@@ -8,7 +8,6 @@ import { BsEmojiAngry } from 'react-icons/bs';
 import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence } from 'framer-motion';
-import config from '@/config';
 
 export default function SearchResults() {
   const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
@@ -78,35 +77,11 @@ export default function SearchResults() {
           animate={{ opacity: 1 }}
         >              
           {loading ? (
-            new Array((page === 1 && config.showStandoutProductAds) ? limit + 1 : limit).fill(0).map((_, index) => (
+            new Array(limit).fill(0).map((_, index) => (
               <div key={index} className='w-full h-[240px] bg-secondary rounded-3xl animate-pulse' />
             ))
           ) : (
             <>
-              {(page === 1 && config.showStandoutProductAds) && (
-                <div className='flex animate-scroll-based-appear'>
-                  <Card
-                    key='bots-standout-ad'
-                    data={{
-                      owner: {},
-                      id: 'bots-standout-ad',
-                      username: 'Your bot here',
-                      discriminator: Math.floor(Math.random() * 10000).toString().padStart(4, '0'),
-                      avatar_url: '/placeholder-avatar.png',
-                      short_description: 'Get your bot featured here and reach thousands of servers! Don\'t miss this.',
-                      standed_out: {
-                        created_at: new Date().toISOString()
-                      },
-                      votes: Math.floor(Math.random() * 10000),
-                      categories: [
-                        config.botCategories.filter(category => category !== 'All')[Math.floor(Math.random() * config.botCategories.filter(category => category !== 'All').length)]
-                      ]
-                    }}
-                    isAd={true}
-                  />
-                </div>
-              )}
-              
               {bots.map(bot => (
                 <Card key={bot.id} data={bot} />
               ))}
