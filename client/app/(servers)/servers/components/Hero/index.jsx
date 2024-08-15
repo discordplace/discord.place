@@ -205,12 +205,12 @@ export default function Hero() {
               animate={{ opacity: 1 }}
             >
               {loading ? (
-                new Array(limit).fill(0).map((_, index) => (
+                new Array((page === 1 && config.showStandoutProductAds) ? limit + 1 : limit).fill(0).map((_, index) => (
                   <div key={index} className='animate-pulse h-[250px] w-[322px] bg-secondary rounded-3xl' />
                 ))
               ) : (
                 <>
-                  {config.showStandoutProductAds && (
+                  {(page === 1 && config.showStandoutProductAds) && (
                     <div className='flex animate-scroll-based-appear'>
                       <ServerCard
                         server={{

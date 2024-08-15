@@ -78,12 +78,12 @@ export default function SearchResults() {
           animate={{ opacity: 1 }}
         >              
           {loading ? (
-            new Array(12).fill(0).map((_, index) => (
+            new Array((page === 1 && config.showStandoutProductAds) ? limit + 1 : limit).fill(0).map((_, index) => (
               <div key={index} className='w-full h-[240px] bg-secondary rounded-3xl animate-pulse' />
             ))
           ) : (
             <>
-              {config.showStandoutProductAds && (
+              {(page === 1 && config.showStandoutProductAds) && (
                 <div className='flex animate-scroll-based-appear'>
                   <Card
                     key='bots-standout-ad'
