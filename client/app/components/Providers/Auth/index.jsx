@@ -19,7 +19,7 @@ export default function AuthProvider({ children }) {
         setLoggedIn(true);
       })
       .catch(() => setUser(null))
-      .finally(async () => {
+      .finally(() => {
         setLanguage('en');
         setShowFullPageLoading(false);
       });
