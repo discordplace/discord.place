@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import i18n from 'i18next';
-import en from '@/languages/en.json';
+import en from '@/locales/en.json';
 
 i18n.init({
   fallbackLng: 'en',
