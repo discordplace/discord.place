@@ -1,21 +1,9 @@
-import { GeistSans } from 'geist/font/sans';
 import '@/styles/main.css';
-import { Toaster } from 'sonner';
-import AuthProvider from '@/app/components/Providers/Auth';
-import Header from '@/app/components/Header';
-import Footer from '@/app/components/Footer';
-import ThemeProvider from '@/app/components/Providers/Theme';
-import ProgressBarProvider from '@/app/components/Providers/ProgressBar';
-import cn from '@/lib/cn';
-import ErrorBoundary from '@/app/components/Providers/Boundary/Error';
-import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
-import Script from 'next/script';
-import CookieBanner from '@/app/components/CookieBanner';
 import 'react-medium-image-zoom/dist/styles.css';
-import { Suspense } from 'react';
-import ModalProvider from '@/app/components/Providers/Modal';
-import config from '@/config';
-import Status from '@/app/components/Providers/Status';
+import { GeistSans } from 'geist/font/sans';
+import cn from '@/lib/cn';
+import LayoutContent from '@/app/layout-content';
+import AuthProvider from '@/app/components/Providers/Auth';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -59,52 +47,11 @@ export default function RootLayout({ children }) {
         GeistSans.className,
         GeistSans.variable
       )}>
-        <Script 
-          defer={true}
-          src={config.analytics.script} 
-          data-website-id={config.analytics.websiteId}
-          data-domains={config.analytics.domains.join(',')}
-        />
-        <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
-        <Script id='google-analytics'>
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-WEX8LKYTTD');
-        `}
-        </Script>
-
-        <ProgressBarProvider>
-          <Toaster toastOptions={{
-            className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
-          }} />
-
-          <Status />
-      
-          <ThemeProvider>
-            <AuthProvider>
-              <VaulWrapperProvider>
-                <ModalProvider>
-                  <Suspense fallback={<></>}>
-                    <Header />
-                  </Suspense>
-
-                  <ErrorBoundary>
-                    {children}
-                  </ErrorBoundary>
-          
-                  <Suspense fallback={<></>}>
-                    <Footer />
-                  </Suspense>
-              
-                  <CookieBanner />
-                </ModalProvider>
-              </VaulWrapperProvider>
-            </AuthProvider>
-          </ThemeProvider>
-        </ProgressBarProvider>
+        <AuthProvider>
+          <LayoutContent>
+            {children}
+          </LayoutContent>
+        </AuthProvider>
       </body>
     </html>
   );
