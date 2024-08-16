@@ -32,6 +32,7 @@ export default function FullPageLoading() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={transition}
+          key={theme === 'dark' ? 'white-logo' : 'black-logo'}
         />
 
         <motion.div 
