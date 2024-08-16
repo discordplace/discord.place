@@ -150,7 +150,7 @@ export default function ServerCard(props) {
               {infos.filter(info => info.condition === true).map(info => (
                 <div key={info.icon} className='flex gap-x-1.5 items-center text-sm'>
                   <info.icon className='text-tertiary' />
-                  <span className='text-secondary'>{info.transform ? info.transform(info.value) : formatter.format(info.value)}</span>
+                  <span className='truncate max-w-[115px] text-secondary'>{info.transform ? info.transform(info.value) : formatter.format(info.value)}</span>
                 </div>
               ))}
             </div>
