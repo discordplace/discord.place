@@ -6,14 +6,17 @@ import Link from 'next/link';
 import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa';
 import cn from '@/lib/cn';
 import Image from 'next/image';
-import AppearanceSettings from '@/app/components/Footer/AppearanceSettings';
 import config from '@/config';
 import { FaXTwitter } from 'react-icons/fa6';
 import { usePathname } from 'next/navigation';
 import useGeneralStore from '@/stores/general';
+import { MdSunny } from 'react-icons/md';
+import { motion } from 'framer-motion';
+import { IoIosMoon } from 'react-icons/io';
 
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
+  const toggleTheme = useThemeStore(state => state.toggleTheme);
   const summary = useGeneralStore(state => state.status.summary);
   
   const pathname = usePathname();
@@ -166,7 +169,7 @@ export default function Footer() {
   }
   
   return (
-    <section className="flex flex-col 2xl:max-h-[616px] flex-wrap flex-1 w-full gap-16 px-6 py-16 mt-auto border-t 2xl:flex-row 2xl:gap-x-48 sm:px-24 xl:px-48 bg-secondary border-primary">
+    <section className="flex flex-col 2xl:max-h-[800px] flex-wrap flex-1 w-full gap-16 px-6 py-16 mt-auto border-t 2xl:flex-row 2xl:gap-x-48 sm:px-24 xl:px-32 bg-secondary border-primary">
       <div className='flex flex-col gap-y-6 max-w-[400px] w-full'>
         <Image 
           src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
@@ -217,12 +220,48 @@ export default function Footer() {
 
       <div className='lg:mt-24 w-full h-[1px] bg-[rgb(var(--border-primary))]' />
 
-      <div className='flex flex-col justify-between w-full gap-4 sm:flex-row'>
+      <div className='flex flex-col items-center justify-between w-full gap-4 -mt-8 sm:flex-row'>
         <p className='text-sm text-tertiary'>
           &copy; {new Date().getFullYear()} discord.place. All rights reserved.
         </p>
 
-        <AppearanceSettings />
+        <div className='mt-4 gap-x-1 flex rounded-xl p-[3px] bg-quaternary dark:bg-background'>
+          <button
+            className={cn(
+              'z-10 select-none justify-center relative gap-x-1.5 flex items-center text-sm font-medium px-3 py-1',
+              theme !== 'light' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
+            )}
+            onClick={() => toggleTheme('light')}
+          >
+            <MdSunny size={16} />
+            Light
+
+            {theme === 'light' && (
+              <motion.div
+                className='absolute w-full h-full rounded-xl -z-[1] bg-secondary dark:bg-quaternary'
+                layoutId='theme-switcher-button-background'
+              />
+            )}
+          </button>
+
+          <button
+            className={cn(
+              'z-10 select-none justify-center relative gap-x-1.5 flex items-center text-sm font-medium px-3 py-1',
+              theme !== 'dark' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
+            )}
+            onClick={() => toggleTheme('dark')}
+          >
+            <IoIosMoon size={16} />
+            Dark
+
+            {theme === 'dark' && (
+              <motion.div
+                className='absolute w-full h-full rounded-xl -z-[1] bg-secondary dark:bg-quaternary'
+                layoutId='theme-switcher-button-background'
+              />
+            )}
+          </button>
+        </div>
       </div>
     </section>
   );
