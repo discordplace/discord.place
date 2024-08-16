@@ -25,3 +25,9 @@
 - name: 'Dependabot: Patch'
   color: 'FFD700'
   description: Pull requests opened by Dependabot to update dependencies.
+- name: 'Internalization'
+  color: 'FF6347'
+  description: Issues related to internationalization or localization of the application.
+- name: 'Documentation'
+  color: '4682B4'
+  description: Issues concerning the documentation of the project.
