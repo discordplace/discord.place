@@ -5,6 +5,7 @@ import useAuthStore from '@/stores/auth';
 import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
 import useLanguageStore from '@/stores/language';
 import useGeneralStore from '@/stores/general';
+import config from '@/config';
 
 export default function AuthProvider({ children }) {
   const setUser = useAuthStore(state => state.setUser);
@@ -20,7 +21,7 @@ export default function AuthProvider({ children }) {
       })
       .catch(() => setUser(null))
       .finally(() => {
-        setLanguage('en');
+        setLanguage(config.availableLocales.find(locale => locale.default).code);
         setShowFullPageLoading(false);
       });
 

@@ -174,6 +174,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 ##### Parameters
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| `availableLocales` | Array<String> | Available locales for the website. |
 | `supportInviteUrl` | String | URL for the your Discord support server invite. Used in the many places in the website. |
 | `docsUrl` | String | URL for the your website documentation website. |
 | `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:3001`. |
@@ -190,6 +191,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 | `customHostnames` | Array<String> | Custom hostnames for the profiles. You may need to change this to your own custom hostnames. |
 
 > [!NOTE]
+> - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value.
 > - The `supportInviteUrl` and `docsUrl` values are used in the website for the support server and documentation links. You can change these values to your own support server and documentation links.
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL.
 > - The `analytics.url`, `analytics.script`, `analytics.websiteId`, and `analytics.domains` values are used for setting up analytics on the website. We use [Umami Analytics](https://umami.is) for analytics. Any other analytics service is not supported.

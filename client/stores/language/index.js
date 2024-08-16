@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import i18n from 'i18next';
-import en from '@/locales/en.json';
+import config from '@/config';
 
 i18n.init({
   fallbackLng: 'en',
@@ -14,11 +14,21 @@ i18n.init({
   }
 });
 
+const localeContents = {};
+
+config.availableLocales
+  .map(async locale => {
+    const file = await import(`../../locales/${locale.code}.json`).catch(() => null);
+    if (!file) throw new Error(`Failed to load locale file for ${locale.code} at /locales/${locale.code}.json`);
+
+    localeContents[locale.code] = file.default;
+  });
+
 const useLanguageStore = create(set => ({
   language: 'loading',
   setLanguage: async language => {
-    const availableLanguages = ['en'];
-    if (!availableLanguages.includes(language)) language = 'en';
+    const availableLanguages = config.availableLocales.map(locale => locale.code);
+    if (!availableLanguages.includes(language)) language = config.availableLocales.find(locale => locale.default).code;
     
     set({ language });
   }
@@ -29,10 +39,7 @@ export function t(key, variables) {
 
   if (language === 'loading') return '';
 
-  switch (language) {
-    case 'en':
-      i18n.addResourceBundle('en', 'translation', en, true, true);
-  }
+  i18n.addResourceBundle(language, 'translation', localeContents[language], true, true);
 
   return i18n.t(key, variables);
 }
