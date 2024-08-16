@@ -145,8 +145,7 @@ const BotSchema = new Schema({
       }
     },
     date: {
-      type: Date,
-      default: Date.now
+      type: Date
     }
   },
   api_key: {

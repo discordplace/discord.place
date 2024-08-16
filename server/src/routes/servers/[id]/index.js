@@ -186,7 +186,8 @@ module.exports = {
         last_voter: {
           user: {
             id: null
-          }
+          },
+          date: Date.now()
         },
         voice_activity_enabled: voice_activity_enabled || false
       });

@@ -66,8 +66,7 @@ const ServerSchema = new Schema({
       }
     },
     date: {
-      type: Date,
-      default: Date.now
+      type: Date
     }
   },
   voice_activity_enabled: {
