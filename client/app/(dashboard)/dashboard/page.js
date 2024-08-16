@@ -99,39 +99,39 @@ export default function Page() {
 
   useEffect(() => {
     switch (activeTab) {
-    case 'home':
-      fetchData(['stats']);
-      break;
-    case 'emojisQueue':
-      fetchData(['emojis']);
-      break;
-    case 'botsQueue':
-      fetchData(['bots']);
-      break;
-    case 'templatesQueue':
-      fetchData(['templates']);
-      break;
-    case 'soundsQueue':
-      fetchData(['sounds']);
-      break;
-    case 'reviewsQueue':
-      fetchData(['reviews']);
-      break;
-    case 'blockedIPs':
-      fetchData(['blockedips']);
-      break;
-    case 'botDenies':
-      fetchData(['botdenies']);
-      break;
-    case 'timeouts':
-      fetchData(['timeouts']);
-      break;
-    case 'quarantines':
-      fetchData(['quarantines']);
-      break;
-    case 'links':
-      fetchData(['links']);
-      break;
+      case 'home':
+        fetchData(['stats']);
+        break;
+      case 'emojisQueue':
+        fetchData(['emojis']);
+        break;
+      case 'botsQueue':
+        fetchData(['bots']);
+        break;
+      case 'templatesQueue':
+        fetchData(['templates']);
+        break;
+      case 'soundsQueue':
+        fetchData(['sounds']);
+        break;
+      case 'reviewsQueue':
+        fetchData(['reviews']);
+        break;
+      case 'blockedIPs':
+        fetchData(['blockedips']);
+        break;
+      case 'botDenies':
+        fetchData(['botdenies']);
+        break;
+      case 'timeouts':
+        fetchData(['timeouts']);
+        break;
+      case 'quarantines':
+        fetchData(['quarantines']);
+        break;
+      case 'links':
+        fetchData(['links']);
+        break;
     }
     
     // eslint-disable-next-line react-hooks/exhaustive-deps

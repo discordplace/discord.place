@@ -77,26 +77,26 @@ export default function Content({ server }) {
   function resetChanges() {    
     changedKeys.forEach(({ key }) => {
       switch (key) {
-      case 'description':
-        setDescription(server[key]);
-        break;
-      case 'invite_url':
-        var parsedInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
-          server.invite_code.type === 'Deleted' ? '' :
-            `https://discord.com/invite/${server.invite_code.code}`
-        );
+        case 'description':
+          setDescription(server[key]);
+          break;
+        case 'invite_url':
+          var parsedInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
+            server.invite_code.type === 'Deleted' ? '' :
+              `https://discord.com/invite/${server.invite_code.code}`
+          );
 
-        setInviteURL(parsedInviteUrl);
-        break;
-      case 'category':
-        setCategory(server[key]);
-        break;
-      case 'keywords':
-        setKeywords(server[key]);
-        break;
-      case 'voice_activity_enabled':
-        setVoiceActivityEnabled(server[key]);
-        break;
+          setInviteURL(parsedInviteUrl);
+          break;
+        case 'category':
+          setCategory(server[key]);
+          break;
+        case 'keywords':
+          setKeywords(server[key]);
+          break;
+        case 'voice_activity_enabled':
+          setVoiceActivityEnabled(server[key]);
+          break;
       }
     });
 

@@ -162,34 +162,34 @@ export default function Content() {
 
   useEffect(() => {
     switch (activeTab) {
-    case 'my-account':
-      fetchData([]);
-      break;
-    case 'active-timeouts':
-      fetchData(['timeouts']);
-      break;
-    case 'my-links':
-      fetchData(['links']);
-      setLinksPageVisited(true);
-      break;
-    case 'my-servers':
-      fetchData(['servers']);
-      break;
-    case 'my-bots':
-      fetchData(['bots']);
-      break;
-    case 'my-emojis':
-      fetchData(['emojis']);
-      break;
-    case 'my-templates':
-      fetchData(['templates']);
-      break;
-    case 'my-sounds':
-      fetchData(['sounds']);
-      break;
-    case 'active-reminders':
-      fetchData(['reminders']);
-      break;
+      case 'my-account':
+        fetchData([]);
+        break;
+      case 'active-timeouts':
+        fetchData(['timeouts']);
+        break;
+      case 'my-links':
+        fetchData(['links']);
+        setLinksPageVisited(true);
+        break;
+      case 'my-servers':
+        fetchData(['servers']);
+        break;
+      case 'my-bots':
+        fetchData(['bots']);
+        break;
+      case 'my-emojis':
+        fetchData(['emojis']);
+        break;
+      case 'my-templates':
+        fetchData(['templates']);
+        break;
+      case 'my-sounds':
+        fetchData(['sounds']);
+        break;
+      case 'active-reminders':
+        fetchData(['reminders']);
+        break;
     }
 
     setCurrentlyAddingServer(null);

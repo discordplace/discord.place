@@ -76,21 +76,21 @@ export default function Content({ bot }) {
   function resetChanges() {    
     changedKeys.forEach(({ key }) => {
       switch (key) {
-      case 'short_description':
-        setShortDescription(bot[key]);
-        break;
-      case 'description':
-        setDescription(bot[key]);
-        break;
-      case 'invite_url':
-        setInviteURL(bot[key]);
-        break;
-      case 'categories':
-        setCategories(bot[key]);
-        break;
-      case 'support_server_id':
-        setSupportServerId(bot.support_server?.id || '0');
-        break;
+        case 'short_description':
+          setShortDescription(bot[key]);
+          break;
+        case 'description':
+          setDescription(bot[key]);
+          break;
+        case 'invite_url':
+          setInviteURL(bot[key]);
+          break;
+        case 'categories':
+          setCategories(bot[key]);
+          break;
+        case 'support_server_id':
+          setSupportServerId(bot.support_server?.id || '0');
+          break;
       }
     });
 
