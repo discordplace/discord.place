@@ -54,8 +54,8 @@ const data = ({
     {
       ...baseProfileData,
       colors: {
-        primary: '#616ffd50',
-        secondary: '#616ffd50'
+        primary: '#616ffd35',
+        secondary: '#616ffd35'
       },
       slug: 'discord.place',
       username: 'discord.place',

@@ -3,12 +3,14 @@
 import { useEffect } from 'react';
 import useAuthStore from '@/stores/auth';
 import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
-import FullPageLoading from '@/app/components/FullPageLoading';
+import useLanguageStore from '@/stores/language';
+import useGeneralStore from '@/stores/general';
 
 export default function AuthProvider({ children }) {
-  const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
+  const setLanguage = useLanguageStore(state => state.setLanguage);
+  const setShowFullPageLoading = useGeneralStore(state => state.setShowFullPageLoading);
 
   useEffect(() => {
     getAuthenticatedUser()
@@ -16,12 +18,14 @@ export default function AuthProvider({ children }) {
         setUser(user);
         setLoggedIn(true);
       })
-      .catch(() => setUser(null));
+      .catch(() => setUser(null))
+      .finally(() => {
+        setLanguage('en');
+        setShowFullPageLoading(false);
+      });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (user === 'loading') return <FullPageLoading />;
 
   return children;
 }
