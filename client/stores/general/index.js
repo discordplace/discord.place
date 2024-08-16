@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import getInstatusSummary from '@/lib/request/getInstatusSummary';
 
-export const useGeneralStore = create(set => ({
+const useGeneralStore = create(set => ({
   createQuarantineModal: {
     step: 0,
     setStep: step => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, step } })),
@@ -53,7 +53,9 @@ export const useGeneralStore = create(set => ({
 
       set(state => ({ status: { ...state.status, summary } }));
     }
-  }
+  },
+  showFullPageLoading: true,
+  setShowFullPageLoading: showFullPageLoading => set({ showFullPageLoading })
 }));
 
 export default useGeneralStore;
