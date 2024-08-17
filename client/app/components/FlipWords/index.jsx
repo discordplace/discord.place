@@ -59,7 +59,7 @@ export default function FlipWords({ words, duration = 3000, className, onStartAn
         )}
         key={currentWord}
       >
-        {currentWord.split('').map((letter, index) => (
+        {currentWord?.split('').map((letter, index) => (
           <motion.span
             key={currentWord + index}
             initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
