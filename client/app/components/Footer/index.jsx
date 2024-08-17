@@ -253,7 +253,7 @@ export default function Footer() {
 
             <button
               className={cn(
-                'z-10 select-none justify-center relative flex items-center text-sm font-medium px-3 py-1',
+                'z-10 select-none justify-center relative flex items-center text-sm font-semibold px-3 py-1',
                 theme !== 'dark' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
               )}
               onClick={() => toggleTheme('dark')}
@@ -267,6 +267,12 @@ export default function Footer() {
                 <motion.div
                   className='absolute w-full h-full rounded-xl bg-secondary dark:bg-quaternary'
                   layoutId='theme-switcher-button-background'
+                  transition={{ 
+                    duration: 0.5,
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 25
+                  }}
                 />
               )}
             </button>
@@ -277,7 +283,7 @@ export default function Footer() {
               <button
                 key={locale.code}
                 className={cn(
-                  'select-none justify-center relative gap-x-1.5 flex items-center text-sm font-medium px-3 py-1',
+                  'select-none justify-center relative gap-x-1.5 flex items-center text-sm font-semibold px-3 py-1',
                   locale.code !== language ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
                 )}
                 onClick={() => setLanguage(locale.code)}
@@ -298,6 +304,12 @@ export default function Footer() {
                   <motion.div
                     className='absolute w-full h-full rounded-xl bg-secondary dark:bg-quaternary'
                     layoutId='language-switcher-button-background'
+                    transition={{ 
+                      duration: 0.5,
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 25
+                    }}
                   />
                 )}
               </button>
