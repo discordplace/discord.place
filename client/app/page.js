@@ -19,11 +19,20 @@ import SafariLightNav from '@/public/safari/light_nav.svg';
 import useThemeStore from '@/stores/theme';
 import FlipWords from '@/app/components/FlipWords';
 import homePageMockData from '@/lib/homePageMockData';
+import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Page() {
-  const texts = ['Discord  Profiles', 'Discord  Servers', 'Discord  Bots', 'Discord  Emojis', 'Discord  Templates', 'Discord  Sounds'];
+  const texts = [
+    t('home.flipWords.0'),
+    t('home.flipWords.1'),
+    t('home.flipWords.2'),
+    t('home.flipWords.3'),
+    t('home.flipWords.4'),
+    t('home.flipWords.5')
+  ];
+
   const theme = useThemeStore(state => state.theme);
 
   const [index, setIndex] = useState(0);
@@ -36,7 +45,7 @@ export default function Page() {
         'px-3 mobile:px-0 font-bold leading-[2rem] sm:!leading-[5.5rem] cursor-default max-w-[400px] sm:max-w-[800px] text-center text-4xl sm:text-7xl select-none mt-[14rem]',
         BricolageGrotesque.className
       )}>
-        A way to find best {' '}
+        {t('home.title')} {' '}
         
         <div className='relative inline'>
           <FlipWords
@@ -73,7 +82,7 @@ export default function Page() {
                 discord.place/
                 <FlipWords
                   className='relative inline -ml-2'
-                  words={texts.map(text => text.split('Discord  ')[1].toLowerCase())}
+                  words={texts.map(text => text?.split('Discord  ')?.[1]?.toLowerCase?.())}
                 />
               </div>
             </div>

@@ -1,3 +1,13 @@
 {
-  "hello": "world"
+  "home": {
+    "title": "Bulabileceğin en iyi",
+    "flipWords": [
+      "Discord  Profilleri",
+      "Discord  Sunucuları",
+      "Discord  Botları",
+      "Discord  Emojileri",
+      "Discord  Şablonları",
+      "Discord  Sesleri"
+    ]
+  }
 }

@@ -1,3 +1,13 @@
 {
-  "hello": "world"
+  "home": {
+    "title": "A way to find best",
+    "flipWords": [
+      "Discord  Profiles",
+      "Discord  Servers",
+      "Discord  Bots",
+      "Discord  Emojis",
+      "Discord  Templates",
+      "Discord  Sounds"
+    ]
+  }
 }

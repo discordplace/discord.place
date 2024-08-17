@@ -50,6 +50,9 @@ importers:
       i18next:
         specifier: ^23.12.7
         version: 23.12.7
+      i18next-react-postprocessor:
+        specifier: ^3.1.0
+        version: 3.1.0(i18next@23.12.7)(react@18.2.0)
       jszip:
         specifier: ^3.10.1
         version: 3.10.1
@@ -1937,6 +1940,12 @@ packages:
   hyphenate-style-name@1.0.4:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
 
+  i18next-react-postprocessor@3.1.0:
+    resolution: {integrity: sha512-VG1k4KSEwuYQlGRtksPfcp6PXjOUCD5jRtrAW+nfAzds8ksKzTvScHt9ue7G8RPuqKS1Ctx3je1hDDd83usWVw==}
+    peerDependencies:
+      i18next: '>=8.4.3'
+      react: '>=15.6.1'
+
   i18next@23.12.7:
     resolution: {integrity: sha512-LW7WpZV929NiNfifCPW3JRruEngBviTgaGSviRaXGxxhloCpECNHL8T6axfxGqgGntffiuJwxCWBmTz9hHcfAg==}
 
@@ -2246,6 +2255,9 @@ packages:
 
   markdown-table@3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
+
+  md5-es@1.8.2:
+    resolution: {integrity: sha512-LKq5jmKMhJYhsBFUh2w+J3C4bMiC5uQie/UYJ429UATmMnFr6iANO2uQq5HXAZSIupGp0WO2mH3sNfxR4XO40Q==}
 
   mdast-util-find-and-replace@3.0.1:
     resolution: {integrity: sha512-SG21kZHGC3XRTSUhtofZkBzZTJNM5ecCi0SK2IMKmSXR8vO3peL+kb1O0z7Zl83jKtutG4k5Wv/W7V3/YHvzPA==}
@@ -5062,7 +5074,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-react: 7.34.2(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.0)
@@ -5086,7 +5098,7 @@ snapshots:
       enhanced-resolve: 5.16.0
       eslint: 8.57.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.3
       is-core-module: 2.13.1
@@ -5108,7 +5120,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
@@ -5502,6 +5514,12 @@ snapshots:
 
   hyphenate-style-name@1.0.4: {}
 
+  i18next-react-postprocessor@3.1.0(i18next@23.12.7)(react@18.2.0):
+    dependencies:
+      i18next: 23.12.7
+      md5-es: 1.8.2
+      react: 18.2.0
+
   i18next@23.12.7:
     dependencies:
       '@babel/runtime': 7.24.1
@@ -5793,6 +5811,8 @@ snapshots:
   map-or-similar@1.5.0: {}
 
   markdown-table@3.0.3: {}
+
+  md5-es@1.8.2: {}
 
   mdast-util-find-and-replace@3.0.1:
     dependencies:
