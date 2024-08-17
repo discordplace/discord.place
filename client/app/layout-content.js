@@ -9,20 +9,27 @@ import ErrorBoundary from '@/app/components/Providers/Boundary/Error';
 import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
 import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import ModalProvider from '@/app/components/Providers/Modal';
 import config from '@/config';
 import Status from '@/app/components/Providers/Status';
 import useGeneralStore from '@/stores/general';
 import FullPageLoading from './components/FullPageLoading';
+import useLanguageStore from '@/stores/language';
 
 export default function RootLayoutContent({ children }) {
+  const language = useLanguageStore(state => state.language);
   const showFullPageLoading = useGeneralStore(state => state.showFullPageLoading);
+
+  useEffect(() => {
+    const html = document.documentElement;
+    html.setAttribute('lang', language);
+  }, [language]);
 
   if (showFullPageLoading) return <FullPageLoading />;
 
   return (
-    <>
+    <section key={language}>
       <Script 
         defer={true}
         src={config.analytics.script} 
@@ -67,6 +74,6 @@ export default function RootLayoutContent({ children }) {
           </VaulWrapperProvider>
         </ThemeProvider>
       </ProgressBarProvider>
-    </>
+    </section>
   );
 }
