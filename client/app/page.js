@@ -60,7 +60,16 @@ export default function Page() {
             <div className='absolute text-secondary select-none gap-x-1.5 text-[10px] flex z-[20] top-2 justify-center'>
               <FaLock className='relative text-tertiary top-1' size={8} />
 
-              <div>
+              <div
+                className={cn(
+                  'transition-all duration-500 whitespace-nowrap overflow-hidden',
+                  (index === 0 || index === 1) && 'w-[110.25px]',
+                  index === 2 && 'w-[95.42px]',
+                  index === 3 && 'w-[105px]',
+                  index === 4 && 'w-[122.5px]',
+                  index === 5 && 'w-[108.34px]'
+                )}
+              >
                 discord.place/
                 <FlipWords
                   className='relative inline -ml-2'
