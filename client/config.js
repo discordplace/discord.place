@@ -31,11 +31,6 @@ const config = {
       name: 'Turkish',
       code: 'tr',
       flag: '🇹🇷'
-    },
-    {
-      name: 'Azerbaijani',
-      code: 'az',
-      flag: '🇦🇿'
     }
   ],
   showStandoutProductAds: true,
