@@ -303,33 +303,9 @@ const data = ({
     {
       ...baseEmojiData,
       id: '5',
-      name: 'discord_logo_pack',
+      name: 'discord_logo_yellow',
       categories: ['Other'],
-      emoji_ids: [
-        { id: 'packagedemoji1' },
-        { id: 'packagedemoji2' },
-        { id: 'packagedemoji3' },
-        { id: 'packagedemoji4' },
-        { id: 'packagedemoji5' }
-      ],
-      overridedImages: [
-        {
-          id: 'packagedemoji1',
-          image: 'https://cdn.discordapp.com/embed/avatars/0.png'
-        },
-        {
-          id: 'packagedemoji2',
-          image: 'https://cdn.discordapp.com/embed/avatars/1.png'
-        },
-        {
-          id: 'packagedemoji3',
-          image: 'https://cdn.discordapp.com/embed/avatars/2.png'
-        },
-        {
-          id: 'packagedemoji4',
-          image: 'https://cdn.discordapp.com/embed/avatars/3.png'
-        }
-      ]
+      overridedImage: 'https://cdn.discordapp.com/embed/avatars/3.png'
     },
     {
       ...baseEmojiData,
@@ -494,55 +470,55 @@ const data = ({
   sounds: [
     {
       ...baseSoundData,
-      id: 'example',
+      id: 'example1',
       name: 'Beep Boop',
       categories: ['Other']
     },
     {
       ...baseSoundData,
-      id: 'example',
+      id: 'example2',
       name: 'Beep Boop',
       categories: ['Other']
     },
     {
       ...baseSoundData,
-      id: 'example',
+      id: 'example3',
       name: 'Beep Boop',
       categories: ['Other']
     },
     {
       ...baseSoundData,
-      id: 'example',
+      id: 'example4',
       name: 'Beep Boop',
       categories: ['Other']
     },
     {
       ...baseSoundData,
-      id: 'example',
+      id: 'example5',
       name: 'Beep Boop',
       categories: ['Other']
     },
     {
       ...baseSoundData,
-      id: 'example',
+      id: 'example6',
       name: 'Beep Boop',
       categories: ['Other']
     },
     {
       ...baseSoundData,
-      id: 'example',
+      id: 'example7',
       name: 'Beep Boop',
       categories: ['Other']
     },
     {
       ...baseSoundData,
-      id: 'example',
+      id: 'example8',
       name: 'Beep Boop',
       categories: ['Other']
     },
     {
       ...baseSoundData,
-      id: 'example',
+      id: 'example9',
       name: 'Beep Boop',
       categories: ['Other']
     }
