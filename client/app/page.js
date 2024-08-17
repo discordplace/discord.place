@@ -24,13 +24,22 @@ import { t } from '@/stores/language';
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Page() {
-  const texts = [
+  const titleTexts = [
     t('home.flipWords.0'),
     t('home.flipWords.1'),
     t('home.flipWords.2'),
     t('home.flipWords.3'),
     t('home.flipWords.4'),
     t('home.flipWords.5')
+  ];
+
+  const mockupTexts = [
+    'Discord  Profiles',
+    'Discord  Servers',
+    'Discord  Bots',
+    'Discord  Emojis',
+    'Discord  Templates',
+    'Discord  Sounds'
   ];
 
   const theme = useThemeStore(state => state.theme);
@@ -49,8 +58,8 @@ export default function Page() {
         
         <div className='relative inline'>
           <FlipWords
-            words={texts}
-            onStartAnimation={() => setIndex(oldIndex => oldIndex >= texts.length - 1 ? 0 : oldIndex + 1)}
+            words={titleTexts}
+            onStartAnimation={() => setIndex(oldIndex => oldIndex >= titleTexts.length - 1 ? 0 : oldIndex + 1)}
           />
         </div>
       </h1>
@@ -82,7 +91,7 @@ export default function Page() {
                 discord.place/
                 <FlipWords
                   className='relative inline -ml-2'
-                  words={texts.map(text => text?.split('Discord  ')?.[1]?.toLowerCase?.())}
+                  words={mockupTexts.map(text => text?.split('Discord  ')?.[1]?.toLowerCase?.())}
                 />
               </div>
             </div>
