@@ -21,7 +21,17 @@ export default function AuthProvider({ children }) {
       })
       .catch(() => setUser(null))
       .finally(() => {
-        setLanguage(config.availableLocales.find(locale => locale.default).code);
+        const availableLanguages = config.availableLocales.map(locale => locale.code);
+        const defaultLanguage = config.availableLocales.find(locale => locale.default).code;
+
+        if ('localStorage' in window) {
+          const language = window.localStorage.getItem('language');
+          if (language) {
+            if (!availableLanguages.includes(language)) window.localStorage.removeItem('language');
+            else setLanguage(language);
+          } else setLanguage(defaultLanguage);
+        } else setLanguage(defaultLanguage);
+
         setShowFullPageLoading(false);
       });
 

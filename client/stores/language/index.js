@@ -30,6 +30,8 @@ const useLanguageStore = create(set => ({
     const availableLanguages = config.availableLocales.map(locale => locale.code);
     if (!availableLanguages.includes(language)) language = config.availableLocales.find(locale => locale.default).code;
     
+    if ('localStorage' in window) window.localStorage.setItem('language', language);
+
     set({ language });
   }
 }));
