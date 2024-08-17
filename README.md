@@ -191,7 +191,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 | `customHostnames` | Array<String> | Custom hostnames for the profiles. You may need to change this to your own custom hostnames. |
 
 > [!NOTE]
-> - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value.
+> - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
 > - The `supportInviteUrl` and `docsUrl` values are used in the website for the support server and documentation links. You can change these values to your own support server and documentation links.
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL.
 > - The `analytics.url`, `analytics.script`, `analytics.websiteId`, and `analytics.domains` values are used for setting up analytics on the website. We use [Umami Analytics](https://umami.is) for analytics. Any other analytics service is not supported.
@@ -253,6 +253,21 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `lemonSqueezy.variantIds` value is used for the variant IDs for the Lemon Squeezy. We sell some products on Lemon Squeezy with different variants. You should create these variants on the Lemon Squeezy and get the variant IDs from there.
 > - Make sure to fill all fields that end with `ChannelId` with the correct channel IDs from the base guild.
 
+### New Languages
+
+To add a new language to the website, follow these steps:
+
+1. Create a new JSON file in the `client/locales` directory with the format `xx.json`, where `xx` is the language code. For example, `fr.json` for French. You can use the existing language files as a reference.
+2. Add the language code to the `availableLocales` value in the `client/config.js` file.
+3. Add the translations for the new language to the JSON file you created. The JSON file should have the following structure:
+
+```json
+{
+  "key": "value",
+  "key2": "value2"
+}
+```
+
 ## Contributing
 
 We welcome contributions from the community! If you'd like to contribute to the project, please follow these guidelines:
@@ -264,6 +279,23 @@ We welcome contributions from the community! If you'd like to contribute to the 
 5. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
 
 Please make sure to follow the [Code of Conduct](.github/CODE_OF_CONDUCT.md) and [Contributing Guidelines](.github/CONTRIBUTING.md) when contributing to this project.
+
+<details>
+<summary>
+  <strong>
+    Contributing Translations
+  </strong>
+</summary>
+
+  If you'd like to contribute translations to the discord.place website, follow these steps:
+
+  1. Fork the repository and clone it locally.
+  2. Create a new branch for your translation.
+  3. Find the language file you want to translate in the `client/locales` directory.
+  4. Add the translations for the missing keys in the language file or update the existing translations.
+  5. Commit your changes with descriptive commit messages.
+  6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
+</details>
 
 ## Help
 
