@@ -23,15 +23,23 @@ export default function AuthProvider({ children }) {
       .finally(() => {
         const availableLanguages = config.availableLocales.map(locale => locale.code);
         const defaultLanguage = config.availableLocales.find(locale => locale.default).code;
+        const localStorageFound = 'localStorage' in window;
 
-        if ('localStorage' in window) {
-          const language = window.localStorage.getItem('language');
-          if (language) {
-            if (!availableLanguages.includes(language)) window.localStorage.removeItem('language');
-            else setLanguage(language);
-          } else setLanguage(defaultLanguage);
-        } else setLanguage(defaultLanguage);
+        let language = localStorageFound ? window.localStorage.getItem('language') : null;
 
+        if (!language) {
+          const localeHeader = navigator.language || navigator.languages[0];
+          const preferredLanguage = availableLanguages.find(lang => localeHeader.startsWith(lang));
+
+          language = preferredLanguage || defaultLanguage;
+
+          if (localStorageFound) window.localStorage.setItem('language', language);
+        } else if (!availableLanguages.includes(language)) {
+          language = defaultLanguage;
+          if (localStorageFound) window.localStorage.removeItem('language');
+        }
+
+        setLanguage(language);
         setShowFullPageLoading(false);
       });
 
