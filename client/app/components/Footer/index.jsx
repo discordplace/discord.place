@@ -229,7 +229,7 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} discord.place. All rights reserved.
         </p>
 
-        <div className='flex flex-col items-end mt-4 gap-y-2'>
+        <div className='flex flex-col items-center mt-4 sm:items-end gap-y-2'>
           <div className='gap-x-1 flex rounded-xl p-[3px] bg-quaternary dark:bg-background'>
             <button
               className={cn(
