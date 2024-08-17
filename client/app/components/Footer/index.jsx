@@ -13,11 +13,15 @@ import useGeneralStore from '@/stores/general';
 import { MdSunny } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import { IoIosMoon } from 'react-icons/io';
+import useLanguageStore from '@/stores/language';
+import Twemoji from 'react-twemoji';
 
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
   const toggleTheme = useThemeStore(state => state.toggleTheme);
   const summary = useGeneralStore(state => state.status.summary);
+  const language = useLanguageStore(state => state.language);
+  const setLanguage = useLanguageStore(state => state.setLanguage);
   
   const pathname = usePathname();
   
@@ -167,7 +171,7 @@ export default function Footer() {
       </Link>
     );
   }
-  
+
   return (
     <section className="flex flex-col 2xl:max-h-[800px] flex-wrap flex-1 w-full gap-16 px-6 py-16 mt-auto border-t 2xl:flex-row 2xl:gap-x-48 sm:px-24 xl:px-32 bg-secondary border-primary">
       <div className='flex flex-col gap-y-6 max-w-[400px] w-full'>
@@ -225,42 +229,80 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} discord.place. All rights reserved.
         </p>
 
-        <div className='mt-4 gap-x-1 flex rounded-xl p-[3px] bg-quaternary dark:bg-background'>
-          <button
-            className={cn(
-              'z-10 select-none justify-center relative gap-x-1.5 flex items-center text-sm font-medium px-3 py-1',
-              theme !== 'light' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
-            )}
-            onClick={() => toggleTheme('light')}
-          >
-            <MdSunny size={16} />
-            Light
+        <div className='flex flex-col items-end mt-4 gap-y-2'>
+          <div className='gap-x-1 flex rounded-xl p-[3px] bg-quaternary dark:bg-background'>
+            <button
+              className={cn(
+                'z-10 select-none justify-center relative flex items-center text-sm font-medium px-3 py-1',
+                theme !== 'light' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
+              )}
+              onClick={() => toggleTheme('light')}
+            >
+              <span className='relative z-10 flex items-center gap-x-1.5'>
+                <MdSunny size={16} />
+                Light
+              </span>
 
-            {theme === 'light' && (
-              <motion.div
-                className='absolute w-full h-full rounded-xl -z-[1] bg-secondary dark:bg-quaternary'
-                layoutId='theme-switcher-button-background'
-              />
-            )}
-          </button>
+              {theme === 'light' && (
+                <motion.div
+                  className='absolute w-full h-full rounded-xl bg-secondary dark:bg-quaternary'
+                  layoutId='theme-switcher-button-background'
+                />
+              )}
+            </button>
 
-          <button
-            className={cn(
-              'z-10 select-none justify-center relative gap-x-1.5 flex items-center text-sm font-medium px-3 py-1',
-              theme !== 'dark' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
-            )}
-            onClick={() => toggleTheme('dark')}
-          >
-            <IoIosMoon size={16} />
-            Dark
+            <button
+              className={cn(
+                'z-10 select-none justify-center relative flex items-center text-sm font-medium px-3 py-1',
+                theme !== 'dark' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
+              )}
+              onClick={() => toggleTheme('dark')}
+            >
+              <span className='flex items-center gap-x-1.5 z-10 relative'>
+                <IoIosMoon size={16} />
+                Dark
+              </span>
 
-            {theme === 'dark' && (
-              <motion.div
-                className='absolute w-full h-full rounded-xl -z-[1] bg-secondary dark:bg-quaternary'
-                layoutId='theme-switcher-button-background'
-              />
-            )}
-          </button>
+              {theme === 'dark' && (
+                <motion.div
+                  className='absolute w-full h-full rounded-xl bg-secondary dark:bg-quaternary'
+                  layoutId='theme-switcher-button-background'
+                />
+              )}
+            </button>
+          </div>
+
+          <div className='gap-x-1 flex rounded-xl p-[3px] bg-quaternary dark:bg-background'>
+            {config.availableLocales.map(locale => (
+              <button
+                key={locale.code}
+                className={cn(
+                  'select-none justify-center relative gap-x-1.5 flex items-center text-sm font-medium px-3 py-1',
+                  locale.code !== language ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
+                )}
+                onClick={() => setLanguage(locale.code)}
+              >
+                <span className='relative z-10 flex items-center gap-x-1.5'>
+                  <Twemoji
+                    options={{
+                      className: 'w-4 h-4'
+                    }}
+                  >
+                    {locale.flag}
+                  </Twemoji>
+                  
+                  {locale.code.toUpperCase()}
+                </span>
+
+                {locale.code === language && (
+                  <motion.div
+                    className='absolute w-full h-full rounded-xl bg-secondary dark:bg-quaternary'
+                    layoutId='language-switcher-button-background'
+                  />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>
