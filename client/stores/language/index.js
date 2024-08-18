@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import i18n from 'i18next';
 import config from '@/config';
+import useGeneralStore from '@/stores/general';
+import sleep from '@/lib/sleep';
 import ReactPostprocessor from 'i18next-react-postprocessor';
 
 i18n
@@ -14,6 +16,7 @@ i18n
   });
 
 const localeContents = {};
+let languageFirstlyChanged = false;
 
 config.availableLocales
   .map(async locale => {
@@ -32,6 +35,16 @@ const useLanguageStore = create(set => ({
     if ('localStorage' in window) window.localStorage.setItem('language', language);
 
     set({ language });
+
+    // Show loading screen to prevent flickering when changing language
+    if (!languageFirstlyChanged) languageFirstlyChanged = true;
+    else {
+      useGeneralStore.getState().setShowFullPageLoading(true);
+    
+      await sleep(Math.random() * 500 + 1000);
+    
+      useGeneralStore.getState().setShowFullPageLoading(false);
+    }
   }
 }));
 
