@@ -80,7 +80,7 @@
       "lifetime": "Lifetime"
     },
     "currentPlan": "Current Plan",
-    "savePercentage": "Save {{percentage}}%",
+    "savePercentage": "Save {{percentage}}",
     "featureHighlights": "Feature Highlights",
     "plans": {
       "free": "Free",
