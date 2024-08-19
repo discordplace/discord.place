@@ -1498,9 +1498,9 @@
           "premium": {
             "plansLoading": "Plans loading..",
             "plans": {
-              "Premium Membership Monthly": "Premium Membership Monthly",
-              "Premium Membership Yearly": "Premium Membership Yearly",
-              "Premium Membership Lifetime": "Premium Membership Lifetime"
+              "Premium Membership Monthly": "Monthly Premium Membership",
+              "Premium Membership Yearly": "Yearly Premium Membership",
+              "Premium Membership Lifetime": "Lifetime Premium Membership"
             },
             "thanks": "Thank you for supporting us!"
           },
