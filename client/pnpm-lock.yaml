@@ -50,6 +50,9 @@ importers:
       i18next:
         specifier: ^23.12.7
         version: 23.12.7
+      i18next-intervalplural-postprocessor:
+        specifier: ^3.0.0
+        version: 3.0.0
       i18next-react-postprocessor:
         specifier: ^3.1.0
         version: 3.1.0(i18next@23.12.7)(react@18.2.0)
@@ -1939,6 +1942,9 @@ packages:
 
   hyphenate-style-name@1.0.4:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
+
+  i18next-intervalplural-postprocessor@3.0.0:
+    resolution: {integrity: sha512-ZJWg2Gcb0kQqVI7kygLj9wVwQHK3mzRAg94uLsdoHqss0M9n0HSPr1pThd2AttkBsJFWR26G18hnKCqcTB8shQ==}
 
   i18next-react-postprocessor@3.1.0:
     resolution: {integrity: sha512-VG1k4KSEwuYQlGRtksPfcp6PXjOUCD5jRtrAW+nfAzds8ksKzTvScHt9ue7G8RPuqKS1Ctx3je1hDDd83usWVw==}
@@ -5513,6 +5519,8 @@ snapshots:
   html-url-attributes@3.0.0: {}
 
   hyphenate-style-name@1.0.4: {}
+
+  i18next-intervalplural-postprocessor@3.0.0: {}
 
   i18next-react-postprocessor@3.1.0(i18next@23.12.7)(react@18.2.0):
     dependencies:

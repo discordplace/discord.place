@@ -4,9 +4,12 @@ import config from '@/config';
 import useGeneralStore from '@/stores/general';
 import sleep from '@/lib/sleep';
 import ReactPostprocessor from 'i18next-react-postprocessor';
+import intervalPlural from 'i18next-intervalplural-postprocessor';
+
 
 i18n
   .use(new ReactPostprocessor())
+  .use(intervalPlural)
   .init({
     fallbackLng: config.availableLocales.find(locale => locale.default).code,
     interpolation: {
@@ -55,10 +58,13 @@ export function t(key, variables = {}) {
 
   i18n.addResourceBundle(language, 'translation', localeContents[language], true, true);
 
+  if (!i18n.getResource(language, 'translation', key)) return key;
+
   return i18n.t(key, {
     ...variables,
     lng: language,
-    fallbackLng: config.availableLocales.find(locale => locale.default).code
+    fallbackLng: config.availableLocales.find(locale => locale.default).code,
+    defaultValue: key
   });
 }
 
