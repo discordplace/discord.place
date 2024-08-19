@@ -1505,8 +1505,8 @@
           "premium": {
             "plansLoading": "Plans loading..",
             "plans": {
-              "Monthly Premium Membership": "Premium Membership Monthly",
-              "Yearly Premium Membership": "Premium Membership Yearly",
+              "Premium Membership Monthly": "Premium Membership Monthly",
+              "Premium Membership Yearly": "Premium Membership Yearly",
               "Lifetime Premium Membership": "Lifetime Premium Membership"
             },
             "thanks": "Thank you for supporting us!"

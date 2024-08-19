@@ -1505,8 +1505,8 @@
           "premium": {
             "plansLoading": "Planlar yükleniyor..",
             "plans": {
-              "Monthly Premium Membership": "Aylık Premium Üyelik",
-              "Yearly Premium Membership": "Yıllık Premium Üyelik",
+              "Premium Membership Monthly": "Aylık Premium Üyelik",
+              "Premium Membership Yearly": "Yıllık Premium Üyelik",
               "Lifetime Premium Membership": "Ömür Boyu Premium Üyelik"
             },
             "thanks": "Bizi desteklediğiniz için teşekkürler!"
