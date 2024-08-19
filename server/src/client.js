@@ -5,10 +5,10 @@ const axios = require('axios');
 const CloudflareAPI = require('cloudflare');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
-const sleep = require('@/utils/sleep');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
 const updateClientActivity = require('@/utils/updateClientActivity');
+const syncMemberRoles = require('@/utils/syncMemberRoles');
 
 // Schemas
 const Server = require('@/schemas/Server');
@@ -26,7 +26,6 @@ const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const Template = require('@/schemas/Template');
 const Sound = require('@/schemas/Sound');
-const User = require('@/schemas/User');
 const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
@@ -123,7 +122,7 @@ module.exports = class Client {
       if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
       if (options.startup.updateBotStats) this.updateBotStats();
       if (options.startup.createNewDashboardData) this.createNewDashboardData();
-      if (options.startup.syncMemberRoles) this.syncMemberRoles();
+      if (options.startup.syncMemberRoles) syncMemberRoles();
       if (options.startup.syncLemonSqueezyPlans) this.syncLemonSqueezyPlans();
       if (options.startup.saveMonthlyVotes) this.saveMonthlyVotes();
       if (options.startup.saveDailyProfileStats) this.saveDailyProfileStats();
@@ -137,7 +136,7 @@ module.exports = class Client {
           this.checkExpiredBlockedIPs();
           this.checkDeletedInviteCodes();
           updateClientActivity();
-          this.syncMemberRoles();
+          syncMemberRoles();
           this.syncLemonSqueezyPlans();
         }, null, true);
         
@@ -365,51 +364,6 @@ module.exports = class Client {
     } catch (error) {
       logger.error('Failed to post new metric to Instatus:', error);
     }
-  }
-
-  async syncMemberRoles() {
-    const guild = client.guilds.cache.get(config.guildId);
-    const members = await guild.members.fetch();
-    const currentDate = new Date();
-
-    const premiumUsers = await User.find({ subscription: { $ne: null } });
-
-    const roles = [
-      {
-        roleId: config.roles.premium,
-        condition: member => premiumUsers.find(premium => premium.id === member.user.id)
-      }
-    ];
-
-    await Promise.all(
-      roles.map(async ({ roleId, condition }) => {
-        const role = guild.roles.cache.get(roleId);
-        if (!role) throw new Error(`Role with ID ${roleId} not found.`);
-    
-        const membersToGiveRole = members.filter(member => condition(member) && !member.roles.cache.has(roleId));
-        const membersToRemoveRole = members.filter(member => !condition(member) && member.roles.cache.has(roleId));
-        const membersToUpdate = membersToGiveRole.concat(membersToRemoveRole).map(member => member.user.id);
-
-        if (membersToUpdate.length <= 0) return;
-
-        const estimatedTime = membersToUpdate.length * 1000;
-        logger.info(`Syncing ${role.name} roles for ${membersToUpdate.length} members. Estimated time: ${estimatedTime / 1000} seconds.`);
-
-        for (const memberId of membersToUpdate) {
-          const member = members.get(memberId);
-          if (!member) continue;
-
-          if (membersToGiveRole.some(collectedMember => collectedMember.user.id == member.user.id)) await member.roles.add(role);
-          if (membersToRemoveRole.some(collectedMember => collectedMember.user.id == member.user.id)) await member.roles.remove(role);
-
-          await sleep(1000);
-        }
-
-        logger.info(`Successfully synced ${role.name} roles for ${membersToUpdate.length} members.`);
-      })
-    )
-      .catch(error => logger.error('Failed to sync member roles:', error))
-      .finally(() => logger.info(`Synced member roles for ${members.size} members in ${new Date() - currentDate}ms.`));
   }
 
   async syncLemonSqueezyPlans() {
