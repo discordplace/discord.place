@@ -27,7 +27,7 @@ export default function MyServers() {
           </h1>
 
           <p className='text-sm text-secondary'>
-            {t('accountPage.tabs.myServers.description')}
+            {t('accountPage.tabs.myServers.subtitle')}
           </p>
         </div>
 
