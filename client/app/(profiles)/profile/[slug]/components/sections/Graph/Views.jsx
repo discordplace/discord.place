@@ -44,7 +44,7 @@ export default function ViewsGraph({ profile }) {
       </h2>
 
       <p className='mt-2 whitespace-pre-wrap text-tertiary'>
-        {t('profilePage.graph.views.description')}
+        {t('profilePage.graph.views.subtitle')}
       </p>
 
       <div className='w-full mt-8'>
