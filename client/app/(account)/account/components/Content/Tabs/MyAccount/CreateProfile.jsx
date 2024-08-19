@@ -13,6 +13,7 @@ import { TbLoader } from 'react-icons/tb';
 import { useDebounce } from 'react-use';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
 
 export default function CreateProfile() {
   const { preferredHost, setPreferredHost, slug, setSlug } = useGeneralStore(useShallow(state => ({
@@ -39,14 +40,14 @@ export default function CreateProfile() {
 
     if (debouncedSlug.length < 3) {
       setSlugStatus('unavailable');
-      toast.error('Slug must be at least 3 characters long.');
+      toast.error(t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.toast.slugTooShort', { minLength: 3 }));
 
       return;
     }
 
     if (!config.validateSlug(debouncedSlug)) {
       setSlugStatus('unavailable');
-      toast.error('Slug can only contain letters, numbers, and dashes.');
+      toast.error(t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.toast.invalidSlug'));
 
       return;
     }
@@ -68,10 +69,12 @@ export default function CreateProfile() {
     <div className="flex flex-col gap-y-4">
       <div className='flex flex-col'>
         <div className='flex items-center gap-x-2'>
-          <h2 className='text-sm font-semibold text-secondary'>Host</h2>
+          <h2 className='text-sm font-semibold text-secondary'>
+            {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.host.title')}
+          </h2>
 
           {!user.premium?.createdAt && (
-            <Tooltip content='This feature is only available for Premium users.'>
+            <Tooltip content={t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.tooltip.premiumRequired')}>
               <div>
                 <FaCrown className='text-yellow-500' />
               </div>
@@ -79,7 +82,9 @@ export default function CreateProfile() {
           )}
         </div>
 
-        <p className='text-xs text-tertiary'>The host you choose will be used as a shortcut to your profile.</p>
+        <p className='text-xs text-tertiary'>
+          {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.host.description')}
+        </p>
             
         <div className="flex w-full mt-2">
           {['discord.place/p', ...config.customHostnames]
@@ -107,7 +112,9 @@ export default function CreateProfile() {
 
       <div className='flex flex-col'>
         <div className='flex items-center gap-x-2'>
-          <h2 className='text-sm font-semibold text-secondary'>Slug</h2>
+          <h2 className='text-sm font-semibold text-secondary'>
+            {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.slug.title')}
+          </h2>
 
           {slugStatus !== 'idle' && (
             <div className={cn(
@@ -119,18 +126,18 @@ export default function CreateProfile() {
               {slugStatus === 'available' ? (
                 <>
                   <IoMdCheckmarkCircle />
-                  Available
+                  {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.status.available')}
                 </>
               ) : (
                 slugStatus === 'unavailable' ? (
                   <>
                     <IoMdCloseCircle />
-                    Unavailable
+                    {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.status.unavailable')}
                   </>
                 ) : (
                   <>
                     <TbLoader className='animate-spin' />
-                    Checking..
+                    {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.status.checking')}
                   </>
                 )
               )}
@@ -138,11 +145,13 @@ export default function CreateProfile() {
           )}
         </div>
 
-        <p className='text-xs text-tertiary'>The slug you choose will be used as a unique identifier for your profile.</p>
+        <p className='text-xs text-tertiary'>
+          {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.slug.description')}
+        </p>
             
         <input
           type="text"
-          placeholder="example-slug"
+          placeholder={t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.slug.placeholder')}
           className="w-full px-3 py-2 mt-2 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
           value={slug}
           maxLength={32}

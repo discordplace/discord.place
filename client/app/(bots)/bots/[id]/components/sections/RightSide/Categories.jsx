@@ -1,5 +1,8 @@
+'use client';
+
 import config from '@/config';
 import { motion } from 'framer-motion';
+import { t } from '@/stores/language';
 
 export default function Categories({ bot }) {
   return (
@@ -10,7 +13,7 @@ export default function Categories({ bot }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .4 }}
       >
-        Categories
+        {t('botPage.categories.title')}
       </motion.h2>
 
       <motion.div 
@@ -30,8 +33,9 @@ export default function Categories({ bot }) {
             <span className='inline-block text-primary'>
               {config.botCategoriesIcons[category]}
             </span>
+
             <span className='truncate'>
-              {category}
+              {t(`categories.${category}`)}
             </span>
           </motion.span>
         ))}

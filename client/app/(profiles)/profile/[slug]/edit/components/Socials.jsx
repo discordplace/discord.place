@@ -1,3 +1,5 @@
+'use client';
+
 import { IoEarth } from 'react-icons/io5';
 import { FaQuestion } from 'react-icons/fa6';
 import { nanoid } from 'nanoid';
@@ -15,6 +17,7 @@ import config from '@/config';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import getIconPath from '@/lib/utils/profiles/getIconPath';
 import revalidateProfile from '@/lib/revalidate/profile';
+import { t } from '@/stores/language';
 
 export default function Socials({ profile }) {
   const [socials, setSocials] = useState(profile.socials);
@@ -65,8 +68,8 @@ export default function Socials({ profile }) {
   const [loading, setLoading] = useState(false);
 
   function saveNewSocial() {
-    if (newSocialType === 'unknown') return toast.error('Invalid URL.');
-    if (newSocialValue === '') return toast.error('URL cannot be empty.');
+    if (newSocialType === 'unknown') return toast.error(t('editProfilePage.toast.invalidUrl'));
+    if (newSocialValue === '') return toast.error(t('editProfilePage.toast.emptyUrl'));
 
     setLoading(true);
 
@@ -75,11 +78,11 @@ export default function Socials({ profile }) {
       if (newSocialType === 'custom') {
         const regexp = typeRegexps['custom'];
         const match = newSocialValue.match(regexp);
-        if (!match) return toast.error('Invalid URL.');
+        if (!match) return toast.error(t('editProfilePage.toast.invalidUrl'));
 
         toast.promise(addSocial(profile.slug, `https://${match[0]}`, 'custom'),
           {
-            loading: 'New social adding..',
+            loading: t('editProfilePage.toast.socialAdding'),
             success: newSocials => {
               setCurrentlyAddingNewSocial(false);
               setNewSocialType('unknown');
@@ -88,7 +91,7 @@ export default function Socials({ profile }) {
               setSocials(newSocials);
               revalidateProfile(profile.slug);
               
-              return 'New social added successfully.';
+              return t('editProfilePage.toast.socialAdded');
             },
             error: message => {
               setLoading(false);
@@ -99,12 +102,12 @@ export default function Socials({ profile }) {
       } else {
         const regexp = typeRegexps[newSocialType];
         const match = newSocialValue.match(regexp);
-        if (!match) return toast.error('Invalid URL.');
+        if (!match) return toast.error(t('editProfilePage.toast.invalidUrl'));
 
         const handle = match[1];
         toast.promise(addSocial(profile.slug, handle, newSocialType),
           {
-            loading: 'New social media adding..',
+            loading: t('editProfilePage.toast.socialMediaAdding'),
             success: newSocials => {
               setCurrentlyAddingNewSocial(false);
               setNewSocialType('unknown');
@@ -113,7 +116,7 @@ export default function Socials({ profile }) {
               setSocials(newSocials);
               revalidateProfile(profile.slug);
 
-              return 'New social media added successfully.';
+              return t('editProfilePage.toast.socialMediaAdded');
             },
             error: message => {
               setLoading(false);
@@ -130,7 +133,7 @@ export default function Socials({ profile }) {
 
     toast.promise(deleteSocial(profile.slug, id),
       {
-        loading: 'Social media deleting..',
+        loading: t('editProfilePage.toast.deletingSocial'),
         success: newSocials => {
           setCurrentlyAddingNewSocial(false);
           setNewSocialType('unknown');
@@ -139,7 +142,7 @@ export default function Socials({ profile }) {
           setSocials(newSocials);
           revalidateProfile(profile.slug);
 
-          return 'Social media deleted successfully.';
+          return t('editProfilePage.toast.socialDeleted');
         },
         error: message => {
           setLoading(false);
@@ -151,8 +154,13 @@ export default function Socials({ profile }) {
 
   return (
     <div className='flex flex-col w-full h-full p-6 rounded-2xl bg-secondary'>
-      <h2 className='font-medium text-tertiary'>Socials</h2>
-      <p className='font-medium text-primary'>Add your social media links to your profile.</p>
+      <h2 className='font-medium text-tertiary'>
+        {t('editProfilePage.socials.title')}
+      </h2>
+      
+      <p className='font-medium text-primary'>
+        {t('editProfilePage.socials.subtitle')}
+      </p>
 
       <div className='flex flex-wrap gap-4 mt-4'>
         {socials.map(social => (
@@ -185,6 +193,7 @@ export default function Socials({ profile }) {
               <button className='text-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => deleteSelectedSocial(social._id)} disabled={loading}>
                 <FiX size={18} />
               </button>
+
               <Link className='text-tertiary hover:text-primary' href={social.link} target='_blank'>
                 <MdOpenInNew size={18} />
               </Link>
@@ -228,24 +237,32 @@ export default function Socials({ profile }) {
           'w-full gap-x-4',
           currentlyAddingNewSocial ? 'flex' : 'hidden'
         )}>
-          <button className='disabled:pointer-events-none disabled:opacity-70 flex items-center justify-center max-w-[calc(50%_-_1rem)] w-full h-10 text-sm font-semibold rounded-lg gap-x-2 text-secondary hover:text-primary bg-tertiary hover:bg-quaternary' onClick={() => {
-            setCurrentlyAddingNewSocial(false);
-            setNewSocialType('unknown');
-            setNewSocialValue('');
-          }} disabled={loading}>
-            Cancel
+          <button
+            className='disabled:pointer-events-none disabled:opacity-70 flex items-center justify-center max-w-[calc(50%_-_1rem)] w-full h-10 text-sm font-semibold rounded-lg gap-x-2 text-secondary hover:text-primary bg-tertiary hover:bg-quaternary' onClick={() => {
+              setCurrentlyAddingNewSocial(false);
+              setNewSocialType('unknown');
+              setNewSocialValue('');
+            }}
+            disabled={loading}
+          >
+            {t('buttons.cancel')}
           </button>
+
           <button className='disabled:pointer-events-none disabled:opacity-70 flex items-center justify-center max-w-[calc(50%_-_1rem)] w-full h-10 text-sm font-semibold rounded-lg gap-x-2 text-secondary hover:text-primary bg-tertiary hover:bg-quaternary' onClick={saveNewSocial} disabled={loading}>
-            Add
+            {t('buttons.add')}
           </button>
         </div>
         
         {socials.length < config.profilesMaxSocialsLength && (
-          <button className={cn(
-            'flex w-full max-w-[calc(50%_-_1rem)] h-10 rounded-lg justify-center text-sm font-semibold border-primary border hover:bg-tertiary hover:border-[rgb(var(--bg-tertiary))] items-center gap-x-2 text-secondary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
-            currentlyAddingNewSocial && 'hidden'
-          )} onClick={() => setCurrentlyAddingNewSocial(true)} disabled={loading}>
-            Add New
+          <button
+            className={cn(
+              'flex w-full max-w-[calc(50%_-_1rem)] h-10 rounded-lg justify-center text-sm font-semibold border-primary border hover:bg-tertiary hover:border-[rgb(var(--bg-tertiary))] items-center gap-x-2 text-secondary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
+              currentlyAddingNewSocial && 'hidden'
+            )}
+            onClick={() => setCurrentlyAddingNewSocial(true)}
+            disabled={loading}
+          >
+            {t('buttons.addNew')}
           </button>
         )}
       </div>

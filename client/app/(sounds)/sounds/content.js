@@ -11,6 +11,7 @@ import Sounds from '@/app/(sounds)/sounds/components/Sounds';
 import useSearchStore from '@/stores/sounds/search';
 import { useShallow } from 'zustand/react/shallow';
 import { useEffect } from 'react';
+import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -61,16 +62,16 @@ export default function Content() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...sequenceTransition, delay: 0.1 }}
         >
-          Discover the sounds
+          {t('soundsPage.title')}
         </motion.h1>
 
         <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
-          Explore, find and download the perfect sounds for your Discord server soundboard! Use sounds to make your server more fun and interactive.
+          {t('soundsPage.subtitle')}
         </motion.span>
 
         <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
           <SearchInput
-            placeholder='Search for a sound by name...'
+            placeholder={t('soundsPage.searchInputPlaceholder')}
             loading={false}
             search={search}
             fetchData={fetchSounds}
@@ -85,7 +86,7 @@ export default function Content() {
             transition={{ ...sequenceTransition, delay: 0.3 }}
           >
             <Select
-              placeholder='Category'
+              placeholder={t('soundsPage.categorySelectPlaceholder')}
               options={
                 ['All', ...config.soundCategories]
                   .map(category => ({
@@ -94,7 +95,7 @@ export default function Content() {
                         {config.soundCategoriesIcons[category]}
                       </span>
 
-                      {category}
+                      {t(`categories.${category}`)}
                     </div>,
                     value: category
                   }))
@@ -105,23 +106,23 @@ export default function Content() {
             />
 
             <Select
-              placeholder='Sorting'
+              placeholder={t('soundsPage.sortSelect.placeholder')}
               options={[
                 ...[
                   {
-                    label: 'Downloads',
+                    label: t('soundsPage.sortSelect.items.downloads'),
                     value: 'Downloads'
                   },
                   {
-                    label: 'Likes',
+                    label: t('soundsPage.sortSelect.items.likes'),
                     value: 'Likes'
                   },
                   {
-                    label: 'Newest',
+                    label: t('soundsPage.sortSelect.items.newest'),
                     value: 'Newest'
                   },
                   {
-                    label: 'Oldest',
+                    label: t('soundsPage.sortSelect.items.oldest'),
                     value: 'Oldest'
                   }
                 ].map(option => ({

@@ -1,10 +1,15 @@
+'use client';
+
 import Graph from '@/app/(dashboard)/components/Home/Graph/index';
 import cn from '@/lib/cn';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import Tooltip from '@/app/components/Tooltip';
 import { useMedia } from 'react-use';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function MonthlyVotesGraph({ server }) {
+  const language = useLanguageStore(state => state.language);
+
   const data = server.monthly_votes || [];
   const latestValue = data[data.length - 1]?.votes || 0;
   const previousValue = data[data.length - 2]?.votes || 0;
@@ -20,7 +25,7 @@ export default function MonthlyVotesGraph({ server }) {
   return (
     <div className='lg:max-w-[70%] w-full px-8 lg:px-0'>
       <h2 className='flex items-center text-xl font-semibold gap-x-2'>
-        Monthly Votes Graph
+        {t('serverPage.tabs.monthlyVotesGraph.title')}
 
         <Tooltip
           side={isMobile ? 'bottom' : 'right'}
@@ -41,7 +46,7 @@ export default function MonthlyVotesGraph({ server }) {
       </h2>
 
       <p className='mt-2 text-sm whitespace-pre-wrap text-tertiary'>
-        The amount of votes this server has received over time.
+        {t('serverPage.tabs.monthlyVotesGraph.subtitle')}
       </p>
 
       <div className='w-full mt-8'>
@@ -49,7 +54,6 @@ export default function MonthlyVotesGraph({ server }) {
           id='monthlyVotes'
           data={server.monthly_votes.map(({ created_at, votes }) => ({ createdAt: created_at, value: votes })).reverse()}
           tooltipFormatter={value => value.toLocaleString('en-US')}
-          tooltipLabel='Votes'
           tooltipIcon='<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M9 13l3 -3l3 3"></path><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path></svg>'
           color={
             isIncreased ? '#64b071' :
@@ -57,7 +61,7 @@ export default function MonthlyVotesGraph({ server }) {
                 '#b4b4b4'
           }
           xaxisRange={server.monthly_votes.length}
-          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }))}
+          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { year: 'numeric', month: 'long' }))}
         />
       </div>
     </div>

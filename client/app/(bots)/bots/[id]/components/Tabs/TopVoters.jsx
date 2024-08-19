@@ -6,6 +6,7 @@ import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import fetchVoters from '@/lib/request/bots/fetchVoters';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { t } from '@/stores/language';
 
 export default function TopVoters({ bot }) {
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ export default function TopVoters({ bot }) {
   return (
     <div className='lg:max-w-[70%] w-full px-8 lg:px-0'>
       <h2 className='text-xl font-semibold'>
-        Top Voters
+        {t('botPage.tabs.topVoters.title')}
       </h2>
 
       {loading ? (

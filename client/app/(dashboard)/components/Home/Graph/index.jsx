@@ -2,13 +2,15 @@
 
 import useThemeStore from '@/stores/theme';
 import dynamic from 'next/dynamic';
+import useLanguageStore, { t } from '@/stores/language';
 
 const DynamicApexCharts = dynamic(() => import('react-apexcharts'), {
   ssr: false
 });
 
-export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltipLabel, color, extraGraphOptions = {}, xAxisCategories, xaxisRange }) {
+export default function Graph({ id, data, tooltipFormatter, tooltipIcon, color, extraGraphOptions = {}, xAxisCategories, xaxisRange }) {
   const theme = useThemeStore(state => state.theme);
+  const language = useLanguageStore(state => state.language);
 
   const reversedData = [...data].reverse();
 
@@ -73,7 +75,7 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
           custom: ({ series, seriesIndex, dataPointIndex }) => {
             return `<div class="bg-black text-white dark:bg-white dark:text-black px-4 py-2 rounded-xl font-semibold flex gap-x-2 items-center apexcharts-arrow-container">
               ${tooltipIcon}
-              ${series[seriesIndex][dataPointIndex].toLocaleString('en-US')} ${tooltipLabel}
+              ${t(`graph.${id}.tooltip`, { count: series[seriesIndex][dataPointIndex] })}              
             </div>`;
           }
         },
@@ -82,7 +84,7 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, tooltip
           categories: xAxisCategories || reversedData.map(({ createdAt }) => {
             const date = new Date(createdAt);
             const day = date.getDate();
-            const month = date.toLocaleString('en-US', { month: 'short' });
+            const month = date.toLocaleString(language, { month: 'short' });
   
             return `${day} ${month}`;
           }),

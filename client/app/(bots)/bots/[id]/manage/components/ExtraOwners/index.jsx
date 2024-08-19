@@ -11,6 +11,7 @@ import createExtraOwner from '@/lib/request/bots/createExtraOwner';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 
 export default function ExtraOwners({ botId, canEditExtraOwners }) {
   const [extraOwners, setExtraOwners] = useState([]);
@@ -32,12 +33,12 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
     setExtraOwnerRemoving(userId);
     
     toast.promise(removeExtraOwner(botId, userId), {
-      loading: 'Removing extra owner..',
+      loading: t('botManagePage.extraOwners.toast.removingOwner'),
       success: () => {
         setExtraOwners(extraOwners.filter(extraOwner => extraOwner.id !== userId));
         setExtraOwnerRemoving('');
 
-        return 'Successfully removed extra owner!';
+        return t('botManagePage.extraOwners.toast.ownerRemoved');
       },
       error: error => {
         setExtraOwnerRemoving('');
@@ -60,16 +61,16 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
     disableButton('add-extra-owner', 'confirm');
 
     const newExtraOwnerId = newExtraOwnerIdInputRef.current.value.trim();
-    if (!newExtraOwnerId) return toast.error('User ID cannot be empty.');
+    if (!newExtraOwnerId) return toast.error(t('botManagePage.extraOwners.toast.emptyUserId'));
 
     toast.promise(createExtraOwner(botId, newExtraOwnerId), {
-      loading: 'Adding extra owner..',
+      loading: t('botManagePage.extraOwners.toast.addingOwner'),
       success: userData => {
         setExtraOwners([...extraOwners, userData]);
         closeModal('add-extra-owner');
         enableButton('add-extra-owner', 'confirm');
 
-        return `User @${userData.username} successfully added as an extra owner!`;
+        return t('botManagePage.extraOwners.toast.ownerAdded', { username: userData.username });
       },
       error: error => {
         enableButton('add-extra-owner', 'confirm');
@@ -83,15 +84,15 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
     <div className='flex flex-col w-full gap-y-4'>
       <h3 className='flex flex-wrap items-center gap-4 text-xl font-semibold'>
         <ImHammer2 size={24} className='text-purple-500' />
-        Extra Owners
+        {t('botManagePage.extraOwners.title')}
 
         {canEditExtraOwners && (
           <button
             className='text-white -ml-2 text-xs bg-purple-500 hover:bg-purple-600 px-2 py-0.5 rounded-full'
             onClick={() => 
               openModal('add-extra-owner', {
-                title: 'Add Extra Owner',
-                description: 'Add a user as an extra owner of your bot.',
+                title: t('botManagePage.extraOwners.addExtraOwnerModal.title'),
+                description: t('botManagePage.extraOwners.addExtraOwnerModal.description'),
                 content: (
                   <input
                     type="text"
@@ -103,13 +104,13 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
                 buttons: [
                   {
                     id: 'cancel',
-                    label: 'Cancel',
+                    label: t('buttons.cancel'),
                     variant: 'ghost',
                     actionType: 'close'
                   },
                   {
                     id: 'confirm',
-                    label: 'Confirm',
+                    label: t('buttons.confirm'),
                     variant: 'solid',
                     action: continueAddingExtraOwner
                   }
@@ -117,21 +118,25 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
               })
             }
           >
-          Add New
+            {t('buttons.addNew')}
           </button>
         )}       
 
         <span className='-ml-2 text-xs text-white dark:text-white px-2 py-0.5 dark:bg-white/30 bg-black/30 rounded-full'>
-          Optional
+          {t('botManagePage.extraOwners.optionalBadge')}
         </span>
       </h3>
 
       {canEditExtraOwners && (
         <p className='text-tertiary'>
-          You can add users as extra owners of your bot. Extra owners can manage your bot just like you do.
-          <br />
-          <br className='block sm:hidden' />
-          <span className='text-secondary'>Note:</span> Extra owners can see and manage all the settings of your bot including API key, so be careful who you add.
+          {t('botManagePage.extraOwners.subtitle', {
+            br: <br />,
+            emptyBlock: <br className='block sm:hidden' />
+          })}
+
+          <span className='text-secondary'>
+            {t('botManagePage.extraOwners.noteText')}
+          </span>
         </p>
       )}
 
@@ -147,7 +152,9 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
             </div>
           ))
         ) : extraOwners.length === 0 ? (
-          <p className='text-tertiary'>No extra owners added yet.</p>
+          <p className='text-tertiary'>
+            {t('botManagePage.extraOwners.emptyErrorState')}
+          </p>
         ) : (
           extraOwners.map(extraOwner => (
             <Tooltip
@@ -170,7 +177,10 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
                   height={32}
                   className='rounded-full'
                 />
-                <span className='font-medium text-secondary'>{extraOwner.username}</span>
+                
+                <span className='font-medium text-secondary'>
+                  {extraOwner.username}
+                </span>
               </div>
             </Tooltip>
           ))

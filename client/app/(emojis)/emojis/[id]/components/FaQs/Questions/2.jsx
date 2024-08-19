@@ -4,6 +4,7 @@ import config from '@/config';
 import Link from 'next/link';
 import { useState } from 'react';
 import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
+import { t } from '@/stores/language';
 
 export default function Question2({ emoji }) {
   const [activeMethod, setActiveMethod] = useState(0);
@@ -11,7 +12,7 @@ export default function Question2({ emoji }) {
   return (
     <div className='flex flex-col mt-2 gap-y-1'>
       <p>
-        I{'\''}m glad to hear that! I will tell you 3 methods for this.
+        {t('emojiPage.frequentlyAskedQuestions.answers.1.title')}
       </p>
 
       <div className='flex gap-x-2'>
@@ -20,7 +21,7 @@ export default function Question2({ emoji }) {
           disabled={activeMethod === 0}
           onClick={() => setActiveMethod(0)}
         >
-          1. Our Website (this page)
+          {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.buttonText')}
         </button>
 
         <button 
@@ -28,7 +29,7 @@ export default function Question2({ emoji }) {
           disabled={activeMethod === 1}
           onClick={() => setActiveMethod(1)}
         >
-          2. Our Bot (recommended)
+          {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.1.buttonText')}
         </button>
 
         <button 
@@ -36,40 +37,45 @@ export default function Question2({ emoji }) {
           disabled={activeMethod === 2}
           onClick={() => setActiveMethod(2)}
         >
-          3. Classic Way
+          {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.2.buttonText')}
         </button>
       </div>
 
       <div className='mt-2'>
         {activeMethod === 0 && (
           <>
-            Using our bot & website, you can upload this emoji to your server with just a few clicks. Here how you can do this:
+            {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructionsBefore')}
+
             <div className='flex flex-col mt-2 gap-y-1'>
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>1.</span>
+                
                 <span>
-                  <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>Add our bot</Link> to your server.
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.linkText')}</Link> })}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>2.</span>
+                
                 <span>
-                  Click {'"'}Upload to Discord{'"'} button on emoji preview in this page. 
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.1')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>4.</span>
+                
                 <span className='flex gap-x-2'>
-                  Select the server you want to upload the emoji & click the upload button.
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.2')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>5.</span>
+                
                 <span className='flex gap-x-2'>
-                  Tada! Now emoji is added to the server.
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.3')}
                 </span>
               </div>
             </div>
@@ -78,29 +84,29 @@ export default function Question2({ emoji }) {
 
         {activeMethod === 1 && (
           <>
-            Using our bot, you can upload this emoji to your server with a single command. Here how you can do this:
+            {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.1.instructionsBefore')}
             <div className='flex flex-col mt-2 gap-y-1'>
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>1.</span>
+                
                 <span>
-                  <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>Add our bot</Link> to your server.
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('emojiPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0.linkText')}</Link> })}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>2.</span>
+                
                 <span>
-                  Copy & Paste this to any channel:
-                  <pre>
-                    /emoji upload emoji:{emoji.id}
-                  </pre>
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.1', { pre: <pre>/emoji upload emoji:{emoji.id}</pre> })}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>3.</span>
+                
                 <span className='flex gap-x-2'>
-                  Use the command and tada! Now emoji is added to the server.
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.2')}
                 </span>
               </div>
             </div>
@@ -109,47 +115,54 @@ export default function Question2({ emoji }) {
 
         {activeMethod === 2 && (
           <>
-            This may be a little more challenging.
+            {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.2.instructionsBefore')}
+
             <div className='flex flex-col mt-2 gap-y-1'>
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>1.</span>
+                
                 <span>
-                  Download the emoji: <button className='px-3 py-0 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white/20 dark:hover:bg-white/30' onClick={() => downloadEmoji(emoji)}>Download</button>
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.2.instructions.0')} <button className='px-3 py-0 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white/20 dark:hover:bg-white/30' onClick={() => downloadEmoji(emoji)}>Download</button>
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>2.</span>
+                
                 <span className='flex gap-x-2'>
-                  Open your Discord App and right click to your server.
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.2.instructions.1')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>3.</span>
+                
                 <span className='flex gap-x-2'>
-                  Go to Server Settings {'>'} Emoji
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.2.instructions.2')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>4.</span>
+                
                 <span className='flex gap-x-2'>
-                  Click the Upload Emoji button.
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.2.instructions.3')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>5.</span>
+                
                 <span className='flex gap-x-2'>
-                  Select the emoji you downloaded before.
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.2.instructions.4')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>6.</span>
+                
                 <span className='flex gap-x-2'>
-                  Tada! Now emoji is added to the server.
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.2.instructions.5')}
                 </span>
               </div>
             </div>

@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
 import { MdSave } from 'react-icons/md';
-
 import isEqual from 'lodash/isEqual';
 import EssentialInformation from '@/app/(bots)/bots/[id]/manage/components/EssentialInformation';
 import Other from '@/app/(bots)/bots/[id]/manage/components/Other';
@@ -18,6 +17,7 @@ import revalidateBot from '@/lib/revalidate/bot';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import { useRouter } from 'next-nprogress-bar';
+import { t } from '@/stores/language';
 
 export default function Content({ bot }) {
   const [savingChanges, setSavingChanges] = useState(false);
@@ -101,13 +101,13 @@ export default function Content({ bot }) {
     setSavingChanges(true);
 
     toast.promise(editBot(bot.id, changedKeys), {
-      loading: 'Saving changes..',
+      loading: t('botManagePage.toast.savingChanges'),
       success: () => {
         setSavingChanges(false);
         setChangedKeys([]);
         revalidateBot(bot.id);
 
-        return 'Successfully saved changes!';
+        return t('botManagePage.toast.changesSaved');
       },
       error: error => {
         setSavingChanges(false);
@@ -135,19 +135,19 @@ export default function Content({ bot }) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
           
           openModal('confirm-exit', {
-            title: 'Discard Changes?',
-            description: 'Are you sure you want to discard your changes?',
-            content: <p className='text-sm text-tertiary'>Your changes will not be saved.</p>,
+            title: t('botManagePage.discardChangesModal.title'),
+            description: t('botManagePage.discardChangesModal.description'),
+            content: <p className='text-sm text-tertiary'>{t('botManagePage.discardChangesModal.note')}</p>,
             buttons: [
               {
                 id: 'cancel',
-                label: 'Cancel',
+                label: t('buttons.cancel'),
                 variant: 'ghost',
                 actionType: 'close'
               },
               {
                 id: 'discard-changes',
-                label: 'Discard Changes',
+                label: t('buttons.discardChanges'),
                 variant: 'solid',
                 action: () => {
                   resetChanges();
@@ -176,13 +176,16 @@ export default function Content({ bot }) {
         <div className="flex flex-col w-full sm:items-center sm:flex-row sm:justify-between">
           <div className="flex flex-col gap-y-1">
             <h2 className="flex items-center text-3xl font-bold gap-x-2">
-              Manage Bot
+              {t('botManagePage.title')}
             
               <div className='p-2 text-xs font-bold uppercase rounded-lg select-none bg-quaternary'>
-                esc to close
+                {t('botManagePage.escToCloseBadge')}
               </div>
             </h2>
-            <p className="text-tertiary">Manage your bot and its settings.</p>
+
+            <p className="text-tertiary">
+              {t('botManagePage.subtitle')}
+            </p>
             
             <div className='flex items-center mt-2 font-medium gap-x-2 text-secondary'>
               <Image
@@ -207,7 +210,7 @@ export default function Content({ bot }) {
               onClick={resetChanges}
               disabled={!changesMade || savingChanges}
             >
-              Cancel
+              {t('buttons.cancel')}
             </button>
 
             <button
@@ -216,7 +219,7 @@ export default function Content({ bot }) {
               onClick={saveChanges}
             >
               {savingChanges ? <TbLoader size={18} className='animate-spin' /> : <MdSave size={18} />}
-              Save Changes
+              {t('buttons.saveChanges')}
             </button>
           </div>
         </div>

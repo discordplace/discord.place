@@ -14,6 +14,7 @@ import cn from '@/lib/cn';
 import config from '@/config';
 import { FaCheck } from 'react-icons/fa';
 import Select from '@/app/components/Select';
+import { t } from '@/stores/language';
 
 export default function NewServer() {
   const currentlyAddingServer = useAccountStore(state => state.currentlyAddingServer);
@@ -35,12 +36,12 @@ export default function NewServer() {
 
   function addServer() {
     const inviteLinkMatch = serverInviteLink.match(/(https?:\/\/|http?:\/\/)?(www.)?(discord.(gg)|discordapp.com\/invite|discord.com\/invite)\/[^\s/]+?(?=$|Z)/g);
-    if (!inviteLinkMatch || !inviteLinkMatch?.[0]) return toast.error('Invalid invite link.');
+    if (!inviteLinkMatch || !inviteLinkMatch?.[0]) return toast.error(t('accountPage.tabs.myServers.sections.newServer.toast.invalidInviteLink'));
 
     setLoading(true);
 
     toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords, voice_activity_enabled: serverVoiceActivityEnabled }), {
-      loading: `Adding ${currentlyAddingServer.name}..`,
+      loading: t('accountPage.tabs.myServers.sections.newServer.toast.addingServer', { server: currentlyAddingServer.name }),
       success: () => {
         setTimeout(() => {
           router.push(`/servers/${currentlyAddingServer.id}`);
@@ -55,7 +56,7 @@ export default function NewServer() {
         }, 3000);
         setRenderConfetti(true);
         
-        return `${currentlyAddingServer.name} added! You will be redirected to ${currentlyAddingServer.name} page in a few seconds..`;
+        return t('accountPage.tabs.myServers.sections.newServer.toast.serverAdded', { server: currentlyAddingServer.name });
       },
       error: error => {
         setLoading(false);
@@ -84,62 +85,64 @@ export default function NewServer() {
           </button>
         
           <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
-            Adding
-
-            <ServerIcon
-              width={32}
-              height={32}
-              icon_url={currentlyAddingServer.icon_url}
-              name={currentlyAddingServer.name}
-              className={cn(
-                !currentlyAddingServer.icon_url && '[&>h2]:text-xs'
-              )}
-            />
-
-            <span className='truncate'>
-              {currentlyAddingServer.name}
-            </span>
+            {t('accountPage.tabs.myServers.sections.newServer.title', {
+              serverName: <span className='truncate'>{currentlyAddingServer.name}</span>,
+              serverIcon: <ServerIcon
+                width={32}
+                height={32}
+                icon_url={currentlyAddingServer.icon_url}
+                name={currentlyAddingServer.name}
+                className={cn(
+                  !currentlyAddingServer.icon_url && '[&>h2]:text-xs'
+                )}
+              />
+            })}
           </h1>
         </div>
         
         <p className='text-sm sm:text-base text-tertiary'>
-          You{'\''}re about to add {currentlyAddingServer.name} to discord.place. This means your server will be listed on discord.place and everyone will be able to see it. You can remove your server from discord.place at any time.
+          {t('accountPage.tabs.myServers.sections.newServer.subtitle', { serverName: currentlyAddingServer.name })}
         </p>
       </div>
 
       <div className='max-w-[800px] flex items-center w-full my-12'>
         <div className='flex flex-col w-full gap-y-1'>
           <h2 className='text-lg font-semibold'>
-            Add a description
+            {t('accountPage.tabs.myServers.sections.newServer.fields.description.label')}
           </h2>
           
           <p className='text-sm sm:text-base text-tertiary'>
-            This is the description that will be shown to everyone who visits your server on discord.place.<br/>Make sure to include important information about your server.
+            {t('accountPage.tabs.myServers.sections.newServer.fields.description.description', { br: <br /> })}
           </p>
 
-          <span contentEditable suppressContentEditableWarning className='block w-full h-[150px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500' onKeyUp={event => {
-            if (event.target.innerText.length > config.serverDescriptionMaxCharacters) {
-              event.target.innerText = event.target.innerText.slice(0, config.serverDescriptionMaxCharacters);
-              event.preventDefault();
-              event.stopPropagation();
-              
-              return toast.error(`Description can be maximum ${config.serverDescriptionMaxCharacters} characters long.`);
-            }
+          <span
+            contentEditable
+            suppressContentEditableWarning
+            className='block w-full h-[150px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+            onKeyUp={event => {
+              if (event.target.innerText.length > config.serverDescriptionMaxCharacters) {
+                event.target.innerText = event.target.innerText.slice(0, config.serverDescriptionMaxCharacters);
+                event.preventDefault();
+                event.stopPropagation();
+                
+                return toast.error(`Description can be maximum ${config.serverDescriptionMaxCharacters} characters long.`);
+              }
 
-            setServerDescription(event.target.textContent);
-          }} />
+              setServerDescription(event.target.textContent);
+            }}
+          />
 
           <h2 className='mt-8 text-lg font-semibold'>
-            Invite link
+            {t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.label')}
           </h2>
 
           <p className='text-sm sm:text-base text-tertiary'>
-            Add an invite link to your server. This will be helpful for people who want to join your server.<br/>Make sure to set the invite link to never expire.
+            {t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.description')}
           </p>
 
           <input
             className='block w-full p-2 mt-4 overflow-y-auto text-sm border-2 border-transparent rounded-lg outline-none placeholder-placeholder bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
-            placeholder='https://discord.gg/invite'
+            placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.placeholder')}
             autoComplete='off'
             spellCheck='false'
             value={serverInviteLink}
@@ -149,18 +152,18 @@ export default function NewServer() {
           <div className='flex flex-col gap-4 mt-8 sm:flex-row'>
             <div className='flex flex-col gap-y-2'>
               <h2 className='text-lg font-semibold'>
-                Category
+                {t('accountPage.tabs.myServers.sections.newServer.fields.category.label')}
               </h2>
 
               <p className='text-sm text-tertiary'>
-                Select a base category for your server. This will help people find your server on discord.place.
+                {t('accountPage.tabs.myServers.sections.newServer.fields.category.description')}
               </p>
 
               <div className='w-full mt-4'>
                 <Select
                   mobileOverride={true}
                   triggerClassName='w-full py-2.5'
-                  placeholder='Select'
+                  placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.category.placeholder')}
                   options={
                     config.serverCategories
                       .filter(category => category !== 'All')
@@ -170,7 +173,7 @@ export default function NewServer() {
                             {config.serverCategoriesIcons[category]}
                           </span>
 
-                          {category}
+                          {t(`categories.${category}`)}
                         </div>,
                         value: category
                       }))
@@ -184,11 +187,11 @@ export default function NewServer() {
 
             <div className='flex flex-col gap-y-2'>
               <h2 className='text-lg font-semibold'>
-                Keywords
+                {t('accountPage.tabs.myServers.sections.newServer.fields.keywords.label')}
               </h2>
 
               <p className='text-sm text-tertiary'>
-                Add keywords to your server. This will help people find your server on discord.place.
+                {t('accountPage.tabs.myServers.sections.newServer.fields.keywords.description')}
               </p>
 
               <div className='relative'>
@@ -197,7 +200,7 @@ export default function NewServer() {
                   autoComplete='off'
                   spellCheck='false'
                   value={keywordsInputValue}
-                  placeholder='Type a keyword and press enter or space..'
+                  placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.keywords.placeholder')}
                   onChange={event => {
                     const regexp = new RegExp(/[^a-zA-Z0-9-]/g);
                     if (regexp.test(event.target.value)) return;
@@ -208,6 +211,7 @@ export default function NewServer() {
                   onKeyUp={event => {
                     if (event.key === ' ' || event.key === 'Enter') {
                       if (keywordsInputValue.trim().length <= 0) return;
+                      if (serverKeywords.some(keyword => keyword.toLowerCase() === keywordsInputValue.trim().toLowerCase())) return toast.error(t('accountPage.tabs.myServers.sections.newServer.toast.duplicateKeyword'));
 
                       setServerKeywords([...serverKeywords, keywordsInputValue.trim()]);
                       setKeywordsInputValue('');
@@ -222,7 +226,7 @@ export default function NewServer() {
           {serverKeywords.filter(keyword => keyword.length > 0).length > 0 && (
             <>
               <h3 className='mt-4 text-sm font-medium text-secondary'>
-                {serverKeywords.filter(keyword => keyword.length > 0).length} Keywords
+                {t('accountPage.tabs.myServers.sections.newServer.fields.keywords.count', { count: serverKeywords.filter(keyword => keyword.length > 0).length })}
               </h3>
 
               <div className='flex flex-wrap mt-2 gap-x-2 gap-y-1'>
@@ -238,11 +242,11 @@ export default function NewServer() {
           )}
 
           <h2 className='mt-8 text-lg font-semibold'>
-            Voice Activity
+            {t('accountPage.tabs.myServers.sections.newServer.fields.voiceActivity.label')}
           </h2>
 
           <p className='text-sm sm:text-base text-tertiary'>
-            Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active your server is.
+            {t('accountPage.tabs.myServers.sections.newServer.fields.voiceActivity.description')}
           </p>
 
           <div 
@@ -252,24 +256,24 @@ export default function NewServer() {
             <button className='p-1 bg-quaternary rounded-md group-hover:bg-white group-hover:text-black min-w-[18px] min-h-[18px]'>
               {serverVoiceActivityEnabled ? <FaCheck size={10} /> : null}
             </button>
+
             <span className='text-sm font-medium select-none text-tertiary'>
-              Enable Tracking
+              {t('buttons.enableTracking')}
             </span>
           </div>
 
           <h2 className='mt-8 text-lg font-semibold'>
-            Content Policy
+            {t('accountPage.tabs.myServers.sections.newServer.fields.contentPolicy.label')}
           </h2>
           
           <p className='flex flex-col text-sm sm:text-base gap-y-1 text-tertiary'>
-            By adding your server to discord.place, you agree to our Server Submission Guidelines.
-            <span className='mt-2 text-xs text-tertiary'>
-              * Can be found in our Discord server.
-            </span>
+            {t('accountPage.tabs.myServers.sections.newServer.fields.contentPolicy.description', {
+              note: <span className='text-xs'>{t('accountPage.tabs.myServers.sections.newServer.fields.contentPolicy.note')}</span>
+            })}
           </p>
 
           <h2 className='mt-8 text-lg font-semibold'>
-            Are you ready?
+            {t('accountPage.tabs.myServers.sections.newServer.fields.areYouReady.label')}
           </h2>
           
           <div className='flex flex-col w-full gap-2 mt-2 sm:flex-row'>
@@ -285,20 +289,21 @@ export default function NewServer() {
               onClick={addServer}
             >
               {loading && <TbLoader className='animate-spin' />}
-              Add
-              <ServerIcon
-                width={20}
-                height={20}
-                icon_url={currentlyAddingServer.icon_url}
-                name={currentlyAddingServer.name}
-                className={cn(
-                  !currentlyAddingServer.icon_url && '[&>h2]:text-xs [&>h2]:text-primary'
-                )}
-              />
-              <span className='truncate'>
-                {currentlyAddingServer.name}
-              </span>
+
+              {t('accountPage.tabs.myServers.sections.newServer.fields.areYouReady.addButton', {
+                serverName: currentlyAddingServer.name,
+                serverIcon: <ServerIcon
+                  width={20}
+                  height={20}
+                  icon_url={currentlyAddingServer.icon_url}
+                  name={currentlyAddingServer.name}
+                  className={cn(
+                    !currentlyAddingServer.icon_url && '[&>h2]:text-xs [&>h2]:text-primary'
+                  )}
+                />
+              })}
             </button>
+
             <button className='flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
               onClick={() => {
                 setCurrentlyAddingServer(null);
@@ -310,7 +315,7 @@ export default function NewServer() {
               }}
               disabled={loading}
             >
-              Cancel
+              {t('buttons.cancel')}
             </button>
           </div>
         </div>

@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
+import { t } from '@/stores/language';
 
 export default function Sounds() {
   const { page, setPage, search, loading, sounds, fetchSounds, sort, category, totalSounds, limit } = useSearchStore(useShallow(state => ({
@@ -51,17 +52,17 @@ export default function Sounds() {
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
-                It{'\''}s quiet in here...
+                {t('soundsPage.emptyErrorState.title')}
               </div>
             }
-            message={'There are no sounds to display. Maybe that\'s a sign to create one?'}
+            message={t('soundsPage.emptyErrorState.message')}
           />
 
           <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
             fetchSounds('', 1, limit, 'All', 'Downloads');
             setPage(1);
           }}>
-            Reset Search
+            {t('buttons.resetSearch')}
           </button>
         </motion.div>
       </AnimatePresence>

@@ -3,13 +3,14 @@ import { useState, useRef } from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { toast } from 'sonner';
 import { BiCopy, BiSolidCopy } from 'react-icons/bi';
+import { t } from '@/stores/language';
 
 export default function CopyButton({ timeout = 2000, successText, copyText, className, DefaultIcon = BiCopy, HoverIcon = BiSolidCopy, children }) {
   const [copied, setCopied] = useState(false);
   const copyTimeoutRef = useRef(null);
 
   const handleCopy = () => {
-    if ('clipboard' in navigator === false) return toast.error('Your browser does not support the clipboard API.');
+    if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
 
     navigator.clipboard.writeText(copyText);
     toast.success(successText);

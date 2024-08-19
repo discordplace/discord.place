@@ -15,9 +15,11 @@ import createProfile from '@/lib/request/profiles/createProfile';
 import { useShallow } from 'zustand/react/shallow';
 import useGeneralStore from '@/stores/general';
 import { useRouter } from 'next-nprogress-bar';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function MyAccount() {
   const user = useAuthStore(state => state.user);
+  const language = useLanguageStore(state => state.language);
   const router = useRouter();
 
   const [plans, setPlans] = useState([]);
@@ -49,12 +51,12 @@ export default function MyAccount() {
     disableButton('create-profile', 'create'); 
   
     toast.promise(createProfile(slug, preferredHost), {
-      loading: 'Creating profile..',
+      loading: t('accountPage.tabs.myAccount.toast.creatingProfile'),
       success: () => {
         closeModal('create-profile');
         router.push(`/profile/${slug}`);
 
-        return 'Profile created successfully! Redirecting to your profile..';
+        return t('accountPage.tabs.myAccount.toast.profileCreated');
       },
       error: error => {
         enableButton('create-profile', 'create');
@@ -69,13 +71,13 @@ export default function MyAccount() {
       buttons: [
         {
           id: 'cancel',
-          label: 'Cancel',
+          label: t('buttons.cancel'),
           variant: 'ghost',
           actionType: 'close'
         },
         {
           id: 'create',
-          label: 'Create',
+          label: t('buttons.create'),
           variant: 'solid',
           action: () => {
             const newSlug = useGeneralStore.getState().createProfileModal.slug;
@@ -94,21 +96,21 @@ export default function MyAccount() {
     <div className='flex flex-col px-6 mt-16 mb-8 lg:px-16 gap-y-6'>      
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
-          My Account
+          {t('accountPage.tabs.myAccount.title')}
         </h1>
 
         <p className='text-sm text-secondary'>
-          View your account details.
+          {t('accountPage.tabs.myAccount.description')}
         </p>
       </div>
 
       <div className='flex flex-col mt-8 gap-y-2'>
         <h2 className='text-sm font-bold text-secondary'>
-          Connected Account
+          {t('accountPage.tabs.myAccount.sections.connectedAccount.title')}
         </h2>
 
         <p className='text-sm text-tertiary'>
-          You can see your Discord account details here.
+          {t('accountPage.tabs.myAccount.sections.connectedAccount.subtitle')}
         </p>
 
         <div className='flex max-w-[500px] flex-col w-full p-2 mt-2 h-max rounded-3xl bg-secondary'>
@@ -141,17 +143,26 @@ export default function MyAccount() {
 
           <div className='mx-auto flex flex-col w-[98%] p-4 mb-1.5 mt-4 bg-tertiary h-max rounded-2xl gap-y-4'>
             <div className='flex flex-col'>
-              <h3 className='text-sm font-bold text-primary'>Display Name</h3>
+              <h3 className='text-sm font-bold text-primary'>
+                {t('accountPage.tabs.myAccount.sections.connectedAccount.fields.displayName')}
+              </h3>
+
               <p className='text-sm font-medium text-tertiary'>{user?.global_name}</p>
             </div>
 
             <div className='flex flex-col'>
-              <h3 className='text-sm font-bold text-primary'>Username</h3>
+              <h3 className='text-sm font-bold text-primary'>
+                {t('accountPage.tabs.myAccount.sections.connectedAccount.fields.username')}
+              </h3>
+
               <p className='text-sm font-medium text-tertiary'>@{user?.username}</p>
             </div>
 
             <div className='flex flex-col'>
-              <h3 className='text-sm font-bold text-primary'>User ID</h3>
+              <h3 className='text-sm font-bold text-primary'>
+                {t('accountPage.tabs.myAccount.sections.connectedAccount.fields.userId')}
+              </h3>
+
               <p className='text-sm font-medium text-tertiary'>{user?.id}</p>
             </div>
           </div>
@@ -170,19 +181,19 @@ export default function MyAccount() {
                     {plansLoading ? (
                       <>
                         <TbLoader className='animate-spin' />
-                        Plans loading..
+                        {t('accountPage.tabs.myAccount.sections.premium.plansLoading')}
                       </>
                     ) : (
-                      plans.find(plan => plan.id === user.premium.planId)?.name
+                      t(`accountPage.tabs.myAccount.sections.premium.plans.${plans.find(plan => plan.id === user.premium.planId)?.name}`)
                     )}
 
                     <span className='text-xs text-tertiary'>
-                      {new Date(user.premium.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      {new Date(user.premium.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
                     </span>
                   </h2>
 
                   <p className='mt-1.5 text-sm mobile:mt-0 text-tertiary'>
-                    Thank you for supporting us!
+                    {t('accountPage.tabs.myAccount.sections.premium.thanks')}
                   </p>
                 </div>
               </div>
@@ -192,26 +203,26 @@ export default function MyAccount() {
 
         <div className='flex flex-col mt-8 gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
-            Your Profile
+            {t('accountPage.tabs.myAccount.sections.yourProfile.title')}
           </h2>
 
           <div className='flex flex-col text-sm text-tertiary gap-y-4'>
 
             {user?.profile ? (
               <>
-                You have a profile! Click the button below to view it.
+                {t('accountPage.tabs.myAccount.sections.yourProfile.profileFound')}
 
                 <Link
                   className='px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
                   href={`/profile/${user.profile.slug}`}
                 >
-                  View Profile
+                  {t('buttons.viewProfile')}
                   <MdOutlineOpenInNew />
                 </Link>
               </>
             ) : (
               <>
-                You don{'\''}t have a profile yet. Maybe that{'\''}s sign to create one?
+                {t('accountPage.tabs.myAccount.sections.yourProfile.noProfile')}
 
                 <button
                   className='outline-none px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
@@ -223,13 +234,13 @@ export default function MyAccount() {
                       buttons: [
                         {
                           id: 'cancel',
-                          label: 'Cancel',
+                          label: t('buttons.cancel'),
                           variant: 'ghost',
                           actionType: 'close'
                         },
                         {
                           id: 'create',
-                          label: 'Create',
+                          label: t('buttons.create'),
                           variant: 'solid',
                           action: continueCreateProfile
                         }
@@ -237,7 +248,7 @@ export default function MyAccount() {
                     })
                   }
                 >
-                  Create Profile
+                  {t('buttons.createProfile')}
                   <MdOutlineOpenInNew />
                 </button>
               </>

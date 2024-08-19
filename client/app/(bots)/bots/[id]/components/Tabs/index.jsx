@@ -1,20 +1,23 @@
+'use client';
+
 import cn from '@/lib/cn';
 import { useState } from 'react';
 import TopVoters from '@/app/(bots)/bots/[id]/components/Tabs/TopVoters';
 import Reviews from '@/app/(bots)/bots/[id]/components/Tabs/Reviews';
 import { motion } from 'framer-motion';
 import { useMedia } from 'react-use';
+import { t } from '@/stores/language';
 
 export default function Tabs({ bot }) {
   const [activeTab, setActiveTab] = useState('reviews');
   const tabs = [
     {
-      label: 'Reviews',
+      label: t('botPage.tabs.labels.reviews'),
       id: 'reviews',
       component: <Reviews bot={bot} />
     },
     {
-      label: 'Top Voters',
+      label: t('botPage.tabs.labels.topVoters'),
       id: 'topVoters',
       component: <TopVoters bot={bot} />,
       disabled: bot.votes <= 0

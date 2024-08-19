@@ -15,6 +15,7 @@ import revalidateServer from '@/lib/revalidate/server';
 import { useRouter } from 'next-nprogress-bar';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
 
 export default function Content({ server }) {
   const [savingChanges, setSavingChanges] = useState(false);
@@ -107,13 +108,13 @@ export default function Content({ server }) {
     setSavingChanges(true);
 
     toast.promise(editServer(server.id, changedKeys), {
-      loading: 'Saving changes..',
+      loading: t('serverManagePage.toast.savingChanges'),
       success: () => {
         setSavingChanges(false);
         setChangedKeys([]);
         revalidateServer(server.id);
 
-        return 'Successfully saved changes!';
+        return t('serverManagePage.toast.savedChanges');
       },
       error: error => {
         setSavingChanges(false);
@@ -139,19 +140,19 @@ export default function Content({ server }) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
           
           openModal('confirm-exit', {
-            title: 'Discard Changes?',
-            description: 'Are you sure you want to discard your changes?',
-            content: <p className='text-sm text-tertiary'>Your changes will not be saved.</p>,
+            title: t('serverManagePage.discardChangesModal.title'),
+            description: t('serverManagePage.discardChangesModal.description'),
+            content: <p className='text-sm text-tertiary'>{t('serverManagePage.discardChangesModal.note')}</p>,
             buttons: [
               {
                 id: 'cancel',
-                label: 'Cancel',
+                label: t('buttons.cancel'),
                 variant: 'ghost',
                 actionType: 'close'
               },
               {
                 id: 'discard-changes',
-                label: 'Discard Changes',
+                label: t('buttons.discardChanges'),
                 variant: 'solid',
                 action: () => {
                   resetChanges();
@@ -186,7 +187,10 @@ export default function Content({ server }) {
                 esc to close
               </div>
             </h2>
-            <p className="text-tertiary">Manage your server and its settings.</p>
+            
+            <p className="text-tertiary">
+              Manage your server and its settings.
+            </p>
             
             <div className='flex items-center mt-2 font-medium gap-x-2 text-secondary'>
               <ServerIcon
@@ -207,7 +211,7 @@ export default function Content({ server }) {
               onClick={resetChanges}
               disabled={!changesMade || savingChanges}
             >
-              Cancel
+              {t('buttons.cancel')}
             </button>
 
             <button
@@ -216,7 +220,7 @@ export default function Content({ server }) {
               onClick={saveChanges}
             >
               {savingChanges ? <TbLoader size={18} className='animate-spin' /> : <MdSave size={18} />}
-              Save Changes
+              {t('buttons.saveChanges')}
             </button>
           </div>
         </div>

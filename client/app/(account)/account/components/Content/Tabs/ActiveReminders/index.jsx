@@ -7,9 +7,11 @@ import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function ActiveReminders() {
   const data = useAccountStore(state => state.data);
+  const language = useLanguageStore(state => state.language);
   
   const remindersCount = data.reminders?.length || 0;
   const voteRemindersCount = data.voteReminders?.length || 0;
@@ -18,11 +20,11 @@ export default function ActiveReminders() {
     <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
-          Active Reminders
+          {t('accountPage.tabs.activeReminders.title')}
         </h1>
 
         <p className='text-sm text-secondary'>
-          Here, you can see your active reminders.
+          {t('accountPage.tabs.activeReminders.subtitle')}
         </p>
       </div>
 
@@ -32,10 +34,10 @@ export default function ActiveReminders() {
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
-                It{'\''}s quiet in here...
+                {t('accountPage.tabs.activeReminders.emptyErrorState.title')}
               </div>
             }
-            message={'There are no active reminders.'}
+            message={t('accountPage.tabs.activeReminders.emptyErrorState.message')}
           />
         </div>
       ) : (
@@ -43,7 +45,7 @@ export default function ActiveReminders() {
           {remindersCount > 0 && (
             <div className='flex flex-col gap-y-4 max-w-[800px]'>
               <h2 className='text-sm font-bold text-secondary'>
-                Reminders
+                {t('accountPage.tabs.activeReminders.fields.reminders.title')}
 
                 <span className='ml-2 text-xs font-medium text-tertiary'>
                   {remindersCount}
@@ -60,7 +62,7 @@ export default function ActiveReminders() {
                     <div className='flex items-start w-full gap-x-4'>
                       <div className='flex flex-col items-start'>
                         <div className='text-base font-semibold text-primary'>
-                          About
+                          {t('accountPage.tabs.activeReminders.fields.reminders.about')}
                         </div>
 
                         <div className='text-xs font-medium text-tertiary max-w-[300px] break-words line-clamp-6'>
@@ -73,14 +75,15 @@ export default function ActiveReminders() {
                           <Countdown
                             date={new Date(reminder.expire_at).getTime()}
                             renderer={({ days, hours, minutes, seconds, completed }) => {
-                              if (completed) return 'Expired';
-                              return `${days} day${days > 1 ? 's' : ''} ${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+                              if (completed) return t('accountPage.tabs.activeReminders.countdown.expired');
+
+                              return t('accountPage.tabs.activeReminders.countdown.expiresIn', { days, hours, minutes, seconds });
                             }}
                           />
                         </div>
 
                         <div className='text-xs font-medium text-tertiary'>
-                          {new Date(reminder.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                          {new Date(reminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
                         </div>
                       </div>
                     </div>
@@ -93,7 +96,7 @@ export default function ActiveReminders() {
           {voteRemindersCount > 0 && (
             <div className='flex flex-col gap-y-4 max-w-[800px]'>
               <h2 className='text-sm font-bold text-secondary'>
-                Vote Reminders
+                {t('accountPage.tabs.activeReminders.fields.voteReminders.title')}
 
                 <span className='ml-2 text-xs font-medium text-tertiary'>
                   {voteRemindersCount}
@@ -142,14 +145,15 @@ export default function ActiveReminders() {
                         <Countdown
                           date={new Date(voteReminder.createdAt).getTime() + 86400000}
                           renderer={({ hours, minutes, seconds, completed }) => {
-                            if (completed) return 'Expired';
-                            return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+                            if (completed) return t('accountPage.tabs.activeReminders.countdown.expired');
+
+                            return t('accountPage.tabs.activeReminders.countdown.expiresInShort', { hours, minutes, seconds });
                           }}
                         />
                       </div>
   
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(voteReminder.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                        {new Date(voteReminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
                       </div>
                     </div>
                   </div>

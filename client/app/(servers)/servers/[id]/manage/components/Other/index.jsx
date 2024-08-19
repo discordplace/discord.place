@@ -9,6 +9,7 @@ import { FaCirclePlus } from 'react-icons/fa6';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { LuHash } from 'react-icons/lu';
 import { toast } from 'sonner';
+import { t } from '@/stores/language';
 
 export default function Other({ category, setCategory, keywords, setKeywords, voiceActivityEnabled, setVoiceActivityEnabled }) {
   const [value, setValue] = useState('');
@@ -17,11 +18,11 @@ export default function Other({ category, setCategory, keywords, setKeywords, vo
     <div className='flex flex-col w-full gap-y-4'>
       <h3 className='flex items-center text-xl font-semibold gap-x-4'>
         <FaCirclePlus size={24} className='text-purple-500' />
-        Other
+        {t('serverManagePage.other.title')}
       </h3>
 
       <p className='text-sm sm:text-base text-tertiary'>
-        Settings that you should not worry about too much.
+        {t('serverManagePage.other.subtitle')}
       </p>
 
       <div className='flex flex-col w-full gap-8 mt-4'>
@@ -29,11 +30,11 @@ export default function Other({ category, setCategory, keywords, setKeywords, vo
           <label
             className='font-medium text-secondary'
           >
-            Category
+            {t('serverManagePage.other.inputs.category.label')}
           </label>
 
           <p className='text-sm text-tertiary'>
-            Select the category that your server belongs to. This will help users find your server.
+            {t('serverManagePage.other.inputs.category.description')}
           </p>
 
           <div className='flex flex-wrap items-center gap-2 mt-2'>
@@ -48,30 +49,31 @@ export default function Other({ category, setCategory, keywords, setKeywords, vo
                 onClick={() => setCategory(serverCategory)}
               >
                 {category === serverCategory ? <IoMdCheckmarkCircle /> : config.serverCategoriesIcons[serverCategory]}
-                {serverCategory}
+                
+                {t(`categories.${serverCategory}`)}
               </button>
             ))}
           </div>
         </div>
 
         <Input
-          label='Keywords'
-          description='Add keywords to your server. This will help people find your server on discord.place. Separate each keyword with a comma.'
-          placeholder='e.g. fun, gaming, community'
+          label={t('serverManagePage.other.inputs.keywords.label')}
+          description={t('serverManagePage.other.inputs.keywords.description')}
+          placeholder={t('serverManagePage.other.inputs.keywords.placeholder')}
           value={value}
           onChange={event => {
             if (event.target.value.includes(',')) {
               const validatedValue = value.replace(',', '').trim();
-              if (validatedValue.length === 0) return toast.error('Please enter a valid keyword.');
-              if (keywords.includes(validatedValue)) return toast.error('This keyword already exists.');
+              if (validatedValue.length === 0) return toast.error(t('serverManagePage.other.toast.notValidKeyword'));
+              if (keywords.includes(validatedValue)) return toast.error(t('serverManagePage.other.toast.keywordExists'));
               
               const regexp = new RegExp(/[^a-zA-Z0-9-]/g);
-              if (regexp.test(validatedValue)) return toast.error('Keywords can only contain letters, numbers, and hyphens.');
+              if (regexp.test(validatedValue)) return toast.error(t('serverManagePage.other.toast.keywordHasInvalidCharacters'));
 
               setKeywords([...keywords, validatedValue]);
               setValue('');
             } else {
-              if (event.target.value.trim().length > config.serverKeywordsMaxCharacters) return toast.error(`Keywords can only be ${config.serverKeywordsMaxCharacters} characters long.`);
+              if (event.target.value.trim().length > config.serverKeywordsMaxCharacters) return toast.error(t('serverManagePage.other.toast.keywordTooLong', { maxLength: config.serverKeywordsMaxCharacters }));
 
               setValue(event.target.value);
             }
@@ -82,11 +84,11 @@ export default function Other({ category, setCategory, keywords, setKeywords, vo
               
               const trimmedValue = event.target.value.trim();
 
-              if (trimmedValue.length === 0) return toast.error('Please enter a valid keyword.');
-              if (keywords.includes(trimmedValue)) return toast.error('This keyword already exists.');
+              if (trimmedValue.length === 0) return toast.error(t('serverManagePage.other.toast.notValidKeyword'));
+              if (keywords.includes(trimmedValue)) return toast.error(t('serverManagePage.other.toast.keywordExists'));
 
               const regexp = new RegExp(/[^a-zA-Z0-9-]/g);
-              if (regexp.test(trimmedValue)) return toast.error('Keywords can only contain letters, numbers, and hyphens.');
+              if (regexp.test(trimmedValue)) return toast.error(t('serverManagePage.other.toast.keywordHasInvalidCharacters'));
 
               setKeywords([...keywords, trimmedValue]);
               setValue('');
@@ -97,13 +99,13 @@ export default function Other({ category, setCategory, keywords, setKeywords, vo
 
         {keywords.length > 0 && (
           <Input
-            label='Added Keywords'
+            label={t('serverManagePage.other.addedKeywords.label')}
             customLabelPeer={
               <span className='text-xs font-semibold text-tertiary'>
-                {keywords.length} {keywords.length >= config.serverKeywordsMaxLength && ' (max)'}
+                {keywords.length} {keywords.length >= config.serverKeywordsMaxLength && t('serverManagePage.other.addedKeywords.max')}
               </span>
             }
-            description='Keywords that you have added so far. Click on a keyword to remove it.'
+            description={t('serverManagePage.other.addedKeywords.description')}
             value={keywords.join(', ')}
             disabled
             CustomInput={
@@ -124,8 +126,8 @@ export default function Other({ category, setCategory, keywords, setKeywords, vo
         )}
 
         <Input
-          label='Voice Activity'
-          description='Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active your server is.'
+          label={t('serverManagePage.other.inputs.voiceActivity.label')}
+          description={t('serverManagePage.other.inputs.voiceActivity.description')}
           CustomInput={
             <div 
               className='flex items-center mt-4 cursor-pointer w-max gap-x-2 group'
@@ -136,7 +138,7 @@ export default function Other({ category, setCategory, keywords, setKeywords, vo
               </button>
 
               <span className='text-sm font-medium select-none text-tertiary'>
-                Enable Tracking
+                {t('buttons.enableTracking')}
               </span>
             </div>
           }

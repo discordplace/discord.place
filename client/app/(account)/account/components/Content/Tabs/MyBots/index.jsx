@@ -11,6 +11,7 @@ import config from '@/config';
 import Countdown from '@/app/components/Countdown';
 import cn from '@/lib/cn';
 import { FaCircleExclamation } from 'react-icons/fa6';
+import { t } from '@/stores/language';
 
 export default function MyBots() {
   const data = useAccountStore(state => state.data);
@@ -27,17 +28,17 @@ export default function MyBots() {
       <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
         <div className='flex flex-col gap-y-2'>
           <h1 className='text-xl font-bold text-primary'>
-            My Bots
+            {t('accountPage.tabs.myBots.title')}
           </h1>
 
           <p className='text-sm text-secondary'>
-            View or manage the bot that you have listed on discord.place. You can also submit a new bot to discord.place.
+            {t('accountPage.tabs.myBots.description')}
           </p>
         </div>
 
         <div className='flex flex-col mt-8 gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
-            Listed Bots
+            {t('accountPage.tabs.myBots.sections.listedBots.title')}
 
             <span className='ml-2 text-xs font-medium text-tertiary'>
               {data.bots?.length || 0}
@@ -45,7 +46,7 @@ export default function MyBots() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            Here, you can see the bots that you have listed on discord.place.
+            {t('accountPage.tabs.myBots.sections.listedBots.description')}
           </p>
 
           {(data.bots || []).length === 0 ? (
@@ -54,10 +55,10 @@ export default function MyBots() {
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
-                    It{'\''}s quiet in here...
+                    {t('accountPage.tabs.myBots.sections.listedBots.emptyErrorState.title')}
                   </div>
                 }
-                message={'You have not listed any bots on discord.place.'}
+                message={t('accountPage.tabs.myBots.sections.listedBots.emptyErrorState.message')}
               />
             </div>
           ) : (
@@ -95,20 +96,22 @@ export default function MyBots() {
 
         <div className='flex flex-col mt-8 gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
-            New Bot
+            {t('accountPage.tabs.myBots.sections.newBot.title')}
           </h2>
 
           <p className='text-sm text-tertiary'>
-            Submit a new bot to discord.place.
+            {t('accountPage.tabs.myBots.sections.newBot.description')}
           </p>
 
           <div className='mt-2 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>
             <h2 className='flex items-center text-lg font-semibold gap-x-2'>
-              <BsQuestionCircleFill /> Note
+              <BsQuestionCircleFill /> {t('accountPage.tabs.myBots.sections.newBot.note.title')}
             </h2>
 
             <p className='text-sm font-medium text-tertiary'>
-              Your submitted bot will be reviewed by our team before it is listed on discord.place. Please make sure that your bot is not violating our bot submission guidelines. Our bot submission guidelines can be found in our <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>Discord server</Link>.
+              {t('accountPage.tabs.myBots.sections.newBot.note.description', {
+                link: <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>{t('accountPage.tabs.myBots.sections.newBot.note.linkText')}</Link>
+              })}
             </p>
           </div>
 
@@ -117,7 +120,7 @@ export default function MyBots() {
               className='px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
               onClick={() => setCurrentlyAddingBot(true)}
             >
-              Let{'\''}s go!
+              {t('buttons.letsGo')}
               <LuPlus />
             </button>
           </div>
@@ -125,11 +128,11 @@ export default function MyBots() {
 
         <div className='flex flex-col mt-8 gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
-            Past Denials
+            {t('accountPage.tabs.myBots.sections.pastDenials.title')}
           </h2>
 
           <p className='text-sm text-tertiary'>
-            View the bots that you have submitted to discord.place but were denied. (last 7 days)
+            {t('accountPage.tabs.myBots.sections.pastDenials.description')}
           </p>
         
           <div className={cn(
@@ -141,10 +144,10 @@ export default function MyBots() {
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
-                    It{'\''}s quiet in here...
+                    {t('accountPage.tabs.myBots.sections.pastDenials.emptyErrorState.title')}
                   </div>
                 }
-                message={'You have not submitted any bots to discord.place that were denied.'}
+                message={t('accountPage.tabs.myBots.sections.pastDenials.emptyErrorState.message')}
               />
             ) : (
               data.denies.map(deny => (
@@ -164,19 +167,21 @@ export default function MyBots() {
                     {deny.bot.username}#{deny.bot.discriminator}
                   </h2>
   
-                  <p className='flex flex-wrap text-sm font-medium text-tertiary gap-x-1'>
-                    The bot was denied by
-                    <Image
-                      src={deny.reviewer.avatar_url}
-                      alt={`${deny.reviewer.username}'s avatar`}
-                      width={20}
-                      height={20}
-                      className='rounded-full'
-                    />
-                    <span className='text-secondary'>
-                      @{deny.reviewer.username}
-                    </span>
-                  </p>
+                  {t('accountPage.tabs.myBots.sections.pastDenials.deniedBy', {
+                    moderator: <div className='flex flex-wrap text-sm font-medium text-tertiary gap-x-1'>
+                      <Image
+                        src={deny.reviewer.avatar_url}
+                        alt={`${deny.reviewer.username}'s avatar`}
+                        width={20}
+                        height={20}
+                        className='rounded-full'
+                      />
+
+                      <span className='text-secondary'>
+                        @{deny.reviewer.username}
+                      </span>
+                    </div>
+                  })}
 
                   <div className='flex flex-col gap-y-1'>
                     <h3 className='text-lg font-semibold text-secondary'>
@@ -191,16 +196,19 @@ export default function MyBots() {
                   <div className='mt-2 text-xs text-tertiary'>
                     {new Date(deny.createdAt).getTime() + 21600000 > Date.now() ? (
                       <span>
-                        This denial will expire in <Countdown date={new Date(deny.createdAt).getTime() + 21600000} renderer={({ hours, minutes, seconds, completed }) => {
-                          if (completed) return 'now';
-                          return `${hours} hours ${minutes} minutes ${seconds} seconds.`;
-                        }} /> You can{'\''}t add the bot again until then.
+                        {t('accountPage.tabs.myBots.sections.pastDenials.expiresIn', {
+                          countdown: (
+                            <Countdown 
+                              date={new Date(deny.createdAt).getTime() + 21600000} 
+                              renderer={({ hours, minutes, seconds, completed }) => {
+                                if (completed) return t('accountPage.tabs.myBots.sections.pastDenials.countdown.completed');
+                                return t('accountPage.tabs.myBots.sections.pastDenials.countdown.renderer', { hours, minutes, seconds });
+                              }}
+                            />
+                          )
+                        })}
                       </span>
-                    ) : (
-                      <>
-                        You can add the bot again now.
-                      </>
-                    )}
+                    ) : t('accountPage.tabs.myBots.sections.pastDenials.expired')}
                   </div>
                 </div>
               ))

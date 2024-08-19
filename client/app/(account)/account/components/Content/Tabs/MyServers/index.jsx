@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
 import UnlistedCard from '@/app/(account)/account/components/Content/Tabs/MyServers/UnlistedCard';
 import NewServer from '@/app/(account)/account/components/Content/Tabs/MyServers/NewServer';
+import { t } from '@/stores/language';
 
 export default function MyServers() {
   const data = useAccountStore(state => state.data);
@@ -22,17 +23,17 @@ export default function MyServers() {
       <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
         <div className='flex flex-col gap-y-2'>
           <h1 className='text-xl font-bold text-primary'>
-            My Servers
+            {t('accountPage.tabs.myServers.title')}
           </h1>
 
           <p className='text-sm text-secondary'>
-            View or manage the servers that you have listed on discord.place.
+            {t('accountPage.tabs.myServers.description')}
           </p>
         </div>
 
         <div className='flex flex-col mt-8 gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
-            Listed Servers
+            {t('accountPage.tabs.myServers.sections.listedServers.title')}
 
             <span className='ml-2 text-xs font-medium text-tertiary'>
               {(data.servers || []).filter(server => server.is_created === true).length}
@@ -40,7 +41,7 @@ export default function MyServers() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            Here, you can see the servers that you have listed on discord.place.
+            {t('accountPage.tabs.myServers.sections.listedServers.description')}
           </p>
 
           {(data.servers || []).length === 0 ? (
@@ -49,10 +50,10 @@ export default function MyServers() {
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
-                    It{'\''}s quiet in here...
+                    {t('accountPage.tabs.myServers.sections.listedServers.emptyErrorState.title')}
                   </div>
                 }
-                message={'You have not listed any servers on discord.place.'}
+                message={t('accountPage.tabs.myServers.sections.listedServers.emptyErrorState.message')}
               />
             </div>
           ) : (
@@ -81,7 +82,7 @@ export default function MyServers() {
                       </h3>
 
                       <p className='text-xs text-tertiary'>
-                        {server.members} members
+                        {t('accountPage.tabs.myServers.sections.listedServers.members', { count: server.members })}
                       </p>
                     </div>
                   </Link>
@@ -92,7 +93,7 @@ export default function MyServers() {
 
         <div className='flex flex-col mt-8 gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
-            Unlisted Servers
+            {t('accountPage.tabs.myServers.sections.unlistedServers.title')}
 
             <span className='ml-2 text-xs font-medium text-tertiary'>
               {(data.servers || []).filter(server => server.is_created === false).length}
@@ -100,16 +101,19 @@ export default function MyServers() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            Here, you can see the servers that you have not listed on discord.place.
+            {t('accountPage.tabs.myServers.sections.unlistedServers.description')}
           </p>
 
           <div className='mt-4 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>
             <h2 className='flex items-center text-lg font-semibold gap-x-2'>
-              <BsQuestionCircleFill /> Can{'\''}t see your server?
+              <BsQuestionCircleFill /> {t('accountPage.tabs.myServers.sections.unlistedServers.missingServerInfo.title')}
             </h2>
 
             <p className='text-sm font-medium text-tertiary'>
-              You can only add servers that you own. If you can{'\''}t see your server, make sure you{'\''}re the owner of the server.<br/>If you still can{'\''}t see your server, make sure <Link className='text-secondary hover:text-primary' href={config.botInviteURL} target='_blank'>discord.place bot</Link> is in your server.
+              {t('accountPage.tabs.myServers.sections.unlistedServers.missingServerInfo.description', {
+                br: <br />,
+                link: <Link className='text-secondary hover:text-primary' href={config.botInviteURL} target='_blank'>{t('accountPage.tabs.myServers.sections.unlistedServers.missingServerInfo.linkText')}</Link>
+              })}
             </p>
           </div>
 
@@ -119,10 +123,10 @@ export default function MyServers() {
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
-                    It{'\''}s quiet in here...
+                    {t('accountPage.tabs.myServers.sections.unlistedServers.emptyErrorState.title')}
                   </div>
                 }
-                message={'There are no servers unlisted on discord.place.'}
+                message={t('accountPage.tabs.myServers.sections.unlistedServers.emptyErrorState.message')}
               />
             </div>
           ) : (

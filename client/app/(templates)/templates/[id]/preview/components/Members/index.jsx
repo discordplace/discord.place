@@ -4,6 +4,7 @@ import Tooltip from '@/app/components/Tooltip';
 import { toast } from 'sonner';
 import { FaDiscord } from 'react-icons/fa';
 import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 
 export default function Members({ template, isMobile, currentlyOpenedSection }) {
   function getRandomBrandColor() {
@@ -22,23 +23,23 @@ export default function Members({ template, isMobile, currentlyOpenedSection }) 
             <span className='truncate max-w-[180px]'>{role.name}</span> — 1
 
             <span className='lg:hidden block text-[#949ba480] font-medium normal-case text-xs'>
-              Click to copy color
+              {t('templatePreviewPage.clickToCopyColor')}
             </span>
           </h2>
 
           <div className='flex flex-col mt-2 gap-y-0.5'>
             <Tooltip
-              content='Click to copy the role color.'
+              content={t('templatePreviewPage.tooltip.clickToCopyColor')}
               side={'left'}
               hide={isMobile}
             >
               <div
                 className='select-none -ml-2 cursor-pointer flex items-center gap-x-2 group hover:bg-[#35373c] px-1.5 py-1 rounded-md'
                 onClick={() => {
-                  if ('clipboard' in navigator === false) return toast.error('Your browser does not support the clipboard API.');
+                  if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
 
                   navigator.clipboard.writeText(role.color);
-                  toast.success('Role color copied to clipboard.');
+                  toast.success(t('templatePreviewPage.toast.roleColorCopied'));
                 }}
               >
                 <div className='w-[32px] h-[32px] rounded-full flex items-center justify-center relative' style={{ backgroundColor: getRandomBrandColor() }}>

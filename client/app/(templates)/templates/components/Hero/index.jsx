@@ -10,6 +10,7 @@ import useSearchStore from '@/stores/templates/search';
 import { useShallow } from 'zustand/react/shallow';
 import config from '@/config';
 import Select from '@/app/components/Select';
+import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -48,16 +49,16 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...sequenceTransition, delay: 0.1 }}
         >
-          Discover the templates
+          {t('templatesPage.title')}
         </motion.h1>
         
         <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
-          Explore most popular templates and find the perfect one for your Discord server!<br/>Don{'\''}t waste your time to create your own server, just use one of the templates!
+          {t('templatesPage.subtitle', { br: <br /> })}
         </motion.span>
 
         <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
           <SearchInput
-            placeholder='Search for a template by name, description, etc.'
+            placeholder={t('templatesPage.searchInputPlaceholder')}
             loading={loading}
             search={search}
             fetchData={fetchTemplates}
@@ -72,7 +73,7 @@ export default function Hero() {
             transition={{ ...sequenceTransition, delay: 0.3 }}
           >
             <Select
-              placeholder='Category'
+              placeholder={t('templatesPage.categorySelectPlaceholder')}
               options={
                 config.templateCategories.map(category => ({
                   label: <div className='flex items-center gap-x-2'>
@@ -80,7 +81,7 @@ export default function Hero() {
                       {config.templateCategoriesIcons[category]}
                     </span>
 
-                    {category}
+                    {t(`categories.${category}`)}
                   </div>,
                   value: category
                 }))
@@ -90,19 +91,19 @@ export default function Hero() {
             />
 
             <Select
-              placeholder='Sorting'
+              placeholder={t('templatesPage.sortSelect.placeholder')}
               options={[
                 ...[
                   {
-                    label: 'Popular',
+                    label: t('templatesPage.sortSelect.items.popular'),
                     value: 'Popular'
                   },
                   {
-                    label: 'Newest',
+                    label: t('templatesPage.sortSelect.items.newest'),
                     value: 'Newest'
                   },
                   {
-                    label: 'Oldest',
+                    label: t('templatesPage.sortSelect.items.oldest'),
                     value: 'Oldest'
                   }
                 ].map(option => ({

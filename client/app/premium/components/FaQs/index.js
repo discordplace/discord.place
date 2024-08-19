@@ -5,29 +5,30 @@ import { useState } from 'react';
 import { MdChevronLeft } from 'react-icons/md';
 import AnimateHeight from 'react-animate-height';
 import { motion } from 'framer-motion';
+import { t } from '@/stores/language';
 
 export default function FaQs() {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: 'What is a Premium Membership?',
-      content: 'Premium Membership is a subscription-based service that allows you to access exclusive features and content on our platform.'
+      label: t('premiumPage.frequentlyAskedQuestions.items.0.label'),
+      content: t('premiumPage.frequentlyAskedQuestions.items.0.content')
     },
     {
-      label: 'What is the cost of Premium Membership?',
-      content: 'The cost of Premium Membership is $3.00 per month. We also offer a discounted annual subscription for $25.00 per year (save $11.00) and a lifetime subscription for $60.00.'
+      label: t('premiumPage.frequentlyAskedQuestions.items.1.label'),
+      content: t('premiumPage.frequentlyAskedQuestions.items.1.content')
     },
     {
-      label: 'How can I subscribe to Premium Membership?',
-      content: 'You can subscribe to Premium Membership by clicking on the "Create Checkout" button on this page. You will be redirected to the checkout page where you can complete the payment process. Once the payment is successful, you will be automatically subscribed to Premium Membership.'
+      label: t('premiumPage.frequentlyAskedQuestions.items.2.label'),
+      content: t('premiumPage.frequentlyAskedQuestions.items.2.content')
     },
     {
-      label: 'Can I request a refund for Premium Membership?',
-      content: 'We do not offer refunds for Premium Membership. However, you can cancel your subscription at any time, and you will not be charged for the next billing cycle.'
+      label: t('premiumPage.frequentlyAskedQuestions.items.3.label'),
+      content: t('premiumPage.frequentlyAskedQuestions.items.3.content')
     },
     {
-      label: 'Can I transfer my Premium Membership to another account?',
-      content: 'No, Premium Membership is non-transferable.'
+      label: t('premiumPage.frequentlyAskedQuestions.items.4.label'),
+      content: t('premiumPage.frequentlyAskedQuestions.items.4.content')
     }
   ];
 

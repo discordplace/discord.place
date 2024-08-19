@@ -24,14 +24,23 @@ const config = {
     {
       name: 'English',
       code: 'en',
+      dateFnsKey: 'enUS',
       flag: '🇺🇸',
       default: true
     },
-    {
-      name: 'Turkish',
-      code: 'tr',
-      flag: '🇹🇷'
-    }
+    // TODO: Turkish and Azerbaijani translations
+    // {
+    //   name: 'Turkish',
+    //   code: 'tr',
+    //   dateFnsKey: 'tr',
+    //   flag: '🇹🇷'
+    // },
+    // {
+    //   name: 'Azerbaijani',
+    //   code: 'az',
+    //   dateFnsKey: 'az',
+    //   flag: '🇦🇿'
+    // }
   ],
   showStandoutProductAds: true,
   supportInviteUrl: 'https://invite.discord.place',
@@ -55,31 +64,37 @@ const config = {
   },
   headerLinks: [
     {
+      id: 'profiles',
       title: 'Profiles',
       href: '/profiles',
       icon: CgProfile
     },
     {
+      id: 'servers',
       title: 'Servers',
       href: '/servers',
       icon: FaCompass
     },
     {
+      id: 'bots',
       title: 'Bots',
       href: '/bots',
       icon: RiRobot2Fill
     },
     {
+      id: 'emojis',
       title: 'Emojis',
       href: '/emojis',
       icon: MdEmojiEmotions
     },
     {
+      id: 'templates',
       title: 'Templates',
       href: '/templates',
       icon: HiTemplate
     },
     {
+      id: 'sounds',
       title: 'Sounds',
       href: '/sounds',
       icon: PiWaveformBold

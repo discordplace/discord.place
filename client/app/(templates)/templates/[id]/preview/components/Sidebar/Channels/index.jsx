@@ -13,6 +13,7 @@ import VoiceChannelNSFWIcon from '@/app/(templates)/templates/[id]/preview/compo
 import cn from '@/lib/cn';
 import { IoChevronDown } from 'react-icons/io5';
 import { useState } from 'react';
+import { t } from '@/stores/language';
 
 export default function Channels({ data, focusedChannel, setFocusedChannel, currentlyOpenedSection, isMobile }) {
   const [collapsedCategories, setCollapsedCategories] = useState([]);
@@ -47,17 +48,17 @@ export default function Channels({ data, focusedChannel, setFocusedChannel, curr
       <div className='flex flex-col items-center px-2.5 mt-4 gap-y-0.5'>
         <div className='flex select-none cursor-pointer text-[#949ba4] hover:text-[#dbdee1] items-center w-full gap-x-1.5 rounded-md font-medium text-sm hover:bg-[#35373c] py-[6px] px-[8px]'>
           <HomeIcon className='min-w-5 min-h-5 w-5 h-5 text-[#80848e]' />
-          Home
+          {t('templatePreviewPage.channels.home')}
         </div>
 
         <div className='flex select-none cursor-pointer text-[#949ba4] hover:text-[#dbdee1] items-center w-full gap-x-1.5 rounded-md font-medium text-sm hover:bg-[#35373c] py-[6px] px-[8px]'>
           <EventsIcon className='min-w-5 min-h-5 w-5 h-5 text-[#80848e]' />
-          Events
+          {t('templatePreviewPage.channels.events')}
         </div>
 
         <div className='flex select-none cursor-pointer text-[#949ba4] hover:text-[#dbdee1] items-center w-full gap-x-1.5 rounded-md font-medium text-sm hover:bg-[#35373c] py-[6px] px-[8px]'>
           <BrowseChannelsIcon className='min-w-5 min-h-5 w-5 h-5 text-[#80848e]' />
-          Browse Channels
+          {t('templatePreviewPage.channels.browseChannels')}
         </div>
 
         <div className='w-full h-[1px] mt-[10.5px] bg-[#3b3d44]' />

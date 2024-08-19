@@ -13,7 +13,7 @@ import useGeneralStore from '@/stores/general';
 import { MdSunny } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import { IoIosMoon } from 'react-icons/io';
-import useLanguageStore from '@/stores/language';
+import useLanguageStore, { t } from '@/stores/language';
 import Twemoji from 'react-twemoji';
 
 export default function Footer() {
@@ -33,82 +33,82 @@ export default function Footer() {
 
   const blocks = [
     {
-      title: 'Pages',
+      title: t('footer.blocks.0.title'), // Pages
       links: [
         {
-          label: 'Home',
+          label: t('footer.blocks.0.links.0'),
           href: '/'
         },
         {
-          label: 'API Documentation',
+          label: t('footer.blocks.0.links.1'),
           href: config.docsUrl
         },
         {
-          label: 'Service Status',
+          label: t('footer.blocks.0.links.2'),
           href: config.instatus.baseUrl
         },
         {
-          label: 'Premium',
+          label: t('footer.blocks.0.links.3'),
           href: '/premium'
         }
       ]
     },
     {
-      title: 'Our Services',
+      title: t('footer.blocks.1.title'), // Our Services
       links: [
         {
-          label: 'Profiles',
+          label: t('footer.blocks.1.links.0'),
           href: '/profiles'
         },
         {
-          label: 'Servers',
+          label: t('footer.blocks.1.links.1'),
           href: '/servers'
         },
         {
-          label: 'Bots',
+          label: t('footer.blocks.1.links.2'),
           href: '/bots'
         },
         {
-          label: 'Emojis',
+          label: t('footer.blocks.1.links.3'),
           href: '/emojis'
         },
         {
-          label: 'Templates',
+          label: t('footer.blocks.1.links.4'),
           href: '/templates'
         },
         {
-          label: 'Sounds',
+          label: t('footer.blocks.1.links.5'),
           href: '/sounds'
         }
       ]
     },
     {
-      title: 'Legal',
+      title: t('footer.blocks.2.title'), // Legal
       links: [
         {
-          label: 'Privacy Policy',
+          label: t('footer.blocks.2.links.0'),
           href: '/legal/privacy'
         },
         {
-          label: 'Terms of Service',
+          label: t('footer.blocks.2.links.1'),
           href: '/legal/terms'
         },
         {
-          label: 'Cookie Policy',
+          label: t('footer.blocks.2.links.2'),
           href: '/legal/cookie-policy'
         },
         {
-          label: 'Content Policy',
+          label: t('footer.blocks.2.links.3'),
           href: '/legal/content-policy'
         },
         {
-          label: 'Purchase Policy',
+          label: t('footer.blocks.2.links.4'),
           href: '/legal/purchase-policy'
         }
       ]
     },
     {
-      title: 'Socials',
+      title: t('footer.blocks.3.title'), // Social
       links: [
         {
           label: 'X',
@@ -137,12 +137,8 @@ export default function Footer() {
   ];
 
   function StatusButton({ status }) {
-
-    const statusText = status === 'UP' ?
-      'All systems operational' : 
-      status === 'HASISSUES' ? 
-        'Partial outage' :
-        'Major outage';
+    const statusTextIndex = status === 'UP' ? 0 : status === 'HASISSUES' ? 1 : 2;
+    const statusText = t(`footer.statusText.${statusTextIndex}`);
 
     return (
       <Link
@@ -184,7 +180,7 @@ export default function Footer() {
         />
 
         <h2 className='text-2xl font-bold text-primary max-w-[350px]'>
-          All things related to Discord in one place.
+          {t('footer.title')}
         </h2>
 
         <span className='text-sm text-secondary'>
@@ -226,7 +222,7 @@ export default function Footer() {
 
       <div className='flex flex-col items-center justify-between w-full gap-4 -mt-8 sm:flex-row'>
         <p className='text-sm text-tertiary'>
-          &copy; {new Date().getFullYear()} discord.place. All rights reserved.
+          &copy; {t('footer.copyRight', { year: new Date().getFullYear() })}
         </p>
 
         <div className='flex flex-col items-center mt-4 sm:items-end gap-y-2'>
@@ -240,7 +236,7 @@ export default function Footer() {
             >
               <span className='relative z-10 flex items-center gap-x-1.5'>
                 <MdSunny size={16} />
-                Light
+                {t('footer.theme.light')}
               </span>
 
               {theme === 'light' && (
@@ -260,7 +256,7 @@ export default function Footer() {
             >
               <span className='flex items-center gap-x-1.5 z-10 relative'>
                 <IoIosMoon size={16} />
-                Dark
+                {t('footer.theme.dark')}
               </span>
 
               {theme === 'dark' && (
@@ -297,7 +293,7 @@ export default function Footer() {
                     {locale.flag}
                   </Twemoji>
                   
-                  {locale.code.toUpperCase()}
+                  {t(`footer.language.${locale.code}`)}
                 </span>
 
                 {locale.code === language && (

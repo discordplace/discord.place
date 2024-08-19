@@ -8,6 +8,7 @@ import { BsEmojiAngry } from 'react-icons/bs';
 import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence } from 'framer-motion';
+import { t } from '@/stores/language';
 
 export default function SearchResults() {
   const { loading, templates, fetchTemplates, total: totalTemplates, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
@@ -56,16 +57,16 @@ export default function SearchResults() {
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
-                It{'\''}s quiet in here...
+                {t('templatesPage.emptyErrorState.title')}
               </div>
             }
-            message={'There are no templates to display. Maybe that\'s a sign to create one?'}
+            message={t('templatesPage.emptyErrorState.message')}
           />
 
           <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
             fetchTemplates('', 1, limit, 'All', 'Popular');
           }}>
-            Reset Search
+            {t('buttons.resetSearch')}
           </button>
         </motion.div>
       </AnimatePresence>

@@ -2,6 +2,7 @@
 
 import useGeneralStore from '@/stores/general';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
 
 export default function CreateLinkModal() {
   const { name, setName, destinationURL, setDestinationURL } = useGeneralStore(useShallow(state => ({
@@ -14,12 +15,17 @@ export default function CreateLinkModal() {
   return (
     <div className='flex flex-col gap-y-4'>
       <div className='flex flex-col'>
-        <h2 className='text-sm font-semibold text-secondary'>Name</h2>
-        <p className='text-xs text-tertiary'>The name of the link.</p>
+        <h2 className='text-sm font-semibold text-secondary'>
+          {t('accountPage.tabs.myLinks.createLinkModal.inputs.name.label')}
+        </h2>
+
+        <p className='text-xs text-tertiary'>
+          {t('accountPage.tabs.myLinks.createLinkModal.inputs.name.description')}
+        </p>
             
         <input
           type="text"
-          placeholder={'example'}
+          placeholder={t('accountPage.tabs.myLinks.createLinkModal.inputs.name.placeholder')}
           className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
           value={name}
           onChange={event => setName(event.target.value)}
@@ -27,12 +33,17 @@ export default function CreateLinkModal() {
       </div>
 
       <div className='flex flex-col'>
-        <h2 className='text-sm font-semibold text-secondary'>Destination URL</h2>
-        <p className='text-xs text-tertiary'>The URL that the link will redirect to.</p>
+        <h2 className='text-sm font-semibold text-secondary'>
+          {t('accountPage.tabs.myLinks.createLinkModal.inputs.destinationUrl.label')}
+        </h2>
+
+        <p className='text-xs text-tertiary'>
+          {t('accountPage.tabs.myLinks.createLinkModal.inputs.destinationUrl.description')}
+        </p>
             
         <input
           type="text"
-          placeholder={'https://example.com'}
+          placeholder={t('accountPage.tabs.myLinks.createLinkModal.inputs.destinationUrl.placeholder')}
           className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
           value={destinationURL}
           onChange={event => setDestinationURL(event.target.value)}

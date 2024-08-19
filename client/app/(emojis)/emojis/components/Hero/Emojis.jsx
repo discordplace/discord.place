@@ -8,6 +8,7 @@ import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
+import { t } from '@/stores/language';
 
 export default function Emojis() {
   const { page, setPage, search, setSearch, loading, emojis, fetchEmojis, setSort, setCategory, totalEmojis, limit } = useSearchStore(useShallow(state => ({
@@ -53,10 +54,10 @@ export default function Emojis() {
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
-                It{'\''}s quiet in here...
+                {t('emojisPage.emptyErrorState.title')}
               </div>
             }
-            message={'There are no emojis to display. Maybe that\'s a sign to create one?'}
+            message={t('emojisPage.emptyErrorState.message')}
           />
 
           <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
@@ -66,7 +67,7 @@ export default function Emojis() {
             fetchEmojis('');
             setPage(1);
           }}>
-            Reset Search
+            {t('buttons.resetSearch')}
           </button>
         </motion.div>
       </AnimatePresence>

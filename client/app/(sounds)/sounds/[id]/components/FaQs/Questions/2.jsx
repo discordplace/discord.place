@@ -4,6 +4,7 @@ import { useState } from 'react';
 import downloadSound from '@/lib/utils/sounds/downloadSound';
 import Link from 'next/link';
 import config from '@/config';
+import { t } from '@/stores/language';
 
 export default function Question2({ sound }) {
   const [activeMethod, setActiveMethod] = useState(0);
@@ -11,7 +12,7 @@ export default function Question2({ sound }) {
   return (
     <div className='flex flex-col mt-2 gap-y-1'>
       <p>
-        I{'\''}m glad to hear that! There are 2 ways to add sounds to your Discord server.
+        {t('soundPage.frequentlyAskedQuestions.answers.1.title')}
       </p>
 
       <div className='flex gap-x-2'>
@@ -20,7 +21,7 @@ export default function Question2({ sound }) {
           disabled={activeMethod === 0}
           onClick={() => setActiveMethod(0)}
         >
-          1. Our Website (this page)
+          {t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.buttonText')}
         </button>
 
         <button
@@ -28,40 +29,41 @@ export default function Question2({ sound }) {
           disabled={activeMethod === 1}
           onClick={() => setActiveMethod(1)}
         >
-          2. Classic Way
+          {t('soundPage.frequentlyAskedQuestions.answers.1.methods.1.buttonText')}
         </button>
       </div>
 
       <div className='mt-2'>
         {activeMethod === 0 && (
           <>
-            Using our website, you can upload this sound to your server with just a few clicks. Here how you can do this:
+            {t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructionsBefore')}
+
             <div className='flex flex-col mt-2 gap-y-1'>
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>1.</span>
                 <span>
-                  <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>Add our bot</Link> to your server.
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.text', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.linkText')}</Link> })}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>2.</span>
                 <span>
-                  Click {'"'}Upload to Discord{'"'} button on sound card in this page. 
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.1')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>4.</span>
                 <span className='flex gap-x-2'>
-                  Select the server you want to upload the sound & click the upload button.
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.2')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>5.</span>
                 <span className='flex gap-x-2'>
-                  Tada! Now sound is added to the server.
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.3')}
                 </span>
               </div>
             </div>
@@ -70,17 +72,18 @@ export default function Question2({ sound }) {
 
         {activeMethod === 1 && (
           <>
-            This may be a little more challenging.
+            {t('soundPage.frequentlyAskedQuestions.answers.1.methods.1.instructionsBefore')}
             <div className='flex flex-col mt-2 gap-y-1'>
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>1.</span>
                 <span>
-                  Download the sound:{' '}
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0')} {' '}
+                  
                   <button
                     className='px-3 py-0 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white/20 dark:hover:bg-white/30'
                     onClick={() => downloadSound(sound)}
                   >
-                    Download
+                    {t('buttons.download')}
                   </button>
                 </span>
               </div>
@@ -88,35 +91,35 @@ export default function Question2({ sound }) {
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>2.</span>
                 <span className='flex gap-x-2'>
-                  Open your Discord App and right click to your server.
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.1')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>3.</span>
                 <span className='flex gap-x-2'>
-                  Go to Server Settings {'>'} Soundboard
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.2')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>4.</span>
                 <span className='flex gap-x-2'>
-                  Click the Upload Sound.
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.3')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>5.</span>
                 <span className='flex gap-x-2'>
-                  Fill the form and select the sound you downloaded before and click the Upload button.
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.4')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
                 <span className='font-bold select-none text-primary'>6.</span>
                 <span className='flex gap-x-2'>
-                  Tada! Now sound is added to the server.
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.5')}
                 </span>
               </div>
             </div>

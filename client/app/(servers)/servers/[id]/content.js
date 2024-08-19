@@ -12,6 +12,7 @@ import { forwardRef } from 'react';
 import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';
+import { t } from '@/stores/language';
 
 export default function Content({ server }) {
   const theme = useThemeStore(state => state.theme);
@@ -87,9 +88,9 @@ export default function Content({ server }) {
                     <Countdown
                       date={new Date(server.vote_triple_enabled.created_at).getTime() + 86400000}
                       renderer={({ completed, hours, minutes }) => {
-                        if (completed) return 'Votes tripled expired!';
-                        
-                        return `Votes tripled for ${hours} hours, ${minutes} minutes!`;
+                        if (completed) return t('serverPage.countdown.tripledVoteExpired');
+
+                        return t('serverPage.countdown.votesTripledFor', { hours, minutes });
                       }}
                     />
                   </>
@@ -111,9 +112,9 @@ export default function Content({ server }) {
                     <Countdown
                       date={new Date(server.standed_out.created_at).getTime() + 43200000}
                       renderer={({ completed, hours, minutes }) => {
-                        if (completed) return 'Standed out expired!';
-                        
-                        return `Standed out for ${hours} hours, ${minutes} minutes!`;
+                        if (completed) return t('serverPage.countdown.standedOutExpired');
+
+                        return t('serverPage.countdown.standedOutFor', { hours, minutes });
                       }}
                     />
                   </>

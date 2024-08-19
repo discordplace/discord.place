@@ -5,6 +5,7 @@ import revalidateProfile from '@/lib/revalidate/profile';
 import { useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
 import { toast } from 'sonner';
+import { t } from '@/stores/language';
 
 export default function PatchVerifyButton({ profile }) {
   const [loading, setLoading] = useState(false);
@@ -15,12 +16,12 @@ export default function PatchVerifyButton({ profile }) {
     setLoading(true);
 
     toast.promise(patchProfileVerify(profile.slug, !profile.verified), {
-      loading: profile.verified ? 'Unverifying profile...' : 'Verifying profile...',
+      loading: t(`editProfilePage.toast.${profile.verified ? 'unverifyingProfile' : 'verifyingProfile'}`),
       success: () => {
         revalidateProfile(profile.slug);
         setLoading(false);
 
-        return profile.verified ? 'Profile unverified!' : 'Profile verified!';
+        return t(`editProfilePage.toast.${profile.verified ? 'profileUnverified' : 'profileVerified'}`);
       },
       error: error => {
         setLoading(false);
@@ -37,7 +38,7 @@ export default function PatchVerifyButton({ profile }) {
         disabled={loading}
         className='mobile:w-max mobile:mt-0 mt-4 w-full justify-center select-none px-4 mobile:py-1.5 py-2 flex items-center gap-x-1.5 text-sm font-semibold rounded-full mobile:rounded-lg disabled:opacity-70 disabled:pointer-events-none text-secondary bg-tertiary hover:text-primary hover:bg-quaternary'
       >
-        {profile.verified ? 'Unverify' : 'Verify'}
+        {profile.verified ? t('buttons.unverify') : t('buttons.verify')}
         {loading && <TbLoader className='animate-spin' />}
       </button>
     </div>

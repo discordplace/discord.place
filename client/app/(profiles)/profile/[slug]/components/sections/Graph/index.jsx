@@ -1,21 +1,24 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import cn from '@/lib/cn';
 import { useState } from 'react';
 import { useMedia } from 'react-use';
 import LikesGraph from '@/app/(profiles)/profile/[slug]/components/sections/Graph/Likes';
 import ViewsGraph from '@/app/(profiles)/profile/[slug]/components/sections/Graph/Views';
+import { t } from '@/stores/language';
 
 export default function Graph({ profile }) {
   const [activeTab, setActiveTab] = useState('likes');
   const tabs = [
     {
-      label: 'Likes',
+      label: t('profilePage.graph.likes.label'),
       id: 'likes',
       component: <LikesGraph profile={profile} />,
       disabled: profile.dailyStats?.length === 0
     },
     {
-      label: 'Views',
+      label: t('profilePage.graph.views.label'),
       id: 'views',
       component: <ViewsGraph profile={profile} />,
       disabled: profile.dailyStats?.length === 0

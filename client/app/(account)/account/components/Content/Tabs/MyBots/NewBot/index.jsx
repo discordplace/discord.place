@@ -15,6 +15,7 @@ import { TbLoader } from 'react-icons/tb';
 import Markdown from '@/app/components/Markdown';
 import useAccountStore from '@/stores/account';
 import { useLocalStorage } from 'react-use';
+import { t } from '@/stores/language';
 
 export default function NewBot() {
   const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
@@ -47,7 +48,7 @@ export default function NewBot() {
       setBotInviteUrl(localData.botInviteUrl);
       setBotCategories(localData.botCategories);
 
-      toast.info('Previously submitted application restored.');
+      toast.info(t('accountPage.tabs.myBots.sections.addBot.toast.storedDataLoaded'));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,7 +81,7 @@ export default function NewBot() {
     };
 
     toast.promise(createBot(botId, botData), {
-      loading: `Adding ${botId}..`,
+      loading: t('accountPage.tabs.myBots.sections.addBot.toast.addingBot', { botId }),
       success: () => {
         setTimeout(() => {
           router.push(`/bots/${botId}`);
@@ -92,9 +93,10 @@ export default function NewBot() {
           setBotDescription('');
           setBotCategories([]);
         }, 3000);
+
         setRenderConfetti(true);
 
-        return `${botId} added! You will be redirected to Bot page in a few seconds..`;
+        return t('accountPage.tabs.myBots.sections.addBot.toast.botAdded', { botId });
       },
       error: error => {
         setLoading(false);
@@ -123,22 +125,22 @@ export default function NewBot() {
           </button>
 
           <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
-            Adding a new bot
+            {t('accountPage.tabs.myBots.sections.addBot.title')}
           </h1>
         </div>
 
         <p className="text-sm sm:text-base max-w-[800px] text-tertiary">
-          You{'\''}re about to add new bot to discord.place. This means your bot will be listed on discord.place and everyone will be able to see it. You can remove your bot from discord.place at any time.
+          {t('accountPage.tabs.myBots.sections.addBot.subtitle')}
         </p>
 
         <div className="flex items-center justify-center w-full mt-12">
           <div className="max-w-[800px] w-full flex flex-col gap-y-1">
             <h2 className="text-lg font-semibold">
-              Bot ID
+              {t('accountPage.tabs.myBots.sections.addBot.fields.botId.title')}
             </h2>
 
             <p className="text-sm sm:text-base text-tertiary">
-              This is the ID of your bot on Discord. You can find it in the developer portal.
+              {t('accountPage.tabs.myBots.sections.addBot.fields.botId.description')}
             </p>
 
             <input
@@ -148,11 +150,11 @@ export default function NewBot() {
             />
 
             <h2 className="mt-8 text-lg font-semibold">
-              Add a short description
+              {t('accountPage.tabs.myBots.sections.addBot.fields.shortDescription.title')}
             </h2>
 
             <p className="text-sm sm:text-base text-tertiary">
-              This is the short description that will be shown to everyone who visits your bot on discord.place.
+              {t('accountPage.tabs.myBots.sections.addBot.fields.shortDescription.description')}
             </p>
 
             <input
@@ -163,11 +165,11 @@ export default function NewBot() {
             />
 
             <h2 className="mt-8 text-lg font-semibold">
-              Add a description
+              {t('accountPage.tabs.myBots.sections.addBot.fields.longDescription.title')}
             </h2>
 
             <p className="text-sm sm:text-base text-tertiary">
-              This is the more detailed description of your bot. You can use this to tell everyone what your bot does and how it works. You can use markdown here.
+              {t('accountPage.tabs.myBots.sections.addBot.fields.longDescription.description')}
             </p>
 
             <button
@@ -177,12 +179,12 @@ export default function NewBot() {
               {markdownPreviewing ? (
                 <>
                   <RiEyeOffFill/>
-                  Back to Editing
+                  {t('buttons.backToEditing')}
                 </>
               ) : (
                 <>
                   <RiEyeFill/>
-                  Show Markdown Preview
+                  {t('buttons.showMarkdownPreview')}
                 </>
               )}
             </button>
@@ -201,11 +203,11 @@ export default function NewBot() {
             )}
 
             <h2 className="mt-8 text-lg font-semibold">
-              Add a invite url
+              {t('accountPage.tabs.myBots.sections.addBot.fields.inviteUrl.title')}
             </h2>
 
             <p className="text-sm sm:text-base text-tertiary">
-              This is the invite URL of your bot. This is the link that users will use to add your bot to their server. You can use default Discord authorization link or custom one.
+              {t('accountPage.tabs.myBots.sections.addBot.fields.inviteUrl.description')}
             </p>
 
             <input
@@ -215,11 +217,11 @@ export default function NewBot() {
             />
 
             <h2 className="mt-8 text-lg font-semibold">
-              Category
+              {t('accountPage.tabs.myBots.sections.addBot.fields.categories.title')}
             </h2>
 
             <p className="text-sm text-tertiary">
-              Select all categories that your bot belongs to. This will help users find your bot.
+              {t('accountPage.tabs.myBots.sections.addBot.fields.categories.description')}
             </p>
 
             <div className="flex flex-wrap mt-4 gap-x-2 gap-y-2">
@@ -238,24 +240,23 @@ export default function NewBot() {
                     }}
                   >
                     {botCategories.includes(category) ? <IoMdCheckmarkCircle/> : config.botCategoriesIcons[category]}
-                    {category}
+                    {t(`categories.${category}`)}
                   </button>
                 ))}
             </div>
 
             <h2 className="mt-8 text-lg font-semibold">
-              Content Policy
+              {t('accountPage.tabs.myBots.sections.addBot.fields.contentPolicy.title')}
             </h2>
 
-            <p className="flex flex-col text-sm sm:text-base gap-y-1 text-tertiary">
-              By adding your bot to discord.place, you agree to our Bot Submission Guidelines.
-              <span className="mt-2 text-xs text-tertiary">
-                * Can be found in our Discord server.
-              </span>
+            <p className='flex flex-col text-sm sm:text-base gap-y-1 text-tertiary'>
+              {t('accountPage.tabs.myServers.sections.addBot.fields.contentPolicy.description', {
+                note: <span className='text-xs'>{t('accountPage.tabs.myServers.sections.addBot.fields.contentPolicy.note')}</span>
+              })}
             </p>
 
             <h2 className="mt-8 text-lg font-semibold">
-              Are you ready?
+              {t('accountPage.tabs.myBots.sections.addBot.fields.areYouReady.title')}
             </h2>
 
             <div className="flex flex-col w-full gap-2 mt-2 sm:flex-row">
@@ -272,8 +273,9 @@ export default function NewBot() {
                 onClick={addBot}
               >
                 {loading && <TbLoader className="animate-spin"/>}
-                Add Bot
+                {t('buttons.addBot')}
               </button>
+
               <button className="flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
                 onClick={() => {
                   setBotId('');
@@ -284,7 +286,7 @@ export default function NewBot() {
                 }}
                 disabled={loading}
               >
-                Cancel
+                {t('buttons.cancel')}
               </button>
             </div>
           </div>

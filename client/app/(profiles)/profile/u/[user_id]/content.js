@@ -14,6 +14,8 @@ import cn from '@/lib/cn';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
 import useThemeStore from '@/stores/theme';
+import useLanguageStore, { t } from '@/stores/language';
+import config from '@/config';
 
 function StatBlock({ fields, index }) {
   return (
@@ -57,21 +59,22 @@ function StatBlock({ fields, index }) {
 
 export default function Content({ user }) {
   const theme = useThemeStore(state => state.theme);
+  const language = useLanguageStore(state => state.language);
 
   const userFlags = {
-    'Staff': 'Discord Staff',
-    'Partner': 'Partnered Server Owner',
-    'Hypesquad': 'HypeSquad Events Member',
-    'BugHunterLevel1': 'Discord Bug Hunter',
-    'BugHunterLevel2': 'Discord Bug Hunter',
-    'HypeSquadOnlineHouse1': 'HypeSquad Bravery',
-    'HypeSquadOnlineHouse2': 'HypeSquad Brilliance',
-    'HypeSquadOnlineHouse3': 'HypeSquad Balance',
-    'PremiumEarlySupporter': 'Early Supporter',
-    'VerifiedDeveloper': 'Verified App Developer',
-    'CertifiedModerator': '	Moderator Programs Alumni',
-    'ActiveDeveloper': 'Active Developer',
-    'Nitro': 'Nitro Subscriber'
+    'Staff': t('userFlags.Staff'),
+    'Partner': t('userFlags.Partner'),
+    'Hypesquad': t('userFlags.Hypesquad'),
+    'BugHunterLevel1': t('userFlags.BugHunterLevel1'),
+    'BugHunterLevel2': t('userFlags.BugHunterLevel2'),
+    'HypeSquadOnlineHouse1': t('userFlags.HypeSquadOnlineHouse1'),
+    'HypeSquadOnlineHouse2': t('userFlags.HypeSquadOnlineHouse2'),
+    'HypeSquadOnlineHouse3': t('userFlags.HypeSquadOnlineHouse3'),
+    'PremiumEarlySupporter': t('userFlags.PremiumEarlySupporter'),
+    'VerifiedDeveloper': t('userFlags.VerifiedDeveloper'),
+    'CertifiedModerator': t('userFlags.CertifiedModerator'),
+    'ActiveDeveloper': t('userFlags.ActiveDeveloper'),
+    'Nitro': t('userFlags.Nitro')
   };
 
   const flagsPositions = [
@@ -102,6 +105,7 @@ export default function Content({ user }) {
               height={256}
               className="rounded-[2.5rem] h-[200px] object-cover"
             />
+
             {user.bannerURL.includes('.gif') && (
               <div className='absolute top-4 right-4 pointer-events-none text-white backdrop-blur-2xl shadow-xl shadow-black px-2 py-0.5 rounded-full font-bold text-xs'>
                 GIF
@@ -153,17 +157,18 @@ export default function Content({ user }) {
 
             <h2 className='flex items-center ml-2 text-lg font-semibold sm:ml-0 text-primary gap-x-2'>
               {user.globalName || user.username}
+
               {user.bot && (
                 <span className='select-none flex items-center gap-x-1 px-1.5 py-0.5 rounded-full text-xs font-semibold text-white uppercase bg-[#5865F2]'>
                   {user.bot_verified && (
-                    <Tooltip content='Verified App'>
+                    <Tooltip content={t('userFlags.tooltip.verifiedApp')}>
                       <div>
                         <HiCheck />
                       </div>
                     </Tooltip>
                   )}
               
-                  App
+                  {t('userFlags.appBadge')}
                 </span>
               )}
             </h2>
@@ -191,7 +196,7 @@ export default function Content({ user }) {
 
           <div className='flex flex-col items-end sm:hidden gap-y-2'>
             <h3 className='font-semibold text-primary'>
-              Badges
+              {t('userProfile.badgesHeading')}
             </h3>
 
             <div className='grid grid-cols-3 grid-rows-2 gap-y-2 gap-x-4'>
@@ -205,6 +210,7 @@ export default function Content({ user }) {
                   />
                 </Tooltip>
               ))}
+
               {new Array(6 - (user.profile?.badges || []).length).fill(null).map((_, index) => (
                 <div className='w-[20px] h-[20px] bg-tertiary rounded-full' key={index} />
               ))}
@@ -218,11 +224,11 @@ export default function Content({ user }) {
             user.bot && 'opacity-20 select-none'
           )}>
             <h3 className='font-semibold text-primary'>
-              About
+              {t('userProfile.about.title')}
             </h3>
 
             <p className='text-sm font-normal whitespace-pre-wrap text-tertiary line-clamp-3'>
-              {user.profile?.bio || 'This user has not set a bio yet.'}
+              {user.profile?.bio || t('userProfile.about.noBio')}
             </p>
           </div>
 
@@ -231,7 +237,7 @@ export default function Content({ user }) {
             user.bot && 'opacity-20 select-none'
           )}>
             <h3 className='font-semibold text-primary'>
-              Badges
+              {t('userProfile.badgesHeading')}
             </h3>
 
             <div className='grid grid-cols-3 grid-rows-2 gap-y-4 gap-x-6'>
@@ -245,6 +251,7 @@ export default function Content({ user }) {
                   />
                 </Tooltip>
               ))}
+
               {new Array(6 - (user.profile?.badges || []).length).fill(null).map((_, index) => (
                 <div className='w-[20px] h-[20px] bg-tertiary rounded-full' key={index} />
               ))}
@@ -257,14 +264,14 @@ export default function Content({ user }) {
             fields={[
               {
                 Icon: FaDiscord,
-                label: 'Member Since',
-                value: new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                label: t('userProfile.fields.memberSince'),
+                value: new Date(user.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })
               },
               {
                 Icon: TbSquareRoundedChevronUp,
-                label: 'Votes Given',
+                label: t('userProfile.fields.votesGiven.label'),
                 value: user.votesGiven || 0,
-                tooltip: 'The total number of votes given by this user.',
+                tooltip: t('userProfile.fields.votesGiven.tooltip'),
                 disabled: user.bot
               }
             ]}
@@ -275,22 +282,28 @@ export default function Content({ user }) {
             fields={[
               {
                 Icon: FaLink,
-                label: 'Profile',
+                label: t('userProfile.fields.profile.label'),
                 value: user.profile ? (
                   <div className='flex items-center gap-x-2'>
-                    {user.profile.preferredHost}/{user.profile.slug}
-                    <Link className='p-0.5 text-xs text-white bg-black rounded-full dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70' href={`https://${user.profile.preferredHost}/${user.profile.slug}`}>
+                    <span className='truncate max-w-[180px]'>
+                      {user.profile.preferredHost}/{user.profile.slug}
+                    </span>
+
+                    <Link
+                      className='p-0.5 text-xs text-white bg-black rounded-full dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
+                      href={config.getProfileURL(user.profile.slug, user.profile.preferredHost)}
+                    >
                       <MdOutlineArrowOutward />
                     </Link>
                   </div>
-                ) : 'No profile found.',
+                ) : t('userProfile.fields.profile.noProfile'),
                 disabled: user.bot
               },
               {
                 Icon: IoMdHeart,
-                label: 'Likes Received',
+                label: t('userProfile.fields.likesReceived.label'),
                 value: user.profile?.likesCount || 0,
-                tooltip: 'The total number of likes given to this user\'s profile.',
+                tooltip: t('userProfile.fields.likesReceived.tooltip'),
                 disabled: user.bot
               }
             ]}
@@ -304,11 +317,11 @@ export default function Content({ user }) {
           {(user.servers || []).length > 0 && (
             <>
               <h3 className='text-lg font-semibold text-primary'>
-                Servers
+                {t('userProfile.servers.title')}
               </h3>
 
               <p className='text-sm font-normal text-tertiary'>
-                This user is also the owner of the following servers. If you like the user, maybe you like the servers also?
+                {t('userProfile.servers.subtitle')}
               </p>
 
               <div className='grid grid-cols-1 gap-4 mt-4 lg:grid-cols-2'>
@@ -341,11 +354,11 @@ export default function Content({ user }) {
           {(user.bots || []).length > 0 && (
             <>
               <h3 className='mt-4 text-lg font-semibold text-primary'>
-                Bots
+                {t('userProfile.bots.title')}
               </h3>
 
               <p className='text-sm font-normal text-tertiary'>
-                This user is also the owner of the following bots. If you like the user, maybe you like the bots also?
+                {t('userProfile.bots.subtitle')}
               </p>
 
               <div className='grid grid-cols-1 gap-4 mt-4 lg:grid-cols-2'>

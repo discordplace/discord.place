@@ -12,6 +12,7 @@ import Drawer from '@/app/components/Drawer';
 import { useRouter } from 'next-nprogress-bar';
 import { MdOutlineOpenInNew } from 'react-icons/md';
 import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 
 export default function CollapsedHeader({ pathname }) {
   const theme = useThemeStore(state => state.theme);
@@ -78,7 +79,7 @@ export default function CollapsedHeader({ pathname }) {
             label: <>
               <div className='flex items-center gap-x-1.5'>
                 <headerLink.icon />
-                {headerLink.title}
+                {t(`header.${headerLink.id}`)}
 
                 {pathname !== headerLink.href && (
                   <MdOutlineOpenInNew />

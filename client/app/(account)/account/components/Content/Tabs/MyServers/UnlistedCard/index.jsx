@@ -2,6 +2,7 @@
 
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import useAccountStore from '@/stores/account';
+import { t } from '@/stores/language';
 
 export default function UnlistedCard({ server }) {
   const setCurrentlyAddingServer = useAccountStore(state => state.setCurrentlyAddingServer);
@@ -27,7 +28,7 @@ export default function UnlistedCard({ server }) {
         </h3>
 
         <p className='text-xs text-tertiary'>
-          {server.members} members
+          {t('accountPage.tabs.myServers.sections.unlistedServers.members', { count: server.members })}
         </p>
       </div>
     </div>

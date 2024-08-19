@@ -10,6 +10,7 @@ import config from '@/config';
 import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
 import { VList } from 'virtua';
+import { t } from '@/stores/language';
 
 export default function MyEmojis() {
   const data = useAccountStore(state => state.data);
@@ -20,17 +21,17 @@ export default function MyEmojis() {
     <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
-          My Emojis
+          {t('accountPage.tabs.myEmojis.title')}
         </h1>
 
         <p className='text-sm text-secondary'>
-          View or manage the emojis that you have listed on discord.place. You can also submit a new emoji to discord.place.
+          {t('accountPage.tabs.myEmojis.subtitle')}
         </p>
       </div>
 
       <div className='flex flex-col mt-8 gap-y-2'>
         <h2 className='text-sm font-bold text-secondary'>
-          Listed Emojis
+          {t('accountPage.tabs.myEmojis.sections.listedEmojis.title')}
 
           <span className='ml-2 text-xs font-medium text-tertiary'>
             {concatenatedEmojis?.length || 0}
@@ -38,7 +39,7 @@ export default function MyEmojis() {
         </h2>
 
         <p className='text-sm text-tertiary'>
-          Here, you can see the emojis that you have listed on discord.place.
+          {t('accountPage.tabs.myEmojis.sections.listedEmojis.description')}
         </p>
 
         {(concatenatedEmojis || []).length === 0 ? (
@@ -47,10 +48,10 @@ export default function MyEmojis() {
               title={
                 <div className='flex items-center gap-x-2'>
                   <BsEmojiAngry />
-                  It{'\''}s quiet in here...
+                  {t('accountPage.tabs.myEmojis.sections.listedEmojis.emptyErrorState.title')}
                 </div>
               }
-              message={'You have not listed any bots on discord.place.'}
+              message={t('accountPage.tabs.myEmojis.sections.listedEmojis.emptyErrorState.message')}
             />
           </div>
         ) : (
@@ -86,20 +87,22 @@ export default function MyEmojis() {
 
       <div className='flex flex-col mt-8 gap-y-2'>
         <h2 className='text-sm font-bold text-secondary'>
-          New Emoji
+          {t('accountPage.tabs.myEmojis.sections.newEmoji.title')}
         </h2>
 
         <p className='text-sm text-tertiary'>
-          Submit a new emoji to discord.place.
+          {t('accountPage.tabs.myEmojis.sections.newEmoji.subtitle')}
         </p>
 
         <div className='mt-2 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>
           <h2 className='flex items-center text-lg font-semibold gap-x-2'>
-            <BsQuestionCircleFill /> Note
+            <BsQuestionCircleFill /> {t('accountPage.tabs.myEmojis.sections.newEmoji.note.title')}
           </h2>
 
           <p className='text-sm font-medium text-tertiary'>
-            Your submitted emoji will be reviewed by our team before it is listed on discord.place. Please make sure that your emoji is not violating our emoji submission guidelines. Our emoji submission guidelines can be found in our <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>Discord server</Link>.
+            {t('accountPage.tabs.myEmojis.sections.newEmoji.note.description', {
+              link: <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>{t('accountPage.tabs.myEmojis.sections.newEmoji.note.linkText')}</Link>
+            })}
           </p>
         </div>
 
@@ -108,7 +111,7 @@ export default function MyEmojis() {
             className='px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
             href='/emojis/create'
           >
-            Let{'\''}s go!
+            {t('buttons.letsGo')}
             <LuPlus />
           </Link>
         </div>

@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { colord, extend } from 'colord';
 import mixPlugin from 'colord/plugins/mix';
 import a11yPlugin from 'colord/plugins/a11y';
+import { t } from '@/stores/language';
 
 extend([
   mixPlugin,
@@ -127,10 +128,14 @@ export default function Card(props) {
         )}>
           <div className='px-5 pt-5 mb-auto'>
             <div className='flex gap-x-1'>
-              <h2 className={cn(
-                'text-lg font-medium truncate max-w-[170px] mr-1',
-                !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
-              )}>{props.global_name}</h2>
+              <h2 
+                className={cn(
+                  'text-lg font-medium truncate max-w-[170px] mr-1',
+                  !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
+                )}
+              >
+                {props.global_name}
+              </h2>
 
               {props.badges.map(({ name, tooltip }) => (
                 <Tooltip key={name} content={tooltip}>
@@ -159,7 +164,7 @@ export default function Card(props) {
                   !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
                 )}
               >
-                About me
+                {t('profileCard.aboutMe')}
               </h3>
 
               <p
@@ -169,17 +174,19 @@ export default function Card(props) {
                 )}
               >
                 {props.bio === 'No bio provided.' ?
-                  'This user has not provided a bio yet but we are sure it\'s awesome!'
+                  t('profileCard.noBio')
                   : props.bio
                 }
               </p>
             </div>
           </div>
 
-          <div className={cn(
-            'w-full my-4 h-[1px]',
-            !haveCustomColors ? 'bg-quaternary' : 'bg-black/20' 
-          )} />
+          <div
+            className={cn(
+              'w-full my-4 h-[1px]',
+              !haveCustomColors ? 'bg-quaternary' : 'bg-black/20' 
+            )}
+          />
 
           <div className='flex flex-col px-5 pb-3 gap-y-4'>
             <div className='flex gap-x-4'>
@@ -190,7 +197,7 @@ export default function Card(props) {
                     !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
                   )}
                 >
-                  Likes
+                  {t('profileCard.fields.likes')}
                 </h3>
                 
                 <p className={cn(
@@ -208,7 +215,7 @@ export default function Card(props) {
                     !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
                   )}
                 >
-                  Views
+                  {t('profileCard.fields.views')}
                 </h3>
                 
                 <p className={cn(
@@ -226,13 +233,15 @@ export default function Card(props) {
                     !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
                   )}
                 >
-                  Created
+                  {t('profileCard.fields.createdAt')}
                 </h3>
                 
-                <p className={cn(
-                  'text-sm font-medium truncate w-[130px]',
-                  !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
-                )}>
+                <p
+                  className={cn(
+                    'text-sm font-medium truncate w-[130px]',
+                    !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
+                  )}
+                >
                   {new Date(props.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </p>
               </div>
@@ -247,11 +256,11 @@ export default function Card(props) {
                 href={`/profile/${props.slug}`}
               >
                 <FiArrowUpRight size={18} />
-                Visit
+                {t('buttons.visit')}
               </Link>
 
               <CopyButtonCustomTrigger
-                successText='Profile URL copied to clipboard!'
+                successText={t('profileCard.toast.profileUrlCopied')}
                 copyText={config.getProfileURL(props.slug, props.preferredHost)}
               >
                 <button
@@ -261,7 +270,7 @@ export default function Card(props) {
                   )}
                 >
                   <TbWorldShare size={16} />
-                  Share
+                  {t('buttons.share')}
                 </button>
               </CopyButtonCustomTrigger>
             </div>

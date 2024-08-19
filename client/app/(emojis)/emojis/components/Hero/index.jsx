@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { Bricolage_Grotesque } from 'next/font/google';
 import cn from '@/lib/cn';
 import Square from '@/app/components/Background/Square';
-import AnimatedCount from '@/app/components/AnimatedCount';
 import useSearchStore from '@/stores/emojis/search';
 import { motion } from 'framer-motion';
 import Emojis from '@/app/(emojis)/emojis/components/Hero/Emojis';
@@ -12,6 +11,7 @@ import SearchInput from '@/app/components/SearchInput';
 import { useShallow } from 'zustand/react/shallow';
 import Select from '@/app/components/Select';
 import config from '@/config';
+import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -56,15 +56,16 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...sequenceTransition, delay: 0.1 }}
         >
-          Discover the emojis
+          {t('emojisPage.title')}
         </motion.h1>
+
         <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
-          Explore, find and download the perfect emoji for your Discord server!<br/>You have <span className='inline-flex'><AnimatedCount data={total} /></span> emojis to explore. 
+          {t('emojisPage.subtitle', { br: <br />, count: total })}
         </motion.span>
 
         <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
           <SearchInput
-            placeholder='Search for a emoji by name...'
+            placeholder={t('emojisPage.searchInputPlaceholder')}
             loading={loading}
             search={search}
             fetchData={fetchEmojis}
@@ -79,7 +80,7 @@ export default function Hero() {
             transition={{ ...sequenceTransition, delay: 0.3 }}
           >
             <Select
-              placeholder='Category'
+              placeholder={t('emojisPage.categorySelectPlaceholder')}
               options={
                 config.emojiCategories
                   .map(category => ({
@@ -88,7 +89,7 @@ export default function Hero() {
                         {config.emojiCategoriesIcons[category]}
                       </span>
 
-                      {category}
+                      {t(`categories.${category}`)}
                     </div>,
                     value: category
                   }))
@@ -99,19 +100,19 @@ export default function Hero() {
             />
 
             <Select
-              placeholder='Sorting'
+              placeholder={t('emojisPage.sortSelect.placeholder')}
               options={[
                 ...[
                   {
-                    label: 'Popular',
+                    label: t('emojisPage.sortSelect.items.popular'),
                     value: 'Popular'
                   },
                   {
-                    label: 'Newest',
+                    label: t('emojisPage.sortSelect.items.newest'),
                     value: 'Newest'
                   },
                   {
-                    label: 'Oldest',
+                    label: t('emojisPage.sortSelect.items.oldest'),
                     value: 'Oldest'
                   }
                 ].map(option => ({

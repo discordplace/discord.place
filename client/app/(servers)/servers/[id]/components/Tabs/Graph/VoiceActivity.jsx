@@ -1,5 +1,8 @@
+'use client';
+
 import useThemeStore from '@/stores/theme';
 import dynamic from 'next/dynamic';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function VoiceActivityGraph({ server }) {
   const DynamicApexCharts = dynamic(() => import('react-apexcharts'), {
@@ -7,6 +10,7 @@ export default function VoiceActivityGraph({ server }) {
   });
 
   const theme = useThemeStore(state => state.theme);
+  const language = useLanguageStore(state => state.language);
 
   const reversedData = [...server.voice_activity].reverse();
 
@@ -66,12 +70,12 @@ export default function VoiceActivityGraph({ server }) {
           show: false
         },
         y: {
-          formatter: (value) => value + ' members'
+          formatter: value => t('serverPage.tabs.voiceActivityGraph.tooltipFormatter', { count: value })
         },
         custom: ({ series, seriesIndex, dataPointIndex }) => {
           return `<div class="bg-black text-white dark:bg-white dark:text-black px-4 py-2 rounded-xl font-semibold flex gap-x-2 items-center apexcharts-arrow-container">
             <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 15c1.66 0 2.99-1.34 2.99-3L15 6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 15 6.7 12H5c0 3.42 2.72 6.23 6 6.72V22h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
-            ${series[seriesIndex][dataPointIndex]} members
+            ${t('graph.voiceActivity.tooltip', { count: series[seriesIndex][dataPointIndex] })}
           </div>`;
         }
       },
@@ -79,7 +83,7 @@ export default function VoiceActivityGraph({ server }) {
         range: 12,
         categories: reversedData
           ?.filter(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))
-          ?.map(activity => new Date(activity.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })),
+          ?.map(activity => new Date(activity.createdAt).toLocaleTimeString(language, { hour: 'numeric', minute: 'numeric' })),
         tooltip: {
           enabled: false
         },

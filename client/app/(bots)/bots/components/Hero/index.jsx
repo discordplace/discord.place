@@ -10,6 +10,7 @@ import useSearchStore from '@/stores/bots/search';
 import { useShallow } from 'zustand/react/shallow';
 import config from '@/config';
 import Select from '@/app/components/Select';
+import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -48,16 +49,16 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...sequenceTransition, delay: 0.1 }}
         >
-          Discover the bots
+          {t('botsPage.title')}
         </motion.h1>
         
         <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
-          Explore most popular bots and find the perfect one for your Discord server!<br/>Make your server more fun and interactive with the best bots available.
+          {t('botsPage.subtitle')}
         </motion.span>
 
         <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
           <SearchInput
-            placeholder='Search for a bot by id, description, or category...'
+            placeholder={t('botsPage.searchInputPlaceholder')}
             loading={loading}
             search={search}
             fetchData={fetchBots}
@@ -72,7 +73,7 @@ export default function Hero() {
             transition={{ ...sequenceTransition, delay: 0.3 }}
           >
             <Select
-              placeholder='Category'
+              placeholder={t('botsPage.categorySelectPlaceholder')}
               options={
                 config.botCategories.map(category => ({
                   label: <div className='flex items-center gap-x-2'>
@@ -80,7 +81,7 @@ export default function Hero() {
                       {config.botCategoriesIcons[category]}
                     </span>
 
-                    {category}
+                    {t(`categories.${category}`)}
                   </div>,
                   value: category
                 }))
@@ -95,27 +96,27 @@ export default function Hero() {
               options={[
                 ...[
                   {
-                    label: 'Votes',
+                    label: t('botsPage.sortSelect.items.votes'),
                     value: 'Votes'
                   },
                   {
-                    label: 'Latest Voted',
+                    label: t('botsPage.sortSelect.items.latestVoted'),
                     value: 'LatestVoted'
                   },
                   {
-                    label: 'Servers',
+                    label: t('botsPage.sortSelect.items.servers'),
                     value: 'Servers'
                   },
                   {
-                    label: 'Most Reviewed',
+                    label: t('botsPage.sortSelect.items.mostReviewed'),
                     value: 'Most Reviewed'
                   },
                   {
-                    label: 'Newest',
+                    label: t('botsPage.sortSelect.items.newest'),
                     value: 'Newest'
                   },
                   {
-                    label: 'Oldest',
+                    label: t('botsPage.sortSelect.items.oldest'),
                     value: 'Oldest'
                   }
                 ].map(option => ({

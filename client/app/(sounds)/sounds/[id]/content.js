@@ -13,8 +13,10 @@ import { useRouter } from 'next-nprogress-bar';
 import deleteSound from '@/lib/request/sounds/deleteSound';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function Content({ sound }) {
+  const language = useLanguageStore(state => state.language);
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -28,12 +30,12 @@ export default function Content({ sound }) {
     disableButton('delete-sound', 'confirm');
 
     toast.promise(deleteSound(sound.id), {
-      loading: `${sound.name} is deleting..`,
+      loading: t('soundPage.toast.deletingSound', { soundName: sound.name }),
       success: () => {
         closeModal('delete-sound');
         setTimeout(() => router.push('/'), 3000);
         
-        return `${sound.name} successfully deleted. You will be redirected to home page after 3 seconds.`;
+        return t('soundPage.toast.soundDeleted', { soundName: sound.name });
       },
       error: error => {
         enableButton('delete-sound', 'confirm');
@@ -46,14 +48,14 @@ export default function Content({ sound }) {
   return (
     <div className='flex items-center justify-center w-full'>
       <div className='flex w-full max-w-[1000px] mt-48 mb-16 flex-col gap-y-4 px-4 lg:px-0'>
-        {!sound.approved && (
+        {sound.approved && (
           <div className='flex flex-col p-4 border border-yellow-500 gap-y-2 bg-yellow-500/10 rounded-xl'>
             <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
               <RiErrorWarningFill />
               Beep beep!
             </h1>
             <p className='text-sm font-medium text-tertiary'>
-              For the moment, only you can see the sound. Once the sound is approved, it will become public. Until then, you can come to <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>our support server</Link> and get a notification from our bot when your sound is approved. Make sure you open your DMs.
+              {t('soundPage.notApprovedInfo.description', { link: <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>{t('soundPage.notApprovedInfo.linkText')}</Link> })}
             </p>
           </div>
         )}
@@ -68,20 +70,24 @@ export default function Content({ sound }) {
 
           <div className='flex flex-col flex-1 w-full gap-y-4'>
             <h2 className='text-xl font-semibold text-primary'>
-              About {sound.name}
+              {t('soundPage.soundDetails.title', { soundName: sound.name })}
             </h2>
 
             <div className='flex flex-col gap-y-2'>
               <div className='flex items-center justify-between w-full'>
-                <span className='text-sm font-medium text-tertiary'>Uploaded At</span>
+                <span className='text-sm font-medium text-tertiary'>
+                  {t('soundPage.soundDetails.fields.uploadedAt')}
+                </span>
 
                 <span className='text-sm font-semibold text-primary'>
-                  {new Date(sound.createdAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
+                  {new Date(sound.createdAt).toLocaleString(language, { dateStyle: 'medium', timeStyle: 'short' })}
                 </span>
               </div>
 
               <div className='flex items-center justify-between w-full'>
-                <span className='text-sm font-medium text-tertiary'>Downloads</span>
+                <span className='text-sm font-medium text-tertiary'>
+                  {t('soundPage.soundDetails.fields.downloads')}
+                </span>
 
                 <span className='text-sm font-semibold text-primary'>
                   <AnimatedCount data={sound.downloadsCount} />
@@ -89,7 +95,9 @@ export default function Content({ sound }) {
               </div>
 
               <div className='flex items-center justify-between w-full'>
-                <span className='text-sm font-medium text-tertiary'>Likes</span>
+                <span className='text-sm font-medium text-tertiary'>
+                  {t('soundPage.soundDetails.fields.likes')}
+                </span>
 
                 <span className='text-sm font-semibold text-primary'>
                   <AnimatedCount data={sound.likesCount} />
@@ -97,7 +105,9 @@ export default function Content({ sound }) {
               </div>
 
               <div className='flex items-center justify-between w-full'>
-                <span className='text-sm font-medium text-tertiary'>Categories</span>
+                <span className='text-sm font-medium text-tertiary'>
+                  {t('soundPage.soundDetails.fields.categories')}
+                </span>
 
                 <div className='flex items-center gap-2'>
                   {sound.categories.map(category => (
@@ -106,14 +116,16 @@ export default function Content({ sound }) {
                       className='flex items-center text-sm font-semibold rounded-lg select-none gap-x-1 text-tertiary'
                     >
                       {config.soundCategoriesIcons[category]}
-                      {category}
+                      {t(`categories.${category}`)}
                     </span>
                   ))}
                 </div>
               </div>
 
               <div className='flex items-center justify-between w-full'>
-                <span className='text-sm font-medium text-tertiary'>Publisher</span>
+                <span className='text-sm font-medium text-tertiary'>
+                  {t('soundPage.soundDetails.fields.publisher')}
+                </span>
 
                 <Link
                   href={`/profile/u/${sound.publisher.id}`}
@@ -130,7 +142,7 @@ export default function Content({ sound }) {
           <div className='flex flex-col w-full gap-y-4'>
             <h2 className='flex items-center mt-4 text-lg font-semibold sm:text-xl gap-x-1'>
               <LuShieldQuestion />
-              Frequently Asked Questions
+              {t('soundPage.frequentlyAskedQuestions.title')}
             </h2>
 
             <FaQs sound={sound} />
@@ -141,10 +153,11 @@ export default function Content({ sound }) {
           <div className='flex flex-col p-4 mt-8 border border-red-500 gap-y-2 bg-red-500/10 rounded-xl'>
             <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
               <RiErrorWarningFill />
-              Danger Zone
+              {t('soundPage.dangerZone.title')}
             </h1>
+            
             <p className='text-sm font-medium text-tertiary'>
-              You can delete the sound using the button below, but be careful not to delete it by mistake :)
+              {t('soundPage.dangerZone.description')}
             </p>
             
             <div className='flex mt-1 gap-x-2'>
@@ -152,24 +165,23 @@ export default function Content({ sound }) {
                 className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
                 onClick={() =>
                   openModal('delete-sound', {
-                    title: 'Delete Sound',
-                    description: `Are you sure you want to delete ${sound.name}?`,
+                    title: t('soundPage.dangerZone.deleteSoundModal.title'),
+                    description: t('soundPage.dangerZone.deleteSoundModal.description', { soundName: sound.name }),
                     content: (
                       <p className='text-sm text-tertiary'>
-                        Please note that deleting the sound will remove all the downloads that the sound has received.<br/><br/>
-                        This action cannot be undone.
+                        {t('soundPage.dangerZone.deleteSoundModal.content', { br: <br /> })}
                       </p>
                     ),
                     buttons: [
                       {
                         id: 'cancel',
-                        label: 'Cancel',
+                        label: t('buttons.cancel'),
                         variant: 'ghost',
                         actionType: 'close'
                       },
                       {
                         id: 'confirm',
-                        label: 'Confirm',
+                        label: t('buttons.delete'),
                         variant: 'solid',
                         action: continueDeleteSound
                       }
@@ -177,7 +189,7 @@ export default function Content({ sound }) {
                   })
                 }
               >
-                Delete
+                {t('buttons.delete')}
               </button>
             </div>
           </div>

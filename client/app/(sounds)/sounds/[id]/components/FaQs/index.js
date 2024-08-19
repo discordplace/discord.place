@@ -7,20 +7,21 @@ import Question1 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/1';
 import Question2 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/2';
 import Question3 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/3';
 import AnimateHeight from 'react-animate-height';
+import { t } from '@/stores/language';
 
 export default function FaQs({ sound }) {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: 'How can I download the sound?',
+      label: t('soundPage.frequentlyAskedQuestions.labels.0'),
       content: <Question1 sound={sound} />
     },
     {
-      label: 'How can I add the sound to my Discord server soundboard?',
+      label: t('soundPage.frequentlyAskedQuestions.labels.1'),
       content: <Question2 sound={sound} />
     },
     {
-      label: 'This sound is inappropriate. What can I do?',
+      label: t('soundPage.frequentlyAskedQuestions.labels.2'),
       content: <Question3 />
     }
   ];

@@ -11,6 +11,7 @@ import Link from 'next/link';
 import config from '@/config';
 import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';
+import { t } from '@/stores/language';
 
 export default function Content({ bot }) {
   const theme = useThemeStore(state => state.theme);
@@ -24,8 +25,9 @@ export default function Content({ bot }) {
               <RiErrorWarningFill />
               Beep beep!
             </h1>
+
             <p className='text-sm font-medium text-tertiary'>
-              For the moment, only you can see the bot. Once the bot is verified, it will become public. Until then, you can come to <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>our support server</Link> and get a notification from our bot when your bot is approved. Make sure you open your DMs.
+              {t('botPage.notVerifiedInfo.description', { link: <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>{t('botPage.notVerifiedInfo.linkText')}</Link> })}
             </p>
           </div>
         )}
@@ -70,7 +72,10 @@ export default function Content({ bot }) {
           {bot.badges.length > 0 && (
             <div className='flex items-center ml-4 gap-x-2'>
               {bot.badges.map(badge => (
-                <Tooltip key={badge} content={badge}>
+                <Tooltip
+                  key={badge}
+                  content={t(`badges.${badge.toLowerCase()}`)}
+                >
                   <MotionImage 
                     src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.toLowerCase()}.svg`} 
                     width={24} 
@@ -88,9 +93,9 @@ export default function Content({ bot }) {
                     <Countdown
                       date={new Date(bot.vote_triple_enabled.created_at).getTime() + 86400000}
                       renderer={({ completed, hours, minutes }) => {
-                        if (completed) return 'Votes tripled ended!';
+                        if (completed) return t('botPage.countdown.tripledVoteExpired');
                         
-                        return `Votes tripled for ${hours} hours, ${minutes} minutes!`;
+                        return t('botPage.countdown.votesTripledFor', { hours, minutes });
                       }}
                     />
                   </>
@@ -112,9 +117,9 @@ export default function Content({ bot }) {
                     <Countdown
                       date={new Date(bot.standed_out.created_at).getTime() + 43200000}
                       renderer={({ completed, hours, minutes }) => {
-                        if (completed) return 'Standed out ended!';
+                        if (completed) return t('botPage.countdown.standedOutExpired');
                         
-                        return `Standed out for ${hours} hours, ${minutes} minutes!`;
+                        return t('botPage.countdown.standedOutFor', { hours, minutes });
                       }}
                     />
                   </>

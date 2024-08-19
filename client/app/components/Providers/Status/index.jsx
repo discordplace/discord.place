@@ -5,6 +5,7 @@ import useModalsStore from '@/stores/modals';
 import { useEffect } from 'react';
 import { useLocalStorage } from 'react-use';
 import useGeneralStore from '@/stores/general';
+import { t } from '@/stores/language';
 
 export default function Status() {
   const openModal = useModalsStore(state => state.openModal);
@@ -33,20 +34,18 @@ export default function Status() {
         .forEach(incident => {
           openModal(`incident-${incident.id}`, {
             title: incident.name,
-            description: 'We are currently experiencing some issues. Check our status page for updates.',
-            content: <>
-            This incident is started at {new Date(incident.started).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}.
-            </>,
+            description: t('status.incidentDescription'),
+            content: t('status.incidentContent', { startedAt: new Date(incident.started, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) }),
             buttons: [
               {
                 id: 'cancel',
-                label: 'Cancel',
+                label: t('buttons.cancel'),
                 variant: 'ghost',
                 action: () => closeModal(`incident-${incident.id}`)
               },
               {
                 id: 'open-incident',
-                label: 'Open Incident',
+                label: t('buttons.openIncident'),
                 variant: 'solid',
                 action: () => {
                   window.open(`${config.instatus.baseUrl}/${incident.id}`, '_blank');
@@ -67,20 +66,18 @@ export default function Status() {
         .forEach(maintenance => {
           openModal(`maintenance-${maintenance.id}`, {
             title: maintenance.name,
-            description: maintenance.status === 'NOTSTARTEDYET' ? 'We are planning to perform maintenance on our services.' : 'We are currently performing maintenance on our services. Check our status page for updates.',
-            content: <>
-              {maintenance.status === 'NOTSTARTEDYET' ? 'This maintenance is planned to start at' : 'This maintenance is started at'} {new Date(maintenance.start).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}.
-            </>,
+            description: t(`status.maintenanceDescription.${maintenance.status === 'NOTSTARTEDYET' ? 'planned' : 'started'}`),
+            content: t(`status.maintenanceContent.${maintenance.status === 'NOTSTARTEDYET' ? 'planned' : 'started'}`, { date: new Date(maintenance.start).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) }),
             buttons: [
               {
                 id: 'cancel',
-                label: 'Cancel',
+                label: t('buttons.cancel'),
                 variant: 'ghost',
                 action: () => closeModal(`maintenance-${maintenance.id}`)
               },
               {
                 id: 'open-maintenance',
-                label: 'Open Maintenance',
+                label: t('buttons.openMaintenance'),
                 variant: 'solid',
                 action: () => {
                   window.open(`${config.instatus.baseUrl}/${maintenance.id}`, '_blank');

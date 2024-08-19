@@ -22,25 +22,27 @@ import confetti from '@/lib/lotties/confetti.json';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import Lottie from 'react-lottie';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function SoundPreview({ sound, overridedSort, showUploadToGuildButton }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
+  const language = useLanguageStore(state => state.language);
   const [liked, setLiked] = useState(sound.isLiked);
   const [loading, setLoading] = useState(false);
 
   const handleLike = () => {
-    if (!loggedIn) return toast.error('You must be logged in to like sounds!');
+    if (!loggedIn) return toast.error(t('soundCard.toast.notLoggedIn'));
 
     setLoading(true);
 
     toast.promise(likeSound(sound.id), {
-      loading: liked ? `Unliking sound ${sound.name}...` : `Liking sound ${sound.name}...`,
+      loading: t(`soundCard.toast.${liked ? 'unliking' : 'liking'}`, { soundName: sound.name }),
       success: isLiked => {
         setLiked(isLiked);
         setLoading(false);
         revalidateSound(sound.id);
 
-        return isLiked ? `Liked sound ${sound.name}!` : `Unliked sound ${sound.name}!`;
+        return t(`soundCard.toast.${isLiked ? 'liked' : 'unliked'}`, { soundName: sound.name });
       },
       error: error => {
         setLoading(false);
@@ -73,7 +75,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     },
     {
       icon: IoMdCalendar,
-      value: new Date(sound.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+      value: new Date(sound.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' }),
       condition: sort === 'Newest' || sort === 'Oldest'
     }
   ];
@@ -102,7 +104,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
 
   function continueUploadSoundToGuild(guildId) {
     if (!guildId) {
-      toast.error('Please select a server to upload the sound to.');
+      toast.error(t('soundCard.uploadSoundToDiscordModal.toast.guildNotFound'));
       return;
     }
 
@@ -110,13 +112,13 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     console.log(sound.id, guildId);
 
     toast.promise(uploadSoundToGuild(sound.id, guildId), {
-      loading: `Sound ${sound.name} is being uploaded to guild...`,
+      loading: t('soundCard.uploadSoundToDiscordModal.toast.uploadingSound', { soundName: sound.name }),
       success: () => {
         closeModal('upload-sound-to-discord');
         setRenderConfetti(true);
         revalidateSound(sound.id);
 
-        return 'Sound uploaded successfully!';
+        return t('soundCard.uploadSoundToDiscordModal.toast.soundUploaded', { soundName: sound.name });
       },
       error: error => {
         enableButton('upload-sound-to-discord', 'upload');
@@ -144,13 +146,13 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         buttons: [
           {
             id: 'cancel',
-            label: 'Cancel',
+            label: t('buttons.cancel'),
             variant: 'ghost',
             actionType: 'close'
           },
           {
             id: 'upload',
-            label: 'Upload',
+            label: t('buttons.upload'),
             variant: 'solid',
             action: () => continueUploadSoundToGuild(selectedGuildId)
           }
@@ -165,7 +167,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         <PiWaveformBold className='inline mr-1' />
         {sound.name}
       </>,
-      description: 'Quickly upload this sound to Discord by selecting a server below.',
+      description: t('soundCard.uploadSoundToDiscordModal.description'),
       content: <UploadSoundToDiscordModal guilds={uploadableGuilds} />,
       buttons: [
         {
@@ -252,7 +254,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
           </button>
 
           {showUploadToGuildButton && (
-            <Tooltip content={loggedIn ? 'Upload to Discord' : 'Login with Discord to Upload'}>
+            <Tooltip content={t(`soundCard.buttons.${loggedIn ? 'upload' : 'login'}`)}>
               <button
                 className={cn(
                   'px-1.5 py-1 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 rounded-lg cursor-pointer',

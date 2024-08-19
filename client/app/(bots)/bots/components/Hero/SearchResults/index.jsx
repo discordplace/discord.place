@@ -1,3 +1,5 @@
+'use client';
+
 import useSearchStore from '@/stores/bots/search';
 import { useShallow } from 'zustand/react/shallow';
 import { motion } from 'framer-motion';
@@ -8,6 +10,7 @@ import { BsEmojiAngry } from 'react-icons/bs';
 import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence } from 'framer-motion';
+import { t } from '@/stores/language';
 
 export default function SearchResults() {
   const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
@@ -56,16 +59,19 @@ export default function SearchResults() {
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
-                It{'\''}s quiet in here...
+                {t('botsPage.emptyErrorState.title')}
               </div>
             }
-            message={'There are no bots to display. Maybe that\'s a sign to create one?'}
+            message={t('botsPage.emptyErrorState.message')}
           />
 
-          <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
-            fetchBots('', 1, limit, 'All', 'Votes');
-          }}>
-            Reset Search
+          <button
+            className='text-tertiary hover:underline hover:text-primary'
+            onClick={() => {
+              fetchBots('', 1, limit, 'All', 'Votes');
+            }}
+          >
+            {t('buttons.resetSearch')}
           </button>
         </motion.div>
       </AnimatePresence>

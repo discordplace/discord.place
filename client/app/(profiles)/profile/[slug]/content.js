@@ -93,6 +93,7 @@ export default function Content({ profile }) {
 
         <div className='flex flex-col gap-8 px-8 mt-8 lg:flex-row lg:px-0'>
           <About profile={profile} />
+          
           <div className='flex flex-col lg:w-[30%] gap-y-8'>
             <Social data={profile.socials} />
           </div>

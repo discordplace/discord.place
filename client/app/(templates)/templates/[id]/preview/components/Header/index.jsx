@@ -10,6 +10,7 @@ import InboxIcon from '@/app/(templates)/templates/[id]/preview/components/Icons
 import HelpIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Help';
 import SearchIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Search';
 import Tooltip from '@/app/components/Tooltip/Discord';
+import { t } from '@/stores/language';
 
 export default function Header({ focusedChannel, memberListCollapsed, setMemberListCollapsed }) {
   return (
@@ -38,7 +39,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
 
       <div className='flex gap-x-4'>
         <Tooltip
-          content='Threads'
+          content={t('templatePreviewPage.tooltip.threads')}
           side='bottom'
           sideOffset={5}
           size='small'
@@ -49,7 +50,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
         </Tooltip>
 
         <Tooltip
-          content='Notification Settings'
+          content={t('templatePreviewPage.tooltip.notificationSettings')}
           side='bottom'
           sideOffset={5}
           size='small'
@@ -60,7 +61,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
         </Tooltip>
 
         <Tooltip
-          content='Pinned Messages'
+          content={t('templatePreviewPage.tooltip.pinnedMessages')}
           side='bottom'
           sideOffset={5}
           size='small'
@@ -71,7 +72,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
         </Tooltip>
 
         <Tooltip
-          content={memberListCollapsed ? 'Show Member List' : 'Hide Member List'}
+          content={memberListCollapsed ? t('templatePreviewPage.tooltip.showMemberList') : t('templatePreviewPage.tooltip.hideMemberList')}
           side='bottom'
           sideOffset={5}
           size='small'
@@ -85,13 +86,13 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
         </Tooltip>
 
         <div className='cursor-text select-none justify-between text-[#949ba4] text-sm px-2 items-center flex rounded-md w-[150px] bg-[#1e1f22]'>
-          Search
+          {t('templatePreviewPage.searchInputPlaceholder')}
             
           <SearchIcon className='w-4 h-4' />
         </div>
 
         <Tooltip
-          content='Inbox'
+          content={t('templatePreviewPage.tooltip.inbox')}
           side='bottom'
           sideOffset={5}
           size='small'
@@ -102,7 +103,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
         </Tooltip>
 
         <Tooltip
-          content='Help'
+          content={t('templatePreviewPage.tooltip.help')}
           side='bottom'
           sideOffset={5}
           size='small'

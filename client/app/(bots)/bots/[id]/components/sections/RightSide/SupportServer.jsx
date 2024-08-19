@@ -1,7 +1,10 @@
+'use client';
+
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import MotionLink from '@/app/components/Motion/Link';
 import { motion } from 'framer-motion';
 import { BiSolidCategory } from 'react-icons/bi';
+import { t } from '@/stores/language';
 
 export default function SupportServer({ bot }) {
   return (
@@ -12,7 +15,7 @@ export default function SupportServer({ bot }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .7 }}
       >
-        Support Server
+        {t('botPage.supportServer.title')}
       </motion.h2>
 
       <MotionLink 

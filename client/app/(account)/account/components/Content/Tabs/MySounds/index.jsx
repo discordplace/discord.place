@@ -10,6 +10,7 @@ import config from '@/config';
 import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
 import NewSound from '@/app/(account)/account/components/Content/Tabs/MySounds/NewSound';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
 
 export default function MySounds() {
   const { data, currentlyAddingSound, setCurrentlyAddingSound } = useAccountStore(useShallow(state => ({
@@ -27,17 +28,17 @@ export default function MySounds() {
       <div className='flex flex-col px-6 mt-16 lg:px-16 gap-y-6'>
         <div className='flex flex-col gap-y-2'>
           <h1 className='text-xl font-bold text-primary'>
-            My Sounds
+            {t('accountPage.tabs.mySounds.title')}
           </h1>
 
           <p className='text-sm text-secondary'>
-            View sounds that you have listed on discord.place. You can also submit a new sound to discord.place.
+            {t('accountPage.tabs.mySounds.subtitle')}
           </p>
         </div>
 
         <div className='flex flex-col mt-8 gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
-            Listed Sounds
+            {t('accountPage.tabs.mySounds.sections.listedSounds.title')}
 
             <span className='ml-2 text-xs font-medium text-tertiary'>
               {data.sounds?.length || 0}
@@ -45,7 +46,7 @@ export default function MySounds() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            Here, you can see the sounds that you have listed on discord.place.
+            {t('accountPage.tabs.mySounds.sections.listedSounds.description')}
           </p>
 
           {(data.sounds || []).length === 0 ? (
@@ -54,10 +55,10 @@ export default function MySounds() {
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
-                    It{'\''}s quiet in here...
+                    {t('accountPage.tabs.mySounds.sections.listedSounds.emptyErrorState.title')}
                   </div>
                 }
-                message={'You have not listed any sounds on discord.place.'}
+                message={t('accountPage.tabs.mySounds.sections.listedSounds.emptyErrorState.message')}
               />
             </div>
           ) : (
@@ -75,20 +76,22 @@ export default function MySounds() {
 
         <div className='flex flex-col mt-8 gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
-            New Sound
+            {t('accountPage.tabs.mySounds.sections.newSound.title')}
           </h2>
 
           <p className='text-sm text-tertiary'>
-            Submit a new sound to discord.place.
+            {t('accountPage.tabs.mySounds.sections.newSound.description')}
           </p>
 
           <div className='mt-2 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>
             <h2 className='flex items-center text-lg font-semibold gap-x-2'>
-              <BsQuestionCircleFill /> Note
+              <BsQuestionCircleFill />  {t('accountPage.tabs.mySounds.sections.newSound.note.title')}
             </h2>
 
             <p className='text-sm font-medium text-tertiary'>
-              Your submitted sound will be reviewed by our team before it is listed on discord.place. Please make sure that your sound is not violating our sound submission guidelines. Our sound submission guidelines can be found in our <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>Discord server</Link>.
+              {t('accountPage.tabs.mySounds.sections.newSound.note.description', {
+                link: <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>{t('accountPage.tabs.mySounds.sections.newSound.note.linkText')}</Link>
+              })}
             </p>
           </div>
 
@@ -97,7 +100,7 @@ export default function MySounds() {
               className='px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
               onClick={() => setCurrentlyAddingSound(true)}
             >
-              Let{'\''}s go!
+              {t('buttons.letsGo')}
               <LuPlus />
             </button>
           </div>

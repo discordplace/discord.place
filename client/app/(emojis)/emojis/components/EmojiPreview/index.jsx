@@ -19,6 +19,7 @@ import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
 import useAuthStore from '@/stores/auth';
 import Tooltip from '@/app/components/Tooltip';
+import { t } from '@/stores/language';
 
 export default function EmojiPreview({ id, name, image_url, ableToChange, defaultSize }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -52,19 +53,19 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
 
   function continueUploadEmojiToGuild(guildId) {
     if (!guildId) {
-      toast.error('Please select a server to upload the emoji to.');
+      toast.error(t('createEmojiPage.emojisPreview.toast.guildNotFound'));
       return;
     }
 
     disableButton('upload-emoji-to-discord', 'upload');
 
     toast.promise(uploadEmojiToGuild(id, guildId, false), {
-      loading: `Emoji ${name} is being uploaded to guild...`,
+      loading: t('createEmojiPage.emojisPreview.toast.uploadingEmojis'),
       success: () => {
         closeModal('upload-emoji-to-discord');
         setRenderConfetti(true);
 
-        return 'Emoji uploaded successfully!';
+        return t('createEmojiPage.emojisPreview.toast.emojisUploaded');
       },
       error: error => {
         enableButton('upload-emoji-to-discord', 'upload');
@@ -92,13 +93,13 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
         buttons: [
           {
             id: 'cancel',
-            label: 'Cancel',
+            label: t('buttons.cancel'),
             variant: 'ghost',
             actionType: 'close'
           },
           {
             id: 'upload',
-            label: 'Upload',
+            label: t('buttons.upload'),
             variant: 'solid',
             action: () => continueUploadEmojiToGuild(selectedGuildId)
           }
@@ -109,30 +110,24 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     }
 
     openModal('upload-emoji-to-discord', {
-      title: <>
-        Upload
-        <Image
-          src={image_url}
-          alt='Emoji Preview'
-          width={48}
-          height={48}
-          className='h-[20px] w-auto inline'
-        />
-        {name} {' '}
-        to Discord
-      </>,
-      description: 'Quickly upload this emoji to Discord by selecting a server below.',
+      title: (
+        t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.titleWithEmoji', {
+          emojiImage: <Image src={image_url} alt={name} width={24} height={24} className='h-[16px] w-auto inline' />,
+          emojiName: name
+        })
+      ),
+      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
       content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
       buttons: [
         {
           id: 'cancel',
-          label: 'Cancel',
+          label: t('buttons.cancel'),
           variant: 'ghost',
           actionType: 'close'
         },
         {
           id: 'uplaod',
-          label: 'Upload',
+          label: t('buttons.upload'),
           variant: 'solid',
           action: () => continueUploadEmojiToGuild(selectedGuildId)
         }
@@ -181,10 +176,10 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
                   )} 
                   htmlFor='emojiFiles' 
                 >
-                  Change
+                  {t('buttons.change')}
                 </label>
               ) : (
-                <Tooltip content={loggedIn ? 'Upload to Discord' : 'Login with Discord to Upload'}>
+                <Tooltip content={loggedIn ? t('createEmojiPage.emojisPreview.tooltip.uploadToDiscord') : t('createEmojiPage.emojisPreview.tooltip.loginToUpload')}>
                   <button
                     className={cn(
                       'px-3 py-1.5 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 rounded-lg cursor-pointer',
@@ -214,7 +209,7 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
                 )} 
                 onClick={() => setPatternDarkMode(!patternDarkMode)}
               >
-                {patternDarkMode ? 'Light' : 'Dark'} Mode
+                {patternDarkMode ? t('buttons.lightMode') : t('buttons.darkMode')}
               </button>
 
               <button 
@@ -224,7 +219,7 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
                 )}  
                 onClick={() => setPreviewSize(previewSize === 32 ? 96 : 32)}
               >
-                {previewSize === 32 ? 'Enlarge' : 'Shrink'}
+                {previewSize === 32 ? t('buttons.enlarge') : t('buttons.shrink')}
               </button>
             </motion.div>
           </>
@@ -241,7 +236,7 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
               exit={{ opacity: 0 }}
               layoutId='base'
             >
-              Select Emoji
+              {t('buttons.selectEmoji')}
             </motion.label>
           )
         )}

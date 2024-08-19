@@ -1,3 +1,5 @@
+'use client';
+
 import cn from '@/lib/cn';
 import { useState } from 'react';
 import TopVoters from '@/app/(servers)/servers/[id]/components/Tabs/TopVoters';
@@ -7,35 +9,36 @@ import Reviews from '@/app/(servers)/servers/[id]/components/Tabs/Reviews';
 import Rewards from '@/app/(servers)/servers/[id]/components/Tabs/Rewards';
 import { motion } from 'framer-motion';
 import { useMedia } from 'react-use';
+import { t } from '@/stores/language';
 
 export default function Tabs({ server }) {
   const [activeTab, setActiveTab] = useState('reviews');
   const tabs = [
     {
-      label: 'Reviews',
+      label: t('serverPage.tabs.labels.reviews'),
       id: 'reviews',
       component: <Reviews server={server} />
     },
     {
-      label: 'Top Voters',
+      label: t('serverPage.tabs.labels.topVoters'),
       id: 'topVoters',
       component: <TopVoters server={server} />,
       disabled: server.votes <= 0
     },
     {
-      label: 'Rewards',
+      label: t('serverPage.tabs.labels.rewards'),
       id: 'rewards',
       component: <Rewards server={server} />,
       disabled: server.rewards.length === 0
     },
     {
-      label: 'Voice Activity',
+      label: t('serverPage.tabs.labels.voiceActivity'),
       id: 'voiceActivityGraph',
       component: <VoiceActivityGraph server={server} />,
       disabled: !server.voice_activity || server.voice_activity.filter?.(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))?.length === 0
     },
     {
-      label: 'Monthly Votes',
+      label: t('serverPage.tabs.labels.monthlyVotes'),
       id: 'monthlyVotesGraph',
       component: <MonthlyVotesGraph server={server} />,
       disabled: server.monthly_votes.length === 0

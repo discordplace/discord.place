@@ -17,8 +17,10 @@ import { useRouter } from 'next-nprogress-bar';
 import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function Content({ emoji }) {
+  const language = useLanguageStore(state => state.language);
   const [imageURLs, setImageURLs] = useState(emoji.emoji_ids.map(({ id, animated }) => config.getEmojiURL(`packages/${emoji.id}/${id}`, animated)));
   const router = useRouter();
 
@@ -33,12 +35,12 @@ export default function Content({ emoji }) {
     disableButton('delete-emoji-package', 'confirm');
 
     toast.promise(deleteEmoji(emoji.id), {
-      loading: `${emoji.name} is deleting..`,
+      loading: t('emojiPackagePage.toast.deletingEmojiPackage'),
       success: () => {
         closeModal('emoji-package');
         setTimeout(() => router.push('/'), 3000);
 
-        return `${emoji.name} successfully deleted. You will be redirected to home page after 3 seconds.`;
+        return t('emojiPackagePage.toast.emojiPackageDeleted');
       },
       error: error => {
         enableButton('delete-emoji-package', 'confirm');        
@@ -56,11 +58,15 @@ export default function Content({ emoji }) {
               <RiErrorWarningFill />
               Beep beep!
             </h1>
+            
             <p className='text-sm font-medium text-tertiary'>
-              For the moment, only you can see the emoji package. Once the emoji package is approved, it will become public. Until then, you can come to <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>our support server</Link> and get a notification from our bot when your emoji package is approved. Make sure you open your DMs.
+              {t('emojiPackagePage.notApprovedInfo.description', {
+                link: <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>{t('emojiPackagePage.notApprovedInfo.linkText')}</Link>
+              })}
             </p>
           </div>
         )}
+
         <div className='flex flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
             <PackagePreview 
@@ -73,8 +79,9 @@ export default function Content({ emoji }) {
           <div className='grid w-full gap-4 grid-cols-21 sm:grid-cols-3'>
             <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
               <h1 className='text-base font-semibold text-tertiary'>
-                Name
+                {t('emojiPackagePage.fields.name')}
               </h1>
+
               <span className='flex items-center text-sm text-center text-primary gap-x-1'>
                 {emoji.name}
               </span>
@@ -82,17 +89,19 @@ export default function Content({ emoji }) {
 
             <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
               <h1 className='text-base font-semibold text-tertiary'>
-                Uploaded
+                {t('emojiPackagePage.fields.uploaded')}
               </h1>
+
               <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                {new Date(emoji.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/,/g,'')}
+                {new Date(emoji.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/,/g,'')}
               </span>
             </div>
 
             <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
               <h1 className='text-base font-semibold text-tertiary'>
-                Downloads
+                {t('emojiPackagePage.fields.downloads')}
               </h1>
+
               <span className='flex items-center text-sm text-center text-primary gap-x-1'>
                 <AnimatedCount data={emoji.downloads} />
               </span>
@@ -100,8 +109,9 @@ export default function Content({ emoji }) {
 
             <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
               <h1 className='text-base font-semibold text-tertiary'>
-                Emoji Count
+                {t('emojiPackagePage.fields.emojiCount')}
               </h1>
+
               <span className='flex items-center text-sm text-center text-primary gap-x-1'>
                 <AnimatedCount data={emoji.emoji_ids.length} />
               </span>
@@ -109,17 +119,19 @@ export default function Content({ emoji }) {
 
             <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
               <h1 className='text-base font-semibold text-tertiary'>
-                Categories
+                {t('emojiPackagePage.fields.categories')}
               </h1>
+
               <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                {emoji.categories.join(', ')}
+                {emoji.categories.map(category => t(`categories.${category}`)).join(', ')}
               </span>
             </div>
 
             <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
               <h1 className='text-base font-semibold text-tertiary'>
-                Publisher
+                {t('emojiPackagePage.fields.publisher')}
               </h1>
+
               <span className='flex items-center text-sm text-center text-primary gap-x-1'>
                 <Image
                   src={emoji.user.avatar_url}
@@ -128,6 +140,7 @@ export default function Content({ emoji }) {
                   alt={`@${emoji.user.username} Avatar's`}
                   className='rounded-full'
                 />
+
                 {emoji.user.username}
               </span>
             </div>
@@ -139,12 +152,12 @@ export default function Content({ emoji }) {
             <div className='mt-4 lg:max-w-[400px] w-full flex flex-col gap-y-2'>
               <h2 className='flex items-center text-lg font-semibold sm:text-xl gap-x-1'>
                 <MdEmojiEmotions />
-                Similar Emoji Packs
+                {t('emojiPackagePage.similarEmojiPacks.title')}
               </h2>
 
               {emoji.similarEmojiPacks.length <= 0 ? (
                 <div className='text-sm text-tertiary'>
-                  It{'\''}s a bit sad, but I couldn{'\''}t find any similar emoji packs..
+                  {t('emojiPackagePage.similarEmojiPacks.emptyErrorState')}
                 </div>
               ) : (
                 <div className='grid w-full grid-cols-1 gap-4 mobile:grid-cols-2 lg:grid-cols-2 lg:grid-rows-2'>
@@ -166,7 +179,7 @@ export default function Content({ emoji }) {
           <div className='flex flex-col w-full gap-y-4'>
             <h2 className='flex items-center mt-4 text-lg font-semibold sm:text-xl gap-x-1'>
               <LuShieldQuestion />
-              Frequently Asked Questions
+              {t('emojiPackagePage.frequentlyAskedQuestions.title')}
             </h2>
 
             <FaQs emoji={emoji} />
@@ -177,10 +190,11 @@ export default function Content({ emoji }) {
           <div className='flex flex-col p-4 mt-8 border border-red-500 gap-y-2 bg-red-500/10 rounded-xl'>
             <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
               <RiErrorWarningFill />
-              Danger Zone
+              {t('emojiPackagePage.dangerZone.title')}
             </h1>
+            
             <p className='text-sm font-medium text-tertiary'>
-                  You can delete the emoji pakcage using the button below, but be careful not to delete it by mistake :)
+              {t('emojiPackagePage.dangerZone.description')}
             </p>
             
             <div className='flex mt-1 gap-x-2'>
@@ -188,24 +202,23 @@ export default function Content({ emoji }) {
                 className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
                 onClick={() =>
                   openModal('delete-emoji-package', {
-                    title: 'Delete Emoji Package',
-                    description: `Are you sure you want to delete ${emoji.name}?`,
+                    title: t('emojiPackagePage.dangerZone.deleteEmojiModal.title'),
+                    description: t('emojiPackagePage.dangerZone.deleteEmojiModal.description', { emojiName: emoji.name }),
                     content: (
                       <p className='text-sm text-tertiary'>
-                        Please note that deleting the emoji package will remove all emojis in the package and the package itself.<br/><br/>
-                        This action cannot be undone.
+                        {t('emojiPackagePage.dangerZone.deleteEmojiModal.content', { br: <br /> })}
                       </p>
                     ),
                     buttons: [
                       {
                         id: 'cancel',
-                        label: 'Cancel',
+                        label: t('buttons.cancel'),
                         variant: 'ghost',
                         actionType: 'close'
                       },
                       {
                         id: 'confirm',
-                        label: 'Confirm',
+                        label: t('buttons.confirm'),
                         variant: 'solid',
                         action: continueDeleteEmojiPackage
                       }
@@ -213,7 +226,7 @@ export default function Content({ emoji }) {
                   })
                 }
               >
-                Delete
+                {t('buttons.delete')}
               </button>
             </div>
           </div>

@@ -8,6 +8,7 @@ import { MdOpenInNew } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import getIconPath from '@/lib/utils/profiles/getIconPath';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
+import { t } from '@/stores/language';
 
 export default function Social({ data }) {
   const colors = {
@@ -35,7 +36,7 @@ export default function Social({ data }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
       >
-        Social
+        {t('profilePage.social.title')}
       </motion.h2>
 
       <motion.div 
@@ -46,7 +47,7 @@ export default function Social({ data }) {
       >
         {data.length === 0 && (
           <p className='text-tertiary'>
-            No socials found.
+            {t('profilePage.social.noSocials')}
           </p>
         )}
             

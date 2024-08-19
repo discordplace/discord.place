@@ -3,6 +3,7 @@
 import useGeneralStore from '@/stores/general';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
+import { t } from '@/stores/language';
 
 export default function VolumePopover() {
   const volume = useGeneralStore(state => state.sounds.volume);
@@ -20,8 +21,13 @@ export default function VolumePopover() {
           side='bottom'
           sideOffset={20}
         >
-          <h2 className='text-sm font-bold text-primary'>Volume</h2>
-          <p className='text-xs text-tertiary'>Adjust the volume of the sounds.</p>
+          <h2 className='text-sm font-bold text-primary'>
+            {t('soundCard.volumePopover.title')}
+          </h2>
+          
+          <p className='text-xs text-tertiary'>
+            {t('soundCard.volumePopover.subtitle')}
+          </p>
 
           <div className='flex items-center justify-between mt-2 gap-x-2'>
             {volume > 0 ? (

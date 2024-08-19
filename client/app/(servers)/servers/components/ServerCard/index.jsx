@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { FaUsers } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
@@ -14,9 +16,11 @@ import getRelativeTime from '@/lib/getRelativeTime';
 import { BsFire } from 'react-icons/bs';
 import config from '@/config';
 import { GiInfinity } from 'react-icons/gi';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function ServerCard(props) {
   const isMobile = useMedia('(max-width: 420px)', false);
+  const language = useLanguageStore(state => state.language);
   const storedSort = useSearchStore(state => state.sort);
   const sort = props.overridedSort || storedSort;
 
@@ -46,7 +50,7 @@ export default function ServerCard(props) {
       icon: MdUpdate,
       value: props.server.data.latest_voted_at,
       condition: sort === 'LatestVoted',
-      transform: getRelativeTime
+      transform: date => getRelativeTime(date, language)
     },
     {
       icon: MdKeyboardVoice,
@@ -57,13 +61,13 @@ export default function ServerCard(props) {
       icon: HiSortAscending,
       value: props.server.joined_at,
       condition: sort === 'Newest',
-      transform: date => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
     },
     {
       icon: HiSortDescending,
       value: props.server.joined_at,
       condition: sort === 'Oldest',
-      transform: date => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
     },
     {
       icon: TiStar,
@@ -143,7 +147,7 @@ export default function ServerCard(props) {
                 WebkitBoxOrient: 'vertical'
               }}
             >
-              {props.server.description || 'This server does not have a description. We can only imagine how beautiful it is inside.'}
+              {props.server.description || t('serverCard.noDescription')}
             </p>
 
             <div className='flex items-center mt-3 gap-x-3'>
@@ -158,7 +162,7 @@ export default function ServerCard(props) {
             <div className='flex items-center mt-3 gap-x-2'>
               <div className='flex items-center px-2.5 py-1 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
                 {config.serverCategoriesIcons[props.server.category]}
-                {props.server.category}
+                {t(`categories.${props.server.category}`)}
               </div>
 
               {props.server.vote_triple_enabled?.created_at && (
@@ -166,7 +170,7 @@ export default function ServerCard(props) {
                   <div className="animate-rotate absolute inset-0 z-[10] h-full w-full rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)] pointer-events-none"></div>
 
                   <div className='flex z-[20] relative items-center px-3 py-1 text-xs font-bold text-white rounded-full gap-x-1 bg-orange-500/20 backdrop-blur-md'>
-                    <BsFire /> 3X VOTE!
+                    <BsFire /> {t('serverCard.tripledVoteBadge')}
                   </div>
                 </div>
               )}

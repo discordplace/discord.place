@@ -21,6 +21,7 @@ import { BiSolidCopy } from 'react-icons/bi';
 import { useEffect, useRef, useState } from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import Link from 'next/link';
+import { t } from '@/stores/language';
 
 export default function Sidebar({ template, focusedChannel, currentlyOpenedSection, setCurrentlyOpenedSection, isMobile, setMemberListCollapsed }) {
   const router = useRouter();
@@ -36,12 +37,12 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
     disableButton('delete-template', 'confirm');
 
     toast.promise(deleteTemplate(template.id), {
-      loading: `Deleting ${template.name}..`,
+      loading: t('templatePreviewPage.toast.deletingTempalte'),
       success: () => {
         closeModal('delete-template');
         setTimeout(() => router.push('/'), 3000);
-        
-        return `Successfully deleted ${template.name}. You will be redirected to the home page in a few seconds.`;
+
+        return t('templatePreviewPage.toast.templateDeleted', { templateName: template.name });
       },
       error: error => {
         enableButton('delete-template', 'confirm');
@@ -122,7 +123,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       </Link>
 
       <Tooltip
-        content='Add a Server'
+        content={t('templatePreviewPage.tooltip.addAServer')}
         side='right'
       >
         <div className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl">
@@ -131,7 +132,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       </Tooltip>
 
       <Tooltip
-        content='Explore Discoverable Servers'
+        content={t('templatePreviewPage.tooltip.exploreDiscoverableServers')}
         side='right'
       >
         <div className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl">
@@ -166,17 +167,17 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
               )}
               onClick={() => 
                 !focusedChannel.topic ? 
-                  toast.error(`#${focusedChannel.name} does not have a topic set.`) :
+                  toast.error(t('templatePreviewPage.noTopic', { focusedChannelName: focusedChannel.name })) :
                   openModal('view-topic', {
-                    title: 'View Topic',
-                    description: `You are currently viewing the topic of the channel: ${focusedChannel.name}.`,
+                    title: t('templatePreviewPage.topicModal.title'),
+                    description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
                     content: <>
                       <p className='text-[#dbdee1] text-sm font-medium break-words'>{focusedChannel.topic}</p>
                     </>,
                     buttons: [
                       {
                         id: 'cancel',
-                        label: 'Cancel',
+                        label: t('buttons.close'),
                         variant: 'ghost',
                         actionType: 'close'
                       }
@@ -191,7 +192,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       )}
 
       <Tooltip
-        content='Back to discord.place'
+        content={t('templatePreviewPage.tooltip.backToDiscordPlace')}
         side='right'
       >
         <div
@@ -203,7 +204,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       </Tooltip>
 
       <Tooltip
-        content='Copy Template ID'
+        content={t('templatePreviewPage.tooltip.copyTemplateId')}
         side='right'
       >
         <div
@@ -212,11 +213,11 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
             templateIdCopied && 'opacity-70 pointer-events-none'
           )}
           onClick={() => {
-            if ('clipboard' in navigator === false) return toast.error('Your browser does not support the clipboard API.');
+            if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
 
             setTemplateIdCopied(true);
             navigator.clipboard.writeText(template.id);
-            toast.success(`Template ID ${template.id} copied to clipboard. You can now use "/template use <id>" to use this template on Discord. Don't forget invite our Discord bot to your server!`);
+            toast.success(t('templatePreviewPage.toast.templateIdCopied', { templateId: template.id }));
           }}
         >
           <IoCheckmarkCircle 
@@ -238,30 +239,30 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
 
       {template.permissions.canDelete && (
         <Tooltip
-          content='Delete Template'
+          content={t('templatePreviewPage.tooltip.deleteTemplate')}
           side='right'
         >
           <div
             className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#ff4d4d] text-[#ff4d4d] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl"
             onClick={() => 
               openModal('delete-template', {
-                title: 'Delete Template',
-                description: `Are you sure you want to delete ${template.name}?`,
+                title: t('templatePreviewPage.deleteTemplateModal.title'),
+                description: t('templatePreviewPage.deleteTemplateModal.description', { templateName: template.name }),
                 content: (
                   <p className='text-sm text-tertiary'>
-                    Please note that deleting your template cannot be undone.
+                    {t('templatePreviewPage.deleteTemplateModal.note')}
                   </p>
                 ),
                 buttons: [
                   {
                     id: 'cancel',
-                    label: 'Cancel',
+                    label: t('buttons.cancel'),
                     variant: 'ghost',
                     actionType: 'close'
                   },
                   {
                     id: 'confirm',
-                    label: 'Confirm',
+                    label: t('buttons.confirm'),
                     variant: 'solid',
                     action: continueDeleteTemplate
                   }

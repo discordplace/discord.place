@@ -5,10 +5,10 @@ import { Bricolage_Grotesque } from 'next/font/google';
 import cn from '@/lib/cn';
 import Square from '@/app/components/Background/Square';
 import SearchInput from '@/app/components/SearchInput';
-import AnimatedCount from '@/app/components/AnimatedCount';
 import useSearchStore from '@/stores/profiles/search';
 import { motion } from 'framer-motion';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -50,16 +50,16 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...sequenceTransition, delay: 0.1 }}
           >
-            Discover the profiles
+            {t('profilesPage.title')}
           </motion.h1>
           
           <motion.div className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
-            Find, share and explore the customized page of Discord profiles!<br/>You have <span className='inline-flex'><AnimatedCount data={totalProfiles} /></span> profiles to explore. 
+            {t('profilesPage.subtitle', { br: <br />, count: totalProfiles })}
           </motion.div>
 
           <div className='mt-8'>
             <SearchInput
-              placeholder='Search for a profile by slug, occupation, location, etc.'
+              placeholder={t('profilesPage.searchInputPlaceholder')}
               loading={loading}
               search={search}
               fetchData={fetchProfiles}

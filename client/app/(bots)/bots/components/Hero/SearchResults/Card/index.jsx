@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaCompass } from 'react-icons/fa';
@@ -11,6 +13,7 @@ import { useMedia } from 'react-use';
 import getRelativeTime from '@/lib/getRelativeTime';
 import { BsFire } from 'react-icons/bs';
 import config from '@/config';
+import { t } from '@/stores/language';
 
 export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -114,6 +117,7 @@ export default function Card({ data, overridedSort }) {
               <span className='text-lg font-semibold truncate'>
                 {data.username}
               </span>
+
               <span className='ml-0.5 text-xs text-tertiary'>
                 #{data.discriminator}
               </span>
@@ -126,7 +130,7 @@ export default function Card({ data, overridedSort }) {
                 WebkitBoxOrient: 'vertical'
               }}
             >
-              {data.short_description || 'This bot does not have a description. We can only imagine how beautiful it is.'}
+              {data.short_description || t('botCard.noDescription')}
             </p>
 
             <div className='flex items-center mt-3 gap-x-3'>
@@ -141,7 +145,7 @@ export default function Card({ data, overridedSort }) {
             <div className='flex items-center mt-3 gap-x-2'>
               <div className='flex items-center px-2.5 py-1 text-sm font-medium rounded-full gap-x-1 w-max text-secondary bg-quaternary'>
                 {config.botCategoriesIcons[data.categories[0]]}
-                {category === 'All' ? data.categories[0] : category}
+                {t(`categories.${category === 'All' ? data.categories[0] : category}`)}
               </div>
 
               {data.vote_triple_enabled?.created_at && (
@@ -149,7 +153,7 @@ export default function Card({ data, overridedSort }) {
                   <div className="animate-rotate absolute inset-0 z-[10] h-full w-full rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)] pointer-events-none"></div>
 
                   <div className='flex z-[20] relative items-center px-3 py-1 text-xs font-bold text-white rounded-full gap-x-1 bg-orange-500/20 backdrop-blur-md'>
-                    <BsFire /> 3X VOTE!
+                    <BsFire /> {t('botCard.tripledVoteBadge')}
                   </div>
                 </div>
               )}

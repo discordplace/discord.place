@@ -1,6 +1,7 @@
+'use client';
+
 import Image from 'next/image';
 import { MdEmojiEmotions } from 'react-icons/md';
-import { FaRegTrashAlt } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import useThemeStore from '@/stores/theme';
 import { motion } from 'framer-motion';
@@ -19,6 +20,7 @@ import config from '@/config';
 import Tooltip from '@/app/components/Tooltip';
 import useAuthStore from '@/stores/auth';
 import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 
 export default function PackagePreview({ image_urls, setImageURLs, setIsPackage, setEmojiURL, ableToChange }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -57,19 +59,19 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
 
   function continueUploadEmojiToGuild(emojiUrl, guildId) {
     if (!guildId) {
-      toast.error('Please select a server to upload the emoji to.');
+      toast.error(t('createEmojiPage.emojisPreview.toast.guildNotFound'));
       return;
     }
 
     disableButton('upload-emoji-to-discord', 'upload');
 
     toast.promise(uploadEmojiToGuild(config.getEmojiIdFromURL(emojiUrl), guildId, image_urls.indexOf(emojiUrl)), {
-      loading: 'Emoji is being uploaded to guild...',
+      loading: t('createEmojiPage.emojisPreview.toast.uploadingEmojis'),
       success: () => {
         closeModal('upload-emoji-to-discord');
         setRenderConfetti(true);
 
-        return 'Emoji uploaded successfully!';
+        return t('createEmojiPage.emojisPreview.toast.emojisUploaded');
       },
       error: error => {
         enableButton('upload-emoji-to-discord', 'upload');
@@ -99,13 +101,13 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
         buttons: [
           {
             id: 'cancel',
-            label: 'Cancel',
+            label: t('buttons.cancel'),
             variant: 'ghost',
             actionType: 'close'
           },
           {
             id: 'upload',
-            label: 'Upload',
+            label: t('buttons.upload'),
             variant: 'solid',
             action: () => continueUploadEmojiToGuild(selectedEmojiURL, selectedGuildId)
           }
@@ -125,20 +127,20 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
           className='h-[20px] w-auto inline'
         />
 
-        Upload to Discord
+        {t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.title')}
       </>,
-      description: 'Quickly upload this emoji to Discord by selecting a server below.',
+      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
       content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
       buttons: [
         {
           id: 'cancel',
-          label: 'Cancel',
+          label: t('buttons.cancel'),
           variant: 'ghost',
           actionType: 'close'
         },
         {
           id: 'uplaod',
-          label: 'Upload',
+          label: t('buttons.upload'),
           variant: 'solid',
           action: () => continueUploadEmojiToGuild(selectedEmojiURL, selectedGuildId)
         }
@@ -147,7 +149,6 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadableGuilds, selectedGuildId, selectedEmojiURL]);
-
 
   return (
     <div className='flex flex-col gap-y-4'>
@@ -161,7 +162,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
             className='px-3 py-1.5 w-full text-sm font-medium rounded-lg cursor-pointer bg-black hover:bg-black/70 text-white dark:hover:bg-white/70 dark:bg-white dark:text-black' 
             onClick={() => setPatternDarkMode(!patternDarkMode)}
           >
-            {patternDarkMode ? 'Light' : 'Dark'} Mode
+            {patternDarkMode ? t('buttons.lightMode') : t('buttons.darkMode')}
           </button>
 
           <button 
@@ -172,10 +173,11 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
               setEmojiURL(null);
             }}
           >
-            Remove All
+            {t('buttons.removeAll')}
           </button>
         </div>
       )}
+
       <div className='grid w-full h-full grid-cols-3 gap-4 place-content-center'>
         {image_urls.map(url => (
           <motion.div 
@@ -186,30 +188,32 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
             }} 
             layoutId={url}
           >
-            <Tooltip
-              content={loggedIn ? 'Upload to Discord' : 'Login with Discord to Upload'}
-              sideOffset={15}
-            >
-              <div
-                className={cn(
-                  'absolute p-1 text-sm text-white dark:text-black bg-black dark:bg-white rounded-md cursor-pointer disabled:opacity-70 left-1 bottom-1',
-                  loggedIn && 'dark:hover:bg-white/70 hover:bg-black/70'
-                )}
-                onClick={() => {
-                  if (!loggedIn) return;
-
-                  setSelectedEmojiURL(url);
-                  uploadToDiscord();
-                }}
-                disabled={!loggedIn || (selectedEmojiURL === url && uploadToDiscordButtonLoading)}
+            {!ableToChange && (
+              <Tooltip
+                content={loggedIn ? t('createEmojiPage.emojisPreview.tooltip.uploadToDiscord') : t('createEmojiPage.emojisPreview.tooltip.loginToUpload')}
+                sideOffset={15}
               >
-                {(selectedEmojiURL === url && uploadToDiscordButtonLoading) ? (
-                  <TbLoader className='animate-spin' /> 
-                ) : (
-                  <FaCloudUploadAlt />
-                )}
-              </div>
-            </Tooltip>
+                <div
+                  className={cn(
+                    'absolute p-1 text-sm text-white dark:text-black bg-black dark:bg-white rounded-md cursor-pointer disabled:opacity-70 left-1 bottom-1',
+                    loggedIn && 'dark:hover:bg-white/70 hover:bg-black/70'
+                  )}
+                  onClick={() => {
+                    if (!loggedIn) return;
+
+                    setSelectedEmojiURL(url);
+                    uploadToDiscord();
+                  }}
+                  disabled={!loggedIn || (selectedEmojiURL === url && uploadToDiscordButtonLoading)}
+                >                
+                  {(selectedEmojiURL === url && uploadToDiscordButtonLoading) ? (
+                    <TbLoader className='animate-spin' /> 
+                  ) : (
+                    <FaCloudUploadAlt />
+                  )}
+                </div>
+              </Tooltip>
+            )}
 
             <Image
               src={url}
@@ -218,18 +222,9 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
               alt={''}
               className='w-[46px] h-[46px] sm:w-[64px] sm:h-[64px] object-contain'
             />
-
-            {ableToChange && (
-              <div className='absolute flex items-center justify-center w-full h-full transition-opacity opacity-0 bg-quaternary/80 rounded-xl group-hover:opacity-100 overflow-clip'>
-                <div className='transition-all opacity-0 group-hover:opacity-100 ease-in-out duration-500 translate-y-[-100px] group-hover:translate-y-0 gap-x-2 flex'>
-                  <button className='p-2 text-sm font-semibold text-white transition-all bg-black rounded-lg cursor-pointer hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70' onClick={() => setImageURLs(oldImageURLs => oldImageURLs.filter(imageURL => imageURL !== url))}>
-                    <FaRegTrashAlt />
-                  </button>
-                </div>
-              </div>
-            )}
           </motion.div>
         ))}
+        
         {new Array(9 - image_urls.length).fill(0).map((_, index) => (
           <div className='flex items-center justify-center w-full h-full rounded-xl bg-secondary min-h-[120px]' key={index}>
             <MdEmojiEmotions size={64} className='text-tertiary' />

@@ -8,9 +8,11 @@ import useAccountStore from '@/stores/account';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function ActiveTimeouts() {
   const data = useAccountStore(state => state.data);
+  const language = useLanguageStore(state => state.language);
   
   const timeoutedBotsCount = data?.timeouts?.bots?.length || 0;
   const timeoutedServersCount = data?.timeouts?.servers?.length || 0;
@@ -19,11 +21,11 @@ export default function ActiveTimeouts() {
     <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
-          Active Timeouts
+          {t('accountPage.tabs.activeTimeouts.title')}
         </h1>
 
         <p className='text-sm text-secondary'>
-          Here, you can see your active timeouts and the remaining time.
+          {t('accountPage.tabs.activeTimeouts.subtitle')}
         </p>
       </div>
 
@@ -33,10 +35,10 @@ export default function ActiveTimeouts() {
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
-                It{'\''}s quiet in here...
+                {t('accountPage.tabs.activeTimeouts.emptyErrorState.title')}
               </div>
             }
-            message={'There are no active timeouts.'}
+            message={t('accountPage.tabs.activeTimeouts.emptyErrorState.message')}
           />
         </div>
       ) : (
@@ -44,7 +46,7 @@ export default function ActiveTimeouts() {
           {timeoutedServersCount > 0 && (
             <div className='flex flex-col gap-y-4 max-w-[800px]'>
               <h2 className='text-sm font-bold text-secondary'>
-                Servers
+                {t('accountPage.tabs.activeTimeouts.fields.servers.title')}
 
                 <span className='ml-2 text-xs font-medium text-tertiary'>
                   {timeoutedServersCount}
@@ -92,14 +94,15 @@ export default function ActiveTimeouts() {
                         <Countdown
                           date={new Date(timeout.createdAt).getTime() + 86400000}
                           renderer={({ hours, minutes, seconds, completed }) => {
-                            if (completed) return 'Expired';
-                            return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+                            if (completed) return t('accountPage.tabs.activeTimeouts.countdown.expired');
+                            
+                            return t('accountPage.tabs.activeTimeouts.countdown.remaining', { hours, minutes, seconds });
                           }}
                         />
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(timeout.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                        {new Date(timeout.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
                       </div>
                     </div>
                   </div>
@@ -111,7 +114,7 @@ export default function ActiveTimeouts() {
           {timeoutedBotsCount > 0 && (
             <div className='flex flex-col gap-y-4 max-w-[800px]'>
               <h2 className='text-sm font-bold text-secondary'>
-                Bots
+                {t('accountPage.tabs.activeTimeouts.fields.bots.title')}
 
                 <span className='ml-2 text-xs font-medium text-tertiary'>
                   {timeoutedBotsCount}
@@ -159,8 +162,9 @@ export default function ActiveTimeouts() {
                         <Countdown
                           date={new Date(timeout.createdAt).getTime() + 86400000}
                           renderer={({ hours, minutes, seconds, completed }) => {
-                            if (completed) return 'Expired';
-                            return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+                            if (completed) return t('accountPage.tabs.activeTimeouts.countdown.expired');
+
+                            return t('accountPage.tabs.activeTimeouts.countdown.remaining', { hours, minutes, seconds });
                           }}
                         />
                       </div>

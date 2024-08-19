@@ -2,8 +2,11 @@
 
 import cn from '@/lib/cn';
 import Image from 'next/image';
+import useLanguageStore from '@/stores/language';
 
 export default function ChatMockup({ avatar_url, username, message, emoji_url, theme, index }) {
+  const language = useLanguageStore(state => state.language);
+
   return (
     <div className={cn(
       'flex w-full h-20 gap-x-3 pl-4 pt-4 select-none',
@@ -17,6 +20,7 @@ export default function ChatMockup({ avatar_url, username, message, emoji_url, t
         alt={`@${username} avatar's`} 
         className='w-[46px] h-[46px] rounded-full' 
       />
+
       <div className='flex flex-col gap-y-1'>
         <div className='flex items-center overflow-clip gap-x-2 sm:overflow-visible'>
           <h1 className={cn(
@@ -25,11 +29,12 @@ export default function ChatMockup({ avatar_url, username, message, emoji_url, t
           )}>
             {username}
           </h1>
+
           <span className={cn(
             'text-xs font-medium truncate max-w-[40%] mobile:max-w-[unset]',
             theme === 'dark' ? 'text-[rgb(var(--dark-text-tertiary))]' : 'text-[rgb(var(--light-text-tertiary))]'
           )}>
-            {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',','')}
+            {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',','')}
           </span>
         </div>
 

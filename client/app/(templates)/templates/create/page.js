@@ -13,6 +13,7 @@ import fetchTemplateDetails from '@/lib/request/templates/fetchTemplateDetails';
 import { useRouter } from 'next-nprogress-bar';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 import { TbLoader } from 'react-icons/tb';
+import { t } from '@/stores/language';
 
 export default function Page() {
   const [templateId, setTemplateId] = useState('');
@@ -31,7 +32,11 @@ export default function Page() {
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const [activeStep, setActiveStep] = useState(0);
-  const steps = ['Fetch Details', 'Fill Details', 'Preview & Publish'];
+  const steps = [
+    t('publishTemplatePage.steps.0.title'),
+    t('publishTemplatePage.steps.1.title'),
+    t('publishTemplatePage.steps.2.title')
+  ];
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -44,10 +49,10 @@ export default function Page() {
       description: templateDescription,
       categories: selectedCategories
     }), {
-      loading: 'Publishing template...',
+      loading: t('publishTemplatePage.toast.publishingTemplate'),
       success: () => {
         router.push(`/templates/${templateId}/preview`);
-        return 'Template published successfully.';
+        return t('publishTemplatePage.toast.templatePublished');
       },
       error: error => {
         setLoading(false);
@@ -63,11 +68,11 @@ export default function Page() {
 
         <div className="mt-48 mb-16 max-w-[600px] flex flex-col gap-y-2 w-full">
           <h1 className="text-4xl font-bold text-primary">
-            Publish Template
+            {t('publishTemplatePage.title')}
           </h1>
 
           <p className="text-sm text-tertiary">
-            List your template on Discord Place and let others use it.
+            {t('publishTemplatePage.subtitle')}
           </p>
 
           <div className='flex flex-col mt-6 gap-y-4'>
@@ -91,11 +96,11 @@ export default function Page() {
           {activeStep === 0 && (
             <>
               <h2 className='mt-4 text-lg font-medium sm:text-xl text-primary'>
-                Let{'\''}s start with the found your template details.
+                {t('publishTemplatePage.steps.0.inputs.templateId.title')}
               </h2>
 
               <p className='text-sm text-tertiary'>
-                You should provide the template ID below.
+                {t('publishTemplatePage.steps.0.inputs.templateId.subtitle')}
               </p>
 
               <input
@@ -104,7 +109,7 @@ export default function Page() {
                 type='text'
                 value={templateId}
                 onChange={event => setTemplateId(event.target.value)}
-                placeholder='Enter template ID'
+                placeholder={t('publishTemplatePage.steps.0.inputs.templateId.placeholder')}
                 maxLength={12}
               />
             </>
@@ -113,11 +118,11 @@ export default function Page() {
           {activeStep === 1 && (
             <>
               <h2 className='mt-4 text-lg font-medium sm:text-xl text-primary'>
-                And now let{'\''}s fill the details.
+                {t('publishTemplatePage.steps.1.inputs.templateCategories.title')}
               </h2>
 
               <p className='text-sm text-tertiary'>
-                Choose a one or more categories for your template.
+                {t('publishTemplatePage.steps.1.inputs.templateCategories.subtitle')}
               </p>
 
               <div className='flex flex-wrap items-center justify-center gap-4 mt-4'>
@@ -136,7 +141,7 @@ export default function Page() {
                         else setSelectedCategories([...selectedCategories, category]);
                       }}
                     >
-                      {category}
+                      {t(`categories.${category}`)}
                       {selectedCategories.includes(category) && (
                         <div className='absolute top-0 left-0 flex items-center justify-center w-full h-full bg-secondary/90 rounded-2xl'>
                           <MdCheckCircle className='text-primary' />
@@ -148,10 +153,11 @@ export default function Page() {
 
               <label className='flex flex-col mt-6 gap-y-2' htmlFor='templateName'>
                 <h2 className='text-xl font-medium text-primary'>
-                  Template Name
+                  {t('publishTemplatePage.steps.1.inputs.templateName.title')}
                 </h2>
+
                 <p className='text-sm text-tertiary'>
-                  Enter a name for your template.
+                  {t('publishTemplatePage.steps.1.inputs.templateName.subtitle')}
                 </p>
               </label>
 
@@ -161,16 +167,17 @@ export default function Page() {
                 type='text'
                 value={templateName}
                 onChange={event => setTemplateName(event.target.value)}
-                placeholder='Enter template name'
+                placeholder={t('publishTemplatePage.steps.1.inputs.templateName.placeholder')}
                 maxLength={20}
               />
 
               <label className='flex flex-col mt-6 gap-y-2' htmlFor='templateDescription'>
                 <h2 className='text-xl font-medium text-primary'>
-                  Template Description
+                  {t('publishTemplatePage.steps.1.inputs.templateDescription.title')}
                 </h2>
+
                 <p className='text-sm text-tertiary'>
-                  Enter a description for your template.
+                  {t('publishTemplatePage.steps.1.inputs.templateDescription.subtitle')}
                 </p>
               </label>
 
@@ -179,7 +186,7 @@ export default function Page() {
                 className='ring-0 focus:ring-2 resize-none ring-purple-500 h-[100px] scrollbar-hide w-full px-3 py-2 text-sm rounded-lg outline-none placeholder-placeholder bg-secondary hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary text-tertiary'
                 value={templateDescription}
                 onChange={event => setTemplateDescription(event.target.value)}
-                placeholder={`Enter template description (min ${config.templateDescriptionMinLength} characters)`}
+                placeholder={t('publishTemplatePage.steps.1.inputs.templateDescription.placeholder', { min: config.templateDescriptionMinLength })}
                 maxLength={config.templateDescriptionMaxLength}
               />
             </>
@@ -188,17 +195,17 @@ export default function Page() {
           {activeStep === 2 && (
             <>
               <h2 className='mt-2 text-lg font-medium sm:text-xl text-primary'>
-                Confirm your details and publish your template.
+                {t('publishTemplatePage.steps.2.heading')}
               </h2>
 
               <p className='text-sm text-tertiary'>
-                Review the details and click on the publish button to publish your template.
+                {t('publishTemplatePage.steps.2.description')}
               </p>
 
               <div className='flex flex-col mt-4 gap-y-2'>
                 <div className='flex justify-between'>
                   <h3 className='text-sm text-tertiary'>
-                    Categories
+                    {t('publishTemplatePage.steps.2.fields.categories')}
                   </h3>
                   <h3 className='text-sm text-tertiary'>
                     {selectedCategories.join(', ')}
@@ -207,7 +214,7 @@ export default function Page() {
 
                 <div className='flex justify-between'>
                   <h3 className='text-sm text-tertiary'>
-                    Template Name
+                    {t('publishTemplatePage.steps.2.fields.templateName')}
                   </h3>
                   <h3 className='text-sm text-tertiary'>
                     {templateName}
@@ -216,7 +223,7 @@ export default function Page() {
 
                 <div className='flex justify-between'>
                   <h3 className='text-sm text-tertiary'>
-                    Template Description
+                    {t('publishTemplatePage.steps.2.fields.templateDescription')}
                   </h3>
                   <p className='text-sm text-tertiary max-w-[250px] break-words'>
                     {templateDescription}
@@ -225,14 +232,14 @@ export default function Page() {
               </div>
 
               <p className='mt-2 text-xs mobile:text-sm text-tertiary'>
-                By publishing this template, you agree to our <Link href='/legal/content-policy' className='hover:text-primary hover:underline'>content policy</Link>.
+                {t('publishTemplatePage.steps.2.disclaimer.content', { contentPolicyLink: <Link href='/legal/terms-of-service' className='hover:text-primary hover:underline'>{t('publishTemplatePage.steps.2.disclaimer.linkText')}</Link> })}
               </p>
             </>
           )}
 
           <div className='flex justify-between w-full mt-8'>
             <button className='flex items-center px-3 py-1 text-sm font-semibold text-white bg-black rounded-lg gap-x-1 dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => setActiveStep(activeStep - 1)} disabled={activeStep === 0 || loading}>
-              Previous
+              {t('buttons.back')}
             </button>
 
             <button 
@@ -251,7 +258,7 @@ export default function Page() {
                     .catch(error => {
                       templateDetailsFound = false;
                       toast.error(
-                        error === 'Request failed with status code 404' ? 'Template not found.' : error
+                        error === 'Request failed with status code 404' ? t('publishTemplatePage.toast.templateNotFound') : error
                       );
                     })
                     .finally(() => setTemplateDetailsLoading(false));
@@ -267,7 +274,7 @@ export default function Page() {
                     ((loading === true || templateDetailsLoading) || false)
               }
             >
-              {activeStep === steps.length - 1 ? 'Publish' : 'Next'}
+              {activeStep === steps.length - 1 ? t('buttons.publish') : t('buttons.next')}
               
               {(loading || templateDetailsLoading) && (
                 <TbLoader className='animate-spin' />

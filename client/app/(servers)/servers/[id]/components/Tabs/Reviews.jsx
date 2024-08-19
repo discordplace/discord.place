@@ -1,3 +1,5 @@
+'use client';
+
 import Pagination from '@/app/components/Pagination';
 import useAuthStore from '@/stores/auth';
 import Image from 'next/image';
@@ -11,6 +13,7 @@ import { RiErrorWarningFill } from 'react-icons/ri';
 import cn from '@/lib/cn';
 import Link from 'next/link';
 import config from '@/config';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function Reviews({ server }) {
   const [page, setPage] = useState(1);
@@ -24,6 +27,7 @@ export default function Reviews({ server }) {
   const [hoveredRating, setHoveredRating] = useState(0);
   const user = useAuthStore(state => state.user);
   const loggedIn = useAuthStore(state => state.loggedIn);
+  const language = useLanguageStore(state => state.language);
 
   useEffect(() => {
     const start = (page - 1) * limit;
@@ -45,14 +49,14 @@ export default function Reviews({ server }) {
     setLoading(true);
 
     toast.promise(createReview(server.id, { rating: selectedRating, content: review }), {
-      loading: 'Submitting your review..',
+      loading: t('serverPage.tabs.reviews.toast.submittingReview'),
       success: () => {
         setLoading(false);
         setSelectedRating(0);
         setReview('');
         setReviewSubmitted(true);
 
-        return 'Your review has been submitted successfully!';
+        return t('serverPage.tabs.reviews.toast.reviewSubmitted');
       },
       error: error => {
         setLoading(false);
@@ -64,13 +68,15 @@ export default function Reviews({ server }) {
   return (
     <div className="flex flex-col lg:w-[70%] px-8 lg:px-0">
       <h1 className="text-xl font-semibold">
-        Reviews
+        {t('serverPage.tabs.reviews.title')}
       </h1>
+      
       <div className="flex flex-col w-full mt-8 gap-y-4 sm:flex-row">
         <div className="flex-col gap-y-4 flex w-[35%]">
           <h2 className="text-5xl font-bold sm:text-7xl">
             {((server.reviews.reduce((acc, review) => acc + review.rating, 0) / server.reviews.length) || 0).toFixed(1)}
           </h2>
+
           <div className="flex text-lg text-yellow-500 gap-x-0.5 sm:gap-x-2">
             {[...Array(5)].map((_, index) => {
               const rating = server.reviews.reduce((acc, review) => acc + review.rating, 0) / server.reviews.length;
@@ -79,18 +85,22 @@ export default function Reviews({ server }) {
               return <TiStarOutline key={index} className='text-tertiary' />;
             })}
           </div>
+
           <span className='text-sm text-tertiary'>
-            {server.reviews.length} review{server.reviews.length > 1 ? 's' : ''}
+            {t('serverPage.tabs.reviews.totalReviews', { postProcess: 'interval', count: server.reviews.length })}
           </span>
         </div>
+        
         <div className="flex flex-1 w-full">
           <div className='flex flex-col w-full gap-y-2'>
             {new Array(5).fill(null).map((_, index) => (
               <div key={index} className='flex items-center w-full gap-x-4'>
                 <span className='font-semibold'>{5 - index}</span>
+                
                 <div className='flex w-full h-[5px] rounded-lg bg-tertiary'>
                   <div className='bg-yellow-500 rounded-lg' style={{ width: calcRating(5 - index) }} />
                 </div>
+
                 <span className='text-sm font-medium text-tertiary'>
                   {server.reviews.filter(review => review.rating === 5 - index).length}
                 </span>
@@ -104,10 +114,11 @@ export default function Reviews({ server }) {
         <div className='flex flex-col p-4 mt-4 border border-blue-500 rounded-lg gap-y-2 bg-blue-500/10'>
           <h3 className='flex items-center text-lg font-semibold gap-x-2'>
             <RiErrorWarningFill />
-            Note
+            {t('serverPage.tabs.reviews.reviewSubmitted.info.title')}
           </h3>
+          
           <span className='text-xs font-medium sm:text-sm text-tertiary'>
-            Your review has been submitted for moderation. It will be visible once it has been approved.
+            {t('serverPage.tabs.reviews.reviewSubmitted.info.description')}
           </span>
         </div>
       )}
@@ -115,11 +126,11 @@ export default function Reviews({ server }) {
       <div className="flex flex-col w-full mt-8 gap-y-8 sm:gap-y-0 sm:flex-row">
         {server.has_reviewed ? (
           <span className='text-sm font-medium text-tertiary'>
-            You have already left a review for this server.
+            {t('serverPage.tabs.reviews.reviewSubmitted.alreadyReviewed')}
           </span>
         ) : server.ownerId === user?.id ? (
           <span className='text-sm font-medium text-tertiary'>
-            You can{'\''}t leave a review for your own server.
+            {t('serverPage.tabs.reviews.ownerCannotReview')}
           </span>
         ) : (
           <>
@@ -136,6 +147,7 @@ export default function Reviews({ server }) {
                 <h3 className='text-base font-semibold'>
                   {user?.username || 'Unknown'}
                 </h3>
+                
                 <div className={cn(
                   'flex items-center text-lg text-tertiary',
                   loading || reviewSubmitted ? 'pointer-events-none' : 'cursor-pointer'
@@ -168,10 +180,11 @@ export default function Reviews({ server }) {
               
             <div className="flex flex-col flex-1 w-full font-medium whitespace-pre-wrap gap-y-1 text-secondary">
               <h3 className='font-medium text-primary'>
-                Your Review
+                {t('serverPage.tabs.reviews.input.title')}
               </h3>
+              
               <p className='text-xs sm:text-sm text-tertiary'>
-                {loggedIn ? 'Let others know what you think about this server.' : 'You must be logged in to leave a review.'}
+                {loggedIn ? t('serverPage.tabs.reviews.input.description') : t('serverPage.tabs.reviews.loginRequiredForReview')}
               </p>
               
               <div className='relative'>
@@ -198,7 +211,8 @@ export default function Reviews({ server }) {
                   disabled={selectedRating === 0 || loading || reviewSubmitted || review.length < config.reviewsMinCharacters}
                 >
                   {loading && <TbLoader className='animate-spin' />}
-                  Submit Review {selectedRating !== 0 && `(${selectedRating}/5)`}
+                  
+                  {t('buttons.submitReview')} {selectedRating !== 0 && `(${selectedRating}/5)`}
                 </button>
               ) : (
                 <Suspense fallback={<></>}>
@@ -241,9 +255,10 @@ export default function Reviews({ server }) {
               </div>
             </div>
           </div>
+          
           <div className="flex flex-col justify-between flex-1 w-full font-medium whitespace-pre-wrap sm:gap-y-0 gap-y-2 text-secondary">
             <span className='text-xs font-medium text-tertiary'>
-              {new Date(review.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+              {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
             </span>
             
             {review.content}

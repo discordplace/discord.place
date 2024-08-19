@@ -12,6 +12,7 @@ import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
 import { TbLoader } from 'react-icons/tb';
 import useAccountStore from '@/stores/account';
+import { t } from '@/stores/language';
 
 export default function NewSound() {
   const setCurrentlyAddingSound = useAccountStore(state => state.setCurrentlyAddingSound);
@@ -34,7 +35,7 @@ export default function NewSound() {
     formData.append('file', file);
 
     toast.promise(createSound(formData), {
-      loading: `Sound ${soundName} is being added..`,
+      loading: t('accountPage.tabs.mySounds.sections.addSound.toast.addingSound'),
       success: data => {
         setTimeout(() => {
           router.push(`/sounds/${data.id}`);
@@ -48,7 +49,7 @@ export default function NewSound() {
 
         setRenderConfetti(true);
 
-        return `${soundName} added! You will be redirected to Sound page in a few seconds..`;
+        return t('accountPage.tabs.mySounds.sections.addSound.toast.soundAdded');
       },
       error: error => {
         setLoading(false);
@@ -78,12 +79,12 @@ export default function NewSound() {
           </button>
 
           <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
-            Adding a new sound
+            {t('accountPage.tabs.mySounds.sections.addSound.title')}
           </h1>
         </div>
 
         <p className="text-sm sm:text-base max-w-[800px] text-tertiary">
-          You{'\''}re about to add new sound to discord.place. Please fill out the form below to add your sound. Make sure that your sound is not violating our sound submission guidelines.
+          {t('accountPage.tabs.mySounds.sections.addSound.subtitle')}
         </p>
 
         <div className="flex items-center justify-center w-full mt-12">
@@ -112,14 +113,14 @@ export default function NewSound() {
 
                 const file = event.dataTransfer.files[0];
                 if (file) {
-                  if (file.type !== 'audio/mpeg') return toast.error('Only mp3 files are allowed.');
+                  if (file.type !== 'audio/mpeg') return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.invalidFile'));
 
                   const reader = new FileReader();
                   reader.onload = () => {
                     const audio = new Audio(reader.result);
                     audio.onloadedmetadata = () => {
-                      if (audio.duration >= 5) return toast.error('Audio file must be less than 5 seconds.');
-                      if (file.size >= 1024 * 1024) return toast.error('Audio file must be less than 1MB.');
+                      if (audio.duration >= 5) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.audioDurationExceeded', { duration: 5 }));
+                      if (file.size >= 1024 * 1024) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.fileSizeExceeded', { size: 1 }));
 
                       setFile(file);
                     };
@@ -139,14 +140,14 @@ export default function NewSound() {
                 onChange={event => {
                   const file = event.target.files[0];
                   if (file) {
-                    if (file.type !== 'audio/mpeg') return toast.error('Only mp3 files are allowed.');
+                    if (file.type !== 'audio/mpeg') return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.invalidFile'));
 
                     const reader = new FileReader();
                     reader.onload = () => {
                       const audio = new Audio(reader.result);
                       audio.onloadedmetadata = () => {
-                        if (audio.duration >= 5) return toast.error('Audio file must be less than 5 seconds.');
-                        if (file.size >= 1024 * 1024) return toast.error('Audio file must be less than 1MB.');
+                        if (audio.duration >= 5) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.audioDurationExceeded', { duration: 5 }));
+                        if (file.size >= 1024 * 1024) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.fileSizeExceeded', { size: 1 }));
 
                         setFile(file);
                       };
@@ -166,17 +167,17 @@ export default function NewSound() {
                     {file.name}
                   </>
                 ) : (
-                  dragging ? 'Drop your file here.' : 'Click to upload file.'
+                  dragging ? t('accountPage.tabs.mySounds.sections.addSound.dragAndDrop.drop') : t('accountPage.tabs.mySounds.sections.addSound.dragAndDrop.click')
                 )}
               </p>
             </label>
 
             <h2 className="mt-8 text-lg font-semibold">
-              Name
+              {t('accountPage.tabs.mySounds.sections.addSound.fields.name.label')}
             </h2>
 
             <p className="text-sm sm:text-base text-tertiary">
-              Add a name for your sound.
+              {t('accountPage.tabs.mySounds.sections.addSound.fields.name.description')}
             </p>
 
             <input
@@ -187,11 +188,11 @@ export default function NewSound() {
             />
 
             <h2 className="mt-8 text-lg font-semibold">
-              Category
+              {t('accountPage.tabs.mySounds.sections.addSound.fields.categories.label')}
             </h2>
 
             <p className="text-sm text-tertiary">
-              Select all categories that your sound belongs to. This will help users find your sound.
+              {t('accountPage.tabs.mySounds.sections.addSound.fields.categories.description')}
             </p>
 
             <div className="flex flex-wrap mt-4 gap-x-2 gap-y-2">
@@ -210,24 +211,23 @@ export default function NewSound() {
                     }}
                   >
                     {soundCategories.includes(category) ? <IoMdCheckmarkCircle/> : config.soundCategoriesIcons[category]}
-                    {category}
+                    {t(`categories.${category}`)}
                   </button>
                 ))}
             </div>
 
             <h2 className="mt-8 text-lg font-semibold">
-              Content Policy
+              {t('accountPage.tabs.mySounds.sections.addSound.fields.contentPolicy.label')}
             </h2>
 
             <p className="flex flex-col text-sm sm:text-base gap-y-1 text-tertiary">
-              By adding sound to discord.place, you agree to our Sound Submission Guidelines.
-              <span className="mt-2 text-xs text-tertiary">
-                * Can be found in our Discord server.
-              </span>
+              {t('accountPage.tabs.mySounds.sections.addSound.fields.contentPolicy.description', {
+                note: <span className="mt-2 text-xs text-tertiary">{t('accountPage.tabs.mySounds.sections.addSound.fields.contentPolicy.note')}</span>
+              })}
             </p>
 
             <h2 className="mt-8 text-lg font-semibold">
-              Are you ready?
+              {t('accountPage.tabs.mySounds.sections.addSound.fields.areYouReady.label')}
             </h2>
 
             <div className="flex flex-col w-full gap-2 mt-2 sm:flex-row">
@@ -242,8 +242,9 @@ export default function NewSound() {
                 onClick={addSound}
               >
                 {loading && <TbLoader className="animate-spin"/>}
-                Add Sound
+                {t('buttons.addSound')}
               </button>
+
               <button className="flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
                 onClick={() => {
                   setSoundName('');
@@ -252,7 +253,7 @@ export default function NewSound() {
                 }}
                 disabled={loading}
               >
-                Cancel
+                {t('buttons.cancel')}
               </button>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { IoSearch } from 'react-icons/io5';
 import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
+import { t } from '@/stores/language';
 
 export default function SearchInput({ placeholder, loading, search, fetchData, setPage, animationDelay }) {
   const [value, setValue] = useState('');
@@ -14,12 +15,12 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
       return false;
     }
 
-    if (!value) return returnError('Please enter a valid search query.');
+    if (!value) return returnError(t('errorMessages.validSearchQuery'));
 
     const trimmedValue = value.trim();
-    if (trimmedValue.length <= 0) return returnError('Please enter a valid search query to.');
-    if (trimmedValue.length < 3) return returnError('The search query is too short. Please enter a minimum of 3 characters.');
-    if (trimmedValue.length > 100) return returnError('The search query is too long. Please enter a maximum of 100 characters.');
+    if (trimmedValue.length <= 0) return returnError(t('errorMessages.validSearchQuery'));
+    if (trimmedValue.length < 3) return returnError(t('errorMessages.searchQueryTooShort'));
+    if (trimmedValue.length > 100) return returnError(t('errorMessages.searchQueryTooLong'));
 
     return trimmedValue;
   }

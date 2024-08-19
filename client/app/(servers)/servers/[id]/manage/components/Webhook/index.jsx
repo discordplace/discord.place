@@ -1,7 +1,5 @@
 'use client';
 
-import config from '@/config';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { HiBell } from 'react-icons/hi';
 import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
@@ -10,6 +8,7 @@ import { IoCheckmarkCircle } from 'react-icons/io5';
 import { toast } from 'sonner';
 import deleteWebhookSettings from '@/lib/request/servers/deleteWebhookSettings';
 import setWebhookSettings from '@/lib/request/servers/setWebhookSettings';
+import { t } from '@/stores/language';
 
 export default function Webhook({ serverId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken }) {
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
@@ -29,12 +28,12 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
   }, [webhookURL, webhookToken]);
 
   function saveChanges() {
-    if ((webhookURL || '') === '' && webhookToken !== '') return toast.error('You should fill Webhook URL if you want to use a secret.');
+    if ((webhookURL || '') === '' && webhookToken !== '') return toast.error(t('serverManagePage.webhook.toast.secretRequired'));
     
     try {
       if (webhookURL !== '') {
         const url = new URL(webhookURL);
-        if (url.protocol !== 'https:') return toast.error('Webhook URL should be a HTTPS URL.');
+        if (url.protocol !== 'https:') return toast.error(t('serverManagePage.webhook.toast.urlNotHTTPS'));
       }
       
       setSavingChanges(true);
@@ -46,7 +45,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
       );
 
       toast.promise(functionToCall(serverId, webhookURL || null, webhookToken || null), {
-        loading: 'Saving webhook settings...',
+        loading: t('serverManagePage.webhook.toast.saving'),
         success: () => {
           setSavingChanges(false);
           setChangesMade(false);
@@ -54,7 +53,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
           setDefaultWebhookURL(webhookURL || null);
           setDefaultWebhookToken(webhookToken || null);
           
-          return 'Webhook settings saved successfully.';
+          return t('serverManagePage.webhook.toast.saved');
         },
         error: error => {
           setSavingChanges(false);
@@ -63,7 +62,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
         }
       });
     } catch {
-      return toast.error('Webhook URL is not a valid URL.');
+      return toast.error(t('serverManagePage.webhook.toast.urlNotValid'));
     }
   }
   
@@ -73,23 +72,15 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
         <div className='flex flex-col gap-y-4'>
           <h3 className='flex items-center text-xl font-semibold gap-x-4'>
             <HiBell size={24} className='text-purple-500' />
-              Webhook
+            {t('serverManagePage.webhook.title')}
 
             <span className='-ml-2 text-xs text-white dark:text-white px-2 py-0.5 dark:bg-white/30 bg-black/30 rounded-full'>
-              Optional
+              {t('serverManagePage.webhook.optionalBadge')}
             </span>
           </h3>
 
           <p className='text-tertiary'>
-            Get notified when someone votes for your server. Documentation can be found{' '}
-            <Link
-              href={config.docsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-secondary hover:underline hover:text-primary"
-            >
-              here
-            </Link>.
+            {t('serverManagePage.webhook.subtitle')}
           </p>
         </div>
 
@@ -100,24 +91,24 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
             onClick={saveChanges}
           >
             {savingChanges ? <TbLoader size={18} className='animate-spin' /> : <IoCheckmarkCircle size={18} />}
-            Save Webhook Settings
+            {t('buttons.saveWebhookSettings')}
           </button>
         </div>
       </div>
 
       <div className='flex flex-col gap-8 mt-4 sm:flex-row'>
         <Input
-          label='URL'
-          description='Enter the URL of your webhook.'
-          placeholder='https://example.com/webhook'
+          label={t('serverManagePage.webhook.inputs.url.label')}
+          description={t('serverManagePage.webhook.inputs.url.description')}
+          placeholder={t('serverManagePage.webhook.inputs.url.placeholder')}
           value={webhookURL}
           onChange={event => setWebhookURL(event.target.value)}
         />
 
         <Input
-          label='Secret'
-          description='Enter the secret of your webhook.'
-          placeholder='ed5d38a4-a3b3-4cf0-adc6-da128973b865'
+          label={t('serverManagePage.webhook.inputs.secret.label')}
+          description={t('serverManagePage.webhook.inputs.secret.description')}
+          placeholder={t('serverManagePage.webhook.inputs.secret.placeholder')}
           value={webhookToken}
           onChange={event => setWebhookToken(event.target.value)}
         />

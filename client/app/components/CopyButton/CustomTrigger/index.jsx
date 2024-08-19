@@ -1,4 +1,5 @@
 import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 import { useState, useRef } from 'react';
 import { toast } from 'sonner';
 
@@ -7,7 +8,7 @@ export default function CopyButton({ timeout = 2000, successText, copyText, chil
   const copyTimeoutRef = useRef(null);
 
   const handleCopy = () => {
-    if ('clipboard' in navigator === false) return toast.error('Your browser does not support the clipboard API.');
+    if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
 
     navigator.clipboard.writeText(copyText);
     toast.success(successText);

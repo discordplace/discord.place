@@ -2,6 +2,7 @@
 
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
+import { t } from '@/stores/language';
 
 export default function VerifiedBadge() {
   const theme = useThemeStore(state => state.theme);
@@ -16,7 +17,7 @@ export default function VerifiedBadge() {
       />
 
       <span className='hidden sm:block'>
-        Verified Profile
+        {t('editProfilePage.verifiedBadge')}
       </span>
     </div>
   );

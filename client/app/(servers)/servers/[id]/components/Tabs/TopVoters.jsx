@@ -1,3 +1,5 @@
+'use client';
+
 import Pagination from '@/app/components/Pagination';
 import { useEffect, useState } from 'react';
 import cn from '@/lib/cn';
@@ -6,6 +8,7 @@ import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import fetchVoters from '@/lib/request/servers/fetchVoters';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { t } from '@/stores/language';
 
 export default function TopVoters({ server }) {
   const [loading, setLoading] = useState(false);
@@ -33,7 +36,7 @@ export default function TopVoters({ server }) {
   return (
     <div className='lg:max-w-[70%] w-full px-8 lg:px-0'>
       <h2 className='text-xl font-semibold'>
-        Top Voters
+        {t('serverPage.tabs.topVoters.title')}
       </h2>
 
       {loading ? (

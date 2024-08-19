@@ -5,6 +5,7 @@ import { MdKeyboardVoice } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { ImTrophy } from 'react-icons/im';
 import config from '@/config';
+import { t } from '@/stores/language';
 
 const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -15,37 +16,37 @@ export default function About({ server }) {
   const keys = [
     {
       key: 'category',
-      label: 'Category',
+      label: t('serverPage.about.labels.category'),
       icon: config.serverCategoriesIcons[server.category],
-      value: server.category
+      value: t(`categories.${server.category}`)
     },
     {
       key: 'members',
-      label: 'Total Members',
+      label: t('serverPage.about.labels.members'),
       icon: <FaUsers />,
       value: formatter.format(server.total_members)
     },
     {
       key: 'rewards',
-      label: 'Rewards',
+      label: t('serverPage.about.labels.rewards'),
       icon: <ImTrophy />,
-      value: server.rewards.length > 0 ? `${server.rewards.length} vote rewards available.` : 'No vote rewards available.'
+      value: server.rewards.length > 0 ? t('serverPage.about.availableVoteRewards', { count: server.rewards.length }) : t('serverPage.about.noVoteRewards')
     },
     {
       key: 'boosts',
-      label: 'Boost Level',
+      label: t('serverPage.about.labels.boosts'),
       icon: <TiStar />,
-      value: `${server.boost_level} (${server.total_boosts} boosts)`
+      value: t('serverPage.about.boostsLabelValue', { level: server.boost_level, count: server.total_boosts })
     },
     {
       key: 'members_in_voice',
-      label: 'Voice Activity',
+      label: t('serverPage.about.labels.voiceActivity'),
       icon: <MdKeyboardVoice />,
-      value: `${formatter.format(server.total_members_in_voice)} members in voice`
+      value: t('serverPage.about.voiceActivityLabelValue', { count: server.total_members_in_voice })
     },
     {
       key: 'votes',
-      label: 'Votes',
+      label: t('serverPage.about.labels.votes'),
       icon: <TbSquareRoundedChevronUp />,
       value: formatter.format(server.votes)
     }
@@ -59,7 +60,7 @@ export default function About({ server }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
       >
-        About
+        {t('serverPage.about.title')}
       </motion.h2>
 
       <motion.p className='mt-2 whitespace-pre-wrap text-tertiary' 

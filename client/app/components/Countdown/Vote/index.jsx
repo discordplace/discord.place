@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import { t } from '@/stores/language';
 
 const ReactCountdown = dynamic(() => import('react-countdown'), {
   ssr: false
@@ -22,11 +23,11 @@ export default function Countdown({ date }) {
         return (
           <>
             <span className='items-center hidden gap-x-1 lg:flex'>
-              Wait {hours}h {minutes}m {seconds}s to vote
+              {t('voteCountdown.desktop', { hours, minutes, seconds })}
             </span>
 
             <span className='flex items-center gap-x-1 lg:hidden'>
-              {hours}h {minutes}m {seconds}s
+              {t('voteCountdown.mobile', { hours, minutes })}
             </span>
           </>
         );

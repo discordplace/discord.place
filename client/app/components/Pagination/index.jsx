@@ -5,6 +5,7 @@ import cn from '@/lib/cn';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { t } from '@/stores/language';
 
 function generateClickableNumbers(currentPage, totalPages, limit) {
   currentPage = Math.max(1, Math.min(currentPage, totalPages));
@@ -39,7 +40,7 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
 
   useEffect(() => {
     if (inputRef?.current) {
-      if (inputOpened) toast.info(`Type a page number between 1 and ${totalPages} and press Enter to navigate to that page.`);
+      if (inputOpened) toast.info(t('pagination.inputOpened', { totalPages }));
       inputRef.current.focus();
     }
 

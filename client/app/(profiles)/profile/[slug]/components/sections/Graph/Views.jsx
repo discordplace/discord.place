@@ -1,8 +1,11 @@
+'use client';
+
 import Graph from '@/app/(dashboard)/components/Home/Graph/index';
 import cn from '@/lib/cn';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import Tooltip from '@/app/components/Tooltip';
 import { useMedia } from 'react-use';
+import { t } from '@/stores/language';
 
 export default function ViewsGraph({ profile }) {
   const data = profile.dailyStats || [];
@@ -20,7 +23,7 @@ export default function ViewsGraph({ profile }) {
   return (
     <>
       <h2 className='flex items-center text-xl font-semibold gap-x-2'>
-        Views Graph
+        {t('profilePage.graph.views.title')}
 
         <Tooltip
           side={isMobile ? 'bottom' : 'right'}
@@ -41,15 +44,14 @@ export default function ViewsGraph({ profile }) {
       </h2>
 
       <p className='mt-2 whitespace-pre-wrap text-tertiary'>
-        The amount of views this profile has received over time.
+        {t('profilePage.graph.views.description')}
       </p>
 
       <div className='w-full mt-8'>
         <Graph
-          id='views'
+          id='profileViews'
           data={profile.dailyStats.map(({ createdAt, views }) => ({ createdAt, value: views })).reverse()}
           tooltipFormatter={value => value.toLocaleString('en-US')}
-          tooltipLabel='Views'
           tooltipIcon='<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M256 105c-101.8 0-188.4 62.4-224 151 35.6 88.6 122.2 151 224 151s188.4-62.4 224-151c-35.6-88.6-122.2-151-224-151zm0 251.7c-56 0-101.8-45.3-101.8-100.7S200 155.3 256 155.3 357.8 200.6 357.8 256 312 356.7 256 356.7zm0-161.1c-33.6 0-61.1 27.2-61.1 60.4s27.5 60.4 61.1 60.4 61.1-27.2 61.1-60.4-27.5-60.4-61.1-60.4z"></path></svg>'
           color={
             isIncreased ? '#64b071' :

@@ -22,6 +22,7 @@ import createTripledVotesCheckout from '@/lib/request/bots/createTripledVotesChe
 import createStandedOutCheckout from '@/lib/request/bots/createStandedOutCheckout';
 import { useRouter } from 'next-nprogress-bar';
 import { AiOutlineRise } from 'react-icons/ai';
+import { t } from '@/stores/language';
 
 export default function Actions({ bot }) {
   const theme = useThemeStore(state => state.theme);
@@ -56,13 +57,13 @@ export default function Actions({ bot }) {
           clearInterval(captchaIntervalRef.current);
 
           toast.promise(voteBot(bot.id, response), {
-            loading: `Voting ${bot.username}..`,
+            loading: t('botPage.actions.toast.voting', { botName: bot.username }),
             success: () => {
               setLoading(false);
               setVoteTimeout({ createdAt: new Date().getTime() + 86400000 });
               revalidateBot(bot.id);
 
-              return `Successfully voted for ${bot.username}!`;
+              return t('botPage.actions.toast.voted', { botName: bot.username });
             },
             error: error => {
               setLoading(false);
@@ -81,11 +82,11 @@ export default function Actions({ bot }) {
     setBuyTripledVotesLoading(true);
 
     toast.promise(createTripledVotesCheckout(bot.id), {
-      loading: 'We are creating a checkout for you..',
+      loading: t('botPage.actions.toast.creatingCheckout'),
       success: data => {        
         setTimeout(() => router.push(data.url), 3000);
 
-        return 'Checkout created! Redirecting you to the payment page in few seconds..';
+        return t('botPage.actions.toast.checkoutCreated');
       },
       error: error => {
         setBuyTripledVotesLoading(false);
@@ -99,11 +100,11 @@ export default function Actions({ bot }) {
     setBuyStandedOutLoading(true);
 
     toast.promise(createStandedOutCheckout(bot.id), {
-      loading: 'We are creating a checkout for you..',
+      loading: t('botPage.actions.toast.creatingCheckout'),
       success: data => {        
         setTimeout(() => router.push(data.url), 3000);
 
-        return 'Checkout created! Redirecting you to the payment page in few seconds..';
+        return t('botPage.actions.toast.checkoutCreated');
       },
       error: error => {
         setBuyStandedOutLoading(false);
@@ -121,7 +122,7 @@ export default function Actions({ bot }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
       >
-        Actions
+        {t('botPage.actions.title')}
       </motion.h2>
 
       <motion.div 
@@ -161,7 +162,7 @@ export default function Actions({ bot }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
           onClick={() => {
-            if (!loggedIn) return toast.error('You need to be logged in to vote for a bot.');
+            if (!loggedIn) return toast.error(t('botPage.actions.toast.loginRequiredForVote'));
             if (voteTimeout) return;
             
             setShowCaptcha(true);
@@ -179,10 +180,10 @@ export default function Actions({ bot }) {
               <TbSquareRoundedChevronUpFilled className='absolute transition-transform opacity-0 group-hover:opacity-100 group-hover:scale-[1.2]' />
               <TbSquareRoundedChevronUp className='opacity-100 transition-[transform] group-hover:opacity-0' />
             </div>
+
             {formatter.format(bot.votes)}
           </div>
         </motion.button>
-        
 
         <MotionLink 
           className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg group disabled:pointer-events-none disabled:opacity-70 hover:text-primary hover:bg-tertiary bg-secondary gap-x-2 text-secondary'
@@ -192,7 +193,7 @@ export default function Actions({ bot }) {
           href={bot.invite_url}
           target='_blank'
         >
-          Invite Bot
+          {t('buttons.inviteBot')}
           <BiSolidEnvelope />
         </MotionLink>
         
@@ -204,7 +205,7 @@ export default function Actions({ bot }) {
             defaultIcon={PiShareFat}
             hoverIcon={PiShareFatFill}
           >
-            Share Bot
+            {t('buttons.shareBot')}
           </CopyButton>
         </motion.button>
 
@@ -215,7 +216,7 @@ export default function Actions({ bot }) {
           transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
           href={config.supportInviteUrl}
         >
-          Report Bot
+          {t('buttons.reportBot')}
           <MdFlag />
         </MotionLink>
 
@@ -228,7 +229,7 @@ export default function Actions({ bot }) {
               transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
               href={`/bots/${bot.id}/manage`}
             >
-              Manage Bot
+              {t('buttons.manageBot')}
               <BiPencil />
             </MotionLink>
 
@@ -245,7 +246,7 @@ export default function Actions({ bot }) {
               >
                 <div className='flex gap-x-1.5 items-center'>
                   {buyTripledVotesLoading && <TbLoader className='animate-spin' />}
-                  Buy Triple Votes
+                  {t('buttons.buyTripleVotes')}
                 </div>
 
                 <div className='flex items-center font-bold gap-x-1'>
@@ -267,7 +268,7 @@ export default function Actions({ bot }) {
               >
                 <div className='flex gap-x-1.5 items-center'>
                   {buyStandedOutLoading && <TbLoader className='animate-spin' />}
-                  Stand Out
+                  {t('buttons.standOut')}
                 </div>
 
                 <div className='flex items-center font-bold gap-x-1'>

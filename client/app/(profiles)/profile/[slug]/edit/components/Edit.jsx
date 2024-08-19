@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import cn from '@/lib/cn';
-import fuc from '@/lib/fuc';
 import editProfile from '@/lib/request/profiles/editProfile';
 import { toast } from 'sonner';
 import Socials from '@/app/(profiles)/profile/[slug]/edit/components/Socials';
@@ -21,6 +20,7 @@ import Tooltip from '@/app/components/Tooltip';
 import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
 import { colord, extend } from 'colord';
 import a11yPlugin from 'colord/plugins/a11y';
+import { t } from '@/stores/language';
 
 extend([a11yPlugin]);
 
@@ -118,10 +118,11 @@ export default function Edit({ profileData }) {
     return (
       <div className='flex flex-col w-full p-4 mt-4 border border-yellow-500 rounded-xl bg-yellow-500/10 gap-y-2'>
         <h2 className='flex items-center text-lg font-bold gap-x-2 text-primary'>
-          <PiWarningCircleFill /> You can{'\''}t do that!
+          <PiWarningCircleFill /> {t('editProfilePage.premiumRequired.title')}
         </h2>
+
         <p className='text-sm font-medium text-tertiary'>
-          You have to be Premium to change that. For more information about Premium, visit <Link href='/premium' className='text-secondary hover:text-primary'>Premium page</Link>.
+          {t('editProfilePage.premiumRequired.description', { link: <Link href='/premium' className='text-secondary hover:text-primary'>{t('editProfilePage.premiumRequired.linkText')}</Link> })}
         </p>
       </div>
     );
@@ -144,18 +145,27 @@ export default function Edit({ profileData }) {
             }}
           >
             <h1 className='text-lg font-medium text-primary'>
-              Beep beep! You have unsaved changes.
+              {t('editProfilePage.unsavedChangesPopover.label')}
             </h1>
+
             <div className='flex gap-x-2'>
-              <button className='px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none text-black dark:text-white hover:text-white dark:hover:text-black hover:bg-black dark:hover:bg-white' onClick={() => {
-                setChangedKeys({});
-                setProfile(unchangedProfile);
-              }} disabled={loading}>
-                Cancel
+              <button
+                className='px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none text-black dark:text-white hover:text-white dark:hover:text-black hover:bg-black dark:hover:bg-white' onClick={() => {
+                  setChangedKeys({});
+                  setProfile(unchangedProfile);
+                }}
+                disabled={loading}
+              >
+                {t('buttons.cancel')}
               </button>
-              <button className='flex items-center gap-x-1.5 px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none text-white dark:text-black dark:bg-white bg-black hover:bg-black/70 dark:hover:bg-white/70 hover:text-white' onClick={saveChangedKeys} disabled={loading}>
+
+              <button
+                className='flex items-center gap-x-1.5 px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none text-white dark:text-black dark:bg-white bg-black hover:bg-black/70 dark:hover:bg-white/70 hover:text-white'
+                onClick={saveChangedKeys}
+                disabled={loading}
+              >
                 {loading && <TbLoader className='animate-spin' />}
-                Save
+                {t('buttons.save')}
               </button>
             </div>
           </motion.div>
@@ -167,18 +177,20 @@ export default function Edit({ profileData }) {
           <div className='flex flex-col justify-between gap-4 sm:flex-row' key={key}>
             <div className='flex flex-col flex-1 w-full gap-y-1 max-w-[80%]'>
               <h2 className='flex items-center font-medium text-tertiary gap-x-2'>
-                {key === 'preferredHost' ? (
-                  <>
-                    Preferred Host
+                {t(`editProfilePage.labels.${key}`)}
 
-                    <Tooltip content='This feature is only available for Premium users.' side='right'>
-                      <div>
-                        <FaCrown className='text-yellow-500' />
-                      </div>
-                    </Tooltip>
-                  </>
-                ) : fuc(key)}
+                {key === 'preferredHost' && (
+                  <Tooltip
+                    content={t('editProfilePage.tooltip.premiumRequired')}
+                    side='right'
+                  >
+                    <div>
+                      <FaCrown className='text-yellow-500' />
+                    </div>
+                  </Tooltip>
+                )}
               </h2>
+
               {currentlyEditingIndex === index ? (
                 key === 'bio' ? (
                   <span
@@ -230,9 +242,10 @@ export default function Edit({ profileData }) {
                   }}
                   disabled={loading}
                 >
-                  Cancel
+                  {t('buttons.cancel')}
                 </button>
               )}
+
               <button 
                 className={cn(
                   'h-max px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none',
@@ -244,7 +257,7 @@ export default function Edit({ profileData }) {
                 }}
                 disabled={loading}
               >
-                {currentlyEditingIndex === index ? 'Save' : 'Edit'}
+                {currentlyEditingIndex === index ? t('buttons.save') : t('buttons.edit')}
               </button>
             </div>
           </div>
@@ -253,9 +266,12 @@ export default function Edit({ profileData }) {
         <div className='flex flex-col justify-between gap-4 sm:flex-row'>
           <div className='flex flex-col flex-1 w-full gap-y-1 max-w-[80%]'>
             <h2 className='flex items-center font-medium text-tertiary gap-x-2'>
-              Card Colors
+              {t('editProfilePage.labels.cardColors')}
               
-              <Tooltip content='This feature is only available for Premium users.' side='right'>
+              <Tooltip
+                content={t('editProfilePage.tooltip.premiumRequired')}
+                side='right'
+              >
                 <div>
                   <FaCrown className='text-yellow-500' />
                 </div>
@@ -267,10 +283,11 @@ export default function Edit({ profileData }) {
                 <div className='flex mt-2 gap-x-4'>
                   <div className='flex flex-col gap-y-2'>
                     <h2 className='flex items-center text-sm font-medium text-secondary gap-x-2'>
-                      Primary
+                      {t('editProfilePage.cardColors.primary')}
 
                       <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.primary || '#000000' }} />
                     </h2>
+
                     <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[10px] [&_.react-colorful\_\_pointer]:h-[10px] [&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px]'>
                       <HexAlphaColorPicker 
                         color={colors.primary || '#000000'}
@@ -288,10 +305,11 @@ export default function Edit({ profileData }) {
 
                   <div className='flex flex-col gap-y-2'>
                     <h2 className='flex items-center text-sm font-medium text-secondary gap-x-2'>
-                      Secondary
+                      {t('editProfilePage.cardColors.secondary')}
 
                       <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.secondary || '#000000' }} />
                     </h2>
+
                     <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[10px] [&_.react-colorful\_\_pointer]:h-[10px] [&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px]'>
                       <HexAlphaColorPicker 
                         color={colors.secondary || '#000000'}
@@ -313,11 +331,13 @@ export default function Edit({ profileData }) {
             ) : (
               <div className='flex mt-2 gap-x-4'>
                 <div className='flex flex-col gap-y-2'>
-                  <h2 className='text-sm font-medium text-secondary'>Primary</h2>
+                  <h2 className='text-sm font-medium text-secondary'>
+                    {t('editProfilePage.cardColors.primary')}                    
+                  </h2>
 
                   <CopyButtonCustomTrigger
                     timeout={2000}
-                    successText={`Color ${profile.colors?.primary || '#000000'} copied!`}
+                    successText={t('editProfilePage.toast.colorCopied', { hex: profile.colors?.primary || '#000000' })}
                     copyText={profile.colors?.primary || '#000000'}
                   >
                     <div className='relative flex items-center justify-center w-20 h-12 cursor-pointer group'>
@@ -332,18 +352,20 @@ export default function Edit({ profileData }) {
                           colord(profile.colors?.primary || '#000000').isLight() ? 'text-black' : 'text-white'
                         )}
                       >
-                        Copy {profile.colors?.primary || '#000000'}
+                        {t('editProfilePage.cardColors.copyColor', { hex: profile.colors?.primary || '#000000' })}
                       </div>
                     </div>
                   </CopyButtonCustomTrigger>
                 </div>
 
                 <div className='flex flex-col gap-y-2'>
-                  <h2 className='text-sm font-medium text-secondary'>Secondary</h2>
+                  <h2 className='text-sm font-medium text-secondary'>
+                    {t('editProfilePage.cardColors.secondary')}
+                  </h2>
 
                   <CopyButtonCustomTrigger
                     timeout={2000}
-                    successText={`Color ${profile.colors?.secondary || '#000000'} copied!`}
+                    successText={t('editProfilePage.toast.colorCopied', { hex: profile.colors?.secondary || '#000000' })}
                     copyText={profile.colors?.secondary || '#000000'}
                   >
                     <div className='relative flex items-center justify-center w-20 h-12 cursor-pointer group'>
@@ -358,7 +380,7 @@ export default function Edit({ profileData }) {
                           colord(profile.colors?.secondary || '#000000').isLight() ? 'text-black' : 'text-white'
                         )}
                       >
-                        Copy {profile.colors?.secondary || '#000000'}
+                        {t('editProfilePage.cardColors.copyColor', { hex: profile.colors?.secondary || '#000000' })}
                       </div>
                     </div>
                   </CopyButtonCustomTrigger>
@@ -375,7 +397,7 @@ export default function Edit({ profileData }) {
                   onClick={() => setCurrentlyEditingIndex(-1)}
                   disabled={loading}
                 >
-                  Cancel
+                  {t('buttons.cancel')}
                 </button>
 
                 <button 
@@ -384,7 +406,7 @@ export default function Edit({ profileData }) {
                     setLoading(true);
 
                     toast.promise(editProfile(profileData.slug, { colors: { primary: null, secondary: null } }), {
-                      loading: 'Resetting colors...',
+                      loading: t('editProfilePage.toast.resettingColors'),
                       success: newProfile => {
                         setLoading(false);
 
@@ -399,7 +421,7 @@ export default function Edit({ profileData }) {
                           primary: newProfile.colors?.primary || '#000000'
                         }));
 
-                        return 'Colors reset!';
+                        return t('editProfilePage.toast.colorsReset');
                       },
                       error: error => {
                         setLoading(false);
@@ -411,7 +433,7 @@ export default function Edit({ profileData }) {
                   disabled={loading}
                 >
                   {loading && <TbLoader className='animate-spin' />}
-                  Reset
+                  {t('buttons.reset')}
                 </button>
               </>
             )}
@@ -427,7 +449,7 @@ export default function Edit({ profileData }) {
               }}
               disabled={loading}
             >
-              {currentlyEditingIndex === 'cardColors' ? 'Save' : 'Edit'}
+              {currentlyEditingIndex === 'cardColors' ? t('buttons.save') : t('buttons.edit')}
             </button>
           </div>
         </div>

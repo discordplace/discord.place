@@ -9,5 +9,1891 @@
       "Discord  Şablonları",
       "Discord  Sesleri"
     ]
+  },
+  "header": {
+    "profiles": "Profiller",
+    "servers": "Sunucular",
+    "bots": "Botlar",
+    "emojis": "Emojiler",
+    "templates": "Şablonlar",
+    "sounds": "Sesler",
+    "logout": "Çıkış Yap"
+  },
+  "footer": {
+    "title": "All things related to Discord in one place.",
+    "copyRight": "{{year}} discord.place. All rights reserved.",
+    "statusText": [
+      "All systems operational",
+      "Partial outage",
+      "Major outage"
+    ],
+    "theme": {
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": {
+      "en": "English",
+      "tr": "Turkish"
+    },
+    "blocks": [
+      {
+        "title": "Pages",
+        "links": [
+          "Home",
+          "API Documentation",
+          "Service Status",
+          "Premium"
+        ]
+      },
+      {
+        "title": "Our Services",
+        "links": [
+          "Profiles",
+          "Servers",
+          "Bots",
+          "Emojis",
+          "Templates",
+          "Sounds"
+        ]
+      },
+      {
+        "title": "Legal",
+        "links": [
+          "Privacy Policy",
+          "Terms of Service",
+          "Cookie Policy",
+          "Content Policy",
+          "Purchase Policy"
+        ]
+      },
+      {
+        "title": "Socials"
+      }
+    ]
+  },
+  "premiumPage": {
+    "title": "Premium Membership",
+    "subtitle": "Unlock exclusive features and benefits by purchasing Premium. With annual & lifetime plans, you can save more!",
+    "billingCycle": {
+      "monthly": "Monthly",
+      "annual": "Annual",
+      "lifetime": "Lifetime"
+    },
+    "currentPlan": "Current Plan",
+    "savePercentage": "Save {{savePercentage}}%",
+    "featureHighlights": "Feature Highlights",
+    "plans": {
+      "free": "Free",
+      "premium": "Premium"
+    },
+    "purchasePremium": "Purchase Premium",
+    "loginToPurchase": "Login to Purchase",
+    "features": [
+      {
+        "label": "Exclusive Premium Badge",
+        "info": "Show off your Premium status with an exclusive badge on your bots/servers & profile."
+      },
+      {
+        "label": "Stunning Card Effects",
+        "info": "Get exclusive card effects for your servers/bots/profile cards."
+      },
+      {
+        "label": "Premium Preferred Hosts",
+        "info": "Ability to use dsc.wtf, dsc.mom, dsc.dog hostnames for your profile."
+      },
+      {
+        "label": "Profile Card Colors",
+        "info": "Customize your profile card with a variety of colors."
+      },
+      {
+        "label": "Doubled Votes",
+        "info": "When someone votes for your server/bot, votes will be doubled."
+      },
+      {
+        "label": "Vote Rewards Limit (per server)",
+        "info": "Maximum amount of vote rewards you can create per server."
+      },
+      {
+        "label": "Links Limit",
+        "info": "Maximum amount of links you can create."
+      },
+      {
+        "label": "Colorful Name in Panels",
+        "info": "Stand out with your colorful name on the server panels."
+      }
+    ],
+    "frequentlyAskedQuestions": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Have a question? Check out our FAQ section below.",
+      "items": [
+        {
+          "label": "What is a Premium Membership?",
+          "content": "Premium Membership is a subscription-based service that allows you to access exclusive features and content on our platform."
+        },
+        {
+          "label": "What is the cost of Premium Membership?",
+          "content": "The cost of Premium Membership is $3.00 per month. We also offer a discounted annual subscription for $25.00 per year (save $11.00) and a lifetime subscription for $60.00."
+        },
+        {
+          "label": "How can I subscribe to Premium Membership?",
+          "content": "You can subscribe to Premium Membership by clicking on the \"Create Checkout\" button on this page. You will be redirected to the checkout page where you can complete the payment process. Once the payment is successful, you will be automatically subscribed to Premium Membership."
+        },
+        {
+          "label": "Can I request a refund for Premium Membership?",
+          "content": "We do not offer refunds for Premium Membership. However, you can cancel your subscription at any time, and you will not be charged for the next billing cycle."
+        },
+        {
+          "label": "Can I transfer my Premium Membership to another account?",
+          "content": "No, Premium Membership is non-transferable."
+        }
+      ]
+    }
+  },
+  "errorPage": {
+    "badge": "Error",
+    "title": "We're sorry, an error occurred.",
+    "messages": {
+      "0": "An unknown error occurred.",
+      "401": "You are not authorized to view this page.",
+      "404": "The page you are looking for does not exist.",
+      "50001": "You are not authorized to edit this profile.",
+      "50002": "The user who created the profile does not currently have a premium.",
+      "60001": "You are not authorized to edit this server.",
+      "70001": "You are not authorized to edit this bot.",
+      "80001": "The link you are looking for does not exist."
+    }
+  },
+  "errorMessages": {
+    "validSearchQuery": "Please enter a valid search query.",
+    "searchQueryTooShort": "The search query is too short. Please enter a minimum of 3 characters.",
+    "searchQueryTooLong": "The search query is too long. Please enter a maximum of 100 characters.",
+    "clipboardNotSupported": "Your browser does not support the clipboard API."
+  },
+  "pagination": {
+    "inputOpened": "Type a page number between 1 and {{totalPages}} and press Enter to navigate to that page."
+  },
+  "status": {
+    "incidentDescription": "We are currently experiencing some issues. Check our status page for updates.",
+    "incidentContent": "This incident started at {{startedAt}}.",
+    "maintenanceDescription": {
+      "planned": "We are planning to perform maintenance on our services.",
+      "started": "We are currently performing maintenance on our services. Check our status page for updates."
+    },
+    "maintenanceContent": {
+      "planned": "This maintenance is planned to start at {{date}}.",
+      "started": "This maintenance is started at {{date}}."
+    }
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "openIncident": "Open Incident",
+    "openMaintenance": "Open Maintenance",
+    "back": "Back",
+    "next": "Next",
+    "publish": "Publish",
+    "resetSearch": "Reset Search",
+    "confirm": "Confirm",
+    "upload": "Upload",
+    "download": "Download",
+    "delete": "Delete",
+    "createReminder": "Create Reminder",
+    "vote": "Vote",
+    "joinServer": "Join Server",
+    "shareServer": "Share Server",
+    "reportServer": "Report Server",
+    "manageServer": "Manage Server",
+    "buyTripleVotes": "Buy Triple Votes",
+    "standOut": "Stand Out",
+    "submitReview": "Submit Review",
+    "loginWithDiscord": "Login with Discord",
+    "discardChanges": "Discard Changes",
+    "saveChanges": "Save Changes",
+    "enableTracking": "Enable Tracking",
+    "saveWebhookSettings": "Save Webhook Settings",
+    "visit": "Visit",
+    "share": "Share",
+    "verify": "Verify",
+    "unverify": "Unverify",
+    "save": "Save",
+    "edit": "Edit",
+    "rest": "Reset",
+    "add": "Add",
+    "addNew": "Add New",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "removeAll": "Remove All",
+    "change": "Change",
+    "enlarge": "Enlarge",
+    "shrink": "Shrink",
+    "selectEmoji": "Select Emoji",
+    "previous": "Previous",
+    "inviteBot": "Invite Bot",
+    "shareBot": "Share Bot",
+    "reportBot": "Report Bot",
+    "manageBot": "Manage Bot",
+    "backToEditing": "Back to Editing",
+    "showMarkdownPreview": "Show Markdown Preview",
+    "saveRepository": "Save Repository",
+    "generateApiKey": "Generate API Key",
+    "deleteApiKey": "Delete API Key",
+    "copyApiKey": "Copy API Key",
+    "apiDocumentation": "API Documentation",
+    "create": "Create",
+    "viewProfile": "View Profile",
+    "createProfile": "Create Profile",
+    "newLink": "New Link",
+    "letsGo": "Let's Go!",
+    "addBot": "Add Bot",
+    "addSound": "Add Sound"
+  },
+  "voteCountdown": {
+    "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",
+    "mobile": "Wait {{hours}}h {{minutes}}m"
+  },
+  "cookieBanner": {
+    "text": "This website uses 🍪 cookies to ensure you get the best experience on our website.",
+    "buttons": {
+      "ok": "Got it!",
+      "learnMore": "Learn more"
+    }
+  },
+  "publishTemplatePage": {
+    "title": "Publish Template",
+    "subtitle": "List your template on Discord Place and let others use it.",
+    "steps": [
+      {
+        "title": "Fetch Details",
+        "inputs": {
+          "templateId": {
+            "title": "Let's start with the found your template details.",
+            "subtitle": "You should provide the template ID below.",
+            "placeholder": "Enter template ID"
+          }
+        }
+      },
+      {
+        "title": "Fill Details",
+        "inputs": {
+          "templateCategories": {
+            "title": "And now let's fill the details.",
+            "subtitle": "Choose a one or more categories for your template."
+          },
+          "templateName": {
+            "title": "Template Name",
+            "subtitle": "Enter a name for your template.",
+            "placeholder": "Enter template name"
+          },
+          "templateDescription": {
+            "title": "Template Description",
+            "subtitle": "Enter a description for your template.",
+            "placeholder": "Enter template description (min {{min}} characters)"
+          }
+        }
+      },
+      {
+        "title": "Preview & Publish",
+        "heading": "Confirm your details and publish your template.",
+        "description": "Review the details and click on the publish button to publish your template.",
+        "fields": {
+          "categories": "Categories",
+          "templateName": "Template Name",
+          "templateDescription": "Template Description"
+        },
+        "disclaimer": {
+          "content": "By publishing this template, you agree to our <contentPolicyLink>.",
+          "linkText": "content policy"
+        }
+      }
+    ],
+    "toast": {
+      "publishingTemplate": "Publishing template...",
+      "templatePublished": "Template published successfully.",
+      "templateNotFound": "Template not found."
+    }
+  },
+  "categories": {
+    "All": "All",
+    "Chat": "Chat",
+    "Design": "Design",
+    "Music": "Music",
+    "Education": "Education",
+    "Gaming": "Gaming",
+    "Anime": "Anime",
+    "Tech": "Tech",
+    "Roleplay": "Roleplay",
+    "Event": "Event",
+    "Other": "Other",
+    "Memes": "Memes",
+    "Loud": "Loud",
+    "NSFW": "NSFW",
+    "Public": "Public",
+    "Community": "Community",
+    "Art": "Art",
+    "Programming": "Programming",
+    "Science": "Science",
+    "Technology": "Technology",
+    "Language": "Language",
+    "Pepe": "Pepe",
+    "Pixel Art": "Pixel Art",
+    "Cute": "Cute",
+    "Logos": "Logos",
+    "Utility": "Utility",
+    "Animated": "Animated",
+    "Moderation": "Moderation",
+    "Fun & Games": "Fun & Games",
+    "Economy": "Economy",
+    "Art & Design": "Art & Design",
+    "Virtual Assistants": "Virtual Assistants",
+    "Social Media Integration": "Social Media Integration",
+    "Anime & Manga": "Anime & Manga"
+  },
+  "templatesPage": {
+    "title": "Discover the templates",
+    "subtitle": "Explore most popular templates and find the perfect one for your Discord server!<br>Don't waste your time to create your own server, just use one of the templates!",
+    "searchInputPlaceholder": "Search for a template by name, description, etc.",
+    "categorySelectPlaceholder": "Category",
+    "sortSelect": {
+      "placeholder": "Sorting",
+      "items": {
+        "popular": "Popular",
+        "newest": "Newest",
+        "oldest": "Oldest"
+      }
+    },
+    "emptyErrorState": {
+      "title": "It's quiet in here...",
+      "message": "There are no templates to display. Maybe that's a sign to create one?"
+    }
+  },
+  "templateCard": {
+    "uses": "{{count}} uses"
+  },
+  "templatePreviewPage": {
+    "toast": {
+      "deletingTemplate": "Deleting template..",
+      "templateDeleted": "Successfully deleted {{templateName}}. You will be redirected to the home page in a few seconds.",
+      "templateIdCopied": "Template ID {{templateId}} copied to clipboard. You can now use \"/template use <id>\" to use this template on Discord. Don't forget invite our Discord bot to your server!",
+      "roleColorCopied": "Role color copied to clipboard."
+    },
+    "tooltip": {
+      "addAServer": "Add a server",
+      "exploreDiscoverableServers": "Explore Discoverable Servers",
+      "backToDiscordPlace": "Back to discord.place",
+      "copyTemplateId": "Copy Template ID",
+      "deleteTemplate": "Delete Template",
+      "clickToCopyColor": "Click to copy the role color",
+      "threads": "Threads",
+      "notificationSettings": "Notification Settings",
+      "pinnedMessages": "Pinned Messages",
+      "showMemberList": "Show Member List",
+      "hideMemberList": "Hide Member List",
+      "inbox": "Inbox",
+      "help": "Help"
+    },
+    "searchInputPlaceholder": "Search",
+    "topicModal": {
+      "title": "View Topic",
+      "description": "You are currently viewing the topic of the channel: {{focusedChannel.name}}."
+    },
+    "deleteTemplateModal": {
+      "title": "Delete Template",
+      "description": "Are you sure you want to delete {{templateName}}?",
+      "note": "Please note that deleting your template cannot be undone."
+    },
+    "noTopic": "#{{focusedChannelName}} does not have a topic set.",
+    "channels": {
+      "home": "Home",
+      "events": "Events",
+      "browseChannels": "Browse Channels"
+    },
+    "clickToCopyColor": "Click to copy color"
+  },
+  "soundsPage": {
+    "title": "Discover the sounds",
+    "subtitle": "Explore, find and download the perfect sounds for your Discord server soundboard! Use sounds to make your server more fun and interactive.",
+    "searchInputPlaceholder": "Search for a sound by name...",
+    "categorySelectPlaceholder": "Category",
+    "sortSelect": {
+      "placeholder": "Sorting",
+      "items": {
+        "downloads": "Downloads",
+        "likes": "Likes",
+        "newest": "Newest",
+        "oldest": "Oldest"
+      }
+    },
+    "emptyErrorState": {
+      "title": "It's quiet in here...",
+      "message": "There are no sounds to display. Maybe that's a sign to create one?"
+    }
+  },
+  "soundCard": {
+    "volumePopover": {
+      "title": "Volume",
+      "subtitle": "Adjust the volume of the sounds."
+    },
+    "uploadSoundToDiscordModal": {
+      "description": "Quickly upload this sound to Discord by selecting a server below.",
+      "emptyErrorState": {
+        "title": "It's quiet in here...",
+        "message": "There are no servers where you can upload sounds to."
+      },
+      "notes": "* You should have the permission to manage sounds in the server.<br>* Log out and back in to freshen up the list.",
+      "tooltip": {
+        "inviteOurBot": "{{guildName}} (Invite our Bot)"
+      },
+      "toast": {
+        "guildNotFound": "Please select a server to upload the sound to.",
+        "uploadingSound": "Sound {{soundName}} is being uploaded to guild...",
+        "soundUploaded": "Sound uploaded successfully!"
+      }
+    },
+    "toast": {
+      "notLoggedIn": "You must be logged in to like sounds!",
+      "liking": "Liking sound...",
+      "liked": "Liked sound {{soundName}}!",
+      "unliking": "Unliking sound...",
+      "unliked": "Unliked sound {{soundName}}!"
+    },
+    "buttons": {
+      "upload": "Upload to Discord",
+      "login": "Login with Discord to Upload"
+    }
+  },
+  "soundPage": {
+    "toast": {
+      "deletingSound": "{{soundName}} is deleting..",
+      "soundDeleted": "{{soundName}} successfully deleted. You will be redirected to the home page in a few seconds."
+    },
+    "notApprovedInfo": {
+      "description": "For the moment, only you can see the sound. Once the sound is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your sound is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
+    },
+    "soundDetails": {
+      "title": "About {{soundName}}",
+      "fields": {
+        "uploadedAt": "Uploaded At",
+        "downloads": "Downloads",
+        "likes": "Likes",
+        "categories": "Categories",
+        "publisher": "Publisher"
+      }
+    },
+    "frequentlyAskedQuestions": {
+      "title": "Frequently Asked Questions",
+      "labels": [
+        "How can I download the sound?",
+        "How can I add the sound to my Discord server soundboard?",
+        "This sound is inappropriate. What can I do?"
+      ],
+      "answers": [
+        "You can use the button below to download <span> sound.",
+        {
+          "title": "I'm glad to hear that! There are 2 ways to add sounds to your Discord server.",
+          "methods": [
+            {
+              "buttonText": "1. Our Website (this page)",
+              "instructionsBefore": "Using our website, you can upload this sound to your server with just a few clicks. Here how you can do this:",
+              "instructions": [
+                {
+                  "text": "<link> to your server.",
+                  "linkText": "Add our bot"
+                },
+                "Click \"Upload to Discord\" button on sound card in this page.",
+                "Select the server you want to upload the sound & click the upload button.",
+                "Tada! Now sound is added to the server."
+              ]
+            },
+            {
+              "buttonText": "2. Classic Way",
+              "instructionsBefore": "This may be a little more challenging.",
+              "instructions": [
+                "Download the sound:",
+                "Open your Discord App and right click to your server.",
+                "Go to Server Settings > Soundboard",
+                "Click the Upload Sound.",
+                "Fill the form and select the sound you downloaded before and click the Upload button.",
+                "Tada! Now sound is added to the server."
+              ]
+            }
+          ]
+        },
+        "You can join our support server via the Discord button at the bottom of the page (Footer) and let us know that the sound is inappropriate."
+      ]
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "description": "You can delete the sound using the button below, but be careful not to delete it by mistake :)",
+      "deleteSoundModal": {
+        "title": "Delete Sound",
+        "description": "Are you sure you want to delete {{soundName}}?",
+        "content": "Please note that deleting the sound will remove all the downloads that the sound has received. This action cannot be undone.<br><br>This action cannot be undone."
+      }
+    }
+  },
+  "serversPage": {
+    "title": "Discover the servers",
+    "subtitle": "Explore the best servers on Discord and find the perfect community for you. Don't forget to vote for your favorite servers!",
+    "searchInputPlaceholder": "Search for a server by name, description, tags, etc.",
+    "categorySelectPlaceholder": "Category",
+    "sortSelect": {
+      "placeholder": "Sorting",
+      "items": {
+        "votes": "Votes",
+        "latestVoted": "Latest Voted",
+        "voice": "Voice",
+        "members": "Members",
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "boosts": "Boosts"
+      }
+    },
+    "emptyErrorState": {
+      "title": "It's quiet in here...",
+      "message": "There are no servers to display. Maybe that's a sign to create one?"
+    }
+  },
+  "serverCard": {
+    "noDescription": "This server does not have a description. We can only imagine how beautiful it is inside.",
+    "tripledVoteBadge": "3X VOTE!"
+  },
+  "serverPage": {
+    "countdown": {
+      "tripledVoteExpired": "Votes tripled expired!",
+      "votesTripledFor": "Votes tripled for {{hours}} hours, ${{minutes}} minutes!",
+      "standedOutExpired": "Standed out expired!",
+      "standedOutFor": "Standed out for {{hours}} hours, ${{minutes}} minutes!"
+    },
+    "about": {
+      "title": "About",
+      "labels": {
+        "category": "Category",
+        "members": "Total Members",
+        "rewards": "Rewards",
+        "boosts": "Boost Level",
+        "voiceActivity": "Voice Activity",
+        "votes": "Votes"
+      },
+      "availableVoteRewards": "{{count}} vote rewards available.",
+      "noVoteRewards": "No vote rewards available.",
+      "boostsLabelValue": "{{level}} ({{count}} boosts)",
+      "voiceActivityLabelValue": "{{count}} members in voice"
+    },
+    "actions": {
+      "title": "Actions",
+      "toast": {
+        "voting": "Voting {{serverName}}..",
+        "voted": "Successfully voted for {{serverName}}!",
+        "creatingReminder": "Creating reminder for {{serverName}}..",
+        "reminderCreated": "I will remind you to vote for {{serverName}} in 24 hours! Please keep your DMs open and don't leave the server.",
+        "creatingCheckout": "We are creating a checkout for you..",
+        "checkoutCreated": "Checkout created! Redirecting you to the payment page in few seconds..",
+        "loginRequiredForVote": "You need to be logged in to vote for servers.",
+        "serverUrlCopied": "Server URL copied to clipboard."
+      },
+      "tooltip": {
+        "noInviteLinkAvailable": "No invite link available for this server."
+      }
+    },
+    "keywords": {
+      "title": "Keywords"
+    },
+    "tabs": {
+      "labels": {
+        "reviews": "Reviews",
+        "topVoters": "Top Voters",
+        "rewards": "Rewards",
+        "voiceActivity": "Voice Activity",
+        "monthlyVotes": "Monthly Votes"
+      },
+      "reviews": {
+        "title": "Reviews",
+        "toast": {
+          "submittingReview": "Submitting review..",
+          "reviewSubmitted": "Your review has been submitted successfully!"
+        },
+        "totalReviews": "(0)[No reviews];(1)[1 review];(2-inf)[{{count}} reviews];",
+        "reviewSubmitted": {
+          "info": {
+            "title": "Note",
+            "description": "Your review has been submitted for moderation. It will be visible once it has been approved."
+          },
+          "alreadyReviewed": "You have already left a review for this server."
+        },
+        "ownerCannotReview": "You can't leave a review for your own server.",
+        "input": {
+          "label": "Your Review",
+          "description": "Let others know what you think about this server."
+        },
+        "loginRequiredForReview": "You need to be logged in to leave a review."
+      },
+      "topVoters": {
+        "title": "Top Voters"
+      },
+      "rewards": {
+        "title": "Rewards",
+        "subtitle": "Roles are given automatically to whoever reaches the required votes. Note that, these rewards is only for the server {{serverName}}.",
+        "badge": {
+          "locked": "Locked",
+          "unlocked": "Unlocked"
+        },
+        "tooltip": {
+          "unlocked": "You have unlocked this reward!",
+          "locked": "You need to vote to unlock this reward."
+        }
+      },
+      "voiceActivityGraph": {
+        "tooltipFormatter": "{{count}} members"
+      },
+      "monthlyVotesGraph": {
+        "title": "Monthly Votes Graph",
+        "subtitle": "The amount of votes this server has received over time."
+      }
+    }
+  },
+  "serverManagePage": {
+    "title": "Manage Server",
+    "subtitle": "Manage your server and its settings.",
+    "escToCloseBadge": "esc to close",
+    "toast": {
+      "savingChanges": "Saving changes..",
+      "changesSaved": "Successfully saved changes!" 
+    },
+    "discardChangesModal": {
+      "title": "Discard Changes",
+      "description": "Are you sure you want to discard your changes?",
+      "note": "Your changes will not be saved."
+    },
+    "essentialInformation": {
+      "title": "Essential Information",
+      "subtitle": "These are the most important settings for server. Be sure to fill them out correctly.",
+      "inputs": {
+        "description": {
+          "label": "Description",
+          "description": "This is the description that will be shown to everyone who visits your server on discord.place.",
+          "placeholder": "A server that has a lot of cool things."
+        },
+        "inviteUrl": {
+          "label": "Invite URL",
+          "description": "The URL that users can use to join your server. Make sure it is a valid invite URL.",
+          "placeholder": "Paste your server invite URL here."
+        }
+      }
+    },
+    "other": {
+      "title": "Other",
+      "subtitle": "Settings that you should not worry about too much.",
+      "inputs": {
+        "category": {
+          "label": "Category",
+          "description": "Select the category that your server belongs to. This will help users find your server."
+        },
+        "keywords": {
+          "label": "Keywords",
+          "description": "Add keywords to your server. This will help people find your server on discord.place. Separate each keyword with a comma.",
+          "placeholder": "e.g. fun, gaming, community"
+        },
+        "voiceActivity": {
+          "label": "Voice Activity",
+          "description": "Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active your server is."
+        }
+      },
+      "toast": {
+        "notValidKeyword": "Please enter a valid keyword.",
+        "keywordExists": "This keyword already exists.",
+        "keywordHasInvalidCharacters": "Keywords can only contain letters, numbers, and hyphens.",
+        "keywordTooLong": "Keywords can only be {{maxLength}} characters long."
+      },
+      "addedKeywords": {
+        "label": "Added Keywords",
+        "description": "Keywords that you have added so far. Click on a keyword to remove it.",
+        "max": " (max)"
+      }
+    },
+    "webhook": {
+      "title": "Webhook",
+      "subtitle": "Get notified when someone votes for your server.",
+      "optionalBadge": "Optional",
+      "toast": {
+        "secretRequired": "You should fill Webhook URL if you want to use a secret.",
+        "urlNotValid": "Webhook URL is not a valid URL.",
+        "urlNotHTTPS": "Webhook URL should be a HTTPS URL.",
+        "saving": "Saving webhook settings..",
+        "saved": "Webhook settings saved successfully."
+      },
+      "inputs": {
+        "url": {
+          "label": "URL",
+          "description": "Enter the URL of your webhook.",
+          "placeholder": "https://example.com/webhook"
+        },
+        "secret": {
+          "label": "Secret",
+          "description": "Enter the secret of your webhook.",
+          "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
+        }
+      }
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "subtitle": "You can delete your server here. Please be careful with this action. This action cannot be undone.",
+      "toast": {
+        "deletingServer": "Deleting server..",
+        "serverDeleted": "Successfully deleted the server. You will be redirected to the home page in a few seconds."
+      },
+      "deleteServerModal": {
+        "title": "Delete Server",
+        "description": "Are you sure you want to delete your server?",
+        "note": "Please note that deleting your server will remove all votes and reviews that your server has received.<br><br>This action cannot be undone."
+      }
+    }
+  },
+  "profilesPage": {
+    "title": "Discover the profiles",
+    "subtitle": " Find, share and explore the customized page of Discord profiles!<br>You have {{count}} profiles to explore.",
+    "searchInputPlaceholder": "Search for a profile by slug, occupation, location, etc."
+  },
+  "profileCard": {
+    "aboutMe": "About me",
+    "noBio": "This user has not provided a bio yet but we are sure it's awesome!",
+    "fields": {
+      "likes": "Likes",
+      "views": "Views",
+      "createdAt": "Created"
+    },
+    "toast": {
+      "profileUrlCopied": "Profile URL copied to clipboard!"
+    }
+  },
+  "userProfile": {
+    "flags": {
+      "Staff": "Discord Staff",
+      "Partner": "Partnered Server Owner",
+      "Hypesquad": "HypeSquad Events Member",
+      "BugHunterLevel1": "Discord Bug Hunter",
+      "BugHunterLevel2": "Discord Bug Hunter",
+      "HypeSquadOnlineHouse1": "HypeSquad Bravery",
+      "HypeSquadOnlineHouse2": "HypeSquad Brilliance",
+      "HypeSquadOnlineHouse3": "HypeSquad Balance",
+      "PremiumEarlySupporter": "Early Supporter",
+      "VerifiedDeveloper": "Verified App Developer",
+      "CertifiedModerator": "Moderator Programs Alumni",
+      "ActiveDeveloper": "Active Developer",
+      "Nitro": "Nitro Subscriber"
+    },
+    "tooltip": {
+      "verifiedApp": "Verified App"
+    },
+    "appBadge": "App",
+    "badgesHeading": "Badges",
+    "about": {
+      "title": "About",
+      "noBio": "his user has not set a bio yet."
+    },
+    "fields": {
+      "memberSince": "Member Since",
+      "votesGiven": {
+        "label": "Votes Given",
+        "tooltip": "The total number of votes given by this user."
+      },
+      "profile": {
+        "label": "Profile",
+        "tooltip": "The total number of profiles created by this user.",
+        "noProfile": "No profile found."
+      },
+      "likesReceived": {
+        "label": "Likes Received",
+        "tooltip": "The total number of likes given to this user's profile."
+      }
+    },
+    "servers": {
+      "title": "Servers",
+      "subtitle": "This user is also the owner of the following servers. If you like the user, maybe you like the servers also?"
+    },
+    "bots": {
+      "title": "Bots",
+      "subtitle": "This user is also the owner of the following bots. If you like the user, maybe you like the bots also?"
+    }
+  },
+  "profilePage": {
+    "about": {
+      "title": "About",
+      "noBio": "No bio provided.",
+      "labels": {
+        "occupation": "Occupation",
+        "gender": "Gender",
+        "location": "Location",
+        "birthday": "Birthday",
+        "views": "Views",
+        "likes": "Likes"
+      },
+      "valueUnknown": "Unknown"
+    },
+    "actions": {
+      "toast": {
+        "loginRequiredForLike": "You must be logged in to like profiles!",
+        "liking": "Liking {{profileSlug}}..",
+        "liked": "Liked {{profileSlug}}!",
+        "unliking": "Unliking {{profileSlug}}..",
+        "unliked": "Unliked {{profileSlug}}!",
+        "profileUrlCopied": "Profile URL copied to clipboard!"
+      },
+      "tooltip": {
+        "copyProfileUrl": "Copy Profile URL",
+        "reportProfile": "Report Profile",
+        "editProfile": "Edit Profile",
+        "likeProfile": "Like",
+        "unlikeProfile": "Unlike",
+        "loginRequiredForLike": "You must be logged in to like profiles."
+      }
+    },
+    "social": {
+      "title": "Social",
+      "noSocials": "No social found."
+    },
+    "graph": {
+      "likes": {
+        "label": "Likes",
+        "title": "Likes Graph",
+        "subtitle": "The amount of likes this profile has received over time."
+      },
+      "views": {
+        "label": "Views",
+        "title": "Views Graph",
+        "subtitle": "The amount of views this profile has received over time."
+      }
+    },
+    "servers": {
+      "title": "Servers",
+      "subtitle": "The owner of this profile is also the owner of the following servers. If you like the profile, maybe you like the servers also?"
+    }
+  },
+  "graph": {
+    "profileLikes": {
+      "tooltip": "{{count}} Likes"
+    },
+    "profileViews": {
+      "tooltip": "{{count}} Views"
+    },
+    "voiceActivity": {
+      "tooltip": "{{count}} members"
+    },
+    "monthlyVotes": {
+      "tooltip": "{{count}} Votes"
+    }
+  },
+  "editProfilePage": {
+    "title": "Edit Profile",
+    "verifiedBadge": "Verified Profile",
+    "toast": {
+      "verifyingProfile": "Verifying profile..",
+      "profileVerified": "Profile verified!",
+      "unverifyingProfile": "Unverifying profile..",
+      "profileUnverified": "Profile unverified!",
+      "colorCopied": "Color {{hex}} copied!",
+      "resettingColors": "Resetting colors..",
+      "colorsReset": "Colors reset!",
+      "invalidUrl": "Invalid URL.",
+      "emptyUrl": "URL cannot be empty.",
+      "socialAdding": "New social adding..",
+      "socialAdded": "New social added successfully.",
+      "socialMediaAdding": "New social media adding..",
+      "socialMediaAdded": "New social media added successfully.",
+      "deletingSocial": "Social deleting..",
+      "socialDeleted": "Social deleted successfully.",
+      "deletingProfile": "Deleting profile..",
+      "profileDeleted": "Profile deleted successfully."
+    },
+    "premiumRequiredInfo": {
+      "title": "You can't do that!",
+      "description": "You have to be Premium to change that. For more information about Premium, visit <link>.",
+      "linkText": "Premium page"
+    },
+    "unsavedChangesPopover": {
+      "label": "Beep beep! You have unsaved changes."
+    },
+    "labels": {
+      "slug": "Slug",
+      "occupation": "Occupation",
+      "gender": "Gender",
+      "location": "Location",
+      "birthday": "Birthday",
+      "bio": "Bio",
+      "preferredHost": "Preferred Host",
+      "cardColors": "Card Colors"
+    },
+    "tooltip": {
+      "premiumRequired": "This feature is only available for Premium users."
+    },
+    "cardColors": {
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "copyColor": "Copy {{hex}}"
+    },
+    "socials": {
+      "title": "Socials",
+      "subtitle": "Add your social media links to your profile."
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "subtitle": "You can delete the your profile using the button below, but be careful not to delete it by mistake :)",
+      "deleteProfileModal": {
+        "title": "Delete Profile",
+        "description": "Are you sure you want to delete your profile?",
+        "note": "Please note that deleting your profile will remove all your social links and likes that your profile has received.<br><br>This action cannot be undone."
+      }
+    }
+  },
+  "emojisPage": {
+    "title": "Discover the emojis",
+    "subtitle": "Explore, find and download the perfect emoji for your Discord server!<br>You have {{count}} emojis to explore.",
+    "searchInputPlaceholder": "Search for a emoji by name...",
+    "categorySelectPlaceholder": "Category",
+    "sortSelect": {
+      "placeholder": "Sorting",
+      "items": {
+        "popular": "Popular",
+        "newest": "Newest",
+        "oldest": "Oldest"
+      }
+    },
+    "emptyErrorState": {
+      "title": "It's quiet in here...",
+      "message": "There are no emojis to display. Maybe that's a sign to create one?"
+    }
+  },
+  "emojiPackageCard": {
+    "packBadge": "PACK"
+  },
+  "emojiCard": {
+    "gifBadge": "GIF"
+  },
+  "createEmojiPage": {
+    "title": "Publish Emoji",
+    "subtitle": "Publish your emoji to the world.",
+    "steps": [
+      {
+        "label": "Details",
+        "inputs": {
+          "emojiCategories": {
+            "title": "Let's start with the details.",
+            "subtitle": "Choose a one or more categories for your emoji."
+          },
+          "emojiName": {
+            "title": "Emoji Name",
+            "subtitle": "Enter a name for your emoji.",
+            "placeholder": "Enter emoji name"
+          }
+        }
+      },
+      {
+        "label": "Upload & Preview"
+      },
+      {
+        "label": "Publish",
+        "title": "Confirm your details and publish your emoji.",
+        "subtitle": "Review the details and click on the publish button to publish your emoji.",
+        "packageInfo": {
+          "title": "Hey!",
+          "description": "It looks like you want to share more than one emoji at the same time. In this case, you will be sharing a package, not an emoji. Emoji packages have pages just like emojis and can be downloaded just like emojis, but as a rar file. "
+        },
+        "fields": {
+          "categories": "Categories",
+          "emojiName": "Emoji Name"
+        },
+        "disclaimer": {
+          "content": "By publishing this emoji(s), you agree to our <contentPolicyLink>.",
+          "linkText": "content policy"
+        }
+      }
+    ],
+    "emojisPreview": {
+      "toast": {
+        "guildNotFound": "Please select a server to upload the emoji to.",
+        "uploadingEmojis": "Emoji is being uploaded to guild...",
+        "emojisUploaded": "Emoji uploaded successfully."
+      },
+      "uploadEmojiToDiscordModal": {
+        "title": "Upload to Discord",
+        "titleWithEmoji": "Upload <emojiImage> {{emojiName}} to Discord",
+        "description": "Quickly upload this emoji to Discord by selecting a server below.",
+        "emptyErrorState": {
+          "title": "It's quiet in here...",
+          "message": "There are no servers where you can upload emojis to."
+        },
+        "notes": "* You should have the permission to manage emojis in the server.<br>* Log out and back in to freshen up the list.",
+        "tooltip": {
+          "inviteOurBot": "{{guildName}} (Invite our Bot)"
+        }
+      },
+      "tooltip": {
+        "uploadToDiscord": "Upload to Discord",
+        "loginToUpload": "Login with Discord to Upload"
+      }
+    },
+    "toast": {
+      "minEmojisLength": "Minimum {{minLength}} emojis should be added to the package for publishing.",
+      "maxEmojisReached": "No more than {{maxLength}} emojis can be added to the package.",
+      "invalidEmojiName": "Emoji name can only contain lowercase letters, numbers, and underscores. Max 20 characters.",
+      "publishingEmojis": "(1)[Publishing emoji...];(2-inf)[Publishing emojis...]",
+      "emojisPublished": "(1)[Emoji published successfully.];(2-inf)[Emojis published successfully.]",
+      "fileSizeExceeded": "File size should not exceed {{maxSize}}kb.",
+      "animatedCategoryNotSelected": "If you want to share an animated emoji, please go back and select the Animated category."
+    }
+  },
+  "emojiPage": {
+    "toast": {
+      "deletingEmoji": "Deleting emoji..",
+      "emojiDeleted": "Successfully deleted {{emojiName}}. You will be redirected to the home page in a few seconds."
+    },
+    "notApprovedInfo": {
+      "description": "For the moment, only you can see the emoji. Once the emoji is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your emoji is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
+    },
+    "fields": {
+      "name": "Name",
+      "uploaded": "Uploaded",
+      "downloads": "Downloads",
+      "animated": "Animated",
+      "categories": "Categories",
+      "publisher": "Publisher"
+    },
+    "similarEmojis": {
+      "title": "Similar Emojis",
+      "emptyErrorState": "It's a bit sad, but I couldn't find any similar emojis.."
+    },
+    "frequentlyAskedQuestions": {
+      "title": "Frequently Asked Questions",
+      "labels": [
+        "How can I download the emoji?",
+        "How can I add the emoji to my Discord server?",
+        "This emoji is inappropriate. What can I do?"
+      ],
+      "answers": [
+        "You can use the button below to download <span> emoji.",
+        {
+          "title": "I'm glad to hear that! I will tell you 3 methods for this.",
+          "methods": [
+            {
+              "buttonText": "1. Our Website (this page)",
+              "instructionsBefore": "Using our bot & website, you can upload this emoji to your server with just a few clicks. Here how you can do this:",
+              "instructions": [
+                {
+                  "text": "<link> to your server.",
+                  "linkText": "Add our bot"
+                },
+                "Click \"Upload to Discord\" button on emoji preview in this page. ",
+                "Select the server you want to upload the emoji & click the upload button.",
+                "Tada! Now emoji is added to the server."
+              ]
+            },
+            {
+              "buttonText": "2. Our Bot (recommended)",
+              "instructionsBefore": "Using our bot, you can upload this emoji to your server with a single command. Here how you can do this:",
+              "instructions": [
+                {
+                  "text": "<link> to your server.",
+                  "linkText": "Add our bot"
+                },
+                "Copy & Paste this to any channel: <pre>",
+                "Use the command and tada! Now emoji is added to the server."
+              ]
+            },
+            {
+              "buttonText": "3. Classic Way",
+              "instructionsBefore": "This may be a little more challenging.",
+              "instructions": [
+                "Download the emoji:",
+                "Open your Discord App and right click to your server.",
+                "Go to Server Settings > Emoji",
+                "Click the Upload Emoji.",
+                "Select the emoji you downloaded before.",
+                "Tada! Now emoji is added to the server."
+              ]
+            }
+          ]
+        },
+        "You can join our support server via the Discord button at the bottom of the page (Footer) and let us know that the emoji is inappropriate."
+      ]
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "description": "You can delete the emoji using the button below, but be careful not to delete it by mistake :)",
+      "deleteEmojiModal": {
+        "title": "Delete Emoji",
+        "description": "Are you sure you want to delete {{emojiName}}?",
+        "content": "Please note that deleting the emoji will remove all the downloads that the emoji has received.<br><br>This action cannot be undone."
+      }
+    }
+  },
+  "emojiPackagePage": {
+    "toast": {
+      "deletingEmojiPackage": "Deleting emoji package..",
+      "emojiPackageDeleted": "Successfully deleted package {{emojiName}}. You will be redirected to the home page in a few seconds."
+    },
+    "notApprovedInfo": {
+      "description": "For the moment, only you can see the emoji package. Once the emoji package is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your emoji package is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
+    },
+    "fields": {
+      "name": "Name",
+      "uploaded": "Uploaded",
+      "downloads": "Downloads",
+      "emojiCount": "Emoji Count",
+      "categories": "Categories",
+      "publisher": "Publisher"
+    },
+    "similarEmojiPacks": {
+      "title": "Similar Emoji Packs",
+      "emptyErrorState": "It's a bit sad, but I couldn't find any similar emojis.."
+    },
+    "frequentlyAskedQuestions": {
+      "title": "Frequently Asked Questions",
+      "labels": [
+        "How can I download the emoji pack?",
+        "How can I add the emoji pack to my Discord server?",
+        "This emoji pack is inappropriate. What can I do?"
+      ],
+      "answers": [
+        "You can use the button below to download <span> package.",
+        {
+          "title": "I'm glad to hear that! I will tell you 2 methods for this.",
+          "methods": [
+            {
+              "buttonText": "1. Our Website (this page)",
+              "instructionsBefore": "Using our bot & website, you can upload this emojis to your server with just a few clicks. Here how you can do this:",
+              "instructions": [
+                {
+                  "text": "<link> to your server.",
+                  "linkText": "Add our bot"
+                },
+                "Click \"Upload to Discord\" button on emoji preview that you want to upload in emojis preview grid.",
+                "Select the server you want to upload the emoji & click the upload button.",
+                "Tada! Now emoji is added to the server."
+              ]
+            },
+            {
+              "buttonText": "2. Classic Way",
+              "instructionsBefore": "This may be a little more challenging.",
+              "instructions": [
+                "Download the emoji pack:",
+                "Extract the downloaded pack.",
+                "Open your Discord App and right click to your server.",
+                "Go to Server Settings > Emoji",
+                "Select all uploaded emojis and drag and drop them to the Discord screen.",
+                "Tada! Now emoji pack is added to the server."
+              ]
+            }
+          ]
+        },
+        "You can join our support server via the Discord button at the bottom of the page (Footer) and let us know that the emoji package is inappropriate."
+      ]
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "description": "You can delete the emoji using the button below, but be careful not to delete it by mistake :)",
+      "deleteEmojiModal": {
+        "title": "Delete Emoji Package",
+        "description": "Are you sure you want to delete {{emojiName}}?",
+        "content": "Please note that deleting the emoji package will remove all emojis in the package and the package itself.<br><br>This action cannot be undone."
+      }
+    }
+  },
+  "botsPage": {
+    "title": "Discover the bots",
+    "subtitle": "Explore most popular bots and find the perfect one for your Discord server!<br>Make your server more fun and interactive with the best bots available.",
+    "searchInputPlaceholder": "Search for a bot by id, description, or category...",
+    "categorySelectPlaceholder": "Category",
+    "sortSelect": {
+      "placeholder": "Sorting",
+      "items": {
+        "votes": "Votes",
+        "latestVoted": "Latest Voted",
+        "servers": "Servers",
+        "mostReviewed": "Most Reviewed",
+        "newest": "Newest",
+        "oldest": "Oldest"
+      }
+    },
+    "emptyErrorState": {
+      "title": "It's quiet in here...",
+      "message": "There are no bots to display. Maybe that's a sign to create one?"
+    }
+  },
+  "botCard": {
+    "noDescription": "This bot does not have a description. We can only imagine how beautiful it is",
+    "tripledVoteBadge": "3X VOTE!"
+  },
+  "badges": {
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "verified": "Verified",
+    "premium": "Premium"
+  },
+  "botPage": {
+    "notVerifiedInfo": {
+      "description": "For the moment, only you can see the bot. Once the bot is verified, it will become public. Until then, you can come to <link> and get a notification from our bot when your bot is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
+    },
+    "countdown": {
+      "tripledVoteExpired": "Votes tripled expired!",
+      "votesTripledFor": "Votes tripled for {{hours}} hours, ${{minutes}} minutes!",
+      "standedOutExpired": "Standed out expired!",
+      "standedOutFor": "Standed out for {{hours}} hours, ${{minutes}} minutes!"
+    },
+    "about": {
+      "title": "About",
+      "labels": {
+        "owner": "Owner",
+        "servers": "Total Servers",
+        "votes": "Votes",
+        "commands": "Commands",
+        "githubRepository": {
+          "label": "GitHub Repository",
+          "openSourceDisclaimer": "This bot is open-source and available on GitHub."
+        }
+      }
+    },
+    "actions": {
+      "title": "Actions",
+      "toast": {
+        "voting": "Voting {{botName}}..",
+        "voted": "Successfully voted for {{botName}}!",
+        "creatingCheckout": "We are creating a checkout for you..",
+        "checkoutCreated": "Checkout created! Redirecting you to the payment page in few seconds..",
+        "loginRequiredForVote": "You need to be logged in to vote for bots.",
+        "botUrlCopied": "Bot URL copied to clipboard."
+      }
+    },
+    "categories": {
+      "title": "Categories"
+    },
+    "supportServer": {
+      "title": "Support Server"
+    },
+    "tabs": {
+      "labels": {
+        "reviews": "Reviews",
+        "topVoters": "Top Voters"
+      },
+      "reviews": {
+        "title": "Reviews",
+        "toast": {
+          "submittingReview": "Submitting review..",
+          "reviewSubmitted": "Your review has been submitted successfully!"
+        },
+        "totalReviews": "(0)[No reviews];(1)[1 review];(2-inf)[{{count}} reviews];",
+        "reviewSubmitted": {
+          "info": {
+            "title": "Note",
+            "description": "Your review has been submitted for moderation. It will be visible once it has been approved."
+          },
+          "alreadyReviewed": "You have already left a review for this server."
+        },
+        "ownerCannotReview": "You can't leave a review for your own server.",
+        "unknown": "Unknown",
+        "input": {
+          "label": "Your Review",
+          "description": "Let others know what you think about this server."
+        },
+        "loginRequiredForReview": "You need to be logged in to leave a review."
+      },
+      "topVoters": {
+        "title": "Top Voters"
+      }
+    }
+  },
+  "botManagePage": {
+    "title": "Manage Bot",
+    "subtitle": "Manage your bot and its settings.",
+    "escToCloseBadge": "esc to close",
+    "toast": {
+      "savingChanges": "Saving changes..",
+      "changesSaved": "Successfully saved changes!"
+    },
+    "discardChangesModal": {
+      "title": "Discard Changes",
+      "description": "Are you sure you want to discard your changes?",
+      "note": "Your changes will not be saved."
+    },
+    "essentialInformation": {
+      "title": "Essential Information",
+      "subtitle": "These are the most important settings for bot. Be sure to fill them out correctly.",
+      "inputs": {
+        "shortDescription": {
+          "label": "Short Description",
+          "description": "A short description of your bot. This will be shown in search results.",
+          "placeholder": "A bot that does cool things."
+        },
+        "longDescription": {
+          "label": "Long Description",
+          "description": "A longer description of your bot. This will be shown on your bot page. Markdown is supported.",
+          "placeholder": "A bot that does cool things and more."
+        },
+        "inviteUrl": {
+          "label": "Invite URL",
+          "description": "The URL that users can use to invite your bot to their server.",
+          "placeholder": "Paste your bot invite URL here."
+        }
+      }
+    },
+    "other": {
+      "title": "Other",
+      "subtitle": "Settings that you should not worry about too much.",
+      "inputs": {
+        "categories": {
+          "label": "Categories",
+          "description": "Select the categories that your bot belongs to. This will help users find your bot."
+        },
+        "keywords": {
+          "label": "Keywords",
+          "description": "Add keywords to your bot. This will help people find your bot on discord.place. Separate each keyword with a comma.",
+          "placeholder": "e.g. fun, moderation, music"
+        }
+      },
+      "toast": {
+        "notValidKeyword": "Please enter a valid keyword.",
+        "keywordExists": "This keyword already exists.",
+        "keywordHasInvalidCharacters": "Keywords can only contain letters, numbers, and hyphens.",
+        "keywordTooLong": "Keywords can only be {{maxLength}} characters long.",
+        "noChangesMade": "No changes made.",
+        "notValidRepositoryFormat": "Invalid username/repository format."
+      },
+      "addedKeywords": {
+        "label": "Added Keywords",
+        "description": "Keywords that you have added so far. Click on a keyword to remove it.",
+        "max": " (max)"
+      },
+      "githubRepository": {
+        "title": "GitHub Repository",
+        "subtitle": "If your bot is open source, you can add a link to your GitHub repository here.",
+        "optionalBadge": "Optional",
+        "toast": {
+          "savingRepository": "Saving GitHub repository..",
+          "repositorySaved": "GitHub repository saved successfully."
+        },
+        "usernameRepositoryInputPlaceholder": "username/repository"
+      },
+      "supportServer": {
+        "title": "Support Server",
+        "subtitle": "If you added your server to discord.place then you can use it as a support server of your bot.",
+        "optionalBadge": "Optional",
+        "emptyErrorState": "You don't have any servers added to discord.place."
+      }
+    },
+    "webhook": {
+      "title": "Webhook",
+      "subtitle": "Get notified when someone votes for your bot.",
+      "optionalBadge": "Optional",
+      "toast": {
+        "secretRequired": "You should fill Webhook URL if you want to use a secret.",
+        "urlNotValid": "Webhook URL is not a valid URL.",
+        "urlNotHTTPS": "Webhook URL should be a HTTPS URL.",
+        "saving": "Saving webhook settings..",
+        "saved": "Webhook settings saved successfully."
+      },
+      "inputs": {
+        "url": {
+          "label": "URL",
+          "description": "Enter the URL of your webhook.",
+          "placeholder": "https://example.com/webhook"
+        },
+        "secret": {
+          "label": "Secret",
+          "description": "Enter the secret of your webhook.",
+          "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
+        }
+      }
+    },
+    "extraOwners": {
+      "title": "Extra Owners",
+      "subtitle": "You can add users as extra owners of your bot. Extra owners can manage your bot just like you do.<br><emptyBlock>",
+      "noteText": "Extra owners can see and manage all the settings of your bot including API key, so be careful who you add.",
+      "optionalBadge": "Optional",
+      "addExtraOwnerModal": {
+        "title": "Add Extra Owner",
+        "description": "Add a user as an extra owner of your bot."
+      },
+      "emptyErrorState": "No extra owners added yet.",
+      "toast": {
+        "removingOwner": "Removing extra owner..",
+        "ownerRemoved": "Extra owner removed successfully.",
+        "emptyUserId": "User ID cannot be empty.",
+        "addingOwner": "Adding extra owner..",
+        "ownerAdded": "User @{{username}} successfully added as an extra owner!"
+      }
+    },
+    "apiKey": {
+      "title": "API Key",
+      "subtitle": "You can manage your API key for your bot. This key can be used to authenticate your bot with discord.place API.",
+      "optionalBadge": "Optional",
+      "toast": {
+        "creatingApiKey": "Creating new API key..",
+        "createdApiKeyAndCopied": "Successfully created new API key and copied it to clipboard!",
+        "resettingApiKey": "Successfully created new API key!",
+        "deletingApiKey": "Deleting API key..",
+        "apiKeyDeleted": "Successfully deleted API key!",
+        "apiKeyCopied": "API key copied to clipboard!"
+      },
+      "deleteApiKeyModal": {
+        "title": "Delete API Key",
+        "description": "Are you sure you want to delete the API key for your bot?",
+        "note": "This action is irreversible and you will not be able to recover your API key after deleting it."
+      }
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "subtitle": "You can delete your bot here. Please be careful with this action. This action cannot be undone.",
+      "toast": {
+        "deletingBot": "Deleting bot..",
+        "botDeleted": "Successfully deleted the bot. You will be redirected to the home page in a few seconds."
+      },
+      "deleteBotModal": {
+        "title": "Delete Bot",
+        "description": "Are you sure you want to delete your bot?",
+        "note": "Please note that deleting your bot will remove all votes and reviews that your bot has received.<br><br>This action cannot be undone."
+      }
+    }
+  },
+  "accountPage": {
+    "sidebar": {
+      "newBadge": "NEW",
+      "labels": {
+        "account": "Account",
+        "myAccount": "My Account",
+        "myUserProfile": "My User Profile",
+        "activeTimeouts": "Active Timeouts",
+        "activeReminders": "Active Reminders",
+        "yourPublicContent": "Your Public Content",
+        "myLinks": "My Links",
+        "myServers": "My Servers",
+        "myBots": "My Bots",
+        "myEmojis": "My Emojis",
+        "myTemplates": "My Templates",
+        "mySounds": "My Sounds",
+        "adminDashboard": "Admin Dashboard",
+        "switchTheme": "Switch Theme",
+        "backToHome": "Back to Home",
+        "language": {
+          "en": "English",
+          "tr": "Turkish"
+        }
+      }
+    },
+    "tabs": {
+      "myAccount": {
+        "title": "My Account",
+        "subtitle": "View your account details.",
+        "sections": {
+          "connectedAccount": {
+            "title": "Connected Account",
+            "subtitle": "You can see your Discord account details here.",
+            "fields": {
+              "displayName": "Display Name",
+              "username": "Username",
+              "userId": "User ID"
+            }
+          },
+          "premium": {
+            "plansLoading": "Plans loading..",
+            "plans": {
+              "Premium Membership Monthly": "Premium Membership Monthly",
+              "Premium Membership Yearly": "Premium Membership Yearly",
+              "Premium Membership Lifetime": "Premium Membership Lifetime"
+            },
+            "thanks": "Thank you for supporting us!"
+          },
+          "yourProfile": {
+            "title": "Your Profile",
+            "noProfile": "You don't have a profile yet. Maybe that's sign to create one?",
+            "profileFound": "You have a profile! Click the button below to view it.",
+            "createProfileModal": {
+              "title": "Create Profile",
+              "description": "Create your customizable profile to show off to your friends!",
+              "toast": {
+                "slugTooShort": "Slug must be at least {{minLength}} characters long.",
+                "invalidSlug": "Slug can only contain letters, numbers, and dashes."
+              },
+              "status": {
+                "available": "Available",
+                "unavailable": "Unavailable",
+                "checking": "Checking.."
+              },
+              "tooltip": {
+                "premiumRequired": "This feature is only available for Premium users."
+              },
+              "fields": {
+                "host": {
+                  "title": "Host",
+                  "description": "The host you choose will be used as a shortcut to your profile."
+                },
+                "slug": {
+                  "title": "Slug",
+                  "description": "The slug you choose will be used as a unique identifier for your profile.",
+                  "placeholder": "example-slug"
+                }
+
+              }
+            }
+          }
+        },
+        "toast": {
+          "creatingProfile": "Creating profile..",
+          "profileCreated": "Profile created successfully! Redirecting to your profile.."
+        }
+      },
+      "activeTimeouts": {
+        "title": "Active Timeouts",
+        "subtitle": "Here, you can see your active timeouts and the remaining time.",
+        "emptyErrorState": {
+          "title": "It's quiet in here...",
+          "message": "There are no active timeouts."
+        },
+        "fields": {
+          "servers": {
+            "title": "Servers"
+          },
+          "bots": {
+            "title": "Bots"
+          }
+        },
+        "countdown": {
+          "expired": "Expired",
+          "remaining": "{{hours}} hours {{minutes}} minutes {{seconds}} seconds"
+        }
+      },
+      "activeReminders": {
+        "title": "Active Reminders",
+        "subtitle": "Here, you can see your active reminders and the remaining time.",
+        "emptyErrorState": {
+          "title": "It's quiet in here...",
+          "message": "There are no active reminders."
+        },
+        "fields": {
+          "reminders": {
+            "title": "Reminders",
+            "about": "About"
+          },
+          "voteReminders": {
+            "title": "Vote Reminders"
+          }
+        },
+        "countdown": {
+          "expired": "Expired",
+          "expiresIn": "{{days}} days {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
+          "expiresInShort": "{{hours}} hours {{minutes}} minutes {{seconds}} seconds"
+        }
+      },
+      "myLinks": {
+        "title": "My Links",
+        "subtitle": "View or manage the links that you have created.",
+        "toast": {
+          "deletingLink": "Deleting link..",
+          "linkDeleted": "Successfully deleted the link."
+        },
+        "maximumLinksReachedInfo": {
+          "title": "Maximum Links Reached",
+          "description": "You have reached the maximum amount of links that you can create.<br>For more information about Premium, visit <link>.",
+          "linkText": "Premium page"
+        },
+        "emptyErrorState": {
+          "title": "It's quiet in here...",
+          "message": "You have not created any links."
+        },
+        "visits": "{{count}} Visits",
+        "createLinkModal": {
+          "title": "Create New Link",
+          "description": "Create a new link to share with your audience.",
+          "inputs": {
+            "name": {
+              "label": "Name",
+              "description": "The name of the link.",
+              "placeholder": "example"
+            },
+            "destinationUrl": {
+              "label": "Destination URL",
+              "description": "The URL that the link will redirect to.",
+              "placeholder": "https://example.com"
+            }
+          },
+          "toast": {
+            "emptyName": "Please enter a name for your link.",
+            "invalidName": "Link name can only contain letters, numbers, hyphens, and underscores.",
+            "nameTooLong": "Link name must be less than {{maxLength}} characters.",
+            "emptyDestinationUrl": "Please enter a destination URL for your link.",
+            "destinationUrlNotHTTPS": "Link destination must be a secure URL. (HTTPS)",
+            "destinationUrlHavePort": "Link destination cannot have a port.",
+            "creatingLink": "Creating link..",
+            "linkCreated": "Link created successfully!",
+            "invalidDestinationUrl": "Please enter a valid URL."
+          }
+        },
+        "deleteLinkModal": {
+          "title": "Delete Link",
+          "description": "Are you sure you want to delete the link?",
+          "note": "Please note that deleting your link will remove all visits that your link has received.<br><br>This action cannot be undone."
+        }
+      },
+      "myServers": {
+        "title": "My Servers",
+        "subtitle": "View or manage the servers that you have listed on discord.place.",
+        "sections": {
+          "listedServers": {
+            "title": "Listed Servers",
+            "subtitle": "Here, you can see the servers that you have listed on discord.place.",
+            "emptyErrorState": {
+              "title": "It's quiet in here...",
+              "message": "You have not listed any servers on discord.place."
+            },
+            "members": "{{count}} members"
+          },
+          "unlistedServers": {
+            "title": "Unlisted Servers",
+            "subtitle": "Here, you can see the servers that you have unlisted on discord.place.",
+            "missingServerInfo": {
+              "title": "Can't see your server?",
+              "description": "You can only add servers that you own. If you can't see your server, make sure you're the owner of the server.<br>If you still can't see your server, make sure <link> is in your server.",
+              "linkText": "discord.place bot"
+            },
+            "emptyErrorState": {
+              "title": "It's quiet in here...",
+              "message": "You have not unlisted any servers on discord.place."
+            },
+            "members": "{{count}} members"
+          },
+          "newServer": {
+            "title": "Adding <serverIcon> <serverName>",
+            "subtitle": "You're about to add {{serverName}} to discord.place. This means your server will be listed on discord.place and everyone will be able to see it. You can remove your server from discord.place at any time..",
+            "toast": {
+              "invalidInviteLink": "Invalid invite link.",
+              "addingServer": "Adding {{serverName}}..",
+              "serverAdded": "{{serverName}} added! You will be redirected to {{serverName}} page in a few seconds.",
+              "duplicateKeyword": "You can't use the same keyword twice."
+            },
+            "fields": {
+              "description": {
+                "label": "Add a description",
+                "description": "This is the description that will be shown to everyone who visits your server on discord.place.<br>Make sure to include important information about your server."
+              },
+              "inviteLink": {
+                "label": "Invite Link",
+                "description": "Add an invite link to your server. This will be helpful for people who want to join your server.<br>Make sure to set the invite link to never expire.",
+                "placeholder": "https://discord.gg/invite"
+              },
+              "category": {
+                "label": "Category",
+                "description": "Select a base category for your server. This will help people find your server on discord.place.",
+                "placeholder": "Select a category"
+              },
+              "keywords": {
+                "label": "Keywords",
+                "description": "Add keywords to your server. This will help people find your server on discord.place.",
+                "placeholder": "Type a keyword and press enter or space..",
+                "count": "{{count}} Keywords"
+              },
+              "voiceActivity": {
+                "label": "Voice Activity",
+                "description": "Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active your server is."
+              },
+              "contentPolicy": {
+                "label": "Content Policy",
+                "description": "By adding your server to discord.place, you agree to our Server Submission Guidelines. <note>",
+                "note": "* Can be found in our Discord server."
+              },
+              "areYouReady": {
+                "label": "Are you ready?",
+                "description": "By clicking the button below, you agree to our Server Submission Guidelines and you confirm that you are the owner of the server.",
+                "addButton": "Add <serverIcon> <serverName>"
+              }
+            }
+          }
+        }
+      },
+      "myBots": {
+        "title": "My Bots",
+        "subtitle": "View or manage the bot that you have listed on discord.place. You can also submit a new bot to discord.place.",
+        "sections": {
+          "listedBots": {
+            "title": "Listed Bots",
+            "subtitle": "Here, you can see the bots that you have listed on discord.place.",
+            "emptyErrorState": {
+              "title": "It's quiet in here...",
+              "message": "You have not listed any bots on discord.place."
+            }
+          },
+          "newBot": {
+            "title": "New Bot",
+            "subtitle": "Submit a new bot to discord.place.",
+            "note": {
+              "title": "Note",
+              "description": "Your submitted bot will be reviewed by our team before it is listed on discord.place. Please make sure that your bot is not violating our bot submission guidelines. Our bot submission guidelines can be found in our <link>.",
+              "linkText": "Discord server"
+            }
+          },
+          "addBot": {
+            "title": "Adding a new bot",
+            "subtitle": "You're about to submit a new bot to discord.place. This means your bot will be listed on discord.place and everyone will be able to see it. You can remove your bot from discord.place at any time.",
+            "toast": {
+              "storedDataLoaded": "Previously submitted application restored.",
+              "addingBot": "Adding bot {{botId}}..",
+              "botAdded": "Bot {{botId}} added! You will be redirected to the bot page in a few seconds."
+            },
+            "fields": {
+              "botId": {
+                "label": "Bot ID",
+                "description": "This is the ID of your bot on Discord. You can find it in the developer portal."
+              },
+              "shortDescription": {
+                "label": "Short Description",
+                "description": "A short description of your bot. This will be shown in search results."
+              },
+              "longDescription": {
+                "label": "Long Description",
+                "description": "This is the more detailed description of your bot. You can use this to tell everyone what your bot does and how it works. You can use markdown here."
+              },
+              "inviteUrl": {
+                "label": "Invite URL",
+                "description": "This is the invite URL of your bot. This is the link that users will use to add your bot to their server. You can use default Discord authorization link or custom one."
+              },
+              "category": {
+                "label": "Category",
+                "description": "Select all categories that your bot belongs to. This will help users find your bot."
+              },
+              "contentPolicy": {
+                "label": "Content Policy",
+                "description": "By adding your bot to discord.place, you agree to our Bot Submission Guidelines. <note>",
+                "note": "* Can be found in our Discord server."
+              },
+              "areYouReady": {
+                "label": "Are you ready?",
+                "description": "By clicking the button below, you agree to our Bot Submission Guidelines and you confirm that you are the owner of the bot."
+              }
+            }
+          },
+          "pastDenials": {
+            "title": "Past Denials",
+            "subtitle": "View the bots that you have submitted to discord.place but were denied. (last 7 days)",
+            "emptyErrorState": {
+              "title": "It's quiet in here...",
+              "message": "You have not submitted any bots to discord.place that were denied."
+            },
+            "deniedBy": "The bot was denied by <moderator>",
+            "countdown": {
+              "expired": "You can add the bot again now.",
+              "expiresIn": "This denial will expire in <countdown> You can't add the bot again until then.",
+              "renderer": "{{hours}} hours {{minutes}} minutes {{seconds}} seconds.",
+              "completed": "0 seconds"
+            }
+          }
+        }
+      },
+      "myEmojis": {
+        "title": "My Emojis",
+        "subtitle": "View or manage the emojis that you have listed on discord.place. You can also submit a new emoji to discord.place.",
+        "sections": {
+          "listedEmojis": {
+            "title": "Listed Emojis",
+            "subtitle": "Here, you can see the emojis that you have listed on discord.place.",
+            "emptyErrorState": {
+              "title": "It's quiet in here...",
+              "message": "You have not listed any emojis on discord.place."
+            }
+          },
+          "newEmoji": {
+            "title": "New Emoji",
+            "subtitle": "Submit a new emoji to discord.place.",
+            "note": {
+              "title": "Note",
+              "description": "Your submitted emoji will be reviewed by our team before it is listed on discord.place. Please make sure that your emoji is not violating our emoji submission guidelines. Our emoji submission guidelines can be found in our <link>.",
+              "linkText": "Discord server"
+            }
+          }
+        }
+      },
+      "myTemplates": {
+        "title": "My Templates",
+        "subtitle": "View templates that you have listed on discord.place. You can also submit a new template to discord.place.",
+        "sections": {
+          "listedTemplates": {
+            "title": "Listed Templates",
+            "subtitle": "Here, you can see the templates that you have listed on discord.place.",
+            "emptyErrorState": {
+              "title": "It's quiet in here...",
+              "message": "You have not listed any templates on discord.place."
+            }
+          },
+          "newTemplate": {
+            "title": "New Template",
+            "subtitle": "Submit a new template to discord.place.",
+            "note": {
+              "title": "Note",
+              "description": "Your submitted template will be reviewed by our team before it is listed on discord.place. Please make sure that your template is not violating our template submission guidelines. Our template submission guidelines can be found in our <link>.",
+              "linkText": "Discord server"
+            }
+          }
+        }
+      },
+      "mySounds": {
+        "title": "My Sounds",
+        "subtitle": "View sounds that you have listed on discord.place. You can also submit a new sound to discord.place.",
+        "sections": {
+          "listedSounds": {
+            "title": "Listed Sounds",
+            "subtitle": "Here, you can see the sounds that you have listed on discord.place.",
+            "emptyErrorState": {
+              "title": "It's quiet in here...",
+              "message": "You have not listed any sounds on discord.place."
+            }
+          },
+          "newSound": {
+            "title": "New Sound",
+            "subtitle": "Submit a new sound to discord.place.",
+            "note": {
+              "title": "Note",
+              "description": "Your submitted sound will be reviewed by our team before it is listed on discord.place. Please make sure that your sound is not violating our sound submission guidelines. Our sound submission guidelines can be found in our <link>.",
+              "linkText": "Discord server"
+            }
+          },
+          "addSound": {
+            "title": "Adding a new sound",
+            "subtitle": "You're about to submit a new sound to discord.place. This means your sound will be listed on discord.place and everyone will be able to see it. You can remove your sound from discord.place at any time.",
+            "toast": {
+              "addingSound": "Sound {{soundName}} is being added..",
+              "soundAdded": "Sound {{soundName}} added! You will be redirected to the sound page in a few seconds.",
+              "invalidFile": "Invalid file format. Only .mp3 files are allowed.",
+              "audioDurationExceeded": "Audio duration exceeded. Maximum audio duration is {{duration}} seconds.",
+              "fileSizeExceeded": "File size exceeded. Maximum file size is {{size}} MB."
+            },
+            "fields": {
+              "file": {
+                "label": "Sound File",
+                "description": "Upload your sound file here. Only .mp3 files are allowed."
+              },
+              "name": {
+                "label": "Name",
+                "description": "Add a name for your sound."
+              },
+              "category": {
+                "label": "Category",
+                "description": "Select all categories that your sound belongs to. This will help users find your sound."
+              },
+              "contentPolicy": {
+                "label": "Content Policy",
+                "description": "By adding your sound to discord.place, you agree to our Sound Submission Guidelines. <note>",
+                "note": "* Can be found in our Discord server."
+              },
+              "areYouReady": {
+                "label": "Are you ready?"
+              }
+            },
+            "dragAndDrop": {
+              "drop": "Drop your file here.",
+              "click": "Click to upload file." 
+            }
+          }
+        }
+      }
+    }
   }
 }

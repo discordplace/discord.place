@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { FaCompass, FaGithub } from 'react-icons/fa';
@@ -9,6 +11,7 @@ import Link from 'next/link';
 import cn from '@/lib/cn';
 import { PiGitForkBold } from 'react-icons/pi';
 import { useMedia } from 'react-use';
+import useLanguageStore, { t } from '@/stores/language';
 
 const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -22,10 +25,12 @@ const serversFormatter = new Intl.NumberFormat('en-US', {
 });
 
 export default function About({ bot }) {
+  const language = useLanguageStore(state => state.language);
+
   const keys = [
     {
       key: 'owner',
-      label: 'Owner',
+      label: t('botPage.about.labels.owner'),
       icon: <RiUserAddLine />,
       component: (
         <Link 
@@ -48,27 +53,27 @@ export default function About({ bot }) {
     },
     {
       key: 'servers',
-      label: 'Total Servers',
+      label: t('botPage.about.labels.servers'),
       icon: <FaCompass />,
       component: (
         <>
-          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })})</span>
+          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
       )
     },
     {
       key: 'votes',
-      label: 'Votes',
+      label: t('botPage.about.labels.votes'),
       icon: <TbSquareRoundedChevronUp />,
       value: formatter.format(bot.votes)
     },
     {
       key: 'commands',
-      label: 'Commands',
+      label: t('botPage.about.labels.commands'),
       icon: <RiSlashCommands2 />,
       component: (
         <>
-          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })})</span>
+          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
       )
     }
@@ -78,7 +83,7 @@ export default function About({ bot }) {
 
   if (bot.github_repository?.data) keys.push({
     key: 'GitHub Repository',
-    label: 'GitHub Repository',
+    label: t('botPage.about.labels.githubRepository.label'),
     icon: <FaGithub />,
     component: <>
       {isMobile ? (
@@ -86,11 +91,11 @@ export default function About({ bot }) {
           className='underline text-tertiary hover:text-primary'
           href={bot.github_repository.data.html_url}
         >
-          This bot is open-source and available on GitHub.
+          {t('botPage.about.labels.githubRepository.openSourceDisclaimer')}
         </Link>
       ) : (
         <p className='text-tertiary'>
-        This bot is open-source and available on GitHub.
+          {t('botPage.about.labels.githubRepository.openSourceDisclaimer')}
         </p>
       )}
 
@@ -153,7 +158,7 @@ export default function About({ bot }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
       >
-        About
+        {t('botPage.about.title')}
       </motion.h2>
 
       <motion.p className='mt-2 whitespace-pre-wrap text-tertiary' 

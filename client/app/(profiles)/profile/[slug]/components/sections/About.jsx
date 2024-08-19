@@ -4,42 +4,43 @@ import { FaGenderless } from 'react-icons/fa';
 import { BsEye, BsGeoAlt, BsSuitcaseLg } from 'react-icons/bs';
 import { motion } from 'framer-motion';
 import { IoMdHeartEmpty } from 'react-icons/io';
+import { t } from '@/stores/language';
 
 export default function About({ profile }) {
   const keys = [
     {
       key: 'occupation',
-      label: 'Occupation',
+      label: t('profilePage.about.labels.occupation'),
       icon: <BsSuitcaseLg />,
-      value: profile.occupation || 'Unknown'
+      value: profile.occupation || t('profilePage.about.valueUnknown')
     },
     {
       key: 'gender',
-      label: 'Gender',
+      label: t('profilePage.about.labels.gender'),
       icon: profile.gender === 'Male' ? <MdOutlineMale /> : profile.gender === 'Female' ? <MdOutlineFemale /> : <FaGenderless />,
-      value: profile.gender || 'Unknown'
+      value: profile.gender || t('profilePage.about.valueUnknown')
     },
     {
       key: 'location',
-      label: 'Location',
+      label: t('profilePage.about.labels.location'),
       icon: <BsGeoAlt />,
-      value: profile.location || 'Unknown'
+      value: profile.location || t('profilePage.about.valueUnknown')
     },
     {
       key: 'birthday',
-      label: 'Birthday',
+      label: t('profilePage.about.labels.birthday'),
       icon: <LiaBirthdayCakeSolid />,
-      value: profile.birthday || 'Unknown'
+      value: profile.birthday || t('profilePage.about.valueUnknown')
     },
     {
       key: 'views',
-      label: 'Views',
+      label: t('profilePage.about.labels.views'),
       icon: <BsEye />,
       value: profile.views
     },
     {
       key: 'likes',
-      label: 'Likes',
+      label: t('profilePage.about.labels.likes'),
       icon: <IoMdHeartEmpty />,
       value: profile.likes
     }
@@ -53,7 +54,7 @@ export default function About({ profile }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
       >
-        About
+        {t('profilePage.about.title')}
       </motion.h2>
 
       <motion.p className='mt-2 break-words whitespace-pre-wrap text-tertiary' 
@@ -61,7 +62,7 @@ export default function About({ profile }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.15 }}
       >
-        {profile.bio}
+        {profile.bio === 'No bio provided.' ? t('profilePage.about.noBio') : profile.bio}
       </motion.p>
 
       <motion.div 

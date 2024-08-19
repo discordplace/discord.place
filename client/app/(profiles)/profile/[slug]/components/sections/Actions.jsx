@@ -1,4 +1,5 @@
 'use client';
+
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { toast } from 'sonner';
 import likeProfile from '@/lib/request/profiles/likeProfile';
@@ -13,6 +14,7 @@ import Tooltip from '@/app/components/Tooltip';
 import useAuthStore from '@/stores/auth';
 import CopyButton from '@/app/components/CopyButton';
 import revalidateProfile from '@/lib/revalidate/profile';
+import { t } from '@/stores/language';
 
 export default function Actions({ profile }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -20,18 +22,18 @@ export default function Actions({ profile }) {
   const [liked, setLiked] = useState(profile.isLiked);
 
   const handleLike = () => {
-    if (!loggedIn) return toast.error('You must be logged in to like profiles!');
+    if (!loggedIn) return toast.error(t('profilePage.actions.toast.loginRequiredForLike'));
 
     setLoading(true);
 
     toast.promise(likeProfile(profile.slug), {
-      loading: liked ? `Unliking ${profile.slug}...` : `Liking ${profile.slug}...`,
+      loading: t(`profilePage.actions.toast.${liked ? 'unliking' : 'liking'}`, { profile: profile.slug }),
       success: (isLiked) => {
         setLiked(isLiked);
         setLoading(false);
         revalidateProfile(profile.slug);
 
-        return isLiked ? `Liked ${profile.slug}!` : `Unliked ${profile.slug}!`;
+        return t(`profilePage.actions.toast.${isLiked ? 'liked' : 'unliked'}`, { profile: profile.slug });
       },
       error: error => {
         setLoading(false);
@@ -48,26 +50,37 @@ export default function Actions({ profile }) {
       transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
     >
       <div className='flex flex-col gap-2 sm:flex-row'>
-        <Tooltip content={loggedIn ? (liked ? 'Unlike' : 'Like') : 'You must be logged in to like profiles!'}>
+        <Tooltip
+          content={loggedIn ? (liked ? t('profilePage.actions.tooltip.unlikeProfile') : t('profilePage.actions.tooltip.likeProfile')) : t('profilePage.actions.tooltip.loginRequiredForLike')}
+        >
           <button className='text-secondary hover:text-primary p-2.5 bg-tertiary hover:bg-quaternary rounded-lg group' onClick={handleLike} disabled={loading}>
-            <IoMdHeartEmpty className={cn(
-              'absolute transition-[transform,colors]',
-              liked ? 'opacity-0' : 'opacity-100 group-hover:opacity-0 group-hover:text-red-500 group-hover:scale-[1.2]'
-            )} />
-            <IoMdHeart className={cn(
-              'transition-[transform,colors]',
-              liked ? 'opacity-100 group-hover:scale-[1.2] text-red-500' : 'opacity-0 group-hover:opacity-100 group-hover:scale-[1.2] group-hover:text-red-500'
-            )} />
+            <IoMdHeartEmpty
+              className={cn(
+                'absolute transition-[transform,colors]',
+                liked ? 'opacity-0' : 'opacity-100 group-hover:opacity-0 group-hover:text-red-500 group-hover:scale-[1.2]'
+              )}
+            />
+            
+            <IoMdHeart
+              className={cn(
+                'transition-[transform,colors]',
+                liked ? 'opacity-100 group-hover:scale-[1.2] text-red-500' : 'opacity-0 group-hover:opacity-100 group-hover:scale-[1.2] group-hover:text-red-500'
+              )}
+            />
           </button>
         </Tooltip>
 
-        <Tooltip content='Copy Profile URL'>
+        <Tooltip content={t('profilePage.actions.tooltip.copyProfileUrl')}>
           <div className='flex'>
-            <CopyButton className='bg-tertiary' successText='Profile URL copied to clipboard!' copyText={config.getProfileURL(profile.slug, profile.preferredHost)} />
+            <CopyButton
+              className='bg-tertiary'
+              successText={t('profilePage.actions.toast.profileUrlCopied')}
+              copyText={config.getProfileURL(profile.slug, profile.preferredHost)} 
+            />
           </div>
         </Tooltip>
 
-        <Tooltip content='Report Profile'>
+        <Tooltip content={t('profilePage.actions.tooltip.reportProfile')}>
           <Link className='text-secondary hover:text-primary p-2.5 bg-tertiary hover:bg-quaternary rounded-lg group' href={config.supportInviteUrl} target='_blank'>
             <AiOutlineFlag className='absolute transition-[transform,colors] opacity-100 group-hover:opacity-0 group-hover:text-red-500 group-hover:scale-[1.2]' />
             <AiFillFlag className='opacity-0 group-hover:opacity-100 group-hover:scale-[1.2] group-hover:text-red-500' />
@@ -75,7 +88,7 @@ export default function Actions({ profile }) {
         </Tooltip>
 
         {profile.permissions.canEdit && (
-          <Tooltip content='Edit Profile'>
+          <Tooltip content={t('profilePage.actions.tooltip.editProfile')}>
             <Link className='text-secondary hover:text-primary p-2.5 bg-tertiary hover:bg-quaternary rounded-lg group' href={`/profile/${profile.slug}/edit`}>
               <BsPencil className='absolute transition-[transform,colors] opacity-100 group-hover:opacity-0 group-hover:scale-[1.2]' />
               <BsPencilFill className='opacity-0 group-hover:opacity-100 group-hover:scale-[1.2]' />

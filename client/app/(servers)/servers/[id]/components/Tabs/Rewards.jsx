@@ -1,9 +1,12 @@
+'use client';
+
 import cn from '@/lib/cn';
 import Image from 'next/image';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { IoMdLock, IoMdUnlock } from 'react-icons/io';
 import useAuthStore from '@/stores/auth';
 import Tooltip from '@/app/components/Tooltip';
+import { t } from '@/stores/language';
 
 export default function Rewards({ server }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -11,11 +14,11 @@ export default function Rewards({ server }) {
   return (
     <div className='lg:max-w-[70%] w-full px-8 lg:px-0'>
       <h2 className='text-xl font-semibold'>
-        Rewards
+        {t('serverPage.tabs.rewards.title')}
       </h2>
 
       <p className='mt-2 text-sm text-tertiary'>
-        Roles are given automatically to whoever reaches the required votes. Note that, these rewards is only for the server {server.name}.
+        {t('serverPage.tabs.rewards.subtitle', { serverName: server.name })}
       </p>
 
       <div className='grid w-full grid-cols-1 mt-6' key='rewards'>
@@ -61,19 +64,25 @@ export default function Rewards({ server }) {
               </span>
               
               {loggedIn && (
-                <Tooltip content={reward.unlocked ? 'You have unlocked this reward!' : 'You need to vote to unlock this reward.'}>
+                <Tooltip content={reward.unlocked ? t('serverPage.tabs.rewards.tooltip.unlocked') : t('serverPage.tabs.rewards.tooltip.locked')}>
                   <span className={cn(
                     'flex items-center text-xs font-medium gap-x-1 text-tertiary select-none',
                     reward.unlocked ? 'text-green-500' : 'text-yellow-500'
                   )}>
                     {reward.unlocked ? (
                       <>
-                        <span className='hidden mobile:block'>Unlocked</span>
+                        <span className='hidden mobile:block'>
+                          {t('serverPage.tabs.rewards.badge.unlocked')}
+                        </span>
+
                         <IoMdUnlock />
                       </>
                     ) : (
                       <>
-                        <span className='hidden mobile:block'>Locked</span>
+                        <span className='hidden mobile:block'>
+                          {t('serverPage.tabs.rewards.badge.locked')}
+                        </span>
+
                         <IoMdLock />
                       </>
                     )}
@@ -84,6 +93,7 @@ export default function Rewards({ server }) {
 
             <div className='flex items-center ml-auto text-base font-bold sm:text-xl gap-x-2'>
               {reward.required_votes}
+              
               <TbSquareRoundedChevronUp />
             </div>
           </div>

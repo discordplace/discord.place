@@ -9,6 +9,7 @@ import useGeneralStore from '@/stores/general';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { HiPlus } from 'react-icons/hi';
+import { t } from '@/stores/language';
 
 export default function UploadSoundToDiscordModal({ guilds }) {
   const selectedGuildId = useGeneralStore(state => state.uploadSoundToDiscordModal.selectedGuildId);
@@ -22,17 +23,16 @@ export default function UploadSoundToDiscordModal({ guilds }) {
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
-                It{'\''}s quiet in here...
+                {t('soundCard.uploadSoundToDiscordModal.emptyErrorState.title')}
               </div>
             }
-            message={'There are no servers where you can upload sounds to.'}
+            message={t('soundCard.uploadSoundToDiscordModal.emptyErrorState.message')}
           />
 
           <div className='w-full bg-quaternary my-4 h-[1px]' />
           
           <p className='text-xs text-tertiary'>
-            * You should have the permission to manage sounds in the server.<br />
-            * Log out and back in to freshen up the list.
+            {t('soundCard.uploadSoundToDiscordModal.emptyErrorState.notes', { br: <br /> })}
           </p>
         </div>
       ) : (
@@ -41,7 +41,7 @@ export default function UploadSoundToDiscordModal({ guilds }) {
             .sort((a, b) => b.bot_in_guild - a.bot_in_guild)
             .map(guild => (
               <Tooltip
-                content={`${guild.name}${guild.bot_in_guild ? '' : ' (Invite our Bot)'}`}
+                content={guild.bot_in_guild ? guild.name : t('soundCard.uploadSoundToDiscordModal.tooltip.inviteOurBot', { guildName: guild.name })}
                 key={guild.id}
                 sideOffset={15}
               >

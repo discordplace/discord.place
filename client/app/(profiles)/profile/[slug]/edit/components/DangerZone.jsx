@@ -5,6 +5,7 @@ import deleteProfile from '@/lib/request/profiles/deleteProfile';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
 
 export default function DangerZone({ profile }) {
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -18,14 +19,14 @@ export default function DangerZone({ profile }) {
     disableButton('delete-profile', 'confirm');
     
     toast.promise(deleteProfile(profile.slug), {
-      loading: 'Deleting profile..',
+      loading: t('editProfilePage.toast.deletingProfile'),
       success: () => {
         closeModal('delete-profile');
 
         // Immediately redirect to /profiles after deleting the profile
         window.location.href = '/profiles';
 
-        return 'Profile has been deleted!'; 
+        return t('editProfilePage.toast.profileDeleted');
       },
       error: message => {
         enableButton('delete-profile', 'confirm');
@@ -51,24 +52,23 @@ export default function DangerZone({ profile }) {
           className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
           onClick={() =>
             openModal('delete-profile', {
-              title: 'Delete Profile',
-              description: 'Are you sure you want to delete your profile?',
+              title: t('editProfilePage.deleteProfileModal.title'),
+              description: t('editProfilePage.deleteProfileModal.description'),
               content: (
                 <p className='text-sm text-tertiary'>
-                  Please note that deleting your profile will remove all your social links and likes that your profile has received.<br/><br/>
-                  This action cannot be undone.
+                  {t('editProfilePage.deleteProfileModal.note', { br: <br /> })}
                 </p>
               ),
               buttons: [
                 {
                   id: 'cancel',
-                  label: 'Cancel',
+                  label: t('buttons.cancel'),
                   variant: 'ghost',
                   actionType: 'close'
                 },
                 {
                   id: 'confirm',
-                  label: 'Confirm',
+                  label: t('buttons.delete'),
                   variant: 'solid',
                   action: continueDeleteProfile
                 }
@@ -76,7 +76,7 @@ export default function DangerZone({ profile }) {
             })
           }
         >
-          Delete
+          {t('buttons.delete')}
         </button>
       </div>
     </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import MotionImage from '@/app/components/Motion/Image';
 import Link from 'next/link';
 import { HiDocumentDownload } from 'react-icons/hi';
@@ -5,6 +7,7 @@ import config from '@/config';
 import cn from '@/lib/cn';
 import { LuPackage } from 'react-icons/lu';
 import { useState } from 'react';
+import { t } from '@/stores/language';
 
 export default function EmojiPackageCard({ overridedImages, id, name, categories, downloads, emoji_ids, className }) {
   const [containerHovered, setContainerHovered] = useState(false);
@@ -56,7 +59,7 @@ export default function EmojiPackageCard({ overridedImages, id, name, categories
         </div>
 
         <div className='group-hover:bg-secondary transition-all absolute px-2 text-xs font-semibold uppercase bg-quaternary rounded-full right-2 top-1.5'>
-          PACK
+          {t('emojiPackageCard.packBadge')}
         </div>
       </Link>
 
@@ -68,6 +71,7 @@ export default function EmojiPackageCard({ overridedImages, id, name, categories
               <LuPackage />
               {emoji_ids.length}
             </div>
+            
             <div className='flex items-center text-sm gap-x-0.5 text-tertiary font-medium'>
               <HiDocumentDownload />
               {formatter.format(downloads)}
@@ -75,7 +79,9 @@ export default function EmojiPackageCard({ overridedImages, id, name, categories
           </div>
         </div>
 
-        <p className='text-xs font-medium text-tertiary max-w-[100%] truncate'>{categories.join(', ')}</p>
+        <p className='text-xs font-medium text-tertiary max-w-[100%] truncate'>
+          {categories.map(category => t(`categories.${category}`)).join(', ')}
+        </p>
       </div>
     </div>
   );

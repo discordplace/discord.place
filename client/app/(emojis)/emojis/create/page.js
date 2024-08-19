@@ -14,6 +14,7 @@ import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';
 import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
+import { t } from '@/stores/language';
 
 export default function Page() {
   const [isPackage, setIsPackage] = useState(false);
@@ -42,16 +43,20 @@ export default function Page() {
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const [activeStep, setActiveStep] = useState(0);
-  const steps = ['Details', 'Upload & Preview', 'Publish'];
+  const steps = [
+    t('createEmojiPage.steps.0.label'),
+    t('createEmojiPage.steps.1.label'),
+    t('createEmojiPage.steps.2.label')
+  ];
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   function publishEmoji() {
-    if (isPackage && emoji.files.length < config.packagesMinEmojisLength) return toast.error(`Minimum ${config.packagesMinEmojisLength} emojis should be added to the package for publishing.`);
-    if (isPackage && emoji.files.length > config.packagesMaxEmojisLength) return toast.error(`No more than ${config.packagesMaxEmojisLength} emojis can be added to the package.`);
+    if (isPackage && emoji.files.length < config.packagesMinEmojisLength) return toast.error(t('createEmojiPage.toast.minEmojisLength', { minLength: config.packagesMinEmojisLength }));
+    if (isPackage && emoji.files.length > config.packagesMaxEmojisLength) return toast.error(t('createEmojiPage.toast.maxEmojisReached', { maxLength: config.packagesMaxEmojisLength }));
 
+    if (!regexp.test(emoji.name)) return toast.error(t('createEmojiPage.toast.invalidEmojiName'));
     const regexp = /^[a-z0-9_]{0,20}$/;
-    if (!regexp.test(emoji.name)) return toast.error('Emoji name can only contain lowercase letters, numbers, and underscores. Max 20 characters.');
     
     setLoading(true);
     
@@ -61,10 +66,11 @@ export default function Page() {
     emoji.files.map(file => formData.append('file', file));
     
     toast.promise(createEmoji(formData), {
-      loading: 'Publishing emoji(s)..',
+      loading: t('createEmojiPage.toast.publishingEmojis', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 }),
       success: emojiId => {
         router.push(`/emojis/${isPackage ? 'packages/' : ''}${emojiId}`);
-        return 'Emoji(s) published successfully.';
+
+        return t('createEmojiPage.toast.emojisPublished', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 });
       },
       error: error => {
         setLoading(false);
@@ -80,11 +86,11 @@ export default function Page() {
 
         <div className="mt-48 mb-16 max-w-[600px] flex flex-col gap-y-2 w-full">
           <h1 className="text-4xl font-bold text-primary">
-            Publish Emoji
+            {t('createEmojiPage.title')}
           </h1>
 
           <p className="text-sm text-tertiary">
-            Publish your emoji to the world.
+            {t('createEmojiPage.subtitle')}
           </p>
 
           <div className='flex flex-col mt-6 gap-y-4'>
@@ -94,6 +100,7 @@ export default function Page() {
                   <div className='text-xs uppercase text-tertiary'>
                     STEP {index + 1}
                   </div>
+
                   <h2 className={cn(
                     'text-sm mobile:text-base transition-colors font-medium text-secondary flex items-center',
                     activeStep === index && 'text-primary'
@@ -108,11 +115,11 @@ export default function Page() {
           {activeStep === 0 && (
             <>
               <h2 className='mt-4 text-lg font-medium sm:text-xl text-primary'>
-                Let{'\''}s start with the details.
+                {t('createEmojiPage.steps.0.inputs.emojiCategories.title')}
               </h2>
 
               <p className='text-sm text-tertiary'>
-                Choose a one or more categories for your emoji.
+                {t('createEmojiPage.steps.0.inputs.emojiCategories.subtitle')}
               </p>
 
               <div className='flex flex-wrap items-center justify-center gap-4 mt-4'>
@@ -132,7 +139,7 @@ export default function Page() {
                         else setSelectedCategories([...selectedCategories, category]);
                       }}
                     >
-                      {category}
+                      {t(`categories.${category}`)}
                       {selectedCategories.includes(category) && <MdCheckCircle className='text-primary' />}
                     </button>
                   ))}
@@ -140,10 +147,11 @@ export default function Page() {
 
               <label className='flex flex-col mt-6 gap-y-2' htmlFor='emojiName'>
                 <h2 className='text-xl font-medium text-primary'>
-                  Emoji Name
+                  {t('createEmojiPage.steps.0.inputs.emojiName.title')}
                 </h2>
+
                 <p className='text-sm text-tertiary'>
-                  Enter a name for your emoji.
+                  {t('createEmojiPage.steps.0.inputs.emojiName.subtitle')}
                 </p>
               </label>
 
@@ -153,7 +161,7 @@ export default function Page() {
                 type='text'
                 value={emoji.name}
                 onChange={event => setEmoji({ ...emoji, name: event.target.value })}
-                placeholder='Enter emoji name'
+                placeholder={t('createEmojiPage.steps.0.inputs.emojiName.placeholder')}
                 maxLength={20}
               />
             </>
@@ -177,10 +185,10 @@ export default function Page() {
                 onChange={event => {
                   const files = event.target.files;
                   if (files.length <= 0) return;
-                  if (files.length > 9) return toast.error('No more than 9 emojis can be added to the package.');
+                  if (files.length > config.packagesMaxEmojisLength) return toast.error(t('createEmojiPage.toast.maxEmojisReached', { maxLength: config.packagesMaxEmojisLength }));
 
-                  if ([...files].some(file => file.size > 256000)) return toast.error('File size should not exceed 256kb.');
-                  if ([...files].some(file => file.type === 'image/gif' && !selectedCategories.includes('Animated'))) return toast.error('If you want to share an animated emoji, please go back and select the Animated category.');
+                  if ([...files].some(file => file.size > 256000)) return toast.error(t('createEmojiPage.toast.fileSizeExceeded', { size: 256 }));
+                  if ([...files].some(file => file.type === 'image/gif' && !selectedCategories.includes('Animated'))) return toast.error(t('createEmojiPage.toast.animatedCategoryNotSelected'));
 
                   setEmoji({ ...emoji, files: [...files] });
                 }}
@@ -191,20 +199,21 @@ export default function Page() {
           {activeStep === 2 && (
             <>
               <h2 className='mt-2 text-lg font-medium sm:text-xl text-primary'>
-                Confirm your details and publish your emoji.
+                {t('createEmojiPage.steps.2.title')}
               </h2>
 
               <p className='text-sm text-tertiary'>
-                Review the details and click on the publish button to publish your emoji.
+                {t('createEmojiPage.steps.2.subtitle')}
               </p>
 
               {emoji.files.length > 1 && (
                 <div className='flex flex-col p-4 mt-2 border border-blue-500 bg-blue-500/10 rounded-xl gap-y-2'>
                   <h3 className='flex items-center text-lg font-bold text-primary gap-x-1.5'>
-                    <RiErrorWarningFill /> Hey!
+                    <RiErrorWarningFill /> {t('createEmojiPage.steps.2.packageInfo.title')}
                   </h3>
+
                   <span className='text-sm font-medium text-tertiary'>
-                    It looks like you want to share more than one emoji at the same time. In this case, you will be sharing a package, not an emoji. Emoji packages have pages just like emojis and can be downloaded just like emojis, but as a rar file. 
+                    {t('createEmojiPage.steps.2.packageInfo.description')}
                   </span>
                 </div>
               )}
@@ -212,8 +221,9 @@ export default function Page() {
               <div className='flex flex-col mt-4 gap-y-2'>
                 <div className='flex justify-between'>
                   <h3 className='text-sm text-tertiary'>
-                    Categories
+                    {t('createEmojiPage.steps.2.fields.categories')}
                   </h3>
+
                   <h3 className='text-sm text-tertiary'>
                     {selectedCategories.join(', ')}
                   </h3>
@@ -221,8 +231,9 @@ export default function Page() {
 
                 <div className='flex justify-between'>
                   <h3 className='text-sm text-tertiary'>
-                    Emoji Name
+                    {t('createEmojiPage.steps.2.fields.emojiName')}
                   </h3>
+
                   <h3 className='text-sm text-tertiary'>
                     {emoji.name}
                   </h3>
@@ -230,14 +241,16 @@ export default function Page() {
               </div>
 
               <p className='mt-2 text-xs mobile:text-sm text-tertiary'>
-                By publishing this emoji{emoji.files.length > 1 && ' package'}, you agree to our <Link href='/legal/content-policy' className='hover:text-primary hover:underline'>content policy</Link>.
+                {t('createEmojiPage.steps.2.disclaimer.content', { 
+                  contentPolicyLink: <Link href='/legal/content-policy' className='hover:text-primary hover:underline'>{t('createEmojiPage.steps.2.disclaimer.linkText')}</Link>
+                })}
               </p>
             </>
           )}
 
           <div className='flex justify-between w-full mt-8'>
             <button className='flex items-center px-3 py-1 text-sm font-semibold text-white bg-black rounded-lg gap-x-1 dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => setActiveStep(activeStep - 1)} disabled={activeStep === 0 || loading}>
-              Previous
+              {t('buttons.previous')}
             </button>
 
             <button className='flex items-center px-3 py-1 text-sm font-semibold text-white bg-black rounded-lg gap-x-1 dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => {
@@ -248,7 +261,7 @@ export default function Page() {
                 activeStep === 1 ? emoji.files?.length <= 0 :
                   (loading === true || false)
             }>
-              {activeStep === steps.length - 1 ? 'Publish' : 'Next'}
+              {activeStep === steps.length - 1 ? t('buttons.publish') : t('buttons.next')}
             </button>
           </div>
         </div>

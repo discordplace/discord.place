@@ -15,6 +15,7 @@ import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import Pagination from '@/app/components/Pagination';
 import config from '@/config';
+import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -76,15 +77,15 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...sequenceTransition, delay: 0.1 }}
         >
-          Discover the servers
+          {t('serversPage.title')}
         </motion.h1>
         <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
-          Explore the best servers on Discord and find the perfect community for you. Don{'\''}t forget to vote for your favorite servers!
+          {t('serversPage.subtitle')}
         </motion.span>
 
         <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
           <SearchInput
-            placeholder='Search for a server by name, description, tags, etc.'
+            placeholder={t('serversPage.searchInputPlaceholder')}
             loading={loading}
             search={search}
             fetchData={fetchServers}
@@ -99,7 +100,7 @@ export default function Hero() {
             transition={{ ...sequenceTransition, delay: 0.3 }}
           >
             <Select
-              placeholder='Category'
+              placeholder={t('serversPage.categorySelectPlaceholder')}
               options={
                 config.serverCategories.map(category => ({
                   label: <div className='flex items-center gap-x-2'>
@@ -107,7 +108,7 @@ export default function Hero() {
                       {config.serverCategoriesIcons[category]}
                     </span>
 
-                    {category}
+                    {t(`categories.${category}`)}
                   </div>,
                   value: category
                 }))
@@ -118,35 +119,35 @@ export default function Hero() {
             />
 
             <Select
-              placeholder='Sorting'
+              placeholder={t('serversPage.sortSelectPlaceholder')}
               options={[
                 ...[
                   {
-                    label: 'Votes',
+                    label: t('serversPage.sortSelect.items.votes'),
                     value: 'Votes'
                   },
                   {
-                    label: 'Latest Voted',
+                    label: t('serversPage.sortSelect.items.latestVoted'),
                     value: 'LatestVoted'
                   },
                   {
-                    label: 'Voice',
+                    label: t('serversPage.sortSelect.items.voice'),
                     value: 'Voice'
                   },
                   {
-                    label: 'Members',
+                    label: t('serversPage.sortSelect.items.members'),
                     value: 'Members'
                   },
                   {
-                    label: 'Newest',
+                    label: t('serversPage.sortSelect.items.newest'),
                     value: 'Newest'
                   },
                   {
-                    label: 'Oldest',
+                    label: t('serversPage.sortSelect.items.oldest'),
                     value: 'Oldest'
                   },
                   {
-                    label: 'Boosts',
+                    label: t('serversPage.sortSelect.items.boosts'),
                     value: 'Boosts'
                   }
                 ].map(option => ({
@@ -184,16 +185,16 @@ export default function Hero() {
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
-                    It{'\''}s quiet in here...
+                    {t('serversPage.emptyErrorState.title')}
                   </div>
                 }
-                message={'There are no servers to display. Maybe that\'s a sign to create one?'}
+                message={t('serversPage.emptyErrorState.message')}
               />
 
               <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
                 fetchServers('', 1, limit, 'All', 'Votes');
               }}>
-                Reset Search
+                {t('buttons.resetSearch')}
               </button>
             </motion.div>
           </AnimatePresence>

@@ -9,6 +9,7 @@ import { useWindowScroll } from 'react-use';
 import { BiLogOut } from 'react-icons/bi';
 import logout from '@/lib/request/auth/logout';
 import { toast } from 'sonner';
+import { t } from '@/stores/language';
 
 export default function UserSide({ className }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -49,7 +50,7 @@ export default function UserSide({ className }) {
             className='relative flex items-center px-4 py-1.5 overflow-hidden text-sm font-semibold text-white bg-black rounded-full pointer-events-auto dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 gap-x-1'
             onClick={logOut}
           >
-            Logout
+            {t('header.logout')}
             <BiLogOut />
           </button>
 
@@ -66,7 +67,7 @@ export default function UserSide({ className }) {
           className='relative flex items-center px-4 py-1.5 overflow-hidden text-sm font-semibold text-white bg-black rounded-full pointer-events-auto dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 gap-x-1'
           href={config.getLoginURL(pathname)}
         >
-          Login with Discord
+          {t('buttons.loginWithDiscord')}
         </Link>
       )}
     </div>

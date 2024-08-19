@@ -1,5 +1,8 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
+import { t } from '@/stores/language';
 
 export default function Servers({ profile }) {
   return (
@@ -10,7 +13,7 @@ export default function Servers({ profile }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.7 }}
       >
-        Servers
+        {t('profilePage.servers.title')}
       </motion.h2>
 
       <motion.p className='mt-2 whitespace-pre-wrap text-tertiary' 
@@ -18,7 +21,7 @@ export default function Servers({ profile }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.715 }}
       >
-        The owner of this profile is also the owner of the following servers. If you like the profile, maybe you like the servers also?
+        {t('profilePage.servers.subtitle')}
       </motion.p>
 
       <motion.div 

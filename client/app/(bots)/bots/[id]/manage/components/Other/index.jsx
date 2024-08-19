@@ -14,6 +14,7 @@ import { TbLoader } from 'react-icons/tb';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
+import { t } from '@/stores/language';
 
 export default function Other({ botId, categories, setCategories, canEditSupportServer, supportServerId, setSupportServerId, githubRepository: currentGithubRepository }) {
   const [ownedServers, setOwnedServers] = useState([]);
@@ -37,23 +38,23 @@ export default function Other({ botId, categories, setCategories, canEditSupport
   const [savingGithubRepository, setSavingGithubRepository] = useState(false);
 
   function saveGithubRepository() {
-    if (githubRepository === defaultGithubRepository) return toast.info('No changes made.');
+    if (githubRepository === defaultGithubRepository) return toast.info(t('botManagePage.other.toast.noChangesMade'));
 
     if (githubRepository) {
       const usernameRepositoryRegex = /^([a-zA-Z\d]{1}[-a-zA-Z\d]+)(\/){1}([-\w.]+)$/i;
-      if (!usernameRepositoryRegex.test(githubRepository)) return toast.error('Invalid username/repository format.');
+      if (!usernameRepositoryRegex.test(githubRepository)) return toast.error(t('botManagePage.other.toast.notValidRepositoryFormat'));
     }
     
     setSavingGithubRepository(true);
 
     toast.promise(editBot(botId, [{ key: 'github_repository', value: githubRepository }]), {
-      loading: 'Saving GitHub repository...',
+      loading: t('botManagePage.other.githubRepository.toast.savingRepository'),
       success: () => {
         setSavingGithubRepository(false);
         setDefaultGithubRepository(githubRepository);
         revalidateBot(botId);
 
-        return 'GitHub repository saved successfully.';
+        return t('botManagePage.other.githubRepository.toast.repositorySaved');
       },
       error: error => {
         setSavingGithubRepository(false);
@@ -67,11 +68,11 @@ export default function Other({ botId, categories, setCategories, canEditSupport
     <div className='flex flex-col w-full gap-y-4'>
       <h3 className='flex items-center text-xl font-semibold gap-x-4'>
         <FaCirclePlus size={24} className='text-purple-500' />
-        Other
+        {t('botManagePage.other.title')}
       </h3>
 
       <p className='text-sm sm:text-base text-tertiary'>
-        Settings that you should not worry about too much.
+        {t('botManagePage.other.subtitle')}
       </p>
 
       <div className='flex flex-col w-full gap-8 mt-4'>
@@ -79,11 +80,11 @@ export default function Other({ botId, categories, setCategories, canEditSupport
           <label
             className='font-medium text-secondary'
           >
-            Categories
+            {t('botManagePage.other.inputs.categories.label')}
           </label>
 
           <p className='text-sm text-tertiary'>
-            Select the categories that your bot belongs to. This will help users find your bot.
+            {t('botManagePage.other.inputs.categories.description')}
           </p>
 
           <div className='flex flex-wrap items-center gap-2 mt-2'>
@@ -100,7 +101,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                 }}
               >
                 {categories.includes(category) ? <IoMdCheckmarkCircle /> : config.botCategoriesIcons[category]}
-                {category}
+                {t(`categories.${category}`)}
               </button>
             ))}
           </div>
@@ -111,15 +112,15 @@ export default function Other({ botId, categories, setCategories, canEditSupport
             <div className='flex flex-col gap-y-2'>
               <h3 className='flex items-center font-medium text-secondary gap-x-2'>
                 <BsGithub className='text-2xl text-black dark:text-white' />
-                GitHub Repository
+                {t('botManagePage.other.githubRepository.title')}
 
                 <span className='text-xs text-white dark:text-white px-2 py-0.5 dark:bg-white/30 bg-black/30 rounded-full'>
-                  Optional
+                  {t('botManagePage.other.githubRepository.optionalBadge')}
                 </span>
               </h3>
 
               <p className='text-sm text-tertiary'>
-                If your bot is open source, you can add a link to your GitHub repository here.
+                {t('botManagePage.other.githubRepository.subtitle')}
               </p>
             </div>
 
@@ -130,7 +131,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                 onClick={saveGithubRepository}
               >
                 {savingGithubRepository ? <TbLoader size={18} className='animate-spin' /> : <IoCheckmarkCircle size={18} />}
-                Save Repository
+                {t('buttons.saveRepository')}
               </button>
             </div>
           </div>
@@ -145,7 +146,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
               type='text'
               value={githubRepository}
               onChange={event => event.target.value === '' ? setGithubRepository(undefined) : setGithubRepository(event.target.value)}
-              placeholder='username/repository'
+              placeholder={t('botManagePage.other.inputs.githubRepository.usernameRepositoryInputPlaceholder')}
               onKeyUp={event => event.key === 'Enter' && saveGithubRepository()}
             />
           </div>
@@ -156,15 +157,15 @@ export default function Other({ botId, categories, setCategories, canEditSupport
             <label
               className='font-medium text-secondary'
             >
-              Support Server
+              {t('botManagePage.other.supportServer.title')}
 
               <span className='ml-2 text-xs text-white dark:text-white px-2 py-0.5 dark:bg-white/30 bg-black/30 rounded-full'>
-                Optional
+                {t('botManagePage.other.supportServer.optionalBadge')}
               </span>
             </label>
         
             <p className='text-sm text-tertiary'>
-              If you added your server to discord.place then you can use it as a support server of your bot.
+              {t('botManagePage.other.supportServer.subtitle')}
             </p>
 
             <div className='flex flex-wrap w-full gap-4 mt-2'>
@@ -175,7 +176,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
               ) : (
                 ownedServers.length === 0 ? (
                   <p className='text-xs text-tertiary'>
-                    You don{'\''}t have any servers added to discord.place.
+                    {t('botManagePage.other.supportServer.emptyErrorState')}
                   </p>
                 ) : (
                   ownedServers.map(server => (

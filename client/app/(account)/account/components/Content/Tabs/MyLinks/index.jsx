@@ -17,6 +17,7 @@ import useAccountStore from '@/stores/account';
 import { PiWarningCircleFill } from 'react-icons/pi';
 import CopyButton from '@/app/components/CopyButton/CustomTrigger';
 import { MdOutlineCopyAll } from 'react-icons/md';
+import { t } from '@/stores/language';
 
 export default function MyLinks() {
   const user = useAuthStore(state => state.user);
@@ -37,12 +38,12 @@ export default function MyLinks() {
     disableButton('delete-link', 'confirm');
   
     toast.promise(deleteLink(id), {
-      loading: 'Link deleting..',
+      loading: t('accountPage.tabs.myLinks.toast.deletingLink'),
       success: () => {
         closeModal('delete-link');
         fetchData(['links']);
         
-        return 'Successfully deleted the link.';
+        return t('accountPage.tabs.myLinks.toast.linkDeleted');
       },
       error: error => {
         enableButton('delete-link', 'confirm');
@@ -54,19 +55,19 @@ export default function MyLinks() {
 
   function continueCreateLink() {
     openModal('create-link', {
-      title: 'Create New Link',
-      description: 'Create a new link to share with your audience.',
+      title: t('accountPage.tabs.myLinks.createLinkModal.title'),
+      description: t('accountPage.tabs.myLinks.createLinkModal.description'),
       content: <CreateLinkModal />,
       buttons: [
         {
           id: 'cancel',
-          label: 'Cancel',
+          label: t('buttons.cancel'),
           variant: 'ghost',
           actionType: 'close'
         },
         {
           id: 'create',
-          label: 'Create',
+          label: t('buttons.create'),
           variant: 'solid',
           action: () => {
             const name = useGeneralStore.getState().createLinkModal.name;
@@ -74,30 +75,30 @@ export default function MyLinks() {
             const setName = useGeneralStore.getState().createLinkModal.setName;
             const setDestinationURL = useGeneralStore.getState().createLinkModal.setDestinationURL;
 
-            if (!name) return toast.error('Please enter a name for your link.');
+            if (!name) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.emptyName'));
 
             const nameRegex = /^[a-zA-Z0-9-_]+$/;
-            if (!nameRegex.test(name)) return toast.error('Link name can only contain letters, numbers, hyphens, and underscores.');
-            if (name.length > 20) return toast.error('Link name must be less than 20 characters.');
+            if (!nameRegex.test(name)) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.invalidName'));
+            if (name.length > 20) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.nameTooLong', { maxLength: 20 }));
 
-            if (!destinationURL) return toast.error('Please enter a destination URL for your link.');
+            if (!destinationURL) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.emptyDestinationURL'));
 
             try {
               const parsedURL = new URL(destinationURL);
-              if (parsedURL.protocol !== 'https:') return toast.error('Link destination must be a secure URL.');
-              if (parsedURL.port) return toast.error('Link destination cannot have a port.');
+              if (parsedURL.protocol !== 'https:') return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.destinationUrlNotHTTPS'));
+              if (parsedURL.port) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.destinationUrlHavePort'));
               
               disableButton('create-link', 'create');
 
               toast.promise(createLink({ name, destinationURL }), {
-                loading: 'Creating link..',
+                loading: t('accountPage.tabs.myLinks.createLinkModal.toast.creatingLink'),
                 success: () => {
                   closeModal('create-link');
                   setName('');
                   setDestinationURL('');
                   fetchData(['links']);
                   
-                  return 'Successfully created the link.';
+                  return t('accountPage.tabs.myLinks.createLinkModal.toast.linkCreated');
                 },
                 error: error => {
                   enableButton('create-link', 'create');
@@ -106,7 +107,7 @@ export default function MyLinks() {
                 }
               });
             } catch {
-              return toast.error('Please enter a valid URL.');
+              return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.invalidDestinationUrl'));
             }
           }
         }
@@ -118,7 +119,7 @@ export default function MyLinks() {
     <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
       <div className='flex flex-col gap-y-2'>
         <h1 className='flex items-center text-xl font-bold gap-x-2 text-primary'>
-          My Links
+          {t('accountPage.tabs.myLinks.title')}
 
           <span className='text-xs font-semibold text-tertiary'>
             {data.links?.length || 0}/{user?.premium?.createdAt ? 5 : 1}
@@ -126,7 +127,7 @@ export default function MyLinks() {
         </h1>
 
         <p className='text-sm text-secondary'>
-          View or manage the links that you have created.
+          {t('accountPage.tabs.myLinks.subtitle')}
         </p>
       </div>
 
@@ -140,17 +141,19 @@ export default function MyLinks() {
               <LuPlus className='text-primary' size={20} />
             
               <span className='text-sm font-medium text-tertiary'>
-              New Link
+                {t('buttons.newLink')}
               </span>
             </div>
           ) : (
             <div className='flex flex-col w-full p-4 mt-4 border border-yellow-500 rounded-xl bg-yellow-500/10 gap-y-2'>
               <h2 className='flex items-center font-bold mobile:text-lg gap-x-2 text-primary'>
-                <PiWarningCircleFill /> Maximum Links Reached
+                <PiWarningCircleFill /> {t('accountPage.tabs.myLinks.maximumLinksReachedInfo.title')}
               </h2>
+
               <p className='text-xs font-medium mobile:text-sm text-tertiary'>
-                You have reached the maximum amount of links that you can create.<br />
-                For more information about Premium, visit <Link href='/premium' className='text-secondary hover:text-primary'>Premium page</Link>.
+                {t('accountPage.tabs.myLinks.maximumLinksReachedInfo.description', {
+                  link: <Link href='/premium' className='text-secondary hover:text-primary'>{t('accountPage.tabs.myLinks.maximumLinksReachedInfo.linkText')}</Link>
+                })}
               </p>
             </div>
           )}
@@ -161,10 +164,10 @@ export default function MyLinks() {
             title={
               <div className='flex items-center mt-8 gap-x-2'>
                 <BsEmojiAngry />
-                It{'\''}s quiet in here...
+                {t('accountPage.tabs.myLinks.emptyErrorState.title')}
               </div>
             }
-            message={'You have not created any links.'}
+            message={t('accountPage.tabs.myLinks.emptyErrorState.message')}
           />
         ) : (
           data.links?.map(link => (
@@ -183,7 +186,7 @@ export default function MyLinks() {
 
                 <div className='flex items-center ml-auto text-xs font-medium gap-x-2 text-tertiary'>
                   <span className='flex items-center gap-x-1'>
-                    {link.visits} Visits
+                    {t('accountPage.tabs.myLinks.visits', { count: link.visits })}
                   </span>
 
                   <CopyButton
@@ -208,24 +211,23 @@ export default function MyLinks() {
                     className='hover:opacity-70'
                     onClick={() => 
                       openModal('delete-link', {
-                        title: 'Delete Link',
-                        description: 'Are you sure you want to delete?',
+                        title: t('accountPage.tabs.myLinks.deleteLinkModal.title'),
+                        description: t('accountPage.tabs.myLinks.deleteLinkModal.description'),
                         content: (
                           <p className='text-sm text-tertiary'>
-                            Please note that deleting your link will remove all visits that your link has received.<br/><br/>
-                            This action cannot be undone.
+                            {t('accountPage.tabs.myLinks.deleteLinkModal.note', { br: <br /> })}
                           </p>
                         ),
                         buttons: [
                           {
                             id: 'cancel',
-                            label: 'Cancel',
+                            label: t('buttons.cancel'),
                             variant: 'ghost',
                             actionType: 'close'
                           },
                           {
                             id: 'confirm',
-                            label: 'Confirm',
+                            label: t('buttons.confirm'),
                             variant: 'solid',
                             action: () => continueDeleteLink(link.id)
                           }

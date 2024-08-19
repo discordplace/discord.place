@@ -1,5 +1,8 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { FaSlackHash } from 'react-icons/fa';
+import { t } from '@/stores/language';
 
 export default function Keywords({ server }) {
   return (
@@ -10,7 +13,7 @@ export default function Keywords({ server }) {
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .4 }}
       >
-        Keywords
+        {t('serverPage.keywords.title')}
       </motion.h2>
 
       <motion.div 
