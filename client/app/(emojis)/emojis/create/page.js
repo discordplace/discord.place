@@ -55,8 +55,8 @@ export default function Page() {
     if (isPackage && emoji.files.length < config.packagesMinEmojisLength) return toast.error(t('createEmojiPage.toast.minEmojisLength', { minLength: config.packagesMinEmojisLength }));
     if (isPackage && emoji.files.length > config.packagesMaxEmojisLength) return toast.error(t('createEmojiPage.toast.maxEmojisReached', { maxLength: config.packagesMaxEmojisLength }));
 
-    if (!regexp.test(emoji.name)) return toast.error(t('createEmojiPage.toast.invalidEmojiName'));
     const regexp = /^[a-z0-9_]{0,20}$/;
+    if (!regexp.test(emoji.name)) return toast.error(t('createEmojiPage.toast.invalidEmojiName'));
     
     setLoading(true);
     
