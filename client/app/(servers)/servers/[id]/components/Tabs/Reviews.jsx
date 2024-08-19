@@ -180,7 +180,7 @@ export default function Reviews({ server }) {
               
             <div className="flex flex-col flex-1 w-full font-medium whitespace-pre-wrap gap-y-1 text-secondary">
               <h3 className='font-medium text-primary'>
-                {t('serverPage.tabs.reviews.input.title')}
+                {t('serverPage.tabs.reviews.input.label')}
               </h3>
               
               <p className='text-xs sm:text-sm text-tertiary'>
