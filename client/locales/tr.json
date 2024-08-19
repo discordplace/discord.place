@@ -829,6 +829,10 @@
         "views": "Ziyaretçi",
         "likes": "Beğeniler"
       },
+      "gender": {
+        "Male": "Erkek",
+        "Female": "Kadın" 
+      },
       "valueUnknown": "Bilinmiyor"
     },
     "actions": {

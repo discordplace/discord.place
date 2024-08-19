@@ -18,7 +18,7 @@ export default function About({ profile }) {
       key: 'gender',
       label: t('profilePage.about.labels.gender'),
       icon: profile.gender === 'Male' ? <MdOutlineMale /> : profile.gender === 'Female' ? <MdOutlineFemale /> : <FaGenderless />,
-      value: profile.gender || t('profilePage.about.valueUnknown')
+      value: profile.gender ? t(`profilePage.about.gender.${profile.gender}`) : t('profilePage.about.valueUnknown')
     },
     {
       key: 'location',

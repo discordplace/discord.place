@@ -1,6 +1,9 @@
+'use client';
+
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 
 export default function GenderDropdown({ profile, currentlyEditingValue, setCurrentlyEditingValue }) {
   return (
@@ -20,7 +23,7 @@ export default function GenderDropdown({ profile, currentlyEditingValue, setCurr
             )} 
             onSelect={() => setCurrentlyEditingValue('Male')}
           >
-            Male
+            {t('profilePage.about.gender.Male')}
             {(currentlyEditingValue === 'Male' || profile.gender === 'Male') && <IoMdCheckmarkCircle />}
           </DropdownMenu.Item>
 
@@ -31,7 +34,7 @@ export default function GenderDropdown({ profile, currentlyEditingValue, setCurr
             )} 
             onSelect={() => setCurrentlyEditingValue('Female')}
           >
-            Female
+            {t('profilePage.about.gender.Female')}
             {(currentlyEditingValue === 'Female' || profile.gender === 'Female') && <IoMdCheckmarkCircle />}
           </DropdownMenu.Item>
 
@@ -42,7 +45,7 @@ export default function GenderDropdown({ profile, currentlyEditingValue, setCurr
             )} 
             onSelect={() => setCurrentlyEditingValue('Unknown')}
           >
-            Unknown
+            {t('profilePage.about.valueUnknown')}
             {(currentlyEditingValue === 'Unknown' || !profile.gender) && <IoMdCheckmarkCircle />}
           </DropdownMenu.Item>
         </DropdownMenu.Content>

@@ -829,6 +829,10 @@
         "views": "Views",
         "likes": "Likes"
       },
+      "gender": {
+        "Male": "Male",
+        "Female": "Female" 
+      },
       "valueUnknown": "Unknown"
     },
     "actions": {
