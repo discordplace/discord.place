@@ -49,18 +49,18 @@ module.exports = {
       let sounds;
 
       switch (sort) {
-      case 'Downloads':
-        sounds = foundSounds.sort((a, b) => b.downloads - a.downloads);
-        break;
-      case 'Likes':
-        sounds = foundSounds.sort((a, b) => b.likers.length - a.likers.length);
-        break;
-      case 'Newest':
-        sounds = foundSounds.sort((a, b) => b.createdAt - a.createdAt);
-        break;
-      case 'Oldest':
-        sounds = foundSounds.sort((a, b) => a.createdAt - b.createdAt);
-        break;
+        case 'Downloads':
+          sounds = foundSounds.sort((a, b) => b.downloads - a.downloads);
+          break;
+        case 'Likes':
+          sounds = foundSounds.sort((a, b) => b.likers.length - a.likers.length);
+          break;
+        case 'Newest':
+          sounds = foundSounds.sort((a, b) => b.createdAt - a.createdAt);
+          break;
+        case 'Oldest':
+          sounds = foundSounds.sort((a, b) => a.createdAt - b.createdAt);
+          break;
       }
 
       sounds = sounds.slice(skip, skip + limit);

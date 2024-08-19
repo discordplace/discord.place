@@ -62,12 +62,12 @@ module.exports = {
         if (bStandedOutData) return 1;
 
         switch (sort) {
-        case 'Votes': return b.votes - a.votes;
-        case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
-        case 'Servers': return b.server_count.value - a.server_count.value;
-        case 'Most Reviewed': return reviews.filter(review => review.bot.id === b.id).length - reviews.filter(review => review.bot.id === a.id).length;
-        case 'Newest': return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-        case 'Oldest': return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          case 'Votes': return b.votes - a.votes;
+          case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
+          case 'Servers': return b.server_count.value - a.server_count.value;
+          case 'Most Reviewed': return reviews.filter(review => review.bot.id === b.id).length - reviews.filter(review => review.bot.id === a.id).length;
+          case 'Newest': return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          case 'Oldest': return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
         }
       }).slice(skip, skip + limit);
        
