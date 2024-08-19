@@ -13,7 +13,7 @@ export default function EssentialInformation({ description, setDescription, invi
       </h3>
 
       <p className='text-sm sm:text-base text-tertiary'>
-        {t('serverManagePage.essentialInformation.description')}
+        {t('serverManagePage.essentialInformation.subtitle')}
       </p>
 
       <div className='flex flex-col w-full gap-8 mt-4'>
