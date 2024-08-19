@@ -27,14 +27,14 @@ const config = {
       dateFnsKey: 'enUS',
       flag: '🇺🇸',
       default: true
+    },
+    {
+      name: 'Turkish',
+      code: 'tr',
+      dateFnsKey: 'tr',
+      flag: '🇹🇷'
     }
-    // TODO: Turkish and Azerbaijani translations
-    // {
-    //   name: 'Turkish',
-    //   code: 'tr',
-    //   dateFnsKey: 'tr',
-    //   flag: '🇹🇷'
-    // }
+    // TODO: Azerbaijani translations
     // {
     //   name: 'Azerbaijani',
     //   code: 'az',
