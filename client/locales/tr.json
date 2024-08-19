@@ -468,7 +468,7 @@
       "soundDeleted": "{{soundName}} başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
     },
     "notApprovedInfo": {
-      "description": "Şu an için bu sesi sadece siz görebilirsiniz. Ses onaylandığında, herkese açık hale gelecektir. O zamana kadar <link>'e gelerek sesiniz onaylandığında botumuzdan bildirim alabilirsiniz. DM'lerinizi açtığınızdan emin olun.",
+      "description": "Şu an için bu sesi sadece siz görebilirsiniz. Ses onaylandığında, herkese açık hale gelecektir. O zamana kadar <link>'a gelerek sesiniz onaylandığında botumuzdan bildirim alabilirsiniz. DM'lerinizi açtığınızdan emin olun.",
       "linkText": "Discord sunucumuz"
     },
     "soundDetails": {
