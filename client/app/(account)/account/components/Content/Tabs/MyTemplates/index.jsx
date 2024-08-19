@@ -69,7 +69,7 @@ export default function MyTemplates() {
         </h2>
 
         <p className='text-sm text-tertiary'>
-          {t('accountPage.tabs.myTemplates.sections.newTemplate.description')}
+          {t('accountPage.tabs.myTemplates.sections.newTemplate.subtitle')}
         </p>
 
         <div className='mt-2 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>

@@ -32,7 +32,7 @@ export default function MyBots() {
           </h1>
 
           <p className='text-sm text-secondary'>
-            {t('accountPage.tabs.myBots.description')}
+            {t('accountPage.tabs.myBots.subtitle')}
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export default function MyBots() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            {t('accountPage.tabs.myBots.sections.newBot.description')}
+            {t('accountPage.tabs.myBots.sections.newBot.subtitle')}
           </p>
 
           <div className='mt-2 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>
@@ -132,7 +132,7 @@ export default function MyBots() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            {t('accountPage.tabs.myBots.sections.pastDenials.description')}
+            {t('accountPage.tabs.myBots.sections.pastDenials.subtitle')}
           </p>
         
           <div className={cn(

@@ -136,7 +136,7 @@ export default function NewBot() {
         <div className="flex items-center justify-center w-full mt-12">
           <div className="max-w-[800px] w-full flex flex-col gap-y-1">
             <h2 className="text-lg font-semibold">
-              {t('accountPage.tabs.myBots.sections.addBot.fields.botId.title')}
+              {t('accountPage.tabs.myBots.sections.addBot.fields.botId.label')}
             </h2>
 
             <p className="text-sm sm:text-base text-tertiary">
@@ -150,7 +150,7 @@ export default function NewBot() {
             />
 
             <h2 className="mt-8 text-lg font-semibold">
-              {t('accountPage.tabs.myBots.sections.addBot.fields.shortDescription.title')}
+              {t('accountPage.tabs.myBots.sections.addBot.fields.shortDescription.label')}
             </h2>
 
             <p className="text-sm sm:text-base text-tertiary">
@@ -165,7 +165,7 @@ export default function NewBot() {
             />
 
             <h2 className="mt-8 text-lg font-semibold">
-              {t('accountPage.tabs.myBots.sections.addBot.fields.longDescription.title')}
+              {t('accountPage.tabs.myBots.sections.addBot.fields.longDescription.label')}
             </h2>
 
             <p className="text-sm sm:text-base text-tertiary">
@@ -203,7 +203,7 @@ export default function NewBot() {
             )}
 
             <h2 className="mt-8 text-lg font-semibold">
-              {t('accountPage.tabs.myBots.sections.addBot.fields.inviteUrl.title')}
+              {t('accountPage.tabs.myBots.sections.addBot.fields.inviteUrl.label')}
             </h2>
 
             <p className="text-sm sm:text-base text-tertiary">
@@ -217,7 +217,7 @@ export default function NewBot() {
             />
 
             <h2 className="mt-8 text-lg font-semibold">
-              {t('accountPage.tabs.myBots.sections.addBot.fields.categories.title')}
+              {t('accountPage.tabs.myBots.sections.addBot.fields.categories.label')}
             </h2>
 
             <p className="text-sm text-tertiary">
@@ -246,7 +246,7 @@ export default function NewBot() {
             </div>
 
             <h2 className="mt-8 text-lg font-semibold">
-              {t('accountPage.tabs.myBots.sections.addBot.fields.contentPolicy.title')}
+              {t('accountPage.tabs.myBots.sections.addBot.fields.contentPolicy.label')}
             </h2>
 
             <p className='flex flex-col text-sm sm:text-base gap-y-1 text-tertiary'>
@@ -256,7 +256,7 @@ export default function NewBot() {
             </p>
 
             <h2 className="mt-8 text-lg font-semibold">
-              {t('accountPage.tabs.myBots.sections.addBot.fields.areYouReady.title')}
+              {t('accountPage.tabs.myBots.sections.addBot.fields.areYouReady.label')}
             </h2>
 
             <div className="flex flex-col w-full gap-2 mt-2 sm:flex-row">

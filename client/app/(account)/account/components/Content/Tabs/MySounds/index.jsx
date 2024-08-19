@@ -80,7 +80,7 @@ export default function MySounds() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            {t('accountPage.tabs.mySounds.sections.newSound.description')}
+            {t('accountPage.tabs.mySounds.sections.newSound.subtitle')}
           </p>
 
           <div className='mt-2 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>

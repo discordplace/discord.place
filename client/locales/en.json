@@ -258,6 +258,7 @@
       "learnMore": "Learn more"
     }
   },
+  "step": "STEP {{currentStep}}",
   "publishTemplatePage": {
     "title": "Publish Template",
     "subtitle": "List your template on Discord Place and let others use it.",
@@ -528,7 +529,7 @@
       "deleteSoundModal": {
         "title": "Delete Sound",
         "description": "Are you sure you want to delete {{soundName}}?",
-        "content": "Please note that deleting the sound will remove all the downloads that the sound has received. This action cannot be undone.<br><br>This action cannot be undone."
+        "content": "Please note that deleting the sound will remove all the downloads that the sound has received.<br><br>This action cannot be undone."
       }
     }
   },
@@ -789,7 +790,7 @@
     "badgesHeading": "Badges",
     "about": {
       "title": "About",
-      "noBio": "his user has not set a bio yet."
+      "noBio": "This user has not set a bio yet."
     },
     "fields": {
       "memberSince": "Member Since",
@@ -799,7 +800,7 @@
       },
       "profile": {
         "label": "Profile",
-        "tooltip": "The total number of profiles created by this user.",
+        "tooltip": "Profile of this user.",
         "noProfile": "No profile found."
       },
       "likesReceived": {
@@ -1057,7 +1058,9 @@
       "downloads": "Downloads",
       "animated": "Animated",
       "categories": "Categories",
-      "publisher": "Publisher"
+      "publisher": "Publisher",
+      "yes": "Yes",
+      "no": "No"
     },
     "similarEmojis": {
       "title": "Similar Emojis",
@@ -1222,7 +1225,7 @@
     }
   },
   "botCard": {
-    "noDescription": "This bot does not have a description. We can only imagine how beautiful it is",
+    "noDescription": "This bot does not have a description. We can only imagine how beautiful it is.",
     "tripledVoteBadge": "3X VOTE!"
   },
   "badges": {
@@ -1756,8 +1759,8 @@
                 "label": "Invite URL",
                 "description": "This is the invite URL of your bot. This is the link that users will use to add your bot to their server. You can use default Discord authorization link or custom one."
               },
-              "category": {
-                "label": "Category",
+              "categories": {
+                "label": "Categories",
                 "description": "Select all categories that your bot belongs to. This will help users find your bot."
               },
               "contentPolicy": {
@@ -1874,8 +1877,8 @@
                 "label": "Name",
                 "description": "Add a name for your sound."
               },
-              "category": {
-                "label": "Category",
+              "categories": {
+                "label": "Categories",
                 "description": "Select all categories that your sound belongs to. This will help users find your sound."
               },
               "contentPolicy": {

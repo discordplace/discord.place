@@ -39,7 +39,7 @@ export default function MyEmojis() {
         </h2>
 
         <p className='text-sm text-tertiary'>
-          {t('accountPage.tabs.myEmojis.sections.listedEmojis.description')}
+          {t('accountPage.tabs.myEmojis.sections.listedEmojis.subtitle')}
         </p>
 
         {(concatenatedEmojis || []).length === 0 ? (

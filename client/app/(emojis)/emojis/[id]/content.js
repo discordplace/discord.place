@@ -119,7 +119,7 @@ export default function Content({ emoji }) {
               </h1>
 
               <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                {emoji.animated ? 'Yes' : 'No'}
+                {emoji.animated ? t('emojiPage.fields.yes') : t('emojiPage.fields.no')}
               </span>
             </div>
 

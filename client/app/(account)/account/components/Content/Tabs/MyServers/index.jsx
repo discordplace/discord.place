@@ -41,7 +41,7 @@ export default function MyServers() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            {t('accountPage.tabs.myServers.sections.listedServers.description')}
+            {t('accountPage.tabs.myServers.sections.listedServers.subtitle')}
           </p>
 
           {(data.servers || []).length === 0 ? (
@@ -101,7 +101,7 @@ export default function MyServers() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            {t('accountPage.tabs.myServers.sections.unlistedServers.description')}
+            {t('accountPage.tabs.myServers.sections.unlistedServers.subtitle')}
           </p>
 
           <div className='mt-4 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>

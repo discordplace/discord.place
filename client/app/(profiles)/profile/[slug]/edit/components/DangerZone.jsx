@@ -40,11 +40,11 @@ export default function DangerZone({ profile }) {
     <div className='flex flex-col p-4 border border-red-500 gap-y-2 bg-red-500/10 rounded-xl'>
       <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
         <RiErrorWarningFill />
-        Danger Zone
+        {t('editProfilePage.dangerZone.title')}
       </h1>
       
       <p className='text-sm font-medium text-tertiary'> 
-        You can delete the your profile using the button below, but be careful not to delete it by mistake :)
+        {t('editProfilePage.dangerZone.subtitle')}
       </p>
     
       <div className='flex mt-1 gap-x-2'>
@@ -52,11 +52,11 @@ export default function DangerZone({ profile }) {
           className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
           onClick={() =>
             openModal('delete-profile', {
-              title: t('editProfilePage.deleteProfileModal.title'),
-              description: t('editProfilePage.deleteProfileModal.description'),
+              title: t('editProfilePage.dangerZone.deleteProfileModal.title'),
+              description: t('editProfilePage.dangerZone.deleteProfileModal.description'),
               content: (
                 <p className='text-sm text-tertiary'>
-                  {t('editProfilePage.deleteProfileModal.note', { br: <br /> })}
+                  {t('editProfilePage.dangerZone.deleteProfileModal.note', { br: <br /> })}
                 </p>
               ),
               buttons: [

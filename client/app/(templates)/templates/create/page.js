@@ -80,8 +80,9 @@ export default function Page() {
               {steps.map((step, index) => (
                 <div className='flex flex-col items-center gap-x-2' key={step}>
                   <div className='text-xs uppercase text-tertiary'>
-                    STEP {index + 1}
+                    {t('step', { currentStep: index + 1 })}
                   </div>
+                  
                   <h2 className={cn(
                     'text-sm mobile:text-base transition-colors font-medium text-secondary flex items-center',
                     activeStep === index && 'text-primary'
