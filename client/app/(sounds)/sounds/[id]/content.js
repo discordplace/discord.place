@@ -48,7 +48,7 @@ export default function Content({ sound }) {
   return (
     <div className='flex items-center justify-center w-full'>
       <div className='flex w-full max-w-[1000px] mt-48 mb-16 flex-col gap-y-4 px-4 lg:px-0'>
-        {sound.approved && (
+        {!sound.approved && (
           <div className='flex flex-col p-4 border border-yellow-500 gap-y-2 bg-yellow-500/10 rounded-xl'>
             <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
               <RiErrorWarningFill />
