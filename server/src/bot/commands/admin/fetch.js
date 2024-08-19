@@ -19,12 +19,12 @@ module.exports = {
     
     try {
       switch (type) {
-      case 'user': 
-        await client.users.fetch(id, { force: true });
-        break;
-      case 'guild':
-        await client.guilds.fetch(id, { force: true });
-        break;
+        case 'user': 
+          await client.users.fetch(id, { force: true });
+          break;
+        case 'guild':
+          await client.guilds.fetch(id, { force: true });
+          break;
       }
 
       return interaction.editReply({ content: `${type === 'user' ? 'User' : 'Guild'} with **ID ${id}** fetched.` });

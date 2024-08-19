@@ -28,82 +28,82 @@ module.exports = {
     const group = interaction.options.getSubcommandGroup(false);
 
     switch (group) {
-    case 'pack':
-      var packId = interaction.options.getString('pack');
-      var pack = await EmojiPack.findOne({ id: packId });
-      if (!pack) return interaction.followUp({ content: 'Pack not found.' });
+      case 'pack':
+        var packId = interaction.options.getString('pack');
+        var pack = await EmojiPack.findOne({ id: packId });
+        if (!pack) return interaction.followUp({ content: 'Pack not found.' });
 
-      var currentlyUploadingEmojiPack = client.currentlyUploadingEmojiPack.get(interaction.guild.id);
-      if (currentlyUploadingEmojiPack) {
-        var components = [
-          new Discord.ActionRowBuilder()
-            .addComponents(
-              new Discord.ButtonBuilder()
-                .setStyle(Discord.ButtonStyle.Link)
-                .setLabel('View Status')
-                .setURL(`https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${currentlyUploadingEmojiPack.messageId}`)
-            )
-        ];
+        var currentlyUploadingEmojiPack = client.currentlyUploadingEmojiPack.get(interaction.guild.id);
+        if (currentlyUploadingEmojiPack) {
+          var components = [
+            new Discord.ActionRowBuilder()
+              .addComponents(
+                new Discord.ButtonBuilder()
+                  .setStyle(Discord.ButtonStyle.Link)
+                  .setLabel('View Status')
+                  .setURL(`https://discord.com/channels/${interaction.guild.id}/${interaction.channel.id}/${currentlyUploadingEmojiPack.messageId}`)
+              )
+          ];
 
-        return interaction.followUp({ content: `I'm currently uploading the pack **${currentlyUploadingEmojiPack.name}**. Please wait until it's finished.`, components });
-      }
-
-      var message = await interaction.followUp({ content: `Uploading ${pack.emoji_ids.length} emojis. **${pack.emoji_ids.length} seconds** estimated.` });
-      var index = 0;
-      var createdEmojis = [];
-
-      client.currentlyUploadingEmojiPack.set(interaction.guild.id, { messageId: message.id, name: pack.name });
-
-      await sleep(2000);
-
-      for (const emoji of pack.emoji_ids) {
-        const createdEmoji = await interaction.guild.emojis.create({ 
-          attachment: getEmojiURL(`packages/${packId}/${emoji.id}`, emoji.animated),
-          name: `${pack.name}_${pack.emoji_ids.indexOf(emoji) + 1}`,
-          reason: `Uploaded by @${interaction.user.username} (${interaction.user.id}) from pack ${packId}. ${index + 1} of ${pack.emoji_ids.length} emojis.`
-        }).catch(() => null);
-        if (!createdEmoji) {
-          message.edit({ content: `Failed uploading ${index}. Emoji. Skipping.. **${pack.emoji_ids.length - index} seconds** remaining.` });
-          logger.error(`Failed to upload emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
-          
-          await sleep(1000);
-          
-          continue;
+          return interaction.followUp({ content: `I'm currently uploading the pack **${currentlyUploadingEmojiPack.name}**. Please wait until it's finished.`, components });
         }
-  
-        logger.info(`Uploaded emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
-        createdEmojis.push({ emoji: createdEmoji, index });
+
+        var message = await interaction.followUp({ content: `Uploading ${pack.emoji_ids.length} emojis. **${pack.emoji_ids.length} seconds** estimated.` });
+        var index = 0;
+        var createdEmojis = [];
+
+        client.currentlyUploadingEmojiPack.set(interaction.guild.id, { messageId: message.id, name: pack.name });
+
+        await sleep(2000);
+
+        for (const emoji of pack.emoji_ids) {
+          const createdEmoji = await interaction.guild.emojis.create({ 
+            attachment: getEmojiURL(`packages/${packId}/${emoji.id}`, emoji.animated),
+            name: `${pack.name}_${pack.emoji_ids.indexOf(emoji) + 1}`,
+            reason: `Uploaded by @${interaction.user.username} (${interaction.user.id}) from pack ${packId}. ${index + 1} of ${pack.emoji_ids.length} emojis.`
+          }).catch(() => null);
+          if (!createdEmoji) {
+            message.edit({ content: `Failed uploading ${index}. Emoji. Skipping.. **${pack.emoji_ids.length - index} seconds** remaining.` });
+            logger.error(`Failed to upload emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
           
-        index++;
-        await message.edit({ content: `Uploaded ${index} of ${pack.emoji_ids.length} emojis. **${pack.emoji_ids.length - index} seconds** remaining.` });
+            await sleep(1000);
+          
+            continue;
+          }
+  
+          logger.info(`Uploaded emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
+          createdEmojis.push({ emoji: createdEmoji, index });
+          
+          index++;
+          await message.edit({ content: `Uploaded ${index} of ${pack.emoji_ids.length} emojis. **${pack.emoji_ids.length - index} seconds** remaining.` });
         
-        await sleep(1000);
-      }
+          await sleep(1000);
+        }
 
-      client.currentlyUploadingEmojiPack.delete(interaction.guild.id);
+        client.currentlyUploadingEmojiPack.delete(interaction.guild.id);
 
-      if (createdEmojis.length === 0) return message.edit({ content: `Pack **${pack.name}** failed to upload.` });
+        if (createdEmojis.length === 0) return message.edit({ content: `Pack **${pack.name}** failed to upload.` });
 
-      await EmojiPack.updateOne({ id: packId }, { $inc: { downloads: 1 } });
+        await EmojiPack.updateOne({ id: packId }, { $inc: { downloads: 1 } });
 
-      return message.edit({ content: `Successfully uploaded **${pack.name}**!\n\n${createdEmojis.map(({ emoji }, index) => `${index + 1}. ${emoji}`).join('\n')}` });
-    case null:
-      var id = interaction.options.getString('emoji');
-      var emoji = await Emoji.findOne({ id });
-      if (!emoji) return interaction.followUp({ content: 'Emoji not found.' });
+        return message.edit({ content: `Successfully uploaded **${pack.name}**!\n\n${createdEmojis.map(({ emoji }, index) => `${index + 1}. ${emoji}`).join('\n')}` });
+      case null:
+        var id = interaction.options.getString('emoji');
+        var emoji = await Emoji.findOne({ id });
+        if (!emoji) return interaction.followUp({ content: 'Emoji not found.' });
 
-      interaction.guild.emojis.create({ attachment: getEmojiURL(emoji.id, emoji.animated), name: emoji.name })
-        .then(createdEmoji => {
-          emoji.updateOne({ $inc: { downloads: 1 } });
+        interaction.guild.emojis.create({ attachment: getEmojiURL(emoji.id, emoji.animated), name: emoji.name })
+          .then(createdEmoji => {
+            emoji.updateOne({ $inc: { downloads: 1 } });
 
-          return interaction.followUp({ content: `Emoji uploaded! ${createdEmoji}` });
-        })
-        .catch(error => {
-          logger.error(`Failed to upload emoji ${emoji.id} to ${interaction.guild.id}: ${error.message}`);
-          return interaction.followUp({ content: 'Failed to upload emoji.' });
-        });
+            return interaction.followUp({ content: `Emoji uploaded! ${createdEmoji}` });
+          })
+          .catch(error => {
+            logger.error(`Failed to upload emoji ${emoji.id} to ${interaction.guild.id}: ${error.message}`);
+            return interaction.followUp({ content: 'Failed to upload emoji.' });
+          });
 
-      break;
+        break;
     }
   },
   autocomplete: async interaction => {
@@ -112,12 +112,12 @@ module.exports = {
     const group = interaction.options.getSubcommandGroup(false);
 
     switch (group) {
-    case 'pack':
-      var packs = await EmojiPack.find();
-      return interaction.customRespond(packs.map(pack => ({ name: `${pack.name} | ID: ${pack.id} | ${pack.emoji_ids.length} Emojis`, value: pack.id })));
-    case null:
-      var emojis = await Emoji.find();
-      return interaction.customRespond(emojis.map(emoji => ({ name: `${emoji.name}${emoji.emoji_ids ? '' : `.${emoji.animated ? 'gif' : 'png'}`} | ID: ${emoji.id}`, value: emoji.id })));            
+      case 'pack':
+        var packs = await EmojiPack.find();
+        return interaction.customRespond(packs.map(pack => ({ name: `${pack.name} | ID: ${pack.id} | ${pack.emoji_ids.length} Emojis`, value: pack.id })));
+      case null:
+        var emojis = await Emoji.find();
+        return interaction.customRespond(emojis.map(emoji => ({ name: `${emoji.name}${emoji.emoji_ids ? '' : `.${emoji.animated ? 'gif' : 'png'}`} | ID: ${emoji.id}`, value: emoji.id })));            
     }
   }
 };

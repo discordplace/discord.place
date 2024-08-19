@@ -65,13 +65,13 @@ module.exports = {
         if (bStandedOutData) return 1;
 
         switch (sort) {
-        case 'Votes': return b.votes - a.votes;
-        case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
-        case 'Voice': return bGuild.members.cache.filter(member => !member.bot && member.voice.channel).size - aGuild.members.cache.filter(member => !member.bot && member.voice.channel).size;
-        case 'Members': return bGuild.memberCount - aGuild.memberCount;
-        case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
-        case 'Oldest': return aGuild.joinedTimestamp - bGuild.joinedTimestamp;
-        case 'Boosts': return bGuild.premiumSubscriptionCount - aGuild.premiumSubscriptionCount;
+          case 'Votes': return b.votes - a.votes;
+          case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
+          case 'Voice': return bGuild.members.cache.filter(member => !member.bot && member.voice.channel).size - aGuild.members.cache.filter(member => !member.bot && member.voice.channel).size;
+          case 'Members': return bGuild.memberCount - aGuild.memberCount;
+          case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
+          case 'Oldest': return aGuild.joinedTimestamp - bGuild.joinedTimestamp;
+          case 'Boosts': return bGuild.premiumSubscriptionCount - aGuild.premiumSubscriptionCount;
         }
       }).slice(skip, skip + limit);
       const total = await Server.countDocuments(findQuery);
@@ -104,9 +104,9 @@ module.exports = {
             };
 
             switch (sort) {
-            case 'Votes': data.votes = server.votes; break;
-            case 'Voice': data.voice = guild.members.cache.filter(member => !member.bot && member.voice.channel).size; break;
-            case 'Boosts': data.boosts = guild.premiumSubscriptionCount; break;
+              case 'Votes': data.votes = server.votes; break;
+              case 'Voice': data.voice = guild.members.cache.filter(member => !member.bot && member.voice.channel).size; break;
+              case 'Boosts': data.boosts = guild.premiumSubscriptionCount; break;
             }
 
             return {
