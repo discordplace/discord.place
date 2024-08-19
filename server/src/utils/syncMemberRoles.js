@@ -1,6 +1,7 @@
 const User = require('@/schemas/User');
 const sleep = require('@/utils/sleep');
 const fs = require('node:fs');
+const path = require('node:path');
 
 async function syncMemberRoles() {
   const guild = client.guilds.cache.get(config.guildId);
@@ -9,7 +10,7 @@ async function syncMemberRoles() {
 
   const premiumUsers = await User.find({ subscription: { $ne: null } });
 
-  const translatorsArray = fs.readFileSync('client/locales/translators.json', 'utf8');
+  const translatorsArray = fs.readFileSync(path.resolve(__dirname, '../../../client/locales/translators.json'), 'utf8');
   const translators = JSON.parse(translatorsArray);
 
   const roles = [
