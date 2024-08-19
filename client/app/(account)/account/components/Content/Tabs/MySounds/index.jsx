@@ -46,7 +46,7 @@ export default function MySounds() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            {t('accountPage.tabs.mySounds.sections.listedSounds.description')}
+            {t('accountPage.tabs.mySounds.sections.listedSounds.subtitle')}
           </p>
 
           {(data.sounds || []).length === 0 ? (

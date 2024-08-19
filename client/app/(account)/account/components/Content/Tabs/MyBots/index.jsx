@@ -46,7 +46,7 @@ export default function MyBots() {
           </h2>
 
           <p className='text-sm text-tertiary'>
-            {t('accountPage.tabs.myBots.sections.listedBots.description')}
+            {t('accountPage.tabs.myBots.sections.listedBots.subtitle')}
           </p>
 
           {(data.bots || []).length === 0 ? (
