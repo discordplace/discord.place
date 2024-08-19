@@ -14,6 +14,7 @@ import { FaUsers } from 'react-icons/fa';
 import { useMedia } from 'react-use';
 import { HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
+import { t } from '@/stores/language';
 
 export default function Home() {
   const data = useDashboardStore(state => state.data);
@@ -54,7 +55,7 @@ export default function Home() {
           {!loading && (
             <Tooltip
               side={tooltipSide}
-              content={`${isIncreased ? 'Increased' : isDecreased ? 'Decreased' : 'No change'} since yesterday (${diffInText})`}
+              content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChange'}`, { difference: diffInText })}
             >
               <div className={cn(
                 'select-none flex w-max gap-x-1 px-2 items-center py-1 text-xs font-semibold rounded-lg',

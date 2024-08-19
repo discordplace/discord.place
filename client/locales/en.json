@@ -886,6 +886,11 @@
     },
     "monthlyVotes": {
       "tooltip": "{{count}} Votes"
+    },
+    "tooltip": {
+      "increased": "Increased since yesterday ({{difference}})",
+      "decreased": "Decreased since yesterday ({{difference}})",
+      "noChanges": "No changes since yesterday"
     }
   },
   "editProfilePage": {

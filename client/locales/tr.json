@@ -886,6 +886,11 @@
     },
     "monthlyVotes": {
       "tooltip": "{{count}} Oy"
+    },
+    "tooltip": {
+      "increased": "Dün'e oranla arttı ({{difference}})",
+      "decreased": "Dün'e oranla azaldı ({{difference}})",
+      "noChanges": "Dün'e oranla değişiklik yok"
     }
   },
   "editProfilePage": {
