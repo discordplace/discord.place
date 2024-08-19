@@ -220,7 +220,7 @@ export default function Actions({ server }) {
             {loading && <TbLoader className='animate-spin' />}
             {voteTimeout ? (
               <VoteCountdown date={new Date(voteTimeout.createdAt).getTime() + 86400000} />
-            ) : 'Vote'}
+            ) : t('buttons.vote')}
           </div>
 
           <div className='flex items-center font-bold gap-x-1'>
