@@ -141,20 +141,6 @@ export default function Page({ plans }) {
       available_to: [
         {
           id: 'free',
-          value: <FaXmark />
-        },
-        {
-          id: 'premium',
-          value: <FaCheck />
-        }
-      ]
-    },
-    {
-      label: t('premiumPage.features.6.label'),
-      info: t('premiumPage.features.6.info'),
-      available_to: [
-        {
-          id: 'free',
           value: '5'
         },
         {
@@ -164,8 +150,8 @@ export default function Page({ plans }) {
       ]
     },
     {
-      label: t('premiumPage.features.7.label'),
-      info: t('premiumPage.features.7.info'),
+      label: t('premiumPage.features.6.label'),
+      info: t('premiumPage.features.6.info'),
       available_to: [
         {
           id: 'free',
@@ -178,9 +164,8 @@ export default function Page({ plans }) {
       ]
     },
     {
-      // label: 'Colorful Name in Panels',
-      label: t('premiumPage.features.8.label'),
-      info: t('premiumPage.features.8.info'),
+      label: t('premiumPage.features.7.label'),
+      info: t('premiumPage.features.7.info'),
       available_to: [
         {
           id: 'free',
@@ -299,7 +284,7 @@ export default function Page({ plans }) {
                 )}
 
                 <span className='text-tertiary'>
-                  {cycle === 'monthly' ? monthlyPlan.price_formatted : cycle === 'annual' ? annualPlan.price_formatted : lifetimePlan.price_formatted}
+                  {cycle === 'monthly' ? monthlyPlan.price_formatted.replace('month', t('premiumPage.billingCycle.monthly').toLowerCase()) : cycle === 'annual' ? annualPlan.price_formatted.replace('year', t('premiumPage.billingCycle.annual').toLowerCase()) : lifetimePlan.price_formatted}
                 </span>
               </div>
             </div>
