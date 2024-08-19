@@ -100,7 +100,7 @@ export default function MyAccount() {
         </h1>
 
         <p className='text-sm text-secondary'>
-          {t('accountPage.tabs.myAccount.description')}
+          {t('accountPage.tabs.myAccount.subtitle')}
         </p>
       </div>
 
