@@ -72,80 +72,80 @@
       }
     ]
   },
-  "premiumPage": {
-    "title": "Premium Üyelik",
-    "subtitle": "Premium satın alarak özel ayrıcalıklara ve avantajlara erişebilirsin. Yıllık ve ömür boyu planlarla daha fazla tasarruf edebilirsin!",
+"premiumPage": {
+    "title": "Premium Üzvlük",
+    "subtitle": "Premium alaraq xüsusi imtiyazlara və üstünlüklərə çıxış əldə edə bilərsiniz. İllik və ömürlük planlarla daha çox qənaət edə bilərsiniz!",
     "billingCycle": {
-      "monthly": "Aylık",
-      "annual": "Yıllık",
-      "lifetime": "Ömür Boyu"
+      "monthly": "Aylıq",
+      "annual": "İllik",
+      "lifetime": "Ömürlük"
     },
-    "currentPlan": "Mevcut Plan",
-    "savePercentage": "{{percentage}} Tasarruf",
-    "featureHighlights": "Premium Özellikleri",
+    "currentPlan": "Mövcud Plan",
+    "savePercentage": "{{percentage}} Qənaət",
+    "featureHighlights": "Premium Xüsusiyyətləri",
     "plans": {
-      "free": "Ücretsiz",
+      "free": "Pulsuz",
       "premium": "Premium"
     },
-    "purchasePremium": "Premium Satın Al",
-    "loginToPurchase": "Satın almak için Giriş Yap",
+    "purchasePremium": "Premium Al",
+    "loginToPurchase": "Almaq üçün Daxil Ol",
     "features": [
       {
-        "label": "Özel Premium Rozeti",
-        "info": "Profilinizde, botlarınızda ve sunucularınızda özel bir premium rozeti sahibi olun."
+        "label": "Xüsusi Premium Rozeti",
+        "info": "Profilinizdə, botlarınızda və serverlərinizdə xüsusi bir premium rozetə sahib olun."
       },
       {
-        "label": "Göz Alıcı Efekler",
-        "info": "Profilinizde, botlarınızda ve sunucularınızda göz alıcı bir çerçeveye sahip olun."
+        "label": "Cəlbedici Effektlər",
+        "info": "Profilinizdə, botlarınızda və serverlərinizdə cəlbedici bir çərçivəyə sahib olun."
       },
       {
-        "label": "Özel Alan Adları",
-        "info": "dsc.wtf, dsc.mom ve dsc.dog gibi özel alan adlarını, profilinize kestirme bir yol olarak kullanma şansı."
+        "label": "Xüsusi Domain Adları",
+        "info": "dsc.wtf, dsc.mom və dsc.dog kimi xüsusi domain adlarını, profilinizə qısayol olaraq istifadə etmək imkanı."
       },
       {
-        "label": "Profil Kartı Renkleri",
-        "info": "Profil kartınızın rengini değiştirin ve profilinizi daha da kişiselleştirin."
+        "label": "Profil Kartı Rəngləri",
+        "info": "Profil kartınızın rəngini dəyişin və profilinizi daha da fərdiləşdirin."
       },
       {
-        "label": "Çift Oy",
-        "info": "Sunucunuza ya da botunuza oy verildiğinde, 1 yerine 2 oy kazanın."
+        "label": "İkiqat Səs",
+        "info": "Serverinizə və ya botunuza səs verildikdə, 1 yerinə 2 səs qazanın."
       },
       {
-        "label": "Daha Fazla Oy Ödülleri",
-        "info": "Sunucu başına ekleyebileceğiniz oy ödülü sayısı artar."
+        "label": "Daha Çox Səs Mükafatları",
+        "info": "Hər serverə əlavə edə biləcəyiniz səs mükafatlarının sayı artır."
       },
       {
-        "label": "Daha Fazla Bağlantı",
-        "info": "Oluşturabileceğiniz maksimum kısaltılmış bağlantıların sayısını artar."
+        "label": "Daha Çox Bağlantı",
+        "info": "Yaradırabileceğiniz maksimum qısaldılmış bağlantıların sayı artır."
       },
       {
-        "label": "Oy Panellerinde Renkli İsim",
-        "info": "Oy verdiğiniz sunucuların oy panellerinde isminiz renkli görünür ve başında bir sembol bulunur."
+        "label": "Səs Panellərində Rəngli Ad",
+        "info": "Səs verdiyiniz serverlərin səs panellərində adınız rəngli görünər və başında bir simvol olar."
       }
     ],
     "frequentlyAskedQuestions": {
-      "title": "Sıkça Sorulan Sorular",
-      "subtitle": "Aklına takılan bir şey mi var? Aşağıdaki SSS bölümümüze göz at.",
+      "title": "Tez-Tez Verilən Suallar",
+      "subtitle": "Ağlınıza bir sual gəldimi? Aşağıdakı SSS bölməmizə nəzər salın.",
       "items": [
         {
-          "label": "Premium üyelik nedir?",
-          "content": "Premium üyelik, platformumuzda özel özelliklere ve içeriklere erişmenizi sağlayan abonelik tabanlı bir hizmettir."
+          "label": "Premium üzvlük nədir?",
+          "content": "Premium üzvlük, platformamızda xüsusi xüsusiyyətlərə və məzmunlara çıxış əldə etməyinizi təmin edən abunə əsaslı bir xidmətdir."
         },
         {
-          "label": "Premium üyeliğin maliyeti nedir?",
-          "content": "Premium üyeliğin maliyeti aylık 3,00 $'dır. Ayrıca yıllık abonelikte 25,00 $ karşılığında (11,00 $ tasarruf edin) ve ömür boyu abonelikte 60,00 $ karşılığında indirimli abonelik sunuyoruz."
+          "label": "Premium üzvlüyün qiyməti nə qədərdir?",
+          "content": "Premium üzvlüyün qiyməti aylıq 3,00 $-dır. Həmçinin, illik abunəlik üçün 25,00 $ qarşılığında (11,00 $ qənaət edin) və ömürlük abunəlik üçün 60,00 $ qarşılığında endirimli abunəlik təklif edirik."
         },
         {
-            "label": "Premium üyeliğe nasıl abone olabilirim?",
-            "content": "Bu sayfada \"Premium Satın Al\" düğmesine tıklayarak Premium üyeliğe abone olabilirsiniz. Ödeme sürecini tamamlayabileceğiniz ödeme sayfasına yönlendirileceksiniz. Ödeme başarılı olduğunda, otomatik olarak Premium üyeliğe abone olacaksınız."
+            "label": "Premium üzvlüyə necə abunə ola bilərəm?",
+            "content": "Bu səhifədə \"Premium Al\" düyməsinə klikləyərək Premium üzvlüyə abunə ola bilərsiniz. Ödənişi tamamlayabileceğiniz ödəniş səhifəsinə yönləndiriləcəksiniz. Ödəniş uğurla həyata keçirildikdə, avtomatik olaraq Premium üzvlüyə abunə olacaqsınız."
         },
         {
-            "label": "Premium üyelik için iade talep edebilir miyim?",
-            "content": "Premium üyelik için iade sunmuyoruz. Ancak, aboneliğinizi istediğiniz zaman iptal edebilirsiniz ve bir sonraki faturalama dönemi için ücretlendirilmezsiniz."
+            "label": "Premium üzvlük üçün geri qaytarma tələb edə bilərəmmi?",
+            "content": "Premium üzvlük üçün geri qaytarma təklif etmirik. Lakin, abunəliyinizi istənilən vaxt ləğv edə bilərsiniz və növbəti faktura dövrü üçün ödəniş edilməyəcək."
         },
         {
-            "label": "Premium üyeliğimi başka bir hesaba devredebilir miyim?",
-            "content": "Hayır, Premium üyelik devredilemez."
+            "label": "Premium üzvlüyümü başqa bir hesabda istifadə edə bilərəmmi?",
+            "content": "Xeyr, Premium üzvlük ötürülə bilməz."
         }
       ]
     }
