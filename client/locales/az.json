@@ -1127,146 +1127,148 @@
       ]
     }
   }
-}
+},
 
-    "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "description": "Aşağıdaki düğmeyi kullanarak emojinizi silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
-      "deleteEmojiModal": {
-        "title": "Emojiyi Sil",
-        "description": "{{emojiName}} adlı emojiyi silmek istediğinizden emin misiniz?",
-        "content": "Lütfen emojiyi silmenin, emojiyi aldığı tüm indirmeler ile beraber kaldıracağını unutmayın.<br><br>Bu işlem geri alınamaz."
-      }
+    {
+  "dangerZone": {
+    "title": "Təhlükəli Bölgə",
+    "description": "Aşağıdakı düyməni istifadə edərək emojinizi silə bilərsiniz, ancaq təsadüfən silməməyə diqqət edin :)",
+    "deleteEmojiModal": {
+      "title": "Emojini Sil",
+      "description": "{{emojiName}} adlı emojini silmək istədiyinizdən əminsinizmi?",
+      "content": "Zəhmət olmasa emojini silməyin, emojinin aldığı bütün yükləmələrlə birlikdə qaldırılacağını unutmayın.<br><br>Bu əməliyyat geri alınmaz."
     }
   },
   "emojiPackagePage": {
     "toast": {
-      "deletingEmojiPackage": "Emoji paketi siliniyor..",
-      "emojiPackageDeleted": "{{emojiName}} adlı emoji paketi başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+      "deletingEmojiPackage": "Emoji paketi silinir..",
+      "emojiPackageDeleted": "{{emojiName}} adlı emoji paketi uğurla silindi. Bir neçə saniyə içində ana səhifəyə yönləndiriləcəksiniz."
     },
     "notApprovedInfo": {
-      "description": "Şu an için bu emoji paketini yalnızca siz görebilirsiniz. Emoji paketi onaylandığında herkese açık hale gelecektir. Bu zamana kadar <link>'a gelip botumuzdan emoji paketi onaylandığında bildirim alabilirsiniz. DM'lerinizi açık tuttuğunuzdan emin olun.",
-      "linkText": "Discord sunucumuz"
+      "description": "Hazırda bu emoji paketini yalnız siz görə bilərsiniz. Emoji paketi təsdiqləndikdən sonra hər kəsə açıq olacaq. Bu vaxta qədər <link>'a gəlib botumuzdan emoji paketi təsdiqləndikdə bildirim ala bilərsiniz. DM-lərinizi açıq saxladığınızdan əmin olun.",
+      "linkText": "Discord serverimiz"
     },
     "fields": {
-      "name": "İsim",
-      "uploaded": "Paylaşım Tarihi",
-      "downloads": "İndirmeler",
-      "emojiCount": "Emoji Sayısı",
-      "categories": "Kategoriler",
+      "name": "Ad",
+      "uploaded": "Paylaşım Tarixi",
+      "downloads": "Yükləmələr",
+      "emojiCount": "Emoji Sayı",
+      "categories": "Kateqoriyalar",
       "publisher": "Paylaşan"
     },
     "similarEmojiPacks": {
-      "title": "Benzer Emoji Paketleri",
-      "emptyErrorState": "Üzgünüm, benzer emoji paketleri bulamadım.."
+      "title": "Bənzər Emoji Paketləri",
+      "emptyErrorState": "Bağışlayın, bənzər emoji paketləri tapmadım.."
     },
     "frequentlyAskedQuestions": {
-      "title": "Sıkça Sorulan Sorular",
+      "title": "Tez-tez Soruşulan Suallar",
       "labels": [
-        "Bu emoji paketini nasıl indirebilirim?",
-        "Bu emoji paketini Discord sunucuma nasıl ekleyebilirim?",
-        "Bu emoji paketi uygunsuz. Ne yapabilirim?"
+        "Bu emoji paketini necə endirə bilərəm?",
+        "Bu emoji paketini Discord serverimə necə əlavə edə bilərəm?",
+        "Bu emoji paketi uyğunsuzdur. Nə edə bilərəm?"
       ],
       "answers": [
-        "<span> paketini indirmek için aşağıdaki düğmeyi kullanabilirsiniz.",
+        "<span> paketini endirmək üçün aşağıdakı düyməni istifadə edə bilərsiniz.",
         {
-          "title": "Bunu duyduğuma sevindim! Size bunun için 2 yöntem anlatacağım.",
+          "title": "Bunu eşitdiyimə sevindim! Sizə bunun üçün 2 metod izah edəcəyəm.",
           "methods": [
             {
-              "buttonText": "1. Web Sitemiz (bu sayfa)",
-              "instructionsBefore": "Botumuzu ve web sitemizi kullanarak, bu emoji paketini sadece birkaç tıklama ile Discord sunucunuza yükleyebilirsiniz. İşte bunu nasıl yapabileceğiniz:",
+              "buttonText": "1. Veb Sitemiz (bu səhifə)",
+              "instructionsBefore": "Botumuzu və veb saytımızı istifadə edərək, bu emoji paketini yalnız bir neçə kliklə Discord serverinizə yükləyə bilərsiniz. Bunu necə edə biləcəyiniz:",
               "instructions": [
                 {
-                  "text": "Sunucunuza <link> ekleyin.",
+                  "text": "Serverinizə <link> əlavə edin.",
                   "linkText": "botumuzu"
                 },
-                "Bu sayfadaki emoji önizlemesinde \"Discord'a Yükle\" düğmesine tıklayın.",
-                "Emojiyi yüklemek istediğiniz sunucuyu seçin ve yükle düğmesine tıklayın.",
-                "Tada! Emoji paketi sunucunuza eklendi."
+                "Bu səhifədəki emoji önizləməsində \"Discord'a Yüklə\" düyməsinə klikləyin.",
+                "Emojini yükləmək istədiyiniz serveri seçin və yüklə düyməsinə klikləyin.",
+                "Tada! Emoji paketi serverinizə əlavə olundu."
               ]
             },
             {
-              "buttonText": "2. Klasik Yöntem",
-              "instructionsBefore": "Bu biraz daha zor olabilir.",
+              "buttonText": "2. Klasik Metod",
+              "instructionsBefore": "Bu biraz daha çətin ola bilər.",
               "instructions": [
-                "Emoji paketini indirin:",
-                "İndirilen paketi çıkartın. (rar, zip vb.)",
-                "Discord uygulamanızı açın ve sunucunuza sağ tıklayın.",
-                "Sunucu Ayarları > Emoji'ye gidin.",
-                "İndirdiğiniz paketteki tüm emojileri seçin ve Discord ekranına sürükleyip bırakın.",
-                "Tada! Emoji paketi sunucunuza eklendi."
+                "Emoji paketini endirin:",
+                "Yüklənmiş paketi çıxarın. (rar, zip və s.)",
+                "Discord tətbiqinizi açın və serverinizə sağ klikləyin.",
+                "Server Parametrləri > Emoji-ə gedin.",
+                "Yüklədiyiniz paketdəki bütün emojiləri seçin və Discord ekranına sürükləyib buraxın.",
+                "Tada! Emoji paketi serverinizə əlavə olundu."
               ]
             }
           ]
         },
-        "Sayfanın altındaki (en aşağıda) Discord düğmesi aracılığıyla destek sunucumuza katılabilir ve emoji paketinin uygunsuz olduğunu bize bildirebilirsiniz."
+        "Səhifənin altındakı (ən aşağıda) Discord düyməsi vasitəsilə dəstək serverimizə qoşula bilər və emoji paketinin uyğunsuz olduğunu bizə bildirə bilərsiniz."
       ]
     },
     "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "description": "Aşağıdaki düğmeyi kullanarak emojiyi silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
+      "title": "Təhlükəli Bölgə",
+      "description": "Aşağıdakı düyməni istifadə edərək emojini silə bilərsiniz, ancaq təsadüfən silməməyə diqqət edin :)",
       "deleteEmojiModal": {
         "title": "Emoji Paketini Sil",
-        "description": "{{emojiName}} adlı emoji paketini silmek istediğinizden emin misiniz?",
-        "content": "Lütfen emoji paketini silmenin, paketin aldığı tüm indirmeler ile beraber kaldıracağını unutmayın.<br><br>Bu işlem geri alınamaz."
+        "description": "{{emojiName}} adlı emoji paketini silmək istədiyinizdən əminsinizmi?",
+        "content": "Zəhmət olmasa emoji paketini silməyin, paketin aldığı bütün yükləmələrlə birlikdə qaldırılacağını unutmayın.<br><br>Bu əməliyyat geri alınmaz."
       }
     }
   },
   "botsPage": {
-    "title": "Botları Keşfedin",
-    "subtitle": "En popüler botları keşfedin ve Discord sunucunuz için mükemmel olanı bulun!<br>Mevcut en iyi botlarla sunucunuzu daha eğlenceli ve etkileşimli hale getirin.",
-    "searchInputPlaceholder": "Bir botu ID'ye, açıklamaya veya kategoriye göre arayın...",
-    "categorySelectPlaceholder": "Kategori",
+    "title": "Botları Kəşf Edin",
+    "subtitle": "Ən populyar botları kəşf edin və Discord serveriniz üçün mükəmməl olanı tapın!<br>Mövcud ən yaxşı botlarla serverinizi daha əyləncəli və interaktiv edin.",
+    "searchInputPlaceholder": "Bir botu ID-ə, açıqlamaya və ya kateqoriyaya görə axtarın...",
+    "categorySelectPlaceholder": "Kateqoriya",
     "sortSelect": {
       "placeholder": "Sıralama",
       "items": {
-        "votes": "Oylar",
-        "latestVoted": "Son Oy Verilen",
-        "servers": "Sunucu Sayısı",
-        "mostReviewed": "En Çok Yorumlanan",
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "votes": "Səslər",
+        "latestVoted": "Son Səs Verilən",
+        "servers": "Server Sayı",
+        "mostReviewed": "Ən Çox Rəylənən",
+        "newest": "Ən Yeni",
+        "oldest": "Ən Köhnə"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek bot yok. Belki de bu, bir botunu paylaşma zamanının geldiğinin bir işaretidir?"
+      "title": "Buralar bir az səssiz...",
+      "message": "Göstəriləcək bot yoxdur. Bəlkə də bu, bir botu paylaşma vaxtınızın gəldiyini göstərir?"
     }
   },
   "botCard": {
-    "noDescription": "Bu botun bir açıklaması yok. Sadece ne kadar güzel olduğunu hayal edebiliriz.",
-    "tripledVoteBadge": "3X OY!"
+    "noDescription": "Bu botun bir açıqlaması yoxdur. Yalnız nə qədər gözəl olduğunu təsəvvür edə bilərik.",
+    "tripledVoteBadge": "3X SƏS!"
   },
   "badges": {
-    "admin": "Yönetici",
-    "moderator": "Moderatör",
-    "verified": "Onaylanmış",
+    "admin": "İdarəçi",
+    "moderator": "Moderator",
+    "verified": "Təsdiqlənmiş",
     "premium": "Premium"
   },
   "botPage": {
     "notVerifiedInfo": {
-      "description": "Şu an için bu botu yalnızca siz görebilirsiniz. Bot onaylandığında herkese açık hale gelecektir. Bu zamana kadar <link>'a gelip botumuzdan bot onaylandığında bildirim alabilirsiniz. DM'lerinizi açık tuttuğunuzdan emin olun.",
-      "linkText": "Discord sunucumuz"
+      "description": "Hazırda bu botu yalnız siz görə bilərsiniz. Bot təsdiqləndikdən sonra hər kəsə açıq olacaq. Bu vaxta qədər <link>'a gəlib botumuzdan bot təsdiqləndikdə bildirim ala bilərsiniz. DM-lərinizi açıq saxladığınızdan əmin olun.",
+      "linkText": "Discord serverimiz"
     },
     "countdown": {
-      "tripledVoteExpired": "Üç kat oy süresi sona erdi!",
-      "votesTripledFor": "Oylar {{hours}} saat, ${{minutes}} dakika boyunca üç katına çıkarıldı!",
-      "standedOutExpired": "Öne çıkma süresi sona erdi!",
-      "standedOutFor": "{{hours}} saat, ${{minutes}} dakika boyunca öne çıkartıldı."
+      "tripledVoteExpired": "Üç qat səs müddəti sona çatdı!",
+      "votesTripledFor": "Səslər {{hours}} saat, ${{minutes}} dəqiqə boyunca üç qatına çıxarıldı!",
+      "standedOutExpired": "Önə çıxma müddəti sona çatdı!",
+      "standedOutFor": "{{hours}} saat, ${{minutes}} dəqiqə boyunca önə çıxarıldı."
     },
     "about": {
-      "title": "Hakkında",
+      "title": "Haqqında",
       "labels": {
         "owner": "Sahibi",
-        "servers": "Toplam Sunucu",
-        "votes": "Oy Sayısı",
-        "commands": "Komut Sayısı",
+        "servers": "Toplam Server",
+        "votes": "Səs Sayı",
+        "commands": "Əmr Sayı",
         "githubRepository": {
           "label": "GitHub Deposu",
-          "openSourceDisclaimer": "Bu bot açık kaynaktır ve GitHub'da bulunabilir."
+          "openSourceDisclaimer": "Bu bot açıq mənbədir və GitHub-da mövcuddur."
         }
       }
-    },
+    }
+  }
+},
     "actions": {
       "title": "İşlemler",
       "toast": {
