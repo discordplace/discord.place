@@ -757,7 +757,7 @@
   },
   "profileCard": {
     "aboutMe": "Hakkımda",
-    "noBio": "Bu kullanıcı henüz bir biyografi eklemedi ama harika biri olduğundan eminiz!",
+    "noBio": "Bu kullanıcı henüz bir biyografi eklemedi, ama harika biri olduğundan eminiz!",
     "fields": {
       "likes": "Beğeni",
       "views": "Ziyaretçi",
@@ -940,7 +940,7 @@
     },
     "cardColors": {
       "primary": "Birincil",
-      "secondary": "İkicncil",
+      "secondary": "İkincil",
       "copyColor": "{{hex}} rengini kopyala"
     },
     "socials": {
@@ -979,7 +979,7 @@
     "packBadge": "PAKET"
   },
   "emojiCard": {
-    "gifBadge": "GİF"
+    "gifBadge": "GIF"
   },
   "createEmojiPage": {
     "title": "Emoji Paylaş",
@@ -1041,7 +1041,7 @@
       },
       "tooltip": {
         "uploadToDiscord": "Discord'a Yükle",
-        "loginToUpload": "Yüklemek için Discord ile Giriş Yapın"
+        "loginToUpload": "Yüklemek için Discord ile Giriş Yapmalısınız"
       }
     },
     "toast": {
