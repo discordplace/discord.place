@@ -738,7 +738,7 @@
     }
   },
   "dangerZone": {
-    "title": "Tehlikeli Bölge",
+    "title": "Təhlükəli Zona",
     "subtitle": "Serverinizi buradan silə bilərsiniz. Bu əməliyyatı etməzdən əvvəl iki dəfə düşünün. Bu əməliyyat geri alınmaz.",
     "toast": {
       "deletingServer": "Server silinir..",
@@ -752,17 +752,18 @@
   }
 },
   "profilesPage": {
-    "title": "Profilleri Keşfedin",
-    "subtitle": "Discord profillerinin özelleştirilmiş sayfalarını bulun, paylaşın ve keşfedin!<br>Keşfetmeniz için {{count}} profil sizi bekliyor.",
-    "searchInputPlaceholder": "Bir profili adı, meslek, konum vb. gibi bilgilerle arayın."
+  "profilesPage": {
+    "title": "Profilləri Kəşf Edin",
+    "subtitle": "Discord profillərinin fərdiləşdirilmiş səhifələrini tapın, paylaşın və kəşf edin!<br>Kəşf etməyiniz üçün {{count}} profil sizi gözləyir.",
+    "searchInputPlaceholder": "Bir profili adı, peşə, yer kimi məlumatlarla axtarın."
   },
   "profileCard": {
-    "aboutMe": "Hakkımda",
-    "noBio": "Bu kullanıcı henüz bir biyografi eklemedi ama harika biri olduğundan eminiz!",
+    "aboutMe": "Haqqımda",
+    "noBio": "Bu istifadəçi hələ bioqrafiya əlavə etməyib, amma əla biri olduğuna əminik!",
     "fields": {
-      "likes": "Beğeni",
-      "views": "Ziyaretçi",
-      "createdAt": "Oluşturulma"
+      "likes": "Bəyənmə",
+      "views": "Ziyarətçi",
+      "createdAt": "Yaradılma"
     },
     "toast": {
       "profileUrlCopied": "Profil bağlantısı panoya kopyalandı!"
@@ -770,123 +771,123 @@
   },
   "userProfile": {
     "flags": {
-      "Staff": "Discord Personeli",
-      "Partner": "Ortaklık Programı'na Dahil Sunucu Sahibi",
-      "Hypesquad": "HypeSquad Etkinlikleri",
-      "BugHunterLevel1": "Discord Hata Avcısı",
-      "BugHunterLevel2": "Discord Hata Avcısı",
-      "HypeSquadOnlineHouse1": "HypeSquad Cesareti",
-      "HypeSquadOnlineHouse2": "HypeSquad Güzelliği",
-      "HypeSquadOnlineHouse3": "HypeSquad Dengesi",
-      "PremiumEarlySupporter": "Erken Dönem Destekçisi",
-      "VerifiedDeveloper": "Erken Doğrulanmış Bot Geliştiricsi",
-      "CertifiedModerator": "Moderatör Programları Mezunu",
-      "ActiveDeveloper": "Aktif Geliştirici",
-      "Nitro": "Nitro Abonesi"
+      "Staff": "Discord İşçisi",
+      "Partner": "Ortaq Proqramına Daxil Server Sahibi",
+      "Hypesquad": "HypeSquad Tədbirləri",
+      "BugHunterLevel1": "Discord Hata Ovçusu",
+      "BugHunterLevel2": "Discord Hata Ovçusu",
+      "HypeSquadOnlineHouse1": "HypeSquad Cəsarəti",
+      "HypeSquadOnlineHouse2": "HypeSquad Gözəlliyi",
+      "HypeSquadOnlineHouse3": "HypeSquad Tarazlığı",
+      "PremiumEarlySupporter": "Erkən Dövr Dəstəkçisi",
+      "VerifiedDeveloper": "Erkən Təsdiqlənmiş Bot İnkişaf etdiricisi",
+      "CertifiedModerator": "Moderator Proqramları Məzunu",
+      "ActiveDeveloper": "Aktiv İnkişaf etdirici",
+      "Nitro": "Nitro Abunəsi"
     },
     "tooltip": {
-      "verifiedApp": "Doğrulanmış Uygulama"
+      "verifiedApp": "Təsdiqlənmiş Tətbiq"
     },
-    "appBadge": "Uyg",
-    "badgesHeading": "Rozetler",
+    "appBadge": "Tətb",
+    "badgesHeading": "Nișanlar",
     "about": {
-      "title": "Hakkında",
-      "noBio": "Bu kullanıcı henüz bir biyografi eklemedi."
+      "title": "Haqqında",
+      "noBio": "Bu istifadəçi hələ bioqrafiya əlavə etməyib."
     },
     "fields": {
-      "memberSince": "Üyelik Tarihi",
+      "memberSince": "Üzvlük Tarixi",
       "votesGiven": {
-        "label": "Verilen Oy",
-        "tooltip": "Bu kullanıcının verdiği toplam oy sayısı."
+        "label": "Verilən Səs",
+        "tooltip": "Bu istifadəçinin verdiyi ümumi səs sayı."
       },
       "profile": {
         "label": "Profil",
-        "tooltip": "Bu kullanıcının profili.",
-        "noProfile": "Profil bulunamadı."
+        "tooltip": "Bu istifadəçinin profili.",
+        "noProfile": "Profil tapılmadı."
       },
       "likesReceived": {
-        "label": "Alınan Beğeni",
-        "tooltip": "Bu kullanıcının profilinin aldığı toplam beğeni sayısı."
+        "label": "Alınan Bəyənmə",
+        "tooltip": "Bu istifadəçinin profilinin aldığı ümumi bəyənmə sayı."
       }
     },
     "servers": {
-      "title": "Sunucular",
-      "subtitle": "Bu kullanıcı ayrıca aşağıdaki sunucuların sahibidir. Kullanıcıyı beğendiyseniz, belki sunucularını da beğenirsiniz?"
+      "title": "Serverlər",
+      "subtitle": "Bu istifadəçi eyni zamanda aşağıdakı serverlərin sahibidir. İstifadəçini bəyəndinizsə, bəlkə serverlərini də bəyənərsiniz?"
     },
     "bots": {
       "title": "Botlar",
-      "subtitle": "Bu kullanıcı ayrıca aşağıdaki botların sahibidir. Kullanıcıyı beğendiyseniz, belki botlarıni da beğenirsiniz?"
+      "subtitle": "Bu istifadəçi eyni zamanda aşağıdakı botların sahibidir. İstifadəçini bəyəndinizsə, bəlkə botlarını da bəyənərsiniz?"
     }
   },
   "profilePage": {
     "about": {
-      "title": "Hakkında",
-      "noBio": "Biyografi bulunamadı.",
+      "title": "Haqqında",
+      "noBio": "Bioqrafiya tapılmadı.",
       "labels": {
-        "occupation": "Meslek",
-        "gender": "Cinsiyet",
-        "location": "Konum",
+        "occupation": "Peşə",
+        "gender": "Cinsiyyət",
+        "location": "Yer",
         "birthday": "Doğum Günü",
-        "views": "Ziyaretçi",
-        "likes": "Beğeniler"
+        "views": "Ziyarətçi",
+        "likes": "Bəyənmələr"
       },
       "gender": {
-        "Male": "Erkek",
-        "Female": "Kadın" 
+        "Male": "Kişi",
+        "Female": "Qadın" 
       },
-      "valueUnknown": "Bilinmiyor"
+      "valueUnknown": "Bilinmir"
     },
     "actions": {
       "toast": {
-        "loginRequiredForLike": "Profilleri beğenebilmek için giriş yapmalısınız!",
-        "liking": "{{profileSlug}} beğeniliyor..",
-        "liked": "{{profileSlug}} beğenildi!",
-        "unliking": "{{profileSlug}} beğenisi geri alınıyor..",
-        "unliked": "{{profileSlug}} beğenisi geri alındı!",
+        "loginRequiredForLike": "Profilləri bəyənə bilmək üçün daxil olmalısınız!",
+        "liking": "{{profileSlug}} bəyənilir..",
+        "liked": "{{profileSlug}} bəyənildi!",
+        "unliking": "{{profileSlug}} bəyənməsi geri alınır..",
+        "unliked": "{{profileSlug}} bəyənməsi geri alındı!",
         "profileUrlCopied": "Profil bağlantısı panoya kopyalandı!"
       },
       "tooltip": {
         "copyProfileUrl": "Profil Bağlantısını Kopyala",
         "reportProfile": "Profili Raporla",
-        "editProfile": "Profili Düzenle",
-        "likeProfile": "Beğen",
-        "unlikeProfile": "Beğeniyi Geri Al",
-        "loginRequiredForLike": "Profilleri beğenebilmek için giriş yapmalısınız."
+        "editProfile": "Profili Dəyişdir",
+        "likeProfile": "Bəyən",
+        "unlikeProfile": "Bəyənməni Geri Al",
+        "loginRequiredForLike": "Profilləri bəyənə bilmək üçün daxil olmalısınız."
       }
     },
     "social": {
-      "title": "Sosyal Medya",
-      "noSocials": "Sosyal medya bağlantısı bulunamadı."
+      "title": "Sosial Media",
+      "noSocials": "Sosial media bağlantısı tapılmadı."
     },
     "graph": {
       "likes": {
-        "label": "Beğeni",
-        "title": "Beğeni Grafiği",
-        "subtitle": "Bu profilin zaman içinde aldığı beğeni sayısı."
+        "label": "Bəyənmə",
+        "title": "Bəyənmə Qrafiki",
+        "subtitle": "Bu profilin zamanla aldığı bəyənmə sayı."
       },
       "views": {
-        "label": "Ziyaretçi",
-        "title": "Ziyaretçi Grafiği",
-        "subtitle": "Bu profili zaman içinde ziyaret eden kişi sayısı."
+        "label": "Ziyarətçi",
+        "title": "Ziyarətçi Qrafiki",
+        "subtitle": "Bu profili zamanla ziyarət edən insan sayı."
       }
     },
     "servers": {
-      "title": "Sunucular",
-      "subtitle": "Bu profilin sahibi, ayrıca aşağıdaki sunucuların sahibidir. Profilin sahibini beğendiyseniz, belki sunucularını da beğenirsiniz?"
+      "title": "Serverlər",
+      "subtitle": "Bu profilin sahibi, eyni zamanda aşağıdakı serverlərin sahibidir. Profil sahibini bəyəndinizsə, bəlkə serverlərini də bəyənərsiniz?"
     }
   },
   "graph": {
     "profileLikes": {
-      "tooltip": "{{count}} Beğeni"
+      "tooltip": "{{count}} Bəyənmə"
     },
     "profileViews": {
-      "tooltip": "{{count}} Ziyaretçi"
+      "tooltip": "{{count}} Ziyarətçi"
     },
     "voiceActivity": {
-      "tooltip": "{{count}} üye"
+      "tooltip": "{{count}} üzv"
     },
     "monthlyVotes": {
-      "tooltip": "{{count}} Oy"
+      "tooltip": "{{count}} Səs"
     }
   },
   "editProfilePage": {
