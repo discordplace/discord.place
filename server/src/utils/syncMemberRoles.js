@@ -2,6 +2,7 @@ const User = require('@/schemas/User');
 const sleep = require('@/utils/sleep');
 const fs = require('node:fs');
 const path = require('node:path');
+const dedent = require('dedent');
 
 async function syncMemberRoles() {
   const guild = client.guilds.cache.get(config.guildId);
@@ -42,7 +43,23 @@ async function syncMemberRoles() {
         const member = members.get(memberId);
         if (!member) continue;
 
-        if (membersToGiveRole.some(collectedMember => collectedMember.user.id == member.user.id)) await member.roles.add(role);
+        if (membersToGiveRole.some(collectedMember => collectedMember.user.id == member.user.id)) {
+          await member.roles.add(role);
+
+          const isTranslatorRoleGiven = role.id === config.roles.translator;
+
+          if (isTranslatorRoleGiven) {
+            const dmChannel = member.dmChannel || await member.createDM().catch(() => null);
+            if (dmChannel) {
+              // Send a message to the user that they've been given the Translator role
+              member.send({ content: dedent`
+                Hey there, Language Legend! 🌍✨
+
+                A huge thank you for stepping up and helping us localize the site. You've earned the Translator role, and we couldn’t be more grateful for your contribution! 🎉
+              `}).catch(() => null);
+            }
+          } 
+        }
         if (membersToRemoveRole.some(collectedMember => collectedMember.user.id == member.user.id)) await member.roles.remove(role);
 
         await sleep(1000);
