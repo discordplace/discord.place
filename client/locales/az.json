@@ -890,150 +890,151 @@
       "tooltip": "{{count}} Səs"
     }
   },
-  "editProfilePage": {
-    "title": "Profili Düzenle",
-    "verifiedBadge": "Onaylı Profil",
+"editProfilePage": {
+    "title": "Profilə Düzəliş Et",
+    "verifiedBadge": "Təsdiqlənmiş Profil",
     "toast": {
-      "verifyingProfile": "Profil doğrulanıyor..",
-      "profileVerified": "Profil doğrulandı!",
-      "unverifyingProfile": "Profil doğrulaması kaldırılıyor..",
-      "profileUnverified": "Profil doğrulaması kaldırıldı!",
-      "colorCopied": "Renk {{hex}} kopyalandı!",
-      "resettingColors": "Renkler sıfırlanıyor..",
-      "colorsReset": "Renkler sıfırlandı!",
-      "invalidUrl": "Geçersiz URL.",
-      "emptyUrl": "URL boş olamaz.",
-      "socialAdding": "Yeni bağlantı ekleniyor..",
-      "socialAdded": "Yeni bağlantı başarıyla eklendi.",
-      "socialMediaAdding": "Yeni sosyal medya bağlantısı ekleniyor..",
-      "socialMediaAdded": "Yeni sosyal medya bağlantısı başarıyla eklendi.",
-      "deletingSocial": "Bağlantı siliniyor..",
-      "socialDeleted": "Bağlantı başarıyla silindi.",
-      "deletingProfile": "Profil siliniyor..",
-      "profileDeleted": "Profil başarıyla silindi."
+      "verifyingProfile": "Profil təsdiqlənir..",
+      "profileVerified": "Profil təsdiqləndi!",
+      "unverifyingProfile": "Profil təsdiqlənməsi ləğv edilir..",
+      "profileUnverified": "Profil təsdiqlənməsi ləğv edildi!",
+      "colorCopied": "{{hex}} rəngi kopyalandı!",
+      "resettingColors": "Rənglər sıfırlanır..",
+      "colorsReset": "Rənglər sıfırlandı!",
+      "invalidUrl": "Yanlış URL.",
+      "emptyUrl": "URL boş ola bilməz.",
+      "socialAdding": "Yeni bağlantı əlavə olunur..",
+      "socialAdded": "Yeni bağlantı uğurla əlavə edildi.",
+      "socialMediaAdding": "Yeni sosial media bağlantısı əlavə olunur..",
+      "socialMediaAdded": "Yeni sosial media bağlantısı uğurla əlavə edildi.",
+      "deletingSocial": "Bağlantı silinir..",
+      "socialDeleted": "Bağlantı uğurla silindi.",
+      "deletingProfile": "Profil silinir..",
+      "profileDeleted": "Profil uğurla silindi."
     },
     "premiumRequiredInfo": {
-      "title": "Bunu yapamazsınız!",
-      "description": "Bunu değiştirmek için Premium olmalısınız. Premium hakkında daha fazla bilgi için <link>'nı ziyaret edin.",
-      "linkText": "Premium sayfası"
+      "title": "Bunu edə bilməzsiniz!",
+      "description": "Bunu dəyişdirmək üçün Premium olmalısınız. Premium haqqında daha çox məlumat üçün <link> ziyarət edin.",
+      "linkText": "Premium səhifəsi"
     },
     "unsavedChangesPopover": {
-      "label": "Beep beep! Kaydedilmemiş değişiklikleriniz var."
+      "label": "Beep beep! Qeyd olunmamış dəyişiklikləriniz var."
     },
     "labels": {
       "slug": "Slug",
-      "occupation": "Meslek",
-      "gender": "Cinsiyet",
-      "location": "Konum",
+      "occupation": "Peşə",
+      "gender": "Cinsiyyət",
+      "location": "Yer",
       "birthday": "Doğum Günü",
-      "bio": "Biyografi",
-      "preferredHost": "Tercih Edilen Domain",
-      "cardColors": "Kart Renkleri"
+      "bio": "Bioqrafiya",
+      "preferredHost": "Seçilmiş Domain",
+      "cardColors": "Kart Rəngləri"
     },
     "tooltip": {
-      "premiumRequired": "Bu özellik yalnızca Premium kullanıcılar içindir."
+      "premiumRequired": "Bu xüsusiyyət yalnız Premium istifadəçilər üçün mövcuddur."
     },
     "cardColors": {
-      "primary": "Birincil",
-      "secondary": "İkicncil",
-      "copyColor": "{{hex}} rengini kopyala"
+      "primary": "Əsas",
+      "secondary": "İkinci dərəcəli",
+      "copyColor": "{{hex}} rəngini kopyala"
     },
     "socials": {
-      "title": "Sosyal Medya",
-      "subtitle": "Profilinize sosyal medya bağlantılarınızı ekleyin."
+      "title": "Sosial Media",
+      "subtitle": "Profilinizə sosial media bağlantılarınızı əlavə edin."
     },
     "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "subtitle": "Profilinizi aşağıdaki butonu kullanarak silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
+      "title": "Təhlükəli Zona",
+      "subtitle": "Profilinizi aşağıdakı düymədən istifadə edərək silə bilərsiniz, amma təsadüfən silməməyə diqqət edin :)",
       "deleteProfileModal": {
         "title": "Profili Sil",
-        "description": "Profilinizi silmek istediğinizden emin misiniz?",
-        "note": "Profilinizi silmek, tüm bağlantılarınızı ve profilinizle ilişkili tüm verileri kalıcı olarak silecektir.<br><br>Bu işlem geri alınamaz."
+        "description": "Profilinizi silmək istədiyinizdən əminsinizmi?",
+        "note": "Profilinizi silmək, bütün bağlantılarınızı və profilinizlə əlaqəli bütün məlumatları daimi olaraq siləcəkdir.<br><br>Bu əməliyyat geri alınamaz."
       }
     }
   },
-  "emojisPage": {
-    "title": "Emojileri Keşfedin",
-    "subtitle": "Discord'daki en iyi emojileri keşfedin ve mükemmel emojileri bulun!<br>Keşfedilecek {{count}} emoji sizi bekliyor.",
-    "searchInputPlaceholder": "Ad ile ses arayın...",
-    "categorySelectPlaceholder": "Kategori",
+"emojisPage": {
+    "title": "Emojiləri Kəşf Edin",
+    "subtitle": "Discord-da ən yaxşı emojiləri kəşf edin və mükəmməl emojiləri tapın!<br>Kəşf edəcək {{count}} emoji sizi gözləyir.",
+    "searchInputPlaceholder": "Ad ilə emoji axtarın...",
+    "categorySelectPlaceholder": "Kateqoriya",
     "sortSelect": {
       "placeholder": "Sıralama",
       "items": {
-        "popular": "Popüler",
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "popular": "Populyar",
+        "newest": "Ən Yeni",
+        "oldest": "Ən Köhnə"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek emoji yok. Belki de bu, bir emoji paylaşma zamanının geldiğinin bir işaretidir?"
+      "title": "Buralar biraz səssiz...",
+      "message": "Göstəriləcək emoji yoxdur. Bəlkə də bu, bir emoji paylaşma vaxtının gəldiyinin bir işarətidir?"
     }
   },
   "emojiPackageCard": {
     "packBadge": "PAKET"
   },
   "emojiCard": {
-    "gifBadge": "GİF"
+    "gifBadge": "GIF"
   },
   "createEmojiPage": {
     "title": "Emoji Paylaş",
     "subtitle": "Dünyaya emojinizi paylaşın.",
     "steps": [
       {
-        "label": "Detaylar",
+        "label": "Detallar",
         "inputs": {
           "emojiCategories": {
-            "title": "Detaylarla başlayalım.",
-            "subtitle": "Emojiniz için bir veya daha fazla kategori seçin."
+            "title": "Detallarla başlayaq.",
+            "subtitle": "Emojiniz üçün bir və ya daha çox kateqoriya seçin."
           },
           "emojiName": {
-            "title": "Emoji İsmi",
-            "subtitle": "Emojiniz için bir isim yazın.",
-            "placeholder": "Ör. harika_emoji"
+            "title": "Emoji Adı",
+            "subtitle": "Emojiniz üçün bir ad yazın.",
+            "placeholder": "Məsələn, əla_emoji"
           }
         }
       },
       {
-        "label": "Yükle & Önizle"
+        "label": "Yüklə & Önizlə"
       },
       {
         "label": "Paylaş",
-        "title": "Emoji detaylarınızı onaylayın ve paylaşın.",
-        "subtitle": "Detayları gözden geçirin ve emojiyi paylaşmak için \"Yükle\" düğmesine tıklayın.",
+        "title": "Emoji detallarınızı təsdiqləyin və paylaşın.",
+        "subtitle": "Detalları gözden keçirin və emojini paylaşmaq üçün \"Yüklə\" düyməsinə basın.",
         "packageInfo": {
           "title": "Pşt!",
-          "description": "Birden fazla emoji paylaşmak istediğinizi görüyorum. Bu durumda, bir paket paylaşıyorsunuz demektir. Emoji paketleri, emojiler gibi sayfalara sahiptir ve emojiler gibi rar dosyası olarak indirilebilir."
+          "description": "Bir neçə emoji paylaşmaq istədiyinizi görürəm. Bu halda, bir paket paylaşmış olursunuz. Emoji paketləri, emojilər kimi səhifələrə malikdir və emojilər kimi rar faylı olaraq endirilə bilər."
         },
         "fields": {
-          "categories": "Kategoriler",
-          "emojiName": "Emoji İsmi"
+          "categories": "Kateqoriyalar",
+          "emojiName": "Emoji Adı"
         },
         "disclaimer": {
-          "content": "Bu emoji(leri) paylaşarak, <contentPolicyLink>'nı kabul etmiş olursunuz.",
-          "linkText": "içerik politikası"
+          "content": "Bu emoji(leri) paylaşaraq, <contentPolicyLink>'ni qəbul etmiş olursunuz.",
+          "linkText": "məzmun siyasəti"
         }
       }
     ],
     "emojisPreview": {
       "toast": {
-        "guildNotFound": "Emojiyi yüklemek için bir sunucu seçin.",
-        "uploadingEmojis": "Emoji sunucuya yükleniyor...",
-        "emojisUploaded": "Emoji başarıyla sunucuya yüklendi."
+        "guildNotFound": "Emojini yükləmək üçün bir server seçin.",
+        "uploadingEmojis": "Emoji serverə yüklənir...",
+        "emojisUploaded": "Emoji uğurla serverə yükləndi."
       },
       "uploadEmojiToDiscordModal": {
-        "title": "Discord'a Yükle",
-        "titleWithEmoji": "Discord'a Yükleyin: <emojiImage> {{emojiName}}",
-        "description": "Hızlı bir şekilde bu emojiyi Discord'a yükleyin. Aşağıdan bir sunucu seçin.",
+        "title": "Discord-a Yüklə",
+        "titleWithEmoji": "Discord-a Yükləyin: <emojiImage> {{emojiName}}",
+        "description": "Tez bir şəkildə bu emojini Discord-a yükləyin. Aşağıdan bir server seçin.",
         "emptyErrorState": {
-          "title": "Buralar biraz sessiz...",
-          "message": "Emoji yükleyebileceğiniz bir sunucu bulunamadı."
+          "title": "Buralar biraz səssiz...",
+          "message": "Emoji yükləyə biləcəyiniz bir server tapılmadı."
         },
-        "notes": "* Sunucuda \"İfadeleri Yönet\" iznine sahip olmalısınız.<br>* Listeyi yenilemek için siteden çıkış yapıp tekrar giriş yapın.",
+        "notes": "* Serverdə \"İfadələri İdarə et\" icazəsinə malik olmalısınız.<br>* Siyahını yeniləmək üçün saytdan çıxış edin və yenidən daxil olun.",
         "tooltip": {
-          "inviteOurBot": "{{guildName}} (Botumuzu Davet Et)"
+          "inviteOurBot": "{{guildName}} (Botumuzu Dəvət Et)"
         }
-      },
+      }
+    },
       "tooltip": {
         "uploadToDiscord": "Discord'a Yükle",
         "loginToUpload": "Yüklemek için Discord ile Giriş Yapın"
