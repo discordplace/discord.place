@@ -12,7 +12,7 @@ export default function VoiceActivityGraph({ server }) {
   const theme = useThemeStore(state => state.theme);
   const language = useLanguageStore(state => state.language);
 
-  const reversedData = [...server.voice_activity].reverse();
+  const reversedData = server.voice_activity;
 
   return <DynamicApexCharts
     type='area'
