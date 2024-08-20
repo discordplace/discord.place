@@ -890,10 +890,10 @@
     "tooltip": {
       "increased": "Increased since yesterday ({{difference}})",
       "decreased": "Decreased since yesterday ({{difference}})",
-      "noChanges": "No changes since yesterday"
-    },
-    "Total Servers": "{{count}} Servers",
-    "Total Bots": "{{count}} Bots"
+      "noChanges": "No changes since yesterday",
+      "Total Servers": "{{count}} Servers",
+      "Total Bots": "{{count}} Bots"
+    }
   },
   "editProfilePage": {
     "title": "Edit Profile",

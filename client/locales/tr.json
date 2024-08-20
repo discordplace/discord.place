@@ -890,10 +890,10 @@
     "tooltip": {
       "increased": "Dün'e oranla arttı ({{difference}})",
       "decreased": "Dün'e oranla azaldı ({{difference}})",
-      "noChanges": "Dün'e oranla değişiklik yok"
-    },
-    "Total Servers": "{{count}} Sunucu",
-    "Total Bots": "{{count}} Bot"
+      "noChanges": "Dün'e oranla değişiklik yok",
+      "Total Servers": "{{count}} Sunucu",
+      "Total Bots": "{{count}} Bot"
+    }
   },
   "editProfilePage": {
     "title": "Profili Düzenle",
