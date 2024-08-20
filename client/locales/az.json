@@ -151,38 +151,38 @@
     }
   },
   "errorPage": {
-    "badge": "Hata",
-    "title": "Üzgünüz, bir hata oluştu.",
+    "badge": "Xəta",
+    "title": "Bağışlayın, bir xəta baş verdi.",
     "messages": {
-      "0": "Bir şeyler ters gitti.",
-      "401": "Bu sayfayı görüntüleyebilmek için yetkiniz yok.",
-      "404": "Aradığınız sayfa bulunamadı.",
-      "50001": "Bu profili düzenleyebilmek için yetkiniz yok.",
-      "50002": "Bu profilin sahibi şu an için Premium üyesi değil.",
-      "60001": "Bu sunucuyu düzenleyebilmek için yetkiniz yok.",
-      "70001": "Bu botu düzenleyebilmek için yetkiniz yok.",
-      "80001": "Aradığınız kısaltılmış bağlantı bulunamadı."
+      "0": "Nəsə səhv getdi.",
+      "401": "Bu səhifəni görüntüləmək üçün icazəniz yoxdur.",
+      "404": "Axtardığınız səhifə tapılmadı.",
+      "50001": "Bu profili düzəltmək üçün icazəniz yoxdur.",
+      "50002": "Bu profilin sahibi hazırda Premium üzv deyil.",
+      "60001": "Bu serveri düzəltmək üçün icazəniz yoxdur.",
+      "70001": "Bu botu düzəltmək üçün icazəniz yoxdur.",
+      "80001": "Axtardığınız qısaldılmış bağlantı tapılmadı."
     }
   },
   "errorMessages": {
-    "validSearchQuery": "Lütfen geçerli bir arama sorgusu girin.",
-    "searchQueryTooShort": "Arama sorgusu çok kısa. Lütfen en az 3 karakter girin.",
-    "searchQueryTooLong": "Arama sorgusu çok uzun. Lütfen en fazla 100 karakter girin.",
-    "clipboardNotSupported": "Tarayıcınız panoya kopyalamayı desteklemiyor."
+    "validSearchQuery": "Zəhmət olmasa, keçərli bir axtarış sorğusu daxil edin.",
+    "searchQueryTooShort": "Axtarış sorğusu çox qısadır. Zəhmət olmasa, ən az 3 simvol daxil edin.",
+    "searchQueryTooLong": "Axtarış sorğusu çox uzundur. Zəhmət olmasa, ən çox 100 simvol daxil edin.",
+    "clipboardNotSupported": "Brauzeriniz panoya kopyalamağı dəstəkləmir."
   },
   "pagination": {
-    "inputOpened": "1 ile {{totalPages}} arasında bir sayfa numarası yazın ve Enter tuşuna basarak onaylayın."
+    "inputOpened": "1 ilə {{totalPages}} arasında bir səhifə nömrəsi yazın və Enter düyməsinə basaraq təsdiq edin."
   },
   "status": {
-    "incidentDescription": "Şu anda sistemlerimizde bazı sorunlar yaşıyoruz. Güncellemeler için servis durumu sayfamıza göz atın.",
-    "incidentContent": "Bu sorun {{startedAt}} tarihinde başladı.",
+    "incidentDescription": "Hazırda sistemlərimizdə bəzi problemlər yaşayırıq. Yeniləmələr üçün xidmət vəziyyəti səhifəmizə nəzər salın.",
+    "incidentContent": "Bu problem {{startedAt}} tarixində başladı.",
     "maintenanceDescription": {
-      "planned": "Hizmetlerimizde bakım yapmayı planlıyoruz.",
-      "started": "Şu anda hizmetlerimizde bakım yapıyoruz. Güncellemeler için servis durumu sayfamıza göz atın."
+      "planned": "Xidmətlərimizdə texniki qulluq etməyi planlaşdırırıq.",
+      "started": "Hazırda xidmətlərimizdə texniki qulluq həyata keçirilir. Yeniləmələr üçün xidmət vəziyyəti səhifəmizə nəzər salın."
     },
     "maintenanceContent": {
-      "planned": "Bu bakımın {{date}} tarihinde başlaması planlanıyor.",
-      "started": "Bu bakım {{date}} tarihinde başladı ve şu anda devam ediyor."
+      "planned": "Bu texniki qulluğun {{date}} tarixində başlaması planlaşdırılır.",
+      "started": "Bu texniki qulluq {{date}} tarixində başladı və hazırda davam edir."
     }
   },
   "buttons": {
