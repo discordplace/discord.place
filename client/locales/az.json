@@ -1035,98 +1035,100 @@
         }
       }
     },
-      "tooltip": {
-        "uploadToDiscord": "Discord'a Yükle",
-        "loginToUpload": "Yüklemek için Discord ile Giriş Yapın"
-      }
-    },
-    "toast": {
-      "minEmojisLength": "Birden fazla emojinin paket olarak yayınlanabilmesi için en az {{minLength}} emojinin pakete eklenmiş olması gerekmektedir.",
-      "maxEmojisReached": "Paketinize en fazla {{maxLength}} emoji ekleyebilirsiniz.",
-      "invalidEmojiName": "Emoji ismi yalnızca küçük harfler, rakamlar ve alt çizgiler içerebilir. Maksimum 20 karakter.",
-      "publishingEmojis": "(1)[Emoji yayınlanıyor...];(2-inf)[Emoji paketi yayınlanıyor...]",
-      "emojisPublished": "(1)[Emoji başarıyla yayınlandı.];(2-inf)[Emoji paketi başarıyla yayınlandı.]",
-      "fileSizeExceeded": "Emoji dosya boyutu {{maxSize}}kb'yi geçmemelidir.",
-      "animatedCategoryNotSelected": "Animasyonlu bir emoji paylaşmak istiyorsanız, lütfen geri gidin ve Hareketli kategorisini seçin."
-    }
+      {
+  "tooltip": {
+    "uploadToDiscord": "Discord'a Yüklə",
+    "loginToUpload": "Yükləmək üçün Discord ilə Daxil Olun"
+  },
+  "toast": {
+    "minEmojisLength": "Bir neçə emoji paket olaraq yayımlanması üçün ən az {{minLength}} emojinin paketə əlavə olunmuş olması tələb olunur.",
+    "maxEmojisReached": "Paketinizə ən çox {{maxLength}} emoji əlavə edə bilərsiniz.",
+    "invalidEmojiName": "Emoji adı yalnız kiçik hərflər, rəqəmlər və alt xəttlərdən ibarət ola bilər. Maksimum 20 simvol.",
+    "publishingEmojis": "(1)[Emoji yayımlanır...];(2-inf)[Emoji paketi yayımlanır...]",
+    "emojisPublished": "(1)[Emoji uğurla yayımlandı.];(2-inf)[Emoji paketi uğurla yayımlandı.]",
+    "fileSizeExceeded": "Emoji fayl ölçüsü {{maxSize}}kb-dən çox olmamalıdır.",
+    "animatedCategoryNotSelected": "Animasiya olunmuş bir emoji paylaşmaq istəyirsinizsə, zəhmət olmasa geri dönün və Hərəkətli kateqoriyanı seçin."
   },
   "emojiPage": {
     "toast": {
-      "deletingEmoji": "Emoji siliniyor..",
-      "emojiDeleted": "{{emojiName}} adlı emoji başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+      "deletingEmoji": "Emoji silinir..",
+      "emojiDeleted": "{{emojiName}} adlı emoji uğurla silindi. Bir neçə saniyə içində ana səhifəyə yönləndiriləcəksiniz."
     },
     "notApprovedInfo": {
-      "description": "Şu an için bu emojiyi yalnızca siz görebilirsiniz. Emoji onaylandığında herkese açık hale gelecektir. Bu zamana kadar <link>'a gelip botumuzdan emoji onaylandığında bildirim alabilirsiniz. DM'lerinizi açık tuttuğunuzdan emin olun.",
-      "linkText": "Discord sunucumuz"
+      "description": "Hazırda bu emojini yalnız siz görə bilərsiniz. Emoji təsdiqləndikdən sonra hər kəsə açıq olacaq. Bu vaxta qədər <link>'a gəlib botumuzdan emoji təsdiqləndikdə bildirim ala bilərsiniz. DM-lərinizi açıq saxladığınızdan əmin olun.",
+      "linkText": "Discord serverimiz"
     },
     "fields": {
-      "name": "İsim",
-      "uploaded": "Paylaşım Tarihi",
-      "downloads": "İndirmeler",
-      "animated": "Hareketli",
-      "categories": "Kategoriler",
+      "name": "Ad",
+      "uploaded": "Paylaşım Tarixi",
+      "downloads": "Yükləmələr",
+      "animated": "Hərəkətli",
+      "categories": "Kateqoriyalar",
       "publisher": "Paylaşan",
-      "yes": "Evet",
-      "no": "Hayır"
+      "yes": "Bəli",
+      "no": "Xeyr"
     },
     "similarEmojis": {
-      "title": "Benzer Emojiler",
-      "emptyErrorState": "Üzgünüm, benzer emojiler bulamadım.."
+      "title": "Bənzər Emojilər",
+      "emptyErrorState": "Bağışlayın, bənzər emojilər tapmadım.."
     },
     "frequentlyAskedQuestions": {
-      "title": "Sıkça Sorulan Sorular",
+      "title": "Tez-tez Soruşulan Suallar",
       "labels": [
-        "Bu emojiyi nasıl indirebilirim?",
-        "Bu emojiyi Discord sunucuma nasıl ekleyebilirim?",
-        "Bu emoji uygunsuz. Ne yapabilirim?"
+        "Bu emojini necə endirə bilərəm?",
+        "Bu emojini Discord serverimə necə əlavə edə bilərəm?",
+        "Bu emoji uyğunsuzdur. Nə edə bilərəm?"
       ],
       "answers": [
-        "<span> emojisini indirmek için aşağıdaki düğmeyi kullanabilirsiniz.",
+        "<span> emojisini endirmək üçün aşağıdakı düyməni istifadə edə bilərsiniz.",
         {
-          "title": "Bunu duyduğuma sevindim! Size bunun için 3 yöntem anlatacağım.",
+          "title": "Bunu eşitdiyimə sevindim! Sizə bunun üçün 3 metod izah edəcəyəm.",
           "methods": [
             {
-              "buttonText": "1. Web Sitemiz (bu sayfa)",
-              "instructionsBefore": "Botumuzu ve web sitemizi kullanarak, bu emojiyi sadece birkaç tıklama ile Discord sunucunuza yükleyebilirsiniz. İşte bunu nasıl yapabileceğiniz:",
+              "buttonText": "1. Veb Sitemiz (bu səhifə)",
+              "instructionsBefore": "Botumuzu və veb saytımızı istifadə edərək, bu emojini yalnız bir neçə kliklə Discord serverinizə yükləyə bilərsiniz. Bunu necə edə biləcəyiniz:",
               "instructions": [
                 {
-                  "text": "Sunucunuza <link> ekleyin.",
+                  "text": "Serverinizə <link> əlavə edin.",
                   "linkText": "botumuzu"
                 },
-                "Bu sayfadaki emoji önizlemesinde \"Discord'a Yükle\" düğmesine tıklayın.",
-                "Emojiyi yüklemek istediğiniz sunucuyu seçin ve yükle düğmesine tıklayın.",
-                "Tada! Emoji sunucunuza eklendi."
+                "Bu səhifədəki emoji önizləməsində \"Discord'a Yüklə\" düyməsinə klikləyin.",
+                "Yükləmək istədiyiniz serveri seçin və yüklə düyməsinə klikləyin.",
+                "Tada! Emoji serverinizə əlavə olundu."
               ]
             },
             {
-              "buttonText": "2. Botumuz (önerilen)",
-              "instructionsBefore": "Botumuzu kullanarak bu emojiyi tek bir komutla sunucunuza yükleyebilirsiniz. İşte bunu nasıl yapabileceğiniz:",
+              "buttonText": "2. Botumuz (təklif olunan)",
+              "instructionsBefore": "Botumuzu istifadə edərək bu emojini tək bir komanda ilə serverinizə yükləyə bilərsiniz. Bunu necə edə biləcəyiniz:",
               "instructions": [
                 {
-                  "text": "Sunucunuza <link> ekleyin.",
+                  "text": "Serverinizə <link> əlavə edin.",
                   "linkText": "botumuzu"
                 },
-                "Bunu kopyalayıp herhangi bir kanala yapıştırın: <pre>",
-                "Komutu kullanın ve tada! Emoji sunucunuza eklendi."
+                "Bunu kopyalayıb hər hansı bir kanala yapışdırın: <pre>",
+                "Komandanı istifadə edin və tada! Emoji serverinizə əlavə olundu."
               ]
             },
             {
-              "buttonText": "3. Klasik Yöntem",
-              "instructionsBefore": "Bu biraz daha zor olabilir.",
+              "buttonText": "3. Klasik Metod",
+              "instructionsBefore": "Bu biraz daha çətin ola bilər.",
               "instructions": [
-                "Emojiyi indirin:",
-                "Discord uygulamanızı açın ve sunucunuza sağ tıklayın.",
-                "Sunucu Ayarları > Emoji'ye gidin.",
-                "Emoji Yükle'ye tıklayın.",
-                "İndirdiğiniz emojiyi seçin ve yükleyin.",
-                "Tada! Emoji sunucunuza eklendi."
+                "Emojini endirin:",
+                "Discord tətbiqinizi açın və serverinizə sağ klikləyin.",
+                "Server Parametrləri > Emoji-ə gedin.",
+                "Emoji Yüklə'ye klikləyin.",
+                "Endirdiyiniz emojini seçin və yükləyin.",
+                "Tada! Emoji serverinizə əlavə olundu."
               ]
             }
           ]
         },
-        "Sayfanın altındaki (en aşağıda) Discord düğmesi aracılığıyla destek sunucumuza katılabilir ve emojinin uygunsuz olduğunu bize bildirebilirsiniz."
+        "Səhifənin altındakı (ən aşağıda) Discord düyməsi vasitəsilə dəstək serverimizə qoşula bilər və emojinin uyğunsuz olduğunu bizə bildirə bilərsiniz."
       ]
-    },
+    }
+  }
+}
+
     "dangerZone": {
       "title": "Tehlikeli Bölge",
       "description": "Aşağıdaki düğmeyi kullanarak emojinizi silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
