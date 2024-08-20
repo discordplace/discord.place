@@ -185,135 +185,136 @@
       "started": "Bu texniki qulluq {{date}} tarixində başladı və hazırda davam edir."
     }
   },
-  "buttons": {
-    "cancel": "İptal",
-    "close": "Kapat",
-    "openIncident": "Daha Fazla Bilgi",
-    "openMaintenance": "Daha Fazla Bilgi",
+"buttons": {
+    "cancel": "Ləğv Et",
+    "close": "Bağla",
+    "openIncident": "Daha Çox Məlumat",
+    "openMaintenance": "Daha Çox Məlumat",
     "back": "Geri",
-    "next": "İleri",
+    "next": "İrəli",
     "publish": "Paylaş",
     "resetSearch": "Sıfırla",
-    "confirm": "Onayla",
-    "upload": "Yükle",
-    "download": "İndir",
+    "confirm": "Təsdiqlə",
+    "upload": "Yüklə",
+    "download": "Yüklə",
     "delete": "Sil",
-    "createReminder": "Hatırlatıcı Oluştur",
-    "vote": "Oy Ver",
-    "joinServer": "Sunucuya Katıl",
-    "shareServer": "Sunucuyu Paylaş",
-    "reportServer": "Sunucuyu Raporla",
-    "manageServer": "Sunucuyu Yönet",
-    "buyTripleVotes": "3X Oy Satın Al",
-    "standOut": "Öne Çık",
-    "submitReview": "İncelemeyi Gönder",
-    "loginWithDiscord": "Discord ile Giriş Yap",
-    "discardChanges": "Değişiklikleri İptal Et",
-    "saveChanges": "Değişiklikleri Kaydet",
-    "enableTracking": "Takibi Etkinleştir",
-    "saveWebhookSettings": "Webhook Ayarlarını Kaydet",
-    "visit": "Görüntüle",
+    "createReminder": "Xatırlatma Yarat",
+    "vote": "Səs Ver",
+    "joinServer": "Serverə Qoşul",
+    "shareServer": "Serveri Paylaş",
+    "reportServer": "Serveri Bildir",
+    "manageServer": "Serveri İdarə Et",
+    "buyTripleVotes": "3X Səs Al",
+    "standOut": "Ön Planda Ol",
+    "submitReview": "Rəyi Göndər",
+    "loginWithDiscord": "Discord ilə Daxil Ol",
+    "discardChanges": "Dəyişiklikləri Ləğv Et",
+    "saveChanges": "Dəyişiklikləri Yadda Saxla",
+    "enableTracking": "İzləməni Aktivləşdir",
+    "saveWebhookSettings": "Webhook Ayarlarını Yadda Saxla",
+    "visit": "Görüntülə",
     "share": "Paylaş",
     "verify": "Doğrula",
-    "unverify": "Doğrulamayı Kaldır",
-    "save": "Kaydet",
-    "edit": "Düzenle",
+    "unverify": "Doğrulamağı Sil",
+    "save": "Yadda Saxla",
+    "edit": "Redaktə Et",
     "rest": "Sıfırla",
-    "add": "Ekle",
-    "addNew": "Yeni Ekle",
-    "darkMode": "Karanlık Mod",
-    "lightMode": "Aydınlık Mod",
-    "removeAll": "Hepsini Kaldır",
-    "change": "Değiştir",
-    "enlarge": "Büyüt",
-    "shrink": "Küçült",
+    "add": "Əlavə Et",
+    "addNew": "Yeni Əlavə Et",
+    "darkMode": "Qaranlıq Rejim",
+    "lightMode": "İşıqlı Rejim",
+    "removeAll": "Hamısını Sil",
+    "change": "Dəyişdir",
+    "enlarge": "Böyüt",
+    "shrink": "Kiçilt",
     "selectEmoji": "Emoji Seç",
     "previous": "Geri",
-    "inviteBot": "Botu Davet Et",
+    "inviteBot": "Botu Dəvət Et",
     "shareBot": "Botu Paylaş",
-    "reportBot": "Botu Raporla",
-    "manageBot": "Botu Yönet",
-    "backToEditing": "Düzenlemeye Geri Dön",
-    "showMarkdownPreview": "Markdown Önizlemesini Göster",
-    "saveRepository": "Repository'yi Kaydet",
-    "generateApiKey": "API Anahtarı Oluştur",
-    "deleteApiKey": "API Anahtarını Sil",
-    "copyApiKey": "API Anahtarını Kopyala",
-    "apiDocumentation": "API Dokümantasyonu",
-    "create": "Oluştur",
-    "viewProfile": "Profili Görüntüle",
-    "createProfile": "Profil Oluştur",
+    "reportBot": "Botu Bildir",
+    "manageBot": "Botu İdarə Et",
+    "backToEditing": "Redaktəyə Qayıt",
+    "showMarkdownPreview": "Markdown Önizləməsini Göstər",
+    "saveRepository": "Repository-i Yadda Saxla",
+    "generateApiKey": "API Açarı Yarat",
+    "deleteApiKey": "API Açarını Sil",
+    "copyApiKey": "API Açarını Kopyala",
+    "apiDocumentation": "API Sənədi",
+    "create": "Yarat",
+    "viewProfile": "Profili Görüntülə",
+    "createProfile": "Profil Yarat",
     "newLink": "Yeni Bağlantı",
-    "letsGo": "Hadi!",
-    "addBot": "Bot Ekle",
-    "addSound": "Ses Ekle"
+    "letsGo": "Başlayaq!",
+    "addBot": "Bot Əlavə Et",
+    "addSound": "Səs Əlavə Et"
   },
-  "voteCountdown": {
-    "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",
-    "mobile": "{{hours}}sa {{minutes}}dk kaldı"
+"voteCountdown": {
+    "desktop": "{{hours}}sa {{minutes}}dəq {{seconds}}sn qaldı",
+    "mobile": "{{hours}}sa {{minutes}}dəq qaldı"
   },
   "cookieBanner": {
-    "text": "Bu web sitesi, size en iyi deneyimi sunmak için 🍪 çerezleri kullanır.",
+    "text": "Bu veb-sayt, sizə ən yaxşı təcrübəni təqdim etmək üçün 🍪 kukilərdən istifadə edir.",
     "buttons": {
-      "ok": "Anladım!",
-      "learnMore": "Daha fazla bilgi"
+      "ok": "Başa düşdüm!",
+      "learnMore": "Daha çox məlumat"
     }
   },
   "step": "ADIM {{currentStep}}",
   "publishTemplatePage": {
-    "title": "Şablon Yayınla",
-    "subtitle": "Şablonunuzu sitemizde yayınlayın.",
+    "title": "Şablon Nəşr Et",
+    "subtitle": "Şablonunuzu saytımızda nəşr edin.",
     "steps": [
       {
-        "title": "Detayları Bul",
+        "title": "Detalları Tapın",
         "inputs": {
           "templateId": {
-            "title": "Şablon detaylarınızı bulalım.",
-            "subtitle": "Aşağıya şablon ID'sini girmeniz gerekiyor.",
-            "placeholder": "Şablon ID'sini girin"
+            "title": "Şablon detallarınızı tapaq.",
+            "subtitle": "Aşağıya şablon ID-sini daxil etməyiniz lazımdır.",
+            "placeholder": "Şablon ID-sini daxil edin"
           }
         }
       },
       {
-        "title": "Detayları Doldur",
+        "title": "Detalları Doldurun",
         "inputs": {
           "templateCategories": {
-            "title": "Şimdi de detayları dolduralım.",
-            "subtitle": "Şablonunuz için bir veya daha fazla kategori seçin."
+            "title": "İndi də detalları dolduraq.",
+            "subtitle": "Şablonunuz üçün bir və ya daha çox kateqoriya seçin."
           },
           "templateName": {
             "title": "Şablon Adı",
-            "subtitle": "Şablonunuz için bir ad girin.",
-            "placeholder": "Şablon adını girin"
+            "subtitle": "Şablonunuz üçün bir ad daxil edin.",
+            "placeholder": "Şablon adını daxil edin"
           },
           "templateDescription": {
-            "title": "Şablon Açıklaması",
-            "subtitle": "Şablonunuz için bir açıklama girin.",
-            "placeholder": "Şablon açıklamasını girin (min. {{min}} karakter)"
+            "title": "Şablon Təsviri",
+            "subtitle": "Şablonunuz üçün bir təsvir daxil edin.",
+            "placeholder": "Şablon təsvirini daxil edin (min. {{min}} simvol)"
           }
         }
       },
       {
-        "title": "Önizle ve Yayınla",
-        "heading": "Detaylarınızı onaylayın ve şablonunuzu yayınlayın.",
-        "description": "Detayları gözden geçirin ve şablonunuzu yayınlamak için yayınla düğmesine tıklayın.",
+        "title": "Önizlə və Nəşr Et",
+        "heading": "Detallarınızı təsdiqləyin və şablonunuzu nəşr edin.",
+        "description": "Detalları nəzərdən keçirin və şablonunuzu nəşr etmək üçün nəşr düyməsinə basın.",
         "fields": {
-          "categories": "Kategoriler",
+          "categories": "Kateqoriyalar",
           "templateName": "Şablon Adı",
-          "templateDescription": "Şablon Açıklaması"
+          "templateDescription": "Şablon Təsviri"
         },
         "disclaimer": {
-          "content": "Bu şablonu yayınlayarak <contentPolicyLink>'nı kabul etmiş olursunuz.",
-          "linkText": "içerik politikası"
+          "content": "Bu şablonu nəşr etməklə <contentPolicyLink>'ni qəbul etmiş olursunuz.",
+          "linkText": "məzmun siyasəti"
         }
       }
     ],
     "toast": {
-      "publishingTemplate": "Şablon yayınlanıyor..",
-      "templatePublished": "Şablon başarıyla yayınlandı.",
-      "templateNotFound": "Şablon bulunamadı."
+      "publishingTemplate": "Şablon nəşr olunur...",
+      "templatePublished": "Şablon uğurla nəşr olundu.",
+      "templateNotFound": "Şablon tapılmadı."
     }
   },
+  
   "categories": {
     "All": "Tümü",
     "Chat": "Sohbet",
