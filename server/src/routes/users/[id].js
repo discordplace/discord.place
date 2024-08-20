@@ -35,6 +35,22 @@ module.exports = {
       const userFlags = user.flags.toArray();
       if (!user.bot && isHaveNitro) userFlags.push('Nitro');
 
+      const validUserFlags = [
+        'Staff',
+        'Partner',
+        'Hypesquad',
+        'BugHunterLevel1',
+        'BugHunterLevel2',
+        'HypeSquadOnlineHouse1',
+        'HypeSquadOnlineHouse2',
+        'HypeSquadOnlineHouse3',
+        'PremiumEarlySupporter',
+        'VerifiedDeveloper',
+        'CertifiedModerator',
+        'ActiveDeveloper',
+        'Nitro'
+      ];
+
       const responseData = {
         id: user.id,
         username: user.username,
@@ -44,7 +60,7 @@ module.exports = {
         createdAt: new Date(user.createdTimestamp).getTime(),
         bot: user.bot,
         bot_verified: false,
-        flags: userFlags
+        flags: userFlags.filter(flag => validUserFlags.includes(flag))
       };
 
       if (user.bot) {
