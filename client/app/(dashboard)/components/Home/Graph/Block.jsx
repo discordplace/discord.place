@@ -5,7 +5,6 @@ import Tooltip from '@/app/components/Tooltip';
 import cn from '@/lib/cn';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import { useMedia } from 'react-use';
-import { t } from '@/stores/language';
 
 export default function GraphBlock({ icon, label, description, data, tooltipFormatter, tooltipIcon, tooltipLabel, color }) {  
   const tooltipSide = useMedia('(max-width: 640px)', false) ? 'bottom' : 'right';
@@ -36,7 +35,7 @@ export default function GraphBlock({ icon, label, description, data, tooltipForm
           
           <Tooltip
             side={tooltipSide}
-            content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChange'}`, { difference: diffInText })}
+            content={`${isIncreased ? 'Increased' : isDecreased ? 'Decreased' : 'No changes'} since yesterday (${diffInText})`}
           >
             <div className={cn(
               'select-none flex w-max gap-x-1 px-2 items-center py-1 text-xs font-semibold rounded-lg',
@@ -55,7 +54,7 @@ export default function GraphBlock({ icon, label, description, data, tooltipForm
         <div className='w-full h-[1px] bg-quaternary my-4' />
 
         <Graph
-          id={`graph-${label}`}
+          id={label}
           data={data || []}
           tooltipFormatter={tooltipFormatter}
           tooltipIcon={tooltipIcon}
