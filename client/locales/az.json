@@ -1129,7 +1129,7 @@
   }
 },
 
-    {
+    
   "dangerZone": {
     "title": "Təhlükəli Bölgə",
     "description": "Aşağıdakı düyməni istifadə edərək emojinizi silə bilərsiniz, ancaq təsadüfən silməməyə diqqət edin :)",
@@ -1490,6 +1490,7 @@
   "topVoters": {
     "title": "Ən Çox Səs Verənlər"
   }
+  
 },
 "botManagePage": {
   "title": "Botu İdarə Et",
@@ -1570,7 +1571,7 @@
     }
   }
 },
-{
+
   "webhook": {
     "title": "Webhook",
     "subtitle": "Birisi botunuza səs verdikdə bildiriş alın.",
@@ -1646,7 +1647,7 @@
   }
 },
     
-  {
+  
   "accountPage": {
     "sidebar": {
       "newBadge": "YENİ",
@@ -1668,7 +1669,8 @@
         "backToHome": "Əsas Səhifəyə Qayıt",
         "language": {
           "en": "İngilis",
-          "tr": "Türk"
+          "tr": "Türk",
+          "az":"Azərbaycanca"
         }
       }
     },
@@ -1881,9 +1883,8 @@
           }
         }
       }
-    }
-  },
-         {
+},
+         
   "keywords": {
     "label": "Anahtar Sözlər",
     "description": "Serverinizlə bağlı anahtar sözləri əlavə edin. Bu, serverinizi axtaranların serverinizi tapmasına kömək edəcək.",
@@ -1965,9 +1966,7 @@
           "description": "Aşağıdakı düyməyə klikləyərək Bot Siyahıya Alınma Qaydalarımızı qəbul edirsiniz və botunuzun sahibi olduğunuzu təsdiqləyirsiniz."
         }
       }
-    }
-  }
-},   
+    },
           
 
   "pastDenials": {
