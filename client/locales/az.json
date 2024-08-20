@@ -1269,133 +1269,308 @@
     }
   }
 },
-    "actions": {
-      "title": "İşlemler",
-      "toast": {
-        "voting": "{{botName}} botuna oy veriliyor..",
-        "voted": "{{botName}} botuna oy verildi!",
-        "creatingCheckout": "Sizin için bir ödeme sayfası oluşturuluyor..",
-        "checkoutCreated": "Ödeme sayfası oluşturuldu! Birkaç saniye içinde ödeme sayfasına yönlendirileceksiniz..",
-        "loginRequiredForVote": "Oy verebilmek için giriş yapmalısınız.",
-        "botUrlCopied": "Bot bağlantısı panoya kopyalandı!"
-      }
-    },
-    "categories": {
-      "title": "Kategoriler"
-    },
-    "supportServer": {
-      "title": "Destek Sunucusu"
-    },
-    "tabs": {
-      "labels": {
-        "reviews": "Yorumlar",
-        "topVoters": "En Çok Oy Verenler"
-      },
-      "reviews": {
-        "title": "Yorumlar",
-        "toast": {
-          "submittingReview": "Yorum gönderiliyor..",
-          "reviewSubmitted": "Yorumunuz başarıyla gönderildi!"
-        },
-        "totalReviews": "(0)[Yorum yok];(1-inf)[{{count}} yorum];",
-        "reviewSubmitted": {
-          "info": {
-            "title": "Not",
-            "description": "Yorumunuz yetkililer tarafından incelenene kadar bekleyin. Onaylanmadan önce diğer kullanıcılar tarafından görüntülenmeyecektir."
+    "tooltip": {
+    "uploadToDiscord": "Discord-a Yüklə",
+    "loginToUpload": "Yükləmək üçün Discord ilə Daxil Olun"
+  }
+},
+"toast": {
+  "minEmojisLength": "Bir neçə emoji paketi olaraq dərc oluna bilməsi üçün ən azı {{minLength}} emoji paketi əlavə edilməlidir.",
+  "maxEmojisReached": "Paketinizə ən çox {{maxLength}} emoji əlavə edə bilərsiniz.",
+  "invalidEmojiName": "Emoji adı yalnız kiçik hərflər, rəqəmlər və alt xətlərdən ibarət ola bilər. Maksimum 20 simvol.",
+  "publishingEmojis": "(1)[Emoji dərc olunur...];(2-inf)[Emoji paketi dərc olunur...]",
+  "emojisPublished": "(1)[Emoji uğurla dərc edildi.];(2-inf)[Emoji paketi uğurla dərc edildi.]",
+  "fileSizeExceeded": "Emoji faylının həcmi {{maxSize}}kb-dən çox olmamalıdır.",
+  "animatedCategoryNotSelected": "Animasiya edilmiş bir emoji paylaşmaq istəyirsinizsə, xahiş edirik geri qayıdın və Hərəkətli kateqoriyasını seçin."
+},
+"emojiPage": {
+  "toast": {
+    "deletingEmoji": "Emoji silinir..",
+    "emojiDeleted": "{{emojiName}} adlı emoji uğurla silindi. Bir neçə saniyə içində ana səhifəyə yönləndiriləcəksiniz."
+  },
+  "notApprovedInfo": {
+    "description": "Bu emojini hazırda yalnız siz görə bilərsiniz. Emoji təsdiq edildikdən sonra hər kəs üçün əlçatan olacaq. Bu müddət ərzində <link>'ə gələrək botumuzdan emoji təsdiqləndikdə bildiriş ala bilərsiniz. DM-lərinizi açıq saxladığınızdan əmin olun.",
+    "linkText": "Discord serverimiz"
+  },
+  "fields": {
+    "name": "Ad",
+    "uploaded": "Paylaşım Tarixi",
+    "downloads": "Yükləmələr",
+    "animated": "Hərəkətli",
+    "categories": "Kateqoriyalar",
+    "publisher": "Yayımlayan",
+    "yes": "Bəli",
+    "no": "Xeyr"
+  },
+  "similarEmojis": {
+    "title": "Oxşar Emojilər",
+    "emptyErrorState": "Bağışlayın, oxşar emojilər tapılmadı.."
+  },
+  "frequentlyAskedQuestions": {
+    "title": "Tez-tez Soruşulan Suallar",
+    "labels": [
+      "Bu emojini necə yükləyə bilərəm?",
+      "Bu emojini Discord serverimə necə əlavə edə bilərəm?",
+      "Bu emoji uyğun deyil. Nə edə bilərəm?"
+    ],
+    "answers": [
+      "<span> emojini yükləmək üçün aşağıdakı düymədən istifadə edə bilərsiniz.",
+      {
+        "title": "Bunu eşitməkdən məmnunam! Sizə bunun üçün 3 üsul izah edəcəm.",
+        "methods": [
+          {
+            "buttonText": "1. Veb Saytımız (bu səhifə)",
+            "instructionsBefore": "Botumuzu və veb saytımızı istifadə edərək, bu emojini yalnız bir neçə kliklə Discord serverinizə yükləyə bilərsiniz. Bunu necə edəcəyiniz belədir:",
+            "instructions": [
+              {
+                "text": "Serverinizə <link> əlavə edin.",
+                "linkText": "botumuzu"
+              },
+              "\"Discord-a Yüklə\" düyməsinə basın.",
+              "Emojini yükləmək istədiyiniz serveri seçin və yükləmə düyməsinə basın.",
+              "Tada! Emoji serverinizə əlavə edildi."
+            ]
           },
-          "alreadyReviewed": "Bu sunucu için zaten bir yorum yaptınız."
-        },
-        "ownerCannotReview": "Sahibi olduğunuz sunuculara yorum yapamazsınız.",
-        "unknown": "Bilinmiyor",
-        "input": {
-          "label": "Yorumunuz",
-          "description": "Bu bot hakkında ne düşünüyorsunuz? Diğer kullanıcılar için bir yorum yapın."
-        },
-        "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız."
+          {
+            "buttonText": "2. Botumuz (təklif olunur)",
+            "instructionsBefore": "Botumuzu istifadə edərək bu emojini tək bir əmrlə serverinizə yükləyə bilərsiniz. Bunu necə edəcəyiniz belədir:",
+            "instructions": [
+              {
+                "text": "Serverinizə <link> əlavə edin.",
+                "linkText": "botumuzu"
+              },
+              "Bunu kopyalayıb istənilən kanala yapışdırın: <pre>",
+              "Əmri istifadə edin və tada! Emoji serverinizə əlavə edildi."
+            ]
+          },
+          {
+            "buttonText": "3. Klassik Metod",
+            "instructionsBefore": "Bu bir az daha çətin ola bilər.",
+            "instructions": [
+              "Emojini yükləyin:",
+              "Discord tətbiqinizi açın və serverinizə sağ klikləyin.",
+              "Server Parametrləri > Emoji-yə gedin.",
+              "Emoji Yüklə'ya basın.",
+              "Yüklədiyiniz emojini seçin və yükləyin.",
+              "Tada! Emoji serverinizə əlavə edildi."
+            ]
+          }
+        ]
       },
-      "topVoters": {
-        "title": "En Çok Oy Verenler"
+      "Səhifənin altındakı (ən aşağıda) Discord düyməsi vasitəsilə dəstək serverimizə qoşulub və emojinin uyğun olmadığını bizə bildirə bilərsiniz."
+    ]
+  },
+  "dangerZone": {
+    "title": "Təhlükəli Zona",
+    "description": "Aşağıdakı düymədən istifadə edərək emojini silə bilərsiniz, amma yanlışlıqla silməməyə diqqət edin :)",
+    "deleteEmojiModal": {
+      "title": "Emojini Sil",
+      "description": "{{emojiName}} adlı emojini silmək istədiyinizə əminsinizmi?",
+      "content": "Xahiş edirik emojini silməyin, emojini aldığı bütün yükləmələrlə birlikdə çıxaracağını unutmayın.<br><br>Bu əməliyyat geri qaytarılmazdır."
+    }
+  }
+},
+"emojiPackagePage": {
+  "toast": {
+    "deletingEmojiPackage": "Emoji paketi silinir..",
+    "emojiPackageDeleted": "{{emojiName}} adlı emoji paketi uğurla silindi. Bir neçə saniyə içində ana səhifəyə yönləndiriləcəksiniz."
+  },
+  "notApprovedInfo": {
+    "description": "Bu emoji paketini hazırda yalnız siz görə bilərsiniz. Emoji paketi təsdiq edildikdən sonra hər kəs üçün əlçatan olacaq. Bu müddət ərzində <link>'ə gələrək botumuzdan emoji paketi təsdiqləndikdə bildiriş ala bilərsiniz. DM-lərinizi açıq saxladığınızdan əmin olun.",
+    "linkText": "Discord serverimiz"
+  },
+  "fields": {
+    "name": "Ad",
+    "uploaded": "Paylaşım Tarixi",
+    "downloads": "Yükləmələr",
+    "emojiCount": "Emoji Sayı",
+    "categories": "Kateqoriyalar",
+    "publisher": "Yayımlayan"
+  },
+  "similarEmojiPacks": {
+    "title": "Oxşar Emoji Paketləri",
+    "emptyErrorState": "Bağışlayın, oxşar emoji paketləri tapılmadı.."
+  },
+  "frequentlyAskedQuestions": {
+    "title": "Tez-tez Soruşulan Suallar",
+    "labels": [
+      "Bu emoji paketini necə yükləyə bilərəm?",
+      "Bu emoji paketini Discord serverimə necə əlavə edə bilərəm?",
+      "Bu emoji paketi uyğun deyil. Nə edə bilərəm?"
+    ],
+    "answers": [
+      "<span> paketini yükləmək üçün aşağıdakı düymədən istifadə edə bilərsiniz.",
+      {
+        "title": "Bunu eşitməkdən məmnunam! Sizə bunun üçün 2 üsul izah edəcəm.",
+        "methods": [
+          {
+            "buttonText": "1. Veb Saytımız (bu səhifə)",
+            "instructionsBefore": "Botumuzu və veb saytımızı istifadə edərək, bu emoji paketini yalnız bir neçə kliklə Discord serverinizə yükləyə bilərsiniz. Bunu necə edəcəyiniz belədir:",
+            "instructions": [
+              {
+                "text": "Serverinizə <link> əlavə edin.",
+                "linkText": "botumuzu"
+              },
+              "\"Discord-a Yüklə\" düyməsinə basın.",
+              "Emojini yükləmək istədiyiniz serveri seçin və yükləmə düyməsinə basın.",
+              "Tada! Emoji paketi serverinizə əlavə edildi."
+            ]
+          },
+          {
+            "buttonText": "2. Klassik Metod",
+            "instructionsBefore": "Bu bir az daha çətin ola bilər.",
+            "instructions": [
+              "Emoji paketini yükləyin:",
+              "Yüklənmiş paketi çıxardın. (rar, zip və s.)",
+              "Discord tətbiqinizi açın və serverinizə sağ klikləyin.",
+              "Server Parametrləri > Emoji-yə gedin.",
+              "Yüklədiyiniz paketdəki bütün emojiləri seçin və Discord ekranına sürüşdürüb buraxın.",
+              "Tada! Emoji paketi serverinizə əlavə edildi."
+            ]
+          }
+        ]
+      },
+            "Səhifənin altındakı (ən aşağıda) Discord düyməsi vasitəsilə dəstək serverimizə qoşulub və emoji paketinin uyğun olmadığını bizə bildirə bilərsiniz."
+    ]
+  },
+  "dangerZone": {
+    "title": "Təhlükəli Zona",
+    "description": "Aşağıdakı düymədən istifadə edərək emoji paketini silə bilərsiniz, amma yanlışlıqla silməməyə diqqət edin :)",
+    "deleteEmojiPackageModal": {
+      "title": "Emoji Paketini Sil",
+      "description": "{{emojiPackageName}} adlı emoji paketini silmək istədiyinizə əminsinizmi?",
+      "content": "Xahiş edirik emoji paketini silməyin, onun aldığı bütün yükləmələrlə birlikdə çıxaracağını unutmayın.<br><br>Bu əməliyyat geri qaytarılmazdır."
+    }
+  }
+},
+"actions": {
+  "title": "Əməliyyatlar",
+  "toast": {
+    "voting": "{{botName}} botuna səs verilir..",
+    "voted": "{{botName}} botuna səs verildi!",
+    "creatingCheckout": "Sizin üçün bir ödəmə səhifəsi yaradılır..",
+    "checkoutCreated": "Ödəmə səhifəsi yaradıldı! Bir neçə saniyə içində ödəmə səhifəsinə yönləndiriləcəksiniz..",
+    "loginRequiredForVote": "Səs verə bilmək üçün daxil olmalısınız.",
+    "botUrlCopied": "Bot bağlantısı panoya kopyalandı!"
+  }
+},
+"categories": {
+  "title": "Kateqoriyalar"
+},
+"supportServer": {
+  "title": "Dəstək Serveri"
+},
+"tabs": {
+  "labels": {
+    "reviews": "Rəylər",
+    "topVoters": "Ən Çox Səs Verənlər"
+  },
+  "reviews": {
+    "title": "Rəylər",
+    "toast": {
+      "submittingReview": "Rəy göndərilir..",
+      "reviewSubmitted": "Rəyiniz uğurla göndərildi!"
+    },
+    "totalReviews": "(0)[Rəy yoxdur];(1-inf)[{{count}} rəy];",
+    "reviewSubmitted": {
+      "info": {
+        "title": "Qeyd",
+        "description": "Rəyiniz moderasiya tərəfindən yoxlanılana qədər gözləyin. Təsdiq olunmadan əvvəl digər istifadəçilər tərəfindən görünməyəcək."
+      },
+      "alreadyReviewed": "Bu server üçün artıq bir rəy yazmısınız."
+    },
+    "ownerCannotReview": "Sahibi olduğunuz serverlərə rəy yaza bilməzsiniz.",
+    "unknown": "Naməlum",
+    "input": {
+      "label": "Rəyiniz",
+      "description": "Bu bot haqqında nə düşünürsünüz? Digər istifadəçilər üçün bir rəy yazın."
+    },
+    "loginRequiredForReview": "Rəy yazmaq üçün daxil olmalısınız."
+  },
+  "topVoters": {
+    "title": "Ən Çox Səs Verənlər"
+  }
+},
+"botManagePage": {
+  "title": "Botu İdarə Et",
+  "subtitle": "Botunuzu və parametrlərini idarə edin.",
+  "escToCloseBadge": "bağlamaq üçün esc",
+  "toast": {
+    "savingChanges": "Dəyişikliklər saxlanılır..",
+    "changesSaved": "Dəyişikliklər uğurla saxlanıldı."
+  },
+  "discardChangesModal": {
+    "title": "Dəyişiklikləri Rədd Et",
+    "description": "Dəyişikliklərinizi rədd etmək istədiyinizdən əminsinizmi?",
+    "note": "Dəyişikliklərinizi rədd etmək, edilən bütün dəyişiklikləri geri qaytaracaq."
+  },
+  "essentialInformation": {
+    "title": "Əsas Parametrlər",
+    "subtitle": "Bu, botunuzun ən vacib parametrləridir. Onları düzgün doldurduğunuzdan əmin olun.",
+    "inputs": {
+      "shortDescription": {
+        "label": "Qısa Təsvir",
+        "description": "Botunuzun qısa bir təsviri. Bu, axtarış nəticələrində göstəriləcək.",
+        "placeholder": "Möhtəşəm şeylər edən bir bot."
+      },
+      "longDescription": {
+        "label": "Uzun Təsvir",
+        "description": "Botunuzun daha geniş təsviri. Bu, bot səhifənizdə göstəriləcək. Markdown dəstəklənir.",
+        "placeholder": "Möhtəşəm şeylər və daha çoxunu edən bir bot."
+      },
+      "inviteUrl": {
+        "label": "Dəvət Bağlantısı",
+        "description": "İstifadəçilərin botunuzu serverlərinə dəvət etmək üçün istifadə edə biləcəyi URL.",
+        "placeholder": "Botunuzun dəvət bağlantısını bura yapışdırın."
       }
     }
   },
-  "botManagePage": {
-    "title": "Botu Yönet",
-    "subtitle": "Botunuzu ve ayarlarını yönetin.",
-    "escToCloseBadge": "kapatmak için esc",
+  "other": {
+    "title": "Digər",
+    "subtitle": "Çox düşünmənizə ehtiyac olmayan parametrlər.",
+    "inputs": {
+      "categories": {
+        "label": "Kateqoriyalar",
+        "description": "Botunuzun aid olduğu kateqoriyaları seçin. Bu, istifadəçilərin botunuzu tapmasına kömək edəcək."
+      },
+      "keywords": {
+        "label": "Açar Sözlər",
+        "description": "Botunuzla əlaqəli açar sözləri əlavə edin. Bu, istifadəçilərin botunuzu tapmasına kömək edəcək.",
+        "placeholder": "məs. əyləncə, moderasiya, musiqi"
+      }
+    },
     "toast": {
-      "savingChanges": "Değişiklikler kaydediliyor..",
-      "changesSaved": "Değişiklikler başarıyla kaydedildi."
+      "notValidKeyword": "Lütfən, keçərli bir açar söz daxil edin.",
+      "keywordExists": "Bu açar söz artıq mövcuddur.",
+      "keywordHasInvalidCharacters": "Açar sözlər yalnız hərflər, rəqəmlər və tirelərdən ibarət ola bilər.",
+      "keywordTooLong": "Açar sözlər yalnız {{maxLength}} simvol uzunluğunda ola bilər.",
+      "noChangesMade": "Dəyişiklik edilmədi.",
+      "notValidRepositoryFormat": "Keçərsiz istifadəçi/ad formatı."
     },
-    "discardChangesModal": {
-      "title": "Değişiklikleri İptal Et",
-      "description": "Değişikliklerinizi iptal etmek istediğinizden emin misiniz?",
-      "note": "Değişikliklerinizi iptal etmek, yapılan tüm değişiklikleri geri alacaktır."
+    "addedKeywords": {
+      "label": "Əlavə Edilmiş Açar Sözlər",
+      "description": "İndiyə qədər əlavə etdiyiniz açar sözlər. Bir açar sözü silmək üçün üzərinə basın.",
+      "max": " (maks)"
     },
-    "essentialInformation": {
-      "title": "Önemli Ayarlar",
-      "subtitle": "Bu botun en önemli ayarlarıdır. Bunları doğru doldurduğunuzdan emin olun.",
-      "inputs": {
-        "shortDescription": {
-          "label": "Kısa Açıklama",
-          "description": "Botunuzun kısa bir açıklaması. Bu, arama sonuçlarında gösterilecektir.",
-          "placeholder": "Harika şeyler yapan bir bot."
-        },
-        "longDescription": {
-          "label": "Uzun Açıklama",
-          "description": "Botunuzun daha uzun bir açıklaması. Bu bot sayfanızda gösterilecektir. Markdown desteklenmektedir.",
-          "placeholder": "Harika şeyler ve daha fazlasını yapan bir bot."
-        },
-        "inviteUrl": {
-          "label": "Davet Bağlantısı",
-          "description": "Kullanıcıların botunuzu sunucularına davet etmek için kullanabilecekleri URL.",
-          "placeholder": "Botunuzun davet bağlantınızı buraya yapıştırın."
-        }
-      }
-    },
-    "other": {
-      "title": "Diğer",
-      "subtitle": "Çok fazla düşünmenize gerek olmayan ayarlar.",
-      "inputs": {
-        "categories": {
-          "label": "Kategoriler",
-          "description": "Botunuzun ait olduğu kategorileri seçin. Bu, kullanıcıların botunuzu bulmasına yardımcı olacaktır."
-        },
-        "keywords": {
-          "label": "Anahtar Kelimeler",
-          "description": "Botunuzun ile ilgili anahtar kelimeleri ekleyin. Bu, kullanıcıların botunuzu bulmasına yardımcı olacaktır.",
-          "placeholder": "ör. eğlence, moderasyon, müzik"
-        }
-      },
+    "githubRepository": {
+      "title": "GitHub Deposu",
+      "subtitle": "Botunuzun GitHub deposunu əlavə edin. Bu, botunuzun açıq mənbə olduğunu göstərir.",
+      "optionalBadge": "İsteğe Bağlı",
       "toast": {
-        "notValidKeyword": "Lütfen geçerli bir anahtar kelime girin.",
-        "keywordExists": "Bu anahtar kelime zaten var.",
-        "keywordHasInvalidCharacters": "Anahtar kelimeler yalnızca harfler, rakamlar ve tireler içerebilir.",
-        "keywordTooLong": "Anahtar kelimeler yalnızca {{maxLength}} karakter uzunluğunda olabilir.",
-        "noChangesMade": "Değişiklik yapılmadı.",
-        "notValidRepositoryFormat": "Geçersiz kullanıcı/ad formatı."
+        "savingRepository": "GitHub deposu saxlanılır..",
+        "repositorySaved": "GitHub deposu uğurla saxlanıldı."
       },
-      "addedKeywords": {
-        "label": "Eklenen Anahtar Kelimeler",
-        "description": "Şu ana kadar eklediğiniz anahtar kelimeler. Bir anahtar kelimeyi kaldırmak için üstüne tıklayın.",
-        "max": " (maks)"
-      },
-      "githubRepository": {
-        "title": "GitHub Deposu",
-        "subtitle": "Botunuzun GitHub deposunu ekleyin. Bu, botunuzun açık kaynak kodlu olduğunu gösterir.",
-        "optionalBadge": "İsteğe Bağlı",
-        "toast": {
-          "savingRepository": "GitHub deposu kaydediliyor..",
-          "repositorySaved": "GitHub deposu başarıyla kaydedildi."
-        },
-        "usernameRepositoryInputPlaceholder": "kullanıcıadı/depo"
-      },
-      "supportServer": {
-        "title": "Destek Sunucusu",
-        "subtitle": "Sunucunuzu discord.place'e eklediyseniz, bunu botunuzun destek sunucusu olarak kullanabilirsiniz. Seçilen sunucu, botun sayfasında gösterilecektir.",
-        "optionalBadge": "İsteğe Bağlı",
-        "emptyErrorState": "discord.place'e eklediğiniz herhangi bir sunucunuz yok."
-      }
+      "usernameRepositoryInputPlaceholder": "istifadəçiadi/depo"
     },
+    "supportServer": {
+      "title": "Dəstək Serveri",
+      "subtitle": "Serverinizi discord.place-ə əlavə etmişsinizsə, bunu botunuzun dəstək serveri kimi istifadə edə bilərsiniz. Seçilmiş server bot səhifənizdə göstəriləcək.",
+      "optionalBadge": "İsteğe Bağlı",
+      "emptyErrorState": "discord.place-ə əlavə etdiyiniz hər hansı bir serveriniz yoxdur."
+    }
+  }
+},
+
     "webhook": {
       "title": "Webhook",
       "subtitle": "Birisi botunuza oy verdiğinde bildirim alın.",
