@@ -25,6 +25,7 @@ module.exports = {
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
       
       const { slug } = matchedData(request);
+
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 
@@ -77,9 +78,20 @@ module.exports = {
         });
       } else Object.assign(publiclySafe, { servers: [] });
 
-      if (!publiclySafe.premium && config.customHostnames.includes(publiclySafe.preferredHost)) {
-        await profile.updateOne({ preferredHost: 'discord.place/p' });
-        publiclySafe.preferredHost = 'discord.place/p';
+      if (!publiclySafe.premium) {
+        if (config.customHostnames.includes(publiclySafe.preferredHost)) {
+          await profile.updateOne({ preferredHost: 'discord.place/p' });
+          publiclySafe.preferredHost = 'discord.place/p';
+
+          logger.warn(`Profile ${profile.slug} preferred host was changed to discord.place/p because user is not premium anymore.`);
+        }
+
+        if (profile.colors.primary !== null || profile.colors.secondary !== null) {
+          await profile.updateOne({ colors: { primary: null, secondary: null } });
+          publiclySafe.colors = { primary: null, secondary: null };
+
+          logger.warn(`Profile ${profile.slug} colors were reset because user is not premium anymore.`);
+        }
       }
       
       return response.json(publiclySafe);
