@@ -430,224 +430,327 @@
       "message": "Göstəriləcək səs yoxdur. Bəlkə də bu, bir səs yaratma vaxtının gəldiyinə bir işarədir?"
     }
   },
- 
-  "serversPage": {
-    "title": "Sunucuları Keşfedin",
-    "subtitle": "Discord'daki en iyi sunucuları keşfedin ve sizin için mükemmel topluluğu bulun. Favori sunucularınıza oy vermeyi unutmayın!",
-    "searchInputPlaceholder": "Bir sunucu adı, açıklama, etiket vb. ile arama yapın.",
-    "categorySelectPlaceholder": "Kategori",
+ "soundCard": {
+    "volumePopover": {
+      "title": "Səs Səviyyəsi",
+      "subtitle": "Çalınan səslərin səs səviyyəsini tənzimləyin."
+    },
+    "uploadSoundToDiscordModal": {
+      "description": "Bu səsi aşağıdan bir Discord serveri seçərək sürətlə yükləyin.",
+      "emptyErrorState": {
+        "title": "Burada bir az səssizlik var...",
+        "message": "Səs yükləyə biləcəyiniz bir server yoxdur."
+      },
+      "notes": "* Serverdə \"Emoji İdarə et\" icazəsinə malik olmalısınız.<br>* Siyahını yeniləmək üçün saytdan çıxış edin və yenidən daxil olun.",
+      "tooltip": {
+        "inviteOurBot": "{{guildName}} (Botumuzu Dəvət Et)"
+      },
+      "toast": {
+        "guildNotFound": "Səsi yükləmək üçün xahiş edirik bir server seçin.",
+        "uploadingSound": "Səs {{soundName}} adlı serverə yüklənir...",
+        "soundUploaded": "Səs uğurla yükləndi!"
+      }
+    },
+    "toast": {
+      "notLoggedIn": "Səsləri bəyənmək üçün daxil olmalısınız!",
+      "liking": "Səs bəyənilir...",
+      "liked": "{{soundName}} adlı səs bəyənildi!",
+      "unliking": "Səs bəyənilməsi geri alınır...",
+      "unliked": "{{soundName}} adlı səsə verdiyiniz bəyənmə geri alındı!"
+    },
+    "buttons": {
+      "upload": "Discord'a Yüklə",
+      "login": "Yükləmək üçün Discord ilə Giriş Et"
+    }
+  },
+  "soundPage": {
+    "toast": {
+      "deletingSound": "{{soundName}} silinir..",
+      "soundDeleted": "{{soundName}} uğurla silindi. Bir neçə saniyə içində ana səhifəyə yönləndiriləcəksiniz."
+    },
+    "notApprovedInfo": {
+      "description": "Hal-hazırda bu səsi yalnız siz görə bilərsiniz. Səs təsdiq edildikdən sonra, hamıya açıq olacaqdır. O vaxta qədər <link>'a daxil olaraq səsiniz təsdiq edildiyi zaman botumuzdan bildiriş ala bilərsiniz. DM-lərinizi açdığınızdan əmin olun.",
+      "linkText": "Discord serverimiz"
+    },
+    "soundDetails": {
+      "title": "{{soundName}} Haqqında",
+      "fields": {
+        "uploadedAt": "Paylaşılma Tarixi",
+        "downloads": "Yükləmələr",
+        "likes": "Bəyənmələr",
+        "categories": "Kateqoriyalar",
+        "publisher": "Paylaşan"
+      }
+    },
+    "frequentlyAskedQuestions": {
+      "title": "Tez-tez Verilən Suallar",
+      "labels": [
+        "Səsi necə yükləyə bilərəm?",
+        "Səsi Discord serverimin səs panelinə necə əlavə edə bilərəm?",
+        "Bu səs uyğunsuzdur. Nə edə bilərəm?"
+    ],
+      "answers": [
+        "Aşağıdakı düyməni istifadə edərək <span> səsini yükləyə bilərsiniz.",
+        {
+          "title": "Bunu eşitdiyimə sevindim! Səsləri Discord serverinizə əlavə etməyin 2 yolu var.",
+          "methods": [
+            {
+              "buttonText": "1. Veb Səhifəmiz (bu səhifə)",
+              "instructionsBefore": "Veb səhifəmizi istifadə edərək, bu səsi bir neçə klik ilə serverinizə yükləyə bilərsiniz. Budur necə edəcəyiniz:",
+              "instructions": [
+                {
+                    "text": "Serverinizə <link> əlavə edin.",
+                    "linkText": "botumuzu əlavə edin"
+                },
+                "Bu səhifədəki səs pleyerindəki \"Discord'a Yüklə\" düyməsini klikləyin.",
+                "Səsi yükləmək istədiyiniz serveri seçin və \"Yüklə\" düyməsinə klikləyin.",
+                "Tada! İndi səs serverinizə əlavə olundu."
+              ]
+            },
+            {
+              "buttonText": "2. Klassik Metod",
+              "instructionsBefore": "Bu bir az çətin ola bilər.",
+              "instructions": [
+                "Səsi yükləyin:",
+                "Discord tətbiqinizi açın və serverinizə sağ klikləyin.",
+                "Server Parametrləri > Səs Panelinə gedin.",
+                "Səs Yüklə'yə klikləyin.",
+                "Formu doldurun və əvvəlcə yüklədiyiniz səsi seçin və Yüklə düyməsinə klikləyin.",
+                "Tada! İndi səs serverinizə əlavə olundu."
+              ]
+            }
+          ]
+        },
+        "Səhifənin altındakı bağlantı ilə dəstək serverimizə qoşula bilər və səsin uyğunsuz olduğunu bizə bildirə bilərsiniz."
+      ]
+    },
+    "dangerZone": {
+      "title": "Təhlükəli Zona",
+      "description": "Aşağıdakı düyməni istifadə edərək səsi saytdan silə bilərsiniz, amma təsadüfən silməməyə diqqət edin :)",
+      "deleteSoundModal": {
+        "title": "Səsi Sil",
+        "description": "{{soundName}} adlı səsi silmək istədiyinizdən əminsinizmi?",
+        "content": "Xahiş edirik, səsi silməyin, səsin qazandığı bütün yükləmələrlə birlikdə saytdan çıxarılacağını unutmayın.<br><br>Bu əməliyyat geri alına bilməz."
+      }
+    }
+  },
+
+"serversPage": {
+    "title": "Serverləri Kəşf Edin",
+    "subtitle": "Discord-dakı ən yaxşı serverləri kəşf edin və sizin üçün mükəmməl icmanı tapın. Sevimli serverlərinizə səs verməyi unutmayın!",
+    "searchInputPlaceholder": "Bir server adı, açıqlama, etiket və s. ilə axtarış edin.",
+    "categorySelectPlaceholder": "Kateqoriya",
     "sortSelect": {
       "placeholder": "Sıralama",
       "items": {
-        "votes": "Oylar",
-        "latestVoted": "Son Oy Verilen",
-        "voice": "Ses Aktivitesi",
-        "members": "Üye Sayısı",
-        "newest": "En Yeni",
-        "oldest": "En Eski",
-        "boosts": "Takviye Sayısı"
+        "votes": "Səslər",
+        "latestVoted": "Son Səs Verilən",
+        "voice": "Səs Aktivliyi",
+        "members": "Üzv Sayı",
+        "newest": "Ən Yeni",
+        "oldest": "Ən Köhnə",
+        "boosts": "Təkan Sayı"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek sunucu yok. Belki de bu, siteye bir sunucunuzu eklemenin zamanının geldiğinin bir işaretidir?"
+      "title": "Burada bir az səssizlik var...",
+      "message": "Göstəriləcək server yoxdur. Bəlkə də bu, sayta bir server əlavə etməyin zamanının gəldiyinin bir işarətidir?"
     }
   },
   "serverCard": {
-    "noDescription": "Bu sunucunun açıklaması yok. İçeride ne kadar güzel olduğunu ancak hayal edebiliyoruz.",
-    "tripledVoteBadge": "3X OY!"
+    "noDescription": "Bu serverin açıqlaması yoxdur. İçəridə nə qədər gözəl olduğunu yalnız təsəvvür edə bilirik.",
+    "tripledVoteBadge": "3X SƏS!"
   },
   "serverPage": {
     "countdown": {
-      "tripledVoteExpired": "Üç kat oy süresi sona erdi!",
-      "votesTripledFor": "Verilen oylar {{hours}} saat, ${{minutes}} dakika boyunca üç ile çarpılacak!",
-      "standedOutExpired": "Öne çıkma süresi sona erdi!",
-      "standedOutFor": "{{hours}} saat, ${{minutes}} dakika boyunca öne çıkartıldı."
+      "tripledVoteExpired": "Üç qat səs müddəti sona çatdı!",
+      "votesTripledFor": "Verilən səslər {{hours}} saat, {{minutes}} dəqiqə boyunca üç ilə vurulacaq!",
+      "standedOutExpired": "Önə çıxma müddəti sona çatdı!",
+      "standedOutFor": "{{hours}} saat, {{minutes}} dəqiqə boyunca önə çıxarıldı."
     },
     "about": {
-      "title": "Hakkında",
+      "title": "Haqqında",
       "labels": {
-        "category": "Kategori",
-        "members": "Üye Sayısı",
-        "rewards": "Oy Ödülleri",
-        "boosts": "Takviye Seviyesi",
-        "voiceActivity": "Ses Aktivitesi",
-        "votes": "Oy Sayısı"
+        "category": "Kateqoriya",
+        "members": "Üzv Sayı",
+        "rewards": "Səs Mükafatları",
+        "boosts": "Təkan Səviyyəsi",
+        "voiceActivity": "Səs Aktivliyi",
+        "votes": "Səs Sayı"
       },
-      "availableVoteRewards": "{{count}} oy ödülü mevcut.",
-      "noVoteRewards": "Hiç oy ödülü yok.",
-      "boostsLabelValue": "{{level}} ({{count}} takviye)",
-      "voiceActivityLabelValue": "{{count}} üye sesli kanallarda"
+      "availableVoteRewards": "{{count}} səs mükafatı mövcuddur.",
+      "noVoteRewards": "Heç bir səs mükafatı yoxdur.",
+      "boostsLabelValue": "{{level}} ({{count}} təkan)",
+      "voiceActivityLabelValue": "{{count}} üzv səsli kanallarda"
     },
     "actions": {
-      "title": "İşlemler",
+      "title": "Əməliyyatlar",
       "toast": {
-        "voting": "{{serverName}} sunucusuna oy veriliyor..",
-        "voted": "{{serverName}} sunucusuna başarıyla oy verildi!",
-        "creatingReminder": "{{serverName}} sunucusuna verdiğiniz oy için bir hatırlatma oluşturuluyor..",
-        "reminderCreated": "{{serverName}} sunucusuna 24 saat sonra oy vermeniz için sizi hatırlatacağım! Lütfen DM'lerinizi açık tutun ve bu sunucudan ayrılmayın.",
-        "creatingCheckout": "Sizin için bir ödeme sayfası oluşturuluyor..",
-        "checkoutCreated": "Ödeme sayfası oluşturuldu! Birkaç saniye içinde ödeme sayfasına yönlendirileceksiniz..",
-        "loginRequiredForVote": "Oy verebilmek için giriş yapmalısınız.",
-        "serverUrlCopied": "Sunucu bağlantısı panoya kopyalandı."
+        "voting": "{{serverName}} serverinə səs verilir..",
+        "voted": "{{serverName}} serverinə uğurla səs verildi!",
+        "creatingReminder": "{{serverName}} serverinə verdiyiniz səs üçün bir xatırlatma yaradılır..",
+        "reminderCreated": "{{serverName}} serverinə 24 saat sonra səs verməyinizi xatırladacağam! Xahiş edirəm DM-lərinizi açıq saxlayın və bu serverdən ayrılmayın.",
+        "creatingCheckout": "Sizin üçün bir ödəniş səhifəsi yaradılır..",
+        "checkoutCreated": "Ödəniş səhifəsi yaradıldı! Bir neçə saniyə içində ödəniş səhifəsinə yönləndiriləcəksiniz..",
+        "loginRequiredForVote": "Səs verə bilmək üçün daxil olmalısınız.",
+        "serverUrlCopied": "Server bağlantısı panoya kopyalandı."
       },
       "tooltip": {
-        "noInviteLinkAvailable": "Bu sunucu için bir davet bağlantısı mevcut değil."
+        "noInviteLinkAvailable": "Bu server üçün bir dəvət bağlantısı mövcud deyil."
       }
     },
     "keywords": {
-      "title": "Anahtar Kelimeler"
+      "title": "Açar Sözlər"
     },
     "tabs": {
       "labels": {
-        "reviews": "Yorumlar",
-        "topVoters": "En Çok Oy Verenler",
-        "rewards": "Ödüller",
-        "voiceActivity": "Ses Aktivitesi",
-        "monthlyVotes": "Aylık Oylar"
+        "reviews": "Rəylər",
+        "topVoters": "Ən Çox Səs Verənlər",
+        "rewards": "Mükafatlar",
+        "voiceActivity": "Səs Aktivliyi",
+        "monthlyVotes": "Aylıq Səslər"
       },
       "reviews": {
-        "title": "Yorumlar",
+        "title": "Rəylər",
         "toast": {
-          "submittingReview": "Yorum gönderiliyor..",
-          "reviewSubmitted": "Yorumunuz başarıyla gönderildi!"
+          "submittingReview": "Rəy göndərilir..",
+          "reviewSubmitted": "Rəyiniz uğurla göndərildi!"
         },
-        "totalReviews": "(0)[Yorum yok];(1-inf)[{{count}} yorum];",
+        "totalReviews": "(0)[Rəy yoxdur];(1-inf)[{{count}} rəy];",
         "reviewSubmitted": {
           "info": {
-            "title": "Not",
-            "description": "Yorumunuz yetkililer tarafından incelenene kadar bekleyin. Onaylanmadan önce diğer kullanıcılar tarafından görüntülenmeyecektir."
+            "title": "Qeyd",
+            "description": "Rəyiniz vəzifəlilər tərəfindən incələnənə qədər gözləyin. Təsdiq edilmədən əvvəl digər istifadəçilər tərəfindən görüntülənməyəcəkdir."
           },
-          "alreadyReviewed": "Bu sunucu için zaten bir yorum yaptınız."
+          "alreadyReviewed": "Bu server üçün artıq bir rəy yazmısınız."
         },
-        "ownerCannotReview": "Sahibi olduğunuz sunuculara yorum yapamazsınız.",
+        "ownerCannotReview": "Sahibi olduğunuz serverlərə rəy yaza bilməzsiniz.",
         "input": {
-          "label": "Yorumunuz",
-          "description": "Bu sunucu hakkında ne düşünüyorsunuz? Diğer kullanıcılar için bir yorum yapın."
+          "label": "Rəyiniz",
+          "description": "Bu server haqqında nə düşünürsünüz? Digər istifadəçilər üçün bir rəy yazın."
         },
-        "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız."
+        "loginRequiredForReview": "Rəy yazmaq üçün daxil olmalısınız."
       },
       "topVoters": {
-        "title": "En Çok Oy Verenler"
+        "title": "Ən Çox Səs Verənlər"
       },
-      "rewards": {
-        "title": "Ödüller",
-        "subtitle": "Belirli oy sayılarına ulaşanlara otomatik olarak roller verilir. Bu ödüller yalnızca {{serverName}} sunucusu içindir.",
-        "badge": {
-          "locked": "Kilitli",
-          "unlocked": "Açıldı"
-        },
-        "tooltip": {
-          "unlocked": "Bu ödülü açtınız!",
-          "locked": "Bu ödülü açmak için daha fazla oy vermeniz gerekiyor."
-        }
+"rewards": {
+    "title": "Mükafatlar",
+    "subtitle": "Bəlirli səs sayına çatanlara avtomatik olaraq rollar verilir. Bu mükafatlar yalnızca {{serverName}} serveri üçün keçərlidir.",
+    "badge": {
+      "locked": "Kilidli",
+      "unlocked": "Açıldı"
+    },
+    "tooltip": {
+      "unlocked": "Bu mükafatı açdınız!",
+      "locked": "Bu mükafatı açmaq üçün daha çox səs verməlisiniz."
+    }
+  },
+  "voiceActivityGraph": {
+    "tooltipFormatter": "{{count}} üzv"
+  },
+  "monthlyVotesGraph": {
+    "title": "Aylıq Səs Qrafiki",
+    "subtitle": "Bu serverin zamanla aldığı səs sayı."
+  }
+},
+"serverManagePage": {
+  "title": "Serveri İdarə Et",
+  "subtitle": "Serverinizi və ayarlarınızı idarə edin.",
+  "escToCloseBadge": "bağlamaq üçün esc",
+  "toast": {
+    "savingChanges": "Dəyişikliklər yaddaşa köçürülür..",
+    "changesSaved": "Dəyişikliklər uğurla yadda saxlanıldı."
+  },
+  "discardChangesModal": {
+    "title": "Dəyişiklikləri İmtina Et",
+    "description": "Dəyişikliklərinizi imtina etmək istədiyinizdən əminsinizmi?",
+    "note": "Dəyişikliklərinizi imtina etmək bütün edilən dəyişiklikləri geri alacaq."
+  },
+  "essentialInformation": {
+    "title": "Əsas Ayarlar",
+    "subtitle": "Bu serverin ən vacib ayarlarıdır. Bunları düzgün doldurduğunuzdan əmin olun.",
+    "inputs": {
+      "description": {
+        "label": "Açıqlama",
+        "description": "Bu açıqlama discord.place-də serverinizi ziyarət edən hər kəsə göstəriləcək.",
+        "placeholder": "Bir çox möhtəşəm şeylərə sahib bir server."
       },
-      "voiceActivityGraph": {
-        "tooltipFormatter": "{{count}} üye"
-      },
-      "monthlyVotesGraph": {
-        "title": "Aylık Oy Grafiği",
-        "subtitle": "Bu sunucunun zaman içinde aldığı oy sayısı."
+      "inviteUrl": {
+        "label": "Dəvət Bağlantısı",
+        "description": "İstifadəçilərin serverinizə qoşula biləcəyi dəvət bağlantısı. Etibarlı bir dəvət bağlantısı olduğundan əmin olun.",
+        "placeholder": "Server dəvət bağlantınızı bura yapışdırın."
       }
     }
   },
-  "serverManagePage": {
-    "title": "Sunucuyu Yönet",
-    "subtitle": "Sunucunuzu ve ayarlarını yönetin.",
-    "escToCloseBadge": "kapatmak için esc",
+  "other": {
+    "title": "Digər",
+    "subtitle": "Çox düşünməyinizə ehtiyac olmayan ayarlar.",
+    "inputs": {
+      "category": {
+        "label": "Kateqoriya",
+        "description": "Serverinizin aid olduğu kateqoriyanı seçin. Bu, istifadəçilərin serverinizi tapmasına kömək edəcək."
+      },
+      "keywords": {
+        "label": "Açar Sözlər",
+        "description": "Serverinizə açar sözlər əlavə edin. Bu, insanların serverinizi discord.place-də tapmasına kömək edəcək. Hər açar sözü vergüllə ayırın.",
+        "placeholder": "məs. əyləncə, oyun, icma"
+      },
+      "voiceActivity": {
+        "label": "Səs Aktivliyi",
+        "description": "Serveriniz üçün səs aktivliyini izləməyi aktivləşdirmək istəyirsinizsə, bu qutunu işarələyin. Bu, ziyarətçilərin serverinizin üzvlərinin səsli kanallarda nə qədər aktiv olduğunu görmələrinə imkan tanıyacaq."
+      }
+    },
     "toast": {
-      "savingChanges": "Değişiklikler kaydediliyor..",
-      "changesSaved": "Değişiklikler başarıyla kaydedildi."
+      "notValidKeyword": "Zəhmət olmasa, etibarlı bir açar söz daxil edin.",
+      "keywordExists": "Bu açar söz artıq mövcuddur.",
+      "keywordHasInvalidCharacters": "Açar sözlər yalnızca hərflər, rəqəmlər və qısa çizgilər içərə bilər.",
+      "keywordTooLong": "Açar sözlər yalnızca {{maxLength}} simvol uzunluğunda ola bilər."
     },
-    "discardChangesModal": {
-      "title": "Değişiklikleri İptal Et",
-      "description": "Değişikliklerinizi iptal etmek istediğinizden emin misiniz?",
-      "note": "Değişikliklerinizi iptal etmek, yapılan tüm değişiklikleri geri alacaktır."
-    },
-    "essentialInformation": {
-      "title": "Önemli Ayarlar",
-      "subtitle": "Bu sunucunun en önemli ayarlarıdır. Bunları doğru doldurduğunuzdan emin olun.",
-      "inputs": {
-        "description": {
-          "label": "Açıklama",
-          "description": "Bu açıklama, discord.place'de sunucunuzu ziyaret eden herkese gösterilecektir.",
-          "placeholder": "Birçok harika şeye sahip bir sunucu."
-        },
-        "inviteUrl": {
-          "label": "Davet Bağlantısı",
-          "description": "Kullanıcıların sunucunuza katılabileceği davet bağlantısı. Geçerli bir davet bağlantısı olduğundan emin olun.",
-          "placeholder": "Sunucu davet bağlantınızı buraya yapıştırın."
-        }
-      }
-    },
-    "other": {
-      "title": "Diğer",
-      "subtitle": "Çok fazla düşünmenize gerek olmayan ayarlar.",
-      "inputs": {
-        "category": {
-          "label": "Kategori",
-          "description": "Sunucunuzun ait olduğu kategoriyi seçin. Bu, kullanıcıların sunucunuzu bulmasına yardımcı olacaktır."
-      },
-        "keywords": {
-          "label": "Anahtar Kelimeler",
-          "description": "Sunucunuza anahtar kelimeler ekleyin. Bu, insanların sunucunuzu discord.place'de bulmasına yardımcı olacaktır. Her anahtar kelimeyi virgülle ayırın.",
-          "placeholder": "ör. eğlence, oyun, topluluk"
-        },
-        "voiceActivity": {
-          "label": "Ses Aktivitesi",
-          "description": "Sunucunuz için ses aktivitesi izlemeyi etkinleştirmek istiyorsanız bu kutuyu işaretleyin. Bu, ziyaretçilerin sunucunuzun üyelerinin ses kanallarında ne kadar aktif olduğunu görmelerine olanak tanır."
-        }
-      },
-      "toast": {
-        "notValidKeyword": "Lütfen geçerli bir anahtar kelime girin.",
-        "keywordExists": "Bu anahtar kelime zaten mevcut.",
-        "keywordHasInvalidCharacters": "Anahtar kelimeler yalnızca harfler, rakamlar ve kısa çizgiler içerebilir.",
-        "keywordTooLong": "Anahtar kelimeler yalnızca {{maxLength}} karakter uzunluğunda olabilir."
-      },
-      "addedKeywords": {
-        "label": "Eklenen Anahtar Kelimeler",
-        "description": "Şu ana kadar eklediğiniz anahtar kelimeler. Bir anahtar kelimeyi kaldırmak için üstüne tıklayın.",
-        "max": " (maks)"
-      }
-    },
-    "webhook": {
-      "title": "Webhook",
-      "subtitle": "Birisi sunucunuza oy verdiğinde bildirim alın.",
-      "optionalBadge": "Optional",
-      "toast": {
-        "secretRequired": "Bir gizli anahtar kullanmak istiyorsanız Webhook URL'sini doldurmalısınız.",
-        "urlNotValid": "Webhook URL'si geçerli bir URL değil.",
-        "urlNotHTTPS": "Webhook URL'si HTTPS (güvenli) olmalıdır.",
-        "saving": "Webhook ayarları kaydediliyor..",
-        "saved": "Webhook ayarları başarıyla kaydedildi."
-      },
-      "inputs": {
-        "url": {
-          "label": "URL",
-          "description": "Webhook URL'nizi girin.",
-          "placeholder": "https://example.com/webhook"
-        },
-        "secret": {
-          "label": "Gizli Anahtar",
-          "description": "Webhook'unuzun gizli anahtarını girin.",
-          "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
-        }
+    "addedKeywords": {
+      "label": "Əlavə Edilmiş Açar Sözlər",
+      "description": "İndiyə qədər əlavə etdiyiniz açar sözlər. Bir açar sözü silmək üçün üstünə klikləyin.",
+      "max": " (maks)"
     }
+  },
+  "webhook": {
+    "title": "Webhook",
+    "subtitle": "Biri serverinizə səs verdikdə bildirim alın.",
+    "optionalBadge": "Opsional",
+    "toast": {
+      "secretRequired": "Bir gizli açar istifadə etmək istəyirsinizsə, Webhook URL'sini doldurmalısınız.",
+      "urlNotValid": "Webhook URL'si etibarlı bir URL deyil.",
+      "urlNotHTTPS": "Webhook URL'si HTTPS (təhlükəsiz) olmalıdır.",
+      "saving": "Webhook ayarları yaddaşa köçürülür..",
+      "saved": "Webhook ayarları uğurla yadda saxlanıldı."
     },
-    "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "subtitle": "Sunucunuzu buradan silebilirsiniz. Bu işlemi yapmadan önce iki kez düşünün. Bu işlem geri alınamaz.",
-      "toast": {
-        "deletingServer": "Sunucu siliniyor..",
-        "serverDeleted": "Sunucu başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+    "inputs": {
+      "url": {
+        "label": "URL",
+        "description": "Webhook URL-nizi daxil edin.",
+        "placeholder": "https://example.com/webhook"
       },
-      "deleteServerModal": {
-        "title": "Sunucuyu Sil",
-        "description": "Sunucunuzu silmek istediğinizden emin misiniz?",
-        "note": "Sunucunuzu silmek, sunucunuzun aldığı tüm oyları ve yorumları sunucuyla beraber kaldıracaktır.<br><br>Bu işlem geri alınamaz."
+      "secret": {
+        "label": "Gizli Açar",
+        "description": "Webhook-unuzun gizli açarını daxil edin.",
+        "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
       }
     }
   },
+  "dangerZone": {
+    "title": "Tehlikeli Bölge",
+    "subtitle": "Serverinizi buradan silə bilərsiniz. Bu əməliyyatı etməzdən əvvəl iki dəfə düşünün. Bu əməliyyat geri alınmaz.",
+    "toast": {
+      "deletingServer": "Server silinir..",
+      "serverDeleted": "Server uğurla silindi. Bir neçə saniyə içində ana səhifəyə yönləndiriləcəksiniz."
+    },
+    "deleteServerModal": {
+      "title": "Serveri Sil",
+      "description": "Serverinizi silmək istədiyinizdən əminsinizmi?",
+      "note": "Serverinizi silmək, serverinizin aldığı bütün səsləri və rəyləri serverlə birlikdə siləcək.<br><br>Bu əməliyyat geri alınmaz."
+    }
+  }
+},
   "profilesPage": {
     "title": "Profilleri Keşfedin",
     "subtitle": "Discord profillerinin özelleştirilmiş sayfalarını bulun, paylaşın ve keşfedin!<br>Keşfetmeniz için {{count}} profil sizi bekliyor.",
