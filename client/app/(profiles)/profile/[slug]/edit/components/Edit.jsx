@@ -118,11 +118,11 @@ export default function Edit({ profileData }) {
     return (
       <div className='flex flex-col w-full p-4 mt-4 border border-yellow-500 rounded-xl bg-yellow-500/10 gap-y-2'>
         <h2 className='flex items-center text-lg font-bold gap-x-2 text-primary'>
-          <PiWarningCircleFill /> {t('editProfilePage.premiumRequired.title')}
+          <PiWarningCircleFill /> {t('editProfilePage.premiumRequiredInfo.title')}
         </h2>
 
         <p className='text-sm font-medium text-tertiary'>
-          {t('editProfilePage.premiumRequired.description', { link: <Link href='/premium' className='text-secondary hover:text-primary'>{t('editProfilePage.premiumRequired.linkText')}</Link> })}
+          {t('editProfilePage.premiumRequiredInfo.description', { link: <Link href='/premium' className='text-secondary hover:text-primary'>{t('editProfilePage.premiumRequiredInfo.linkText')}</Link> })}
         </p>
       </div>
     );
