@@ -1570,517 +1570,523 @@
     }
   }
 },
-
-    "webhook": {
-      "title": "Webhook",
-      "subtitle": "Birisi botunuza oy verdiğinde bildirim alın.",
-      "optionalBadge": "İsteğe Bağlı",
-      "toast": {
-        "secretRequired": "Bir gizli anahtar kullanmak istiyorsanız Webhook URL'sini doldurmalısınız.",
-        "urlNotValid": "Webhook URL'si geçerli bir URL değil.",
-        "urlNotHTTPS": "Webhook URL'si HTTPS (güvenli) olmalıdır.",
-        "saving": "Webhook ayarları kaydediliyor..",
-        "saved": "Webhook ayarları başarıyla kaydedildi."
-      },
-      "inputs": {
-        "url": {
-          "label": "URL",
-          "description": "Webhook URL'nizi girin.",
-          "placeholder": "https://example.com/webhook"
-        },
-        "secret": {
-          "label": "Gizli Anahtar",
-          "description": "Webhook'unuzun gizli anahtarını girin.",
-          "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
-        }
-      }
+{
+  "webhook": {
+    "title": "Webhook",
+    "subtitle": "Birisi botunuza səs verdikdə bildiriş alın.",
+    "optionalBadge": "İstəğe Bağlı",
+    "toast": {
+      "secretRequired": "Bir gizli açar istifadə etmək istəyirsinizsə, Webhook URL'sini doldurmalısınız.",
+      "urlNotValid": "Webhook URL'si keçərli bir URL deyil.",
+      "urlNotHTTPS": "Webhook URL'si HTTPS (təhlükəsiz) olmalıdır.",
+      "saving": "Webhook parametrləri saxlanılır..",
+      "saved": "Webhook parametrləri uğurla saxlanıldı."
     },
-    "extraOwners": {
-      "title": "Ek Sahipler",
-      "subtitle": "Başka kullanıcıları botunuzun ek sahibi olarak ekleyebilirsiniz. Ek sahipler botunuzu tıpkı sizin yaptığınız gibi yönetebilir.<br><emptyBlock>",
-      "noteText": "Ek sahipler, API anahtarı da dahil olmak üzere botunuzun tüm ayarlarını görebilir ve yönetebilir, bu nedenle kimi eklediğinize dikkat edin.",
-      "optionalBadge": "İsteğe Bağlı",
-      "addExtraOwnerModal": {
-        "title": "Ek Sahip Ekle",
-        "description": "Botunuzun ek sahibi olarak bir kullanıcı ekleyin."
+    "inputs": {
+      "url": {
+        "label": "URL",
+        "description": "Webhook URL'nizi daxil edin.",
+        "placeholder": "https://example.com/webhook"
       },
-      "emptyErrorState": "Şu ana kadar hiç ek sahip eklenmemiş.",
-      "toast": {
-        "removingOwner": "Ek sahip siliniyor..",
-        "ownerRemoved": "Ek sahip başarıyla silindi!",
-        "emptyUserId": "Kullanıcı ID'si boş olamaz.",
-        "addingOwner": "Ek sahip ekleniyor..",
-        "ownerAdded": "@{{username}} kullanıcısı başarıyla ek sahip olarak eklendi!"
-      }
-    },
-    "apiKey": {
-      "title": "API Anahtarı",
-      "subtitle": "API anahtarınızı buradan yönetebilirsiniz. Bu anahtar, botunuzu discord.place API'si ile kimlik doğrulamak için kullanılabilir.",
-      "optionalBadge": "İsteğe Bağlı",
-      "toast": {
-        "creatingApiKey": "API anahtarı oluşturuluyor..",
-        "createdApiKeyAndCopied": "Yeni API anahtarı başarıyla oluşturuldu! Anahtar panoya kopyalandı.",
-        "resettingApiKey": "API anahtarı sıfırlanıyor..",
-        "deletingApiKey": "API anahtarı siliniyor..",
-        "apiKeyDeleted": "API anahtarı başarıyla silindi!",
-        "apiKeyCopied": "API anahtarı panoya kopyalandı."
-      },
-      "deleteApiKeyModal": {
-        "title": "API Anahtarını Sil",
-        "description": "API anahtarınızı silmek istediğinizden emin misiniz?",
-        "note": "Bu işlem geri alınamaz."
-      }
-    },
-    "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "subtitle": "Botunuzu buradan silebilirsiniz. Lütfen bu işlemde dikkatli olun. Bu işlem geri alınamaz.",
-      "toast": {
-        "deletingBot": "Bot siliniyor..",
-        "botDeleted": "Bot başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
-      },
-      "deleteBotModal": {
-        "title": "Botu Sil",
-        "description": "Botunuzu silmek istediğinizden emin misiniz?",
-        "note": "Lütfen botunuzu silmenin, botunuzu aldığı tüm oylar ve yorumlarla beraber kaldıracağını unutmayın.<br><br>Bu işlem geri alınamaz."
+      "secret": {
+        "label": "Gizli Açar",
+        "description": "Webhook'unuzun gizli açarını daxil edin.",
+        "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
       }
     }
   },
+  "extraOwners": {
+    "title": "Əlavə Sahiblər",
+    "subtitle": "Başqa istifadəçiləri botunuzun əlavə sahibi olaraq əlavə edə bilərsiniz. Əlavə sahiblər botunuzu sizin etdiyiniz kimi idarə edə bilərlər.<br><emptyBlock>",
+    "noteText": "Əlavə sahiblər, API açarı da daxil olmaqla botunuzun bütün parametrlərini görə və idarə edə bilər, buna görə kimi əlavə etdiyinizə diqqət yetirin.",
+    "optionalBadge": "İstəğe Bağlı",
+    "addExtraOwnerModal": {
+      "title": "Əlavə Sahibi Əlavə Et",
+      "description": "Botunuza əlavə sahibi olaraq bir istifadəçi əlavə edin."
+    },
+    "emptyErrorState": "İndiyə qədər heç əlavə sahibi əlavə edilməyib.",
+    "toast": {
+      "removingOwner": "Əlavə sahibi silinir..",
+      "ownerRemoved": "Əlavə sahibi uğurla silindi!",
+      "emptyUserId": "İstifadəçi ID'si boş ola bilməz.",
+      "addingOwner": "Əlavə sahibi əlavə edilir..",
+      "ownerAdded": "@{{username}} istifadəçisi uğurla əlavə sahibi olaraq əlavə edildi!"
+    }
+  },
+  "apiKey": {
+    "title": "API Açarı",
+    "subtitle": "API açarınızı buradan idarə edə bilərsiniz. Bu açar, botunuzu discord.place API'si ilə identifikasiya etmək üçün istifadə oluna bilər.",
+    "optionalBadge": "İstəğe Bağlı",
+    "toast": {
+      "creatingApiKey": "API açarı yaradılır..",
+      "createdApiKeyAndCopied": "Yeni API açarı uğurla yaradıldı! Açar panoya kopyalandı.",
+      "resettingApiKey": "API açarı sıfırlanır..",
+      "deletingApiKey": "API açarı silinir..",
+      "apiKeyDeleted": "API açarı uğurla silindi!",
+      "apiKeyCopied": "API açarı panoya kopyalandı."
+    },
+    "deleteApiKeyModal": {
+      "title": "API Açarını Sil",
+      "description": "API açarınızı silmək istədiyinizdən əminsinizmi?",
+      "note": "Bu əməliyyat geri qaytarılmaz."
+    }
+  },
+  "dangerZone": {
+    "title": "Təhlükəli Zona",
+    "subtitle": "Botunuzu buradan silə bilərsiniz. Xahiş edirik bu əməliyyatda diqqətli olun. Bu əməliyyat geri qaytarılmaz.",
+    "toast": {
+      "deletingBot": "Bot silinir..",
+      "botDeleted": "Bot uğurla silindi. Bir neçə saniyə içində ana səhifəyə yönləndiriləcəksiniz."
+    },
+    "deleteBotModal": {
+      "title": "Botu Sil",
+      "description": "Botunuzu silmək istədiyinizdən əminsinizmi?",
+      "note": "Xahiş edirik botunuzu silməyin, onun aldığı bütün səs və rəylərlə birlikdə çıxarılacağını unutmayın.<br><br>Bu əməliyyat geri qaytarılmaz."
+    }
+  }
+},
+    
+  {
   "accountPage": {
     "sidebar": {
       "newBadge": "YENİ",
       "labels": {
-        "account": "Hesap",
+        "account": "Hesab",
         "myAccount": "Hesabım",
         "myUserProfile": "Discord Profilim",
-        "activeTimeouts": "Aktif Zaman Aşımları",
-        "activeReminders": "Aktif Hatırlatıcılar",
-        "yourPublicContent": "Halka Açık İçerikleriniz",
+        "activeTimeouts": "Aktiv Zaman Aşımı",
+        "activeReminders": "Aktiv Xatırlatmalar",
+        "yourPublicContent": "İctimai Məzmunlarınız",
         "myLinks": "Bağlantılarım",
-        "myServers": "Sunucularım",
+        "myServers": "Serverlərim",
         "myBots": "Botlarım",
-        "myEmojis": "Emojilerim",
+        "myEmojis": "Emojilərim",
         "myTemplates": "Şablonlarım",
-        "mySounds": "Seslerim",
-        "adminDashboard": "Yönetici Paneli",
-        "switchTheme": "Tema Değiştir",
-        "backToHome": "Ana Sayfaya Dön",
+        "mySounds": "Səs-lərim",
+        "adminDashboard": "İdarəçi Paneli",
+        "switchTheme": "Tema Dəyişdir",
+        "backToHome": "Əsas Səhifəyə Qayıt",
         "language": {
-          "en": "İngilizce",
-          "tr": "Türkçe"
+          "en": "İngilis",
+          "tr": "Türk"
         }
       }
     },
     "tabs": {
       "myAccount": {
         "title": "Hesabım",
-        "subtitle": "Hesap detaylarınızı görüntüleyin.",
+        "subtitle": "Hesab detallarıınızı görüntüləyin.",
         "sections": {
           "connectedAccount": {
-            "title": "Bağlı Hesap",
-            "subtitle": "Discord hesap bilgilerinizi buradan görebilirsiniz.",
+            "title": "Bağlı Hesab",
+            "subtitle": "Discord hesab məlumatlarınızı buradan görə bilərsiniz.",
             "fields": {
-              "displayName": "Görünen Ad",
-              "username": "Kullanıcı Adı",
-              "userId": "Kullanıcı ID"
+              "displayName": "Görünən Ad",
+              "username": "İstifadəçi Adı",
+              "userId": "İstifadəçi ID"
             }
           },
           "premium": {
-            "plansLoading": "Planlar yükleniyor..",
+            "plansLoading": "Planlar yüklənir..",
             "plans": {
-              "Premium Membership Monthly": "Aylık Premium Üyelik",
-              "Premium Membership Yearly": "Yıllık Premium Üyelik",
-              "Lifetime Premium Membership": "Ömür Boyu Premium Üyelik"
+              "Premium Membership Monthly": "Aylıq Premium Üyelik",
+              "Premium Membership Yearly": "İllik Premium Üyelik",
+              "Lifetime Premium Membership": "Ömürlük Premium Üyelik"
             },
-            "thanks": "Bizi desteklediğiniz için teşekkürler!"
+            "thanks": "Bizi dəstəklədiyiniz üçün təşəkkürlər!"
           },
           "yourProfile": {
             "title": "Profiliniz",
-            "noProfile": "Henüz bir profiliniz yok. Belki de bir tane oluşturma zamanıdır?",
-            "profileFound": "Bir profiliniz var! Görmek için aşağıdaki düğmeye tıklayın.",
+            "noProfile": "Hələ bir profiliniz yoxdur. Bəlkə də birini yaratmanın vaxtıdır?",
+            "profileFound": "Bir profiliniz var! Görmək üçün aşağıdakı düyməni basın.",
             "createProfileModal": {
-              "title": "Profil Oluştur",
-              "description": "Arkadaşlarınıza göstermek için özelleştirilebilir profilinizi oluşturun!",
+              "title": "Profil Yaradın",
+              "description": "Dostlarınıza göstərmək üçün fərdiləşdirilə bilən profilinizi yaradın!",
               "toast": {
-                "slugTooShort": "Ayrıç en az {{minLength}} karakter uzunluğunda olmalıdır.",
-                "invalidSlug": "Ayrıç yalnızca harfler, rakamlar ve tireler içerebilir."
+                "slugTooShort": "Slug ən az {{minLength}} simvol uzunluğunda olmalıdır.",
+                "invalidSlug": "Slug yalnız hərflər, rəqəmlər və tirelərdən ibarət ola bilər."
               },
               "status": {
-                "available": "Uygun",
-                "unavailable": "Uygun değil",
-                "checking": "Kontrol ediliyor.."
+                "available": "Mövcuddur",
+                "unavailable": "Mövcud deyil",
+                "checking": "Yoxlanılır.."
               },
               "tooltip": {
-                "premiumRequired": "Bu özellik yalnızca Premium kullanıcılar içindir."
+                "premiumRequired": "Bu xüsusiyyət yalnız Premium istifadəçilər üçündür."
               },
               "fields": {
                 "host": {
                   "title": "Domain",
-                  "description": "Seçtiğiniz domain, profilinize bir kısayol olarak kullanılacaktır. (Örnek: dsc.dog/ayrıç)"
+                  "description": "Seçdiyiniz domain profilinizə qısa yol kimi istifadə olunacaqdır. (Nümunə: dsc.dog/slug)"
                 },
                 "slug": {
-                  "title": "Ayraç",
-                  "description": "Seçtiğiniz ayrıç, profilinize bir kısayol olarak kullanılacaktır. (Örnek: example-slug)",
-                  "placeholder": "örnek-ayrıç"
+                  "title": "Slug",
+                  "description": "Seçdiyiniz slug profilinizə qısa yol kimi istifadə olunacaqdır. (Nümunə: example-slug)",
+                  "placeholder": "ornek-slug"
                 }
-
               }
             }
           }
         },
         "toast": {
-          "creatingProfile": "Profiliniz oluşturuluyor..",
-          "profileCreated": "Profil başarıyla oluşturuldu! Profilinize yönlendiriliyorsunuz.."
+          "creatingProfile": "Profiliniz yaradılır..",
+          "profileCreated": "Profil uğurla yaradıldı! Profilinizə yönləndirilirsiniz.."
         }
       },
       "activeTimeouts": {
-        "title": "Aktif Zaman Aşımları",
-        "subtitle": "Burada, aktif zaman aşımlarınızı ve kalan süreyi görebilirsiniz.",
+        "title": "Aktiv Zaman Aşımı",
+        "subtitle": "Burada aktiv zaman aşımınızı və qalan müddəti görə bilərsiniz.",
         "emptyErrorState": {
-          "title": "Buralar biraz sessiz...",
-          "message": "Aktif zaman aşımınız yok."
+          "title": "Burada bir az sakitdir...",
+          "message": "Aktiv zaman aşımınız yoxdur."
         },
         "fields": {
           "servers": {
-            "title": "Sunucular"
+            "title": "Serverlər"
           },
           "bots": {
             "title": "Botlar"
           }
         },
         "countdown": {
-          "expired": "Sona erdi",
-          "remaining": "{{hours}} saat {{minutes}} dakika {{seconds}} saniye"
+          "expired": "Bitdi",
+          "remaining": "{{hours}} saat {{minutes}} dəqiqə {{seconds}} saniyə"
         }
       },
       "activeReminders": {
-        "title": "Aktif Hatırlatıcılar",
-        "subtitle": "Burada, aktif hatırlatıcılarınızı ve kalan süreyi görebilirsiniz.",
+        "title": "Aktiv Xatırlatmalar",
+        "subtitle": "Burada aktiv xatırlatmalarınızı və qalan müddəti görə bilərsiniz.",
         "emptyErrorState": {
-          "title": "Buralar biraz sessiz...",
-          "message": "Aktif hatırlatıcınız yok."
+          "title": "Burada bir az sakitdir...",
+          "message": "Aktiv xatırlatmanız yoxdur."
         },
         "fields": {
           "reminders": {
-            "title": "Hatırlatıcılar",
-            "about": "Şunun Hakkında:"
+            "title": "Xatırlatmalar",
+            "about": "Bu Haqda:"
           },
           "voteReminders": {
-            "title": "Oy Hatırlatıcıları"
+            "title": "Səs Xatırlatmaları"
           }
         },
         "countdown": {
-          "expired": "Sona erdi",
-          "expiresIn": "{{days}} gün {{hours}} saat {{minutes}} dakika {{seconds}} saniye",
-          "expiresInShort": "{{hours}} saat {{minutes}} dakika {{seconds}} saniye"
+          "expired": "Bitdi",
+          "expiresIn": "{{days}} gün {{hours}} saat {{minutes}} dəqiqə {{seconds}} saniyə",
+          "expiresInShort": "{{hours}} saat {{minutes}} dəqiqə {{seconds}} saniyə"
+        }
+      }
+    },
+    
+       
+  "myLinks": {
+    "title": "Bağlantılarım",
+    "subtitle": "Yaratdığınız qısaldılmış bağlantıları görüntüləyin və ya idarə edin.",
+    "toast": {
+      "deletingLink": "Bağlantı silinir..",
+      "linkDeleted": "Bağlantı uğurla silindi!"
+    },
+    "maximumLinksReachedInfo": {
+      "title": "Maksimum Bağlantı Sayısına Ulaşıldı",
+      "description": "Yaratdığınız maksimum bağlantı sayısına çatdınız.<br>Daha çox məlumat üçün <link>'a baxın.",
+      "linkText": "Premium səhifəsi"
+    },
+    "emptyErrorState": {
+      "title": "Burada bir az sakitdir...",
+      "message": "Heç bir bağlantı yaratmamısınız."
+    },
+    "visits": "{{count}} Ziyarət",
+    "createLinkModal": {
+      "title": "Yeni Bağlantı Yaradın",
+      "description": "Hədəf kütlənizlə paylaşmaq üçün yeni bir bağlantı yaradın.",
+      "inputs": {
+        "name": {
+          "label": "Ad",
+          "description": "Bağlantınızın adı. Bu, bağlantınızı tanımaq üçün istifadə olunacaq.",
+          "placeholder": "example"
+        },
+        "destinationUrl": {
+          "label": "Hədəf URL",
+          "description": "Bağlantınızın yönləndiriləcəyi URL.",
+          "placeholder": "https://example.com"
         }
       },
-      "myLinks": {
-        "title": "Bağlantılarım",
-        "subtitle": "Oluşturduğunuz kısaltılmış bağlantıları görüntüleyin veya yönetin.",
-        "toast": {
-          "deletingLink": "Bağlantı siliniyor..",
-          "linkDeleted": "Bağlantı başarıyla silindi!"
+      "toast": {
+        "emptyName": "Xahiş edirəm bağlantınız üçün bir ad daxil edin.",
+        "invalidName": "Bağlantı adı yalnız hərflər, rəqəmlər, tirelər və alt xətlərdən ibarət ola bilər.",
+        "nameTooLong": "Bağlantı adı {{maxLength}} simvoldan az olmalıdır.",
+        "emptyDestinationUrl": "Xahiş edirəm bağlantınız üçün bir hədəf URL daxil edin.",
+        "destinationUrlNotHTTPS": "Bağlantı hədəfi təhlükəsiz bir URL olmalıdır. (HTTPS)",
+        "destinationUrlHavePort": "Bağlantı hədəfi port daxil etməməlidir.",
+        "creatingLink": "Bağlantı yaradılır..",
+        "linkCreated": "Bağlantı uğurla yaradıldı!",
+        "invalidDestinationUrl": "Xahiş edirəm keçərli bir URL daxil edin."
+      }
+    },
+    "deleteLinkModal": {
+      "title": "Bağlantını Sil",
+      "description": "Bağlantını silmək istədiyinizdən əminsinizmi?",
+      "note": "Bağlantınızı silmənin, bağlantınızı aldığı bütün ziyarətlərlə birlikdə silinəcəyini unutmayın.<br><br>Bu əməliyyat geri alına bilməz."
+    }
+  },
+  "myServers": {
+    "title": "Serverlərim",
+    "subtitle": "discord.place-də siyahıya alınmış serverlərinizi görüntüləyin və ya idarə edin.",
+    "sections": {
+      "listedServers": {
+        "title": "Siyahıya Alınmış Serverlər",
+        "subtitle": "Burada, discord.place-də siyahıya alınmış serverlərinizi görə bilərsiniz.",
+        "emptyErrorState": {
+          "title": "Burada bir az sakitdir...",
+          "message": "Siyahıya alınmış heç bir serveriniz yoxdur."
         },
-        "maximumLinksReachedInfo": {
-          "title": "Maksimum Bağlantı Sayısına Ulaşıldı",
-          "description": "Oluşturabileceğiniz maksimum bağlantı sayısına ulaştınız.<br>Daha fazla bilgi için <link>'na göz atın.",
-          "linkText": "Premium sayfası"
+        "members": "{{count}} üzv"
+      },
+      "unlistedServers": {
+        "title": "Siyahıya Alınmamış Serverlər",
+        "subtitle": "Burada, discord.place-də siyahıya alınmamış serverlərinizi görə bilərsiniz.",
+        "missingServerInfo": {
+          "title": "Serverinizi görə bilmir misiniz?",
+          "description": "Yalnızca sahib olduğunuz serverləri əlavə edə bilərsiniz. Serverinizi görə bilmirsinizsə, serverin sahibi olduğunuzdan əmin olun.<br>Serverinizi hələ də görə bilmirsinizsə, <link>'un serverinizdə olduğundan əmin olun.",
+          "linkText": "discord.place bot"
         },
         "emptyErrorState": {
-          "title": "Buralar biraz sessiz...",
-          "message": "Herhangi bir bağlantı oluşturmadınız."
+          "title": "Burada bir az sakitdir...",
+          "message": "Siyahıya alınmamış heç bir serveriniz yoxdur."
         },
-        "visits": "{{count}} Ziyaret",
-        "createLinkModal": {
-          "title": "Yeni Bağlantı Oluştur",
-          "description": "Hedef kitlenizle paylaşmak için yeni bir bağlantı oluşturun.",
-          "inputs": {
-            "name": {
-              "label": "İsim",
-              "description": "Bağlantınızın adı. Bu, bağlantınızı tanımlamak için kullanılacaktır.",
-              "placeholder": "example"
-            },
-            "destinationUrl": {
-              "label": "Hedef URL",
-              "description": "Bağlantınızın yönlendirileceği URL.",
-              "placeholder": "https://example.com"
-            }
+        "members": "{{count}} üzv"
+      },
+      "newServer": {
+        "title": "<serverIcon> <serverName> serveri əlavə olunur",
+        "subtitle": "{{serverName}} adlı serveri discord.place-ə əlavə edirsiniz. Bu, serverinizin discord.place-də siyahıya alınacağı və hər kəsin onu görə biləcəyi anlamına gəlir. Serverinizi istədiyiniz zaman discord.place-dən silə bilərsiniz...",
+        "toast": {
+          "invalidInviteLink": "Keçərsiz dəvət bağlantısı. Xahiş edirəm keçərli bir dəvət bağlantısı daxil edin.",
+          "addingServer": "{{serverName}} adlı server əlavə olunur..",
+          "serverAdded": "{{serverName}} adlı server əlavə edildi! Bir neçə saniyə ərzində {{serverName}} serverinin səhifəsinə yönləndiriləcəksiniz.",
+          "duplicateKeyword": "Eyni anahtar söz bir neçə dəfə əlavə edilə bilməz."
+        },
+        "fields": {
+          "description": {
+            "label": "Təsvir",
+            "description": "Bu, discord.place-də serverinizi ziyarət edən hər kəsə göstəriləcək təsvir olacaqdır.<br>Serverinizlə bağlı əhəmiyyətli məlumatları əlavə etdiyinizdən əmin olun."
           },
-          "toast": {
-            "emptyName": "Lütfen bağlantınız için bir isim girin.",
-            "invalidName": "Bağlantı adı yalnızca harfler, rakamlar, tireler ve alt çizgiler içerebilir.",
-            "nameTooLong": "Bağlantı adı {{maxLength}} karakterden az olmalıdır.",
-            "emptyDestinationUrl": "Lütfen bağlantınız için bir hedef URL girin.",
-            "destinationUrlNotHTTPS": "Bağlantı hedefi güvenli bir URL olmalıdır. (HTTPS)",
-            "destinationUrlHavePort": "Bağlantı hedefi bir port içeremez.",
-            "creatingLink": "Bağlantı oluşturuluyor..",
-            "linkCreated": "Bağlantı başarıyla oluşturuldu!",
-            "invalidDestinationUrl": "Lütfen geçerli bir URL girin."
+          "inviteLink": {
+            "label": "Dəvət Bağlantısı",
+            "description": "Serverinizin dəvət bağlantısını əlavə edin. Bu, serverinizə qoşulmaq istəyənlər üçün faydalı olacaqdır.<br>Dəvət bağlantısının müddətsiz olduğundan əmin olun.",
+            "placeholder": "https://discord.gg/invite"
+          },
+          "category": {
+            "label": "Kateqoriya",
+            "description": "Serverinizin aid olduğu kateqoriyanı seçin. Bu, serverinizi axtaranların onu tapmasına kömək edəcəkdir.",
+            "placeholder": "Kateqoriya Seçin"
+          }
+        }
+      }
+    }
+  },
+         {
+  "keywords": {
+    "label": "Anahtar Sözlər",
+    "description": "Serverinizlə bağlı anahtar sözləri əlavə edin. Bu, serverinizi axtaranların serverinizi tapmasına kömək edəcək.",
+    "placeholder": "Bir anahtar söz yazın və enter və ya boşluq düyməsinə basın..",
+    "count": "{{count}} Anahtar Söz"
+  },
+  "voiceActivity": {
+    "label": "Səs Aktivliyi",
+    "description": "Serveriniz üçün səs aktivliyi izləməni aktivləşdirmək istəyirsinizsə, bu qutunu işarələyin. Bu, ziyarətçilərə serverinizin üzvlərinin səs kanallarında nə qədər aktiv olduqlarını görməyə imkan verəcəkdir."
+  },
+  "contentPolicy": {
+    "label": "Məzmun Siyasəti",
+    "description": "Serverinizi discord.place-ə əlavə etməklə Server Siyahıya Alınma Qaydalarımızı qəbul edirsiniz. <note>",
+    "note": "* Discord serverimizdə mövcud ola bilər."
+  },
+  "areYouReady": {
+    "label": "Hazırsınızmı?",
+    "description": "Aşağıdakı düyməyə klikləyərək Server Siyahıya Alınma Qaydalarımızı qəbul edirsiniz və serverinizin sahibi olduğunuzu təsdiqləyirsiniz.",
+    "addButton": "<serverIcon> <serverName> Serverini Əlavə Et"
+  }
+},
+"myBots": {
+  "title": "Botlarım",
+  "subtitle": "discord.place-də siyahıya alınmış botlarınızı görüntüləyin və ya idarə edin. Həmçinin discord.place-ə yeni bir bot əlavə edə bilərsiniz.",
+  "sections": {
+    "listedBots": {
+      "title": "Siyahıya Alınmış Botlar",
+      "subtitle": "Burada, discord.place-də siyahıya alınmış botlarınızı görə bilərsiniz.",
+      "emptyErrorState": {
+        "title": "Burada bir az sakitdir...",
+        "message": "Siyahıya alınmış heç bir botunuz yoxdur."
+      }
+    },
+    "newBot": {
+      "title": "Yeni Bot",
+      "subtitle": "discord.place-ə yeni bir bot əlavə edin.",
+      "note": {
+        "title": "Qeyd",
+        "description": "Əlavə etdiyiniz bot discord.place tərəfindən nəzərdən keçiriləcək və sonra siyahıya alınacaq. Botunuzun bot göndərmə qaydalarımızı pozmadığından əmin olun. Bot göndərmə qaydalarımız <link>'da mövcuddur.",
+        "linkText": "Discord serverimiz"
+      }
+    },
+    "addBot": {
+      "title": "Yeni bot əlavə olunur",
+      "subtitle": "discord.place-ə yeni bir bot əlavə etmək üzrəsiniz. Bu, botunuzun discord.place-də siyahıya alınacağı və hər kəsin onu görə biləcəyi anlamına gəlir. Botunuzu istədiyiniz zaman discord.place-dən silə bilərsiniz...",
+      "toast": {
+        "storedDataLoaded": "Əvvəlcə saxlanılan məlumatlar bərpa edildi.",
+        "addingBot": "{{botId}} ID-li bot əlavə olunur..",
+        "botAdded": "{{botId}} ID-li bot əlavə edildi! Bir neçə saniyə ərzində botun səhifəsinə yönləndiriləcəksiniz."
+      },
+      "fields": {
+        "botId": {
+          "label": "Bot ID",
+          "description": "Bu, botunuzun Discord-dakı ID-sidir. Geliştirici portalında tapa bilərsiniz."
+        },
+        "shortDescription": {
+          "label": "Qısa Təsvir",
+          "description": "Botunuzun qısa təsviri. Bu, axtarış nəticələrində göstəriləcəkdir."
+        },
+        "longDescription": {
+          "label": "Uzun Təsvir",
+          "description": "Botunuzun daha ətraflı təsviri. Bu, bot səhifənizdə göstəriləcəkdir. Markdown dəstəklənir."
+        },
+        "inviteUrl": {
+          "label": "Dəvət Bağlantısı",
+          "description": "Botunuzun dəvət bağlantısı. Bu, istifadəçilərin botunuzu serverlərinə əlavə etmək üçün istifadə edəcəyi bağlantıdır. Varsayılan Discord dəvət bağlantısını və ya xüsusi bir bağlantını istifadə edə bilərsiniz."
+        },
+        "categories": {
+          "label": "Kateqoriyalar",
+          "description": "Botunuzun aid olduğu kateqoriyaları seçin. Bu, istifadəçilərin botunuzu tapmasına kömək edəcəkdir."
+        },
+        "contentPolicy": {
+          "label": "Məzmun Siyasəti",
+          "description": "Botunuzu discord.place-ə əlavə etməklə Bot Siyahıya Alınma Qaydalarımızı qəbul edirsiniz. <note>",
+          "note": "* Discord serverimizdə mövcud ola bilər."
+        },
+        "areYouReady": {
+          "label": "Hazırsınızmı?",
+          "description": "Aşağıdakı düyməyə klikləyərək Bot Siyahıya Alınma Qaydalarımızı qəbul edirsiniz və botunuzun sahibi olduğunuzu təsdiqləyirsiniz."
+        }
+      }
+    }
+  }
+},   
+          
+
+  "pastDenials": {
+    "title": "Keçmiş Reddedilmişlər",
+    "subtitle": "discord.place-ə göndərdiyiniz amma rədd edilmiş botlarınızı görüntüləyin. (son 7 gün)",
+    "emptyErrorState": {
+      "title": "Burada bir az sakitdir...",
+      "message": "Rədd edilmiş hər hansı bir bot tapılmadı."
+    },
+    "deniedBy": "Bot, <moderator> tərəfindən rədd edildi",
+    "countdown": {
+      "expired": "Botu indi yenidən əlavə edə bilərsiniz.",
+      "expiresIn": "Botu yenidən əlavə etmək üçün <countdown> gözləməlisiniz.",
+      "renderer": "{{hours}} saat {{minutes}} dəqiqə {{seconds}} saniyə",
+      "completed": "0 saniyə"
+    }
+  },
+  "myEmojis": {
+    "title": "Emojilərim",
+    "subtitle": "discord.place-də siyahıya alınmış emojilərinizi görüntüləyin və ya idarə edin. Həmçinin discord.place-ə yeni bir emoji əlavə edə bilərsiniz.",
+    "sections": {
+      "listedEmojis": {
+        "title": "Siyahıya Alınmış Emojilər",
+        "subtitle": "Burada, discord.place-də siyahıya alınmış emojilərinizi görə bilərsiniz.",
+        "emptyErrorState": {
+          "title": "Burada bir az sakitdir...",
+          "message": "Siyahıya alınmış heç bir emojiniz yoxdur."
+        }
+      },
+      "newEmoji": {
+        "title": "Yeni Emoji",
+        "subtitle": "discord.place-ə yeni bir emoji əlavə edin.",
+        "note": {
+          "title": "Qeyd",
+          "description": "Əlavə etdiyiniz emoji, müvafiq şəxslər tərəfindən nəzərdən keçiriləcək və sonra siyahıya alınacaq. Lütfən, emoji'nizin emoji siyahıya alma qaydalarımızı pozmadığından əmin olun. Emoji siyahıya alma qaydalarımız <link>'da mövcuddur.",
+          "linkText": "Discord serverimiz"
+        }
+      }
+    }
+  },
+  "myTemplates": {
+    "title": "Şablonlarım",
+    "subtitle": "discord.place-də siyahıya alınmış şablonlarınızı görüntüləyin və ya idarə edin. Həmçinin discord.place-ə yeni bir şablon əlavə edə bilərsiniz.",
+    "sections": {
+      "listedTemplates": {
+        "title": "Siyahıya Alınmış Şablonlar",
+        "subtitle": "Burada, discord.place-də siyahıya alınmış şablonlarınızı görə bilərsiniz.",
+        "emptyErrorState": {
+          "title": "Burada bir az sakitdir...",
+          "message": "Siyahıya alınmış heç bir şablonunuz yoxdur."
+        }
+      },
+      "newTemplate": {
+        "title": "Yeni Şablon",
+        "subtitle": "discord.place-ə yeni bir şablon əlavə edin.",
+        "note": {
+          "title": "Qeyd",
+          "description": "Əlavə etdiyiniz şablon, müvafiq şəxslər tərəfindən nəzərdən keçiriləcək və sonra siyahıya alınacaq. Lütfən, şablonunuzun şablon siyahıya alma qaydalarımızı pozmadığından əmin olun. Şablon siyahıya alma qaydalarımız <link>'da mövcuddur.",
+          "linkText": "Discord serverimiz"
+        }
+      }
+    }
+  },
+  "mySounds": {
+    "title": "Səsim",
+    "subtitle": "discord.place-də siyahıya alınmış səslərinizi görüntüləyin və ya idarə edin. Həmçinin discord.place-ə yeni bir səs əlavə edə bilərsiniz.",
+    "sections": {
+      "listedSounds": {
+        "title": "Siyahıya Alınmış Səs",
+        "subtitle": "Burada, discord.place-də siyahıya alınmış səslərinizi görə bilərsiniz.",
+        "emptyErrorState": {
+          "title": "Burada bir az sakitdir...",
+          "message": "Siyahıya alınmış heç bir səsiniz yoxdur."
+        }
+      },
+      "newSound": {
+        "title": "Yeni Səs",
+        "subtitle": "discord.place-ə yeni bir səs əlavə edin.",
+        "note": {
+          "title": "Qeyd",
+          "description": "Əlavə etdiyiniz səs, müvafiq şəxslər tərəfindən nəzərdən keçiriləcək və sonra siyahıya alınacaq. Lütfən, səsinizin səs siyahıya alma qaydalarımızı pozmadığından əmin olun. Səs siyahıya alma qaydalarımız <link>'da mövcuddur.",
+          "linkText": "Discord serverimiz"
+        }
+      },
+      "addSound": {
+        "title": "Yeni səs əlavə olunur",
+        "subtitle": "discord.place-ə yeni bir səs əlavə etmək üzrəsiniz. Bu, səsinizin discord.place-də siyahıya alınacağı və hər kəsin onu görə biləcəyi anlamına gəlir. Səsinizi istədiyiniz zaman discord.place-dən silə bilərsiniz...",
+        "toast": {
+          "addingSound": "{{soundName}} adlı səs əlavə olunur..",
+          "soundAdded": "{{soundName}} adlı səs əlavə edildi! Bir neçə saniyə ərzində səsin səhifəsinə yönləndiriləcəksiniz.",
+          "invalidFile": "Yanlış fayl formatı. Yalnız .mp3 faylları qəbul edilir.",
+          "audioDurationExceeded": "Səs çox uzun. Maksimum səs müddəti {{duration}} saniyədədir.",
+          "fileSizeExceeded": "Fayl ölçüsü aşdı. Maksimum fayl ölçüsü {{size}} MB-dir."
+        },
+        "fields": {
+          "file": {
+            "label": "Səs Faylı",
+            "description": "Səs faylınızı bura yükləyin. Yalnız .mp3 faylları qəbul edilir."
+          },
+          "name": {
+            "label": "Ad",
+            "description": "Səsiniz üçün bir ad əlavə edin."
+          },
+          "categories": {
+            "label": "Kateqoriyalar",
+            "description": "Səsinizin aid olduğu bütün kateqoriyaları seçin. Bu, istifadəçilərin səsinizi tapmasına kömək edəcəkdir."
+          },
+          "contentPolicy": {
+            "label": "Məzmun Siyasəti",
+            "description": "Səsinizi discord.place-ə əlavə etməklə Səs Siyahıya Alınma Qaydalarımızı qəbul edirsiniz. <note>",
+            "note": "* Discord serverimizdə mövcud ola bilər."
+          },
+          "areYouReady": {
+            "label": "Hazırsınızmı?"
           }
         },
-        "deleteLinkModal": {
-          "title": "Bağlantıyı Sil",
-          "description": "Bağlantıyı silmek istediğinizden emin misiniz?",
-          "note": "Bağlantınızı silmenin, bağlantınızı aldığı tüm ziyaretlerle beraber kaldıracağını unutmayın.<br><br>Bu işlem geri alınamaz."
-        }
-      },
-      "myServers": {
-        "title": "Sunucularım",
-        "subtitle": "discord.place'de listelediğiniz sunucuları görüntüleyin veya yönetin.",
-        "sections": {
-          "listedServers": {
-            "title": "Listelenen Sunucular",
-            "subtitle": "Burada, discord.place'de listelediğiniz sunucuları görebilirsiniz.",
-            "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelediğiniz herhangi bir sunucu yok."
-            },
-            "members": "{{count}} üye"
-          },
-          "unlistedServers": {
-            "title": "Listelenmemiş Sunucular",
-            "subtitle": "Burada, discord.place'de listelenmemiş sunucularınızı görebilirsiniz.",
-            "missingServerInfo": {
-              "title": "Sunucunuzu göremiyor musunuz?",
-              "description": "Yalnızca sahibi olduğunuz sunucuları ekleyebilirsiniz. Sunucunuzu göremiyorsanız, sunucunun sahibi olduğunuzdan emin olun.<br>Sunucunuzu hala göremiyorsanız, <link>'unun sunucunuzda olduğundan emin olun.",
-              "linkText": "discord.place bot"
-            },
-            "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenmemiş herhangi bir sunucunuz yok."
-            },
-            "members": "{{count}} üye"
-          },
-          "newServer": {
-            "title": "<serverIcon> <serverName> sunucusu ekleniyor",
-            "subtitle": "{{serverName}} adlı sunucuyu discord.place'e eklemek üzeresiniz. Bu, sunucunuzun discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Sunucunuzu istediğiniz zaman discord.place'den kaldırabilirsiniz...",
-            "toast": {
-              "invalidInviteLink": "Geçersiz davet bağlantısı. Lütfen geçerli bir davet bağlantısı girin.",
-              "addingServer": "{{serverName}} adlı sunucu ekleniyor..",
-              "serverAdded": "{{serverName}} adlı sunucu eklendi! Birkaç saniye içinde {{serverName}} sunucusunun sayfasına yönlendirileceksiniz.",
-              "duplicateKeyword": "Aynı anahtar kelime birden fazla kez eklenemez."
-            },
-            "fields": {
-              "description": {
-                "label": "Açıklama",
-                "description": "Bu, discord.place'de sunucunuzu ziyaret eden herkese gösterilecek olan açıklamadır.<br>Sunucunuzla ilgili önemli bilgileri eklediğinizden emin olun."
-              },
-              "inviteLink": {
-                "label": "Davet Bağlantısı",
-                "description": "Sunucunuzun davet bağlantısını ekleyin. Bu, sunucunuza katılmak isteyen kişiler için faydalı olacaktır.<br>Davet bağlantısının süresiz olduğundan emin olun.",
-                "placeholder": "https://discord.gg/invite"
-              },
-              "category": {
-                "label": "Kategori",
-                "description": "Sunucunuzun ait olduğu kategoriyi seçin. Bu, sunucunuzu arayan kişilerin sunucunuzu bulmasına yardımcı olacaktır.",
-                "placeholder": "Kategori Seçin"
-              },
-              "keywords": {
-                "label": "Anahtar Kelimeler",
-                "description": "Sunucunuzla ilgili anahtar kelimeleri ekleyin. Bu, sunucunuzu arayan kişilerin sunucunuzu bulmasına yardımcı olacaktır.",
-                "placeholder": "Bir anahtar kelime yazın ve enter veya boşluk tuşuna basın..",
-                "count": "{{count}} Anahtar Kelime"
-              },
-              "voiceActivity": {
-                "label": "Ses Aktivitesi",
-                "description": "Sunucunuz için ses aktivitesi izlemeyi etkinleştirmek istiyorsanız bu kutuyu işaretleyin. Bu, ziyaretçilerin sunucunuzun üyelerinin ses kanallarında ne kadar aktif olduğunu görmelerine olanak tanır."
-              },
-              "contentPolicy": {
-                "label": "İçerik Politikası",
-                "description": "Sunucunuzu discord.place'e ekleyerek Sunucu Listeleme İlkelerimizi kabul etmiş olursunuz. <note>",
-                "note": "* Discord sunucumuzda bulunabilir."
-              },
-              "areYouReady": {
-                "label": "Hazır mısınız?",
-                "description": "Aşağıdaki düğmeye tıklayarak Sunucu Listeleme İlkelerimizi kabul etmiş olursunuz ve sunucunuzun sahibi olduğunuzu onaylarsınız.",
-                "addButton": "<serverIcon> <serverName> Sunucusunu Ekle"
-              }
-            }
-          }
-        }
-      },
-      "myBots": {
-        "title": "Botlarım",
-        "subtitle": "discord.place'de listelenen botlarınızı görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir bot ekleyebilirsiniz.",
-        "sections": {
-          "listedBots": {
-            "title": "Listelenen Botlar",
-            "subtitle": "Burada, discord.place'de listelenen botlarınızı görebilirsiniz.",
-            "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenen herhangi bir botunuz yok."
-            }
-          },
-          "newBot": {
-            "title": "Yeni Bot",
-            "subtitle": "discord.place'e yeni bir bot ekleyin.",
-            "note": {
-              "title": "Not",
-              "description": "Eklediğiniz bot, discord.place tarafından incelenecek ve ardından listelenecektir. Lütfen botunuzun bot gönderme ilkelerimizi ihlal etmediğinden emin olun. Bot gönderme ilkelerimiz <link>'da bulunabilir.",
-              "linkText": "Discord sunucumuz"
-            }
-          },
-          "addBot": {
-            "title": "Yeni bot ekleniyor",
-            "subtitle": "discord.place'e yeni bir bot eklemek üzeresiniz. Bu, botunuzun discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Botunuzu istediğiniz zaman discord.place'den kaldırabilirsiniz...",
-            "toast": {
-              "storedDataLoaded": "Önceden kaydedilen veriler geri yüklendi.",
-              "addingBot": "{{botId}} ID'li bot ekleniyor..",
-              "botAdded": "{{botId}} ID'li bot eklendi! Birkaç saniye içinde botun sayfasına yönlendirileceksiniz."
-            },
-            "fields": {
-              "botId": {
-                "label": "Bot ID",
-                "description": "Bu, botunuzun Discord'daki ID'sidir. Geliştirici portalında bulabilirsiniz."
-              },
-              "shortDescription": {
-                "label": "Kısa Açıklama",
-                "description": "Botunuzun kısa bir açıklaması. Bu, arama sonuçlarında gösterilecektir."
-              },
-              "longDescription": {
-                "label": "Uzun Açıklama",
-                "description": "Botunuzun daha detaylı açıklaması. Bu, bot sayfanızda gösterilecektir. Markdown desteklenmektedir."
-              },
-              "inviteUrl": {
-                "label": "Davet Bağlantısı",
-                "description": "Botunuzun davet bağlantısı. Bu, kullanıcıların botunuzu sunucularına eklemek için kullanacakları bağlantıdır. Varsayılan Discord davet bağlantısını veya özel bir bağlantıyı kullanabilirsiniz."
-              },
-              "categories": {
-                "label": "Kategoriler",
-                "description": "Botunuzun ait olduğu kategorileri seçin. Bu, kullanıcıların botunuzu bulmasına yardımcı olacaktır."
-              },
-              "contentPolicy": {
-                "label": "İçerik Politikası",
-                "description": "Botunuzu discord.place'e ekleyerek Bot Listeleme İlkelerimizi kabul etmiş olursunuz. <note>",
-                "note": "* Discord sunucumuzda bulunabilir."
-              },
-              "areYouReady": {
-                "label": "Hazır mısınız?",
-                "description": "Aşağıdaki düğmeye tıklayarak Bot Listeleme İlkelerimizi kabul etmiş olursunuz ve botunuzun sahibi olduğunuzu onaylarsınız."
-              }
-            }
-          },
-          "pastDenials": {
-            "title": "Geçmiş Reddedilenler",
-            "subtitle": "discord.place'e gönderdiğiniz ancak reddedilen botlarınızı görüntüleyin. (son 7 gün)",
-            "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Reddedilen herhangi bir bot bulunamadı."
-            },
-            "deniedBy": "Bot, <moderator> tarafından reddedildi",
-            "countdown": {
-              "expired": "Botu şimdi tekrar ekleyebilirsiniz.",
-              "expiresIn": "Botu tekrar eklemek için <countdown> beklemeniz gerekiyor.",
-              "renderer": "{{hours}} saat {{minutes}} dakika {{seconds}} saniye",
-              "completed": "0 saniye"
-            }
-          }
-        }
-      },
-      "myEmojis": {
-        "title": "Emojilerim",
-        "subtitle": "discord.place'de listelenen emojilerinizi görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir emoji ekleyebilirsiniz.",
-        "sections": {
-          "listedEmojis": {
-            "title": "Listelenen Emojiler",
-            "subtitle": "Burada, discord.place'de listelenen emojilerinizi görebilirsiniz.",
-            "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenen herhangi bir emojiniz yok."
-            }
-          },
-          "newEmoji": {
-            "title": "Yeni Emoji",
-            "subtitle": "discord.place'e yeni bir emoji ekleyin.",
-            "note": {
-              "title": "Not",
-              "description": "Eklediğiniz emoji, yetkililer tarafından incelenecek ve ardından listelenecektir. Lütfen emoji'nizin emoji listeleme ilkelerimizi ihlal etmediğinden emin olun. Emoji listeleme ilkelerimiz <link>'da bulunabilir.",
-              "linkText": "Discord sunucumuz"
-            }
-          }
-        }
-      },
-      "myTemplates": {
-        "title": "Şablonlarım",
-        "subtitle": "discord.place'de listelenen şablonlarınızı görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir şablon ekleyebilirsiniz.",
-        "sections": {
-          "listedTemplates": {
-            "title": "Listelenen Şablonlar",
-            "subtitle": "Burada, discord.place'de listelenen şablonlarınızı görebilirsiniz.",
-            "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenen herhangi bir şablonunuz yok."
-            }
-          },
-          "newTemplate": {
-            "title": "Yeni Şablon",
-            "subtitle": "discord.place'e yeni bir şablon ekleyin.",
-            "note": {
-              "title": "Not",
-              "description": "Eklediğiniz şablon, yetkililer tarafından incelenecek ve ardından listelenecektir. Lütfen şablonunuzun şablon listeleme ilkelerimizi ihlal etmediğinden emin olun. Şablon listeleme ilkelerimiz <link>'da bulunabilir.",
-              "linkText": "Discord sunucumuz"
-            }
-          }
-        }
-      },
-      "mySounds": {
-        "title": "Seslerim",
-        "subtitle": "discord.place'de listelenen seslerinizi görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir ses ekleyebilirsiniz.",
-        "sections": {
-          "listedSounds": {
-            "title": "Listelenen Sesler",
-            "subtitle": "Burada, discord.place'de listelenen seslerinizi görebilirsiniz.",
-            "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenen herhangi bir sesiniz yok."
-            }
-          },
-          "newSound": {
-            "title": "Yeni Ses",
-            "subtitle": "discord.place'e yeni bir ses ekleyin.",
-            "note": {
-              "title": "Not",
-              "description": "Eklediğiniz ses, yetkililer tarafından incelenecek ve ardından listelenecektir. Lütfen sesinizin ses listeleme ilkelerimizi ihlal etmediğinden emin olun. Ses listeleme ilkelerimiz <link>'da bulunabilir.",
-              "linkText": "Discord sunucumuz"
-            }
-          },
-          "addSound": {
-            "title": "Yeni ses ekleniyor",
-            "subtitle": "discord.place'e yeni bir ses eklemek üzeresiniz. Bu, sesinizin discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Sesinizi istediğiniz zaman discord.place'den kaldırabilirsiniz...",
-            "toast": {
-              "addingSound": "{{soundName}} adlı ses ekleniyor..",
-              "soundAdded": "{{soundName}} adlı ses eklendi! Birkaç saniye içinde sesin sayfasına yönlendirileceksiniz.",
-              "invalidFile": "Geçersiz dosya biçimi. Yalnızca .mp3 dosyaları kabul edilir.",
-              "audioDurationExceeded": "Ses çok uzun. Maksimum ses süresi {{duration}} saniyedir.",
-              "fileSizeExceeded": "Dosya boyutu aşıldı. Maksimum dosya boyutu {{size}} MB'dir."
-            },
-            "fields": {
-              "file": {
-                "label": "Ses Dosyası",
-                "description": "Ses dosyanızı buraya yükleyin. Yalnızca .mp3 dosyaları kabul edilir."
-              },
-              "name": {
-                "label": "İsim",
-                "description": "Sesiniz için bir isim ekleyin."
-              },
-              "categories": {
-                "label": "Kategoriler",
-                "description": "Sesinizin ait olduğu tüm kategorileri seçin. Bu, kullanıcıların sesinizi bulmasına yardımcı olacaktır."
-              },
-              "contentPolicy": {
-                "label": "İçerik Politikası",
-                "description": "Sesinizi discord.place'e ekleyerek Ses Listeleme İlkelerimizi kabul etmiş olursunuz. <note>",
-                "note": "* Discord sunucumuzda bulunabilir."
-              },
-              "areYouReady": {
-                "label": "Hazır mısınız?"
-              }
-            },
-            "dragAndDrop": {
-              "drop": "Dosyayı buraya sürükleyin ve bırakın.",
-              "click": "Dosya seçmek için tıklayın."
-            }
-          }
+        "dragAndDrop": {
+          "drop": "Faylı bura sürükləyin və buraxın.",
+          "click": "Fayl seçmək üçün klikləyin."
         }
       }
     }
