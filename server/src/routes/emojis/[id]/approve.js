@@ -60,7 +60,7 @@ module.exports = {
           .addComponents(
             new Discord.ButtonBuilder()
               .setStyle(Discord.ButtonStyle.Link)
-              .setURL(`${config.frontendUrl}/emojis/${emoji.id}`)
+              .setURL(`${config.frontendUrl}/emojis/${isPack ? 'packages/' : ''}${emoji.id}`)
               .setLabel(`View Emoji${isPack ? ' Pack' : ''} on discord.place`)
           )
       ];
