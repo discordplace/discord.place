@@ -314,227 +314,123 @@
       "templateNotFound": "Şablon tapılmadı."
     }
   },
-  
   "categories": {
-    "All": "Tümü",
-    "Chat": "Sohbet",
-    "Design": "Tasarım",
-    "Music": "Müzik",
-    "Education": "Eğitim",
+    "All": "Hamısı",
+    "Chat": "Söhbət",
+    "Design": "Dizayn",
+    "Music": "Musiqi",
+    "Education": "Təhsil",
     "Gaming": "Oyun",
     "Anime": "Anime",
-    "Tech": "Teknoloji",
-    "Roleplay": "Rol Yapma",
-    "Event": "Etkinlik",
-    "Other": "Diğer",
+    "Tech": "Texnologiya",
+    "Roleplay": "Rol Oyunu",
+    "Event": "Tədbir",
+    "Other": "Digər",
     "Memes": "Mizah",
-    "Loud": "Gürültülü",
-    "NSFW": "Yetişkin İçerik",
-    "Public": "Herkese Açık",
-    "Community": "Topluluk",
-    "Art": "Sanat",
-    "Programming": "Programlama",
-    "Science": "Bilim",
-    "Technology": "Teknoloji",
+    "Loud": "Səs-küylü",
+    "NSFW": "Yetkin Məzmun",
+    "Public": "Hamıya Açıq",
+    "Community": "İcma",
+    "Art": "İncəsənət",
+    "Programming": "Proqramlaşdırma",
+    "Science": "Elm",
+    "Technology": "Texnologiya",
     "Language": "Dil",
     "Pepe": "Pepe",
-    "Pixel Art": "Pixel Art",
+    "Pixel Art": "Pixel İncəsənət",
     "Cute": "Sevimli",
-    "Logos": "Logolar",
-    "Utility": "Ek",
-    "Animated": "Hareketli",
-    "Moderation": "Moderasyon",
-    "Fun & Games": "Eğlence & Oyunlar",
-    "Economy": "Ekonomi",
-    "Art & Design": "Sanat & Tasarım",
-    "Virtual Assistants": "Sanal Asistanlar",
-    "Social Media Integration": "Sosyal Medya Entegrasyonu",
+    "Logos": "Loqolar",
+    "Utility": "Əlavə",
+    "Animated": "Animasiya",
+    "Moderation": "Moderasiya",
+    "Fun & Games": "Əyləncə & Oyunlar",
+    "Economy": "İqtisadiyyat",
+    "Art & Design": "İncəsənət & Dizayn",
+    "Virtual Assistants": "Virtual Köməkçilər",
+    "Social Media Integration": "Sosial Media İntegrasiyası",
     "Anime & Manga": "Anime & Manga"
   },
   "templatesPage": {
-    "title": "Şablonları Keşfedin",
-    "subtitle": "En popüler şablonları keşfedin ve Discord sunucunuz için mükemmel olanı bulun!<br>Sunucunuzu oluşturmakla zaman kaybetmeyin, şablonlardan birini kullanın!",
-    "searchInputPlaceholder": "Şablon adı, açıklama vb. ile arama yapın",
-    "categorySelectPlaceholder": "Kategori",
+    "title": "Şablonları Kəşf edin",
+    "subtitle": "Ən məşhur şablonları kəşf edin və Discord serveriniz üçün mükəmməl olanı tapın!<br>Serverinizi yaratmaqla vaxt itirməyin, şablonlardan birini istifadə edin!",
+    "searchInputPlaceholder": "Şablon adı, təsvir və s. ilə axtarış edin",
+    "categorySelectPlaceholder": "Kateqoriya",
     "sortSelect": {
       "placeholder": "Sıralama",
       "items": {
-        "popular": "Popüler",
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "popular": "Populyar",
+        "newest": "Ən Yeni",
+        "oldest": "Ən Köhnə"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek şablon yok. Belki de bu, bir şablon oluşturma zamanının geldiğinin bir işaretidir?"
+      "title": "Burada bir az səssizlik var...",
+      "message": "Göstəriləcək şablon yoxdur. Bəlkə də bu, bir şablon yaratma vaxtının gəldiyinə bir işarədir?"
     }
   },
   "templateCard": {
-    "uses": "{{count}} kullanım"
+    "uses": "{{count}} istifadə"
   },
   "templatePreviewPage": {
     "toast": {
-      "deletingTemplate": "Şablon siliniyor..",
-      "templateDeleted": "{{templateName}} başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz.",
-      "templateIdCopied": "Şablon ID'si {{templateId}} panoya kopyalandı. Bu şablonu Discord'da kullanmak için şimdi \"/template use <id>\" komutunu kullanabilirsiniz. Discord botumuzu sunucunuza davet etmeyi unutmayın!",
-      "roleColorCopied": "Rol rengi panoya kopyalandı."
+      "deletingTemplate": "Şablon silinir..",
+      "templateDeleted": "{{templateName}} uğurla silindi. Bir neçə saniyə içində ana səhifəyə yönləndiriləcəksiniz.",
+      "templateIdCopied": "Şablon ID-si {{templateId}} panoya kopyalandı. Bu şablonu Discord-da istifadə etmək üçün indi \"/template use <id>\" əmri ilə istifadə edə bilərsiniz. Discord botumuzu serverinizə dəvət etməyi unutmayın!",
+      "roleColorCopied": "Rol rəngi panoya kopyalandı."
     },
     "tooltip": {
-      "addAServer": "Bir sunucu ekle",
-      "exploreDiscoverableServers": "Keşfedilebilir sunucuları keşfet",
-      "backToDiscordPlace": "discord.place'e geri dön",
-      "copyTemplateId": "Şablon ID'sini kopyala",
+      "addAServer": "Bir server əlavə edin",
+      "exploreDiscoverableServers": "Kəşf edilə bilən serverləri kəşf edin",
+      "backToDiscordPlace": "discord.place-ə geri dön",
+      "copyTemplateId": "Şablon ID-sini kopyalayın",
       "deleteTemplate": "Şablonu Sil",
-      "clickToCopyColor": "Rol rengini kopyalamak için tıkla",
-      "threads": "Alt Başlıklar",
-      "notificationSettings": "Bildirim Ayarları",
+      "clickToCopyColor": "Rol rəngini kopyalamaq üçün tıklayın",
+      "threads": "Alt Başlıqlar",
+      "notificationSettings": "Bildiriş Ayarları",
       "pinnedMessages": "Sabitlenmiş Mesajlar",
-      "showMemberList": "Üye Listesini Göster",
-      "hideMemberList": "Üye Listesini Gizle",
-      "inbox": "Gelen Kutusu",
+      "showMemberList": "Üzv Siyahısını Göstər",
+      "hideMemberList": "Üzv Siyahısını Gizlət",
+      "inbox": "Gələn Qutusu",
       "help": "Yardım"
     },
-    "searchInputPlaceholder": "Ara",
+    "searchInputPlaceholder": "Axtar",
     "topicModal": {
-      "title": "Başlığı Görüntüle",
-      "description": "Şu anda bu kanalın konusunu görüntülüyorsunuz: {{focusedChannel.name}}."
+      "title": "Başlığı Görüntüləyin",
+      "description": "Hal-hazırda bu kanalın mövzusunu görüntüləyirsiniz: {{focusedChannel.name}}."
     },
     "deleteTemplateModal": {
       "title": "Şablonu Sil",
-      "description": "{{templateName}} şablonunu silmek istediğinizden emin misiniz?",
-      "note": "Lütfen şablonunuzu silmenin geri alınamayacağını unutmayın."
+      "description": "{{templateName}} şablonunu silmək istədiyinizdən əminsinizmi?",
+      "note": "Lütfən, şablonunuzu silməyin geri alına bilməyəcəyini unutmayın."
     },
-    "noTopic": "#{{focusedChannelName}} için bir konu belirlenmemiş.",
+    "noTopic": "#{{focusedChannelName}} üçün bir mövzu təyin edilməyib.",
     "channels": {
-      "home": "Ana Sayfa",
-      "events": "Etkinlikler",
+      "home": "Ana Səhifə",
+      "events": "Tədbirlər",
       "browseChannels": "Kanallara Göz At"
     },
-    "clickToCopyColor": "Rol rengini kopyalamak için tıkla"
+    "clickToCopyColor": "Rol rəngini kopyalamaq üçün tıklayın"
   },
   "soundsPage": {
-    "title": "Sesleri Keşfedin",
-    "subtitle": "Discord sunucunuzun ses paneli için mükemmel sesleri keşfedin, bulun ve indirin! Sesleri kullanarak sunucunuzu daha eğlenceli ve etkileşimli hale getirin.",
-    "searchInputPlaceholder": "Ad ile ses arayın...",
-    "categorySelectPlaceholder": "Kategori",
+    "title": "Səsləri Kəşf edin",
+    "subtitle": "Discord serverinizin səs paneli üçün mükəmməl səsləri kəşf edin, tapın və endirin! Səsləri istifadə edərək serverinizi daha əyləncəli və interaktiv edin.",
+    "searchInputPlaceholder": "Ad ilə səs axtarın...",
+    "categorySelectPlaceholder": "Kateqoriya",
     "sortSelect": {
       "placeholder": "Sıralama",
       "items": {
-        "downloads": "İndirmeler",
-        "likes": "Beğeniler",
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "downloads": "Endirmələr",
+        "likes": "Bəyənmələr",
+        "newest": "Ən Yeni",
+        "oldest": "Ən Köhnə"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek ses yok. Belki de bu, bir ses oluşturmanın zamanının geldiğinin bir işaretidir?"
+      "title": "Burada bir az səssizlik var...",
+      "message": "Göstəriləcək səs yoxdur. Bəlkə də bu, bir səs yaratma vaxtının gəldiyinə bir işarədir?"
     }
   },
-  "soundCard": {
-    "volumePopover": {
-      "title": "Ses Seviyesi",
-      "subtitle": "Çalınan seslerin ses seviyesini ayarlayın."
-    },
-    "uploadSoundToDiscordModal": {
-      "description": "Bu sesi aşağıdan bir Discord sunucusu seçerek hızlıca yükleyin.",
-      "emptyErrorState": {
-        "title": "Buralar biraz sessiz...",
-        "message": "Ses yükleyebileceğiniz bir sunucu yok."
-      },
-      "notes": "* Sunucuda \"İfadeleri Yönet\" iznine sahip olmalısınız.<br>* Listeyi yenilemek için siteden çıkış yapıp tekrar giriş yapın.",
-      "tooltip": {
-        "inviteOurBot": "{{guildName}} (Botumuzu Davet Et)"
-      },
-      "toast": {
-        "guildNotFound": "Sesi yüklemek için lütfen bir sunucu seçin.",
-        "uploadingSound": "Ses {{soundName}} adlı sunucuya yükleniyor...",
-        "soundUploaded": "Ses başarıyla yüklendi!"
-      }
-    },
-    "toast": {
-      "notLoggedIn": "Sesleri beğenebilmek için giriş yapmalısınız!",
-      "liking": "Ses beğeniliyor...",
-      "liked": "{{soundName}} adlı ses beğenildi!",
-      "unliking": "Ses beğenisi geri alınıyor...",
-      "unliked": "{{soundName}} adlı sese verdiğiniz beğeni geri alındı!"
-    },
-    "buttons": {
-      "upload": "Discord'a Yükle",
-      "login": "Yüklemek için Discord ile Giriş Yap"
-    }
-  },
-  "soundPage": {
-    "toast": {
-      "deletingSound": "{{soundName}} siliniyor..",
-      "soundDeleted": "{{soundName}} başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
-    },
-    "notApprovedInfo": {
-      "description": "Şu an için bu sesi sadece siz görebilirsiniz. Ses onaylandığında, herkese açık hale gelecektir. O zamana kadar <link>'a gelerek sesiniz onaylandığında botumuzdan bildirim alabilirsiniz. DM'lerinizi açtığınızdan emin olun.",
-      "linkText": "Discord sunucumuz"
-    },
-    "soundDetails": {
-      "title": "{{soundName}} Hakkında",
-      "fields": {
-        "uploadedAt": "Paylaşılma Tarihi",
-        "downloads": "İndirmeler",
-        "likes": "Beğeniler",
-        "categories": "Kategoriler",
-        "publisher": "Paylaşan"
-      }
-    },
-    "frequentlyAskedQuestions": {
-      "title": "Sıkça Sorulan Sorular",
-      "labels": [
-        "Sesi nasıl indirebilirim?",
-        "Sesi Discord sunucumun ses paneline nasıl ekleyebilirim?",
-        "Bu ses uygunsuz. Ne yapabilirim?"
-    ],
-      "answers": [
-        "Aşağıdaki butonu kullanarak <span> sesini indirebilirsiniz.",
-        {
-          "title": "Bunu duyduğuma sevindim! Sesleri Discord sunucunuza eklemenin 2 yolu var.",
-          "methods": [
-            {
-              "buttonText": "1. Web Sitemiz (bu sayfa)",
-              "instructionsBefore": "Web sitemizi kullanarak, bu sesi birkaç tıklama ile sunucunuza yükleyebilirsiniz. İşte nasıl yapacağınız:",
-              "instructions": [
-                {
-                    "text": "Sunucunuza <link> ekleyin.",
-                    "linkText": "botumuzu ekleyin"
-                },
-                "Bu sayfadaki ses oynatıcısında ki \"Discord'a Yükle\" düğmesine tıklayın.",
-                "Sesi yüklemek istediğiniz sunucuyu seçin ve \"Yükle\" düğmesine tıklayın.",
-                "Tada! Artık ses sunucunuza eklendi."
-              ]
-            },
-            {
-              "buttonText": "2. Klasik Yöntem",
-              "instructionsBefore": "Bu biraz daha zor olabilir.",
-              "instructions": [
-                "Sesi indirin:",
-                "Discord uygulamanızı açın ve sunucunuza sağ tıklayın.",
-                "Sunucu Ayarları > Ses Paneli'ne gidin.",
-                "Ses Yükle'ye tıklayın.",
-                "Formu doldurun ve daha önce indirdiğiniz sesi seçin ve Yükle düğmesine tıklayın.",
-                "Tada! Artık ses sunucunuza eklendi."
-              ]
-            }
-          ]
-        },
-        "Sayfanın altındaki bağlantı ile destek sunucumuza katılabilir ve sesin uygunsuz olduğunu bize bildirebilirsiniz."
-      ]
-    },
-    "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "description": "Aşağıdaki butonu kullanarak sesi siteden silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
-      "deleteSoundModal": {
-        "title": "Sesi Sil",
-        "description": "{{soundName}} adlı sesi silmek istediğinizden emin misiniz?",
-        "content": "Lütfen sesi silmenin, sesin kazandığı tüm indirmelerle beraber siteden kaldırılacağını unutmayın.<br><br>Bu işlem geri alınamaz."
-      }
-    }
-  },
+ 
   "serversPage": {
     "title": "Sunucuları Keşfedin",
     "subtitle": "Discord'daki en iyi sunucuları keşfedin ve sizin için mükemmel topluluğu bulun. Favori sunucularınıza oy vermeyi unutmayın!",
