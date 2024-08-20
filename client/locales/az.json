@@ -1,73 +1,74 @@
 {
   "home": {
-    "title": "Bulabileceğin en iyi",
+    "title": "Tapa biləcəyiniz ən yaxşı",
     "flipWords": [
-      "Discord  Profilleri",
-      "Discord  Sunucuları",
+      "Discord  Profilləri",
+      "Discord  Serverləri",
       "Discord  Botları",
-      "Discord  Emojileri",
+      "Discord  Emojiləri",
       "Discord  Şablonları",
-      "Discord  Sesleri"
+      "Discord  Səsləri"
     ]
   },
   "header": {
-    "profiles": "Profiller",
-    "servers": "Sunucular",
+    "profiles": "Profillər",
+    "servers": "Serverlər",
     "bots": "Botlar",
-    "emojis": "Emojiler",
+    "emojis": "Emojilər",
     "templates": "Şablonlar",
-    "sounds": "Sesler",
-    "logout": "Çıkış Yap"
+    "sounds": "Səslər",
+    "logout": "Çıxış Et"
   },
   "footer": {
-    "title": "Discord ile alakalı her şey, bir arada.",
-    "copyRight": "{{year}} discord.place. Tüm hakları saklıdır.",
+    "title": "Discord ilə bağlı hər şey, bir yerdə.",
+    "copyRight": "{{year}} discord.place. Bütün hüquqlar qorunur.",
     "statusText": [
-      "Tüm sistemler çalışıyor",
-      "Kısmi kesinti",
-      "Kesinti"
+      "Bütün sistemlər işləyir",
+      "Qismən kəsinti",
+      "Kəsinti"
     ],
     "theme": {
-      "light": "Aydınlık",
-      "dark": "Karanlık"
+      "light": "İşıqlı",
+      "dark": "Qaranlıq"
     },
     "language": {
-      "en": "İngilizce",
-      "tr": "Türkçe"
+      "en": "İngilis",
+      "tr": "Türk",
+      "az": "Azərbaycan"
     },
     "blocks": [
       {
-        "title": "Sayfalar",
+        "title": "Səhifələr",
         "links": [
-          "Anasayfa",
-          "API Dokümantasyonu",
-          "Servis Durumu",
+          "Ana Səhifə",
+          "API Sənədi",
+          "Xidmətin Vəziyyəti",
           "Premium"
         ]
       },
       {
-        "title": "Servislerimiz",
+        "title": "Xidmətlərimiz",
         "links": [
-          "Profiller",
-          "Sunucular",
+          "Profillər",
+          "Serverlər",
           "Botlar",
-          "Emojiler",
+          "Emojilər",
           "Şablonlar",
-          "Sesler"
+          "Səslər"
         ]
       },
       {
-        "title": "Yasal Dökümanlar",
+        "title": "Hüquqi Sənədlər",
         "links": [
-          "Gizlilik Sözleşmesi",
-          "Kullanım Şartları",
-          "Çerez Politikası",
-          "İçerik Politikası",
-          "Satış Sözleşmesi"
+          "Məxfilik Sazişi",
+          "İstifadə Şərtləri",
+          "Çərəz Siyasəti",
+          "Məzmun Siyasəti",
+          "Satış Sazişi"
         ]
       },
       {
-        "title": "Sosyal Medya"
+        "title": "Sosial Media"
       }
     ]
   },
