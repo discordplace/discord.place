@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  validate:
+  validate-locale-files:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -30,4 +30,4 @@ jobs:
         run: echo "DEFAULT_LOCALE_CODE=en" >> .env
 
       - name: Run validation script
-        run: npm run .github/scripts/validate-locale-files.js
+        run: npm run validate-locale-files.js --prefix .github/scripts
