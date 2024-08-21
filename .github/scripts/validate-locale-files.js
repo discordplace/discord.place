@@ -9,8 +9,9 @@ const locales = fs.readdirSync(localesDir);
 
 const failedParse = [];
 
-locales.forEach(locale => {
-  const jsonPath = path.join(localesDir, `${locale}.json`);
+locales.forEach(localeFile => {
+  const locale = localeFile.split('.json')[0];
+  const jsonPath = path.join(localesDir, localeFile);
   const content = fs.readFileSync(jsonPath, 'utf8');
 
   try {

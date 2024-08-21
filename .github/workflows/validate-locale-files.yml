@@ -26,8 +26,5 @@ jobs:
       - name: Install dependencies
         run: npm install --prefix .github/scripts
 
-      - name: Set up environment variables
-        run: echo "DEFAULT_LOCALE_CODE=en" >> .env
-
       - name: Run validation script
-        run: npm run validate-locale-files --prefix .github/scripts
+        run: cross-env DEFAULT_LOCALE_CODE=en npm run validate-locale-files --prefix .github/scripts
