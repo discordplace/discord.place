@@ -30,4 +30,4 @@ jobs:
         run: echo "DEFAULT_LOCALE_CODE=en" >> .env
 
       - name: Run validation script
-        run: npm run validate-locale-files.js --prefix .github/scripts
+        run: npm run validate-locale-files --prefix .github/scripts
