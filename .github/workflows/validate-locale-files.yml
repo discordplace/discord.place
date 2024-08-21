@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  monitor:
+  validate-locale-files:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -15,9 +15,6 @@ jobs:
       image: node:20
 
     steps:
-      - name: Add exception for dubious ownership
-        run: git config --global --add safe.directory /__w/discord.place/discord.place
-
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -26,14 +23,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Go to .github/scripts directory
-        run: cd .github/scripts
-
       - name: Install dependencies
-        run: npm install
+        run: npm install --prefix .github/workflows/scripts
 
       - name: Set up environment variables
         run: echo "DEFAULT_LOCALE_CODE=en" >> .env
 
       - name: Run validation script
-        run: npm run validate-locale-files
+        run: npm run .github/workflows/scripts/validate-locale-files.js
