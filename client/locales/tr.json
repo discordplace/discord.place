@@ -187,8 +187,8 @@
   "buttons": {
     "cancel": "İptal",
     "close": "Kapat",
-    "openIncident": "Daha Fazla Bilgi",
-    "openMaintenance": "Daha Fazla Bilgi",
+    "viewIncident": "Daha Fazla Bilgi",
+    "viewMaintenance": "Daha Fazla Bilgi",
     "back": "Geri",
     "next": "İleri",
     "publish": "Paylaş",

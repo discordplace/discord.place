@@ -188,8 +188,8 @@
 "buttons": {
     "cancel": "Ləğv Et",
     "close": "Bağla",
-    "openIncident": "Daha Çox Məlumat",
-    "openMaintenance": "Daha Çox Məlumat",
+    "viewIncident": "Daha Çox Məlumat",
+    "viewMaintenance": "Daha Çox Məlumat",
     "back": "Geri",
     "next": "İrəli",
     "publish": "Paylaş",

@@ -45,7 +45,7 @@ export default function Status() {
               },
               {
                 id: 'open-incident',
-                label: t('buttons.openIncident'),
+                label: t('buttons.viewIncident'),
                 variant: 'solid',
                 action: () => {
                   window.open(`${config.instatus.baseUrl}/${incident.id}`, '_blank');
@@ -77,7 +77,7 @@ export default function Status() {
               },
               {
                 id: 'open-maintenance',
-                label: t('buttons.openMaintenance'),
+                label: t('buttons.viewMaintenance'),
                 variant: 'solid',
                 action: () => {
                   window.open(`${config.instatus.baseUrl}/${maintenance.id}`, '_blank');

@@ -187,8 +187,8 @@
   "buttons": {
     "cancel": "Cancel",
     "close": "Close",
-    "openIncident": "View Incident",
-    "openMaintenance": "View Maintenance",
+    "viewIncident": "View Incident",
+    "viewMaintenance": "View Maintenance",
     "back": "Back",
     "next": "Next",
     "publish": "Publish",
