@@ -75,7 +75,7 @@ export default function Graph({ id, data, tooltipFormatter, tooltipIcon, color, 
           custom: ({ series, seriesIndex, dataPointIndex }) => {
             return `<div class="bg-black text-white dark:bg-white dark:text-black px-4 py-2 rounded-xl font-semibold flex gap-x-2 items-center apexcharts-arrow-container">
               ${tooltipIcon}
-              ${t(`graph.${id}.tooltip`, { count: series[seriesIndex][dataPointIndex] })}              
+              ${t(`graph.tooltip.${id}`, { count: series[seriesIndex][dataPointIndex] })}              
             </div>`;
           }
         },
