@@ -34,7 +34,7 @@ const config = {
       dateFnsKey: 'tr',
       flag: '🇹🇷'
     },
-     {
+    {
        name: 'Azerbaijani',
        code: 'az',
        dateFnsKey: 'az',
