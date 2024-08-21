@@ -204,6 +204,9 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the website with different ports and use a reverse proxy to redirect the requests to the correct port.
 
+> [!WARNING]
+> - If you wanna change the default locale, you should change the `default` value in the `client/config.js` file. This value should be one of the values in the `availableLocales` array. After changing this value, you also need to change the `DEFAULT_LOCALE_CODE` environment value in the `.github/workflows/validate-locale-files.yml` file. (if you don't want to get any unnecessary errors in the GitHub Actions)
+
 ### About Configuration File (Server)
 
 We use YML files for the configuration of the server. You can find the configuration file in the `server` directory. You can modify the values in these files to customize the server according to your requirements.

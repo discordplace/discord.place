@@ -1,0 +1,11 @@
+{
+  "name": "scripts",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "validate-locale-files": "node -r dotenv/config validate-locale-files.js"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

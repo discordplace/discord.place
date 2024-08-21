@@ -1,0 +1,38 @@
+name: Validate Locale Files
+
+on:
+  pull_request:
+    paths:
+      - 'client/**'
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    container:
+      image: node:20
+
+    steps:
+      - name: Add exception for dubious ownership
+        run: git config --global --add safe.directory /__w/discord.place/discord.place
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Go to .github/scripts directory
+        run: cd .github/scripts
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up environment variables
+        run: echo "DEFAULT_LOCALE_CODE=en" >> .env
+
+      - name: Run validation script
+        run: npm run validate-locale-files
