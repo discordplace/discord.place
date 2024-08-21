@@ -26,5 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm install --prefix .github/scripts
 
+      - name: Install cross-env
+        run: npm install -g cross-env --prefix .github/scripts
+
       - name: Run validation script
         run: cross-env DEFAULT_LOCALE_CODE=en npm run validate-locale-files --prefix .github/scripts
