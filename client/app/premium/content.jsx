@@ -196,11 +196,11 @@ export default function Page({ plans }) {
     const planIdToPurchase = preferredBillingCycle === 'monthly' ? monthlyPlan.id : preferredBillingCycle === 'annual' ? annualPlan.id : lifetimePlan.id;
 
     toast.promise(createCheckout(planIdToPurchase), {
-      loading: 'Creating checkout..',
+      loading: t('premiumPage.toast.createCheckout'),
       success: data => {
         setTimeout(() => window.location.href = data.url, 3000);
 
-        return 'Checkout created successfully. You will be redirected to the payment page after a few seconds.';
+        return t('premiumPage.toast.checkoutCreated');
       },
       error: message => {
         setLoading(false);

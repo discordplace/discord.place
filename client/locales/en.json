@@ -86,6 +86,10 @@
       "free": "Free",
       "premium": "Premium"
     },
+    "toast": {
+      "creatingCheckout": "We are creating a checkout for you...",
+      "checkoutCreated": "Checkout created! Redirecting you to the payment page in few seconds..."
+    },
     "purchasePremium": "Purchase Premium",
     "loginToPurchase": "Log in to Purchase",
     "features": [

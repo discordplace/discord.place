@@ -86,6 +86,10 @@
       "free": "Ücretsiz",
       "premium": "Premium"
     },
+    "toast": {
+      "creatingCheckout": "Sizin için bir ödeme sayfası oluşturuluyor..",
+      "checkoutCreated": "Ödeme sayfası oluşturuldu! Birkaç saniye içinde ödeme sayfasına yönlendirileceksiniz.."
+    },
     "purchasePremium": "Premium Satın Al",
     "loginToPurchase": "Satın almak için Giriş Yap",
     "features": [
