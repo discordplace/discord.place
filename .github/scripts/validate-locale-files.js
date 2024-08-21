@@ -44,9 +44,10 @@ locales.forEach(localeFile => {
 
   const jsonPath = path.join(localesDir, `${locale}.json`);
   const content = fs.readFileSync(jsonPath, 'utf8');
+  const parsedContent = JSON.parse(content);
 
-  const missingKeys = Object.keys(defaultLocaleContent).filter(key => !content[key]);
-  const extraKeys = Object.keys(content).filter(key => !defaultLocaleContent[key]);
+  const missingKeys = Object.keys(defaultLocaleContent).filter(key => !parsedContent[key]);
+  const extraKeys = Object.keys(parsedContent).filter(key => !defaultLocaleContent[key]);
 
   if (missingKeys.length > 0) {
     missingKeys.forEach(key => {
