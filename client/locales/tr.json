@@ -940,7 +940,7 @@
     },
     "cardColors": {
       "primary": "Birincil",
-      "secondary": "İkicncil",
+      "secondary": "İkincil",
       "copyColor": "{{hex}} rengini kopyala"
     },
     "socials": {
@@ -979,7 +979,7 @@
     "packBadge": "PAKET"
   },
   "emojiCard": {
-    "gifBadge": "GİF"
+    "gifBadge": "GIF"
   },
   "createEmojiPage": {
     "title": "Emoji Paylaş",
