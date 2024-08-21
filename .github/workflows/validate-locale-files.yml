@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'client/locales/**'
+  workflow_dispatch:
 
 jobs:
   monitor:
