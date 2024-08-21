@@ -491,7 +491,7 @@
       "answers": [
         "You can use the button below to download <span> sound.",
         {
-          "title": "There are 2 ways to add sounds to your Discord server.",
+          "title": "I'm glad to hear that! There are 2 ways to add sounds to your Discord server.",
           "methods": [
             {
               "buttonText": "1. Our Website (this page)",
@@ -520,7 +520,7 @@
             }
           ]
         },
-        "You can join our support server via the Discord button at the bottom of the page (Footer) and let us know by reporting that the sound effect is inappropriate."
+        "You can join our support server via the Discord button at the bottom of the page (Footer) and let us know by reporting that the sound is inappropriate."
       ]
     },
     "dangerZone": {
@@ -1118,7 +1118,7 @@
               "buttonText": "3. Legacy Way",
               "instructionsBefore": "This may be a little more challenging.",
               "instructions": [
-                "Download the emoji.",
+                "Download the emoji:",
                 "Open your Discord App and right click to your server.",
                 "Go to Server Settings > Emoji.",
                 "Click the Upload Emoji.",
