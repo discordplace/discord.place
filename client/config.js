@@ -33,13 +33,13 @@ const config = {
       code: 'tr',
       dateFnsKey: 'tr',
       flag: '🇹🇷'
-    },
-    {
-      name: 'Azerbaijani',
-      code: 'az',
-      dateFnsKey: 'az',
-      flag: '🇦🇿'
-    }     
+    }
+    // {
+    //   name: 'Azerbaijani',
+    //   code: 'az',
+    //   dateFnsKey: 'az',
+    //   flag: '🇦🇿'
+    // }     
   ],
   showStandoutProductAds: true,
   supportInviteUrl: 'https://invite.discord.place',
