@@ -1,0 +1,43 @@
+name: ESLint
+
+on:
+  pull_request:
+    paths:
+      - 'client/**'
+      - 'server/**'
+
+jobs:
+  lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies to /client
+        run: |
+          cd client
+          npm install
+          
+      - name: Run lint script on /client
+        run: |
+          cd client
+          npm run lint
+
+      - name: Back to root
+        run: cd ..
+
+      - name: Install dependencies to /server
+        run: |
+          cd server
+          npm install
+
+      - name: Run lint script on /server
+        run: |
+          cd server
+          npm run lint

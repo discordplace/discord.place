@@ -32,9 +32,7 @@ import { nanoid } from 'nanoid';
 import { PiWaveformBold } from 'react-icons/pi';
 import { FiLink } from 'react-icons/fi';
 import { useShallow } from 'zustand/react/shallow';
-import useLanguageStore, { t } from '@/stores/language';
-import config from '@/config';
-import Twemoji from 'react-twemoji';
+import { t } from '@/stores/language';
 
 export default function Content() {
   const user = useAuthStore(state => state.user);
@@ -43,8 +41,6 @@ export default function Content() {
   const toggleTheme = useThemeStore(state => state.toggleTheme);
   const isCollapsed = useAccountStore(state => state.isCollapsed);
   const setIsCollapsed = useAccountStore(state => state.setIsCollapsed);
-  const language = useLanguageStore(state => state.language);
-  const setLanguage = useLanguageStore(state => state.setLanguage);
 
   const router = useRouter();
 
@@ -151,9 +147,6 @@ export default function Content() {
           name: t('accountPage.sidebar.labels.backToHome'),
           id: 'back',
           action: () => router.push('/')
-        },
-        {
-          id: 'language-switcher'
         }
       ]
     }
@@ -299,78 +292,57 @@ export default function Content() {
                         className='w-[95%] mx-auto h-[2px] bg-quaternary my-2' 
                       />
                     ) : (
-                      id === 'language-switcher' ? (
-                        <div className='flex items-center justify-end w-full gap-2'>
-                          {config.availableLocales.map(locale => (
-                            <div
-                              className={cn(
-                                '[&_img]:w-4 cursor-pointer select-none [&_img]:h-4 gap-x-2 items-center rounded-lg flex max-w-[calc(50%)] text-tertiary py-1.5 text-sm font-semibold w-full justify-center',
-                                locale.code === language ? 'bg-quaternary text-primary' : 'bg-tertiary hover:bg-quaternary hover:text-primary'
-                              )}
-                              key={locale.code}
-                              onClick={() => setLanguage(locale.code)}
-                            >
-                              <Twemoji>
-                                {locale.flag}
-                              </Twemoji>
-                              
-                              {t(`accountPage.sidebar.labels.language.${locale.code}`)}
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <button
-                          className={cn(
-                            'outline-none group relative items-center transition-opacity gap-x-2 px-2 py-2 font-medium w-full rounded-lg select-none flex',
-                            activeTab === id ? 'pointer-events-none bg-quaternary text-primary' : 'text-secondary hover:text-primary hover:bg-tertiary',
-                            loading && 'pointer-events-none'
-                          )}
-                          key={id}
-                          onClick={() => {
-                            if (action) return action();
+                      <button
+                        className={cn(
+                          'outline-none group relative items-center transition-opacity gap-x-2 px-2 py-2 font-medium w-full rounded-lg select-none flex',
+                          activeTab === id ? 'pointer-events-none bg-quaternary text-primary' : 'text-secondary hover:text-primary hover:bg-tertiary',
+                          loading && 'pointer-events-none'
+                        )}
+                        key={id}
+                        onClick={() => {
+                          if (action) return action();
 
-                            setActiveTab(id);
-                            setIsCollapsed(true);
-                          }}
-                        >
-                          {activeTab === id && (
-                            <motion.div
-                              layoutId='activeTabIndicator'
-                              className='absolute -left-3 bg-black dark:bg-white w-[3px] h-[50%] rounded-lg'
-                            />
-                          )}
-
-                          <Icon />
-                        
-                          <span className='pr-2 truncate'>
-                            {name}
-                          </span>
-
-                          {new_badge && (
-                            <div className='px-2.5 py-0.5 ml-auto text-xs font-bold text-white bg-purple-500 rounded-full'>
-                              {t('accountPage.sidebar.newBadge')}
-                            </div>
-                          )}
-
-                          {badge_count > 0 && (
-                            <span className={cn(
-                              'px-2 py-0.5 ml-auto text-xs transition-opacity font-semibold rounded-full bg-quaternary text-primary',
-                              ((badge_count || 0) === 0 || (activeTab === id && loading)) ? 'opacity-0' : 'opacity-100'
-                            )}>
-                              {badge_count}
-                            </span>
-                          )}
-
-                          {IconEnd && <IconEnd className='ml-auto text-tertiary' />}
-
-                          <TbLoader 
-                            className={cn(
-                              'absolute right-2 animate-spin transition-opacity text-tertiary',
-                              (loading && activeTab === id && !new_badge) ? 'opacity-100' : 'opacity-0'
-                            )} 
+                          setActiveTab(id);
+                          setIsCollapsed(true);
+                        }}
+                      >
+                        {activeTab === id && (
+                          <motion.div
+                            layoutId='activeTabIndicator'
+                            className='absolute -left-3 bg-black dark:bg-white w-[3px] h-[50%] rounded-lg'
                           />
-                        </button>
-                      )
+                        )}
+
+                        <Icon />
+                      
+                        <span className='pr-2 truncate'>
+                          {name}
+                        </span>
+
+                        {new_badge && (
+                          <div className='px-2.5 py-0.5 ml-auto text-xs font-bold text-white bg-purple-500 rounded-full'>
+                            {t('accountPage.sidebar.newBadge')}
+                          </div>
+                        )}
+
+                        {badge_count > 0 && (
+                          <span className={cn(
+                            'px-2 py-0.5 ml-auto text-xs transition-opacity font-semibold rounded-full bg-quaternary text-primary',
+                            ((badge_count || 0) === 0 || (activeTab === id && loading)) ? 'opacity-0' : 'opacity-100'
+                          )}>
+                            {badge_count}
+                          </span>
+                        )}
+
+                        {IconEnd && <IconEnd className='ml-auto text-tertiary' />}
+
+                        <TbLoader 
+                          className={cn(
+                            'absolute right-2 animate-spin transition-opacity text-tertiary',
+                            (loading && activeTab === id && !new_badge) ? 'opacity-100' : 'opacity-0'
+                          )} 
+                        />
+                      </button>
                     )
                   ))}
               </div>
