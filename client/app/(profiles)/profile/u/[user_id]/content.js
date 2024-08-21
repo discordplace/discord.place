@@ -62,19 +62,19 @@ export default function Content({ user }) {
   const language = useLanguageStore(state => state.language);
 
   const userFlags = {
-    'Staff': t('userFlags.Staff'),
-    'Partner': t('userFlags.Partner'),
-    'Hypesquad': t('userFlags.Hypesquad'),
-    'BugHunterLevel1': t('userFlags.BugHunterLevel1'),
-    'BugHunterLevel2': t('userFlags.BugHunterLevel2'),
-    'HypeSquadOnlineHouse1': t('userFlags.HypeSquadOnlineHouse1'),
-    'HypeSquadOnlineHouse2': t('userFlags.HypeSquadOnlineHouse2'),
-    'HypeSquadOnlineHouse3': t('userFlags.HypeSquadOnlineHouse3'),
-    'PremiumEarlySupporter': t('userFlags.PremiumEarlySupporter'),
-    'VerifiedDeveloper': t('userFlags.VerifiedDeveloper'),
-    'CertifiedModerator': t('userFlags.CertifiedModerator'),
-    'ActiveDeveloper': t('userFlags.ActiveDeveloper'),
-    'Nitro': t('userFlags.Nitro')
+    'Staff': t('userProfile.flags.Staff'),
+    'Partner': t('userProfile.flags.Partner'),
+    'Hypesquad': t('userProfile.flags.Hypesquad'),
+    'BugHunterLevel1': t('userProfile.flags.BugHunterLevel1'),
+    'BugHunterLevel2': t('userProfile.flags.BugHunterLevel2'),
+    'HypeSquadOnlineHouse1': t('userProfile.flags.HypeSquadOnlineHouse1'),
+    'HypeSquadOnlineHouse2': t('userProfile.flags.HypeSquadOnlineHouse2'),
+    'HypeSquadOnlineHouse3': t('userProfile.flags.HypeSquadOnlineHouse3'),
+    'PremiumEarlySupporter': t('userProfile.flags.PremiumEarlySupporter'),
+    'VerifiedDeveloper': t('userProfile.flags.VerifiedDeveloper'),
+    'CertifiedModerator': t('userProfile.flags.CertifiedModerator'),
+    'ActiveDeveloper': t('userProfile.flags.ActiveDeveloper'),
+    'Nitro': t('userProfile.flags.Nitro')
   };
 
   const flagsPositions = [
@@ -161,14 +161,14 @@ export default function Content({ user }) {
               {user.bot && (
                 <span className='select-none flex items-center gap-x-1 px-1.5 py-0.5 rounded-full text-xs font-semibold text-white uppercase bg-[#5865F2]'>
                   {user.bot_verified && (
-                    <Tooltip content={t('userFlags.tooltip.verifiedApp')}>
+                    <Tooltip content={t('userProfile.flags.tooltip.verifiedApp')}>
                       <div>
                         <HiCheck />
                       </div>
                     </Tooltip>
                   )}
               
-                  {t('userFlags.appBadge')}
+                  {t('userProfile.flags.appBadge')}
                 </span>
               )}
             </h2>
