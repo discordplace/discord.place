@@ -40,6 +40,7 @@ const defaultLocaleContent = JSON.parse(fs.readFileSync(defaultLocalePath, 'utf8
 locales.forEach(localeFile => {
   const locale = localeFile.split('.json')[0];
   if (locale === process.env.DEFAULT_LOCALE_CODE) return;
+  if (failedParse.includes(locale)) return;
 
   const jsonPath = path.join(localesDir, `${locale}.json`);
   const content = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
