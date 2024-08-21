@@ -34,7 +34,7 @@
     "language": {
       "en": "İngilis",
       "tr": "Türk",
-      "az": "Azərbaycan"
+      "az": "Azərbaycanca"
     },
     "blocks": [
       {
@@ -1886,10 +1886,10 @@
 },
          
   "keywords": {
-    "label": "Anahtar Sözlər",
-    "description": "Serverinizlə bağlı anahtar sözləri əlavə edin. Bu, serverinizi axtaranların serverinizi tapmasına kömək edəcək.",
-    "placeholder": "Bir anahtar söz yazın və enter və ya boşluq düyməsinə basın..",
-    "count": "{{count}} Anahtar Söz"
+    "label": "Açar Sözlər",
+    "description": "Serverinizlə bağlı açar sözləri əlavə edin. Bu, serverinizi axtaranların serverinizi tapmasına kömək edəcək.",
+    "placeholder": "Bir açar söz yazın və enter və ya boşluq düyməsinə basın..",
+    "count": "{{count}} Açar Söz"
   },
   "voiceActivity": {
     "label": "Səs Aktivliyi",
