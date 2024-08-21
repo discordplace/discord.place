@@ -28,16 +28,17 @@ if (failedParse.length > 0) {
       file: `${locale}.json`
     });
   });
+} else {
+  console.log('All locale files are valid JSON');
 }
-
-console.log('All locales are valid JSON');
 
 console.log('Checking missing or extra keys in locales');
 
 const defaultLocalePath = path.join(localesDir, `${process.env.DEFAULT_LOCALE_CODE}.json`);
 const defaultLocaleContent = JSON.parse(fs.readFileSync(defaultLocalePath, 'utf8'));
 
-locales.forEach(locale => {
+locales.forEach(localeFile => {
+  const locale = localeFile.split('.json')[0];
   if (locale === process.env.DEFAULT_LOCALE_CODE) return;
 
   const jsonPath = path.join(localesDir, `${locale}.json`);
