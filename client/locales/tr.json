@@ -880,24 +880,24 @@
     }
   },
   "graph": {
-    "profileLikes": {
-      "tooltip": "{{count}} Beğeni"
-    },
-    "profileViews": {
-      "tooltip": "{{count}} Ziyaretçi"
-    },
-    "voiceActivity": {
-      "tooltip": "{{count}} üye"
-    },
-    "monthlyVotes": {
-      "tooltip": "{{count}} Oy"
-    },
     "tooltip": {
       "increased": "Dün'e oranla arttı ({{difference}})",
       "decreased": "Dün'e oranla azaldı ({{difference}})",
       "noChanges": "Dün'e oranla değişiklik yok",
       "Total Servers": "{{count}} Sunucu",
-      "Total Bots": "{{count}} Bot"
+      "Total Bots": "{{count}} Bot",
+      "profileLikes": {
+        "tooltip": "{{count}} Beğeni"
+      },
+      "profileViews": {
+        "tooltip": "{{count}} Ziyaretçi"
+      },
+      "voiceActivity": {
+        "tooltip": "{{count}} üye"
+      },
+      "monthlyVotes": {
+        "tooltip": "{{count}} Oy"
+      }
     }
   },
   "editProfilePage": {
