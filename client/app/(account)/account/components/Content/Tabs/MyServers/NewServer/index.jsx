@@ -41,7 +41,7 @@ export default function NewServer() {
     setLoading(true);
 
     toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords, voice_activity_enabled: serverVoiceActivityEnabled }), {
-      loading: t('accountPage.tabs.myServers.sections.newServer.toast.addingServer', { server: currentlyAddingServer.name }),
+      loading: t('accountPage.tabs.myServers.sections.newServer.toast.addingServer', { serverName: currentlyAddingServer.name }),
       success: () => {
         setTimeout(() => {
           router.push(`/servers/${currentlyAddingServer.id}`);
@@ -56,7 +56,7 @@ export default function NewServer() {
         }, 3000);
         setRenderConfetti(true);
         
-        return t('accountPage.tabs.myServers.sections.newServer.toast.serverAdded', { server: currentlyAddingServer.name });
+        return t('accountPage.tabs.myServers.sections.newServer.toast.serverAdded', { serverName: currentlyAddingServer.name });
       },
       error: error => {
         setLoading(false);
