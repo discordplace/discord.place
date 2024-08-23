@@ -33,7 +33,8 @@ module.exports = {
           id: request.user.id
         },
         guild: {
-          id
+          id,
+          name: guild.name
         }
       });
 

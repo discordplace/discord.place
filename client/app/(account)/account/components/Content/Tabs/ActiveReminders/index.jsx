@@ -121,29 +121,23 @@ export default function ActiveReminders() {
                       className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
                       href={`/servers/${voteReminder.guild.id}`}
                     >
-                      {voteReminder.guild.name ? (
-                        <>
-                          <ServerIcon
-                            width={32}
-                            height={32}
-                            icon_url={voteReminder.guild.icon_url}
-                            name={voteReminder.guild.name}
-                            className='[&>h2]:text-sm bg-quaternary'
-                          />
+                      <ServerIcon
+                        id={voteReminder.guild.id}
+                        hash={voteReminder.guild.icon}
+                        size={32}
+                        width={32}
+                        height={32}
+                      />
                   
-                          <div className='flex flex-col'>
-                            <p className='text-sm font-bold text-secondary'>
-                              {voteReminder.guild.name}
-                            </p>
+                      <div className='flex flex-col'>
+                        <p className='text-sm font-bold text-secondary'>
+                          {voteReminder.guild.name}
+                        </p>
   
-                            <p className='text-xs text-tertiary'>
-                              {voteReminder.guild.id}
-                            </p>
-                          </div>
-                        </>
-                      ) : (
-                        voteReminder.guild.id
-                      )}
+                        <p className='text-xs text-tertiary'>
+                          {voteReminder.guild.id}
+                        </p>
+                      </div>
                     </Link>
   
                     <div className='flex flex-col items-center sm:items-end'>
