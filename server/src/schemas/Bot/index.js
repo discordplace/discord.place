@@ -196,7 +196,7 @@ const BotSchema = new Schema({
 
       const user = await User.findOne({ id: this.owner.id });
       if (user) {
-        const ownerHasPremium = typeof user.subscription?.id === 'string';
+        const ownerHasPremium = user.subscription && user.subscription.createdAt;
         const userHashes = await getUserHashes(user.id);
 
         Object.assign(newBot, {
@@ -204,7 +204,7 @@ const BotSchema = new Schema({
             id: user.id,
             username: user.data.username,
             avatar: userHashes.avatar,
-            premium: ownerHasPremium
+            premium: ownerHasPremium ? true : false
           }
         });
       }
