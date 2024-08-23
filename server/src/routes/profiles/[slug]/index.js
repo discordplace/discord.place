@@ -35,7 +35,7 @@ module.exports = {
         ) || false,
         canDelete: request.user && (
           request.user.id == profile.user.id ||
-          config.permissions.canDeleteProfilesRoles.some(role => request.member.roles.cache.has(role))
+          (request.member && config.permissions.canDeleteProfilesRoles.some(role => request.member.roles.cache.has(role)))
         ) || false,
         canVerify: request.user && (
           (request.member && request.member && config.permissions.canVerifyProfilesRoles.some(role => request.member.roles.cache.has(role)))
