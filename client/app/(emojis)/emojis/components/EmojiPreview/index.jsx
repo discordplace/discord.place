@@ -39,14 +39,7 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     setUploadToDiscordButtonLoading(true);
 
     getEmojiUploadableGuilds()
-      .then(guilds => {
-        setUploadableGuilds(guilds.map(guild => ({
-          id: guild.id,
-          name: guild.name,
-          icon_url: guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.${guild.icon.startsWith('a_') ? 'gif' : 'png'}` : null,
-          bot_in_guild: guild.bot_in_guild
-        })));
-      })
+      .then(setUploadableGuilds)
       .catch(toast.error)
       .finally(() => setUploadToDiscordButtonLoading(false));
   }

@@ -12,6 +12,7 @@ import cn from '@/lib/cn';
 import { PiGitForkBold } from 'react-icons/pi';
 import { useMedia } from 'react-use';
 import useLanguageStore, { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -41,9 +42,10 @@ export default function About({ bot }) {
             @{bot.owner.username}
           </span>
 
-          <Image
-            src={bot.owner.avatar_url}
-            alt={`${bot.owner.username}'s avatar`}
+          <UserAvatar
+            id={bot.owner.id}
+            hash={bot.owner.avatar}
+            size={16}
             width={16}
             height={16}
             className='rounded-full w-[16px] h-[16px]'

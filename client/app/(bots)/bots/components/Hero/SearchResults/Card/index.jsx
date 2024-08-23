@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { FaCompass } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
@@ -14,6 +13,8 @@ import getRelativeTime from '@/lib/getRelativeTime';
 import { BsFire } from 'react-icons/bs';
 import config from '@/config';
 import { t } from '@/stores/language';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -92,11 +93,12 @@ export default function Card({ data, overridedSort }) {
       )}
 
       <div className='flex w-full h-full z-[20] relative border-4 border-primary rounded-3xl'>
-        {data.banner_url ? (
-          <Image
+        {data.banner ? (
+          <UserBanner
+            id={data.id}
+            hash={data.banner}
             className='bg-quaternary absolute top-0 left-0 z-[1] w-full h-[calc(100%_-_1px)] rounded-[1.25rem]'
-            src={data.banner_url}
-            alt={`${data.username}'s banner`}
+            size={512}
             width={350}
             height={200}
           />
@@ -104,9 +106,10 @@ export default function Card({ data, overridedSort }) {
           <div className='absolute top-0 left-0 z-[1] bg-quaternary w-full h-[calc(100%_-_1px)] rounded-[1.25rem]' />
         )}
         <div className='bg-secondary group-hover:bg-tertiary transition-colors w-full h-[calc(100%_-_30px)] z-[2] relative top-[30px] rounded-b-[1.25rem] rounded-t-[1.5rem]'>
-          <Image
-            src={data.avatar_url}
-            alt={`${data.username}'s avatar`}
+          <UserAvatar
+            id={data.id}
+            hash={data.avatar}
+            size={64}
             width={64}
             height={64}
             className='absolute top-[-25px] left-4 bg-secondary group-hover:bg-tertiary border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'

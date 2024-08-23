@@ -1,6 +1,7 @@
 'use client';
 
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import Image from 'next/image';
 import createServer from '@/lib/request/servers/createServer';
 import useAccountStore from '@/stores/account';
 import { useRouter } from 'next-nprogress-bar';
@@ -10,7 +11,6 @@ import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
 import { TbLoader } from 'react-icons/tb';
 import { MdChevronLeft } from 'react-icons/md';
-import cn from '@/lib/cn';
 import config from '@/config';
 import { FaCheck } from 'react-icons/fa';
 import Select from '@/app/components/Select';
@@ -83,19 +83,30 @@ export default function NewServer() {
           }}>
             <MdChevronLeft size={24} />
           </button>
-        
+
           <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
             {t('accountPage.tabs.myServers.sections.newServer.title', {
               serverName: <span className='truncate'>{currentlyAddingServer.name}</span>,
-              serverIcon: <ServerIcon
-                width={32}
-                height={32}
-                icon_url={currentlyAddingServer.icon_url}
-                name={currentlyAddingServer.name}
-                className={cn(
-                  !currentlyAddingServer.icon_url && '[&>h2]:text-xs'
-                )}
-              />
+              serverIcon: (
+                currentlyAddingServer.icon ? (
+                  <ServerIcon
+                    id={currentlyAddingServer.id}
+                    hash={currentlyAddingServer.icon}
+                    size={32}
+                    width={24}
+                    height={24}
+                    className='rounded-lg'
+                  />
+                ) : (
+                  <Image
+                    src='https://cdn.discordapp.com/embed/avatars/0.png'
+                    alt='Server Icon'
+                    width={24}
+                    height={24}
+                    className='rounded-lg'
+                  />
+                )
+              )
             })}
           </h1>
         </div>
@@ -292,15 +303,26 @@ export default function NewServer() {
 
               {t('accountPage.tabs.myServers.sections.newServer.fields.areYouReady.addButton', {
                 serverName: currentlyAddingServer.name,
-                serverIcon: <ServerIcon
-                  width={20}
-                  height={20}
-                  icon_url={currentlyAddingServer.icon_url}
-                  name={currentlyAddingServer.name}
-                  className={cn(
-                    !currentlyAddingServer.icon_url && '[&>h2]:text-xs [&>h2]:text-primary'
-                  )}
-                />
+                serverIcon: (
+                  currentlyAddingServer.icon ? (
+                    <ServerIcon
+                      id={currentlyAddingServer.id}
+                      hash={currentlyAddingServer.icon}
+                      size={32}
+                      width={16}
+                      height={16}
+                      className='rounded'
+                    />
+                  ) : (
+                    <Image
+                      src='https://cdn.discordapp.com/embed/avatars/0.png'
+                      alt='Server Icon'
+                      width={16}
+                      height={16}
+                      className='rounded'
+                    />
+                  )
+                )
               })}
             </button>
 

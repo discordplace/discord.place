@@ -8,11 +8,16 @@ const webhookUrlValidation = require('@/validations/bots/webhookUrl');
 const User = require('@/schemas/User');
 const encrypt = require('@/utils/encryption/encrypt');
 const decrypt = require('@/utils/encryption/decrypt');
+const getUserHashes = require('@/utils/getUserHashes');
 
 const BotSchema = new Schema({
   id: {
     type: String,
     required: true
+  },
+  data: {
+    type: Object,
+    required: false
   },
   owner: {
     id: {
@@ -125,6 +130,10 @@ const BotSchema = new Schema({
           id: {
             type: String,
             required: true
+          },
+          username: {
+            type: String,
+            required: true
           }
         },
         vote: {
@@ -185,36 +194,31 @@ const BotSchema = new Schema({
         };
       }
 
-      const user = client.users.cache.get(this.owner.id) || await client.users.fetch(this.owner.id).catch(() => null);   
+      const user = await User.findOne({ id: this.owner.id });
       if (user) {
-        const ownerHasPremium = await User.exists({ id: user.id, subscription: { $ne: null } }); 
+        const ownerHasPremium = user.subscription !== null;
+        const userHashes = await getUserHashes(user.id);
 
         Object.assign(newBot, {
           owner: {
             id: user.id,
-            username: user.username,
-            avatar_url: user.displayAvatarURL({ size: 256 }),
-            premium: !!ownerHasPremium
+            username: user.data.username,
+            avatar: userHashes.avatar,
+            premium: ownerHasPremium
           }
         });
       }
 
-      if (!client.forceFetchedUsers.has(this.id)) {
-        await client.users.fetch(this.id, { force: true }).catch(() => null);
-        client.forceFetchedUsers.set(this.id, true);
-      }
-
-      const bot = client.users.cache.get(this.id);      
-      if (bot) Object.assign(newBot, {
-        username: bot.username,
-        discriminator: bot.discriminator,
-        avatar_url: bot.displayAvatarURL({ size: 256 }),
-        banner_url: bot.bannerURL({ size: 1024, format: 'png' })
-      });
+      const botHashes = await getUserHashes(this.id);
 
       return {
         ...newBot,
         id: this.id,
+        username: this.data.username,
+        discriminator: this.data.discriminator,
+        flags: this.data.flags,
+        avatar: botHashes.avatar,
+        banner: botHashes.banner,
         short_description: this.short_description,
         description: this.description,
         invite_url: this.invite_url,

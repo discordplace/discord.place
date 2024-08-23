@@ -43,7 +43,8 @@ module.exports = {
           id: guild.id
         },
         user: {
-          id: request.user.id
+          id: request.user.id,
+          username: request.user.username
         },
         rating,
         content

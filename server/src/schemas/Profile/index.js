@@ -5,13 +5,18 @@ const slugValidation = require('@/validations/profiles/slug');
 const birthdayValidation = require('@/validations/profiles/birthday');
 const colorsValidation = require('@/validations/profiles/colors');
 const getBadges = require('@/utils/profiles/getBadges');
+const getUserHashes = require('@/utils/getUserHashes');
 
 const ProfileSchema = new Schema({
   user: {
     id: {
       type: String,
       required: true
-    }
+    },
+    data: {
+      type: Object,
+      required: false
+    } 
   },
   occupation: {
     type: String,
@@ -126,24 +131,18 @@ const ProfileSchema = new Schema({
     async toPubliclySafe() {
       const User = require('@/schemas/User');
       const newProfile = {};
-  
-      if (!client.forceFetchedUsers.has(this.user.id)) {
-        await client.users.fetch(this.user.id, { force: true }).catch(() => null);
-        client.forceFetchedUsers.set(this.user.id, true);
-      }
 
-      const user = client.users.cache.get(this.user.id);      
-      if (user) Object.assign(newProfile, {
-        username: user.username,
-        global_name: user.globalName,
-        avatar_url: user.displayAvatarURL({ size: 256 }),
-        banner_url: user.bannerURL({ size: 512, format: 'png' })
-      });
+      const userHashes = await getUserHashes(this.user.id);
 
       const premiumUserData = await User.findOne({ id: this.user.id, subscription: { $ne: null } });
 
       return {
         ...newProfile,
+        id: this.user.id,
+        username: this.user.data.username,
+        global_name: this.user.data.global_name,
+        avatar: userHashes.avatar,
+        banner: userHashes.banner,
         occupation: this.occupation,
         gender: this.gender,
         location: this.location,

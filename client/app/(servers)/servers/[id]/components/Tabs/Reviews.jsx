@@ -2,7 +2,6 @@
 
 import Pagination from '@/app/components/Pagination';
 import useAuthStore from '@/stores/auth';
-import Image from 'next/image';
 import { Suspense, useEffect, useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
 import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline } from 'react-icons/ti';
@@ -14,6 +13,7 @@ import cn from '@/lib/cn';
 import Link from 'next/link';
 import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Reviews({ server }) {
   const [page, setPage] = useState(1);
@@ -135,11 +135,12 @@ export default function Reviews({ server }) {
         ) : (
           <>
             <div className="flex gap-x-4 w-[35%]">
-              <Image
-                src={user?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}
+              <UserAvatar
+                id={user?.id}
+                hash={user?.avatar}
+                size={256}
                 width={48}
                 height={48}
-                alt={`${user?.username || 'Unknown'}'s Avatar`}
                 className='rounded-2xl w-[48px] h-[48px]'
               />
 
@@ -231,11 +232,12 @@ export default function Reviews({ server }) {
               href={`/profile/u/${review.user.id}`} 
               className='transition-opacity hover:opacity-70'
             >
-              <Image
-                src={review.user.avatar_url}
+              <UserAvatar
+                id={review.user.id}
+                hash={review.user.avatar}
+                size={64}
                 width={48}
                 height={48}
-                alt={`${review.user.username}'s Avatar`}
                 className='rounded-2xl w-[48px] h-[48px]'
               />
             </Link>
@@ -251,12 +253,12 @@ export default function Reviews({ server }) {
               </Link>
 
               <div className='flex items-center text-sm font-semibold text-tertiary'>
-                <span className='text-xl text-primary'>{review.rating}</span>/5
+                <span className='text-xl text-primary'>{review.rating}</span>/5 <TiStarFullOutline className='ml-2 text-yellow-500' />
               </div>
             </div>
           </div>
           
-          <div className="flex flex-col justify-between flex-1 w-full font-medium whitespace-pre-wrap sm:gap-y-0 gap-y-2 text-secondary">
+          <div className="flex flex-col justify-between flex-1 w-full font-medium max-w-[500px] break-words whitespace-pre-wrap sm:gap-y-0 gap-y-2 text-secondary">
             <span className='text-xs font-medium text-tertiary'>
               {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
             </span>

@@ -1,7 +1,6 @@
 'use client';
 
 import useAuthStore from '@/stores/auth';
-import Image from 'next/image';
 import Link from 'next/link';
 import { MdOutlineOpenInNew } from 'react-icons/md';
 import { GoHeartFill } from 'react-icons/go';
@@ -16,6 +15,8 @@ import { useShallow } from 'zustand/react/shallow';
 import useGeneralStore from '@/stores/general';
 import { useRouter } from 'next-nprogress-bar';
 import useLanguageStore, { t } from '@/stores/language';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function MyAccount() {
   const user = useAuthStore(state => state.user);
@@ -114,24 +115,25 @@ export default function MyAccount() {
         </p>
 
         <div className='flex max-w-[500px] flex-col w-full p-2 mt-2 h-max rounded-3xl bg-secondary'>
-          {user?.banner_url ? (
-            <Image
-              src={user.banner_url}
-              alt={`${user.username}'s banner`}
-              className='rounded-xl'
+          {user?.banner ? (
+            <UserBanner
+              hash={user.banner}
+              size={512}
               width={500}
               height={150}
+              className='w-full h-[150px] rounded-2xl object-cover'
             />
           ) : (
             <div className='w-full h-[150px] rounded-2xl bg-quaternary' />
           )}
 
-          <Image
-            src={user?.avatar_url}
-            alt={`${user?.username}'s avatar`}
-            className='relative -mb-20 border-8 border-[rgba(var(--bg-secondary))] rounded-full bottom-10 left-4'
+          <UserAvatar
+            id={user.id}
+            hash={user.avatar}
+            size={96}
             width={80}
             height={80}
+            className='relative -mb-20 border-8 border-[rgba(var(--bg-secondary))] rounded-full bottom-10 left-4'
           />
 
           <div className='mt-2 ml-28'>

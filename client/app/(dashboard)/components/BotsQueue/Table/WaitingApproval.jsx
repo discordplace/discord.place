@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Pagination from '@/app/components/Pagination';
-import Image from 'next/image';
 import config from '@/config';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -14,6 +13,7 @@ import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import Link from 'next/link';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function WaitingApproval({ data }) {
   const [page, setPage] = useState(1);
@@ -101,9 +101,10 @@ export default function WaitingApproval({ data }) {
                       className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
                       href={`/bots/${bot.id}`}
                     >
-                      <Image
-                        src={bot.avatar_url}
-                        alt={`${bot.username}'s avatar`}
+                      <UserAvatar
+                        id={bot.id}
+                        hash={bot.avatar}
+                        size={32}
                         width={32}
                         height={32}
                         className='rounded-full'
@@ -121,17 +122,19 @@ export default function WaitingApproval({ data }) {
                       className='flex items-center transition-opacity gap-x-2 hover:opacity-70'
                       href={`/profile/u/${bot.owner.id}`}
                     >
-                      <Image
-                        src={bot.owner.avatar_url}
-                        alt={`${bot.owner.username}'s avatar`}
+                      <UserAvatar
+                        id={bot.owner.id}
+                        hash={bot.owner.avatar}
+                        size={32}
                         width={24}
                         height={24}
                         className='rounded-full'
                       />
 
-                      <span className='text-sm font-medium'>
-                        {bot.owner.username}
-                      </span>
+                      <div className='flex flex-col gap-y-1'>
+                        <h2 className='text-base font-semibold'>{bot.owner.username}</h2>
+                        <span className='text-xs font-medium text-tertiary'>{bot.owner.id}</span>
+                      </div>
                     </Link>
                   </td>
 

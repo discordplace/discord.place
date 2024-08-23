@@ -1,6 +1,6 @@
 'use client';
 
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import { TbLoader } from 'react-icons/tb';
 import { MdSave } from 'react-icons/md';
 import { useEffect, useState } from 'react';
@@ -194,11 +194,12 @@ export default function Content({ server }) {
             
             <div className='flex items-center mt-2 font-medium gap-x-2 text-secondary'>
               <ServerIcon
-                name={server.name}
-                icon_url={server.icon_url}
+                id={server.id}
+                hash={server.icon}
+                size={32}
                 width={18}
                 height={18}
-                className='rounded-full bg-quaternary [&>h2]:text-xs'
+                className='rounded-full bg-quaternary'
               />
 
               {server.name}

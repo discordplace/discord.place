@@ -15,19 +15,10 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      const responseData = {
+      return response.json({
+        username: bot.data.username,
         short_description: bot.short_description
-      };
-
-      if (!client.forceFetchedUsers.has(id)) {
-        await client.users.fetch(id, { force: true }).catch(() => null);
-        client.forceFetchedUsers.set(id, true);
-      }
-
-      const botUser = client.users.cache.get(id);   
-      if (botUser) Object.assign(responseData, { username: botUser.username });
-
-      return response.json(responseData);
+      });
     }
   ]
 };

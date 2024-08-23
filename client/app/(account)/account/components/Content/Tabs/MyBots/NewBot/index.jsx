@@ -250,8 +250,8 @@ export default function NewBot() {
             </h2>
 
             <p className='flex flex-col text-sm sm:text-base gap-y-1 text-tertiary'>
-              {t('accountPage.tabs.myServers.sections.addBot.fields.contentPolicy.description', {
-                note: <span className='text-xs'>{t('accountPage.tabs.myServers.sections.addBot.fields.contentPolicy.note')}</span>
+              {t('accountPage.tabs.myBots.sections.addBot.fields.contentPolicy.description', {
+                note: <span className='text-xs'>{t('accountPage.tabs.myBots.sections.addBot.fields.contentPolicy.note')}</span>
               })}
             </p>
 

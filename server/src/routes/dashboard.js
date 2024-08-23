@@ -119,7 +119,7 @@ module.exports = {
         const concatenatedEmojis = emojis.concat(emojiPacks);
         const sortedEmojis = concatenatedEmojis.sort((a, b) => b.createdAt - a.createdAt);
         
-        responseData.queue.emojis = await Promise.all(sortedEmojis.map(async emoji => await emoji.toPubliclySafe()));
+        responseData.queue.emojis = sortedEmojis.map(emoji => emoji.toPubliclySafe());
       }
 
       if (keys?.includes('bots')) {
@@ -133,7 +133,7 @@ module.exports = {
         if (!permissions.canApproveTemplates) return response.sendError('You do not have permission to approve templates.', 403);
 
         const templates = await Template.find().sort({ createdAt: -1 });
-        responseData.queue.templates = await Promise.all(templates.map(async template => await template.toPubliclySafe()));
+        responseData.queue.templates = templates.map(template => template.toPubliclySafe());
       }
 
       if (keys?.includes('sounds')) {
@@ -165,30 +165,7 @@ module.exports = {
         if (!permissions.canDeleteBotDenies) return response.sendError('You do not have permission to delete bot denies.', 403);
 
         const botDenies = await BotDeny.find().sort({ createdAt: -1 });
-        responseData.botDenies = await Promise.all(botDenies.map(async botDeny => {
-          const user = client.users.cache.get(botDeny.user.id) || await client.users.fetch(botDeny.user.id).catch(() => null);
-          const bot = client.users.cache.get(botDeny.bot.id) || await client.users.fetch(botDeny.bot.id).catch(() => null);
-          const reviewer = client.users.cache.get(botDeny.reviewer.id) || await client.users.fetch(botDeny.reviewer.id).catch(() => null);
-
-          return {
-            ...botDeny.toJSON(),
-            user: user ? {
-              id: user.id,
-              username: user.username,
-              avatar_url: user.displayAvatarURL({ dynamic: true, size: 256 })
-            } : botDeny.user.id,
-            bot: bot ? {
-              id: bot.id,
-              username: bot.username,
-              avatar_url: bot.displayAvatarURL({ dynamic: true, size: 256 })
-            } : botDeny.bot.id,
-            reviewer: reviewer ? {
-              id: reviewer.id,
-              username: reviewer.username,
-              avatar_url: reviewer.displayAvatarURL({ dynamic: true, size: 256 })
-            } : botDeny.reviewer.id
-          };
-        }));
+        responseData.botDenies = botDenies;
       }
 
       if (keys?.includes('timeouts')) {
@@ -199,48 +176,14 @@ module.exports = {
         const concatenatedTimeouts = botTimeouts.concat(serverTimeouts);
         const sortedTimeouts = concatenatedTimeouts.sort((a, b) => b.createdAt - a.createdAt);
 
-        responseData.timeouts = await Promise.all(sortedTimeouts.map(async timeout => {
-          const user = client.users.cache.get(timeout.user.id) || await client.users.fetch(timeout.user.id).catch(() => null);
-
-          if (timeout.bot) {
-            const bot = client.users.cache.get(timeout.bot.id) || await client.users.fetch(timeout.bot.id).catch(() => null);
-            return {
-              ...timeout.toJSON(),
-              user: user ? {
-                id: user.id,
-                username: user.username,
-                avatar_url: user.displayAvatarURL({ dynamic: true, size: 256 })
-              } : timeout.user.id,
-              bot: bot ? {
-                id: bot.id,
-                username: bot.username,
-                avatar_url: bot.displayAvatarURL({ dynamic: true, size: 256 })
-              } : timeout.bot.id
-            };
-          } else {
-            const server = client.guilds.cache.get(timeout.guild.id);
-            return {
-              ...timeout.toJSON(),
-              user: user ? {
-                id: user.id,
-                username: user.username,
-                avatar_url: user.displayAvatarURL({ dynamic: true, size: 256 })
-              } : timeout.user.id,
-              guild: server ? {
-                id: server.id,
-                name: server.name,
-                icon_url: server.iconURL({ dynamic: true, size: 256 })
-              } : timeout.guild.id
-            };
-          }
-        }));
+        responseData.timeouts = sortedTimeouts;
       }
 
       if (keys?.includes('quarantines')) {
         if (!permissions.canViewQuarantines && !permissions.canCreateQuarantines && !permissions.canDeleteQuarantines) return response.sendError('You do not have permission to view, create, or delete quarantines.', 403);
 
         const quarantines = await Quarantine.find().sort({ createdAt: -1 });
-        responseData.quarantines = await Promise.all(quarantines.map(async quarantine => await quarantine.toPubliclySafe()));
+        responseData.quarantines = quarantines.map(quarantine => quarantine.toPubliclySafe());
       }
 
       if (keys?.includes('links')) {

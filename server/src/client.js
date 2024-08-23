@@ -61,7 +61,6 @@ module.exports = class Client {
     });
 
     this.client.fetchedGuilds = new Discord.Collection();
-    this.client.forceFetchedUsers = new Discord.Collection();
     this.client.blockedIps = new Discord.Collection();
     this.client.currentlyUploadingEmojiPack = new Discord.Collection();
     this.client.humanVerificationData = new Discord.Collection();

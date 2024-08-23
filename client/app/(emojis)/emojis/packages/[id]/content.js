@@ -3,7 +3,6 @@
 import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
 import AnimatedCount from '@/app/components/AnimatedCount';
 import config from '@/config';
-import Image from 'next/image';
 import { LuShieldQuestion } from 'react-icons/lu';
 import FaQs from '@/app/(emojis)/emojis/packages/[id]/components/FaQs';
 import { MdEmojiEmotions } from 'react-icons/md';
@@ -18,6 +17,7 @@ import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import useLanguageStore, { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ emoji }) {
   const language = useLanguageStore(state => state.language);
@@ -133,11 +133,12 @@ export default function Content({ emoji }) {
               </h1>
 
               <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                <Image
-                  src={emoji.user.avatar_url}
+                <UserAvatar
+                  id={emoji.user.id}
+                  hash={emoji.user.avatar}
+                  size={32}
                   width={18}
                   height={18}
-                  alt={`@${emoji.user.username} Avatar's`}
                   className='rounded-full'
                 />
 

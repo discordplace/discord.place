@@ -28,7 +28,7 @@ module.exports = {
 
       if (!template.approved && !permissions.canApprove && !permissions.canDelete) return response.sendError('You can\'t view this template until confirmed.', 404);
 
-      const publiclySafe = await template.toPubliclySafe();
+      const publiclySafe = template.toPubliclySafe();
 
       Object.assign(publiclySafe, { permissions });
 

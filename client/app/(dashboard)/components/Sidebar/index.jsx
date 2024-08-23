@@ -29,6 +29,7 @@ import { MdSync } from 'react-icons/md';
 import { CgBlock } from 'react-icons/cg';
 import { PiWaveformBold } from 'react-icons/pi';
 import { FiLink } from 'react-icons/fi';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -301,12 +302,13 @@ export default function Sidebar() {
         <div className='flex items-center gap-x-4'>        
           {loggedIn && (
             <>
-              <Image
-                src={user.avatar_url}
+              <UserAvatar
+                id={user.id}
+                hash={user.avatar}
+                size={32}
                 width={32}
                 height={32}
                 className='rounded-full'
-                alt={`${user.username}'s avatar`}
               />
 
               <div className={cn(

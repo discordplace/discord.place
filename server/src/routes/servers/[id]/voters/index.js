@@ -1,6 +1,7 @@
 const { query, param, validationResult, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const Server = require('@/schemas/Server');
+const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
   get: [
@@ -33,13 +34,15 @@ module.exports = {
       const totalPages = Math.ceil(voters.length / limit);
       const maxReached = voters.length <= skip + limit;
       const fetchedVotes = await Promise.all(paginatedVoters.map(async voter => {
-        const user = client.users.cache.get(voter.user.id) || await client.users.fetch(voter.user.id).catch(() => null);
+        const userHashes = await getUserHashes(voter.user.id);
 
         return {
           id: voter.id,
-          user_id: voter.user.id,
-          username: user?.username || 'Unknown',
-          avatar_url: user?.displayAvatarURL({ format: 'png', size: 256 }) || 'https://cdn.discordapp.com/embed/avatars/0.png',
+          user: {
+            id: voter.user.id,
+            username: voter.user.username,
+            avatar: userHashes.avatar
+          },
           votes: voter.vote
         };
       }));

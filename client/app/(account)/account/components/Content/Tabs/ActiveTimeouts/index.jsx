@@ -1,11 +1,11 @@
 'use client';
 
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
-import Image from 'next/image';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
 import useLanguageStore, { t } from '@/stores/language';
@@ -55,38 +55,36 @@ export default function ActiveTimeouts() {
 
               <div className='flex flex-col border-2 divide-y border-primary rounded-xl'>
                 {data.timeouts.servers.map((timeout, index) => (
-                  <div key={timeout._id} className={cn(
-                    'flex items-center flex-wrap p-3 gap-4 justify-center sm:justify-between bg-secondary border-y-primary',
-                    index === data.timeouts.servers.length - 1 ? 'rounded-b-xl' : '',
-                    index === 0 ? 'rounded-t-xl' : ''
-                  )}>
+                  <div
+                    key={timeout.id}
+                    className={cn(
+                      'flex items-center flex-wrap p-3 gap-4 justify-center sm:justify-between bg-secondary border-y-primary',
+                      index === data.timeouts.servers.length - 1 ? 'rounded-b-xl' : '',
+                      index === 0 ? 'rounded-t-xl' : ''
+                    )}
+                  >
                     <Link
                       className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                      href={`/servers/${timeout.guild.id}`}
+                      href={`/servers/${timeout.id}`}
                     >
-                      {timeout.guild.name ? (
-                        <>
-                          <ServerIcon
-                            width={32}
-                            height={32}
-                            icon_url={timeout.guild.icon_url}
-                            name={timeout.guild.name}
-                            className='[&>h2]:text-sm bg-quaternary'
-                          />
-                      
-                          <div className='flex flex-col'>
-                            <p className='text-sm font-bold text-secondary'>
-                              {timeout.guild.name}
-                            </p>
+                      <ServerIcon
+                        id={timeout.id}
+                        hash={timeout.icon}
+                        size={32}
+                        width={32}
+                        height={32}
+                        className='rounded-lg bg-quaternary'
+                      />
+                  
+                      <div className='flex flex-col'>
+                        <p className='text-sm font-bold text-secondary'>
+                          {timeout.name}
+                        </p>
 
-                            <p className='text-xs text-tertiary'>
-                              {timeout.guild.id}
-                            </p>
-                          </div>
-                        </>
-                      ) : (
-                        timeout.guild.id
-                      )}
+                        <p className='text-xs text-tertiary'>
+                          {timeout.id}
+                        </p>
+                      </div>
                     </Link>
 
                     <div className='flex flex-col items-center sm:items-end'>
@@ -123,20 +121,24 @@ export default function ActiveTimeouts() {
 
               <div className='flex flex-col border-2 divide-y border-primary rounded-xl'>
                 {data.timeouts.bots.map((timeout, index) => (
-                  <div key={timeout._id} className={cn(
-                    'flex items-center flex-wrap justify-center p-3 gap-4 sm:justify-between bg-secondary border-y-primary',
-                    index === data.timeouts.bots.length - 1 ? 'rounded-b-xl' : '',
-                    index === 0 ? 'rounded-t-xl' : ''
-                  )}>
+                  <div
+                    key={timeout.id}
+                    className={cn(
+                      'flex items-center flex-wrap justify-center p-3 gap-4 sm:justify-between bg-secondary border-y-primary',
+                      index === data.timeouts.bots.length - 1 ? 'rounded-b-xl' : '',
+                      index === 0 ? 'rounded-t-xl' : ''
+                    )}
+                  >
                     <Link
                       className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                      href={`/bots/${timeout.bot.id}`}
+                      href={`/bots/${timeout.id}`}
                     >
-                      {timeout.bot.username ? (
+                      {timeout.username ? (
                         <>
-                          <Image
-                            src={timeout.bot.avatar_url}
-                            alt={timeout.bot.username}
+                          <UserAvatar
+                            id={timeout.id}
+                            hash={timeout.avatar}
+                            size={32}
                             width={32}
                             height={32}
                             className='rounded-lg'
@@ -144,16 +146,16 @@ export default function ActiveTimeouts() {
 
                           <div className='flex flex-col'>
                             <p className='text-sm font-bold text-secondary'>
-                              {timeout.bot.username}
+                              {timeout.username}
                             </p>
 
                             <p className='text-xs text-tertiary'>
-                              {timeout.bot.id}
+                              {timeout.id}
                             </p>
                           </div>
                         </>
                       ) : (
-                        timeout.bot.id
+                        timeout.id
                       )}
                     </Link>
 

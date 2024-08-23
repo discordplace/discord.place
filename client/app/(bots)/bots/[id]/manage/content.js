@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
 import { MdSave } from 'react-icons/md';
@@ -18,6 +17,7 @@ import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import { useRouter } from 'next-nprogress-bar';
 import { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ bot }) {
   const [savingChanges, setSavingChanges] = useState(false);
@@ -188,9 +188,10 @@ export default function Content({ bot }) {
             </p>
             
             <div className='flex items-center mt-2 font-medium gap-x-2 text-secondary'>
-              <Image
-                src={bot.avatar_url}
-                alt={`${bot.username}'s avatar`}
+              <UserAvatar
+                id={bot.id}
+                hash={bot.avatar}
+                size={32}
                 width={18}
                 height={18}
                 className="rounded-full bg-secondary"

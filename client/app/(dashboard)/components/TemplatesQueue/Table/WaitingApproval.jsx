@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Pagination from '@/app/components/Pagination';
-import Image from 'next/image';
 import config from '@/config';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -99,21 +98,11 @@ export default function WaitingApproval({ data }) {
                   <td className='px-6 py-4'>
                     {template.user?.username ? (
                       <Link
-                        className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
+                        className='flex flex-col transition-opacity gap-y-1 gap-x-4 hover:opacity-70'
                         href={`/profile/u/${template.user.id}`}
                       >
-                        <Image
-                          src={template.user.avatar_url}
-                          alt={`${template.user.username}'s avatar`}
-                          width={32}
-                          height={32}
-                          className='rounded-full'
-                        />
-
-                        <div className='flex flex-col gap-y-1'>
-                          <h2 className='text-base font-semibold'>{template.user.username}</h2>
-                          <span className='text-xs font-medium text-tertiary'>{template.user.id}</span>
-                        </div>
+                        <h2 className='text-base font-semibold'>{template.user.username}</h2>
+                        <span className='text-xs font-medium text-tertiary'>{template.user.id}</span>
                       </Link>
                     ) : template.user.id}
                   </td>

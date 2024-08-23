@@ -1,11 +1,11 @@
 'use client';
 
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ErrorState from '@/app/components/ErrorState';
 import useAccountStore from '@/stores/account';
 import Link from 'next/link';
 import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
 import NewBot from '@/app/(account)/account/components/Content/Tabs/MyBots/NewBot';
-import Image from 'next/image';
 import { LuPlus } from 'react-icons/lu';
 import config from '@/config';
 import Countdown from '@/app/components/Countdown';
@@ -70,9 +70,10 @@ export default function MyBots() {
                   href={`/bots/${bot.id}`}
                 >
                   <div className='relative w-12 h-12'>
-                    <Image
-                      src={bot.avatar_url}
-                      alt={`${bot.username}'s avatar`}
+                    <UserAvatar
+                      id={bot.id}
+                      hash={bot.avatar}
+                      size={64}
                       width={48}
                       height={48}
                       className='rounded-lg'
@@ -157,31 +158,28 @@ export default function MyBots() {
                 >
                   <h2 className='flex flex-wrap items-center text-lg font-semibold gap-x-2'>
                     <FaCircleExclamation />
-                    <Image
-                      src={deny.bot.avatar_url}
-                      alt={`${deny.bot.username}'s avatar`}
+                    
+                    <UserAvatar
+                      id={deny.bot.id}
+                      hash={deny.bot.avatar}
+                      size={32}
                       width={24}
                       height={24}
                       className='rounded-full'
                     />
+
                     {deny.bot.username}#{deny.bot.discriminator}
                   </h2>
   
-                  {t('accountPage.tabs.myBots.sections.pastDenials.deniedBy', {
-                    moderator: <div className='flex flex-wrap text-sm font-medium text-tertiary gap-x-1'>
-                      <Image
-                        src={deny.reviewer.avatar_url}
-                        alt={`${deny.reviewer.username}'s avatar`}
-                        width={20}
-                        height={20}
-                        className='rounded-full'
-                      />
-
-                      <span className='text-secondary'>
-                        @{deny.reviewer.username}
-                      </span>
-                    </div>
-                  })}
+                  <div className='flex flex-wrap text-sm font-medium text-tertiary gap-x-1'>
+                    {t('accountPage.tabs.myBots.sections.pastDenials.deniedBy', {
+                      moderator: (
+                        <span className='text-secondary'>
+                          @{deny.reviewer.username}
+                        </span>
+                      )
+                    })}
+                  </div>
 
                   <div className='flex flex-col gap-y-1'>
                     <h3 className='text-lg font-semibold text-secondary'>
@@ -196,7 +194,7 @@ export default function MyBots() {
                   <div className='mt-2 text-xs text-tertiary'>
                     {new Date(deny.createdAt).getTime() + 21600000 > Date.now() ? (
                       <span>
-                        {t('accountPage.tabs.myBots.sections.pastDenials.expiresIn', {
+                        {t('accountPage.tabs.myBots.sections.pastDenials.countdown.expiresIn', {
                           countdown: (
                             <Countdown 
                               date={new Date(deny.createdAt).getTime() + 21600000} 
@@ -208,7 +206,7 @@ export default function MyBots() {
                           )
                         })}
                       </span>
-                    ) : t('accountPage.tabs.myBots.sections.pastDenials.expired')}
+                    ) : t('accountPage.tabs.myBots.sections.pastDenials.countdown.expired')}
                   </div>
                 </div>
               ))

@@ -17,6 +17,7 @@ const getValidationError = require('@/utils/getValidationError');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const DashboardData = require('@/schemas/Dashboard/Data');
+const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
   get: [
@@ -37,19 +38,20 @@ module.exports = {
       const rewards = await Reward.find({ 'guild.id': id });
 
       const voiceActivity = await VoiceActivity.findOne({ 'guild.id': id });
-      const reviews = await Promise.all(
-        (await Review.find({ 'server.id': id, approved: true }).sort({ createdAt: -1 }))
-          .map(async review => {
-            const user = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
-            if (user) return {
-              ...review.toJSON(),
-              user: {
-                id: user.id,
-                username: user.username,
-                avatar_url: user.displayAvatarURL({ format: 'png', size: 64 })
-              }
-            };
-          }));
+      const foundReviews = await Review.find({ 'server.id': id, approved: true }).sort({ createdAt: -1 });
+      const parsedReviews = await Promise.all(foundReviews
+        .map(async review => {
+          const userHashes = await getUserHashes(review.user.id);
+
+          return {
+            ...review.toJSON(),
+            user: {
+              id: review.user.id,
+              username: review.user.username,
+              avatar: userHashes.avatar
+            }
+          };
+        }));
 
       const badges = [];
       const foundPremium = await User.findOne({ 'id': guild.ownerId, subscription: { $ne: null } });
@@ -88,7 +90,9 @@ module.exports = {
       return response.json({
         ...await server.toPubliclySafe(),
         name: guild.name,
+        icon: guild.icon,
         icon_url: guild.iconURL(),
+        banner: guild.banner,
         banner_url: guild.bannerURL({ format: 'png', size: 2048 }),
         total_members: guild.memberCount,
         total_members_in_voice: guild.members.cache.filter(member => !member.bot && member.voice.channel).size,
@@ -98,13 +102,14 @@ module.exports = {
         vote_timeout: request.user ? (voteTimeout || null) : null,
         badges,
         voice_activity: voiceActivity ? voiceActivity.data : null,
-        reviews,
-        has_reviewed: request.user ? !!reviews.find(review => review.user.id === request.user.id) : null,
+        reviews: parsedReviews,
+        has_reviewed: request.user ? !!parsedReviews.find(review => review.user.id === request.user.id) : null,
         permissions,
         can_set_reminder: !!(request.user && !reminder && voteTimeout && memberInGuild && !tenMinutesPassedAfterVote),
         ownerId: guild.ownerId,
         rewards: rewards.map(reward => {
           const role = guild.roles.cache.get(reward.role.id);
+          
           if (role) return {
             id: reward._id,
             role: {

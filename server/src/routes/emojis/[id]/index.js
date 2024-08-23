@@ -3,6 +3,7 @@ const { param, validationResult, matchedData } = require('express-validator');
 const Emoji = require('@/schemas/Emoji');
 const idValidation = require('@/validations/emojis/id');
 const shuffle = require('lodash.shuffle');
+const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
   get: [
@@ -39,10 +40,13 @@ module.exports = {
       });
       const shuffledEmojis = shuffle(similarEmojis);
       const limitedEmojis = shuffledEmojis.slice(0, 4);
-      const publiclySafeEmojis = await Promise.all(limitedEmojis.map(async e => await e.toPubliclySafe()));
+      const publiclySafeEmojis = limitedEmojis.map(e => e.toPubliclySafe());
       
-      const publiclySafe = await emoji.toPubliclySafe();
+      const publiclySafe = emoji.toPubliclySafe();
       Object.assign(publiclySafe, { permissions });
+
+      const userHashes = await getUserHashes(emoji.user.id);
+      publiclySafe.user.avatar = userHashes.avatar;
 
       return response.json({
         ...publiclySafe,

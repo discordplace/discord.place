@@ -8,8 +8,6 @@ import { MdKeyboardVoice, MdUpdate } from 'react-icons/md';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import { IoHeart } from 'react-icons/io5';
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import Image from 'next/image';
 import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
 import getRelativeTime from '@/lib/getRelativeTime';
@@ -17,6 +15,8 @@ import { BsFire } from 'react-icons/bs';
 import config from '@/config';
 import { GiInfinity } from 'react-icons/gi';
 import useLanguageStore, { t } from '@/stores/language';
+import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 
 export default function ServerCard(props) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -91,10 +91,11 @@ export default function ServerCard(props) {
 
       <div className='flex w-full h-full z-[20] relative border-4 border-primary rounded-3xl'>
         {props.server.banner_url ? (
-          <Image
+          <ServerBanner
+            id={props.server.id}
+            hash={props.server.banner}
             className='bg-quaternary absolute top-0 left-0 z-[1] w-full h-[calc(100%_-_1px)] rounded-[1.25rem]'
-            src={props.server.banner_url}
-            alt={`${props.server.name}'s banner`}
+            size={512}
             width={350}
             height={200}
           />
@@ -105,13 +106,14 @@ export default function ServerCard(props) {
         <div className='bg-secondary group-hover:bg-tertiary transition-colors w-full h-[calc(100%_-_30px)] z-[10] relative top-[30px] rounded-b-[1.25rem] rounded-t-[1.5rem]'>
           <div className='relative'>
             <ServerIcon
-              icon_url={props.server.icon_url}
-              name={props.server.name}
+              id={props.server.id}
+              hash={props.server.icon}
+              size={64}
               width={64}
               height={64}
               className={cn(
-                props.server.icon_url ? 'bg-secondary group-hover:bg-tertiary' : '[&>h2]:text-xl',
-                'absolute top-[-25px] left-4 border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl'
+                'absolute top-[-25px] left-4 border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl',
+                props.server.icon && 'bg-secondary group-hover:bg-tertiary'
               )}
             />
 

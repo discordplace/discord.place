@@ -12,6 +12,8 @@ import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers
 import Script from 'next/script';
 import Graph from '@/app/(profiles)/profile/[slug]/components/sections/Graph';
 import useThemeStore from '@/stores/theme';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ profile }) {
   const theme = useThemeStore(state => state.theme);
@@ -32,14 +34,15 @@ export default function Content({ profile }) {
           
       <div className='flex flex-col max-w-[1000px] w-full mb-8 px-2 lg:px-0'>
         <div className='relative bg-secondary w-full h-[300px] rounded-xl'>
-          {profile.banner_url && (
+          {profile.banner && (
             <>
-              <MotionImage
-                src={profile.banner_url}
-                alt={`${profile.username}'s banner`}
+              <UserBanner
+                id={profile.id}
+                hash={profile.banner}
                 className='absolute top-0 left-0 w-full h-full rounded-xl z-[1] object-cover'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                size={2048}
                 width={2048}
                 height={2048}
               />
@@ -49,9 +52,10 @@ export default function Content({ profile }) {
           )}
 
           <div className='absolute w-[calc(100%_-_2.5rem)] -bottom-14 left-10 z-[3]'>
-            <MotionImage
-              src={profile.avatar_url}
-              alt={`${profile.username}'s avatar`}
+            <UserAvatar
+              id={profile.id}
+              hash={profile.avatar}
+              size={256}
               width={150}
               height={150}
               initial={{ opacity: 0, y: 20 }}

@@ -6,6 +6,7 @@ const getValidationError = require('@/utils/getValidationError');
 const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
 const Discord = require('discord.js');
+const User = require('@/schemas/User');
 
 module.exports = {
   post: [
@@ -51,21 +52,27 @@ module.exports = {
 
       const quarantineTime = ms(time);
       
+      const requestUser = await User.findOne({ id: request.user.id });
+
       const quarantineData = {
         type,
         restriction,
         reason,
-        created_by: request.user.id,
+        created_by: {
+          id: request.user.id,
+          username: requestUser.data.username
+        },
         expire_at: quarantineTime ? new Date(Date.now() + quarantineTime) : null
       };
 
       if (type === 'USER_ID') {
-        const user = client.users.cache.get(value) || await client.users.fetch(value).catch(() => null);
+        const user = await client.users.fetch(value).catch(() => null);
         if (!user) return response.sendError('User not found.', 404);
 
         Object.assign(quarantineData, { 
           user: {
-            id: user.id
+            id: user.id,
+            username: user.username
           }
         });
       }

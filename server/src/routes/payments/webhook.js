@@ -12,6 +12,8 @@ const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
 const Discord = require('discord.js');
 const decrypt = require('@/utils/encryption/decrypt');
+const getImageFromHash = require('@/utils/getImageFromHash');
+const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
   post: [
@@ -92,16 +94,9 @@ module.exports = {
 
               await new BotVoteTripleEnabled({ id: decryptedData }).save();
 
-              var botUser;
-      
-              if (!client.forceFetchedUsers.has(decryptedData)) {
-                await client.users.fetch(decryptedData, { force: true }).catch(() => null);
-                client.forceFetchedUsers.set(decryptedData, true);
-              
-                botUser = client.users.cache.get(decryptedData);
-              }
+              var userHashes = await getUserHashes(bot.id);
 
-              sendPurchaseMessage(colors.tripledVote, botUser?.tag || decryptedData, botUser?.displayAvatarURL?.(), 'Purchased tripled votes.');
+              sendPurchaseMessage(colors.tripledVote, bot.data.tag || decryptedData, getImageFromHash(bot.id, userHashes.avatar), 'Purchased tripled votes.');
             }
           }
         
@@ -131,16 +126,7 @@ module.exports = {
 
               await new StandedOutBot({ identifier: decryptedData }).save();
 
-              var botUser;
-      
-              if (!client.forceFetchedUsers.has(decryptedData)) {
-                await client.users.fetch(decryptedData, { force: true }).catch(() => null);
-                client.forceFetchedUsers.set(decryptedData, true);
-              
-                botUser = client.users.cache.get(decryptedData);
-              }
-
-              sendPurchaseMessage(colors.standedOut, botUser?.tag || decryptedData, botUser?.displayAvatarURL?.(), 'Purchased standed out.');
+              sendPurchaseMessage(colors.standedOut, bot.data.tag || decryptedData, getImageFromHash(bot.id, userHashes.avatar), 'Purchased standed out.');
             }
           }
 

@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { MdChevronLeft } from 'react-icons/md';
 import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
@@ -8,6 +7,7 @@ import DangerZone from '@/app/(profiles)/profile/[slug]/edit/components/DangerZo
 import VerifiedBadge from '@/app/(profiles)/profile/[slug]/edit/components/VerifiedBadge';
 import PatchVerifyButton from '@/app/(profiles)/profile/[slug]/edit/components/PatchVerifyButton';
 import { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ profile }) {
   return (
@@ -25,8 +25,15 @@ export default function Content({ profile }) {
           </div>
 
           <div className='flex flex-wrap items-center mt-16 gap-x-4'>
-            <Image src={profile.avatar_url} width={128} height={128} className='rounded-full w-[64px] h-[64px]' alt='User Avatar' />
-            
+            <UserAvatar
+              id={profile.id}
+              hash={profile.avatar}
+              size={128}
+              width={128}
+              height={128}
+              className='rounded-full w-[64px] h-[64px]'
+            />
+
             <div className='flex flex-col'>
               <div className='flex flex-wrap items-center gap-2'>
                 <h2 className='text-2xl font-semibold'>

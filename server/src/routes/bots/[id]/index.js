@@ -15,6 +15,7 @@ const Deny = require('@/schemas/Bot/Deny');
 const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
 const githubRepositoryValidation = require('@/validations/bots/githubRepository');
 const findRepository = require('@/utils/bots/findRepository');
+const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
   get: [
@@ -48,29 +49,29 @@ module.exports = {
 
       if (!bot.verified && !permissions.canDelete && !permissions.canEdit) return response.sendError('This bot is not verified yet.', 403);
 
-      const reviews = await Promise.all(
-        (await Review.find({ 'bot.id': id, approved: true }).sort({ createdAt: -1 }))
-          .map(async review => {
-            const user = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
-            if (user) return {
-              ...review.toJSON(),
-              user: {
-                id: user.id,
-                username: user.username,
-                avatar_url: user.displayAvatarURL({ format: 'png', size: 64 })
-              }
-            };
-          }));
+      const foundReviews = await Review.find({ 'bot.id': id, approved: true }).sort({ createdAt: -1 });
+      const parsedReviews = await Promise.all(foundReviews
+        .map(async review => {
+          const userHashes = await getUserHashes(review.user.id);
+            
+          return {
+            ...review.toJSON(),
+            user: {
+              id: review.user.id,
+              username: review.user.username,
+              avatar: userHashes.avatar
+            }
+          };
+        }));
 
       let vote_timeout = null;
       if (request.user) vote_timeout = await VoteTimeout.findOne({ 'user.id': request.user.id, 'bot.id': bot.id }) || null;
 
       const publiclySafeBot = await bot.toPubliclySafe();
-      const botUser = client.users.cache.get(bot.id);
       const badges = [];
-      const has_reviewed = reviews.some(review => review.user.id === request.user?.id);
+      const has_reviewed = parsedReviews.some(review => review.user.id === request.user?.id);
 
-      if (botUser.flags.toArray().includes('VerifiedBot')) badges.push('Verified');
+      if (new Discord.UserFlagsBitField(bot.data.flags).toArray().includes('VerifiedBot')) badges.push('Verified');
       if (publiclySafeBot.owner?.premium) badges.push('Premium');
 
       const github_repository = await findRepository(bot.github_repository);
@@ -80,7 +81,7 @@ module.exports = {
         permissions,
         badges,
         vote_timeout,
-        reviews,
+        reviews: parsedReviews,
         has_reviewed,
         github_repository: {
           value: bot.github_repository,
@@ -161,6 +162,12 @@ module.exports = {
 
       const bot = new Bot({
         id: user.id,
+        data: {
+          username: user.username,
+          discriminator: user.discriminator,
+          tag: user.tag,
+          flags: user.flags
+        },
         owner: {
           id: request.user.id
         },

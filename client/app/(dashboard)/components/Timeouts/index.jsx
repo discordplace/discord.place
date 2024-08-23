@@ -1,6 +1,5 @@
 import useDashboardStore from '@/stores/dashboard';
 import Pagination from '@/app/components/Pagination';
-import cn from '@/lib/cn';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { useState } from 'react';
@@ -9,9 +8,7 @@ import { LuTrash2 } from 'react-icons/lu';
 import { toast } from 'sonner';
 import deleteBotTimeout from '@/lib/request/bots/deleteTimeout';
 import deleteServerTimeout from '@/lib/request/servers/deleteTimeout';
-import Image from 'next/image';
 import Link from 'next/link';
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -87,8 +84,8 @@ export default function Timeouts() {
             <table className='w-full table-auto'>
               <thead className='text-left select-none bg-secondary'>
                 <tr>
-                  <th scope='col' className='px-6 py-4 font-semibold'>Bot/Server</th>
-                  <th scope='col' className='px-6 py-4 font-semibold'>User</th>
+                  <th scope='col' className='px-6 py-4 font-semibold'>Bot ID/Server ID</th>
+                  <th scope='col' className='px-6 py-4 font-semibold'>User ID</th>
                   <th scope='col' className='px-6 py-4 font-semibold'>Date</th>
                   <th scope='col' className='px-6 py-4 font-semibold'>Expire In</th>
                   {data.permissions.canDeleteTimeouts && <th scope='col' className='px-6 py-4 font-semibold'>Actions</th>}
@@ -103,68 +100,17 @@ export default function Timeouts() {
                         className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
                         href={timeout.bot ? `/bots/${timeout.bot?.id || timeout.bot}` : `/servers/${timeout.guild?.id || timeout.guild}`}
                       >
-                        {(timeout.bot?.username || timeout.guild?.name) ? (
-                          <>
-                            {timeout.bot ? (
-                              <Image
-                                src={timeout.bot.avatar_url}
-                                alt={`${timeout.bot.username}'s avatar`}
-                                width={32}
-                                height={32}
-                                className='rounded-full'
-                              />
-                            ) : (
-                              <ServerIcon
-                                width={32}
-                                height={32}
-                                icon_url={timeout.guild.icon_url}
-                                name={timeout.guild.name}
-                                className='rounded-full [&>h2]:text-sm'
-                              />
-                            )}
-
-                            <div className='flex flex-col gap-y-1'>
-                              <h2 className='flex items-center text-base font-semibold gap-x-2'>
-                                {timeout.bot ? timeout.bot.username : timeout.guild.name}
-
-                                <span className={cn(
-                                  'text-xs font-bold px-2 py-0.5 rounded-full text-tertiary',
-                                  timeout.bot ? 'bg-[#5865F2] text-white' : 'dark:bg-white/30 bg-black/30 text-black dark:text-white'
-                                )}>
-                                  {timeout.bot ? 'Bot' : 'Server'}
-                                </span>
-                              </h2>
-                              <span className='text-xs font-medium text-tertiary'>{timeout.bot ? timeout.bot.id : timeout.guild.id}</span>
-                            </div>
-                          </>
-                        ) : (
-                          timeout.bot || timeout.guild
-                        )}
+                        {timeout.bot?.id || timeout.guild.id}
                       </Link>
                     </td>
 
                     <td className='px-6 py-4'>
-                      {timeout.user?.username ? (
-                        <Link
-                          className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                          href={`/profile/u/${timeout.user.id}`}
-                        >
-                          <Image
-                            src={timeout.user.avatar_url}
-                            alt={`${timeout.user.username}'s avatar`}
-                            width={32}
-                            height={32}
-                            className='rounded-full'
-                          />
-
-                          <div className='flex flex-col gap-y-1'>
-                            <h2 className='text-base font-semibold'>{timeout.user.username}</h2>
-                            <span className='text-xs font-medium text-tertiary'>{timeout.user.id}</span>
-                          </div>
-                        </Link>
-                      ) : (
-                        timeout.user
-                      )}
+                      <Link
+                        className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
+                        href={`/profile/u/${timeout.user.id}`}
+                      >
+                        {timeout.user.id}
+                      </Link>
                     </td>
 
                     <td className='px-6 py-4'>
