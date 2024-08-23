@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const UserHashes = require('@/schemas/User/Hashes');
+const ServerHashes = require('@/schemas/Server/Hashes');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -21,10 +23,14 @@ module.exports = {
     try {
       switch (type) {
         case 'user': 
-          await client.users.fetch(id, { force: true });
+          var userHashes = (await UserHashes.findOne({ id })) || new UserHashes({ id });
+          await userHashes.getNewHashes();
+          
           break;
         case 'guild':
-          await client.guilds.fetch(id, { force: true });
+          var serverHashes = (await ServerHashes.findOne({ id })) || new ServerHashes({ id });
+          await serverHashes.getNewHashes();
+
           break;
       }
       
