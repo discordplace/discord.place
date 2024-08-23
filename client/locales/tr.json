@@ -886,18 +886,10 @@
       "noChanges": "Dün'e oranla değişiklik yok",
       "Total Servers": "{{count}} Sunucu",
       "Total Bots": "{{count}} Bot",
-      "profileLikes": {
-        "tooltip": "{{count}} Beğeni"
-      },
-      "profileViews": {
-        "tooltip": "{{count}} Ziyaretçi"
-      },
-      "voiceActivity": {
-        "tooltip": "{{count}} üye"
-      },
-      "monthlyVotes": {
-        "tooltip": "{{count}} Oy"
-      }
+      "profileLikes": "{{count}} Beğeni",
+      "profileViews": "{{count}} Ziyaretçi",
+      "voiceActivity": "{{count}} Üye",
+      "monthlyVotes": "{{count}} Oy"
     }
   },
   "editProfilePage": {

@@ -886,18 +886,10 @@
       "noChanges": "No changes since yesterday",
       "Total Servers": "{{count}} Servers",
       "Total Bots": "{{count}} Bots",
-      "profileLikes": {
-        "tooltip": "{{count}} Likes"
-      },
-      "profileViews": {
-        "tooltip": "{{count}} Views"
-      },
-      "voiceActivity": {
-        "tooltip": "{{count}} Members"
-      },
-      "monthlyVotes": {
-        "tooltip": "{{count}} Votes"
-      }
+      "profileLikes": "{{count}} Likes",
+      "profileViews": "{{count}} Views",
+      "voiceActivity": "{{count}} Members",
+      "monthlyVotes": "{{count}} Votes"
     }
   },
   "editProfilePage": {
