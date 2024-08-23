@@ -5,7 +5,7 @@ module.exports = {
     .setName('refresh')
     .setDescription('Refreshes the cached hashes of a user/guild.')
 
-    .addSubcommandGroup(group => group.setName('hashes').setDescription('Refreshes the cached hashes of a user/guild.')
+    .addSubcommand(subcommand => subcommand.setName('hashes').setDescription('Refreshes the cached hashes of a user/guild.')
       .addStringOption(option => option.setName('type').setDescription('The type of the cache.').setRequired(true).addChoices({ name: 'User', value: 'user' }, { name: 'Guild', value: 'guild' }))
       .addStringOption(option => option.setName('id').setDescription('The ID of the user/guild.').setRequired(true)))
 
