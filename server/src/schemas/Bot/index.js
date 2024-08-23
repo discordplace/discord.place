@@ -207,6 +207,12 @@ const BotSchema = new Schema({
             premium: ownerHasPremium ? true : false
           }
         });
+      } else {
+        Object.assign(newBot, {
+          owner: {
+            id: this.owner.id
+          }
+        });
       }
 
       const botHashes = await getUserHashes(this.id);
