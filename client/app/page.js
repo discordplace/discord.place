@@ -51,7 +51,7 @@ export default function Page() {
       <Square column='4' row='4' transparentEffectDirection='leftRightBottomTop' blockColor='rgba(var(--bg-quaternary))' />
       
       <h1 className={cn(
-        'px-3 mobile:px-0 font-bold leading-[2rem] sm:!leading-[5.5rem] cursor-default max-w-[400px] sm:max-w-[800px] text-center text-4xl sm:text-7xl select-none mt-[14rem]',
+        'px-4 mobile:px-0 font-bold leading-[2rem] sm:!leading-[5.5rem] cursor-default max-w-full mobile:max-w-[400px] sm:max-w-[800px] text-center text-4xl sm:text-7xl select-none mt-[14rem]',
         BricolageGrotesque.className
       )}>
         {t('home.title')} {' '}
