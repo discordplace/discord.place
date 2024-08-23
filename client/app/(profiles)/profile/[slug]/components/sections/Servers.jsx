@@ -47,8 +47,8 @@ export default function Servers({ profile }) {
                 },
                 joined_at: server.joined_at,
                 id: server.id,
-                banner_url: server.banner_url,
-                icon_url: server.icon_url,
+                banner: server.banner,
+                icon: server.icon,
                 name: server.name,
                 description: server.description,
                 category: server.category

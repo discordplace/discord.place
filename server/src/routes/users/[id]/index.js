@@ -106,8 +106,8 @@ module.exports = {
             return {
               id: guild.id,
               name: guild.name,
-              icon_url: guild.iconURL(),
-              banner_url: guild.bannerURL({ format: 'png', size: 2048 }),
+              icon: guild.icon,
+              banner: guild.banner,
               description: server.description,
               total_members: guild.memberCount,
               votes: server.votes,

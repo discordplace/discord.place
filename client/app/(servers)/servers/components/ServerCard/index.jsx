@@ -90,7 +90,7 @@ export default function ServerCard(props) {
       )}
 
       <div className='flex w-full h-full z-[20] relative border-4 border-primary rounded-3xl'>
-        {props.server.banner_url ? (
+        {props.server.banner ? (
           <ServerBanner
             id={props.server.id}
             hash={props.server.banner}
