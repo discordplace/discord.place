@@ -1,8 +1,9 @@
 'use client';
 
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
+import Image from 'next/image';
 
 export default function UnlistedCard({ server }) {
   const setCurrentlyAddingServer = useAccountStore(state => state.setCurrentlyAddingServer);
@@ -13,13 +14,24 @@ export default function UnlistedCard({ server }) {
       onClick={() => setCurrentlyAddingServer(server)}
     >
       <div className='relative w-12 h-12'>
-        <ServerIcon
-          width={48}
-          height={48}
-          icon_url={server.icon_url}
-          name={server.name}
-          className='[&>h2]:text-base'
-        />
+        {server.icon ? (
+          <ServerIcon
+            id={server.id}
+            hash={server.icon}
+            size={64}
+            width={48}
+            height={48}
+            className='rounded-xl'
+          />
+        ) : (
+          <Image
+            src='https://cdn.discordapp.com/embed/avatars/0.png'
+            alt='Server Icon'
+            width={48}
+            height={48}
+            className='rounded-xl'
+          />
+        )}
       </div>
 
       <div className='flex flex-col'>

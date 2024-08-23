@@ -79,6 +79,11 @@ export default function Footer() {
         {
           label: t('footer.blocks.1.links.5'),
           href: '/sounds'
+        },
+        {
+          label: 'Lantern',
+          href: 'https://github.com/discordplace/lantern',
+          new: true
         }
       ]
     },
@@ -211,6 +216,12 @@ export default function Footer() {
                 >
                   {link.icon && <link.icon />}
                   {link.label}
+
+                  {link.new && (
+                    <span className='px-2.5 py-0.5 text-xs font-bold bg-purple-500 rounded-full text-primary text-quaternary'>
+                      {t('footer.newBadge')}
+                    </span>
+                  )}
                 </Link>
               ))}
             </div>

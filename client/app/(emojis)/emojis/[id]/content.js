@@ -5,7 +5,6 @@ import ChatMockup from '@/app/(emojis)/emojis/[id]/components/ChatMockup';
 import AnimatedCount from '@/app/components/AnimatedCount';
 import useAuthStore from '@/stores/auth';
 import config from '@/config';
-import Image from 'next/image';
 import { LuShieldQuestion } from 'react-icons/lu';
 import FaQs from '@/app/(emojis)/emojis/[id]/components/FaQs';
 import { MdEmojiEmotions } from 'react-icons/md';
@@ -19,6 +18,7 @@ import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import useLanguageStore, { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ emoji }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -139,11 +139,12 @@ export default function Content({ emoji }) {
               </h1>
               
               <span className='flex items-center text-sm text-center text-primary gap-x-1'>
-                <Image
-                  src={emoji.user.avatar_url}
+                <UserAvatar
+                  id={emoji.user.id}
+                  hash={emoji.user.avatar}
+                  size={32}
                   width={18}
                   height={18}
-                  alt={`@${emoji.user.username}'s Avatar`}
                   className='rounded-full'
                 />
                 
@@ -156,7 +157,8 @@ export default function Content({ emoji }) {
         <div className='flex flex-col w-full gap-4 lg:flex-row'>
           <div className='flex lg:max-w-[400px] w-full flex-col'>
             <ChatMockup
-              avatar_url={loggedIn ? user.avatar_url : emoji.user.avatar_url}
+              id={loggedIn ? user.id : emoji.user.id}
+              avatar={loggedIn ? user.avatar : emoji.user.avatar}
               username={loggedIn ? user.username : emoji.user.username}
               message='Chipi chipi chapa chapa dubi dubi daba daba'
               emoji_url={config.getEmojiURL(emoji.id, emoji.animated)}
@@ -165,7 +167,8 @@ export default function Content({ emoji }) {
             />
             
             <ChatMockup
-              avatar_url={loggedIn ? user.avatar_url : emoji.user.avatar_url}
+              id={loggedIn ? user.id : emoji.user.id}
+              avatar={loggedIn ? user.avatar : emoji.user.avatar}
               username={loggedIn ? user.username : emoji.user.username}
               message='Chipi chipi chapa chapa dubi dubi daba daba'
               emoji_url={config.getEmojiURL(emoji.id, emoji.animated)}

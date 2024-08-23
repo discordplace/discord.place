@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Pagination from '@/app/components/Pagination';
-import Image from 'next/image';
 import Link from 'next/link';
 import { TbExternalLink } from 'react-icons/tb';
 import ErrorState from '@/app/components/ErrorState';
@@ -78,25 +77,13 @@ export default function Approved({ data }) {
               {displayedData?.map(template => (
                 <tr key={template.id} className='text-sm text-secondary'>
                   <td className='px-6 py-4'>
-                    {template.user?.username ? (
-                      <Link 
-                        className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                        href={`/profile/u/${template.user.id}`}
-                      >
-                        <Image
-                          src={template.user.avatar_url}
-                          alt={`${template.user.username}'s avatar`}
-                          width={32}
-                          height={32}
-                          className='rounded-full'
-                        />
-
-                        <div className='flex flex-col gap-y-1'>
-                          <h2 className='text-base font-semibold'>{template.user.username}</h2>
-                          <span className='text-xs font-medium text-tertiary'>{template.user.id}</span>
-                        </div>
-                      </Link>
-                    ) : template.user.id}
+                    <Link 
+                      className='flex flex-col transition-opacity gap-y-1 gap-x-4 hover:opacity-70'
+                      href={`/profile/u/${template.user.id}`}
+                    >
+                      <h2 className='text-base font-semibold'>{template.user.username}</h2>
+                      <span className='text-xs font-medium text-tertiary'>{template.user.id}</span>
+                    </Link>
                   </td>
 
                   <td className='px-6 py-4'>

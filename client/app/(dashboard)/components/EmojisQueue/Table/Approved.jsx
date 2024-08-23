@@ -36,7 +36,7 @@ export default function Approved({ data }) {
                 <th scope='col' className='px-6 py-4 font-semibold'>Name</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Image(s)</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Categories</th>
-                <th scope='col' className='px-6 py-4 font-semibold'>Publisher</th>
+                <th scope='col' className='px-6 py-4 font-semibold'>Publisher ID</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Downloads</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Date</th>
                 <th scope='col' className='px-6 py-4 font-semibold'>Actions</th>
@@ -81,20 +81,10 @@ export default function Approved({ data }) {
 
                   <td className='px-6 py-4'>
                     <Link
-                      className='flex items-center transition-opacity gap-x-2 hover:opacity-70'
+                      className='flex items-center text-sm font-medium transition-opacity text-tertiary gap-x-2 hover:opacity-70'
                       href={`/profile/u/${emoji.user.id}`}
                     >
-                      <Image
-                        src={emoji.user.avatar_url}
-                        alt={`${emoji.user.username}'s avatar`}
-                        width={24}
-                        height={24}
-                        className='rounded-full'
-                      />
-
-                      <span className='text-sm font-medium'>
-                        {emoji.user.username}
-                      </span>
+                      {emoji.user.id}
                     </Link>
                   </td>
 

@@ -147,8 +147,7 @@ module.exports = class Server {
           id: user.id,
           data: {
             username: user.username,
-            global_name: user.global_name,
-            discriminator: user.discriminator
+            global_name: user.global_name
           },
           email: user.email,
           accessToken: encrypt(user.accessToken, process.env.USER_TOKEN_ENCRYPT_SECRET)

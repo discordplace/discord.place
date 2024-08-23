@@ -5,7 +5,6 @@ import cn from '@/lib/cn';
 import useLanguageStore, { t } from '@/stores/language';
 import useSearchStore from '@/stores/templates/search';
 import useThemeStore from '@/stores/theme';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { HiSortAscending } from 'react-icons/hi';
@@ -114,19 +113,9 @@ export default function Card({ data, className }) {
                 )}
               </div>
 
-              <div className='flex items-center gap-x-1'>
-                <Image
-                  src={data.user.avatar_url}
-                  alt={`${data.user.username}'s avatar`}
-                  width={16}
-                  height={16}
-                  className='rounded-full'
-                />
-
-                <span className='text-xs font-medium text-tertiary truncate max-w-[50px] mobile:max-w-[unset]'>
-                  {data.user.username}
-                </span>
-              </div>
+              <span className='text-xs font-medium text-tertiary truncate max-w-[50px] mobile:max-w-[unset]'>
+                @{data.user.username}
+              </span>
             </div>
           </div>
         </Link>

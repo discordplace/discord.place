@@ -5,8 +5,6 @@ import { FiArrowUpRight } from 'react-icons/fi';
 import { TbWorldShare } from 'react-icons/tb';
 import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
 import config from '@/config';
-import { useState } from 'react';
-import forceFetchProfile from '@/lib/request/profiles/forceFetchProfile';
 import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
 import Tooltip from '@/app/components/Tooltip';
@@ -15,6 +13,8 @@ import { colord, extend } from 'colord';
 import mixPlugin from 'colord/plugins/mix';
 import a11yPlugin from 'colord/plugins/a11y';
 import { t } from '@/stores/language';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 extend([
   mixPlugin,
@@ -27,8 +27,6 @@ export default function Card(props) {
     notation: 'compact',
     maximumFractionDigits: 2
   });
-
-  const [isBannerFailed, setIsBannerFailed] = useState(false);
 
   const theme = useThemeStore(state => state.theme);
   const haveCustomColors = props.colors?.primary !== null || props.colors?.secondary !== null;
@@ -77,24 +75,18 @@ export default function Card(props) {
           backgroundImage: haveCustomColors ? `linear-gradient(180deg, ${props.colors.primary}, ${props.colors.secondary})` : null
         }}
       >
-        {!isBannerFailed && props.banner_url ? (
+        {props.banner ? (
           <div className='relative w-full h-full max-h-[136px]'>
-            <Image
-              className='object-cover w-full h-full rounded-3xl'
+            <UserBanner
+              id={props.id}
+              hash={props.banner}
+              size={512}
               width={512}
               height={512}
-              src={props.banner_url}
-              alt='Banner'
-              onError={async () => {
-                console.error(`Failed to load banner for ${props.slug}`);
-
-                const newBanner = await forceFetchProfile(props.slug);
-                if (newBanner) document.querySelector(`img[src="${props.banner_url}"]`).src = newBanner;
-                else setIsBannerFailed(true);
-              }}
+              className='object-cover w-full h-full rounded-3xl'
             />
 
-            {props.banner_url.includes('.gif') && (
+            {props.banner.startsWith('a_') && (
               <div className='absolute top-3 right-3 pointer-events-none text-white backdrop-blur-2xl px-2 py-0.5 rounded-full font-bold text-xs'>
                 GIF
               </div>
@@ -110,14 +102,15 @@ export default function Card(props) {
         )}
         
         <div className='-mt-[4.5rem] relative left-[10px]'>
-          <Image
-            src={props.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}
-            alt={`${props.username}'s avatar`}
+          <UserAvatar
+            id={props.id}
+            hash={props.avatar}
+            size={64}
             width={64}
             height={64}
             className={cn(
               'border-2 rounded-full border-transparent',
-              !isBannerFailed && props.banner_url && 'shadow-lg shadow-black/70'
+              props.banner && 'shadow-lg shadow-black/70'
             )}
           />
         </div>

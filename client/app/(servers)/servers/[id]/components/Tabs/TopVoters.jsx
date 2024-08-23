@@ -3,12 +3,12 @@
 import Pagination from '@/app/components/Pagination';
 import { useEffect, useState } from 'react';
 import cn from '@/lib/cn';
-import Image from 'next/image';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import fetchVoters from '@/lib/request/servers/fetchVoters';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function TopVoters({ server }) {
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,7 @@ export default function TopVoters({ server }) {
         <div className='grid w-full grid-cols-1 mt-4' key='voters'>
           {voters.map((voter, index) => (
             <Link 
-              href={`/profile/u/${voter.user_id}`}
+              href={`/profile/u/${voter.user.id}`}
               key={voter.id} 
               className={cn(
                 'flex items-center w-full gap-4 p-4 odd:bg-secondary even:bg-tertiary hover:opacity-70 transition-opacity',
@@ -68,27 +68,30 @@ export default function TopVoters({ server }) {
               )}
             >
               <div className='relative'>
-                <Image
-                  src={voter.avatar_url} 
-                  alt={`${voter.username}'s avatar`} 
+                <UserAvatar
+                  id={voter.user.id}
+                  hash={voter.user.avatar}
+                  size={64}
                   width={40} 
                   height={40} 
                   className='rounded-full'
                 />
 
                 {[0, 1, 2].includes(voters.indexOf(voter)) && (
-                  <div className={cn(
-                    'absolute top-0 left-0 w-full h-full rounded-full',
-                    page === 1 && 'border-2',
-                    page === 1 && voters.indexOf(voter) === 0 && 'border-yellow-500',
-                    page === 1 && voters.indexOf(voter) === 1 && 'border-gray-500',
-                    page === 1 && voters.indexOf(voter) === 2 && 'border-yellow-900'
-                  )} />
+                  <div
+                    className={cn(
+                      'absolute top-0 left-0 w-full h-full rounded-full',
+                      page === 1 && 'border-2',
+                      page === 1 && voters.indexOf(voter) === 0 && 'border-yellow-500',
+                      page === 1 && voters.indexOf(voter) === 1 && 'border-gray-500',
+                      page === 1 && voters.indexOf(voter) === 2 && 'border-yellow-900'
+                    )}
+                  />
                 )}
               </div>
 
               <h2 className='text-lg font-semibold truncate'>
-                @{voter.username}
+                @{voter.user.username}
               </h2>
 
               <div className='flex items-center ml-auto text-xl font-bold gap-x-2'>

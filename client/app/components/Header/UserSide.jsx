@@ -1,5 +1,4 @@
 import useAuthStore from '@/stores/auth';
-import Image from 'next/image';
 import Link from 'next/link';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
@@ -10,6 +9,7 @@ import { BiLogOut } from 'react-icons/bi';
 import logout from '@/lib/request/auth/logout';
 import { toast } from 'sonner';
 import { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function UserSide({ className }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -59,7 +59,16 @@ export default function UserSide({ className }) {
             onClick={() => setOpen(!open)}
             href='/account'  
           >
-            <Image src={user.avatar_url} width={32} height={32} className='rounded-full' alt='User Avatar' />
+            <UserAvatar
+              id={user.id}
+              hash={user.avatar}
+              size={32}
+              width={32}
+              height={32}
+              format='png'
+              className='rounded-full bg-tertiary'
+            />
+            {/* <Image src={user.avatar_url} width={32} height={32} className='rounded-full' alt='User Avatar' /> */}
           </Link>
         </>
       ) : (

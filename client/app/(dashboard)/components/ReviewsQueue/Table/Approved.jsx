@@ -113,7 +113,7 @@ export default function Approved({ data }) {
                   </td>
 
                   <td className='px-6 py-4'>
-                    <p className='max-w-[500px]'>
+                    <p className='max-w-[500px] break-words'>
                       {review.content}
                     </p>
                   </td>

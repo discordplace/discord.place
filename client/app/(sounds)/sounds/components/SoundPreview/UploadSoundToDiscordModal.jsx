@@ -1,6 +1,6 @@
 'use client';
 
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import ErrorState from '@/app/components/ErrorState';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
@@ -54,12 +54,13 @@ export default function UploadSoundToDiscordModal({ guilds }) {
                     onClick={() => setSelectedGuildId(guild.id)}
                   >
                     <ServerIcon
-                      icon_url={guild.icon_url}
-                      name={guild.name}
+                      id={guild.id}
+                      hash={guild.icon}
+                      size={48}
                       width={48}
                       height={48}
                       className={cn(
-                        '[&_>h2]:text-lg rounded-full bg-quaternary hover:bg-secondary cursor-pointer hover:ring-2 transition-all ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))]',
+                        'rounded-full bg-quaternary hover:bg-secondary cursor-pointer hover:ring-2 transition-all ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))]',
                         selectedGuildId === guild.id && 'ring-2 ring-purple-600'
                       )}
                     />
@@ -74,12 +75,13 @@ export default function UploadSoundToDiscordModal({ guilds }) {
                     </div>
                     
                     <ServerIcon
-                      icon_url={guild.icon_url}
-                      name={guild.name}
+                      id={guild.id}
+                      hash={guild.icon}
+                      size={48}
                       width={48}
                       height={48}
                       className={cn(
-                        '[&_>h2]:text-lg rounded-full bg-quaternary hover:bg-secondary cursor-pointer hover:ring-2 transition-all ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))]',
+                        'rounded-full bg-quaternary hover:bg-secondary cursor-pointer hover:ring-2 transition-all ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))]',
                         selectedGuildId === guild.id && 'ring-2 ring-purple-600'
                       )}
                     />

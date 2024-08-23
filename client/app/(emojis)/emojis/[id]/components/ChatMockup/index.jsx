@@ -3,8 +3,9 @@
 import cn from '@/lib/cn';
 import Image from 'next/image';
 import useLanguageStore from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
-export default function ChatMockup({ avatar_url, username, message, emoji_url, theme, index }) {
+export default function ChatMockup({ id, username, avatar, message, emoji_url, theme, index }) {
   const language = useLanguageStore(state => state.language);
 
   return (
@@ -13,11 +14,12 @@ export default function ChatMockup({ avatar_url, username, message, emoji_url, t
       index === 0 ? 'rounded-t-xl' : 'rounded-b-xl',
       theme === 'dark' ? 'bg-[rgb(var(--dark-bg-secondary))]' : 'bg-[rgb(var(--light-bg-secondary))]'
     )}>
-      <Image 
-        src={avatar_url} 
+      <UserAvatar
+        id={id}
+        hash={avatar}
+        size={128}
         width={128} 
         height={128} 
-        alt={`@${username} avatar's`} 
         className='w-[46px] h-[46px] rounded-full' 
       />
 

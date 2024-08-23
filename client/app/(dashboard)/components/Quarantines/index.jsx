@@ -7,7 +7,6 @@ import { TbLoader, TbLockPlus } from 'react-icons/tb';
 import Countdown from '@/app/components/Countdown';
 import { toast } from 'sonner';
 import deleteQuarantineRecord from '@/lib/request/dashboard/deleteQuarantineRecord';
-import Image from 'next/image';
 import Link from 'next/link';
 import { IoMdCloseCircle } from 'react-icons/io';
 import useModalsStore from '@/stores/modals';
@@ -126,74 +125,31 @@ export default function Quarantines() {
                   <tr key={record.id} className='text-sm text-secondary'>
                     <td className='px-6 py-4'>
                       {record.type === 'USER_ID' ? (
-                        record.user?.username ? (
-                          <Link
-                            className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                            href={`/profile/u/${record.user.id}`}
-                          >
-                            <Image
-                              src={record.user.avatar_url}
-                              alt={`${record.user.username}'s avatar`}
-                              width={32}
-                              height={32}
-                              className='rounded-full'
-                            />
-  
-                            <div className='flex flex-col gap-y-1'>
-                              <h2 className='text-base font-semibold'>{record.user.username}</h2>
-                              <span className='text-xs font-medium text-tertiary'>{record.user.id}</span>
-                            </div>
-                          </Link>
-                        ) : (
-                          record.user
-                        )
+                        <Link
+                          className='flex flex-col transition-opacity gap-y-1 gap-x-4 hover:opacity-70'
+                          href={`/profile/u/${record.user.id}`}
+                        >
+                          <h2 className='text-base font-semibold'>{record.user.username}</h2>
+                          <span className='text-xs font-medium text-tertiary'>{record.user.id}</span>
+                        </Link>
                       ) : (
-                        record.guild?.name ? (
-                          <Link
-                            className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                            href={`/server/${record.guild.id}`}
-                          >
-                            <Image
-                              src={record.guild.icon_url}
-                              alt={`${record.guild.name}'s icon`}
-                              width={32}
-                              height={32}
-                              className='rounded-full'
-                            />
-  
-                            <div className='flex flex-col gap-y-1'>
-                              <h2 className='text-base font-semibold'>{record.guild.name}</h2>
-                              <span className='text-xs font-medium text-tertiary'>{record.guild.id}</span>
-                            </div>
-                          </Link>
-                        ) : (
-                          record.guild
-                        )
+                        <Link
+                          className='flex flex-col transition-opacity gap-y-1 gap-x-4 hover:opacity-70'
+                          href={`/servers/${record.guild.id}`}
+                        >
+                          <span className='text-base font-semibold'>{record.guild.id}</span>
+                        </Link>
                       )}
                     </td>
 
                     <td className='px-6 py-4'>
-                      {record.created_by?.username ? (
-                        <Link
-                          className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                          href={`/profile/u/${record.created_by.id}`}
-                        >
-                          <Image
-                            src={record.created_by.avatar_url}
-                            alt={`${record.created_by.username}'s avatar`}
-                            width={32}
-                            height={32}
-                            className='rounded-full'
-                          />
-
-                          <div className='flex flex-col gap-y-1'>
-                            <h2 className='text-base font-semibold'>{record.created_by.username}</h2>
-                            <span className='text-xs font-medium text-tertiary'>{record.created_by.id}</span>
-                          </div>
-                        </Link>
-                      ) : (
-                        record.created_by
-                      )}
+                      <Link
+                        className='flex flex-col transition-opacity gap-y-1 gap-x-4 hover:opacity-70'
+                        href={`/profile/u/${record.created_by.id}`}
+                      >
+                        <h2 className='text-base font-semibold'>{record.created_by.username}</h2>
+                        <span className='text-xs font-medium text-tertiary'>{record.created_by.id}</span>
+                      </Link>
                     </td>
 
                     <td className='px-6 py-4'>

@@ -161,14 +161,14 @@ export default function Content({ user }) {
               {user.bot && (
                 <span className='select-none flex items-center gap-x-1 px-1.5 py-0.5 rounded-full text-xs font-semibold text-white uppercase bg-[#5865F2]'>
                   {user.bot_verified && (
-                    <Tooltip content={t('userProfile.flags.tooltip.verifiedApp')}>
+                    <Tooltip content={t('userProfile.tooltip.verifiedApp')}>
                       <div>
                         <HiCheck />
                       </div>
                     </Tooltip>
                   )}
               
-                  {t('userProfile.flags.appBadge')}
+                  {t('userProfile.appBadge')}
                 </span>
               )}
             </h2>

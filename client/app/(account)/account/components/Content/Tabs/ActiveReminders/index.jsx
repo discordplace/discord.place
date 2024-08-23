@@ -1,6 +1,6 @@
 'use client';
 
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';
 import cn from '@/lib/cn';
@@ -54,11 +54,14 @@ export default function ActiveReminders() {
 
               <div className='flex flex-col border-2 divide-y border-primary rounded-xl'>
                 {data.reminders.map((reminder, index) => (
-                  <div key={reminder._id} className={cn(
-                    'flex items-center flex-wrap p-3 gap-4 justify-center sm:justify-between bg-secondary border-y-primary',
-                    index === data.reminders.length - 1 ? 'rounded-b-xl' : '',
-                    index === 0 ? 'rounded-t-xl' : ''
-                  )}>
+                  <div
+                    key={reminder._id}
+                    className={cn(
+                      'flex items-center flex-wrap p-3 gap-4 justify-center sm:justify-between bg-secondary border-y-primary',
+                      index === data.reminders.length - 1 ? 'rounded-b-xl' : '',
+                      index === 0 ? 'rounded-t-xl' : ''
+                    )}
+                  >
                     <div className='flex items-start w-full gap-x-4'>
                       <div className='flex flex-col items-start'>
                         <div className='text-base font-semibold text-primary'>
@@ -106,11 +109,14 @@ export default function ActiveReminders() {
               <div className='flex flex-col border-2 divide-y border-primary rounded-xl'>
 
                 {data.voteReminders.map((voteReminder, index) => (
-                  <div key={voteReminder._id} className={cn(
-                    'flex items-center p-3 gap-4 justify-center flex-wrap sm:justify-between bg-secondary border-y-primary',
-                    index === data.voteReminders.length - 1 ? 'rounded-b-xl' : '',
-                    index === 0 ? 'rounded-t-xl' : ''
-                  )}>
+                  <div
+                    key={voteReminder._id}
+                    className={cn(
+                      'flex items-center p-3 gap-4 justify-center flex-wrap sm:justify-between bg-secondary border-y-primary',
+                      index === data.voteReminders.length - 1 ? 'rounded-b-xl' : '',
+                      index === 0 ? 'rounded-t-xl' : ''
+                    )}
+                  >
                     <Link
                       className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
                       href={`/servers/${voteReminder.guild.id}`}

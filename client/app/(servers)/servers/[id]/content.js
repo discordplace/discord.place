@@ -6,22 +6,16 @@ import About from '@/app/(servers)/servers/[id]/components/sections/About';
 import RightSide from '@/app/(servers)/servers/[id]/components/sections/RightSide';
 import Tabs from '@/app/(servers)/servers/[id]/components/Tabs';
 import Tooltip from '@/app/components/Tooltip';
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import Script from 'next/script';
-import { forwardRef } from 'react';
 import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';
 import { t } from '@/stores/language';
+import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 
 export default function Content({ server }) {
   const theme = useThemeStore(state => state.theme);
-
-  // eslint-disable-next-line react/display-name
-  const ForwardedServerIcon = forwardRef((props, ref) => (
-    <ServerIcon {...props} ref={ref} />
-  ));
-  const MotionServerIcon = motion(ForwardedServerIcon);
 
   return (
     <div className='flex justify-center w-full mt-32'>
@@ -29,27 +23,29 @@ export default function Content({ server }) {
       
       <div className='flex flex-col max-w-[1000px] w-full mb-8 px-2 lg:px-0'>
         <div className='relative bg-secondary w-full h-[300px] rounded-xl'>
-          {server.banner_url && (
-            <MotionImage
-              src={server.banner_url}
-              alt={`Guild ${server.name}'s banner`}
+          {server.banner && (
+            <ServerBanner
+              id={server.id}
+              hash={server.banner}
               className='absolute top-0 left-0 w-full h-full rounded-xl z-[1] object-cover'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              size={2048}
               width={2048}
               height={2048}
             />
           )}
 
           <div className='absolute w-[calc(100%_-_2.5rem)] -bottom-14 left-10 z-[3]'>
-            <MotionServerIcon
-              icon_url={server.icon_url}
-              name={server.name}
+            <ServerIcon
+              id={server.id}
+              hash={server.icon}
+              size={256}
               width={150}
               height={150}
               className={cn(
-                server.icon_url ? 'bg-background' : '[&>h2]:text-[3rem]',
-                'border-[10px] border-[rgb(var(--bg-background))] rounded-3xl w-[128px] h-[128px]'
+                'border-[10px] border-[rgb(var(--bg-background))] rounded-3xl w-[128px] h-[128px]',
+                server.icon && 'bg-background'
               )}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

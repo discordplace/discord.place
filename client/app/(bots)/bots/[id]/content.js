@@ -12,6 +12,8 @@ import config from '@/config';
 import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';
 import { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 
 export default function Content({ bot }) {
   const theme = useThemeStore(state => state.theme);
@@ -33,22 +35,24 @@ export default function Content({ bot }) {
         )}
 
         <div className='relative bg-secondary w-full h-[300px] rounded-xl'>
-          {bot.banner_url && (
-            <MotionImage
-              src={bot.banner_url}
-              alt={`${bot.username}'s banner`}
+          {bot.banner && (
+            <UserBanner
+              id={bot.id}
+              hash={bot.banner}
               className='absolute top-0 left-0 w-full h-full rounded-xl z-[1] object-cover'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              size={2048}
               width={2048}
               height={2048}
             />
           )}
 
           <div className='absolute w-[calc(100%_-_2.5rem)] -bottom-14 left-10 z-[3]'>
-            <MotionImage
-              src={bot.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}
-              alt={`${bot.username}'s avatar`}
+            <UserAvatar
+              id={bot.id}
+              hash={bot.avatar}
+              size={256}
               width={150}
               height={150}
               initial={{ opacity: 0, y: 20 }}
@@ -66,7 +70,10 @@ export default function Content({ bot }) {
             className='flex items-center text-lg font-bold sm:text-3xl gap-x-2'
           >
             {bot.username}
-            <span className='inline text-sm font-medium select-none text-tertiary'>#{bot.discriminator}</span>
+
+            <span className='inline text-sm font-medium select-none text-tertiary'>
+              #{bot.discriminator}
+            </span>
           </motion.h1>
 
           {bot.badges.length > 0 && (

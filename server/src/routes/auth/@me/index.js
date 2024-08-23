@@ -21,7 +21,6 @@ module.exports = {
         id: user.id,
         username: user.data.username,
         global_name: user.data.global_name,
-        discriminator: user.data.discriminator,
         avatar: userHashes.avatar,
         banner: userHashes.banner,
         profile: profile?.slug ? {

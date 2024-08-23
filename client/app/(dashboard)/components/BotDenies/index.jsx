@@ -7,7 +7,6 @@ import { TbLoader } from 'react-icons/tb';
 import Countdown from '@/app/components/Countdown';
 import { toast } from 'sonner';
 import deleteBotDenyRecord from '@/lib/request/bots/deleteBotDenyRecord';
-import Image from 'next/image';
 import Link from 'next/link';
 import { IoMdCloseCircle } from 'react-icons/io';
 import useModalsStore from '@/stores/modals';
@@ -88,9 +87,9 @@ export default function BotDenies() {
             <table className='w-full table-auto'>
               <thead className='text-left select-none bg-secondary'>
                 <tr>
-                  <th scope='col' className='px-6 py-4 font-semibold'>Bot</th>
-                  <th scope='col' className='px-6 py-4 font-semibold'>Submitter</th>
-                  <th scope='col' className='px-6 py-4 font-semibold'>Reviewer</th>
+                  <th scope='col' className='px-6 py-4 font-semibold'>Bot ID</th>
+                  <th scope='col' className='px-6 py-4 font-semibold'>Submitter ID</th>
+                  <th scope='col' className='px-6 py-4 font-semibold'>Reviewer ID</th>
                   <th scope='col' className='px-6 py-4 font-semibold'>Reason</th>
                   <th scope='col' className='px-6 py-4 font-semibold'>Date</th>
                   <th scope='col' className='px-6 py-4 font-semibold'>Expire In</th>
@@ -107,75 +106,30 @@ export default function BotDenies() {
                 {displayedData?.map(record => (
                   <tr key={record._id} className='text-sm text-secondary'>
                     <td className='px-6 py-4'>
-                      {record.bot?.username ? (
-                        <Link
-                          className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                          href={`/profile/u/${record.bot.id}`}
-                        >
-                          <Image
-                            src={record.bot.avatar_url}
-                            alt={`${record.bot.username}'s avatar`}
-                            width={32}
-                            height={32}
-                            className='rounded-full'
-                          />
-
-                          <div className='flex flex-col gap-y-1'>
-                            <h2 className='text-base font-semibold'>{record.bot.username}</h2>
-                            <span className='text-xs font-medium text-tertiary'>{record.bot.id}</span>
-                          </div>
-                        </Link>
-                      ) : (
-                        record.bot
-                      )}
+                      <Link
+                        className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
+                        href={`/profile/u/${record.bot.id}`}
+                      >
+                        {record.bot.id}
+                      </Link>
                     </td>
 
                     <td className='px-6 py-4'>
-                      {record.user?.username ? (
-                        <Link
-                          className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                          href={`/profile/u/${record.user.id}`}
-                        >
-                          <Image
-                            src={record.user.avatar_url}
-                            alt={`${record.user.username}'s avatar`}
-                            width={32}
-                            height={32}
-                            className='rounded-full'
-                          />
-
-                          <div className='flex flex-col gap-y-1'>
-                            <h2 className='text-base font-semibold'>{record.user.username}</h2>
-                            <span className='text-xs font-medium text-tertiary'>{record.user.id}</span>
-                          </div>
-                        </Link>
-                      ) : (
-                        record.user
-                      )}
+                      <Link
+                        className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
+                        href={`/profile/u/${record.user.id}`}
+                      >
+                        {record.user.id}
+                      </Link>
                     </td>
 
                     <td className='px-6 py-4'>
-                      {record.reviewer?.username ? (
-                        <Link
-                          className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
-                          href={`/profile/u/${record.reviewer.id}`}
-                        >
-                          <Image
-                            src={record.reviewer.avatar_url}
-                            alt={`${record.reviewer.username}'s avatar`}
-                            width={32}
-                            height={32}
-                            className='rounded-full'
-                          />
-
-                          <div className='flex flex-col gap-y-1'>
-                            <h2 className='text-base font-semibold'>{record.reviewer.username}</h2>
-                            <span className='text-xs font-medium text-tertiary'>{record.reviewer.id}</span>
-                          </div>
-                        </Link>
-                      ) : (
-                        record.reviewer
-                      )}
+                      <Link
+                        className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
+                        href={`/profile/u/${record.reviewer.id}`}
+                      >
+                        {record.reviewer.id}
+                      </Link>
                     </td>
 
                     <td className='px-6 py-4'>
