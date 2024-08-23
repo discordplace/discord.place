@@ -1,7 +1,7 @@
 const ServerHashes = require('@/schemas/Server/Hashes');
 
-async function getServerHashes(userId) {
-  const hashes = (await ServerHashes.findOne({ id: userId })) || new ServerHashes({ id: userId });
+async function getServerHashes(serverId) {
+  const hashes = (await ServerHashes.findOne({ id: serverId })) || new ServerHashes({ id: serverId });
   if (typeof hashes.__v === 'undefined') await hashes.getNewHashes();
 
   return hashes;
