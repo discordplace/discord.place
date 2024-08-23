@@ -1486,12 +1486,7 @@
         "mySounds": "My Sounds",
         "adminDashboard": "Admin Dashboard",
         "switchTheme": "Switch Theme",
-        "backToHome": "Back to Home",
-        "language": {
-          "en": "English",
-          "tr": "Turkish",
-          "az": "Azerbaijani"
-        }
+        "backToHome": "Back to Home"
       }
     },
     "tabs": {

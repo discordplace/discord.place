@@ -1486,12 +1486,7 @@
         "mySounds": "Mənim Səslərim",
         "adminDashboard": "İdarəetmə Paneli",
         "switchTheme": "Mövzunu dəyişdirin",
-        "backToHome": "Evə qayıt",
-        "language": {
-          "en": "İngiliscə",
-          "tr": "Türkcə",
-          "az": "Azərbaycanca"
-        }
+        "backToHome": "Evə qayıt"
       }
     },
     "tabs": {

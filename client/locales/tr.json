@@ -1486,12 +1486,7 @@
         "mySounds": "Seslerim",
         "adminDashboard": "Yönetici Paneli",
         "switchTheme": "Tema Değiştir",
-        "backToHome": "Ana Sayfaya Dön",
-        "language": {
-          "en": "İngilizce",
-          "tr": "Türkçe",
-          "az": "Azerbaycanca"
-        }
+        "backToHome": "Ana Sayfaya Dön"
       }
     },
     "tabs": {
