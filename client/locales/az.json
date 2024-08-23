@@ -1488,8 +1488,9 @@
         "switchTheme": "Mövzunu dəyişdirin",
         "backToHome": "Evə qayıt",
         "language": {
-          "en": "İngilis dili",
-          "tr": "türk"
+          "en": "İngiliscə",
+          "tr": "Türkcə",
+          "az": "Azərbaycanca"
         }
       }
     },
