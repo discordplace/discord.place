@@ -53,35 +53,10 @@ const data = ({
     },
     {
       ...baseProfileData,
-      colors: {
-        primary: '#616ffd35',
-        secondary: '#616ffd35'
-      },
-      slug: 'discord.place',
-      username: 'discord.place',
-      avatar_url: '/templates/square_logo.png',
-      global_name: 'discord.place',
-      bio: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
-      createdAt: '2024-02-16T00:00:00.000Z',
-      premium: true
-    },
-    {
-      ...baseProfileData,
-      slug: 'disbot',
-      username: 'Disbot',
-      avatar_url: '/templates/disbot_logo.png',
-      global_name: 'Disbot',
-      bio: 'All discord bots specially designed for you are here!',
-      createdAt: '2024-04-28T00:00:00.000Z'
-    },
-    {
-      ...baseProfileData,
       slug: 'discord2',
       username: 'Discord',
       global_name: 'Discord',
       bio: 'Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.',
-      views: 100000,
-      likes: 100000,
       badges: [],
       createdAt: '2015-05-14T00:00:00.000Z'
     },
@@ -106,6 +81,28 @@ const data = ({
       likes: 100000,
       badges: [],
       createdAt: '2015-05-14T00:00:00.000Z'
+    },
+    {
+      ...baseProfileData,
+      slug: 'discord5',
+      username: 'Discord',
+      global_name: 'Discord',
+      bio: 'Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.',
+      views: 100000,
+      likes: 100000,
+      badges: [],
+      createdAt: '2015-05-14T00:00:00.000Z'
+    },
+    {
+      ...baseProfileData,
+      slug: 'discord6',
+      username: 'Discord',
+      global_name: 'Discord',
+      bio: 'Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.',
+      views: 100000,
+      likes: 100000,
+      badges: [],
+      createdAt: '2015-05-14T00:00:00.000Z'
     }
   ],
   servers: [
@@ -120,12 +117,11 @@ const data = ({
     {
       ...baseServerData,
       id: '2',
-      name: 'discord.place',
-      description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
-      icon_url: '/templates/square_logo.png',
-      banner_url: '/templates/discord_banner.png',
-      premium: true,
-      category: 'Community'
+      name: 'Discord',
+      description: 'Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.',
+      icon_url: 'https://cdn.discordapp.com/embed/avatars/0.png',
+      category: 'Community',
+      premium: true
     },
     {
       ...baseServerData,

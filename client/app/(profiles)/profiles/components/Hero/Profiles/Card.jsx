@@ -102,17 +102,30 @@ export default function Card(props) {
         )}
         
         <div className='-mt-[4.5rem] relative left-[10px]'>
-          <UserAvatar
-            id={props.id}
-            hash={props.avatar}
-            size={64}
-            width={64}
-            height={64}
-            className={cn(
-              'border-2 rounded-full border-transparent',
-              props.banner && 'shadow-lg shadow-black/70'
-            )}
-          />
+          {props.avatar ? (
+            <UserAvatar
+              id={props.id}
+              hash={props.avatar}
+              size={64}
+              width={64}
+              height={64}
+              className={cn(
+                'border-2 rounded-full border-transparent',
+                props.banner && 'shadow-lg shadow-black/70'
+              )}
+            /> 
+          ) : (
+            <Image
+              src='https://cdn.discordapp.com/embed/avatars/0.png'
+              alt='Default Avatar'
+              width={64}
+              height={64}
+              className={cn(
+                'border-2 rounded-full border-transparent',
+                props.banner && 'shadow-lg shadow-black/70'
+              )}
+            />
+          )}
         </div>
 
         <div className={cn(
