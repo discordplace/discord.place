@@ -12,6 +12,10 @@ const BotReviewSchema = new Schema({
     id: {
       type: String,
       required: true
+    },
+    username: {
+      type: String,
+      required: true
     }
   },
   rating: {

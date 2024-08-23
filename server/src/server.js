@@ -14,6 +14,7 @@ const morgan = require('morgan');
 
 const passport = require('passport');
 const User = require('@/schemas/User');
+const UserHashes = require('@/schemas/User/Hashes');
 const DiscordStrategy = require('passport-discord').Strategy;
 const encrypt = require('@/utils/encryption/encrypt');
 
@@ -96,7 +97,7 @@ module.exports = class Server {
   configureSessions() {
     const store = MongoStore.create({
       mongoUrl: process.env.MONGO_URL,
-      dbName: 'api',
+      dbName: process.env.NODE_ENV === 'production' ? 'api' : 'development',
       touchAfter: 24 * 3600,
       crypto: {
         secret: process.env.SESSION_STORE_SECRET
@@ -144,6 +145,11 @@ module.exports = class Server {
       User.findOneAndUpdate({ id: user.id },
         {
           id: user.id,
+          data: {
+            username: user.username,
+            global_name: user.global_name,
+            discriminator: user.discriminator
+          },
           email: user.email,
           accessToken: encrypt(user.accessToken, process.env.USER_TOKEN_ENCRYPT_SECRET)
         }, 
@@ -152,6 +158,18 @@ module.exports = class Server {
         logger.error('Error while saving user:', error);
         throw new Error('Error while logging in. Please try again.');
       });
+
+      // Save avatar and banner to UserHashes
+      await UserHashes.findOneAndUpdate(
+        { id: user.id },
+        {
+          $set: {
+            avatar: user.avatar,
+            banner: user.banner
+          }
+        },
+        { upsert: true }
+      ).catch(() => null);
     });
     passport.deserializeUser((obj, done) => done(null, obj));
 

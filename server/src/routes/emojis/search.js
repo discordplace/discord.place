@@ -70,7 +70,7 @@ module.exports = {
         total: emojis.length + emojiPacks.reduce((a, b) => a + b.emoji_ids.length, 0),
         page,
         limit,
-        emojis: await Promise.all(allEmojis.slice(skip, skip + limit).map(async emoji => await emoji.toPubliclySafe()))
+        emojis: allEmojis.slice(skip, skip + limit).map(emoji => emoji.toPubliclySafe())
       });      
     }
   ]

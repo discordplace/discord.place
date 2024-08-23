@@ -12,6 +12,10 @@ const EmojiPackSchema = new Schema({
     id: {
       type: String,
       required: true
+    },
+    username: {
+      type: String,
+      required: true
     }
   },
   name: {
@@ -66,21 +70,16 @@ const EmojiPackSchema = new Schema({
 }, {
   timestamps: true,
   methods: {
-    async toPubliclySafe() {
+    toPubliclySafe() {
       const newEmojiPackage = {};
- 
-      const user = await client.users.fetch(this.user.id).catch(() => null);
-      if (user) Object.assign(newEmojiPackage, {
-        user: {
-          id: user.id,
-          username: user.username,
-          avatar_url: user.displayAvatarURL({ size: 256 })
-        }
-      });
 
       return {
         ...newEmojiPackage,
         id: this.id,
+        user: {
+          id: this.user.id,
+          username: this.user.username
+        },
         name: this.name,
         categories: this.categories,
         downloads: this.downloads,

@@ -6,6 +6,14 @@ const BotDenySchema = new Schema({
     id: {
       type: String,
       required: true
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    discriminator: {
+      type: String,
+      required: true
     }
   },
   user: {
@@ -16,6 +24,10 @@ const BotDenySchema = new Schema({
   },
   reviewer: {
     id: {
+      type: String,
+      required: true
+    },
+    username: {
       type: String,
       required: true
     }

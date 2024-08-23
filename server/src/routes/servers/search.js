@@ -112,7 +112,9 @@ module.exports = {
             return {
               id: guild.id,
               name: guild.name,
+              icon: guild.icon,
               icon_url: guild.iconURL({ dynamic: true }),
+              banner: guild.banner,
               banner_url: guild.bannerURL({ format: 'png', size: 512 }),
               category: server.category,
               description: server.description,

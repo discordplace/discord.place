@@ -55,7 +55,8 @@ async function incrementVote(guildId, userId) {
       $push: {
         voters: {
           user: {
-            id: userId
+            id: userId,
+            username: user.username
           },
           vote: 1
         }
@@ -78,7 +79,8 @@ async function incrementVote(guildId, userId) {
       id: userId
     }, 
     guild: { 
-      id: guild.id
+      id: guild.id,
+      name: guild.name
     } 
   }).save();
 

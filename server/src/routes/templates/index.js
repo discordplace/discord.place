@@ -49,7 +49,8 @@ module.exports = {
         id: id,
         data: templateDetails.serialized_source_guild,
         user: {
-          id: request.user.id
+          id: request.user.id,
+          username: request.user.username
         },
         name,
         description,

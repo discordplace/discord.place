@@ -5,6 +5,7 @@ const Bot = require('@/schemas/Bot');
 const BotDeny = require('@/schemas/Bot/Deny');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
+const User = require('@/schemas/User');
 
 module.exports = {
   post: [
@@ -35,15 +36,20 @@ module.exports = {
 
       await bot.deleteOne();
 
-      new BotDeny({
+      const requestUser = await User.findOne({ id: request.user.id });
+
+      await new BotDeny({
         bot: {
-          id: bot.id
+          id: bot.id,
+          username: botUser.username,
+          discriminator: botUser.discriminator
         },
         user: {
           id: bot.owner.id
         },
         reviewer: {
-          id: request.user.id
+          id: request.user.id,
+          username: requestUser.data.username
         },
         reason: {
           title: config.botsDenyReasons[reason].name,

@@ -39,10 +39,16 @@ module.exports = {
         const foundPremium = await User.findOne({ id: request.user.id, subscription: { $ne: null } });
         if (!foundPremium) return response.sendError(`You must be premium to use ${preferredHost}.`, 400);
       }
+
+      const requestUser = await User.findOne({ id: request.user.id });
       
       const newProfile = new Profile({
         user: {
-          id: request.user.id
+          id: request.user.id,
+          data: {
+            username: requestUser.data.username,
+            global_name: requestUser.data.global_name
+          }
         },
         slug,
         preferredHost

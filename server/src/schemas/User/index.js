@@ -8,6 +8,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  data: {
+    type: Object,
+    required: false
+  },
   acceptedPolicies: {
     type: Boolean,
     required: true,

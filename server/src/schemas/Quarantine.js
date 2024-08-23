@@ -20,6 +20,10 @@ const QuarantineSchema = new Schema({
     id: {
       type: String,
       required: false
+    },
+    username: {
+      type: String,
+      required: false
     }
   },
   guild: {
@@ -45,8 +49,14 @@ const QuarantineSchema = new Schema({
     required: true
   },
   created_by: {
-    type: String,
-    required: true
+    id: {
+      type: String,
+      required: true
+    },
+    username: {
+      type: String,
+      required: false
+    }
   },
   expire_at: {
     type: Date,
@@ -55,54 +65,23 @@ const QuarantineSchema = new Schema({
 }, {
   timestamps: true,
   methods: {
-    async toPubliclySafe() {
+    toPubliclySafe() {
       const newQuarantine = {};
 
-      const fetchedUsers = (await Promise.all(
-        // Fetch users if they are not cached
-        [...new Set(this.type === 'USER_ID' ? [this.user.id, this.created_by] : [this.created_by])].map(async id => {
-          if (!id) return;
-
-          if (client.forceFetchedUsers.has(id)) return client.users.cache.get(id);
-
-          await client.users.fetch(id, { force: true }).catch(() => null);
-          client.forceFetchedUsers.set(id, true);
-
-          return client.users.cache.get(id);
-        })
-      )).filter(Boolean); // Filter out undefined values
-
-      const created_by = fetchedUsers.find(user => user.id === this.created_by);
-
-      Object.assign(newQuarantine, {
-        created_by: created_by ? {
-          id: created_by.id,
-          username: created_by.username,
-          avatar_url: created_by.displayAvatarURL({ dynamic: true })
-        } : this.created_by
-      });
-
       if (this.type === 'USER_ID') {
-        const user = fetchedUsers.find(user => user.id === this.user.id);
-
         Object.assign(newQuarantine, {
-          user: user ? {
-            id: user.id,
-            username: user.username,
-            avatar_url: user.displayAvatarURL({ dynamic: true })
-          } : this.user.id
+          user: {
+            id: this.user.id,
+            username: this.user.username
+          }
         });
       }
 
       if (this.type === 'GUILD_ID') {
-        const guild = client.guilds.cache.get(this.guild.id);
-
         Object.assign(newQuarantine, {
-          guild: guild ? {
-            id: guild.id,
-            name: guild.name,
-            icon_url: guild.iconURL({ dynamic: true })
-          } : this.guild.id
+          guild: {
+            id: this.guild.id
+          }
         });
       }
 
@@ -112,6 +91,7 @@ const QuarantineSchema = new Schema({
         type: this.type,
         restriction: this.restriction,
         reason: this.reason,
+        created_by: this.created_by.id,
         created_at: this.createdAt,
         expire_at: this.expire_at
       };

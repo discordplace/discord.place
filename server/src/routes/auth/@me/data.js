@@ -14,6 +14,8 @@ const { body, validationResult, matchedData } = require('express-validator');
 const Deny = require('@/src/schemas/Bot/Deny');
 const Sound = require('@/schemas/Sound');
 const Link = require('@/schemas/Link');
+const getUserHashes = require('@/utils/getUserHashes');
+const getServerHashes = require('@/utils/getServerHashes');
 
 const validKeys = [
   'timeouts',
@@ -81,29 +83,25 @@ module.exports = {
         Object.assign(responseData, {
           timeouts: {
             bots: await Promise.all(botTimeouts.map(async timeout => {
-              const newTimeout = Object.assign({}, timeout._doc);
+              const hashes = await getUserHashes(timeout.bot.id);
 
-              const bot = client.users.cache.get(timeout.bot.id) || await client.users.fetch(timeout.bot.id).catch(() => null);
-              if (bot) newTimeout.bot = {
-                id: bot.id,
-                username: bot.username,
-                avatar_url: bot.displayAvatarURL()
+              return {
+                id: timeout.bot.id,
+                username: timeout.bot.username,
+                avatar: hashes.avatar,
+                createdAt: timeout.createdAt
               };
-
-              return newTimeout;
             })),
-            servers: serverTimeouts.map(timeout => {
-              const newTimeout = Object.assign({}, timeout._doc);
+            servers: await Promise.all(serverTimeouts.map(async timeout => {
+              const hashes = await getServerHashes(timeout.guild.id);
 
-              const guild = client.guilds.cache.get(timeout.guild.id);
-              if (guild) newTimeout.guild = {
-                id: guild.id,
-                name: guild.name,
-                icon_url: guild.iconURL()
+              return {
+                id: timeout.guild.id,
+                name: timeout.guild.name,
+                icon: hashes.icon,
+                createdAt: timeout.createdAt
               };
-
-              return newTimeout;
-            })
+            }))
           }
         });
       }
@@ -114,13 +112,13 @@ module.exports = {
         Object.assign(responseData, { links });
       }
 
-      if (keys.includes('servers') || keys.includes('bots')) {
+      if (keys.includes('servers')) {
         const servers = await Server.find();
 
         const data = ownedGuilds.map(guild => ({
           id: guild.id,
           name: guild.name,
-          icon_url: guild.iconURL({ format: 'png', size: 128 }),
+          icon: guild.icon,
           is_created: servers.some(server => server.id === guild.id),
           members: guild.memberCount
         }));
@@ -135,26 +133,22 @@ module.exports = {
         Object.assign(responseData, { 
           bots: await Promise.all(bots.map(async bot => await bot.toPubliclySafe())),
           denies: await Promise.all(denies.map(async deny => {
-            const newDeny = Object.assign({}, deny._doc);
+            const botHashes = await getUserHashes(deny.bot.id);
 
-            const botUser = client.users.cache.get(deny.bot.id) || await client.users.fetch(deny.bot.id).catch(() => null);
-            const reviewer = client.users.cache.get(deny.reviewer.id) || await client.users.fetch(deny.reviewer.id).catch(() => null);
-  
-            if (botUser) newDeny.bot = {
-              id: botUser.id,
-              username: botUser.username,
-              discriminator: botUser.discriminator,
-              avatar_url: botUser.displayAvatarURL({ size: 256 })
+            return {
+              bot: {
+                id: deny.bot.id,
+                username: deny.bot.username,
+                discriminator: deny.bot.discriminator,
+                avatar: botHashes.avatar
+              },
+              reviewer: {
+                id: deny.reviewer.id,
+                username: deny.reviewer.username
+              },
+              reason: deny.reason,
+              createdAt: deny.createdAt
             };
-
-            if (reviewer) newDeny.reviewer = {
-              id: reviewer.id,
-              username: reviewer.username,
-              discriminator: reviewer.discriminator,
-              avatar_url: reviewer.displayAvatarURL({ size: 256 })
-            };
-
-            return newDeny;
           }))
         });
       }
@@ -192,16 +186,18 @@ module.exports = {
         Object.assign(responseData, {
           reminders,
           voteReminders: await Promise.all(voteReminders.map(async reminder => {
-            const newReminder = Object.assign({}, reminder._doc);
-
-            const guild = client.guilds.cache.get(reminder.guild.id);
-            if (guild) newReminder.guild = {
-              id: guild.id,
-              name: guild.name,
-              icon_url: guild.iconURL()
+            const serverHashes = await getServerHashes(reminder.guild.id);
+            
+            return {
+              _id: reminder._id,
+              id: reminder.id,
+              guild: {
+                id: reminder.guild.id,
+                name: reminder.guild.name,
+                icon: serverHashes.icon
+              },
+              createdAt: reminder.createdAt
             };
-
-            return newReminder;
           }))
         });
       }

@@ -11,7 +11,6 @@ const colorsValidation = require('@/validations/profiles/colors');
 const Server = require('@/schemas/Server');
 const randomizeArray = require('@/utils/randomizeArray');
 const getValidationError = require('@/utils/getValidationError');
-const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 module.exports = {
   get: [
@@ -44,23 +43,18 @@ module.exports = {
       };
 
       const isLiked = profile.likes.includes(request.user?.id || request.clientIp);
-      const bannerURL = client.users.cache.get(profile.user.id)?.bannerURL?.({ format: 'png', size: 2048 }) || await client.users.fetch(profile.user.id, { force: true }).then(user => user.bannerURL({ format: 'png', size: 2048 })).catch(() => null);
 
       const publiclySafe = await profile.toPubliclySafe();
       
-      Object.assign(publiclySafe, { permissions, isLiked, banner_url: bannerURL });
+      Object.assign(publiclySafe, { permissions, isLiked });
 
       const ownedServers = client.guilds.cache.filter(({ ownerId }) => ownerId === profile.user.id);
       if (ownedServers.size > 0) {
         const listedServers = randomizeArray(await Server.find({ id: { $in: ownedServers.map(({ id }) => id) } })).slice(0, 3);
 
         Object.assign(publiclySafe, { 
-          servers: await Promise.all(listedServers.map(async server => {
+          servers: listedServers.map( server => {
             let guild = ownedServers.find(({ id }) => id === server.id);
-            if (!client.fetchedGuilds.has(guild.id)) {
-              await fetchGuildsMembers([server.id]).catch(() => null);
-              guild = client.guilds.cache.get(server.id);
-            }
 
             return {
               id: guild.id,
@@ -74,7 +68,7 @@ module.exports = {
               keywords: server.keywords,
               joined_at: guild.joinedTimestamp
             };
-          }))
+          })
         });
       } else Object.assign(publiclySafe, { servers: [] });
 

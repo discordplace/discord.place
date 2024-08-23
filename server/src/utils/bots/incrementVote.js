@@ -51,7 +51,8 @@ async function incrementVote(botId, userId, botWebhook) {
       $push: {
         voters: {
           user: {
-            id: userId
+            id: userId,
+            username: user.username
           },
           vote: 1
         }
@@ -74,7 +75,8 @@ async function incrementVote(botId, userId, botWebhook) {
       id: userId
     }, 
     bot: { 
-      id: botId
+      id: botId,
+      username: botUser.username
     } 
   }).save();
 

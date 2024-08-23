@@ -101,14 +101,6 @@ module.exports = {
         if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         var user = interaction.options.getUser('user') || interaction.user;
-      
-        if (!client.forceFetchedUsers.has(user.id)) {
-          await client.users.fetch(user.id, { force: true }).catch(() => null);
-          client.forceFetchedUsers.set(user.id, true);
-        
-          user = client.users.cache.get(user.id);
-        }
-
         if (!user) return interaction.followUp({ content: 'User not found.' });
 
         var votedServersCount = await Server.aggregate([

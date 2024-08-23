@@ -7,6 +7,7 @@ const User = require('@/schemas/User');
 const getBadges = require('@/utils/profiles/getBadges');
 const randomizeArray = require('@/utils/randomizeArray');
 const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
+const Discord = require('discord.js');
 
 module.exports = {
   get: [
@@ -20,19 +21,11 @@ module.exports = {
 
       const { id } = matchedData(request);
 
-      let user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
-
-      if (!client.forceFetchedUsers.has(id)) {
-        await client.users.fetch(id, { force: true }).catch(() => null);
-        client.forceFetchedUsers.set(id, true);
-        
-        user = client.users.cache.get(id);
-      }
-
+      let user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('User not found.', 404);
 
       const isHaveNitro = user.banner?.startsWith('a_') || user.avatar?.startsWith('a_');
-      const userFlags = user.flags.toArray();
+      const userFlags = new Discord.UserFlagsBitField(user.flags).toArray();
       if (!user.bot && isHaveNitro) userFlags.push('Nitro');
 
       const validUserFlags = [

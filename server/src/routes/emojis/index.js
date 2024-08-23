@@ -74,7 +74,8 @@ module.exports = {
         const emojiPack = new EmojiPack({
           id,
           user: {
-            id: request.user.id
+            id: request.user.id,
+            username: requestUser.username
           },
           name,
           categories,
@@ -142,7 +143,7 @@ module.exports = {
           
             return response.json({
               success: true,
-              emoji: await emojiPack.toPubliclySafe()
+              emoji: emojiPack.toPubliclySafe()
             });
           })
           .catch(error => {
@@ -155,10 +156,12 @@ module.exports = {
         if (emojiIsAnimated && !categories.includes('Animated')) return response.sendError('Animated emojis must have the Animated category.', 400);
         if (!emojiIsAnimated && categories.includes('Animated')) return response.sendError('Non-animated emojis shouldn\'t have the Animated category.', 400);
 
+
         const emoji = new Emoji({
           id,
           user: {
-            id: request.user.id
+            id: request.user.id,
+            username: requestUser.username
           },
           name,
           categories,
@@ -216,7 +219,7 @@ module.exports = {
           
             return response.json({
               success: true,
-              emoji: await emoji.toPubliclySafe()
+              emoji: emoji.toPubliclySafe()
             });
           })
           .catch(error => {

@@ -12,6 +12,10 @@ const BotVoteTimeoutSchema = new Schema({
     id: {
       type: String,
       required: true
+    },
+    username: {
+      type: String,
+      required: true
     }
   }
 }, { 
