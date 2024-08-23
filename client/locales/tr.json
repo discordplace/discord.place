@@ -34,7 +34,7 @@
     "language": {
       "en": "İngilizce",
       "tr": "Türkçe",
-      "az": "Azerice"
+      "az": "Azerbaycanca"
     },
     "blocks": [
       {
@@ -1489,7 +1489,8 @@
         "backToHome": "Ana Sayfaya Dön",
         "language": {
           "en": "İngilizce",
-          "tr": "Türkçe"
+          "tr": "Türkçe",
+          "az": "Azerbaycanca"
         }
       }
     },
