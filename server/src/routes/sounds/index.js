@@ -16,10 +16,19 @@ const upload = multer({
     fileSize: 264 * 1024,
     files: 1
   },
-  fileFilter: (req, file, cb) => {
+  fileFilter: async (req, file, cb) => {
     if (!file || !file.mimetype) return cb(null, false);
-    if (file.mimetype === 'audio/mpeg') return cb(null, true);
-    return cb(null, false);
+    // if (file.mimetype === 'audio/mpeg') return cb(null, true);
+
+    const { fileTypeFromBuffer } = await import('file-type');
+    const { readChunk } = await import('read-chunk');
+
+    const buffer = await readChunk(file.buffer, { length: 4100 });
+    const fileType = await fileTypeFromBuffer(buffer);
+
+    if (!fileType || fileType.mime !== 'audio/mpeg') return cb(null, false);
+
+    return cb(null, true);
   }
 }).array('file', 1);
 
@@ -47,6 +56,8 @@ module.exports = {
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
     async (request, response) => {
+      if (!request.files || request.files.length === 0) return response.sendError('Please upload a sound file.', 400);
+
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
   
