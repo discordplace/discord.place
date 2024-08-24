@@ -18,18 +18,10 @@ const upload = multer({
     fileSize: 264 * 1024,
     files: 9
   },
-  fileFilter: async (req, file, cb) => {
+  fileFilter: (req, file, cb) => {
     if (!file || !file.mimetype) return cb(null, false);
-
-    const { fileTypeFromBuffer } = await import('file-type');
-    const { readChunk } = await import('read-chunk');
-
-    const buffer = await readChunk(file.buffer, { length: 4100 });
-    const fileType = await fileTypeFromBuffer(buffer);
-
-    if (!fileType || (fileType.mime !== 'image/png' && fileType.mime !== 'image/gif')) return cb(null, false);
-
-    return cb(null, true);
+    if (file.mimetype === 'image/png' || file.mimetype === 'image/gif') return cb(null, true);
+    return cb(null, false);
   }
 }).array('file', 9);
 
@@ -57,8 +49,6 @@ module.exports = {
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
     async (request, response) => {
-      if (!request.files || request.files.length === 0) return response.sendError('You must upload at least one emoji.', 400);
-
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
   
@@ -165,6 +155,7 @@ module.exports = {
         const emojiIsAnimated = request.files[0].mimetype === 'image/gif';
         if (emojiIsAnimated && !categories.includes('Animated')) return response.sendError('Animated emojis must have the Animated category.', 400);
         if (!emojiIsAnimated && categories.includes('Animated')) return response.sendError('Non-animated emojis shouldn\'t have the Animated category.', 400);
+
 
         const emoji = new Emoji({
           id,
