@@ -139,7 +139,7 @@ export default function Actions({ server }) {
   }
 
   // If the invite link is deleted or if the invite link is a vanity URL and currently not available
-  const inviteLinkAvailable = server.invite_code.type !== 'Deleted' || (server.invite_code.type === 'Vanity' && server.vanity_url !== null);
+  const inviteLinkAvailable = server.invite_code.type !== 'Deleted' && (server.invite_code.type === 'Vanity' && server.vanity_url !== null);
 
   return (
     <div>
