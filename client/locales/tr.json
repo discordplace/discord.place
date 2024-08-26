@@ -1681,9 +1681,9 @@
               "duplicateKeyword": "Aynı anahtar kelime birden fazla kez eklenemez."
             },
             "requirements": {
-              "title": "Meet the requirements",
-              "subtitle": "You need to meet the following requirements to add your server to the list.",
-              "completedBadge": "completed",
+              "title": "Gereksinimleri Karşılayın",
+              "subtitle": "Sunucunuzu listeye eklemek için aşağıdaki gereksinimleri karşılamanız gerekmektedir.",
+              "completedBadge": "tamamlandı",
               "items": {
                 "enough_members": {
                   "name": "Minimum Üye Sayısı",
