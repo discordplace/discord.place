@@ -50,7 +50,7 @@ export default function ServerCard(props) {
       icon: MdUpdate,
       value: props.server.data.latest_voted_at,
       condition: sort === 'LatestVoted',
-      transform: date => getRelativeTime(date, language)
+      transform: date => date ? getRelativeTime(date, language) : t('serverCard.neverVoted')
     },
     {
       icon: MdKeyboardVoice,
