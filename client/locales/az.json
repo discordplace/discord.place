@@ -1235,7 +1235,8 @@
   },
   "botCard": {
     "noDescription": "Bu botun təsviri yoxdur. ",
-    "tripledVoteBadge": "3X SƏS!"
+    "tripledVoteBadge": "3X SƏS!",
+    "neverVoted": "Heç bir səs yoxdur"
   },
   "badges": {
     "admin": "Admin",

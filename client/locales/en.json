@@ -1235,7 +1235,8 @@
   },
   "botCard": {
     "noDescription": "This bot does not have a description. We can only imagine how beautiful it is.",
-    "tripledVoteBadge": "3X VOTE!"
+    "tripledVoteBadge": "3X VOTE!",
+    "neverVoted": "Never Voted"
   },
   "badges": {
     "admin": "Admin",
