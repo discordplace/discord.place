@@ -1235,7 +1235,8 @@
   },
   "botCard": {
     "noDescription": "Bu botun bir açıklaması yok. Sadece ne kadar güzel olduğunu hayal edebiliriz.",
-    "tripledVoteBadge": "3X OY!"
+    "tripledVoteBadge": "3X OY!",
+    "neverVoted": "Hiç oy verilmedi"
   },
   "badges": {
     "admin": "Yönetici",
