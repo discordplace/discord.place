@@ -12,12 +12,13 @@ import { useMedia } from 'react-use';
 import getRelativeTime from '@/lib/getRelativeTime';
 import { BsFire } from 'react-icons/bs';
 import config from '@/config';
-import { t } from '@/stores/language';
+import useLanguageStore, { t } from '@/stores/language';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
+  const language = useLanguageStore(state => state.language);
   const storedSort = useSearchStore(state => state.sort);
   const sort = overridedSort || storedSort;
   const category = useSearchStore(state => state.category);
@@ -43,7 +44,7 @@ export default function Card({ data, overridedSort }) {
       icon: MdUpdate,
       value: data.latest_voted_at,
       condition: sort === 'LatestVoted',
-      transform: getRelativeTime
+      transform: date => date ? getRelativeTime(date, language) : t('botCard.neverVoted')
     },
     {
       icon: FaCompass,
