@@ -58,7 +58,10 @@ export function t(key, variables = {}) {
 
   i18n.addResourceBundle(language, 'translation', localeContents[language], true, true);
 
-  if (!i18n.getResource(language, 'translation', key)) return key;
+  if (!i18n.getResource(language, 'translation', key)) {
+    if (process.env.NODE_ENV === 'development') return `${key} (missing translation)`;
+    return localeContents[config.availableLocales.find(locale => locale.default).code][key] || key;
+  }
 
   return i18n.t(key, {
     ...variables,
