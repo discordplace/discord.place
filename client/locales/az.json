@@ -1680,33 +1680,33 @@
               "duplicateKeyword": "Eyni açar sözü iki dəfə istifadə edə bilməzsiniz."
             },
             "requirements": {
-              "title": "Meet the requirements",
-              "subtitle": "You need to meet the following requirements to add your server to the list.",
-              "completedBadge": "completed",
+              "title": "Şərtlərimizlə tanış olun!",
+              "subtitle": "Serverinizi siyahıya əlavə etmək üçün aşağıdakı şərtlərə cavab verməlisiniz.",
+              "completedBadge": "tamamlandı",
               "items": {
                  "enough_members": {
-                  "name": "Minimum Member Count",
-                  "description": "Your server must have at least 100 members."
+                  "name": "Minimal Üzv Sayı",
+                  "description": "Serverinizin ən azı 100 üzvü olmalıdır."
                 },
                 "old_enough": {
-                  "name": "Minimum Server Age",
-                  "description": "Your server must be at least 14 days old."
+                  "name": "Minimal Server Yaşı",
+                  "description": "Serveriniz ən azı 14 günlük olmalıdır."
                 },
                 "has_icon": {
-                  "name": "Server Icon",
-                  "description": "Your server must have a icon."
+                  "name": "Server Ikonu",
+                  "description": "Serveriniz bir ikonaya sahib olmalıdır"
                 },
                 "2fa_enabled": {
-                  "name": "Two-Factor Authentication",
-                  "description": "Your server must have Two-Factor Authentication enabled for server moderators."
+                  "name": "İki faktorlu autentifikasiya",
+                  "description": "Serverinizdə server moderatorları üçün iki faktorlu autentifikasiya aktiv olmalıdır."
                 },
                 "is_community": {
-                  "name": "Community Server",
-                  "description": "Your server must be a Community Server."
+                  "name": "İcma serveri",
+                  "description": "Serveriniz İcma Serveri olmalıdır."
                 },
                 "no_nsfw": {
-                  "name": "No NSFW Content",
-                  "description": "Your server must not contain NSFW content."
+                  "name": "NSFW məzmunu yoxdur",
+                  "description": "Serverinizdə NSFW məzmunu olmamalıdır."
                 }
               }
             },
