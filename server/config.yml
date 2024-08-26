@@ -402,3 +402,17 @@ lemonSqueezy:
     standedOut:
       servers: '425991'
       bots: '425992'
+
+serverListingRequirements:
+  - id: 'enough_members'
+    name: 'Minimum Member Count'
+  - id: 'old_enough'
+    name: 'Minimum Server Age'
+  - id: 'has_icon'
+    name: 'Server Icon'
+  - id: '2fa_enabled'
+    name: 'Two-Factor Authentication'
+  - id: 'is_community'
+    name: 'Community Server'
+  - id: 'no_nsfw'
+    name: 'No NSFW Content'
