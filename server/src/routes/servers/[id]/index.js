@@ -18,6 +18,7 @@ const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const getUserHashes = require('@/utils/getUserHashes');
+const requirementChecks = require('@/utils/servers/requirementChecks');
 
 module.exports = {
   get: [
@@ -178,6 +179,20 @@ module.exports = {
         const invite = await guild.invites.fetch(inviteCode).catch(() => null);
         if (!invite) return response.sendError('Invite link is not valid.', 400);
       }
+
+      const allRequirementsIsMet = config.serverListingRequirements.map(({ id: reqId, name: reqName, description }) => {
+        const checkFunction = requirementChecks[reqId];
+        const isMet = checkFunction ? checkFunction(guild) : false;
+  
+        return {
+          id: reqId,
+          name: reqName,
+          description,
+          met: isMet
+        };
+      });
+
+      if (allRequirementsIsMet.some(req => !req.met)) return response.sendError(`Server does not meet the requirements. (${allRequirementsIsMet.filter(req => !req.met).map(req => req.name).join(', ')})`, 400);
 
       const newServer = new Server({
         id,
