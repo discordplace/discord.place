@@ -1680,6 +1680,37 @@
               "serverAdded": "{{serverName}} added! You will be redirected to {{serverName}} page in a few seconds.",
               "duplicateKeyword": "You can't use the same keyword twice."
             },
+            "requirements": {
+              "title": "Meet the requirements",
+              "subtitle": "You need to meet the following requirements to add your server to the list.",
+              "completedBadge": "completed",
+              "items": {
+                 "enough_members": {
+                  "name": "Minimum Member Count",
+                  "description": "Your server must have at least 100 members."
+                },
+                "old_enough": {
+                  "name": "Minimum Server Age",
+                  "description": "Your server must be at least 14 days old."
+                },
+                "has_icon": {
+                  "name": "Server Icon",
+                  "description": "Your server must have a icon."
+                },
+                "2fa_enabled": {
+                  "name": "Two-Factor Authentication",
+                  "description": "Your server must have Two-Factor Authentication enabled for server moderators."
+                },
+                "is_community": {
+                  "name": "Community Server",
+                  "description": "Your server must be a Community Server."
+                },
+                "no_nsfw": {
+                  "name": "No NSFW Content",
+                  "description": "Your server must not contain NSFW content."
+                }
+              }
+            },
             "fields": {
               "description": {
                 "label": "Add a description",

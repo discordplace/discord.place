@@ -1679,6 +1679,37 @@
               "serverAdded": "{{serverName}} əlavə edildi!  {{serverName}} bir neçə saniyə ərzində səhifə.",
               "duplicateKeyword": "Eyni açar sözü iki dəfə istifadə edə bilməzsiniz."
             },
+            "requirements": {
+              "title": "Şərtlərimizlə tanış olun!",
+              "subtitle": "Serverinizi siyahıya əlavə etmək üçün aşağıdakı şərtlərə cavab verməlisiniz.",
+              "completedBadge": "tamamlandı",
+              "items": {
+                 "enough_members": {
+                  "name": "Minimal Üzv Sayı",
+                  "description": "Serverinizin ən azı 100 üzvü olmalıdır."
+                },
+                "old_enough": {
+                  "name": "Minimal Server Yaşı",
+                  "description": "Serveriniz ən azı 14 günlük olmalıdır."
+                },
+                "has_icon": {
+                  "name": "Server Ikonu",
+                  "description": "Serveriniz bir ikonaya sahib olmalıdır"
+                },
+                "2fa_enabled": {
+                  "name": "İki faktorlu autentifikasiya",
+                  "description": "Serverinizdə server moderatorları üçün iki faktorlu autentifikasiya aktiv olmalıdır."
+                },
+                "is_community": {
+                  "name": "İcma serveri",
+                  "description": "Serveriniz İcma Serveri olmalıdır."
+                },
+                "no_nsfw": {
+                  "name": "NSFW məzmunu yoxdur",
+                  "description": "Serverinizdə NSFW məzmunu olmamalıdır."
+                }
+              }
+            },
             "fields": {
               "description": {
                 "label": "Təsvir əlavə edin",

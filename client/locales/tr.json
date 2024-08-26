@@ -1680,6 +1680,37 @@
               "serverAdded": "{{serverName}} adlı sunucu eklendi! Birkaç saniye içinde {{serverName}} sunucusunun sayfasına yönlendirileceksiniz.",
               "duplicateKeyword": "Aynı anahtar kelime birden fazla kez eklenemez."
             },
+            "requirements": {
+              "title": "Gereksinimleri Karşılayın",
+              "subtitle": "Sunucunuzu listeye eklemek için aşağıdaki gereksinimleri karşılamanız gerekmektedir.",
+              "completedBadge": "tamamlandı",
+              "items": {
+                "enough_members": {
+                  "name": "Minimum Üye Sayısı",
+                  "description": "Sunucunuzda en az 100 üye olmalıdır."
+                },
+                "old_enough": {
+                  "name": "Minimum Sunucu Yaşı",
+                  "description": "Sunucunuzun en az 14 günlük olması gerekmektedir."
+                },
+                "has_icon": {
+                  "name": "Sunucu İkonu",
+                  "description": "Sunucunuzun bir ikonu olmalıdır."
+                },
+                "2fa_enabled": {
+                  "name": "İki Faktörlü Kimlik Doğrulama",
+                  "description": "Sunucu moderatörleri için iki faktörlü kimlik doğrulamanın etkin olması gerekmektedir."
+                },
+                "is_community": {
+                  "name": "Topluluk Sunucusu",
+                  "description": "Sunucunuz bir Topluluk Sunucusu olmalıdır."
+                },
+                "no_nsfw": {
+                  "name": "NSFW İçerik Yok",
+                  "description": "Sunucunuzda NSFW içeriği bulunmamalıdır."
+                }
+              }
+            },
             "fields": {
               "description": {
                 "label": "Açıklama",
