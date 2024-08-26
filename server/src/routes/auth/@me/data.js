@@ -16,6 +16,7 @@ const Sound = require('@/schemas/Sound');
 const Link = require('@/schemas/Link');
 const getUserHashes = require('@/utils/getUserHashes');
 const getServerHashes = require('@/utils/getServerHashes');
+const requirementChecks = require('@/utils/servers/requirementChecks');
 
 const validKeys = [
   'timeouts',
@@ -115,13 +116,28 @@ module.exports = {
       if (keys.includes('servers')) {
         const servers = await Server.find();
 
-        const data = ownedGuilds.map(guild => ({
-          id: guild.id,
-          name: guild.name,
-          icon: guild.icon,
-          is_created: servers.some(server => server.id === guild.id),
-          members: guild.memberCount
-        }));
+        const data = ownedGuilds.map((guild) => {
+          const { id, name, icon, memberCount } = guild;
+        
+          return {
+            id,
+            name,
+            icon,
+            is_created: servers.some(server => server.id === id),
+            members: memberCount,
+            requirements: config.serverListingRequirements.map(({ id: reqId, name: reqName, description }) => {
+              const checkFunction = requirementChecks[reqId];
+              const isMet = checkFunction ? checkFunction(guild) : false;
+        
+              return {
+                id: reqId,
+                name: reqName,
+                description,
+                met: isMet
+              };
+            })
+          };
+        });
 
         Object.assign(responseData, { servers: data });
       }
