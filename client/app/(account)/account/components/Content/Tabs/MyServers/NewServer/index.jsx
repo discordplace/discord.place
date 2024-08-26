@@ -139,7 +139,7 @@ export default function NewServer() {
               </span>
 
               <div className='flex flex-col items-center gap-y-2'>
-                <div className='flex items-center gap-x-1'>
+                <div className='items-center hidden sm:flex gap-x-1'>
                   <span className='text-base font-semibold'>
                     {currentlyAddingServer.requirements.filter(requirement => requirement.met).length / currentlyAddingServer.requirements.length * 100}%
                   </span>
@@ -166,9 +166,21 @@ export default function NewServer() {
               </div>
             </div>
 
-            <p className='text-sm text-tertiary'>
+            <p className='mt-2 text-sm sm:mt-0 text-tertiary'>
               {t('accountPage.tabs.myServers.sections.newServer.requirements.subtitle')}
             </p>
+
+            <div className='flex flex-col mt-6 gap-y-4 sm:hidden'>
+              <div className='flex items-center justify-center gap-x-1'>
+                <span className='text-base font-semibold'>
+                  {currentlyAddingServer.requirements.filter(requirement => requirement.met).length / currentlyAddingServer.requirements.length * 100}%
+                </span>
+
+                <span className='text-sm font-medium text-tertiary'>
+                  {t('accountPage.tabs.myServers.sections.newServer.requirements.completedBadge')}
+                </span>
+              </div>
+            </div>
 
             <div className='flex flex-col mt-8 gap-y-4'>
               {currentlyAddingServer.requirements.map(requirement => (
@@ -187,7 +199,7 @@ export default function NewServer() {
                       {t(`accountPage.tabs.myServers.sections.newServer.requirements.items.${requirement.id}.name`)}
                     </span>
                     
-                    <span className='text-sm font-medium text-tertiary max-w-[700px]'>
+                    <span className='text-sm font-medium text-tertiary max-w-[250px] sm:max-w-[700px]'>
                       {t(`accountPage.tabs.myServers.sections.newServer.requirements.items.${requirement.id}.description`)}
                     </span>
                   </div>
