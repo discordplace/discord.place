@@ -110,8 +110,9 @@ module.exports = {
         ownerId: guild.ownerId,
         rewards: rewards.map(reward => {
           const role = guild.roles.cache.get(reward.role.id);
-          
-          if (role) return {
+          if (!role) return null;
+
+          return {
             id: reward._id,
             role: {
               id: role.id,
@@ -121,7 +122,7 @@ module.exports = {
             required_votes: reward.required_votes,
             unlocked: request.user && (server.voters.find(voter => voter.user.id === request.user.id)?.vote || 0) >= reward.required_votes
           };
-        }),
+        }).filter(Boolean),
         monthly_votes: monthlyVotes,
         webhook: permissions.canEdit && server.webhook
       });
