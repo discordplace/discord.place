@@ -12,7 +12,7 @@ module.exports = async guild => {
   
   const embeds = [
     new Discord.EmbedBuilder()
-      .setAuthor({ name: 'Joined Guild' })
+      .setAuthor({ name: 'Joined Guild', iconURL: guild.iconURL() })
       .setColor(Discord.Colors.Green)
       .setFields([
         {

@@ -10,7 +10,7 @@ module.exports = async guild => {
   
   const embeds = [
     new Discord.EmbedBuilder()
-      .setAuthor({ name: 'Kicked from Guild' })
+      .setAuthor({ name: 'Kicked from Guild', iconURL: guild.iconURL() })
       .setColor(Discord.Colors.Red)
       .setFields([
         {
