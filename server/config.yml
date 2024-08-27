@@ -211,6 +211,7 @@ reviewQueueChannelId: '1267552786162389085'
 botQueueChannelId: '1267552786162389085'
 templateQueueChannelId: '1267552786162389085'
 voteLogsChannelId: '1267553398337572905'
+serverLogsChannelId: '1267553398337572905'
 templateApplyLogsChannelId: '1267553398337572905'
 linksLogsChannelId: '1267553398337572905'
 portalChannelId: '1238654829916585984'
@@ -402,7 +403,6 @@ lemonSqueezy:
     standedOut:
       servers: '425991'
       bots: '425992'
-
 serverListingRequirements:
   - id: 'enough_members'
     name: 'Minimum Member Count'
