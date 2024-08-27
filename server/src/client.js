@@ -29,6 +29,7 @@ const Sound = require('@/schemas/Sound');
 const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
+const Reward = require('@/schemas/Server/Vote/Reward');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -114,6 +115,7 @@ module.exports = class Client {
       }
 
       if (options.startup.checkDeletedInviteCodes) this.checkDeletedInviteCodes();
+      if (options.startup.checkDeletedRewardsRoles) this.checkDeletedRewardsRoles();
       if (options.startup.updatePanelMessages) this.updatePanelMessages();
       if (options.startup.updateClientActivity) updateClientActivity();
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
@@ -134,6 +136,7 @@ module.exports = class Client {
           this.checkReminerMetadatas();
           this.checkExpiredBlockedIPs();
           this.checkDeletedInviteCodes();
+          this.checkDeletedRewardsRoles();
           updateClientActivity();
           syncMemberRoles();
           this.syncLemonSqueezyPlans();
@@ -178,6 +181,43 @@ module.exports = class Client {
     }
   }
 
+  async checkDeletedRewardsRoles() {
+    const rewards = await Reward.find();
+  
+    const serversToCheck = new Set(rewards.map(reward => reward.guild.id));
+      
+    const deleteServerOperations = [];
+    const deleteRoleOperations = [];
+  
+    for (const serverId of serversToCheck) {
+      const guild = client.guilds.cache.get(serverId);
+      if (!guild) deleteServerOperations.push({
+        deleteMany: {
+          filter: { 'guild.id': serverId }
+        }
+      });
+    }
+  
+    for (const reward of rewards) {
+      const guild = client.guilds.cache.get(reward.guild.id);
+      if (guild) {
+        const role = guild.roles.cache.get(reward.role.id);
+        if (!role) deleteRoleOperations.push({
+          deleteOne: {
+            filter: { 'role.id': reward.role.id }
+          }
+        });
+      }
+    }
+  
+    if (deleteServerOperations.length > 0) await Reward.bulkWrite(deleteServerOperations);
+    if (deleteRoleOperations.length > 0) await Reward.bulkWrite(deleteRoleOperations);
+  
+    if (deleteServerOperations.length > 0 || deleteRoleOperations.length > 0) {
+      logger.info(`Deleted vote rewards that associated with deleted servers or roles. (Operations: ${deleteServerOperations.length + deleteRoleOperations.length})`);
+    }
+  }
+  
   async checkVoiceActivity() {
     try {
       const servers = await Server.find({ voice_activity_enabled: true });
