@@ -234,7 +234,7 @@ export default function Actions({ server }) {
         </motion.button>
         
         {!inviteLinkAvailable ? (
-          <Tooltip content={t('serverPage.actions.noInviteLinkAvailable')}>
+          <Tooltip content={t('serverPage.actions.tooltip.noInviteLinkAvailable')}>
             <motion.div
               className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg cursor-default !opacity-70 bg-secondary gap-x-2 text-secondary'
               initial={{ opacity: 0, y: -10 }}
