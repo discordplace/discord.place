@@ -886,7 +886,7 @@
       "decreased": "Dün'e oranla azaldı ({{difference}})",
       "noChanges": "Dün'e oranla değişiklik yok",
       "Total Servers": "{{count}} Sunucu",
-      "Total Bots": "{{count}} Bot",
+      "Total Users": "{{count}} Kullanıcı",
       "profileLikes": "{{count}} Beğeni",
       "profileViews": "{{count}} Ziyaretçi",
       "voiceActivity": "{{count}} Üye",

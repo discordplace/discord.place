@@ -886,7 +886,7 @@
       "decreased": "Decreased since yesterday ({{difference}})",
       "noChanges": "No changes since yesterday",
       "Total Servers": "{{count}} Servers",
-      "Total Bots": "{{count}} Bots",
+      "Total Users": "{{count}} Users",
       "profileLikes": "{{count}} Likes",
       "profileViews": "{{count}} Views",
       "voiceActivity": "{{count}} Members",
