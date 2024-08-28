@@ -200,11 +200,20 @@ export default function Content({ user }) {
             </h3>
 
             <div className='grid grid-cols-3 grid-rows-2 gap-y-2 gap-x-4'>
-              {(user.profile?.badges || []).map(badge => (
-                <Tooltip content={badge.tooltip} key={badge.name}>
+              {(user.profile?.badges || []).map(badgeId => (
+                <Tooltip
+                  content={t(`badges.${badgeId}`, {
+                    premiumSince: user.subscriptionCreatedAt,
+                    lng: language,
+                    formatParams: {
+                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
+                    }
+                  })}
+                  key={badgeId}
+                >
                   <Image
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.name.toLowerCase()}.svg`}
-                    alt={`${badge.name} Badge`}
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeId}.svg`}
+                    alt={`${badgeId} Badge`}
                     width={20}
                     height={20}
                   />
@@ -241,11 +250,20 @@ export default function Content({ user }) {
             </h3>
 
             <div className='grid grid-cols-3 grid-rows-2 gap-y-4 gap-x-6'>
-              {(user.profile?.badges || []).map(badge => (
-                <Tooltip content={badge.tooltip} key={badge.name}>
+              {(user.profile?.badges || []).map(badgeId => (
+                <Tooltip
+                  content={t(`badges.${badgeId}`, {
+                    premiumSince: user.subscriptionCreatedAt,
+                    lng: language,
+                    formatParams: {
+                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
+                    }
+                  })}
+                  key={badgeId}
+                >
                   <Image
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.name.toLowerCase()}.svg`}
-                    alt={`${badge.name} Badge`}
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeId}.svg`}
+                    alt={`${badgeId} Badge`}
                     width={20}
                     height={20}
                   />
