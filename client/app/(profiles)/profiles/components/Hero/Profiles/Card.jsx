@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { colord, extend } from 'colord';
 import mixPlugin from 'colord/plugins/mix';
 import a11yPlugin from 'colord/plugins/a11y';
-import { t } from '@/stores/language';
+import useLanguageStore, { t } from '@/stores/language';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
@@ -22,6 +22,8 @@ extend([
 ]);
 
 export default function Card(props) {
+  const language = useLanguageStore(state => state.language);
+
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
     notation: 'compact',
@@ -143,10 +145,19 @@ export default function Card(props) {
                 {props.global_name}
               </h2>
 
-              {props.badges.map(({ name, tooltip }) => (
-                <Tooltip key={name} content={tooltip}>
+              {props.badges.map(badgeId => (
+                <Tooltip
+                  content={t(`badges.${badgeId}`, {
+                    premiumSince: props.subscriptionCreatedAt,
+                    lng: language,
+                    formatParams: {
+                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
+                    }
+                  })}
+                  key={badgeId}
+                >
                   <Image
-                    src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_${name.toLowerCase()}.svg`}
+                    src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_${badgeId}.svg`}
                     width={16}
                     height={16}
                     alt={`${name} Badge`}
