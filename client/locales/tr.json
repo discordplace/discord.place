@@ -1242,7 +1242,7 @@
     "admin": "Yönetici",
     "moderator": "Moderatör",
     "verified": "Onaylanmış",
-    "premium": "Premium"
+    "premium": "{{premiumSince, datetime}} tarihinden beri Premium"
   },
   "botPage": {
     "notVerifiedInfo": {

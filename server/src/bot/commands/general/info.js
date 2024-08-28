@@ -164,7 +164,7 @@ module.exports = {
 
           var fetchedBadges = await getBadges(profile, userData?.subscription?.createdAt);
           var emptySlots = maxBadges - fetchedBadges.length;
-          var badges = fetchedBadges.map(badge => config.emojis.badges[badge.name.toLowerCase()] || emptySlotEmoji);
+          var badges = fetchedBadges.map(badge => config.emojis.badges[badge.id] || emptySlotEmoji);
         
           for (var i = 0; i < emptySlots; i++) badges.push(emptySlotEmoji);
 
