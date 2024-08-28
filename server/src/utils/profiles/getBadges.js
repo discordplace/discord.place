@@ -26,7 +26,6 @@ function getBadges(profile, premiumSince) {
     },
     {
       id: 'premium',
-      // tooltip: `Premium since ${new Date(premiumSince).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`,
       condition: () => premiumSince
     }
   ];
