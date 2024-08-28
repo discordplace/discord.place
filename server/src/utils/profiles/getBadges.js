@@ -31,7 +31,7 @@ function getBadges(profile, premiumSince) {
     }
   ];
 
-  return badges.filter(badge => badge.condition()).map(badge => ({ name: badge.name, tooltip: badge.tooltip || badge.name }));
+  return badges.filter(badge => badge.condition()).map(badge => badge.id);
 }
 
 module.exports = getBadges;
