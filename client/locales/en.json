@@ -1242,7 +1242,7 @@
     "admin": "Admin",
     "moderator": "Moderator",
     "verified": "Verified",
-    "premium": "Premium"
+    "premium": "Premium since {{premiumSince, datetime}}"
   },
   "botPage": {
     "notVerifiedInfo": {
