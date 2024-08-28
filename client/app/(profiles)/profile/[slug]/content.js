@@ -14,9 +14,11 @@ import Graph from '@/app/(profiles)/profile/[slug]/components/sections/Graph';
 import useThemeStore from '@/stores/theme';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function Content({ profile }) {
   const theme = useThemeStore(state => state.theme);
+  const language = useLanguageStore(state => state.language);
 
   useEffect(() => {
     incrementViews(profile.slug);
@@ -79,13 +81,22 @@ export default function Content({ profile }) {
 
           {profile.badges.length > 0 && (
             <div className='flex items-center ml-4 gap-x-2'>
-              {profile.badges.map(badge => (
-                <Tooltip key={badge.name} content={badge.tooltip}>
+              {profile.badges.map(badgeId => (
+                <Tooltip
+                  content={t(`badges.${badgeId}`, {
+                    premiumSince: profile.subscriptionCreatedAt,
+                    lng: language,
+                    formatParams: {
+                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
+                    }
+                  })}
+                  key={badgeId}
+                >
                   <MotionImage 
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.name.toLowerCase()}.svg`} 
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeId}.svg`} 
                     width={24}
                     height={24}
-                    alt={`${badge.name} Badge`}
+                    alt={`${badgeId} Badge`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                   />
