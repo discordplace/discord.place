@@ -89,7 +89,7 @@ export default function TopVoters({ bot }) {
               </div>
 
               <h2 className='text-lg font-semibold truncate'>
-                @{voter.username}
+                @{voter.user.username}
               </h2>
 
               <div className='flex items-center ml-auto text-xl font-bold gap-x-2'>
