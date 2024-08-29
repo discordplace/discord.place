@@ -181,16 +181,17 @@ export default function Content({ server }) {
         <div className="flex flex-col w-full sm:items-center sm:flex-row sm:justify-between">
           <div className="flex flex-col gap-y-1">
             <h2 className="flex items-center text-3xl font-bold gap-x-2">
-              Manage Server
+              {t('serverManagePage.title')}
             
               <div className='p-2 text-xs font-bold uppercase rounded-lg select-none bg-quaternary'>
-                esc to close
+                {t('serverManagePage.escToCloseBadge')}
               </div>
             </h2>
-            
+
             <p className="text-tertiary">
-              Manage your server and its settings.
+              {t('serverManagePage.subtitle')}
             </p>
+            
             
             <div className='flex items-center mt-2 font-medium gap-x-2 text-secondary'>
               <ServerIcon
