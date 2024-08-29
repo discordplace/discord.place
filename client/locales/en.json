@@ -882,9 +882,9 @@
   },
   "graph": {
     "tooltip": {
-      "increased": "Increased since yesterday ({{difference}})",
-      "decreased": "Decreased since yesterday ({{difference}})",
-      "noChanges": "No changes since yesterday",
+      "increased": "(0)[Increased since yesterday ({{difference}})];(1)[Increased since last month ({{difference}})];",
+      "decreased": "(0)[Decreased since yesterday ({{difference}})];(1)[Decreased since last month ({{difference}})];",
+      "noChanges": "(0)[No changes since yesterday];(1)[No changes since last month];",
       "Total Servers": "{{count}} Servers",
       "Total Users": "{{count}} Users",
       "profileLikes": "{{count}} Likes",

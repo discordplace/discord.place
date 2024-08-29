@@ -882,9 +882,9 @@
   },
   "graph": {
     "tooltip": {
-      "increased": "Dünəndən artıb ({{difference}})",
-      "decreased": "Dünəndən azalıb ({{difference}})",
-      "noChanges": "Dünəndən bəri heç bir dəyişiklik yoxdur",
+      "increased": "(0)[Dünəndən artıb ({{difference}})];(1)[Keçən aydan artıb ({{difference}})];",
+      "decreased": "(0)[Dünəndən azalıb ({{difference}})];(1)[Keçən aydan azalıb ({{difference}})];",
+      "noChanges": "(0)[Dünəndən bəri heç bir dəyişiklik yoxdur];(1)[Keçən aydan bəri heç bir dəyişiklik yoxdur];",
       "Total Servers": "{{count}} Serverlər",
       "Total Users": "{{count}} İstifadəçilər",
       "profileLikes": "{{count}} Bəyənir",
