@@ -9,7 +9,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Pagination from '@/app/components/Pagination';
 
 export default function Profiles() {
-
   const { search, setSearch, profiles, fetchProfiles, loading, page, setPage, limit, count } = useSearchStore(useShallow(state => ({ 
     search: state.search,
     setSearch: state.setSearch,
@@ -42,7 +41,7 @@ export default function Profiles() {
     stiffness: 260,
     damping: 20
   };
-  
+
   return (
     <motion.div 
       className='flex flex-col my-16'
