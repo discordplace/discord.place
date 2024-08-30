@@ -15,6 +15,7 @@ import a11yPlugin from 'colord/plugins/a11y';
 import useLanguageStore, { t } from '@/stores/language';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import useSearchStore from '@/stores/profiles/search';
 
 extend([
   mixPlugin,
@@ -43,6 +44,11 @@ export default function Card(props) {
   };
 
   const classesToGenerate = ['text-[rgba(var(--dark-text-primary))]', 'text-[rgba(var(--dark-text-secondary))]', 'text-[rgba(var(--dark-text-tertiary))]', 'text-[rgba(var(--light-text-primary))]', 'text-[rgba(var(--light-text-secondary))]', 'text-[rgba(var(--light-text-tertiary))]'];
+
+  const presences = useSearchStore(state => state.presences);
+  const userStatus = presences?.find?.(presence => presence.metadata.id === props.id)?.status;
+
+  userStatus && !props.badges.includes('poweredByLantern') && props.badges.push('poweredByLantern');
 
   return (
     <div className='w-[300px] p-0.5 h-[461px] rounded-3xl relative overflow-hidden group z-[1]'>
@@ -104,30 +110,47 @@ export default function Card(props) {
         )}
         
         <div className='-mt-[4.5rem] relative left-[10px]'>
-          {props.avatar ? (
-            <UserAvatar
-              id={props.id}
-              hash={props.avatar}
-              size={64}
-              width={64}
-              height={64}
-              className={cn(
-                'border-2 rounded-full border-transparent',
-                props.banner && 'shadow-lg shadow-black/70'
-              )}
-            /> 
-          ) : (
-            <Image
-              src='https://cdn.discordapp.com/embed/avatars/0.png'
-              alt='Default Avatar'
-              width={64}
-              height={64}
-              className={cn(
-                'border-2 rounded-full border-transparent',
-                props.banner && 'shadow-lg shadow-black/70'
-              )}
-            />
-          )}
+          <div className='relative w-max'>
+            {props.avatar ? (
+              <UserAvatar
+                id={props.id}
+                hash={props.avatar}
+                size={64}
+                width={64}
+                height={64}
+                className={cn(
+                  'border-2 rounded-full border-transparent',
+                  props.banner && 'shadow-lg shadow-black/70'
+                )}
+              />
+            ) : (
+              <Image
+                src='https://cdn.discordapp.com/embed/avatars/0.png'
+                alt='Default Avatar'
+                width={64}
+                height={64}
+                className={cn(
+                  'border-2 rounded-full border-transparent',
+                  props.banner && 'shadow-lg shadow-black/70'
+                )}
+              />
+            )}
+
+            {userStatus && (
+              <Tooltip content={t(`profileCard.tooltip.status.${userStatus}`)}>
+                <Image
+                  src={`/status/${userStatus}.svg`}
+                  alt={userStatus}
+                  width={20}
+                  height={20}
+                  className={cn(
+                    'absolute bottom-0 right-0 p-0.5 rounded-full',
+                    !haveCustomColors ? 'bg-secondary' : 'bg-black/30'
+                  )}
+                />
+              </Tooltip>
+            )}
+          </div>
         </div>
 
         <div className={cn(
