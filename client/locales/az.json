@@ -771,6 +771,15 @@
     },
     "toast": {
       "profileUrlCopied": "Profil URL-i buferə kopyalandı!"
+    },
+    "tooltip": {
+      "status": {
+        "online": "Vəziyyət Onlayn",
+        "offline": "Vəziyyət Offline",
+        "idle": "Vəziyyət Boş",
+        "dnd": "Vəziyyət Narahat Etməyin (DND)",
+        "streaming": "Vəziyyət Yayım"
+      }
     }
   },
   "userProfile": {
@@ -1242,7 +1251,8 @@
     "admin": "Admin",
     "moderator": "Moderator",
     "verified": "Doğrulanıb",
-    "premium": "{{premiumSince, datetime}} tarixindən bəri Premium"
+    "premium": "{{premiumSince, datetime}} tarixindən bəri Premium",
+    "poweredByLantern": "Bu istifadəçi vəziyyəti lantern.rest tərəfindən təmin edilir"
   },
   "botPage": {
     "notVerifiedInfo": {

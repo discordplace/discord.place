@@ -771,6 +771,15 @@
     },
     "toast": {
       "profileUrlCopied": "Profile URL copied to clipboard!"
+    },
+    "tooltip": {
+      "status": {
+        "online": "Status Online",
+        "idle": "Status Idle",
+        "dnd": "Status Do Not Disturb",
+        "offline": "Status offline",
+        "streaming": "Status Streaming"
+      }
     }
   },
   "userProfile": {
@@ -1242,7 +1251,8 @@
     "admin": "Admin",
     "moderator": "Moderator",
     "verified": "Verified",
-    "premium": "Premium since {{premiumSince, datetime}}"
+    "premium": "Premium since {{premiumSince, datetime}}",
+    "poweredByLantern": "This user status is powered by lantern.rest"
   },
   "botPage": {
     "notVerifiedInfo": {

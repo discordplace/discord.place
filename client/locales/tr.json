@@ -771,6 +771,15 @@
     },
     "toast": {
       "profileUrlCopied": "Profil bağlantısı panoya kopyalandı!"
+    },
+    "tooltip": {
+      "status": {
+        "online": "Durum Çevrimiçi",
+        "idle": "Durum Boşta",
+        "dnd": "Durum Rahatsız Etmeyin",
+        "offline": "Durum Çevrimdışı",
+        "streaming": "Durum Yayında"
+      }
     }
   },
   "userProfile": {
@@ -1242,7 +1251,8 @@
     "admin": "Yönetici",
     "moderator": "Moderatör",
     "verified": "Onaylanmış",
-    "premium": "{{premiumSince, datetime}} tarihinden beri Premium"
+    "premium": "{{premiumSince, datetime}} tarihinden beri Premium",
+    "poweredByLantern": "Bu kullanıcı durumu lantern.rest tarafından sağlanmaktadır"
   },
   "botPage": {
     "notVerifiedInfo": {
