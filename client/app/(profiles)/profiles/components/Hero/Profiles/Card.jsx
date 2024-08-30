@@ -183,7 +183,7 @@ export default function Card(props) {
                     src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_${badgeId}.svg`}
                     width={16}
                     height={16}
-                    alt={`${name} Badge`}
+                    alt={`${badgeId} Badge`}
                   />
                 </Tooltip>
               ))}
