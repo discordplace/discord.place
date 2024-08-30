@@ -179,12 +179,27 @@ export default function Card(props) {
                   })}
                   key={badgeId}
                 >
-                  <Image
-                    src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_${badgeId}.svg`}
-                    width={16}
-                    height={16}
-                    alt={`${badgeId} Badge`}
-                  />
+                  {badgeId === 'poweredByLantern' ? (
+                    <Link
+                      href='https://github.com/discordplace/lantern'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      <Image
+                        src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_poweredByLantern.svg`}
+                        width={16}
+                        height={16}
+                        alt={'poweredByLantern Badge'}
+                      />
+                    </Link>
+                  ) : (
+                    <Image
+                      src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_${badgeId}.svg`}
+                      width={16}
+                      height={16}
+                      alt={`${badgeId} Badge`}
+                    />
+                  )}
                 </Tooltip>
               ))}
             </div>
