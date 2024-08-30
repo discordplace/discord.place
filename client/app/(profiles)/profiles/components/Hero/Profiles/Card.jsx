@@ -145,7 +145,7 @@ export default function Card(props) {
                   height={20}
                   className={cn(
                     'absolute bottom-0 right-0 p-0.5 rounded-full',
-                    !haveCustomColors ? 'bg-secondary' : 'bg-black/30'
+                    !haveCustomColors && !props.banner ? 'bg-secondary' : 'bg-black/30'
                   )}
                 />
               </Tooltip>
