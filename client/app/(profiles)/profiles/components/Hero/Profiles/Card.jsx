@@ -184,6 +184,7 @@ export default function Card(props) {
                       href='https://github.com/discordplace/lantern'
                       target='_blank'
                       rel='noopener noreferrer'
+                      className='flex items-center'
                     >
                       <Image
                         src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_poweredByLantern.svg`}
