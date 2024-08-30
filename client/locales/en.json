@@ -777,7 +777,7 @@
         "online": "Status Online",
         "idle": "Status Idle",
         "dnd": "Status Do Not Disturb",
-        "offline": "Status offline",
+        "offline": "Status Offline",
         "streaming": "Status Streaming"
       }
     }
