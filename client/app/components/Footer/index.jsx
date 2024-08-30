@@ -218,7 +218,7 @@ export default function Footer() {
                   {link.label}
 
                   {link.new && (
-                    <span className='px-2.5 py-0.5 text-xs font-bold bg-purple-500 rounded-full text-primary text-quaternary'>
+                    <span className='px-2.5 py-0.5 text-xs font-bold bg-purple-500 rounded-full text-white'>
                       {t('footer.newBadge')}
                     </span>
                   )}
