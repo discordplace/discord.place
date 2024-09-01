@@ -27,13 +27,13 @@ export default function Actions({ profile }) {
     setLoading(true);
 
     toast.promise(likeProfile(profile.slug), {
-      loading: t(`profilePage.actions.toast.${liked ? 'unliking' : 'liking'}`, { profile: profile.slug }),
+      loading: t(`profilePage.actions.toast.${liked ? 'unliking' : 'liking'}`, { profileSlug: profile.slug }),
       success: (isLiked) => {
         setLiked(isLiked);
         setLoading(false);
         revalidateProfile(profile.slug);
 
-        return t(`profilePage.actions.toast.${isLiked ? 'liked' : 'unliked'}`, { profile: profile.slug });
+        return t(`profilePage.actions.toast.${isLiked ? 'liked' : 'unliked'}`, { profileSlug: profile.slug });
       },
       error: error => {
         setLoading(false);
