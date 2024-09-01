@@ -76,7 +76,7 @@ module.exports = {
           }
         ]);
 
-        if (guild.banner) embeds[0].setImage(guild.bannerURL({ format: 'png', size: 4096 }));
+        if (guild.banner) embeds[0].setImage(guild.bannerURL({ extension: 'png', size: 4096 }));
         
         var components = [
           new Discord.ActionRowBuilder()
@@ -137,7 +137,7 @@ module.exports = {
             )
         ];
 
-        if (user.banner) embeds[0].setImage(user.bannerURL({ format: 'png', size: 4096 }));
+        if (user.banner) embeds[0].setImage(user.bannerURL({ extension: 'png', size: 4096 }));
       
         if (userData?.subscription?.createdAt) {
           const premiumSince = new Date(userData.subscription.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });

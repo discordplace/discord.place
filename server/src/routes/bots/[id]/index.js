@@ -101,7 +101,7 @@ module.exports = {
           if (guild) responseData.support_server = {
             id: guild.id,
             name: guild.name,
-            icon_url: guild.iconURL({ format: 'png', size: 128 }),
+            icon_url: guild.iconURL({ extension: 'png', size: 128 }),
             category: server.category
           };
         }

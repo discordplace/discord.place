@@ -95,7 +95,7 @@ module.exports = {
         icon: guild.icon,
         icon_url: guild.iconURL(),
         banner: guild.banner,
-        banner_url: guild.bannerURL({ format: 'png', size: 2048 }),
+        banner_url: guild.bannerURL({ extension: 'png', size: 2048 }),
         total_members: guild.memberCount,
         total_members_in_voice: guild.members.cache.filter(member => !member.bot && member.voice.channel).size,
         vanity_url: guild.vanityURLCode ? `https://discord.com/invite/${guild.vanityURLCode}` : null,
@@ -118,7 +118,7 @@ module.exports = {
             role: {
               id: role.id,
               name: role.name,
-              icon_url: role.iconURL({ format: 'webp', size: 128, dynamic: true })
+              icon_url: role.iconURL({ extension: 'webp', size: 128, dynamic: true })
             },
             required_votes: reward.required_votes,
             unlocked: request.user && (server.voters.find(voter => voter.user.id === request.user.id)?.vote || 0) >= reward.required_votes
