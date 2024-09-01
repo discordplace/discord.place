@@ -2,17 +2,26 @@ import getBotMetadata from '@/lib/request/bots/getBotMetadata';
 import getBot from '@/lib/request/bots/getBot';
 import Content from '@/app/(bots)/bots/[id]/content';
 import { redirect } from 'next/navigation';
+import config from '@/config';
 
 export async function generateMetadata({ params }) {
-  const bot = await getBotMetadata(params.id).catch(error => error);
-  if (typeof bot === 'string') return;
+  const metadata = await getBotMetadata(params.id).catch(error => error);
+  if (typeof metadata === 'string') return;
 
   return {
-    title: `Bot ${bot.username}`,
-    description: bot.short_description,
+    title: `Bot ${metadata.username}`,
+    description: metadata.short_description,
     openGraph: {
-      title: `Discord Place - ${bot.username} Bot`,
-      description: bot.short_description
+      title: `Discord Place - ${metadata.username} Bot`,
+      description: metadata.short_description,
+      url: `${config.baseUrl}/bots/${params.id}`,
+      images: [
+        {
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'bot', metadata }))}`,
+          width: 1200,
+          height: 630
+        }
+      ]
     }
   };
 }

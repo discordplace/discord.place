@@ -2,15 +2,24 @@ import getEmoji from '@/lib/request/emojis/getEmoji';
 import getEmojiMetadata from '@/lib/request/emojis/getEmojiMetadata';
 import { redirect } from 'next/navigation';
 import Content from '@/app/(emojis)/emojis/[id]/content';
+import config from '@/config';
 
 export async function generateMetadata({ params }) {
-  const emoji = await getEmojiMetadata(params.id).catch(error => error);
-  if (typeof emoji === 'string') return;
-
+  const metadata = await getEmojiMetadata(params.id).catch(error => error);
+  if (typeof metadata === 'string') return;
+  
   return {
-    title: `Emoji ${emoji.name}.${emoji.animated ? 'gif' : 'png'}`,
+    title: `Emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'}`,
     openGraph: {
-      title: `Discord Place - Emoji ${emoji.name}.${emoji.animated ? 'gif' : 'png'}`
+      title: `Discord Place - Emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'}`,
+      url: `/emojis/${params.id}`,
+      images: [
+        {
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'emoji', metadata }))}`,
+          width: 1200,
+          height: 630
+        }
+      ]
     }
   };
 }

@@ -2,23 +2,34 @@ import getSound from '@/lib/request/sounds/getSound';
 import { redirect } from 'next/navigation';
 import Content from '@/app/(sounds)/sounds/[id]/content';
 import getSoundMetadata from '@/lib/request/sounds/getSoundMetadata';
+import config from '@/config';
 
 export async function generateMetadata({ params }) {
-  const sound = await getSoundMetadata(params.id).catch(error => error);
-  if (typeof sound === 'string') return;
+  const metadata = await getSoundMetadata(params.id).catch(error => error);
+  if (typeof metadata === 'string') return;
+
+  console.log(`${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'sound', metadata }))}`)
 
   return {
-    title: `Sound ${sound.name}`,
+    title: `Sound ${metadata.name}`,
     keywords: [
-      sound.name,
-      `discord sound ${sound.name}`,
-      `discord soundboard ${sound.name}`,
-      `discord ${sound.name} download`,
-      `discord ${sound.name} upload`,
-      `${sound.name} download`
+      metadata.name,
+      `discord sound ${metadata.name}`,
+      `discord soundboard ${metadata.name}`,
+      `discord ${metadata.name} download`,
+      `discord ${metadata.name} upload`,
+      `${metadata.name} download`
     ],
     openGraph: {
-      title: `Discord Place - Sound ${sound.name}`
+      title: `Discord Place - Sound ${metadata.name}`,
+      url: `/sounds/${params.id}`,
+      images: [
+        {
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'sound', metadata }))}`,
+          width: 1200,
+          height: 630
+        }
+      ]
     }
   };
 }
