@@ -8,8 +8,6 @@ export async function generateMetadata({ params }) {
   const metadata = await getSoundMetadata(params.id).catch(error => error);
   if (typeof metadata === 'string') return;
 
-  console.log(`${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'sound', metadata }))}`)
-
   return {
     title: `Sound ${metadata.name}`,
     keywords: [
