@@ -114,7 +114,7 @@ export default function Content({ server }) {
         setChangedKeys([]);
         revalidateServer(server.id);
 
-        return t('serverManagePage.toast.savedChanges');
+        return t('serverManagePage.toast.changesSaved');
       },
       error: error => {
         setSavingChanges(false);
