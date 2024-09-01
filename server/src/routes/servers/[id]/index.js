@@ -118,7 +118,7 @@ module.exports = {
             role: {
               id: role.id,
               name: role.name,
-              icon_url: role.iconURL({ extension: 'webp', size: 128, dynamic: true })
+              icon_url: role.iconURL({ extension: 'webp', size: 128 })
             },
             required_votes: reward.required_votes,
             unlocked: request.user && (server.voters.find(voter => voter.user.id === request.user.id)?.vote || 0) >= reward.required_votes

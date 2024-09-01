@@ -104,7 +104,7 @@ async function createPanelMessageOptions(guild, server) {
 
   const embeds = [
     new Discord.EmbedBuilder()
-      .setAuthor({ name: guild.name, iconURL: guild.iconURL({ dynamic: true }) })
+      .setAuthor({ name: guild.name, iconURL: guild.iconURL() })
       .setColor('#2b2d31')
       .setFields([
         {
@@ -129,7 +129,7 @@ async function createPanelMessageOptions(guild, server) {
   if (lastVoter) embeds.push(
     new Discord.EmbedBuilder()
       .setColor('#2b2d31')
-      .setFooter({ text: `@${lastVoter.username}`, iconURL: lastVoter.displayAvatarURL({ dynamic: true }) })
+      .setFooter({ text: `@${lastVoter.username}`, iconURL: lastVoter.displayAvatarURL() })
       .setTimestamp(server.last_voter.date)
   );
 
