@@ -1,7 +1,7 @@
 const Reminder = require('@/schemas/Reminder');
 const Discord = require('discord.js');
 const parseTimeDuration = require('@/utils/parseTimeDuration');
-const getValidationError = require('@/src/utils/getValidationError');
+const getValidationError = require('@/utils/getValidationError');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()

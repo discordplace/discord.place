@@ -1,4 +1,4 @@
-const checkAuthentication = require('@/src/utils/middlewares/checkAuthentication');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 
 module.exports = {

@@ -1,4 +1,4 @@
-const useRateLimiter = require('@/src/utils/useRateLimiter');
+const useRateLimiter = require('@/utils/useRateLimiter');
 const Bot = require('@/schemas/Bot');
 
 module.exports = {

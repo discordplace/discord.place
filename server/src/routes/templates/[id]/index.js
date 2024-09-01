@@ -1,7 +1,7 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Template = require('@/schemas/Template');
-const checkAuthentication = require('@/src/utils/middlewares/checkAuthentication');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 
 module.exports = {
   get: [

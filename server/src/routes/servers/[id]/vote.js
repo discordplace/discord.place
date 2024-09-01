@@ -5,7 +5,7 @@ const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const checkCaptcha = require('@/utils/middlewares/checkCaptcha');
 const bodyParser = require('body-parser');
-const incrementVote = require('@/src/utils/servers/incrementVote');
+const incrementVote = require('@/utils/servers/incrementVote');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 module.exports = {

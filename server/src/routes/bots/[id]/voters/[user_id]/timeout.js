@@ -1,6 +1,6 @@
 const { param, validationResult, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const checkAuthentication = require('@/src/utils/middlewares/checkAuthentication');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 
 module.exports = {

@@ -1,5 +1,5 @@
 const Profile = require('@/schemas/Profile');
-const useRateLimiter = require('@/src/utils/useRateLimiter');
+const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
 const { param, validationResult, matchedData } = require('express-validator');
 const bodyParser = require('body-parser');

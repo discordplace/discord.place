@@ -2,7 +2,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const User = require('@/schemas/User');
-const getUserHashes = require('@/src/utils/getUserHashes');
+const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
   get: [

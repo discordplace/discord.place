@@ -1,6 +1,6 @@
 const Reward = require('@/schemas/Server/Vote/Reward');
 const Server = require('@/schemas/Server');
-const sendLog = require('@/src/utils/servers/sendLog');
+const sendLog = require('@/utils/servers/sendLog');
 const Discord = require('discord.js');
 const User = require('@/schemas/User');
 

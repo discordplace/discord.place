@@ -1,8 +1,8 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Sound = require('@/schemas/Sound');
-const checkAuthentication = require('@/src/utils/middlewares/checkAuthentication');
-const idValidation = require('@/src/utils/validations/sounds/id');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const idValidation = require('@/utils/validations/sounds/id');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({

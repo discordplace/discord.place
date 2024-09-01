@@ -3,7 +3,7 @@ const Template = require('@/schemas/Template');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const sleep = require('@/utils/sleep');
 const DashboardData = require('@/schemas/Dashboard/Data');
-const humanizeMs = require('@/src/utils/humanizeMs');
+const humanizeMs = require('@/utils/humanizeMs');
 
 const currentlyApplyingTemplates = new Discord.Collection();
 const latestUses = new Discord.Collection();

@@ -1,4 +1,4 @@
-const fetchGuildsMembers = require('@/src/utils/fetchGuildsMembers');
+const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const Discord = require('discord.js');
 const updateClientActivity = require('@/utils/updateClientActivity');
 
