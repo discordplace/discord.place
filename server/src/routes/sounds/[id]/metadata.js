@@ -2,6 +2,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const idValidation = require('@/src/utils/validations/sounds/id');
+const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
   get: [
@@ -18,8 +19,16 @@ module.exports = {
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);
 
+      const hashes = await getUserHashes(sound.publisher.id);
+
       return response.json({
-        name: sound.name
+        name: sound.name,
+        username: sound.publisher.username,
+        avatar_url: `https://cdn.discordapp.com/avatars/${sound.publisher.id}/${hashes.avatar}.png?size=64`,
+        likes: sound.likers.length,
+        downloads: sound.downloads,
+        created_at: new Date(sound.createdAt).getTime(),
+        categories: sound.categories
       });
     }
   ]

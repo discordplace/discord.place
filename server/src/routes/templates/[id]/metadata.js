@@ -1,6 +1,7 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Template = require('@/schemas/Template');
+const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
   get: [
@@ -17,18 +18,16 @@ module.exports = {
       const template = await Template.findOne({ id });
       if (!template) return response.sendError('Template not found.', 404);
 
-      const responseData = {
-        name: template.name
-      };
+      const hashes = await getUserHashes(template.user.id);
 
-      const user = await client.users.fetch(template.user.id).catch(() => null);
-      if (user) Object.assign(responseData, {
-        user: {
-          username: user.username
-        }
+      return response.json({
+        name: template.name,
+        username: template.user.username,
+        avatar_url: `https://cdn.discordapp.com/avatars/${template.user.id}/${hashes.avatar}.png?size=64`,
+        uses: template.uses,
+        description: template.description,
+        categories: template.categories
       });
-
-      return response.json(responseData);
     }
   ]
 };

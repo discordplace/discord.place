@@ -1,6 +1,8 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
+const User = require('@/schemas/User');
+const getUserHashes = require('@/src/utils/getUserHashes');
 
 module.exports = {
   get: [
@@ -15,9 +17,17 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
+      const ownerHasPremium = await User.findOne({ id: bot.owner.id, subscription: { $ne: null } });
+      const hashes = await getUserHashes(bot.id);
+
       return response.json({
         username: bot.data.username,
-        short_description: bot.short_description
+        discriminator: bot.data.discriminator,
+        avatar_url: `https://cdn.discordapp.com/avatars/${bot.id}/${hashes.avatar}.png?size=64`,
+        votes: bot.votes,
+        category: bot.categories[0],
+        short_description: bot.short_description,
+        premium: !!ownerHasPremium
       });
     }
   ]
