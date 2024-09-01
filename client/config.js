@@ -42,6 +42,7 @@ const config = {
     }     
   ],
   showStandoutProductAds: true,
+  baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place',
   supportInviteUrl: 'https://invite.discord.place',
   docsUrl: 'https://docs.discord.place',
   api: {
