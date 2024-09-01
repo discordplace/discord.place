@@ -8,6 +8,7 @@ import getData from '@/lib/request/auth/getData';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import HashServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import { BsGithub } from 'react-icons/bs';
 import Input from '../Input';
 import { TbLoader } from 'react-icons/tb';
@@ -185,13 +186,25 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                       key={server.id}
                       onClick={() => supportServerId === server.id ? setSupportServerId('0') : setSupportServerId(server.id)}
                     >
-                      <ServerIcon
-                        width={96}
-                        height={96}
-                        name={server.name}
-                        icon_url={server.icon_url}
-                        className='cursor-pointer hover:opacity-70 rounded-xl'
-                      />
+                      {server.icon ? (
+                        <HashServerIcon
+                          id={server.id}
+                          name={server.name}
+                          hash={server.icon}
+                          size={96}
+                          className='cursor-pointer hover:opacity-70 rounded-xl'
+                          width={96}
+                          height={96}
+                        />
+                      ) : (
+                        <ServerIcon
+                          width={96}
+                          height={96}
+                          name={server.name}
+                          icon_url={server.icon_url}
+                          className='cursor-pointer hover:opacity-70 rounded-xl'
+                        />
+                      )}
 
                       {supportServerId === server.id && (
                         <div className='absolute p-1 text-2xl rounded-full pointer-events-none -right-1 -bottom-1 bg-background'>
