@@ -18,7 +18,16 @@ export default function Profile({ data, avatar_base64 }) {
           style={{ width: '64px', height: '64px', borderRadius: '50%' }}
         />
 
-        <h1 style={{ fontSize: '64px', fontWeight: 700 }}>
+        <h1
+          style={{
+            fontSize: '64px',
+            fontWeight: 70,
+            maxWidth: '1000px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+          }}
+        >
           {data.username}
         </h1>
 
@@ -37,7 +46,7 @@ export default function Profile({ data, avatar_base64 }) {
               gap: '4px'
             }}
           >
-          Premium
+            Premium
           </span>
         )}
       </div>

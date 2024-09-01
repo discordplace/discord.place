@@ -13,7 +13,16 @@ export default function Sound({ data, avatar_base64 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-        <h1 style={{ fontSize: '64px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '2px' }}>
+        <h1
+          style={{
+            fontSize: '64px',
+            fontWeight: 700,
+            maxWidth: '1000px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'  
+          }}
+        >
           {data.name}
         </h1>
       </div>

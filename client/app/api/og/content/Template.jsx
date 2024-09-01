@@ -11,7 +11,15 @@ export default function Profile({ data, avatar_base64 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0px' }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <h1 style={{ fontSize: '64px', fontWeight: 700 }}>
+      <h1
+        style={{
+          fontSize: '64px',
+          fontWeight: 700,
+          maxWidth: '1000px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        }}>
         {data.name}
       </h1>
 

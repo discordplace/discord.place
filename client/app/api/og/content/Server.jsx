@@ -25,7 +25,16 @@ export default function Server({ data, icon_base64 }) {
           style={{ width: '64px', height: '64px', borderRadius: '8px' }}
         />
 
-        <h1 style={{ fontSize: '64px', fontWeight: 700 }}>
+        <h1
+          style={{
+            fontSize: '64px',
+            fontWeight: 700,
+            maxWidth: '1000px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+          }}
+        >
           {data.name}
         </h1>
 
