@@ -1,6 +1,7 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
+const User = require('@/schemas/User');
 
 module.exports = {
   get: [
@@ -18,13 +19,16 @@ module.exports = {
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404); 
 
+      const ownerHasPremium = await User.findOne({ id: guild.ownerId, subscription: { $ne: null } });
+
       return response.json({
         name: guild.name,
         description: guild.description,
         icon_url: guild.iconURL({ extension: 'png', size: 64, forceStatic: true }),
         members: guild.memberCount,
         votes: server.votes,
-        category: server.category
+        category: server.category,
+        premium: !!ownerHasPremium
       });
     }
   ]

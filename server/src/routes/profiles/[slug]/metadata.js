@@ -27,7 +27,8 @@ module.exports = {
         likes: publiclySafe.likes,
         views: profile.views,
         created_at: new Date(profile.createdAt).getTime(),
-        bio: publiclySafe.bio
+        bio: publiclySafe.bio,
+        premium: publiclySafe.premium
       });
     }
   ]
