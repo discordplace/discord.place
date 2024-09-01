@@ -135,7 +135,6 @@ export default function Content({ server }) {
   useEffect(() => {
     function handleEscape(event) {
       if (event.key === 'Escape') {
-
         if (changesMade) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
           
