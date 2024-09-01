@@ -8,8 +8,6 @@ export async function generateMetadata({ params }) {
   const metadata = await getServerMetadata(params.id).catch(error => error);
   if (typeof metadata === 'string') return;
 
-  console.log(metadata);
-
   return {
     title: `Server ${metadata.name}`,
     description: metadata.description,

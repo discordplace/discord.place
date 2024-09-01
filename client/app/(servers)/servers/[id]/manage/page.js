@@ -5,13 +5,13 @@ import { redirect } from 'next/navigation';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 
 export async function generateMetadata({ params }) {
-  const server = await getServerMetadata(params.id).catch(error => error);
+  const metadata = await getServerMetadata(params.id).catch(error => error);
   if (typeof server === 'string') return;
 
   return {
-    title: `Manage ${server.name}`,
+    title: `Manage ${metadata.name}`,
     openGraph: {
-      title: `Discord Place - Manage ${server.name}`
+      title: `Discord Place - Manage ${metadata.name}`
     }
   };
 }
