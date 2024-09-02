@@ -108,6 +108,11 @@ S3_ACCESS_KEY_ID=
 S3_SECRET_ACCESS_KEY=
 S3_REGION=
 S3_ENDPOINT=
+S3_DATABASE_BACKUP_BUCKET_NAME=
+S3_DATABASE_BACKUP_ACCESS_KEY_ID=
+S3_DATABASE_BACKUP_SECRET_ACCESS_KEY=
+S3_DATABASE_BACKUP_REGION=
+S3_DATABASE_BACKUP_ENDPOINT=
 CLOUDFLARE_TURNSTILE_SECRET_KEY=
 CLOUDFLARE_API_KEY=
 CLOUDFLARE_EMAIL=
@@ -141,6 +146,11 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 | `S3_SECRET_ACCESS_KEY` | S3 secret access key. |
 | `S3_REGION` | S3 region. |
 | `S3_ENDPOINT` | S3 endpoint. |
+| `S3_DATABASE_BACKUP_BUCKET_NAME` | S3 bucket name for database backups. |
+| `S3_DATABASE_BACKUP_ACCESS_KEY_ID` | S3 access key ID for database backups. |
+| `S3_DATABASE_BACKUP_SECRET_ACCESS_KEY` | S3 secret access key for database backups. |
+| `S3_DATABASE_BACKUP_REGION` | S3 region for database backups. |
+| `S3_DATABASE_BACKUP_ENDPOINT` | S3 endpoint for database backups. |
 | `CLOUDFLARE_TURNSTILE_SECRET_KEY` | Cloudflare Turnstile secret key. |
 | `CLOUDFLARE_API_KEY` | Cloudflare API key. |
 | `CLOUDFLARE_EMAIL` | Cloudflare email. |
@@ -159,7 +169,7 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 > - The `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` is used for syncing the translators roles when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically sync the translators roles in the base guild with the ids in the `client/locales/translators.json` file.
 > - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET`, `USER_TOKEN_ENCRYPT_SECRET` and `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
 > - For the `MONGO_URL` value, you can use a local MongoDB instance or a cloud-based MongoDB service like MongoDB Atlas. Refer to the [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string) for more information on constructing the connection URL.
-> - Values starting with `S3_` are required. This is used for storing emojis & sounds files in S3. We personally use Cloudflare R2 Storage for this. You can use any S3-compatible storage service with the same configuration.
+> - Values starting with `S3_` are required. This is used for storing emojis & sounds files in S3 (and also database backups). We personally use Cloudflare R2 Storage for this. You can use any S3-compatible storage service with the same configuration.
 > - The `CLOUDFLARE_TURNSTILE_SECRET_KEY` is used for verifying the Turnstile token. We use Cloudflare Turnstile for ensuring that the user is a human and not a bot on the website. Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile secret key.
 > - The `CLOUDFLARE_API_KEY`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_ACCOUNT_ID` values are required for interacting with the Cloudflare API. You can get the API key from the Cloudflare dashboard.
 > - The `CLOUDFLARE_BLOCK_IP_LIST_ID` is used for blocking IP addresses within the Cloudflare firewall. Refer to the [Cloudflare WAF documentation](https://developers.cloudflare.com/waf/tools/lists/create-dashboard/) to create a list. After creating the list, you can get the list ID from the URL. (usually should be in the end of the URL)
