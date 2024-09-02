@@ -1959,7 +1959,7 @@
         "biography": "Biyografi",
         "review": "Yorum",
         "description": "Açıklama",
-        "somethingElse": "Bir hata veya yeni özellik isteği gibi başka bir şey."
+        "something": "Bir hata veya yeni özellik isteği gibi başka bir şey."
       },
       "inputs": {
         "reason": {

@@ -1959,7 +1959,7 @@
         "biography": "Biography",
         "review": "Review",
         "description": "Description",
-        "somethingElse": "Something else like a bug or a feature request."
+        "something": "Something else like a bug or a feature request."
       },
       "inputs": {
         "reason": {

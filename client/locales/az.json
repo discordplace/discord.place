@@ -1958,7 +1958,7 @@
         "biography": "Bioqrafiya",
         "review": "Rəy",
         "description": "Təsvir",
-        "somethingElse": "Başqa bir şey, məsələn, səhv və ya funksionallıq istəyi."
+        "something": "Başqa bir şey, məsələn, səhv və ya funksionallıq istəyi."
       },
       "inputs": {
         "reason": {
