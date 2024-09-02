@@ -28,7 +28,7 @@ export default function ReviewPreview({ metadata }) {
 
       <div className='flex flex-col gap-y-1'>
         <h2 className='text-sm font-semibold text-secondary'>
-          {t('inAppReporting.reportModal.fields.review')}
+          {t('inAppReporting.reportModal.labels.review')}
         </h2>
 
         <p className='overflow-hidden text-xs font-medium break-words whitespace-pre-wrap text-tertiary'>
