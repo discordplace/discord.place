@@ -14,6 +14,7 @@ import Link from 'next/link';
 import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import ReportableArea from '@/app/components/ReportableArea';
 
 export default function Reviews({ bot }) {
   const [page, setPage] = useState(1);
@@ -257,13 +258,29 @@ export default function Reviews({ bot }) {
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-between max-w-[500px] break-words flex-1 w-full font-medium whitespace-pre-wrap sm:gap-y-0 gap-y-2 text-secondary">
-            <span className='text-xs font-medium text-tertiary'>
-              {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
-            </span>
+
+          <ReportableArea
+            type='review'
+            active={user?.id !== review.user.id}
+            metadata={{
+              reviewer: {
+                id: review.user.id,
+                username: review.user.username,
+                avatar: review.user.avatar
+              },
+              rating: review.rating,
+              content: review.content
+            }}
+            identifier={`bot-${bot.id}-review-${review._id}`}
+          >
+            <div className="flex flex-col justify-between max-w-[500px] break-words flex-1 w-full font-medium whitespace-pre-wrap sm:gap-y-0 gap-y-2 text-secondary">
+              <span className='text-xs font-medium text-tertiary'>
+                {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+              </span>
             
-            {review.content}
-          </div>
+              {review.content}
+            </div>
+          </ReportableArea>
         </div>
       ))}
 

@@ -10,24 +10,12 @@ import { useEffect, useRef, useState } from 'react';
 import { HiSortAscending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import Ripples from 'react-ripples';
+import getCompressedName from '@/lib/getCompressedName';
 
 export default function Card({ data, className }) {
   const theme = useThemeStore(state => state.theme);
   const sort = useSearchStore(state => state.sort);
   const language = useLanguageStore(state => state.language);
-
-  function getCompressedName(name, limit) {
-    const noVowels = name.replace(/[AEIOUaeiou\s]/g, '');
-  
-    let compressedName = '';
-  
-    for (let i = 0; i < 3; i++) {
-      compressedName += noVowels[i];
-      if (compressedName.length === limit) break;
-    }
-  
-    return compressedName;
-  }
 
   const [isClicked, setIsClicked] = useState(false);
   const timeoutRef = useRef(null);

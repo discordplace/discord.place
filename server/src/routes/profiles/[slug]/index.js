@@ -66,7 +66,10 @@ module.exports = {
               votes: server.votes,
               category: server.category,
               keywords: server.keywords,
-              joined_at: guild.joinedTimestamp
+              joined_at: guild.joinedTimestamp,
+              owner: {
+                id: guild.ownerId
+              }
             };
           })
         });

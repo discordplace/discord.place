@@ -39,7 +39,7 @@ export const viewport = {
   userScalable: false
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout(props) {
   return (
     <html lang="en" translate="no" className='dark'>
       <body className={cn(
@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
       )}>
         <AuthProvider>
           <LayoutContent>
-            {children}
+            {props.children}
           </LayoutContent>
         </AuthProvider>
       </body>

@@ -3,8 +3,12 @@
 import { motion } from 'framer-motion';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import { t } from '@/stores/language';
+import ReportableArea from '@/app/components/ReportableArea';
+import useAuthStore from '@/stores/auth';
 
 export default function Servers({ profile }) {
+  const user = useAuthStore(state => state.user);
+
   return (
     <div className="px-8 mt-8 lg:px-0">
       <motion.h2 
@@ -31,31 +35,43 @@ export default function Servers({ profile }) {
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.785 }}
       >
         {profile.servers.map((server, index) => (
-          <div 
-            className='flex'
+          <ReportableArea
             key={server.id}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.79 + (index * 0.1) }}
+            active={user?.id !== server.owner.id}
+            metadata={{
+              id: server.id,
+              name: server.name,
+              icon: server.icon,
+              description: server.description
+            }}
+            identifier={`server-${server.id}`}
           >
-            <ServerCard 
-              server={{
-                premium: profile.premium,
-                data: {
-                  members: server.total_members,
-                  votes: server.votes
-                },
-                joined_at: server.joined_at,
-                id: server.id,
-                banner: server.banner,
-                icon: server.icon,
-                name: server.name,
-                description: server.description,
-                category: server.category
-              }}
-              overridedSort='Votes'
-            />
-          </div>
+            <div 
+              className='flex'
+              key={server.id}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.79 + (index * 0.1) }}
+            >
+              <ServerCard 
+                server={{
+                  premium: profile.premium,
+                  data: {
+                    members: server.total_members,
+                    votes: server.votes
+                  },
+                  joined_at: server.joined_at,
+                  id: server.id,
+                  banner: server.banner,
+                  icon: server.icon,
+                  name: server.name,
+                  description: server.description,
+                  category: server.category
+                }}
+                overridedSort='Votes'
+              />
+            </div>
+          </ReportableArea>
         ))}
       </motion.div>
     </div>

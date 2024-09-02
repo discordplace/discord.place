@@ -52,7 +52,8 @@ module.exports = {
         loading: 'loading 3s infinite cubic-bezier(.48, -0.03, .12, .97)',
         'logo-spin': 'logo-spin 1.5s forwards cubic-bezier(.83,-0.16,.04,1.36)',
         'scroll-based-appear': 'scroll-based-appear linear both',
-        'rotate': 'rotate 10s linear infinite'
+        'rotate': 'rotate 10s linear infinite',
+        'reportable-area': 'reportable-area 3s infinite ease-in-out'
       },
       keyframes: {
         shine: {
@@ -84,6 +85,17 @@ module.exports = {
         rotate: {
           '0%': { transform: 'rotate(0deg) scale(10)' },
           '100%': { transform: 'rotate(-360deg) scale(10)' }
+        },
+        'reportable-area': {
+          '0%': {
+            backgroundColor: 'rgb(168 85 247 / 0.1)'
+          },
+          '50%': {
+            backgroundColor: 'rgb(168 85 247 / 0.3)'
+          },
+          '100%': {
+            backgroundColor: 'rgb(168 85 247 / 0.1)'
+          }
         }
       }
     }

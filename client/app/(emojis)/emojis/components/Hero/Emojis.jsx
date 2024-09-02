@@ -9,8 +9,12 @@ import { BsEmojiAngry } from 'react-icons/bs';
 import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
 import { t } from '@/stores/language';
+import ReportableArea from '@/app/components/ReportableArea';
+import useAuthStore from '@/stores/auth';
 
 export default function Emojis() {
+  const user = useAuthStore(state => state.user);
+  
   const { page, setPage, search, setSearch, loading, emojis, fetchEmojis, setSort, setCategory, totalEmojis, limit } = useSearchStore(useShallow(state => ({
     page: state.page,
     setPage: state.setPage,
@@ -84,7 +88,18 @@ export default function Emojis() {
             ))
           ) : (
             emojis.map(emoji => (
-              <div key={emoji.id}>
+              <ReportableArea
+                key={emoji.id}
+                active={user?.id !== emoji.user.id}
+                type='emoji'
+                metadata={{
+                  id: emoji.id,
+                  name: emoji.name,
+                  animated: emoji.animated,
+                  emoji_ids: emoji.emoji_ids
+                }}
+                identifier={`emoji-${emoji.emoji_ids?.length > 0 ? 'package-' : ''}${emoji.id}`}
+              >
                 {(emoji.emoji_ids || []).length > 0 ? (
                   <EmojiPackageCard
                     id={emoji.id}
@@ -102,7 +117,7 @@ export default function Emojis() {
                     downloads={emoji.downloads}
                   />
                 )}
-              </div>
+              </ReportableArea>
             ))
           )}
         </motion.div>

@@ -8,8 +8,12 @@ import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
 import { t } from '@/stores/language';
+import ReportableArea from '@/app/components/ReportableArea';
+import useAuthStore from '@/stores/auth';
 
 export default function Sounds() {
+  const user = useAuthStore(state => state.user);
+
   const { page, setPage, search, loading, sounds, fetchSounds, sort, category, totalSounds, limit } = useSearchStore(useShallow(state => ({
     page: state.page,
     setPage: state.setPage,
@@ -79,10 +83,19 @@ export default function Sounds() {
             ))
           ) : (
             sounds.map(sound => (
-              <SoundPreview
+              <ReportableArea
                 key={sound.id}
-                sound={sound}
-              />
+                active={user?.id !== sound.publisher.id}
+                type='sound'
+                metadata={{
+                  id: sound.id,
+                  name: sound.name,
+                  publisher: sound.publisher
+                }}
+                identifier={`sound-${sound.id}`}
+              >
+                <SoundPreview sound={sound} />
+              </ReportableArea>
             ))
           )}
         </motion.div>

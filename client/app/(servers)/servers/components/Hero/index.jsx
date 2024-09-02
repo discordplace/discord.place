@@ -16,6 +16,7 @@ import { BsEmojiAngry } from 'react-icons/bs';
 import Pagination from '@/app/components/Pagination';
 import config from '@/config';
 import { t } from '@/stores/language';
+import ReportableArea from '@/app/components/ReportableArea';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -212,15 +213,24 @@ export default function Hero() {
               ) : (
                 <>                  
                   {servers.map(server => (
-                    <div
-                      className='flex animate-scroll-based-appear'
+                    <ReportableArea
                       key={server.id}
+                      type='server'
+                      metadata={{
+                        id: server.id,
+                        name: server.name,
+                        icon: server.icon,
+                        description: server.description
+                      }}
+                      identifier={`server-${server.id}`}
                     >
-                      <ServerCard
-                        server={server}
-                        index={page > 1 ? null : servers.filter(({ standed_out }) => !standed_out?.created_at).indexOf(server)}
-                      />
-                    </div>
+                      <div className='flex animate-scroll-based-appear'>
+                        <ServerCard
+                          server={server}
+                          index={page > 1 ? null : servers.filter(({ standed_out }) => !standed_out?.created_at).indexOf(server)}
+                        />
+                      </div>
+                    </ReportableArea>
                   ))}
                 </>
               )}

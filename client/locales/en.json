@@ -207,7 +207,6 @@
     "vote": "Vote",
     "joinServer": "Join Server",
     "shareServer": "Share Server",
-    "reportServer": "Report Server",
     "manageServer": "Manage Server",
     "buyTripleVotes": "Get Triple Votes",
     "standOut": "Stand Out",
@@ -236,7 +235,6 @@
     "previous": "Previous",
     "inviteBot": "Invite Bot",
     "shareBot": "Share Bot",
-    "reportBot": "Report Bot",
     "manageBot": "Manage Bot",
     "backToEditing": "Back to Editing",
     "showMarkdownPreview": "Show Markdown Preview",
@@ -251,7 +249,8 @@
     "newLink": "New Link",
     "letsGo": "Let's Go!",
     "addBot": "Add Bot",
-    "addSound": "Add Sound"
+    "addSound": "Add Sound",
+    "createReport": "Create Report"
   },
   "voteCountdown": {
     "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",
@@ -526,7 +525,7 @@
             }
           ]
         },
-        "You can join our support server via the Discord button at the bottom of the page (Footer) and let us know by reporting that the sound is inappropriate."
+        "You can use the report button on the bottom right of the page to report the sound with a valid reason. Our team will review the sound and take necessary actions."
       ]
     },
     "dangerZone": {
@@ -861,7 +860,6 @@
       },
       "tooltip": {
         "copyProfileUrl": "Copy Profile URL",
-        "reportProfile": "Report Profile",
         "editProfile": "Edit Profile",
         "likeProfile": "Like",
         "unlikeProfile": "Unlike",
@@ -1208,7 +1206,7 @@
             }
           ]
         },
-        "You can join our support server via the Discord button at the bottom of the page (Footer) and let us know by reporting that the emoji package is inappropriate."
+        "You can use the report button on the bottom right of the page to report the emoji pack with a valid reason. Our team will review the emoji pack and take necessary actions."
       ]
     },
     "dangerZone": {
@@ -1943,6 +1941,38 @@
             }
           }
         }
+      }
+    }
+  },
+  "inAppReporting": {
+    "tooltip": {
+      "hide": "Hide",
+      "reportSomething": "Report Something",
+      "reportSomethingOnThisPage": "Report something on this page",
+      "loginRequiredForReport": "You need to be logged in to report something"
+    },
+    "reportModal": {
+      "title": "In App Reporting",
+      "description": "You are about to report this.",
+      "labels": {
+        "shortDescription": "Short Description",
+        "biography": "Biography",
+        "review": "Review",
+        "description": "Description",
+        "something": "Something else like a bug or a feature request."
+      },
+      "inputs": {
+        "reason": {
+          "label": "Reason",
+          "description": "Tell us why you are reporting this."
+        }
+      },
+      "toast": {
+        "noReason": "Please provide a reason for reporting this.",
+        "reasonTooShort": "Reason must be at least {{minLength}} characters long.",
+        "reasonTooLong": "Reason must be less than {{maxLength}} characters long.",
+        "submittingReport": "Your report is being submitted..",
+        "reportSubmitted": "Thank you for reporting this. We will review it shortly. You don't get a message from us if we take action."
       }
     }
   }

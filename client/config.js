@@ -196,6 +196,8 @@ const config = {
   templateMaxCategoriesLength: 3,
   templateDescriptionMinLength: 32,
   templateDescriptionMaxLength: 256,
+  reportReasonMinCharacters: 32,
+  reportReasonMaxCharacters: 4096,
   botMaxExtraOwners: 4,
   botTestGuildId: '1239320384441159751',
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
@@ -486,6 +488,10 @@ const config = {
     'SOUNDS_LIKE': {
       available_to: ['USER_ID'],
       description: 'Liking sounds.'
+    },
+    'REPORTS_CREATE': {
+      available_to: ['USER_ID'],
+      description: 'Creating reports.'
     }
   }
 };

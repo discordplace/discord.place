@@ -207,7 +207,6 @@
     "vote": "Oy Ver",
     "joinServer": "Sunucuya Katıl",
     "shareServer": "Sunucuyu Paylaş",
-    "reportServer": "Sunucuyu Raporla",
     "manageServer": "Sunucuyu Yönet",
     "buyTripleVotes": "3X Oy Satın Al",
     "standOut": "Öne Çık",
@@ -236,7 +235,6 @@
     "previous": "Geri",
     "inviteBot": "Botu Davet Et",
     "shareBot": "Botu Paylaş",
-    "reportBot": "Botu Raporla",
     "manageBot": "Botu Yönet",
     "backToEditing": "Düzenlemeye Geri Dön",
     "showMarkdownPreview": "Markdown Önizlemesini Göster",
@@ -251,7 +249,8 @@
     "newLink": "Yeni Bağlantı",
     "letsGo": "Hadi!",
     "addBot": "Bot Ekle",
-    "addSound": "Ses Ekle"
+    "addSound": "Ses Ekle",
+    "createReport": "Bildirim Oluştur"
   },
   "voteCountdown": {
     "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",
@@ -526,7 +525,7 @@
             }
           ]
         },
-        "Sayfanın altındaki bağlantı ile destek sunucumuza katılabilir ve sesin uygunsuz olduğunu bize bildirebilirsiniz."
+        "Sayfanın sağ alt köşesindeki rapor düğmesini kullanarak sesi uygun bir nedenle bildirebilirsiniz. Ekibimiz sesi inceleyecek ve gerekli işlemleri yapacaktır."
       ]
     },
     "dangerZone": {
@@ -861,7 +860,6 @@
       },
       "tooltip": {
         "copyProfileUrl": "Profil Bağlantısını Kopyala",
-        "reportProfile": "Profili Raporla",
         "editProfile": "Profili Düzenle",
         "likeProfile": "Beğen",
         "unlikeProfile": "Beğeniyi Geri Al",
@@ -1208,7 +1206,7 @@
             }
           ]
         },
-        "Sayfanın altındaki (en aşağıda) Discord düğmesi aracılığıyla destek sunucumuza katılabilir ve emoji paketinin uygunsuz olduğunu bize bildirebilirsiniz."
+        "Sayfanın sağ alt köşesindeki rapor düğmesini kullanarak, geçerli bir nedenle emoji paketini bildirebilirsiniz. Ekibimiz emoji paketini inceleyecek ve gerekli işlemleri yapacaktır."
       ]
     },
     "dangerZone": {
@@ -1943,6 +1941,38 @@
             }
           }
         }
+      }
+    }
+  },
+  "inAppReporting": {
+    "tooltip": {
+      "hide": "Kapat",
+      "reportSomething": "Bir şey bildir",
+      "reportSomethingOnThisPage": "Bu sayfada bir şey bildir",
+      "loginRequiredForReport": "Bir şey bildirmek için giriş yapmanız gerekmektedir"
+    },
+    "reportModal": {
+      "title": "Uygulama İçi Bildirme",
+      "description": "Bunu bildirmek üzeresiniz.",
+      "labels": {
+        "shortDescription": "Kısa Açıklama",
+        "biography": "Biyografi",
+        "review": "Yorum",
+        "description": "Açıklama",
+        "something": "Bir hata veya yeni özellik isteği gibi başka bir şey."
+      },
+      "inputs": {
+        "reason": {
+          "label": "Sebep",
+          "description": "Bunu neden bildirdiğinizi bize söyleyin."
+        }
+      },
+      "toast": {
+        "noReason": "Lütfen bildirme sebebinizi belirtin.",
+        "reasonTooShort": "Sebep en az {{minLength}} karakter uzunluğunda olmalıdır.",
+        "reasonTooLong": "Sebep en fazla {{maxLength}} karakter uzunluğunda olmalıdır.",
+        "submittingReport": "Bildiriminiz gönderiliyor..",
+        "reportSubmitted": "Bildiriminiz için teşekkür ederiz. Kısa süre içinde inceleyeceğiz. Eylem aldığımızda size bir mesaj göndermeyiz."
       }
     }
   }
