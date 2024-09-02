@@ -16,6 +16,7 @@ import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
 import useThemeStore from '@/stores/theme';
 import useLanguageStore, { t } from '@/stores/language';
 import config from '@/config';
+import ReportableArea from '@/app/components/ReportableArea';
 
 function StatBlock({ fields, index }) {
   return (
@@ -344,25 +345,38 @@ export default function Content({ user }) {
 
               <div className='grid grid-cols-1 gap-4 mt-4 lg:grid-cols-2'>
                 {user.servers.map(server => (
-                  <div className='flex' key={server.id}>
-                    <ServerCard
-                      server={{
-                        premium: user.premium,
-                        data: {
-                          members: server.total_members,
-                          votes: server.votes
-                        },
-                        joined_at: server.joined_at,
-                        id: server.id,
-                        banner: server.banner,
-                        icon: server.icon,
-                        name: server.name,
-                        description: server.description,
-                        category: server.category
-                      }}
-                      overridedSort='Votes'
-                    />
-                  </div>
+                  <ReportableArea
+                    key={server.id}
+                    active={user?.id !== server.owner.id}
+                    type='server'
+                    metadata={{
+                      id: server.id,
+                      name: server.name,
+                      icon: server.icon,
+                      description: server.description
+                    }}
+                    identifier={`server-${server.id}`}
+                  >                   
+                    <div className='flex'>
+                      <ServerCard
+                        server={{
+                          premium: user.premium,
+                          data: {
+                            members: server.total_members,
+                            votes: server.votes
+                          },
+                          joined_at: server.joined_at,
+                          id: server.id,
+                          banner: server.banner,
+                          icon: server.icon,
+                          name: server.name,
+                          description: server.description,
+                          category: server.category
+                        }}
+                        overridedSort='Votes'
+                      />
+                    </div>
+                  </ReportableArea>
                 ))}
               </div>
             </>
@@ -380,11 +394,25 @@ export default function Content({ user }) {
 
               <div className='grid grid-cols-1 gap-4 mt-4 lg:grid-cols-2'>
                 {user.bots.map(bot => (
-                  <BotCard
-                    data={bot}
+                  <ReportableArea
                     key={bot.id}
-                    overridedSort='Votes'
-                  />
+                    active={user?.id !== bot.owner.id}
+                    type='bot'
+                    metadata={{
+                      id: bot.id,
+                      username: bot.username,
+                      discriminator: bot.discriminator,
+                      avatar: bot.avatar,
+                      short_description: bot.short_description
+                    }}
+                    identifier={`bot-${bot.id}`}
+                  >
+                    <BotCard
+                      data={bot}
+                      key={bot.id}
+                      overridedSort='Votes'
+                    />
+                  </ReportableArea>
                 ))}
               </div>
             </>

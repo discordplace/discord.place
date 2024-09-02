@@ -16,6 +16,7 @@ import Status from '@/app/components/Providers/Status';
 import useGeneralStore from '@/stores/general';
 import FullPageLoading from './components/FullPageLoading';
 import useLanguageStore from '@/stores/language';
+import ReportButtonProvider from '@/app/components/Providers/ReportButton';
 
 export default function RootLayoutContent({ children }) {
   const language = useLanguageStore(state => state.language);
@@ -53,10 +54,14 @@ export default function RootLayoutContent({ children }) {
         }} />
 
         <Status />
-  
+
         <ThemeProvider>
           <VaulWrapperProvider>
             <ModalProvider>
+              <Suspense fallback={<></>}>
+                <ReportButtonProvider />
+              </Suspense>
+              
               <Suspense fallback={<></>}>
                 <Header />
               </Suspense>

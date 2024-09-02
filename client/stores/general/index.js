@@ -55,7 +55,13 @@ const useGeneralStore = create(set => ({
     }
   },
   showFullPageLoading: true,
-  setShowFullPageLoading: showFullPageLoading => set({ showFullPageLoading })
+  setShowFullPageLoading: showFullPageLoading => set({ showFullPageLoading }),
+  showReportableAreas: false,
+  setShowReportableAreas: showReportableAreas => set({ showReportableAreas }),
+  reportAreaModal: {
+    reason: '',
+    setReason: reason => set(state => ({ reportAreaModal: { ...state.reportAreaModal, reason } }))
+  }
 }));
 
 export default useGeneralStore;

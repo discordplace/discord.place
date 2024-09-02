@@ -9,8 +9,12 @@ import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence } from 'framer-motion';
 import { t } from '@/stores/language';
+import ReportableArea from '@/app/components/ReportableArea';
+import useAuthStore from '@/stores/auth';
 
 export default function SearchResults() {
+  const user = useAuthStore(state => state.user);
+
   const { loading, templates, fetchTemplates, total: totalTemplates, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
     loading: state.loading,
     templates: state.templates,
@@ -83,7 +87,19 @@ export default function SearchResults() {
             ))
           ) : (
             templates.map(template => (
-              <Card key={template.id} data={template} />
+              <ReportableArea
+                key={template.id}
+                active={user?.id !== template.user.id}
+                type='template'
+                metadata={{
+                  id: template.id,
+                  name: template.name,
+                  description: template.description
+                }}
+                identifier={`template-${template.id}`}
+              >
+                <Card data={template} />
+              </ReportableArea>
             ))
           )}
         </motion.div>

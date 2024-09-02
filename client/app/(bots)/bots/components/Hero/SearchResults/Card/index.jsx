@@ -82,7 +82,7 @@ export default function Card({ data, overridedSort }) {
 
   return (
     <Link 
-      className='w-full p-0.5 h-[250px] relative z-[1] overflow-hidden group cursor-pointer rounded-3xl'
+      className='w-full p-0.5 flex h-[250px] relative z-[1] overflow-hidden group cursor-pointer rounded-3xl'
       href={`/bots/${data.id}`}
     >
       {data.standed_out?.created_at ? (

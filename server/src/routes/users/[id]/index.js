@@ -115,7 +115,10 @@ module.exports = {
               category: server.category,
               keywords: server.keywords,
               joined_at: guild.joinedTimestamp,
-              premium: isPremium
+              premium: isPremium,
+              owner: {
+                id: guild.ownerId
+              }
             };
           }))
         });

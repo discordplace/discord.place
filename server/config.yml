@@ -141,6 +141,8 @@ templateMaxNameLength: 32
 templateMinDescriptionLength: 32
 templateMaxDescriptionLength: 256
 templateMaxCategoriesLength: 3
+reportReasonMinLength: 32
+reportReasonMaxLength: 4096
 soundNameMaxLength: 64
 botMaxExtraOwners: 4
 maxServerCountDifference: 50
@@ -208,6 +210,7 @@ emojiMaxCategoriesLength: 4
 emojiQueueChannelId: '1267552786162389085'
 soundQueueChannelId: '1267552786162389085'
 reviewQueueChannelId: '1267552786162389085'
+reportsQueueChannelId: '1267552786162389085'
 botQueueChannelId: '1267552786162389085'
 templateQueueChannelId: '1267552786162389085'
 voteLogsChannelId: '1267553398337572905'
@@ -276,6 +279,9 @@ quarantineRestrictions:
     available_to:
       - 'USER_ID'
   'SOUNDS_LIKE':
+    available_to:
+      - 'USER_ID'
+  'REPORTS_CREATE':
     available_to:
       - 'USER_ID'
 customHostnames:

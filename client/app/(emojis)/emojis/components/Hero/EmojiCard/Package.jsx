@@ -40,7 +40,7 @@ export default function EmojiPackageCard({ overridedImages, id, name, categories
             {new Array(9 - emoji_ids.length).fill(0).map((_, index) => (
               <div 
                 key={index}
-                className='w-[32px] h-[32px] p-0.5 rounded-md bg-secondary'
+                className='w-[48px] h-[48px] rounded-md bg-secondary'
               />
             ))}
           </div>
