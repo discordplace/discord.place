@@ -126,7 +126,10 @@ module.exports = {
               } : null,
               standed_out: standedOutServerIds.find(({ identifier }) => identifier === guild.id) ? {
                 created_at: standedOutServerIds.find(({ identifier }) => identifier === guild.id).createdAt
-              } : null
+              } : null,
+              owner: {
+                id: guild.ownerId
+              }
             };
           }
         })
