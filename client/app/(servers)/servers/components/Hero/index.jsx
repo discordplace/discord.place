@@ -17,10 +17,13 @@ import Pagination from '@/app/components/Pagination';
 import config from '@/config';
 import { t } from '@/stores/language';
 import ReportableArea from '@/app/components/ReportableArea';
+import useAuthStore from '@/stores/auth';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
+  const user = useAuthStore(state => state.user);
+
   const { category, setCategory, sort, setSort, search, loading, servers, fetchServers, page, totalServers, limit, setPage } = useSearchStore(useShallow(state => ({
     category: state.category,
     setCategory: state.setCategory,
@@ -215,6 +218,7 @@ export default function Hero() {
                   {servers.map(server => (
                     <ReportableArea
                       key={server.id}
+                      active={user?.id !== server.owner.id}
                       type='server'
                       metadata={{
                         id: server.id,
