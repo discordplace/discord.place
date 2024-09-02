@@ -5,7 +5,7 @@ const UserHashes = require('@/schemas/User/Hashes');
 
 module.exports = {
   get: [
-    useRateLimiter({ maxRequests: 3, perMinutes: 5 }),
+    useRateLimiter({ maxRequests: 20, perMinutes: 5 }),
     param('id')
       .isNumeric().withMessage('User ID must be a number')
       .isLength({ min: 17, max: 19 }).withMessage('Invalid user ID length')
