@@ -14,7 +14,7 @@ export default function fetchPresences(userIds) {
       const response = await axios.get(url);
       resolve(userIds.length > 1 ? response.data : [response.data]);
     } catch (error) {
-      reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
+      if (!(error instanceof axios.AxiosError)) reject(error.message);
     }
   });
 }
