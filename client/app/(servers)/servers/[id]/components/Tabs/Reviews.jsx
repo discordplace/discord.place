@@ -273,7 +273,7 @@ export default function Reviews({ server }) {
             }}
             identifier={`server-${server.id}-review-${review._id}`}
           >
-            <div className="flex flex-col justify-between flex-1 w-full font-medium max-w-[500px] break-words whitespace-pre-wrap sm:gap-y-0 gap-y-2 text-secondary">
+            <div className="flex flex-col justify-between flex-1 w-full font-medium max-w-[440px] break-words whitespace-pre-wrap sm:gap-y-0 gap-y-2 text-secondary">
               <span className='text-xs font-medium text-tertiary'>
                 {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
               </span>
