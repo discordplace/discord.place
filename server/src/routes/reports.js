@@ -3,11 +3,13 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const { body, validationResult, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Discord = require('discord.js');
+const useRateLimiter = require('@/utils/useRateLimiter');
 
 module.exports = {
   put: [
     bodyParser.json(),
     checkAuthentication,
+    useRateLimiter({ maxRequests: 5, perMinutes: 10 }),
     body('identifier')
       .isString().withMessage('Identifier must be a string.')
       .isLength({ min: 1, max: 255 }).withMessage('Identifier must be between 1 and 255 characters long.'),
