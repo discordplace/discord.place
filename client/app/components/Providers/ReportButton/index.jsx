@@ -11,6 +11,7 @@ import { motion, useAnimationControls } from 'framer-motion';
 import { MdBugReport } from 'react-icons/md';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
+import { t } from '@/stores/language';
 
 export default function ReportButtonProvider() {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -50,7 +51,7 @@ export default function ReportButtonProvider() {
       className='fixed z-[999] right-4 bottom-4'
       animate={animate}
     >
-      <Tooltip content={'Hide'}>
+      <Tooltip content={t('inAppReporting.tooltip.hide')}>
         <button
           className={cn(
             'absolute p-2 text-xl rounded-full transition-[opacity,transform] duration-300 ease-in-out bg-quaternary dark:hover:bg-white dark:hover:text-black hover:text-white hover:bg-black',
@@ -62,7 +63,7 @@ export default function ReportButtonProvider() {
         </button>
       </Tooltip>
 
-      <Tooltip content={'Just report something'}>
+      <Tooltip content={t('inAppReporting.tooltip.reportSomething')}>
         <button
           className={cn(
             'absolute p-2 text-xl rounded-full transition-[opacity,transform] duration-300 ease-in-out bg-quaternary dark:hover:bg-white dark:hover:text-black hover:text-white hover:bg-black',
@@ -84,7 +85,7 @@ export default function ReportButtonProvider() {
       )}
 
       <Tooltip
-        content={loggedIn ? 'Report something on this page' : 'You need to be logged in to report something'}
+        content={loggedIn ? t('inAppReporting.tooltip.reportSomethingOnThisPage') : t('inAppReporting.tooltip.loginRequiredForReport')}
         side='left'
       >
         <button

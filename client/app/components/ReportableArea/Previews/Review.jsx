@@ -1,4 +1,5 @@
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import { t } from '@/stores/language';
 import { TiStarFullOutline } from 'react-icons/ti';
 
 export default function ReviewPreview({ metadata }) {
@@ -27,7 +28,7 @@ export default function ReviewPreview({ metadata }) {
 
       <div className='flex flex-col gap-y-1'>
         <h2 className='text-sm font-semibold text-secondary'>
-          Review
+          {t('inAppReporting.reportModal.fields.review')}
         </h2>
 
         <p className='overflow-hidden text-xs font-medium break-words whitespace-pre-wrap text-tertiary'>

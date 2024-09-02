@@ -8,6 +8,7 @@ import SoundPreview from '@/app/components/ReportableArea/Previews/Sound';
 import ReviewPreview from '@/app/components/ReportableArea/Previews/Review';
 import config from '@/config';
 import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 
 export default function ReportAreaModal({ type, metadata }) {
   const reason = useGeneralStore(state => state.reportAreaModal.reason);
@@ -23,16 +24,16 @@ export default function ReportAreaModal({ type, metadata }) {
         {type === 'template' && <TemplatePreview metadata={metadata} />}
         {type === 'sound' && <SoundPreview metadata={metadata} />}
         {type === 'review' && <ReviewPreview metadata={metadata} />}
-        {type === 'something' && <p className='text-sm text-tertiary'>Something else like a bug or a feature request.</p>}
+        {type === 'something' && <p className='text-sm text-tertiary'>{t('inAppReporting.reportModal.labels.something')}</p>}
       </div>
 
       <div className='flex flex-col gap-y-1'>
         <h2 className='text-sm font-semibold text-secondary'>
-          Reason
+          {t('inAppReporting.reportModal.inputs.reason.label')}
         </h2>
 
         <p className='text-xs text-tertiary'>
-          Tell us why you are reporting this.
+          {t('inAppReporting.reportModal.inputs.reason.description')}
         </p>
             
         <div className='relative'>

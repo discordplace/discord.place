@@ -6,7 +6,7 @@ import { t } from '@/stores/language';
 import ReportAreaModal from '@/app/components/ReportableArea/ReportAreaModal';
 import config from '@/config';
 import { toast } from 'sonner';
-import reportArea from '@/lib/request/reportArea';
+import createReport from '@/lib/request/createReport';
 import { useShallow } from 'zustand/react/shallow';
 
 export default function ReportableArea(props) {
@@ -24,20 +24,20 @@ export default function ReportableArea(props) {
 
   function submitReport() {
     const reason = useGeneralStore.getState().reportAreaModal.reason;
-    if (!reason) return toast.error('Please provide a reason for reporting this.');
+    if (!reason) return toast.error(t('inAppReporting.reportModal.toast.noReason'));
 
-    if (reason.length < config.reportReasonMinCharacters) return toast.error(`Reason must be at least ${config.reportReasonMinCharacters} characters long.`);
-    if (reason.length > config.reportReasonMaxCharacters) return toast.error(`Reason must be at most ${config.reportReasonMaxCharacters} characters long.`);
-  
+    if (reason.length < config.reportReasonMinCharacters) return toast.error(t('inAppReporting.reportModal.toast.reasonTooShort', { minLength: config.reportReasonMinCharacters }));
+    if (reason.length > config.reportReasonMaxCharacters) return toast.error(t('inAppReporting.reportModal.toast.reasonTooLong', { maxLength: config.reportReasonMaxCharacters }));
+
     disableButton('report-area', 'createReport');
 
-    toast.promise(reportArea(props.type, props.identifier, reason), {
-      loading: 'Your report is being submitted..',
+    toast.promise(createReport(props.type, props.identifier, reason), {
+      loading: t('inAppReporting.reportModal.toast.submittingReport'),
       success: () => {
         closeModal('report-area');
         setShowReportableAreas(false);
 
-        return 'Thank you for reporting this. We will review it shortly. You don\'t get a message from us if we take action.';
+        return t('inAppReporting.reportModal.toast.reportSubmitted');
       },
       error: message => {
         enableButton('report-area', 'createReport');
@@ -49,8 +49,8 @@ export default function ReportableArea(props) {
 
   function handleReportClick() {
     openModal('report-area', {
-      title: 'Report Area',
-      description: 'You are about to report this.',
+      title: t('inAppReporting.reportModal.title'),
+      description: t('inAppReporting.reportModal.description'),
       content: (
         <ReportAreaModal
           type={props.type}

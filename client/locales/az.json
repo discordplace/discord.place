@@ -207,7 +207,6 @@
     "vote": "Səs verin",
     "joinServer": "Serverə qoşulun",
     "shareServer": "Server paylaşın",
-    "reportServer": "Hesabat Serveri",
     "manageServer": "Serveri idarə et",
     "buyTripleVotes": "Üçqat səs alın",
     "standOut": "Fərqli olun",
@@ -236,7 +235,6 @@
     "previous": "Əvvəlki",
     "inviteBot": "Botu dəvət et",
     "shareBot": "Botu paylaşın",
-    "reportBot": "Hesabat Botu",
     "manageBot": "Botu idarə et",
     "backToEditing": "Redaktəyə qayıt",
     "showMarkdownPreview": "Markdown Preview-i göstərin",
@@ -251,7 +249,8 @@
     "newLink": "Yeni Link",
     "letsGo": "Gəlin gedək!",
     "addBot": "Bot əlavə edin",
-    "addSound": "Səs əlavə edin"
+    "addSound": "Səs əlavə edin",
+    "createReport": "Hesabat yaradın"
   },
   "voteCountdown": {
     "desktop": "gözləyin {{hours}}h {{minutes}}m {{seconds}}səs vermək",
@@ -526,7 +525,7 @@
             }
           ]
         },
-        "Siz səhifənin altındakı Discord düyməsi (Alt-bilgi) vasitəsilə dəstək serverimizə qoşula və səsin uyğun olmadığını bildirərək bizə bildirə bilərsiniz."
+        "Siz səhifənin sağ altında yerləşən report düyməsindən istifadə edərək səsi uyğun səbəblə bildirə bilərsiniz. Bizim komandamız səsi nəzərdən keçirəcək və lazım olan tədbirləri atacaq."
       ]
     },
     "dangerZone": {
@@ -861,7 +860,6 @@
       },
       "tooltip": {
         "copyProfileUrl": "Profil URL-ni kopyalayın",
-        "reportProfile": "Profili Şikayət Et",
         "editProfile": "Profili redaktə edin",
         "likeProfile": "kimi",
         "unlikeProfile": "Fərqli",
@@ -1208,7 +1206,7 @@
             }
           ]
         },
-        "Siz səhifənin altındakı Discord düyməsi (Alt-bilgi) vasitəsilə dəstək serverimizə qoşula və emoji paketinin uyğunsuz olduğunu bildirərək bizə bildirə bilərsiniz."
+        "Siz səhifənin sağ altında yerləşən Discord düyməsi (Alt-bilgi) vasitəsilə dəstək serverimizə qoşula və emoji paketinin uyğunsuz olduğunu bildirərək bizə bildirə bilərsiniz. Bizim komandamız sizin təkliflərinizi dəyərləndirəcək və uyğun olmayan paketi siləcək."
       ]
     },
     "dangerZone": {
@@ -1942,6 +1940,38 @@
             }
           }
         }
+      }
+    }
+  },
+  "inAppReporting": {
+    "tooltip": {
+      "hide": "Gizlət",
+      "reportSomething": "Bir şey bildirin",
+      "reportSomethingOnThisPage": "Bu səhifədə bir şey bildirin",
+      "loginRequiredForReport": "Bir şeyi bildirmək üçün daxil olmalısınız"
+    },
+    "reportModal": {
+      "title": "Proqramdaxili Hesabat",
+      "description": "Bu barədə hesabat vermək üzrəsiniz.",
+      "labels": {
+        "shortDescription": "Qısa Təsvir",
+        "biography": "Bioqrafiya",
+        "review": "Rəy",
+        "description": "Təsvir",
+        "somethingElse": "Başqa bir şey, məsələn, səhv və ya funksionallıq istəyi."
+      },
+      "inputs": {
+        "reason": {
+          "label": "Səbəb",
+          "description": "Niyə bunu bildirdiyinizi bizə bildirin."
+        }
+      },
+      "toast": {
+        "noReason": "Zəhmət olmasa, bunu bildirmək üçün bir səbəb verin.",
+        "reasonTooShort": "Səbəb ən az {{minLength}} simvoldan ibarət olmalıdır.",
+        "reasonTooLong": "Səbəb {{maxLength}} simvoldan az olmalıdır.",
+        "submittingReport": "Hesabatınız göndərilir..",
+        "reportSubmitted": "Bunu bildirdiyiniz üçün təşəkkür edirik. Qısa müddət ərzində nəzərdən keçirəcəyik. Əgər tədbir görsək, sizə mesaj göndərməyəcəyik."
       }
     }
   }

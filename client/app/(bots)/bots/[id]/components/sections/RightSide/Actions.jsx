@@ -5,8 +5,6 @@ import MotionLink from '@/app/components/Motion/Link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BiPencil, BiSolidEnvelope } from 'react-icons/bi';
 import { PiShareFat, PiShareFatFill } from 'react-icons/pi';
-import { MdFlag } from 'react-icons/md';
-import config from '@/config';
 import { TbLoader, TbSquareRoundedChevronUpFilled, TbSquareRoundedChevronUp } from 'react-icons/tb';
 import useAuthStore from '@/stores/auth';
 import cn from '@/lib/cn';
@@ -208,17 +206,6 @@ export default function Actions({ bot }) {
             {t('buttons.shareBot')}
           </CopyButton>
         </motion.button>
-
-        <MotionLink
-          className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg group disabled:pointer-events-none disabled:opacity-70 hover:text-primary hover:bg-tertiary bg-secondary gap-x-2 text-secondary'
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
-          href={config.supportInviteUrl}
-        >
-          {t('buttons.reportBot')}
-          <MdFlag />
-        </MotionLink>
 
         {bot.permissions.canEdit && (
           <>

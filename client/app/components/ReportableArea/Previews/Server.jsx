@@ -1,4 +1,5 @@
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import { t } from '@/stores/language';
 
 export default function ServerPreview({ metadata }) {
   return (
@@ -20,7 +21,7 @@ export default function ServerPreview({ metadata }) {
 
       <div className='flex flex-col gap-y-1'>
         <h2 className='text-sm font-semibold text-secondary'>
-          Description
+          {t('inAppReporting.reportModal.labels.description')}
         </h2>
 
         <p className='text-xs font-medium whitespace-pre-wrap text-tertiary line-clamp-2'>

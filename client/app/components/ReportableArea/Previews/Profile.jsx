@@ -1,4 +1,5 @@
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import { t } from '@/stores/language';
 
 export default function ProfilePreview({ metadata }) {
   return (
@@ -26,11 +27,11 @@ export default function ProfilePreview({ metadata }) {
 
       <div className='flex flex-col gap-y-1'>
         <h2 className='text-sm font-semibold text-secondary'>
-          Biography
+          {t('inAppReporting.reportModal.labels.biography')}
         </h2>
 
         <p className='text-xs font-medium whitespace-pre-wrap text-tertiary line-clamp-2'>
-          {metadata.bio === 'No bio provided.' ? 'This user has not provided a bio yet but we are sure they\'re awesome!' : metadata.bio}
+          {metadata.bio === 'No bio provided.' ? t('profileCard.noBio') : metadata.bio}
         </p>
       </div>
     </div>

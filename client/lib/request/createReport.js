@@ -1,7 +1,7 @@
 import config from '@/config';
 import axios from 'axios';
 
-export default function reportArea(type, identifier, reason) {
+export default function createReport(type, identifier, reason) {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const url = `${config.api.url}/reports`;

@@ -7,7 +7,6 @@ import cn from '@/lib/cn';
 import { useState } from 'react';
 import { BsPencil, BsPencilFill } from 'react-icons/bs';
 import config from '@/config';
-import { AiOutlineFlag, AiFillFlag} from 'react-icons/ai';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Tooltip from '@/app/components/Tooltip';
@@ -78,13 +77,6 @@ export default function Actions({ profile }) {
               copyText={config.getProfileURL(profile.slug, profile.preferredHost)} 
             />
           </div>
-        </Tooltip>
-
-        <Tooltip content={t('profilePage.actions.tooltip.reportProfile')}>
-          <Link className='text-secondary hover:text-primary p-2.5 bg-tertiary hover:bg-quaternary rounded-lg group' href={config.supportInviteUrl} target='_blank'>
-            <AiOutlineFlag className='absolute transition-[transform,colors] opacity-100 group-hover:opacity-0 group-hover:text-red-500 group-hover:scale-[1.2]' />
-            <AiFillFlag className='opacity-0 group-hover:opacity-100 group-hover:scale-[1.2] group-hover:text-red-500' />
-          </Link>
         </Tooltip>
 
         {profile.permissions.canEdit && (
