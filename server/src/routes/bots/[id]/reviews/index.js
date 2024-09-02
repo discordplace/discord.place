@@ -41,12 +41,15 @@ module.exports = {
       const userReview = await Review.findOne({ 'user.id': request.user.id, 'bot.id': id });
       if (userReview) return response.sendError('You already reviewed this bot.', 400);
 
+      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
+
       const review = new Review({
         bot: {
           id: bot.id
         },
         user: {
-          id: request.user.id
+          id: request.user.id,
+          username: requestUser.username
         },
         rating,
         content
@@ -56,8 +59,6 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await review.save();
-
-      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
       const embeds = [
         new Discord.EmbedBuilder()
