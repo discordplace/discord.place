@@ -127,6 +127,7 @@ export default function ActiveReminders() {
                         size={32}
                         width={32}
                         height={32}
+                        className='rounded-lg'
                       />
                   
                       <div className='flex flex-col'>
