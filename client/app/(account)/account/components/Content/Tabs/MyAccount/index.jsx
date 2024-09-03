@@ -122,7 +122,7 @@ export default function MyAccount() {
               size={512}
               width={500}
               height={150}
-              className='relative z-[1] w-full h-[150px] rounded-2xl object-cover'
+              className='w-full h-[150px] rounded-2xl object-cover'
             />
           ) : (
             <div className='w-full h-[150px] rounded-2xl bg-quaternary' />
@@ -134,7 +134,7 @@ export default function MyAccount() {
             size={96}
             width={80}
             height={80}
-            className='relative -mb-20 border-8 border-[rgba(var(--bg-secondary))] rounded-full bottom-10 left-4'
+            className='relative z-[1] -mb-20 border-8 border-[rgba(var(--bg-secondary))] rounded-full bottom-10 left-4'
           />
 
           <div className='mt-2 ml-28'>
