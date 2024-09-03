@@ -70,6 +70,7 @@ export default function NewServer() {
   }
 
   const allRequirementsIsMet = currentlyAddingServer.requirements.every(requirement => requirement.met);
+  const completedPercent = currentlyAddingServer.requirements.filter(requirement => requirement.met).length / currentlyAddingServer.requirements.length * 100;
 
   return (
     <>
@@ -141,7 +142,7 @@ export default function NewServer() {
               <div className='flex flex-col items-center gap-y-2'>
                 <div className='items-center hidden sm:flex gap-x-1'>
                   <span className='text-base font-semibold'>
-                    {currentlyAddingServer.requirements.filter(requirement => requirement.met).length / currentlyAddingServer.requirements.length * 100}%
+                    {completedPercent.toFixed(1)}%
                   </span>
 
                   <span className='text-sm font-medium text-tertiary'>
