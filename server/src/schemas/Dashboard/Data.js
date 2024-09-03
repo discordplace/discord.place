@@ -29,6 +29,10 @@ const DashboardDataSchema = new Schema({
   guilds: {
     type: Number,
     default: 0
+  },
+  sounds: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamps: true
