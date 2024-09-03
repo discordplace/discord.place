@@ -63,9 +63,9 @@ export default function Content({ server }) {
             {server.name}
           </motion.h1>
 
-          {server.badges.length > 0 && (
-            <div className='flex items-center ml-4 gap-x-2'>
-              {server.badges.map(badge => (
+          <div className='flex items-center ml-4 gap-x-2'>
+            {server.badges.length > 0 && (
+              server.badges.map(badge => (
                 <Tooltip key={badge} content={badge}>
                   <MotionImage 
                     src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.toLowerCase()}.svg`} 
@@ -76,57 +76,57 @@ export default function Content({ server }) {
                     animate={{ opacity: 1, y: 0 }}
                   />
                 </Tooltip>
-              ))}
+              ))
+            )}
 
-              {server.vote_triple_enabled?.created_at && (
-                <Tooltip content={
-                  <>
-                    <Countdown
-                      date={new Date(server.vote_triple_enabled.created_at).getTime() + 86400000}
-                      renderer={({ completed, hours, minutes }) => {
-                        if (completed) return t('serverPage.countdown.tripledVoteExpired');
+            {server.vote_triple_enabled?.created_at && (
+              <Tooltip content={
+                <>
+                  <Countdown
+                    date={new Date(server.vote_triple_enabled.created_at).getTime() + 86400000}
+                    renderer={({ completed, hours, minutes }) => {
+                      if (completed) return t('serverPage.countdown.tripledVoteExpired');
 
-                        return t('serverPage.countdown.votesTripledFor', { hours, minutes });
-                      }}
-                    />
-                  </>
-                }>
-                  <MotionImage 
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_votes_tripled.svg`} 
-                    width={24} 
-                    height={24} 
-                    alt={'Votes Tripled Badge'}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                      return t('serverPage.countdown.votesTripledFor', { hours, minutes });
+                    }}
                   />
-                </Tooltip>       
-              )}
+                </>
+              }>
+                <MotionImage 
+                  src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_votes_tripled.svg`} 
+                  width={24} 
+                  height={24} 
+                  alt={'Votes Tripled Badge'}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                />
+              </Tooltip>       
+            )}
 
-              {server.standed_out?.created_at && (
-                <Tooltip content={
-                  <>
-                    <Countdown
-                      date={new Date(server.standed_out.created_at).getTime() + 43200000}
-                      renderer={({ completed, hours, minutes }) => {
-                        if (completed) return t('serverPage.countdown.standedOutExpired');
+            {server.standed_out?.created_at && (
+              <Tooltip content={
+                <>
+                  <Countdown
+                    date={new Date(server.standed_out.created_at).getTime() + 43200000}
+                    renderer={({ completed, hours, minutes }) => {
+                      if (completed) return t('serverPage.countdown.standedOutExpired');
 
-                        return t('serverPage.countdown.standedOutFor', { hours, minutes });
-                      }}
-                    />
-                  </>
-                }>
-                  <MotionImage 
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_standed_out.svg`} 
-                    width={24} 
-                    height={24} 
-                    alt={'Standed Out Badge'}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                      return t('serverPage.countdown.standedOutFor', { hours, minutes });
+                    }}
                   />
-                </Tooltip>       
-              )}
-            </div>
-          )}
+                </>
+              }>
+                <MotionImage 
+                  src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_standed_out.svg`} 
+                  width={24} 
+                  height={24} 
+                  alt={'Standed Out Badge'}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                />
+              </Tooltip>       
+            )}
+          </div>
         </div>
 
         <div className='flex flex-col gap-8 px-8 mt-8 lg:flex-row lg:px-0'>
