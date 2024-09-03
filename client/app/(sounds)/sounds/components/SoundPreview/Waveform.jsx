@@ -66,7 +66,7 @@ export default function Waveform({ id }) {
     <div className='flex flex-col'>
       <WavesurferPlayer
         key={id}
-        waveColor={theme === 'dark' ? '#585858' : '#aaaaaa'}
+        waveColor={theme === 'dark' ? '#3e3e54' : '#aaaaaa'}
         progressColor={theme === 'dark' ? '#ffffff' : '#000000'}
         barWidth={3}
         barHeight={1}
