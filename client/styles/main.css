@@ -15,15 +15,15 @@ html, body {
   --light-text-tertiary: 108, 117, 125;
   --light-text-placeholder: 133, 138, 141;
   --light-border-primary: 204, 204, 204;
-  --dark-bg-background: 16, 16, 19;
-  --dark-bg-secondary: 23, 23, 28;
-  --dark-bg-tertiary: 30, 30, 36;
-  --dark-bg-quaternary: 37, 37, 45;
-  --dark-text-primary: 255, 255, 255;
-  --dark-text-secondary: 204, 204, 204;
-  --dark-text-tertiary: 153, 153, 153;
-  --dark-text-placeholder: 128, 128, 128;
-  --dark-border-primary: 46, 46, 56;
+  --dark-bg-background: 15, 15, 20;
+  --dark-bg-secondary: 22, 22, 30;
+  --dark-bg-tertiary: 30, 30, 40;
+  --dark-bg-quaternary: 40, 40, 50;
+  --dark-text-primary: 235, 235, 245;
+  --dark-text-secondary: 200, 200, 210;
+  --dark-text-tertiary: 160, 160, 170;
+  --dark-text-placeholder: 130, 130, 140;
+  --dark-border-primary: 56, 56, 66;
 }
 
 html {
