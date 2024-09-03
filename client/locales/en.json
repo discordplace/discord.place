@@ -1515,6 +1515,7 @@
           "premium": {
             "plansLoading": "Plans loading...",
             "plans": {
+              "Premium Membership Weekly (not for sale)": "Premium Membership Weekly",
               "Premium Membership Monthly": "Premium Membership Monthly",
               "Premium Membership Yearly": "Premium Membership Yearly",
               "Lifetime Premium Membership": "Lifetime Premium Membership"

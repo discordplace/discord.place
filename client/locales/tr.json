@@ -1515,6 +1515,7 @@
           "premium": {
             "plansLoading": "Planlar yükleniyor..",
             "plans": {
+              "Premium Membership Weekly (not for sale)": "Haftalık Premium Üyelik",
               "Premium Membership Monthly": "Aylık Premium Üyelik",
               "Premium Membership Yearly": "Yıllık Premium Üyelik",
               "Lifetime Premium Membership": "Ömür Boyu Premium Üyelik"
