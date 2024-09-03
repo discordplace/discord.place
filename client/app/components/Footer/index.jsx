@@ -41,11 +41,13 @@ export default function Footer() {
         },
         {
           label: t('footer.blocks.0.links.1'),
-          href: config.docsUrl
+          href: config.docsUrl,
+          target: '_blank'
         },
         {
           label: t('footer.blocks.0.links.2'),
-          href: config.instatus.baseUrl
+          href: config.instatus.baseUrl,
+          target: '_blank'
         },
         {
           label: t('footer.blocks.0.links.3'),
@@ -119,23 +121,27 @@ export default function Footer() {
           label: 'X',
           href: 'https://x.com/discord_place',
           icon: FaXTwitter,
-          disabled: false
+          disabled: false,
+          target: '_blank'
         },
         {
           label: 'Discord',
           href: 'https://invite.discord.place',
-          icon: FaDiscord
+          icon: FaDiscord,
+          target: '_blank'
         },
         {
           label: 'GitHub',
           href: 'https://github.com/discordplace',
-          icon: FaGithub
+          icon: FaGithub,
+          target: '_blank'
         },
         {
           label: 'LinkedIn',
           href: '#',
           icon: FaLinkedin,
-          disabled: true
+          disabled: true,
+          target: '_blank'
         }
       ]
     }
@@ -213,6 +219,7 @@ export default function Footer() {
                     'flex items-center gap-x-2 text-secondary w-max',
                     link.disabled ? 'pointer-events-none opacity-70' : 'hover:text-primary'
                   )}
+                  target={link.target || '_self'}
                 >
                   {link.icon && <link.icon />}
                   {link.label}
