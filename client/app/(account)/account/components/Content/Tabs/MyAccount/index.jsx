@@ -117,11 +117,12 @@ export default function MyAccount() {
         <div className='flex max-w-[500px] flex-col w-full p-2 mt-2 h-max rounded-3xl bg-secondary'>
           {user?.banner ? (
             <UserBanner
+              id={user.id}
               hash={user.banner}
               size={512}
               width={500}
               height={150}
-              className='w-full h-[150px] rounded-2xl object-cover'
+              className='relative z-[1] w-full h-[150px] rounded-2xl object-cover'
             />
           ) : (
             <div className='w-full h-[150px] rounded-2xl bg-quaternary' />
