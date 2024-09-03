@@ -567,9 +567,9 @@
   "serverPage": {
     "countdown": {
       "tripledVoteExpired": "Tripled Votes has expired!",
-      "votesTripledFor": "Your votes are tripled for {{hours}} hours, ${{minutes}} minutes!",
+      "votesTripledFor": "Your votes are tripled for {{hours}} hours, {{minutes}} minutes!",
       "standedOutExpired": "Stand out has expired!",
-      "standedOutFor": "Standing out for {{hours}} hours, ${{minutes}} minutes!"
+      "standedOutFor": "Standing out for {{hours}} hours, {{minutes}} minutes!"
     },
     "about": {
       "title": "About",
@@ -1259,9 +1259,9 @@
     },
     "countdown": {
       "tripledVoteExpired": "Tripled Votes has expired!",
-      "votesTripledFor": "Votes tripled for {{hours}} hours, ${{minutes}} minutes!",
+      "votesTripledFor": "Votes tripled for {{hours}} hours, {{minutes}} minutes!",
       "standedOutExpired": "Stand out has expired!",
-      "standedOutFor": "Standing out for {{hours}} hours, ${{minutes}} minutes!"
+      "standedOutFor": "Standing out for {{hours}} hours, {{minutes}} minutes!"
     },
     "about": {
       "title": "About",

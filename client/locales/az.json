@@ -567,9 +567,9 @@
   "serverPage": {
     "countdown": {
       "tripledVoteExpired": "Üçqat səslərin müddəti bitdi!",
-      "votesTripledFor": "Səsiniz üç dəfə artır {{hours}} saat, ${{minutes}} dəqiqə!",
+      "votesTripledFor": "Səsiniz üç dəfə artır {{hours}} saat, {{minutes}} dəqiqə!",
       "standedOutExpired": "Stand out müddəti bitdi!",
-      "standedOutFor": "üçün önə çıxır {{hours}} saat, ${{minutes}} dəqiqə!"
+      "standedOutFor": "üçün önə çıxır {{hours}} saat, {{minutes}} dəqiqə!"
     },
     "about": {
       "title": "Haqqında",
@@ -1259,9 +1259,9 @@
     },
     "countdown": {
       "tripledVoteExpired": "Üçqat səslərin müddəti bitdi!",
-      "votesTripledFor": "Səslər üç dəfə artıb {{hours}} saat, ${{minutes}} dəqiqə!",
+      "votesTripledFor": "Səslər üç dəfə artıb {{hours}} saat, {{minutes}} dəqiqə!",
       "standedOutExpired": "Stand out müddəti bitdi!",
-      "standedOutFor": "üçün önə çıxır {{hours}} saat, ${{minutes}} dəqiqə!"
+      "standedOutFor": "üçün önə çıxır {{hours}} saat, {{minutes}} dəqiqə!"
     },
     "about": {
       "title": "Haqqında",

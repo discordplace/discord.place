@@ -567,9 +567,9 @@
   "serverPage": {
     "countdown": {
       "tripledVoteExpired": "Üç kat oy süresi sona erdi!",
-      "votesTripledFor": "Verilen oylar {{hours}} saat, ${{minutes}} dakika boyunca üç ile çarpılacak!",
+      "votesTripledFor": "Verilen oylar {{hours}} saat, {{minutes}} dakika boyunca üç ile çarpılacak!",
       "standedOutExpired": "Öne çıkma süresi sona erdi!",
-      "standedOutFor": "{{hours}} saat, ${{minutes}} dakika boyunca öne çıkartıldı."
+      "standedOutFor": "{{hours}} saat, {{minutes}} dakika boyunca öne çıkartıldı."
     },
     "about": {
       "title": "Hakkında",
@@ -1259,9 +1259,9 @@
     },
     "countdown": {
       "tripledVoteExpired": "Üç kat oy süresi sona erdi!",
-      "votesTripledFor": "Oylar {{hours}} saat, ${{minutes}} dakika boyunca üç katına çıkarıldı!",
+      "votesTripledFor": "Oylar {{hours}} saat, {{minutes}} dakika boyunca üç katına çıkarıldı!",
       "standedOutExpired": "Öne çıkma süresi sona erdi!",
-      "standedOutFor": "{{hours}} saat, ${{minutes}} dakika boyunca öne çıkartıldı."
+      "standedOutFor": "{{hours}} saat, {{minutes}} dakika boyunca öne çıkartıldı."
     },
     "about": {
       "title": "Hakkında",
