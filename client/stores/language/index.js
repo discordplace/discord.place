@@ -54,7 +54,12 @@ const useLanguageStore = create(set => ({
 export function t(key, variables = {}) {
   const language = useLanguageStore.getState().language;
 
-  if (language === 'loading' || !localeContents[language]) return '';
+  if (language === 'loading') return '';
+
+  if (!localeContents[language]) {
+    const defaultLanguage = config.availableLocales.find(locale => locale.default).code;
+    return localeContents[defaultLanguage][key] || key;
+  }
 
   i18n.addResourceBundle(language, 'translation', localeContents[language], true, true);
 
