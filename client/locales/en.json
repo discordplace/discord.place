@@ -758,7 +758,16 @@
   "profilesPage": {
     "title": "Discover the profiles",
     "subtitle": " Find, share and explore the customized page of Discord profiles!<br>You have {{count}} profiles to explore.",
-    "searchInputPlaceholder": "Search for a profile by slug, occupation, location, etc."
+    "searchInputPlaceholder": "Search for a profile by slug, occupation, location, etc.",
+    "sortSelect": {
+      "placeholder": "Sorting",
+      "items": {
+        "likes": "Likes",
+        "mostViewed": "Most Viewed",
+        "newest": "Newest",
+        "oldest": "Oldest"
+      }
+    }
   },
   "profileCard": {
     "aboutMe": "About me",

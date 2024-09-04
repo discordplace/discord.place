@@ -10,6 +10,11 @@ module.exports = {
       .isString().withMessage('Search query must be a string.')
       .trim()
       .isLength({ min: 1, max: 128 }).withMessage('Search query must be between 1 and 128 characters.'),
+    query('sort')
+      .optional()
+      .isString().withMessage('Sort must be a string.')
+      .trim()
+      .isIn(['Likes', 'MostViewed', 'Newest', 'Oldest']).withMessage('Sort must be one of: Likes, MostViewed, Newest, Oldest.'),
     query('limit')
       .optional()
       .isInt({ min: 1, max: 9 }).withMessage('Limit must be an integer between 1 and 9.')
@@ -22,7 +27,7 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { query, limit = 9, page = 1 } = matchedData(request);
+      const { query, sort = 'Likes', limit = 9, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
       const findQuery = query ? {
         $or: [
@@ -34,8 +39,15 @@ module.exports = {
           { gender: { $regex: query, $options: 'i' } }
         ]
       } : {};
+      const sortQuery = sort === 'Likes' ? 
+        { likes_count: -1 } :
+        sort === 'MostViewed' ?
+          { views: -1 } :
+          sort === 'Newest' ?
+            { createdAt: -1 } :
+            { createdAt: 1 };
 
-      const profiles = await Profile.find(findQuery).sort({ likes_count: -1 });
+      const profiles = await Profile.find(findQuery).sort(sortQuery);
       const paginatedProfiles = profiles.slice(skip, skip + limit);
       const totalProfiles = await Profile.countDocuments(findQuery);
       const total = await Profile.countDocuments({});

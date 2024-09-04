@@ -758,7 +758,16 @@
   "profilesPage": {
     "title": "Profilləri kəşf edin",
     "subtitle": " Discord profillərinin fərdiləşdirilmiş səhifəsini tapın, paylaşın və araşdırın!<br>Sizdə var {{count}} araşdırmaq üçün profillər.",
-    "searchInputPlaceholder": "Profili şlak, peşə, yer və s. ilə axtarın."
+    "searchInputPlaceholder": "Profili şlak, peşə, yer və s. ilə axtarın.",
+    "sortSelect": {
+      "placeholder": "Çeşidləmə",
+      "items": {
+        "likes": "Bəyənilən",
+        "mostViewed": "Ən çox baxılan",
+        "newest": "Ən yeni",
+        "oldest": "Ən köhnə"
+      }
+    }
   },
   "profileCard": {
     "aboutMe": "Mənim haqqımda",

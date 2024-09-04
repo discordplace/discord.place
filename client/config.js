@@ -1,7 +1,7 @@
 import { CgProfile } from 'react-icons/cg';
 import { MdDownload, MdEmojiEmotions, MdEvent, MdKeyboardVoice, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
 import { RiCommunityFill, RiRobot2Fill } from 'react-icons/ri';
-import { FaCat, FaCompass, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers } from 'react-icons/fa';
+import { FaCat, FaCompass, FaEye, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers } from 'react-icons/fa';
 import { AiFillSound, AiFillTool } from 'react-icons/ai';
 import { BiSolidCategory, BiSolidHappy, BiSolidMusic } from 'react-icons/bi';
 import { IoMusicalNotesSharp, IoGameController, IoLanguage, IoHeart } from 'react-icons/io5';
@@ -285,7 +285,8 @@ const config = {
     'MostReviewed': <TiStar />,
     'Popular': <TiStar />,
     'Downloads': <MdDownload />,
-    'Likes': <IoHeart />
+    'Likes': <IoHeart />,
+    'MostViewed': <FaEye />
   },  
   customHostnames: ['dsc.wtf', 'dsc.dog', 'dsc.mom'],
   emojisDenyReasons: {

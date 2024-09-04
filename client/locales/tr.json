@@ -758,7 +758,16 @@
   "profilesPage": {
     "title": "Profilleri Keşfedin",
     "subtitle": "Discord profillerinin özelleştirilmiş sayfalarını bulun, paylaşın ve keşfedin!<br>Keşfetmeniz için {{count}} profil sizi bekliyor.",
-    "searchInputPlaceholder": "Bir profili adı, meslek, konum vb. gibi bilgilerle arayın."
+    "searchInputPlaceholder": "Bir profili adı, meslek, konum vb. gibi bilgilerle arayın.",
+    "sortSelect": {
+      "placeholder": "Sıralama",
+      "items": {
+        "likes": "Beğenilen",
+        "mostViewed": "Çok Göz Atılan",
+        "newest": "En Yeni",
+        "oldest": "En Eski"
+      }
+    }
   },
   "profileCard": {
     "aboutMe": "Hakkımda",

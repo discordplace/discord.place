@@ -9,16 +9,20 @@ import useSearchStore from '@/stores/profiles/search';
 import { motion } from 'framer-motion';
 import { useShallow } from 'zustand/react/shallow';
 import { t } from '@/stores/language';
+import Select from '@/app/components/Select';
+import config from '@/config';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function Hero() {
-  const { fetchProfiles, totalProfiles, loading, search, setPage } = useSearchStore(useShallow(state => ({
+  const { fetchProfiles, totalProfiles, loading, search, setPage, sort, setSort } = useSearchStore(useShallow(state => ({
     fetchProfiles: state.fetchProfiles,
     totalProfiles: state.totalProfiles,
     loading: state.loading,
     search: state.search,
-    setPage: state.setPage
+    setPage: state.setPage,
+    sort: state.sort,
+    setSort: state.setSort
   })));
   
   useEffect(() => {
@@ -57,7 +61,7 @@ export default function Hero() {
             {t('profilesPage.subtitle', { br: <br />, count: totalProfiles })}
           </motion.div>
 
-          <div className='mt-8'>
+          <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
             <SearchInput
               placeholder={t('profilesPage.searchInputPlaceholder')}
               loading={loading}
@@ -66,6 +70,48 @@ export default function Hero() {
               setPage={setPage}
               animationDelay={0.3}
             />
+
+            <motion.div
+              className='flex flex-col items-center w-full gap-2 mobile:flex-row sm:w-max'
+              initial={{ opacity: 0, y: -25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...sequenceTransition, delay: 0.3 }}
+            >
+              <Select
+                placeholder={t('profilesPage.sortSelect.placeholder')}
+                options={[
+                  ...[
+                    {
+                      label: t('profilesPage.sortSelect.items.likes'),
+                      value: 'Likes'
+                    },
+                    {
+                      label: t('profilesPage.sortSelect.items.mostViewed'),
+                      value: 'MostViewed'
+                    },
+                    {
+                      label: t('profilesPage.sortSelect.items.newest'),
+                      value: 'Newest'
+                    },
+                    {
+                      label: t('profilesPage.sortSelect.items.oldest'),
+                      value: 'Oldest'
+                    }
+                  ].map(option => ({
+                    label: (
+                      <div className='flex items-center gap-x-2'>
+                        {config.sortIcons[option.value.replace(' ', '')]}
+                        {option.label}
+                      </div>
+                    ),
+                    value: option.value
+                  }))
+                ]}
+                value={sort}
+                onChange={setSort}
+                disabled={loading}
+              />
+            </motion.div>
           </div>
         </div>
       </div>

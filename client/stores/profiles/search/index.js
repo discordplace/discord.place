@@ -18,13 +18,20 @@ const useSearchStore = create((set, get) => ({
   count: 0,
   maxReached: false,
   presences: [],
+  sort: 'Likes',
+  setSort: sort => {
+    set({ sort, page: 1 });
+
+    get().fetchProfiles(get().search);
+  },
   fetchProfiles: async search => {
     const page = get().page;
     const limit = get().limit;
+    const sort = get().sort;
 
     set({ loading: true, search });
     
-    fetchProfiles(search, page, limit)
+    fetchProfiles(search, page, limit, sort)
       .then(data => {
         set({ profiles: data.profiles, loading: false, totalProfiles: data.total, maxReached: data.maxReached, count: data.count });
 
