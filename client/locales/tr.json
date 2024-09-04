@@ -762,7 +762,7 @@
     "sortSelect": {
       "placeholder": "Sıralama",
       "items": {
-        "likes": "Beğenilen",
+        "likes": "Beğeniler",
         "mostViewed": "Çok Göz Atılan",
         "newest": "En Yeni",
         "oldest": "En Eski"
