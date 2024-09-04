@@ -123,7 +123,7 @@ export default function Hero() {
             />
 
             <Select
-              placeholder={t('serversPage.sortSelectPlaceholder')}
+              placeholder={t('serversPage.sortSelect.placeholder')}
               options={[
                 ...[
                   {
