@@ -55,13 +55,14 @@ const config = {
     domains: ['discord.place', 'www.discord.place']
   },
   instatus: {
-    summaryUrl: 'https://discordplace.instatus.com/summary.json',
-    baseUrl: 'https://discordplace.instatus.com'
+    summaryUrl: 'https://status.discord.place/summary.json',
+    baseUrl: 'https://status.discord.place'
   },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;
     return url;
   },
+  dashboardRequestDelay: 1000,
   headerLinks: [
     {
       id: 'profiles',
