@@ -11,8 +11,8 @@ export default function ServerBanner({ id, hash, format, size, className, motion
 
   const options = {
     ...defaultOptions,
-    format,
-    size
+    format: format || defaultOptions.format,
+    size: size || defaultOptions.size
   };
 
   return (

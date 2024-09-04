@@ -11,8 +11,8 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
 
   const options = {
     ...defaultOptions,
-    format,
-    size
+    format: format || defaultOptions.format,
+    size: size || defaultOptions.size
   };
 
   return (
