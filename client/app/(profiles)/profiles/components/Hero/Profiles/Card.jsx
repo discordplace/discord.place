@@ -313,7 +313,7 @@ export default function Card(props) {
                       !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
                     )}
                   >
-                    {new Date(props.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    {new Date(props.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })}
                   </p>
                 </div>
               </div>

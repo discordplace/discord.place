@@ -70,13 +70,13 @@ export default function Card({ data, overridedSort }) {
       icon: HiSortAscending,
       value: data.created_at,
       condition: sort === 'Newest',
-      transform: date => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
     },
     {
       icon: HiSortDescending,
       value: data.created_at,
       condition: sort === 'Oldest',
-      transform: date => new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
     }
   ];
 

@@ -172,7 +172,7 @@ export default function ActiveTimeouts() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(timeout.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                        {new Date(timeout.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
                       </div>
                     </div>
                   </div>

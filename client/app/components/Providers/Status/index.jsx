@@ -5,9 +5,10 @@ import useModalsStore from '@/stores/modals';
 import { useEffect } from 'react';
 import { useLocalStorage } from 'react-use';
 import useGeneralStore from '@/stores/general';
-import { t } from '@/stores/language';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function Status() {
+  const language = useLanguageStore(state => state.language);
   const openModal = useModalsStore(state => state.openModal);
   const closeModal = useModalsStore(state => state.closeModal);
   
@@ -67,7 +68,7 @@ export default function Status() {
           openModal(`maintenance-${maintenance.id}`, {
             title: maintenance.name,
             description: t(`status.maintenanceDescription.${maintenance.status === 'NOTSTARTEDYET' ? 'planned' : 'started'}`),
-            content: t(`status.maintenanceContent.${maintenance.status === 'NOTSTARTEDYET' ? 'planned' : 'started'}`, { date: new Date(maintenance.start).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) }),
+            content: t(`status.maintenanceContent.${maintenance.status === 'NOTSTARTEDYET' ? 'planned' : 'started'}`, { date: new Date(maintenance.start).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) }),
             buttons: [
               {
                 id: 'cancel',
