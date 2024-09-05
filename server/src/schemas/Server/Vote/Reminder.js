@@ -52,15 +52,11 @@ Model.watch().on('change', async data => {
           new Discord.ButtonBuilder()
             .setStyle(Discord.ButtonStyle.Secondary)
             .setLabel((`Quickly vote ${guild.name}`).slice(0, 80))
-            .setCustomId(`quick-vote-${guild.id}`),
-          new Discord.ButtonBuilder()
-            .setStyle(Discord.ButtonStyle.Primary)
-            .setLabel('Create Reminder')
-            .setCustomId(`create-reminder-${guild.id}`)
+            .setCustomId(`quick-vote-${guild.id}`)
         )
     ];
 
-    channel.send({ content: `You can vote again for the server **${guild.name}**. After voting, you can create a reminder to get notified when you can vote again.`, components });
+    channel.send({ content: `You can vote again for the server **${guild.name}**.`, components });
   }
 
   if (operationType === 'insert') {
