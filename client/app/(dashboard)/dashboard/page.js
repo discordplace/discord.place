@@ -30,6 +30,7 @@ import { RiPencilFill } from 'react-icons/ri';
 import { TbLockPlus } from 'react-icons/tb';
 import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
 import useModalsStore from '@/stores/modals';
+import { toast } from 'sonner';
 
 export default function Page() {
   const user = useAuthStore(state => state.user);
@@ -141,14 +142,13 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'View Emoji',
                   icon: FaEye,
                   action: selectedIndex => {
                     const emoji = data.queue.emojis[selectedIndex];
                     
                     router.push(`/emojis/${emoji.emoji_ids ? 'packages/' : ''}${emoji.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Approve',
@@ -215,7 +215,7 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'View Emoji',
                   icon: FaEye,
                   action: selectedIndex => {
                     const emoji = data.queue.emojis[selectedIndex];
@@ -223,8 +223,7 @@ export default function Page() {
                     setSelectedIndexes([]);
 
                     router.push(`/emojis/${emoji.emoji_ids ? 'packages/' : ''}${emoji.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Download',
@@ -310,7 +309,7 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'View Bot',
                   icon: FaEye,
                   action: selectedIndex => {
                     const bot = data.queue.bots[selectedIndex];
@@ -318,8 +317,7 @@ export default function Page() {
                     setSelectedIndexes([]);
 
                     router.push(`/bots/${bot.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Approve',
@@ -395,7 +393,7 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'View Bot',
                   icon: FaEye,
                   action: selectedIndex => {
                     const bot = data.queue.bots[selectedIndex];
@@ -403,8 +401,7 @@ export default function Page() {
                     setSelectedIndexes([]);
 
                     router.push(`/bots/${bot.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Delete',
@@ -477,7 +474,7 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'Template Preview',
                   icon: FaEye,
                   action: selectedIndex => {
                     const template = data.queue.templates[selectedIndex];
@@ -485,8 +482,7 @@ export default function Page() {
                     setSelectedIndexes([]);
 
                     router.push(`/templates/${template.id}/preview`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Approve',
@@ -560,7 +556,7 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'Template Preview',
                   icon: FaEye,
                   action: selectedIndex => {
                     const template = data.queue.templates[selectedIndex];
@@ -568,8 +564,7 @@ export default function Page() {
                     setSelectedIndexes([]);
 
                     router.push(`/templates/${template.id}/preview`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Delete',
@@ -642,7 +637,7 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'View Sound',
                   icon: FaEye,
                   action: selectedIndex => {
                     const sound = data.queue.sounds[selectedIndex];
@@ -650,8 +645,7 @@ export default function Page() {
                     setSelectedIndexes([]);
 
                     router.push(`/sounds/${sound.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Approve',
@@ -725,7 +719,7 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'View Sound',
                   icon: FaEye,
                   action: selectedIndex => {
                     const sound = data.queue.sounds[selectedIndex];
@@ -733,8 +727,7 @@ export default function Page() {
                     setSelectedIndexes([]);
 
                     router.push(`/sounds/${sound.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Delete',
@@ -813,16 +806,17 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'View Server/Bot',
                   icon: FaEye,
-                  action: selectedIndex => {
-                    const review = data.queue.reviews[selectedIndex];
+                  action: selectedIndexes => {
+                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+
+                    const review = data.queue.reviews[selectedIndexes];
                     
                     setSelectedIndexes([]);
 
                     router.push(`/${review.server ? 'servers' : 'bots'}/${review.server ? review.server.id : review.bot.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Approve',
@@ -903,16 +897,17 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'View Server/Bot',
                   icon: FaEye,
-                  action: selectedIndex => {
-                    const review = data.queue.reviews[selectedIndex];
+                  action: selectedIndexes => {
+                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+
+                    const review = data.queue.reviews[selectedIndexes];
                     
                     setSelectedIndexes([]);
 
                     router.push(`/${review.server ? 'servers' : 'bots'}/${review.server ? review.server.id : review.bot.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Delete',
@@ -1125,16 +1120,17 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View',
+                  name: 'View Bot',
                   icon: FaEye,
-                  action: selectedIndex => {
-                    const botDeny = data.botDenies[selectedIndex];
+                  action: selectedIndexes => {
+                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+
+                    const botDeny = data.botDenies[selectedIndexes];
                     
                     setSelectedIndexes([]);
 
                     router.push(`/bots/${botDeny.bot.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Delete',
@@ -1215,52 +1211,30 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View Bot',
+                  name: 'View Server/Bot',
                   icon: FaEye,
-                  action: selectedIndex => {
-                    const timeout = data.timeouts[selectedIndex];
+                  action: selectedIndexes => {
+                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+
+                    const timeout = data.timeouts[selectedIndexes];
                     
                     setSelectedIndexes([]);
 
-                    router.push(`/bots/${timeout.bot.id}`);
-                  },
-                  hide: selectedIndexes => {
-                    if (selectedIndexes.length !== 1) return true;
-
-                    const timeout = data.timeouts[selectedIndexes[0]];
-
-                    return typeof timeout.bot !== 'object';
-                  }
-                },
-                {
-                  name: 'View Server',
-                  icon: FaEye,
-                  action: selectedIndex => {
-                    const timeout = data.timeouts[selectedIndex];
-                    
-                    setSelectedIndexes([]);
-
-                    router.push(`/servers/${timeout.server.id}`);
-                  },
-                  hide: selectedIndexes => {
-                    if (selectedIndexes.length !== 1) return true;
-
-                    const timeout = data.timeouts[selectedIndexes[0]];
-
-                    return typeof timeout.server !== 'object';
+                    router.push(typeof timeout.bot === 'object' ? `/bots/${timeout.bot.id}` : `/servers/${timeout.server.id}`);
                   }
                 },
                 {
                   name: 'View User',
                   icon: FaEye,
-                  action: selectedIndex => {
-                    const timeout = data.timeouts[selectedIndex];
+                  action: selectedIndexes => {
+                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+
+                    const timeout = data.timeouts[selectedIndexes];
                     
                     setSelectedIndexes([]);
 
                     router.push(`/profile/u/${timeout.user.id}`);
-                  },
-                  hide: selectedIndexes => selectedIndexes.length !== 1
+                  }
                 },
                 {
                   name: 'Delete',
@@ -1376,13 +1350,6 @@ export default function Page() {
                     setSelectedIndexes([]);
 
                     router.push(`/profile/u/${quarantine.user.id}`);
-                  },
-                  hide: selectedIndexes => {
-                    if (selectedIndexes.length !== 1) return true;
-
-                    const quarantine = data.quarantines[selectedIndexes[0]];
-
-                    return quarantine.type !== 'USER_ID';
                   }
                 },
                 {
