@@ -259,7 +259,7 @@ export default function ColumnRenderer({ data }) {
       return (
         <div className='flex flex-col ml-2 gap-y-1'>
           <span className='text-xs font-medium text-tertiary'>
-            dsc.ink/<span className='text-sm text-primary'>{data.name}adsfadsfasdf</span>
+            dsc.ink/<span className='text-sm text-primary'>{data.name}</span>
           </span>
 
           <span className='text-xs font-medium text-secondary'>
