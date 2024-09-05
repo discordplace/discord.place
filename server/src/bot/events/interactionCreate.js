@@ -3,6 +3,8 @@ const User = require('@/schemas/User');
 const Discord = require('discord.js');
 const EvaluateResult = require('@/schemas/EvaluateResult');
 const evaluate = require('@/utils/evaluate');
+const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
+const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 
 module.exports = async interaction => {
   if (interaction.isCommand()) {    
@@ -99,6 +101,38 @@ module.exports = async interaction => {
       
       const voteCommand = require('@/src/bot/commands/features/vote');
       return voteCommand.execute(interaction);
+    }
+
+    if (interaction.customId.startsWith('create-reminder-')) {
+      await interaction.deferReply();
+
+      const guildId = interaction.customId.split('-')[2];
+
+      const guild = client.guilds.cache.get(guildId);
+      if (!guild) return interaction.followUp({ content: 'I couldn\'t find the server.' });
+
+      const server = await Server.findOne({ id: guild.id });
+      if (!server) return interaction.followUp({ content: 'I couldn\'t find the server.' });
+
+      const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
+      if (!timeout) return interaction.followUp({ content: 'You can\'t set a reminder for a server you haven\'t voted for.', ephemeral: true });
+
+      const reminder = await VoteReminder.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
+      if (reminder) return interaction.followUp({ content: 'You already set a reminder for this server.', ephemeral: true });
+
+      const newReminder = new VoteReminder({
+        user: {
+          id: interaction.user.id
+        },
+        guild: {
+          id: guildId,
+          name: guild.name
+        }
+      });
+
+      await newReminder.save();
+
+      return interaction.followUp({ content: 'Reminder created.', ephemeral: true });
     }
 
     if (interaction.customId.startsWith('hv-')) {
