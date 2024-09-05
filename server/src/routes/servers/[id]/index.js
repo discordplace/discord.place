@@ -75,7 +75,6 @@ module.exports = {
       const voteTimeout = await VoteTimeout.findOne({ 'user.id': request.user?.id, 'guild.id': id });
       const reminder = await VoteReminder.findOne({ 'user.id': request.user?.id, 'guild.id': id });
       const memberInGuild = guild.members.cache.get(request.user?.id) || await guild.members.fetch(request.user?.id).catch(() => false);
-      const tenMinutesPassedAfterVote = voteTimeout && Date.now() - voteTimeout.createdAt.getTime() > 600000;
 
       const monthlyVotes = ((await ServerMonthlyVotes.findOne({ identifier: id }))?.data || [])
         .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
@@ -107,7 +106,7 @@ module.exports = {
         reviews: parsedReviews,
         has_reviewed: request.user ? !!parsedReviews.find(review => review.user.id === request.user.id) : null,
         permissions,
-        can_set_reminder: !!(request.user && !reminder && voteTimeout && memberInGuild && !tenMinutesPassedAfterVote),
+        can_set_reminder: !!(request.user && !reminder && voteTimeout && memberInGuild),
         ownerId: guild.ownerId,
         rewards: rewards.map(reward => {
           const role = guild.roles.cache.get(reward.role.id);
