@@ -69,14 +69,14 @@ export default function Page() {
       await sleep(config.dashboardRequestDelay);
 
       fetchData([params.fetchKey]);
-    }
+    } else {
+      for (const item of data) {
+        params.action(item);
 
-    for (const item of data) {
-      params.action(item);
-
-      await sleep(config.dashboardRequestDelay);
+        await sleep(config.dashboardRequestDelay);
       
-      if (data.indexOf(item) === data.length - 1) fetchData([params.fetchKey]);
+        if (data.indexOf(item) === data.length - 1) fetchData([params.fetchKey]);
+      }
     }
   }
 
