@@ -20,6 +20,10 @@ const BotVoteTimeoutSchema = new Schema({
     username: {
       type: String,
       required: true
+    },
+    discriminator: {
+      type: String,
+      required: true
     }
   }
 }, { 

@@ -77,7 +77,8 @@ async function incrementVote(botId, userId, botWebhook) {
     }, 
     bot: { 
       id: botId,
-      username: botUser.username
+      username: botUser.username,
+      discriminator: botUser.discriminator
     } 
   }).save();
 
