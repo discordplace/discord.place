@@ -104,7 +104,7 @@ module.exports = async interaction => {
     }
 
     if (interaction.customId.startsWith('create-reminder-')) {
-      await interaction.deferReply();
+      await interaction.deferReply({ ephemeral: true });
 
       const guildId = interaction.customId.split('-')[2];
 
@@ -115,10 +115,10 @@ module.exports = async interaction => {
       if (!server) return interaction.followUp({ content: 'I couldn\'t find the server.' });
 
       const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
-      if (!timeout) return interaction.followUp({ content: 'You can\'t set a reminder for a server you haven\'t voted for.', ephemeral: true });
+      if (!timeout) return interaction.followUp({ content: 'You can\'t set a reminder for a server you haven\'t voted for.' });
 
       const reminder = await VoteReminder.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
-      if (reminder) return interaction.followUp({ content: 'You already set a reminder for this server.', ephemeral: true });
+      if (reminder) return interaction.followUp({ content: 'You already set a reminder for this server.' });
 
       const newReminder = new VoteReminder({
         user: {
@@ -132,7 +132,7 @@ module.exports = async interaction => {
 
       await newReminder.save();
 
-      return interaction.followUp({ content: 'Reminder created.', ephemeral: true });
+      return interaction.followUp({ content: 'Reminder created.' });
     }
 
     if (interaction.customId.startsWith('hv-')) {
