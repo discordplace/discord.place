@@ -144,7 +144,8 @@ export default function Page() {
                 {
                   name: 'View Emoji',
                   icon: FaEye,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const emoji = data.queue.emojis[selectedIndex];
                     
                     router.push(`/emojis/${emoji.emoji_ids ? 'packages/' : ''}${emoji.id}`);
@@ -217,7 +218,8 @@ export default function Page() {
                 {
                   name: 'View Emoji',
                   icon: FaEye,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const emoji = data.queue.emojis[selectedIndex];
                     
                     setSelectedIndexes([]);
@@ -228,7 +230,8 @@ export default function Page() {
                 {
                   name: 'Download',
                   icon: BiCloudDownload,
-                  action: selectedIndexes => {
+                  action: () => {
+                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
                     const emojis = selectedIndexes.map(index => data.queue.emojis[index]);
 
                     setSelectedIndexes([]);
@@ -311,7 +314,8 @@ export default function Page() {
                 {
                   name: 'View Bot',
                   icon: FaEye,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const bot = data.queue.bots[selectedIndex];
                     
                     setSelectedIndexes([]);
@@ -395,7 +399,8 @@ export default function Page() {
                 {
                   name: 'View Bot',
                   icon: FaEye,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const bot = data.queue.bots[selectedIndex];
                     
                     setSelectedIndexes([]);
@@ -476,7 +481,8 @@ export default function Page() {
                 {
                   name: 'Template Preview',
                   icon: FaEye,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const template = data.queue.templates[selectedIndex];
                     
                     setSelectedIndexes([]);
@@ -558,7 +564,8 @@ export default function Page() {
                 {
                   name: 'Template Preview',
                   icon: FaEye,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const template = data.queue.templates[selectedIndex];
                     
                     setSelectedIndexes([]);
@@ -639,7 +646,8 @@ export default function Page() {
                 {
                   name: 'View Sound',
                   icon: FaEye,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const sound = data.queue.sounds[selectedIndex];
                     
                     setSelectedIndexes([]);
@@ -721,7 +729,8 @@ export default function Page() {
                 {
                   name: 'View Sound',
                   icon: FaEye,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const sound = data.queue.sounds[selectedIndex];
                     
                     setSelectedIndexes([]);
@@ -808,7 +817,8 @@ export default function Page() {
                 {
                   name: 'View Server/Bot',
                   icon: FaEye,
-                  action: selectedIndexes => {
+                  action: () => {
+                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
                     if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
 
                     const review = data.queue.reviews[selectedIndexes];
@@ -899,7 +909,8 @@ export default function Page() {
                 {
                   name: 'View Server/Bot',
                   icon: FaEye,
-                  action: selectedIndexes => {
+                  action: () => {
+                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
                     if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
 
                     const review = data.queue.reviews[selectedIndexes];
@@ -1030,7 +1041,8 @@ export default function Page() {
                 {
                   name: 'Visit',
                   icon: MdOpenInNew,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const link = data.links[selectedIndex];
                     
                     setSelectedIndexes([]);
@@ -1122,7 +1134,8 @@ export default function Page() {
                 {
                   name: 'View Bot',
                   icon: FaEye,
-                  action: selectedIndexes => {
+                  action: () => {
+                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
                     if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
 
                     const botDeny = data.botDenies[selectedIndexes];
@@ -1213,7 +1226,8 @@ export default function Page() {
                 {
                   name: 'View Server/Bot',
                   icon: FaEye,
-                  action: selectedIndexes => {
+                  action: () => {
+                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
                     if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
 
                     const timeout = data.timeouts[selectedIndexes];
@@ -1226,7 +1240,8 @@ export default function Page() {
                 {
                   name: 'View User',
                   icon: FaEye,
-                  action: selectedIndexes => {
+                  action: () => {
+                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
                     if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
 
                     const timeout = data.timeouts[selectedIndexes];
@@ -1344,7 +1359,8 @@ export default function Page() {
                 {
                   name: 'View User',
                   icon: FaEye,
-                  action: selectedIndex => {
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const quarantine = data.quarantines[selectedIndex];
                     
                     setSelectedIndexes([]);
