@@ -106,14 +106,14 @@ module.exports = {
         const components = [
           new Discord.ActionRowBuilder().addComponents(
             new Discord.ButtonBuilder()
-              .setStyle(Discord.ButtonStyle.Link)
+              .setStyle(Discord.ButtonStyle.Primary)
               .setLabel('Create Reminder')
-              .setURL(`${config.frontendUrl}/servers/${interaction.guild.id}`)
+              .setCustomId(`create-reminder-${interaction.guild.id}`)
           )
         ];
 
         return interaction.followUp({
-          content: 'Thank you for voting!\n\nIf you want to create a reminder to be notified when you can vote again, click the button below and visit the server page. You should be logged in to create a reminder on the website.', 
+          content: 'Thank you for voting!', 
           components,
           ephemeral: true
         });
