@@ -154,7 +154,7 @@ export default function ColumnRenderer({ data }) {
     case 'category':
       return (
         <div className='flex items-center gap-x-2'>
-          {Array.isArray(data.value) ? data.value.map(category => (
+          {Array.isArray(data.value) ? data.value.slice(0, 5).map(category => (
             <CategoryBadge
               key={category}
               icons={data.icons}
@@ -165,6 +165,12 @@ export default function ColumnRenderer({ data }) {
             <CategoryBadge icons={data.icons}>
               {data.value}
             </CategoryBadge>
+          )}
+
+          {Array.isArray(data.value) && data.value.length > 5 && (
+            <span className='text-xs font-medium text-tertiary'>
+              {data.value.length - 5} more
+            </span>
           )}
         </div>
       );
