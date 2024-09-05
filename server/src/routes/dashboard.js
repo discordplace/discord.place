@@ -173,7 +173,20 @@ module.exports = {
         if (!permissions.canApproveSounds) return response.sendError('You do not have permission to approve sounds.', 403);
 
         const sounds = await Sound.find().sort({ createdAt: -1 });
-        responseData.queue.sounds = sounds.map(sound => sound.toPubliclySafe({ isLiked: false }));
+
+        responseData.queue.sounds = await Promise.all(sounds.map(async sound => {
+          const publiclySafeSound = sound.toPubliclySafe({ isLiked: false });
+          const userHashes = await getUserHashes(sound.publisher.id);
+
+          return {
+            ...publiclySafeSound,
+            publisher: {
+              id: sound.publisher.id,
+              username: sound.publisher.username,
+              avatar: userHashes.avatar
+            }
+          };
+        }));
       }
 
       if (keys?.includes('reviews')) {
@@ -209,6 +222,7 @@ module.exports = {
         if (!permissions.canDeleteBotDenies) return response.sendError('You do not have permission to delete bot denies.', 403);
 
         const botDenies = await BotDeny.find().sort({ createdAt: -1 });
+        
         responseData.botDenies = await Promise.all(botDenies.map(async botDeny => {
           const botHashes = await getUserHashes(botDeny.bot.id);
           const userHashes = await getUserHashes(botDeny.user.id);
@@ -287,6 +301,7 @@ module.exports = {
         if (!permissions.canViewQuarantines && !permissions.canCreateQuarantines && !permissions.canDeleteQuarantines) return response.sendError('You do not have permission to view, create, or delete quarantines.', 403);
 
         const quarantines = await Quarantine.find().sort({ createdAt: -1 });
+        
         responseData.quarantines = await Promise.all(quarantines.map(async quarantine => {
           const publiclySafeQuarantine = quarantine.toPubliclySafe();
           const createdByUserHashes = await getUserHashes(quarantine.created_by.id);
