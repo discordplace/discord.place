@@ -167,7 +167,7 @@ export default function Table({ tabs }) {
         <AnimatePresence>
           {selectedIndexes.length > 0 && (
             <motion.div
-              className='left-8 px-2 py-2 sm:p-[unset] sm:left-[unset] z-[10] font-medium text-sm gap-x-2 fixed bottom-4 rounded-2xl flex items-center border-2 border-primary w-full max-w-[calc(100%_-_40px)] sm:max-w-[500px] h-max sm:h-[50px] bg-secondary'
+              className='left-8 px-2 py-2 sm:p-[unset] sm:left-[unset] z-[10] font-medium text-sm gap-x-2 fixed bottom-4 rounded-2xl flex items-center border-2 border-primary w-full max-w-[calc(100%_-_40px)] sm:min-w-[500px] sm:w-max h-max sm:h-[50px] bg-secondary'
               initial={{
                 opacity: 0,
                 y: 60,
