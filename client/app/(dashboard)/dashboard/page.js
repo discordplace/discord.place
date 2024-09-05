@@ -18,7 +18,7 @@ import { FaCompass, FaCrown, FaEye, FaUserCircle } from 'react-icons/fa';
 import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
 import { BiCloudDownload, BiSolidCategory } from 'react-icons/bi';
 import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
-import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, deleteBlockedIP, deleteLink, deleteBotDenyRecord, deleteTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
+import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, deleteBlockedIP, deleteLink, deleteBotDenyRecord, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
 import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
 import config from '@/config';
 import sleep from '@/lib/sleep';
@@ -74,10 +74,10 @@ export default function Page() {
     for (const item of data) {
       params.action(item);
 
-      if (data.indexOf(item) !== data.length - 1) await sleep(config.dashboardRequestDelay);
+      await sleep(config.dashboardRequestDelay);
+      
+      if (data.indexOf(item) === data.length - 1) fetchData([params.fetchKey]);
     }
-
-    fetchData([params.fetchKey]);
   }
 
   async function bulkActionWithConfirmationModal(params) {
@@ -1257,7 +1257,7 @@ export default function Page() {
                   action: () => bulkActionWithConfirmationModal({
                     name: 'timeout',
                     data: data.timeouts,
-                    action: item => deleteTimeout(typeof item.bot === 'object' ? 'bot' : 'server', item._id),
+                    action: item => typeof item.bot === 'object' ? deleteBotTimeout(item.bot.id, item.user.id) : deleteServerTimeout(item.guild.id, item.user.id),
                     fetchKey: 'timeouts'
                   }),
                   hide: !data.permissions?.canDeleteTimeouts
