@@ -52,10 +52,7 @@ Model.watch().on('change', async data => {
           new Discord.ButtonBuilder()
             .setStyle(Discord.ButtonStyle.Secondary)
             .setLabel((`Quickly vote ${guild.name}`).slice(0, 80))
-            .setCustomId(`quick-vote-${guild.id}`)
-        ),
-      new Discord.ActionRowBuilder()
-        .addComponents(
+            .setCustomId(`quick-vote-${guild.id}`),
           new Discord.ButtonBuilder()
             .setStyle(Discord.ButtonStyle.Primary)
             .setLabel('Create Reminder')
