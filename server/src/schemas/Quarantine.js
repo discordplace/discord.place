@@ -91,7 +91,7 @@ const QuarantineSchema = new Schema({
         type: this.type,
         restriction: this.restriction,
         reason: this.reason,
-        created_by: this.created_by.id,
+        created_by: this.created_by,
         created_at: this.createdAt,
         expire_at: this.expire_at
       };

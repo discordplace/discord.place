@@ -37,6 +37,7 @@ module.exports = {
       await bot.deleteOne();
 
       const requestUser = await User.findOne({ id: request.user.id });
+      const botOwnerUser = client.users.cache.get(bot.owner.id) || await client.users.fetch(bot.owner.id).catch(() => null);
 
       await new BotDeny({
         bot: {
@@ -45,7 +46,8 @@ module.exports = {
           discriminator: botUser.discriminator
         },
         user: {
-          id: bot.owner.id
+          id: bot.owner.id,
+          username: botOwnerUser.username
         },
         reviewer: {
           id: request.user.id,

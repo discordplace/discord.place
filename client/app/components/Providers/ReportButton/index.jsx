@@ -46,6 +46,10 @@ export default function ReportButtonProvider() {
 
   const reportSomethingTriggerButtonRef = useRef(null);
 
+  const disabledPaths = ['/dashboard'];
+  
+  if (disabledPaths.includes(pathname)) return null;
+
   return (
     <motion.div
       className='fixed z-[999] right-4 bottom-4'

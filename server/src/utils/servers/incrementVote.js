@@ -76,7 +76,8 @@ async function incrementVote(guildId, userId) {
 
   await new VoteTimeout({ 
     user: { 
-      id: userId
+      id: userId,
+      username: user.username
     }, 
     guild: { 
       id: guild.id,

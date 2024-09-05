@@ -72,7 +72,8 @@ async function incrementVote(botId, userId, botWebhook) {
 
   await new VoteTimeout({ 
     user: { 
-      id: userId
+      id: userId,
+      username: user.username
     }, 
     bot: { 
       id: botId,

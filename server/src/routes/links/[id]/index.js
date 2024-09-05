@@ -22,7 +22,7 @@ module.exports = {
       const foundLink = await Link.findOne({ id });
       if (!foundLink) return response.sendError('Link not found.', 404);
 
-      const canDelete = foundLink.createdBy === request.user.id || (request.member && config.permissions.canDeleteLinksRoles.some(role => request.member.roles.cache.has(role)));
+      const canDelete = foundLink.createdBy.id === request.user.id || (request.member && config.permissions.canDeleteLinksRoles.some(role => request.member.roles.cache.has(role)));
       if (!canDelete) return response.sendError('You do not have permission to delete this link.', 403);
 
       await foundLink.deleteOne();

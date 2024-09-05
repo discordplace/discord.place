@@ -35,12 +35,6 @@ export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
   const data = useDashboardStore(state => state.data);
 
-  const unapprovedEmojis = data?.queue?.emojis?.filter(emoji => !emoji.approved).length;
-  const unapprovedBots = data?.queue?.bots?.filter(bot => !bot.verified).length;
-  const unapprovedTemplates = data?.queue?.templates?.filter(template => !template.approved).length;
-  const unapprovedSounds = data?.queue?.sounds?.filter(sound => !sound.approved).length;
-  const unapprovedReviews = data?.queue?.reviews?.filter(review => !review.approved).length;
-
   const blocks = [
     {
       name: 'Main Menu',
@@ -63,31 +57,31 @@ export default function Sidebar() {
       tabs: [
         {
           id: 'emojisQueue',
-          name: `Emojis Queue${unapprovedEmojis ? ` (${unapprovedEmojis})` : ''}`,
+          name: 'Emojis',
           icon: MdEmojiEmotions,
           disabled: data?.permissions?.canApproveEmojis === false
         },
         {
           id: 'botsQueue',
-          name: `Bots Queue${unapprovedBots ? ` (${unapprovedBots})` : ''}`,
+          name: 'Bots',
           icon: RiRobot2Fill,
           disabled: data?.permissions?.canApproveBots === false
         },
         {
           id: 'templatesQueue',
-          name: `Templates Queue${unapprovedTemplates ? ` (${unapprovedTemplates})` : ''}`,
+          name: 'Templates',
           icon: HiTemplate,
           disabled: data?.permissions?.canApproveTemplates === false
         },
         {
           id: 'soundsQueue',
-          name: `Sounds Queue${unapprovedSounds ? ` (${unapprovedSounds})` : ''}`,
+          name: 'Sounds',
           icon: PiWaveformBold,
           disabled: data?.permissions?.canApproveSounds === false
         },
         {
           id: 'reviewsQueue',
-          name: `Reviews Queue${unapprovedReviews ? ` (${unapprovedReviews})` : ''}`,
+          name: 'Reviews',
           icon: FaEye,
           disabled: data?.permissions?.canApproveReviews === false && data?.permissions?.canDeleteReviews === false
         }
@@ -109,13 +103,6 @@ export default function Sidebar() {
           disabled: data?.permissions?.canDeleteBotDenies === false
         },
         {
-          type: 'redirect',
-          id: 'analytics',
-          href: `${config.analytics.url}/websites/${config.analytics.websiteId}`,
-          name: 'Analytics',
-          icon: SiGoogleanalytics
-        },
-        {
           id: 'timeouts',
           name: 'Timeouts',
           icon: TbSquareRoundedChevronUp,
@@ -126,6 +113,13 @@ export default function Sidebar() {
           name: 'Quarantines',
           icon: CgBlock,
           disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false
+        },
+        {
+          type: 'redirect',
+          id: 'analytics',
+          href: `${config.analytics.url}/websites/${config.analytics.websiteId}`,
+          name: 'Analytics',
+          icon: SiGoogleanalytics
         },
         {
           id: 'syncPlans',
@@ -173,7 +167,7 @@ export default function Sidebar() {
 
     // eslint-disable-next-line
   }, [isMobile]);
-
+  
   return (
     <div className={cn(
       'bg-secondary sticky left-0 top-0 h-[100dvh] z-[10] border-r border-r-[rgba(var(--bg-quaternary))] min-w-[300px] flex flex-col gap-y-8 p-6',

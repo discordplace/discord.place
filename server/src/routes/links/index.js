@@ -37,10 +37,15 @@ module.exports = {
       if (foundPremium && userLinksCount >= 5) return response.sendError('You have reached the maximum amount of links.', 400);
   
       const id = crypto.randomBytes(8).toString('hex');
-      
+
+      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
+
       const link = new Link({
         id,
-        createdBy: request.user.id,
+        createdBy: {
+          id: request.user.id,
+          username: requestUser.username
+        },
         name: name.toLocaleLowerCase('en-US'),
         redirectTo: destinationURL
       });
@@ -49,8 +54,6 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await link.save();
-
-      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
       const embeds = [
         new Discord.EmbedBuilder()

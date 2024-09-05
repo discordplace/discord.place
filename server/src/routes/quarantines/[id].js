@@ -41,7 +41,7 @@ module.exports = {
                 },
                 {
                   name: 'Created By',
-                  value: `<@${quarantine.created_by}>`,
+                  value: `<@${quarantine.created_by.id}>`,
                   inline: true
                 },
                 {

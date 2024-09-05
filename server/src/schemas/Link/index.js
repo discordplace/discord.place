@@ -7,8 +7,14 @@ const LinkSchema = new Schema({
     required: true
   },
   createdBy: {
-    type: String,
-    required: true
+    id: {
+      type: String,
+      required: true
+    },
+    username: {
+      type: String,
+      required: true
+    }
   },
   name: {
     type: String,

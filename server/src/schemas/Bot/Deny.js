@@ -20,6 +20,10 @@ const BotDenySchema = new Schema({
     id: {
       type: String,
       required: true
+    },
+    username: {
+      type: String,
+      required: true
     }
   },
   reviewer: {

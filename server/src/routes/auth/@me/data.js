@@ -51,7 +51,7 @@ module.exports = {
       const bulkOperations = [
         BotTimeout.countDocuments({ 'user.id': request.user.id }),
         ServerTimeout.countDocuments({ 'user.id': request.user.id }),
-        Link.countDocuments({ createdBy: request.user.id }),
+        Link.countDocuments({ 'createdBy.id': request.user.id }),
         Bot.countDocuments({ 'owner.id': request.user.id }),
         Emoji.countDocuments({ 'user.id': request.user.id }),
         EmojiPack.countDocuments({ 'user.id': request.user.id }),
@@ -108,7 +108,7 @@ module.exports = {
       }
 
       if (keys.includes('links')) {
-        const links = await Link.find({ createdBy: request.user.id });
+        const links = await Link.find({ 'createdBy.id': request.user.id });
 
         Object.assign(responseData, { links });
       }

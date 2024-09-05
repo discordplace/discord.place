@@ -8,6 +8,7 @@ export const useDashboardStore = create(set => ({
   data: {},
   setData: data => set({ data }),
   loading: true,
+  setLoading: loading => set({ loading }),
   fetchData: async keys => {
     set({ loading: true });
     
@@ -19,7 +20,9 @@ export const useDashboardStore = create(set => ({
       });
   },
   isCollapsed: false,
-  setIsCollapsed: isCollapsed => set({ isCollapsed })
+  setIsCollapsed: isCollapsed => set({ isCollapsed }),
+  selectedIndexes: [],
+  setSelectedIndexes: selectedIndexes => set({ selectedIndexes })
 }));
 
 export default useDashboardStore;

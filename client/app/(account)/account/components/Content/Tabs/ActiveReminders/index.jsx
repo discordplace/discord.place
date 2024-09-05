@@ -62,9 +62,9 @@ export default function ActiveReminders() {
                       index === 0 ? 'rounded-t-xl' : ''
                     )}
                   >
-                    <div className='flex items-start w-full gap-x-4'>
+                    <div className='flex flex-wrap items-center w-full gap-4 sm:items-start'>
                       <div className='flex flex-col items-start'>
-                        <div className='text-base font-semibold text-primary'>
+                        <div className='hidden text-base font-semibold text-primary sm:block'>
                           {t('accountPage.tabs.activeReminders.fields.reminders.about')}
                         </div>
 
