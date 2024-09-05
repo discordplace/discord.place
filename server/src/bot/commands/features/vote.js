@@ -113,7 +113,7 @@ module.exports = {
         ];
 
         return interaction.followUp({
-          content: 'Thank you for voting!\n\nIf you want to create a reminder to be notified when you can vote again, click the button below and visit the server page.\nYou should be logged in to create a reminder on the website.', 
+          content: 'Thank you for voting!\n\nIf you want to create a reminder to be notified when you can vote again, click the button below and visit the server page. You should be logged in to create a reminder on the website.', 
           components,
           ephemeral: true
         });
