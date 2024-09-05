@@ -180,7 +180,7 @@ export default function Card(props) {
                     !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
                   )}
                 >
-                  {props.global_name}
+                  {props.global_name || props.username}
                 </h2>
 
                 {props.badges.map(badgeId => (
