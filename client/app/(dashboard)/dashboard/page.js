@@ -1167,7 +1167,7 @@ export default function Page() {
       name: 'Timeouts',
       data: {
         title: 'Timeouts',
-        description: 'Here you can see the all the vote timeouts that have been recorded.',
+        subtitle: 'Here you can see the all the vote timeouts that have been recorded.',
         totalCount: data?.timeouts?.length || 0,
         tableData: {
           tabs: [
@@ -1273,7 +1273,7 @@ export default function Page() {
       name: 'Quarantines',
       data: {
         title: 'Quarantines',
-        description: 'Here you can see the all the quarantines that have been created and not yet expired.',
+        subtitle: 'Here you can see the all the quarantines that have been created and not yet expired.',
         totalCount: data?.quarantines?.length || 0,
         actionButton: {
           name: 'Create Quarantine',
