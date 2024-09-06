@@ -136,8 +136,7 @@ export default function Actions({ server }) {
     });
   }
 
-  // If the invite link is deleted or if the invite link is a vanity URL and currently not available
-  const inviteLinkAvailable = server.invite_code.type !== 'Deleted' && (server.invite_code.type === 'Vanity' && server.vanity_url !== null);
+  const inviteLinkNotAvailable = server.invite_code.type === 'Deleted' || (server.invite_code.type === 'Vanity' && server.vanity_url === null);
 
   return (
     <div>
@@ -231,7 +230,7 @@ export default function Actions({ server }) {
           </div>
         </motion.button>
         
-        {!inviteLinkAvailable ? (
+        {!inviteLinkNotAvailable ? (
           <Tooltip content={t('serverPage.actions.tooltip.noInviteLinkAvailable')}>
             <motion.div
               className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg cursor-default !opacity-70 bg-secondary gap-x-2 text-secondary'
