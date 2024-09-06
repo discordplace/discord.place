@@ -819,7 +819,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
 
                     const review = data.queue.reviews[selectedIndexes];
                     
@@ -911,7 +911,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
 
                     const review = data.queue.reviews[selectedIndexes];
                     
@@ -1136,7 +1136,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
 
                     const botDeny = data.botDenies[selectedIndexes];
                     
@@ -1228,7 +1228,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
 
                     const timeout = data.timeouts[selectedIndexes];
                     
@@ -1242,7 +1242,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 0) return toast.error('You can only view one item at a time.');
+                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
 
                     const timeout = data.timeouts[selectedIndexes];
                     
