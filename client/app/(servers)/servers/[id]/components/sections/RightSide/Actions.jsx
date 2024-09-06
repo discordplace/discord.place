@@ -202,14 +202,14 @@ export default function Actions({ server }) {
         <motion.button 
           className={cn(
             'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-black rounded-lg group gap-x-2 hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70',
-            (loading || voteTimeout) && 'cursor-default !opacity-70 hover:bg-black dark:hover:bg-white'
+            loading && 'cursor-default !opacity-70 hover:bg-black dark:hover:bg-white'
           )}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
           onClick={() => {
             if (!loggedIn) return toast.error(t('serverPage.actions.toast.loginRequiredForVote'));
-            if (voteTimeout) return;
+            if (voteTimeout && new Date(voteTimeout.createdAt).getTime() + 86400000 > new Date().getTime()) return;
             
             setShowCaptcha(true);
           }}

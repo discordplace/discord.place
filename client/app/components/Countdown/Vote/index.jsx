@@ -19,7 +19,7 @@ export default function Countdown({ date }) {
     <ReactCountdown
       date={date} 
       renderer={({ hours, minutes, seconds, completed }) => {
-        if (completed) return 'Vote';
+        if (completed) return t('buttons.vote');
         return (
           <>
             <span className='items-center hidden gap-x-1 lg:flex'>
