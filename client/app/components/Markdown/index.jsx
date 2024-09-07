@@ -11,7 +11,10 @@ export default function Markdown({ children, className }) {
       'markdown',
       className
     )}>
-      <ReactMarkdown remarkPlugins={[gfm]} components={MarkdownComponents}>
+      <ReactMarkdown
+        remarkPlugins={[gfm]}
+        components={MarkdownComponents}
+      >
         {children}
       </ReactMarkdown>
     </div>

@@ -68,7 +68,6 @@ export default function UserSide({ className }) {
               format='png'
               className='rounded-full bg-tertiary'
             />
-            {/* <Image src={user.avatar_url} width={32} height={32} className='rounded-full' alt='User Avatar' /> */}
           </Link>
         </>
       ) : (

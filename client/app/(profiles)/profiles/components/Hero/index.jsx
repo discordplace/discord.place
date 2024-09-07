@@ -57,7 +57,7 @@ export default function Hero() {
             {t('profilesPage.title')}
           </motion.h1>
           
-          <motion.div className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+          <motion.div className="sm:text-lg max-w-[700px] text-center mt-8 text-tertiary" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
             {t('profilesPage.subtitle', { br: <br />, count: totalProfiles })}
           </motion.div>
 
