@@ -4,7 +4,7 @@ description: "We're just as surprised as you are that it exists. No one's read i
 id: hello-from-blogs
 tags:
   - 'discord.place'
-date: 2024-07-09 06:16
+date: 2024-09-07 06:16
 ---
 
 # Our First Blog Post (No One's Read This Yet)
