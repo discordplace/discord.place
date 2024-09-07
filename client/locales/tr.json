@@ -11,12 +11,19 @@
     ]
   },
   "header": {
-    "profiles": "Profiller",
-    "servers": "Sunucular",
-    "bots": "Botlar",
-    "emojis": "Emojiler",
-    "templates": "Şablonlar",
-    "sounds": "Sesler",
+    "links": [
+      "Servislerimiz",
+      "Blog",
+      "Premium"
+    ],
+    "servicesDropdownLinks": [
+      "Profiller",
+      "Sunucular",
+      "Botlar",
+      "Emojiler",
+      "Şablonlar",
+      "Sesler"
+    ],
     "logout": "Çıkış Yap"
   },
   "footer": {
@@ -43,7 +50,8 @@
           "Anasayfa",
           "API Dokümantasyonu",
           "Servis Durumu",
-          "Premium"
+          "Premium",
+          "Blog"
         ]
       },
       {
@@ -250,7 +258,9 @@
     "letsGo": "Hadi!",
     "addBot": "Bot Ekle",
     "addSound": "Ses Ekle",
-    "createReport": "Bildirim Oluştur"
+    "createReport": "Bildirim Oluştur",
+    "all": "Tümü",
+    "copy": "Kopyala"
   },
   "voteCountdown": {
     "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",
@@ -1230,7 +1240,7 @@
   },
   "botsPage": {
     "title": "Botları Keşfedin",
-    "subtitle": "En popüler botları keşfedin ve Discord sunucunuz için mükemmel olanı bulun!<br>Mevcut en iyi botlarla sunucunuzu daha eğlenceli ve etkileşimli hale getirin.",
+    "subtitle": "En popüler botları keşfedin ve Discord sunucunuz için mükemmel olanı bulun!<br> Mevcut en iyi botlarla sunucunuzu daha eğlenceli ve etkileşimli hale getirin.",
     "searchInputPlaceholder": "Bir botu ID'ye, açıklamaya veya kategoriye göre arayın...",
     "categorySelectPlaceholder": "Kategori",
     "sortSelect": {
@@ -1985,5 +1995,9 @@
         "reportSubmitted": "Bildiriminiz için teşekkür ederiz. Kısa süre içinde inceleyeceğiz. Eylem aldığımızda size bir mesaj göndermeyiz."
       }
     }
+  },
+  "blogsPage": {
+    "title": "Ekibimizden Yazılar",
+    "subtitle": "Discord Place ekibinden en son haberler, güncellemeler ve rehberler. Tasarım, geliştirme ve daha fazlası hakkında en yeni trendleri keşfedin."
   }
 }

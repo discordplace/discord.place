@@ -11,12 +11,19 @@
     ]
   },
   "header": {
-    "profiles": "Profillər",
-    "servers": "Serverlər",
-    "bots": "Botlar",
-    "emojis": "Emojilər",
-    "templates": "Şablonlar",
-    "sounds": "Səslər",
+    "links": [
+      "Xidmətlər",
+      "Blog",
+      "Premium"
+    ],
+    "servicesDropdownLinks": [
+      "Profillər",
+      "Serverlər",
+      "Botlar",
+      "Emojilər",
+      "Şablonlar",
+      "Səslər"
+    ],
     "logout": "Çıxın"
   },
   "footer": {
@@ -43,7 +50,8 @@
           "Ev",
           "API Sənədləri",
           "Xidmət Vəziyyəti",
-          "Premium"
+          "Premium",
+          "Blog"
         ]
       },
       {
@@ -250,7 +258,9 @@
     "letsGo": "Gəlin gedək!",
     "addBot": "Bot əlavə edin",
     "addSound": "Səs əlavə edin",
-    "createReport": "Hesabat yaradın"
+    "createReport": "Hesabat yaradın",
+    "all": "Hamısı",
+    "copy": "Kopyalayın"
   },
   "voteCountdown": {
     "desktop": "gözləyin {{hours}}h {{minutes}}m {{seconds}}səs vermək",
@@ -757,7 +767,7 @@
   },
   "profilesPage": {
     "title": "Profilləri kəşf edin",
-    "subtitle": " Discord profillərinin fərdiləşdirilmiş səhifəsini tapın, paylaşın və araşdırın!<br>Sizdə var {{count}} araşdırmaq üçün profillər.",
+    "subtitle": "Discord profillərinin fərdiləşdirilmiş səhifəsini tapın, paylaşın və araşdırın!<br>Sizdə var {{count}} araşdırmaq üçün profillər.",
     "searchInputPlaceholder": "Profili şlak, peşə, yer və s. ilə axtarın.",
     "sortSelect": {
       "placeholder": "Çeşidləmə",
@@ -1230,7 +1240,7 @@
   },
   "botsPage": {
     "title": "Botları kəşf edin",
-    "subtitle": "Ən populyar botları araşdırın və Discord serveriniz üçün mükəmməl olanı tapın!<br>Ən yaxşı botlarla serverinizi daha əyləncəli və interaktiv edin.",
+    "subtitle": "Ən populyar botları araşdırın və Discord serveriniz üçün mükəmməl olanı tapın!<br> Ən yaxşı botlarla serverinizi daha əyləncəli və interaktiv edin.",
     "searchInputPlaceholder": "İd, təsvir və ya kateqoriya üzrə botu axtarın...",
     "categorySelectPlaceholder": "Kateqoriya",
     "sortSelect": {
@@ -1984,5 +1994,9 @@
         "reportSubmitted": "Bunu bildirdiyiniz üçün təşəkkür edirik. Qısa müddət ərzində nəzərdən keçirəcəyik. Əgər tədbir görsək, sizə mesaj göndərməyəcəyik."
       }
     }
+  },
+  "blogsPage": {
+    "title": "Komandamızdan yazılar",
+    "subtitle": "Discord Place komandasından son xəbərlər, yeniliklər və təlimlər. Dizayn, inkişaf və daha çox sahələrdə son trendləri öyrənin."
   }
 }
