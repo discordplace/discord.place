@@ -13,7 +13,7 @@ export default function CopyButton({ timeout = 2000, successText, copyText, clas
     if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
 
     navigator.clipboard.writeText(copyText);
-    toast.success(successText);
+    if (successText) toast.success(successText);
     setCopied(true);
 
     clearTimeout(copyTimeoutRef.current);
