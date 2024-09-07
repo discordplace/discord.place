@@ -11,9 +11,10 @@ import Bot from '@/app/api/og/content/Bot';
 import Emoji from '@/app/api/og/content/Emoji';
 import Template from '@/app/api/og/content/Template';
 import Sound from '@/app/api/og/content/Sound';
+import Blog from '@/app/api/og/content/Blog';
 import { RiRobot2Fill } from 'react-icons/ri';
 import { MdEmojiEmotions } from 'react-icons/md';
-import { HiTemplate } from 'react-icons/hi';
+import { HiNewspaper, HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
 
 function getFontData(fontName) {
@@ -40,7 +41,8 @@ export async function GET(request) {
     'bot': RiRobot2Fill,
     'emoji': MdEmojiEmotions,
     'template': HiTemplate,
-    'sound': PiWaveformBold
+    'sound': PiWaveformBold,
+    'blog': HiNewspaper
   };
 
   if (!data.type || !icons[data.type]) return sendError('Invalid type.', 400);
@@ -132,6 +134,10 @@ export async function GET(request) {
               data={data.metadata}
               avatar_base64={(await getImageBuffer(data.metadata.avatar_url)).toString('base64')}
             />
+          )}
+
+          {data.type === 'blog' && (
+            <Blog data={data.metadata} />
           )}
         </div>
 

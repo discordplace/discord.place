@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import matter from 'gray-matter';
-import { config } from 'node:process';
+import config from '@/config';
 import Markdown from '@/app/components/Markdown';
 import BackButton from '@/app/(blogs)/blogs/[id]/components/BackButton';
 import Header from '@/app/(blogs)/blogs/[id]/components/Header';
