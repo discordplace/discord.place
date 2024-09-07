@@ -36,12 +36,12 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 lg:px-0">
+    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-6 mobile:px-12 lg:px-0">
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
       <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
 
-      <div className='flex flex-col items-start w-full max-w-5xl'>
+      <div className='flex flex-col items-center w-full max-w-5xl sm:items-start'>
         <motion.h1 
           className={cn(
             'text-5xl relative font-medium max-w-[800px] text-center text-primary',
@@ -58,16 +58,16 @@ export default function Hero() {
             alt=''
             width={32}
             height={5}
-            className='absolute -top-2 -right-8 -rotate-12'
+            className='absolute hidden sm:block -top-2 -right-8 -rotate-12'
           />
         </motion.h1>
 
-        <motion.span className="sm:text-lg max-w-[700px] mt-8 text-tertiary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+        <motion.span className="sm:text-left text-center sm:text-lg max-w-[700px] mt-8 text-tertiary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
           {t('blogsPage.subtitle')}
         </motion.span>
 
         <motion.div
-          className='flex items-center w-full mt-24 border-b-2 gap-x-6 border-b-primary'
+          className='flex flex-wrap items-center w-full gap-2 mt-24 lg:border-b-2 lg:gap-x-6 lg:border-b-primary'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ ...sequenceTransition, delay: 0.3 }}
@@ -78,7 +78,7 @@ export default function Hero() {
               <button
                 key={tag}
                 className={cn(
-                  'relative select-none pb-4 font-medium cursor-pointer text-tertiary outline-none',
+                  'bg-secondary border border-primary lg:border-none rounded-full px-3 py-1.5 lg:pt-0 lg:px-0 lg:bg-none relative select-none lg:pb-4 font-medium cursor-pointer text-tertiary outline-none',
                   tag === activeTag ? 'text-primary select-none pointer-events-none' : 'hover:text-secondary active:text-primary'
                 )}
                 onClick={() => setActiveTag(tag)}
@@ -89,7 +89,7 @@ export default function Hero() {
                   <motion.div
                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                     layoutId='blogActiveTagIndicator'
-                    className='absolute -bottom-0.5 left-0 w-full h-[2px] bg-black dark:bg-white'
+                    className='hidden lg:block absolute -bottom-0.5 left-0 w-full h-[2px] bg-black dark:bg-white'
                   />
                 )}
               </button>

@@ -57,7 +57,7 @@ const markdownComponents = {
           <span className='text-xs font-bold text-tertiary'>{languageMatch[1]}</span>
 
           <CopyButton
-            className='p-0 text-xs'
+            className='hidden p-0 text-xs mobile:flex'
             copyText={String(children).replace(/\n$/, '')}
           >
             {t('buttons.copy')}

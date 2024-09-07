@@ -24,6 +24,12 @@
       "Templates",
       "Sounds"
     ],
+    "profiles": "Profiles",
+    "servers": "Servers",
+    "bots": "Bots",
+    "emojis": "Emojis",
+    "templates": "Templates",
+    "sounds": "Sounds",
     "logout": "Logout"
   },
   "footer": {

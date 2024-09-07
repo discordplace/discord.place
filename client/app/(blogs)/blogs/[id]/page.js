@@ -32,7 +32,7 @@ export default async function Page({ params }) {
 
   return (
     <div className='flex items-center justify-center w-full'>
-      <div className='flex flex-col w-full max-w-5xl px-8 my-32 lg:px-0'>
+      <div className='flex flex-col w-full max-w-5xl px-4 my-32 mobile:px-8 lg:px-0'>
         <BackButton />
 
         <Header data={data} />

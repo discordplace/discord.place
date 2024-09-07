@@ -24,6 +24,12 @@
       "Şablonlar",
       "Sesler"
     ],
+    "profiles": "Profiller",
+    "servers": "Sunucular",
+    "bots": "Botlar",
+    "emojis": "Emojiler",
+    "templates": "Şablonlar",
+    "sounds": "Sesler",
     "logout": "Çıkış Yap"
   },
   "footer": {
