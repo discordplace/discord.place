@@ -47,8 +47,8 @@ export default function Hero() {
             'text-5xl relative font-medium max-w-[800px] text-center text-primary',
             BricolageGrotesque.className
           )}
-          initial={{ opacity: 0, y: -25 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ ...sequenceTransition, delay: 0.1 }}
         >
           {t('blogsPage.title')}
@@ -62,14 +62,14 @@ export default function Hero() {
           />
         </motion.h1>
 
-        <motion.span className="sm:text-lg max-w-[700px] mt-8 text-tertiary" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+        <motion.span className="sm:text-lg max-w-[700px] mt-8 text-tertiary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
           {t('blogsPage.subtitle')}
         </motion.span>
 
         <motion.div
           className='flex items-center w-full mt-24 border-b-2 gap-x-6 border-b-primary'
-          initial={{ opacity: 0, y: -25 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ ...sequenceTransition, delay: 0.3 }}
         >
           {['All', ...new Set(data.map(data => data.tags).flat())]
@@ -98,8 +98,8 @@ export default function Hero() {
 
         <motion.div
           className='flex flex-wrap w-full gap-12 mt-12 mb-24'
-          initial={{ opacity: 0, y: -25 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ ...sequenceTransition, delay: 0.4 }}
         >
           {loading ? (
