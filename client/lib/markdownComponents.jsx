@@ -3,24 +3,29 @@
 import Link from 'next/link';
 import cn from './cn';
 import Zoom from 'react-medium-image-zoom';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import CopyButton from '@/app/components/CopyButton';
+import { t } from '@/stores/language';
 
 const Heading = ({ level, children }) => {
   const Tag = `h${level}`;
   
   return (
     <div className="relative">
-      <Tag className={cn(
-        'my-4 font-semibold',
-        level === 1 && 'text-2xl',
-        level === 2 && 'text-xl',
-        level === 3 && 'text-lg',
-        level === 4 && 'text-base',
-        level === 5 && 'text-sm',
-        level === 6 && 'text-xs',
-      )}>
+      <Tag
+        className={cn(
+          'my-4 font-semibold',
+          level === 1 && 'text-2xl',
+          level === 2 && 'text-xl',
+          level === 3 && 'text-lg',
+          level === 4 && 'text-base',
+          level === 5 && 'text-sm',
+          level === 6 && 'text-xs',
+        )}
+      >
         {children}
       </Tag>
-      <span className="absolute w-full bg-tertiary" style={{ bottom: '-8px', height: '2px' }}></span>
     </div>
   );
 };
@@ -33,22 +38,43 @@ const markdownComponents = {
   h5: ({ children }) => <Heading level={5}>{children}</Heading>,
   h6: ({ children }) => <Heading level={6}>{children}</Heading>,
   blockquote: ({ children }) => <blockquote className="pl-4 my-4 text-sm font-medium text-tertiary" style={{ borderLeft: '4px solid rgba(var(--border-primary))' }}>{children}</blockquote>,
-  code: ({ children }) => {
-    const color = children.match(/#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)|hsl\((\d{1,3}), (\d{1,3})%, (\d{1,3})%\)/g);
-    if (!color) return <code className="px-1 py-0.5 mx-2 border rounded-md border-primary bg-tertiary text-primary">{children}</code>;
+  code: ({ children, className, node, ...rest }) => {
+    const languageMatch = /language-(\w+)/.exec(className || '');
 
-    return (
-      <>
-        <div className='inline-flex items-center gap-x-1 px-2 py-0.5 mx-2 border rounded-md border-primary bg-tertiary text-primary' style={{ padding: '0 0.3rem'}}>
-          <code>{children}</code>
-          {color && <span className="inline-block rounded-full select-none bg-quaternary" style={{ width: '12px', height: '12px', backgroundColor: color }}>&thinsp;</span>}
+    return languageMatch ? (
+      <div className='relative'>
+        <SyntaxHighlighter
+          {...rest}
+          PreTag={'div'}
+          children={String(children).replace(/\n$/, '')}
+          language={languageMatch[1]}
+          style={darcula}
+          wrapLongLines={false}
+          className='!pr-12 rounded-lg overflow-auto max-w-5xl'
+        />
+
+        <div className='absolute flex items-center p-1 top-2 right-2 gap-x-4'>
+          <span className='text-xs font-bold text-tertiary'>{languageMatch[1]}</span>
+
+          <CopyButton
+            className='p-0 text-xs'
+            copyText={String(children).replace(/\n$/, '')}
+          >
+            {t('buttons.copy')}
+          </CopyButton>
         </div>
-      </>
+      </div>
+    ) : (
+      <code {...rest} className={className}>
+        {children}
+      </code>
     );
   },
-  a: ({ children, href }) => <Link href={href} className='hover:underline text-secondary'>
-    {children}
-  </Link>,
+  a: ({ children, href }) => (
+    <Link href={href} className='hover:underline text-secondary'>
+      {children}
+    </Link>
+  ),
   img: ({ src, alt }) => {
     return (
       <Zoom>

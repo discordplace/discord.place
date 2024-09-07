@@ -13,7 +13,7 @@ export default function Error() {
         We{'\''}re sorry, an error occurred.
       </h1>
 
-      <p className='text-center mt-2 text-base text-neutral-400 max-w-[800px] w-full max-h-[200px]'>
+      <p className='text-center mt-2 text-base text-tertiary max-w-[800px] w-full max-h-[200px]'>
         The page you are looking for does not exist.
       </p>
     </div>

@@ -22,7 +22,7 @@ export default function Page() {
         {t('errorPage.title')}
       </h1>
 
-      <p className='text-center mt-2 text-base text-neutral-400 max-w-[800px] w-full max-h-[200px]'>
+      <p className='text-center mt-2 text-base text-tertiary max-w-[800px] w-full max-h-[200px]'>
         {customMessage || t(`errorPage.messages.${code || Object.keys(config.errorMessages)[0]}`)}
       </p>
     </div>

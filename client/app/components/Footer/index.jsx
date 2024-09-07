@@ -52,6 +52,10 @@ export default function Footer() {
         {
           label: t('footer.blocks.0.links.3'),
           href: '/premium'
+        },
+        {
+          label: t('footer.blocks.0.links.4'),
+          href: '/blogs'
         }
       ]
     },

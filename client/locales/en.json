@@ -11,12 +11,19 @@
     ]
   },
   "header": {
-    "profiles": "Profiles",
-    "servers": "Servers",
-    "bots": "Bots",
-    "emojis": "Emojis",
-    "templates": "Templates",
-    "sounds": "Sounds",
+    "links": [
+      "Services",
+      "Blog",
+      "Premium"
+    ],
+    "servicesDropdownLinks": [
+      "Profiles",
+      "Servers",
+      "Bots",
+      "Emojis",
+      "Templates",
+      "Sounds"
+    ],
     "logout": "Logout"
   },
   "footer": {
@@ -43,7 +50,8 @@
           "Home",
           "API Documentation",
           "Service Status",
-          "Premium"
+          "Premium",
+          "Blog"
         ]
       },
       {
@@ -250,7 +258,9 @@
     "letsGo": "Let's Go!",
     "addBot": "Add Bot",
     "addSound": "Add Sound",
-    "createReport": "Create Report"
+    "createReport": "Create Report",
+    "all": "All",
+    "copy": "Copy"
   },
   "voteCountdown": {
     "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",
@@ -356,7 +366,7 @@
   },
   "templatesPage": {
     "title": "Discover the templates",
-    "subtitle": "Explore the most popular templates and find the perfect one for your Discord server!<br>Don't waste your time with creating your own server, choose one of the templates to get started!",
+    "subtitle": "Explore the most popular templates and find the perfect one for your Discord server! Don't waste your time with creating your own server, choose one of the templates to get started!",
     "searchInputPlaceholder": "Search for a template by name, description, etc.",
     "categorySelectPlaceholder": "Category",
     "sortSelect": {
@@ -757,7 +767,7 @@
   },
   "profilesPage": {
     "title": "Discover the profiles",
-    "subtitle": " Find, share and explore the customized page of Discord profiles!<br>You have {{count}} profiles to explore.",
+    "subtitle": "Find, share and explore the customized page of Discord profiles!<br>You have {{count}} profiles to explore.",
     "searchInputPlaceholder": "Search for a profile by slug, occupation, location, etc.",
     "sortSelect": {
       "placeholder": "Sorting",
@@ -1230,7 +1240,7 @@
   },
   "botsPage": {
     "title": "Discover Bots",
-    "subtitle": "Explore the most popular bots and find the perfect one for your Discord server!<br>Make your server more fun and interactive with the best bots available.",
+    "subtitle": "Explore the most popular bots and find the perfect one for your Discord server!<br> Make your server more fun and interactive with the best bots available.",
     "searchInputPlaceholder": "Search for a bot by id, description, or category...",
     "categorySelectPlaceholder": "Category",
     "sortSelect": {
@@ -1985,5 +1995,9 @@
         "reportSubmitted": "Thank you for reporting this. We will review it shortly. You don't get a message from us if we take action."
       }
     }
+  },
+  "blogsPage": {
+    "title": "Writings from our team",
+    "subtitle": "The latest news, updates and guides from the Discord Place team. Discover the latest trends in design, development and more."
   }
 }

@@ -10,7 +10,7 @@ export default function ErrorState({ title, message }) {
       )}>
         {title}
       </h2>
-      <p className='text-lg text-center text-neutral-400'>
+      <p className='text-lg text-center text-tertiary'>
         {message}
       </p>
     </div>

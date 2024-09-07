@@ -18,20 +18,20 @@ export default function WithText({ className}) {
     )} href='/'>
       <Image 
         src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-        width={128} 
-        height={128} 
+        width={64} 
+        height={64} 
         alt="discord.place Logo" 
-        className='w-[48px] h-[48px]'
+        className='w-[32px] h-[32px]'
       />
 
       <div className={cn(
         'flex flex-col',
         BricolageGrotesque.className
       )}>
-        <h1 className='text-xl font-bold'>
+        <h1 className='text-lg font-bold'>
           Discord
         </h1>
-        <h2 className='text-sm font-medium'>
+        <h2 className='text-xs font-medium'>
           Place
         </h2>
       </div>

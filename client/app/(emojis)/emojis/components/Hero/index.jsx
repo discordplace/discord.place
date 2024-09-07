@@ -59,7 +59,7 @@ export default function Hero() {
           {t('emojisPage.title')}
         </motion.h1>
 
-        <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-neutral-400" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+        <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-tertiary" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
           {t('emojisPage.subtitle', { br: <br />, count: total })}
         </motion.span>
 
