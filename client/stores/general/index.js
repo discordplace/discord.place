@@ -61,6 +61,12 @@ const useGeneralStore = create(set => ({
   reportAreaModal: {
     reason: '',
     setReason: reason => set(state => ({ reportAreaModal: { ...state.reportAreaModal, reason } }))
+  },
+  header: {
+    hoveringHeaderTab: null,
+    setHoveringHeaderTab: hoveringHeaderTab => set(state => ({ header: { ...state.header, hoveringHeaderTab } })),
+    lastMouseOut: 0,
+    setLastMouseOut: lastMouseOut => set(state => ({ header: { ...state.header, lastMouseOut } }))
   }
 }));
 
