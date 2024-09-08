@@ -12,6 +12,7 @@ export async function generateMetadata({ params }) {
   return {
     title: data.name,
     description: data.description,
+    keywords: ['blog', 'post', ...data.keywords],
     openGraph: {
       title: `Discord Place - ${data.name}`,
       description: data.description,
