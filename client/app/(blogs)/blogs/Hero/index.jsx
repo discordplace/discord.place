@@ -78,7 +78,7 @@ export default function Hero() {
               <button
                 key={tag}
                 className={cn(
-                  'bg-secondary border border-primary lg:border-none rounded-full px-3 py-1.5 lg:pt-0 lg:px-0 lg:bg-none relative select-none lg:pb-4 font-medium cursor-pointer text-tertiary outline-none',
+                  'bg-secondary border border-primary lg:border-none rounded-full px-3 py-1.5 lg:pt-0 lg:px-0 lg:bg-[unset] relative select-none lg:pb-4 font-medium cursor-pointer text-tertiary outline-none',
                   tag === activeTag ? 'text-primary select-none pointer-events-none' : 'hover:text-secondary active:text-primary'
                 )}
                 onClick={() => setActiveTag(tag)}
