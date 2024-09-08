@@ -3,7 +3,19 @@ import { FiArrowRightCircle } from 'react-icons/fi';
 export default function Blog({ data }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0px' }}>
-      <h1 style={{ fontSize: '64px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '2px' }}>
+      <h1
+        style={{
+          fontSize: '64px',
+          fontWeight: 700,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '2px',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          maxWidth: '1100px'
+        }}
+      >
         {data.name}
       </h1>
 
