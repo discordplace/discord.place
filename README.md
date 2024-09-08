@@ -1,3 +1,5 @@
+[![discord.place](https://discord.place/og.png)](https://discord.place)
+
 # discord.place
 
 discord.place is your comprehensive hub for everything related to Discord. Whether you're a developer, server owner, or a regular user, discord.place offers valuable resources to enhance your Discord experience.
