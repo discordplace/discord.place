@@ -37,6 +37,7 @@ const markdownComponents = {
   h4: ({ children }) => <Heading level={4}>{children}</Heading>,
   h5: ({ children }) => <Heading level={5}>{children}</Heading>,
   h6: ({ children }) => <Heading level={6}>{children}</Heading>,
+  strong: ({ children }) => <strong className="font-bold text-secondary">{children}</strong>,
   blockquote: ({ children }) => <blockquote className="pl-4 my-4 text-sm font-medium text-tertiary" style={{ borderLeft: '4px solid rgba(var(--border-primary))' }}>{children}</blockquote>,
   code: ({ children, className, node, ...rest }) => {
     const languageMatch = /language-(\w+)/.exec(className || '');
@@ -65,7 +66,13 @@ const markdownComponents = {
         </div>
       </div>
     ) : (
-      <code {...rest} className={className}>
+      <code
+        {...rest}
+        className={cn(
+          className,
+          'px-1.5 py-1 text-sm bg-quaternary text-primary rounded-lg',
+        )}
+      >
         {children}
       </code>
     );
@@ -90,8 +97,8 @@ const markdownComponents = {
   },
   ul: ({ children }) => <ul className="my-4 text-tertiary" style={{ paddingLeft: '12px', listStyleType: 'disc', listStylePosition: 'inside' }}>{children}</ul>,
   ol: ({ children }) => <ol className="my-4 text-tertiary" style={{ paddingLeft: '12px', listStyleType: 'decimal', listStylePosition: 'inside' }}>{children}</ol>,
-  li: ({ children }) => <li>{children}</li>,
-  p: ({ children }) => <p className="my-4 break-words text-tertiary">{children}</p>,
+  li: ({ children }) => <li className='my-2'>{children}</li>,
+  p: ({ children }) => <p className="my-4 break-words text-secondary">{children}</p>,
   hr: () => <hr className="my-4" style={{ borderTop: '1px solid rgba(var(--border-primary))' }} />
 };
 
