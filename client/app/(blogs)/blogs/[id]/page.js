@@ -4,8 +4,11 @@ import config from '@/config';
 import Markdown from '@/app/components/Markdown';
 import BackButton from '@/app/(blogs)/blogs/[id]/components/BackButton';
 import Header from '@/app/(blogs)/blogs/[id]/components/Header';
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata({ params }) {
+  if (!fs.existsSync(process.cwd() + `/blogs/${params.id}.md`)) return;
+
   const source = fs.readFileSync(process.cwd() + `/blogs/${params.id}.md`, 'utf-8');
   const { data } = matter(source);
 
@@ -28,6 +31,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
+  if (!fs.existsSync(process.cwd() + `/blogs/${params.id}.md`)) return redirect('/error?code=90001');
+
   const source = fs.readFileSync(process.cwd() + `/blogs/${params.id}.md`, 'utf-8');
   const { data, content } = matter(source);
 
