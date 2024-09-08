@@ -109,7 +109,8 @@ const config = {
     '50002': 'The user who created the profile does not currently have a premium.',
     '60001': 'You are not authorized to edit this server.',
     '70001': 'You are not authorized to edit this bot.',
-    '80001': 'The link you are looking for does not exist.'
+    '80001': 'The link you are looking for does not exist.',
+    '90001': 'The blog you are looking for does not exist.'
   },
   profilesMaxSocialsLength: 8,
   getLoginURL: function (pathname) {

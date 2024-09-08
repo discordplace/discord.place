@@ -180,7 +180,8 @@
       "50002": "Profili yaradan istifadəçinin hazırda mükafatı yoxdur.",
       "60001": "Sizin bu serveri redaktə etmək səlahiyyətiniz yoxdur.",
       "70001": "Sizin bu botu redaktə etmək səlahiyyətiniz yoxdur.",
-      "80001": "Axtardığınız link mövcud deyil."
+      "80001": "Axtardığınız link mövcud deyil.",
+      "90001": "Axtardığınız blog mövcud deyil."
     }
   },
   "errorMessages": {

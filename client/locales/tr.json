@@ -180,7 +180,8 @@
       "50002": "Bu profilin sahibi şu an için Premium üyesi değil.",
       "60001": "Bu sunucuyu düzenleyebilmek için yetkiniz yok.",
       "70001": "Bu botu düzenleyebilmek için yetkiniz yok.",
-      "80001": "Aradığınız kısaltılmış bağlantı bulunamadı."
+      "80001": "Aradığınız kısaltılmış bağlantı bulunamadı.",
+      "90001": "Aradığınız blog yazısı bulunamadı."
     }
   },
   "errorMessages": {
