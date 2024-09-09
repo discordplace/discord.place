@@ -46,6 +46,8 @@ export default function NotCollapsedHeader() {
     const headerTabElement = document.getElementById(`headerTab-${hoveringHeaderTab}`);
     const headerTabsElement = document.getElementById('headerTabs');
 
+    if (!hoveringHeaderTabElement || !headerTabElement || !headerTabsElement) return;
+
     const headerTabElementRect = headerTabElement.getBoundingClientRect();
     const headerTabsElementRect = headerTabsElement.getBoundingClientRect();
 
