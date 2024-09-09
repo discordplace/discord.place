@@ -67,7 +67,7 @@ export default function NotCollapsedHeader() {
   }, [hoveringHeaderTab, lastMouseOut]);
 
   return (
-    <div className="absolute flex items-center justify-center top-0 left-0 w-full z-[9999]">
+    <div className="absolute flex items-center justify-center top-0 left-0 w-full z-[9998]">
       <div className="flex items-center justify-between w-full max-w-5xl mt-8">
         <div className='flex items-center gap-x-12'>
           <Link href='/'>
