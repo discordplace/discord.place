@@ -234,6 +234,7 @@ const BotSchema = new Schema({
         servers: this.server_count.value,
         servers_updated_at: this.server_count.updatedAt,
         votes: this.votes,
+        totalVoters: this.voters.length,
         verified: this.verified,
         github_repository: this.github_repository,
         created_at: this.createdAt

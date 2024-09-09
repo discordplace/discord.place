@@ -20,7 +20,7 @@ export default function Tabs({ bot }) {
       label: t('botPage.tabs.labels.topVoters'),
       id: 'topVoters',
       component: <TopVoters bot={bot} />,
-      disabled: bot.votes <= 0
+      disabled: bot.totalVoters <= 0
     }
   ];
   
