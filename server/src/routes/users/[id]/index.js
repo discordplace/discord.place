@@ -79,7 +79,7 @@ module.exports = {
         const profileBadges = profile ? getBadges(profile, userData?.subscription?.createdAt || null) : [];
         
         Object.assign(responseData, {
-          subscriptionCreatedAt: userData?.subscription?.createdAt || null,
+          subscriptionCreatedAt: userData?.subscription?.createdAt ? new Date(userData.subscription.createdAt).getTime() : null,
           profile: {
             bio: profile.bio,
             badges: profileBadges,
