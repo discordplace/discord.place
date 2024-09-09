@@ -52,7 +52,7 @@ module.exports = {
           .then(async () => {
             await Sound.updateOne({ id }, { $inc: { downloads: 1 } });
 
-            return response.sendStatus(204).end();
+            return response.status(204).end();
           })
           .catch(error => {
             logger.warn(`Sound ${sound.name} (${sound.id}) could not be uploaded to guild ${guild.name} (${guild.id}):`, error);

@@ -33,7 +33,7 @@ module.exports = {
 
       await review.deleteOne();
 
-      response.sendStatus(204).end();
+      response.status(204).end();
 
       const bot = await Bot.findOne({ id: review.bot.id });
       if (!bot) return;

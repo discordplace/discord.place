@@ -19,7 +19,7 @@ module.exports = {
       const { ip } = matchedData(request);
       
       await BlockedIp.findOneAndDelete({ ip })
-        .then(() => response.sendStatus(204).end())
+        .then(() => response.status(204).end())
         .catch(error => {
           logger.error('There was an error while trying to delete a blocked IP address:', error);
           return response.sendError('Failed to unblock IP address.', 500);

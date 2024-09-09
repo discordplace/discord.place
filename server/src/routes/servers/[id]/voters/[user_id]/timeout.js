@@ -24,7 +24,7 @@ module.exports = {
           await ServerReminder.findOneAndDelete({ 'guild.id': id, 'user.id': user_id })
             .catch(() => null);
 
-          return response.sendStatus(204).end();
+          return response.status(204).end();
         })
         .catch(error => {
           logger.error('There was an error while trying to delete a timeout record:', error);

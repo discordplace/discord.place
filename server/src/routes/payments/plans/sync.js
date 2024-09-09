@@ -11,7 +11,7 @@ module.exports = {
       if (!canSyncLemonSqueezyPlans) return response.sendError('You are not allowed to sync Lemon Squeezy plans.', 403);
 
       syncLemonSqueezyPlans()
-        .then(() => response.sendStatus(204).end())
+        .then(() => response.status(204).end())
         .catch(error => {
           logger.error('There was an error syncing Lemon Squeezy plans:', error);
           return response.sendError('Failed to sync Lemon Squeezy plans.', 500);

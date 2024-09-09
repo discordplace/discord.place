@@ -39,7 +39,7 @@ module.exports = {
 
       await newReminder.save();
 
-      return response.sendStatus(204).end();
+      return response.status(204).end();
     }
   ]
 };

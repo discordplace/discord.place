@@ -19,7 +19,7 @@ module.exports = {
 
       await emoji.updateOne({ $inc: { downloads: 1 } });
 
-      return response.sendStatus(204).end();
+      return response.status(204).end();
     }
   ]
 };

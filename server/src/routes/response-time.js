@@ -10,6 +10,6 @@ module.exports = {
       calculatedResponseTime = newDate - currentDate;
     });
 
-    return response.sendStatus(204).end();
+    return response.status(204).end();
   }
 };

@@ -28,7 +28,7 @@ module.exports = {
 
       await review.updateOne({ approved: true });
 
-      response.sendStatus(204).end();
+      response.status(204).end();
 
       const bot = await Bot.findOne({ id });
       if (!bot) return;

@@ -55,7 +55,7 @@ module.exports = {
   
           client.channels.cache.get(config.quarantineLogsChannelId).send({ embeds });  
         
-          return response.sendStatus(204).end();
+          return response.status(204).end();
         })
         .catch(error => {
           logger.error('There was an error while trying to delete a quarantine record:', error);

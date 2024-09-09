@@ -51,7 +51,7 @@ module.exports = {
           reason: `Uploaded by @${request.user.username} (${request.user.id}) via discord.place`
         });
 
-        return response.sendStatus(204).end();
+        return response.status(204).end();
       } catch (error) {
         logger.warn(`Emoji pack ${pack.name} (${pack.id}) could not be uploaded to guild ${guild.name} (${guild.id}):`, error);
         return response.sendError(`An error occurred: ${error.message}`, 500);

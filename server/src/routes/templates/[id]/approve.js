@@ -62,7 +62,7 @@ module.exports = {
 
       client.channels.cache.get(config.portalChannelId).send({ embeds, components });
 
-      return response.sendStatus(204).end();
+      return response.status(204).end();
     }
   ]
 };

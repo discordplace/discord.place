@@ -33,7 +33,7 @@ module.exports = {
       try {
         await incrementVote(id, request.user.id, bot.webhook);
 
-        return response.sendStatus(204).end();
+        return response.status(204).end();
       } catch (error) {
         return response.sendError(error.message, 400);
       }

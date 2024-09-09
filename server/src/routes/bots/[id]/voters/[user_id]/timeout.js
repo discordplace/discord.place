@@ -19,7 +19,7 @@ module.exports = {
       const { id, user_id } = matchedData(request);
 
       BotTimeout.findOneAndDelete({ 'bot.id': id, 'user.id': user_id })
-        .then(() => response.sendStatus(204).end())
+        .then(() => response.status(204).end())
         .catch(error => {
           logger.error('There was an error while trying to delete a timeout record:', error);
           return response.sendError('Failed to delete timeout record.', 500);

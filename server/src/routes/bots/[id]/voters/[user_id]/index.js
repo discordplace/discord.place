@@ -24,7 +24,7 @@ module.exports = {
 
       const isVotedInLast24Hours = bot.voters.some(voter => voter.user.id == user_id && new Date() - voter.lastVote < 86400000);
       
-      if (isVotedInLast24Hours) return response.sendStatus(204).end();
+      if (isVotedInLast24Hours) return response.status(204).end();
       else return response.sendError('User did not vote in the last 24 hours.', 403);
     }
   ]

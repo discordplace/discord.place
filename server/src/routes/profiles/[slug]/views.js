@@ -22,7 +22,7 @@ module.exports = {
 
       await profile.updateOne({ $inc: { views: 1 } });
 
-      return response.sendStatus(204).end();
+      return response.status(204).end();
     }
   ]
 };

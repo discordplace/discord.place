@@ -30,7 +30,7 @@ module.exports = {
       try {
         await exec('git pull');
 
-        await response.sendStatus(201);
+        await response.status(201).end();
 
         return syncMemberRoles();
       } catch (error) {
