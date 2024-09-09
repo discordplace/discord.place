@@ -124,7 +124,7 @@ async function incrementVote(guildId, userId) {
         continue;
       }
 
-      const member = guild.members.cache.get(userId);
+      const member = guild.members.cache.get(userId) || await guild.members.fetch(userId).catch(() => null);
       if (!member) continue;
 
       if (member.roles.cache.has(role.id)) break;

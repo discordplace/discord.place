@@ -30,7 +30,7 @@ module.exports = {
       const guild = client.guilds.cache.get(config.guildId);
 
       const publisher = await client.users.fetch(template.user.id).catch(() => null);
-      const isPublisherFoundInGuild = publisher ? guild.members.cache.has(publisher.id) : false;
+      const isPublisherFoundInGuild = guild.members.cache.has(publisher.id) || await guild.members.fetch(publisher.id).then(() => true).catch(() => false);
 
       if (isPublisherFoundInGuild) {
         const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);

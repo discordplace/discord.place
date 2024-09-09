@@ -135,10 +135,6 @@ export default function Hero() {
                     value: 'LatestVoted'
                   },
                   {
-                    label: t('serversPage.sortSelect.items.voice'),
-                    value: 'Voice'
-                  },
-                  {
                     label: t('serversPage.sortSelect.items.members'),
                     value: 'Members'
                   },

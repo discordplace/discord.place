@@ -32,21 +32,18 @@ export default function Content({ server }) {
   const [inviteURL, setInviteURL] = useState(parsedInviteUrl);
   const [category, setCategory] = useState(server.category);
   const [keywords, setKeywords] = useState(server.keywords);
-  const [voiceActivityEnabled, setVoiceActivityEnabled] = useState(server.voice_activity_enabled === true);
   
   useEffect(() => {
     const isDescriptionChanged = !isEqual(description, server.description);
     const isInviteURLChanged = !isEqual(inviteURL, parsedInviteUrl);
     const isCategoryChanged = !isEqual(category, server.category);
     const isKeywordsChanged = !isEqual(keywords, server.keywords);
-    const isVoiceActivityEnabledChanged = !isEqual(voiceActivityEnabled, server.voice_activity_enabled);
 
     setChangesMade(
       isDescriptionChanged ||
       isInviteURLChanged ||
       isCategoryChanged ||
-      isKeywordsChanged ||
-      isVoiceActivityEnabledChanged
+      isKeywordsChanged
     );
 
     function pushToChangedKeys(key, value) {
@@ -70,10 +67,9 @@ export default function Content({ server }) {
     if (isInviteURLChanged) pushToChangedKeys('invite_url', inviteURL);
     if (isCategoryChanged) pushToChangedKeys('category', category);
     if (isKeywordsChanged) pushToChangedKeys('keywords', keywords);
-    if (isVoiceActivityEnabledChanged) pushToChangedKeys('voice_activity_enabled', voiceActivityEnabled);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [description, inviteURL, category, keywords, voiceActivityEnabled]);
+  }, [description, inviteURL, category, keywords]);
 
   function resetChanges() {    
     changedKeys.forEach(({ key }) => {
@@ -94,9 +90,6 @@ export default function Content({ server }) {
           break;
         case 'keywords':
           setKeywords(server[key]);
-          break;
-        case 'voice_activity_enabled':
-          setVoiceActivityEnabled(server[key]);
           break;
       }
     });
@@ -242,8 +235,6 @@ export default function Content({ server }) {
           setCategory={setCategory}
           keywords={keywords}
           setKeywords={setKeywords}
-          voiceActivityEnabled={voiceActivityEnabled}
-          setVoiceActivityEnabled={setVoiceActivityEnabled}
         />
 
         <div className='w-full h-[1px] bg-tertiary' />

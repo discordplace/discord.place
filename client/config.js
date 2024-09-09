@@ -1,5 +1,5 @@
 import { CgProfile } from 'react-icons/cg';
-import { MdDownload, MdEmojiEmotions, MdEvent, MdKeyboardVoice, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
+import { MdDownload, MdEmojiEmotions, MdEvent, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
 import { RiCommunityFill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCat, FaCompass, FaEye, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers } from 'react-icons/fa';
 import { AiFillSound, AiFillTool } from 'react-icons/ai';
@@ -279,7 +279,6 @@ const config = {
     'Servers': <FaCompass />,
     'Votes': <TbSquareRoundedChevronUp />,
     'LatestVoted': <MdUpdate />,
-    'Voice': <MdKeyboardVoice />,
     'Members': <FaUsers />,
     'Newest': <HiSortAscending />,
     'Oldest': <HiSortDescending />,

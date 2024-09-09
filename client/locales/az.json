@@ -565,7 +565,6 @@
       "items": {
         "votes": "Səslər",
         "latestVoted": "Ən son səsvermə",
-        "voice": "Səs",
         "members": "Üzvlər",
         "newest": "Ən yeni",
         "oldest": "Ən köhnə",
@@ -595,13 +594,12 @@
         "members": "Ümumi Üzvlər",
         "rewards": "Mükafatlar",
         "boosts": "Artırma Səviyyəsi",
-        "voiceActivity": "Səs Fəaliyyəti",
+        "joinedAt": "Qoşuldu",
         "votes": "Səslər"
       },
       "availableVoteRewards": "{{count}} səs mükafatları mövcuddur.",
       "noVoteRewards": "Səs mükafatı yoxdur.",
-      "boostsLabelValue": "{{level}} ({{count}} artırır)",
-      "voiceActivityLabelValue": "{{count}} səsli üzvlər"
+      "boostsLabelValue": "{{level}} ({{count}} artırır)"
     },
     "actions": {
       "title": "Fəaliyyətlər",
@@ -627,7 +625,6 @@
         "reviews": "Rəylər",
         "topVoters": "Ən çox səs verənlər",
         "rewards": "Mükafatlar",
-        "voiceActivity": "Səs Fəaliyyəti",
         "monthlyVotes": "Aylıq Səslər"
       },
       "reviews": {
@@ -665,9 +662,6 @@
           "unlocked": "Siz bu mükafatı açdınız!",
           "locked": "Bu mükafatı açmaq üçün səs verməlisiniz."
         }
-      },
-      "voiceActivityGraph": {
-        "tooltipFormatter": "{{count}} üzvləri"
       },
       "monthlyVotesGraph": {
         "title": "Aylıq Səs Qrafiki",
@@ -716,10 +710,6 @@
           "label": "Açar sözlər",
           "description": "Serverinizə açar sözlər əlavə edin. ",
           "placeholder": "məs. "
-        },
-        "voiceActivity": {
-          "label": "Səs Fəaliyyəti",
-          "description": "Serveriniz üçün səs fəaliyyətinin izlənilməsini aktiv etmək istəyirsinizsə, bu qutuyu işarələyin. "
         }
       },
       "toast": {
@@ -922,7 +912,6 @@
       "Total Users": "{{count}} İstifadəçilər",
       "profileLikes": "{{count}} Bəyənir",
       "profileViews": "{{count}} Baxışlar",
-      "voiceActivity": "{{count}} Üzvlər",
       "monthlyVotes": "{{count}} Səslər"
     }
   },
@@ -1765,10 +1754,6 @@
                 "description": "Serverinizə açar sözlər əlavə edin. ",
                 "placeholder": "Açar söz yazın və enter və ya boşluq düyməsini basın.",
                 "count": "{{count}} Açar sözlər"
-              },
-              "voiceActivity": {
-                "label": "Səs Fəaliyyəti",
-                "description": "Serveriniz üçün səs fəaliyyətinin izlənilməsini aktiv etmək istəyirsinizsə, bu qutuyu işarələyin. "
               },
               "contentPolicy": {
                 "label": "Məzmun Siyasəti",

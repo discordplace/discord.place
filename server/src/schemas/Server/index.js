@@ -73,10 +73,6 @@ const ServerSchema = new Schema({
       type: Date
     }
   },
-  voice_activity_enabled: {
-    type: Boolean,
-    default: false
-  },
   webhook: {
     url: {
       type: String,
@@ -122,8 +118,7 @@ const ServerSchema = new Schema({
         category: this.category,
         keywords: this.keywords,
         invite_code: this.invite_code,
-        votes: this.votes,
-        voice_activity_enabled: this.voice_activity_enabled
+        votes: this.votes
       };
     }
   }

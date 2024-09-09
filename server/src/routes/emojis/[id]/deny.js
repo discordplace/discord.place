@@ -55,7 +55,7 @@ module.exports = {
 
           const guild = client.guilds.cache.get(config.guildId);
 
-          const publisher = await guild.members.fetch(emoji.user.id).catch(() => null);
+          const publisher = guild.members.cache.get(emoji.user.id) || await guild.members.fetch(emoji.user.id).catch(() => null);
           if (publisher) {
             const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
             if (dmChannel) dmChannel.send({ content: `### Hey ${publisher.user.username}\nYour emoji${isPack ? ` pack **${emoji.name}**` : ` **${emoji.name}.${emoji.animated ? 'gif' : 'png'}**`} has been denied by <@${request.user.id}>. Reason: **${reason ? config.emojisDenyReasons[reason].description : reason}**` }).catch(() => null);
