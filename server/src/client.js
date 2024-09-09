@@ -4,7 +4,6 @@ const { CronJob } = require('cron');
 const axios = require('axios');
 const CloudflareAPI = require('cloudflare');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
-const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
 const updateClientActivity = require('@/utils/updateClientActivity');
@@ -12,7 +11,6 @@ const syncMemberRoles = require('@/utils/syncMemberRoles');
 
 // Schemas
 const Server = require('@/schemas/Server');
-const VoiceActivity = require('@/schemas/Server/VoiceActivity');
 const Panel = require('@/schemas/Server/Panel');
 const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
@@ -53,15 +51,13 @@ module.exports = class Client {
         Discord.GatewayIntentBits.Guilds,
         Discord.GatewayIntentBits.GuildMembers,
         Discord.GatewayIntentBits.GuildMessages,
-        Discord.GatewayIntentBits.GuildInvites,
-        Discord.GatewayIntentBits.GuildVoiceStates
+        Discord.GatewayIntentBits.GuildInvites
       ],
       presence: {
         status: config.botPresenceStatus
       }
     });
 
-    this.client.fetchedGuilds = new Discord.Collection();
     this.client.blockedIps = new Discord.Collection();
     this.client.currentlyUploadingEmojiPack = new Discord.Collection();
     this.client.humanVerificationData = new Discord.Collection();
@@ -85,19 +81,21 @@ module.exports = class Client {
         process.exit(1);
       }
 
-      await fetchGuildsMembers([config.guildId]);
+      await client.guilds.cache.get(config.guildId).members.fetch();
 
       logger.info(`Client logged in as ${this.client.user.tag}`);
 
       const CommandsHandler = require('@/src/bot/handlers/commands.js');
       const commandsHandler = new CommandsHandler();
       commandsHandler.fetchCommands();
+      
       if (options.registerCommands) {
         commandsHandler.registerCommands().then(() => process.exit(0)).catch(error => {
           logger.error('Failed to register commands:', error);
           process.exit(1);
         });
       }
+
       if (options.unregisterCommands) {
         commandsHandler.unregisterCommands().then(() => process.exit(0)).catch(error => {
           logger.error('Failed to unregister commands:', error);
@@ -131,7 +129,6 @@ module.exports = class Client {
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', () => {
-          this.checkVoiceActivity();
           this.checkVoteReminderMetadatas();
           this.checkReminerMetadatas();
           this.checkExpiredBlockedIPs();
@@ -218,48 +215,6 @@ module.exports = class Client {
     }
   }
   
-  async checkVoiceActivity() {
-    try {
-      const servers = await Server.find({ voice_activity_enabled: true });
-
-      const bulkOperations = client.guilds.cache.map(({ id }) => {
-        if (!servers.find(server => server.id === id)) return;
-
-        const guild = client.guilds.cache.get(id);
-        if (!guild) return;
-
-        const totalMembersInVoice = guild.members.cache.filter(member => member.voice.channel).size;
-
-        return {
-          updateOne: {
-            filter: { 'guild.id': id },
-            update: {
-              $push: {
-                data: {
-                  $each: [
-                    {
-                      createdAt: new Date(),
-                      data: totalMembersInVoice
-                    }
-                  ],
-                  $slice: -24
-                }
-              }
-            },
-            upsert: true
-          }
-        };
-      }).filter(Boolean);
-
-      await VoiceActivity.bulkWrite(bulkOperations);
-
-      logger.info(`Voice activity for ${bulkOperations.length} servers updated.`);
-    } catch (error) {
-      logger.error('Error checking voice activity:', error);
-    }
-  }
-  
-
   async updatePanelMessages() {
     const panels = await Panel.find();
     for (const panel of panels) await updatePanelMessage(panel.guildId);

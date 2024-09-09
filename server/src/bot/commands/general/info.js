@@ -4,7 +4,6 @@ const Bot = require('@/schemas/Bot');
 const Profile = require('@/schemas/Profile');
 const User = require('@/schemas/User');
 const getBadges = require('@/utils/profiles/getBadges');
-const VoiceActivity = require('@/schemas/Server/VoiceActivity');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -32,10 +31,6 @@ module.exports = {
         var lastVoter;
         if (server.lastVoter?.user?.id) lastVoter = interaction.client.users.cache.get(server.last_voter.user.id) || await interaction.client.users.fetch(server.last_voter.user.id).catch(() => null);
 
-        var voiceActivityEnabled = server.voice_activity_enabled;
-        var voiceActivity = voiceActivityEnabled ? (await VoiceActivity.findOne({ 'guild.id': serverId }))?.data || null : null;
-        var voiceActivityAverage = (voiceActivityEnabled && voiceActivity) ? Math.round(voiceActivity.reduce((acc, cur) => acc + cur.data, 0) / voiceActivity.length) : 0;
-
         var bot = await Bot.findOne({ support_server_id: serverId });
         var botUser = bot ? (interaction.client.users.cache.get(bot.id) || await interaction.client.users.fetch(bot.id).catch(() => null)) : null;
 
@@ -60,10 +55,6 @@ module.exports = {
               {
                 name: 'Votes',
                 value: `This server has **${server.votes}** votes.${lastVoter ? `\nLast vote was by [@${lastVoter.username}](${config.frontendUrl}/profile/u/${lastVoter.id}) on **${server.lastVoter.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}**.` : ''}`
-              },
-              {
-                name: 'Voice Activity',
-                value: voiceActivityEnabled ? `This server has an average of **${voiceActivityAverage}** voice activity in the last 12 hours.` : 'Voice activity is disabled for this server.'
               }
             ])
             .setFooter({ text: server.category, iconURL: guild.iconURL() })

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FaUsers } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import useSearchStore from '@/stores/servers/search';
-import { MdKeyboardVoice, MdUpdate } from 'react-icons/md';
+import { MdUpdate } from 'react-icons/md';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import { IoHeart } from 'react-icons/io5';
@@ -51,11 +51,6 @@ export default function ServerCard(props) {
       value: props.server.data.latest_voted_at,
       condition: sort === 'LatestVoted',
       transform: date => date ? getRelativeTime(date, language) : t('serverCard.neverVoted')
-    },
-    {
-      icon: MdKeyboardVoice,
-      value: props.server.data.voice,
-      condition: sort === 'Voice'
     },
     {
       icon: HiSortAscending,

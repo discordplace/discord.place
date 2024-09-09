@@ -6,7 +6,6 @@ const { param, body, validationResult, matchedData } = require('express-validato
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
-const VoiceActivity = require('@/schemas/Server/VoiceActivity');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const Review = require('@/schemas/Server/Review');
 const inviteLinkValidation = require('@/validations/servers/inviteLink');
@@ -14,7 +13,6 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
-const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const getUserHashes = require('@/utils/getUserHashes');
@@ -39,7 +37,6 @@ module.exports = {
 
       const rewards = await Reward.find({ 'guild.id': id });
 
-      const voiceActivity = await VoiceActivity.findOne({ 'guild.id': id });
       const foundReviews = await Review.find({ 'server.id': id, approved: true }).sort({ createdAt: -1 });
       const parsedReviews = await Promise.all(foundReviews
         .map(async review => {
@@ -70,11 +67,9 @@ module.exports = {
         )
       };
 
-      if (!client.fetchedGuilds.has(guild.id)) await fetchGuildsMembers([guild.id]).catch(() => null);
-
       const voteTimeout = await VoteTimeout.findOne({ 'user.id': request.user?.id, 'guild.id': id });
       const reminder = await VoteReminder.findOne({ 'user.id': request.user?.id, 'guild.id': id });
-      const memberInGuild = guild.members.cache.get(request.user?.id) || await guild.members.fetch(request.user?.id).catch(() => false);
+      const memberInGuild = request.user ? (guild.members.cache.get(request.user?.id) || await guild.members.fetch(request.user?.id).catch(() => false)) : false;
 
       const monthlyVotes = ((await ServerMonthlyVotes.findOne({ identifier: id }))?.data || [])
         .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
@@ -96,13 +91,11 @@ module.exports = {
         banner: guild.banner,
         banner_url: guild.bannerURL({ extension: 'png', size: 2048 }),
         total_members: guild.memberCount,
-        total_members_in_voice: guild.members.cache.filter(member => !member.bot && member.voice.channel).size,
         vanity_url: guild.vanityURLCode ? `https://discord.com/invite/${guild.vanityURLCode}` : null,
         boost_level: guild.premiumTier,
         total_boosts: guild.premiumSubscriptionCount,
         vote_timeout: request.user ? (voteTimeout || null) : null,
         badges,
-        voice_activity: voiceActivity ? voiceActivity.data : null,
         reviews: parsedReviews,
         has_reviewed: request.user ? !!parsedReviews.find(review => review.user.id === request.user.id) : null,
         permissions,
@@ -124,7 +117,8 @@ module.exports = {
           };
         }).filter(Boolean),
         monthly_votes: monthlyVotes,
-        webhook: permissions.canEdit && server.webhook
+        webhook: permissions.canEdit && server.webhook,
+        joined_at: guild.joinedTimestamp
       });
     }
   ],
@@ -147,14 +141,11 @@ module.exports = {
       .isString().withMessage('Invite link must be a string.')
       .trim()
       .custom(inviteLinkValidation),
-    body('voice_activity_enabled')
-      .optional()
-      .isBoolean().withMessage('Voice activity enabled must be a boolean.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
 
-      const { id, description, category, keywords, invite_link, voice_activity_enabled } = matchedData(request);
+      const { id, description, category, keywords, invite_link } = matchedData(request);
 
       const userOrGuildQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'SERVERS_CREATE' },
@@ -209,8 +200,7 @@ module.exports = {
             id: null
           },
           date: Date.now()
-        },
-        voice_activity_enabled: voice_activity_enabled || false
+        }
       });
 
       const validationError = getValidationError(newServer);
@@ -242,8 +232,6 @@ module.exports = {
 
       await DashboardData.findOneAndUpdate({}, { $inc: { servers: 1 } }, { sort: { createdAt: -1 } });
 
-      if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
-
       return response.status(204).end();
     }
   ],
@@ -268,7 +256,6 @@ module.exports = {
       const bulkOperations = [
         Review.deleteMany({ 'server.id': id }),
         VoteTimeout.deleteMany({ 'guild.id': id }),
-        VoiceActivity.deleteOne({ 'guild.id': id }),
         server.deleteOne()
       ];
 
@@ -301,14 +288,11 @@ module.exports = {
       .optional()
       .isArray().withMessage('Keywords should be an array.')
       .custom(keywordsValidation),
-    body('voice_activity_enabled')
-      .optional()
-      .isBoolean().withMessage('Voice activity enabled should be a boolean.'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
   
-      const { id, description, invite_url, category, keywords, voice_activity_enabled } = matchedData(request);
+      const { id, description, invite_url, category, keywords } = matchedData(request);
   
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Server not found.', 404);
@@ -342,7 +326,6 @@ module.exports = {
       
       if (category) server.category = category;
       if (keywords) server.keywords = keywords;
-      if (typeof voice_activity_enabled === 'boolean') server.voice_activity_enabled = voice_activity_enabled;
   
       const validationError = getValidationError(server);
       if (validationError) return response.sendError(validationError, 400);
@@ -352,8 +335,6 @@ module.exports = {
       await server.save();
 
       await updatePanelMessage(id);
-
-      if (!client.fetchedGuilds.has(id)) await fetchGuildsMembers([id]).catch(() => null);
 
       return response.json(await server.toPubliclySafe());
     }   

@@ -32,7 +32,7 @@ module.exports = {
 
       const guild = client.guilds.cache.get(review.server.id);
       if (guild) {
-        const publisher = await client.guilds.cache.get(config.guildId).members.fetch(review.user.id).catch(() => null);
+        const publisher = guild.members.cache.get(review.user.id) || await guild.members.fetch(review.user.id).catch(() => null);
         if (publisher) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Your review to **${guild.name}** has been denied.\n**Reason**: ${reason || 'No reason provided.'}` });

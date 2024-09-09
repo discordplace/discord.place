@@ -3,7 +3,6 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
 const Discord = require('discord.js');
-const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 
 module.exports = {
   post: [
@@ -30,10 +29,8 @@ module.exports = {
 
       const guild = client.guilds.cache.get(review.server.id);
       if (guild) {
-        if (!client.fetchedGuilds.has(review.server.id)) await fetchGuildsMembers([review.server.id]);
-        
         const publisher = await client.users.fetch(review.user.id).catch(() => null);
-        const isPublisherFoundInGuild = publisher ? guild.members.cache.has(publisher.id) : false;
+        const isPublisherFoundInGuild = guild.members.cache.has(publisher.id) || await guild.members.fetch(publisher.id).then(() => true).catch(() => false);
         
         if (isPublisherFoundInGuild) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);

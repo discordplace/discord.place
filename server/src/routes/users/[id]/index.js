@@ -6,7 +6,6 @@ const Profile = require('@/schemas/Profile');
 const User = require('@/schemas/User');
 const getBadges = require('@/utils/profiles/getBadges');
 const randomizeArray = require('@/utils/randomizeArray');
-const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const Discord = require('discord.js');
 
 module.exports = {
@@ -98,11 +97,6 @@ module.exports = {
         Object.assign(responseData, { 
           servers: await Promise.all(listedServers.map(async server => {
             let guild = ownedServers.find(({ id }) => id === server.id);
-
-            if (!client.fetchedGuilds.has(guild.id)) {
-              await fetchGuildsMembers([server.id]).catch(() => null);
-              guild = client.guilds.cache.get(server.id);
-            }
 
             return {
               id: guild.id,

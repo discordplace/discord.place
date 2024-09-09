@@ -565,7 +565,6 @@
       "items": {
         "votes": "Votes",
         "latestVoted": "Latest Voted",
-        "voice": "Voice",
         "members": "Members",
         "newest": "Newest",
         "oldest": "Oldest",
@@ -595,13 +594,12 @@
         "members": "Total Members",
         "rewards": "Rewards",
         "boosts": "Boost Level",
-        "voiceActivity": "Voice Activity",
+        "joinedAt": "Joined At",
         "votes": "Votes"
       },
       "availableVoteRewards": "{{count}} vote rewards available.",
       "noVoteRewards": "No vote rewards available.",
-      "boostsLabelValue": "{{level}} ({{count}} boosts)",
-      "voiceActivityLabelValue": "{{count}} members in voice"
+      "boostsLabelValue": "{{level}} ({{count}} boosts)"
     },
     "actions": {
       "title": "Actions",
@@ -627,7 +625,6 @@
         "reviews": "Reviews",
         "topVoters": "Top Voters",
         "rewards": "Rewards",
-        "voiceActivity": "Voice Activity",
         "monthlyVotes": "Monthly Votes"
       },
       "reviews": {
@@ -665,9 +662,6 @@
           "unlocked": "You have unlocked this reward!",
           "locked": "You need to vote to unlock this reward."
         }
-      },
-      "voiceActivityGraph": {
-        "tooltipFormatter": "{{count}} members"
       },
       "monthlyVotesGraph": {
         "title": "Monthly Votes Graph",
@@ -716,10 +710,6 @@
           "label": "Keywords",
           "description": "Add keywords to your server. This will help people find your server on discord.place. Separate each keyword with a comma.",
           "placeholder": "e.g. fun, gaming, community"
-        },
-        "voiceActivity": {
-          "label": "Voice Activity",
-          "description": "Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active users on your server are."
         }
       },
       "toast": {
@@ -922,7 +912,6 @@
       "Total Users": "{{count}} Users",
       "profileLikes": "{{count}} Likes",
       "profileViews": "{{count}} Views",
-      "voiceActivity": "{{count}} Members",
       "monthlyVotes": "{{count}} Votes"
     }
   },
@@ -1766,10 +1755,6 @@
                 "description": "Add keywords to your server. This will help people find your server on discord.place.",
                 "placeholder": "Type a keyword and press enter or space..",
                 "count": "{{count}} Keywords"
-              },
-              "voiceActivity": {
-                "label": "Voice Activity",
-                "description": "Check this box if you want to enable voice activity tracking for your server. This will help people see how voice active your server is."
               },
               "contentPolicy": {
                 "label": "Content Policy",

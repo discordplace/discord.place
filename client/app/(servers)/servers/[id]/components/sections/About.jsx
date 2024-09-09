@@ -1,11 +1,13 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { FaUsers } from 'react-icons/fa';
 import { TiStar } from 'react-icons/ti';
-import { MdKeyboardVoice } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { ImTrophy } from 'react-icons/im';
 import config from '@/config';
-import { t } from '@/stores/language';
+import useLanguageStore, { t } from '@/stores/language';
+import { FiArrowUpRight } from 'react-icons/fi';
 
 const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
@@ -13,6 +15,8 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
 
 export default function About({ server }) {
+  const language = useLanguageStore(state => state.language);
+
   const keys = [
     {
       key: 'category',
@@ -39,10 +43,10 @@ export default function About({ server }) {
       value: t('serverPage.about.boostsLabelValue', { level: server.boost_level, count: server.total_boosts })
     },
     {
-      key: 'members_in_voice',
-      label: t('serverPage.about.labels.voiceActivity'),
-      icon: <MdKeyboardVoice />,
-      value: t('serverPage.about.voiceActivityLabelValue', { count: server.total_members_in_voice })
+      key: 'joined_at',
+      label: t('serverPage.about.labels.joinedAt'),
+      icon: <FiArrowUpRight />,
+      value: new Date(server.joined_at).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
     },
     {
       key: 'votes',

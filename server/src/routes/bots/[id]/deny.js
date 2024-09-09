@@ -61,7 +61,7 @@ module.exports = {
 
       const guild = client.guilds.cache.get(config.guildId);
 
-      const publisher = await guild.members.fetch(bot.owner.id).catch(() => null);
+      const publisher = guild.members.cache.get(bot.owner.id) || await guild.members.fetch(bot.owner.id).catch(() => null);
       if (publisher) {
         const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
         if (dmChannel) dmChannel.send({ content: `### Your bot **${botUser.username}** has been denied by <@${request.user.id}>.\nReason: **${config.botsDenyReasons[reason].description}**` }).catch(() => null);

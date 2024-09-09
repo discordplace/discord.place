@@ -565,7 +565,6 @@
       "items": {
         "votes": "Oylar",
         "latestVoted": "Son Oy Verilen",
-        "voice": "Ses Aktivitesi",
         "members": "Üye Sayısı",
         "newest": "En Yeni",
         "oldest": "En Eski",
@@ -595,13 +594,12 @@
         "members": "Üye Sayısı",
         "rewards": "Oy Ödülleri",
         "boosts": "Takviye Seviyesi",
-        "voiceActivity": "Ses Aktivitesi",
+        "joinedAt": "Katılma Tarihi",
         "votes": "Oy Sayısı"
       },
       "availableVoteRewards": "{{count}} oy ödülü mevcut.",
       "noVoteRewards": "Hiç oy ödülü yok.",
-      "boostsLabelValue": "{{level}} ({{count}} takviye)",
-      "voiceActivityLabelValue": "{{count}} üye sesli kanallarda"
+      "boostsLabelValue": "{{level}} ({{count}} takviye)"
     },
     "actions": {
       "title": "İşlemler",
@@ -627,7 +625,6 @@
         "reviews": "Yorumlar",
         "topVoters": "En Çok Oy Verenler",
         "rewards": "Ödüller",
-        "voiceActivity": "Ses Aktivitesi",
         "monthlyVotes": "Aylık Oylar"
       },
       "reviews": {
@@ -665,9 +662,6 @@
           "unlocked": "Bu ödülü açtınız!",
           "locked": "Bu ödülü açmak için daha fazla oy vermeniz gerekiyor."
         }
-      },
-      "voiceActivityGraph": {
-        "tooltipFormatter": "{{count}} üye"
       },
       "monthlyVotesGraph": {
         "title": "Aylık Oy Grafiği",
@@ -716,10 +710,6 @@
           "label": "Anahtar Kelimeler",
           "description": "Sunucunuza anahtar kelimeler ekleyin. Bu, insanların sunucunuzu discord.place'de bulmasına yardımcı olacaktır. Her anahtar kelimeyi virgülle ayırın.",
           "placeholder": "ör. eğlence, oyun, topluluk"
-        },
-        "voiceActivity": {
-          "label": "Ses Aktivitesi",
-          "description": "Sunucunuz için ses aktivitesi izlemeyi etkinleştirmek istiyorsanız bu kutuyu işaretleyin. Bu, ziyaretçilerin sunucunuzun üyelerinin ses kanallarında ne kadar aktif olduğunu görmelerine olanak tanır."
         }
       },
       "toast": {
@@ -922,7 +912,6 @@
       "Total Users": "{{count}} Kullanıcı",
       "profileLikes": "{{count}} Beğeni",
       "profileViews": "{{count}} Ziyaretçi",
-      "voiceActivity": "{{count}} Üye",
       "monthlyVotes": "{{count}} Oy"
     }
   },
@@ -1766,10 +1755,6 @@
                 "description": "Sunucunuzla ilgili anahtar kelimeleri ekleyin. Bu, sunucunuzu arayan kişilerin sunucunuzu bulmasına yardımcı olacaktır.",
                 "placeholder": "Bir anahtar kelime yazın ve enter veya boşluk tuşuna basın..",
                 "count": "{{count}} Anahtar Kelime"
-              },
-              "voiceActivity": {
-                "label": "Ses Aktivitesi",
-                "description": "Sunucunuz için ses aktivitesi izlemeyi etkinleştirmek istiyorsanız bu kutuyu işaretleyin. Bu, ziyaretçilerin sunucunuzun üyelerinin ses kanallarında ne kadar aktif olduğunu görmelerine olanak tanır."
               },
               "contentPolicy": {
                 "label": "İçerik Politikası",

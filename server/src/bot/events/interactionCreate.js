@@ -91,7 +91,7 @@ module.exports = async interaction => {
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return interaction.reply({ content: 'I couldn\'t find the server.' });
       
-      const member = await guild.members.fetch(interaction.user.id).catch(() => null);
+      const member = guild.members.cache.get(interaction.user.id) || await guild.members.fetch(interaction.user.id).catch(() => null);
       if (!member) return interaction.reply({ content: 'You are not in the server.' });
 
       const server = await Server.findOne({ id: guild.id });
@@ -140,7 +140,7 @@ module.exports = async interaction => {
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return interaction.reply({ content: 'I couldn\'t find the server.' });
 
-      const member = await guild.members.fetch(interaction.user.id).catch(() => null);
+      const member = guild.members.cache.get(interaction.user.id) || await guild.members.fetch(interaction.user.id).catch(() => null);
       if (!member) return interaction.reply({ content: 'You are not in the server.' });
 
       const server = await Server.findOne({ id: guild.id });
