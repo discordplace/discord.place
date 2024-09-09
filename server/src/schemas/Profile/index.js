@@ -157,7 +157,7 @@ const ProfileSchema = new Schema({
         preferredHost: this.preferredHost,
         colors: this.colors,
         premium: !!premiumUserData,
-        subscriptionCreatedAt: premiumUserData ? premiumUserData.subscription?.createdAt : null,
+        subscriptionCreatedAt: premiumUserData?.subscription?.createdAt ? new Date(premiumUserData.subscription.createdAt).getTime() : null,
         badges: getBadges(this, premiumUserData ? premiumUserData.subscription?.createdAt : null),
         createdAt: this.createdAt,
         updatedAt: this.updatedAt
