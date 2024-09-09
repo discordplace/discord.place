@@ -147,7 +147,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
               type='text'
               value={githubRepository}
               onChange={event => event.target.value === '' ? setGithubRepository(undefined) : setGithubRepository(event.target.value)}
-              placeholder={t('botManagePage.other.inputs.githubRepository.usernameRepositoryInputPlaceholder')}
+              placeholder={t('botManagePage.other.githubRepository.usernameRepositoryInputPlaceholder')}
               onKeyUp={event => event.key === 'Enter' && saveGithubRepository()}
             />
           </div>
