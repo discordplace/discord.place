@@ -3,11 +3,12 @@ let calculatedResponseTime = 0;
 module.exports = {
   get: async (request, response) => response.json({ responseTime: calculatedResponseTime }),
   post: async (request, response) => {
-    const currentDate = new Date();
+    const current_time = process.hrtime();
     
     response.on('finish', () => {
-      const newDate = new Date();
-      calculatedResponseTime = newDate - currentDate;
+      const end_time = process.hrtime(current_time);
+      /// process.hrtime() returns nanoseconds, this converts the result to milliseconds.
+      calculatedResponseTime = ( end_time[0] * 1000 + end_time[1] / 1e6 ).toFixed(2);
     });
 
     return response.status(204).end();
