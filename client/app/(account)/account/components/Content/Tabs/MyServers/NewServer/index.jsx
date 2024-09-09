@@ -12,7 +12,6 @@ import confetti from '@/lib/lotties/confetti.json';
 import { TbLoader } from 'react-icons/tb';
 import { MdChevronLeft } from 'react-icons/md';
 import config from '@/config';
-import { FaCheck } from 'react-icons/fa';
 import Select from '@/app/components/Select';
 import { t } from '@/stores/language';
 import { BsFire } from 'react-icons/bs';
@@ -32,8 +31,6 @@ export default function NewServer() {
   const [keywordsInputValue, setKeywordsInputValue] = useState('');
   const [serverKeywords, setServerKeywords] = useState([]);
 
-  const [serverVoiceActivityEnabled, setServerVoiceActivityEnabled] = useState(false);
-  
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -43,7 +40,7 @@ export default function NewServer() {
 
     setLoading(true);
 
-    toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords, voice_activity_enabled: serverVoiceActivityEnabled }), {
+    toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords }), {
       loading: t('accountPage.tabs.myServers.sections.newServer.toast.addingServer', { serverName: currentlyAddingServer.name }),
       success: () => {
         setTimeout(() => {
@@ -55,7 +52,6 @@ export default function NewServer() {
           setServerInviteLink('');
           setServerCategory('');
           setServerKeywords([]);
-          setServerVoiceActivityEnabled(false);
         }, 3000);
         setRenderConfetti(true);
         
@@ -348,27 +344,6 @@ export default function NewServer() {
             )}
 
             <h2 className='mt-8 text-lg font-semibold'>
-              {t('accountPage.tabs.myServers.sections.newServer.fields.voiceActivity.label')}
-            </h2>
-
-            <p className='text-sm sm:text-base text-tertiary'>
-              {t('accountPage.tabs.myServers.sections.newServer.fields.voiceActivity.description')}
-            </p>
-
-            <div 
-              className='flex items-center mt-4 cursor-pointer gap-x-2 group'
-              onClick={() => setServerVoiceActivityEnabled(!serverVoiceActivityEnabled)}
-            >
-              <button className='p-1 bg-quaternary rounded-md group-hover:bg-white group-hover:text-black min-w-[18px] min-h-[18px]'>
-                {serverVoiceActivityEnabled ? <FaCheck size={10} /> : null}
-              </button>
-
-              <span className='text-sm font-medium select-none text-tertiary'>
-                {t('buttons.enableTracking')}
-              </span>
-            </div>
-
-            <h2 className='mt-8 text-lg font-semibold'>
               {t('accountPage.tabs.myServers.sections.newServer.fields.contentPolicy.label')}
             </h2>
             
@@ -428,7 +403,6 @@ export default function NewServer() {
                   setServerInviteLink('');
                   setServerCategory('');
                   setServerKeywords([]);
-                  setServerVoiceActivityEnabled(false);
                 }}
                 disabled={loading}
               >

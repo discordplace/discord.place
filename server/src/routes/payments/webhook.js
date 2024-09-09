@@ -152,7 +152,7 @@ module.exports = {
             await user.save();
 
             var guild = client.guilds.cache.get(config.guildId);
-            var member = await guild.members.fetch(user.id).catch(() => null);
+            var member = guild.members.cache.get(user.id) || await guild.members.fetch(user.id).catch(() => null);
 
             if (member) {
               await member.roles.add(config.roles.premium);
@@ -179,7 +179,7 @@ module.exports = {
           }
 
           var guild = client.guilds.cache.get(config.guildId);
-          var member = await guild.members.cache.get(user.id);
+          var member = guild.members.cache.get(user.id) || await guild.members.fetch(user.id).catch(() => null);
 
           if (member && member.roles.cache.has(config.roles.premium)) await member.roles.remove(config.roles.premium);
 
@@ -209,7 +209,7 @@ module.exports = {
           }
 
           var guild = client.guilds.cache.get(config.guildId);
-          var member = await guild.members.cache.get(user.id);
+          var member = guild.members.cache.get(user.id) || await guild.members.fetch(user.id).catch(() => null);
 
           if (member && member.roles.cache.has(config.roles.premium)) await member.roles.remove(config.roles.premium);
 

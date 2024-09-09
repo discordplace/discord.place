@@ -1,5 +1,4 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const fetchGuildsMembers = require('@/utils/fetchGuildsMembers');
 const { query, validationResult, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
@@ -23,7 +22,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Sort must be a string.')
       .trim()
-      .isIn(['Votes', 'LatestVoted', 'Voice', 'Members', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, LatestVoted, Voice, Members, Newest, Oldest, Boosts.'),
+      .isIn(['Votes', 'LatestVoted', 'Members', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, LatestVoted, Members, Newest, Oldest, Boosts.'),
     query('limit')
       .optional()
       .isInt({ min: 1, max: 12 }).withMessage('Limit must be an integer between 1 and 12.')
@@ -67,7 +66,6 @@ module.exports = {
         switch (sort) {
           case 'Votes': return b.votes - a.votes;
           case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
-          case 'Voice': return bGuild.members.cache.filter(member => !member.bot && member.voice.channel).size - aGuild.members.cache.filter(member => !member.bot && member.voice.channel).size;
           case 'Members': return bGuild.memberCount - aGuild.memberCount;
           case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
           case 'Oldest': return aGuild.joinedTimestamp - bGuild.joinedTimestamp;
@@ -84,9 +82,6 @@ module.exports = {
           $ne: null
         }
       }).select('id');
-
-      const shouldBeFetchedServers = sortedServers.filter(({ id }) => !client.fetchedGuilds.has(id));
-      if (shouldBeFetchedServers.length > 0) await fetchGuildsMembers(shouldBeFetchedServers.map(server => server.id)).catch(() => null);
 
       const voteTripleEnabledServerIds = await ServerVoteTripleEnabled.find({ id: { $in: sortedServers.map(server => server.id) } });
 
@@ -105,7 +100,6 @@ module.exports = {
 
             switch (sort) {
               case 'Votes': data.votes = server.votes; break;
-              case 'Voice': data.voice = guild.members.cache.filter(member => !member.bot && member.voice.channel).size; break;
               case 'Boosts': data.boosts = guild.premiumSubscriptionCount; break;
             }
 

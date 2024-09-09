@@ -4,14 +4,13 @@ import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 import config from '@/config';
 import cn from '@/lib/cn';
 import { useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
 import { FaCirclePlus } from 'react-icons/fa6';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { LuHash } from 'react-icons/lu';
 import { toast } from 'sonner';
 import { t } from '@/stores/language';
 
-export default function Other({ category, setCategory, keywords, setKeywords, voiceActivityEnabled, setVoiceActivityEnabled }) {
+export default function Other({ category, setCategory, keywords, setKeywords }) {
   const [value, setValue] = useState('');
 
   return (
@@ -124,25 +123,6 @@ export default function Other({ category, setCategory, keywords, setKeywords, vo
             }
           />
         )}
-
-        <Input
-          label={t('serverManagePage.other.inputs.voiceActivity.label')}
-          description={t('serverManagePage.other.inputs.voiceActivity.description')}
-          CustomInput={
-            <div 
-              className='flex items-center mt-4 cursor-pointer w-max gap-x-2 group'
-              onClick={() => setVoiceActivityEnabled(!voiceActivityEnabled)}
-            >
-              <button className='p-1 bg-quaternary rounded-md group-hover:bg-white group-hover:text-black min-w-[18px] min-h-[18px]'>
-                {voiceActivityEnabled ? <FaCheck size={10} /> : null}
-              </button>
-
-              <span className='text-sm font-medium select-none text-tertiary'>
-                {t('buttons.enableTracking')}
-              </span>
-            </div>
-          }
-        />
       </div>
     </div>
   );

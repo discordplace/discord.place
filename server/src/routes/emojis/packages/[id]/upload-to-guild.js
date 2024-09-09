@@ -32,7 +32,7 @@ module.exports = {
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return response.sendError('Guild not found.', 404);
 
-      const member = guild.members.cache.get(request.user.id);
+      const member = guild.members.cache.get(request.user.id) || await guild.members.fetch(request.user.id).catch(() => null);
       if (!member) return response.sendError('You are not a member of this guild.', 403);
 
       const hasPermission = member.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions);

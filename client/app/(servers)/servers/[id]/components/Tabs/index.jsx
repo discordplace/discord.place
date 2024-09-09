@@ -3,7 +3,6 @@
 import cn from '@/lib/cn';
 import { useState } from 'react';
 import TopVoters from '@/app/(servers)/servers/[id]/components/Tabs/TopVoters';
-import VoiceActivityGraph from '@/app/(servers)/servers/[id]/components/Tabs/Graph/VoiceActivity';
 import MonthlyVotesGraph from '@/app/(servers)/servers/[id]/components/Tabs/Graph/MonthlyVotes';
 import Reviews from '@/app/(servers)/servers/[id]/components/Tabs/Reviews';
 import Rewards from '@/app/(servers)/servers/[id]/components/Tabs/Rewards';
@@ -30,12 +29,6 @@ export default function Tabs({ server }) {
       id: 'rewards',
       component: <Rewards server={server} />,
       disabled: server.rewards.length === 0
-    },
-    {
-      label: t('serverPage.tabs.labels.voiceActivity'),
-      id: 'voiceActivityGraph',
-      component: <VoiceActivityGraph server={server} />,
-      disabled: !server.voice_activity || server.voice_activity.filter?.(activity => new Date(activity.createdAt) > new Date(Date.now() - 86400000))?.length === 0
     },
     {
       label: t('serverPage.tabs.labels.monthlyVotes'),
