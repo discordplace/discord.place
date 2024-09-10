@@ -158,7 +158,7 @@ export async function GET(request) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src='/symbol_white.png'
+            src='http://127.0.0.1:3000/symbol_white.png'
             style={{ width: '56px', height: '56px', marginLeft: '20px' }}
             alt="discord.place Logo"
           />
