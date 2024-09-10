@@ -203,7 +203,6 @@ const config = {
   botMaxExtraOwners: 4,
   botTestGuildId: '1239320384441159751',
   themeSensitiveSocialTypes: ['x', 'custom', 'tiktok', 'github'],
-  cdnURL: 'https://cdn.discord.place',
   getEmojiURL: (id, animated) => `https://cdn.discord.place/emojis/${id}.${animated ? 'gif' : 'png'}`,
   getSoundURL: id => `https://cdn.discord.place/sounds/${id}.mp3`,
   getEmojiIdFromURL: url => {
