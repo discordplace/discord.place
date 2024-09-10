@@ -165,7 +165,7 @@ export default function Footer() {
             'w-2.5 h-2.5 rounded-full animate-ping',
             status === 'UP' && 'bg-green-500',
             status === 'HASISSUES' && 'bg-yellow-500',
-            status === 'DOWN' && 'bg-red-500'
+            (status !== 'UP' && status !== 'HASISSUES') && 'bg-red-500'
           )}
         />
 
@@ -174,7 +174,7 @@ export default function Footer() {
             'w-2.5 h-2.5 rounded-full absolute',
             status === 'UP' && 'bg-green-500',
             status === 'HASISSUES' && 'bg-yellow-500',
-            status === 'DOWN' && 'bg-red-500'
+            (status !== 'UP' && status !== 'HASISSUES') && 'bg-red-500'
           )}
         />
   
