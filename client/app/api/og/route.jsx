@@ -30,7 +30,7 @@ function sendError(message, status) {
 
 export async function GET(request) {
   // Redirect to og.png for now
-  return NextResponse.redirect('/og.png', { status: 301 });
+  return NextResponse.redirect(config.baseUrl + '/og.png', { status: 301 });
 
   const url = new URL(request.url);
   let data = url.searchParams.get('data');
