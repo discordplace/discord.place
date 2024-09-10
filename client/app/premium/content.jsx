@@ -196,7 +196,7 @@ export default function Page({ plans }) {
     const planIdToPurchase = preferredBillingCycle === 'monthly' ? monthlyPlan.id : preferredBillingCycle === 'annual' ? annualPlan.id : lifetimePlan.id;
 
     toast.promise(createCheckout(planIdToPurchase), {
-      loading: t('premiumPage.toast.createCheckout'),
+      loading: t('premiumPage.toast.creatingCheckout'),
       success: data => {
         setTimeout(() => window.location.href = data.url, 3000);
 
