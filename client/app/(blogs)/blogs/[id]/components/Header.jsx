@@ -20,7 +20,7 @@ export default function Header({ data }) {
           ))}
         </div>
 
-        <h1 className='text-2xl font-medium text-center max-w-[400px] text-pretty text-primary'>
+        <h1 className='text-2xl font-semibold text-center max-w-[400px] text-pretty text-primary'>
           {data.name}
         </h1>
 
