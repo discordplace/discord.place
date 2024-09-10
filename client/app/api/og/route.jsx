@@ -1,5 +1,5 @@
 import { ImageResponse } from '@vercel/og';
-import axios from 'axios';
+import fs from 'node:fs';
 import config from '@/config';
 import { NextResponse } from 'next/server';
 import fuc from '@/lib/fuc';
@@ -18,7 +18,8 @@ import { HiNewspaper, HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
 
 function getFontData(fontName) {
-  return axios.get(config.baseUrl + '/fonts/' + fontName + '.ttf', { responseType: 'arraybuffer' }).then(response => response.data);
+  const file = fs.readFileSync(process.cwd() + '/public/' + fontName + '.ttf');
+  return file.buffer;
 }
 
 function sendError(message, status) {
@@ -50,19 +51,19 @@ export async function GET(request) {
   const fonts = [
     {
       name: 'Geist',
-      data: await getFontData('Geist-Bold'),
+      data: getFontData('Geist-Bold'),
       style: 'normal',
       weight: 700
     },
     {
       name: 'Geist',
-      data: await getFontData('Geist-SemiBold'),
+      data: getFontData('Geist-SemiBold'),
       style: 'normal',
       weight: 600
     },
     {
       name: 'Geist',
-      data: await getFontData('Geist-Medium'),
+      data:  getFontData('Geist-Medium'),
       style: 'normal',
       weight: 500
     }
