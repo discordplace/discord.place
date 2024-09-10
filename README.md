@@ -14,7 +14,7 @@ This repository contains the client and server files for the discord.place websi
 
 To self-host discord.place, you will need to have the following prerequisites installed on your system:
 
-- [Node.js](https://nodejs.org/en/download/)
+- [Node.js](https://nodejs.org/en/download/) (Node.js 18.x should be used on the client side)
 - [npm](https://www.npmjs.com/get-npm) (usually comes with Node.js)
 - [Git](https://git-scm.com/downloads)
 - [MongoDB](https://www.mongodb.com/try/download/community)
