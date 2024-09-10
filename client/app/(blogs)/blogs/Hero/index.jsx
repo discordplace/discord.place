@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 import fetchBlogs from '@/lib/request/fetchBlogs';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function Hero() {
   const sequenceTransition = {

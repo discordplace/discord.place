@@ -13,7 +13,7 @@ import Select from '@/app/components/Select';
 import config from '@/config';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function Hero() {
   const { fetchEmojis, total, category, setCategory, sort, setSort, loading, search, setPage } = useSearchStore(useShallow(state => ({

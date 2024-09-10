@@ -21,8 +21,8 @@ import Tooltip from '@/app/components/Tooltip';
 import { BiSolidInfoCircle } from 'react-icons/bi';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const SourceSerif4 = Source_Serif_4({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function Page({ plans }) {
   const loggedIn = useAuthStore(state => state.loggedIn);

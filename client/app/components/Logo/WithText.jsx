@@ -6,7 +6,7 @@ import { useThemeStore } from '@/stores/theme';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function WithText({ className}) {
   const theme = useThemeStore(state => state.theme);

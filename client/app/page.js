@@ -21,7 +21,7 @@ import FlipWords from '@/app/components/FlipWords';
 import homePageMockData from '@/lib/homePageMockData';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function Page() {
   const titleTexts = [

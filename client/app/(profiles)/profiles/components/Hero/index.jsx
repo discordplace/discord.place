@@ -12,7 +12,7 @@ import { t } from '@/stores/language';
 import Select from '@/app/components/Select';
 import config from '@/config';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function Hero() {
   const { fetchProfiles, totalProfiles, loading, search, setPage, sort, setSort } = useSearchStore(useShallow(state => ({
