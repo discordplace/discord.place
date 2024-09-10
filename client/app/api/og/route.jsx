@@ -18,7 +18,7 @@ import { HiNewspaper, HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
 
 function getFontData(fontName) {
-  const file = fs.readFileSync(process.cwd() + '/public/' + fontName + '.ttf');
+  const file = fs.readFileSync(`${process.cwd()}/public/fonts/${fontName}.ttf`);
   return file.buffer;
 }
 
