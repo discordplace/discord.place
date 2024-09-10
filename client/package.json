@@ -59,6 +59,7 @@
     "react-text-transition": "^3.1.0",
     "react-twemoji": "^0.6.0",
     "react-use": "^17.5.0",
+    "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "sonner": "^1.4.0",
     "tailwind-merge": "^2.2.1",
