@@ -242,12 +242,27 @@ export default function Footer() {
 
       <div className='lg:mt-24 w-full h-[1px] bg-[rgb(var(--border-primary))]' />
 
-      <div className='flex flex-col items-center justify-between w-full gap-4 -mt-8 sm:flex-row'>
-        <p className='text-sm text-tertiary'>
-          &copy; {t('footer.copyRight', { year: new Date().getFullYear() })}
-        </p>
+      <div className='flex flex-col items-center justify-between w-full gap-4 -mt-8 lg:flex-row'>
+        <div className='flex flex-col items-center lg:items-start gap-y-4'>
+          <p className='text-sm text-tertiary'>
+            &copy; {t('footer.copyRight', { year: new Date().getFullYear() })}
+          </p>
 
-        <div className='flex flex-col items-center mt-4 sm:items-end gap-y-2'>
+          <Link
+            href='https://nodesty.com'
+            target='_blank'
+            className='w-max'
+          >
+            <Image
+              src={theme === 'dark' ? '/nodesty-logo-white.png' : '/nodesty-logo-blue.png'}
+              width={100}
+              height={25}
+              alt='nodesty.com Logo'
+            />
+          </Link>
+        </div>
+
+        <div className='flex flex-col items-center mt-4 lg:items-end gap-y-2'>
           <div className='gap-x-1 flex rounded-xl p-[3px] bg-quaternary dark:bg-background'>
             <button
               className={cn(
@@ -296,7 +311,7 @@ export default function Footer() {
             </button>
           </div>
 
-          <div className='gap-x-1 flex rounded-xl p-[3px] bg-quaternary dark:bg-background'>
+          <div className='gap-1 justify-center lg:justify-end flex rounded-xl p-[3px] flex-wrap lg:bg-quaternary lg:dark:bg-background'>
             {config.availableLocales.map(locale => (
               <button
                 key={locale.code}

@@ -41,9 +41,9 @@ module.exports = {
     const botUptimeHumanized = moment.duration(process.uptime() * 1000).humanize();
 
     const embed = new Discord.EmbedBuilder()
-      .setColor('Random')
       .setAuthor({ name: client.user.username + ' | Server Stats', iconURL: client.user.displayAvatarURL() })
       .setDescription('A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.')
+      .setColor(Discord.Colors.Blurple)
       .setFields([
         {
           name: 'System',
@@ -54,7 +54,9 @@ module.exports = {
  - Free: **${(os.freemem() / 1024 / 1024 / 1024).toFixed(2)} GB**
 - CPU
  - Model: **${os.cpus()[0].model}**
- - Uptime: **${uptimeHumanized}**`
+ - Uptime: **${uptimeHumanized}**
+ 
+Get your own virtual private server at [Nodesty](https://nodesty.com/) <a:springleFire:1282966373869551667>`
         },
         {
           name: 'Bot',
