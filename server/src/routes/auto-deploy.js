@@ -10,9 +10,6 @@ module.exports = {
       const signature = request.headers['x-hub-signature-256'];
       if (!signature) return response.sendError('No signature provided', 400);
 
-      const action = request.body.action;
-      if (action !== 'published') return;
-
       const hmac = crypto.createHmac('sha256', process.env.GITHUB_AUTO_DEPLOY_SECRET);
       hmac.update(JSON.stringify(request.body));
 
@@ -25,17 +22,22 @@ module.exports = {
         return response.sendError('Invalid signature', 403);
       }
 
-      try {
-        const { stdout, stderr } = await exec('git pull');
-        logger.info(stdout);
-        if (stderr) logger.info(stderr);
-        
-        logger.info('Auto deploy successful. Exiting process..');
+      const action = request.body.action;
+      if (action === 'published') {
+        try {
+          const { stdout, stderr } = await exec('git pull');
+          logger.info(stdout);
+          if (stderr) logger.info(stderr);
+          
+          logger.info('Auto deploy successful. Exiting process..');
+          response.status(201).end();
+          process.exit(0);
+        } catch (error) {
+          logger.error('Error while pulling from GitHub:', error);
+          response.sendError(`Error while pulling from GitHub:\n${error}`, 500);
+        }
+      } else {
         response.status(201).end();
-        process.exit(0);
-      } catch (error) {
-        logger.error('Error while pulling from GitHub:', error);
-        response.sendError(`Error while pulling from GitHub:\n${error}`, 500);
       }
     }
   ]
