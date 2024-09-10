@@ -25,7 +25,7 @@ import sleep from '@/lib/sleep';
 import { useShallow } from 'zustand/react/shallow';
 import { HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
-import { FiLink } from 'react-icons/fi';
+import { FiArrowUpRight, FiLink } from 'react-icons/fi';
 import { RiPencilFill } from 'react-icons/ri';
 import { TbLockPlus } from 'react-icons/tb';
 import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
@@ -312,15 +312,15 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View Bot',
-                  icon: FaEye,
+                  name: 'Invite Bot',
+                  icon: FiArrowUpRight,
                   action: () => {
                     const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
                     const bot = data.queue.bots[selectedIndex];
                     
                     setSelectedIndexes([]);
 
-                    router.push(`/bots/${bot.id}`);
+                    router.push(`https://discord.com/oauth2/authorize?client_id=${bot.id}&permissions=0&integration_type=0&scope=bot+applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`);
                   }
                 },
                 {
