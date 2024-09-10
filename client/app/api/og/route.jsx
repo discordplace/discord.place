@@ -2,7 +2,6 @@
 
 import { ImageResponse } from '@vercel/og';
 import fs from 'node:fs';
-import config from '@/config';
 import { NextResponse } from 'next/server';
 import fuc from '@/lib/fuc';
 import { FaCompass, FaUserCircle } from 'react-icons/fa';
@@ -159,7 +158,7 @@ export async function GET(request) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={config.baseUrl + '/symbol_white.png'}
+            src='/symbol_white.png'
             style={{ width: '56px', height: '56px', marginLeft: '20px' }}
             alt="discord.place Logo"
           />
