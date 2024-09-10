@@ -1,6 +1,7 @@
 name: Build Client
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'client/**'
