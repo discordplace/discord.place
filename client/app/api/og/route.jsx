@@ -18,7 +18,7 @@ import { HiNewspaper, HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
 
 function getFontData(fontName) {
-  return axios.get(config.baseUrl + '/fonts/' + fontName + '.ttf', { responseType: 'arraybuffer' }).then(response => response.data);
+  return axios.get(config.cdnURL + '/fonts/' + fontName + '.ttf', { responseType: 'arraybuffer' }).then(response => response.data);
 }
 
 function sendError(message, status) {
