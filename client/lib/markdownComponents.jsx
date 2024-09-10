@@ -7,6 +7,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import CopyButton from '@/app/components/CopyButton';
 import { t } from '@/stores/language';
+import { FiArrowUpRight } from 'react-icons/fi';
 
 const Heading = ({ level, children }) => {
   const Tag = `h${level}`;
@@ -26,6 +27,10 @@ const Heading = ({ level, children }) => {
       >
         {children}
       </Tag>
+
+      {level === 1 && (
+        <div className='my-2 w-full h-[1px] bg-quaternary' />
+      )}
     </div>
   );
 };
@@ -78,18 +83,20 @@ const markdownComponents = {
     );
   },
   a: ({ children, href }) => (
-    <Link href={href} className='hover:underline text-secondary'>
+    <Link href={href} className='inline-flex items-center gap-x-1 hover:underline text-secondary'>
       {children}
+
+      {!children.key?.startsWith('img-') && <FiArrowUpRight />}
     </Link>
   ),
-  img: ({ src, alt }) => {
+  img: ({ src, alt, width, height }) => {
     return (
       <Zoom>
         <img
           src={src}
           alt={alt}
-          width={'100%'}
-          height={'auto'}
+          width={width || '100%'}
+          height={height || 'auto'}
           className="my-4 rounded-xl"
         />
       </Zoom>
