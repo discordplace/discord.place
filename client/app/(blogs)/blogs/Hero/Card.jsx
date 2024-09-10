@@ -34,7 +34,7 @@ export default function BlogCard({ data, loading }) {
         </div>
       </div>
 
-      <h2 className='font-medium text-pretty text text-primary'>
+      <h2 className='font-medium whitespace-nowrap line-clamp-1 text-pretty text text-primary'>
         {data.name}
       </h2>
       
