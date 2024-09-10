@@ -1,0 +1,28 @@
+name: Build Client
+
+on:
+  push:
+    paths:
+      - 'client/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Connect VPS
+        uses: appleboy/ssh-action@
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            cd discord.place/client
+            git pull
+            pnpm install
+            pnpm build
+            pm2 restart discord.place
