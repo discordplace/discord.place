@@ -75,6 +75,7 @@ Create a `.env` file in the `client` directory with the following environment va
 
 ```env
 ANALYZE=false
+NEXT_PUBLIC_PORT=3000
 NEXT_PUBLIC_CF_SITE_KEY=0x0000000000000000000000
 ```
 
@@ -82,6 +83,7 @@ NEXT_PUBLIC_CF_SITE_KEY=0x0000000000000000000000
 | Name | Description |
 | ---- | ----------- |
 | `ANALYZE` | Set to `true` to enable bundle analysis. |
+| `NEXT_PUBLIC_PORT` | Port for the client. |
 | `NEXT_PUBLIC_CF_SITE_KEY` | Cloudflare site key for Turnstile. |
 
 > [!NOTE]  
