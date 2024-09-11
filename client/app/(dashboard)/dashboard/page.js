@@ -110,7 +110,7 @@ export default function Page() {
             {
               label: 'Users',
               count: data?.users?.length,
-              columns: data?.users?.map(user => [
+              columns: data?.users?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map(user => [
                 {
                   type: 'user',
                   id: user.id,
@@ -195,7 +195,7 @@ export default function Page() {
             {
               label: 'Guilds',
               count: data?.guilds?.length,
-              columns: data?.guilds?.map(guild => [
+              columns: data?.guilds?.sort((a, b) => new Date(b.joinedAt).getTime() - new Date(a.joinedAt).getTime()).map(guild => [
                 {
                   type: 'server',
                   id: guild.id,
