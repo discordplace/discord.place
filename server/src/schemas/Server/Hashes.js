@@ -18,6 +18,8 @@ const ServerHashesSchema = new Schema({
   timestamps: true,
   methods: {
     async getNewHashes() {
+      logger.info(`Getting new hashes for server ${this.id}`);
+
       const guild = await client.guilds.fetch(this.id, { force: true }).catch(() => null);
       if (!guild) return null;
 
