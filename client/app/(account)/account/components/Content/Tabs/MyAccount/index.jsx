@@ -139,7 +139,7 @@ export default function MyAccount() {
 
           <div className='mt-2 ml-28'>
             <div className='flex flex-col'>
-              <h3 className='text-lg font-bold text-primary'>{user?.global_name}</h3>
+              <h3 className='text-lg font-bold text-primary'>{user?.global_name || user?.username}</h3>
               <p className='text-sm font-medium text-tertiary'>@{user?.username}</p>
             </div>
           </div>
