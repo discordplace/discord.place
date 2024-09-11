@@ -20,6 +20,7 @@ const getUserHashes = require('@/utils/getUserHashes');
 const getServerHashes = require('@/utils/getServerHashes');
 const User = require('@/schemas/User');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
+const UserHashes = require('@/schemas/User/Hashes');
 
 const validKeys = [
   'stats',
@@ -124,18 +125,15 @@ module.exports = {
       if (keys?.includes('users')) {
         const users = await User.find().sort({ createdAt: -1 });
         const plans = await Plan.find();
+        const hashes = await UserHashes.find();
 
-        responseData.users = await Promise.all(users.map(async user => {
-          const userHashes = await getUserHashes(user.id);
-          
-          return {
-            id: user.id,
-            username: user.data?.username,
-            avatar: userHashes.avatar,
-            email: user.email,
-            createdAt: user.createdAt,
-            subscription: user.subscription?.createdAt ? user.subscription : null
-          };
+        responseData.users = users.map(user => ({
+          id: user.id,
+          username: user.data?.username,
+          avatar: hashes.find(hash => hash.id === user.id)?.avatar || null,
+          email: user.email,
+          createdAt: user.createdAt,
+          subscription: user.subscription?.createdAt ? user.subscription : null
         }));
 
         responseData.plans = plans;
