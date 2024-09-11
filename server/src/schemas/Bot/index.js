@@ -205,7 +205,7 @@ const BotSchema = new Schema({
             username: user.data.username,
             avatar: userHashes.avatar,
             premium: ownerHasPremium ? true : false,
-            subscriptionCreatedAt: ownerHasPremium ? user.subscription.createdAt : null
+            subscriptionCreatedAt: ownerHasPremium ? new Date(user.subscription.createdAt).getTime() : null
           }
         });
       } else {
