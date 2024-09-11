@@ -13,7 +13,7 @@ import MotionImage from '@/app/components/Motion/Image';
 import cn from '@/lib/cn';
 import { useMedia } from 'react-use';
 import Queue from '@/app/(dashboard)/components/Queue';
-import { MdEmojiEmotions, MdHttps, MdOpenInNew, MdStarRate, MdTimer, MdUpdate, MdVisibility } from 'react-icons/md';
+import { MdAlternateEmail, MdEmojiEmotions, MdHttps, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility } from 'react-icons/md';
 import { FaCompass, FaCrown, FaEye, FaUserCircle } from 'react-icons/fa';
 import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
 import { BiCloudDownload, BiSolidCategory } from 'react-icons/bi';
@@ -25,12 +25,15 @@ import sleep from '@/lib/sleep';
 import { useShallow } from 'zustand/react/shallow';
 import { HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
-import { FiArrowUpRight, FiLink } from 'react-icons/fi';
+import { FiArrowRightCircle, FiArrowUpRight, FiLink } from 'react-icons/fi';
 import { RiPencilFill } from 'react-icons/ri';
 import { TbLockPlus } from 'react-icons/tb';
 import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
 import useModalsStore from '@/stores/modals';
 import { toast } from 'sonner';
+import { HiMiniIdentification } from 'react-icons/hi2';
+import { BsStars } from 'react-icons/bs';
+import getHashes from '@/lib/request/getHashes';
 
 export default function Page() {
   const user = useAuthStore(state => state.user);
@@ -96,6 +99,155 @@ export default function Page() {
       component: <Home />
     },
     {
+      id: 'users',
+      name: 'Users',
+      data: {
+        title: 'Users',
+        subtitle: 'Here you can see the all the users that have logged in to discord.place.',
+        totalCount: data?.users?.length || 0,
+        tableData: {
+          tabs: [
+            {
+              label: 'Users',
+              count: data?.users?.length,
+              columns: data?.users?.map(user => [
+                {
+                  type: 'user',
+                  id: user.id,
+                  username: user.username,
+                  avatar: user.avatar,
+                  showId: true
+                },
+                {
+                  type: user.subscription ? 'userSubscription' : 'long-text',
+                  value: user.subscription || 'N/A'
+                },
+                {
+                  type: 'email',
+                  value: user.email
+                },
+                {
+                  type: 'date',
+                  value: new Date(user.createdAt)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'User',
+                  icon: HiMiniIdentification
+                },
+                {
+                  name: 'Subscription',
+                  icon: BsStars
+                },
+                {
+                  name: 'Email',
+                  icon: MdAlternateEmail
+                },
+                {
+                  name: 'Date Added',
+                  icon: FiArrowRightCircle
+                }
+              ],
+              actions: [
+                {
+                  name: 'View User',
+                  icon: FaEye,
+                  action: () => {
+                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
+                    const user = data.users[selectedIndex];
+                    
+                    setSelectedIndexes([]);
+
+                    router.push(`/profile/u/${user.id}`);
+                  }
+                },
+                {
+                  name: 'Refresh Hashes',
+                  icon: MdRefresh,
+                  action: () => bulkAction({
+                    data: data.users,
+                    action: item => {
+                      toast.promise(getHashes(item.id, 'user'), {
+                        loading: `Refreshing ${item.username}'s hashes...`,
+                        success: `Successfully refreshed ${item.username}'s hashes.`,
+                        error: error => error
+                      });
+                    },
+                    fetchKey: 'users'
+                  })
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      id: 'guilds',
+      name: 'Guilds',
+      data: {
+        title: 'Guilds',
+        subtitle: 'Here you can see the all the guilds that have been added discord.place bot to.',
+        totalCount: data?.guilds?.length || 0,
+        tableData: {
+          tabs: [
+            {
+              label: 'Guilds',
+              count: data?.guilds?.length,
+              columns: data?.guilds?.map(guild => [
+                {
+                  type: 'server',
+                  id: guild.id,
+                  name: guild.name,
+                  icon: guild.icon
+                },
+                {
+                  type: 'number',
+                  value: guild.memberCount
+                },
+                {
+                  type: 'date',
+                  value: new Date(guild.joinedAt)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'Guild',
+                  icon: FaCompass
+                },
+                {
+                  name: 'Members',
+                  icon: MdVisibility
+                },
+                {
+                  name: 'Date Joined',
+                  icon: FiArrowRightCircle
+                }
+              ],
+              actions: [
+                {
+                  name: 'Refresh Hashes',
+                  icon: FaEye,
+                  action: () => bulkAction({
+                    data: data.guilds,
+                    action: item => {
+                      toast.promise(getHashes(item.id, 'server'), {
+                        loading: `Refreshing ${item.name}'s hashes...`,
+                        success: `Successfully refreshed ${item.name}'s hashes.`,
+                        error: error => error
+                      });
+                    },
+                    fetchKey: 'guilds'
+                  })
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       id: 'emojisQueue',
       name: 'Emojis Queue',
       data: {
@@ -137,7 +289,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -211,7 +363,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -307,7 +459,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -392,7 +544,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -474,7 +626,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -557,7 +709,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -639,7 +791,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -722,7 +874,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -810,7 +962,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -902,7 +1054,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -966,7 +1118,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Blocked',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -1034,7 +1186,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -1127,7 +1279,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 }
               ],
               actions: [
@@ -1215,7 +1367,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 },
                 {
                   name: 'Ends In',
@@ -1348,7 +1500,7 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: MdUpdate
+                  icon: FiArrowRightCircle
                 },
                 {
                   name: 'Ends In',
@@ -1395,6 +1547,12 @@ export default function Page() {
     switch (activeTab) {
       case 'home':
         fetchData(['stats']);
+        break;
+      case 'users':
+        fetchData(['users']);
+        break;
+      case 'guilds':
+        fetchData(['guilds']);
         break;
       case 'emojisQueue':
         fetchData(['emojis']);

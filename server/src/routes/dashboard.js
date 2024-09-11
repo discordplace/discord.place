@@ -18,9 +18,13 @@ const Quarantine = require('@/schemas/Quarantine');
 const Link = require('@/schemas/Link');
 const getUserHashes = require('@/utils/getUserHashes');
 const getServerHashes = require('@/utils/getServerHashes');
+const User = require('@/schemas/User');
+const Plan = require('@/schemas/LemonSqueezy/Plan');
 
 const validKeys = [
   'stats',
+  'users',
+  'guilds',
   'links',
   'emojis',
   'bots',
@@ -115,6 +119,40 @@ module.exports = {
             createdAt: dashboardData.createdAt
           }))
         });
+      }
+
+      if (keys?.includes('users')) {
+        const users = await User.find().sort({ createdAt: -1 });
+        const plans = await Plan.find();
+
+        responseData.users = await Promise.all(users.map(async user => {
+          const userHashes = await getUserHashes(user.id);
+          
+          return {
+            id: user.id,
+            username: user.data?.username,
+            avatar: userHashes.avatar,
+            email: user.email,
+            createdAt: user.createdAt,
+            subscription: user.subscription?.createdAt ? user.subscription : null
+          };
+        }));
+
+        responseData.plans = plans;
+      }
+
+      if (keys?.includes('guilds')) {
+        responseData.guilds = await Promise.all(client.guilds.cache.map(async guild => {
+          const guildHashes = await getServerHashes(guild.id);
+
+          return {
+            id: guild.id,
+            name: guild.name,
+            icon: guildHashes.icon,
+            joinedAt: guild.joinedAt,
+            memberCount: guild.memberCount
+          };
+        }));
       }
 
       if (keys?.includes('emojis')) {

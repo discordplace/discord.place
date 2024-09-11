@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 import Tooltip from '@/app/components/Tooltip';
 import { motion } from 'framer-motion';
 import { RiRobot2Fill } from 'react-icons/ri';
-import { FaEye } from 'react-icons/fa';
+import { FaCompass, FaEye, FaUsers } from 'react-icons/fa';
 import { MdMyLocation } from 'react-icons/md';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { useMedia } from 'react-use';
@@ -45,10 +45,14 @@ export default function Sidebar() {
           icon: MdHome
         },
         {
-          id: 'blockedIPs',
-          name: `Blocked IPs${data?.blockedIps?.length ? ` (${data.blockedIps.length})` : ''}`,
-          icon: MdMyLocation,
-          disabled: data?.permissions?.canViewBlockedIps === false || data?.permissions?.canDeleteBlockedIps === false
+          id: 'users',
+          name: 'Users',
+          icon: FaUsers
+        },
+        {
+          id: 'guilds',
+          name: 'Guilds',
+          icon: FaCompass
         }
       ]
     },
@@ -115,6 +119,12 @@ export default function Sidebar() {
           disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false
         },
         {
+          id: 'blockedIPs',
+          name: `Blocked IPs${data?.blockedIps?.length ? ` (${data.blockedIps.length})` : ''}`,
+          icon: MdMyLocation,
+          disabled: data?.permissions?.canViewBlockedIps === false || data?.permissions?.canDeleteBlockedIps === false
+        },
+        {
           type: 'redirect',
           id: 'analytics',
           href: `${config.analytics.url}/websites/${config.analytics.websiteId}`,
@@ -169,16 +179,20 @@ export default function Sidebar() {
   }, [isMobile]);
   
   return (
-    <div className={cn(
-      'bg-secondary sticky left-0 top-0 h-[100dvh] z-[10] border-r border-r-[rgba(var(--bg-quaternary))] min-w-[300px] flex flex-col gap-y-8 p-6',
-      isCollapsed && 'min-w-[60px] max-w-[120px]',
-      isMobile && isCollapsed && 'min-w-[0px] max-w-[0px] p-3',
-      isMobile && !isCollapsed && 'scrollbar-hide fixed'
-    )}>
-      <div  className={cn(
-        'flex items-center w-full',
-        isCollapsed ? 'justify-center' : 'justify-between'
-      )}>
+    <div
+      className={cn(
+        'bg-secondary sticky left-0 top-0 h-max z-[10] border-r border-r-[rgba(var(--bg-quaternary))] min-w-[300px] flex flex-col gap-y-6 p-6',
+        isCollapsed && 'min-w-[60px] max-w-[120px]',
+        isMobile && isCollapsed && 'min-w-[0px] max-w-[0px] p-3',
+        isMobile && !isCollapsed && 'scrollbar-hide fixed'
+      )}
+    >
+      <div
+        className={cn(
+          'flex items-center w-full',
+          isCollapsed ? 'justify-center' : 'justify-between'
+        )}
+      >
         <Link 
           href='/'
           className='relative flex items-center transition-opacity gap-x-6 hover:opacity-70'

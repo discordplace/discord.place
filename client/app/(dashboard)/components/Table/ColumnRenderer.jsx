@@ -12,6 +12,8 @@ import { useEffect, useRef } from 'react';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import cn from '@/lib/cn';
 import Countdown from '@/app/components/Countdown';
+import useDashboardStore from '@/stores/dashboard';
+import { FiArrowRightCircle } from 'react-icons/fi';
 
 function CategoryBadge({ children, icons }) {
   return (
@@ -57,6 +59,8 @@ export default function ColumnRenderer({ data }) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentlyPlaying]);
+
+  const dashboardData = useDashboardStore(state => state.data);
 
   switch (data?.type) {
     case 'emoji':
@@ -111,6 +115,12 @@ export default function ColumnRenderer({ data }) {
           <span className='text-sm font-medium text-primary'>
             {data.username || 'Unknown'}
           </span>
+
+          {data.showId && (
+            <span className='text-xs text-tertiary'>
+              {data.id}
+            </span>
+          )}
         </div>
       );
     case 'server':
@@ -274,9 +284,11 @@ export default function ColumnRenderer({ data }) {
         </div>
       );
     case 'number':
+      var formatter = new Intl.NumberFormat('en-US', { style: 'decimal', notation: 'compact', maximumFractionDigits: 2 });
+
       return (
-        <span className='bg-purple-700 font-semibold text-xs text-primary px-2 py-1.5 rounded-full'>
-          {data.value}
+        <span className='font-semibold text-xs text-primary px-2 py-1.5 rounded-full border border-primary bg-secondary'>
+          {formatter.format(data.value)}
         </span>
       );
     case 'reason':
@@ -309,6 +321,35 @@ export default function ColumnRenderer({ data }) {
         <span className='px-2 py-1 text-xs font-medium border rounded-full text-secondary bg-secondary border-primary'>
           {data.value.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase())}
         </span>
+      );
+    case 'email':
+      return (
+        <span className='px-2 py-1 text-xs font-medium border rounded-full text-secondary bg-secondary border-primary'>
+          {data.value}
+        </span>
+      );
+    case 'userSubscription':
+      var foundPlan = dashboardData.plans.find(plan => plan.id === data.value.planId); 
+
+      return (
+        <div className='flex flex-col gap-y-1'>
+          <h2 className='text-sm font-semibold'>
+            {foundPlan.name}
+          </h2>
+
+          <div className='flex items-center text-xs gap-x-1 text-secondary'>
+            <FiArrowRightCircle
+              size={16}
+              className='text-green-500 -rotate-45'
+            />
+
+            {new Date(data.value.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            
+            <span className='text-tertiary'>
+              ({getRelativeTime(data.value.createdAt, 'en')})
+            </span>
+          </div>
+        </div>
       );
     default:
       return JSON.stringify(data);
