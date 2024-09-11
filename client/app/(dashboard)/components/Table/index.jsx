@@ -11,6 +11,9 @@ import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { HiCursorClick } from 'react-icons/hi';
 import Pagination from '@/app/components/Pagination';
+import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
+import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
+import { FiX } from 'react-icons/fi';
 
 export default function Table({ tabs }) {
   const selectedIndexes = useDashboardStore(state => state.selectedIndexes);
@@ -31,14 +34,44 @@ export default function Table({ tabs }) {
   }, [currentTab]);
 
   const [page, setPage] = useState(1);
+  const [currentSort, setCurrentSort] = useState({ name: '', key: '', order: '' });
 
   if (!currentTabData || !currentTabData.columns) return null;
 
-  const displayedColumns = currentTabData.columns.slice((page - 1) * 10, page * 10);
+  const sortedColumns = currentTabData.columns
+    .sort((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b]));
+
+  // Paginate columns
+  const displayedColumns = sortedColumns.slice((page - 1) * 10, page * 10);
+
   const showPagination = currentTabData.columns.length > 10;
+
+  const CurrentSortIcon = currentTabData.rows[currentSort.key]?.icon;
 
   return (
     <>
+      <div
+        className={cn(
+          'transition-all duration-300 flex items-center gap-x-2',
+          (currentTabData.columns.length > 0 && currentSort.name) ? 'opacity-100 mb-0' : 'opacity-0 -mb-14'
+        )}
+      >
+        <span className='text-xs font-medium text-tertiary'>
+          Sort by
+        </span>
+
+        <button
+          className='flex hover:bg-quaternary items-center pl-1.5 pr-2 text-xs rounded-full gap-x-1.5 py-0.5 text-secondary border bg-secondary border-primary'
+          onClick={() => setCurrentSort({ name: '', key: '', order: '' })}
+        >
+          {CurrentSortIcon && <CurrentSortIcon size={14} />}
+
+          {currentSort.name || 'None'}
+
+          <FiX size={14} />
+        </button>
+      </div>
+      
       <div className='flex flex-wrap pb-5 gap-x-4 gap-y-2 sm:flex-nowrap sm:border-b sm:overflow-hidden border-b-primary'>
         {tabs?.map(tab => (
           <div
@@ -65,7 +98,7 @@ export default function Table({ tabs }) {
         ))}
       </div>
 
-      <div className='relative -mt-2 min-w-[1000px] w-full overflow-scroll'>
+      <div className='relative -mt-8 min-w-[1000px] w-full overflow-scroll'>
         {currentTabData.columns.length === 0 && (
           <div className='flex items-center max-w-[calc(100vw_-_65px)] sm:max-w-[unset] justify-center min-h-[calc(100dvh_-_400px)]'>
             <ErrorState
@@ -84,16 +117,36 @@ export default function Table({ tabs }) {
           {currentTabData.columns.length > 0 && (
             <thead className='relative text-left select-none'>
               <tr>
-                {currentTabData.rows?.map(row => (
+                {currentTabData.rows?.map((row, index) => (
                   <th
                     key={`row-${row.name}`}
                     scope='col'
-                    className='px-2 pb-6 text-sm font-medium text-tertiary min-w-[150px]'
+                    className={cn(
+                      'px-2 py-6 text-sm font-medium text-tertiary min-w-[150px]',
+                      row.sortable && 'cursor-pointer hover:text-primary transition-colors'
+                    )}
+                    onClick={() => {
+                      if (!row.sortable) return;
+                     
+                      setCurrentSort({
+                        name: row.name,
+                        key: index,
+                        order: currentSort.key === index ? (currentSort.order === 'asc' ? 'desc' : 'asc') : 'asc'
+                      });
+                    }}
                   >
                     <div className="flex items-center text-xs font-bold uppercase gap-x-2">
                       {row.icon && <row.icon size={18} />}
                 
                       {row.name}
+
+                      {(currentSort.name === row.name && currentSort.key === index) && (
+                        currentSort.order === 'asc' ? (
+                          <PiSortAscendingBold size={18} />
+                        ) : (
+                          <PiSortDescendingBold size={18} />
+                        )
+                      )}
                     </div>
                   </th>
                 ))}

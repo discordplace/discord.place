@@ -129,7 +129,7 @@ export default function Reviews({ server }) {
           <span className='text-sm font-medium text-tertiary'>
             {t('serverPage.tabs.reviews.reviewSubmitted.alreadyReviewed')}
           </span>
-        ) : server.ownerId === user?.id ? (
+        ) : !server.ownerId === user?.id ? (
           <span className='text-sm font-medium text-tertiary'>
             {t('serverPage.tabs.reviews.ownerCannotReview')}
           </span>

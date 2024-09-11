@@ -26,7 +26,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
 import { FiArrowRightCircle, FiArrowUpRight, FiLink } from 'react-icons/fi';
-import { RiPencilFill } from 'react-icons/ri';
+import { RiGroup2Fill, RiPencilFill } from 'react-icons/ri';
 import { TbLockPlus } from 'react-icons/tb';
 import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
 import useModalsStore from '@/stores/modals';
@@ -119,8 +119,8 @@ export default function Page() {
                   showId: true
                 },
                 {
-                  type: user.subscription ? 'userSubscription' : 'long-text',
-                  value: user.subscription || 'N/A'
+                  type: 'userSubscription',
+                  value: user.subscription || null
                 },
                 {
                   type: 'email',
@@ -134,19 +134,23 @@ export default function Page() {
               rows: [
                 {
                   name: 'User',
-                  icon: HiMiniIdentification
+                  icon: HiMiniIdentification,
+                  sortable: true
                 },
                 {
                   name: 'Subscription',
-                  icon: BsStars
+                  icon: BsStars,
+                  sortable: true
                 },
                 {
                   name: 'Email',
-                  icon: MdAlternateEmail
+                  icon: MdAlternateEmail,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -214,15 +218,18 @@ export default function Page() {
               rows: [
                 {
                   name: 'Guild',
-                  icon: FaCompass
+                  icon: FaCompass,
+                  sortable: true
                 },
                 {
                   name: 'Members',
-                  icon: MdVisibility
+                  icon: RiGroup2Fill,
+                  sortable: true
                 },
                 {
                   name: 'Date Joined',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -285,11 +292,13 @@ export default function Page() {
                 },
                 {
                   name: 'Publisher',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -359,11 +368,13 @@ export default function Page() {
                 },
                 {
                   name: 'Publisher',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -447,15 +458,18 @@ export default function Page() {
               rows: [
                 {
                   name: 'Bot',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Owner',
-                  icon: FaCrown
+                  icon: FaCrown,
+                  sortable: true
                 },
                 {
                   name: 'Categories',
-                  icon: BiSolidCategory
+                  icon: BiSolidCategory,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
@@ -532,19 +546,23 @@ export default function Page() {
               rows: [
                 {
                   name: 'Bot',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Owner',
-                  icon: FaCrown
+                  icon: FaCrown,
+                  sortable: true
                 },
                 {
                   name: 'Categories',
-                  icon: BiSolidCategory
+                  icon: BiSolidCategory,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -614,19 +632,23 @@ export default function Page() {
               rows: [
                 {
                   name: 'Template',
-                  icon: HiTemplate
+                  icon: HiTemplate,
+                  sortable: true
                 },
                 {
                   name: 'Publisher',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Categories',
-                  icon: BiSolidCategory
+                  icon: BiSolidCategory,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -697,19 +719,23 @@ export default function Page() {
               rows: [
                 {
                   name: 'Template',
-                  icon: HiTemplate
+                  icon: HiTemplate,
+                  sortable: true
                 },
                 {
                   name: 'Publisher',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Categories',
-                  icon: BiSolidCategory
+                  icon: BiSolidCategory,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -779,19 +805,23 @@ export default function Page() {
               rows: [
                 {
                   name: 'Sound',
-                  icon: PiWaveformBold
+                  icon: PiWaveformBold,
+                  sortable: true
                 },
                 {
                   name: 'Publisher',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Categories',
-                  icon: BiSolidCategory
+                  icon: BiSolidCategory,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -862,19 +892,23 @@ export default function Page() {
               rows: [
                 {
                   name: 'Sound',
-                  icon: PiWaveformBold
+                  icon: PiWaveformBold,
+                  sortable: true
                 },
                 {
                   name: 'Publisher',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Categories',
-                  icon: BiSolidCategory
+                  icon: BiSolidCategory,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -946,15 +980,18 @@ export default function Page() {
               rows: [
                 {
                   name: 'Server/Bot ID',
-                  icon: FaCompass
+                  icon: FaCompass,
+                  sortable: true
                 },
                 {
                   name: 'User',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Rating',
-                  icon: MdStarRate
+                  icon: MdStarRate,
+                  sortable: true
                 },
                 {
                   name: 'Content',
@@ -962,7 +999,8 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -1038,15 +1076,18 @@ export default function Page() {
               rows: [
                 {
                   name: 'Server/Bot ID',
-                  icon: FaCompass
+                  icon: FaCompass,
+                  sortable: true
                 },
                 {
                   name: 'User',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Rating',
-                  icon: MdStarRate
+                  icon: MdStarRate,
+                  sortable: true
                 },
                 {
                   name: 'Content',
@@ -1054,7 +1095,8 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -1082,55 +1124,6 @@ export default function Page() {
                     fetchKey: 'reviews'
                   }),
                   hide: !data.permissions?.canDeleteReviews
-                }
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      id: 'blockedIPs',
-      name: 'Blocked IPs',
-      data: {
-        title: 'Blocked IPs',
-        subtitle: 'Here you can see the all the IPs that have been blocked by the system.',
-        totalCount: data?.blockedIps?.length || 0,
-        tableData: {
-          tabs: [
-            {
-              label: 'Blocked IPs',
-              count: data?.blockedIps?.length,
-              columns: data?.blockedIps?.map(item => [
-                {
-                  type: 'ipAddress',
-                  value: item.ip
-                },
-                {
-                  type: 'date',
-                  value: new Date(item.createdAt)
-                }
-              ]),
-              rows: [
-                {
-                  name: 'IP',
-                  icon: MdHttps
-                },
-                {
-                  name: 'Date Blocked',
-                  icon: FiArrowRightCircle
-                }
-              ],
-              actions: [
-                {
-                  name: 'Delete',
-                  icon: IoMdCheckmarkCircle,
-                  action: () => bulkAction({
-                    data: data.blockedIps,
-                    action: item => deleteBlockedIP(item.id),
-                    fetchKey: 'blockedips'
-                  }),
-                  hide: !data.permissions?.canDeleteBlockedIps
                 }
               ]
             }
@@ -1174,19 +1167,23 @@ export default function Page() {
               rows: [
                 {
                   name: 'URL',
-                  icon: FiLink
+                  icon: FiLink,
+                  sortable: true
                 },
                 {
                   name: 'Visits',
-                  icon: MdVisibility
+                  icon: MdVisibility,
+                  sortable: true
                 },
                 {
                   name: 'Created By',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -1263,15 +1260,18 @@ export default function Page() {
               rows: [
                 {
                   name: 'Bot',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'User',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Reviewer',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Reason',
@@ -1279,7 +1279,8 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 }
               ],
               actions: [
@@ -1359,19 +1360,23 @@ export default function Page() {
               rows: [
                 {
                   name: 'Bot/Server',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'User',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 },
                 {
                   name: 'Ends In',
-                  icon: MdTimer
+                  icon: MdTimer,
+                  sortable: true
                 }
               ],
               actions: [
@@ -1484,11 +1489,13 @@ export default function Page() {
               rows: [
                 {
                   name: 'User/Server',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Created By',
-                  icon: FaUserCircle
+                  icon: FaUserCircle,
+                  sortable: true
                 },
                 {
                   name: 'Restriction',
@@ -1500,11 +1507,13 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
-                  icon: FiArrowRightCircle
+                  icon: FiArrowRightCircle,
+                  sortable: true
                 },
                 {
                   name: 'Ends In',
-                  icon: MdTimer
+                  icon: MdTimer,
+                  sortable: true
                 }
               ],
               actions: [
@@ -1530,6 +1539,56 @@ export default function Page() {
                     fetchKey: 'quarantines'
                   }),
                   hide: !data.permissions?.canDeleteQuarantines
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      id: 'blockedIPs',
+      name: 'Blocked IPs',
+      data: {
+        title: 'Blocked IPs',
+        subtitle: 'Here you can see the all the IPs that have been blocked by the system.',
+        totalCount: data?.blockedIps?.length || 0,
+        tableData: {
+          tabs: [
+            {
+              label: 'Blocked IPs',
+              count: data?.blockedIps?.length,
+              columns: data?.blockedIps?.map(item => [
+                {
+                  type: 'ipAddress',
+                  value: item.ip
+                },
+                {
+                  type: 'date',
+                  value: new Date(item.createdAt)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'IP',
+                  icon: MdHttps
+                },
+                {
+                  name: 'Date Blocked',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'Delete',
+                  icon: IoMdCheckmarkCircle,
+                  action: () => bulkAction({
+                    data: data.blockedIps,
+                    action: item => deleteBlockedIP(item.id),
+                    fetchKey: 'blockedips'
+                  }),
+                  hide: !data.permissions?.canDeleteBlockedIps
                 }
               ]
             }
