@@ -4,6 +4,10 @@ import axios from 'axios';
 export default function getHashes(id, type) {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
+    
+    const allowedTypes = ['user', 'server'];
+    if (!allowedTypes.includes(type)) return reject('Invalid type');
+
     let url = `${config.api.url}`;
 
     switch (type) {
