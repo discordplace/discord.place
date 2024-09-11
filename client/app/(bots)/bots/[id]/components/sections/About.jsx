@@ -176,7 +176,7 @@ export default function About({ bot }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.3 }}
       >
-        <Markdown>
+        <Markdown className='mt-8'>
           {bot.description}
         </Markdown>
       </motion.div>
