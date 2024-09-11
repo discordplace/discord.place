@@ -79,10 +79,10 @@ export default function Content({ bot }) {
 
           {bot.badges.length > 0 && (
             <div className='flex items-center ml-4 gap-x-2'>
-              {bot.badges.map(badgeId => (
+              {bot.badges.map(badgeName => (
                 <Tooltip
-                  key={badgeId}
-                  content={t(`badges.${badgeId}`, {
+                  key={badgeName}
+                  content={t(`badges.${badgeName.toLowerCase()}`, {
                     premiumSince: bot.owner.subscriptionCreatedAt,
                     lng: language,
                     formatParams: {
@@ -90,10 +90,10 @@ export default function Content({ bot }) {
                     }
                   })}                >
                   <MotionImage 
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeId.toLowerCase()}.svg`} 
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeName.toLowerCase()}.svg`} 
                     width={24} 
                     height={24} 
-                    alt={`${badgeId} Badge`}
+                    alt={`${badgeName} Badge`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                   />
