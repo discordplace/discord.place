@@ -352,7 +352,7 @@ export default function Content() {
       </div>
 
       <div className={cn(
-        'relative w-full h-full bg-tertiary min-h-[100dvh] flex flex-col',
+        'relative w-full pb-4 bg-tertiary min-h-[100dvh] flex flex-col overflow-y-auto',
         isCollapsed && 'max-w-[100%]',
         !isLaptop && 'max-w-[70%]'
       )}>
@@ -366,7 +366,7 @@ export default function Content() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={transition}
-                    className='w-full h-full overflow-y-auto'
+                    className='w-full h-full'
                   >
                     {component}
                   </motion.div>
