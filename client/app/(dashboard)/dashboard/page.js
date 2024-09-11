@@ -980,8 +980,7 @@ export default function Page() {
               rows: [
                 {
                   name: 'Server/Bot ID',
-                  icon: FaCompass,
-                  sortable: true
+                  icon: FaCompass
                 },
                 {
                   name: 'User',
@@ -1076,8 +1075,7 @@ export default function Page() {
               rows: [
                 {
                   name: 'Server/Bot ID',
-                  icon: FaCompass,
-                  sortable: true
+                  icon: FaCompass
                 },
                 {
                   name: 'User',
