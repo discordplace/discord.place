@@ -18,6 +18,8 @@ const UserHashesSchema = new Schema({
   timestamps: true,
   methods: {
     async getNewHashes() {
+      logger.info(`Getting new hashes for user ${this.id}`);
+
       const user = await client.users.fetch(this.id, { force: true }).catch(() => null);
       if (!user) return null;
 
