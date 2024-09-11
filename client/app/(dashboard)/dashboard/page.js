@@ -124,7 +124,7 @@ export default function Page() {
                 },
                 {
                   type: 'email',
-                  value: user.email
+                  value: user.email || 'N/A'
                 },
                 {
                   type: 'date',
