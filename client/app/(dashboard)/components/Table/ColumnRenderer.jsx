@@ -329,7 +329,7 @@ export default function ColumnRenderer({ data }) {
         </span>
       );
     case 'userSubscription':
-      var foundPlan = dashboardData.plans.find(plan => plan.id === data.value?.planId);
+      var foundPlan = dashboardData?.plans?.find(plan => plan.id === data.value?.planId);
 
       if (!foundPlan) return (
         <span className='text-xs font-medium text-tertiary'>
