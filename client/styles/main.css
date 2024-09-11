@@ -86,7 +86,7 @@ html.dark {
   transition: background-color 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
 }
 [data-rmiz-modal-overlay="visible"] {
-  background-color: rgba(var(--bg-secondary), 0.85) !important;
+  background-color: rgba(var(--dark-bg-background), 0.85) !important;
   backdrop-filter: blur(5px) !important;
 }
 

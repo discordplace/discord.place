@@ -9,7 +9,10 @@ import raw from 'rehype-raw';
 export default function Markdown({ children, className }) {
   return (
     <div className={cn(
-      'markdown',
+      'markdown prose max-w-5xl dark:prose-invert',
+      'prose-blockquote:border-l-primary prose-blockquote:text-tertiary',
+      'prose-li:marker:text-tertiary',
+      'prose-thead:border-b-[rgba(var(--bg-quaternary))] prose-tr:border-b-[rgba(var(--bg-tertiary))]',
       className
     )}>
       <ReactMarkdown
