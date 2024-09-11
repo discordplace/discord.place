@@ -204,7 +204,8 @@ const BotSchema = new Schema({
             id: user.id,
             username: user.data.username,
             avatar: userHashes.avatar,
-            premium: ownerHasPremium ? true : false
+            premium: ownerHasPremium ? true : false,
+            subscriptionCreatedAt: ownerHasPremium ? user.subscription.createdAt : null
           }
         });
       } else {

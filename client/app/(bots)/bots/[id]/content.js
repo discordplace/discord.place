@@ -11,12 +11,13 @@ import Link from 'next/link';
 import config from '@/config';
 import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';
-import { t } from '@/stores/language';
+import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 
 export default function Content({ bot }) {
   const theme = useThemeStore(state => state.theme);
+  const language = useLanguageStore(state => state.language);
 
   return (
     <div className='flex justify-center w-full mt-32'>      
@@ -78,16 +79,21 @@ export default function Content({ bot }) {
 
           {bot.badges.length > 0 && (
             <div className='flex items-center ml-4 gap-x-2'>
-              {bot.badges.map(badge => (
+              {bot.badges.map(badgeId => (
                 <Tooltip
-                  key={badge}
-                  content={t(`badges.${badge.toLowerCase()}`)}
-                >
+                  key={badgeId}
+                  content={t(`badges.${badgeId}`, {
+                    premiumSince: bot.owner.subscriptionCreatedAt,
+                    lng: language,
+                    formatParams: {
+                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
+                    }
+                  })}                >
                   <MotionImage 
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.toLowerCase()}.svg`} 
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeId.toLowerCase()}.svg`} 
                     width={24} 
                     height={24} 
-                    alt={`${badge} Badge`}
+                    alt={`${badgeId} Badge`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                   />
