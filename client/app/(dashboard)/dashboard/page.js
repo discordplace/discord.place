@@ -179,7 +179,8 @@ export default function Page() {
                       });
                     },
                     fetchKey: 'users'
-                  })
+                  }),
+                  hide: !data.permissions?.canRefreshHashes
                 }
               ]
             }
@@ -246,7 +247,8 @@ export default function Page() {
                       });
                     },
                     fetchKey: 'guilds'
-                  })
+                  }),
+                  hide: !data.permissions?.canRefreshHashes
                 }
               ]
             }
