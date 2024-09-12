@@ -1,7 +1,12 @@
+'use client';
+
 import MotionImage from '@/app/components/Motion/Image';
 import getHashes from '@/lib/request/getHashes';
+import { useState } from 'react';
 
 export default function UserBanner({ id, hash, format, size, className, motionOptions, ...props }) {
+  const [error, setError] = useState(false);
+
   if (!id || !hash) return null;
 
   const defaultOptions = {
@@ -21,6 +26,10 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
       alt={`Image ${hash}`}
       className={className}
       onError={async event => {
+        if (error) return;
+
+        setError(true);
+
         const element = event.target;
 
         // Show a fallback image while new hashes are being fetched
