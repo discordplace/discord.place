@@ -17,7 +17,7 @@ export default function MockProfileCard() {
           primary: null,
           secondary: null
         }}
-        badges={loggedIn ? [] : ['Verified']}
+        badges={loggedIn ? [] : ['verified']}
         views={100000}
         likes={100000}
         username={loggedIn ? user.username : 'discordplace'}
