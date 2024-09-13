@@ -167,7 +167,7 @@ export default function Table({ tabs }) {
                       'p-2 h-[60px] border-y border-[rgba(var(--bg-tertiary))] transition-colors group-hover:cursor-pointer',
                       selectedIndexes.includes(columnIndex) ? 'bg-tertiary border-[rgba(var(--bg-quaternary))] select-none' : 'group-hover:bg-secondary'
                     )}
-                    onClick={() => handleSelect(columnIndex)}
+                    onClick={() => handleSelect(currentTabData.columns.indexOf(column))}
                   >
                     <div
                       className='flex items-center gap-x-2'
@@ -175,7 +175,7 @@ export default function Table({ tabs }) {
                       {rowIndex === 0 && (
                         <div 
                           className='flex items-center cursor-pointer gap-x-2 group'
-                          onClick={() => handleSelect(columnIndex)}
+                          onClick={() => handleSelect(currentTabData.columns.indexOf(column))}
                         >
                           <button className={cn(
                             'w-[18px] h-[18px] flex justify-center items-center border-2 outline-none hover:bg-[rgba(var(--border-primary))] transition-colors border-primary rounded-md',
