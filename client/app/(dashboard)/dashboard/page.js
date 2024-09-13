@@ -58,9 +58,8 @@ export default function Page() {
   const openModal = useModalsStore(state => state.openModal);
 
   async function bulkAction(params) {
-    const newSelectedIndexes = useDashboardStore.getState().selectedIndexes;
-    const setSelectedIndexes = useDashboardStore.getState().setSelectedIndexes;
-    const data = newSelectedIndexes.map(index => params.data[index]);
+    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
+    const data = selectedIndexes.map(index => params.filter ? params.filter(data[index]) : data[index]);
 
     setSelectedIndexes([]);
     setLoading(true);
@@ -320,6 +319,7 @@ export default function Page() {
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     data: data.queue.emojis,
+                    filter: item => item.approved === false,
                     action: item => approveEmoji(item.id),
                     fetchKey: 'emojis'
                   }),
@@ -334,6 +334,7 @@ export default function Page() {
                     reasons: config.emojisDenyReasons,
                     onDeny: reason => bulkAction({
                       data: data.queue.emojis,
+                      filter: item => item.approved === false,
                       action: item => denyEmoji(item.id, reason),
                       fetchKey: 'emojis'
                     })
@@ -410,6 +411,7 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'emoji',
+                    filter: item => item.approved === true,
                     data: data.queue.emojis,
                     action: item => deleteEmoji(item.id),
                     fetchKey: 'emojis'
@@ -497,6 +499,7 @@ export default function Page() {
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     data: data.queue.bots,
+                    filter: item => item.verified === false,
                     action: item => approveBot(item.id),
                     fetchKey: 'bots'
                   }),
@@ -511,6 +514,7 @@ export default function Page() {
                     reasons: config.botsDenyReasons,
                     onDeny: reason => bulkAction({
                       data: data.queue.bots,
+                      filter: item => item.verified === false,
                       action: item => denyBot(item.id, reason),
                       fetchKey: 'bots'
                     })
@@ -587,6 +591,7 @@ export default function Page() {
                   action: () => bulkActionWithConfirmationModal({
                     name: 'bot',
                     data: data.queue.bots,
+                    filter: item => item.verified === true,
                     action: item => deleteBot(item.id),
                     fetchKey: 'bots'
                   }),
@@ -672,6 +677,7 @@ export default function Page() {
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     data: data.queue.templates,
+                    filter: item => item.approved === false,
                     action: item => approveTemplate(item.id),
                     fetchKey: 'templates'
                   }),
@@ -686,6 +692,7 @@ export default function Page() {
                     reasons: config.templatesDenyReasons,
                     onDeny: reason => bulkAction({
                       data: data.queue.templates,
+                      filter: item => item.approved === false,
                       action: item => denyTemplate(item.id, reason),
                       fetchKey: 'templates'
                     })
@@ -760,6 +767,7 @@ export default function Page() {
                   action: () => bulkActionWithConfirmationModal({
                     name: 'template',
                     data: data.queue.templates,
+                    filter: item => item.approved === true,
                     action: item => deleteTemplate(item.id),
                     fetchKey: 'templates'
                   }),
@@ -845,6 +853,7 @@ export default function Page() {
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     data: data.queue.sounds,
+                    filter: item => item.approved === false,
                     action: item => approveSound(item.id),
                     fetchKey: 'sounds'
                   }),
@@ -859,6 +868,7 @@ export default function Page() {
                     reasons: config.soundsDenyReasons,
                     onDeny: reason => bulkAction({
                       data: data.queue.sounds,
+                      filter: item => item.approved === false,
                       action: item => denySound(item.id, reason),
                       fetchKey: 'sounds'
                     })
@@ -933,6 +943,7 @@ export default function Page() {
                   action: () => bulkActionWithConfirmationModal({
                     name: 'sound',
                     data: data.queue.sounds,
+                    filter: item => item.approved === true,
                     action: item => deleteSound(item.id),
                     fetchKey: 'sounds'
                   }),
@@ -1025,6 +1036,7 @@ export default function Page() {
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     data: data.queue.reviews,
+                    filter: item => item.approved === false,
                     action: item => approveReview(item.server ? 'server' : 'bot', item.server ? item.server.id : item.bot.id, item._id),
                     fetchKey: 'reviews'
                   }),
@@ -1039,6 +1051,7 @@ export default function Page() {
                     reasons: {},
                     onDeny: reason => bulkAction({
                       data: data.queue.reviews,
+                      filter: item => item.approved === false,
                       action: item => denyReview(item.server ? 'server' : 'bot', item.server ? item.server.id : item.bot.id, item._id, reason),
                       fetchKey: 'reviews'
                     }),
@@ -1121,6 +1134,7 @@ export default function Page() {
                   action: () => bulkActionWithConfirmationModal({
                     name: 'review',
                     data: data.queue.reviews,
+                    filter: item => item.approved === true,
                     action: item => deleteReview(item.server ? 'server' : 'bot', item.server ? item.server.id : item.bot.id, item._id),
                     fetchKey: 'reviews'
                   }),
