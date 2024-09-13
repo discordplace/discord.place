@@ -59,7 +59,7 @@ export default function Page() {
 
   async function bulkAction(params) {
     const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-    const data = selectedIndexes.map(index => params.filter ? params.filter(params.data[index]) : params.data[index]);
+    const data = selectedIndexes.map(index => params.filter ? params.data.filter(params.filter)[index] : params.data[index]);
 
     setSelectedIndexes([]);
     setLoading(true);
