@@ -1,13 +1,36 @@
 {
   "home": {
-    "title": "Ən yaxşısını tapmaq üçün bir yol",
-    "flipWords": [
-      "Discord  Profillər",
-      "Discord serverləri",
-      "Discord  Botlar",
-      "Discord  Emojilər",
-      "Discord  Şablonları",
-      "Discord  Səslər"
+    "title": "All things related to Discord",
+    "subtitle": "A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.",
+    "trustedByHeading": "Trusted by more than <totalServers> servers",
+    "infoCards": [
+      {
+        "title": "Open Source",
+        "description": "Everything you see here is open source. You can check the source code on GitHub. Feel free to contribute or report issues. We are always open to feedback.",
+        "buttonText": "See on GitHub"
+      },
+      {
+        "title": "Stand Out",
+        "description": "Discord Place is a great place to promote your servers and bots. Get votes, reviews, and feedback from the community. Stand out from the crowd.",
+        "buttonTextLoggedIn": "My Account",
+        "buttonTextLoggedOut": "Login",
+        "serverCardDescription": "A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here."
+      },
+      {
+        "title": "Customized Profiles",
+        "description": "Create your own customizable profile. Add your social media links, your job, and your skills. Let others know who you are. Linked with your Discord account.",
+        "profileCardBio": "A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here."
+      },
+      {
+        "title": "Feedback & Reviews",
+        "description": "Get feedback and reviews from the community. Improve your servers and bots. Help others to improve their servers and bots. Make Discord a better place.",
+        "reviews": [
+          "Discord Place is an incredible hub for anything Discord-related. Whether you're a developer or just managing a server, the resources here are invaluable.",
+          "Discord Place is a great place but still needs some improvements. I am looking forward to seeing what the future holds.",
+          "I look forward to seeing what Discord Place has to offer in the future. I have already found some great resources here.",
+          "I am a developer and I am using Discord Place to promote my bot. I am getting great feedback from the community."
+        ]
+      }
     ]
   },
   "header": {

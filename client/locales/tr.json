@@ -1,13 +1,36 @@
 {
   "home": {
-    "title": "Bulabileceğin en iyi",
-    "flipWords": [
-      "Discord  Profilleri",
-      "Discord  Sunucuları",
-      "Discord  Botları",
-      "Discord  Emojileri",
-      "Discord  Şablonları",
-      "Discord  Sesleri"
+    "title": "Discord İle Alakalı Her Şey",
+    "subtitle": "Discord sunucunuz için mükemmel botları keşfedin, indirin ve kullanın! Botlarımızı kullanarak sunucunuzu daha eğlenceli ve etkileşimli hale getirin.",
+    "trustedByHeading": "<totalServers> 'dan fazla sunucu tarafından güveniliyor",
+    "infoCards": [
+      {
+        "title": "Açık Kaynak",
+        "description": "Gördüğünüz her şey açık kaynaklıdır. GitHub'dan kaynak kodunu kontrol edebilirsiniz. Geri bildirimde bulunmak veya sorunları bildirmekten çekinmeyin. Her zaman geri bildirime açığız.",
+        "buttonText": "GitHub'da Görüntüle"
+      },
+      {
+        "title": "Öne Çıkın",
+        "description": "Discord Place, sunucularınızı ve botlarınızı tanıtmak için harika bir yerdir. Topluluktan oy, inceleme ve geri bildirim alın. Kalabalıktan sıyrılın.",
+        "buttonTextLoggedIn": "Hesabım",
+        "buttonTextLoggedOut": "Giriş Yap",
+        "serverCardDescription": "Discord ile alakalı her şey. Geliştirici, sunucu sahibi veya sadece bir kullanıcı olmanız fark etmez, burada size faydalı bir şeyler bulabilirsiniz."
+      },
+      {
+        "title": "Özelleştirilebilir Profiller",
+        "description": "Kendi özelleştirilebilir profilinizi oluşturun. Sosyal medya bağlantılarınızı, işinizi ve becerilerinizi ekleyin. Profiliniz Discord hesabınıza bağlıdır.",
+        "profileCardBio": "Discord ile alakalı her şey. Geliştirici, sunucu sahibi veya sadece bir kullanıcı olmanız fark etmez, burada size faydalı bir şeyler bulabilirsiniz."
+      },
+      {
+        "title": "Geri Bildirim ve İncelemeler",
+        "description": "Topluluktan geri bildirim ve incelemeler alın. Sunucularınızı ve botlarınızı geliştirin. Başkalarına sunucularını ve botlarını geliştirmelerine yardımcı olun. Discord'u daha iyi bir yer haline getirin.",
+        "reviews": [
+          "Discord Place, Discord ile alakalı her şey için inanılmaz bir merkez. Geliştirici ya da sunucu sahibi olun, buradaki kaynaklar paha biçilemez.",
+          "Discord Place harika bir yer ama hala bazı iyileştirmelere ihtiyaç var. Gelecekte neye benzeyeceğini görmeyi dört gözle bekliyorum.",
+          "Gelecekte Discord Place'ın neler sunacağını görmeyi dört gözle bekliyorum. Burada harika kaynaklar buldum.",
+          "Ben bir geliştiriciyim ve Discord Place'ı botumu tanıtmak için kullanıyorum. Harika geri bildirimler alıyorum."
+        ]
+      }
     ]
   },
   "header": {
