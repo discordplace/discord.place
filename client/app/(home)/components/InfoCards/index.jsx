@@ -17,7 +17,7 @@ export default function InfoCards() {
   const pathname = usePathname();
 
   return (
-    <div className='flex flex-col items-center justify-center w-full max-w-5xl mt-48 gap-y-32'>
+    <div className='flex flex-col items-center justify-center w-full max-w-5xl px-4 mt-48 lg:px-0 gap-y-32'>
       <InfoCard
         index={0}
         title={t('home.infoCards.0.title')}

@@ -12,29 +12,33 @@ export default async function Page() {
   const { data, totalServers } = result || { data: [], totalServers: 0 };
 
   return (
-    <div className="relative z-10 flex flex-col items-center w-full px-4 mb-24 lg:px-0">
-      <Square
-        column='10'
-        row='10'
-        transparentEffectDirection='bottomToTop'
-        blockColor='rgba(var(--bg-secondary))'
-      />
+    <div className="relative z-10 flex flex-col items-center w-full mb-24">
+      <div className='relative h-[60dvh] w-full flex items-center flex-col'>
+        <Square
+          column='5'
+          row='5'
+          transparentEffectDirection='bottomToTop'
+          blockColor='rgba(var(--bg-secondary))'
+        />
 
-      <Heading />
+        <div className='absolute top-0 left-0 -z-[1] w-full h-full background-[linear-gradient(180deg,_rgba(168, 85, 247,_0.075)_0%,_transparent_100%)]' />
 
-      <div className='flex flex-col items-center justify-center w-full max-w-5xl mt-24 gap-y-4'>
-        <TrustedByHeading totalServers={totalServers} />
+        <Heading />
 
-        <div className='flex flex-col flex-wrap justify-center gap-4 sm:flex-row'>
-          {data?.map(server => (
-            <ServerCard data={server} key={server.id} />
-          ))}
+        <div className='flex flex-col items-center justify-center w-full max-w-5xl mt-24 gap-y-4'>
+          <TrustedByHeading totalServers={totalServers} />
+
+          <div className='flex flex-col flex-wrap justify-center gap-4 sm:flex-row'>
+            {data?.map(server => (
+              <ServerCard data={server} key={server.id} />
+            ))}
+          </div>
         </div>
       </div>
-
+      
       <Suspense fallback={<></>}>
         <InfoCards />
       </Suspense>
     </div>
   );
-}
+} 

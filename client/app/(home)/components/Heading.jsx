@@ -8,7 +8,7 @@ const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 's
 
 export default function Heading() {
   return (
-    <div className='flex flex-col text-center items-center justify-center w-full max-w-5xl mt-[20rem]'>
+    <div className='px-4 lg:px-0 flex flex-col text-center items-center justify-center w-full max-w-5xl mt-[20rem]'>
       <h1
         className={cn(
           'text-4xl mobile:text-5xl font-medium',
