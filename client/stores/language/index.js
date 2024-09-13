@@ -6,7 +6,6 @@ import sleep from '@/lib/sleep';
 import ReactPostprocessor from 'i18next-react-postprocessor';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 
-
 i18n
   .use(new ReactPostprocessor())
   .use(intervalPlural)
@@ -58,7 +57,7 @@ export function t(key, variables = {}) {
 
   if (!localeContents[language]) {
     const defaultLanguage = config.availableLocales.find(locale => locale.default).code;
-    return localeContents[defaultLanguage][key] || key;
+    return localeContents[defaultLanguage]?.[key] || key;
   }
 
   i18n.addResourceBundle(language, 'translation', localeContents[language], true, true);
