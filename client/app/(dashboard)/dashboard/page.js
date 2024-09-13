@@ -58,8 +58,9 @@ export default function Page() {
   const openModal = useModalsStore(state => state.openModal);
 
   async function bulkAction(params) {
-    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-    const data = selectedIndexes.map(index => params.data[index]);
+    const newSelectedIndexes = useDashboardStore.getState().selectedIndexes;
+    const setSelectedIndexes = useDashboardStore.getState().setSelectedIndexes;
+    const data = newSelectedIndexes.map(index => params.data[index]);
 
     setSelectedIndexes([]);
     setLoading(true);
