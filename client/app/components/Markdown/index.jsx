@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import raw from 'rehype-raw';
 
-export default function Markdown({ children, className }) {
+export default function Markdown({ children, className, rawEnabled }) {
   return (
     <div className={cn(
       'markdown prose max-w-5xl dark:prose-invert',
@@ -17,7 +17,7 @@ export default function Markdown({ children, className }) {
     )}>
       <ReactMarkdown
         remarkPlugins={[gfm]}
-        rehypePlugins={[raw]}
+        rehypePlugins={rawEnabled ? [raw] : []}
         components={MarkdownComponents}
       >
         {children}

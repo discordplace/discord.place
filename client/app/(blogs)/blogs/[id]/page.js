@@ -44,7 +44,7 @@ export default async function Page({ params }) {
         <Header data={data} />
 
         <div className='flex items-center justify-center w-full h-full mt-12'>
-          <Markdown>
+          <Markdown rawEnabled={true}>
             {content}
           </Markdown>
         </div>
