@@ -21,7 +21,7 @@ export default async function Page() {
           blockColor='rgba(var(--bg-secondary))'
         />
 
-        <div className='absolute top-0 left-0 -z-[1] w-full h-full background-[linear-gradient(180deg,_rgba(168, 85, 247,_0.075)_0%,_transparent_100%)]' />
+        <div className='absolute top-0 left-0 -z-[1] w-full h-full [background:linear-gradient(180deg,_rgba(168,_85,_247,_0.075)_0%,_transparent_100%)]' />
 
         <Heading />
 
