@@ -65,7 +65,9 @@ export default function Page() {
     setLoading(true);
 
     if (data.length === 1) {
-      await params.action(data[0]);
+      const paramsToPass = data[0][0];
+
+      await params.action(paramsToPass);
 
       setLoading(true);
 
@@ -74,7 +76,7 @@ export default function Page() {
       fetchData([params.fetchKey]);
     } else {
       for (const item of data) {
-        params.action(item);
+        params.action(item[0]);
 
         await sleep(config.dashboardRequestDelay);
       
