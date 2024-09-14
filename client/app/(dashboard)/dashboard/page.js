@@ -158,8 +158,7 @@ export default function Page() {
                   name: 'View User',
                   icon: FaEye,
                   action: () => {
-                    const selectedItems = useDashboardStore.getState().selectedItems[0];
-                    const user = data.users[selectedItems];
+                    const user = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
@@ -308,8 +307,7 @@ export default function Page() {
                   name: 'View Emoji',
                   icon: FaEye,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const emoji = data.queue.emojis[selectedItem];
+                    const emoji = useDashboardStore.getState().selectedItems[0];
                     
                     router.push(`/emojis/${emoji.emoji_ids ? 'packages/' : ''}${emoji.id}`);
                   }
@@ -384,8 +382,7 @@ export default function Page() {
                   name: 'View Emoji',
                   icon: FaEye,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const emoji = data.queue.emojis[selectedItem];
+                    const emoji = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
@@ -396,11 +393,11 @@ export default function Page() {
                   name: 'Download',
                   icon: BiCloudDownload,
                   action: () => {
-                    const selectedItems = useDashboardStore.getState().selectedItems;
+                    const emojis = useDashboardStore.getState().selectedItems;
 
                     setSelectedItems([]);
                     
-                    selectedItems.forEach(emoji => downloadEmoji(emoji));
+                    emojis.forEach(emoji => downloadEmoji(emoji));
                   }
                 },
                 {
@@ -482,8 +479,7 @@ export default function Page() {
                   name: 'Invite Bot',
                   icon: FiArrowUpRight,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const bot = data.queue.bots[selectedItem];
+                    const bot = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
@@ -571,8 +567,7 @@ export default function Page() {
                   name: 'View Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const bot = data.queue.bots[selectedItem];
+                    const bot = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
@@ -657,8 +652,7 @@ export default function Page() {
                   name: 'Template Preview',
                   icon: FaEye,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const template = data.queue.templates[selectedItem];
+                    const template = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
@@ -744,8 +738,7 @@ export default function Page() {
                   name: 'Template Preview',
                   icon: FaEye,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const template = data.queue.templates[selectedItem];
+                    const template = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
@@ -830,8 +823,7 @@ export default function Page() {
                   name: 'View Sound',
                   icon: FaEye,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const sound = data.queue.sounds[selectedItem];
+                    const sound = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
@@ -917,8 +909,7 @@ export default function Page() {
                   name: 'View Sound',
                   icon: FaEye,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const sound = data.queue.sounds[selectedItem];
+                    const sound = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
@@ -1008,11 +999,8 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedItems = useDashboardStore.getState().selectedItems;
-                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
+                    const review = useDashboardStore.getState().selectedItems[0];
 
-                    const review = data.queue.reviews[selectedItems];
-                    
                     setSelectedItems([]);
 
                     router.push(`/${review.server ? 'servers' : 'bots'}/${review.server ? review.server.id : review.bot.id}`);
@@ -1103,11 +1091,8 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedItems = useDashboardStore.getState().selectedItems;
-                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
+                    const review = useDashboardStore.getState().selectedItems[0];
 
-                    const review = data.queue.reviews[selectedItems];
-                    
                     setSelectedItems([]);
 
                     router.push(`/${review.server ? 'servers' : 'bots'}/${review.server ? review.server.id : review.bot.id}`);
@@ -1190,8 +1175,7 @@ export default function Page() {
                   name: 'Visit',
                   icon: MdOpenInNew,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const link = data.links[selectedItem];
+                    const link = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
@@ -1287,11 +1271,8 @@ export default function Page() {
                   name: 'View Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedItems = useDashboardStore.getState().selectedItems;
-                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
+                    const botDeny = useDashboardStore.getState().selectedItems[0];
 
-                    const botDeny = data.botDenies[selectedItems];
-                    
                     setSelectedItems([]);
 
                     router.push(`/bots/${botDeny.bot.id}`);
@@ -1383,11 +1364,8 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedItems = useDashboardStore.getState().selectedItems;
-                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
+                    const timeout = useDashboardStore.getState().selectedItems[0];
 
-                    const timeout = data.timeouts[selectedItems];
-                    
                     setSelectedItems([]);
 
                     router.push(typeof timeout.bot === 'object' ? `/bots/${timeout.bot.id}` : `/servers/${timeout.server.id}`);
@@ -1397,11 +1375,8 @@ export default function Page() {
                   name: 'View User',
                   icon: FaEye,
                   action: () => {
-                    const selectedItems = useDashboardStore.getState().selectedItems;
-                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
+                    const timeout = useDashboardStore.getState().selectedItems[0];
 
-                    const timeout = data.timeouts[selectedItems];
-                    
                     setSelectedItems([]);
 
                     router.push(`/profile/u/${timeout.user.id}`);
@@ -1520,8 +1495,7 @@ export default function Page() {
                   name: 'View User',
                   icon: FaEye,
                   action: () => {
-                    const selectedItem = useDashboardStore.getState().selectedItems[0];
-                    const quarantine = data.quarantines[selectedItem];
+                    const quarantine = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
