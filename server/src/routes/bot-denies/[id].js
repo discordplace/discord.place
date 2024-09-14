@@ -7,8 +7,7 @@ module.exports = {
   delete: [
     checkAuthentication,
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
-    param('id')
-      .isMongoId().withMessage('Invalid ID.'),
+    param('id'),
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
