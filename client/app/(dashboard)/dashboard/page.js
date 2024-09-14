@@ -46,22 +46,22 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn, user]);
 
-  const { activeTab, loading, setLoading, data, selectedIndexes, setSelectedIndexes } = useDashboardStore(useShallow(state => ({
+  const { activeTab, loading, setLoading, data, selectedItems, setSelectedItems } = useDashboardStore(useShallow(state => ({
     activeTab: state.activeTab,
     loading: state.loading,
     setLoading: state.setLoading,
     data: state.data,
-    selectedIndexes: state.selectedIndexes,
-    setSelectedIndexes: state.setSelectedIndexes
+    selectedItems: state.selectedItems,
+    setSelectedItems: state.setSelectedItems
   })));
 
   const openModal = useModalsStore(state => state.openModal);
 
   async function bulkAction(params) {
-    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-    const data = selectedIndexes.map(index => params.data[index]);
+    const selectedItems = useDashboardStore.getState().selectedItems;
+    const data = selectedItems;
 
-    setSelectedIndexes([]);
+    setSelectedItems([]);
     setLoading(true);
 
     if (data.length === 1) {
@@ -85,7 +85,7 @@ export default function Page() {
 
   async function bulkActionWithConfirmationModal(params) {
     return showConfirmationModal(
-      `You are about to delete ${selectedIndexes.length} ${params.name}${selectedIndexes.length > 1 ? 's' : ''}. This action is irreversible.`,
+      `You are about to delete ${selectedItems.length} ${params.name}${selectedItems.length > 1 ? 's' : ''}. This action is irreversible.`,
       async () => {
         bulkAction(params);
       }
@@ -158,10 +158,10 @@ export default function Page() {
                   name: 'View User',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const user = data.users[selectedIndex];
+                    const selectedItems = useDashboardStore.getState().selectedItems[0];
+                    const user = data.users[selectedItems];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/profile/u/${user.id}`);
                   }
@@ -308,8 +308,8 @@ export default function Page() {
                   name: 'View Emoji',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const emoji = data.queue.emojis[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const emoji = data.queue.emojis[selectedItem];
                     
                     router.push(`/emojis/${emoji.emoji_ids ? 'packages/' : ''}${emoji.id}`);
                   }
@@ -384,10 +384,10 @@ export default function Page() {
                   name: 'View Emoji',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const emoji = data.queue.emojis[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const emoji = data.queue.emojis[selectedItem];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/emojis/${emoji.emoji_ids ? 'packages/' : ''}${emoji.id}`);
                   }
@@ -396,12 +396,11 @@ export default function Page() {
                   name: 'Download',
                   icon: BiCloudDownload,
                   action: () => {
-                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    const emojis = selectedIndexes.map(index => data.queue.emojis[index]);
+                    const selectedItems = useDashboardStore.getState().selectedItems;
 
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
                     
-                    emojis.forEach(emoji => downloadEmoji(emoji));
+                    selectedItems.forEach(emoji => downloadEmoji(emoji));
                   }
                 },
                 {
@@ -483,10 +482,10 @@ export default function Page() {
                   name: 'Invite Bot',
                   icon: FiArrowUpRight,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const bot = data.queue.bots[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const bot = data.queue.bots[selectedItem];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`https://discord.com/oauth2/authorize?client_id=${bot.id}&permissions=0&integration_type=0&scope=bot+applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`);
                   }
@@ -572,10 +571,10 @@ export default function Page() {
                   name: 'View Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const bot = data.queue.bots[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const bot = data.queue.bots[selectedItem];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/bots/${bot.id}`);
                   }
@@ -658,10 +657,10 @@ export default function Page() {
                   name: 'Template Preview',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const template = data.queue.templates[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const template = data.queue.templates[selectedItem];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/templates/${template.id}/preview`);
                   }
@@ -745,10 +744,10 @@ export default function Page() {
                   name: 'Template Preview',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const template = data.queue.templates[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const template = data.queue.templates[selectedItem];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/templates/${template.id}/preview`);
                   }
@@ -831,10 +830,10 @@ export default function Page() {
                   name: 'View Sound',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const sound = data.queue.sounds[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const sound = data.queue.sounds[selectedItem];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/sounds/${sound.id}`);
                   }
@@ -918,10 +917,10 @@ export default function Page() {
                   name: 'View Sound',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const sound = data.queue.sounds[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const sound = data.queue.sounds[selectedItem];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/sounds/${sound.id}`);
                   }
@@ -1009,12 +1008,12 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
+                    const selectedItems = useDashboardStore.getState().selectedItems;
+                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
 
-                    const review = data.queue.reviews[selectedIndexes];
+                    const review = data.queue.reviews[selectedItems];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/${review.server ? 'servers' : 'bots'}/${review.server ? review.server.id : review.bot.id}`);
                   }
@@ -1104,12 +1103,12 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
+                    const selectedItems = useDashboardStore.getState().selectedItems;
+                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
 
-                    const review = data.queue.reviews[selectedIndexes];
+                    const review = data.queue.reviews[selectedItems];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/${review.server ? 'servers' : 'bots'}/${review.server ? review.server.id : review.bot.id}`);
                   }
@@ -1191,10 +1190,10 @@ export default function Page() {
                   name: 'Visit',
                   icon: MdOpenInNew,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const link = data.links[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const link = data.links[selectedItem];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     window.open(link.redirectTo, '_blank');
                   }
@@ -1288,12 +1287,12 @@ export default function Page() {
                   name: 'View Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
+                    const selectedItems = useDashboardStore.getState().selectedItems;
+                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
 
-                    const botDeny = data.botDenies[selectedIndexes];
+                    const botDeny = data.botDenies[selectedItems];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/bots/${botDeny.bot.id}`);
                   }
@@ -1384,12 +1383,12 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
+                    const selectedItems = useDashboardStore.getState().selectedItems;
+                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
 
-                    const timeout = data.timeouts[selectedIndexes];
+                    const timeout = data.timeouts[selectedItems];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(typeof timeout.bot === 'object' ? `/bots/${timeout.bot.id}` : `/servers/${timeout.server.id}`);
                   }
@@ -1398,12 +1397,12 @@ export default function Page() {
                   name: 'View User',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndexes = useDashboardStore.getState().selectedIndexes;
-                    if (selectedIndexes.length > 1) return toast.error('You can only view one item at a time.');
+                    const selectedItems = useDashboardStore.getState().selectedItems;
+                    if (selectedItems.length > 1) return toast.error('You can only view one item at a time.');
 
-                    const timeout = data.timeouts[selectedIndexes];
+                    const timeout = data.timeouts[selectedItems];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/profile/u/${timeout.user.id}`);
                   }
@@ -1521,10 +1520,10 @@ export default function Page() {
                   name: 'View User',
                   icon: FaEye,
                   action: () => {
-                    const selectedIndex = useDashboardStore.getState().selectedIndexes[0];
-                    const quarantine = data.quarantines[selectedIndex];
+                    const selectedItem = useDashboardStore.getState().selectedItems[0];
+                    const quarantine = data.quarantines[selectedItem];
                     
-                    setSelectedIndexes([]);
+                    setSelectedItems([]);
 
                     router.push(`/profile/u/${quarantine.user.id}`);
                   }
@@ -1601,7 +1600,7 @@ export default function Page() {
   const fetchData = useDashboardStore(state => state.fetchData);
 
   useEffect(() => {
-    setSelectedIndexes([]);
+    setSelectedItems([]);
 
     switch (activeTab) {
       case 'home':

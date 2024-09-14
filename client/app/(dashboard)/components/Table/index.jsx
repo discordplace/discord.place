@@ -14,32 +14,33 @@ import Pagination from '@/app/components/Pagination';
 import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
 import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
 import { FiX } from 'react-icons/fi';
+import { isEqual } from 'lodash';
 
 export default function Table({ tabs }) {
-  const selectedIndexes = useDashboardStore(state => state.selectedIndexes);
-  const setSelectedIndexes = useDashboardStore(state => state.setSelectedIndexes);
+  const selectedItems = useDashboardStore(state => state.selectedItems);
+  const setSelectedItems = useDashboardStore(state => state.setSelectedItems);
   
-  function handleSelect(index) {
-    if (selectedIndexes.includes(index)) setSelectedIndexes(selectedIndexes.filter(selectedRow => selectedRow !== index));
-    else setSelectedIndexes([...selectedIndexes, index]);
+  function handleSelect(item) {
+    if (selectedItems.includes(item)) setSelectedItems(selectedItems.filter(selectedRow => selectedRow !== item));
+    else setSelectedItems([...selectedItems, item]);
   }
 
   const [currentTab, setCurrentTab] = useState(tabs[0].label);
   const currentTabData = tabs.find(tab => tab.label === currentTab);
 
-  useEffect(() => {
-    setSelectedIndexes([]);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTab]);
-
   const [page, setPage] = useState(1);
   const [currentSort, setCurrentSort] = useState({ name: '', key: '', order: '' });
+
+  useEffect(() => {
+    setSelectedItems([]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTab, currentSort]);
 
   if (!currentTabData || !currentTabData.columns) return null;
 
   const sortedColumns = currentTabData.columns
-    .sort((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b]));
+    .toSorted((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b]));
 
   // Paginate columns
   const displayedColumns = sortedColumns.slice((page - 1) * 10, page * 10);
@@ -165,9 +166,9 @@ export default function Table({ tabs }) {
                     key={`row-${rowIndex}`}
                     className={cn(
                       'p-2 h-[60px] border-y border-[rgba(var(--bg-tertiary))] transition-colors group-hover:cursor-pointer',
-                      selectedIndexes.includes(columnIndex) ? 'bg-tertiary border-[rgba(var(--bg-quaternary))] select-none' : 'group-hover:bg-secondary'
+                      selectedItems.find(col => isEqual(col, column)) ? 'bg-tertiary border-[rgba(var(--bg-quaternary))] select-none' : 'group-hover:bg-secondary'
                     )}
-                    onClick={() => handleSelect(currentTabData.columns.sort((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b])).indexOf(column))}
+                    onClick={() => handleSelect(column)}
                   >
                     <div
                       className='flex items-center gap-x-2'
@@ -175,17 +176,19 @@ export default function Table({ tabs }) {
                       {rowIndex === 0 && (
                         <div 
                           className='flex items-center cursor-pointer gap-x-2 group'
-                          onClick={() => handleSelect(currentTabData.columns.sort((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b])).indexOf(column))}
+                          onClick={() => handleSelect(column)}
                         >
-                          <button className={cn(
-                            'w-[18px] h-[18px] flex justify-center items-center border-2 outline-none hover:bg-[rgba(var(--border-primary))] transition-colors border-primary rounded-md',
-                            selectedIndexes.includes(columnIndex) && 'bg-purple-500 hover:bg-purple-500 text-white'
-                          )}>
+                          <button
+                            className={cn(
+                              'w-[18px] h-[18px] flex justify-center items-center border-2 outline-none hover:bg-[rgba(var(--border-primary))] transition-colors border-primary rounded-md',
+                              selectedItems.find(col => isEqual(col, column)) && 'bg-purple-500 hover:bg-purple-500 text-white'
+                            )}
+                          >
                             <FaCheck
                               size={10} 
                               className={cn(
                                 'transition-opacity opacity-0',
-                                selectedIndexes.includes(columnIndex) && 'opacity-100'
+                                selectedItems.find(col => isEqual(col, column)) && 'opacity-100'
                               )}
                             />
                           </button>
@@ -218,7 +221,7 @@ export default function Table({ tabs }) {
       
       <div className='flex items-center justify-center'>
         <AnimatePresence>
-          {selectedIndexes.length > 0 && (
+          {selectedItems.length > 0 && (
             <motion.div
               className='left-8 px-2 py-2 sm:p-[unset] sm:left-[unset] z-[10] font-medium text-sm gap-x-2 fixed bottom-4 rounded-2xl flex items-center border-2 border-primary w-full max-w-[calc(100%_-_40px)] sm:min-w-[500px] sm:w-max h-max sm:h-[50px] bg-secondary'
               initial={{
@@ -247,12 +250,12 @@ export default function Table({ tabs }) {
               <div className='items-center hidden sm:flex gap-x-2'>
                 <div className='ml-4 w-max gap-x-1 px-1.5 py-0.5 min-w-[18px] min-h-[18px] font-medium flex items-center justify-center text-white bg-purple-600 rounded-lg'>
                   <HiCursorClick size={16} />            
-                  {selectedIndexes.length} Selected
+                  {selectedItems.length} Selected
                 </div>
 
                 <button
                   className='flex items-center text-sm hover:bg-purple-600 hover:text-white transition-all gap-x-2 hover:ring-purple-500 text-primary px-2.5 py-0.5 rounded-lg'
-                  onClick={() => setSelectedIndexes([])}
+                  onClick={() => setSelectedItems([])}
                 >
                   Clear
                 </button>
@@ -272,9 +275,9 @@ export default function Table({ tabs }) {
                         <button
                           className={cn(
                             'flex w-full flex-1 sm:flex-[unset] justify-center sm:w-max items-center text-sm hover:bg-tertiary transition-all gap-x-2 hover:ring-purple-500 ring-2 ring-[rgba(var(--bg-secondary))] text-primary bg-quaternary px-2.5 py-1.5 rounded-xl',
-                            typeof action.hide === 'function' ? action.hide?.(selectedIndexes) : action.hide === true && 'hidden'
+                            typeof action.hide === 'function' ? action.hide?.(selectedItems) : action.hide === true && 'hidden'
                           )}
-                          onClick={() => action.action?.(selectedIndexes)}
+                          onClick={() => action.action?.(selectedItems)}
                         >
                           {action.icon && <action.icon size={16} className='text-tertiary' />}
                           {action.name}

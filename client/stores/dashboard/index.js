@@ -21,8 +21,8 @@ export const useDashboardStore = create(set => ({
   },
   isCollapsed: false,
   setIsCollapsed: isCollapsed => set({ isCollapsed }),
-  selectedIndexes: [],
-  setSelectedIndexes: selectedIndexes => set({ selectedIndexes })
+  selectedItems: [],
+  setSelectedItems: selectedItems => set({ selectedItems })
 }));
 
 export default useDashboardStore;
