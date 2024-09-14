@@ -13,7 +13,7 @@ export default async function Page() {
 
   return (
     <div className="relative z-10 flex flex-col items-center w-full mb-24">
-      <div className='relative h-[60dvh] w-full flex items-center flex-col'>
+      <div className='relative min-h-[60dvh] w-full flex items-center flex-col'>
         <Square
           column='5'
           row='5'
