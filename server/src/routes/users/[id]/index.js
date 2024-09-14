@@ -118,7 +118,7 @@ module.exports = {
         });
       } else Object.assign(responseData, { servers: [] });
 
-      const ownedBots = await Bot.find({ 'owner.id': id });
+      const ownedBots = await Bot.find({ 'owner.id': id, verified: true });
       if (ownedBots.length > 0) {
         const listedBots = randomizeArray(ownedBots).slice(0, 2);
 
