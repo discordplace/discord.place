@@ -158,11 +158,11 @@ export default function Page() {
                   name: 'View User',
                   icon: FaEye,
                   action: () => {
-                    const user = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    router.push(`/profile/u/${user.id}`);
+                    router.push(`/profile/u/${column[0].id}`);
                   }
                 },
                 {
@@ -307,9 +307,9 @@ export default function Page() {
                   name: 'View Emoji',
                   icon: FaEye,
                   action: () => {
-                    const emoji = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
-                    router.push(`/emojis/${emoji.emoji_ids ? 'packages/' : ''}${emoji.id}`);
+                    router.push(`/emojis/${column[0].emoji_ids ? 'packages/' : ''}${column[0].id}`);
                   }
                 },
                 {
@@ -382,22 +382,22 @@ export default function Page() {
                   name: 'View Emoji',
                   icon: FaEye,
                   action: () => {
-                    const emoji = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    router.push(`/emojis/${emoji.emoji_ids ? 'packages/' : ''}${emoji.id}`);
+                    router.push(`/emojis/${column[0].emoji_ids ? 'packages/' : ''}${column[0].id}`);
                   }
                 },
                 {
                   name: 'Download',
                   icon: BiCloudDownload,
                   action: () => {
-                    const emojis = useDashboardStore.getState().selectedItems;
+                    const columns = useDashboardStore.getState().selectedItems;
 
                     setSelectedItems([]);
                     
-                    emojis.forEach(emoji => downloadEmoji(emoji));
+                    columns.forEach(column => downloadEmoji(column[0]));
                   }
                 },
                 {
@@ -479,11 +479,11 @@ export default function Page() {
                   name: 'Invite Bot',
                   icon: FiArrowUpRight,
                   action: () => {
-                    const bot = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    router.push(`https://discord.com/oauth2/authorize?client_id=${bot.id}&permissions=0&integration_type=0&scope=bot+applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`);
+                    router.push(`https://discord.com/oauth2/authorize?client_id=${column[0].id}&permissions=0&integration_type=0&scope=bot+applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`);
                   }
                 },
                 {
@@ -567,11 +567,11 @@ export default function Page() {
                   name: 'View Bot',
                   icon: FaEye,
                   action: () => {
-                    const bot = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    router.push(`/bots/${bot.id}`);
+                    router.push(`/bots/${column[0].id}`);
                   }
                 },
                 {
@@ -652,11 +652,11 @@ export default function Page() {
                   name: 'Template Preview',
                   icon: FaEye,
                   action: () => {
-                    const template = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    router.push(`/templates/${template.id}/preview`);
+                    router.push(`/templates/${column[0].id}/preview`);
                   }
                 },
                 {
@@ -738,11 +738,11 @@ export default function Page() {
                   name: 'Template Preview',
                   icon: FaEye,
                   action: () => {
-                    const template = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    router.push(`/templates/${template.id}/preview`);
+                    router.push(`/templates/${column[0].id}/preview`);
                   }
                 },
                 {
@@ -823,11 +823,11 @@ export default function Page() {
                   name: 'View Sound',
                   icon: FaEye,
                   action: () => {
-                    const sound = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    router.push(`/sounds/${sound.id}`);
+                    router.push(`/sounds/${column[0].id}`);
                   }
                 },
                 {
@@ -909,11 +909,11 @@ export default function Page() {
                   name: 'View Sound',
                   icon: FaEye,
                   action: () => {
-                    const sound = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    router.push(`/sounds/${sound.id}`);
+                    router.push(`/sounds/${column[0].id}`);
                   }
                 },
                 {
@@ -999,11 +999,11 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const review = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
-                    router.push(`/${review.server ? 'servers' : 'bots'}/${review.server ? review.server.id : review.bot.id}`);
+                    router.push(`/${column[0].server ? 'servers' : 'bots'}/${column[0].server ? column[0].server.id : column[0].bot.id}`);
                   }
                 },
                 {
@@ -1091,11 +1091,11 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const review = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
-                    router.push(`/${review.server ? 'servers' : 'bots'}/${review.server ? review.server.id : review.bot.id}`);
+                    router.push(`/${column[0].server ? 'servers' : 'bots'}/${column[0].server ? column[0].server.id : column[0].bot.id}`);
                   }
                 },
                 {
@@ -1175,11 +1175,11 @@ export default function Page() {
                   name: 'Visit',
                   icon: MdOpenInNew,
                   action: () => {
-                    const link = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    window.open(link.redirectTo, '_blank');
+                    window.open(column[0].redirectTo, '_blank');
                   }
                 },
                 {
@@ -1271,11 +1271,11 @@ export default function Page() {
                   name: 'View Bot',
                   icon: FaEye,
                   action: () => {
-                    const botDeny = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
-                    router.push(`/bots/${botDeny.bot.id}`);
+                    router.push(`/bots/${column[0].bot.id}`);
                   }
                 },
                 {
@@ -1364,22 +1364,22 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const timeout = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
-                    router.push(typeof timeout.bot === 'object' ? `/bots/${timeout.bot.id}` : `/servers/${timeout.server.id}`);
+                    router.push(typeof column[0].bot === 'object' ? `/bots/${column[0].bot.id}` : `/servers/${column[0].server.id}`);
                   }
                 },
                 {
                   name: 'View User',
                   icon: FaEye,
                   action: () => {
-                    const timeout = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
-                    router.push(`/profile/u/${timeout.user.id}`);
+                    router.push(`/profile/u/${column[0].user.id}`);
                   }
                 },
                 {
@@ -1495,11 +1495,11 @@ export default function Page() {
                   name: 'View User',
                   icon: FaEye,
                   action: () => {
-                    const quarantine = useDashboardStore.getState().selectedItems[0];
+                    const column = useDashboardStore.getState().selectedItems[0];
                     
                     setSelectedItems([]);
 
-                    router.push(`/profile/u/${quarantine.user.id}`);
+                    router.push(`/profile/u/${column[0].user.id}`);
                   }
                 },
                 {
