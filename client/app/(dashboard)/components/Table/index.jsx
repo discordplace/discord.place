@@ -21,7 +21,7 @@ export default function Table({ tabs }) {
   const setSelectedItems = useDashboardStore(state => state.setSelectedItems);
   
   function handleSelect(item) {
-    if (selectedItems.includes(item)) setSelectedItems(selectedItems.filter(selectedRow => selectedRow !== item));
+    if (selectedItems.find(column => isEqual(column, item))) setSelectedItems(selectedItems.filter(selectedRow => selectedRow !== item));
     else setSelectedItems([...selectedItems, item]);
   }
 
