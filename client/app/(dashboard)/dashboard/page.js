@@ -1286,7 +1286,7 @@ export default function Page() {
                   action: () => bulkActionWithConfirmationModal({
                     name: 'bot deny',
                     data: data.botDenies,
-                    action: item => deleteBotDenyRecord(item.id),
+                    action: item => deleteBotDenyRecord(item._id),
                     fetchKey: 'botdenies'
                   }),
                   hide: !data.permissions?.canDeleteBotDenies
