@@ -5,6 +5,9 @@ import useGeneralStore from '@/stores/general';
 import sleep from '@/lib/sleep';
 import ReactPostprocessor from 'i18next-react-postprocessor';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
+import en from '@/locales/en.json';
+import tr from '@/locales/tr.json';
+import az from '@/locales/az.json';
 
 i18n
   .use(new ReactPostprocessor())
@@ -17,16 +20,7 @@ i18n
     postProcess: ['reactPostprocessor']
   });
 
-const localeContents = {};
 let languageFirstlyChanged = false;
-
-config.availableLocales
-  .map(async locale => {
-    const file = await import(`../../locales/${locale.code}.json`).catch(() => null);
-    if (!file) throw new Error(`Failed to load locale file for ${locale.code} at /locales/${locale.code}.json`);
-
-    localeContents[locale.code] = file.default;
-  });
 
 const useLanguageStore = create(set => ({
   language: 'loading',
@@ -55,16 +49,17 @@ export function t(key, variables = {}) {
 
   if (language === 'loading') return '';
 
-  if (!localeContents[language]) {
-    const defaultLanguage = config.availableLocales.find(locale => locale.default).code;
-    return localeContents[defaultLanguage]?.[key] || key;
-  }
+  const localeContents = {
+    en,
+    tr,
+    az
+  };
 
   i18n.addResourceBundle(language, 'translation', localeContents[language], true, true);
 
   if (!i18n.getResource(language, 'translation', key)) {
     if (process.env.NODE_ENV === 'development') return `${key} (missing translation)`;
-    return localeContents[config.availableLocales.find(locale => locale.default).code][key] || key;
+    return key;
   }
 
   return i18n.t(key, {
