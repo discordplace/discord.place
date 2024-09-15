@@ -296,7 +296,7 @@ customHostnames:
   - 'dsc.mom'
 globalRateLimit:
   enabled: true
-  maxRequests: 60
+  maxRequests: 30
   perMinutes: 1
   cleanUpIntervalInMinutes: 2.5
 emojisDenyReasons:
