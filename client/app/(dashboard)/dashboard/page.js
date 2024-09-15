@@ -1494,17 +1494,6 @@ export default function Page() {
               ],
               actions: [
                 {
-                  name: 'View User',
-                  icon: FaEye,
-                  action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-                    
-                    setSelectedItems([]);
-
-                    router.push(`/profile/u/${column[0].user.id}`);
-                  }
-                },
-                {
                   name: 'Delete',
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
