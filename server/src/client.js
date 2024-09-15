@@ -253,25 +253,19 @@ module.exports = class Client {
   }
 
   async updateBotStats() {
-    if (!process.env.DISCORD_PLACE_API_KEY) return logger.warn('API key is not defined. Please define DISCORD_PLACE_API_KEY in your environment variables.');
+    const bot = await Bot.findOne({ id: client.user.id });
+    if (!bot) return logger.error(`${client.user.id} bot not found in the Bot collection. Skipping update bot stats.`);
 
-    const url = `https://api.discord.place/bots/${client.user.id}/stats`;
-    const data = {
-      command_count: client.commands.size
-    };
-    
-    try {
-      const response = await axios.patch(url, data, {
-        headers: {
-          authorization: process.env.DISCORD_PLACE_API_KEY
+    await Bot.updateOne({ id: client.user.id }, {
+      $set: {
+        command_count: {
+          value: client.commands.size,
+          updatedAt: new Date()
         }
-      });
+      }
+    });
 
-      if (response.status === 200) logger.info('Bot stats updated on Discord Place.');
-      else logger.error(`Failed to update bot stats: ${response.data}`);
-    } catch (error) {
-      logger.error('Failed to update bot stats:', error);
-    }
+    logger.info('Updated bot stats.');
   }
 
   async checkExpiredBlockedIPs() {
