@@ -295,6 +295,7 @@ customHostnames:
   - 'dsc.dog'
   - 'dsc.mom'
 globalRateLimit:
+  enabled: false
   maxRequests: 60
   perMinutes: 2
   cleanUpIntervalInMinutes: 2.5
