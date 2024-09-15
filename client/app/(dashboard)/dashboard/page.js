@@ -1431,7 +1431,8 @@ export default function Page() {
                     type: 'user',
                     id: item.user.id,
                     username: item.user.username,
-                    avatar: item.user.avatar
+                    avatar: item.user.avatar,
+                    showId: true
                   } : 
                   {
                     type: 'server',
