@@ -496,7 +496,7 @@ const config = {
       description: 'Creating reports.'
     },
     'LOGIN': {
-      ava1ilable_to: ['USER_ID'],
+      available_to: ['USER_ID'],
       description: 'Logging in.'
     }
   }
