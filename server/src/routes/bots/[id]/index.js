@@ -71,7 +71,7 @@ module.exports = {
       const badges = [];
       const has_reviewed = parsedReviews.some(review => review.user.id === request.user?.id);
 
-      if (new Discord.UserFlagsBitField(bot.data.flags).toArray().includes('VerifiedBot')) badges.push('Verified');
+      if (new Discord.UserFlagsBitField(bot.data.flags || 0).toArray().includes('VerifiedBot')) badges.push('Verified');
       if (publiclySafeBot.owner?.premium) badges.push('Premium');
 
       const github_repository = await findRepository(bot.github_repository);
