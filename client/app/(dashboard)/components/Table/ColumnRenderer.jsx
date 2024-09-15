@@ -308,10 +308,10 @@ export default function ColumnRenderer({ data }) {
         <div className='text-xs font-medium text-tertiary'>
           <Countdown
             date={data.value}
-            renderer={({ hours, minutes, seconds, completed }) => {
+            renderer={({ days, hours, minutes, seconds, completed }) => {
               if (completed) return 'Ended';
 
-              return `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+              return `${days} days ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
             }}
           />
         </div>
