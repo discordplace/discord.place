@@ -99,42 +99,42 @@ export async function GET(request) {
           {data.type === 'profile' && (
             <Profile
               data={data.metadata}
-              avatar_base64={(await getImageBuffer(data.metadata.avatar_url)).toString('base64')}
+              avatar_base64={(await getImageBuffer(data.metadata.avatar_url))?.toString?.('base64')}
             />
           )}
 
           {data.type === 'server' && (
             <Server
               data={data.metadata}
-              icon_base64={(await getImageBuffer(data.metadata.icon_url)).toString('base64')}
+              icon_base64={(await getImageBuffer(data.metadata.icon_url))?.toString?.('base64')}
             />
           )}
 
           {data.type === 'bot' && (
             <Bot
               data={data.metadata}
-              avatar_base64={(await getImageBuffer(data.metadata.avatar_url)).toString('base64')}
+              avatar_base64={(await getImageBuffer(data.metadata.avatar_url))?.toString?.('base64')}
             />
           )}
 
           {data.type === 'emoji' && (
             <Emoji
               data={data.metadata}
-              avatar_base64={(await getImageBuffer(data.metadata.avatar_url)).toString('base64')}
+              avatar_base64={(await getImageBuffer(data.metadata.avatar_url))?.toString?.('base64')}
             />
           )}
 
           {data.type === 'template' && (
             <Template
               data={data.metadata}
-              avatar_base64={(await getImageBuffer(data.metadata.avatar_url)).toString('base64')}
+              avatar_base64={(await getImageBuffer(data.metadata.avatar_url))?.toString?.('base64')}
             />
           )}
 
           {data.type === 'sound' && (
             <Sound
               data={data.metadata}
-              avatar_base64={(await getImageBuffer(data.metadata.avatar_url)).toString('base64')}
+              avatar_base64={(await getImageBuffer(data.metadata.avatar_url))?.toString?.('base64')}
             />
           )}
 
