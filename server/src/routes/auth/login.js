@@ -15,13 +15,15 @@ module.exports = {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
       
-      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'LOGIN').catch(() => false);
-      if (userQuarantined) {
-        return request.logout(error => {      
-          if (error) return response.sendError(error, 500);
+      if (request.session.passport?.user?.id) {
+        const userQuarantined = await findQuarantineEntry.single('USER_ID', request.session.passport.user.id);
+        if (userQuarantined) {
+          return request.logout(error => {      
+            if (error) return response.sendError(error, 500);
           
-          return response.sendError('You are not allowed to login.', 403);
-        });
+            return response.sendError('You are not allowed to login.', 403);
+          });
+        }
       }
 
       const { redirect } = matchedData(request);
