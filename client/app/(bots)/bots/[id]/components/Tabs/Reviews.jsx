@@ -213,8 +213,8 @@ export default function Reviews({ bot }) {
                   disabled={selectedRating === 0 || loading || reviewSubmitted || review.length < config.reviewsMinCharacters}
                 >
                   {loading && <TbLoader className='animate-spin' />}
-                  {t('buttons.submitReview')}
-                  {selectedRating !== 0 && `(${selectedRating}/5)`}
+                  
+                  {t('buttons.submitReview')} {selectedRating !== 0 && `(${selectedRating}/5)`}
                 </button>
               ) : (
                 <Suspense fallback={<></>}>
