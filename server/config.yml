@@ -295,9 +295,9 @@ customHostnames:
   - 'dsc.dog'
   - 'dsc.mom'
 globalRateLimit:
-  enabled: false
-  maxRequests: 60
-  perMinutes: 2
+  enabled: true
+  maxRequests: 30
+  perMinutes: 1
   cleanUpIntervalInMinutes: 2.5
 emojisDenyReasons:
   reposted-emoji:

@@ -39,8 +39,7 @@ async function globalRateLimiter(request, response, next) {
 
   requestTimes.push(currentTime);
 
-  if (requestTimes.length >= RATE_LIMIT) await blockIp(ip)
-    .catch(error => logger.error(`There was an error blocking IP address ${ip}:`, error));
+  if (requestTimes.length >= RATE_LIMIT) await blockIp(ip);
 
   next();
 }
