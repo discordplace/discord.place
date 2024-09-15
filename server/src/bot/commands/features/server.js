@@ -97,7 +97,8 @@ module.exports = {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.followUp({ content: 'You don\'t have permission to use this command.' });
 
         const channel = interaction.options.getChannel('channel');
-        if (!channel.permissionsFor(interaction.guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) return interaction.followUp({ content: 'I don\'t have permission to send messages in that channel.' });
+        const hasPermission = channel.permissionsFor(interaction.guild.members.me).has(Discord.PermissionFlagsBits.SendMessages) && channel.permissionsFor(interaction.guild.members.me).has(Discord.PermissionFlagsBits.ViewChannel);
+        if (!hasPermission) return interaction.followUp({ content: 'I don\'t have permission to send messages in that channel.' });
 
         const server = await Server.findOne({ id: interaction.guild.id });
         if (!server) return interaction.followUp({ content: `You can't set a panel channel without creating a server first. Visit [here](${config.frontendUrl}/servers/manage) to create one.` });
