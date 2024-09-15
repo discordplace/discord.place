@@ -1436,8 +1436,8 @@ export default function Page() {
                   {
                     type: 'server',
                     id: item.guild.id,
-                    name: 'Unknown',
-                    icon: null
+                    name: item.guild.name,
+                    icon: item.guild.icon
                   },
                 {
                   type: 'user',
