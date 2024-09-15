@@ -287,6 +287,9 @@ quarantineRestrictions:
   'REPORTS_CREATE':
     available_to:
       - 'USER_ID'
+  'LOGIN':
+    available_to:
+      - 'USER_ID'
 customHostnames:
   - 'dsc.wtf'
   - 'dsc.dog'

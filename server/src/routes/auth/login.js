@@ -1,4 +1,5 @@
 const { query, validationResult, matchedData } = require('express-validator');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 module.exports = {
   get: [
@@ -10,9 +11,18 @@ module.exports = {
         throw new Error('Invalid redirect URL.');
       }
     }),
-    (request, response, next) => {
+    async (request, response, next) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
+      
+      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'LOGIN').catch(() => false);
+      if (userQuarantined) {
+        return request.logout(error => {      
+          if (error) return response.sendError(error, 500);
+          
+          return response.sendError('You are not allowed to login.', 403);
+        });
+      }
 
       const { redirect } = matchedData(request);
       if (redirect) {

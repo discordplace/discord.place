@@ -494,6 +494,10 @@ const config = {
     'REPORTS_CREATE': {
       available_to: ['USER_ID'],
       description: 'Creating reports.'
+    },
+    'LOGIN': {
+      ava1ilable_to: ['USER_ID'],
+      description: 'Logging in.'
     }
   }
 };
