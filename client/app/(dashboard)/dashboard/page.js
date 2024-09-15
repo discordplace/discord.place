@@ -1460,7 +1460,7 @@ export default function Page() {
                 },
                 {
                   type: 'countdown',
-                  value: new Date(item.expire_at).getTime()
+                  value: item.expire_at ? new Date(item.expire_at).getTime() : null
                 }
               ]),
               rows: [

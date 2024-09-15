@@ -306,14 +306,18 @@ export default function ColumnRenderer({ data }) {
     case 'countdown':
       return (
         <div className='text-xs font-medium text-tertiary'>
-          <Countdown
-            date={data.value}
-            renderer={({ days, hours, minutes, seconds, completed }) => {
-              if (completed) return 'Ended';
+          {data.value ? (
+            <Countdown
+              date={data.value}
+              renderer={({ days, hours, minutes, seconds, completed }) => {
+                if (completed) return 'Ended';
 
-              return `${days} days ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-            }}
-          />
+                return `${days} days ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+              }}
+            />
+          ) : (
+            'N/A'
+          )}
         </div>
       );
     case 'restriction':
