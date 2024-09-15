@@ -80,7 +80,8 @@ module.exports = {
       if (type === 'GUILD_ID') {
         Object.assign(quarantineData, {
           guild: {
-            id: value
+            id: value,
+            name: client.guilds.cache.get(value)?.name
           }
         });
       }

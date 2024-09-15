@@ -30,6 +30,10 @@ const QuarantineSchema = new Schema({
     id: {
       type: String,
       required: false
+    },
+    name: {
+      type: String,
+      required: false
     }
   },
   restriction: {

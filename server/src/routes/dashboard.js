@@ -355,6 +355,18 @@ module.exports = {
             });
           }
 
+          if (quarantine.type === 'GUILD_ID') {
+            const serverHashes = await getServerHashes(quarantine.guild.id);
+
+            Object.assign(publiclySafeQuarantine, {
+              guild: {
+                id: quarantine.guild.id,
+                name: quarantine.guild.name,
+                icon: serverHashes.icon
+              }
+            });
+          }
+
           Object.assign(publiclySafeQuarantine, {
             created_by: {
               id: quarantine.created_by.id,
