@@ -29,6 +29,8 @@ module.exports = {
     body('time')
       .isString().withMessage('Time should be a string.')
       .custom(value => {
+        if (value === '') return true;
+        
         const quarantineTime = ms(value);
         if (typeof quarantineTime !== 'number') throw new Error('Invalid time format.');
         if (quarantineTime && quarantineTime > 31557600000) throw new Error('Time should be less than 1 year.');
