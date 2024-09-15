@@ -13,7 +13,7 @@ export default function Bot({ data, avatar_base64 }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`data:image/png;base64,${avatar_base64}`}
+          src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : 'https://cdn.discordapp.com/embed/avatars/0.png'}
           alt={`${data.username}'s avatar`}
           style={{ width: '64px', height: '64px', borderRadius: '50%' }}
         />

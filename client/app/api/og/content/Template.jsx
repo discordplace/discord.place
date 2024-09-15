@@ -54,7 +54,7 @@ export default function Profile({ data, avatar_base64 }) {
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`data:image/png;base64,${avatar_base64}`}
+          src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : 'https://cdn.discordapp.com/embed/avatars/0.png'}
           alt={`${data.username}'s avatar`}
           style={{ width: '32px', height: '32px', borderRadius: '50%' }}
         />
