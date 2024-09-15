@@ -51,7 +51,7 @@ export default function Question2({ emoji }) {
                 <span className='font-bold select-none text-primary'>1.</span>
                 
                 <span>
-                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.linkText')}</Link> })}
+                  {t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.text', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('emojiPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.linkText')}</Link> })}
                 </span>
               </div>
 
