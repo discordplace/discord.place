@@ -50,7 +50,7 @@ module.exports = {
       const existingQuarantine = await Quarantine.findOne({ type, restriction, [type === 'USER_ID' ? 'user.id' : 'guild.id']: value });
       if (existingQuarantine) return response.sendError(`There is already a quarantine entry with the same values. ID: ${existingQuarantine._id}.`, 400);
 
-      const quarantineTime = ms(time);
+      const quarantineTime = time ? ms(time) : null;
       
       const requestUser = await User.findOne({ id: request.user.id });
 
