@@ -1370,7 +1370,7 @@ export default function Page() {
 
                     setSelectedItems([]);
 
-                    router.push(typeof column[0].bot === 'object' ? `/bots/${column[0].bot.id}` : `/servers/${column[0].server.id}`);
+                    router.push(column[0].discriminator ? '/bots/' : '/servers/' + column[0].id);
                   }
                 },
                 {
@@ -1381,7 +1381,7 @@ export default function Page() {
 
                     setSelectedItems([]);
 
-                    router.push(`/profile/u/${column[0].user.id}`);
+                    router.push(`/profile/u/${column[0].id}`);
                   }
                 },
                 {
