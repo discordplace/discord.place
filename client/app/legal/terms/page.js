@@ -39,7 +39,9 @@ export default function Page() {
       </ul>
     
       <h2>5. Termination</h2>
-      <p>We reserve the right to terminate or suspend your access to the services at our sole discretion, without notice, for conduct that we believe violates these Terms or is harmful to other users of the services, us, or third parties, or for any other reason.</p>
+      <p>
+        These Terms are governed by and construed in accordance with the laws of the Republic of Turkey, without regard to its conflict of law principles. In the event of any disputes arising from the execution of this agreement, the courts and enforcement offices of İstanbul Küçükçekmece Adalet Sarayı shall have exclusive jurisdiction
+      </p>
     
       <h2>6. Limitation of Liability</h2>
       <p>To the fullest extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from:</p>
