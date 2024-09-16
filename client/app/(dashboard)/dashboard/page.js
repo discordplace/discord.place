@@ -1550,7 +1550,7 @@ export default function Page() {
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     data: data.blockedIps,
-                    action: item => deleteBlockedIP(item.ip),
+                    action: item => deleteBlockedIP(item.value  ),
                     fetchKey: 'blockedips'
                   }),
                   hide: !data.permissions?.canDeleteBlockedIps
