@@ -68,7 +68,7 @@ module.exports = {
 
       const servers = await Server.find({ 'voters.user.id': id });
       const bots = await Bot.find({ 'voters.user.id': id });
-      const isPremium = await User.findOne({ id, subscription: { $ne: null } });
+      const isPremium = await User.exists({ id, subscription: { $ne: null } });
 
       const votesGiven = servers.reduce((acc, server) => acc + server.voters.find(voter => voter.user.id === id).vote, 0) + bots.reduce((acc, bot) => acc + bot.voters.find(voter => voter.user.id === id).vote, 0);
       Object.assign(responseData, { votesGiven });
