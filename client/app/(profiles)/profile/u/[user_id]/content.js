@@ -360,7 +360,7 @@ export default function Content({ user }) {
                     <div className='flex'>
                       <ServerCard
                         server={{
-                          premium: user.premium,
+                          premium: server.premium,
                           data: {
                             members: server.total_members,
                             votes: server.votes
