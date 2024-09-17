@@ -194,7 +194,7 @@ module.exports = {
         const foundServer = await Server.findOne({ id: interaction.guild.id });
         if (!foundServer) return interaction.followUp({ content: `You can't add a reward without listing your server. Visit [here](<${config.frontendUrl}/servers/manage>) to list this server.` });
 
-        const ownerHasPremium = await User.findOne({ id: interaction.guild.ownerId, subscription: { $ne: null } });
+        const ownerHasPremium = await User.exists({ id: interaction.guild.ownerId, subscription: { $ne: null } });
 
         const foundRewards = await Reward.find({ guild: { id: interaction.guild.id } });
         if (foundRewards.length >= (ownerHasPremium ? 20 : 5)) return interaction.followUp({ content: `You can't have more than ${ownerHasPremium ? 20 : 5} rewards.` });

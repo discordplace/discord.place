@@ -36,7 +36,7 @@ module.exports = {
       if (userHasProfile) return response.sendError('You already have a profile.', 400);
 
       if (config.customHostnames.includes(preferredHost)) {
-        const foundPremium = await User.findOne({ id: request.user.id, subscription: { $ne: null } });
+        const foundPremium = await User.exists({ id: request.user.id, subscription: { $ne: null } });
         if (!foundPremium) return response.sendError(`You must be premium to use ${preferredHost}.`, 400);
       }
 

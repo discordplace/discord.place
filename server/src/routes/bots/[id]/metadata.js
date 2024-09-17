@@ -17,7 +17,7 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      const ownerHasPremium = await User.findOne({ id: bot.owner.id, subscription: { $ne: null } });
+      const ownerHasPremium = await User.exists({ id: bot.owner.id, subscription: { $ne: null } });
       const hashes = await getUserHashes(bot.id);
 
       return response.json({

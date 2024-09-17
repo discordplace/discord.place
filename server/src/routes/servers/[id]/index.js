@@ -53,7 +53,7 @@ module.exports = {
         }));
 
       const badges = [];
-      const foundPremium = await User.findOne({ 'id': guild.ownerId, subscription: { $ne: null } });
+      const foundPremium = await User.exists({ 'id': guild.ownerId, subscription: { $ne: null } });
       if (foundPremium) badges.push('Premium');
 
       const permissions = {

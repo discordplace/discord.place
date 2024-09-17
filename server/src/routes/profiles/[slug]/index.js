@@ -168,7 +168,7 @@ module.exports = {
       if (!canEdit) return response.sendError('You do not have permission to edit this profile.', 403);
 
       if (config.customHostnames.includes(newPreferredHost)) {
-        const foundPremium = await User.findOne({ id: request.user.id, subscription: { $ne: null } });
+        const foundPremium = await User.exists({ id: request.user.id, subscription: { $ne: null } });
         if (!foundPremium) return response.sendError(`You must be premium to use ${newPreferredHost}.`, 400);
       }
 

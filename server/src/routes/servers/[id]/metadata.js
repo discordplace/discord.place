@@ -19,7 +19,7 @@ module.exports = {
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404); 
 
-      const ownerHasPremium = await User.findOne({ id: guild.ownerId, subscription: { $ne: null } });
+      const ownerHasPremium = await User.exists({ id: guild.ownerId, subscription: { $ne: null } });
 
       return response.json({
         name: guild.name,

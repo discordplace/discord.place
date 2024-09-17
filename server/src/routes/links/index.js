@@ -32,7 +32,7 @@ module.exports = {
 
       const userLinksCount = await Link.countDocuments({ createdBy: request.user.id });
 
-      const foundPremium = await User.findOne({ id: request.user.id, subscription: { $ne: null } });
+      const foundPremium = await User.exists({ id: request.user.id, subscription: { $ne: null } });
       if (!foundPremium && userLinksCount >= 1) return response.sendError('You have reached the maximum amount of links. Please buy a premium subscription to create up to 5 links.', 400);
       if (foundPremium && userLinksCount >= 5) return response.sendError('You have reached the maximum amount of links.', 400);
   
