@@ -26,7 +26,7 @@ module.exports = {
       const { vote, lastVote } = bot.voters.find(voter => voter.user.id == user_id) || {};
 
       if (isVotedInLast24Hours) return response.status(200).json({ voted: true, vote, lastVote });
-      else return response.status(200).json({ voted: false, vote: null, lastVote: null });
+      else return response.status(200).json({ voted: false, vote, lastVote });
     }
   ]
 };
