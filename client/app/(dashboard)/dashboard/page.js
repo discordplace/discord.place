@@ -992,11 +992,11 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
+                    const [column] = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
-                    router.push(`/${column[0].server ? 'servers' : 'bots'}/${column[0].server ? column[0].server.id : column[0].bot.id}`);
+                    router.push(`/${column.custom.type === 'server' ? 'servers' : 'bots'}/${column.value}`);
                   }
                 },
                 {
@@ -1087,11 +1087,11 @@ export default function Page() {
                   name: 'View Server/Bot',
                   icon: FaEye,
                   action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-
+                    const [column] = useDashboardStore.getState().selectedItems[0];
+                    
                     setSelectedItems([]);
 
-                    router.push(`/${column[0].server ? 'servers' : 'bots'}/${column[0].server ? column[0].server.id : column[0].bot.id}`);
+                    router.push(`/${column.custom.type === 'server' ? 'servers' : 'bots'}/${column.value}`);
                   }
                 },
                 {
