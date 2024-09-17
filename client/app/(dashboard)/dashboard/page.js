@@ -171,7 +171,6 @@ export default function Page() {
                   name: 'Refresh Hashes',
                   icon: MdRefresh,
                   action: () => bulkAction({
-                    data: data.users,
                     action: item => {
                       toast.promise(getHashes(item.id, 'user'), {
                         loading: `Refreshing ${item.username}'s hashes...`,
@@ -239,7 +238,6 @@ export default function Page() {
                   name: 'Refresh Hashes',
                   icon: FaEye,
                   action: () => bulkAction({
-                    data: data.guilds,
                     action: item => {
                       toast.promise(getHashes(item.id, 'server'), {
                         loading: `Refreshing ${item.name}'s hashes...`,
@@ -318,7 +316,6 @@ export default function Page() {
                   name: 'Approve',
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
-                    data: data.queue.emojis,
                     action: item => approveEmoji(item.id),
                     fetchKey: 'emojis'
                   }),
@@ -332,7 +329,6 @@ export default function Page() {
                     description: 'Please select a reason to deny.',
                     reasons: config.emojisDenyReasons,
                     onDeny: reason => bulkAction({
-                      data: data.queue.emojis,
                       action: item => denyEmoji(item.id, reason),
                       fetchKey: 'emojis'
                     })
@@ -407,7 +403,6 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'emoji',
-                    data: data.queue.emojis,
                     action: item => deleteEmoji(item.id),
                     fetchKey: 'emojis'
                   }),
@@ -492,7 +487,6 @@ export default function Page() {
                   name: 'Approve',
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
-                    data: data.queue.bots,
                     action: item => approveBot(item.id),
                     fetchKey: 'bots'
                   }),
@@ -506,7 +500,6 @@ export default function Page() {
                     description: 'Please select a reason to deny.',
                     reasons: config.botsDenyReasons,
                     onDeny: reason => bulkAction({
-                      data: data.queue.bots,
                       action: item => denyBot(item.id, reason),
                       fetchKey: 'bots'
                     })
@@ -581,7 +574,6 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'bot',
-                    data: data.queue.bots,
                     action: item => deleteBot(item.id),
                     fetchKey: 'bots'
                   }),
@@ -665,7 +657,6 @@ export default function Page() {
                   name: 'Approve',
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
-                    data: data.queue.templates,
                     action: item => approveTemplate(item.id),
                     fetchKey: 'templates'
                   }),
@@ -679,7 +670,6 @@ export default function Page() {
                     description: 'Please select a reason to deny.',
                     reasons: config.templatesDenyReasons,
                     onDeny: reason => bulkAction({
-                      data: data.queue.templates,
                       action: item => denyTemplate(item.id, reason),
                       fetchKey: 'templates'
                     })
@@ -752,7 +742,6 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'template',
-                    data: data.queue.templates,
                     action: item => deleteTemplate(item.id),
                     fetchKey: 'templates'
                   }),
@@ -850,7 +839,6 @@ export default function Page() {
                     description: 'Please select a reason to deny.',
                     reasons: config.soundsDenyReasons,
                     onDeny: reason => bulkAction({
-                      data: data.queue.sounds,
                       action: item => denySound(item.id, reason),
                       fetchKey: 'sounds'
                     })
@@ -923,7 +911,6 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'sound',
-                    data: data.queue.sounds,
                     action: item => deleteSound(item.id),
                     fetchKey: 'sounds'
                   }),
@@ -950,7 +937,11 @@ export default function Page() {
               columns: data?.queue?.reviews?.filter(review => !review.approved).map(review => [
                 {
                   type: 'text',
-                  value: review.server ? review.server.id : review.bot.id
+                  value: review.server ? review.server.id : review.bot.id,
+                  custom: {
+                    type: review.server ? 'server' : 'bot',
+                    id: review._id
+                  }
                 },
                 {
                   type: 'user',
@@ -1013,7 +1004,7 @@ export default function Page() {
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     data: data.queue.reviews,
-                    action: item => approveReview(item.server ? 'server' : 'bot', item.server ? item.server.id : item.bot.id, item._id),
+                    action: item => approveReview(item.custom.type, item.value, item.custom._id),
                     fetchKey: 'reviews'
                   }),
                   hide: !data.permissions?.canApproveReviews
@@ -1026,8 +1017,7 @@ export default function Page() {
                     description: 'Add a custom reason to deny this review.',
                     reasons: {},
                     onDeny: reason => bulkAction({
-                      data: data.queue.reviews,
-                      action: item => denyReview(item.server ? 'server' : 'bot', item.server ? item.server.id : item.bot.id, item._id, reason),
+                      action: item => denyReview(item.custom.type, item.value, item.custom._id, reason),
                       fetchKey: 'reviews'
                     }),
                     customReason: true
@@ -1042,7 +1032,11 @@ export default function Page() {
               columns: data?.queue?.reviews?.filter(review => review.approved).map(review => [
                 {
                   type: 'text',
-                  value: review.server ? review.server.id : review.bot.id
+                  value: review.server ? review.server.id : review.bot.id,
+                  custom: {
+                    type: review.server ? 'server' : 'bot',
+                    id: review._id
+                  }
                 },
                 {
                   type: 'user',
@@ -1105,8 +1099,7 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'review',
-                    data: data.queue.reviews,
-                    action: item => deleteReview(item.server ? 'server' : 'bot', item.server ? item.server.id : item.bot.id, item._id),
+                    action: item => deleteReview(item.custom.type, item.value, item.custom._id),
                     fetchKey: 'reviews'
                   }),
                   hide: !data.permissions?.canDeleteReviews
@@ -1189,7 +1182,6 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'link',
-                    data: data.links,
                     action: item => deleteLink(item.id),
                     fetchKey: 'links'
                   }),
@@ -1285,7 +1277,6 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'bot deny',
-                    data: data.botDenies,
                     action: item => deleteBotDenyRecord(item.id),
                     fetchKey: 'botdenies'
                   }),
@@ -1389,7 +1380,6 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'timeout',
-                    data: data.timeouts,
                     action: item => typeof item.bot === 'object' ? deleteBotTimeout(item.bot.id, item.user.id) : deleteServerTimeout(item.guild.id, item.user.id),
                     fetchKey: 'timeouts'
                   }),
@@ -1499,7 +1489,6 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'quarantine',
-                    data: data.quarantines,
                     action: item => deleteQuarantineRecord(item.id),
                     fetchKey: 'quarantines'
                   }),
@@ -1549,7 +1538,6 @@ export default function Page() {
                   name: 'Delete',
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
-                    data: data.blockedIps,
                     action: item => deleteBlockedIP(item.value),
                     fetchKey: 'blockedips'
                   }),
