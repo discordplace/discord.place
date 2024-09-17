@@ -1004,7 +1004,7 @@ export default function Page() {
                   icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     data: data.queue.reviews,
-                    action: item => approveReview(item.custom.type, item.value, item.custom._id),
+                    action: item => approveReview(item.custom.type, item.value, item.custom.id),
                     fetchKey: 'reviews'
                   }),
                   hide: !data.permissions?.canApproveReviews
@@ -1017,7 +1017,7 @@ export default function Page() {
                     description: 'Add a custom reason to deny this review.',
                     reasons: {},
                     onDeny: reason => bulkAction({
-                      action: item => denyReview(item.custom.type, item.value, item.custom._id, reason),
+                      action: item => denyReview(item.custom.type, item.value, item.custom.id, reason),
                       fetchKey: 'reviews'
                     }),
                     customReason: true
@@ -1099,7 +1099,7 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'review',
-                    action: item => deleteReview(item.custom.type, item.value, item.custom._id),
+                    action: item => deleteReview(item.custom.type, item.value, item.custom.id),
                     fetchKey: 'reviews'
                   }),
                   hide: !data.permissions?.canDeleteReviews
