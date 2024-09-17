@@ -23,10 +23,13 @@ module.exports = {
       if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
 
       const isVotedInLast24Hours = bot.voters.some(voter => voter.user.id == user_id && new Date() - voter.lastVote < 86400000);
-      const { vote, lastVote } = bot.voters.find(voter => voter.user.id == user_id) || {};
+      const voteData = bot.voters.find(voter => voter.user.id == user_id) || {};
 
-      if (isVotedInLast24Hours) return response.status(200).json({ voted: true, vote, lastVote });
-      else return response.status(200).json({ voted: false, vote, lastVote });
+      return response.json({
+        voted: isVotedInLast24Hours,
+        vote: voteData.vote || 0,
+        lastVote: voteData.lastVote ? new Date(voteData.lastVote).getTime() : null
+      });
     }
   ]
 };
