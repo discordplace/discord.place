@@ -27,6 +27,8 @@ module.exports = {
       const userFlags = new Discord.UserFlagsBitField(user.flags).toArray();
       if (!user.bot && isHaveNitro) userFlags.push('Nitro');
 
+      const userData = await User.findOne({ id });
+
       const validUserFlags = [
         'Staff',
         'Partner',
@@ -52,7 +54,8 @@ module.exports = {
         createdAt: new Date(user.createdTimestamp).getTime(),
         bot: user.bot,
         bot_verified: false,
-        flags: userFlags.filter(flag => validUserFlags.includes(flag))
+        flags: userFlags.filter(flag => validUserFlags.includes(flag)),
+        subscriptionCreatedAt: userData?.subscription?.createdAt ? new Date(userData.subscription.createdAt).getTime() : null
       };
 
       if (user.bot) {
@@ -75,11 +78,9 @@ module.exports = {
 
       const profile = await Profile.findOne({ 'user.id': id });
       if (profile) {
-        const userData = await User.findOne({ id });
         const profileBadges = profile ? getBadges(profile, userData?.subscription?.createdAt || null) : [];
         
         Object.assign(responseData, {
-          subscriptionCreatedAt: userData?.subscription?.createdAt ? new Date(userData.subscription.createdAt).getTime() : null,
           profile: {
             bio: profile.bio,
             badges: profileBadges,
