@@ -669,7 +669,9 @@
           "label": "Your Review",
           "description": "Let others know what you think about this server."
         },
-        "loginRequiredForReview": "You need to be logged in to leave a review."
+        "loginRequiredForReview": "You need to be logged in to leave a review.",
+        "ratingRequired": "Please select a rating.",
+        "ratingSelected": "Selected rating: {{count}}/5"
       },
       "topVoters": {
         "title": "Top Voters"
@@ -1356,7 +1358,9 @@
           "label": "Your Review",
           "description": "Let others know what you think about this bot."
         },
-        "loginRequiredForReview": "You need to be logged in to leave a review."
+        "loginRequiredForReview": "You need to be logged in to leave a review.",
+        "ratingRequired": "Please select a rating.",
+        "ratingSelected": "Selected rating: {{count}}/5"
       },
       "topVoters": {
         "title": "Top Voters"

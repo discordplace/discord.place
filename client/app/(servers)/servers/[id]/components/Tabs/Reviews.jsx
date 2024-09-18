@@ -129,55 +129,70 @@ export default function Reviews({ server }) {
           <span className='text-sm font-medium text-tertiary'>
             {t('serverPage.tabs.reviews.reviewSubmitted.alreadyReviewed')}
           </span>
-        ) : !server.ownerId === user?.id ? (
+        ) : server.ownerId === user?.id ? (
           <span className='text-sm font-medium text-tertiary'>
             {t('serverPage.tabs.reviews.ownerCannotReview')}
           </span>
         ) : (
           <>
-            <div className="flex gap-x-4 w-[35%]">
-              <UserAvatar
-                id={user?.id}
-                hash={user?.avatar}
-                size={256}
-                width={48}
-                height={48}
-                className='rounded-2xl w-[48px] h-[48px]'
-              />
+            <div className='w-[35%] flex flex-col gap-y-3'>
+              <div className="flex gap-x-4">
+                <UserAvatar
+                  id={user?.id}
+                  hash={user?.avatar}
+                  size={256}
+                  width={48}
+                  height={48}
+                  className='rounded-2xl w-[48px] h-[48px]'
+                />
 
-              <div className='flex flex-col gap-y-1'>
-                <h3 className='text-base font-semibold'>
-                  {user?.username || 'Unknown'}
-                </h3>
-                
-                <div className={cn(
-                  'flex items-center text-lg text-tertiary',
-                  loading || reviewSubmitted ? 'pointer-events-none' : 'cursor-pointer'
-                )}>
-                  {[...Array(5)].map((_, index) => (
-                    hoveredRating >= index + 1 || (selectedRating >= index + 1) ? (
-                      <TiStarFullOutline
-                        key={index} 
-                        className='text-yellow-500 cursor-pointer'
-                        onClick={() => {
-                          if (selectedRating === index + 1) setSelectedRating(0);
-                          else setSelectedRating(index + 1);
-                        }} 
-                        onMouseEnter={() => setHoveredRating(index + 1)}
-                        onMouseLeave={() => setHoveredRating(0)}
-                      />
-                    ) : (
-                      <TiStarOutline 
-                        key={index} 
-                        className='cursor-pointer text-tertiary'
-                        onClick={() => setSelectedRating(index + 1)} 
-                        onMouseEnter={() => setHoveredRating(index + 1)}
-                        onMouseLeave={() => setHoveredRating(0)}
-                      />
-                    )
-                  ))}
+                <div className='flex flex-col gap-y-1'>
+                  <h3 className='text-base font-semibold'>
+                    {user?.username || 'Unknown'}
+                  </h3>
+                  
+                  <div className={cn(
+                    'flex items-center text-lg text-tertiary',
+                    loading || reviewSubmitted ? 'pointer-events-none' : 'cursor-pointer'
+                  )}>
+                    {[...Array(5)].map((_, index) => (
+                      hoveredRating >= index + 1 || (selectedRating >= index + 1) ? (
+                        <TiStarFullOutline
+                          key={index} 
+                          className='text-yellow-500 cursor-pointer'
+                          onClick={() => {
+                            if (selectedRating === index + 1) setSelectedRating(0);
+                            else setSelectedRating(index + 1);
+                          }} 
+                          onMouseEnter={() => setHoveredRating(index + 1)}
+                          onMouseLeave={() => setHoveredRating(0)}
+                        />
+                      ) : (
+                        <TiStarOutline 
+                          key={index} 
+                          className='cursor-pointer text-tertiary'
+                          onClick={() => setSelectedRating(index + 1)} 
+                          onMouseEnter={() => setHoveredRating(index + 1)}
+                          onMouseLeave={() => setHoveredRating(0)}
+                        />
+                      )
+                    ))}
+                  </div>
                 </div>
               </div>
+
+              <span
+                className={cn(
+                  'text-xs font-medium text-tertiary select-none',
+                  selectedRating === 0 && 'text-red-400'
+                )}
+              >
+                {selectedRating === 0 ? (
+                  t('serverPage.tabs.reviews.ratingRequired')
+                ) : (
+                  t('serverPage.tabs.reviews.ratingSelected', { count: selectedRating })
+                )}
+              </span>
             </div>
               
             <div className="flex flex-col flex-1 w-full font-medium whitespace-pre-wrap gap-y-1 text-secondary">

@@ -669,7 +669,9 @@
           "label": "Rəyiniz",
           "description": "Bu server haqqında nə düşündüyünüzü başqalarına bildirin."
         },
-        "loginRequiredForReview": "Rəy yazmaq üçün daxil olmalısınız."
+        "loginRequiredForReview": "Rəy yazmaq üçün daxil olmalısınız.",
+        "ratingRequired": "Zəhmət olmasa reytinq seçin.",
+        "ratingSelected": "Seçilmiş reytinq: {{count}}/5"
       },
       "topVoters": {
         "title": "Ən çox səs verənlər"
@@ -1356,7 +1358,9 @@
           "label": "Rəyiniz",
           "description": "Bu bot haqqında nə düşündüyünüzü başqalarına bildirin."
         },
-        "loginRequiredForReview": "Rəy yazmaq üçün daxil olmalısınız."
+        "loginRequiredForReview": "Rəy yazmaq üçün daxil olmalısınız.",
+        "ratingRequired": "Zəhmət olmasa reytinq seçin.",
+        "ratingSelected": "Seçilmiş reytinq: {{count}}/5"
       },
       "topVoters": {
         "title": "Ən çox səs verənlər"

@@ -669,7 +669,9 @@
           "label": "Yorumunuz",
           "description": "Bu sunucu hakkında ne düşünüyorsunuz? Diğer kullanıcılar için bir yorum yapın."
         },
-        "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız."
+        "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız.",
+        "ratingRequired": "Lütfen bir derecelendirme seçin.",
+        "ratingSelected": "Seçilen derecelendirme: {{count}}/5"
       },
       "topVoters": {
         "title": "En Çok Oy Verenler"
@@ -1356,7 +1358,9 @@
           "label": "Yorumunuz",
           "description": "Bu bot hakkında ne düşünüyorsunuz? Diğer kullanıcılar için bir yorum yapın."
         },
-        "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız."
+        "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız.",
+        "ratingRequired": "Lütfen bir derecelendirme seçin.",
+        "ratingSelected": "Seçilen derecelendirme: {{count}}/5"
       },
       "topVoters": {
         "title": "En Çok Oy Verenler"
