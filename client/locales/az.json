@@ -1348,13 +1348,13 @@
             "title": "Qeyd",
             "description": "Rəyiniz yoxlama üçün göndərilib. "
           },
-          "alreadyReviewed": "Siz artıq bu server üçün rəy yazmısınız."
+          "alreadyReviewed": "Bu bot üçün artıq rəy yazdınız."
         },
-        "ownerCannotReview": "Öz serveriniz üçün rəy yaza bilməzsiniz.",
+        "ownerCannotReview": "Öz botunuza rəy yazmaq olmaz.",
         "unknown": "Naməlum",
         "input": {
           "label": "Rəyiniz",
-          "description": "Bu server haqqında nə düşündüyünüzü başqalarına bildirin."
+          "description": "Bu bot haqqında nə düşündüyünüzü başqalarına bildirin."
         },
         "loginRequiredForReview": "Rəy yazmaq üçün daxil olmalısınız."
       },

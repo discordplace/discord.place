@@ -1348,9 +1348,9 @@
             "title": "Not",
             "description": "Yorumunuz yetkililer tarafından incelenene kadar bekleyin. Onaylanmadan önce diğer kullanıcılar tarafından görüntülenmeyecektir."
           },
-          "alreadyReviewed": "Bu sunucu için zaten bir yorum yaptınız."
+          "alreadyReviewed": "Bu bot için zaten bir yorum yaptınız."
         },
-        "ownerCannotReview": "Sahibi olduğunuz sunuculara yorum yapamazsınız.",
+        "ownerCannotReview": "Sahibi olduğunuz botlara yorum yapamazsınız.",
         "unknown": "Bilinmiyor",
         "input": {
           "label": "Yorumunuz",

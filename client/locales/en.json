@@ -1348,13 +1348,13 @@
             "title": "Note",
             "description": "Your review has been submitted for verification. It will be visible once it has been approved."
           },
-          "alreadyReviewed": "You have already left a review for this server."
+          "alreadyReviewed": "You have already left a review for this bot."
         },
-        "ownerCannotReview": "You can't leave a review for your own server.",
+        "ownerCannotReview": "You can't leave a review for your own bot.",
         "unknown": "Unknown",
         "input": {
           "label": "Your Review",
-          "description": "Let others know what you think about this server."
+          "description": "Let others know what you think about this bot."
         },
         "loginRequiredForReview": "You need to be logged in to leave a review."
       },
