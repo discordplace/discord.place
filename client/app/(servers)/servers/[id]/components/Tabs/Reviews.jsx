@@ -229,7 +229,7 @@ export default function Reviews({ server }) {
                 >
                   {loading && <TbLoader className='animate-spin' />}
                   
-                  {t('buttons.submitReview')} {selectedRating !== 0 && `(${selectedRating}/5)`}
+                  {t('buttons.submitReview')}
                 </button>
               ) : (
                 <Suspense fallback={<></>}>
