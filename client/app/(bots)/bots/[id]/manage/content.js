@@ -105,6 +105,7 @@ export default function Content({ bot }) {
       success: () => {
         setSavingChanges(false);
         setChangedKeys([]);
+        setChangesMade(false);
         revalidateBot(bot.id);
 
         return t('botManagePage.toast.changesSaved');
