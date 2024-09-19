@@ -15,6 +15,7 @@ import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ReportableArea from '@/app/components/ReportableArea';
+import Image from 'next/image';
 
 export default function Reviews({ server }) {
   const [page, setPage] = useState(1);
@@ -137,14 +138,24 @@ export default function Reviews({ server }) {
           <>
             <div className='w-[35%] flex flex-col gap-y-3'>
               <div className="flex gap-x-4">
-                <UserAvatar
-                  id={user?.id}
-                  hash={user?.avatar}
-                  size={256}
-                  width={48}
-                  height={48}
-                  className='rounded-2xl w-[48px] h-[48px]'
-                />
+                {loggedIn ? (
+                  <UserAvatar
+                    id={user?.id}
+                    hash={user?.avatar}
+                    size={256}
+                    width={48}
+                    height={48}
+                    className='rounded-2xl w-[48px] h-[48px]'
+                  />
+                ) : (
+                  <Image
+                    src='https://cdn.discordapp.com/embed/avatars/0.png'
+                    alt='Placeholder Avatar'
+                    width={48}
+                    height={48}
+                    className='rounded-2xl w-[48px] h-[48px]'
+                  />
+                )}
 
                 <div className='flex flex-col gap-y-1'>
                   <h3 className='text-base font-semibold'>
@@ -181,18 +192,20 @@ export default function Reviews({ server }) {
                 </div>
               </div>
 
-              <span
-                className={cn(
-                  'text-xs font-medium text-tertiary select-none',
-                  selectedRating === 0 && 'text-red-400'
-                )}
-              >
-                {selectedRating === 0 ? (
-                  t('serverPage.tabs.reviews.ratingRequired')
-                ) : (
-                  t('serverPage.tabs.reviews.ratingSelected', { count: selectedRating })
-                )}
-              </span>
+              {loggedIn && (
+                <span
+                  className={cn(
+                    'text-xs font-medium text-tertiary select-none',
+                    selectedRating === 0 && 'text-red-400'
+                  )}
+                >
+                  {selectedRating === 0 ? (
+                    t('serverPage.tabs.reviews.ratingRequired')
+                  ) : (
+                    t('serverPage.tabs.reviews.ratingSelected', { count: selectedRating })
+                  )}
+                </span>
+              )}
             </div>
               
             <div className="flex flex-col flex-1 w-full font-medium whitespace-pre-wrap gap-y-1 text-secondary">
