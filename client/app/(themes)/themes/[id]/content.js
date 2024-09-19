@@ -78,36 +78,6 @@ export default function Content({ theme }) {
             </h2>
 
             <div className='flex flex-col gap-y-2'>
-              {/* <div className='flex items-center justify-between w-full'>
-                <span className='text-sm font-medium text-tertiary'>
-                  {t('themePage.themeDetails.fields.colors')}
-                </span>
-
-                <div className='flex items-center gap-4'>
-                  <CopyButton
-                    successText={t('themePage.themeDetails.colors.coped', { color: theme.colors.primary })}
-                    copyText={theme.colors.primary}
-                  >
-                    <div className='flex items-center text-sm font-semibold transition-all rounded-lg cursor-pointer select-none hover:opacity-80 gap-x-2 text-tertiary'>
-                      <span className='w-3 h-3 rounded-full' style={{ background: theme.colors.primary }} />
-                    
-                      {theme.colors.primary}
-                    </div>
-                  </CopyButton>
-
-                  <CopyButton
-                    successText={t('themePage.themeDetails.colors.coped', { color: theme.colors.secondary })}
-                    copyText={theme.colors.secondary}
-                  >
-                    <div className='flex items-center text-sm font-semibold transition-all rounded-lg cursor-pointer select-none hover:opacity-80 gap-x-2 text-tertiary'>
-                      <span className='w-3 h-3 rounded-full' style={{ background: theme.colors.secondary }} />
-                    
-                      {theme.colors.secondary}
-                    </div>
-                  </CopyButton>
-                </div>
-              </div> */}
-
               <div className='flex items-center justify-between w-full'>
                 <span className='text-sm font-medium text-tertiary'>
                   {t('themePage.themeDetails.fields.uploadedAt')}
