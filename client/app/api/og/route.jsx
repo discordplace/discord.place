@@ -12,9 +12,8 @@ import Bot from '@/app/api/og/content/Bot';
 import Emoji from '@/app/api/og/content/Emoji';
 import Template from '@/app/api/og/content/Template';
 import Sound from '@/app/api/og/content/Sound';
-import Theme from '@/app/api/og/content/Theme';
 import Blog from '@/app/api/og/content/Blog';
-import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
+import { RiRobot2Fill } from 'react-icons/ri';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { HiNewspaper, HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
@@ -45,8 +44,7 @@ export async function GET(request) {
     'emoji': MdEmojiEmotions,
     'template': HiTemplate,
     'sound': PiWaveformBold,
-    'blog': HiNewspaper,
-    'theme': RiBrush2Fill
+    'blog': HiNewspaper
   };
 
   if (!data.type || !icons[data.type]) return sendError('Invalid type.', 400);
@@ -135,13 +133,6 @@ export async function GET(request) {
 
           {data.type === 'sound' && (
             <Sound
-              data={data.metadata}
-              avatar_base64={(await getImageBuffer(data.metadata.avatar_url))?.toString?.('base64')}
-            />
-          )}
-
-          {data.type === 'theme' && (
-            <Theme
               data={data.metadata}
               avatar_base64={(await getImageBuffer(data.metadata.avatar_url))?.toString?.('base64')}
             />
