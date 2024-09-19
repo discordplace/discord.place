@@ -7,7 +7,7 @@ import { FaCompass } from 'react-icons/fa';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import cn from '@/lib/cn';
 import { BiSolidUserCircle } from 'react-icons/bi';
-import { RiRobot2Fill } from 'react-icons/ri';
+import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import { MdEmojiEmotions } from 'react-icons/md';
 import GraphBlock from '@/app/(dashboard)/components/Home/Graph/Block';
 import { FaUsers } from 'react-icons/fa';
@@ -86,7 +86,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col my-8 gap-y-4">
-      <div className='grid grid-cols-1 gap-6 mr-6 sm:grid-cols-2 2xl:grid-cols-6'>
+      <div className='grid grid-cols-1 gap-6 mr-6 sm:grid-cols-2 2xl:grid-cols-4'>
         <StatsBlock
           icon={<FaCompass />}
           label='Servers'
@@ -125,7 +125,6 @@ export default function Home() {
           tooltip='Total number of templates created on discord.place.'
           current={data.templates?.[0]?.value}
           previous={data.templates?.[1]?.value}
-          className='sm:col-span-2 xl:col-span-1'
         />
 
         <StatsBlock
@@ -134,7 +133,15 @@ export default function Home() {
           tooltip='Total number of sounds created on discord.place.'
           current={data.sounds?.[0]?.value}
           previous={data.sounds?.[1]?.value}
-          className='sm:col-span-2 xl:col-span-1'
+        />
+
+        <StatsBlock
+          icon={<RiBrush2Fill />}
+          label='Themes'
+          tooltip='Total number of themes created on discord.place.'
+          current={data.themes?.[0]?.value}
+          previous={data.themes?.[1]?.value}
+          className='sm:col-span-2'
         />
       </div>
 
