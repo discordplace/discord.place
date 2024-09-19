@@ -156,7 +156,7 @@ export default function Content({ theme }) {
                 copyText={theme.colors.secondary}
               >
                 <div
-                  className='flex items-center justify-center w-full py-2 text-sm font-medium text-center text-white transition-all rounded-lg cursor-pointer hover:opacity-80 gap-x-2'
+                  className='flex items-center justify-center w-full py-2 text-sm font-medium text-center transition-all rounded-lg cursor-pointer text-primary hover:opacity-80 gap-x-2'
                   style={{
                     background: colord(theme.colors.secondary).alpha(0.08).toHex(),
                     border: `2px solid ${colord(theme.colors.secondary).alpha(0.5).toHex()}`
