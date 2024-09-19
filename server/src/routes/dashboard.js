@@ -8,6 +8,7 @@ const BotReview = require('@/schemas/Bot/Review');
 const BotDeny = require('@/schemas/Bot/Deny');
 const Template = require('@/schemas/Template');
 const Sound = require('@/schemas/Sound');
+const Theme = require('@/schemas/Theme');
 const ServerReview = require('@/schemas/Server/Review');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
@@ -31,6 +32,7 @@ const validKeys = [
   'bots',
   'templates',
   'sounds',
+  'themes',
   'reviews',
   'blockedips',
   'botdenies',
@@ -62,6 +64,7 @@ module.exports = {
         canApproveTemplates: request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveSounds: request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveReviews: request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canApproveThemes: request.member && config.permissions.canApproveThemesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteBlockedIps: config.permissions.canDeleteBlockedIps.includes(request.user.id),
         canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteLinks: request.member && config.permissions.canDeleteLinksRoles.some(roleId => request.member.roles.cache.has(roleId)),
@@ -70,6 +73,7 @@ module.exports = {
         canDeleteBots: request.member && config.permissions.canDeleteBotsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteTemplates: request.member && config.permissions.canDeleteTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteSounds: request.member && config.permissions.canDeleteSoundsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteThemes: request.member && config.permissions.canDeleteThemesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteReviews: request.member && config.permissions.canDeleteReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteQuarantines: request.member && config.permissions.canDeleteQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canCreateQuarantines: request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
@@ -118,6 +122,10 @@ module.exports = {
           })),
           sounds: Object.values(data).map(dashboardData => ({
             value: dashboardData.sounds,
+            createdAt: dashboardData.createdAt
+          })),
+          themes: Object.values(data).map(dashboardData => ({
+            value: dashboardData.themes,
             createdAt: dashboardData.createdAt
           }))
         });
@@ -220,6 +228,26 @@ module.exports = {
             publisher: {
               id: sound.publisher.id,
               username: sound.publisher.username,
+              avatar: userHashes.avatar
+            }
+          };
+        }));
+      }
+
+      if (keys?.includes('themes')) {
+        if (!permissions.canApproveThemes) return response.sendError('You do not have permission to approve themes.', 403);
+
+        const themes = await Theme.find().sort({ createdAt: -1 });
+
+        responseData.queue.themes = await Promise.all(themes.map(async theme => {
+          const publiclySafeTheme = theme.toPubliclySafe();
+          const userHashes = await getUserHashes(theme.publisher.id);
+
+          return {
+            ...publiclySafeTheme,
+            publisher: {
+              id: theme.publisher.id,
+              username: theme.publisher.username,
               avatar: userHashes.avatar
             }
           };

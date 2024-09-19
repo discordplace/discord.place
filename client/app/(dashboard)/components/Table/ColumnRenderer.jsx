@@ -361,6 +361,29 @@ export default function ColumnRenderer({ data }) {
           </div>
         </div>
       );
+    case 'theme':
+      return (
+        <div className='flex items-center gap-x-2 pl-1 pr-2 rounded-full w-max py-0.5 bg-quaternary'>
+          <div className="relative flex items-center justify-center">
+            <span
+              className='block w-4 h-4 rounded-full'
+              style={{ backgroundColor: data.colors.primary }}
+            />
+
+            <span
+              className='absolute block w-4 h-4 rounded-full'
+              style={{
+                backgroundColor: data.colors.secondary,
+                clipPath: 'polygon(100% 0, 100% 48%, 100% 100%, 0 100%)'
+              }}
+            />
+          </div>
+
+          <span className='text-sm font-medium text-primary'>
+            {data.id}
+          </span>
+        </div>
+      );
     default:
       return JSON.stringify(data);
   }

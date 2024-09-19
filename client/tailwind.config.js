@@ -8,7 +8,8 @@ module.exports = {
     './app/**/*.{js,jsx}',
     './src/**/*.{js,jsx}',
     './public/profile-badges/*.svg',
-    './lib/**/*.{js,jsx}'
+    './lib/**/*.{js,jsx}',
+    './config.js'
   ],
   theme: {
     extend: {

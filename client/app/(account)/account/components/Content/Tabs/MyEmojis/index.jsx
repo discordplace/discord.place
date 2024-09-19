@@ -18,7 +18,7 @@ export default function MyEmojis() {
   const concatenatedEmojis = data.emojis?.concat(data.emojiPacks).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   
   return (
-    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
+    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
           {t('accountPage.tabs.myEmojis.title')}

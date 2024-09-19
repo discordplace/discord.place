@@ -3,6 +3,7 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const User = require('@/schemas/User');
 const getUserHashes = require('@/utils/getUserHashes');
+const Discord = require('discord.js');
 
 module.exports = {
   get: [
@@ -17,10 +18,29 @@ module.exports = {
       const profile = await Profile.findOne({ 'user.id': user.id });
       const canViewDashboard = request.member && config.permissions.canViewDashboardRoles.some(roleId => request.member.roles.cache.has(roleId));
 
+      const userFlags = new Discord.UserFlagsBitField(user.data.flags).toArray();
+
+      const validUserFlags = [
+        'Staff',
+        'Partner',
+        'Hypesquad',
+        'BugHunterLevel1',
+        'BugHunterLevel2',
+        'HypeSquadOnlineHouse1',
+        'HypeSquadOnlineHouse2',
+        'HypeSquadOnlineHouse3',
+        'PremiumEarlySupporter',
+        'VerifiedDeveloper',
+        'CertifiedModerator',
+        'ActiveDeveloper',
+        'Nitro'
+      ];
+
       return response.json({
         id: user.id,
         username: user.data.username,
         global_name: user.data.global_name,
+        flags: userFlags.filter(flag => validUserFlags.includes(flag)),
         avatar: userHashes.avatar,
         banner: userHashes.banner,
         profile: profile?.slug ? {

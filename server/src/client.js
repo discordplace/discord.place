@@ -24,6 +24,7 @@ const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const Template = require('@/schemas/Template');
 const Sound = require('@/schemas/Sound');
+const Theme = require('@/schemas/Theme');
 const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
@@ -302,6 +303,7 @@ module.exports = class Client {
     const totalEmojis = (await Emoji.countDocuments()) + emojiPacks.reduce((acc, pack) => acc + pack.emoji_ids.length, 0);
     const totalTemplates = await Template.countDocuments();
     const totalSounds = await Sound.countDocuments();
+    const totalThemes = await Theme.countDocuments();
 
     await new DashboardData({
       servers: totalServers,
@@ -310,6 +312,7 @@ module.exports = class Client {
       emojis: totalEmojis,
       templates: totalTemplates,
       sounds: totalSounds,
+      themes: totalThemes,
       users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
       guilds: client.guilds.cache.size
     }).save();

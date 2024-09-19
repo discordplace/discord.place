@@ -12,7 +12,7 @@ import logout from '@/lib/request/auth/logout';
 import { toast } from 'sonner';
 import Tooltip from '@/app/components/Tooltip';
 import { motion } from 'framer-motion';
-import { RiRobot2Fill } from 'react-icons/ri';
+import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCompass, FaEye, FaUsers } from 'react-icons/fa';
 import { MdMyLocation } from 'react-icons/md';
 import { IoChevronBackOutline } from 'react-icons/io5';
@@ -88,6 +88,12 @@ export default function Sidebar() {
           name: 'Reviews',
           icon: FaEye,
           disabled: data?.permissions?.canApproveReviews === false && data?.permissions?.canDeleteReviews === false
+        },
+        {
+          id: 'themesQueue',
+          name: 'Themes',
+          icon: RiBrush2Fill,
+          disabled: data?.permissions?.canApproveThemes === false
         }
       ]
     },

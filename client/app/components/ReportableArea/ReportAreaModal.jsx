@@ -6,6 +6,7 @@ import EmojiPreview from '@/app/components/ReportableArea/Previews/Emoji';
 import TemplatePreview from '@/app/components/ReportableArea/Previews/Template';
 import SoundPreview from '@/app/components/ReportableArea/Previews/Sound';
 import ReviewPreview from '@/app/components/ReportableArea/Previews/Review';
+import ThemePreview from '@/app/components/ReportableArea/Previews/Theme';
 import config from '@/config';
 import cn from '@/lib/cn';
 import { t } from '@/stores/language';
@@ -24,6 +25,7 @@ export default function ReportAreaModal({ type, metadata }) {
         {type === 'template' && <TemplatePreview metadata={metadata} />}
         {type === 'sound' && <SoundPreview metadata={metadata} />}
         {type === 'review' && <ReviewPreview metadata={metadata} />}
+        {type === 'theme' && <ThemePreview metadata={metadata} />}
         {type === 'something' && <p className='text-sm text-tertiary'>{t('inAppReporting.reportModal.labels.something')}</p>}
       </div>
 

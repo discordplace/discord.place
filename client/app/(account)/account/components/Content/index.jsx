@@ -13,6 +13,7 @@ import MyBots from '@/app/(account)/account/components/Content/Tabs/MyBots';
 import MyEmojis from '@/app/(account)/account/components/Content/Tabs/MyEmojis';
 import MyTemplates from '@/app/(account)/account/components/Content/Tabs/MyTemplates';
 import MySounds from '@/app/(account)/account/components/Content/Tabs/MySounds';
+import MyThemes from '@/app/(account)/account/components/Content/Tabs/MyThemes';
 import useAccountStore from '@/stores/account';
 import useThemeStore from '@/stores/theme';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -21,7 +22,7 @@ import { IoMdArrowBack } from 'react-icons/io';
 import { useRouter } from 'next-nprogress-bar';
 import { TbLoader } from 'react-icons/tb';
 import { FaCompass, FaBell, FaShieldAlt, FaDiscord } from 'react-icons/fa';
-import { RiRobot2Fill } from 'react-icons/ri';
+import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import useAuthStore from '@/stores/auth';
 import { MdArrowOutward } from 'react-icons/md';
 import { HiTemplate } from 'react-icons/hi';
@@ -44,7 +45,7 @@ export default function Content() {
 
   const router = useRouter();
 
-  const [linksPageVisited, setLinksPageVisited] = useLocalStorage('links-page-visited', false);
+  const [themesPageVisited, setThemesPageVisited] = useLocalStorage('themes-page-visited', false);
 
   const sidebar = [
     {
@@ -87,7 +88,6 @@ export default function Content() {
           name: t('accountPage.sidebar.labels.myLinks'),
           id: 'my-links',
           component: <MyLinks />,
-          new_badge: !linksPageVisited,
           badge_count: data.counts?.links || 0
         },
         {
@@ -124,6 +124,14 @@ export default function Content() {
           id: 'my-sounds',
           component: <MySounds />,
           badge_count: data.counts?.sounds || 0
+        },
+        {
+          Icon: RiBrush2Fill,
+          name: t('accountPage.sidebar.labels.myThemes'),
+          id: 'my-themes',
+          component: <MyThemes />,
+          badge_count: data.counts?.themes || 0,
+          new_badge: !themesPageVisited
         },
         {
           type: 'divider'
@@ -171,7 +179,6 @@ export default function Content() {
         break;
       case 'my-links':
         fetchData(['links']);
-        setLinksPageVisited(true);
         break;
       case 'my-servers':
         fetchData(['servers']);
@@ -187,6 +194,10 @@ export default function Content() {
         break;
       case 'my-sounds':
         fetchData(['sounds']);
+        break;
+      case 'my-themes':
+        fetchData(['themes']);
+        setThemesPageVisited(true);
         break;
       case 'active-reminders':
         fetchData(['reminders']);

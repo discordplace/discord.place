@@ -87,9 +87,13 @@ export default function Footer() {
           href: '/sounds'
         },
         {
-          label: 'Lantern',
-          href: 'https://github.com/discordplace/lantern',
+          label: t('footer.blocks.1.links.6'),
+          href: '/themes',
           new: true
+        },
+        {
+          label: 'Lantern',
+          href: 'https://github.com/discordplace/lantern'
         }
       ]
     },

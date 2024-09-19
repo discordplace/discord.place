@@ -61,7 +61,7 @@ module.exports = {
       if (!sound) return response.sendError('Sound not found.', 404);
 
       const canDelete = request.user.id === sound.publisher.id || config.permissions.canDeleteSoundsRoles.some(role => request.member.roles.cache.has(role));
-      if (!canDelete) return response.sendError('You are not allowed to delete this sounds.', 403);
+      if (!canDelete) return response.sendError('You are not allowed to delete this sound.', 403);
 
       const command = new DeleteObjectCommand({
         Bucket: process.env.S3_BUCKET_NAME,

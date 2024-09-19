@@ -142,12 +142,13 @@ module.exports = class Server {
 
       done(null, user);
 
-      User.findOneAndUpdate({ id: user.id },
+      await User.findOneAndUpdate({ id: user.id },
         {
           id: user.id,
           data: {
             username: user.username,
-            global_name: user.global_name
+            global_name: user.global_name,
+            flags: user.flags
           },
           email: user.email,
           accessToken: encrypt(user.accessToken, process.env.USER_TOKEN_ENCRYPT_SECRET)

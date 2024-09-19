@@ -85,7 +85,7 @@ export default function ReportableArea(props) {
       <Tooltip content='Report this area'>
         <div
           className={cn(
-            'absolute z-10 w-[calc(100%_+_15px)] h-[calc(100%_+_15px)] rounded-xl top-[-10px] left-[-10px] transition-opacity',
+            'absolute z-10 w-[calc(100%_+_15px)] h-[calc(100%_+_15px)] -translate-y-[7.5px] -translate-x-[7.5px] rounded-xl left-0 top-0 transition-opacity',
             showReportableAreas ? 'animate-reportable-area cursor-pointer hover:opacity-60 opacity-100' : 'opacity-0 pointer-events-none'
           )}
           onClick={handleReportClick}

@@ -6,6 +6,7 @@ const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
+const Theme = require('@/schemas/Theme');
 const Template = require('@/schemas/Template');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const Reminder = require('@/schemas/Reminder');
@@ -26,6 +27,7 @@ const validKeys = [
   'emojis',
   'templates',
   'sounds',
+  'themes',
   'reminders'
 ];
 
@@ -57,11 +59,12 @@ module.exports = {
         EmojiPack.countDocuments({ 'user.id': request.user.id }),
         Template.countDocuments({ 'user.id': request.user.id }),
         Sound.countDocuments({ 'publisher.id': request.user.id }),
+        Theme.countDocuments({ 'publisher.id': request.user.id }),
         Reminder.countDocuments({ 'user.id': request.user.id }),
         VoteReminder.countDocuments({ 'user.id': request.user.id })
       ];
 
-      const [botTimeouts, serverTimeouts, links, bots, emojis, emojiPacks, templates, sounds, reminders, voteReminders] = await Promise.all(bulkOperations);
+      const [botTimeouts, serverTimeouts, links, bots, emojis, emojiPacks, templates, sounds, themes, reminders, voteReminders] = await Promise.all(bulkOperations);
       
       responseData.counts = {
         timeouts: botTimeouts + serverTimeouts,
@@ -73,6 +76,7 @@ module.exports = {
         bots,
         emojis: emojis + emojiPacks,
         sounds,
+        themes,
         templates,
         reminders: reminders + voteReminders
       };
@@ -192,6 +196,14 @@ module.exports = {
 
         Object.assign(responseData, {
           sounds: sounds.map(sound => sound.toPubliclySafe({ isLiked: sound.likers.includes(request.user.id) }))
+        });
+      }
+
+      if (keys.includes('themes')) {
+        const themes = await Theme.find({ 'publisher.id': request.user.id }).sort({ createdAt: -1 });
+
+        Object.assign(responseData, {
+          themes: themes.map(theme => theme.toPubliclySafe())
         });
       }
 
