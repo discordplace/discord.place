@@ -8,7 +8,6 @@ import useGeneralStore from '@/stores/general';
 import config from '@/config';
 
 export default function AuthProvider({ children }) {
-  const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
   const setLanguage = useLanguageStore(state => state.setLanguage);
