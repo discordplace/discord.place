@@ -1,7 +1,7 @@
 import { BiSolidCategory } from 'react-icons/bi';
 import { FiArrowRightCircle } from 'react-icons/fi';
 
-export default function Sound({ data, avatar_base64 }) {
+export default function Theme({ data, avatar_base64 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
