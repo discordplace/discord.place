@@ -189,7 +189,7 @@ export default function Sidebar() {
       className={cn(
         'bg-secondary sticky left-0 top-0 h-max z-[10] border-r border-r-[rgba(var(--bg-quaternary))] min-w-[300px] flex flex-col gap-y-6 p-6',
         isCollapsed && 'min-w-[60px] max-w-[120px]',
-        isMobile && isCollapsed && 'min-w-[0px] max-w-[0px] p-3',
+        isMobile && isCollapsed && 'min-w-[0px] max-w-[0px] p-3 min-h-[100dvh]',
         isMobile && !isCollapsed && 'scrollbar-hide fixed'
       )}
     >
