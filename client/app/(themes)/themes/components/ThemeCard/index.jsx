@@ -31,7 +31,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
   const averageColor = colord(primaryColor).mix(colord(secondaryColor)).toHex();
   const contrast = colord(averageColor).contrast();
-  const contrastColor = contrast > 2 ? 'dark' : 'light';
+  const contrastColor = contrast > 1.5 ? 'dark' : 'light';
   
   const [avatarAverageColor, setAvatarAverageColor] = useState(null);
 
