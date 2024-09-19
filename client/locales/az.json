@@ -45,7 +45,8 @@
       "Botlar",
       "Emojilər",
       "Şablonlar",
-      "Səslər"
+      "Səslər",
+      "Themes"
     ],
     "profiles": "Profillər",
     "servers": "Serverlər",
@@ -53,6 +54,7 @@
     "emojis": "Emojilər",
     "templates": "Şablonlar",
     "sounds": "Səslər",
+    "themes": "Themes",
     "logout": "Çıxın"
   },
   "footer": {
@@ -91,7 +93,8 @@
           "Botlar",
           "Emojilər",
           "Şablonlar",
-          "Səslər"
+          "Səslər",
+          "Themes"
         ]
       },
       {
@@ -288,6 +291,7 @@
     "letsGo": "Gəlin gedək!",
     "addBot": "Bot əlavə edin",
     "addSound": "Səs əlavə edin",
+    "addTheme": "Add Theme",
     "createReport": "Hesabat yaradın",
     "all": "Hamısı",
     "copy": "Kopyalayın"
@@ -392,7 +396,17 @@
     "Art & Design": "İncəsənət və Dizayn",
     "Virtual Assistants": "Virtual köməkçilər",
     "Social Media Integration": "Sosial Media İnteqrasiyası",
-    "Anime & Manga": "Anime və Manqa"
+    "Anime & Manga": "Anime və Manqa",
+    "Gradient": "Gradient",
+    "Light": "Light",
+    "Dark": "Dark",
+    "Red": "Red",
+    "Orange": "Orange",
+    "Yellow": "Yellow",
+    "Green": "Green",
+    "Blue": "Blue",
+    "Purple": "Purple",
+    "Pink": "Pink"
   },
   "templatesPage": {
     "title": "Şablonları kəşf edin",
@@ -575,6 +589,85 @@
         "title": "Səsi silin",
         "description": "Silmək istədiyinizə əminsiniz {{soundName}}?",
         "content": "Nəzərə alın ki, səsin silinməsi səsin qəbul etdiyi bütün yükləmələri siləcək.<br><br>Bu əməliyyat geri qaytarıla bilməz."
+      }
+    }
+  },
+  "themesPage": {
+    "title": "Discover the themes",
+    "subtitle": "Discover the best two-color combinations to make your Discord profile stand out. Use colors to make your profile more attractive and unique.",
+    "searchInputPlaceholder": "Search for a theme by hex color, category or id..",
+    "categorySelectPlaceholder": "Colors",
+    "sortSelect": {
+      "placeholder": "Sorting",
+      "items": {
+        "newest": "Newest",
+        "oldest": "Oldest"
+      }
+    },
+    "emptyErrorState": {
+      "title": "It's quiet here...",
+      "message": "There are no themes to display. Maybe that's a sign to create one?"
+    }
+  },
+  "themePage": {
+    "toast": {
+      "deletingTheme": "Theme {{id}} is deleting..",
+      "themeDeleted": "Theme {{id}} successfully deleted. You will be redirected to the home page in a few seconds."
+    },
+    "notApprovedInfo": {
+      "description": "Currently, only you can see this theme. Once the theme is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your theme is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
+    },
+    "themeDetails": {
+      "title": "About Theme",
+      "fields": {
+        "uploadedAt": "Uploaded At",
+        "categories": "Categories",
+        "publisher": "Publisher"
+      },
+      "colors": {
+        "copied": "Color {{color}} copied to clipboard.",
+        "copyPrimary": "Copy Primary Color",
+        "copySecondary": "Copy Secondary Color"
+      }
+    },
+    "frequentlyAskedQuestions": {
+      "title": "Frequently Asked Questions",
+      "labels": [
+        "How can I copy theme colors?",
+        "How can I use this colors in my Discord profile?", 
+        "This profile theme is inappropriate. What can I do?"
+      ],
+      "answers": [
+        "You can use the buttons above to copy the primary and secondary colors of the theme.",
+        {
+          "title": "I'm glad to hear that! There are 1 ways to use this colors in your Discord profile.",
+          "methods": [
+            {
+              "buttonText": "1. Copy & Paste",
+              "instructionsBefore": "Using our website, you can copy the colors and paste them to your Discord profile. Here how you can do this:",
+              "instructions": [
+                "Click the \"Copy Primary Color\" button to copy the primary color.",
+                "Open your Discord App and right click to your server.",
+                "Go to User Settings > Profiles & scroll down to the profile theme settings.",
+                "Click the Primary and paste the color you copied.",
+                "Go back to our website and click the \"Copy Secondary Color\" button to copy the secondary color.",
+                "Go back to Discord and paste the color you copied to the Secondary color.",
+                "Save the changes and tada! Now your profile is using the this theme colors."
+              ]
+            }
+          ]
+        },
+        "You can use the report button on the bottom right of the page to report the theme with a valid reason. Our team will review the theme and take necessary actions."
+      ]
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "description": "You can delete the theme using the button below, but be careful not to delete it by mistake :)",
+      "deleteThemeModal": {
+        "title": "Delete Theme",
+        "description": "Are you sure you want to delete theme {{id}}?",
+        "content": "This action cannot be undone."
       }
     }
   },
@@ -1535,6 +1628,7 @@
         "myEmojis": "Emojilərim",
         "myTemplates": "Şablonlarım",
         "mySounds": "Mənim Səslərim",
+        "myThemes": "My Themes",
         "adminDashboard": "İdarəetmə Paneli",
         "switchTheme": "Mövzunu dəyişdirin",
         "backToHome": "Evə qayıt"
@@ -1976,6 +2070,57 @@
             "dragAndDrop": {
               "drop": "Faylınızı bura buraxın.",
               "click": "Faylı yükləmək üçün klikləyin."
+            }
+          }
+        }
+      }
+    },
+    "myThemes": {
+      "title": "My Themes",
+      "subtitle": "View themes that you have listed on discord.place. You can also submit a new theme to discord.place.",
+      "sections": {
+        "listedThemes": {
+          "title": "Listed Themes",
+          "subtitle": "Here, you can see the themes that you have listed on discord.place.",
+          "emptyErrorState": {
+            "title": "It's quiet in here...",
+            "message": "You have not listed any themes on discord.place."
+          }
+        },
+        "newTheme": {
+          "title": "New Theme",
+          "subtitle": "Submit a new theme to discord.place.",
+          "note": {
+            "title": "Note",
+            "description": "Your submitted theme will be reviewed by our team before it is listed on discord.place. Please make sure that your theme is not violating our theme submission guidelines. Our theme submission guidelines can be found in our <link>.",
+            "linkText": "Discord server"
+          }
+        },
+        "addTheme": {
+          "title": "Adding a new theme",
+          "subtitle": "You're about to submit a new theme to discord.place. This means your theme will be listed on discord.place and everyone will be able to see it. You can remove your theme from discord.place at any time.",
+          "toast": {
+            "addingTheme": "Theme is being added..",
+            "themeAdded": "Theme added! You will be redirected to the theme page in a few seconds."
+          },
+          "fields": {
+            "colors": {
+              "label": "Colors",
+              "description": "Select a primary and secondary color for your theme.",
+              "primaryLabel": "Primary Color",
+              "secondaryLabel": "Secondary Color"
+            },
+            "categories": {
+              "label": "Categories",
+              "description": "Select all categories that your theme belongs to. This will help users find your theme."
+            },
+            "contentPolicy": {
+              "label": "Content Policy",
+              "description": "By adding your theme to discord.place, you agree to our Theme Submission Guidelines. <note>",
+              "note": "* Can be found in our Discord server."
+            },
+            "areYouReady": {
+              "label": "Are you ready?"
             }
           }
         }

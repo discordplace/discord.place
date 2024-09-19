@@ -18,7 +18,7 @@ export default function ActiveTimeouts() {
   const timeoutedServersCount = data?.timeouts?.servers?.length || 0;
 
   return (
-    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
+    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
           {t('accountPage.tabs.activeTimeouts.title')}

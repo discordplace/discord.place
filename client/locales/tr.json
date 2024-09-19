@@ -45,7 +45,8 @@
       "Botlar",
       "Emojiler",
       "Şablonlar",
-      "Sesler"
+      "Sesler",
+      "Temalar"
     ],
     "profiles": "Profiller",
     "servers": "Sunucular",
@@ -53,6 +54,7 @@
     "emojis": "Emojiler",
     "templates": "Şablonlar",
     "sounds": "Sesler",
+    "themes": "Temalar",
     "logout": "Çıkış Yap"
   },
   "footer": {
@@ -91,7 +93,8 @@
           "Botlar",
           "Emojiler",
           "Şablonlar",
-          "Sesler"
+          "Sesler",
+          "Temalar"
         ]
       },
       {
@@ -288,6 +291,7 @@
     "letsGo": "Hadi!",
     "addBot": "Bot Ekle",
     "addSound": "Ses Ekle",
+    "addTheme": "Tema Ekle",
     "createReport": "Bildirim Oluştur",
     "all": "Tümü",
     "copy": "Kopyala"
@@ -392,7 +396,17 @@
     "Art & Design": "Sanat & Tasarım",
     "Virtual Assistants": "Sanal Asistanlar",
     "Social Media Integration": "Sosyal Medya Entegrasyonu",
-    "Anime & Manga": "Anime & Manga"
+    "Anime & Manga": "Anime & Manga",
+    "Gradient": "Renk Geçişli",
+    "Light": "Aydınlık",
+    "Dark": "Karanlık",
+    "Red": "Kırmızı",
+    "Orange": "Turuncu",
+    "Yellow": "Sarı",
+    "Green": "Yeşil",
+    "Blue": "Mavi",
+    "Purple": "Mor",
+    "Pink": "Pembe"
   },
   "templatesPage": {
     "title": "Şablonları Keşfedin",
@@ -575,6 +589,85 @@
         "title": "Sesi Sil",
         "description": "{{soundName}} adlı sesi silmek istediğinizden emin misiniz?",
         "content": "Lütfen sesi silmenin, sesin kazandığı tüm indirmelerle beraber siteden kaldırılacağını unutmayın.<br><br>Bu işlem geri alınamaz."
+      }
+    }
+  },
+  "themesPage": {
+    "title": "Temaları Keşfedin",
+    "subtitle": "Discord profilinizi öne çıkarmak için en iyi iki renk kombinasyonları keşfedin. Profilinizi daha çekici ve benzersiz hale getirmek için renkleri kullanın.",
+    "searchInputPlaceholder": "Renk, kategori veya ID ile tema arayın..",
+    "categorySelectPlaceholder": "Renkler",
+    "sortSelect": {
+      "placeholder": "Sıralama",
+      "items": {
+        "newest": "En Yeni",
+        "oldest": "En Eski"
+      }
+    },
+    "emptyErrorState": {
+      "title": "Buralar biraz sessiz...",
+      "message": "Gösterilecek tema yok. Belki de bu, bir tema oluşturmanın zamanının geldiğinin bir işaretidir?"
+    }
+  },
+  "themePage": {
+    "toast": {
+      "deletingTheme": "Tema {{id}} siliniyor..",
+      "themeDeleted": "Tema {{id}} başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+    },
+    "notApprovedInfo": {
+      "description": "Şu an için bu temayı sadece siz görebilirsiniz. Tema onaylandığında, herkese açık hale gelecektir. O zamana kadar <link>'a gelerek temanız onaylandığında botumuzdan bildirim alabilirsiniz. DM'lerinizi açtığınızdan emin olun.",
+      "linkText": "Discord sunucumuz"
+    },
+    "themeDetails": {
+      "title": "Tema Hakkında",
+      "fields": {
+        "uploadedAt": "Paylaşılma Tarihi",
+        "categories": "Kategoriler",
+        "publisher": "Paylaşan"
+      },
+      "colors": {
+        "copied": "Renk {{color}} panoya kopyalandı.",
+        "copyPrimary": "Birincil Rengi Kopyala",
+        "copySecondary": "İkincil Rengi Kopyala"
+      }
+    },
+    "frequentlyAskedQuestions": {
+      "title": "Sıkça Sorulan Sorular",
+      "labels": [
+        "Tema renklerini nasıl kopyalayabilirim?",
+        "Bu renkleri Discord profilimde nasıl kullanabilirim?",
+        "Bu profil teması uygunsuz. Ne yapabilirim?"
+      ],
+      "answers": [
+        "Yukarıdaki düğmeleri kullanarak temanın birincil ve ikincil renklerini kopyalayabilirsiniz.",
+        {
+          "title": "Bunu duyduğuma sevindim! Bu renkleri Discord profilinizde kullanmanın 1 yolu var.",
+          "methods": [
+            {
+              "buttonText": "1. Kopyala & Yapıştır",
+              "instructionsBefore": "Web sitemizi kullanarak, bu renkleri kopyalayabilir ve Discord profilinize yapıştırabilirsiniz. İşte nasıl yapacağınız:",
+              "instructions": [
+                "Birincil rengi kopyalamak için \"Birincil Rengi Kopyala\" düğmesine tıklayın.",
+                "Discord uygulamanızı açın ve sunucunuza sağ tıklayın.",
+                "Kullanıcı Ayarları > Profil'e gidin ve profil teması ayarlarına gidin.",
+                "Ana renge tıklayın ve kopyaladığınız birincil rengi rengi yapıştırın.",
+                "Web sitemize geri dönün ve \"İkincil Rengi Kopyala\" düğmesine tıklayarak ikincil rengi kopyalayın.",
+                "Discord'a geri dönün ve kopyaladığınız rengi Tema rengi yerine yapıştırın.",
+                "Değişiklikleri kaydedin ve tada! Artık profiliniz bu tema renklerini kullanıyor."
+              ]
+            }
+          ]
+        },
+        "Sayfanın sağ alt köşesindeki rapor düğmesini kullanarak temayı uygun bir nedenle bildirebilirsiniz. Ekibimiz tema inceleyecek ve gerekli işlemleri yapacaktır."
+      ]
+    },
+    "dangerZone": {
+      "title": "Tehlikeli Bölge",
+      "description": "Aşağıdaki butonu kullanarak temayı siteden silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
+      "deleteThemeModal": {
+        "title": "Tema Sil",
+        "description": "{{id}} ID'li temayı silmek istediğinizden emin misiniz?",
+        "content": "Lütfen temayı silmenin geri alınamayacağını unutmayın."
       }
     }
   },
@@ -1535,6 +1628,7 @@
         "myEmojis": "Emojilerim",
         "myTemplates": "Şablonlarım",
         "mySounds": "Seslerim",
+        "myThemes": "Temalarım",
         "adminDashboard": "Yönetici Paneli",
         "switchTheme": "Tema Değiştir",
         "backToHome": "Ana Sayfaya Dön"
@@ -1977,6 +2071,57 @@
             "dragAndDrop": {
               "drop": "Dosyayı buraya sürükleyin ve bırakın.",
               "click": "Dosya seçmek için tıklayın."
+            }
+          }
+        }
+      },
+      "myThemes": {
+        "title": "Temalarım",
+        "subtitle": "discord.place'de listelenen temalarınızı görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir tema ekleyebilirsiniz.",
+        "sections": {
+          "listedThemes": {
+            "title": "Listelenen Temalar",
+            "subtitle": "Burada, discord.place'de listelenen temalarınızı görebilirsiniz.",
+            "emptyErrorState": {
+              "title": "Buralar biraz sessiz...",
+              "message": "Listelenen herhangi bir temanız yok."
+            }
+          },
+          "newTheme": {
+            "title": "Yeni Tema",
+            "subtitle": "discord.place'e yeni bir tema ekleyin.",
+            "note": {
+              "title": "Not",
+              "description": "Eklediğiniz tema, yetkililer tarafından incelenecek ve ardından listelenecektir. Lütfen temanızın tema listeleme ilkelerimizi ihlal etmediğinden emin olun. Tema listeleme ilkelerimiz <link>'da bulunabilir.",
+              "linkText": "Discord sunucumuz"
+            }
+          },
+          "addTheme": {
+            "title": "Yeni tema ekleniyor",
+            "subtitle": "discord.place'e yeni bir tema eklemek üzeresiniz. Bu, temanızın discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Temanızı istediğiniz zaman discord.place'den kaldırabilirsiniz...",
+            "toast": {
+              "addingTheme": "Tema ekleniyor..",
+              "themeAdded": "Tema eklendi! Birkaç saniye içinde tema sayfasına yönlendirileceksiniz."
+            },
+            "fields": {
+              "colors": {
+                "label": "Renkler",
+                "description": "Temanız için birincil ve ikincil bir renk seçin.",
+                "primaryLabel": "Birincil Renk",
+                "secondaryLabel": "İkincil Renk"
+              },
+              "categories": {
+                "label": "Kategoriler",
+                "description": "Temanızın ait olduğu tüm kategorileri seçin. Bu, kullanıcıların temanızı bulmasına yardımcı olacaktır."
+              },
+              "contentPolicy": {
+                "label": "İçerik Politikası",
+                "description": "Temanızı discord.place'e ekleyerek Tema Listeleme İlkelerimizi kabul etmiş olursunuz. <note>",
+                "note": "* Discord sunucumuzda bulunabilir."
+              },
+              "areYouReady": {
+                "label": "Hazır mısınız?"
+              }
             }
           }
         }

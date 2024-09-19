@@ -116,7 +116,7 @@ export default function MyLinks() {
   }
 
   return (
-    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
+    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
       <div className='flex flex-col gap-y-2'>
         <h1 className='flex items-center text-xl font-bold gap-x-2 text-primary'>
           {t('accountPage.tabs.myLinks.title')}

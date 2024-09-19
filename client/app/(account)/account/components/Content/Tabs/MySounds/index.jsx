@@ -21,7 +21,7 @@ export default function MySounds() {
   
   return (
     currentlyAddingSound ? (
-      <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6'>
+      <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
         <NewSound />
       </div>
     ) : (

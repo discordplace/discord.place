@@ -33,6 +33,10 @@ const DashboardDataSchema = new Schema({
   sounds: {
     type: Number,
     default: 0
+  },
+  themes: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamps: true

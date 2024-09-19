@@ -58,11 +58,21 @@ permissions:
     - '1206032198562742312'
     - '1267549562957205645'
     - '1206354879321210900'
+  canDeleteThemesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
   canApproveEmojisRoles:
     - '1238588360193216695'
   canApproveBotsRoles:
     - '1238588360193216695'
   canApproveReviewsRoles:
+    - '1238588360193216695'
+  canApproveTemplatesRoles:
+    - '1238588360193216695'
+  canApproveSoundsRoles:
+    - '1238588360193216695'
+  canApproveThemesRoles:
     - '1238588360193216695'
   canEditServersRoles:
     - '1238588360193216695'
@@ -99,10 +109,6 @@ permissions:
   canDeleteTimeoutsRoles:
     - '1206032198562742312'
     - '1267549562957205645'
-  canApproveTemplatesRoles:
-    - '1238588360193216695'
-  canApproveSoundsRoles:
-    - '1238588360193216695'
   canSyncLemonSqueezyPlans:
     - '957840712404193290'
   canExecuteEval:
@@ -207,10 +213,22 @@ soundCategories:
   - 'Loud'
   - 'NSFW'
   - 'Other'
+themeCategories:
+  - 'Gradient'
+  - 'Light'
+  - 'Dark'
+  - 'Red'
+  - 'Orange'
+  - 'Yellow'
+  - 'Green'
+  - 'Blue'
+  - 'Purple'
+  - 'Pink'
 emojiMaxCategoriesLength: 4
 emojiQueueChannelId: '1267552786162389085'
 soundQueueChannelId: '1267552786162389085'
 reviewQueueChannelId: '1267552786162389085'
+themeQueueChannelId: '1267552786162389085'
 reportsQueueChannelId: '1267552786162389085'
 botQueueChannelId: '1267552786162389085'
 templateQueueChannelId: '1267552786162389085'
@@ -288,6 +306,9 @@ quarantineRestrictions:
     available_to:
       - 'USER_ID'
   'LOGIN':
+    available_to:
+      - 'USER_ID'
+  'THEMES_CREATE':
     available_to:
       - 'USER_ID'
 customHostnames:
@@ -405,6 +426,10 @@ soundDenyReasons:
   sound-licensing:
     name: 'Sound Licensing'
     description: 'Ensure your sound does not violate any copyright or intellectual property rights. Avoid using copyrighted audio, music, or sound effects without proper authorization.'
+themeDenyReasons:
+  proper-categorization:
+    name: 'Proper Categorization'
+    description: 'Ensure your theme is categorized correctly. Misleading categorization can result in rejection.'
 instatus:
   page_id: 'clwx1az6k27335bhobasj52b6y'
   metric_id: 'clwx1tevy38905bhobroucjm8j'

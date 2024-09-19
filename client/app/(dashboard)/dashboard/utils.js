@@ -16,6 +16,9 @@ import INTERNAL_deleteServerReview from '@/lib/request/servers/deleteReview';
 import INTERNAL_approveBotReview from '@/lib/request/bots/approveReview';
 import INTERNAL_denyBotReview from '@/lib/request/bots/denyReview';
 import INTERNAL_deleteBotReview from '@/lib/request/bots/deleteReview';
+import INTERNAL_approveTheme from '@/lib/request/themes/approveTheme';
+import INTERNAL_denyTheme from '@/lib/request/themes/denyTheme';
+import INTERNAL_deleteTheme from '@/lib/request/themes/deleteTheme';
 import INTERNAL_deleteBlockedIP from '@/lib/request/dashboard/deleteBlockedIP';
 import INTERNAL_deleteLink from '@/lib/request/links/deleteLink';
 import INTERNAL_deleteBotDenyRecord from '@/lib/request/bots/deleteBotDenyRecord';
@@ -169,6 +172,27 @@ export const deleteReview = (type, serverOrBotId, reviewId) => sendRequest({
   promise: type === 'server' ? INTERNAL_deleteServerReview : INTERNAL_deleteBotReview,
   successMessage: `Server review ${reviewId} deleted successfully!`,
   loadingMessage: `Deleting server review ${reviewId}..`
+});
+
+export const approveTheme = id => sendRequest({
+  params: id,
+  promise: INTERNAL_approveTheme,
+  successMessage: `Theme ${id} approved successfully!`,
+  loadingMessage: `Approving theme ${id}..`
+});
+
+export const denyTheme = (id, reason) => sendRequest({
+  params: { id, reason },
+  promise: INTERNAL_denyTheme,
+  successMessage: `Theme ${id} denied successfully!`,
+  loadingMessage: `Denying theme ${id}..`
+});
+
+export const deleteTheme = id => sendRequest({
+  params: id,
+  promise: INTERNAL_deleteTheme,
+  successMessage: `Theme ${id} deleted successfully!`,
+  loadingMessage: `Deleting theme ${id}..`
 });
 
 export const deleteBlockedIP = ip => sendRequest({

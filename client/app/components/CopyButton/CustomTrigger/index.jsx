@@ -3,7 +3,7 @@ import { t } from '@/stores/language';
 import { useState, useRef } from 'react';
 import { toast } from 'sonner';
 
-export default function CopyButton({ timeout = 2000, successText, copyText, children }) {
+export default function CopyButton({ timeout = 2000, successText, copyText, className = '', children }) {
   const [copied, setCopied] = useState(false);
   const copyTimeoutRef = useRef(null);
 
@@ -25,7 +25,8 @@ export default function CopyButton({ timeout = 2000, successText, copyText, chil
       onClick={handleCopy}
       className={cn(
         'transition-all',
-        copied && 'pointer-events-none opacity-50'
+        copied && 'pointer-events-none opacity-50',
+        className
       )}
     >
       {children}

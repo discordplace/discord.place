@@ -1,6 +1,6 @@
 import { CgProfile } from 'react-icons/cg';
 import { MdDownload, MdEmojiEmotions, MdEvent, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
-import { RiCommunityFill, RiRobot2Fill } from 'react-icons/ri';
+import { RiBrush2Fill, RiCommunityFill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCat, FaCompass, FaEye, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers } from 'react-icons/fa';
 import { AiFillSound, AiFillTool } from 'react-icons/ai';
 import { BiSolidCategory, BiSolidHappy, BiSolidMusic } from 'react-icons/bi';
@@ -99,6 +99,12 @@ const config = {
       title: 'Sounds',
       href: '/sounds',
       icon: PiWaveformBold
+    },
+    {
+      id: 'themes',
+      title: 'Themes',
+      href: '/themes',
+      icon: RiBrush2Fill
     }
   ],
   errorMessages: {
@@ -182,6 +188,18 @@ const config = {
     'Loud',
     'NSFW',
     'Other'
+  ],
+  themeCategories: [
+    'Gradient',
+    'Light',
+    'Dark',
+    'Red',
+    'Orange',
+    'Yellow',
+    'Green',
+    'Blue',
+    'Purple',
+    'Pink'
   ],
   emojiMaxCategoriesLength: 4,
   packagesMinEmojisLength: 4,
@@ -274,6 +292,19 @@ const config = {
     'Loud': <AiFillSound />,
     'NSFW': <HiMiniExclamationCircle />,
     'Other': <BsThreeDots />
+  },
+  themeCategoriesIcons: {
+    'All': <BiSolidCategory />,
+    'Gradient': <span className='block w-[14px] h-[14px] rounded-full bg-gradient-to-r from-pink-400 to-purple-500' />,
+    'Light': <span className='block w-[14px] h-[14px] bg-white rounded-full' />,
+    'Dark': <span className='block w-[14px] h-[14px] bg-black rounded-full' />,
+    'Red': <span className='block w-[14px] h-[14px] bg-red-500 rounded-full' />,
+    'Orange': <span className='block w-[14px] h-[14px] bg-orange-500 rounded-full' />,
+    'Yellow': <span className='block w-[14px] h-[14px] bg-yellow-500 rounded-full' />,
+    'Green': <span className='block w-[14px] h-[14px] bg-green-500 rounded-full' />,
+    'Blue': <span className='block w-[14px] h-[14px] bg-blue-500 rounded-full' />,
+    'Purple': <span className='block w-[14px] h-[14px] bg-purple-500 rounded-full' />,
+    'Pink': <span className='block w-[14px] h-[14px] bg-pink-500 rounded-full' />
   },
   sortIcons: {
     'Servers': <FaCompass />,
@@ -430,6 +461,12 @@ const config = {
       description: 'Ensure your sound does not violate any copyright or intellectual property rights. Avoid using copyrighted audio, music, or sound effects without proper authorization.'
     }
   },
+  themesDenyReasons: {
+    'proper-categorization': {
+      name: 'Proper Categorization',
+      description: 'Ensure your theme is categorized correctly. Misleading categorization can result in rejection.'
+    }
+  },
   quarantineRestrictions: {
     'PROFILES_CREATE': {
       available_to: ['USER_ID'],
@@ -498,6 +535,10 @@ const config = {
     'LOGIN': {
       available_to: ['USER_ID'],
       description: 'Logging in.'
+    },
+    'THEMES_CREATE': {
+      available_to: ['USER_ID'],
+      description: 'Listing themes.'
     }
   }
 };

@@ -18,7 +18,7 @@ import { FaCompass, FaCrown, FaEye, FaUserCircle } from 'react-icons/fa';
 import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
 import { BiCloudDownload, BiSolidCategory } from 'react-icons/bi';
 import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
-import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, deleteBlockedIP, deleteLink, deleteBotDenyRecord, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
+import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, deleteBlockedIP, deleteLink, deleteBotDenyRecord, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
 import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
 import config from '@/config';
 import sleep from '@/lib/sleep';
@@ -1111,6 +1111,174 @@ export default function Page() {
       }
     },
     {
+      id: 'themesQueue',
+      name: 'Themes Queue',
+      data: {
+        title: 'Themes Queue',
+        subtitle: 'Here you can see the all the themes that published on discord.place.',
+        totalCount: data?.queue?.themes?.length || 0,
+        tableData: {
+          tabs: [
+            {
+              label: 'Waiting Approval',
+              count: data?.queue?.themes?.filter(theme => !theme.approved).length,
+              columns: data?.queue?.themes?.filter(theme => !theme.approved).map(theme => [
+                {
+                  type: 'theme',
+                  id: theme.id,
+                  colors: theme.colors
+                },
+                {
+                  type: 'user',
+                  id: theme.publisher.id,
+                  username: theme.publisher.username,
+                  avatar: theme.publisher.avatar
+                },
+                {
+                  type: 'category',
+                  value: theme.categories,
+                  icons: config.themeCategoriesIcons
+                },
+                {
+                  type: 'date',
+                  value: new Date(theme.createdAt)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'Theme',
+                  icon: HiTemplate,
+                  sortable: true
+                },
+                {
+                  name: 'Publisher',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Categories',
+                  icon: BiSolidCategory,
+                  sortable: true
+                },
+                {
+                  name: 'Date Added',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'View Theme',
+                  icon: FaEye,
+                  action: () => {
+                    const column = useDashboardStore.getState().selectedItems[0];
+                    
+                    setSelectedItems([]);
+
+                    router.push(`/themes/${column[0].id}`);
+                  }
+                },
+                {
+                  name: 'Approve',
+                  icon: IoMdCheckmarkCircle,
+                  action: () => bulkAction({
+                    action: item => approveTheme(item.id),
+                    fetchKey: 'themes'
+                  }),
+                  hide: !data.permissions?.canApproveThemes
+                },
+                {
+                  name: 'Deny',
+                  icon: IoMdCloseCircle,
+                  trigger: DenyDropdown,
+                  triggerProps: {
+                    description: 'Please select a reason to deny.',
+                    reasons: config.themesDenyReasons,
+                    onDeny: reason => bulkAction({
+                      action: item => denyTheme(item.id, reason),
+                      fetchKey: 'themes'
+                    })
+                  },
+                  hide: !data.permissions?.canApproveThemes
+                }
+              ]
+            },
+            {
+              label: 'Approved',
+              count: data?.queue?.themes?.filter(theme => theme.approved).length,
+              columns: data?.queue?.themes?.filter(theme => theme.approved).map(theme => [
+                {
+                  type: 'theme',
+                  id: theme.id,
+                  colors: theme.colors
+                },
+                {
+                  type: 'user',
+                  id: theme.publisher.id,
+                  username: theme.publisher.username,
+                  avatar: theme.publisher.avatar
+                },
+                {
+                  type: 'category',
+                  value: theme.categories,
+                  icons: config.themeCategoriesIcons
+                },
+                {
+                  type: 'date',
+                  value: new Date(theme.createdAt)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'Theme',
+                  icon: HiTemplate,
+                  sortable: true
+                },
+                {
+                  name: 'Publisher',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Categories',
+                  icon: BiSolidCategory,
+                  sortable: true
+                },
+                {
+                  name: 'Date Added',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'View Theme',
+                  icon: FaEye,
+                  action: () => {
+                    const column = useDashboardStore.getState().selectedItems[0];
+                    
+                    setSelectedItems([]);
+
+                    router.push(`/themes/${column[0].id}`);
+                  }
+                },
+                {
+                  name: 'Delete',
+                  icon: IoMdCloseCircle,
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'theme',
+                    action: item => deleteTheme(item.id),
+                    fetchKey: 'themes'
+                  }),
+                  hide: !data.permissions?.canDeleteThemes
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       id: 'links',
       name: 'Links',
       data: {
@@ -1580,6 +1748,9 @@ export default function Page() {
         break;
       case 'reviewsQueue':
         fetchData(['reviews']);
+        break;
+      case 'themesQueue':
+        fetchData(['themes']);
         break;
       case 'blockedIPs':
         fetchData(['blockedips']);
