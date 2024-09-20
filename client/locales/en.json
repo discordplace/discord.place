@@ -2100,6 +2100,7 @@
             "title": "Adding a new theme",
             "subtitle": "You're about to submit a new theme to discord.place. This means your theme will be listed on discord.place and everyone will be able to see it. You can remove your theme from discord.place at any time.",
             "toast": {
+              "gradientCategoryRequired": "If you select two different colors, you must select a gradient category.",
               "addingTheme": "Theme is being added..",
               "themeAdded": "Theme added! You will be redirected to the theme page in a few seconds."
             },

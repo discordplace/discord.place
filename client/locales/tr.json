@@ -2100,6 +2100,7 @@
             "title": "Yeni tema ekleniyor",
             "subtitle": "discord.place'e yeni bir tema eklemek üzeresiniz. Bu, temanızın discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Temanızı istediğiniz zaman discord.place'den kaldırabilirsiniz...",
             "toast": {
+              "gradientCategoryRequired": "Eğer iki farklı renk seçerseniz, renk geçişli kategorisini seçmek zorundasınız.",
               "addingTheme": "Tema ekleniyor..",
               "themeAdded": "Tema eklendi! Birkaç saniye içinde tema sayfasına yönlendirileceksiniz."
             },

@@ -14,6 +14,7 @@ import { TbLoader } from 'react-icons/tb';
 import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
 import { HexAlphaColorPicker } from 'react-colorful';
+import { isEqual } from 'lodash';
 
 export default function NewTheme() {
   const setCurrentlyAddingTheme = useAccountStore(state => state.setCurrentlyAddingTheme);
@@ -31,6 +32,8 @@ export default function NewTheme() {
   const router = useRouter();
 
   function addTheme() {
+    if (!isEqual(colors.primary, colors.secondary) && !themeCategories.includes('Gradient')) return toast.error(t('accountPage.tabs.myThemes.sections.addTheme.toast.gradientCategoryRequired'));
+
     setLoading(true);
 
     toast.promise(createTheme({ colors, categories: themeCategories }), {

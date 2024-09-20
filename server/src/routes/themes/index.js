@@ -45,6 +45,8 @@ module.exports = {
 
       const { colors, categories } = matchedData(request);
 
+      if (colors.primary !== colors.secondary && !categories.includes('Gradient')) return response.sendError('If you are using different primary and secondary colors, you must include the Gradient category.', 400);
+
       const themeExists = await Theme.exists({ 'colors.primary': colors.primary, 'colors.secondary': colors.secondary });
       if (themeExists) return response.sendError('This theme already exists.', 400);
 
