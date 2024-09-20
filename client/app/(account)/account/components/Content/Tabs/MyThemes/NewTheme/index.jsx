@@ -115,6 +115,7 @@ export default function NewTheme() {
                   <input
                     type='text'
                     value={colors.primary || '#000000'}
+                    maxLength={7}
                     onChange={event => setColors(oldColors => ({ ...oldColors, primary: event.target.value }))}
                     className='w-full px-2 py-1 mt-4 text-sm max-w-[120px] font-medium rounded-md outline-none text-secondary placeholder-placeholder bg-secondary hover:bg-quaternary focus-visible:bg-quaternary'
                   />
@@ -137,6 +138,7 @@ export default function NewTheme() {
                   <input
                     type='text'
                     value={colors.secondary || '#000000'}
+                    maxLength={7}
                     onChange={event => setColors(oldColors => ({ ...oldColors, secondary: event.target.value }))}
                     className='w-full px-2 py-1 mt-4 text-sm max-w-[120px] font-medium rounded-md outline-none text-secondary placeholder-placeholder bg-secondary hover:bg-quaternary focus-visible:bg-quaternary'
                   />
