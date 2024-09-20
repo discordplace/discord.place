@@ -84,7 +84,7 @@ async function createPanelMessageOptions(guild, server) {
     const user = client.users.cache.get(voter.user.id) || await client.users.fetch(voter.user.id).catch(() => null);
     const userIsPremium = premiumUsers.some(premiumUser => premiumUser.id === voter.user.id);
     const username = user ? user.username : user;
-    const usernameText = userIsPremium ? `[1;2m[1;35m✦ ${username}[0m[1m` : username;
+    const usernameText = userIsPremium ? `[1;2m[1;35m✦ ${username.slice(0, 6)}[0m[1m` : username;
 
     topVotersTable.push([`${index + 1}.`, formatter.format(voter.vote), usernameText]);
   }
