@@ -3,7 +3,6 @@ const Discord = require('discord.js');
 const { CronJob } = require('cron');
 const axios = require('axios');
 const CloudflareAPI = require('cloudflare');
-const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
 const updateClientActivity = require('@/utils/updateClientActivity');
@@ -11,7 +10,6 @@ const syncMemberRoles = require('@/utils/syncMemberRoles');
 
 // Schemas
 const Server = require('@/schemas/Server');
-const Panel = require('@/schemas/Server/Panel');
 const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
@@ -76,6 +74,10 @@ module.exports = class Client {
       process.exit(1);
     });
 
+    this.client.rest.on(Discord.RESTEvents.RateLimited, rateLimitInfo => {
+      logger.warn(`Rate limited: ${rateLimitInfo.route} ${rateLimitInfo.method} ${rateLimitInfo.retryAfter}ms ${rateLimitInfo.global ? '(global)' : ''} ${rateLimitInfo.hash} ${rateLimitInfo.url}`);
+    });
+
     this.client.once('ready', async () => {
       if (!client.guilds.cache.get(config.guildId)) {
         logger.error(`Guild with ID ${config.guildId} not found. You can change this guild ID in the config file.`);
@@ -115,7 +117,6 @@ module.exports = class Client {
 
       if (options.startup.checkDeletedInviteCodes) this.checkDeletedInviteCodes();
       if (options.startup.checkDeletedRewardsRoles) this.checkDeletedRewardsRoles();
-      if (options.startup.updatePanelMessages) this.updatePanelMessages();
       if (options.startup.updateClientActivity) updateClientActivity();
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
       if (options.startup.checkReminerMetadatas) this.checkReminerMetadatas();
@@ -214,11 +215,6 @@ module.exports = class Client {
     if (deleteServerOperations.length > 0 || deleteRoleOperations.length > 0) {
       logger.info(`Deleted vote rewards that associated with deleted servers or roles. (Operations: ${deleteServerOperations.length + deleteRoleOperations.length})`);
     }
-  }
-  
-  async updatePanelMessages() {
-    const panels = await Panel.find();
-    for (const panel of panels) await updatePanelMessage(panel.guildId);
   }
 
   async saveMonthlyVotes() {

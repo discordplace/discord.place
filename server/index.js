@@ -21,7 +21,6 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
   startup: {
     checkDeletedInviteCodes: true,
     checkDeletedRewardsRoles: true,
-    updatePanelMessages: true,
     updateClientActivity: true,
     checkVoteReminderMetadatas: true,
     checkReminerMetadatas: true,

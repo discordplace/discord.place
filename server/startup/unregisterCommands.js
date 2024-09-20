@@ -12,7 +12,6 @@ const client = new Client();
 client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
   startup: {
     checkDeletedInviteCodes: false,
-    updatePanelMessages: false,
     updateClientActivity: false,
     checkVoteReminderMetadatas: false,
     checkReminerMetadatas: false,
