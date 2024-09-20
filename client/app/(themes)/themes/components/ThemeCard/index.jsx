@@ -17,7 +17,7 @@ extend([
   a11yPlugin
 ]);
 
-export default function ThemeCard({ id, primaryColor, secondaryColor }) {
+export default function ThemeCard({ id, primaryColor, secondaryColor, className }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
 
@@ -48,9 +48,14 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn, user]);
 
+  const Container = id ? Link : 'div';
+
   return (
-    <Link
-      className='hover:opacity-80 transition-all rounded-lg select-none w-full h-[200px] p-0.5'
+    <Container
+      className={cn(
+        'hover:opacity-80 transition-all rounded-lg select-none w-full h-[200px] p-0.5',
+        className
+      )}
       style={{
         background: `linear-gradient(${primaryColor}, ${secondaryColor})`
       }}
@@ -138,6 +143,6 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
           </p>
         </div>
       </div>
-    </Link>
+    </Container>
   );
 }
