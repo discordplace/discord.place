@@ -8,9 +8,7 @@ import a11yPlugin from 'colord/plugins/a11y';
 import cn from '@/lib/cn';
 import Link from 'next/link';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
-import { useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
-import getAverageColor from '@/app/(themes)/themes/components/ThemeCard/getAverageColor';
 
 extend([
   mixPlugin,
@@ -32,21 +30,6 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
   const averageColor = colord(primaryColor).mix(colord(secondaryColor)).toHex();
   const contrast = colord(averageColor).contrast();
   const contrastColor = contrast > 1.5 ? 'dark' : 'light';
-  
-  const [avatarAverageColor, setAvatarAverageColor] = useState(null);
-
-  useLayoutEffect(() => {
-    if (loggedIn && !user?.banner) {
-      const image = document.querySelector(`img[alt="Image ${user.avatar}"]`);
-      if (!image) return;
-      
-      if (image) getAverageColor(image)
-        .then(setAvatarAverageColor)
-        .catch(console.error);
-    } else setAvatarAverageColor('#757e8a');
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedIn, user]);
 
   const Container = id ? Link : 'div';
 
@@ -71,11 +54,12 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
             height={60}
           />
         ) : (
-          <div
-            className='w-full rounded-t-lg min-h-[60px] bg-black/40'
-            style={{
-              background: avatarAverageColor
-            }}
+          <Image
+            className='w-full rounded-t-lg min-h-[60px] object-cover'
+            src='/og-black.png'
+            alt='Placeholder Banner'
+            width={200}
+            height={60}
           />
         )}
 
