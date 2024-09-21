@@ -36,7 +36,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
   return (
     <Container
       className={cn(
-        'hover:opacity-80 transition-all rounded-lg select-none w-full h-[200px] p-0.5',
+        'hover:opacity-80 transition-all rounded-lg select-none w-full h-max p-0.5',
         className
       )}
       style={{
@@ -49,13 +49,13 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
           <UserBanner
             id={user.id}
             hash={user.banner}
-            className='w-full rounded-t-lg min-h-[60px] object-cover'
+            className='w-full rounded-t-lg h-[60px] object-cover'
             width={200}
             height={60}
           />
         ) : (
           <Image
-            className='w-full rounded-t-lg min-h-[60px] object-cover'
+            className='w-full rounded-t-lg h-[60px] object-cover'
             src='/og-black.png'
             alt='Placeholder Banner'
             width={200}
@@ -119,7 +119,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
 
           <p
             className={cn(
-              'mt-3 text-xs line-clamp-2',
+              'my-3 text-xs line-clamp-2',
               contrastColor === 'dark' ? 'text-white/60' : 'text-black/60'
             )}
           >
