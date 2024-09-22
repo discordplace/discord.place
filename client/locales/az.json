@@ -598,7 +598,7 @@
     "searchInputPlaceholder": "Hex rəng, kateqoriya və ya id ilə tema axtarın.",
     "categorySelectPlaceholder": "Rənglər",
     "sortSelect": {
-      "placeholder": "Sorting",
+      "placeholder": "Çeşidləmə",
       "items": {
         "newest": "Yenidən köhnəyə",
         "oldest": "Köhnədən yeniyə"
@@ -612,53 +612,53 @@
   "themePage": {
     "toast": {
       "deletingTheme": "{{id}} tema silinir..",
-      "themeDeleted": "Theme {{id}} successfully deleted. You will be redirected to the home page in a few seconds."
+      "themeDeleted": "{{id}} teması uğurla silindi. Bir neçə saniyədən sonra ana səhifəyə yönləndiriləcəksiniz."
     },
     "notApprovedInfo": {
-      "description": "Currently, only you can see this theme. Once the theme is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your theme is approved. Make sure you open your DMs.",
-      "linkText": "our support server"
+      "description": "Hazırda bu temanı yalnız siz görə bilərsiniz. Tema təsdiqləndikdən sonra ictimai olacaq. O vaxta qədər temanız təsdiqləndikdə <link>-ə gəlib botumuzdan bildiriş ala bilərsiniz. DM-lərinizi açdığınızdan əmin olun."",
+      "linkText": "dəstək serverimiz"
     },
     "themeDetails": {
-      "title": "About Theme",
+      "title": "Tema haqqında",
       "fields": {
-        "uploadedAt": "Uploaded At",
-        "categories": "Categories",
-        "publisher": "Publisher"
+        "uploadedAt": "Yüklənib",
+        "categories": "Kateqoriyalar",
+        "publisher": "Yayınlayan"
       },
       "colors": {
-        "copied": "Color {{color}} copied to clipboard.",
-        "copyPrimary": "Copy Primary Color",
-        "copySecondary": "Copy Secondary Color"
+        "copied": "Rəng {{color}} buferə kopyalandı.",
+        "copyPrimary": "Əsas Rəngi ​​Kopyala",
+        "copySecondary": "İkinci rəngi kopyalayın"
       }
     },
     "frequentlyAskedQuestions": {
-      "title": "Frequently Asked Questions",
+      "title": "Tez-tez verilən suallar",
       "labels": [
-        "How can I copy theme colors?",
-        "How can I use this colors in my Discord profile?", 
-        "This profile theme is inappropriate. What can I do?"
+        "Tema rənglərini necə kopyalaya bilərəm?",
+        "Discord profilimdə bu rənglərdən necə istifadə edə bilərəm?", 
+        "Bu profil teması uyğun deyil. Mən nə edə bilərəm?"
       ],
       "answers": [
-        "You can use the buttons above to copy the primary and secondary colors of the theme.",
+        "Temanın əsas və ikincil rənglərini köçürmək üçün yuxarıdakı düymələrdən istifadə edə bilərsiniz.",
         {
-          "title": "I'm glad to hear that! There are 1 ways to use this colors in your Discord profile.",
+          "title": "Bunu eşitdiyimə şadam! Discord profilinizdə bu rənglərdən istifadə etməyin 1 yolu var.",
           "methods": [
             {
-              "buttonText": "1. Copy & Paste",
-              "instructionsBefore": "Using our website, you can copy the colors and paste them to your Discord profile. Here how you can do this:",
+              "buttonText": "1. Kopyala & Yapışdır",
+              "instructionsBefore": "Veb saytımızdan istifadə edərək rəngləri kopyalayıb Discord profilinizə yapışdıra bilərsiniz. Bunu belə edə bilərsiniz:",
               "instructions": [
-                "Click the \"Copy Primary Color\" button to copy the primary color.",
-                "Open your Discord App and right click to your server.",
-                "Go to User Settings > Profiles & scroll down to the profile theme settings.",
-                "Click the Primary and paste the color you copied.",
-                "Go back to our website and click the \"Copy Secondary Color\" button to copy the secondary color.",
-                "Go back to Discord and paste the color you copied to the Secondary color.",
-                "Save the changes and tada! Now your profile is using the this theme colors."
+                "Əsas rəngi kopyalamaq üçün \"Əsas Rəngi ​​Kopyala\" düyməsini klikləyin.",
+                "Discord Tətbiqinizi açın və serverinizə sağ klik vurun.",
+                "İstifadəçi Parametrləri > Profillər bölməsinə keçin və profil teması parametrlərinə aşağı diyirləyin.",
+                "Əsas üzərinə klikləyin və kopyaladığınız rəngi yapışdırın.",
+                "Veb saytımıza qayıdın və ikincil rəngi kopyalamaq üçün \"İkinci Rəngi ​​Kopyala\" düyməsini klikləyin.",
+                "Discord-a qayıdın və kopyaladığınız rəngi İkincil rəngə yapışdırın.",
+                "Dəyişiklikləri saxlayın! İndi profiliniz bu mövzu rənglərindən istifadə edir."
               ]
             }
           ]
         },
-        "You can use the report button on the bottom right of the page to report the theme with a valid reason. Our team will review the theme and take necessary actions."
+        "Temanı əsaslı səbəblə bildirmək üçün səhifənin aşağı sağ tərəfindəki hesabat düyməsini istifadə edə bilərsiniz. Komandamız temanı nəzərdən keçirəcək və lazımi tədbirlər görəcək."
       ]
     },
     "dangerZone": {
