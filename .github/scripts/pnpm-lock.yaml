@@ -11,6 +11,9 @@ importers:
       '@actions/core':
         specifier: ^1.10.1
         version: 1.10.1
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
     devDependencies:
       dotenv:
         specifier: ^16.4.5
@@ -31,6 +34,9 @@ packages:
   dotenv@16.4.5:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
+
+  lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
   tunnel@0.0.6:
     resolution: {integrity: sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==}
@@ -59,6 +65,8 @@ snapshots:
   '@fastify/busboy@2.1.1': {}
 
   dotenv@16.4.5: {}
+
+  lodash@4.17.21: {}
 
   tunnel@0.0.6: {}
 

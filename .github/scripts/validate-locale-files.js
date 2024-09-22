@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const core = require('@actions/core');
+const lodash = require('lodash');
 
 if (!process.env.DEFAULT_LOCALE_CODE) core.setFailed('DEFAULT_LOCALE_CODE is not set');
 
@@ -17,6 +18,38 @@ filteredLocales.forEach(localeFile => {
 
   try {
     JSON.parse(content);
+
+    // check for missing keys
+    const defaultLocalePath = path.join(localesDir, 'en.json');
+    const defaultLocaleContent = fs.readFileSync(defaultLocalePath, 'utf8');
+    const defaultLocale = JSON.parse(defaultLocaleContent);
+
+    const localeContent = JSON.parse(content);
+    
+    // keys can be object in object so we need to flatten it
+    const flattenedDefaultLocale = lodash.flattenDeep(lodash.toPairsDeep(defaultLocale));
+    const flattenedLocaleContent = lodash.flattenDeep(lodash.toPairsDeep(localeContent));
+
+    const missingKeys = flattenedDefaultLocale.filter(([key]) => !flattenedLocaleContent.some(([localeKey]) => localeKey === key));
+    
+    if (missingKeys.length > 0) {
+      core.error(`Missing keys in ${locale}.json`, {
+        title: 'Missing keys',
+        file: `${locale}.json`,
+        keys: missingKeys.map(([key]) => key)
+      });
+    }
+
+    // check for extra keys
+    const extraKeys = flattenedLocaleContent.filter(([key]) => !flattenedDefaultLocale.some(([localeKey]) => localeKey === key));
+
+    if (extraKeys.length > 0) {
+      core.error(`Extra keys in ${locale}.json`, {
+        title: 'Extra keys',
+        file: `${locale}.json`,
+        keys: extraKeys.map(([key]) => key)
+      });
+    }
   } catch (e) {
     failedParse.push(locale);
   }

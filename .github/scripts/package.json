@@ -9,6 +9,7 @@
     "dotenv": "^16.4.5"
   },
   "dependencies": {
-    "@actions/core": "^1.10.1"
+    "@actions/core": "^1.10.1",
+    "lodash": "^4.17.21"
   }
 }
