@@ -2076,52 +2076,54 @@
       }
     },
     "myThemes": {
-      "title": "My Themes",
-      "subtitle": "View themes that you have listed on discord.place. You can also submit a new theme to discord.place.",
+      "title": "Mənim Temalarım",
+      "subtitle": "Discord.place üzərində siyahıya aldığınız temalara baxın. Siz həmçinin yeni bir tema da təqdim edə bilərsiniz.",
       "sections": {
         "listedThemes": {
-          "title": "Listed Themes",
-          "subtitle": "Here, you can see the themes that you have listed on discord.place.",
-          "emptyErrorState": {
-            "title": "It's quiet in here...",
-            "message": "You have not listed any themes on discord.place."
-          }
-        },
+        "title": "Siyahıya Alınmış Temalar",
+        "subtitle": "Burada, discord.place üzərində siyahıya aldığınız temaları görə bilərsiniz.",
+        "emptyErrorState": {
+         "title": "Bura çox sakitdir...",
+         "message": "Discord.place üzərində heç bir tema siyahıya almamısınız."
+       }
+     }
+    }
+  },
         "newTheme": {
-          "title": "New Theme",
-          "subtitle": "Submit a new theme to discord.place.",
+          "title": "Yeni Tema",
+          "subtitle": "Discord.place saytına yeni mövzu təqdim edin.",
           "note": {
-            "title": "Note",
-            "description": "Your submitted theme will be reviewed by our team before it is listed on discord.place. Please make sure that your theme is not violating our theme submission guidelines. Our theme submission guidelines can be found in our <link>.",
+            "title": "Qeyd",
+            "description": "Göndərdiyiniz tema, discord.place-də siyahıya alınmadan əvvəl komandamız tərəfindən nəzərdən keçiriləcək. Zəhmət olmasa, temanızın tema təqdim etmə qaydalarımızı pozmadığına əmin olun. Tema təqdim etmə qaydalarımızı <link>-də tapa bilərsiniz.",
             "linkText": "Discord server"
           }
         },
         "addTheme": {
-          "title": "Adding a new theme",
-          "subtitle": "You're about to submit a new theme to discord.place. This means your theme will be listed on discord.place and everyone will be able to see it. You can remove your theme from discord.place at any time.",
+          "title": "Yeni tema əlavə olunur",
+          "subtitle": "Siz yeni bir temanı discord.place-ə təqdim etmək üzrəsiniz. Bu, temanızın discord.place üzərində siyahıya alınacağı və hər kəsin onu görə biləcəyi deməkdir. Temanızı istənilən vaxt discord.place-dən silə bilərsiniz.",
           "toast": {
-            "gradientCategoryRequired": "Əgər iki fərqli rəng seçirsinizsə, rəng keçidli kateqoriyasını seçməlisiniz.",
-            "addingTheme": "Theme is being added..",
-            "themeAdded": "Theme added! You will be redirected to the theme page in a few seconds."
+           "gradientCategoryRequired": "Əgər iki fərqli rəng seçirsinizsə, rəng keçidli kateqoriyasını seçməlisiniz.",
+           "addingTheme": "Tema əlavə edilir..",
+           "themeAdded": "Tema əlavə olundu! Bir neçə saniyə ərzində tema səhifəsinə yönləndiriləcəksiniz."
           },
           "fields": {
             "colors": {
-              "label": "Colors",
-              "description": "Select a primary and secondary color for your theme.",
-              "primaryLabel": "Primary Color",
-              "secondaryLabel": "Secondary Color"
+            "label": "Rənglər",
+            "description": "Temanız üçün əsas və ikinci rəngi seçin.",
+            "primaryLabel": "Əsas Rəng",
+            "secondaryLabel": "İkinci Rəng"
             },
             "categories": {
-              "label": "Categories",
-              "description": "Select all categories that your theme belongs to. This will help users find your theme."
+              "label": "Kategoriyalar",
+              "description": "Temanızın aid olduğu bütün kateqoriyaları seçin. Bu, istifadəçilərə Temanızı tapmağa kömək edəcək."
             },
             "contentPolicy": {
-              "label": "Content Policy",
-              "description": "By adding your theme to discord.place, you agree to our Theme Submission Guidelines. <note>",
-              "note": "* Can be found in our Discord server."
+              "label": "Məzmun Siyasəti",
+              "description": "Temanızı discord.place-ə əlavə etməklə, Tema Təqdim Etmə Qaydalarımızla razılaşırsınız. <qeyd>",
+              "note": "* Discord serverimizdə tapa bilərsiniz."
             },
             "areYouReady": {
-              "label": "Are you ready?"
+              "label": "Hazırsan?"
             }
           }
         }
