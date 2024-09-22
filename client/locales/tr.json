@@ -1,2127 +1,2126 @@
 {
   "home": {
-    "title": "Discord ile Alakalı Her Şey",
-    "subtitle": "Discord ile alakalı her şey. Geliştirici, sunucu sahibi veya sadece bir kullanıcı olmanız fark etmez, burada size faydalı bir şeyler bulabilirsiniz.",
-    "trustedByHeading": "<totalServers> 'dan fazla sunucu tarafından güveniliyor",
+    "title": "All things related to Discord",
+    "subtitle": "A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.",
+    "trustedByHeading": "Trusted by more than <totalServers> servers",
     "infoCards": [
       {
-        "title": "Açık Kaynak",
-        "description": "Gördüğünüz her şey açık kaynaklıdır. GitHub'dan kaynak kodunu kontrol edebilirsiniz. Geri bildirimde bulunmak veya sorunları bildirmekten çekinmeyin. Her zaman geri bildirime açığız.",
-        "buttonText": "GitHub'da Görüntüle"
+        "title": "Open Source",
+        "description": "Everything you see here is open source. You can check the source code on GitHub. Feel free to contribute or report issues. We are always open to feedback.",
+        "buttonText": "See on GitHub"
       },
       {
-        "title": "Öne Çıkın",
-        "description": "Discord Place, sunucularınızı ve botlarınızı tanıtmak için harika bir yerdir. Topluluktan oy, inceleme ve geri bildirim alın. Kalabalıktan sıyrılın.",
-        "buttonTextLoggedIn": "Hesabım",
-        "buttonTextLoggedOut": "Giriş Yap",
-        "serverCardDescription": "Discord ile alakalı her şey. Geliştirici, sunucu sahibi veya sadece bir kullanıcı olmanız fark etmez, burada size faydalı bir şeyler bulabilirsiniz."
+        "title": "Stand Out",
+        "description": "Discord Place is a great place to promote your servers and bots. Get votes, reviews, and feedback from the community. Stand out from the crowd.",
+        "buttonTextLoggedIn": "My Account",
+        "buttonTextLoggedOut": "Login",
+        "serverCardDescription": "A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here."
       },
       {
-        "title": "Özelleştirilebilir Profiller",
-        "description": "Kendi özelleştirilebilir profilinizi oluşturun. Sosyal medya bağlantılarınızı, işinizi ve becerilerinizi ekleyin. Profiliniz Discord hesabınıza bağlıdır.",
-        "profileCardBio": "Discord ile alakalı her şey. Geliştirici, sunucu sahibi veya sadece bir kullanıcı olmanız fark etmez, burada size faydalı bir şeyler bulabilirsiniz."
+        "title": "Customized Profiles",
+        "description": "Create your own customizable profile. Add your social media links, your job, and your skills. Let others know who you are. Linked with your Discord account.",
+        "profileCardBio": "A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here."
       },
       {
-        "title": "Geri Bildirim ve İncelemeler",
-        "description": "Topluluktan geri bildirim ve incelemeler alın. Sunucularınızı ve botlarınızı geliştirin. Başkalarına sunucularını ve botlarını geliştirmelerine yardımcı olun. Discord'u daha iyi bir yer haline getirin.",
+        "title": "Feedback & Reviews",
+        "description": "Get feedback and reviews from the community. Improve your servers and bots. Help others to improve their servers and bots. Make Discord a better place.",
         "reviews": [
-          "Discord Place, Discord ile alakalı her şey için inanılmaz bir merkez. Geliştirici ya da sunucu sahibi olun, buradaki kaynaklar paha biçilemez.",
-          "Discord Place harika bir yer ama hala bazı iyileştirmelere ihtiyaç var. Gelecekte neye benzeyeceğini görmeyi dört gözle bekliyorum.",
-          "Gelecekte Discord Place'ın neler sunacağını görmeyi dört gözle bekliyorum. Burada harika kaynaklar buldum.",
-          "Ben bir geliştiriciyim ve Discord Place'ı botumu tanıtmak için kullanıyorum. Harika geri bildirimler alıyorum."
+          "Discord Place is an incredible hub for anything Discord-related. Whether you're a developer or just managing a server, the resources here are invaluable.",
+          "Discord Place is a great place but still needs some improvements. I am looking forward to seeing what the future holds.",
+          "I look forward to seeing what Discord Place has to offer in the future. I have already found some great resources here.",
+          "I am a developer and I am using Discord Place to promote my bot. I am getting great feedback from the community."
         ]
       }
     ]
   },
   "header": {
     "links": [
-      "Servislerimiz",
+      "Services",
       "Blog",
       "Premium"
     ],
     "servicesDropdownLinks": [
-      "Profiller",
-      "Sunucular",
-      "Botlar",
-      "Emojiler",
-      "Şablonlar",
-      "Sesler",
-      "Temalar"
+      "Profiles",
+      "Servers",
+      "Bots",
+      "Emojis",
+      "Templates",
+      "Sounds",
+      "Themes"
     ],
-    "profiles": "Profiller",
-    "servers": "Sunucular",
-    "bots": "Botlar",
-    "emojis": "Emojiler",
-    "templates": "Şablonlar",
-    "sounds": "Sesler",
-    "themes": "Temalar",
-    "logout": "Çıkış Yap"
+    "profiles": "Profiles",
+    "servers": "Servers",
+    "bots": "Bots",
+    "emojis": "Emojis",
+    "templates": "Templates",
+    "sounds": "Sounds",
+    "themes": "Themes",
+    "logout": "Logout"
   },
   "footer": {
-    "title": "Discord ile alakalı her şey, bir arada.",
-    "copyRight": "{{year}} discord.place. Tüm hakları saklıdır.",
+    "title": "All things related to Discord all in one place.",
+    "copyRight": "{{year}} discord.place. All rights reserved.",
     "statusText": [
-      "Tüm sistemler çalışıyor",
-      "Kısmi kesinti",
-      "Kesinti"
+      "All systems operational",
+      "Partial outage",
+      "Major outage"
     ],
     "theme": {
-      "light": "Aydınlık",
-      "dark": "Karanlık"
+      "light": "Light",
+      "dark": "Dark"
     },
     "language": {
-      "en": "İngilizce",
-      "tr": "Türkçe",
-      "az": "Azerbaycanca"
+      "en": "English",
+      "tr": "Turkish",
+      "az": "Azerbaijani"
     },
     "blocks": [
       {
-        "title": "Sayfalar",
+        "title": "Pages",
         "links": [
-          "Anasayfa",
-          "API Dokümantasyonu",
-          "Servis Durumu",
+          "Home",
+          "API Documentation",
+          "Service Status",
           "Premium",
           "Blog"
         ]
       },
       {
-        "title": "Servislerimiz",
+        "title": "Our Services",
         "links": [
-          "Profiller",
-          "Sunucular",
-          "Botlar",
-          "Emojiler",
-          "Şablonlar",
-          "Sesler",
-          "Temalar"
+          "Profiles",
+          "Servers",
+          "Bots",
+          "Emojis",
+          "Templates",
+          "Sounds",
+          "Themes"
         ]
       },
       {
-        "title": "Yasal Dökümanlar",
+        "title": "Legal",
         "links": [
-          "Gizlilik Sözleşmesi",
-          "Kullanım Şartları",
-          "Çerez Politikası",
-          "İçerik Politikası",
-          "Satış Sözleşmesi"
+          "Privacy Policy",
+          "Terms of Service",
+          "Cookie Policy",
+          "Content Policy",
+          "Purchase Policy"
         ]
       },
       {
-        "title": "Sosyal Medya"
+        "title": "Socials"
       }
     ],
-    "newBadge": "Yeni"
+    "newBadge": "New"
   },
   "premiumPage": {
-    "title": "Premium Üyelik",
-    "subtitle": "Premium satın alarak özel ayrıcalıklara ve avantajlara erişebilirsin. Yıllık ve ömür boyu planlarla daha fazla tasarruf edebilirsin!",
+    "title": "Premium Membership",
+    "subtitle": "Unlock exclusive features and earn benefits by purchasing Premium. With annual & lifetime plans, you get to save more!",
     "billingCycle": {
-      "monthly": "Aylık",
-      "annual": "Yıllık",
-      "lifetime": "Ömür Boyu"
+      "monthly": "Monthly",
+      "annual": "Annual",
+      "lifetime": "Lifetime"
     },
-    "currentPlan": "Mevcut Plan",
-    "savePercentage": "{{percentage}} Tasarruf",
-    "featureHighlights": "Premium Özellikleri",
+    "currentPlan": "Current Plan",
+    "savePercentage": "Save {{percentage}}",
+    "featureHighlights": "Feature Highlights",
     "plans": {
-      "free": "Ücretsiz",
+      "free": "Free",
       "premium": "Premium"
     },
     "toast": {
-      "creatingCheckout": "Sizin için bir ödeme sayfası oluşturuluyor..",
-      "checkoutCreated": "Ödeme sayfası oluşturuldu! Birkaç saniye içinde ödeme sayfasına yönlendirileceksiniz.."
+      "creatingCheckout": "We are creating a checkout for you...",
+      "checkoutCreated": "Checkout created! Redirecting you to the payment page in few seconds..."
     },
-    "purchasePremium": "Premium Satın Al",
-    "loginToPurchase": "Satın almak için Giriş Yap",
+    "purchasePremium": "Purchase Premium",
+    "loginToPurchase": "Log in to Purchase",
     "features": [
       {
-        "label": "Özel Premium Rozeti",
-        "info": "Profilinizde, botlarınızda ve sunucularınızda özel bir premium rozeti sahibi olun."
+        "label": "Exclusive Premium Badge",
+        "info": "Show off your Premium status with an exclusive badge on your bots/servers & profile."
       },
       {
-        "label": "Göz Alıcı Efekler",
-        "info": "Profilinizde, botlarınızda ve sunucularınızda göz alıcı bir çerçeveye sahip olun."
+        "label": "Stunning Card Effects",
+        "info": "Get exclusive card effects for your bot/server & profile cards."
       },
       {
-        "label": "Özel Alan Adları",
-        "info": "dsc.wtf, dsc.mom ve dsc.dog gibi özel alan adlarını, profilinize kestirme bir yol olarak kullanma şansı."
+        "label": "Premium Preferred Hosts",
+        "info": "Ability to use dsc.wtf, dsc.mom, dsc.dog hostnames for your profile."
       },
       {
-        "label": "Profil Kartı Renkleri",
-        "info": "Profil kartınızın rengini değiştirin ve profilinizi daha da kişiselleştirin."
+        "label": "Profile Card Colors",
+        "info": "Customize your profile card with a variety of colors."
       },
       {
-        "label": "Çift Oy",
-        "info": "Sunucunuza ya da botunuza oy verildiğinde, 1 yerine 2 oy kazanın."
+        "label": "Doubled Votes",
+        "info": "Double the count of votes on your servers and bots."
       },
       {
-        "label": "Daha Fazla Oy Ödülleri",
-        "info": "Sunucu başına ekleyebileceğiniz oy ödülü sayısı artar."
+        "label": "Vote Rewards Limit (per server)",
+        "info": "Maximum amount of vote rewards you can create per server."
       },
       {
-        "label": "Daha Fazla Bağlantı",
-        "info": "Oluşturabileceğiniz maksimum kısaltılmış bağlantıların sayısını artar."
+        "label": "Links Limit",
+        "info": "Maximum amount of links you can create."
       },
       {
-        "label": "Oy Panellerinde Renkli İsim",
-        "info": "Oy verdiğiniz sunucuların oy panellerinde isminiz renkli görünür ve başında bir sembol bulunur."
+        "label": "Colorful Name in Panels",
+        "info": "Stand out with a colorful name on server panels."
       }
     ],
     "frequentlyAskedQuestions": {
-      "title": "Sıkça Sorulan Sorular",
-      "subtitle": "Aklına takılan bir şey mi var? Aşağıdaki SSS bölümümüze göz at.",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Do you have a question? Check out our FAQ section below.",
       "items": [
         {
-          "label": "Premium üyelik nedir?",
-          "content": "Premium üyelik, platformumuzda özel özelliklere ve içeriklere erişmenizi sağlayan abonelik tabanlı bir hizmettir."
+          "label": "What is a Premium Membership?",
+          "content": "Premium Membership is a subscription-based service that yield exclusive features and content to you on our platform."
         },
         {
-          "label": "Premium üyeliğin maliyeti nedir?",
-          "content": "Premium üyeliğin maliyeti aylık 3,00 $'dır. Ayrıca yıllık abonelikte 25,00 $ karşılığında (11,00 $ tasarruf edin) ve ömür boyu abonelikte 60,00 $ karşılığında indirimli abonelik sunuyoruz."
+          "label": "What is the cost of Premium Membership?",
+          "content": "The cost of Premium Membership is $3.00 per month. We also offer a discounted annual subscription for $25.00 per year (save $11.00) and a lifetime subscription for $60.00."
         },
         {
-            "label": "Premium üyeliğe nasıl abone olabilirim?",
-            "content": "Bu sayfada \"Premium Satın Al\" düğmesine tıklayarak Premium üyeliğe abone olabilirsiniz. Ödeme sürecini tamamlayabileceğiniz ödeme sayfasına yönlendirileceksiniz. Ödeme başarılı olduğunda, otomatik olarak Premium üyeliğe abone olacaksınız."
+          "label": "How can I subscribe as a Premium Membership?",
+          "content": "You can subscribe as a Premium Membership by clicking on the \"Create Checkout\" button on this page. You will be redirected to the checkout page where you can complete the payment process. Once the payment is successful, you will be given a Premium Membership subscription."
         },
         {
-            "label": "Premium üyelik için iade talep edebilir miyim?",
-            "content": "Premium üyelik için iade sunmuyoruz. Ancak, aboneliğinizi istediğiniz zaman iptal edebilirsiniz ve bir sonraki faturalama dönemi için ücretlendirilmezsiniz."
+          "label": "Can I request a refund for Premium Membership?",
+          "content": "We do not offer refunds for Premium Membership. However, you can cancel your subscription at any time, and you will not be charged for the next billing cycle."
         },
         {
-            "label": "Premium üyeliğimi başka bir hesaba devredebilir miyim?",
-            "content": "Hayır, Premium üyelik devredilemez."
+          "label": "Can I transfer my Premium Membership to another account?",
+          "content": "No, Premium Membership is non-transferable."
         }
       ]
     }
   },
   "errorPage": {
-    "badge": "Hata",
-    "title": "Üzgünüz, bir hata oluştu.",
+    "badge": "Error",
+    "title": "We're sorry, an error occurred.",
     "messages": {
-      "0": "Bir şeyler ters gitti.",
-      "401": "Bu sayfayı görüntüleyebilmek için yetkiniz yok.",
-      "404": "Aradığınız sayfa bulunamadı.",
-      "50001": "Bu profili düzenleyebilmek için yetkiniz yok.",
-      "50002": "Bu profilin sahibi şu an için Premium üyesi değil.",
-      "60001": "Bu sunucuyu düzenleyebilmek için yetkiniz yok.",
-      "70001": "Bu botu düzenleyebilmek için yetkiniz yok.",
-      "80001": "Aradığınız kısaltılmış bağlantı bulunamadı.",
-      "90001": "Aradığınız blog yazısı bulunamadı."
+      "0": "An unknown error occurred.",
+      "401": "You are not authorized to view this page.",
+      "404": "The page you are looking for does not exist.",
+      "50001": "You are not authorized to edit this profile.",
+      "50002": "The user who created the profile does not currently have premium.",
+      "60001": "You are not authorized to edit this server.",
+      "70001": "You are not authorized to edit this bot.",
+      "80001": "The link you are looking for does not exist.",
+      "90001": "The blog post you are looking for does not exist."
     }
   },
   "errorMessages": {
-    "validSearchQuery": "Lütfen geçerli bir arama sorgusu girin.",
-    "searchQueryTooShort": "Arama sorgusu çok kısa. Lütfen en az 3 karakter girin.",
-    "searchQueryTooLong": "Arama sorgusu çok uzun. Lütfen en fazla 100 karakter girin.",
-    "clipboardNotSupported": "Tarayıcınız panoya kopyalamayı desteklemiyor."
+    "validSearchQuery": "Please enter a valid search query.",
+    "searchQueryTooShort": "The search query is too short. Please enter a minimum of 3 characters.",
+    "searchQueryTooLong": "The search query is too long. Please enter a maximum of 100 characters.",
+    "clipboardNotSupported": "Your browser does not support the clipboard API."
   },
   "pagination": {
-    "inputOpened": "1 ile {{totalPages}} arasında bir sayfa numarası yazın ve Enter tuşuna basarak onaylayın."
+    "inputOpened": "Type a page number between 1 and {{totalPages}} and press Enter to navigate to that page."
   },
   "status": {
-    "incidentDescription": "Şu anda sistemlerimizde bazı sorunlar yaşıyoruz. Güncellemeler için servis durumu sayfamıza göz atın.",
-    "incidentContent": "Bu sorun {{startedAt}} tarihinde başladı.",
+    "incidentDescription": "We are currently experiencing some issues. Check our status page for updates.",
+    "incidentContent": "This incident started at {{startedAt}}.",
     "maintenanceDescription": {
-      "planned": "Hizmetlerimizde bakım yapmayı planlıyoruz.",
-      "started": "Şu anda hizmetlerimizde bakım yapıyoruz. Güncellemeler için servis durumu sayfamıza göz atın."
+      "planned": "We are scheduled to perform maintenance on our services.",
+      "started": "We are currently performing maintenance on our services. Check our status page for updates."
     },
     "maintenanceContent": {
-      "planned": "Bu bakımın {{date}} tarihinde başlaması planlanıyor.",
-      "started": "Bu bakım {{date}} tarihinde başladı ve şu anda devam ediyor."
+      "planned": "Routine maintenance is scheduled to start at {{date}}.",
+      "started": "We are currently undergoing routine maintenance since {{date}}."
     }
   },
   "buttons": {
-    "cancel": "İptal",
-    "close": "Kapat",
-    "viewIncident": "Daha Fazla Bilgi",
-    "viewMaintenance": "Daha Fazla Bilgi",
-    "back": "Geri",
-    "next": "İleri",
-    "publish": "Paylaş",
-    "resetSearch": "Sıfırla",
-    "confirm": "Onayla",
-    "upload": "Yükle",
-    "download": "İndir",
-    "delete": "Sil",
-    "createReminder": "Hatırlatıcı Oluştur",
-    "vote": "Oy Ver",
-    "joinServer": "Sunucuya Katıl",
-    "shareServer": "Sunucuyu Paylaş",
-    "manageServer": "Sunucuyu Yönet",
-    "buyTripleVotes": "3X Oy Satın Al",
-    "standOut": "Öne Çık",
-    "submitReview": "İncelemeyi Gönder",
-    "loginWithDiscord": "Discord ile Giriş Yap",
-    "discardChanges": "Değişiklikleri İptal Et",
-    "saveChanges": "Değişiklikleri Kaydet",
-    "enableTracking": "Takibi Etkinleştir",
-    "saveWebhookSettings": "Webhook Ayarlarını Kaydet",
-    "visit": "Görüntüle",
-    "share": "Paylaş",
-    "verify": "Doğrula",
-    "unverify": "Doğrulamayı Kaldır",
-    "save": "Kaydet",
-    "edit": "Düzenle",
-    "reset": "Sıfırla",
-    "add": "Ekle",
-    "addNew": "Yeni Ekle",
-    "darkMode": "Karanlık Mod",
-    "lightMode": "Aydınlık Mod",
-    "removeAll": "Hepsini Kaldır",
-    "change": "Değiştir",
-    "enlarge": "Büyüt",
-    "shrink": "Küçült",
-    "selectEmoji": "Emoji Seç",
-    "previous": "Geri",
-    "inviteBot": "Botu Davet Et",
-    "shareBot": "Botu Paylaş",
-    "manageBot": "Botu Yönet",
-    "backToEditing": "Düzenlemeye Geri Dön",
-    "showMarkdownPreview": "Markdown Önizlemesini Göster",
-    "saveRepository": "Depoyu Kaydet",
-    "generateApiKey": "API Anahtarı Oluştur",
-    "deleteApiKey": "API Anahtarını Sil",
-    "copyApiKey": "API Anahtarını Kopyala",
-    "apiDocumentation": "API Dokümantasyonu",
-    "create": "Oluştur",
-    "viewProfile": "Profili Görüntüle",
-    "createProfile": "Profil Oluştur",
-    "newLink": "Yeni Bağlantı",
-    "letsGo": "Hadi!",
-    "addBot": "Bot Ekle",
-    "addSound": "Ses Ekle",
-    "addTheme": "Tema Ekle",
-    "createReport": "Bildirim Oluştur",
-    "all": "Tümü",
-    "copy": "Kopyala"
+    "cancel": "Cancel",
+    "close": "Close",
+    "viewIncident": "View Incident",
+    "viewMaintenance": "View Maintenance",
+    "back": "Back",
+    "next": "Next",
+    "publish": "Publish",
+    "resetSearch": "Reset Search",
+    "confirm": "Confirm",
+    "upload": "Upload",
+    "download": "Download",
+    "delete": "Delete",
+    "createReminder": "Create Reminder",
+    "vote": "Vote",
+    "joinServer": "Join Server",
+    "shareServer": "Share Server",
+    "manageServer": "Manage Server",
+    "buyTripleVotes": "Get Triple Votes",
+    "standOut": "Stand Out",
+    "submitReview": "Submit Review",
+    "loginWithDiscord": "Log in with Discord",
+    "discardChanges": "Discard Changes",
+    "saveChanges": "Save Changes",
+    "enableTracking": "Enable Tracking",
+    "saveWebhookSettings": "Save Webhook Settings",
+    "visit": "Visit",
+    "share": "Share",
+    "verify": "Verify",
+    "unverify": "Unverify",
+    "save": "Save",
+    "edit": "Edit",
+    "reset": "Reset",
+    "add": "Add",
+    "addNew": "Add New",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "removeAll": "Remove All",
+    "change": "Change",
+    "enlarge": "Enlarge",
+    "shrink": "Shrink",
+    "selectEmoji": "Select Emoji",
+    "previous": "Previous",
+    "inviteBot": "Invite Bot",
+    "shareBot": "Share Bot",
+    "manageBot": "Manage Bot",
+    "backToEditing": "Back to Editing",
+    "showMarkdownPreview": "Show Markdown Preview",
+    "saveRepository": "Save Repository",
+    "generateApiKey": "Generate API Key",
+    "deleteApiKey": "Delete API Key",
+    "copyApiKey": "Copy API Key",
+    "apiDocumentation": "API Documentation",
+    "create": "Create",
+    "viewProfile": "View Profile",
+    "createProfile": "Create Profile",
+    "newLink": "New Link",
+    "letsGo": "Let's Go!",
+    "addBot": "Add Bot",
+    "addSound": "Add Sound",
+    "addTheme": "Add Theme",
+    "createReport": "Create Report",
+    "all": "All",
+    "copy": "Copy"
   },
   "voteCountdown": {
-    "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",
-    "mobile": "{{hours}}sa {{minutes}}dk kaldı"
+    "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",
+    "mobile": "Wait {{hours}}h {{minutes}}m"
   },
   "cookieBanner": {
-    "text": "Bu web sitesi, size en iyi deneyimi sunmak için 🍪 çerezleri kullanır.",
+    "text": "This website uses 🍪 cookies to ensure you get the best experience on our website.",
     "buttons": {
-      "ok": "Anladım!",
-      "learnMore": "Daha fazla bilgi"
+      "ok": "Got it!",
+      "learnMore": "Learn More"
     }
   },
-  "step": "ADIM {{currentStep}}",
+  "step": "STEP {{currentStep}}",
   "publishTemplatePage": {
-    "title": "Şablon Yayınla",
-    "subtitle": "Şablonunuzu sitemizde yayınlayın.",
+    "title": "Publish Template",
+    "subtitle": "List your template on Discord Place and let others use it.",
     "steps": [
       {
-        "title": "Detayları Bul",
+        "title": "Fetch Details",
         "inputs": {
           "templateId": {
-            "title": "Şablon detaylarınızı bulalım.",
-            "subtitle": "Aşağıya şablon ID'sini girmeniz gerekiyor.",
-            "placeholder": "Şablon ID'sini girin"
+            "title": "Let's start with finding your template details.",
+            "subtitle": "Enter the template ID below.",
+            "placeholder": "Enter template ID"
           }
         }
       },
       {
-        "title": "Detayları Doldur",
+        "title": "Fill Details",
         "inputs": {
           "templateCategories": {
-            "title": "Şimdi de detayları dolduralım.",
-            "subtitle": "Şablonunuz için bir veya daha fazla kategori seçin."
+            "title": "And now let's fill the details.",
+            "subtitle": "Choose one or more categories for your template."
           },
           "templateName": {
-            "title": "Şablon Adı",
-            "subtitle": "Şablonunuz için bir ad girin.",
-            "placeholder": "Şablon adını girin"
+            "title": "Template Name",
+            "subtitle": "Enter a name for your template.",
+            "placeholder": "Enter template name"
           },
           "templateDescription": {
-            "title": "Şablon Açıklaması",
-            "subtitle": "Şablonunuz için bir açıklama girin.",
-            "placeholder": "Şablon açıklamasını girin (min. {{min}} karakter)"
+            "title": "Template Description",
+            "subtitle": "Enter a description for your template.",
+            "placeholder": "template description (min {{min}} characters)"
           }
         }
       },
       {
-        "title": "Önizle ve Yayınla",
-        "heading": "Detaylarınızı onaylayın ve şablonunuzu yayınlayın.",
-        "description": "Detayları gözden geçirin ve şablonunuzu yayınlamak için yayınla düğmesine tıklayın.",
+        "title": "Preview & Publish",
+        "heading": "Confirm the details and publish your template.",
+        "description": "Review the details and click on the publish button to publish your template.",
         "fields": {
-          "categories": "Kategoriler",
-          "templateName": "Şablon Adı",
-          "templateDescription": "Şablon Açıklaması"
+          "categories": "Categories",
+          "templateName": "Template Name",
+          "templateDescription": "Template Description"
         },
         "disclaimer": {
-          "content": "Bu şablonu yayınlayarak <contentPolicyLink>'nı kabul etmiş olursunuz.",
-          "linkText": "içerik politikası"
+          "content": "By publishing this template, you agree to our <contentPolicyLink>.",
+          "linkText": "content policy"
         }
       }
     ],
     "toast": {
-      "publishingTemplate": "Şablon yayınlanıyor..",
-      "templatePublished": "Şablon başarıyla yayınlandı.",
-      "templateNotFound": "Şablon bulunamadı."
+      "publishingTemplate": "Publishing template...",
+      "templatePublished": "Template published successfully.",
+      "templateNotFound": "Template not found."
     }
   },
   "categories": {
-    "All": "Tümü",
-    "Chat": "Sohbet",
-    "Design": "Tasarım",
-    "Music": "Müzik",
-    "Education": "Eğitim",
-    "Gaming": "Oyun",
+    "All": "All",
+    "Chat": "Chat",
+    "Design": "Design",
+    "Music": "Music",
+    "Education": "Education",
+    "Gaming": "Gaming",
     "Anime": "Anime",
-    "Tech": "Teknoloji",
-    "Roleplay": "Rol Yapma",
-    "Event": "Etkinlik",
-    "Other": "Diğer",
-    "Memes": "Mizah",
-    "Loud": "Gürültülü",
-    "NSFW": "Yetişkin İçerik",
-    "Public": "Herkese Açık",
-    "Community": "Topluluk",
-    "Art": "Sanat",
-    "Programming": "Programlama",
-    "Science": "Bilim",
-    "Technology": "Teknoloji",
-    "Language": "Dil",
+    "Tech": "Tech",
+    "Roleplay": "Roleplay",
+    "Event": "Event",
+    "Other": "Other",
+    "Memes": "Memes",
+    "Loud": "Loud",
+    "NSFW": "NSFW",
+    "Public": "Public",
+    "Community": "Community",
+    "Art": "Art",
+    "Programming": "Programming",
+    "Science": "Science",
+    "Technology": "Technology",
+    "Language": "Language",
     "Pepe": "Pepe",
     "Pixel Art": "Pixel Art",
-    "Cute": "Sevimli",
-    "Logos": "Logolar",
-    "Utility": "Ek",
-    "Animated": "Hareketli",
-    "Moderation": "Moderasyon",
-    "Fun & Games": "Eğlence & Oyunlar",
-    "Economy": "Ekonomi",
-    "Art & Design": "Sanat & Tasarım",
-    "Virtual Assistants": "Sanal Asistanlar",
-    "Social Media Integration": "Sosyal Medya Entegrasyonu",
+    "Cute": "Cute",
+    "Logos": "Logos",
+    "Utility": "Utility",
+    "Animated": "Animated",
+    "Moderation": "Moderation",
+    "Fun & Games": "Fun & Games",
+    "Economy": "Economy",
+    "Art & Design": "Art & Design",
+    "Virtual Assistants": "Virtual Assistants",
+    "Social Media Integration": "Social Media Integration",
     "Anime & Manga": "Anime & Manga",
-    "Gradient": "Renk Geçişli",
-    "Light": "Aydınlık",
-    "Dark": "Karanlık",
-    "Red": "Kırmızı",
-    "Orange": "Turuncu",
-    "Yellow": "Sarı",
-    "Green": "Yeşil",
-    "Blue": "Mavi",
-    "Purple": "Mor",
-    "Pink": "Pembe"
+    "Gradient": "Gradient",
+    "Light": "Light",
+    "Dark": "Dark",
+    "Red": "Red",
+    "Orange": "Orange",
+    "Yellow": "Yellow",
+    "Green": "Green",
+    "Blue": "Blue",
+    "Purple": "Purple",
+    "Pink": "Pink"
   },
   "templatesPage": {
-    "title": "Şablonları Keşfedin",
-    "subtitle": "En popüler şablonları keşfedin ve Discord sunucunuz için mükemmel olanı bulun!<br>Sunucunuzu oluşturmakla zaman kaybetmeyin, şablonlardan birini kullanın!",
-    "searchInputPlaceholder": "Şablon adı, açıklama vb. ile arama yapın",
-    "categorySelectPlaceholder": "Kategori",
+    "title": "Discover the templates",
+    "subtitle": "Explore the most popular templates and find the perfect one for your Discord server! Don't waste your time with creating your own server, choose one of the templates to get started!",
+    "searchInputPlaceholder": "Search for a template by name, description, etc.",
+    "categorySelectPlaceholder": "Category",
     "sortSelect": {
-      "placeholder": "Sıralama",
+      "placeholder": "Sorting",
       "items": {
-        "popular": "Popüler",
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "popular": "Popular",
+        "newest": "Newest",
+        "oldest": "Oldest"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek şablon yok. Belki de bu, bir şablon oluşturma zamanının geldiğinin bir işaretidir?"
+      "title": "It's quiet here...",
+      "message": "There are no templates to display. Maybe that's a sign to create one?"
     }
   },
   "templateCard": {
-    "uses": "{{count}} kullanım"
+    "uses": "{{count}} uses"
   },
   "templatePreviewPage": {
     "toast": {
-      "deletingTemplate": "Şablon siliniyor..",
-      "templateDeleted": "{{templateName}} başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz.",
-      "templateIdCopied": "Şablon ID'si {{templateId}} panoya kopyalandı. Bu şablonu Discord'da kullanmak için şimdi \"/template use <id>\" komutunu kullanabilirsiniz. Discord botumuzu sunucunuza davet etmeyi unutmayın!",
-      "roleColorCopied": "Rol rengi panoya kopyalandı."
+      "deletingTemplate": "Deleting template..",
+      "templateDeleted": "Successfully deleted {{templateName}}. You will be redirected to the home page in a few seconds.",
+      "templateIdCopied": "Template ID {{templateId}} copied to clipboard. You can now use \"/template use <id>\" to use this template on Discord. Don't forget invite our Discord bot to your server!",
+      "roleColorCopied": "Role color copied to clipboard."
     },
     "tooltip": {
-      "addAServer": "Bir sunucu ekle",
-      "exploreDiscoverableServers": "Keşfedilebilir sunucuları keşfet",
-      "backToDiscordPlace": "discord.place'e geri dön",
-      "copyTemplateId": "Şablon ID'sini kopyala",
-      "deleteTemplate": "Şablonu Sil",
-      "clickToCopyColor": "Rol rengini kopyalamak için tıkla",
-      "threads": "Alt Başlıklar",
-      "notificationSettings": "Bildirim Ayarları",
-      "pinnedMessages": "Sabitlenmiş Mesajlar",
-      "showMemberList": "Üye Listesini Göster",
-      "hideMemberList": "Üye Listesini Gizle",
-      "inbox": "Gelen Kutusu",
-      "help": "Yardım"
+      "addAServer": "Add a server",
+      "exploreDiscoverableServers": "Explore Discoverable Servers",
+      "backToDiscordPlace": "Back to discord.place",
+      "copyTemplateId": "Copy Template ID",
+      "deleteTemplate": "Delete Template",
+      "clickToCopyColor": "Click to copy the role color",
+      "threads": "Threads",
+      "notificationSettings": "Notification Settings",
+      "pinnedMessages": "Pinned Messages",
+      "showMemberList": "Show Member List",
+      "hideMemberList": "Hide Member List",
+      "inbox": "Inbox",
+      "help": "Help"
     },
-    "searchInputPlaceholder": "Ara",
+    "searchInputPlaceholder": "Search",
     "topicModal": {
-      "title": "Başlığı Görüntüle",
-      "description": "Şu anda bu kanalın konusunu görüntülüyorsunuz: {{focusedChannel.name}}."
+      "title": "View Topic",
+      "description": "You are currently viewing the topic of the channel: {{focusedChannel.name}}."
     },
     "deleteTemplateModal": {
-      "title": "Şablonu Sil",
-      "description": "{{templateName}} şablonunu silmek istediğinizden emin misiniz?",
-      "note": "Lütfen şablonunuzu silmenin geri alınamayacağını unutmayın."
+      "title": "Delete Template",
+      "description": "Are you sure you want to delete {{templateName}}?",
+      "note": "Please note that deleting your template cannot be undone."
     },
-    "noTopic": "#{{focusedChannelName}} için bir konu belirlenmemiş.",
+    "noTopic": "#{{focusedChannelName}} does not have a topic set.",
     "channels": {
-      "home": "Ana Sayfa",
-      "events": "Etkinlikler",
-      "browseChannels": "Kanallara Göz At"
+      "home": "Home",
+      "events": "Events",
+      "browseChannels": "Browse Channels"
     },
-    "clickToCopyColor": "Rol rengini kopyalamak için tıkla"
+    "clickToCopyColor": "Click to copy color"
   },
   "soundsPage": {
-    "title": "Sesleri Keşfedin",
-    "subtitle": "Discord sunucunuzun ses paneli için mükemmel sesleri keşfedin, bulun ve indirin! Sesleri kullanarak sunucunuzu daha eğlenceli ve etkileşimli hale getirin.",
-    "searchInputPlaceholder": "Ad ile ses arayın...",
-    "categorySelectPlaceholder": "Kategori",
+    "title": "Discover the sounds",
+    "subtitle": "Explore, find and download the perfect sounds for your Discord server soundboard! Use sounds to make your server more fun and interactive.",
+    "searchInputPlaceholder": "Search for a sound by name...",
+    "categorySelectPlaceholder": "Category",
     "sortSelect": {
-      "placeholder": "Sıralama",
+      "placeholder": "Sorting",
       "items": {
-        "downloads": "İndirmeler",
-        "likes": "Beğeniler",
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "downloads": "Downloads",
+        "likes": "Likes",
+        "newest": "Newest",
+        "oldest": "Oldest"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek ses yok. Belki de bu, bir ses oluşturmanın zamanının geldiğinin bir işaretidir?"
+      "title": "It's quiet here...",
+      "message": "There are no sounds to display. Maybe that's a sign to create one?"
     }
   },
   "soundCard": {
     "volumePopover": {
-      "title": "Ses Seviyesi",
-      "subtitle": "Çalınan seslerin ses seviyesini ayarlayın."
+      "title": "Volume",
+      "subtitle": "Adjust the volume of the sounds."
     },
     "uploadSoundToDiscordModal": {
-      "description": "Bu sesi aşağıdan bir Discord sunucusu seçerek hızlıca yükleyin.",
+      "description": "Quickly upload this sound to Discord by selecting a server below.",
       "emptyErrorState": {
-        "title": "Buralar biraz sessiz...",
-        "message": "Ses yükleyebileceğiniz bir sunucu yok."
+        "title": "It's quiet here...",
+        "message": "There are no servers you can upload sounds to."
       },
-      "notes": "* Sunucuda \"İfadeleri Yönet\" iznine sahip olmalısınız.<br>* Listeyi yenilemek için siteden çıkış yapıp tekrar giriş yapın.",
+      "notes": "* You should have the permission to manage sounds in the server.<br>* Log out and back in to refresh the list.",
       "tooltip": {
-        "inviteOurBot": "{{guildName}} (Botumuzu Davet Et)"
+        "inviteOurBot": "{{guildName}} (Invite our Bot)"
       },
       "toast": {
-        "guildNotFound": "Sesi yüklemek için lütfen bir sunucu seçin.",
-        "uploadingSound": "Ses {{soundName}} adlı sunucuya yükleniyor...",
-        "soundUploaded": "Ses başarıyla yüklendi!"
+        "guildNotFound": "Please select a server to upload the sound to.",
+        "uploadingSound": "Sound {{soundName}} is being uploaded to guild...",
+        "soundUploaded": "Sound uploaded successfully!"
       }
     },
     "toast": {
-      "notLoggedIn": "Sesleri beğenebilmek için giriş yapmalısınız!",
-      "liking": "Ses beğeniliyor...",
-      "liked": "{{soundName}} adlı ses beğenildi!",
-      "unliking": "Ses beğenisi geri alınıyor...",
-      "unliked": "{{soundName}} adlı sese verdiğiniz beğeni geri alındı!"
+      "notLoggedIn": "You must be logged in to like sounds!",
+      "liking": "Liking sound...",
+      "liked": "Liked sound {{soundName}}!",
+      "unliking": "Unliking sound...",
+      "unliked": "Unliked sound {{soundName}}!"
     },
     "buttons": {
-      "upload": "Discord'a Yükle",
-      "login": "Yüklemek için Discord ile Giriş Yap"
+      "upload": "Upload to Discord",
+      "login": "Login with Discord to Upload"
     }
   },
   "soundPage": {
     "toast": {
-      "deletingSound": "{{soundName}} siliniyor..",
-      "soundDeleted": "{{soundName}} başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+      "deletingSound": "{{soundName}} is deleting..",
+      "soundDeleted": "{{soundName}} successfully deleted. You will be redirected to the home page in a few seconds."
     },
     "notApprovedInfo": {
-      "description": "Şu an için bu sesi sadece siz görebilirsiniz. Ses onaylandığında, herkese açık hale gelecektir. O zamana kadar <link>'a gelerek sesiniz onaylandığında botumuzdan bildirim alabilirsiniz. DM'lerinizi açtığınızdan emin olun.",
-      "linkText": "Discord sunucumuz"
+      "description": "Currently, only you can see this sound. Once the sound is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your sound is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
     },
     "soundDetails": {
-      "title": "{{soundName}} Hakkında",
+      "title": "About {{soundName}}",
       "fields": {
-        "uploadedAt": "Paylaşılma Tarihi",
-        "downloads": "İndirmeler",
-        "likes": "Beğeniler",
-        "categories": "Kategoriler",
-        "publisher": "Paylaşan"
+        "uploadedAt": "Uploaded At",
+        "downloads": "Downloads",
+        "likes": "Likes",
+        "categories": "Categories",
+        "publisher": "Publisher"
       }
     },
     "frequentlyAskedQuestions": {
-      "title": "Sıkça Sorulan Sorular",
+      "title": "Frequently Asked Questions",
       "labels": [
-        "Sesi nasıl indirebilirim?",
-        "Sesi Discord sunucumun ses paneline nasıl ekleyebilirim?",
-        "Bu ses uygunsuz. Ne yapabilirim?"
-    ],
+        "How can I download a sound?",
+        "How can I add a sound to my Discord server soundboard?",
+        "This sound is inappropriate. What can I do?"
+      ],
       "answers": [
-        "Aşağıdaki butonu kullanarak <span> sesini indirebilirsiniz.",
+        "You can use the button below to download <span> sound.",
         {
-          "title": "Bunu duyduğuma sevindim! Sesleri Discord sunucunuza eklemenin 2 yolu var.",
+          "title": "I'm glad to hear that! There are 2 ways to add sounds to your Discord server.",
           "methods": [
             {
-              "buttonText": "1. Web Sitemiz (bu sayfa)",
-              "instructionsBefore": "Web sitemizi kullanarak, bu sesi birkaç tıklama ile sunucunuza yükleyebilirsiniz. İşte nasıl yapacağınız:",
+              "buttonText": "1. Our Website (this page)",
+              "instructionsBefore": "Using our website, you can upload this sound to your server with just a few clicks. Here how you can do this:",
               "instructions": [
                 {
-                    "text": "Sunucunuza <link> ekleyin.",
-                    "linkText": "botumuzu ekleyin"
+                  "text": "<link> to your server.",
+                  "linkText": "Add our bot"
                 },
-                "Bu sayfadaki ses oynatıcısında ki \"Discord'a Yükle\" düğmesine tıklayın.",
-                "Sesi yüklemek istediğiniz sunucuyu seçin ve \"Yükle\" düğmesine tıklayın.",
-                "Tada! Artık ses sunucunuza eklendi."
+                "Click the \"Upload to Discord\" button on the sound card in this page.",
+                "Select the server you want to upload the sound to & click the upload button.",
+                "Tada! Now sound is added to the server."
               ]
             },
             {
-              "buttonText": "2. Klasik Yöntem",
-              "instructionsBefore": "Bu biraz daha zor olabilir.",
+              "buttonText": "2. Legacy Way",
+              "instructionsBefore": "This may be a little more challenging.",
               "instructions": [
-                "Sesi indirin:",
-                "Discord uygulamanızı açın ve sunucunuza sağ tıklayın.",
-                "Sunucu Ayarları > Ses Paneli'ne gidin.",
-                "Ses Yükle'ye tıklayın.",
-                "Formu doldurun ve daha önce indirdiğiniz sesi seçin ve Yükle düğmesine tıklayın.",
-                "Tada! Artık ses sunucunuza eklendi."
+                "Download the sound:",
+                "Open your Discord App and right click to your server.",
+                "Go to Server Settings > Soundboard",
+                "Click the Upload Sound.",
+                "Fill the form and select the sound you downloaded and click the upload button.",
+                "Tada! Now sound is added to the server."
               ]
             }
           ]
         },
-        "Sayfanın sağ alt köşesindeki rapor düğmesini kullanarak sesi uygun bir nedenle bildirebilirsiniz. Ekibimiz sesi inceleyecek ve gerekli işlemleri yapacaktır."
+        "You can use the report button on the bottom right of the page to report the sound with a valid reason. Our team will review the sound and take necessary actions."
       ]
     },
     "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "description": "Aşağıdaki butonu kullanarak sesi siteden silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
+      "title": "Danger Zone",
+      "description": "You can delete the sound using the button below, but be careful not to delete it by mistake :)",
       "deleteSoundModal": {
-        "title": "Sesi Sil",
-        "description": "{{soundName}} adlı sesi silmek istediğinizden emin misiniz?",
-        "content": "Lütfen sesi silmenin, sesin kazandığı tüm indirmelerle beraber siteden kaldırılacağını unutmayın.<br><br>Bu işlem geri alınamaz."
+        "title": "Delete Sound",
+        "description": "Are you sure you want to delete {{soundName}}?",
+        "content": "Please note that deleting the sound will remove all the downloads that the sound has received.<br><br>This action cannot be undone."
       }
     }
   },
   "themesPage": {
-    "title": "Temaları Keşfedin",
-    "subtitle": "Discord profilinizi öne çıkarmak için en iyi iki renk kombinasyonları keşfedin. Profilinizi daha çekici ve benzersiz hale getirmek için renkleri kullanın.",
-    "searchInputPlaceholder": "Renk, kategori veya ID ile tema arayın..",
-    "categorySelectPlaceholder": "Renkler",
+    "title": "Discover the themes",
+    "subtitle": "Discover the best two-color combinations to make your Discord profile stand out. Use colors to make your profile more attractive and unique.",
+    "searchInputPlaceholder": "Search for a theme by hex color, category or id..",
+    "categorySelectPlaceholder": "Colors",
     "sortSelect": {
-      "placeholder": "Sıralama",
+      "placeholder": "Sorting",
       "items": {
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "newest": "Newest",
+        "oldest": "Oldest"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek tema yok. Belki de bu, bir tema oluşturmanın zamanının geldiğinin bir işaretidir?"
+      "title": "It's quiet here...",
+      "message": "There are no themes to display. Maybe that's a sign to create one?"
     }
   },
   "themePage": {
     "toast": {
-      "deletingTheme": "Tema {{id}} siliniyor..",
-      "themeDeleted": "Tema {{id}} başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+      "deletingTheme": "Theme {{id}} is deleting..",
+      "themeDeleted": "Theme {{id}} successfully deleted. You will be redirected to the home page in a few seconds."
     },
     "notApprovedInfo": {
-      "description": "Şu an için bu temayı sadece siz görebilirsiniz. Tema onaylandığında, herkese açık hale gelecektir. O zamana kadar <link>'a gelerek temanız onaylandığında botumuzdan bildirim alabilirsiniz. DM'lerinizi açtığınızdan emin olun.",
-      "linkText": "Discord sunucumuz"
+      "description": "Currently, only you can see this theme. Once the theme is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your theme is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
     },
     "themeDetails": {
-      "title": "Tema Hakkında",
+      "title": "About This Theme",
       "fields": {
-        "uploadedAt": "Paylaşılma Tarihi",
-        "categories": "Kategoriler",
-        "publisher": "Paylaşan"
+        "uploadedAt": "Uploaded at",
+        "categories": "Categories",
+        "publisher": "Published by"
       },
       "colors": {
-        "copied": "Renk {{color}} panoya kopyalandı.",
-        "copyPrimary": "Birincil Rengi Kopyala",
-        "copySecondary": "İkincil Rengi Kopyala"
+        "copied": "Color {{color}} copied to clipboard.",
+        "copyPrimary": "Copy Primary Color",
+        "copySecondary": "Copy Secondary Color"
       }
     },
     "frequentlyAskedQuestions": {
-      "title": "Sıkça Sorulan Sorular",
+      "title": "Frequently Asked Questions",
       "labels": [
-        "Tema renklerini nasıl kopyalayabilirim?",
-        "Bu renkleri Discord profilimde nasıl kullanabilirim?",
-        "Bu profil teması uygunsuz. Ne yapabilirim?"
+        "How can I copy theme colors?",
+        "How can I use this colors in my Discord profile?",
+        "This profile theme is inappropriate. What can I do?"
       ],
       "answers": [
-        "Yukarıdaki düğmeleri kullanarak temanın birincil ve ikincil renklerini kopyalayabilirsiniz.",
+        "You can use the buttons above to copy the primary and secondary colors of the theme.",
         {
-          "title": "Bunu duyduğuma sevindim! Bu renkleri Discord profilinizde kullanmanın 1 yolu var.",
+          "title": "I'm glad to hear that! There are 1 ways to use this colors in your Discord profile.",
           "methods": [
             {
-              "buttonText": "1. Kopyala & Yapıştır",
-              "instructionsBefore": "Web sitemizi kullanarak, bu renkleri kopyalayabilir ve Discord profilinize yapıştırabilirsiniz. İşte nasıl yapacağınız:",
+              "buttonText": "1. Copy & Paste",
+              "instructionsBefore": "Using our website, you can copy the colors and paste them to your Discord profile. Here how you can do this:",
               "instructions": [
-                "Birincil rengi kopyalamak için \"Birincil Rengi Kopyala\" düğmesine tıklayın.",
-                "Discord uygulamanızı açın ve sunucunuza sağ tıklayın.",
-                "Kullanıcı Ayarları > Profil'e gidin ve profil teması ayarlarına gidin.",
-                "Ana renge tıklayın ve kopyaladığınız birincil rengi rengi yapıştırın.",
-                "Web sitemize geri dönün ve \"İkincil Rengi Kopyala\" düğmesine tıklayarak ikincil rengi kopyalayın.",
-                "Discord'a geri dönün ve kopyaladığınız rengi Tema rengi yerine yapıştırın.",
-                "Değişiklikleri kaydedin ve tada! Artık profiliniz bu tema renklerini kullanıyor."
+                "Click the \"Copy Primary Color\" button to copy the primary color.",
+                "Open your Discord App and right click to your server.",
+                "Go to User Settings > Profiles & scroll down to the profile theme settings.",
+                "Click the Primary and paste the color you copied.",
+                "Go back to our website and click the \"Copy Secondary Color\" button to copy the secondary color.",
+                "Go back to Discord and paste the color you copied to the Secondary color.",
+                "Save the changes and tada! Now your profile is using the this theme colors."
               ]
             }
           ]
         },
-        "Sayfanın sağ alt köşesindeki rapor düğmesini kullanarak temayı uygun bir nedenle bildirebilirsiniz. Ekibimiz tema inceleyecek ve gerekli işlemleri yapacaktır."
+        "You can use the report button on the bottom right of the page to report the theme with a valid reason. Our team will review the theme and take necessary actions."
       ]
     },
     "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "description": "Aşağıdaki butonu kullanarak temayı siteden silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
+      "title": "Danger Zone",
+      "description": "You can delete the theme using the button below, but be careful not to delete it by mistake :)",
       "deleteThemeModal": {
-        "title": "Tema Sil",
-        "description": "{{id}} ID'li temayı silmek istediğinizden emin misiniz?",
-        "content": "Lütfen temayı silmenin geri alınamayacağını unutmayın."
+        "title": "Delete Theme",
+        "description": "Are you sure you want to delete theme {{id}}?",
+        "content": "This action cannot be undone."
       }
     }
   },
   "serversPage": {
-    "title": "Sunucuları Keşfedin",
-    "subtitle": "Discord'daki en iyi sunucuları keşfedin ve sizin için mükemmel topluluğu bulun. Favori sunucularınıza oy vermeyi unutmayın!",
-    "searchInputPlaceholder": "Bir sunucu adı, açıklama, etiket vb. ile arama yapın.",
-    "categorySelectPlaceholder": "Kategori",
+    "title": "Discover the servers",
+    "subtitle": "Explore the best servers on Discord and find the perfect community for you. Don't forget to vote for your favorite servers!",
+    "searchInputPlaceholder": "Search for a server by name, description, tags, etc.",
+    "categorySelectPlaceholder": "Category",
     "sortSelect": {
-      "placeholder": "Sıralama",
+      "placeholder": "Sorting",
       "items": {
-        "votes": "Oylar",
-        "latestVoted": "Son Oy Verilen",
-        "members": "Üye Sayısı",
-        "newest": "En Yeni",
-        "oldest": "En Eski",
-        "boosts": "Takviye Sayısı"
+        "votes": "Votes",
+        "latestVoted": "Latest Voted",
+        "members": "Members",
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "boosts": "Boosts"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek sunucu yok. Belki de bu, siteye bir sunucunuzu eklemenin zamanının geldiğinin bir işaretidir?"
+      "title": "It's quiet here...",
+      "message": "There are no servers to display. Maybe that's a sign to create one?"
     }
   },
   "serverCard": {
-    "noDescription": "Bu sunucunun açıklaması yok. İçeride ne kadar güzel olduğunu ancak hayal edebiliyoruz.",
-    "tripledVoteBadge": "3X OY!"
+    "noDescription": "This server does not have a description. We can only imagine how beautiful it is inside.",
+    "tripledVoteBadge": "3X VOTE!"
   },
   "serverPage": {
     "countdown": {
-      "tripledVoteExpired": "Üç kat oy süresi sona erdi!",
-      "votesTripledFor": "Verilen oylar {{hours}} saat, {{minutes}} dakika boyunca üç ile çarpılacak!",
-      "standedOutExpired": "Öne çıkma süresi sona erdi!",
-      "standedOutFor": "{{hours}} saat, {{minutes}} dakika boyunca öne çıkartıldı."
+      "tripledVoteExpired": "Tripled Votes has expired!",
+      "votesTripledFor": "Your votes are tripled for {{hours}} hours, {{minutes}} minutes!",
+      "standedOutExpired": "Stand out has expired!",
+      "standedOutFor": "Standing out for {{hours}} hours, {{minutes}} minutes!"
     },
     "about": {
-      "title": "Hakkında",
+      "title": "About",
       "labels": {
-        "category": "Kategori",
-        "members": "Üye Sayısı",
-        "rewards": "Oy Ödülleri",
-        "boosts": "Takviye Seviyesi",
-        "joinedAt": "Katılma Tarihi",
-        "votes": "Oy Sayısı"
+        "category": "Category",
+        "members": "Total Members",
+        "rewards": "Rewards",
+        "boosts": "Boost Level",
+        "joinedAt": "Joined At",
+        "votes": "Votes"
       },
-      "availableVoteRewards": "{{count}} oy ödülü mevcut.",
-      "noVoteRewards": "Hiç oy ödülü yok.",
-      "boostsLabelValue": "{{level}} ({{count}} takviye)"
+      "availableVoteRewards": "{{count}} vote rewards available.",
+      "noVoteRewards": "No vote rewards available.",
+      "boostsLabelValue": "{{level}} ({{count}} boosts)"
     },
     "actions": {
-      "title": "İşlemler",
+      "title": "Actions",
       "toast": {
-        "voting": "{{serverName}} sunucusuna oy veriliyor..",
-        "voted": "{{serverName}} sunucusuna başarıyla oy verildi!",
-        "creatingReminder": "{{serverName}} sunucusuna verdiğiniz oy için bir hatırlatma oluşturuluyor..",
-        "reminderCreated": "{{serverName}} sunucusuna 24 saat sonra oy vermeniz için sizi hatırlatacağım! Lütfen DM'lerinizi açık tutun ve bu sunucudan ayrılmayın.",
-        "creatingCheckout": "Sizin için bir ödeme sayfası oluşturuluyor..",
-        "checkoutCreated": "Ödeme sayfası oluşturuldu! Birkaç saniye içinde ödeme sayfasına yönlendirileceksiniz..",
-        "loginRequiredForVote": "Oy verebilmek için giriş yapmalısınız.",
-        "serverUrlCopied": "Sunucu bağlantısı panoya kopyalandı."
+        "voting": "Voting {{serverName}}..",
+        "voted": "Successfully voted for {{serverName}}!",
+        "creatingReminder": "Creating reminder for {{serverName}}..",
+        "reminderCreated": "I will remind you to vote for {{serverName}} in 24 hours! Please keep your DMs open and don't leave the server.",
+        "creatingCheckout": "We are creating a checkout for you...",
+        "checkoutCreated": "Checkout created! Redirecting you to the payment page in few seconds...",
+        "loginRequiredForVote": "You need to be logged in to vote for servers.",
+        "serverUrlCopied": "Server URL copied to clipboard."
       },
       "tooltip": {
-        "noInviteLinkAvailable": "Bu sunucu için bir davet bağlantısı mevcut değil."
+        "noInviteLinkAvailable": "No invite link available for this server."
       }
     },
     "keywords": {
-      "title": "Anahtar Kelimeler"
+      "title": "Keywords"
     },
     "tabs": {
       "labels": {
-        "reviews": "Yorumlar",
-        "topVoters": "En Çok Oy Verenler",
-        "rewards": "Ödüller",
-        "monthlyVotes": "Aylık Oylar"
+        "reviews": "Reviews",
+        "topVoters": "Top Voters",
+        "rewards": "Rewards",
+        "monthlyVotes": "Monthly Votes"
       },
       "reviews": {
-        "title": "Yorumlar",
+        "title": "Reviews",
         "toast": {
-          "submittingReview": "Yorum gönderiliyor..",
-          "reviewSubmitted": "Yorumunuz başarıyla gönderildi!"
+          "submittingReview": "Submitting review..",
+          "reviewSubmitted": "Your review has been submitted successfully!"
         },
-        "totalReviews": "(0)[Yorum yok];(1-inf)[{{count}} yorum];",
+        "totalReviews": "(0)[No reviews];(1)[1 review];(2-inf)[{{count}} reviews];",
         "reviewSubmitted": {
           "info": {
-            "title": "Not",
-            "description": "Yorumunuz yetkililer tarafından incelenene kadar bekleyin. Onaylanmadan önce diğer kullanıcılar tarafından görüntülenmeyecektir."
+            "title": "Note",
+            "description": "Your review has been submitted for verification. It will be visible once it has been approved."
           },
-          "alreadyReviewed": "Bu sunucu için zaten bir yorum yaptınız."
+          "alreadyReviewed": "You have already left a review for this server."
         },
-        "ownerCannotReview": "Sahibi olduğunuz sunuculara yorum yapamazsınız.",
+        "ownerCannotReview": "You can't leave a review for your own server.",
         "input": {
-          "label": "Yorumunuz",
-          "description": "Bu sunucu hakkında ne düşünüyorsunuz? Diğer kullanıcılar için bir yorum yapın."
+          "label": "Your Review",
+          "description": "Let others know what you think about this server."
         },
-        "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız.",
-        "ratingRequired": "Lütfen bir derecelendirme seçin.",
-        "ratingSelected": "Seçilen derecelendirme: {{count}}/5"
+        "loginRequiredForReview": "You need to be logged in to leave a review.",
+        "ratingRequired": "Please select a rating.",
+        "ratingSelected": "Selected rating: {{count}}/5"
       },
       "topVoters": {
-        "title": "En Çok Oy Verenler"
+        "title": "Top Voters"
       },
       "rewards": {
-        "title": "Ödüller",
-        "subtitle": "Belirli oy sayılarına ulaşanlara otomatik olarak roller verilir. Bu ödüller yalnızca {{serverName}} sunucusu içindir.",
+        "title": "Rewards",
+        "subtitle": "Roles are given out automatically to whomever reaches the required votes. Note that, these rewards is only for the server {{serverName}}.",
         "badge": {
-          "locked": "Kilitli",
-          "unlocked": "Açıldı"
+          "locked": "Locked",
+          "unlocked": "Unlocked"
         },
         "tooltip": {
-          "unlocked": "Bu ödülü açtınız!",
-          "locked": "Bu ödülü açmak için daha fazla oy vermeniz gerekiyor."
+          "unlocked": "You have unlocked this reward!",
+          "locked": "You need to vote to unlock this reward."
         }
       },
       "monthlyVotesGraph": {
-        "title": "Aylık Oy Grafiği",
-        "subtitle": "Bu sunucunun zaman içinde aldığı oy sayısı."
+        "title": "Monthly Votes Graph",
+        "subtitle": "The amount of votes this server has received over time."
       }
     }
   },
   "serverManagePage": {
-    "title": "Sunucuyu Yönet",
-    "subtitle": "Sunucunuzu ve ayarlarını yönetin.",
-    "escToCloseBadge": "kapatmak için esc",
+    "title": "Manage Server",
+    "subtitle": "Manage your server and its settings.",
+    "escToCloseBadge": "[esc] to close",
     "toast": {
-      "savingChanges": "Değişiklikler kaydediliyor..",
-      "changesSaved": "Değişiklikler başarıyla kaydedildi."
+      "savingChanges": "Saving changes..",
+      "changesSaved": "Successfully saved changes!"
     },
     "discardChangesModal": {
-      "title": "Değişiklikleri İptal Et",
-      "description": "Değişikliklerinizi iptal etmek istediğinizden emin misiniz?",
-      "note": "Değişikliklerinizi iptal etmek, yapılan tüm değişiklikleri geri alacaktır."
+      "title": "Discard Changes",
+      "description": "Are you sure you want to discard your changes?",
+      "note": "Your changes will not be saved."
     },
     "essentialInformation": {
-      "title": "Önemli Ayarlar",
-      "subtitle": "Bu sunucunun en önemli ayarlarıdır. Bunları doğru doldurduğunuzdan emin olun.",
+      "title": "Essential Information",
+      "subtitle": "These are the most important settings for server. Be sure to fill them out correctly.",
       "inputs": {
         "description": {
-          "label": "Açıklama",
-          "description": "Bu açıklama, discord.place'de sunucunuzu ziyaret eden herkese gösterilecektir.",
-          "placeholder": "Birçok harika şeye sahip bir sunucu."
+          "label": "Description",
+          "description": "This is the description for your server that will be shown to visitors on discord.place.",
+          "placeholder": "A server that has a lot of cool things."
         },
         "inviteUrl": {
-          "label": "Davet Bağlantısı",
-          "description": "Kullanıcıların sunucunuza katılabileceği davet bağlantısı. Geçerli bir davet bağlantısı olduğundan emin olun.",
-          "placeholder": "Sunucu davet bağlantınızı buraya yapıştırın."
+          "label": "Invite URL",
+          "description": "The URL that users can use to join your server. Make sure it is a valid invite URL.",
+          "placeholder": "Paste your server invite URL here."
         }
       }
     },
     "other": {
-      "title": "Diğer",
-      "subtitle": "Çok fazla düşünmenize gerek olmayan ayarlar.",
+      "title": "Other",
+      "subtitle": "Settings that you should not worry about too much.",
       "inputs": {
         "category": {
-          "label": "Kategori",
-          "description": "Sunucunuzun ait olduğu kategoriyi seçin. Bu, kullanıcıların sunucunuzu bulmasına yardımcı olacaktır."
-      },
+          "label": "Category",
+          "description": "Select the category that your server belongs to. This will help users find your server."
+        },
         "keywords": {
-          "label": "Anahtar Kelimeler",
-          "description": "Sunucunuza anahtar kelimeler ekleyin. Bu, insanların sunucunuzu discord.place'de bulmasına yardımcı olacaktır. Her anahtar kelimeyi virgülle ayırın.",
-          "placeholder": "ör. eğlence, oyun, topluluk"
+          "label": "Keywords",
+          "description": "Add keywords to your server. This will help people find your server on discord.place. Separate each keyword with a comma.",
+          "placeholder": "e.g. fun, gaming, community"
         }
       },
       "toast": {
-        "notValidKeyword": "Lütfen geçerli bir anahtar kelime girin.",
-        "keywordExists": "Bu anahtar kelime zaten mevcut.",
-        "keywordHasInvalidCharacters": "Anahtar kelimeler yalnızca harfler, rakamlar ve kısa çizgiler içerebilir.",
-        "keywordTooLong": "Anahtar kelimeler yalnızca {{maxLength}} karakter uzunluğunda olabilir."
+        "notValidKeyword": "Please enter a valid keyword.",
+        "keywordExists": "This keyword already exists.",
+        "keywordHasInvalidCharacters": "Keywords can only contain letters, numbers, and hyphens.",
+        "keywordTooLong": "Keywords must be shorter {{maxLength}} characters long."
       },
       "addedKeywords": {
-        "label": "Eklenen Anahtar Kelimeler",
-        "description": "Şu ana kadar eklediğiniz anahtar kelimeler. Bir anahtar kelimeyi kaldırmak için üstüne tıklayın.",
-        "max": " (maks)"
+        "label": "Added Keywords",
+        "description": "Keywords that you have added so far. Click on a keyword to remove it.",
+        "max": " (max)"
       }
     },
     "webhook": {
       "title": "Webhook",
-      "subtitle": "Birisi sunucunuza oy verdiğinde bildirim alın.",
+      "subtitle": "Get notified when someone votes for your server.",
       "optionalBadge": "Optional",
       "toast": {
-        "secretRequired": "Bir gizli anahtar kullanmak istiyorsanız Webhook URL'sini doldurmalısınız.",
-        "urlNotValid": "Webhook URL'si geçerli bir URL değil.",
-        "urlNotHTTPS": "Webhook URL'si HTTPS (güvenli) olmalıdır.",
-        "saving": "Webhook ayarları kaydediliyor..",
-        "saved": "Webhook ayarları başarıyla kaydedildi."
+        "secretRequired": "You should fill the Webhook URL if you want to use a secret.",
+        "urlNotValid": "Webhook URL is not a valid URL.",
+        "urlNotHTTPS": "Webhook URL should be a HTTPS URL.",
+        "saving": "Saving webhook settings..",
+        "saved": "Webhook settings saved successfully."
       },
       "inputs": {
         "url": {
           "label": "URL",
-          "description": "Webhook URL'nizi girin.",
+          "description": "Enter the URL of your webhook.",
           "placeholder": "https://example.com/webhook"
         },
         "secret": {
-          "label": "Gizli Anahtar",
-          "description": "Webhook'unuzun gizli anahtarını girin.",
+          "label": "Secret",
+          "description": "Enter the secret of your webhook.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
-    }
+      }
     },
     "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "subtitle": "Sunucunuzu buradan silebilirsiniz. Bu işlemi yapmadan önce iki kez düşünün. Bu işlem geri alınamaz.",
+      "title": "Danger Zone",
+      "subtitle": "You can remove your server card here. Please be careful with this action. This action cannot be undone.",
       "toast": {
-        "deletingServer": "Sunucu siliniyor..",
-        "serverDeleted": "Sunucu başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+        "deletingServer": "Removing server..",
+        "serverDeleted": "Successfully remove the server card. You will be redirected to the home page in a few seconds."
       },
       "deleteServerModal": {
-        "title": "Sunucuyu Sil",
-        "description": "Sunucunuzu silmek istediğinizden emin misiniz?",
-        "note": "Sunucunuzu silmek, sunucunuzun aldığı tüm oyları ve yorumları sunucuyla beraber kaldıracaktır.<br><br>Bu işlem geri alınamaz."
+        "title": "Delete Server",
+        "description": "Are you sure you want to remove your server card?",
+        "note": "Please note that removing your server will remove all votes and reviews that your server has received.<br><br>This action cannot be undone."
       }
     }
   },
   "profilesPage": {
-    "title": "Profilleri Keşfedin",
-    "subtitle": "Discord profillerinin özelleştirilmiş sayfalarını bulun, paylaşın ve keşfedin!<br>Keşfetmeniz için {{count}} profil sizi bekliyor.",
-    "searchInputPlaceholder": "Bir profili adı, meslek, konum vb. gibi bilgilerle arayın.",
+    "title": "Discover the profiles",
+    "subtitle": "Find, share and explore the customized page of Discord profiles!<br>You have {{count}} profiles to explore.",
+    "searchInputPlaceholder": "Search for a profile by slug, occupation, location, etc.",
     "sortSelect": {
-      "placeholder": "Sıralama",
+      "placeholder": "Sorting",
       "items": {
-        "likes": "Beğeniler",
-        "mostViewed": "Çok Göz Atılan",
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "likes": "Likes",
+        "mostViewed": "Most Viewed",
+        "newest": "Newest",
+        "oldest": "Oldest"
       }
     }
   },
   "profileCard": {
-    "aboutMe": "Hakkımda",
-    "noBio": "Bu kullanıcı henüz bir biyografi eklemedi ama harika biri olduğundan eminiz!",
+    "aboutMe": "About me",
+    "noBio": "This user has not provided a bio yet but we are sure they're awesome!",
     "fields": {
-      "likes": "Beğeni",
-      "views": "Ziyaretçi",
-      "createdAt": "Oluşturulma"
+      "likes": "Likes",
+      "views": "Views",
+      "createdAt": "Created"
     },
     "toast": {
-      "profileUrlCopied": "Profil bağlantısı panoya kopyalandı!"
+      "profileUrlCopied": "Profile URL copied to clipboard!"
     },
     "tooltip": {
       "status": {
-        "online": "Durum Çevrimiçi",
-        "idle": "Durum Boşta",
-        "dnd": "Durum Rahatsız Etmeyin",
-        "offline": "Durum Çevrimdışı",
-        "streaming": "Durum Yayında"
+        "online": "Status Online",
+        "idle": "Status Idle",
+        "dnd": "Status Do Not Disturb",
+        "offline": "Status Offline",
+        "streaming": "Status Streaming"
       }
     }
   },
   "userProfile": {
     "flags": {
-      "Staff": "Discord Personeli",
-      "Partner": "Ortaklık Programı'na Dahil Sunucu Sahibi",
-      "Hypesquad": "HypeSquad Etkinlikleri",
-      "BugHunterLevel1": "Discord Hata Avcısı",
-      "BugHunterLevel2": "Discord Hata Avcısı",
-      "HypeSquadOnlineHouse1": "HypeSquad Cesareti",
-      "HypeSquadOnlineHouse2": "HypeSquad Güzelliği",
-      "HypeSquadOnlineHouse3": "HypeSquad Dengesi",
-      "PremiumEarlySupporter": "Erken Dönem Destekçisi",
-      "VerifiedDeveloper": "Erken Doğrulanmış Bot Geliştiricsi",
-      "CertifiedModerator": "Moderatör Programları Mezunu",
-      "ActiveDeveloper": "Aktif Geliştirici",
-      "Nitro": "Nitro Abonesi"
+      "Staff": "Discord Staff",
+      "Partner": "Partnered Server Owner",
+      "Hypesquad": "HypeSquad Events Member",
+      "BugHunterLevel1": "Discord Bug Hunter",
+      "BugHunterLevel2": "Discord Bug Hunter",
+      "HypeSquadOnlineHouse1": "HypeSquad Bravery",
+      "HypeSquadOnlineHouse2": "HypeSquad Brilliance",
+      "HypeSquadOnlineHouse3": "HypeSquad Balance",
+      "PremiumEarlySupporter": "Early Supporter",
+      "VerifiedDeveloper": "Verified App Developer",
+      "CertifiedModerator": "Moderator Programs Alumni",
+      "ActiveDeveloper": "Active Developer",
+      "Nitro": "Nitro Subscriber"
     },
     "tooltip": {
-      "verifiedApp": "Doğrulanmış Uygulama"
+      "verifiedApp": "Verified App"
     },
-    "appBadge": "Uyg",
-    "badgesHeading": "Rozetler",
+    "appBadge": "App",
+    "badgesHeading": "Badges",
     "about": {
-      "title": "Hakkında",
-      "noBio": "Bu kullanıcı henüz bir biyografi eklemedi."
+      "title": "About",
+      "noBio": "This user has not set a bio yet."
     },
     "fields": {
-      "memberSince": "Üyelik Tarihi",
+      "memberSince": "Member Since",
       "votesGiven": {
-        "label": "Verilen Oy",
-        "tooltip": "Bu kullanıcının verdiği toplam oy sayısı."
+        "label": "Votes Given",
+        "tooltip": "The total number of votes given by this user."
       },
       "profile": {
-        "label": "Profil",
-        "tooltip": "Bu kullanıcının profili.",
-        "noProfile": "Profil bulunamadı."
+        "label": "Profile",
+        "tooltip": "The Profile of this user.",
+        "noProfile": "No profile found."
       },
       "likesReceived": {
-        "label": "Alınan Beğeni",
-        "tooltip": "Bu kullanıcının profilinin aldığı toplam beğeni sayısı."
+        "label": "Likes Received",
+        "tooltip": "The total number of likes given to this user's profile."
       }
     },
     "servers": {
-      "title": "Sunucular",
-      "subtitle": "Bu kullanıcı ayrıca aşağıdaki sunucuların sahibidir. Kullanıcıyı beğendiyseniz, belki sunucularını da beğenirsiniz?"
+      "title": "Servers",
+      "subtitle": "This user is also the owner of these servers. If you like them, maybe you may enjoy their servers too!"
     },
     "bots": {
-      "title": "Botlar",
-      "subtitle": "Bu kullanıcı ayrıca aşağıdaki botların sahibidir. Kullanıcıyı beğendiyseniz, belki botlarıni da beğenirsiniz?"
+      "title": "Bots",
+      "subtitle": "This user is also the owner of these bots. If you like them, maybe you may enjoy their bots too!"
     }
   },
   "profilePage": {
     "about": {
-      "title": "Hakkında",
-      "noBio": "Biyografi bulunamadı.",
+      "title": "About",
+      "noBio": "No bio provided.",
       "labels": {
-        "occupation": "Meslek",
-        "gender": "Cinsiyet",
-        "location": "Konum",
-        "birthday": "Doğum Günü",
-        "views": "Ziyaretçi",
-        "likes": "Beğeniler"
+        "occupation": "Occupation",
+        "gender": "Gender",
+        "location": "Location",
+        "birthday": "Birthday",
+        "views": "Views",
+        "likes": "Likes"
       },
       "gender": {
-        "Male": "Erkek",
-        "Female": "Kadın" 
+        "Male": "Male",
+        "Female": "Female"
       },
-      "valueUnknown": "Bilinmiyor"
+      "valueUnknown": "Unknown"
     },
     "actions": {
       "toast": {
-        "loginRequiredForLike": "Profilleri beğenebilmek için giriş yapmalısınız!",
-        "liking": "{{profileSlug}} beğeniliyor..",
-        "liked": "{{profileSlug}} beğenildi!",
-        "unliking": "{{profileSlug}} beğenisi geri alınıyor..",
-        "unliked": "{{profileSlug}} beğenisi geri alındı!",
-        "profileUrlCopied": "Profil bağlantısı panoya kopyalandı!"
+        "loginRequiredForLike": "You must be logged in to like profiles!",
+        "liking": "Liking {{profileSlug}}..",
+        "liked": "Liked {{profileSlug}}!",
+        "unliking": "Unliking {{profileSlug}}..",
+        "unliked": "Unliked {{profileSlug}}!",
+        "profileUrlCopied": "Profile URL copied to clipboard!"
       },
       "tooltip": {
-        "copyProfileUrl": "Profil Bağlantısını Kopyala",
-        "editProfile": "Profili Düzenle",
-        "likeProfile": "Beğen",
-        "unlikeProfile": "Beğeniyi Geri Al",
-        "loginRequiredForLike": "Profilleri beğenebilmek için giriş yapmalısınız."
+        "copyProfileUrl": "Copy Profile URL",
+        "editProfile": "Edit Profile",
+        "likeProfile": "Like",
+        "unlikeProfile": "Unlike",
+        "loginRequiredForLike": "You must be logged in to like profiles."
       }
     },
     "social": {
-      "title": "Sosyal Medya",
-      "noSocials": "Sosyal medya bağlantısı bulunamadı."
+      "title": "Social",
+      "noSocials": "No social found."
     },
     "graph": {
       "likes": {
-        "label": "Beğeni",
-        "title": "Beğeni Grafiği",
-        "subtitle": "Bu profilin zaman içinde aldığı beğeni sayısı."
+        "label": "Likes",
+        "title": "Likes Graph",
+        "subtitle": "The amount of likes this profile has received over time."
       },
       "views": {
-        "label": "Ziyaretçi",
-        "title": "Ziyaretçi Grafiği",
-        "subtitle": "Bu profili zaman içinde ziyaret eden kişi sayısı."
+        "label": "Views",
+        "title": "Views Graph",
+        "subtitle": "The amount of views this profile has received over time."
       }
     },
     "servers": {
-      "title": "Sunucular",
-      "subtitle": "Bu profilin sahibi, ayrıca aşağıdaki sunucuların sahibidir. Profilin sahibini beğendiyseniz, belki sunucularını da beğenirsiniz?"
+      "title": "Servers",
+      "subtitle": "The owner of this profile is also the owner of these servers. If you like it, maybe you will also enjoy their servers too!"
     }
   },
   "graph": {
     "tooltip": {
-      "increased": "(0)[Dün'e oranla arttı ({{difference}})];(1)[Geçen ay'a oranla arttı ({{difference}})];",
-      "decreased": "(0)[Dün'e oranla azaldı ({{difference}})];(1)[Geçen ay'a oranla azaldı ({{difference}})];",
-      "noChanges": "(0)[Dün'e oranla değişiklik yok];(1)[Geçen ay'a oranla değişiklik yok];",
-      "Total Servers": "{{count}} Sunucu",
-      "Total Users": "{{count}} Kullanıcı",
-      "profileLikes": "{{count}} Beğeni",
-      "profileViews": "{{count}} Ziyaretçi",
-      "monthlyVotes": "{{count}} Oy"
+      "increased": "(0)[Increased since yesterday ({{difference}})];(1)[Increased since last month ({{difference}})];",
+      "decreased": "(0)[Decreased since yesterday ({{difference}})];(1)[Decreased since last month ({{difference}})];",
+      "noChanges": "(0)[No changes since yesterday];(1)[No changes since last month];",
+      "Total Servers": "{{count}} Servers",
+      "Total Users": "{{count}} Users",
+      "profileLikes": "{{count}} Likes",
+      "profileViews": "{{count}} Views",
+      "monthlyVotes": "{{count}} Votes"
     }
   },
   "editProfilePage": {
-    "title": "Profili Düzenle",
-    "verifiedBadge": "Onaylı Profil",
+    "title": "Edit Profile",
+    "verifiedBadge": "Verified Profile",
     "toast": {
-      "verifyingProfile": "Profil doğrulanıyor..",
-      "profileVerified": "Profil doğrulandı!",
-      "unverifyingProfile": "Profil doğrulaması kaldırılıyor..",
-      "profileUnverified": "Profil doğrulaması kaldırıldı!",
-      "colorCopied": "Renk {{hex}} kopyalandı!",
-      "resettingColors": "Renkler sıfırlanıyor..",
-      "colorsReset": "Renkler sıfırlandı!",
-      "invalidUrl": "Geçersiz URL.",
-      "emptyUrl": "URL boş olamaz.",
-      "socialAdding": "Yeni bağlantı ekleniyor..",
-      "socialAdded": "Yeni bağlantı başarıyla eklendi.",
-      "socialMediaAdding": "Yeni sosyal medya bağlantısı ekleniyor..",
-      "socialMediaAdded": "Yeni sosyal medya bağlantısı başarıyla eklendi.",
-      "deletingSocial": "Bağlantı siliniyor..",
-      "socialDeleted": "Bağlantı başarıyla silindi.",
-      "deletingProfile": "Profil siliniyor..",
-      "profileDeleted": "Profil başarıyla silindi."
+      "verifyingProfile": "Verifying profile..",
+      "profileVerified": "Profile verified!",
+      "unverifyingProfile": "Unverifying profile..",
+      "profileUnverified": "Profile unverified!",
+      "colorCopied": "Color {{hex}} copied!",
+      "resettingColors": "Resetting colors..",
+      "colorsReset": "Colors reset!",
+      "invalidUrl": "Invalid URL.",
+      "emptyUrl": "URL cannot be empty.",
+      "socialAdding": "New social adding..",
+      "socialAdded": "New social added successfully.",
+      "socialMediaAdding": "New social media adding..",
+      "socialMediaAdded": "New social media added successfully.",
+      "deletingSocial": "Social deleting..",
+      "socialDeleted": "Social deleted successfully.",
+      "deletingProfile": "Deleting profile..",
+      "profileDeleted": "Profile deleted successfully."
     },
     "premiumRequiredInfo": {
-      "title": "Bunu yapamazsınız!",
-      "description": "Bunu değiştirmek için Premium olmalısınız. Premium hakkında daha fazla bilgi için <link>'nı ziyaret edin.",
-      "linkText": "Premium sayfası"
+      "title": "You can't do that!",
+      "description": "You have to be a Premium User to change that option. For more information about Premium Memberships, visit <link>.",
+      "linkText": "Premium page"
     },
     "unsavedChangesPopover": {
-      "label": "Beep beep! Kaydedilmemiş değişiklikleriniz var."
+      "label": "Beep beep! You have unsaved changes."
     },
     "labels": {
       "slug": "Slug",
-      "occupation": "Meslek",
-      "gender": "Cinsiyet",
-      "location": "Konum",
-      "birthday": "Doğum Günü",
-      "bio": "Biyografi",
-      "preferredHost": "Tercih Edilen Domain",
-      "cardColors": "Kart Renkleri"
+      "occupation": "Occupation",
+      "gender": "Gender",
+      "location": "Location",
+      "birthday": "Birthday",
+      "bio": "Bio",
+      "preferredHost": "Preferred Host",
+      "cardColors": "Card Colors"
     },
     "tooltip": {
-      "premiumRequired": "Bu özellik yalnızca Premium kullanıcılar içindir."
+      "premiumRequired": "This feature is only available for Premium Members."
     },
     "cardColors": {
-      "primary": "Birincil",
-      "secondary": "İkincil",
-      "copyColor": "{{hex}} rengini kopyala"
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "copyColor": "Copy {{hex}}"
     },
     "socials": {
-      "title": "Sosyal Medya",
-      "subtitle": "Profilinize sosyal medya bağlantılarınızı ekleyin."
+      "title": "Socials",
+      "subtitle": "Add your social media links to your profile."
     },
     "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "subtitle": "Profilinizi aşağıdaki butonu kullanarak silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
+      "title": "Danger Zone",
+      "subtitle": "You can remove your profile with button below, but be careful not to delete it by mistake :)",
       "deleteProfileModal": {
-        "title": "Profili Sil",
-        "description": "Profilinizi silmek istediğinizden emin misiniz?",
-        "note": "Profilinizi silmek, tüm bağlantılarınızı ve profilinizle ilişkili tüm verileri kalıcı olarak silecektir.<br><br>Bu işlem geri alınamaz."
+        "title": "Delete Profile",
+        "description": "Are you sure you want to remove your profile?",
+        "note": "Please note that remove your profile will remove all your social links and likes that your profile has received.<br><br>This action cannot be undone."
       }
     }
   },
   "emojisPage": {
-    "title": "Emojileri Keşfedin",
-    "subtitle": "Discord'daki en iyi emojileri keşfedin ve mükemmel emojileri bulun!<br>Keşfedilecek {{count}} emoji sizi bekliyor.",
-    "searchInputPlaceholder": "Ad ile ses arayın...",
-    "categorySelectPlaceholder": "Kategori",
+    "title": "Discover Emojis",
+    "subtitle": "Explore, find and download the perfect emotes for your Discord server!<br>You have {{count}} emojis to explore.",
+    "searchInputPlaceholder": "Search for a emoji by name...",
+    "categorySelectPlaceholder": "Category",
     "sortSelect": {
-      "placeholder": "Sıralama",
+      "placeholder": "Sorting",
       "items": {
-        "popular": "Popüler",
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "popular": "Popular",
+        "newest": "Newest",
+        "oldest": "Oldest"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek emoji yok. Belki de bu, bir emoji paylaşma zamanının geldiğinin bir işaretidir?"
+      "title": "It's quiet here...",
+      "message": "There are no emojis to display. Maybe that's a sign to create one?"
     }
   },
   "emojiPackageCard": {
-    "packBadge": "PAKET"
+    "packBadge": "PACK"
   },
   "emojiCard": {
     "gifBadge": "GIF"
   },
   "createEmojiPage": {
-    "title": "Emoji Paylaş",
-    "subtitle": "Dünyaya emojinizi paylaşın.",
+    "title": "Publish Emoji",
+    "subtitle": "Publish your emoji to the world.",
     "steps": [
       {
-        "label": "Detaylar",
+        "label": "Details",
         "inputs": {
           "emojiCategories": {
-            "title": "Detaylarla başlayalım.",
-            "subtitle": "Emojiniz için bir veya daha fazla kategori seçin."
+            "title": "Let's start with the details.",
+            "subtitle": "Choose one or more categories for your emoji."
           },
           "emojiName": {
-            "title": "Emoji İsmi",
-            "subtitle": "Emojiniz için bir isim yazın.",
-            "placeholder": "Ör. harika_emoji"
+            "title": "Emoji Name",
+            "subtitle": "Enter a name for your emoji.",
+            "placeholder": "Enter emoji name"
           }
         }
       },
       {
-        "label": "Yükle & Önizle"
+        "label": "Upload & Preview"
       },
       {
-        "label": "Paylaş",
-        "title": "Emoji detaylarınızı onaylayın ve paylaşın.",
-        "subtitle": "Detayları gözden geçirin ve emojiyi paylaşmak için \"Yükle\" düğmesine tıklayın.",
+        "label": "Publish",
+        "title": "Confirm the details and publish your emoji.",
+        "subtitle": "Review the details and click on the publish button to publish your emoji.",
         "packageInfo": {
-          "title": "Pşt!",
-          "description": "Birden fazla emoji paylaşmak istediğinizi görüyorum. Bu durumda, bir paket paylaşıyorsunuz demektir. Emoji paketleri, emojiler gibi sayfalara sahiptir ve emojiler gibi rar dosyası olarak indirilebilir."
+          "title": "Hey!",
+          "description": "It looks like you want to share more than one emoji at the same time. In this case, you will be sharing a package, not an emoji. Emoji packages have pages just like emojis and can be downloaded just like emojis, but as a rar file. "
         },
         "fields": {
-          "categories": "Kategoriler",
-          "emojiName": "Emoji İsmi"
+          "categories": "Categories",
+          "emojiName": "Emoji Name"
         },
         "disclaimer": {
-          "content": "Bu emoji(leri) paylaşarak, <contentPolicyLink>'nı kabul etmiş olursunuz.",
-          "linkText": "içerik politikası"
+          "content": "By publishing this emoji(s), you agree to our <contentPolicyLink>.",
+          "linkText": "content policy"
         }
       }
     ],
     "emojisPreview": {
       "toast": {
-        "guildNotFound": "Emojiyi yüklemek için bir sunucu seçin.",
-        "uploadingEmojis": "Emoji sunucuya yükleniyor...",
-        "emojisUploaded": "Emoji başarıyla sunucuya yüklendi."
+        "guildNotFound": "Please select a server to upload the emoji.",
+        "uploadingEmojis": "Emoji is being uploaded to guild...",
+        "emojisUploaded": "The Emoji has been uploaded successfully."
       },
       "uploadEmojiToDiscordModal": {
-        "title": "Discord'a Yükle",
-        "titleWithEmoji": "Discord'a Yükleyin: <emojiImage> {{emojiName}}",
-        "description": "Hızlı bir şekilde bu emojiyi Discord'a yükleyin. Aşağıdan bir sunucu seçin.",
+        "title": "Upload to Discord",
+        "titleWithEmoji": "Upload <emojiImage> {{emojiName}} to Discord",
+        "description": "Quickly upload this emoji to Discord by selecting a server below.",
         "emptyErrorState": {
-          "title": "Buralar biraz sessiz...",
-          "message": "Emoji yükleyebileceğiniz bir sunucu bulunamadı."
+          "title": "It's quiet here...",
+          "message": "There are no servers you can upload emojis to."
         },
-        "notes": "* Sunucuda \"İfadeleri Yönet\" iznine sahip olmalısınız.<br>* Listeyi yenilemek için siteden çıkış yapıp tekrar giriş yapın.",
+        "notes": "* You should have the permission to manage emojis in the server.<br>* Log out and back in to refresh the list.",
         "tooltip": {
-          "inviteOurBot": "{{guildName}} (Botumuzu Davet Et)"
+          "inviteOurBot": "{{guildName}} (Invite our Bot)"
         }
       },
       "tooltip": {
-        "uploadToDiscord": "Discord'a Yükle",
-        "loginToUpload": "Yüklemek için Discord ile Giriş Yapın"
+        "uploadToDiscord": "Upload to Discord",
+        "loginToUpload": "Login with Discord to Upload"
       }
     },
     "toast": {
-      "minEmojisLength": "Birden fazla emojinin paket olarak yayınlanabilmesi için en az {{minLength}} emojinin pakete eklenmiş olması gerekmektedir.",
-      "maxEmojisReached": "Paketinize en fazla {{maxLength}} emoji ekleyebilirsiniz.",
-      "invalidEmojiName": "Emoji ismi yalnızca küçük harfler, rakamlar ve alt çizgiler içerebilir. Maksimum 20 karakter.",
-      "publishingEmojis": "(1)[Emoji yayınlanıyor...];(2-inf)[Emoji paketi yayınlanıyor...]",
-      "emojisPublished": "(1)[Emoji başarıyla yayınlandı.];(2-inf)[Emoji paketi başarıyla yayınlandı.]",
-      "fileSizeExceeded": "Emoji dosya boyutu {{maxSize}}kb'yi geçmemelidir.",
-      "animatedCategoryNotSelected": "Animasyonlu bir emoji paylaşmak istiyorsanız, lütfen geri gidin ve Hareketli kategorisini seçin."
+      "minEmojisLength": "A minimum of {{minLength}} emojis must be added to the package to be eligible for publishing.",
+      "maxEmojisReached": "You can not add more than {{maxLength}} emojis to this package.",
+      "invalidEmojiName": "Emoji name must only consist of lowercase letters, numbers, and underscores. Max 20 characters.",
+      "publishingEmojis": "(1)[Publishing emoji...];(2-inf)[Publishing emojis...]",
+      "emojisPublished": "(1)[Emoji published successfully.];(2-inf)[Emojis published successfully.]",
+      "fileSizeExceeded": "File size should not exceed {{maxSize}}kb.",
+      "animatedCategoryNotSelected": "If you want to share an animated emoji, please go back and select the Animated category."
     }
   },
   "emojiPage": {
     "toast": {
-      "deletingEmoji": "Emoji siliniyor..",
-      "emojiDeleted": "{{emojiName}} adlı emoji başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+      "deletingEmoji": "Deleting emoji..",
+      "emojiDeleted": "Successfully deleted {{emojiName}}. You will be redirected to the home page in a few seconds."
     },
     "notApprovedInfo": {
-      "description": "Şu an için bu emojiyi yalnızca siz görebilirsiniz. Emoji onaylandığında herkese açık hale gelecektir. Bu zamana kadar <link>'a gelip botumuzdan emoji onaylandığında bildirim alabilirsiniz. DM'lerinizi açık tuttuğunuzdan emin olun.",
-      "linkText": "Discord sunucumuz"
+      "description": "Currently, only you can see this emoji. Once it is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your emoji is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
     },
     "fields": {
-      "name": "İsim",
-      "uploaded": "Paylaşım Tarihi",
-      "downloads": "İndirmeler",
-      "animated": "Hareketli",
-      "categories": "Kategoriler",
-      "publisher": "Paylaşan",
-      "yes": "Evet",
-      "no": "Hayır"
+      "name": "Name",
+      "uploaded": "Uploaded",
+      "downloads": "Downloads",
+      "animated": "Animated",
+      "categories": "Categories",
+      "publisher": "Publisher",
+      "yes": "Yes",
+      "no": "No"
     },
     "similarEmojis": {
-      "title": "Benzer Emojiler",
-      "emptyErrorState": "Üzgünüm, benzer emojiler bulamadım.."
+      "title": "Similar Emojis",
+      "emptyErrorState": "It's a bit sad, but I couldn't find any similar emojis.."
     },
     "frequentlyAskedQuestions": {
-      "title": "Sıkça Sorulan Sorular",
+      "title": "Frequently Asked Questions",
       "labels": [
-        "Bu emojiyi nasıl indirebilirim?",
-        "Bu emojiyi Discord sunucuma nasıl ekleyebilirim?",
-        "Bu emoji uygunsuz. Ne yapabilirim?"
+        "How can I download an emoji?",
+        "How can I add an emoji to my Discord server?",
+        "This emoji is inappropriate. What can I do?"
       ],
       "answers": [
-        "<span> emojisini indirmek için aşağıdaki düğmeyi kullanabilirsiniz.",
+        "You can use the button below to download <span> emoji.",
         {
-          "title": "Bunu duyduğuma sevindim! Size bunun için 3 yöntem anlatacağım.",
+          "title": "I'm glad to hear that! There are 3 ways to download an emoji.",
           "methods": [
             {
-              "buttonText": "1. Web Sitemiz (bu sayfa)",
-              "instructionsBefore": "Botumuzu ve web sitemizi kullanarak, bu emojiyi sadece birkaç tıklama ile Discord sunucunuza yükleyebilirsiniz. İşte bunu nasıl yapabileceğiniz:",
+              "buttonText": "1. Our Website (this page)",
+              "instructionsBefore": "Using our bot & website, you can upload this emoji to your server with just a few clicks. Here's how:",
               "instructions": [
                 {
-                  "text": "Sunucunuza <link> ekleyin.",
-                  "linkText": "botumuzu"
+                  "text": "<link> to your server.",
+                  "linkText": "Add our bot"
                 },
-                "Bu sayfadaki emoji önizlemesinde \"Discord'a Yükle\" düğmesine tıklayın.",
-                "Emojiyi yüklemek istediğiniz sunucuyu seçin ve yükle düğmesine tıklayın.",
-                "Tada! Emoji sunucunuza eklendi."
+                "Click \"Upload to Discord\" button on emoji preview in this page. ",
+                "Select the server you want to upload the emoji & click the upload button.",
+                "Tada! Now emoji is added to the server."
               ]
             },
             {
-              "buttonText": "2. Botumuz (önerilen)",
-              "instructionsBefore": "Botumuzu kullanarak bu emojiyi tek bir komutla sunucunuza yükleyebilirsiniz. İşte bunu nasıl yapabileceğiniz:",
+              "buttonText": "2. Our Bot (recommended)",
+              "instructionsBefore": "Using our bot, you can upload this emoji to your server with a single command. Here's how:",
               "instructions": [
                 {
-                  "text": "Sunucunuza <link> ekleyin.",
-                  "linkText": "botumuzu"
+                  "text": "<link> to your server.",
+                  "linkText": "Add our bot"
                 },
-                "Bunu kopyalayıp herhangi bir kanala yapıştırın: <pre>",
-                "Komutu kullanın ve tada! Emoji sunucunuza eklendi."
+                "Copy & Paste this to any channel: <pre>",
+                "Use the command and tada! Now emoji is added to the server."
               ]
             },
             {
-              "buttonText": "3. Klasik Yöntem",
-              "instructionsBefore": "Bu biraz daha zor olabilir.",
+              "buttonText": "3. Legacy Way",
+              "instructionsBefore": "This may be a little more challenging.",
               "instructions": [
-                "Emojiyi indirin:",
-                "Discord uygulamanızı açın ve sunucunuza sağ tıklayın.",
-                "Sunucu Ayarları > Emoji'ye gidin.",
-                "Emoji Yükle'ye tıklayın.",
-                "İndirdiğiniz emojiyi seçin ve yükleyin.",
-                "Tada! Emoji sunucunuza eklendi."
+                "Download the emoji:",
+                "Open your Discord App and right click to your server.",
+                "Go to Server Settings > Emoji.",
+                "Click the Upload Emoji.",
+                "Select the emoji you downloaded before.",
+                "Tada! Now emoji is added to the server."
               ]
             }
           ]
         },
-        "Sayfanın altındaki (en aşağıda) Discord düğmesi aracılığıyla destek sunucumuza katılabilir ve emojinin uygunsuz olduğunu bize bildirebilirsiniz."
+        "You can join our support server via the Discord button at the bottom of the page (Footer) and let us know that the emoji is inappropriate."
       ]
     },
     "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "description": "Aşağıdaki düğmeyi kullanarak emojinizi silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
+      "title": "Danger Zone",
+      "description": "You can remove the emoji using the button below, but be careful not to delete it by mistake :)",
       "deleteEmojiModal": {
-        "title": "Emojiyi Sil",
-        "description": "{{emojiName}} adlı emojiyi silmek istediğinizden emin misiniz?",
-        "content": "Lütfen emojiyi silmenin, emojiyi aldığı tüm indirmeler ile beraber kaldıracağını unutmayın.<br><br>Bu işlem geri alınamaz."
+        "title": "Remove Emoji",
+        "description": "Are you sure you want to remove {{emojiName}}?",
+        "content": "Please note that removing the emoji will remove all the downloads that the emoji has received.<br><br>This action cannot be undone."
       }
     }
   },
   "emojiPackagePage": {
     "toast": {
-      "deletingEmojiPackage": "Emoji paketi siliniyor..",
-      "emojiPackageDeleted": "{{emojiName}} adlı emoji paketi başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+      "deletingEmojiPackage": "Removing emoji package..",
+      "emojiPackageDeleted": "Successfully removed package {{emojiName}}. You will be redirected to the home page in a few seconds."
     },
     "notApprovedInfo": {
-      "description": "Şu an için bu emoji paketini yalnızca siz görebilirsiniz. Emoji paketi onaylandığında herkese açık hale gelecektir. Bu zamana kadar <link>'a gelip botumuzdan emoji paketi onaylandığında bildirim alabilirsiniz. DM'lerinizi açık tuttuğunuzdan emin olun.",
-      "linkText": "Discord sunucumuz"
+      "description": "Currently, only you can see the emoji package. Once the it is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your emoji package is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
     },
     "fields": {
-      "name": "İsim",
-      "uploaded": "Paylaşım Tarihi",
-      "downloads": "İndirmeler",
-      "emojiCount": "Emoji Sayısı",
-      "categories": "Kategoriler",
-      "publisher": "Paylaşan"
+      "name": "Name",
+      "uploaded": "Uploaded",
+      "downloads": "Downloads",
+      "emojiCount": "Emoji Count",
+      "categories": "Categories",
+      "publisher": "Publisher"
     },
     "similarEmojiPacks": {
-      "title": "Benzer Emoji Paketleri",
-      "emptyErrorState": "Üzgünüm, benzer emoji paketleri bulamadım.."
+      "title": "Similar Emoji Packs",
+      "emptyErrorState": "It's a bit sad, but I couldn't find any similar emojis.."
     },
     "frequentlyAskedQuestions": {
-      "title": "Sıkça Sorulan Sorular",
+      "title": "Frequently Asked Questions",
       "labels": [
-        "Bu emoji paketini nasıl indirebilirim?",
-        "Bu emoji paketini Discord sunucuma nasıl ekleyebilirim?",
-        "Bu emoji paketi uygunsuz. Ne yapabilirim?"
+        "How can I download an emoji pack?",
+        "How can I add an emoji pack to my Discord server?",
+        "This emoji pack is inappropriate. What can I do?"
       ],
       "answers": [
-        "<span> paketini indirmek için aşağıdaki düğmeyi kullanabilirsiniz.",
+        "You can use the button below to download <span> package.",
         {
-          "title": "Bunu duyduğuma sevindim! Size bunun için 2 yöntem anlatacağım.",
+          "title": "I'm glad to hear that! There are 2 ways to download an emoji package.",
           "methods": [
             {
-              "buttonText": "1. Web Sitemiz (bu sayfa)",
-              "instructionsBefore": "Botumuzu ve web sitemizi kullanarak, bu emoji paketini sadece birkaç tıklama ile Discord sunucunuza yükleyebilirsiniz. İşte bunu nasıl yapabileceğiniz:",
+              "buttonText": "1. Our Website (this page)",
+              "instructionsBefore": "Using our bot & website, you can upload these emojis to your server with just a few clicks. Here how you can do this:",
               "instructions": [
                 {
-                  "text": "Sunucunuza <link> ekleyin.",
-                  "linkText": "botumuzu"
+                  "text": "<link> to your server.",
+                  "linkText": "Add our bot"
                 },
-                "Bu sayfadaki emoji önizlemesinde \"Discord'a Yükle\" düğmesine tıklayın.",
-                "Emojiyi yüklemek istediğiniz sunucuyu seçin ve yükle düğmesine tıklayın.",
-                "Tada! Emoji paketi sunucunuza eklendi."
+                "Click \"Upload to Discord\" button on emoji preview that you want to upload in emojis preview grid.",
+                "Select the server you want to upload the emoji & click the upload button.",
+                "Tada! The emojis are added to the server."
               ]
             },
             {
-              "buttonText": "2. Klasik Yöntem",
-              "instructionsBefore": "Bu biraz daha zor olabilir.",
+              "buttonText": "2. Legacy Way",
+              "instructionsBefore": "This may be a little more challenging.",
               "instructions": [
-                "Emoji paketini indirin:",
-                "İndirilen paketi çıkartın. (rar, zip vb.)",
-                "Discord uygulamanızı açın ve sunucunuza sağ tıklayın.",
-                "Sunucu Ayarları > Emoji'ye gidin.",
-                "İndirdiğiniz paketteki tüm emojileri seçin ve Discord ekranına sürükleyip bırakın.",
-                "Tada! Emoji paketi sunucunuza eklendi."
+                "Download the emoji pack:",
+                "Extract the downloaded pack.",
+                "Open your Discord App and right click to your server.",
+                "Go to Server Settings > Emoji.",
+                "Select all uploaded emojis and drag and drop them to the Discord screen.",
+                "Tada! Now emoji pack is added to the server."
               ]
             }
           ]
         },
-        "Sayfanın sağ alt köşesindeki rapor düğmesini kullanarak, geçerli bir nedenle emoji paketini bildirebilirsiniz. Ekibimiz emoji paketini inceleyecek ve gerekli işlemleri yapacaktır."
+        "You can use the report button on the bottom right of the page to report the emoji pack with a valid reason. Our team will review the emoji pack and take necessary actions."
       ]
     },
     "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "description": "Aşağıdaki düğmeyi kullanarak emojiyi silebilirsiniz, ancak yanlışlıkla silmemeye dikkat edin :)",
+      "title": "Danger Zone",
+      "description": "You can remove the emoji using the button below, but be careful not to delete it by mistake :)",
       "deleteEmojiModal": {
-        "title": "Emoji Paketini Sil",
-        "description": "{{emojiName}} adlı emoji paketini silmek istediğinizden emin misiniz?",
-        "content": "Lütfen emoji paketini silmenin, paketin aldığı tüm indirmeler ile beraber kaldıracağını unutmayın.<br><br>Bu işlem geri alınamaz."
+        "title": "Remove Emoji Package",
+        "description": "Are you sure you want to remove {{emojiName}}?",
+        "content": "Please note that removing the emoji package will remove all emojis in the package and the package itself.<br><br>This action cannot be undone."
       }
     }
   },
   "botsPage": {
-    "title": "Botları Keşfedin",
-    "subtitle": "En popüler botları keşfedin ve Discord sunucunuz için mükemmel olanı bulun!<br> Mevcut en iyi botlarla sunucunuzu daha eğlenceli ve etkileşimli hale getirin.",
-    "searchInputPlaceholder": "Bir botu ID'ye, açıklamaya veya kategoriye göre arayın...",
-    "categorySelectPlaceholder": "Kategori",
+    "title": "Discover Bots",
+    "subtitle": "Explore the most popular bots and find the perfect one for your Discord server!<br> Make your server more fun and interactive with the best bots available.",
+    "searchInputPlaceholder": "Search for a bot by id, description, or category...",
+    "categorySelectPlaceholder": "Category",
     "sortSelect": {
-      "placeholder": "Sıralama",
+      "placeholder": "Sorting",
       "items": {
-        "votes": "Oylar",
-        "latestVoted": "Son Oy Verilen",
-        "servers": "Sunucu Sayısı",
-        "mostReviewed": "En Çok Yorumlanan",
-        "newest": "En Yeni",
-        "oldest": "En Eski"
+        "votes": "Votes",
+        "latestVoted": "Latest Voted",
+        "servers": "Servers",
+        "mostReviewed": "Most Reviewed",
+        "newest": "Newest",
+        "oldest": "Oldest"
       }
     },
     "emptyErrorState": {
-      "title": "Buralar biraz sessiz...",
-      "message": "Gösterilecek bot yok. Belki de bu, bir botunu paylaşma zamanının geldiğinin bir işaretidir?"
+      "title": "It's quiet here...",
+      "message": "There are no bots to display. Maybe that's a sign to create one?"
     }
   },
   "botCard": {
-    "noDescription": "Bu botun bir açıklaması yok. Sadece ne kadar güzel olduğunu hayal edebiliriz.",
-    "tripledVoteBadge": "3X OY!",
-    "neverVoted": "Hiç oy verilmedi"
+    "noDescription": "This bot does not have a description. We can only imagine how beautiful it is.",
+    "tripledVoteBadge": "3X VOTE!",
+    "neverVoted": "Never Voted"
   },
   "badges": {
-    "admin": "Yönetici",
-    "moderator": "Moderatör",
-    "verified": "Onaylanmış",
-    "premium": "{{premiumSince, datetime}} tarihinden beri Premium",
-    "poweredByLantern": "Bu kullanıcı durumu lantern.rest tarafından sağlanmaktadır"
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "verified": "Verified",
+    "premium": "Premium since {{premiumSince, datetime}}",
+    "poweredByLantern": "This user status is powered by lantern.rest"
   },
   "botPage": {
     "notVerifiedInfo": {
-      "description": "Şu an için bu botu yalnızca siz görebilirsiniz. Bot onaylandığında herkese açık hale gelecektir. Bu zamana kadar <link>'a gelip botumuzdan bot onaylandığında bildirim alabilirsiniz. DM'lerinizi açık tuttuğunuzdan emin olun.",
-      "linkText": "Discord sunucumuz"
+      "description": "Currently, only you can see the bot. Once it is verified, it will become public. Until then, you can come to <link> and get a notification from our bot when your bot is approved. Make sure you open your DMs.",
+      "linkText": "our support server"
     },
     "countdown": {
-      "tripledVoteExpired": "Üç kat oy süresi sona erdi!",
-      "votesTripledFor": "Oylar {{hours}} saat, {{minutes}} dakika boyunca üç katına çıkarıldı!",
-      "standedOutExpired": "Öne çıkma süresi sona erdi!",
-      "standedOutFor": "{{hours}} saat, {{minutes}} dakika boyunca öne çıkartıldı."
+      "tripledVoteExpired": "Tripled Votes has expired!",
+      "votesTripledFor": "Votes tripled for {{hours}} hours, {{minutes}} minutes!",
+      "standedOutExpired": "Stand out has expired!",
+      "standedOutFor": "Standing out for {{hours}} hours, {{minutes}} minutes!"
     },
     "about": {
-      "title": "Hakkında",
+      "title": "About",
       "labels": {
-        "owner": "Sahibi",
-        "servers": "Toplam Sunucu",
-        "votes": "Oy Sayısı",
-        "commands": "Komut Sayısı",
+        "owner": "Owner",
+        "servers": "Total Servers",
+        "votes": "Votes",
+        "commands": "Commands",
         "githubRepository": {
-          "label": "GitHub Deposu",
-          "openSourceDisclaimer": "Bu bot açık kaynaktır ve GitHub'da bulunabilir."
+          "label": "Git Repository",
+          "openSourceDisclaimer": "This bot is open-source. Its source is available on a Git Repository."
         }
       }
     },
     "actions": {
-      "title": "İşlemler",
+      "title": "Actions",
       "toast": {
-        "voting": "{{botName}} botuna oy veriliyor..",
-        "voted": "{{botName}} botuna oy verildi!",
-        "creatingCheckout": "Sizin için bir ödeme sayfası oluşturuluyor..",
-        "checkoutCreated": "Ödeme sayfası oluşturuldu! Birkaç saniye içinde ödeme sayfasına yönlendirileceksiniz..",
-        "loginRequiredForVote": "Oy verebilmek için giriş yapmalısınız.",
-        "botUrlCopied": "Bot bağlantısı panoya kopyalandı!"
+        "voting": "Voting {{botName}}..",
+        "voted": "Successfully voted for {{botName}}!",
+        "creatingCheckout": "We are creating a checkout for you..",
+        "checkoutCreated": "Checkout created! Redirecting you to the payment page in few seconds..",
+        "loginRequiredForVote": "You need to be logged in to vote for bots.",
+        "botUrlCopied": "Bot URL copied to clipboard."
       }
     },
     "categories": {
-      "title": "Kategoriler"
+      "title": "Categories"
     },
     "supportServer": {
-      "title": "Destek Sunucusu"
+      "title": "Support Server"
     },
     "tabs": {
       "labels": {
-        "reviews": "Yorumlar",
-        "topVoters": "En Çok Oy Verenler"
+        "reviews": "Reviews",
+        "topVoters": "Top Voters"
       },
       "reviews": {
-        "title": "Yorumlar",
+        "title": "Reviews",
         "toast": {
-          "submittingReview": "Yorum gönderiliyor..",
-          "reviewSubmitted": "Yorumunuz başarıyla gönderildi!"
+          "submittingReview": "Submitting review..",
+          "reviewSubmitted": "Your review has been submitted successfully!"
         },
-        "totalReviews": "(0)[Yorum yok];(1-inf)[{{count}} yorum];",
+        "totalReviews": "(0)[No reviews];(1)[1 review];(2-inf)[{{count}} reviews];",
         "reviewSubmitted": {
           "info": {
-            "title": "Not",
-            "description": "Yorumunuz yetkililer tarafından incelenene kadar bekleyin. Onaylanmadan önce diğer kullanıcılar tarafından görüntülenmeyecektir."
+            "title": "Note",
+            "description": "Your review has been submitted for verification. It will be visible once it has been approved."
           },
-          "alreadyReviewed": "Bu bot için zaten bir yorum yaptınız."
+          "alreadyReviewed": "You have already left a review for this bot."
         },
-        "ownerCannotReview": "Sahibi olduğunuz botlara yorum yapamazsınız.",
-        "unknown": "Bilinmiyor",
+        "ownerCannotReview": "You can't leave a review for your own bot.",
+        "unknown": "Unknown",
         "input": {
-          "label": "Yorumunuz",
-          "description": "Bu bot hakkında ne düşünüyorsunuz? Diğer kullanıcılar için bir yorum yapın."
+          "label": "Your Review",
+          "description": "Let others know what you think about this bot."
         },
-        "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız.",
-        "ratingRequired": "Lütfen bir derecelendirme seçin.",
-        "ratingSelected": "Seçilen derecelendirme: {{count}}/5"
+        "loginRequiredForReview": "You need to be logged in to leave a review.",
+        "ratingRequired": "Please select a rating.",
+        "ratingSelected": "Selected rating: {{count}}/5"
       },
       "topVoters": {
-        "title": "En Çok Oy Verenler"
+        "title": "Top Voters"
       }
     }
   },
   "botManagePage": {
-    "title": "Botu Yönet",
-    "subtitle": "Botunuzu ve ayarlarını yönetin.",
-    "escToCloseBadge": "kapatmak için esc",
+    "title": "Manage Bot",
+    "subtitle": "Manage your bot and its settings.",
+    "escToCloseBadge": "[esc] to close",
     "toast": {
-      "savingChanges": "Değişiklikler kaydediliyor..",
-      "changesSaved": "Değişiklikler başarıyla kaydedildi."
+      "savingChanges": "Saving changes..",
+      "changesSaved": "Successfully saved changes!"
     },
     "discardChangesModal": {
-      "title": "Değişiklikleri İptal Et",
-      "description": "Değişikliklerinizi iptal etmek istediğinizden emin misiniz?",
-      "note": "Değişikliklerinizi iptal etmek, yapılan tüm değişiklikleri geri alacaktır."
+      "title": "Discard Changes",
+      "description": "Are you sure you want to discard your changes?",
+      "note": "Your changes will not be saved."
     },
     "essentialInformation": {
-      "title": "Önemli Ayarlar",
-      "subtitle": "Bu botun en önemli ayarlarıdır. Bunları doğru doldurduğunuzdan emin olun.",
+      "title": "Essential Information",
+      "subtitle": "These are the most important settings for bot. Be sure to fill them out correctly.",
       "inputs": {
         "shortDescription": {
-          "label": "Kısa Açıklama",
-          "description": "Botunuzun kısa bir açıklaması. Bu, arama sonuçlarında gösterilecektir.",
-          "placeholder": "Harika şeyler yapan bir bot."
+          "label": "Short Description",
+          "description": "A short description of your bot. This will be shown in search results.",
+          "placeholder": "A bot that does cool things."
         },
         "longDescription": {
-          "label": "Uzun Açıklama",
-          "description": "Botunuzun daha uzun bir açıklaması. Bu bot sayfanızda gösterilecektir. Markdown desteklenmektedir.",
-          "placeholder": "Harika şeyler ve daha fazlasını yapan bir bot."
+          "label": "Long Description",
+          "description": "A longer description of your bot. This will be shown on your bot page. Markdown is supported.",
+          "placeholder": "A bot that does cool things and more."
         },
         "inviteUrl": {
-          "label": "Davet Bağlantısı",
-          "description": "Kullanıcıların botunuzu sunucularına davet etmek için kullanabilecekleri URL.",
-          "placeholder": "Botunuzun davet bağlantınızı buraya yapıştırın."
+          "label": "Invite URL",
+          "description": "The URL that users can use to invite your bot to their server.",
+          "placeholder": "Paste your bot invite URL here."
         }
       }
     },
     "other": {
-      "title": "Diğer",
-      "subtitle": "Çok fazla düşünmenize gerek olmayan ayarlar.",
+      "title": "Other",
+      "subtitle": "Settings that you should not worry about too much.",
       "inputs": {
         "categories": {
-          "label": "Kategoriler",
-          "description": "Botunuzun ait olduğu kategorileri seçin. Bu, kullanıcıların botunuzu bulmasına yardımcı olacaktır."
+          "label": "Categories",
+          "description": "Select the categories that your bot belongs to. This will help users find your bot."
         },
         "keywords": {
-          "label": "Anahtar Kelimeler",
-          "description": "Botunuzun ile ilgili anahtar kelimeleri ekleyin. Bu, kullanıcıların botunuzu bulmasına yardımcı olacaktır.",
-          "placeholder": "ör. eğlence, moderasyon, müzik"
+          "label": "Keywords",
+          "description": "Add keywords to your bot. This will help people find your bot on discord.place. Separate each keyword with a comma.",
+          "placeholder": "e.g. fun, moderation, music"
         }
       },
       "toast": {
-        "notValidKeyword": "Lütfen geçerli bir anahtar kelime girin.",
-        "keywordExists": "Bu anahtar kelime zaten var.",
-        "keywordHasInvalidCharacters": "Anahtar kelimeler yalnızca harfler, rakamlar ve tireler içerebilir.",
-        "keywordTooLong": "Anahtar kelimeler yalnızca {{maxLength}} karakter uzunluğunda olabilir.",
-        "noChangesMade": "Değişiklik yapılmadı.",
-        "notValidRepositoryFormat": "Geçersiz kullanıcı/ad formatı."
+        "notValidKeyword": "Please enter a valid keyword.",
+        "keywordExists": "This keyword already exists.",
+        "keywordHasInvalidCharacters": "Keywords can only contain letters, numbers, and hyphens.",
+        "keywordTooLong": "Keywords must be shorter than {{maxLength}} characters long.",
+        "noChangesMade": "No changes made.",
+        "notValidRepositoryFormat": "Invalid username/repository format."
       },
       "addedKeywords": {
-        "label": "Eklenen Anahtar Kelimeler",
-        "description": "Şu ana kadar eklediğiniz anahtar kelimeler. Bir anahtar kelimeyi kaldırmak için üstüne tıklayın.",
-        "max": " (maks)"
+        "label": "Added Keywords",
+        "description": "Keywords that you have added so far. Click on a keyword to remove it.",
+        "max": " (max)"
       },
       "githubRepository": {
-        "title": "GitHub Deposu",
-        "subtitle": "Botunuzun GitHub deposunu ekleyin. Bu, botunuzun açık kaynak kodlu olduğunu gösterir.",
-        "optionalBadge": "İsteğe Bağlı",
+        "title": "Git Repository",
+        "subtitle": "If your bot is open source, you can add a link to your Git repository here.",
+        "optionalBadge": "Optional",
         "toast": {
-          "savingRepository": "GitHub deposu kaydediliyor..",
-          "repositorySaved": "GitHub deposu başarıyla kaydedildi."
+          "savingRepository": "Saving Git repository..",
+          "repositorySaved": "Git repository saved successfully."
         },
-        "usernameRepositoryInputPlaceholder": "kullanıcıadı/depo"
+        "usernameRepositoryInputPlaceholder": "username/repository"
       },
       "supportServer": {
-        "title": "Destek Sunucusu",
-        "subtitle": "Sunucunuzu discord.place'e eklediyseniz, bunu botunuzun destek sunucusu olarak kullanabilirsiniz. Seçilen sunucu, botun sayfasında gösterilecektir.",
-        "optionalBadge": "İsteğe Bağlı",
-        "emptyErrorState": "discord.place'e eklediğiniz herhangi bir sunucunuz yok."
+        "title": "Support Server",
+        "subtitle": "If you added your server to discord.place, you can choose to display it as a support server of your bot.",
+        "optionalBadge": "Optional",
+        "emptyErrorState": "You don't have any servers on discord.place."
       }
     },
     "webhook": {
       "title": "Webhook",
-      "subtitle": "Birisi botunuza oy verdiğinde bildirim alın.",
-      "optionalBadge": "İsteğe Bağlı",
+      "subtitle": "Get notified when someone votes for your bot.",
+      "optionalBadge": "Optional",
       "toast": {
-        "secretRequired": "Bir gizli anahtar kullanmak istiyorsanız Webhook URL'sini doldurmalısınız.",
-        "urlNotValid": "Webhook URL'si geçerli bir URL değil.",
-        "urlNotHTTPS": "Webhook URL'si HTTPS (güvenli) olmalıdır.",
-        "saving": "Webhook ayarları kaydediliyor..",
-        "saved": "Webhook ayarları başarıyla kaydedildi."
+        "secretRequired": "You should fill Webhook URL if you want to use a secret.",
+        "urlNotValid": "Webhook URL is not a valid URL.",
+        "urlNotHTTPS": "Webhook URL should be a HTTPS URL.",
+        "saving": "Saving webhook settings..",
+        "saved": "Webhook settings saved successfully."
       },
       "inputs": {
         "url": {
           "label": "URL",
-          "description": "Webhook URL'nizi girin.",
+          "description": "Enter the URL of your webhook.",
           "placeholder": "https://example.com/webhook"
         },
         "secret": {
-          "label": "Gizli Anahtar",
-          "description": "Webhook'unuzun gizli anahtarını girin.",
+          "label": "Secret",
+          "description": "Enter the secret of your webhook.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
       }
     },
     "extraOwners": {
-      "title": "Ek Sahipler",
-      "subtitle": "Başka kullanıcıları botunuzun ek sahibi olarak ekleyebilirsiniz. Ek sahipler botunuzu tıpkı sizin yaptığınız gibi yönetebilir.<br><emptyBlock>",
-      "noteText": "Ek sahipler, API anahtarı da dahil olmak üzere botunuzun tüm ayarlarını görebilir ve yönetebilir, bu nedenle kimi eklediğinize dikkat edin.",
-      "optionalBadge": "İsteğe Bağlı",
+      "title": "Extra Owners",
+      "subtitle": "You can add users as extra owners of your bot. Extra owners can manage your bot just like you do.<br><emptyBlock>",
+      "noteText": "Extra owners can see and manage all the settings of your bot including API key, so be careful with who you add.",
+      "optionalBadge": "Optional",
       "addExtraOwnerModal": {
-        "title": "Ek Sahip Ekle",
-        "description": "Botunuzun ek sahibi olarak bir kullanıcı ekleyin."
+        "title": "Add Extra Owner",
+        "description": "Add a user as an extra owner of your bot."
       },
-      "emptyErrorState": "Şu ana kadar hiç ek sahip eklenmemiş.",
+      "emptyErrorState": "No extra owners added yet.",
       "toast": {
-        "removingOwner": "Ek sahip siliniyor..",
-        "ownerRemoved": "Ek sahip başarıyla silindi!",
-        "emptyUserId": "Kullanıcı ID'si boş olamaz.",
-        "addingOwner": "Ek sahip ekleniyor..",
-        "ownerAdded": "@{{username}} kullanıcısı başarıyla ek sahip olarak eklendi!"
+        "removingOwner": "Removing extra owner..",
+        "ownerRemoved": "Extra owner removed successfully.",
+        "emptyUserId": "User ID cannot be empty.",
+        "addingOwner": "Adding extra owner..",
+        "ownerAdded": "User @{{username}} successfully added as an extra owner!"
       }
     },
     "apiKey": {
-      "title": "API Anahtarı",
-      "subtitle": "API anahtarınızı buradan yönetebilirsiniz. Bu anahtar, botunuzu discord.place API'si ile kimlik doğrulamak için kullanılabilir.",
-      "optionalBadge": "İsteğe Bağlı",
+      "title": "API Key",
+      "subtitle": "You can manage your API key for your bot. This key can be used to authenticate your bot with discord.place API.",
+      "optionalBadge": "Optional",
       "toast": {
-        "creatingApiKey": "API anahtarı oluşturuluyor..",
-        "createdApiKeyAndCopied": "Yeni API anahtarı başarıyla oluşturuldu! Anahtar panoya kopyalandı.",
-        "resettingApiKey": "API anahtarı sıfırlanıyor..",
-        "deletingApiKey": "API anahtarı siliniyor..",
-        "apiKeyDeleted": "API anahtarı başarıyla silindi!",
-        "apiKeyCopied": "API anahtarı panoya kopyalandı."
+        "creatingApiKey": "Creating new API key..",
+        "createdApiKeyAndCopied": "Successfully created new API key and copied it to clipboard!",
+        "resettingApiKey": "Successfully created new API key!",
+        "deletingApiKey": "Deleting API key..",
+        "apiKeyDeleted": "Successfully deleted API key!",
+        "apiKeyCopied": "API key copied to clipboard!"
       },
       "deleteApiKeyModal": {
-        "title": "API Anahtarını Sil",
-        "description": "API anahtarınızı silmek istediğinizden emin misiniz?",
-        "note": "Bu işlem geri alınamaz."
+        "title": "Delete API Key",
+        "description": "Are you sure you want to delete the API key for your bot?",
+        "note": "This action is irreversible and you will not be able to recover your API key after deleting it."
       }
     },
     "dangerZone": {
-      "title": "Tehlikeli Bölge",
-      "subtitle": "Botunuzu buradan silebilirsiniz. Lütfen bu işlemde dikkatli olun. Bu işlem geri alınamaz.",
+      "title": "Danger Zone",
+      "subtitle": "You can remove your bot here. Please be careful with this action. This action cannot be undone.",
       "toast": {
-        "deletingBot": "Bot siliniyor..",
-        "botDeleted": "Bot başarıyla silindi. Birkaç saniye içinde ana sayfaya yönlendirileceksiniz."
+        "deletingBot": "Removing bot..",
+        "botDeleted": "Successfully removed the bot. You will be redirected to the home page in a few seconds."
       },
       "deleteBotModal": {
-        "title": "Botu Sil",
-        "description": "Botunuzu silmek istediğinizden emin misiniz?",
-        "note": "Lütfen botunuzu silmenin, botunuzu aldığı tüm oylar ve yorumlarla beraber kaldıracağını unutmayın.<br><br>Bu işlem geri alınamaz."
+        "title": "Remove Bot",
+        "description": "Are you sure you want to remove your bot?",
+        "note": "Please note that removing your bot will remove all votes and reviews that your bot has received.<br><br>This action cannot be undone."
       }
     }
   },
   "accountPage": {
     "sidebar": {
-      "newBadge": "YENİ",
+      "newBadge": "NEW",
       "labels": {
-        "account": "Hesap",
-        "myAccount": "Hesabım",
-        "myUserProfile": "Discord Profilim",
-        "activeTimeouts": "Aktif Zaman Aşımları",
-        "activeReminders": "Aktif Hatırlatıcılar",
-        "yourPublicContent": "Halka Açık İçerikleriniz",
-        "myLinks": "Bağlantılarım",
-        "myServers": "Sunucularım",
-        "myBots": "Botlarım",
-        "myEmojis": "Emojilerim",
-        "myTemplates": "Şablonlarım",
-        "mySounds": "Seslerim",
-        "myThemes": "Temalarım",
-        "adminDashboard": "Yönetici Paneli",
-        "switchTheme": "Tema Değiştir",
-        "backToHome": "Ana Sayfaya Dön"
+        "account": "Account",
+        "myAccount": "My Account",
+        "myUserProfile": "My User Profile",
+        "activeTimeouts": "Active Timeouts",
+        "activeReminders": "Active Reminders",
+        "yourPublicContent": "Your Public Content",
+        "myLinks": "My Links",
+        "myServers": "My Servers",
+        "myBots": "My Bots",
+        "myEmojis": "My Emojis",
+        "myTemplates": "My Templates",
+        "mySounds": "My Sounds",
+        "myThemes": "My Themes",
+        "adminDashboard": "Admin Dashboard",
+        "switchTheme": "Switch Theme",
+        "backToHome": "Back to Home"
       }
     },
     "tabs": {
       "myAccount": {
-        "title": "Hesabım",
-        "subtitle": "Hesap detaylarınızı görüntüleyin.",
+        "title": "My Account",
+        "subtitle": "View your account details.",
         "sections": {
           "connectedAccount": {
-            "title": "Bağlı Hesap",
-            "subtitle": "Discord hesap bilgilerinizi buradan görebilirsiniz.",
+            "title": "Connected Account",
+            "subtitle": "You can see your Discord account details here.",
             "fields": {
-              "displayName": "Görünen Ad",
-              "username": "Kullanıcı Adı",
-              "userId": "Kullanıcı ID"
+              "displayName": "Display Name",
+              "username": "Username",
+              "userId": "User ID"
             }
           },
           "premium": {
-            "plansLoading": "Planlar yükleniyor..",
+            "plansLoading": "Plans loading...",
             "plans": {
-              "Premium Membership Weekly (not for sale)": "Haftalık Premium Üyelik",
-              "Premium Membership Monthly": "Aylık Premium Üyelik",
-              "Premium Membership Yearly": "Yıllık Premium Üyelik",
-              "Lifetime Premium Membership": "Ömür Boyu Premium Üyelik"
+              "Premium Membership Weekly (not for sale)": "Premium Membership Weekly",
+              "Premium Membership Monthly": "Premium Membership Monthly",
+              "Premium Membership Yearly": "Premium Membership Yearly",
+              "Lifetime Premium Membership": "Lifetime Premium Membership"
             },
-            "thanks": "Bizi desteklediğiniz için teşekkürler!"
+            "thanks": "Thank you for supporting us!"
           },
           "yourProfile": {
-            "title": "Profiliniz",
-            "noProfile": "Henüz bir profiliniz yok. Belki de bir tane oluşturma zamanıdır?",
-            "profileFound": "Bir profiliniz var! Görmek için aşağıdaki düğmeye tıklayın.",
+            "title": "Your Profile",
+            "noProfile": "You don't have a profile yet. Maybe that's sign to create one?",
+            "profileFound": "You have a profile! Click the button below to view it.",
             "createProfileModal": {
-              "title": "Profil Oluştur",
-              "description": "Arkadaşlarınıza göstermek için özelleştirilebilir profilinizi oluşturun!",
+              "title": "Create Profile",
+              "description": "Create your customizable profile to show off to your friends!",
               "toast": {
-                "slugTooShort": "Ayrıç en az {{minLength}} karakter uzunluğunda olmalıdır.",
-                "invalidSlug": "Ayrıç yalnızca harfler, rakamlar ve tireler içerebilir."
+                "slugTooShort": "Slug must be at least {{minLength}} characters long.",
+                "invalidSlug": "Slug can only contain letters, numbers, and dashes."
               },
               "status": {
-                "available": "Uygun",
-                "unavailable": "Uygun değil",
-                "checking": "Kontrol ediliyor.."
+                "available": "Available",
+                "unavailable": "Unavailable",
+                "checking": "Checking.."
               },
               "tooltip": {
-                "premiumRequired": "Bu özellik yalnızca Premium kullanıcılar içindir."
+                "premiumRequired": "This feature is only available for Premium Members."
               },
               "fields": {
                 "host": {
-                  "title": "Domain",
-                  "description": "Seçtiğiniz domain, profilinize bir kısayol olarak kullanılacaktır. (Örnek: dsc.dog/ayrıç)"
+                  "title": "Host",
+                  "description": "The host you choose will be used as a shortcut to your profile."
                 },
                 "slug": {
-                  "title": "Ayraç",
-                  "description": "Seçtiğiniz ayrıç, profilinize bir kısayol olarak kullanılacaktır. (Örnek: example-slug)",
-                  "placeholder": "örnek-ayrıç"
+                  "title": "Slug",
+                  "description": "The slug you choose will be used as a unique identifier for your profile.",
+                  "placeholder": "example-slug"
                 }
-
               }
             }
           }
         },
         "toast": {
-          "creatingProfile": "Profiliniz oluşturuluyor..",
-          "profileCreated": "Profil başarıyla oluşturuldu! Profilinize yönlendiriliyorsunuz.."
+          "creatingProfile": "Creating profile..",
+          "profileCreated": "Profile created successfully! Redirecting you to your profile..."
         }
       },
       "activeTimeouts": {
-        "title": "Aktif Zaman Aşımları",
-        "subtitle": "Burada, aktif zaman aşımlarınızı ve kalan süreyi görebilirsiniz.",
+        "title": "Active Timeouts",
+        "subtitle": "You can see your active timeouts and the remaining time here.",
         "emptyErrorState": {
-          "title": "Buralar biraz sessiz...",
-          "message": "Aktif zaman aşımınız yok."
+          "title": "It's quiet here...",
+          "message": "There are no active timeouts."
         },
         "fields": {
           "servers": {
-            "title": "Sunucular"
+            "title": "Servers"
           },
           "bots": {
-            "title": "Botlar"
+            "title": "Bots"
           }
         },
         "countdown": {
-          "expired": "Sona erdi",
-          "remaining": "{{hours}} saat {{minutes}} dakika {{seconds}} saniye"
+          "expired": "Expired",
+          "remaining": "{{hours}} hours {{minutes}} minutes {{seconds}} seconds"
         }
       },
       "activeReminders": {
-        "title": "Aktif Hatırlatıcılar",
-        "subtitle": "Burada, aktif hatırlatıcılarınızı ve kalan süreyi görebilirsiniz.",
+        "title": "Active Reminders",
+        "subtitle": "You can see your active reminders and the remaining time here.",
         "emptyErrorState": {
-          "title": "Buralar biraz sessiz...",
-          "message": "Aktif hatırlatıcınız yok."
+          "title": "It's quiet here...",
+          "message": "There are no active reminders."
         },
         "fields": {
           "reminders": {
-            "title": "Hatırlatıcılar",
-            "about": "Şunun Hakkında:"
+            "title": "Reminders",
+            "about": "About"
           },
           "voteReminders": {
-            "title": "Oy Hatırlatıcıları"
+            "title": "Vote Reminders"
           }
         },
         "countdown": {
-          "expired": "Sona erdi",
-          "expiresIn": "{{days}} gün {{hours}} saat {{minutes}} dakika {{seconds}} saniye",
-          "expiresInShort": "{{hours}} saat {{minutes}} dakika {{seconds}} saniye"
+          "expired": "Expired",
+          "expiresIn": "{{days}} days {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
+          "expiresInShort": "{{hours}} hours {{minutes}} minutes {{seconds}} seconds"
         }
       },
       "myLinks": {
-        "title": "Bağlantılarım",
-        "subtitle": "Oluşturduğunuz kısaltılmış bağlantıları görüntüleyin veya yönetin.",
+        "title": "My Links",
+        "subtitle": "View or manage the links that you have created.",
         "toast": {
-          "deletingLink": "Bağlantı siliniyor..",
-          "linkDeleted": "Bağlantı başarıyla silindi!"
+          "deletingLink": "Deleting link..",
+          "linkDeleted": "Successfully deleted the link."
         },
         "maximumLinksReachedInfo": {
-          "title": "Maksimum Bağlantı Sayısına Ulaşıldı",
-          "description": "Oluşturabileceğiniz maksimum bağlantı sayısına ulaştınız.<br>Daha fazla bilgi için <link>'na göz atın.",
-          "linkText": "Premium sayfası"
+          "title": "Maximum Links Reached",
+          "description": "You have reached the maximum amount of links that you can create.<br>For more information about Premium, visit <link>.",
+          "linkText": "Premium page"
         },
         "emptyErrorState": {
-          "title": "Buralar biraz sessiz...",
-          "message": "Herhangi bir bağlantı oluşturmadınız."
+          "title": "It's quiet in here...",
+          "message": "You have not created any links."
         },
-        "visits": "{{count}} Ziyaret",
+        "visits": "{{count}} Visits",
         "createLinkModal": {
-          "title": "Yeni Bağlantı Oluştur",
-          "description": "Hedef kitlenizle paylaşmak için yeni bir bağlantı oluşturun.",
+          "title": "Create New Link",
+          "description": "Create a new link to share with your audience.",
           "inputs": {
             "name": {
-              "label": "İsim",
-              "description": "Bağlantınızın adı. Bu, bağlantınızı tanımlamak için kullanılacaktır.",
+              "label": "Name",
+              "description": "The name of the link.",
               "placeholder": "example"
             },
             "destinationUrl": {
-              "label": "Hedef URL",
-              "description": "Bağlantınızın yönlendirileceği URL.",
+              "label": "Destination URL",
+              "description": "The URL that the link will redirect to.",
               "placeholder": "https://example.com"
             }
           },
           "toast": {
-            "emptyName": "Lütfen bağlantınız için bir isim girin.",
-            "invalidName": "Bağlantı adı yalnızca harfler, rakamlar, tireler ve alt çizgiler içerebilir.",
-            "nameTooLong": "Bağlantı adı {{maxLength}} karakterden az olmalıdır.",
-            "emptyDestinationUrl": "Lütfen bağlantınız için bir hedef URL girin.",
-            "destinationUrlNotHTTPS": "Bağlantı hedefi güvenli bir URL olmalıdır. (HTTPS)",
-            "destinationUrlHavePort": "Bağlantı hedefi bir port içeremez.",
-            "creatingLink": "Bağlantı oluşturuluyor..",
-            "linkCreated": "Bağlantı başarıyla oluşturuldu!",
-            "invalidDestinationUrl": "Lütfen geçerli bir URL girin."
+            "emptyName": "Please enter a name for your link.",
+            "invalidName": "Link name  must only consist of letters, numbers, hyphens, and underscores.",
+            "nameTooLong": "Link name must be less than {{maxLength}} characters long.",
+            "emptyDestinationUrl": "Please enter a destination URL for your link.",
+            "destinationUrlNotHTTPS": "Link destination must be a secure URL. (HTTPS)",
+            "destinationUrlHavePort": "Link destination cannot have a port.",
+            "creatingLink": "Creating link..",
+            "linkCreated": "Link created successfully!",
+            "invalidDestinationUrl": "Please enter a valid URL."
           }
         },
         "deleteLinkModal": {
-          "title": "Bağlantıyı Sil",
-          "description": "Bağlantıyı silmek istediğinizden emin misiniz?",
-          "note": "Bağlantınızı silmenin, bağlantınızı aldığı tüm ziyaretlerle beraber kaldıracağını unutmayın.<br><br>Bu işlem geri alınamaz."
+          "title": "Remove Link",
+          "description": "Are you sure you want to remove the link?",
+          "note": "Please note that removing your link will remove all visits that your link has received.<br><br>This action cannot be undone."
         }
       },
       "myServers": {
-        "title": "Sunucularım",
-        "subtitle": "discord.place'de listelediğiniz sunucuları görüntüleyin veya yönetin.",
+        "title": "My Servers",
+        "subtitle": "View or manage the servers that you have listed on discord.place.",
         "sections": {
           "listedServers": {
-            "title": "Listelenen Sunucular",
-            "subtitle": "Burada, discord.place'de listelediğiniz sunucuları görebilirsiniz.",
+            "title": "Listed Servers",
+            "subtitle": "You can see the servers that you have listed on discord.place here.",
             "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelediğiniz herhangi bir sunucu yok."
+              "title": "It's quiet here...",
+              "message": "You have not listed any servers on discord.place."
             },
-            "members": "{{count}} üye"
+            "members": "{{count}} members"
           },
           "unlistedServers": {
-            "title": "Listelenmemiş Sunucular",
-            "subtitle": "Burada, discord.place'de listelenmemiş sunucularınızı görebilirsiniz.",
+            "title": "Unlisted Servers",
+            "subtitle": "You can see the servers that you have unlisted on discord.place here.",
             "missingServerInfo": {
-              "title": "Sunucunuzu göremiyor musunuz?",
-              "description": "Yalnızca sahibi olduğunuz sunucuları ekleyebilirsiniz. Sunucunuzu göremiyorsanız, sunucunun sahibi olduğunuzdan emin olun.<br>Sunucunuzu hala göremiyorsanız, <link>'unun sunucunuzda olduğundan emin olun.",
+              "title": "Can't see your server?",
+              "description": "You can only add servers that you own. If you can't see your server, make sure you're the owner of the server.<br>If you still can't see your server, make sure <link> is in your server.",
               "linkText": "discord.place bot"
             },
             "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenmemiş herhangi bir sunucunuz yok."
+              "title": "It's quiet in here...",
+              "message": "You do not have any unlisted servers on discord.place."
             },
-            "members": "{{count}} üye"
+            "members": "{{count}} members"
           },
           "newServer": {
-            "title": "<serverIcon> <serverName> sunucusu ekleniyor",
-            "subtitle": "{{serverName}} adlı sunucuyu discord.place'e eklemek üzeresiniz. Bu, sunucunuzun discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Sunucunuzu istediğiniz zaman discord.place'den kaldırabilirsiniz...",
+            "title": "Adding <serverIcon> <serverName>",
+            "subtitle": "You're about to add {{serverName}} to discord.place. This means your server will be listed on discord.place and everyone will be able to see it. You can remove your server from discord.place at any time..",
             "toast": {
-              "invalidInviteLink": "Geçersiz davet bağlantısı. Lütfen geçerli bir davet bağlantısı girin.",
-              "addingServer": "{{serverName}} adlı sunucu ekleniyor..",
-              "serverAdded": "{{serverName}} adlı sunucu eklendi! Birkaç saniye içinde {{serverName}} sunucusunun sayfasına yönlendirileceksiniz.",
-              "duplicateKeyword": "Aynı anahtar kelime birden fazla kez eklenemez."
+              "invalidInviteLink": "Invalid invite link.",
+              "addingServer": "Adding {{serverName}}..",
+              "serverAdded": "{{serverName}} added! You will be redirected to {{serverName}} page in a few seconds.",
+              "duplicateKeyword": "You can't use the same keyword twice."
             },
             "requirements": {
-              "title": "Gereksinimleri Karşılayın",
-              "subtitle": "Sunucunuzu listeye eklemek için aşağıdaki gereksinimleri karşılamanız gerekmektedir.",
-              "completedBadge": "tamamlandı",
+              "title": "Meet the requirements",
+              "subtitle": "You need to meet the following requirements to add your server to the list.",
+              "completedBadge": "completed",
               "items": {
                 "enough_members": {
-                  "name": "Minimum Üye Sayısı",
-                  "description": "Sunucunuzda en az 100 üye olmalıdır."
+                  "name": "Minimum Member Count",
+                  "description": "Your server must have at least 100 members."
                 },
                 "old_enough": {
-                  "name": "Minimum Sunucu Yaşı",
-                  "description": "Sunucunuzun en az 14 günlük olması gerekmektedir."
+                  "name": "Minimum Server Age",
+                  "description": "Your server must be at least 14 days old."
                 },
                 "has_icon": {
-                  "name": "Sunucu İkonu",
-                  "description": "Sunucunuzun bir ikonu olmalıdır."
+                  "name": "Server Icon",
+                  "description": "Your server must have a icon."
                 },
                 "2fa_enabled": {
-                  "name": "İki Faktörlü Kimlik Doğrulama",
-                  "description": "Sunucu moderatörleri için iki faktörlü kimlik doğrulamanın etkin olması gerekmektedir."
+                  "name": "Two-Factor Authentication",
+                  "description": "Your server must have Two-Factor Authentication enabled for server moderators."
                 },
                 "is_community": {
-                  "name": "Topluluk Sunucusu",
-                  "description": "Sunucunuz bir Topluluk Sunucusu olmalıdır."
+                  "name": "Community Server",
+                  "description": "Your server must be a Community Server."
                 },
                 "no_nsfw": {
-                  "name": "NSFW İçerik Yok",
-                  "description": "Sunucunuzda NSFW içeriği bulunmamalıdır."
+                  "name": "No NSFW Content",
+                  "description": "Your server must not contain NSFW content."
                 }
               }
             },
             "fields": {
               "description": {
-                "label": "Açıklama",
-                "description": "Bu, discord.place'de sunucunuzu ziyaret eden herkese gösterilecek olan açıklamadır.<br>Sunucunuzla ilgili önemli bilgileri eklediğinizden emin olun."
+                "label": "Add a description",
+                "description": "This is the description that will be shown to everyone who visits your server on discord.place.<br>Make sure to include important information about your server."
               },
               "inviteLink": {
-                "label": "Davet Bağlantısı",
-                "description": "Sunucunuzun davet bağlantısını ekleyin. Bu, sunucunuza katılmak isteyen kişiler için faydalı olacaktır.<br>Davet bağlantısının süresiz olduğundan emin olun.",
+                "label": "Invite Link",
+                "description": "Add an invite link to your server. This will be helpful for people who want to join your server.<br>Make sure to set the invite link to never expire.",
                 "placeholder": "https://discord.gg/invite"
               },
               "category": {
-                "label": "Kategori",
-                "description": "Sunucunuzun ait olduğu kategoriyi seçin. Bu, sunucunuzu arayan kişilerin sunucunuzu bulmasına yardımcı olacaktır.",
-                "placeholder": "Kategori Seçin"
+                "label": "Category",
+                "description": "Select a base category for your server. This will help people find your server on discord.place.",
+                "placeholder": "Select a category"
               },
               "keywords": {
-                "label": "Anahtar Kelimeler",
-                "description": "Sunucunuzla ilgili anahtar kelimeleri ekleyin. Bu, sunucunuzu arayan kişilerin sunucunuzu bulmasına yardımcı olacaktır.",
-                "placeholder": "Bir anahtar kelime yazın ve enter veya boşluk tuşuna basın..",
-                "count": "{{count}} Anahtar Kelime"
+                "label": "Keywords",
+                "description": "Add keywords to your server. This will help people find your server on discord.place.",
+                "placeholder": "Type a keyword and press enter or space..",
+                "count": "{{count}} Keywords"
               },
               "contentPolicy": {
-                "label": "İçerik Politikası",
-                "description": "Sunucunuzu discord.place'e ekleyerek Sunucu Listeleme İlkelerimizi kabul etmiş olursunuz. <note>",
-                "note": "* Discord sunucumuzda bulunabilir."
+                "label": "Content Policy",
+                "description": "By adding your server to discord.place, you agree to our Server Submission Guidelines. <note>",
+                "note": "* Can be found in our Discord server."
               },
               "areYouReady": {
-                "label": "Hazır mısınız?",
-                "description": "Aşağıdaki düğmeye tıklayarak Sunucu Listeleme İlkelerimizi kabul etmiş olursunuz ve sunucunuzun sahibi olduğunuzu onaylarsınız.",
-                "addButton": "<serverIcon> <serverName> Sunucusunu Ekle"
+                "label": "Are you ready?",
+                "description": "By clicking the button below, you agree to our Server Submission Guidelines and you confirm that you are the owner of the server.",
+                "addButton": "Add <serverIcon> <serverName>"
               }
             }
           }
         }
       },
       "myBots": {
-        "title": "Botlarım",
-        "subtitle": "discord.place'de listelenen botlarınızı görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir bot ekleyebilirsiniz.",
+        "title": "My Bots",
+        "subtitle": "View or manage the bot that you have listed on discord.place. You can also submit a new bot to discord.place.",
         "sections": {
           "listedBots": {
-            "title": "Listelenen Botlar",
-            "subtitle": "Burada, discord.place'de listelenen botlarınızı görebilirsiniz.",
+            "title": "Listed Bots",
+            "subtitle": "You can see the bots that you have listed on discord.place here.",
             "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenen herhangi bir botunuz yok."
+              "title": "It's quiet in here...",
+              "message": "You have not listed any bots on discord.place."
             }
           },
           "newBot": {
-            "title": "Yeni Bot",
-            "subtitle": "discord.place'e yeni bir bot ekleyin.",
+            "title": "New Bot",
+            "subtitle": "Submit a new bot to discord.place.",
             "note": {
-              "title": "Not",
-              "description": "Eklediğiniz bot, discord.place tarafından incelenecek ve ardından listelenecektir. Lütfen botunuzun bot gönderme ilkelerimizi ihlal etmediğinden emin olun. Bot gönderme ilkelerimiz <link>'da bulunabilir.",
-              "linkText": "Discord sunucumuz"
+              "title": "Note",
+              "description": "Your submitted bot will be reviewed by our team before it is listed on discord.place. Please make sure that your bot is not violating our bot submission guidelines. Our bot submission guidelines can be found in our <link>.",
+              "linkText": "Discord server"
             }
           },
           "addBot": {
-            "title": "Yeni bot ekleniyor",
-            "subtitle": "discord.place'e yeni bir bot eklemek üzeresiniz. Bu, botunuzun discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Botunuzu istediğiniz zaman discord.place'den kaldırabilirsiniz...",
+            "title": "Adding a new bot",
+            "subtitle": "You're about to submit a new bot to discord.place. This means your bot will be listed on discord.place and everyone will be able to see it. You can remove your bot from discord.place at any time.",
             "toast": {
-              "storedDataLoaded": "Önceden kaydedilen veriler geri yüklendi.",
-              "addingBot": "{{botId}} ID'li bot ekleniyor..",
-              "botAdded": "{{botId}} ID'li bot eklendi! Birkaç saniye içinde botun sayfasına yönlendirileceksiniz."
+              "storedDataLoaded": "Previously submitted application restored.",
+              "addingBot": "Adding bot {{botId}}..",
+              "botAdded": "Bot {{botId}} added! You will be redirected to the bot page in a few seconds."
             },
             "fields": {
               "botId": {
                 "label": "Bot ID",
-                "description": "Bu, botunuzun Discord'daki ID'sidir. Geliştirici portalında bulabilirsiniz."
+                "description": "This is the ID of your bot on Discord. You can find it in the developer portal."
               },
               "shortDescription": {
-                "label": "Kısa Açıklama",
-                "description": "Botunuzun kısa bir açıklaması. Bu, arama sonuçlarında gösterilecektir."
+                "label": "Short Description",
+                "description": "A short description of your bot. This will be shown in search results."
               },
               "longDescription": {
-                "label": "Uzun Açıklama",
-                "description": "Botunuzun daha detaylı açıklaması. Bu, bot sayfanızda gösterilecektir. Markdown desteklenmektedir."
+                "label": "Long Description",
+                "description": "This is the more detailed description of your bot. You can use this to tell everyone what your bot does and how it works. You can use markdown here."
               },
               "inviteUrl": {
-                "label": "Davet Bağlantısı",
-                "description": "Botunuzun davet bağlantısı. Bu, kullanıcıların botunuzu sunucularına eklemek için kullanacakları bağlantıdır. Varsayılan Discord davet bağlantısını veya özel bir bağlantıyı kullanabilirsiniz."
+                "label": "Invite URL",
+                "description": "This is the invite URL of your bot. This is the link that users will use to add your bot to their server. You can use default Discord authorization link or custom one."
               },
               "categories": {
-                "label": "Kategoriler",
-                "description": "Botunuzun ait olduğu kategorileri seçin. Bu, kullanıcıların botunuzu bulmasına yardımcı olacaktır."
+                "label": "Categories",
+                "description": "Select all categories that your bot belongs to. This will help users find your bot."
               },
               "contentPolicy": {
-                "label": "İçerik Politikası",
-                "description": "Botunuzu discord.place'e ekleyerek Bot Listeleme İlkelerimizi kabul etmiş olursunuz. <note>",
-                "note": "* Discord sunucumuzda bulunabilir."
+                "label": "Content Policy",
+                "description": "By adding your bot to discord.place, you agree to our Bot Submission Guidelines. <note>",
+                "note": "* Can be found in our Discord server."
               },
               "areYouReady": {
-                "label": "Hazır mısınız?",
-                "description": "Aşağıdaki düğmeye tıklayarak Bot Listeleme İlkelerimizi kabul etmiş olursunuz ve botunuzun sahibi olduğunuzu onaylarsınız."
+                "label": "Are you ready?",
+                "description": "By clicking the button below, you agree to our Bot Submission Guidelines and you confirm that you are the owner of the bot."
               }
             }
           },
           "pastDenials": {
-            "title": "Geçmiş Reddedilenler",
-            "subtitle": "discord.place'e gönderdiğiniz ancak reddedilen botlarınızı görüntüleyin. (son 7 gün)",
+            "title": "Past Denials",
+            "subtitle": "View the bots that you have submitted to discord.place but were denied. (last 7 days)",
             "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Reddedilen herhangi bir bot bulunamadı."
+              "title": "It's quiet in here...",
+              "message": "You have not submitted any bots to discord.place that were denied."
             },
-            "deniedBy": "Bot, <moderator> tarafından reddedildi",
+            "deniedBy": "The bot was denied by <moderator>",
             "countdown": {
-              "expired": "Botu şimdi tekrar ekleyebilirsiniz.",
-              "expiresIn": "Botu tekrar eklemek için <countdown> beklemeniz gerekiyor.",
-              "renderer": "{{hours}} saat {{minutes}} dakika {{seconds}} saniye",
-              "completed": "0 saniye"
+              "expired": "You can add the bot again now.",
+              "expiresIn": "This denial will expire in <countdown> You can't add the bot again until then.",
+              "renderer": "{{hours}} hours {{minutes}} minutes {{seconds}} seconds.",
+              "completed": "0 seconds"
             }
           }
         }
       },
       "myEmojis": {
-        "title": "Emojilerim",
-        "subtitle": "discord.place'de listelenen emojilerinizi görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir emoji ekleyebilirsiniz.",
+        "title": "My Emojis",
+        "subtitle": "View or manage the emojis that you have listed on discord.place. You can also submit a new emoji to discord.place.",
         "sections": {
           "listedEmojis": {
-            "title": "Listelenen Emojiler",
-            "subtitle": "Burada, discord.place'de listelenen emojilerinizi görebilirsiniz.",
+            "title": "Listed Emojis",
+            "subtitle": "Here, you can see the emojis that you have listed on discord.place.",
             "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenen herhangi bir emojiniz yok."
+              "title": "It's quiet in here...",
+              "message": "You have not listed any emojis on discord.place."
             }
           },
           "newEmoji": {
-            "title": "Yeni Emoji",
-            "subtitle": "discord.place'e yeni bir emoji ekleyin.",
+            "title": "New Emoji",
+            "subtitle": "Submit a new emoji to discord.place.",
             "note": {
-              "title": "Not",
-              "description": "Eklediğiniz emoji, yetkililer tarafından incelenecek ve ardından listelenecektir. Lütfen emoji'nizin emoji listeleme ilkelerimizi ihlal etmediğinden emin olun. Emoji listeleme ilkelerimiz <link>'da bulunabilir.",
-              "linkText": "Discord sunucumuz"
+              "title": "Note",
+              "description": "Your submitted emoji will be reviewed by our team before it is listed on discord.place. Please make sure that your emoji is not violating our emoji submission guidelines. Our emoji submission guidelines can be found in our <link>.",
+              "linkText": "Discord server"
             }
           }
         }
       },
       "myTemplates": {
-        "title": "Şablonlarım",
-        "subtitle": "discord.place'de listelenen şablonlarınızı görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir şablon ekleyebilirsiniz.",
+        "title": "My Templates",
+        "subtitle": "View templates that you have listed on discord.place. You can also submit a new template to discord.place.",
         "sections": {
           "listedTemplates": {
-            "title": "Listelenen Şablonlar",
-            "subtitle": "Burada, discord.place'de listelenen şablonlarınızı görebilirsiniz.",
+            "title": "Listed Templates",
+            "subtitle": "Here, you can see the templates that you have listed on discord.place.",
             "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenen herhangi bir şablonunuz yok."
+              "title": "It's quiet in here...",
+              "message": "You have not listed any templates on discord.place."
             }
           },
           "newTemplate": {
-            "title": "Yeni Şablon",
-            "subtitle": "discord.place'e yeni bir şablon ekleyin.",
+            "title": "New Template",
+            "subtitle": "Submit a new template to discord.place.",
             "note": {
-              "title": "Not",
-              "description": "Eklediğiniz şablon, yetkililer tarafından incelenecek ve ardından listelenecektir. Lütfen şablonunuzun şablon listeleme ilkelerimizi ihlal etmediğinden emin olun. Şablon listeleme ilkelerimiz <link>'da bulunabilir.",
-              "linkText": "Discord sunucumuz"
+              "title": "Note",
+              "description": "Your submitted template will be reviewed by our team before it is listed on discord.place. Please make sure that your template is not violating our template submission guidelines. Our template submission guidelines can be found in our <link>.",
+              "linkText": "Discord server"
             }
           }
         }
       },
       "mySounds": {
-        "title": "Seslerim",
-        "subtitle": "discord.place'de listelenen seslerinizi görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir ses ekleyebilirsiniz.",
+        "title": "My Sounds",
+        "subtitle": "View sounds that you have listed on discord.place. You can also submit a new sound to discord.place.",
         "sections": {
           "listedSounds": {
-            "title": "Listelenen Sesler",
-            "subtitle": "Burada, discord.place'de listelenen seslerinizi görebilirsiniz.",
+            "title": "Listed Sounds",
+            "subtitle": "Here, you can see the sounds that you have listed on discord.place.",
             "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenen herhangi bir sesiniz yok."
+              "title": "It's quiet in here...",
+              "message": "You have not listed any sounds on discord.place."
             }
           },
           "newSound": {
-            "title": "Yeni Ses",
-            "subtitle": "discord.place'e yeni bir ses ekleyin.",
+            "title": "New Sound",
+            "subtitle": "Submit a new sound to discord.place.",
             "note": {
-              "title": "Not",
-              "description": "Eklediğiniz ses, yetkililer tarafından incelenecek ve ardından listelenecektir. Lütfen sesinizin ses listeleme ilkelerimizi ihlal etmediğinden emin olun. Ses listeleme ilkelerimiz <link>'da bulunabilir.",
-              "linkText": "Discord sunucumuz"
+              "title": "Note",
+              "description": "Your submitted sound will be reviewed by our team before it is listed on discord.place. Please make sure that your sound is not violating our sound submission guidelines. Our sound submission guidelines can be found in our <link>.",
+              "linkText": "Discord server"
             }
           },
           "addSound": {
-            "title": "Yeni ses ekleniyor",
-            "subtitle": "discord.place'e yeni bir ses eklemek üzeresiniz. Bu, sesinizin discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Sesinizi istediğiniz zaman discord.place'den kaldırabilirsiniz...",
+            "title": "Adding a new sound",
+            "subtitle": "You're about to submit a new sound to discord.place. This means your sound will be listed on discord.place and everyone will be able to see it. You can remove your sound from discord.place at any time.",
             "toast": {
-              "addingSound": "{{soundName}} adlı ses ekleniyor..",
-              "soundAdded": "{{soundName}} adlı ses eklendi! Birkaç saniye içinde sesin sayfasına yönlendirileceksiniz.",
-              "invalidFile": "Geçersiz dosya biçimi. Yalnızca .mp3 dosyaları kabul edilir.",
-              "audioDurationExceeded": "Ses çok uzun. Maksimum ses süresi {{duration}} saniyedir.",
-              "fileSizeExceeded": "Dosya boyutu aşıldı. Maksimum dosya boyutu {{size}} MB'dir."
+              "addingSound": "Sound {{soundName}} is being added..",
+              "soundAdded": "Sound {{soundName}} added! You will be redirected to the sound page in a few seconds.",
+              "invalidFile": "Invalid file format. Only .mp3 files are allowed.",
+              "audioDurationExceeded": "Audio duration exceeded. Maximum audio duration is {{duration}} seconds.",
+              "fileSizeExceeded": "File size exceeded. Maximum file size is {{size}} MB."
             },
             "fields": {
               "file": {
-                "label": "Ses Dosyası",
-                "description": "Ses dosyanızı buraya yükleyin. Yalnızca .mp3 dosyaları kabul edilir."
+                "label": "Sound File",
+                "description": "Upload your sound file here. Only .mp3 files are allowed."
               },
               "name": {
-                "label": "İsim",
-                "description": "Sesiniz için bir isim ekleyin."
+                "label": "Name",
+                "description": "Add a name for your sound."
               },
               "categories": {
-                "label": "Kategoriler",
-                "description": "Sesinizin ait olduğu tüm kategorileri seçin. Bu, kullanıcıların sesinizi bulmasına yardımcı olacaktır."
+                "label": "Categories",
+                "description": "Select all categories that your sound belongs to. This will help users find your sound."
               },
               "contentPolicy": {
-                "label": "İçerik Politikası",
-                "description": "Sesinizi discord.place'e ekleyerek Ses Listeleme İlkelerimizi kabul etmiş olursunuz. <note>",
-                "note": "* Discord sunucumuzda bulunabilir."
+                "label": "Content Policy",
+                "description": "By adding your sound to discord.place, you agree to our Sound Submission Guidelines. <note>",
+                "note": "* Can be found in our Discord server."
               },
               "areYouReady": {
-                "label": "Hazır mısınız?"
+                "label": "Are you ready?"
               }
             },
             "dragAndDrop": {
-              "drop": "Dosyayı buraya sürükleyin ve bırakın.",
-              "click": "Dosya seçmek için tıklayın."
+              "drop": "Drop your file here.",
+              "click": "Click to upload file."
             }
           }
         }
       },
       "myThemes": {
-        "title": "Temalarım",
-        "subtitle": "discord.place'de listelenen temalarınızı görüntüleyin veya yönetin. Ayrıca discord.place'e yeni bir tema ekleyebilirsiniz.",
+        "title": "My Themes",
+        "subtitle": "View themes that you have listed on discord.place. You can also submit a new theme to discord.place.",
         "sections": {
           "listedThemes": {
-            "title": "Listelenen Temalar",
-            "subtitle": "Burada, discord.place'de listelenen temalarınızı görebilirsiniz.",
+            "title": "Listed Themes",
+            "subtitle": "Here, you can see the themes that you have listed on discord.place.",
             "emptyErrorState": {
-              "title": "Buralar biraz sessiz...",
-              "message": "Listelenen herhangi bir temanız yok."
+              "title": "It's quiet in here...",
+              "message": "You have not listed any themes on discord.place."
             }
           },
           "newTheme": {
-            "title": "Yeni Tema",
-            "subtitle": "discord.place'e yeni bir tema ekleyin.",
+            "title": "New Theme",
+            "subtitle": "Submit a new theme to discord.place.",
             "note": {
-              "title": "Not",
-              "description": "Eklediğiniz tema, yetkililer tarafından incelenecek ve ardından listelenecektir. Lütfen temanızın tema listeleme ilkelerimizi ihlal etmediğinden emin olun. Tema listeleme ilkelerimiz <link>'da bulunabilir.",
-              "linkText": "Discord sunucumuz"
+              "title": "Note",
+              "description": "Your submitted theme will be reviewed by our team before it is listed on discord.place. Please make sure that your theme is not violating our theme submission guidelines. Our theme submission guidelines can be found in our <link>.",
+              "linkText": "Discord server"
             }
           },
           "addTheme": {
-            "title": "Yeni tema ekleniyor",
-            "subtitle": "discord.place'e yeni bir tema eklemek üzeresiniz. Bu, temanızın discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Temanızı istediğiniz zaman discord.place'den kaldırabilirsiniz...",
+            "title": "Adding a new theme",
+            "subtitle": "You're about to submit a new theme to discord.place. This means your theme will be listed on discord.place and everyone will be able to see it. You can remove your theme from discord.place at any time.",
             "toast": {
-              "gradientCategoryRequired": "Eğer iki farklı renk seçerseniz, renk geçişli kategorisini seçmek zorundasınız.",
-              "addingTheme": "Tema ekleniyor..",
-              "themeAdded": "Tema eklendi! Birkaç saniye içinde tema sayfasına yönlendirileceksiniz."
+              "gradientCategoryRequired": "If you select two different colors, you must select a gradient category.",
+              "addingTheme": "Theme is being added..",
+              "themeAdded": "Theme added! You will be redirected to the theme page in a few seconds."
             },
             "fields": {
               "colors": {
-                "label": "Renkler",
-                "description": "Temanız için birincil ve ikincil bir renk seçin.",
-                "primaryLabel": "Birincil Renk",
-                "secondaryLabel": "İkincil Renk"
+                "label": "Colors",
+                "description": "Select a primary and secondary color for your theme.",
+                "primaryLabel": "Primary Color",
+                "secondaryLabel": "Secondary Color"
               },
               "categories": {
-                "label": "Kategoriler",
-                "description": "Temanızın ait olduğu tüm kategorileri seçin. Bu, kullanıcıların temanızı bulmasına yardımcı olacaktır."
+                "label": "Categories",
+                "description": "Select all categories that your theme belongs to. This will help users find your theme."
               },
               "contentPolicy": {
-                "label": "İçerik Politikası",
-                "description": "Temanızı discord.place'e ekleyerek Tema Listeleme İlkelerimizi kabul etmiş olursunuz. <note>",
-                "note": "* Discord sunucumuzda bulunabilir."
+                "label": "Content Policy",
+                "description": "By adding your theme to discord.place, you agree to our Theme Submission Guidelines. <note>",
+                "note": "* Can be found in our Discord server."
               },
               "areYouReady": {
-                "label": "Hazır mısınız?"
+                "label": "Are you ready?"
               }
             }
           }
@@ -2131,38 +2130,38 @@
   },
   "inAppReporting": {
     "tooltip": {
-      "hide": "Kapat",
-      "reportSomething": "Bir şey bildir",
-      "reportSomethingOnThisPage": "Bu sayfada bir şey bildir",
-      "loginRequiredForReport": "Bir şey bildirmek için giriş yapmanız gerekmektedir"
+      "hide": "Hide",
+      "reportSomething": "Report Something",
+      "reportSomethingOnThisPage": "Report something on this page",
+      "loginRequiredForReport": "You need to be logged in to report something"
     },
     "reportModal": {
-      "title": "Uygulama İçi Bildirme",
-      "description": "Bunu bildirmek üzeresiniz.",
+      "title": "In App Reporting",
+      "description": "You are about to report this.",
       "labels": {
-        "shortDescription": "Kısa Açıklama",
-        "biography": "Biyografi",
-        "review": "Yorum",
-        "description": "Açıklama",
-        "something": "Bir hata veya yeni özellik isteği gibi başka bir şey."
+        "shortDescription": "Short Description",
+        "biography": "Biography",
+        "review": "Review",
+        "description": "Description",
+        "something": "Something else like a bug or a feature request."
       },
       "inputs": {
         "reason": {
-          "label": "Sebep",
-          "description": "Bunu neden bildirdiğinizi bize söyleyin."
+          "label": "Reason",
+          "description": "Tell us why you are reporting this."
         }
       },
       "toast": {
-        "noReason": "Lütfen bildirme sebebinizi belirtin.",
-        "reasonTooShort": "Sebep en az {{minLength}} karakter uzunluğunda olmalıdır.",
-        "reasonTooLong": "Sebep en fazla {{maxLength}} karakter uzunluğunda olmalıdır.",
-        "submittingReport": "Bildiriminiz gönderiliyor..",
-        "reportSubmitted": "Bildiriminiz için teşekkür ederiz. Kısa süre içinde inceleyeceğiz. Eylem aldığımızda size bir mesaj göndermeyiz."
+        "noReason": "Please provide a reason for reporting this.",
+        "reasonTooShort": "Reason must be at least {{minLength}} characters long.",
+        "reasonTooLong": "Reason must be less than {{maxLength}} characters long.",
+        "submittingReport": "Your report is being submitted..",
+        "reportSubmitted": "Thank you for reporting this. We will review it shortly. You don't get a message from us if we take action."
       }
     }
   },
   "blogsPage": {
-    "title": "Ekibimizden Yazılar",
-    "subtitle": "Discord Place ekibinden en son haberler, güncellemeler ve rehberler. Tasarım, geliştirme ve daha fazlası hakkında en yeni trendleri keşfedin."
+    "title": "Writings from our team",
+    "subtitle": "The latest news, updates and guides from the Discord Place team. Discover the latest trends in design, development and more."
   }
 }
