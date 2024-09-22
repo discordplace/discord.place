@@ -77,6 +77,19 @@ module.exports = {
             username: user.username
           }
         });
+
+        const isUserFoundInGuild = client.guild.members.cache.has(value) || await client.guild.members.fetch(value).then(() => true).catch(() => false);
+  
+        if (isUserFoundInGuild) {
+          const dmChannel = client.dmChannel || await user.createDM().catch(() => null);
+          if (dmChannel) dmChannel.send({ content: `Hey there,
+
+It looks like you've been quarantined from using one of our website features for now. This means you won’t have access to it for a certain period of time.
+
+If you have any questions or want to discuss this action, feel free to join [our Discord server](${config.supportInviteUrl}) and reach out to us via ModMail.
+
+Use the following ID to refer to your quarantine: \`${quarantineData._id}\`` });
+        }
       }
 
       if (type === 'GUILD_ID') {
@@ -86,6 +99,22 @@ module.exports = {
             name: client.guilds.cache.get(value)?.name
           }
         });
+
+        const guild = client.guilds.cache.get(value);
+        const owner = await guild.fetchOwner();
+        const ownerIsInGuild = guild?.members.cache.has(guild.ownerId) || await guild.members.fetch(guild.ownerId).then(() => true).catch(() => false);
+        const dmChannel = (
+          (owner.user.dmChannel || await owner.user.createDM().catch(() => null)) || 
+          (ownerIsInGuild ? (await guild.members.cache.get(guild.ownerId).createDM().catch(() => null)) : null)
+        );
+
+        if (dmChannel) dmChannel.send({ content: `Hey there,
+
+It looks like your server has been quarantined from using one of our website features for now. This means you won’t have access to it for a certain period of time.
+
+If you have any questions or want to discuss this action, feel free to join [our Discord server](${config.supportInviteUrl}) and reach out to us via ModMail.
+
+Use the following ID to refer to your quarantine: \`${quarantineData._id}\`` });
       }
 
       const quarantine = new Quarantine(quarantineData);
