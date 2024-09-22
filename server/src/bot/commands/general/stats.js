@@ -7,7 +7,8 @@ const EmojiPack = require('@/schemas/Emoji/Pack');
 const Profile = require('@/schemas/Profile');
 const Server = require('@/schemas/Server');
 const Template = require('@/schemas/Template');
-const Sounds = require('@/schemas/Sound');
+const Sound = require('@/schemas/Sound');
+const Theme = require('@/schemas/Theme');
 
 const cooldowns = new Discord.Collection();
 
@@ -27,14 +28,15 @@ module.exports = {
 
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
-    const [botsCount, emojisCount, emojiPacksCount, profilesCount, serversCount, templatesCount, soundsCount] = await Promise.all([
+    const [botsCount, emojisCount, emojiPacksCount, profilesCount, serversCount, templatesCount, soundsCount, themesCount] = await Promise.all([
       Bot.countDocuments({ verified: true }),
       Emoji.countDocuments({ approved: true }),
       EmojiPack.countDocuments({ approved: true }),
       Profile.countDocuments(),
       Server.countDocuments(),
       Template.countDocuments(),
-      Sounds.countDocuments()
+      Sound.countDocuments(),
+      Theme.countDocuments()
     ]);
 
     const uptimeHumanized = moment.duration(os.uptime() * 1000).humanize();
@@ -75,7 +77,8 @@ Get your own virtual private server at [Nodesty](https://nodesty.com/) <a:spring
 - Profiles: **${profilesCount}**  
 - Servers: **${serversCount}**
 - Templates: **${templatesCount}**
-- Sounds: **${soundsCount}**`
+- Sounds: **${soundsCount}**
+- Themes: **${themesCount}**`
         }
       ]);
     
