@@ -46,7 +46,7 @@
       "Emojilər",
       "Şablonlar",
       "Səslər",
-      "Themes"
+      "Temalar"
     ],
     "profiles": "Profillər",
     "servers": "Serverlər",
@@ -54,7 +54,7 @@
     "emojis": "Emojilər",
     "templates": "Şablonlar",
     "sounds": "Səslər",
-    "themes": "Themes",
+    "themes": "Temalar",
     "logout": "Çıxın"
   },
   "footer": {
@@ -94,7 +94,7 @@
           "Emojilər",
           "Şablonlar",
           "Səslər",
-          "Themes"
+          "Temalar"
         ]
       },
       {
@@ -291,7 +291,7 @@
     "letsGo": "Gəlin gedək!",
     "addBot": "Bot əlavə edin",
     "addSound": "Səs əlavə edin",
-    "addTheme": "Add Theme",
+    "addTheme": "Tema əlavə et",
     "createReport": "Hesabat yaradın",
     "all": "Hamısı",
     "copy": "Kopyalayın"
@@ -397,16 +397,16 @@
     "Virtual Assistants": "Virtual köməkçilər",
     "Social Media Integration": "Sosial Media İnteqrasiyası",
     "Anime & Manga": "Anime və Manqa",
-    "Gradient": "Gradient",
-    "Light": "Light",
-    "Dark": "Dark",
-    "Red": "Red",
-    "Orange": "Orange",
-    "Yellow": "Yellow",
-    "Green": "Green",
-    "Blue": "Blue",
-    "Purple": "Purple",
-    "Pink": "Pink"
+    "Gradient": "Qradient",
+    "Light": "Işıqlı",
+    "Dark": "Qaranlıq",
+    "Red": "Qırmızı",
+    "Orange": "Narıncı",
+    "Yellow": "Sarı",
+    "Green": "Yaşıl",
+    "Blue": "Mavi",
+    "Purple": "Bənövşəyi",
+    "Pink": "Çəhrayı"
   },
   "templatesPage": {
     "title": "Şablonları kəşf edin",
@@ -593,81 +593,81 @@
     }
   },
   "themesPage": {
-    "title": "Discover the themes",
-    "subtitle": "Discover the best two-color combinations to make your Discord profile stand out. Use colors to make your profile more attractive and unique.",
-    "searchInputPlaceholder": "Search for a theme by hex color, category or id..",
-    "categorySelectPlaceholder": "Colors",
+    "title": "Temaları kəşf edin",
+    "subtitle": "Discord profilinizi fərqləndirmək üçün ən yaxşı iki rəngli birləşmələri kəşf edin. Profilinizi daha cəlbedici və unikal etmək üçün rənglərdən istifadə edin.",
+    "searchInputPlaceholder": "Hex rəng, kateqoriya və ya id ilə tema axtarın.",
+    "categorySelectPlaceholder": "Rənglər",
     "sortSelect": {
-      "placeholder": "Sorting",
+      "placeholder": "Çeşidləmə",
       "items": {
-        "newest": "Newest",
-        "oldest": "Oldest"
+        "newest": "Yenidən köhnəyə",
+        "oldest": "Köhnədən yeniyə"
       }
     },
     "emptyErrorState": {
-      "title": "It's quiet here...",
-      "message": "There are no themes to display. Maybe that's a sign to create one?"
+      "title": "Bura sakitlikdir...",
+      "message": "Göstəriləcək tema yoxdur. Bəlkə bu, yaratmaq üçün bir işarədir?"
     }
   },
   "themePage": {
     "toast": {
-      "deletingTheme": "Theme {{id}} is deleting..",
-      "themeDeleted": "Theme {{id}} successfully deleted. You will be redirected to the home page in a few seconds."
+      "deletingTheme": "{{id}} tema silinir..",
+      "themeDeleted": "{{id}} teması uğurla silindi. Bir neçə saniyədən sonra ana səhifəyə yönləndiriləcəksiniz."
     },
     "notApprovedInfo": {
-      "description": "Currently, only you can see this theme. Once the theme is approved, it will become public. Until then, you can come to <link> and get a notification from our bot when your theme is approved. Make sure you open your DMs.",
-      "linkText": "our support server"
+      "description": "Hazırda bu temanı yalnız siz görə bilərsiniz. Tema təsdiqləndikdən sonra ictimai olacaq. O vaxta qədər temanız təsdiqləndikdə <link>-ə gəlib botumuzdan bildiriş ala bilərsiniz. DM-lərinizi açdığınızdan əmin olun."",
+      "linkText": "dəstək serverimiz"
     },
     "themeDetails": {
-      "title": "About Theme",
+      "title": "Tema haqqında",
       "fields": {
-        "uploadedAt": "Uploaded At",
-        "categories": "Categories",
-        "publisher": "Publisher"
+        "uploadedAt": "Yüklənib",
+        "categories": "Kateqoriyalar",
+        "publisher": "Yayınlayan"
       },
       "colors": {
-        "copied": "Color {{color}} copied to clipboard.",
-        "copyPrimary": "Copy Primary Color",
-        "copySecondary": "Copy Secondary Color"
+        "copied": "Rəng {{color}} buferə kopyalandı.",
+        "copyPrimary": "Əsas Rəngi ​​Kopyala",
+        "copySecondary": "İkinci rəngi kopyalayın"
       }
     },
     "frequentlyAskedQuestions": {
-      "title": "Frequently Asked Questions",
+      "title": "Tez-tez verilən suallar",
       "labels": [
-        "How can I copy theme colors?",
-        "How can I use this colors in my Discord profile?", 
-        "This profile theme is inappropriate. What can I do?"
+        "Tema rənglərini necə kopyalaya bilərəm?",
+        "Discord profilimdə bu rənglərdən necə istifadə edə bilərəm?", 
+        "Bu profil teması uyğun deyil. Mən nə edə bilərəm?"
       ],
       "answers": [
-        "You can use the buttons above to copy the primary and secondary colors of the theme.",
+        "Temanın əsas və ikincil rənglərini köçürmək üçün yuxarıdakı düymələrdən istifadə edə bilərsiniz.",
         {
-          "title": "I'm glad to hear that! There are 1 ways to use this colors in your Discord profile.",
+          "title": "Bunu eşitdiyimə şadam! Discord profilinizdə bu rənglərdən istifadə etməyin 1 yolu var.",
           "methods": [
             {
-              "buttonText": "1. Copy & Paste",
-              "instructionsBefore": "Using our website, you can copy the colors and paste them to your Discord profile. Here how you can do this:",
+              "buttonText": "1. Kopyala & Yapışdır",
+              "instructionsBefore": "Veb saytımızdan istifadə edərək rəngləri kopyalayıb Discord profilinizə yapışdıra bilərsiniz. Bunu belə edə bilərsiniz:",
               "instructions": [
-                "Click the \"Copy Primary Color\" button to copy the primary color.",
-                "Open your Discord App and right click to your server.",
-                "Go to User Settings > Profiles & scroll down to the profile theme settings.",
-                "Click the Primary and paste the color you copied.",
-                "Go back to our website and click the \"Copy Secondary Color\" button to copy the secondary color.",
-                "Go back to Discord and paste the color you copied to the Secondary color.",
-                "Save the changes and tada! Now your profile is using the this theme colors."
+                "Əsas rəngi kopyalamaq üçün \"Əsas Rəngi ​​Kopyala\" düyməsini klikləyin.",
+                "Discord Tətbiqinizi açın və serverinizə sağ klik vurun.",
+                "İstifadəçi Parametrləri > Profillər bölməsinə keçin və profil teması parametrlərinə aşağı diyirləyin.",
+                "Əsas üzərinə klikləyin və kopyaladığınız rəngi yapışdırın.",
+                "Veb saytımıza qayıdın və ikincil rəngi kopyalamaq üçün \"İkinci Rəngi ​​Kopyala\" düyməsini klikləyin.",
+                "Discord-a qayıdın və kopyaladığınız rəngi İkincil rəngə yapışdırın.",
+                "Dəyişiklikləri saxlayın! İndi profiliniz bu mövzu rənglərindən istifadə edir."
               ]
             }
           ]
         },
-        "You can use the report button on the bottom right of the page to report the theme with a valid reason. Our team will review the theme and take necessary actions."
+        "Temanı əsaslı səbəblə bildirmək üçün səhifənin aşağı sağ tərəfindəki hesabat düyməsini istifadə edə bilərsiniz. Komandamız temanı nəzərdən keçirəcək və lazımi tədbirlər görəcək."
       ]
     },
     "dangerZone": {
-      "title": "Danger Zone",
-      "description": "You can delete the theme using the button below, but be careful not to delete it by mistake :)",
+      "title": "Təhlükəli Bölgə",
+      "description": "Aşağıdakı düymədən istifadə edərək temanı silə bilərsiniz, lakin səhvən silməmək üçün diqqətli olun :)",
       "deleteThemeModal": {
-        "title": "Delete Theme",
-        "description": "Are you sure you want to delete theme {{id}}?",
-        "content": "This action cannot be undone."
+        "title": "Temanı sil",
+        "description": "{{id}} temasını silmək istədiyinizə əminsiniz?",
+        "content": "Bu əməliyyat geri qaytarıla bilməz."
       }
     }
   },
@@ -1628,7 +1628,7 @@
         "myEmojis": "Emojilərim",
         "myTemplates": "Şablonlarım",
         "mySounds": "Mənim Səslərim",
-        "myThemes": "My Themes",
+        "myThemes": "Mənim Temalarım",
         "adminDashboard": "İdarəetmə Paneli",
         "switchTheme": "Mövzunu dəyişdirin",
         "backToHome": "Evə qayıt"
@@ -2076,52 +2076,52 @@
       }
     },
     "myThemes": {
-      "title": "My Themes",
-      "subtitle": "View themes that you have listed on discord.place. You can also submit a new theme to discord.place.",
+      "title": "Mənim Temalarım",
+      "subtitle": "Discord.place saytında qeyd etdiyiniz temalara baxın. Siz həmçinin discord.place saytına yeni tema təqdim edə bilərsiniz.",
       "sections": {
         "listedThemes": {
-          "title": "Listed Themes",
-          "subtitle": "Here, you can see the themes that you have listed on discord.place.",
+          "title": "Siyahılanmış Temalar",
+          "subtitle": "Burada, discord.place saytında qeyd etdiyiniz temaları görə bilərsiniz.",
           "emptyErrorState": {
-            "title": "It's quiet in here...",
-            "message": "You have not listed any themes on discord.place."
+            "title": "Bura sakitlikdir...",
+            "message": "Siz discord.place saytında heç bir mövzu qeyd etməmisiniz."
           }
         },
         "newTheme": {
-          "title": "New Theme",
-          "subtitle": "Submit a new theme to discord.place.",
+          "title": "Yeni Tema",
+          "subtitle": "discord.place saytına yeni tema təqdim edin.",
           "note": {
-            "title": "Note",
-            "description": "Your submitted theme will be reviewed by our team before it is listed on discord.place. Please make sure that your theme is not violating our theme submission guidelines. Our theme submission guidelines can be found in our <link>.",
+            "title": "Not",
+            "description": "Təqdim etdiyiniz tema discord.place-də qeyd olunmazdan əvvəl komandamız tərəfindən nəzərdən keçiriləcək. Lütfən əmin olun ki, temanız bizim tema təqdim etmə qaydalarımızı pozmur. Temanı təqdim etmə qaydalarımızı <link> bölməmizdə tapa bilərsiniz.",
             "linkText": "Discord server"
           }
         },
         "addTheme": {
-          "title": "Adding a new theme",
-          "subtitle": "You're about to submit a new theme to discord.place. This means your theme will be listed on discord.place and everyone will be able to see it. You can remove your theme from discord.place at any time.",
+          "title": "Yeni tema əlavə et",
+          "subtitle": "Siz discord.place saytına yeni tema təqdim etmək üzrəsiniz. Bu o deməkdir ki, temanız discord.place saytında siyahıya alınacaq və hər kəs onu görə biləcək. Temanızı discord.place saytından istənilən vaxt silə bilərsiniz.",
           "toast": {
             "gradientCategoryRequired": "Əgər iki fərqli rəng seçirsinizsə, rəng keçidli kateqoriyasını seçməlisiniz.",
-            "addingTheme": "Theme is being added..",
-            "themeAdded": "Theme added! You will be redirected to the theme page in a few seconds."
+            "addingTheme": "Tema əlavə olunur..",
+            "themeAdded": "Tema əlavə edildi! Bir neçə saniyədən sonra tema səhifəsinə yönləndiriləcəksiniz."
           },
           "fields": {
             "colors": {
-              "label": "Colors",
-              "description": "Select a primary and secondary color for your theme.",
-              "primaryLabel": "Primary Color",
-              "secondaryLabel": "Secondary Color"
+              "label": "Rənglər",
+              "description": "Temanız üçün əsas və ikincil rəng seçin.",
+              "primaryLabel": "Əsas Rəng",
+              "secondaryLabel": "Ikincil Rəng"
             },
             "categories": {
-              "label": "Categories",
-              "description": "Select all categories that your theme belongs to. This will help users find your theme."
+              "label": "Kateaoriyalar",
+              "description": "Temanızın aid olduğu bütün kateqoriyaları seçin. Bu, istifadəçilərə temanızı tapmağa kömək edəcək."
             },
             "contentPolicy": {
-              "label": "Content Policy",
-              "description": "By adding your theme to discord.place, you agree to our Theme Submission Guidelines. <note>",
-              "note": "* Can be found in our Discord server."
+              "label": "Məzmun Siyasəti",
+              "description": "Temanızı discord.place saytına əlavə etməklə siz Tema Təqdimetmə Qaydalarımızla razılaşırsınız. <qeyd>",
+              "note": "* Discord serverimizdə tapa bilərsiniz."
             },
             "areYouReady": {
-              "label": "Are you ready?"
+              "label": "Hazırsan?"
             }
           }
         }
