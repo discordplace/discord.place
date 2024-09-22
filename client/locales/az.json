@@ -46,7 +46,7 @@
       "Emojilər",
       "Şablonlar",
       "Səslər",
-      "Themes"
+      "Temalar"
     ],
     "profiles": "Profillər",
     "servers": "Serverlər",
@@ -54,7 +54,7 @@
     "emojis": "Emojilər",
     "templates": "Şablonlar",
     "sounds": "Səslər",
-    "themes": "Themes",
+    "themes": "Temalar",
     "logout": "Çıxın"
   },
   "footer": {
@@ -94,7 +94,7 @@
           "Emojilər",
           "Şablonlar",
           "Səslər",
-          "Themes"
+          "Temalar"
         ]
       },
       {
@@ -291,7 +291,7 @@
     "letsGo": "Gəlin gedək!",
     "addBot": "Bot əlavə edin",
     "addSound": "Səs əlavə edin",
-    "addTheme": "Add Theme",
+    "addTheme": "Tema əlavə et",
     "createReport": "Hesabat yaradın",
     "all": "Hamısı",
     "copy": "Kopyalayın"
@@ -397,16 +397,16 @@
     "Virtual Assistants": "Virtual köməkçilər",
     "Social Media Integration": "Sosial Media İnteqrasiyası",
     "Anime & Manga": "Anime və Manqa",
-    "Gradient": "Gradient",
-    "Light": "Light",
-    "Dark": "Dark",
-    "Red": "Red",
-    "Orange": "Orange",
-    "Yellow": "Yellow",
-    "Green": "Green",
-    "Blue": "Blue",
-    "Purple": "Purple",
-    "Pink": "Pink"
+    "Gradient": "Qradient",
+    "Light": "Işıqlı",
+    "Dark": "Qaranlıq",
+    "Red": "Qırmızı",
+    "Orange": "Narıncı",
+    "Yellow": "Sarı",
+    "Green": "Yaşıl",
+    "Blue": "Mavi",
+    "Purple": "Bənövşəyi",
+    "Pink": "Çəhrayı"
   },
   "templatesPage": {
     "title": "Şablonları kəşf edin",
@@ -593,25 +593,25 @@
     }
   },
   "themesPage": {
-    "title": "Discover the themes",
-    "subtitle": "Discover the best two-color combinations to make your Discord profile stand out. Use colors to make your profile more attractive and unique.",
-    "searchInputPlaceholder": "Search for a theme by hex color, category or id..",
-    "categorySelectPlaceholder": "Colors",
+    "title": "Temaları kəşf edin",
+    "subtitle": "Discord profilinizi fərqləndirmək üçün ən yaxşı iki rəngli birləşmələri kəşf edin. Profilinizi daha cəlbedici və unikal etmək üçün rənglərdən istifadə edin.",
+    "searchInputPlaceholder": "Hex rəng, kateqoriya və ya id ilə tema axtarın.",
+    "categorySelectPlaceholder": "Rənglər",
     "sortSelect": {
       "placeholder": "Sorting",
       "items": {
-        "newest": "Newest",
-        "oldest": "Oldest"
+        "newest": "Yenidən köhnəyə",
+        "oldest": "Köhnədən yeniyə"
       }
     },
     "emptyErrorState": {
-      "title": "It's quiet here...",
-      "message": "There are no themes to display. Maybe that's a sign to create one?"
+      "title": "Bura sakitlikdir...",
+      "message": "Göstəriləcək tema yoxdur. Bəlkə bu, yaratmaq üçün bir işarədir?"
     }
   },
   "themePage": {
     "toast": {
-      "deletingTheme": "Theme {{id}} is deleting..",
+      "deletingTheme": "{{id}} tema silinir..",
       "themeDeleted": "Theme {{id}} successfully deleted. You will be redirected to the home page in a few seconds."
     },
     "notApprovedInfo": {
