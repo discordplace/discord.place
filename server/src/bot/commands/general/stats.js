@@ -50,19 +50,19 @@ module.exports = {
           value: `- Platform: **${os.platform()}**
 - Arch: **${os.arch()}**
 - Memory
- - Total: **${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)} GB**
- - Free: **${(os.freemem() / 1024 / 1024 / 1024).toFixed(2)} GB**
+  - Total: **${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)} GB**
+  - Free: **${(os.freemem() / 1024 / 1024 / 1024).toFixed(2)} GB**
 - CPU
- - Model: **${os.cpus()[0].model}**
- - Uptime: **${uptimeHumanized}**
+  - Model: **${os.cpus()[0].model}**
+  - Uptime: **${uptimeHumanized}**
  
 Get your own virtual private server at [Nodesty](https://nodesty.com/) <a:springleFire:1282966373869551667>`
         },
         {
           name: 'Bot',
           value: `- Versions
- - Node.js: **${process.version}**
- - Discord.js: **${Discord.version}**
+  - Node.js: **${process.version}**
+  - Discord.js: **${Discord.version}**
 - Uptime: **${botUptimeHumanized}**
 - Servers: **${client.guilds.cache.size}**
 - Users: **${client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')}**`
