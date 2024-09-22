@@ -16,7 +16,6 @@ const Deny = require('@/src/schemas/Bot/Deny');
 const Sound = require('@/schemas/Sound');
 const Link = require('@/schemas/Link');
 const getUserHashes = require('@/utils/getUserHashes');
-const getServerHashes = require('@/utils/getServerHashes');
 const requirementChecks = require('@/utils/servers/requirementChecks');
 
 const validKeys = [
@@ -97,16 +96,16 @@ module.exports = {
                 createdAt: timeout.createdAt
               };
             })),
-            servers: await Promise.all(serverTimeouts.map(async timeout => {
-              const hashes = await getServerHashes(timeout.guild.id);
+            servers: serverTimeouts.map(timeout => {
+              const guild = client.guilds.cache.get(timeout.guild.id);
 
               return {
                 id: timeout.guild.id,
                 name: timeout.guild.name,
-                icon: hashes.icon,
+                icon: guild?.icon || null,
                 createdAt: timeout.createdAt
               };
-            }))
+            })
           }
         });
       }
@@ -213,8 +212,8 @@ module.exports = {
 
         Object.assign(responseData, {
           reminders,
-          voteReminders: await Promise.all(voteReminders.map(async reminder => {
-            const serverHashes = await getServerHashes(reminder.guild.id);
+          voteReminders: voteReminders.map(reminder => {
+            const guild = client.guilds.cache.get(reminder.guild.id);
             
             return {
               _id: reminder._id,
@@ -222,11 +221,11 @@ module.exports = {
               guild: {
                 id: reminder.guild.id,
                 name: reminder.guild.name,
-                icon: serverHashes.icon
+                icon: guild?.icon || null
               },
               createdAt: reminder.createdAt
             };
-          }))
+          })
         });
       }
 

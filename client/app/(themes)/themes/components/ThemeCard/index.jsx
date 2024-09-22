@@ -8,16 +8,14 @@ import a11yPlugin from 'colord/plugins/a11y';
 import cn from '@/lib/cn';
 import Link from 'next/link';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
-import { useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
-import getAverageColor from '@/app/(themes)/themes/components/ThemeCard/getAverageColor';
 
 extend([
   mixPlugin,
   a11yPlugin
 ]);
 
-export default function ThemeCard({ id, primaryColor, secondaryColor }) {
+export default function ThemeCard({ id, primaryColor, secondaryColor, className }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
 
@@ -32,25 +30,15 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   const averageColor = colord(primaryColor).mix(colord(secondaryColor)).toHex();
   const contrast = colord(averageColor).contrast();
   const contrastColor = contrast > 1.5 ? 'dark' : 'light';
-  
-  const [avatarAverageColor, setAvatarAverageColor] = useState(null);
 
-  useLayoutEffect(() => {
-    if (loggedIn && !user?.banner) {
-      const image = document.querySelector(`img[alt="Image ${user.avatar}"]`);
-      if (!image) return;
-      
-      if (image) getAverageColor(image)
-        .then(setAvatarAverageColor)
-        .catch(console.error);
-    } else setAvatarAverageColor('#757e8a');
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedIn, user]);
+  const Container = id ? Link : 'div';
 
   return (
-    <Link
-      className='hover:opacity-80 transition-all rounded-lg select-none w-full h-[200px] p-0.5'
+    <Container
+      className={cn(
+        'hover:opacity-80 transition-all rounded-lg select-none w-full h-max p-0.5',
+        className
+      )}
       style={{
         background: `linear-gradient(${primaryColor}, ${secondaryColor})`
       }}
@@ -61,16 +49,17 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
           <UserBanner
             id={user.id}
             hash={user.banner}
-            className='w-full rounded-t-lg min-h-[60px] object-cover'
+            className='w-full rounded-t-lg h-[60px] object-cover'
             width={200}
             height={60}
           />
         ) : (
-          <div
-            className='w-full rounded-t-lg min-h-[60px] bg-black/40'
-            style={{
-              background: avatarAverageColor
-            }}
+          <Image
+            className='w-full rounded-t-lg h-[60px] object-cover'
+            src='/og-black.png'
+            alt='Placeholder Banner'
+            width={200}
+            height={60}
           />
         )}
 
@@ -130,7 +119,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
           <p
             className={cn(
-              'mt-3 text-xs line-clamp-2',
+              'my-3 text-xs line-clamp-2',
               contrastColor === 'dark' ? 'text-white/60' : 'text-black/60'
             )}
           >
@@ -138,6 +127,6 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
           </p>
         </div>
       </div>
-    </Link>
+    </Container>
   );
 }

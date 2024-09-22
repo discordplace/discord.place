@@ -619,11 +619,11 @@
       "linkText": "our support server"
     },
     "themeDetails": {
-      "title": "About Theme",
+      "title": "About This Theme",
       "fields": {
-        "uploadedAt": "Uploaded At",
+        "uploadedAt": "Uploaded at",
         "categories": "Categories",
-        "publisher": "Publisher"
+        "publisher": "Published by"
       },
       "colors": {
         "copied": "Color {{color}} copied to clipboard.",
