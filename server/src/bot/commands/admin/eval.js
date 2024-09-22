@@ -13,10 +13,10 @@ module.exports = {
 
     await interaction.deferReply();
 
-    await interaction.followUp({ content: 'Please send the code you want to evaluate (reply to this message).', ephemeral: true });
+    await interaction.followUp({ content: 'Please send the code you want to evaluate (reply to this message or mention me).', ephemeral: true });
 
     const filter = message => message.author.id === interaction.user.id;
-    const collected = await interaction.channel.awaitMessages({ filter, time: 60000, max: 1 }).catch(error => {
+    const collected = await interaction.channel.awaitMessages({ filter, time: 300000, max: 1 }).catch(error => {
       const errorMessage = inspect(error, { depth: Infinity });
       logger.error('Error while waiting for the code to evaluate:', error);
 
