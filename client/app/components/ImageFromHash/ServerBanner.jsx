@@ -1,7 +1,6 @@
 'use client';
 
 import MotionImage from '@/app/components/Motion/Image';
-import getHashes from '@/lib/request/getHashes';
 import { useState } from 'react';
 
 export default function ServerBanner({ id, hash, format, size, className, motionOptions, ...props }) {
@@ -36,16 +35,6 @@ export default function ServerBanner({ id, hash, format, size, className, motion
         const fallback = '/discord-logo-banner.png';
 
         element.src = fallback;
-        
-        const hashes = await getHashes(id, 'server');
-        if (!hashes) return;
-
-        const newHash = hashes.banner;
-        if (!newHash) return;
-
-        // Update the image source with the new hash
-
-        element.src = `https://cdn.discordapp.com/banners/${id}/${newHash}.${newHash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`;
       }}
       {...motionOptions}
       {...props}

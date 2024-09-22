@@ -18,7 +18,6 @@ const { body, validationResult, matchedData } = require('express-validator');
 const Quarantine = require('@/schemas/Quarantine');
 const Link = require('@/schemas/Link');
 const getUserHashes = require('@/utils/getUserHashes');
-const getServerHashes = require('@/utils/getServerHashes');
 const User = require('@/schemas/User');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
 const UserHashes = require('@/schemas/User/Hashes');
@@ -149,16 +148,12 @@ module.exports = {
       }
 
       if (keys?.includes('guilds')) {
-        responseData.guilds = await Promise.all(client.guilds.cache.map(async guild => {
-          const guildHashes = await getServerHashes(guild.id);
-
-          return {
-            id: guild.id,
-            name: guild.name,
-            icon: guildHashes.icon,
-            joinedAt: guild.joinedAt,
-            memberCount: guild.memberCount
-          };
+        responseData.guilds = client.guilds.cache.map(guild => ({
+          id: guild.id,
+          name: guild.name,
+          icon: guild.icon,
+          joinedAt: guild.joinedAt,
+          memberCount: guild.memberCount
         }));
       }
 
@@ -348,14 +343,14 @@ module.exports = {
               }
             };
           } else {
-            const serverHashes = await getServerHashes(timeout.guild.id);
+            const guild = client.guilds.cache.get(timeout.guild.id);
 
             return {
               ...baseObject,
               guild: {
                 id: timeout.guild.id,
                 name: timeout.guild.name,
-                icon: serverHashes.icon
+                icon: guild?.icon || null
               }
             };
           }
@@ -384,13 +379,13 @@ module.exports = {
           }
 
           if (quarantine.type === 'GUILD_ID') {
-            const serverHashes = await getServerHashes(quarantine.guild.id);
-
+            const guild = client.guilds.cache.get(quarantine.guild.id);
+            
             Object.assign(publiclySafeQuarantine, {
               guild: {
                 id: quarantine.guild.id,
                 name: quarantine.guild.name,
-                icon: serverHashes.icon
+                icon: guild?.icon || null
               }
             });
           }

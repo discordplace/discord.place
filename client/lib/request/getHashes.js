@@ -1,24 +1,11 @@
 import config from '@/config';
 import axios from 'axios';
 
-export default function getHashes(id, type) {
+export default function getHashes(id) {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
+    let url = `${config.api.url}/users/${id}/hashes`;
     
-    const allowedTypes = ['user', 'server'];
-    if (!allowedTypes.includes(type)) return reject('Invalid type');
-
-    let url = `${config.api.url}`;
-
-    switch (type) {
-      case 'user':
-        url += `/users/${id}/hashes`;
-        break;
-      case 'server':
-        url += `/servers/${id}/hashes`;
-        break;
-    }
-
     try {
       const response = await axios.get(url, { withCredentials: true });
       resolve(response.data);

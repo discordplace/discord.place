@@ -172,7 +172,7 @@ export default function Page() {
                   icon: MdRefresh,
                   action: () => bulkAction({
                     action: item => {
-                      toast.promise(getHashes(item.id, 'user'), {
+                      toast.promise(getHashes(item.id), {
                         loading: `Refreshing ${item.username}'s hashes...`,
                         success: `Successfully refreshed ${item.username}'s hashes.`,
                         error: error => error
@@ -231,23 +231,6 @@ export default function Page() {
                   name: 'Date Joined',
                   icon: FiArrowRightCircle,
                   sortable: true
-                }
-              ],
-              actions: [
-                {
-                  name: 'Refresh Hashes',
-                  icon: FaEye,
-                  action: () => bulkAction({
-                    action: item => {
-                      toast.promise(getHashes(item.id, 'server'), {
-                        loading: `Refreshing ${item.name}'s hashes...`,
-                        success: `Successfully refreshed ${item.name}'s hashes.`,
-                        error: error => error
-                      });
-                    },
-                    fetchKey: 'guilds'
-                  }),
-                  hide: !data.permissions?.canRefreshHashes
                 }
               ]
             }
