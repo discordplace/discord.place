@@ -845,7 +845,7 @@
     "webhook": {
       "title": "Webhook",
       "subtitle": "Birisi sunucunuza oy verdiğinde bildirim alın.",
-      "optionalBadge": "Optional",
+      "optionalBadge": "İsteğe Bağlı",
       "toast": {
         "secretRequired": "Bir gizli anahtar kullanmak istiyorsanız Webhook URL'sini doldurmalısınız.",
         "urlNotValid": "Webhook URL'si geçerli bir URL değil.",
