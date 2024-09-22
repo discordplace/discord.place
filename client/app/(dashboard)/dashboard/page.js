@@ -1570,6 +1570,7 @@ export default function Page() {
                 item.type === 'USER_ID' ?
                   {
                     type: 'user',
+                    _id: item.id,
                     id: item.user.id,
                     username: item.user.username,
                     avatar: item.user.avatar,
@@ -1577,6 +1578,7 @@ export default function Page() {
                   } : 
                   {
                     type: 'server',
+                    _id: item.id,
                     id: item.guild.id,
                     name: item.guild.name,
                     icon: item.guild.icon
