@@ -647,29 +647,29 @@
               "buttonText": "1. Kopyalayın&Yapışdırın",
               "instructionsBefore": "Veb saytımızdan istifadə edərək rəngləri kopyalayıb Discord profilinizə yapışdıra bilərsiniz. Bunu necə edə bilərsiniz:",
               "instructions": [
-                "Click the \"Copy Primary Color\" button to copy the primary color.",
-                "Open your Discord App and right click to your server.",
-                "Go to User Settings > Profiles & scroll down to the profile theme settings.",
-                "Click the Primary and paste the color you copied.",
-                "Go back to our website and click the \"Copy Secondary Color\" button to copy the secondary color.",
-                "Go back to Discord and paste the color you copied to the Secondary color.",
-                "Save the changes and tada! Now your profile is using the this theme colors."
+                 "\"Əsas Rəngi Kopyala\" düyməsini basaraq əsas rəngi kopyalayın.",
+                 "Discord tətbiqinizi açın və serverinizə sağ klikləyin.",
+                 "İstifadəçi Parametrləri > Profillər bölməsinə gedin və profil mövzusu parametrlərinə qədər aşağı sürüşdürün.",
+                 "\"Əsas\" rəngi seçin və kopyaladığınız rəngi yapışdırın.",
+                 "Vebsaytımıza qayıdın və \"İkinci Rəngi Kopyala\" düyməsini basaraq ikinci rəngi kopyalayın.",
+                 "Discord-a qayıdın və kopyaladığınız rəngi \"İkinci\" rəng kimi yapışdırın.",
+                 "Dəyişiklikləri yadda saxlayın və ta-da! İndi profiliniz bu mövzu rənglərindən istifadə edir."
               ]
             }
           ]
         },
-        "You can use the report button on the bottom right of the page to report the theme with a valid reason. Our team will review the theme and take necessary actions."
+        "Səhifənin sağ alt küncündəki Hesabat düyməsini istifadə edərək mövzunu (tema) etibarlı səbəblə bildirmək olar. Komandamız mövzunu nəzərdən keçirəcək və lazımi tədbirləri görəcək."
       ]
     },
     "dangerZone": {
-      "title": "Danger Zone",
-      "description": "You can delete the theme using the button below, but be careful not to delete it by mistake :)",
-      "deleteThemeModal": {
-        "title": "Delete Theme",
-        "description": "Are you sure you want to delete theme {{id}}?",
-        "content": "This action cannot be undone."
-      }
+     "title": "Təhlükəli Zona",
+     "description": "Aşağıdakı düyməni istifadə edərək temanı silə bilərsiniz, lakin səhvən silməməyə diqqət edin :)",
+     "deleteThemeModal": {
+     "title": "Temanı Sil",
+     "description": "Tema {{id}}-ni silmək istədiyinizə əminsiniz?",
+     "content": "Bu əməliyyat geri alına bilməz."
     }
+}
   },
   "serversPage": {
     "title": "Serverləri kəşf edin",
