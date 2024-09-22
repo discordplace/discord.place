@@ -233,6 +233,7 @@ We use YML files for the configuration of the server. You can find the configura
 | `frontendUrl` | String | Client website URL for the website. |
 | `backendUrl` | String | Server API URL for the website. |
 | `cdnUrl` | String | CDN URL for the website. |
+| `supportInviteUrl` | String | URL for the your Discord support server invite. |
 | `emojis` | Object | Emojis used in the bot. |
 | `port.frontend` | Number | Port for the client. |
 | `port.backend` | Number | Port for the server. |
@@ -257,6 +258,7 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `trustProxy` value is used for the trust proxy setting for the server. You can change this value to your own trust proxy setting.
 > - The `session.cookieDomain` value is used for the domain for the session cookie. You can change this value to your own domain. Make sure to include the `.` before the domain and only use the domain name without any subdomains.
 > - The `frontendUrl`, `backendUrl`, and `cdnUrl` values are used for the client website URL, server API URL, and CDN URL for the website. You can change these values to your own URLs.
+> - The `supportInviteUrl` value is used for the support server invite URL. You can change this value to your own support server invite URL.
 > - The `emojis` value is used for the emojis used in the bot. You should change these values to your own emojis.
 > - The `port.frontend` and `port.backend` values are used for the client and server ports. You can change these values to your own ports.
 > - The `guildId` and `guildInviteUrl` values are used for the base guild ID and invite URL for the base guild. You can change these values to your own guild ID and invite URL.
