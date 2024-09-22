@@ -615,7 +615,7 @@
       "themeDeleted": "{{id}} teması uğurla silindi. Bir neçə saniyədən sonra ana səhifəyə yönləndiriləcəksiniz."
     },
     "notApprovedInfo": {
-      "description": "Hazırda bu temanı yalnız siz görə bilərsiniz. Tema təsdiqləndikdən sonra ictimai olacaq. O vaxta qədər temanız təsdiqləndikdə <link>-ə gəlib botumuzdan bildiriş ala bilərsiniz. DM-lərinizi açdığınızdan əmin olun."",
+      "description": "Hazırda bu temanı yalnız siz görə bilərsiniz. Tema təsdiqləndikdən sonra ictimai olacaq. O vaxta qədər temanız təsdiqləndikdə <link>-ə gəlib botumuzdan bildiriş ala bilərsiniz. DM-lərinizi açdığınızdan əmin olun.",
       "linkText": "dəstək serverimiz"
     },
     "themeDetails": {
