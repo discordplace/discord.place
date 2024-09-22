@@ -27,8 +27,8 @@ filteredLocales.forEach(localeFile => {
     const localeContent = JSON.parse(content);
     
     // keys can be object in object so we need to flatten it
-    const flattenedDefaultLocale = lodash.flattenDeep(lodash.toPairsDeep(defaultLocale));
-    const flattenedLocaleContent = lodash.flattenDeep(lodash.toPairsDeep(localeContent));
+    const flattenedDefaultLocale = lodash.toPairs(lodash.flattenDeep(defaultLocale));
+    const flattenedLocaleContent = lodash.toPairs(lodash.flattenDeep(localeContent));
 
     const missingKeys = flattenedDefaultLocale.filter(([key]) => !flattenedLocaleContent.some(([localeKey]) => localeKey === key));
     
