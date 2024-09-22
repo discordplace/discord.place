@@ -463,7 +463,7 @@ export default function Page() {
                     
                     setSelectedItems([]);
 
-                    router.push(`https://discord.com/oauth2/authorize?client_id=${column[0].id}&permissions=0&integration_type=0&scope=bot+applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`);
+                    window.open(`https://discord.com/oauth2/authorize?client_id=${column[0].id}&permissions=0&integration_type=0&scope=bot+applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`, '_blank');
                   }
                 },
                 {
