@@ -52,7 +52,7 @@ module.exports = {
 
         const server = await Server.findOne({ id: interaction.guild.id });
         const newInviteCode = interaction.options.getString('code');
-        if (newInviteCode === server.invite_code?.code) return interaction.followUp({ content: 'Invite code is the same as the current one.' });
+        if (newInviteCode === server?.invite_code?.code) return interaction.followUp({ content: 'Invite code is the same as the current one.' });
 
         if (newInviteCode === interaction.guild.vanityURLCode) await Server.findOneAndUpdate({ id: interaction.guild.id }, { invite_code: { type: 'Vanity' } });
         else {
