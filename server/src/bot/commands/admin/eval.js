@@ -24,7 +24,8 @@ module.exports = {
     });
     if (!collected?.first?.()?.content) return;
 
-    const code = collected.first().content;
+    const message = collected.first();
+    const code = message.mentions.has(interaction.client.user.id) ? message.content.replace(new RegExp(`<@!?${interaction.client.user.id}>`), '') : message.content;
     const { result, hasError, id } = await evaluate(code);
 
     const embeds = [
