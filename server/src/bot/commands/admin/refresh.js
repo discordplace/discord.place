@@ -4,10 +4,10 @@ const UserHashes = require('@/schemas/User/Hashes');
 module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('refresh')
-    .setDescription('Refreshes the cached hashes of a user/guild.')
+    .setDescription('Refreshes the cached hashes of a user.')
 
-    .addSubcommand(subcommand => subcommand.setName('hashes').setDescription('Refreshes the cached hashes of a user/guild.')
-      .addStringOption(option => option.setName('id').setDescription('The ID of the user/guild.').setRequired(true)))
+    .addSubcommand(subcommand => subcommand.setName('hashes').setDescription('Refreshes the cached hashes of a user.')
+      .addStringOption(option => option.setName('id').setDescription('The ID of the user.').setRequired(true)))
 
     .toJSON(),
   execute: async interaction => {
