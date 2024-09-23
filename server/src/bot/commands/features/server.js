@@ -271,7 +271,7 @@ ${rewards.sort((a, b) => a.required_votes - b.required_votes).map(reward => `- R
           [interaction.guild.vanityURLCode ? { name: `https://discord.com/invite/${interaction.guild.vanityURLCode} (Vanity)`, value: interaction.guild.vanityURLCode }: null]
             .filter(Boolean)
             .concat(invites.map(invite => ({ name: `https://discord.com/invite/${invite.code}`, value: invite.code })))
-            .filter(choice => server.invite_code?.type === 'Vanity' ? choice.value !== interaction.guild.vanityURLCode : choice.value !== server.invite_code?.code)
+            .filter(choice => server?.invite_code?.type === 'Vanity' ? choice.value !== interaction.guild.vanityURLCode : choice.value !== server?.invite_code?.code)
         );
       }
     }
