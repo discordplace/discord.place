@@ -96,6 +96,8 @@ module.exports = async interaction => {
 
       const server = await Server.findOne({ id: guild.id });
       if (!server) return interaction.reply({ content: 'I couldn\'t find the server.' });
+
+      Object.defineProperty(interaction, 'user', { value: member.user });
       Object.defineProperty(interaction, 'member', { value: member });
       Object.defineProperty(interaction, 'guild', { value: guild });
       
@@ -137,6 +139,7 @@ module.exports = async interaction => {
 
     if (interaction.customId.startsWith('hv-')) {
       const guildId = interaction.customId.split('-')[1];
+
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return interaction.reply({ content: 'I couldn\'t find the server.' });
 
@@ -167,20 +170,31 @@ module.exports = async interaction => {
         client.humanVerificationTimeouts.set(interaction.user.id, { guild: guildId, expiresAt: Date.now() + 60000 });
 
         const isCorrect = data.every((number, index) => number === numbers[index]);
-        if (!isCorrect) return interaction.update({ content: 'You failed to verify yourself. You can try again after 1 minute.', components: [], embeds: [], files: [] });
+        if (!isCorrect) return interaction.update({ content: 'You failed to verify yourself. You can try again after 1 minute.', components: [], files: [] });
 
-        await interaction.update({ content: 'You successfully verified yourself.', components: [], embeds: [], files: [] });
+        await interaction.update({ content: 'You successfully verified yourself.', components: [], files: [] });
 
         const continueVote = require('@/src/bot/commands/features/vote').continueVote;
 
+        Object.defineProperty(interaction, 'user', { value: member.user });
         Object.defineProperty(interaction, 'member', { value: member });
         Object.defineProperty(interaction, 'guild', { value: guild });
 
         return continueVote(interaction);
       } else {
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
+        const currentComponents = [
+          Discord.ActionRowBuilder.from(interaction.message.components[0]),
+          Discord.ActionRowBuilder.from(interaction.message.components[1]),
+          Discord.ActionRowBuilder.from(interaction.message.components[2])
+        ];
 
-        return interaction.followUp({ content: `You selected: **${data.join('')}** (${data.length}/3)` });
+        const selectedButtonComponent = currentComponents.find(row => row.components.find(component => component.data.custom_id === interaction.customId)).components.find(component => component.data.custom_id === interaction.customId);
+        selectedButtonComponent.setStyle(Discord.ButtonStyle.Primary);
+
+        return interaction.update({ 
+          content: `You selected ${data.join('')}.`,
+          components: currentComponents
+        });
       }
     }
 

@@ -32,7 +32,12 @@ module.exports = {
     }
 
     const givenVotes = server.voters.find(voter => voter.user.id === interaction.user.id)?.vote || 0;
-    const showVerification = givenVotes % 3 === 0 && givenVotes !== 0;
+    const accountAge = Date.now() - interaction.user.createdAt.getTime();
+
+    const showVerification = (
+      (givenVotes % 3 === 0 && givenVotes !== 0) ||
+      accountAge - (1000 * 60 * 60 * 24 * 30)
+    );
 
     if (!showVerification) return this.continueVote(interaction);
 
@@ -78,7 +83,7 @@ module.exports = {
 - The gif includes 3 repeated numbers in it.
 - You need to memorize these numbers.
 - After the last number is hidden, you need to click the buttons in the order of the numbers you memorized.
-- You have 15 seconds to click all buttons.
+- You have 10 seconds to click all the buttons.
 - If you fail, you can try again after 1 minute.
 
 **Note:** This verification is only shown every third vote to prevent spamming.`
@@ -86,19 +91,32 @@ module.exports = {
 
     await sleep(5000);
 
-    return interaction.editReply({
-      content: 'Don\'t click on the gif or don\'t minimize the Discord app while this process is running.',
-      embeds: [
-        {
-          color: 0x5865F2,
-          image: { 
-            url: 'attachment://vote.gif' 
-          }
-        }
-      ],
-      files: [attachment],
-      components
+    await interaction.editReply({
+      content: null,
+      files: [attachment]
     });
+
+    await sleep(5500);
+
+    await interaction.editReply({
+      content: 'The gif is hidden now. Please click the buttons in the order of the numbers you memorized.',
+      components,
+      files: []
+    });
+
+    await sleep(10000);
+
+    const data = client.humanVerificationData.get(interaction.user.id);
+    if (data && data.length < 3) {
+      client.humanVerificationData.delete(interaction.user.id);
+      client.humanVerificationTimeouts.set(interaction.user.id, { guild: interaction.guild.id, expiresAt: Date.now() + 60000 });
+      
+      return interaction.editReply({
+        content: 'You failed to verify yourself. You can try again after 1 minute.',
+        components: [],
+        files: []
+      });
+    }
   },
   continueVote(interaction) {
     incrementVote(interaction.guild.id, interaction.user.id)
