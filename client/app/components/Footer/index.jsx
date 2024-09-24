@@ -203,7 +203,7 @@ export default function Footer() {
         </h2>
 
         <span className='text-sm text-secondary'>
-          discord.place, {new Date().getFullYear()}
+          {t('footer.subtitle')}
         </span>
 
         {summary?.page?.status && (

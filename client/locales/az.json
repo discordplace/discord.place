@@ -59,6 +59,7 @@
   },
   "footer": {
     "title": "Discord ilə əlaqəli hər şey bir yerdə.",
+    "subtitle": "Bu sayt Discord Inc. ilə əlaqəli deyil. Bütün ticarət markaları müvafiq sahiblərinin mülkiyyətindədir.",
     "copyRight": "{{year}} discord.place ",
     "statusText": [
       "Bütün sistemlər işləyir",
@@ -673,7 +674,7 @@
   },
   "serversPage": {
     "title": "Serverləri kəşf edin",
-    "subtitle": "Discord-da ən yaxşı serverləri araşdırın və sizin üçün mükəmməl icma tapın. ",
+    "subtitle": "Discord-da ən yaxşı serverləri araşdırın və sizin üçün mükəmməl icma tapın.",
     "searchInputPlaceholder": "Serveri ad, təsvir, etiketlər və s. ilə axtarın.",
     "categorySelectPlaceholder": "Kateqoriya",
     "sortSelect": {

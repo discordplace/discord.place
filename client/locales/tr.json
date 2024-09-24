@@ -59,6 +59,7 @@
   },
   "footer": {
     "title": "Discord ile alakalı her şey, bir arada.",
+    "subtitle": "Bu site Discord Inc. ile ilişkili değildir. Tüm ticari markalar ilgili sahiplerine aittir.",
     "copyRight": "{{year}} discord.place. Tüm hakları saklıdır.",
     "statusText": [
       "Tüm sistemler çalışıyor",

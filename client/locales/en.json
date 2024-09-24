@@ -59,6 +59,7 @@
   },
   "footer": {
     "title": "All things related to Discord all in one place.",
+    "subtitle": "This site is not affiliated with Discord Inc. All trademarks are property of their respective owners.",
     "copyRight": "{{year}} discord.place. All rights reserved.",
     "statusText": [
       "All systems operational",
