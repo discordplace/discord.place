@@ -62,6 +62,9 @@ process.on('uncaughtException', error => logger.error(error));
 
 process.removeAllListeners('warning');
 process.on('warning', warning => {
-  if (warning.toString().includes('The `punycode` module is deprecated.')) return;
+  if (
+    warning.toString().includes('The `punycode` module is deprecated.') ||
+    warning.toString().includes('ExperimentalWarning: buffer.File is an experimental feature and might change at any time')
+  ) return;
   logger.warn(warning);
 });
