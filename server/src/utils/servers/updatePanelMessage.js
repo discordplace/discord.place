@@ -1,6 +1,5 @@
 const Panel = require('@/schemas/Server/Panel');
 const Discord = require('discord.js');
-const Table = require('cli-table3');
 const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const Server = require('@/schemas/Server');
@@ -44,86 +43,44 @@ async function updatePanelMessage(guildId) {
 async function createPanelMessageOptions(guild, server) {
   const rewards = await Reward.find({ 'guild.id': guild.id });
 
-  const tableBaseOptions = {
-    style: { 
-      head: ['magenta', 'bold'],
-      compact: true,
-      paddingLeft: 0,
-      paddingRight: 0
-    },
-    chars: { 
-      'top': '' , 
-      'top-mid': '' , 
-      'top-left': '' , 
-      'top-right': '', 
-      'bottom': '' , 
-      'bottom-mid': '' , 
-      'bottom-left': '' , 
-      'bottom-right': '',
-      'left': '' , 
-      'left-mid': '', 
-      'mid': '' , 
-      'mid-mid': '',
-      'right': '' , 
-      'right-mid': ' ', 
-      'middle': ' '
-    }
-  };
-
-  const topVotersTable = new Table({ 
-    head: ['##', 'Vote', 'User'],
-    colWidths: [4, 6, 10],
-    ...tableBaseOptions
-  });
-
   const formatter = new Intl.NumberFormat('en-US');
   const topVoters = server.voters.sort((a, b) => b.vote - a.vote).slice(0, 10);
   const premiumUsers = await User.find({ id: { $in: topVoters.map(voter => voter.user.id) }, subscription: { $ne: null } });
   
+  const topVotersTable = [];
+
   for (const [index, voter] of topVoters.entries()) {
     const user = client.users.cache.get(voter.user.id) || await client.users.fetch(voter.user.id).catch(() => null);
     const userIsPremium = premiumUsers.some(premiumUser => premiumUser.id === voter.user.id);
     const username = user ? user.username : user;
-    const usernameText = userIsPremium ? `[1;2m[1;35m✦ ${username.slice(0, 6)}[0m[1m` : username;
+    const usernameText = userIsPremium ? `[1;2m[1;34m✦ @${username}[0m[1m` : username;
 
     topVotersTable.push([`${index + 1}.`, formatter.format(voter.vote), usernameText]);
-  }
-
-  const monthlyVotesTable = new Table({ 
-    head: ['Month', 'Votes'],
-    colWidths: [10, 15],
-    ...tableBaseOptions
-  });
-
-  const monthlyVotes = await ServerMonthlyVotes.findOne({ identifier: guild.id });
-  if (monthlyVotes) {
-    for (const [, month] of monthlyVotes.data.sort((a, b) => b.created_at - a.created_at).slice(0, 6).entries()) {
-      monthlyVotesTable.push([new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' }), formatter.format(month.votes)]);
-    }
   }
 
   const embeds = [
     new Discord.EmbedBuilder()
       .setAuthor({ name: guild.name, iconURL: guild.iconURL() })
       .setColor('#2b2d31')
-      .setFields([
-        {
-          name: 'Vote',
-          value: `***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.
-\`\`\`ansi\n${topVotersTable.toString()}\`\`\``,
-          inline: true
-        },
-        {
-          name: 'Monthly Votes',
-          value: `${!monthlyVotes ? 'Uh, there is no data for previous months.' : `This server has gained ***${formatter.format(server.votes)}*** votes in this month.\n\`\`\`ansi\n${monthlyVotesTable.toString()}\`\`\``}`,
-          inline: true
-        },
-        {
-          name: 'Rewards',
-          value: `${!rewards.length ? 'No rewards found.' : rewards.map(reward => `- ***${reward.required_votes}*** votes for <@&${reward.role.id}>`).join('\n')}`
-        }
-      ])
+      .setDescription(`**Votes**\n- ***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.\n\`\`\`ansi\n${topVotersTable.map(([index, votes, username]) => `[1;2m${index}${index == 10 ? '' : ' '} |[0m [1;2m[1;34m${votes} Vote[0m[0m [1;2m‒ ${username}[0m[0;2m[0;2m[0;2m[0;2m[0m[0m[0m[0m[1;2m[1;2m[0;2m[0m[0m[0m`).join('\n')}\`\`\``)
   ];
+
+  const monthlyVotes = await ServerMonthlyVotes.findOne({ identifier: guild.id });
+  if (monthlyVotes) {
+    embeds.push(
+      new Discord.EmbedBuilder()
+        .setColor('#2b2d31')
+        .setDescription(`**Monthly Votes**\n- This server has gained ***${formatter.format(server.votes)}*** votes in this month.\n\`\`\`ansi\n${monthlyVotes.data.map(month => [formatter.format(month.votes), new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' })]).map(([votes, date]) => `[1;2m${date}[0m ‒ [2;34m[1;34m${votes}[0m[2;34m[0m`).join('\n')}\`\`\``)
+    );
+  }
+
+  if (rewards.length) {
+    embeds.push(
+      new Discord.EmbedBuilder()
+        .setColor('#2b2d31')
+        .setDescription(`**Rewards**\n- This server has ***${rewards.length}*** reward${rewards.length > 1 ? 's' : ''}.\n\`\`\`ansi\n${rewards.map(reward => `[1;2m${reward.required_votes}[0m ‒ [1;2m@${guild.roles.cache.get(reward.role.id)?.name || 'unknown'}[0m`).join('\n')}\`\`\``)
+    );
+  }
 
   const lastVoter = server.last_voter?.user?.id ? (client.users.cache.get(server.last_voter.user.id) || await client.users.fetch(server.last_voter.user.id).catch(() => null)) : false;
   if (lastVoter) embeds.push(
