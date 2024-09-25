@@ -62,7 +62,7 @@ async function createPanelMessageOptions(guild, server) {
     new Discord.EmbedBuilder()
       .setAuthor({ name: guild.name, iconURL: guild.iconURL() })
       .setColor('#2b2d31')
-      .setDescription(`**Votes**\n- ***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.\n\`\`\`ansi\n${topVotersTable.map(([index, votes, username]) => `[1;2m${index}${index == 10 ? '' : ' '} |[0m [1;2m[1;34m${votes}${' '.repeat(5 - votes.toString().length)} Vote[0m[0m [1;2m‒ ${username}[0m[0;2m[0;2m[0;2m[0;2m[0m[0m[0m[0m[1;2m[1;2m[0;2m[0m[0m[0m`).join('\n')}\`\`\``)
+      .setDescription(`**Votes**\n- ***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.\n\`\`\`ansi\n${topVotersTable.map(([index, votes, username]) => `[1;2m${index}${index == 10 ? '' : ' '} |[0m [1;2m[1;34m${votes}${' '.repeat(Math.max(...topVotersTable.map(([, votes]) => votes)).toString().length - votes.toString().length)} Vote[0m[0m [1;2m‒ ${username}[0m[0;2m[0;2m[0;2m[0;2m[0m[0m[0m[0m[1;2m[1;2m[0;2m[0m[0m[0m`).join('\n')}\`\`\``)
   ];
 
   const monthlyVotes = await ServerMonthlyVotes.findOne({ identifier: guild.id });
