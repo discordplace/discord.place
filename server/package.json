@@ -30,7 +30,6 @@
     "async-lock": "^1.4.1",
     "axios": "^1.6.1",
     "body-parser": "^1.20.2",
-    "cli-table3": "^0.6.3",
     "cloudflare": "^3.2.0",
     "colord": "^2.9.3",
     "colorette": "^2.0.20",

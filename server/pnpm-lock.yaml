@@ -32,9 +32,6 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
-      cli-table3:
-        specifier: ^0.6.3
-        version: 0.6.3
       cloudflare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -305,10 +302,6 @@ packages:
   '@aws-sdk/xml-builder@3.535.0':
     resolution: {integrity: sha512-VXAq/Jz8KIrU84+HqsOJhIKZqG0PNTdi6n6PFQ4xJf44ZQHD/5C7ouH4qCFX5XgZXcgbRIcMVVYGC6Jye0dRng==}
     engines: {node: '>=14.0.0'}
-
-  '@colors/colors@1.5.0':
-    resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
-    engines: {node: '>=0.1.90'}
 
   '@colors/colors@1.6.0':
     resolution: {integrity: sha512-Ir+AOibqzrIsL6ajt3Rz3LskB7OiMVHqltZmspbW/TJuTVuyOMirVqAkjfY6JISiLHgyNqicAC8AyHHGzNd/dA==}
@@ -808,10 +801,6 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
-
-  cli-table3@0.6.3:
-    resolution: {integrity: sha512-w5Jac5SykAeZJKntOxJCrm63Eg5/4dhMWIcuTbo9rpE+brgaSZo0RuNJZeOyMgsUdhDeojvgyQLmjI+K50ZGyg==}
-    engines: {node: 10.* || >= 12.*}
 
   cloudflare@3.2.0:
     resolution: {integrity: sha512-L6X3ky8rj+vFv6wf+/MxVVkwzMcxm+rjHtPAznHejYp3UC3ESovv+z8a6SZv6uXIXkAXHbCMCsbegiM4NNvXsg==}
@@ -2474,9 +2463,6 @@ snapshots:
       '@smithy/types': 2.12.0
       tslib: 2.6.2
 
-  '@colors/colors@1.5.0':
-    optional: true
-
   '@colors/colors@1.6.0': {}
 
   '@dabh/diagnostics@2.0.3':
@@ -3153,12 +3139,6 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-
-  cli-table3@0.6.3:
-    dependencies:
-      string-width: 4.2.3
-    optionalDependencies:
-      '@colors/colors': 1.5.0
 
   cloudflare@3.2.0:
     dependencies:
