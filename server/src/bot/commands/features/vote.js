@@ -36,7 +36,7 @@ module.exports = {
 
     const showVerification = (
       (givenVotes % 3 === 0 && givenVotes !== 0) ||
-      accountAge - (1000 * 60 * 60 * 24 * 30)
+      accountAge - (1000 * 60 * 60 * 24 * 30) < 0
     );
 
     if (!showVerification) return this.continueVote(interaction);
