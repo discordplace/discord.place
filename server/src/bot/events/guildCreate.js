@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const updateClientActivity = require('@/utils/updateClientActivity');
+const ServerLanguage = require('@/schemas/Server/Language');
 
 module.exports = async guild => {
   logger.info(`Joined guild ${guild.name} (${guild.id}).`);
@@ -27,4 +28,15 @@ module.exports = async guild => {
   ];
 
   channel.send({ embeds });
+
+  // Set the guild's language to the preferred locale if it's supported by us
+  const foundLanguage = config.availableLocales.find(locale => locale.code === guild.preferredLocale.split('-')[0]);
+  if (foundLanguage) {
+    await ServerLanguage.findOneAndUpdate(
+      { id: guild.id },
+      { id: guild.id, language: foundLanguage },
+      { upsert: true }
+    );
+  }
+
 };
