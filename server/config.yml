@@ -455,3 +455,14 @@ serverListingRequirements:
     name: 'Community Server'
   - id: 'no_nsfw'
     name: 'No NSFW Content'
+availableLocales:
+  - name: 'English'
+    code: 'en'
+    flag: '🇺🇸'
+    default: true
+  - name: 'Turkish'
+    code: 'tr'
+    flag: '🇹🇷'
+  - name: 'Azerbaijani'
+    code: 'az'
+    flag: '🇦🇿'
