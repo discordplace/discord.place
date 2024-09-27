@@ -83,6 +83,8 @@ module.exports = class Client {
       const localeContent = fs.readFileSync(localePath, 'utf8');
 
       i18n.addResourceBundle(locale.code, 'translation', JSON.parse(localeContent), true, true);
+
+      if (!Object.values(Discord.Locale).some(localeCode => localeCode === locale.code)) logger.warn(`Locale ${locale.code} is not supported by Discord.js.`);
     });
 
     return this;
