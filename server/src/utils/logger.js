@@ -7,6 +7,8 @@ const { Console, File, DailyRotateFile } = winston.transports;
 const { Logtail } = require('@logtail/node');
 const { LogtailTransport } = require('@logtail/winston');
 
+const { inspect } = require('util');
+
 module.exports = class Logger {
   constructor() {
     const transports = [
@@ -104,7 +106,7 @@ module.exports = class Logger {
 
   error(...messages) {
     for (const message of messages) {
-      this.logger.error(message);
+      this.logger.error(inspect(message, { depth: null }));
     }
   }
 
