@@ -1,6 +1,6 @@
 import config from '@/config';
 import axios from 'axios';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { cache } from 'react';
 
 export default cache(function getBot(id) {
@@ -11,7 +11,8 @@ export default cache(function getBot(id) {
     try {
       const response = await axios.get(url, {
         headers: {
-          cookie: cookies().toString()
+          cookie: cookies().toString(),
+          'x-forwarded-for': headers().get('x-forwarded-for')
         },
         withCredentials: true
       });
