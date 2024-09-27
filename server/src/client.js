@@ -31,6 +31,8 @@ const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const Reward = require('@/schemas/Server/Vote/Reward');
+const ServerLanguage = require('@/schemas/Server/Language');
+const translate = require('@/utils/localization/translate');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -65,6 +67,11 @@ module.exports = class Client {
     this.client.currentlyUploadingEmojiPack = new Discord.Collection();
     this.client.humanVerificationData = new Discord.Collection();
     this.client.humanVerificationTimeouts = new Discord.Collection();
+    this.client.languageCache = new Discord.Collection();
+
+    // Get all stored server languages and add them to the cache
+    ServerLanguage.find()
+      .then(languages => languages.forEach(language => this.client.languageCache.set(language.id, language.language)));
 
     logger.info('Client created.');
 
@@ -86,6 +93,17 @@ module.exports = class Client {
 
       if (!Object.values(Discord.Locale).some(localeCode => localeCode === locale.code)) logger.warn(`Locale ${locale.code} is not supported by Discord.`);
     });
+
+    // Add a translate method to the Discord.js guild object.
+
+    Discord.Guild.prototype.translate = async function(key, variables = {}) {
+      const cachedLanguage = client.languageCache.get(this.id);
+
+      const serverLanguage = cachedLanguage ? { language: cachedLanguage } : await ServerLanguage.findOne({ id: this.id }).select('language').lean();
+      const language = serverLanguage ? serverLanguage.language : config.availableLocales.find(locale => locale.default).code;
+
+      return translate(key, variables, language);
+    };
 
     return this;
   }

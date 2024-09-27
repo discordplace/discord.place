@@ -1,6 +1,3 @@
-const Discord = require('discord.js');
-const ServerLanguage = require('@/schemas/Server/Language');
-
 /**
  * Translates a given key into the specified language.
  * 
@@ -21,13 +18,5 @@ function translate(key, variables, language = config.availableLocales.find(local
     defaultValue: key
   });
 }
-
-// Add a translate method to the Discord.js guild object.
-
-Discord.Guild.prototype.translate = async function(key, variables = {}) {
-  const language = await ServerLanguage.findOne({ id: this.id }) || config.availableLocales.find(locale => locale.default).code;
-  
-  return translate(key, variables, language);
-};
 
 module.exports = translate;
