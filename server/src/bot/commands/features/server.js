@@ -141,6 +141,8 @@ module.exports = {
           { language },
           { upsert: true }
         );
+
+        client.languageCache.set(interaction.guild.id, language);
   
         return interaction.followUp({ content: `Language set to ${config.availableLocales.find(locale => locale.code === language).name}.` });
       }
