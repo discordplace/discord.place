@@ -34,7 +34,7 @@ module.exports = async guild => {
   if (foundLanguage) {
     await ServerLanguage.findOneAndUpdate(
       { id: guild.id },
-      { id: guild.id, language: foundLanguage },
+      { id: guild.id, language: foundLanguage.code },
       { upsert: true }
     );
   }
