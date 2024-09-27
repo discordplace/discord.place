@@ -15,4 +15,21 @@ const ServerLanguageSchema = new Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('ServerLanguage', ServerLanguageSchema);
+const Model = mongoose.model('ServerLanguage', ServerLanguageSchema);
+
+Model.watch().on('change', async data => {
+  if (data.operationType === 'insert') {
+    const { id, language } = data.fullDocument;
+
+    client.languageCache.set(id, language);
+  }
+
+  if (data.operationType === 'update') {
+    const { language } = data.updateDescription.updatedFields;
+    const data = await Model.findById(data.documentKey._id);
+
+    client.languageCache.set(data.id, language);
+  }
+});
+
+module.exports = Model;
