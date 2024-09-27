@@ -17,7 +17,9 @@ module.exports = {
       .addSubcommand(subcommand => subcommand.setName('log').setDescription('Sets the log channel of the server.')
         .addChannelOption(option => option.setName('channel').setDescription('The new log channel.').setRequired(true).addChannelTypes(Discord.ChannelType.GuildText)))
       .addSubcommand(subcommand => subcommand.setName('panel').setDescription('Sets the panel channel of the server.')
-        .addChannelOption(option => option.setName('channel').setDescription('The new panel channel.').setRequired(true).addChannelTypes(Discord.ChannelType.GuildText))))
+        .addChannelOption(option => option.setName('channel').setDescription('The new panel channel.').setRequired(true).addChannelTypes(Discord.ChannelType.GuildText)))
+      .addSubcommand(subcommand => subcommand.setName('language').setDescription('Sets the language of the server.')
+        .addStringOption(option => option.setName('language').setDescription('The new language of the server.').setRequired(true).addChoices(...config.availableLocales.map(locale => ({ name: locale.name, value: locale.code }))))))
     
     .addSubcommandGroup(group => group.setName('unset').setDescription('unset')
       .addSubcommand(subcommand => subcommand.setName('log').setDescription('Unsets the log channel of the server.'))
@@ -125,6 +127,21 @@ module.exports = {
           
           return interaction.followUp({ content: 'Panel channel was set.' });
         }
+      }
+
+      if (subcommand === 'language') {
+        const language = interaction.options.getString('language');
+        if (!config.availableLocales.some(locale => locale.code === language)) return interaction.reply({ content: 'Language not found.' });
+  
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+  
+        await Server.findOneAndUpdate(
+          { id: interaction.guild.id },
+          { language },
+          { upsert: true }
+        );
+  
+        return interaction.followUp({ content: `Language set to ${config.availableLocales.find(locale => locale.code === language).name}.` });
       }
     }
 
