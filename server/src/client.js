@@ -2,6 +2,10 @@
 const Discord = require('discord.js');
 const { CronJob } = require('cron');
 const axios = require('axios');
+const i18n = require('i18next');
+const intervalPlural = require('i18next-intervalplural-postprocessor');
+const fs = require('node:fs');
+const path = require('node:path');
 const CloudflareAPI = require('cloudflare');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
@@ -63,6 +67,24 @@ module.exports = class Client {
     this.client.humanVerificationTimeouts = new Discord.Collection();
 
     logger.info('Client created.');
+
+    // i18n Setup
+    i18n
+      .use(intervalPlural)
+      .init({
+        fallbackLng: config.availableLocales.find(locale => locale.default).code,
+        postProcess: ['intervalPlural']
+      });
+
+    global.i18n = i18n;
+
+    config.availableLocales.forEach(locale => {
+      const localePath = path.join(__dirname, `./locales/${locale.code}.json`);
+      const localeContent = fs.readFileSync(localePath, 'utf8');
+
+      i18n.addResourceBundle(locale.code, 'translation', JSON.parse(localeContent), true, true);
+    });
+
     return this;
   }
 
