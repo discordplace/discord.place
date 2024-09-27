@@ -9,6 +9,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const ip = require('@/utils/middlewares/ip');
 const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
+const languageDetection = require('@/utils/middlewares/languageDetection');
 const compression = require('compression');
 const morgan = require('morgan');
 
@@ -58,7 +59,7 @@ module.exports = class Server {
     });
 
     this.server.use(morganMiddleware);
-
+    
     this.server.use(compression());
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
@@ -77,6 +78,8 @@ module.exports = class Server {
       if (client.blockedIps.has(request.clientIp)) return response.sendError('Forbidden', 403);
       next();
     });
+
+    this.server.use(languageDetection);
 
     if (process.env.NODE_ENV === 'production' && config.globalRateLimit.enabled === true) this.server.use(require('@/utils/middlewares/globalRateLimiter'));
     
