@@ -1,1 +1,57 @@
-{}
+{
+  "commands": {
+    "shared": {
+      "errors": {
+        "missing_permissions": "Bu komutu kullanmak için yetkiniz yok.",
+        "user_quarantined": "Hesabınız karantinaya alındığından bu komutu kullanamazsınız."
+      }
+    },
+    "emoji": {
+      "errors": {
+        "missing_bot_permissions": "Emoji yüklemek için yetkim yok. Lütfen \"İfadeleri Yönet\" ve \"İfadeler Oluştur\" izinlerine sahip olduğumdan emin olun.",
+        "pack_not_found": "Emoji paketi bulunamadı.",
+        "currently_uploading": {
+          "message": "Şu anda **{packName}** paketini yüklüyorum. Lütfen bitene kadar bekleyin.",
+          "button_label": "Durumu Görüntüle"
+        },
+        "no_emojis_uploaded": "Paket **{packName}** yüklenemedi.",
+        "pack_failed": "{index}. emoji yüklenemedi. Göz ardı ediliyor.. **{remainingSeconds} saniye** kaldı.",
+        "emoji_not_found": "Emoji bulunamadı.",
+        "emoji_failed": "Emoji yüklenemedi."
+      },
+      "subcommands": {
+        "upload": {
+          "name": "yükle",
+          "description": "Seçilen emojiyi sunucuya yükler.",
+          "options": {
+            "emoji": {
+              "description": "Yüklenecek emoji."
+            }
+          },
+          "uploaded": "Emoji başarıyla yüklendi."
+        }
+      },
+      "groups": {
+        "pack": {
+          "name": "paket",
+          "subcommands": {
+            "upload": {
+              "name": "yükle",
+              "description": "Seçilen emoji paketini sunucuya yükler.",
+              "options": {
+                "pack": {
+                  "name": "paket",
+                  "description": "Yüklenecek emoji paketi."
+                }
+              },
+              "uploading": "{emojiCount} emoji yükleniyor. Tahminen **{remainingSeconds} saniye** kaldı.",
+              "reason": "@{username} ({userId}) tarafından {packId} paketinden yüklendi. {index} / {total} emoji.",
+              "uploaded": "{total} emoji arasından {index}. emoji yüklendi. **{remainingSeconds} saniye** kaldı.",
+              "completed": "Başarıyla **{packName}** yüklendi!"
+            }
+          }
+        }
+      }
+    }
+  }
+}

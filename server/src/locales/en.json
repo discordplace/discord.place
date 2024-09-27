@@ -1,1 +1,42 @@
-{}
+{
+  "commands": {
+    "shared": {
+      "errors": {
+        "missing_permissions": "You don't have permission to use this command.",
+        "user_quarantined": "You are not allowed to upload emojis."
+      }
+    },
+    "emoji": {
+      "errors": {
+        "missing_bot_permissions": "I don't have permission to upload emojis. Please make sure I have the \"Manage Guild Expressions\" and \"Create Guild Expressions\" permissions.",
+        "pack_not_found": "Pack not found.",
+        "currently_uploading": {
+          "message": "I'm currently uploading the pack **{packName}**. Please wait until it's finished.",
+          "button_label": "View Status"
+        },
+        "no_emojis_uploaded": "Pack **{packName}** failed to upload.",
+        "pack_failed": "Failed uploading {index}. emoji. Skipping.. **{remainingSeconds} seconds** remaining.",
+        "emoji_not_found": "Emoji not found.",
+        "emoji_failed": "Failed to upload emoji."
+      },
+      "subcommands": {
+        "upload": {
+          "uploaded": "Emoji uploaded!"
+        }
+      },
+      "groups": {
+        "pack": {
+          "name": "paket",
+          "subcommands": {
+            "upload": {
+              "uploading": "Uploading {emojiCount} emojis. **{remainingSeconds} seconds** estimated.",
+              "reason": "Uploaded by @{username} ({userId}) from pack {packId}. {index} of / {total} emojis.",
+              "uploaded": "Uploaded {index} of {total} emojis. **{remainingSeconds} seconds** remaining.",
+              "completed": "Successfully uploaded **{packName}**!"
+            }
+          }
+        }
+      }
+    }
+  }
+}
