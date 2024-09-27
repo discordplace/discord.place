@@ -6,6 +6,7 @@ const Reward = require('@/schemas/Server/Vote/Reward');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
 const User = require('@/schemas/User');
+const Language = require('@/schemas/Server/Language');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -135,7 +136,7 @@ module.exports = {
   
         if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
   
-        await Server.findOneAndUpdate(
+        await Language.findOneAndUpdate(
           { id: interaction.guild.id },
           { language },
           { upsert: true }
