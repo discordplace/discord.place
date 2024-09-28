@@ -44,6 +44,7 @@ module.exports = {
                 .setAutocomplete(true)
                 .setNameLocalizations(getLocalizedCommand('emoji.groups.pack.subcommands.upload.options.pack').names)
                 .setDescriptionLocalizations(getLocalizedCommand('emoji.groups.pack.subcommands.upload.options.pack').descriptions)))),
+                
   isGuildOnly: true,
   execute: async interaction => {
     if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.guild.translate('commands.shared.errors.missing_permissions'));

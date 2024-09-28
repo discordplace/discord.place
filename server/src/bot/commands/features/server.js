@@ -162,6 +162,7 @@ module.exports = {
             .setDescription('Lists all the vote rewards of the server.')
             .setNameLocalizations(getLocalizedCommand('server.groups.list.subcommands.rewards').names)
             .setDescriptionLocalizations(getLocalizedCommand('server.groups.list.subcommands.rewards').descriptions))),
+            
   isGuildOnly: true,
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
