@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "validate-locale-files": "node -r dotenv/config validate-locale-files.js"
+    "client:validate-locale-files": "node -r dotenv/config validate-locale-files/client.js",
+    "server:validate-locale-files": "node -r dotenv/config validate-locale-files/server.js"
   },
   "devDependencies": {
     "dotenv": "^16.4.5"
