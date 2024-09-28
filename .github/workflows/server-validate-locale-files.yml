@@ -1,4 +1,4 @@
-name: "server: Validate Locale Files"
+name: "Validate Locale Files"
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  validate-locale-files:
+  server:
     runs-on: ubuntu-latest
     permissions:
       contents: write
