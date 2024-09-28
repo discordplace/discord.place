@@ -3,7 +3,8 @@
     "shared": {
       "errors": {
         "missing_permissions": "You don't have permission to use this command.",
-        "user_quarantined": "You are not allowed to upload emojis."
+        "user_quarantined": "You are not allowed to upload emojis.",
+        "server_owner_only": "You must be the server owner to use this command."
       }
     },
     "emoji": {
@@ -26,7 +27,6 @@
       },
       "groups": {
         "pack": {
-          "name": "paket",
           "subcommands": {
             "upload": {
               "uploading": "Uploading {emojiCount} emojis. **{remainingSeconds} seconds** estimated.",
@@ -36,6 +36,106 @@
             }
           }
         }
+      }
+    },
+    "server": {
+      "name": "server",
+      "errors": {
+        "same_invite_code": "Invite code is the same as the current one.",
+        "invalid_invite_code": "Invite code is not valid.",
+        "missing_bot_permissions": "I don't have permission to send messages in that channel.",
+        "panel_server_not_listed": "You can't set a panel channel without listing your server. Visit [here]({link}) to list this server.",
+        "invalid_language": "Language not found.",
+        "panel_not_set": "Panel channel is not set.",
+        "role_is_managed": "You can't add a managed role as a reward.",
+        "role_is_higher": "You can't add a role higher or equal to my highest role as a reward.",
+        "invalid_votes": "Required votes must be at least 1.",
+        "reward_server_not_listed": "You can't add a reward without listing your server. Visit [here]({link}) to list this server.",
+        "max_rewards_reached": "You can't have more than {count} rewards.",
+        "reward_exists": "There is already a reward with that role."
+      },
+      "groups": {
+        "set": {
+          "subcommands": {
+            "invite": {
+              "updated": "Invite code was updated."
+            },
+            "log": {
+              "updated": "Log channel was updated.",
+              "set": "Log channel was set."
+            },
+            "panel": {
+              "updated": "Panel channel was updated.",
+              "set": "Panel channel was set."
+            },
+            "language": {
+              "updated": "Language set to English."
+            }
+          }
+        },
+        "unset": {
+          "subcommands": {
+            "panel": {
+              "unset": "Panel channel was unset."
+            },
+            "log": {
+              "unset": "Log channel was unset."
+            }
+          }
+        },
+        "refresh": {
+          "subcommands": {
+            "panel": {
+              "refreshed": "Panel message was refreshed."
+            }
+          }
+        },
+        "add": {
+          "subcommands": {
+            "reward": {
+              "errors": {
+                "missing_bot_permissions": "I don't have permission to add roles to users."
+              },
+              "added": "New vote reward added! I will give {role} to users who reach **{requiredVotes}** votes."
+            }
+          }
+        },
+        "remove": {
+          "subcommands": {
+            "reward": {
+              "errors": {
+                "reward_not_found": "Reward not found."
+              },
+              "removed": "Reward removed.",
+              "autocomplete": {
+                "item": "Role: @{role} | Required Votes: {requiredVotes}"
+              }
+            }
+          }
+        },
+        "list": {
+          "subcommands": {
+            "rewards": {
+              "errors": {
+                "no_rewards": "There are no rewards in this server."
+              },
+              "embed": {
+                "title": "{serverName} | Vote Rewards",
+                "description": "**{count}** rewards found.",
+                "item": "- Reward {role}\n - Required Votes: **{requiredVotes}**"
+              }
+            }
+          }
+        }
+      },
+      "logging_messages": {
+        "invite_code_updated": "Invite code updated to {newInviteCode} by {user}.",
+        "panel_channel_updated": "Panel channel updated to {channel} by {user}.",
+        "language_updated": "Language updated to English by {user}.",
+        "panel_channel_unset": "Panel channel unset by {user}.",
+        "panel_message_refreshed": "Panel message refreshed by {user}.",
+        "reward_added": "New reward {role} added by {user}. The role will be given to users who reach **{requiredVotes}** votes.",
+        "reward_removed": "Reward {role} removed by {user}."
       }
     }
   }

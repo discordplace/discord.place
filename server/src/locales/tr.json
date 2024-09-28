@@ -1,9 +1,11 @@
 {
+  "test": "{test} test",
   "commands": {
     "shared": {
       "errors": {
         "missing_permissions": "Bu komutu kullanmak için yetkiniz yok.",
-        "user_quarantined": "Hesabınız karantinaya alındığından bu komutu kullanamazsınız."
+        "user_quarantined": "Hesabınız karantinaya alındığından bu komutu kullanamazsınız.",
+        "server_owner_only": "Bu komutu kullanabilmek için sunucu sahibi olmalısınız."
       }
     },
     "emoji": {
@@ -51,6 +53,172 @@
             }
           }
         }
+      }
+    },
+    "server": {
+      "name": "sunucu",
+      "errors": {
+        "same_invite_code": "Davet kodu mevcut olan ile aynı.",
+        "invalid_invite_code": "Davet kodu geçerli değil.",
+        "missing_bot_permissions": "Bu kanalda mesaj göndermek için yetkim yok.",
+        "panel_server_not_listed": "Sunucunuzu listelemeden bir panel kanalı ayarlayamazsınız. Bu sunucuyu listelemek için [buraya]({link}) gidin.",
+        "invalid_language": "Dil bulunamadı.",
+        "panel_not_set": "Panel kanalı ayarlanmadı.",
+        "role_is_managed": "Yönetilen bir rolü ödül olarak ekleyemezsiniz.",
+        "role_is_higher": "Ödül olarak, en yüksek rolümden daha yüksek veya eşit bir rol ekleyemezsiniz.",
+        "invalid_votes": "Gerekli oy sayısı en az 1 olmalıdır.",
+        "reward_server_not_listed": "Sunucunuzu listelemeden ödül ekleyemezsiniz. Bu sunucuyu listelemek için [buraya]({link}) gidin.",
+        "max_rewards_reached": "{count} ödülden fazlasına sahip olamazsınız.",
+        "reward_exists": "Bu rolle zaten bir ödül mevcut."
+      },
+      "groups": {
+        "set": {
+          "name": "ayarla",
+          "subcommands": {
+            "invite": {
+              "name": "davet",
+              "description": "Sunucunun davet bağlantısını değiştirir.",
+              "options": {
+                "code": {
+                  "name": "kod",
+                  "description": "Yeni davet kodu."
+                }
+              },
+              "updated": "Davet kodu güncellendi."
+            },
+            "log": {
+              "name": "log",
+              "description": "Sunucunun log kanalını ayarlar.",
+              "options": {
+                "channel": {
+                  "name": "kanal",
+                  "description": "Yeni log kanalı."
+                }
+              },
+              "updated": "Log kanalı güncellendi.",
+              "set": "Log kanalı ayarlandı."
+            },
+            "panel": {
+              "name": "panel",
+              "description": "Sunucunun panel kanalını ayarlar.",
+              "options": {
+                "channel": {
+                  "name": "kanal",
+                  "description": "Yeni panel kanalı."
+                }
+              },
+              "updated": "Panel kanalı güncellendi.",
+              "set": "Panel kanalı ayarlandı."
+            },
+            "language": {
+              "name": "dil",
+              "description": "Sunucunun dilini değiştirir.",
+              "options": {
+                "language": {
+                  "name": "dil",
+                  "description": "Yeni dil."
+                }
+              },
+              "updated": "Sunucunun dili Türkçe olarak güncellendi."
+            }
+          }
+        },
+        "unset": {
+          "name": "kaldır",
+          "subcommands": {
+            "panel": {
+              "name": "panel",
+              "description": "Sunucunun panel kanalını devredışı bırakır.",
+              "unset": "Panel kanalı devredışı bırakıldı."
+            },
+            "log": {
+              "name": "log",
+              "description": "Sunucunun log kanalını devredışı bırakır.",
+              "unset": "Log kanalı devredışı bırakıldı."
+            }
+          }
+        },
+        "refresh": {
+          "name": "yenile",
+          "subcommands": {
+            "panel": {
+              "name": "panel",
+              "description": "Sunucunun panel mesajını yeniler.",
+              "refreshed": "Panel mesajı yenilendi."
+            }
+          }
+        },
+        "add": {
+          "name": "ekle",
+          "subcommands": {
+            "reward": {
+              "name": "ödül",
+              "description": "Sunucuya yeni bir oy ödülü ekler.",
+              "options": {
+                "role": {
+                  "name": "rol",
+                  "description": "Ödül olarak verilecek rol."
+                },
+                "required-votes": {
+                  "name": "gerekli-oy",
+                  "description": "Ödülü kazanmak için gerekli oy sayısı."
+                }
+              },
+              "errors": {
+                "missing_bot_permissions": "Kullanıcılara rol eklemek için yetkim yok."
+              },
+              "added": "Yeni oy ödülü eklendi! **{requiredVotes}** oya ulaşan kullanıcılara {role} rolünü vereceğim."
+            }
+          }
+        },
+        "remove": {
+          "name": "sil",
+          "subcommands": {
+            "reward": {
+              "name": "ödül",
+              "description": "Sunucudan seçilen oy ödülünü kaldırır.",
+              "options": {
+                "reward": {
+                  "name": "ödül",
+                  "description": "Kaldırılacak ödül."
+                }
+              },
+              "errors": {
+                "reward_not_found": "Ödül bulunamadı."
+              },
+              "removed": "Ödül kaldırıldı.",
+              "autocomplete": {
+                "item": "Rol: @{role} | Gerekli Oy: {requiredVotes}"
+              }
+            }
+          }
+        },
+        "list": {
+          "name": "listele",
+          "subcommands": {
+            "rewards": {
+              "name": "ödüller",
+              "description": "Sunucunun tüm oy ödüllerini listeler.",
+              "errors": {
+                "no_rewards": "Bu sunucuda ödül bulunmuyor."
+              },
+              "embed": {
+                "title": "{serverName} | Oy Ödülleri",
+                "description": "**{count}** ödül bulundu.",
+                "item": "- Ödül {role}\n - Gerekli Oy: **{requiredVotes}**"
+              }
+            }
+          }
+        }
+      },
+      "logging_messages": {
+        "invite_code_updated": "Davet kodu {user} tarafından {newInviteCode} olarak güncellendi.",
+        "panel_channel_updated": "Panel kanalı {user} tarafından {channel} olarak güncellendi.",
+        "language_updated": "Dil {user} tarafından İngilizce olarak güncellendi.",
+        "panel_channel_unset": "Panel kanalı {user} tarafından devredışı bırakıldı.",
+        "panel_message_refreshed": "Panel mesajı {user} tarafından yenilendi.",
+        "reward_added": "Yeni ödül {user} tarafından eklendi. Bu rol, **{requiredVotes}** oya ulaşan kullanıcılara verilecek.",
+        "reward_removed": "Ödül {user} tarafından kaldırıldı."
       }
     }
   }
