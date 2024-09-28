@@ -80,7 +80,12 @@ module.exports = class Client {
       .use(intervalPlural)
       .init({
         fallbackLng: config.availableLocales.find(locale => locale.default).code,
-        postProcess: ['intervalPlural']
+        postProcess: ['intervalPlural'],
+        interpolation: {
+          escapeValue: false,
+          prefix: '{',
+          suffix: '}'
+        }
       });
 
     global.i18n = i18n;
