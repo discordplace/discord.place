@@ -10,6 +10,8 @@
       "errors": {
         "missing_permissions": "You don't have permission to use this command.",
         "user_quarantined": "You are not allowed to upload emojis.",
+        "server_quarantined": "You can't use this command because this server is quarantined.",
+        "user_or_guild_quarantined": "You can't use this command because your account or this server is quarantined.",
         "server_owner_only": "You must be the server owner to use this command."
       }
     },
