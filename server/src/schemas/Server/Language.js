@@ -26,9 +26,9 @@ Model.watch().on('change', async data => {
 
   if (data.operationType === 'update') {
     const { language } = data.updateDescription.updatedFields;
-    const data = await Model.findById(data.documentKey._id);
+    const foundData = await Model.findById(data.documentKey._id);
 
-    client.languageCache.set(data.id, language);
+    client.languageCache.set(foundData.id, language);
   }
 });
 
