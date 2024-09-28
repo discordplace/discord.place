@@ -4,11 +4,14 @@ const Server = require('@/schemas/Server');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const sleep = require('@/utils/sleep');
 const incrementVote = require('@/utils/servers/incrementVote');
+const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 
 module.exports = {
   data: {
     name: 'vote',
-    description: 'Vote for the server you are on.'
+    description: 'Vote for the server you are on.',
+    name_localizations: getLocalizedCommand('vote').names,
+    description_localizations: getLocalizedCommand('vote').descriptions
   },
   isGuildOnly: true,
   execute: async function (interaction) {
@@ -18,17 +21,17 @@ module.exports = {
       { type: 'USER_ID', value: interaction.user.id, restriction: 'SERVERS_VOTE' },
       { type: 'GUILD_ID', value: interaction.guild.id, restriction: 'SERVERS_VOTE' }
     ]).catch(() => false);
-    if (userOrGuildQuarantined) return interaction.followUp({ content: 'You are not allowed to vote for servers or this server is not allowed to receive votes.' });
+    if (userOrGuildQuarantined) return interaction.followUp(await interaction.guild.translate('commands.shared.errors.user_or_guild_quarantined'));
 
     const server = await Server.findOne({ id: interaction.guild.id });
-    if (!server) return interaction.followUp('You can\'t vote servers that are not listed on our website.');
+    if (!server) return interaction.followUp(await interaction.guild.translate('commands.vote.errors.server_not_listed'));
 
     const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': interaction.guild.id });
-    if (timeout) return interaction.followUp(`You can vote again in ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000)} hours, ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60} minutes.`);
+    if (timeout) return interaction.followUp(await interaction.guild.translate('commands.vote.errors.already_voted', { hours: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000), minutes: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60 }));
 
     if (client.humanVerificationTimeouts.has(interaction.user.id)) {
       const timeout = client.humanVerificationTimeouts.get(interaction.user.id);
-      if (timeout.guild === interaction.guild.id && timeout.expiresAt > Date.now()) return interaction.followUp({ content: `You recently tried to vote for this server. You can try again after ${Math.floor((timeout.expiresAt - Date.now()) / 1000)} seconds.`, ephemeral: true });
+      if (timeout.guild === interaction.guild.id && timeout.expiresAt > Date.now()) return interaction.followUp(await interaction.guild.translate('commands.vote.errors.human_verification_timeout', { seconds: Math.floor((timeout.expiresAt - Date.now()) / 1000) }));
     }
 
     const givenVotes = server.voters.find(voter => voter.user.id === interaction.user.id)?.vote || 0;
@@ -76,18 +79,7 @@ module.exports = {
   
     const attachment = new Discord.AttachmentBuilder(`public/${imageToShow}`, { name: 'vote.gif' });
     
-    await interaction.followUp({ content: `You are going to vote for **${interaction.guild.name}**.
-
-**About Human Verification:**
-- A gif will be shown to you in a few seconds.
-- The gif includes 3 repeated numbers in it.
-- You need to memorize these numbers.
-- After the last number is hidden, you need to click the buttons in the order of the numbers you memorized.
-- You have 10 seconds to click all the buttons.
-- If you fail, you can try again after 1 minute.
-
-**Note:** This verification is only shown every third vote to prevent spamming.`
-    });
+    await interaction.followUp(await interaction.guild.translate('commands.vote.human_verification_text', { guildName: interaction.guild.name }));
 
     await sleep(5000);
 
@@ -99,7 +91,7 @@ module.exports = {
     await sleep(5500);
 
     await interaction.editReply({
-      content: 'The gif is hidden now. Please click the buttons in the order of the numbers you memorized.',
+      content: await interaction.guild.translate('commands.vote.gif_hidden_now'),
       components,
       files: []
     });
@@ -111,34 +103,31 @@ module.exports = {
       client.humanVerificationData.delete(interaction.user.id);
       client.humanVerificationTimeouts.set(interaction.user.id, { guild: interaction.guild.id, expiresAt: Date.now() + 60000 });
       
-      return interaction.editReply({
-        content: 'You failed to verify yourself. You can try again after 1 minute.',
-        components: [],
-        files: []
-      });
+      return interaction.editReply(await interaction.guild.translate('commands.vote.errors.human_verification_failed'));
     }
   },
   continueVote(interaction) {
     incrementVote(interaction.guild.id, interaction.user.id)
-      .then(() => {
+      .then(async () => {
         const components = [
           new Discord.ActionRowBuilder().addComponents(
             new Discord.ButtonBuilder()
               .setStyle(Discord.ButtonStyle.Primary)
-              .setLabel('Create Reminder')
+              .setLabel(await interaction.guild.translate('commands.vote.create_reminder_button_label'))
               .setCustomId(`create-reminder-${interaction.guild.id}`)
           )
         ];
 
         return interaction.followUp({
-          content: 'Thank you for voting!', 
+          content: await interaction.guild.translate('commands.vote.success'),
           components,
           ephemeral: true
         });
       })
-      .catch(error => {
+      .catch(async error => {
         logger.error('Error incrementing vote:', error);
-        return interaction.followUp({ content: `An error occurred: ${error.message}` });
+
+        return interaction.followUp(await interaction.guild.translate('commands.shared.errors.unknown_error', { errorMessage: error.message }));
       });
   }
 };

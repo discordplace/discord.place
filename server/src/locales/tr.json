@@ -12,7 +12,8 @@
         "user_quarantined": "Hesabınız karantinaya alındığından bu komutu kullanamazsınız.",
         "server_quarantined": "Bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
         "user_or_guild_quarantined": "Hesabınız veya bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
-        "server_owner_only": "Bu komutu kullanabilmek için sunucu sahibi olmalısınız."
+        "server_owner_only": "Bu komutu kullanabilmek için sunucu sahibi olmalısınız.",
+        "unknown_error": "Bir hata oluştu: {errorMessage}"
       }
     },
     "emoji": {
@@ -280,6 +281,20 @@
           }
         }
       }
+    },
+    "vote": {
+      "name": "oy-ver",
+      "description": "Bulunduğunuz sunucuya oy verirsiniz.",
+      "errors": {
+        "server_not_listed": "Web sitemizde listelenmeyen sunuculara oy veremezsiniz.",
+        "already_voted": "{hours} saat {minutes} dakika içinde tekrar oy verebilirsiniz.",
+        "human_verification_timeout": "Bu sunucuya oy vermeye çalıştınız ve insan doğrulamasını geçemediniz. {seconds} saniye sonra tekrar deneyebilirsiniz."
+      },
+      "human_verification_text": "Şu an **{guildName}** sunucusuna oy vereceksiniz.\n**İnsan Doğrulaması Hakkında:**\n- Size birkaç saniye içinde bir gif gösterilecek.\n- Gif'te 3 tekrar eden sayı olacak.\n- Bu sayıları ezberlemeniz gerekiyor.\n- Son sayı kaybolduktan sonra, ezberlediğiniz sayıların sırasına göre butonlara tıklamanız gerekiyor.\n- Tüm butonlara tıklamak için 10 saniyeniz olacak.\n- Başarısız olursanız, 1 dakika sonra tekrar deneyebilirsiniz.\n\n**Not:** Bu doğrulama, spam'i önlemek için sadece her üçüncü oyda gösterilir.",
+      "gif_hidden_now": "Gif şimdi gizlendi. Lütfen ezberlediğiniz sayıların sırasına göre butonlara tıklayın.",
+      "human_verification_failed": "Kendinizi doğrulayamadınız. 1 dakika sonra tekrar deneyebilirsiniz.",
+      "create_reminder_button_label": "Hatırlatıcı Oluştur",
+      "success": "Oy verdiğiniz için teşekkürler!"
     }
   }
 }
