@@ -25,7 +25,7 @@ module.exports = {
 
       if (request.body.ref !== 'refs/heads/main') return response.sendError('Not the main branch', 400);
 
-      if (!request.body.commits.some(commit => commit.modified.includes('client/locales/translators.json'))) return response.sendError('No changes to translators.json', 400);
+      if (!request.body.commits.some(commit => commit.modified.includes('translators.json'))) return response.sendError('No changes to translators.json', 400);
 
       try {
         await exec('git pull');
