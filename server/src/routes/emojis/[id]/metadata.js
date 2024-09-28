@@ -27,7 +27,7 @@ module.exports = {
         name: emoji.name,
         animated: emoji.animated,
         username: emoji.user.username,
-        avatar_url: `https://cdn.discordapp.com/avatars/${emoji.user.id}/${hashes.avatar}.png?size=64`,
+        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${emoji.user.id}/${hashes.avatar}.png?size=64` : null,
         downloads: emoji.downloads,
         category: emoji.categories[0]
       });

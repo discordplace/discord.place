@@ -23,7 +23,7 @@ module.exports = {
       return response.json({
         username: bot.data.username,
         discriminator: bot.data.discriminator,
-        avatar_url: `https://cdn.discordapp.com/avatars/${bot.id}/${hashes.avatar}.png?size=64`,
+        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${bot.id}/${hashes.avatar}.png?size=64` : null,
         votes: bot.votes,
         category: bot.categories[0],
         short_description: bot.short_description,

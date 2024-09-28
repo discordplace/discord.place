@@ -24,7 +24,7 @@ module.exports = {
       return response.json({
         id: theme.id,
         username: theme.publisher.username,
-        avatar_url: `https://cdn.discordapp.com/avatars/${theme.publisher.id}/${hashes.avatar}.png?size=64`,
+        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${theme.publisher.id}/${hashes.avatar}.png?size=64` : null,
         categories: theme.categories,
         colors: theme.colors,
         created_at: new Date(theme.createdAt).getTime()

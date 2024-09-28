@@ -23,7 +23,7 @@ module.exports = {
       return response.json({
         name: template.name,
         username: template.user.username,
-        avatar_url: `https://cdn.discordapp.com/avatars/${template.user.id}/${hashes.avatar}.png?size=64`,
+        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${template.user.id}/${hashes.avatar}.png?size=64` : null,
         uses: template.uses,
         description: template.description,
         categories: template.categories

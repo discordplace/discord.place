@@ -23,7 +23,7 @@ module.exports = {
       
       return response.json({
         username: publiclySafe.username,
-        avatar_url: `https://cdn.discordapp.com/avatars/${publiclySafe.id}/${publiclySafe.avatar}.png?size=64`,
+        avatar_url: publiclySafe.avatar ? `https://cdn.discordapp.com/avatars/${publiclySafe.id}/${publiclySafe.avatar}.png?size=64` : null,
         likes: publiclySafe.likes,
         views: profile.views,
         created_at: new Date(profile.createdAt).getTime(),
