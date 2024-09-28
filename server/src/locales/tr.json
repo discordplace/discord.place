@@ -1,10 +1,17 @@
 {
-  "test": "{test} test",
+  "time": {
+    "seconds": "saniye",
+    "minutes": "dakika",
+    "hours": "saat",
+    "days": "gün"
+  },
   "commands": {
     "shared": {
       "errors": {
         "missing_permissions": "Bu komutu kullanmak için yetkiniz yok.",
         "user_quarantined": "Hesabınız karantinaya alındığından bu komutu kullanamazsınız.",
+        "server_quarantined": "Bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
+        "user_or_guild_quarantined": "Hesabınız veya bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
         "server_owner_only": "Bu komutu kullanabilmek için sunucu sahibi olmalısınız."
       }
     },
@@ -219,6 +226,59 @@
         "panel_message_refreshed": "Panel mesajı {user} tarafından yenilendi.",
         "reward_added": "Yeni ödül {user} tarafından eklendi. Bu rol, **{requiredVotes}** oya ulaşan kullanıcılara verilecek.",
         "reward_removed": "Ödül {user} tarafından kaldırıldı."
+      }
+    },
+    "templates": {
+      "name": "şablon",
+      "errors": {
+        "too_many_currently": "Şu anda çok fazla şablon uygulanıyor. Lütfen mevcut şablonların uygulanmasını bekleyin ve ardından komutu tekrar kullanın.",
+        "currently_applying": "Bu sunucu şu anda bir şablon uyguluyor. Lütfen mevcut şablonun uygulanmasını bekleyin ve ardından komutu tekrar kullanın.",
+        "server_wait_for_applying": "Bu sunucuda başka bir şablon kullanmadan önce lütfen {remainingMinutes} dakika bekleyin.",
+        "user_wait_for_applying": "Başka bir şablon kullanmadan önce lütfen {remainingMinutes} dakika bekleyin.",
+        "template_not_found": "Şablon bulunamadı.",
+        "confirmation_timeout": "İşlemi zamanında onaylamadınız. Şablon uygulanmadı.",
+        "dms_disabled": "Size özel mesaj gönderemedim. Lütfen DM'lerinizin açık olduğundan emin olun ve tekrar deneyin.",
+        "missing_highest_role": "Bu sunucuda en yüksek role sahip değilim. Lütfen en yüksek role sahip olduğumdan emin olun ve tekrar deneyin.",
+        "missing_bot_permissions": "En yüksek rolüm 'Yönetici' iznine sahip değil. Lütfen en yüksek rolümün 'Yönetici' iznine sahip olduğundan emin olun ve tekrar deneyin."
+      },
+      "subcommands": {
+        "use": {
+          "name": "kullan",
+          "description": "Şablonu kullanır.",
+          "options": {
+            "template": {
+              "name": "şablon",
+              "description": "Kullanılacak şablon."
+            }
+          },
+          "confirmation_text": "Sonuçları anlıyorum ve devam etmek istiyorum.",
+          "last_chance": {
+            "button_label": "İptal",
+            "message": "{loadingEmoji} **{templateName}** şablonunu **{guildName}** sunucusuna uygulamak istediğinize emin misiniz?\n(__BU SON ŞANSINIZ!__)"
+          },
+          "cancelled": "{checkEmoji} Zamanında işlemi iptal ettiniz. Şablon uygulanmadı.",
+          "steps": [
+            "{loadingEmoji} **{templateName}** şablonu **{guildName}** sunucusuna uygulanıyor. Lütfen bekleyin..",
+            "{loadingEmoji} Tüm kanallar ve roller siliniyor.. Bu biraz zaman alabilir. Tahmini süre: **{estimatedTime}**.",
+            "{loadingEmoji} Kanallar ve roller oluşturuluyor.. Bu biraz zaman alabilir. Tahmini süre: **{estimatedTime}**.",
+            "{loadingEmoji} Ayarlar uygulanıyor..",
+            "{loadingEmoji} Neredeyse bitti..",
+            "{checkEmoji} **{templateName}** şablonu başarıyla **{guildName}** sunucusuna uygulandı."
+          ],
+          "embeds": {
+            "warning": {
+              "title": "Şablon {templateName} | ID: {templateId}",
+              "description": "### Durun!\nBu sunucuda **{templateName}** şablonunu kullanmak üzeresiniz.\n\n__**Ne olacak?**__\n- Tüm kanallar silinecek.\n- Tüm roller silinecek.\n- Tüm webhooklar silinecek.\n- Tüm ayarlar sıfırlanacak.\n\n__**Emin misiniz?**__\nBu işlem geri alınamaz ve geri döndürülemez.\n\n__**Onaylamak için lütfen şunu yazın:**__\n`Sonuçları anlıyorum ve devam etmek istiyorum.`\n\n__**Not:**__\nBu mesajı onaylamak için yukarıdaki metni cevap olarak göndermeyi unutmayın."
+            },
+            "success": {
+              "title": "Şablon {templateId}",
+              "description": "{checkEmoji} **{templateName}** şablonu başarıyla **{guildName}** sunucusuna {user} tarafından uygulandı.\n\n__**Şimdi ne yapmalı?**__\n- Bu kanalı silebilirsiniz.\n- Sunucuyu kullanmaya başlayabilirsiniz."
+            }
+          },
+          "buttons": {
+            "preview_template": "Şablonu discord.place'de Önizle"
+          }
+        }
       }
     }
   }

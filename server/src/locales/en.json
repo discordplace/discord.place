@@ -137,6 +137,51 @@
         "reward_added": "New reward {role} added by {user}. The role will be given to users who reach **{requiredVotes}** votes.",
         "reward_removed": "Reward {role} removed by {user}."
       }
+    },
+    "templates": {
+      "name": "template",
+      "errors": {
+        "too_many_currently": "There are too many templates being applied at the moment. Please wait for the current templates to be applied before using another template.",
+        "currently_applying": "This server is currently applying a template. Please wait for the current template to be applied before using another template.",
+        "server_wait_for_applying": "Please wait {remainingMinutes} minutes before using another template in this server.",
+        "user_wait_for_applying": "Please wait {remainingMinutes} minutes before using another template.",
+        "template_not_found": "Template not found.",
+        "confirmation_timeout": "You are did not confirm the action in time. The template was not applied.",
+        "dms_disabled": "I could not send you a DM. Please make sure your DMs are open and try again",
+        "missing_highest_role": "I do not have the highest role in this server. Please make sure I have the highest role in the server and try again.",
+        "missing_bot_permissions": "My highest role does not have the `Administrator` permission. Please make sure my highest role has the `Administrator` permission and try again."
+      },
+      "subcommands": {
+        "use": {
+          "confirmation_text": "I understand the consequences and I want to proceed.",
+          "last_chance": {
+            "button_label": "Cancel",
+            "message": "{loadingEmoji} Are you sure want to apply the template **{templateName}** to **{guildName}**?\n(__THIS IS YOUR LAST CHANCE!__)"
+          },
+          "cancelled": "{checkEmoji} You are cancelled the action in time. The template was not applied.",
+          "steps": [
+            "{loadingEmoji} Applying the template **{templateName}** to **{guildName}**. Please wait..",
+            "{loadingEmoji} Removing all channels and roles.. This may take a while. Estimated time: **{estimatedTime}**.",
+            "{loadingEmoji} Creating channels and roles.. This may take a while. Estimated time: **${estimatedTime}**.",
+            "{loadingEmoji} Applying settings..",
+            "{loadingEmoji} Almost done..",
+            "{checkEmoji} The template **{templateName}** has been successfully applied to **{guildName}**."
+          ],
+          "embeds": {
+            "warning": {
+              "title": "Template {templateName} | ID: {templateId}",
+              "description": "### Hold on!\nYou are about to use the template **{templateName}** in this server.\n\n__**What will happen?**__\n- All channels will be deleted.\n- All roles will be deleted.\n- All webhooks will be deleted.\n- All settings will be reset.\n\n__**Are you sure?**__\nThis action is irreversible and cannot be undone.\n\n__**Please type the following to confirm:**__\n`I understand the consequences and I want to proceed.`\n\n__**Note:**__\nDo not forget to __reply__ this message with the above text to confirm the action."
+            },
+            "success": {
+              "title": "Template {templateId}",
+              "description": "{checkEmoji} Template **{templateName}** has been successfully applied to **{guildName}** by {user}.\n\n__**What now?**__\n- You can delete this channel.\n- You can start using the server."
+            } 
+          },
+          "buttons": {
+            "preview_template": "Preview Template on discord.place"
+          }
+        }
+      }
     }
   }
 }

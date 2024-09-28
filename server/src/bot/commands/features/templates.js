@@ -4,6 +4,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const sleep = require('@/utils/sleep');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const humanizeMs = require('@/utils/humanizeMs');
+const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 
 const currentlyApplyingTemplates = new Discord.Collection();
 const latestUses = new Discord.Collection();
@@ -12,21 +13,34 @@ module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('templates')
     .setDescription('templates')
-    .addSubcommand(subcommand => subcommand.setName('use').setDescription('Use a template.')
-      .addStringOption(option => option.setName('template').setDescription('Template to use.').setRequired(true).setAutocomplete(true)))
-    .toJSON(),
+    .setNameLocalizations(getLocalizedCommand('templates').names)
+
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('use')
+        .setDescription('Use a template.')
+        .setNameLocalizations(getLocalizedCommand('templates.subcommands.use').names)
+        .setDescriptionLocalizations(getLocalizedCommand('templates.subcommands.use').descriptions)
+        .addStringOption(option =>
+          option
+            .setName('template')
+            .setDescription('Template to use.')
+            .setDescriptionLocalizations(getLocalizedCommand('templates.subcommands.use.options.template').descriptions)
+            .setRequired(true)
+            .setAutocomplete(true))),
+
   isGuildOnly: true,
   execute: async interaction => {
-    if (interaction.guild.ownerId !== interaction.user.id) return interaction.reply({ content: 'You must be the owner of the server to use this command.' });
+    if (interaction.guild.ownerId !== interaction.user.id) return interaction.reply(await interaction.guild.translate('commands.shared.errors.server_owner_only'));
     
-    if (currentlyApplyingTemplates.size >= 5) return interaction.reply({ content: 'There are too many templates being applied at the moment. Please wait for the current templates to be applied before using another template.' });
-    if (currentlyApplyingTemplates.has(interaction.guild.id)) return interaction.reply({ content: 'This server is currently applying a template. Please wait for the current template to be applied before using another template.' });
+    if (currentlyApplyingTemplates.size >= 5) return interaction.reply(await interaction.guild.translate('commands.templates.errors.too_many_templates'));
+    if (currentlyApplyingTemplates.has(interaction.guild.id)) return interaction.reply(await interaction.guild.translate('commands.templates.errors.already_applying_template'));
 
     const guildLatestUse = latestUses.get(interaction.guild.id);
-    if (guildLatestUse && guildLatestUse > Date.now()) return interaction.reply({ content: `Please wait ${Math.ceil((guildLatestUse - Date.now()) / 60000)} minutes before using another template in this server.` });
+    if (guildLatestUse && guildLatestUse > Date.now()) return interaction.reply(await interaction.guild.translate('commands.templates.errors.server_wait_for_applying', { remainingMinutes: Math.ceil((guildLatestUse - Date.now()) / 60000) }));
 
     const userLatestUse = latestUses.get(interaction.user.id);
-    if (userLatestUse && userLatestUse > Date.now()) return interaction.reply({ content: `Please wait ${Math.ceil((userLatestUse - Date.now()) / 60000)} minutes before using another template.` });
+    if (userLatestUse && userLatestUse > Date.now()) return interaction.reply(await interaction.guild.translate('commands.templates.errors.user_wait_for_applying', { remainingMinutes: Math.ceil((userLatestUse - Date.now()) / 60000) }));
 
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
@@ -34,21 +48,21 @@ module.exports = {
       { type: 'USER_ID', value: interaction.user.id, restriction: 'TEMPLATES_USE' },
       { type: 'GUILD_ID', value: interaction.guild.id, restriction: 'TEMPLATES_USE' }
     ]).catch(() => false);
-    if (userOrGuildQuarantined) return interaction.followUp({ content: 'You or this server is restricted from using templates.' });
+    if (userOrGuildQuarantined) return interaction.followUp(await interaction.guild.translate('commands.shared.errors.user_or_guild_quarantined'));
   
     const templateId = interaction.options.getString('template');
     const template = await Template.findOne({ id: templateId, approved: true });
     
-    if (!template) return interaction.followUp({ content: 'Template not found.' });
+    if (!template) return interaction.followUp(await interaction.guild.translate('commands.templates.errors.template_not_found'));
 
     currentlyApplyingTemplates.set(interaction.guild.id, true);
 
     const embeds = [
       new Discord.EmbedBuilder()
         .setColor('#5865F2')
-        .setTitle(`Template ${template.name} | ID: ${template.id}`)
+        .setTitle(await interaction.guild.translate('commands.templates.subcommands.use.embeds.warning.title', { templateName: template.name, templateId: template.id }))
         .setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
-        .setDescription(`### Hold on!\nYou are about to use the template **${template.name}** in this server.\n\n__**What will happen?**__\n- All channels will be deleted.\n- All roles will be deleted.\n- All webhooks will be deleted.\n- All settings will be reset.\n\n__**Are you sure?**__\nThis action is irreversible and cannot be undone.\n\n__**Please type the following to confirm:**__\n\`I understand the consequences and I want to proceed.\`\n\n__**Note:**__\nDo not forget to __reply__ this message with the above text to confirm the action.`)
+        .setDescription(await interaction.guild.translate('commands.templates.subcommands.use.embeds.warning.description', { templateName: template.name }))
     ];
 
     const components = [
@@ -56,18 +70,24 @@ module.exports = {
         .addComponents(
           new Discord.ButtonBuilder()
             .setStyle(Discord.ButtonStyle.Link)
-            .setLabel('Preview Template on discord.place')
+            .setLabel(await interaction.guild.translate('commands.templates.subcommands.use.buttons.preview_template'))
             .setURL(`${config.frontendUrl}/templates/${template.id}/preview`)
         )
     ];
 
     const confirmMessage = await interaction.followUp({ embeds, components, fetchReply: true });
 
-    const filter = message => message.author.id === interaction.user.id && message.content === 'I understand the consequences and I want to proceed.' && message.channel.id === interaction.channel.id;
+    const filter = async message => message.author.id === interaction.user.id && message.channel.id === interaction.channel.id && message.content === await interaction.guild.translate('commands.templates.subcommands.use.confirmation_text');
     const collected = await interaction.channel.awaitMessages({ filter, time: 30000, max: 1, errors: ['time'] }).catch(() => false);
+   
     if (!collected) {
       currentlyApplyingTemplates.delete(interaction.guild.id);
-      return confirmMessage.edit({ content: 'You are did not confirm the action in time. The template was not applied.', embeds: [], components: [] });
+
+      return confirmMessage.edit({
+        content: await interaction.guild.translate('commands.templates.errors.confirmation_timeout'),
+        embeds: [],
+        components: []
+      });
     }
   
     const collectedMessage = collected.first();
@@ -75,25 +95,26 @@ module.exports = {
     const dmChannel = interaction.user.dmChannel || await interaction.user.createDM().catch(() => false);
     if (!dmChannel) {
       currentlyApplyingTemplates.delete(interaction.guild.id);
-      return collectedMessage.reply({ content: 'I could not send you a DM. Please make sure your DMs are open and try again.' });
+
+      return collectedMessage.reply(await interaction.guild.translate('commands.templates.errors.dms_disabled'));
     }
 
     const dmMessage = await dmChannel.send({
-      content: `${config.emojis.loading} Are you sure you want to apply the template **${template.name}** to **${interaction.guild.name}**?\n(__THIS IS YOUR LAST CHANCE!__)`,
+      content: await interaction.guild.translate('commands.templates.subcommands.use.last_chance.message', { loadingEmoji: config.emojis.loading, templateName: template.name, guildName: interaction.guild.name }),
       components: [
         new Discord.ActionRowBuilder()
           .addComponents(
             new Discord.ButtonBuilder()
               .setCustomId('cancel-template-apply')
-              .setLabel('Cancel')
+              .setLabel(await interaction.guild.translate('commands.templates.subcommands.use.last_chance.button_label'))
               .setStyle(Discord.ButtonStyle.Danger)
           )
       ]
-    }).catch(() => {
+    }).catch(async () => {
       // Check here also if the user has DMs disabled
       currentlyApplyingTemplates.delete(interaction.guild.id);
       
-      collectedMessage.reply({ content: 'I could not send you a DM. Please make sure your DMs are open and try again.' });
+      collectedMessage.reply(await interaction.guild.translate('commands.templates.errors.dms_disabled'));
     });
 
     if (!dmMessage) return;
@@ -106,11 +127,11 @@ module.exports = {
     }
     
     const cancelled = await dmMessage.awaitMessageComponent({ time: 10000, errors: ['time'] }).catch(() => false);
-    if (cancelled) return sendError(`${config.emojis.checkmark} You are cancelled the action in time. The template was not applied.`);
+    if (cancelled) return sendError(await interaction.guild.translate('commands.templates.subcommands.use.cancelled', { checkEmoji: config.emojis.checkmark }));
 
     const botHighestRole = interaction.guild.members.me.roles.highest;
-    if (botHighestRole.position !== interaction.guild.roles.cache.map(role => role.position).sort((a, b) => b - a)[0]) return sendError('I do not have the highest role in this server. Please make sure I have the highest role in the server and try again.');
-    if (!botHighestRole.permissions.has(Discord.PermissionFlagsBits.Administrator)) return sendError('My highest role does not have the `Administrator` permission. Please make sure my highest role has the `Administrator` permission and try again.');
+    if (botHighestRole.position !== interaction.guild.roles.cache.map(role => role.position).sort((a, b) => b - a)[0]) return sendError(await interaction.guild.translate('commands.templates.errors.missing_highest_role'));
+    if (!botHighestRole.permissions.has(Discord.PermissionFlagsBits.Administrator)) return sendError(await interaction.guild.translate('commands.templates.errors.missing_bot_permissions'));
 
     client.channels.cache.get(config.templateApplyLogsChannelId).send({
       embeds: [
@@ -141,14 +162,17 @@ module.exports = {
 
     await template.updateOne({ $inc: { uses: 1 } });
 
-    await dmMessage.edit({ content: `${config.emojis.loading} Applying the template **${template.name}** to **${interaction.guild.name}**. Please wait..`, components: [] });
+    await dmMessage.edit({
+      content: await interaction.guild.translate('commands.templates.subcommands.steps.0', { loadingEmoji: config.emojis.loading, templateName: template.name, guildName: interaction.guild.name }),
+      components: []
+    });
   
     await sleep(1000);
 
     const guildChannels = await interaction.guild.channels.fetch();
     const guildRoles = await interaction.guild.roles.fetch();
 
-    await dmMessage.edit({ content: `${config.emojis.loading} Removing all channels and roles.. This may take a while. Estimated time: **${humanizeMs((guildChannels.size * 500) + (guildRoles.size * 500))}**.`, components: [] });
+    await dmMessage.edit(await interaction.guild.translate('commands.templates.subcommands.use.steps.1', { loadingEmoji: config.emojis.loading, templateName: template.name, guildName: interaction.guild.name }));
 
     await Promise.all(guildChannels.filter(channel => channel.deletable).map(async channel => {
       await channel.delete().catch(() => null);
@@ -167,7 +191,18 @@ module.exports = {
     const channelsLength = template.data.channels.filter(channel => channel.type !== Discord.ChannelType.GuildCategory).length;
     const rolesLength = template.data.roles.length;
 
-    await dmMessage.edit({ content: `${config.emojis.loading} Creating channels and roles.. This may take a while. Estimated time: **${humanizeMs((categoriesLength * 500) + (channelsLength * 1000) + (rolesLength * 500))}**.`, components: [] });
+    await dmMessage.edit(await interaction.guild.translate('commands.templates.subcommands.use.steps.2', {
+      loadingEmoji: config.emojis.loading,
+      estimatedTime: humanizeMs(
+        (categoriesLength * 500) + (channelsLength * 1000) + (rolesLength * 500),
+        {
+          days: await interaction.guild.translate('time.days'),
+          hours: await interaction.guild.translate('time.hours'),
+          minutes: await interaction.guild.translate('time.minutes'),
+          seconds: await interaction.guild.translate('time.seconds')
+        }
+      )
+    }));
 
     const createdChannels = [];
     const createdRoles = [];
@@ -252,7 +287,7 @@ module.exports = {
       await sleep(1000);
     }
 
-    await dmMessage.edit({ content: `${config.emojis.loading} Applying settings..`, components: [] });
+    await dmMessage.edit(await interaction.guild.translate('commands.templates.subcommands.use.steps.3', { loadingEmoji: config.emojis.loading }));
 
     await interaction.guild.edit({
       defaultMessageNotifications: template.data.default_message_notifications,
@@ -265,7 +300,7 @@ module.exports = {
 
     await sleep(1000);
 
-    await dmMessage.edit({ content: `${config.emojis.loading} Almost done..`, components: [] });
+    await dmMessage.edit(await interaction.guild.translate('commands.templates.subcommands.use.steps.4', { loadingEmoji: config.emojis.loading }));
 
     await DashboardData.findOneAndUpdate({}, { $inc: { templates: 1 } }, { sort: { createdAt: -1 } });
     currentlyApplyingTemplates.delete(interaction.guild.id);
@@ -277,15 +312,15 @@ module.exports = {
       embeds: [
         new Discord.EmbedBuilder()
           .setColor('#5865F2')
-          .setTitle(`Template ${template.id}`)
+          .setTitle(await interaction.guild.translate('commands.templates.subcommands.use.embeds.success.title', { templateId: template.id }))
           .setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
           .setTimestamp()
           .setFooter({ text: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
-          .setDescription(`${config.emojis.checkmark} Template **${template.name}** has been successfully applied to **${interaction.guild.name}** by ${interaction.user}.\n\n__**What now?**__\n- You can delete this channel.\n- You can start using the server.`)
+          .setDescription(await interaction.guild.translate('commands.templates.subcommands.use.embeds.success.description', { checkEmoji: config.emojis.checkmark, templateName: template.name, guildName: interaction.guild.name, user: interaction.user }))
       ] 
     });
     
-    return dmMessage.edit({ content: `${config.emojis.checkmark} The template **${template.name}** has been successfully applied to **${interaction.guild.name}**. Thanks for using discord.place!`, components: [] });
+    return dmMessage.edit(await interaction.guild.translate('commands.templates.subcommands.use.steps.5', { checkEmoji: config.emojis.checkmark, templateName: template.name, guildName: interaction.guild.name }));
   },
   autocomplete: async interaction => {
     if (!interaction.guild) return;
