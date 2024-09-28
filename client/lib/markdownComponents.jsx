@@ -30,7 +30,6 @@ const markdownComponents = {
       {!children.key?.startsWith('img-') && <FiArrowUpRight />}
     </Link>
   ),
-  pre: ({ children }) => <pre className='bg-[unset] p-0'>{children}</pre>,
   code: ({ children, className, ...rest }) => {
     const languageMatch = /language-(\w+)/.exec(className || '');
 
