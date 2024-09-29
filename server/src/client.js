@@ -33,6 +33,7 @@ const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const ServerLanguage = require('@/schemas/Server/Language');
 const translate = require('@/utils/localization/translate');
+const moment = require('moment');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -74,6 +75,14 @@ module.exports = class Client {
       .then(languages => languages.forEach(language => this.client.languageCache.set(language.id, language.language)));
 
     logger.info('Client created.');
+
+    // Localization Setup for moment
+    if (!config.availableLocales.find(locale => locale.default)) {
+      logger.error('Default locale is not found in the available locales. Please set the default locale in the config file.');
+      process.exit(1);
+    }
+
+    moment.locale(config.availableLocales.find(locale => locale.default).code);
 
     // i18n Setup
     i18n
