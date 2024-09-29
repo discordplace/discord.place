@@ -400,5 +400,12 @@
         ]
       }
     }
+  },
+  "vote_rewards": {
+    "reward_role_deleted": "Role with ID {roleId} has been deleted from the database because it was not found in the server.",
+    "reward_role_added": "**@{username}** ({userId}) has been given the reward role **{roleName}** for voting {vote} times.",
+    "reward_role_add_error": "Failed to give the reward role **{roleName}** to **@{username}** ({userId}). (Error: {errorMessage})",
+    "reward_role_added_audit_reason": "Voted {requiredVotes} times for the server. This role was given as a reward.",
+    "reward_role_added_dm_message": "### Congratulations!\nYou have been given the reward role **{roleName}** in **{guildName}** for voting {vote} times!"
   }
 }
