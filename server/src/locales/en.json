@@ -213,7 +213,10 @@
       "gif_hidden_now": "The gif is hidden now. Please click the buttons in the order of the numbers you memorized.",
       "human_verification_failed": "You failed to verify yourself. You can try again after 1 minute.",
       "create_reminder_button_label": "Create Reminder",
-      "success": "Thank you for voting!"
+      "success": "Thank you for voting!",
+      "logging_messages": {
+        "user_voted": "**@{username}** ({userId}) has voted for the server!"
+      }
     },
     "info": {
       "name": "info",

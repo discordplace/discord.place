@@ -100,7 +100,9 @@ async function incrementVote(botId, userId, botWebhook) {
   client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
 
   if (botWebhook?.url) {
-    const headers = {};
+    const headers = {
+      'User-Agent': 'discord.place (https://discord.place)'
+    };
     if (botWebhook.token) headers['Authorization'] = botWebhook.token;
     
     axios({

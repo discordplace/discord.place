@@ -305,7 +305,10 @@
       "gif_hidden_now": "Gif şimdi gizlendi. Lütfen ezberlediğiniz sayıların sırasına göre butonlara tıklayın.",
       "human_verification_failed": "Kendinizi doğrulayamadınız. 1 dakika sonra tekrar deneyebilirsiniz.",
       "create_reminder_button_label": "Hatırlatıcı Oluştur",
-      "success": "Oy verdiğiniz için teşekkürler!"
+      "success": "Oy verdiğiniz için teşekkürler!",
+      "logging_messages": {
+        "user_voted": "**@{username}** ({userId}) oy verdi."
+      }
     },
     "info": {
       "name": "bilgi",
