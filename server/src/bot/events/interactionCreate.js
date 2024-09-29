@@ -11,15 +11,18 @@ module.exports = async interaction => {
     const foundCommand = client.commands.find(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON().name === interaction.commandName : command.data.name === interaction.commandName);
     if (!foundCommand) return;
 
-    if (foundCommand.isGuildOnly && !interaction.guild) return interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
+    if (foundCommand.isGuildOnly && !interaction.guild) return interaction.reply({
+      content: await interaction.translate('commands.shared.errors.guild_only'),
+      ephemeral: true
+    });
 
     const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, new: true });
 
     if (!user.acceptedPolicies) {
       const embeds = [
         new Discord.EmbedBuilder()
-          .setTitle('About Our Policies')
-          .setDescription('Before you can use the bot, you need to accept our policies.\nAfter you accept them, you can use the bot as you wish.\n\n- [Privacy Policy](https://discord.place/legal/privacy)\n- [Terms of Service](https://discord.place/legal/terms)\n- [Cookie Policy](https://discord.place/legal/cookie)\n- [Content Policy](https://discord.place/legal/content-policy)\n- [Purchase Policy](https://discord.place/legal/purchase-policy)\n\nIf you have any questions, you can contact us at **legal@discord.place**.')
+          .setTitle(await interaction.translate('commands.accept_policies.embed.title'))
+          .setDescription(await interaction.translate('commands.accept_policies.embed.description'))
           .setColor(Discord.Colors.Blurple)
           .setFooter({ text: 'discord.place', iconURL: client.user.displayAvatarURL() })
       ];
@@ -29,7 +32,7 @@ module.exports = async interaction => {
           .addComponents(
             new Discord.ButtonBuilder()
               .setCustomId('accept-policies')
-              .setLabel('Accept Policies')
+              .setLabel(await interaction.translate('commands.accept_policies.button_label'))
               .setStyle(Discord.ButtonStyle.Secondary)
               .setEmoji(config.emojis.checkmark)
           )
@@ -37,13 +40,21 @@ module.exports = async interaction => {
 
       const message = await interaction.reply({ embeds, components, fetchReply: true });
       const collected = await message.awaitMessageComponent({ time: 60000 }).catch(() => null);
-      if (!collected) return message.edit({ content: 'You didn\'t accept the policies in time.', embeds: [], components: [] });
+      if (!collected) return message.edit({
+        content: await interaction.translate('commands.accept_policies.timeout'),
+        embeds: [],
+        components: []
+      });
 
       if (collected.customId === 'accept-policies') {
         user.acceptedPolicies = true;
         await user.save();
 
-        await message.edit({ content: 'You accepted the policies.', embeds: [], components: [] });
+        await message.edit({
+          content: await interaction.translate('commands.accept_policies.success'),
+          embeds: [],
+          components: []
+        });
 
         await collected.deferUpdate();
       }
@@ -54,8 +65,11 @@ module.exports = async interaction => {
     } catch (error) {
       logger.error(`Error executing command ${interaction.commandName}:`, error);
 
-      if (interaction.deferred || interaction.replied) interaction.followUp({ content: 'There was an error while executing this command.' });
-      else interaction.reply({ content: 'There was an error while executing this command.', ephemeral: true });
+      if (interaction.deferred || interaction.replied) interaction.followUp(await interaction.translate('commands.shared.errors.command_error'));
+      else interaction.reply({
+        content: await interaction.translate('commands.shared.errors.command_error'),
+        ephemeral: true
+      });
     }
   }
 
@@ -89,13 +103,13 @@ module.exports = async interaction => {
     if (interaction.customId.startsWith('quick-vote-')) {
       const guildId = interaction.customId.split('-')[2];
       const guild = client.guilds.cache.get(guildId);
-      if (!guild) return interaction.reply({ content: 'I couldn\'t find the server.' });
+      if (!guild) return interaction.reply(await interaction.translate('interaction.buttons.quick_vote.errors.guild_not_found'));
       
       const member = guild.members.cache.get(interaction.user.id) || await guild.members.fetch(interaction.user.id).catch(() => null);
-      if (!member) return interaction.reply({ content: 'You are not in the server.' });
+      if (!member) return interaction.reply(await interaction.translate('interaction.buttons.quick_vote.errors.member_not_found'));
 
       const server = await Server.findOne({ id: guild.id });
-      if (!server) return interaction.reply({ content: 'I couldn\'t find the server.' });
+      if (!server) return interaction.reply(await interaction.translate('interaction.buttons.quick_vote.errors.server_not_listed'));
 
       Object.defineProperty(interaction, 'user', { value: member.user });
       Object.defineProperty(interaction, 'member', { value: member });
@@ -111,16 +125,16 @@ module.exports = async interaction => {
       const guildId = interaction.customId.split('-')[2];
 
       const guild = client.guilds.cache.get(guildId);
-      if (!guild) return interaction.followUp({ content: 'I couldn\'t find the server.' });
+      if (!guild) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.guild_not_found'));
 
       const server = await Server.findOne({ id: guild.id });
-      if (!server) return interaction.followUp({ content: 'I couldn\'t find the server.' });
+      if (!server) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.server_not_listed'));
 
       const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
-      if (!timeout) return interaction.followUp({ content: 'You can\'t set a reminder for a server you haven\'t voted for.' });
+      if (!timeout) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.user_not_voted'));
 
       const reminder = await VoteReminder.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
-      if (reminder) return interaction.followUp({ content: 'You already set a reminder for this server.' });
+      if (reminder) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.reminder_already_created'));
 
       const newReminder = new VoteReminder({
         user: {
@@ -134,33 +148,41 @@ module.exports = async interaction => {
 
       await newReminder.save();
 
-      return interaction.followUp({ content: 'Reminder created.' });
+      const date = new Date(new Date(timeout.createdAt).getTime() + 86400000).toLocaleString(await interaction.getLanguage(), { dateStyle: 'full', timeStyle: 'short' });
+
+      return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.success', { date }));
     }
 
     if (interaction.customId.startsWith('hv-')) {
       const guildId = interaction.customId.split('-')[1];
 
       const guild = client.guilds.cache.get(guildId);
-      if (!guild) return interaction.reply({ content: 'I couldn\'t find the server.' });
+      if (!guild) return interaction.reply(await interaction.translate('interaction.buttons.human_verification.errors.guild_not_found'));
 
       const member = guild.members.cache.get(interaction.user.id) || await guild.members.fetch(interaction.user.id).catch(() => null);
-      if (!member) return interaction.reply({ content: 'You are not in the server.' });
+      if (!member) return interaction.reply(await interaction.translate('interaction.buttons.human_verification.errors.member_not_found'));
 
       const server = await Server.findOne({ id: guild.id });
-      if (!server) return interaction.reply({ content: 'I couldn\'t find the server.' });
+      if (!server) return interaction.reply(await interaction.translate('interaction.buttons.human_verification.errors.server_not_listed'));
 
       const numbers = interaction.customId.split('-')[2].split('');
       const selectNumber = interaction.customId.split('-')[3];
 
       if (client.humanVerificationTimeouts.has(interaction.user.id)) {
         const timeout = client.humanVerificationTimeouts.get(interaction.user.id);
-        if (timeout.guild === guildId && timeout.expiresAt > Date.now()) return interaction.reply({ content: `You can try again after ${Math.floor((timeout.expiresAt - Date.now()) / 1000)} seconds.`, ephemeral: true });
+        if (timeout.guild === guildId && timeout.expiresAt > Date.now()) return interaction.reply({
+          content: await interaction.translate('interaction.buttons.human_verification.errors.timeout', { seconds: Math.floor((timeout.expiresAt - Date.now()) / 1000) }),
+          ephemeral: true
+        });
       }
     
       if (!client.humanVerificationData.has(interaction.user.id)) client.humanVerificationData.set(interaction.user.id, []);
 
       const data = client.humanVerificationData.get(interaction.user.id);
-      if (data.includes(selectNumber)) return interaction.reply({ content: 'You already selected this number.', ephemeral: true });
+      if (data.includes(selectNumber)) return interaction.reply({
+        content: await interaction.translate('interaction.buttons.human_verification.errors.number_already_selected'),
+        ephemeral: true
+      });
 
       data.push(selectNumber);
       client.humanVerificationData.set(interaction.user.id, data);
@@ -170,9 +192,17 @@ module.exports = async interaction => {
         client.humanVerificationTimeouts.set(interaction.user.id, { guild: guildId, expiresAt: Date.now() + 60000 });
 
         const isCorrect = data.every((number, index) => number === numbers[index]);
-        if (!isCorrect) return interaction.update({ content: 'You failed to verify yourself. You can try again after 1 minute.', components: [], files: [] });
+        if (!isCorrect) return interaction.update({
+          content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
+          components: [],
+          files: []
+        });
 
-        await interaction.update({ content: 'You successfully verified yourself.', components: [], files: [] });
+        await interaction.update({
+          content: await interaction.translate('interaction.buttons.human_verification.success'),
+          components: [],
+          files: []
+        });
 
         const continueVote = require('@/src/bot/commands/features/vote').continueVote;
 
@@ -192,7 +222,7 @@ module.exports = async interaction => {
         selectedButtonComponent.setStyle(Discord.ButtonStyle.Primary);
 
         return interaction.update({ 
-          content: `You selected ${data.join('')}.`,
+          content: await interaction.translate('interaction.buttons.human_verification.numbers_selected', { numbers: data.join('') }),
           components: currentComponents
         });
       }

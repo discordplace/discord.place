@@ -6,6 +6,15 @@
     "days": "gün"
   },
   "commands": {
+    "accept_policies": {
+      "embed": {
+        "title": "Politikalarımız Hakkında",
+        "description": "Botu kullanmadan önce politikalarımızı kabul etmeniz gerekiyor.\nPolitikaları kabul ettikten sonra, botu istediğiniz gibi kullanabilirsiniz.\n\n- [Gizlilik Politikası](https://discord.place/legal/privacy)\n- [Hizmet Şartları](https://discord.place/legal/terms)\n- [Çerez Politikası](https://discord.place/legal/cookie)\n- [İçerik Politikası](https://discord.place/legal/content-policy)\n- [Satın Alma Politikası](https://discord.place/legal/purchase-policy)\n\nHerhangi bir sorunuz varsa, **legal@discord.place** adresinden bize ulaşabilirsiniz."
+      },
+      "button_label": "Politikaları Kabul Et",
+      "timeout": "Politikaları zamanında kabul etmediniz.",
+      "success": "Politikaları kabul ettiniz."
+    },    
     "shared": {
       "errors": {
         "missing_permissions": "Bu komutu kullanmak için yetkiniz yok.",
@@ -13,7 +22,9 @@
         "server_quarantined": "Bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
         "user_or_guild_quarantined": "Hesabınız veya bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
         "server_owner_only": "Bu komutu kullanabilmek için sunucu sahibi olmalısınız.",
-        "unknown_error": "Bir hata oluştu: {errorMessage}"
+        "unknown_error": "Bir hata oluştu: {errorMessage}",
+        "guild_only": "Bu komut sadece bir sunucuda kullanılabilir.",
+        "command_error": "Komutu çalıştırırken bir hata oluştu."
       }
     },
     "emoji": {
@@ -541,5 +552,37 @@
     "reward_role_add_error": "**@{username}** ({userId}) kullanıcısına **{roleName}** ödül rolü verilemedi. (Hata: {errorMessage})",
     "reward_role_added_audit_reason": "Sunucu için {requiredVotes} kez oy verdi. Bu rol ödül olarak verildi.",
     "reward_role_added_dm_message": "### Tebrikler!\n**{guildName}** sunucusunda {vote} kez oy verdiğiniz için size **{roleName}** ödül rolü verildi!"
+  },
+  "interaction": {
+    "buttons": {
+      "quick_vote": {
+        "errors": {
+          "guild_not_found": "Sunucuyu bulamadım.",
+          "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
+          "member_not_found": "Sunucuda değilsiniz."
+        }
+      },
+      "create_reminder": {
+        "errors": {
+          "guild_not_found": "Sunucuyu bulamadım.",
+          "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
+          "user_not_voted": "Oy vermediğiniz bir sunucu için hatırlatıcı oluşturamazsınız.",
+          "reminder_already_created": "Bu sunucu için zaten bir hatırlatıcı oluşturmuşsunuz."
+        },
+        "success": "Hatırlatıcı oluşturuldu ve {date} tarihinde gönderilecek."
+      },
+      "human_verification": {
+        "errors": {
+          "guild_not_found": "Sunucuyu bulamadım.",
+          "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
+          "member_not_found": "Sunucuda değilsiniz.",
+          "timeout": "{seconds} saniye sonra tekrar deneyebilirsiniz.",
+          "failed": "Kendinizi doğrulamada başarısız oldunuz. 1 dakika sonra tekrar deneyebilirsiniz.",
+          "number_already_selected": "Bu numarayı zaten seçtiniz."
+        },
+        "success": "Başarıyla kendinizi doğruladınız.",
+        "numbers_selected": "Seçilen numaralar: {numbers}"
+      }
+    }
   }
 }

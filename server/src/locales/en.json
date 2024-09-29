@@ -6,6 +6,15 @@
     "days": "days"
   },
   "commands": {
+    "accept_policies": {
+      "embed": {
+        "title": "About Our Policies",
+        "description": "Before you can use the bot, you need to accept our policies.\nAfter you accept them, you can use the bot as you wish.\n\n- [Privacy Policy](https://discord.place/legal/privacy)\n- [Terms of Service](https://discord.place/legal/terms)\n- [Cookie Policy](https://discord.place/legal/cookie)\n- [Content Policy](https://discord.place/legal/content-policy)\n- [Purchase Policy](https://discord.place/legal/purchase-policy)\n\nIf you have any questions, you can contact us at **legal@discord.place**."
+      },
+      "button_label": "Accept Policies",
+      "timeout": "You didn't not accept the policies in time.",
+      "success": "You accepted the policies."
+    },
     "shared": {
       "errors": {
         "missing_permissions": "You don't have permission to use this command.",
@@ -13,7 +22,9 @@
         "server_quarantined": "You can't use this command because this server is quarantined.",
         "user_or_guild_quarantined": "You can't use this command because your account or this server is quarantined.",
         "server_owner_only": "You must be the server owner to use this command.",
-        "unknown_error": "An error occured: {errorMessage}"
+        "unknown_error": "An error occured: {errorMessage}",
+        "guild_only": "This command can only be used in a server.",
+        "command_error": "There was an error while executing the command."
       }
     },
     "emoji": {
@@ -407,5 +418,37 @@
     "reward_role_add_error": "Failed to give the reward role **{roleName}** to **@{username}** ({userId}). (Error: {errorMessage})",
     "reward_role_added_audit_reason": "Voted {requiredVotes} times for the server. This role was given as a reward.",
     "reward_role_added_dm_message": "### Congratulations!\nYou have been given the reward role **{roleName}** in **{guildName}** for voting {vote} times!"
+  },
+  "interaction": {
+    "buttons": {
+      "quick_vote": {
+        "errors": {
+          "guild_not_found": "I couldn't find the server.",
+          "server_not_listed": "This server is not listed on discord.place.",
+          "member_not_found": "You are not in the server."
+        }
+      },
+      "create_reminder": {
+        "errors": {
+          "guild_not_found": "I couldn't find the server.",
+          "server_not_listed": "This server is not listed on discord.place.",
+          "user_not_voted": "You can't set a reminder for a server you haven't voted for.",
+          "reminder_already_created": "You already set a reminder for this server."
+        },
+        "success": "Reminder has been created and will be sent in {date}."
+      },
+      "human_verification": {
+        "errors": {
+          "guild_not_found": "I couldn't find the server.",
+          "server_not_listed": "This server is not listed on discord.place.",
+          "member_not_found": "You are not in the server.",
+          "timeout": "You can try again after {seconds} seconds.",
+          "failed": "You failed to verify yourself. You can try again after 1 minute.",
+          "number_already_selected": "You already selected this number."
+        },
+        "success": "You successfully verified yourself.",
+        "numbers_selected": "You selected {numbers}."
+      }
+    }
   }
 }
