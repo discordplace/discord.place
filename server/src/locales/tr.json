@@ -373,6 +373,23 @@
           }
         }
       }
-    }    
+    },
+    "ping": {
+      "description": "Bot ile Discord API'si arasındaki gecikmeyi, sunucunun yanıt süresini ve bot ile veritabanı arasındaki gecikmeyi verir.",
+      "fields": [
+        {
+          "name": "Websocket Gecikmesi",
+          "value": "Bot ile Discord API'si arasındaki gecikme."
+        },
+        {
+          "name": "Sunucu Yanıt Süresi",
+          "value": "Sunucumuzun yanıt süresi."
+        },
+        {
+          "name": "Veritabanı Gecikmesi",
+          "value": "Bot ile veritabanı arasındaki gecikme."
+        }
+      ]
+    }
   }
 }

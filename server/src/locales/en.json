@@ -265,6 +265,22 @@
           }
         }
       }
+    },
+    "ping": {
+      "fields": [
+        {
+          "name": "Websocket Latency",
+          "value": "Latency between the bot and the Discord API."
+        },
+        {
+          "name": "Server Response Time",
+          "value": "Current response time of the our server."
+        },
+        {
+          "name": "Database Latency",
+          "value": "Latency between the bot and the database."
+        }
+      ]
     }
   }
 }
