@@ -1,10 +1,10 @@
-
-const validateBody = require('@/utils/middlewares/validateBody');const Profile = require('@/schemas/Profile');
+const Profile = require('@/schemas/Profile');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const User = require('@/schemas/User');
 const getUserHashes = require('@/utils/getUserHashes');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 const Discord = require('discord.js');
 
