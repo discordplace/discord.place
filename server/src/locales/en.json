@@ -59,7 +59,6 @@
       }
     },
     "server": {
-      "name": "server",
       "errors": {
         "same_invite_code": "Invite code is the same as the current one.",
         "invalid_invite_code": "Invite code is not valid.",
@@ -159,7 +158,6 @@
       }
     },
     "templates": {
-      "name": "template",
       "errors": {
         "too_many_currently": "There are too many templates being applied at the moment. Please wait for the current templates to be applied before using another template.",
         "currently_applying": "This server is currently applying a template. Please wait for the current template to be applied before using another template.",
@@ -219,7 +217,6 @@
       }
     },
     "info": {
-      "name": "info",
       "errors": {
         "server_not_listed": "This server is not listed on discord.place.",
         "invite_was_deleted": "Invite link was deleted.",
