@@ -534,5 +534,12 @@
         ]
       }
     }  
+  },
+  "vote_rewards": {
+    "reward_role_deleted": "{roleId} ID'li rol, sunucuda bulunamadığı için veritabanından silindi.",
+    "reward_role_added": "**@{username}** ({userId}) kullanıcısı {vote} kez oy verdiği için **{roleName}** ödül rolü verildi.",
+    "reward_role_add_error": "**@{username}** ({userId}) kullanıcısına **{roleName}** ödül rolü verilemedi. (Hata: {errorMessage})",
+    "reward_role_added_audit_reason": "Sunucu için {requiredVotes} kez oy verdi. Bu rol ödül olarak verildi.",
+    "reward_role_added_dm_message": "### Tebrikler!\n**{guildName}** sunucusunda {vote} kez oy verdiğiniz için size **{roleName}** ödül rolü verildi!"
   }
 }
