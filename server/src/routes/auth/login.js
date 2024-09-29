@@ -1,5 +1,6 @@
 const { query, validationResult, matchedData } = require('express-validator');
 const passport = require('passport');
+
 module.exports = {
   get: [
     query('redirect').optional().customSanitizer(value => decodeURIComponent(value)).custom(value => {
