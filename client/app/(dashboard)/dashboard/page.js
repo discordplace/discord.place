@@ -1642,7 +1642,7 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'quarantine',
-                    action: item => deleteQuarantineRecord(item.id),
+                    action: item => deleteQuarantineRecord(item._id),
                     fetchKey: 'quarantines'
                   }),
                   hide: !data.permissions?.canDeleteQuarantines
