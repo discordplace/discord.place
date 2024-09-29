@@ -78,7 +78,7 @@ module.exports = {
           }
         });
 
-        const isUserFoundInGuild = client.guild.members.cache.has(value) || await client.guild.members.fetch(value).then(() => true).catch(() => false);
+        const isUserFoundInGuild = client.guilds.cache.get(config.guildId).members.has(value) || await client.guilds.cache.get(config.guildId).members.fetch(value).then(() => true).catch(() => false);
   
         if (isUserFoundInGuild) {
           const dmChannel = client.dmChannel || await user.createDM().catch(() => null);
