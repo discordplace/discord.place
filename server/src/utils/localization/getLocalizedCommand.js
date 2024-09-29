@@ -1,5 +1,10 @@
 const Discord = require('discord.js');
 
+/**
+ * Get localized command name and description.
+ * @param {string} key - Command key.
+ * @returns {Object.<string, string>} - Localized command name and description.
+ */
 function getLocalizedCommand(key) {
   const availableLocales = config.availableLocales.filter(({ code }) => Object.values(Discord.Locale).some(locale => locale === code));
 
