@@ -393,6 +393,7 @@
     },
     "stats": {
       "name": "istatistikler",
+      "description": "Botun istatistiklerini görüntüler.",
       "blocks": [
         {
           "title": "Sistem",

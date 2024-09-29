@@ -19,7 +19,8 @@ module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('stats')
     .setDescription('View the stats of the bot.')
-    .setNameLocalizations(getLocalizedCommand('stats').names),
+    .setNameLocalizations(getLocalizedCommand('stats').names)
+    .setDescriptionLocalizations(getLocalizedCommand('stats').descriptions),
   execute: async interaction => {
     if (cooldowns.has(interaction.user.id)) {
       const expirationTime = cooldowns.get(interaction.user.id) + 60000;
