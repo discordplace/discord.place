@@ -11,6 +11,7 @@ const colorsValidation = require('@/validations/profiles/colors');
 const Server = require('@/schemas/Server');
 const randomizeArray = require('@/utils/randomizeArray');
 const getValidationError = require('@/utils/getValidationError');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
@@ -19,6 +20,7 @@ module.exports = {
       .isString().withMessage('Slug must be a string.')
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
@@ -146,6 +148,7 @@ module.exports = {
     body('verified')
       .optional()
       .isBoolean().withMessage('Verified must be a boolean.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

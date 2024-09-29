@@ -9,6 +9,7 @@ const crypto = require('node:crypto');
 const getValidationError = require('@/utils/getValidationError');
 const User = require('@/schemas/User');
 const Discord = require('discord.js');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -21,6 +22,7 @@ module.exports = {
     body('destinationURL')
       .isString().withMessage('Destination URL should be a string.')
       .custom(destinationURLValidation),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

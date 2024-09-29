@@ -2,6 +2,7 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   delete: [
@@ -10,6 +11,7 @@ module.exports = {
     param('id'),
     param('review_id')
       .isString().withMessage('Invalid review ID.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

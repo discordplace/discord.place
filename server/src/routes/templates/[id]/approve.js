@@ -5,6 +5,7 @@ const Template = require('@/schemas/Template');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -12,6 +13,7 @@ module.exports = {
     bodyParser.json(),
     checkAuthentication,
     param('id'),
+    validateBody,
     async (request, response) => {
       const { id } = matchedData(request);
 

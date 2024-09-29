@@ -17,6 +17,7 @@ const Sound = require('@/schemas/Sound');
 const Link = require('@/schemas/Link');
 const getUserHashes = require('@/utils/getUserHashes');
 const requirementChecks = require('@/utils/servers/requirementChecks');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 const validKeys = [
   'timeouts',
@@ -38,6 +39,7 @@ module.exports = {
     body('keys')
       .optional()
       .custom(keys => keys.every(key => validKeys.includes(key))).withMessage('Invalid key provided.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

@@ -3,6 +3,7 @@ const Quarantine = require('@/schemas/Quarantine');
 const { param, validationResult, matchedData } = require('express-validator');
 const Discord = require('discord.js');
 const useRateLimiter = require('@/utils/useRateLimiter');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   delete: [
@@ -10,6 +11,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('id')
       .isMongoId().withMessage('Invalid ID.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

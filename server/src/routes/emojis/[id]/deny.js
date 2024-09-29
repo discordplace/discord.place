@@ -5,6 +5,7 @@ const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const Discord = require('discord.js');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const bodyParser = require('body-parser');
@@ -29,6 +30,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.emojisDenyReasons)).withMessage('Invalid reason.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

@@ -7,6 +7,7 @@ const Discord = require('discord.js');
 const getSoundURL = require('@/utils/sounds/getSoundURL');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -19,6 +20,7 @@ module.exports = {
     body('guildId')
       .isString().withMessage('Guild ID must be an string.')
       .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

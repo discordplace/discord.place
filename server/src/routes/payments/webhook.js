@@ -14,10 +14,12 @@ const Discord = require('discord.js');
 const decrypt = require('@/utils/encryption/decrypt');
 const getImageFromHash = require('@/utils/getImageFromHash');
 const getUserHashes = require('@/utils/getUserHashes');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
     bodyParser.raw({ type: 'application/json' }),
+    validateBody,
     async (request, response) => {
       const hmac = crypto.createHmac('sha256', process.env.LEMON_SQUEEZY_WEBHOOK_SECRET);
       const digest = Buffer.from(hmac.update(request.body).digest('hex'), 'utf-8');

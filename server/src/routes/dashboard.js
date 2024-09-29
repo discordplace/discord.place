@@ -21,6 +21,7 @@ const getUserHashes = require('@/utils/getUserHashes');
 const User = require('@/schemas/User');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
 const UserHashes = require('@/schemas/User/Hashes');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 const validKeys = [
   'stats',
@@ -47,6 +48,7 @@ module.exports = {
     body('keys')
       .optional()
       .custom(keys => keys.every(key => validKeys.includes(key))).withMessage('Invalid key provided.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

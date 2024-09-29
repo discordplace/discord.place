@@ -8,6 +8,7 @@ const Template = require('@/schemas/Template');
 const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const fetchTemplateDetails = require('@/utils/templates/fetchTemplateDetails');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -28,6 +29,7 @@ module.exports = {
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

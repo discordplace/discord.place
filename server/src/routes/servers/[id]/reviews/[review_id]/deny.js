@@ -3,6 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, validationResult, body } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
 const bodyParser = require('body-parser');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -16,6 +17,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Reason must be a string.')
       .isLength({ min: 1, max: 200 }).withMessage('Reason must be between 1 and 200 characters.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

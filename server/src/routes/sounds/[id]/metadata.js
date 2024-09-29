@@ -3,6 +3,7 @@ const { param, validationResult, matchedData } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const idValidation = require('@/utils/validations/sounds/id');
 const getUserHashes = require('@/utils/getUserHashes');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
@@ -10,6 +11,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

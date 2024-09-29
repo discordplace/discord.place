@@ -4,12 +4,14 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const Bot = require('@/schemas/Bot');
 const crypto = require('node:crypto');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 2, perMinutes: 30 }),
     checkAuthentication,
     param('id'),
+    validateBody,
     async (request, response) => {
       const { id } = matchedData(request);
 
@@ -43,6 +45,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 2, perMinutes: 30 }),
     checkAuthentication,
     param('id'),
+    validateBody,
     async (request, response) => {
       const { id } = matchedData(request);
 
@@ -76,6 +79,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 2, perMinutes: 30 }),
     checkAuthentication,
     param('id'),
+    validateBody,
     async (request, response) => {
       const { id } = matchedData(request);
 

@@ -3,11 +3,13 @@ const { param, validationResult, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const User = require('@/schemas/User');
 const getUserHashes = require('@/utils/getUserHashes');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('id'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

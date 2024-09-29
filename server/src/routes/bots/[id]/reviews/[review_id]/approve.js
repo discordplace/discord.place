@@ -4,6 +4,7 @@ const { param, matchedData, validationResult } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const Discord = require('discord.js');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -12,6 +13,7 @@ module.exports = {
     param('id'),
     param('review_id')
       .isMongoId().withMessage('Invalid review ID'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

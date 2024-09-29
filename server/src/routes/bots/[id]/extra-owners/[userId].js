@@ -2,6 +2,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, validationResult, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   delete: [
@@ -12,6 +13,7 @@ module.exports = {
       .isString().withMessage('User ID must be a string.')
       .isLength({ min: 17, max: 19 }).withMessage('User ID must be between 17 and 19 characters long.')
       .matches(/^\d+$/).withMessage('User ID must be a number.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

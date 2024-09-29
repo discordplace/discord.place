@@ -1,4 +1,5 @@
-const Profile = require('@/schemas/Profile');
+
+const validateBody = require('@/utils/middlewares/validateBody');const Profile = require('@/schemas/Profile');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const User = require('@/schemas/User');
@@ -11,6 +12,7 @@ module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     checkAuthentication,
+    validateBody,
     async (request, response) => {
       const user = await User.findOne({ id: request.user.id });
       if (!user) return response.sendError('User not found.', 404);

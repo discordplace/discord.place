@@ -3,6 +3,7 @@ const { param, body, matchedData, validationResult } = require('express-validato
 const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   patch: [
@@ -15,6 +16,7 @@ module.exports = {
     body('server_count')
       .isInt({ min: 0, max: 10000000 }).withMessage('Server count must be between 0 and 10 Million.')
       .optional(),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

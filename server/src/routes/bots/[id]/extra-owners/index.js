@@ -3,12 +3,14 @@ const { param, validationResult, matchedData, body } = require('express-validato
 const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     checkAuthentication,
     param('id'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
@@ -49,6 +51,7 @@ module.exports = {
       .isString().withMessage('User ID must be a string.')
       .isLength({ min: 17, max: 19 }).withMessage('User ID must be between 17 and 19 characters long.')
       .matches(/^\d+$/).withMessage('User ID must be a number.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

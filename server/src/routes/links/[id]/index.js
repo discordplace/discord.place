@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const { validationResult, matchedData, param } = require('express-validator');
 const Link = require('@/schemas/Link');
 const Discord = require('discord.js');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   delete: [
@@ -13,6 +14,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID should be a string.')
       .isLength({ min: 16, max: 16 }).withMessage('ID should be 16 characters long.'),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);

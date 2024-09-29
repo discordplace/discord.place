@@ -1,8 +1,10 @@
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
     passport.authenticate('discord', { failureRedirect: '/auth/login' }),
+    validateBody,
     async (request, response) => {
       if (request.session.passport?.user?.id) {
         const userQuarantined = await findQuarantineEntry.single('USER_ID', request.session.passport.user.id, 'LOGIN').catch(() => false);

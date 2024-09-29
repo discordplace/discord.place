@@ -7,6 +7,7 @@ const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
 const Discord = require('discord.js');
 const User = require('@/schemas/User');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -37,6 +38,7 @@ module.exports = {
        
         return true;
       }),
+    validateBody,
     async (request, response) => {
       const errors = validationResult(request);
       if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
