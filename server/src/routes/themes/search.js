@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { query, validationResult } = require('express-validator');
+const { query} = require('express-validator');
 const Theme = require('@/schemas/Theme');
 const validateBody = require('@/utils/middlewares/validateBody');
 
@@ -31,9 +31,6 @@ module.exports = {
       .toInt(),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { query, category = 'All', sort = 'Newest', limit = 12, page = 1 } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, approved: true } : { approved: true };

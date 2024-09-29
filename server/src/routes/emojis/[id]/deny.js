@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, validationResult, matchedData, body } = require('express-validator');
+const { param, matchedData, body } = require('express-validator');
 const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
@@ -31,10 +31,7 @@ module.exports = {
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.emojisDenyReasons)).withMessage('Invalid reason.'),
     validateBody,
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-      
+    async (request, response) => {      
       const canDeny = request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDeny) return response.sendError('You are not allowed to deny this emoji.', 403);
 

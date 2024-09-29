@@ -14,7 +14,7 @@ const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
 const BlockedIp = require('@/schemas/BlockedIp');
 const bodyParser = require('body-parser');
-const { body, validationResult, matchedData } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const Quarantine = require('@/schemas/Quarantine');
 const Link = require('@/schemas/Link');
 const getUserHashes = require('@/utils/getUserHashes');
@@ -50,9 +50,6 @@ module.exports = {
       .custom(keys => keys.every(key => validKeys.includes(key))).withMessage('Invalid key provided.'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { keys } = matchedData(request);
 
       const permissions = {

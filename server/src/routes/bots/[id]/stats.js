@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, body, matchedData, validationResult } = require('express-validator');
+const { param, body, matchedData} = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
@@ -17,10 +17,7 @@ module.exports = {
       .isInt({ min: 0, max: 10000000 }).withMessage('Server count must be between 0 and 10 Million.')
       .optional(),
     validateBody,
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-      
+    async (request, response) => {      
       const { id, command_count, server_count } = matchedData(request);
 
       if (!command_count && !server_count) return response.sendError('One of the following fields is required: command_count, server_count.', 400);

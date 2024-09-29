@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body, validationResult, matchedData } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const categoriesValidation = require('@/validations/themes/categories');
 const colorValidation = require('@/validations/themes/color');
 const Theme = require('@/schemas/Theme');
@@ -33,10 +33,7 @@ module.exports = {
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
     validateBody,
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-  
+    async (request, response) => {  
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'THEMES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create themes.', 403);
       

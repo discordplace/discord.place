@@ -1,4 +1,4 @@
-const { param, validationResult, matchedData } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
@@ -12,9 +12,6 @@ module.exports = {
     param('user_id'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const canDelete = request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDelete) return response.sendError('You do not have permission to delete timeouts.', 403);
 

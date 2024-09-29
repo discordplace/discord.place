@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, validationResult, matchedData, body } = require('express-validator');
+const { param, matchedData, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
@@ -12,9 +12,6 @@ module.exports = {
     param('id'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const bot = await Bot.findOne({ id });
@@ -53,9 +50,6 @@ module.exports = {
       .matches(/^\d+$/).withMessage('User ID must be a number.'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const bot = await Bot.findOne({ id });

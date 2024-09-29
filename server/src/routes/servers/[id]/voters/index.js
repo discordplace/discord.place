@@ -1,4 +1,4 @@
-const { query, param, validationResult, matchedData } = require('express-validator');
+const { query, param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const Server = require('@/schemas/Server');
 const getUserHashes = require('@/utils/getUserHashes');
@@ -18,9 +18,6 @@ module.exports = {
       .toInt(),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id, page = 1, limit = 12 } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);

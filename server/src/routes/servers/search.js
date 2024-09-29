@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { query, validationResult, matchedData } = require('express-validator');
+const { query, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
@@ -34,9 +34,6 @@ module.exports = {
       .toInt(),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
       const baseFilter = { 

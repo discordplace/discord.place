@@ -1,4 +1,4 @@
-const { query, validationResult, matchedData } = require('express-validator');
+const { query, matchedData } = require('express-validator');
 const passport = require('passport');
 
 module.exports = {
@@ -12,9 +12,6 @@ module.exports = {
       }
     }),
     async (request, response, next) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { redirect } = matchedData(request);
       if (redirect) {
         const redirectUrl = new URL(redirect);

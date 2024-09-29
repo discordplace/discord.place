@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, validationResult } = require('express-validator');
+const { param, matchedData} = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const Discord = require('discord.js');
@@ -14,10 +14,7 @@ module.exports = {
     param('review_id')
       .isMongoId().withMessage('Invalid review ID'),
     validateBody,
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-      
+    async (request, response) => {      
       const canApprove = request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve reviews.', 403);
 

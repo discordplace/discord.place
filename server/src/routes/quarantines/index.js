@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body, validationResult, matchedData } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const getValidationError = require('@/utils/getValidationError');
 const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
@@ -40,9 +40,6 @@ module.exports = {
       }),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const canCreateQuarantine = request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canCreateQuarantine) return response.sendError('You do not have permission to create quarantines.', 403);
 

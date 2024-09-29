@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { param, body, validationResult, matchedData } = require('express-validator');
+const { param, body, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const getValidationError = require('@/utils/getValidationError');
 const validateBody = require('@/utils/middlewares/validateBody');
@@ -13,9 +13,6 @@ module.exports = {
     param('id'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
@@ -55,9 +52,6 @@ module.exports = {
       .trim(),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id, url, token } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);

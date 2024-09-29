@@ -1,4 +1,4 @@
-const { query, validationResult } = require('express-validator');
+const { query} = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const categoriesValidation = require('@/validations/bots/categories');
 const Bot = require('@/schemas/Bot');
@@ -34,9 +34,6 @@ module.exports = {
       .toInt(),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, verified: true } : { verified: true };

@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, validationResult } = require('express-validator');
+const { param, matchedData} = require('express-validator');
 const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const Profile = require('@/schemas/Profile');
@@ -17,9 +17,6 @@ module.exports = {
       .isLength({ min: 1, max: 24 }).withMessage('Invalid user ID'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       let user = await client.users.fetch(id).catch(() => null);

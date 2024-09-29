@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body, validationResult, matchedData } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const nameValidation = require('@/validations/links/name');
 const destinationURLValidation = require('@/validations/links/destinationURL');
 const Link = require('@/schemas/Link');
@@ -23,10 +23,7 @@ module.exports = {
       .isString().withMessage('Destination URL should be a string.')
       .custom(destinationURLValidation),
     validateBody,
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-      
+    async (request, response) => {      
       const { name, destinationURL } = matchedData(request);
       
       const foundLink = await Link.findOne({ name: name.toLocaleLowerCase('en-US') });

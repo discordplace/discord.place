@@ -2,7 +2,7 @@ const EmojiPack = require('@/schemas/Emoji/Pack');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/emojis/id');
-const { param, validationResult, matchedData, body } = require('express-validator');
+const { param, matchedData, body } = require('express-validator');
 const Discord = require('discord.js');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
 const bodyParser = require('body-parser');
@@ -23,9 +23,6 @@ module.exports = {
       .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id, packIndex, guildId } = matchedData(request);
 
       if (!parseInt(packIndex)) return response.sendError('Pack index must be an integer.', 400);

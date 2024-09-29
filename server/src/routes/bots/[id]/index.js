@@ -2,7 +2,7 @@ const categoriesValidation = require('@/utils/validations/bots/categories');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { param, body, validationResult, matchedData } = require('express-validator');
+const { param, body, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Bot = require('@/schemas/Bot');
 const Server = require('@/schemas/Server');
@@ -24,9 +24,6 @@ module.exports = {
     param('id'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const bot = await Bot.findOne({ id });
@@ -137,9 +134,6 @@ module.exports = {
       .custom(categoriesValidation),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id, short_description, description, invite_url, categories } = matchedData(request);
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
@@ -242,9 +236,6 @@ module.exports = {
     param('id'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const user = await client.users.fetch(id).catch(() => null);
@@ -303,9 +294,6 @@ module.exports = {
       .custom(githubRepositoryValidation),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id, short_description, description, invite_url, categories, support_server_id, github_repository } = matchedData(request);
 
       const bot = await Bot.findOne({ id });

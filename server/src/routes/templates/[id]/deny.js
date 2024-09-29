@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body, validationResult } = require('express-validator');
+const { param, matchedData, body} = require('express-validator');
 const Template = require('@/schemas/Template');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
@@ -16,10 +16,7 @@ module.exports = {
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.templateDenyReasons)).withMessage('Invalid reason.'),
     validateBody,
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-      
+    async (request, response) => {      
       const { id, reason } = matchedData(request);
       if (!config.templateDenyReasons[reason]) return response.sendError('Invalid reason.', 400);
 

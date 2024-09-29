@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { query, validationResult, matchedData } = require('express-validator');
+const { query, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const validateBody = require('@/utils/middlewares/validateBody');
 
@@ -26,9 +26,6 @@ module.exports = {
       .toInt(),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { query, sort = 'Likes', limit = 9, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
       const findQuery = query ? {

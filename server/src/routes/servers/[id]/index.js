@@ -2,7 +2,7 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const keywordsValidation = require('@/validations/servers/keywords');
 const bodyParser = require('body-parser');
-const { param, body, validationResult, matchedData } = require('express-validator');
+const { param, body, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
@@ -26,9 +26,6 @@ module.exports = {
     param('id'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
@@ -145,9 +142,6 @@ module.exports = {
       .custom(inviteLinkValidation),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id, description, category, keywords, invite_link } = matchedData(request);
 
       const userOrGuildQuarantined = await findQuarantineEntry.multiple([
@@ -244,9 +238,6 @@ module.exports = {
     param('id'),
     validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
@@ -293,10 +284,7 @@ module.exports = {
       .isArray().withMessage('Keywords should be an array.')
       .custom(keywordsValidation),
     validateBody,
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-  
+    async (request, response) => {  
       const { id, description, invite_url, category, keywords } = matchedData(request);
   
       const guild = client.guilds.cache.get(id);
