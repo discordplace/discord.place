@@ -35,6 +35,9 @@ importers:
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
+      chrono-node:
+        specifier: ^2.7.7
+        version: 2.7.7
       cloudflare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -819,6 +822,10 @@ packages:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
 
+  chrono-node@2.7.7:
+    resolution: {integrity: sha512-p3S7gotuTPu5oqhRL2p1fLwQXGgdQaRTtWR3e8Di9P1Pa9mzkK5DWR5AWBieMUh2ZdOnPgrK+zCrbbtyuA+D/Q==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
   cloudflare@3.2.0:
     resolution: {integrity: sha512-L6X3ky8rj+vFv6wf+/MxVVkwzMcxm+rjHtPAznHejYp3UC3ESovv+z8a6SZv6uXIXkAXHbCMCsbegiM4NNvXsg==}
 
@@ -936,6 +943,9 @@ packages:
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
+
+  dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -3172,6 +3182,10 @@ snapshots:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
+  chrono-node@2.7.7:
+    dependencies:
+      dayjs: 1.11.13
+
   cloudflare@3.2.0:
     dependencies:
       '@types/node': 18.19.33
@@ -3317,6 +3331,8 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  dayjs@1.11.13: {}
 
   debug@2.6.9:
     dependencies:

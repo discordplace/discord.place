@@ -9,7 +9,7 @@ module.exports = {
     .setDescription('reminder')
     .addSubcommand(subcommand => subcommand.setName('create').setDescription('Create a reminder about something.')
       .addStringOption(option => option.setName('about').setDescription('What is the reminder about?').setRequired(true))
-      .addStringOption(option => option.setName('when').setDescription('When should the reminder be sent?').setRequired(true)))
+      .addStringOption(option => option.setName('when').setDescription('Examples: tomorrow, in 9 hours, next week, next Friday at 3pm').setRequired(true)))
     .addSubcommand(subcommand => subcommand.setName('delete').setDescription('Delete a reminder.')
       .addStringOption(option => option.setName('reminder').setDescription('Select the reminder to delete.').setRequired(true).setAutocomplete(true))),
   execute: async interaction => {
@@ -23,7 +23,7 @@ module.exports = {
         if (about.length > 512) return interaction.reply({ content: 'The reminder description must be 512 characters or less.', ephemeral: true });
       
         var reminderTime = parseTimeDuration(when);
-        if (!reminderTime) return interaction.reply({ content: 'Invalid time duration. You can use `1d`, `1h`, `1m`, `1s` for days, hours, minutes, and seconds respectively.', ephemeral: true });
+        if (!reminderTime) return interaction.reply({ content: 'Invalid time duration. Examples: `tomorrow`, `in 9 hours`, `next week`, `next Friday at 3pm`', ephemeral: true });
         if (reminderTime < (60000 * 5)) return interaction.reply({ content: 'The reminder time must be at least 5 minutes.', ephemeral: true });
 
         if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
