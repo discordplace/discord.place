@@ -9,6 +9,8 @@ const Server = require('@/schemas/Server');
 const Template = require('@/schemas/Template');
 const Sound = require('@/schemas/Sound');
 const Theme = require('@/schemas/Theme');
+const dedent = require('dedent');
+const ansiColors = require('ansi-colors');
 
 const cooldowns = new Discord.Collection();
 
@@ -41,47 +43,35 @@ module.exports = {
 
     const uptimeHumanized = moment.duration(os.uptime() * 1000).humanize();
     const botUptimeHumanized = moment.duration(process.uptime() * 1000).humanize();
+    const platform = os.platform() === 'win32' ? 'Windows' : os.platform() === 'darwin' ? 'macOS' : os.platform() === 'linux' ? 'Linux' : os.platform();
 
-    const embed = new Discord.EmbedBuilder()
-      .setAuthor({ name: client.user.username + ' | Server Stats', iconURL: client.user.displayAvatarURL() })
-      .setDescription('A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.')
-      .setColor(Discord.Colors.Blurple)
-      .setFields([
-        {
-          name: 'System',
-          value: `- Platform: **${os.platform()}**
-- Arch: **${os.arch()}**
-- Memory
-  - Total: **${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)} GB**
-  - Free: **${(os.freemem() / 1024 / 1024 / 1024).toFixed(2)} GB**
-- CPU
-  - Model: **${os.cpus()[0].model}**
-  - Uptime: **${uptimeHumanized}**
- 
-Get your own virtual private server at [Nodesty](https://nodesty.com/) <a:springleFire:1282966373869551667>`
-        },
-        {
-          name: 'Bot',
-          value: `- Versions
-  - Node.js: **${process.version}**
-  - Discord.js: **${Discord.version}**
-- Uptime: **${botUptimeHumanized}**
-- Servers: **${client.guilds.cache.size}**
-- Users: **${client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')}**`
-        },
-        {
-          name: 'Statistics',
-          value: `- Bots: **${botsCount}**
-- Emojis: **${emojisCount}**
-- Emoji Packs: **${emojiPacksCount}**
-- Profiles: **${profilesCount}**  
-- Servers: **${serversCount}**
-- Templates: **${templatesCount}**
-- Sounds: **${soundsCount}**
-- Themes: **${themesCount}**`
-        }
-      ]);
-    
-    return interaction.followUp({ embeds: [embed] });
+    return interaction.followUp({
+      content: dedent`
+        \`\`\`ansi
+        ${ansiColors.bold.blue('System')}
+        • ${ansiColors.reset.bold('Platform')} ${platform} ${os.arch()}
+        • ${ansiColors.reset.bold('Operating System')} ${os.version()} ${os.release()}
+        • ${ansiColors.reset.bold('Memory')} ${Math.round(os.totalmem() / 1024 / 1024 / 1024)} GB total, ${Math.round(os.freemem() / 1024 / 1024 / 1024)} GB free
+        • ${ansiColors.reset.bold('CPU')} ${os.cpus()[0].model.trimEnd()} | Uptime: ${uptimeHumanized}
+        • Get your own virtual private server at ${ansiColors.bold.blue('Nodesty')} https://nodesty.com 🔥
+
+        ${ansiColors.bold.blue('Bot')}
+        • ${ansiColors.reset.bold('Versions')} Node.js: ${process.version} | Discord.js: ${Discord.version}
+        • ${ansiColors.reset.bold('Uptime')} ${botUptimeHumanized}
+        • ${ansiColors.reset.bold('Servers')} ${interaction.client.guilds.cache.size}
+        • ${ansiColors.reset.bold('Users')} ${interaction.client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US')}
+
+        ${ansiColors.bold.blue('Database Collections')}
+        • ${ansiColors.reset.bold('Bots')} ${botsCount}
+        • ${ansiColors.reset.bold('Emojis')} ${emojisCount}
+        • ${ansiColors.reset.bold('Emoji Packs')} ${emojiPacksCount}
+        • ${ansiColors.reset.bold('Profiles')} ${profilesCount}
+        • ${ansiColors.reset.bold('Servers')} ${serversCount}
+        • ${ansiColors.reset.bold('Templates')} ${templatesCount}
+        • ${ansiColors.reset.bold('Sounds')} ${soundsCount}
+        • ${ansiColors.reset.bold('Themes')} ${themesCount}
+        \`\`\`
+      `
+    });
   }
 };
