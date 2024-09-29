@@ -4,6 +4,7 @@ const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
+const ansiColors = require('ansi-colors');
 
 async function updatePanelMessage(guildId) {
   const guild = client.guilds.cache.get(guildId);
@@ -53,16 +54,16 @@ async function createPanelMessageOptions(guild, server) {
     const user = client.users.cache.get(voter.user.id) || await client.users.fetch(voter.user.id).catch(() => null);
     const userIsPremium = premiumUsers.some(premiumUser => premiumUser.id === voter.user.id);
     const username = user ? user.username : user;
-    const usernameText = userIsPremium ? `[1;2m[1;34m✦ @${username}[0m[1m` : `@${username}`;
+    const usernameText = userIsPremium ? ansiColors.reset.bold.blue(`✦ @${username}`) : `@${username}`;
 
-    topVotersTable.push([`${index + 1}.`, formatter.format(voter.vote), usernameText]);
+    topVotersTable.push([index + 1, formatter.format(voter.vote), usernameText]);
   }
 
   const embeds = [
     new Discord.EmbedBuilder()
       .setAuthor({ name: guild.name, iconURL: guild.iconURL() })
       .setColor('#2b2d31')
-      .setDescription(`**Votes**\n- ***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.\n\`\`\`ansi\n${topVotersTable.map(([index, votes, username]) => `[1;2m${index}${index == 10 ? '' : ' '} |[0m [1;2m[1;34m${votes}${' '.repeat(Math.max(...topVotersTable.map(([, votes]) => votes)).toString().length - votes.toString().length)} Vote[0m[0m [1;2m‒ ${username}[0m[0;2m[0;2m[0;2m[0;2m[0m[0m[0m[0m[1;2m[1;2m[0;2m[0m[0m[0m`).join('\n')}\`\`\``)
+      .setDescription(`**Votes**\n- ***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.\n\`\`\`ansi\n${topVotersTable.map(([index, votes, username]) => `${ansiColors.reset.bold(`${index}${index == 10 ? '' : ' '} |`)} ${ansiColors.reset.bold.blue(`${votes}${' '.repeat(Math.max(...topVotersTable.map(([, votes]) => votes)).toString().length - votes.toString().length)} Vote`)} ${ansiColors.reset.bold(`‒ ${username}`)}`).join('\n')}\`\`\``)
   ];
 
   const monthlyVotes = await ServerMonthlyVotes.findOne({ identifier: guild.id });
@@ -70,7 +71,7 @@ async function createPanelMessageOptions(guild, server) {
     embeds.push(
       new Discord.EmbedBuilder()
         .setColor('#2b2d31')
-        .setDescription(`**Monthly Votes**\n- This server has gained ***${formatter.format(server.votes)}*** votes in this month.\n\`\`\`ansi\n${monthlyVotes.data.map(month => [formatter.format(month.votes), new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' })]).map(([votes, date]) => `[1;2m${date}[0m ‒ [2;34m[1;34m${votes}[0m[2;34m[0m`).join('\n')}\`\`\``)
+        .setDescription(`**Monthly Votes**\n- This server has gained ***${formatter.format(server.votes)}*** votes in this month.\n\`\`\`ansi\n${monthlyVotes.data.map(month => [formatter.format(month.votes), new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' })]).map(([votes, date]) => `${ansiColors.reset.bold(`${date} ‒`)} ${ansiColors.reset.bold.blue(votes)}`).join('\n')}\`\`\``)
     );
   }
 
@@ -78,7 +79,7 @@ async function createPanelMessageOptions(guild, server) {
     embeds.push(
       new Discord.EmbedBuilder()
         .setColor('#2b2d31')
-        .setDescription(`**Rewards**\n- This server has ***${rewards.length}*** reward${rewards.length > 1 ? 's' : ''}.\n\`\`\`ansi\n${rewards.map(reward => `[1;2m${reward.required_votes}[0m ‒ [1;2m@${guild.roles.cache.get(reward.role.id)?.name || 'unknown'}[0m`).join('\n')}\`\`\``)
+        .setDescription(`**Rewards**\n- This server has ***${rewards.length}*** reward${rewards.length > 1 ? 's' : ''}.\n\`\`\`ansi\n${rewards.map(reward => ansiColors.reset.bold(`${reward.required_votes} ‒ @${guild.roles.cache.get(reward.role.id)?.name || 'unknown'}`)).join('\n')}\`\`\``)
     );
   }
 
