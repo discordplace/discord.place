@@ -223,7 +223,7 @@
               },
               {
                 "name": "Votes",
-                "value": "This server has **{count}** votes.(1-inf)[\nLast vote was by {lastVoter} on **{date}**.];"
+                "value": "(0)[This server has **{totalVotes}** votes.];(1-inf)[This server has **{totalVotes}** votes.\nLast vote was by {lastVoter} on **{date}**.];"
               },
               {
                 "name": "Support Server",
