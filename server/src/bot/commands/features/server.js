@@ -263,6 +263,8 @@ module.exports = {
           { upsert: true }
         );
 
+        client.languageCache.set(interaction.guild.id, language);
+
         await sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.language_updated', { user: interaction.user.toString() }))
           .catch(() => null);
           
