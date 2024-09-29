@@ -203,6 +203,68 @@
       "human_verification_failed": "You failed to verify yourself. You can try again after 1 minute.",
       "create_reminder_button_label": "Create Reminder",
       "success": "Thank you for voting!"
+    },
+    "info": {
+      "name": "info",
+      "errors": {
+        "server_not_listed": "This server is not listed on discord.place.",
+        "invite_was_deleted": "Invite link was deleted.",
+        "user_not_found": "User not found.",
+        "not_set": "Not set",
+        "no_biography": "No biography found."
+      },
+      "subcommands": {
+        "server": {
+          "embed": {
+            "fields": [
+              {
+                "name": "Invite",
+                "value": "[Click here to join.]({inviteUrl})"
+              },
+              {
+                "name": "Votes",
+                "value": "This server has **{count}** votes.(1-inf)[\nLast vote was by {lastVoter} on **{date}**.];"
+              },
+              {
+                "name": "Support Server",
+                "value": "This server is the support server fot Bot {bot}."
+              }
+            ]
+          },
+          "buttons": {
+            "view_on_discord_place": "View on discord.place",
+            "view_server_owner": "View Server Owner (@{ownerUsername})"
+          }
+        },
+        "user": {
+          "embed": {
+            "description": [
+              "This user has **{totalVotes}** votes on discord.place.",
+              "This user has given **{totalVotes}** votes to server **{guildName}**."
+            ],
+            "fields": [
+              {
+                "name": "Premium",
+                "value": "This user has premium since **{premiumSince}**."
+              },
+              {
+                "name": "Profile",
+                "value": {
+                  "occupation": "- **Occupation** 🔨 {occupation}",
+                  "gender": "- **Gender** {gender_icon} {gender}",
+                  "location": "- **Location** 📌 {location}",
+                  "birthday": "- **Birthday** 🎂 {birthday}",
+                  "stats": "👁️ **{views}** ❤️ **{likes_count}**"
+                }
+              }
+            ]
+          },
+          "buttons": {
+            "view_on_discord_place": "View on discord.place",
+            "view_discord_place_profile": "View discord.place Profile"
+          }
+        }
+      }
     }
   }
 }

@@ -4,16 +4,41 @@ const Bot = require('@/schemas/Bot');
 const Profile = require('@/schemas/Profile');
 const User = require('@/schemas/User');
 const getBadges = require('@/utils/profiles/getBadges');
+const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('info')
     .setDescription('info')
+    .setNameLocalizations(getLocalizedCommand('info').names)
     .setDMPermission(false)
-    .addSubcommand(subcommand => subcommand.setName('server').setDescription('Get information about the server.')
-      .addStringOption(option => option.setName('server_id').setDescription('Server ID to get information about.')))
-    .addSubcommand(subcommand => subcommand.setName('user').setDescription('Get information about the user.')
-      .addUserOption(option => option.setName('user').setDescription('User to get information about.'))),
+    
+    .addSubcommand(subcommand => 
+      subcommand
+        .setName('server')
+        .setDescription('Get information about the server.')
+        .setNameLocalizations(getLocalizedCommand('info.subcommands.server').names)
+        .setDescriptionLocalizations(getLocalizedCommand('info.subcommands.server').descriptions)
+        .addStringOption(option =>
+          option
+            .setName('server_id')
+            .setDescription('Server ID to get information about.')
+            .setNameLocalizations(getLocalizedCommand('info.subcommands.server.options.server_id').names)
+            .setDescriptionLocalizations(getLocalizedCommand('info.subcommands.server.options.server_id').descriptions)))
+    
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('user')
+        .setDescription('Get information about the user.')
+        .setNameLocalizations(getLocalizedCommand('info.subcommands.user').names)
+        .setDescriptionLocalizations(getLocalizedCommand('info.subcommands.user').descriptions)
+        .addUserOption(option =>
+          option
+            .setName('user')
+            .setDescription('User to get information about.')
+            .setNameLocalizations(getLocalizedCommand('info.subcommands.user.options.user').names)
+            .setDescriptionLocalizations(getLocalizedCommand('info.subcommands.user.options.user').descriptions))),
+
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
 
@@ -24,7 +49,7 @@ module.exports = {
         var serverId = interaction.options.getString('server_id') || interaction.guild.id;
 
         var server = await Server.findOne({ id: serverId });
-        if (!server) return interaction.followUp({ content: 'This server is not listed on discord.place.' });
+        if (!server) return interaction.followUp(await interaction.guild.translate('commands.info.errors.server_not_listed'));
 
         var guild = interaction.client.guilds.cache.get(serverId);
         var owner = interaction.client.users.cache.get(guild.ownerId) || await interaction.client.users.fetch(guild.ownerId).catch(() => null);
@@ -44,16 +69,20 @@ module.exports = {
             .setColor(Discord.Colors.Blurple)
             .setFields([
               {
-                name: 'Invite',
-                value: !inviteLinkNotAvailable ? 
-                  server.invite_code.type === 'Vanity' ? 
-                    `[Click here to join.](https://discord.gg/${guild.vanityURLCode})` 
-                    : `[Click here to join.](https://discord.gg/${server.invite_code.code})`
-                  : 'Invite link was deleted.'
+                name: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.0.name'),
+                value: !inviteLinkNotAvailable ?
+                  await interaction.guild.translate('commands.info.subcommands.server.embed.fields.0.value', { inviteUrl: `https://discord.gg/${server.invite_code.type === 'Vanity' ? guild.vanityURLCode : server.invite_code.code}` }) : 
+                  await interaction.guild.translate('commands.info.errors.invite_was_deleted')
               },
               {
-                name: 'Votes',
-                value: `This server has **${server.votes}** votes.${lastVoter ? `\nLast vote was by [@${lastVoter.username}](${config.frontendUrl}/profile/u/${lastVoter.id}) on **${server.lastVoter.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}**.` : ''}`
+                name: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.1.name'),
+                value: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.1.value', {
+                  postProcess: 'interval',
+                  count: lastVoter ? 1 : 0,
+                  totalVotes: server.votes,
+                  lastVoter: lastVoter ? `[@${lastVoter.username}](${config.frontendUrl}/profile/u/${lastVoter.id})` : null,
+                  date: lastVoter ? server.lastVoter.date.toLocaleDateString(await interaction.guild.getLanguage(), { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) : null
+                })
               }
             ])
             .setFooter({ text: server.category, iconURL: guild.iconURL() })
@@ -61,8 +90,8 @@ module.exports = {
 
         if (bot) embeds[0].addFields([
           {
-            name: 'Support Server',
-            value: `This server is the support server for Bot [${botUser?.tag || bot.id}](${config.frontendUrl}/profile/u/${bot.id}).`
+            name: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.2.name'),
+            value: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.2.value', { bot: `[@${botUser.username}](${config.frontendUrl}/profile/u/${bot.id})` })
           }
         ]);
 
@@ -73,16 +102,19 @@ module.exports = {
             .addComponents(
               new Discord.ButtonBuilder()
                 .setStyle(Discord.ButtonStyle.Link)
-                .setLabel('View on discord.place')
+                .setLabel(await interaction.guild.translate('commands.info.subcommands.server.buttons.view_on_discord_place'))
                 .setURL(`${config.frontendUrl}/servers/${serverId}`)
-                .setEmoji('🌐'),
-              new Discord.ButtonBuilder()
-                .setStyle(Discord.ButtonStyle.Link)
-                .setLabel((`View Server Owner${owner ? ` (@${owner.username})` : ''}`).slice(0, 80))
-                .setURL(`${config.frontendUrl}/profile/u/${guild.ownerId}`)
-                .setEmoji('👑')
+                .setEmoji('🌐')
             )
         ];
+
+        if (owner) components[0].addComponents(
+          new Discord.ButtonBuilder()
+            .setStyle(Discord.ButtonStyle.Link)
+            .setLabel((await interaction.guild.translate('commands.info.subcommands.server.buttons.view_server_owner', { ownerUsername: owner.username })).slice(0, 80))
+            .setURL(`${config.frontendUrl}/profile/u/${guild.ownerId}`)
+            .setEmoji('👑')
+        );
 
         interaction.followUp({ embeds, components });
 
@@ -91,7 +123,7 @@ module.exports = {
         if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         var user = interaction.options.getUser('user') || interaction.user;
-        if (!user) return interaction.followUp({ content: 'User not found.' });
+        if (!user) return interaction.followUp(await interaction.guild.translate('commands.info.errors.user_not_found'));
 
         var votedServersCount = await Server.aggregate([
           { $match: { 'voters.user.id': user.id } },
@@ -111,7 +143,7 @@ module.exports = {
           new Discord.EmbedBuilder()
             .setAuthor({ name: `@${user.username}` })
             .setThumbnail(user.displayAvatarURL())
-            .setDescription(`This user has **${totalVotes}** votes on discord.place.`)
+            .setDescription(await interaction.guild.translate('commands.info.subcommands.user.embed.description.0', { totalVotes }))
             .setColor(Discord.Colors.Blurple)
         ];
 
@@ -121,7 +153,7 @@ module.exports = {
             .addComponents(
               new Discord.ButtonBuilder()
                 .setStyle(Discord.ButtonStyle.Link)
-                .setLabel('View on discord.place')
+                .setLabel(await interaction.guild.translate('commands.info.subcommands.user.buttons.view_on_discord_place'))
                 .setURL(`${config.frontendUrl}/profile/u/${user.id}`)
                 .setEmoji('🌐')
             )
@@ -130,19 +162,19 @@ module.exports = {
         if (user.banner) embeds[0].setImage(user.bannerURL({ extension: 'png', size: 4096 }));
       
         if (userData?.subscription?.createdAt) {
-          const premiumSince = new Date(userData.subscription.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+          const premiumSince = new Date(userData.subscription.createdAt).toLocaleDateString(await interaction.guild.getLanguage(), { year: 'numeric', month: 'long', day: 'numeric' });
 
           embeds[0].addFields([
             {
-              name: 'Premium',
-              value: `This user has premium since **${premiumSince}**.`
+              name: await interaction.guild.translate('commands.info.subcommands.user.embed.fields.0.name'),
+              value: await interaction.guild.translate('commands.info.subcommands.user.embed.fields.0.value', { premiumSince })
             }
           ]);
         }
 
         if (currentServer) {
           var totalVotesForCurrentServer = currentServer.voters.find(voter => voter.user.id === user.id)?.vote || 0;
-          embeds[0].setDescription(`This users has given **${totalVotesForCurrentServer}** votes to server **${interaction.guild.name}**.`);
+          embeds[0].setDescription(await interaction.guild.translate('commands.info.subcommands.user.embed.description.1', { totalVotes: totalVotesForCurrentServer, guildName: interaction.guild.name }));
         }
 
         if (profile) {
@@ -161,19 +193,21 @@ module.exports = {
           // eslint-disable-next-line no-redeclare
           for (var i = 0; i < maxRows; i++) badgesText += `${badges.slice(i * 3, i * 3 + 3).join('  ')}\n`;
 
+          const notSetText = await interaction.guild.translate('commands.info.errors.not_set');
+
           embeds[0].addFields([
             {
               name: 'Profile',
-              value: `- **Occupation** 🔨 ${profile.occupation || 'Not set'}
-- **Gender** ${profile.gender ? `${profile.gender === 'Male' ? '♂️' : '♀️'} ${profile.gender}` : 'Not set'}
-- **Location** 📌 ${profile.location || 'Not set'}
-- **Birthday** 🎂 ${profile.birthday || 'Not set'}
+              value: `${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.occupation', { occupation: profile.occupation || notSetText })}
+${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.gender', { gender_icon: profile.gender === 'Male' ? '♂️' : '♀️', gender: profile.gender || notSetText })}
+${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.location', { location: profile.location || notSetText })}
+${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.birthday', { birthday: profile.birthday || notSetText })}
 
-👁️ **${profile.views.toLocaleString('en-US')}** ❤️ **${profile.likes_count.toLocaleString('en-US')}**`
+${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.stats', { views: profile.views.toLocaleString('en-US'), likes_count: profile.likes_count.toLocaleString('en-US') })}`
             },
             {
               name: 'Biography',
-              value: profile.bio || 'No biography found.'
+              value: profile.bio || await interaction.guild.translate('commands.info.errors.no_biography')
             },
             {
               name: 'Badges',
@@ -185,7 +219,7 @@ module.exports = {
           components[0].addComponents(
             new Discord.ButtonBuilder()
               .setStyle(Discord.ButtonStyle.Link)
-              .setLabel('View discord.place Profile')
+              .setLabel(await interaction.guild.translate('commands.info.subcommands.user.buttons.view_discord_place_profile'))
               .setURL(`${config.frontendUrl}/profile/${profile.slug}`)
               .setEmoji('👤')
           );

@@ -295,6 +295,84 @@
       "human_verification_failed": "Kendinizi doğrulayamadınız. 1 dakika sonra tekrar deneyebilirsiniz.",
       "create_reminder_button_label": "Hatırlatıcı Oluştur",
       "success": "Oy verdiğiniz için teşekkürler!"
-    }
+    },
+    "info": {
+      "name": "bilgi",
+      "errors": {
+        "server_not_listed": "Bu sunucu discord.place üzerinde listelenmemiş.",
+        "invite_was_deleted": "Davet bağlantısı silindi.",
+        "user_not_found": "Kullanıcı bulunamadı.",
+        "not_set": "Belirtilmemiş",
+        "no_biography": "Biyografi bulunamadı."
+      },
+      "subcommands": {
+        "server": {
+          "name": "sunucu",
+          "description": "Sunucu hakkında bilgi gösterir.",
+          "options": {
+            "server_id": {
+              "name": "sunucu-id",
+              "description": "Bilgileri gösterilecek sunucunun ID'si."
+            }
+          },
+          "embed": {
+            "fields": [
+              {
+                "name": "Davet",
+                "value": "[Katılmak için buraya tıkla.]({inviteUrl})"
+              },
+              {
+                "name": "Oylar",
+                "value": "(0)[Bu sunucunun **{totalVotes}** oyu var.];(1-inf)[Bu sunucunun **{totalVotes}** oyu var.\nSon oy {lastVoter} tarafından **{date}** tarihinde verildi.];"
+              },
+              {
+                "name": "Destek Sunucusu",
+                "value": "Bu sunucu Bot {bot} için destek sunucusudur."
+              }
+            ]
+          },
+          "buttons": {
+            "view_on_discord_place": "discord.place'de görüntüle",
+            "view_server_owner": "Sunucu Sahibini Görüntüle (@{ownerUsername})"
+          }
+        },
+        "user": {
+          "name": "kullanıcı",
+          "description": "Kullanıcı hakkında bilgi gösterir.",
+          "options": {
+            "user": {
+              "name": "kullanıcı",
+              "description": "Bilgileri gösterilecek kullanıcı."
+            }
+          },
+          "embed": {
+            "description": [
+              "Bu kullanıcının discord.place üzerinde **{totalVotes}** oyu var.",
+              "Bu kullanıcı, **{guildName}** sunucusuna **{totalVotes}** oy verdi."
+            ],
+            "fields": [
+              {
+                "name": "Premium",
+                "value": "Bu kullanıcı **{premiumSince}** tarihinden beri premium sahibi."
+              },
+              {
+                "name": "Profil",
+                "value": {
+                  "occupation": "- **Meslek** 🔨 {occupation}",
+                  "gender": "- **Cinsiyet** {gender_icon} {gender}",
+                  "location": "- **Konum** 📌 {location}",
+                  "birthday": "- **Doğum Günü** 🎂 {birthday}",
+                  "stats": "👁️ **{views}** ❤️ **{likes_count}**"
+                }
+              }
+            ]
+          },
+          "buttons": {
+            "view_on_discord_place": "discord.place'de görüntüle",
+            "view_discord_place_profile": "discord.place Profilini Görüntüle"
+          }
+        }
+      }
+    }    
   }
 }
