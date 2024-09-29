@@ -11,6 +11,7 @@ const Sound = require('@/schemas/Sound');
 const Theme = require('@/schemas/Theme');
 const dedent = require('dedent');
 const ansiColors = require('ansi-colors');
+const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 
 const cooldowns = new Discord.Collection();
 
@@ -18,7 +19,7 @@ module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('stats')
     .setDescription('View the stats of the bot.')
-    .toJSON(),
+    .setNameLocalizations(getLocalizedCommand('stats').names),
   execute: async interaction => {
     if (cooldowns.has(interaction.user.id)) {
       const expirationTime = cooldowns.get(interaction.user.id) + 60000;

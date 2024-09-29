@@ -392,6 +392,7 @@
       ]
     },
     "stats": {
+      "name": "istatistikler",
       "blocks": [
         {
           "title": "Sistem",
