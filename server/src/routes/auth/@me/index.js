@@ -3,6 +3,8 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const User = require('@/schemas/User');
 const getUserHashes = require('@/utils/getUserHashes');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+
 const Discord = require('discord.js');
 
 module.exports = {
@@ -12,6 +14,15 @@ module.exports = {
     async (request, response) => {
       const user = await User.findOne({ id: request.user.id });
       if (!user) return response.sendError('User not found.', 404);
+
+      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'LOGIN').catch(() => false);
+      if (userQuarantined) {
+        return request.logout(error => {      
+          if (error) return response.sendError(error, 500);
+        
+          return response.sendError('You are not allowed to login.', 403);
+        });
+      }
 
       const userHashes = await getUserHashes(user.id);
 
