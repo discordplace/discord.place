@@ -80,7 +80,7 @@ module.exports = class Client {
       .use(intervalPlural)
       .init({
         fallbackLng: config.availableLocales.find(locale => locale.default).code,
-        postProcess: ['intervalPlural'],
+        postProcess: [],
         interpolation: {
           escapeValue: false,
           prefix: '{',
@@ -108,6 +108,17 @@ module.exports = class Client {
       const language = serverLanguage ? serverLanguage.language : config.availableLocales.find(locale => locale.default).code;
 
       return translate(key, variables, language);
+    };
+
+    // Add a getLanguage method to the Discord.js guild object.
+    
+    Discord.Guild.prototype.getLanguage = async function() {
+      const cachedLanguage = client.languageCache.get(this.id);
+
+      const serverLanguage = cachedLanguage ? { language: cachedLanguage } : await ServerLanguage.findOne({ id: this.id }).select('language').lean();
+      const language = serverLanguage ? serverLanguage.language : config.availableLocales.find(locale => locale.default).code;
+
+      return language;
     };
 
     return this;
