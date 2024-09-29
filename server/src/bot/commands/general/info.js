@@ -49,7 +49,7 @@ module.exports = {
         var serverId = interaction.options.getString('server_id') || interaction.guild.id;
 
         var server = await Server.findOne({ id: serverId });
-        if (!server) return interaction.followUp(await interaction.guild.translate('commands.info.errors.server_not_listed'));
+        if (!server) return interaction.followUp(await interaction.translate('commands.info.errors.server_not_listed'));
 
         var guild = interaction.client.guilds.cache.get(serverId);
         var owner = interaction.client.users.cache.get(guild.ownerId) || await interaction.client.users.fetch(guild.ownerId).catch(() => null);
@@ -69,19 +69,19 @@ module.exports = {
             .setColor(Discord.Colors.Blurple)
             .setFields([
               {
-                name: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.0.name'),
+                name: await interaction.translate('commands.info.subcommands.server.embed.fields.0.name'),
                 value: !inviteLinkNotAvailable ?
-                  await interaction.guild.translate('commands.info.subcommands.server.embed.fields.0.value', { inviteUrl: `https://discord.gg/${server.invite_code.type === 'Vanity' ? guild.vanityURLCode : server.invite_code.code}` }) : 
-                  await interaction.guild.translate('commands.info.errors.invite_was_deleted')
+                  await interaction.translate('commands.info.subcommands.server.embed.fields.0.value', { inviteUrl: `https://discord.gg/${server.invite_code.type === 'Vanity' ? guild.vanityURLCode : server.invite_code.code}` }) : 
+                  await interaction.translate('commands.info.errors.invite_was_deleted')
               },
               {
-                name: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.1.name'),
-                value: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.1.value', {
+                name: await interaction.translate('commands.info.subcommands.server.embed.fields.1.name'),
+                value: await interaction.translate('commands.info.subcommands.server.embed.fields.1.value', {
                   postProcess: 'interval',
                   count: lastVoter ? 1 : 0,
                   totalVotes: server.votes,
                   lastVoter: lastVoter ? `[@${lastVoter.username}](${config.frontendUrl}/profile/u/${lastVoter.id})` : null,
-                  date: lastVoter ? server.lastVoter.date.toLocaleDateString(await interaction.guild.getLanguage(), { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) : null
+                  date: lastVoter ? server.lastVoter.date.toLocaleDateString(await interaction.getLanguage(), { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) : null
                 })
               }
             ])
@@ -90,8 +90,8 @@ module.exports = {
 
         if (bot) embeds[0].addFields([
           {
-            name: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.2.name'),
-            value: await interaction.guild.translate('commands.info.subcommands.server.embed.fields.2.value', { bot: `[@${botUser.username}](${config.frontendUrl}/profile/u/${bot.id})` })
+            name: await interaction.translate('commands.info.subcommands.server.embed.fields.2.name'),
+            value: await interaction.translate('commands.info.subcommands.server.embed.fields.2.value', { bot: `[@${botUser.username}](${config.frontendUrl}/profile/u/${bot.id})` })
           }
         ]);
 
@@ -102,7 +102,7 @@ module.exports = {
             .addComponents(
               new Discord.ButtonBuilder()
                 .setStyle(Discord.ButtonStyle.Link)
-                .setLabel(await interaction.guild.translate('commands.info.subcommands.server.buttons.view_on_discord_place'))
+                .setLabel(await interaction.translate('commands.info.subcommands.server.buttons.view_on_discord_place'))
                 .setURL(`${config.frontendUrl}/servers/${serverId}`)
                 .setEmoji('🌐')
             )
@@ -111,7 +111,7 @@ module.exports = {
         if (owner) components[0].addComponents(
           new Discord.ButtonBuilder()
             .setStyle(Discord.ButtonStyle.Link)
-            .setLabel((await interaction.guild.translate('commands.info.subcommands.server.buttons.view_server_owner', { ownerUsername: owner.username })).slice(0, 80))
+            .setLabel((await interaction.translate('commands.info.subcommands.server.buttons.view_server_owner', { ownerUsername: owner.username })).slice(0, 80))
             .setURL(`${config.frontendUrl}/profile/u/${guild.ownerId}`)
             .setEmoji('👑')
         );
@@ -123,7 +123,7 @@ module.exports = {
         if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
         var user = interaction.options.getUser('user') || interaction.user;
-        if (!user) return interaction.followUp(await interaction.guild.translate('commands.info.errors.user_not_found'));
+        if (!user) return interaction.followUp(await interaction.translate('commands.info.errors.user_not_found'));
 
         var votedServersCount = await Server.aggregate([
           { $match: { 'voters.user.id': user.id } },
@@ -143,7 +143,7 @@ module.exports = {
           new Discord.EmbedBuilder()
             .setAuthor({ name: `@${user.username}` })
             .setThumbnail(user.displayAvatarURL())
-            .setDescription(await interaction.guild.translate('commands.info.subcommands.user.embed.description.0', { totalVotes }))
+            .setDescription(await interaction.translate('commands.info.subcommands.user.embed.description.0', { totalVotes }))
             .setColor(Discord.Colors.Blurple)
         ];
 
@@ -153,7 +153,7 @@ module.exports = {
             .addComponents(
               new Discord.ButtonBuilder()
                 .setStyle(Discord.ButtonStyle.Link)
-                .setLabel(await interaction.guild.translate('commands.info.subcommands.user.buttons.view_on_discord_place'))
+                .setLabel(await interaction.translate('commands.info.subcommands.user.buttons.view_on_discord_place'))
                 .setURL(`${config.frontendUrl}/profile/u/${user.id}`)
                 .setEmoji('🌐')
             )
@@ -162,19 +162,19 @@ module.exports = {
         if (user.banner) embeds[0].setImage(user.bannerURL({ extension: 'png', size: 4096 }));
       
         if (userData?.subscription?.createdAt) {
-          const premiumSince = new Date(userData.subscription.createdAt).toLocaleDateString(await interaction.guild.getLanguage(), { year: 'numeric', month: 'long', day: 'numeric' });
+          const premiumSince = new Date(userData.subscription.createdAt).toLocaleDateString(await interaction.getLanguage(), { year: 'numeric', month: 'long', day: 'numeric' });
 
           embeds[0].addFields([
             {
-              name: await interaction.guild.translate('commands.info.subcommands.user.embed.fields.0.name'),
-              value: await interaction.guild.translate('commands.info.subcommands.user.embed.fields.0.value', { premiumSince })
+              name: await interaction.translate('commands.info.subcommands.user.embed.fields.0.name'),
+              value: await interaction.translate('commands.info.subcommands.user.embed.fields.0.value', { premiumSince })
             }
           ]);
         }
 
         if (currentServer) {
           var totalVotesForCurrentServer = currentServer.voters.find(voter => voter.user.id === user.id)?.vote || 0;
-          embeds[0].setDescription(await interaction.guild.translate('commands.info.subcommands.user.embed.description.1', { totalVotes: totalVotesForCurrentServer, guildName: interaction.guild.name }));
+          embeds[0].setDescription(await interaction.translate('commands.info.subcommands.user.embed.description.1', { totalVotes: totalVotesForCurrentServer, guildName: interaction.guild.name }));
         }
 
         if (profile) {
@@ -193,21 +193,21 @@ module.exports = {
           // eslint-disable-next-line no-redeclare
           for (var i = 0; i < maxRows; i++) badgesText += `${badges.slice(i * 3, i * 3 + 3).join('  ')}\n`;
 
-          const notSetText = await interaction.guild.translate('commands.info.errors.not_set');
+          const notSetText = await interaction.translate('commands.info.errors.not_set');
 
           embeds[0].addFields([
             {
               name: 'Profile',
-              value: `${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.occupation', { occupation: profile.occupation || notSetText })}
-${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.gender', { gender_icon: profile.gender === 'Male' ? '♂️' : '♀️', gender: profile.gender || notSetText })}
-${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.location', { location: profile.location || notSetText })}
-${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.birthday', { birthday: profile.birthday || notSetText })}
+              value: `${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.occupation', { occupation: profile.occupation || notSetText })}
+${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.gender', { gender_icon: profile.gender === 'Male' ? '♂️' : '♀️', gender: profile.gender || notSetText })}
+${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.location', { location: profile.location || notSetText })}
+${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.birthday', { birthday: profile.birthday || notSetText })}
 
-${await interaction.guild.translate('commands.info.subcommands.user.embed.fields.1.value.stats', { views: profile.views.toLocaleString('en-US'), likes_count: profile.likes_count.toLocaleString('en-US') })}`
+${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.stats', { views: profile.views.toLocaleString('en-US'), likes_count: profile.likes_count.toLocaleString('en-US') })}`
             },
             {
               name: 'Biography',
-              value: profile.bio || await interaction.guild.translate('commands.info.errors.no_biography')
+              value: profile.bio || await interaction.translate('commands.info.errors.no_biography')
             },
             {
               name: 'Badges',
@@ -219,7 +219,7 @@ ${await interaction.guild.translate('commands.info.subcommands.user.embed.fields
           components[0].addComponents(
             new Discord.ButtonBuilder()
               .setStyle(Discord.ButtonStyle.Link)
-              .setLabel(await interaction.guild.translate('commands.info.subcommands.user.buttons.view_discord_place_profile'))
+              .setLabel(await interaction.translate('commands.info.subcommands.user.buttons.view_discord_place_profile'))
               .setURL(`${config.frontendUrl}/profile/${profile.slug}`)
               .setEmoji('👤')
           );

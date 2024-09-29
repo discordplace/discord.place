@@ -43,7 +43,7 @@ module.exports = {
       Theme.countDocuments()
     ]);
 
-    moment.locale(await interaction.guild.getLanguage());
+    moment.locale(await interaction.getLanguage());
 
     const uptimeHumanized = moment.duration(os.uptime() * 1000).humanize();
     const botUptimeHumanized = moment.duration(process.uptime() * 1000).humanize();
@@ -54,28 +54,28 @@ module.exports = {
     return interaction.followUp({
       content: dedent`
         \`\`\`ansi
-        ${ansiColors.bold.blue(await interaction.guild.translate('commands.stats.blocks.0.title'))}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.0.fields.0.name'))} ${await interaction.guild.translate('commands.stats.blocks.0.fields.0.value', { platform, arch: os.arch() })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.0.fields.1.name'))} ${await interaction.guild.translate('commands.stats.blocks.0.fields.1.value', { version: os.version(), release: os.release() })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.0.fields.2.name'))} ${await interaction.guild.translate('commands.stats.blocks.0.fields.2.value', { totalMemory: Math.round(os.totalmem() / 1024 / 1024 / 1024), freeMemory: Math.round(os.freemem() / 1024 / 1024 / 1024) })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.0.fields.3.name'))} ${await interaction.guild.translate('commands.stats.blocks.0.fields.3.value', { cpuModel: os.cpus()[0].model.trimEnd(), uptime: uptimeHumanized })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.0.fields.4.name'))} ${await interaction.guild.translate('commands.stats.blocks.0.fields.4.value', { nodestyText: `${ansiColors.bold.blue('Nodesty')} https://nodesty.com` })}
+        ${ansiColors.bold.blue(await interaction.translate('commands.stats.blocks.0.title'))}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.0.fields.0.name'))} ${await interaction.translate('commands.stats.blocks.0.fields.0.value', { platform, arch: os.arch() })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.0.fields.1.name'))} ${await interaction.translate('commands.stats.blocks.0.fields.1.value', { version: os.version(), release: os.release() })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.0.fields.2.name'))} ${await interaction.translate('commands.stats.blocks.0.fields.2.value', { totalMemory: Math.round(os.totalmem() / 1024 / 1024 / 1024), freeMemory: Math.round(os.freemem() / 1024 / 1024 / 1024) })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.0.fields.3.name'))} ${await interaction.translate('commands.stats.blocks.0.fields.3.value', { cpuModel: os.cpus()[0].model.trimEnd(), uptime: uptimeHumanized })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.0.fields.4.name'))} ${await interaction.translate('commands.stats.blocks.0.fields.4.value', { nodestyText: `${ansiColors.bold.blue('Nodesty')} https://nodesty.com` })}
 
-        ${ansiColors.bold.blue(await interaction.guild.translate('commands.stats.blocks.1.title'))}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.1.fields.0.name'))} ${await interaction.guild.translate('commands.stats.blocks.1.fields.0.value', { nodeVersion: process.version, discordVersion: Discord.version })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.1.fields.1.name'))} ${await interaction.guild.translate('commands.stats.blocks.1.fields.1.value', { uptime: botUptimeHumanized })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.1.fields.2.name'))} ${await interaction.guild.translate('commands.stats.blocks.1.fields.2.value', { guildsCount: interaction.client.guilds.cache.size })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.1.fields.3.name'))} ${await interaction.guild.translate('commands.stats.blocks.1.fields.3.value', { usersCount: interaction.client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US') })}
+        ${ansiColors.bold.blue(await interaction.translate('commands.stats.blocks.1.title'))}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.1.fields.0.name'))} ${await interaction.translate('commands.stats.blocks.1.fields.0.value', { nodeVersion: process.version, discordVersion: Discord.version })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.1.fields.1.name'))} ${await interaction.translate('commands.stats.blocks.1.fields.1.value', { uptime: botUptimeHumanized })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.1.fields.2.name'))} ${await interaction.translate('commands.stats.blocks.1.fields.2.value', { guildsCount: interaction.client.guilds.cache.size })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.1.fields.3.name'))} ${await interaction.translate('commands.stats.blocks.1.fields.3.value', { usersCount: interaction.client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0).toLocaleString('en-US') })}
 
-        ${ansiColors.bold.blue(await interaction.guild.translate('commands.stats.blocks.2.title'))}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.2.fields.0.name'))} ${await interaction.guild.translate('commands.stats.blocks.2.fields.0.value', { botsCount })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.2.fields.1.name'))} ${await interaction.guild.translate('commands.stats.blocks.2.fields.1.value', { emojisCount })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.2.fields.2.name'))} ${await interaction.guild.translate('commands.stats.blocks.2.fields.2.value', { emojiPacksCount })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.2.fields.3.name'))} ${await interaction.guild.translate('commands.stats.blocks.2.fields.3.value', { profilesCount })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.2.fields.4.name'))} ${await interaction.guild.translate('commands.stats.blocks.2.fields.4.value', { serversCount })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.2.fields.5.name'))} ${await interaction.guild.translate('commands.stats.blocks.2.fields.5.value', { templatesCount })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.2.fields.6.name'))} ${await interaction.guild.translate('commands.stats.blocks.2.fields.6.value', { soundsCount })}
-        • ${ansiColors.reset.bold(await interaction.guild.translate('commands.stats.blocks.2.fields.7.name'))} ${await interaction.guild.translate('commands.stats.blocks.2.fields.7.value', { themesCount })}
+        ${ansiColors.bold.blue(await interaction.translate('commands.stats.blocks.2.title'))}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.2.fields.0.name'))} ${await interaction.translate('commands.stats.blocks.2.fields.0.value', { botsCount })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.2.fields.1.name'))} ${await interaction.translate('commands.stats.blocks.2.fields.1.value', { emojisCount })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.2.fields.2.name'))} ${await interaction.translate('commands.stats.blocks.2.fields.2.value', { emojiPacksCount })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.2.fields.3.name'))} ${await interaction.translate('commands.stats.blocks.2.fields.3.value', { profilesCount })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.2.fields.4.name'))} ${await interaction.translate('commands.stats.blocks.2.fields.4.value', { serversCount })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.2.fields.5.name'))} ${await interaction.translate('commands.stats.blocks.2.fields.5.value', { templatesCount })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.2.fields.6.name'))} ${await interaction.translate('commands.stats.blocks.2.fields.6.value', { soundsCount })}
+        • ${ansiColors.reset.bold(await interaction.translate('commands.stats.blocks.2.fields.7.name'))} ${await interaction.translate('commands.stats.blocks.2.fields.7.value', { themesCount })}
         \`\`\`
       `
     });

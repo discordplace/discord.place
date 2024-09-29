@@ -2,7 +2,7 @@ const Reminder = require('@/schemas/Reminder');
 const Discord = require('discord.js');
 const parseTimeDuration = require('@/utils/parseTimeDuration');
 const getValidationError = require('@/utils/getValidationError');
-const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
+const getLocalizedCommand = require('@/src/utils/localization/getLocalizedCommand');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -54,16 +54,26 @@ module.exports = {
         var about = interaction.options.getString('about');
         var when = interaction.options.getString('when');
 
-        if (about.length > 512) return interaction.reply({ content: 'The reminder description must be 512 characters or less.', ephemeral: true });
+        if (about.length > 512) return interaction.reply({
+          content: await interaction.translate('commands.reminder.errors.reminder_too_long'),
+          ephemeral: true
+        });
       
         var reminderTime = parseTimeDuration(when);
-        if (!reminderTime) return interaction.reply({ content: 'Invalid time duration. Examples: `tomorrow`, `in 9 hours`, `next week`, `next Friday at 3pm`', ephemeral: true });
-        if (reminderTime < (60000 * 5)) return interaction.reply({ content: 'The reminder time must be at least 5 minutes.', ephemeral: true });
+        if (!reminderTime) return interaction.reply({
+          content: await interaction.translate('commands.reminder.errors.invalid_time'),
+          ephemeral: true
+        });
+        
+        if (reminderTime < (60000 * 5)) return interaction.reply({
+          content: await interaction.translate('commands.reminder.errors.time_too_short'),
+          ephemeral: true
+        });
 
         if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
 
         var totalReminders = await Reminder.countDocuments({ 'user.id': interaction.user.id });
-        if (totalReminders >= 5) return interaction.followUp({ content: 'You can only have up to 5 reminders at a time.' });
+        if (totalReminders >= 5) return interaction.followUp(await interaction.translate('commands.reminder.errors.too_many_reminders'));
 
         var reminder = new Reminder({
           user: {
@@ -74,22 +84,28 @@ module.exports = {
         });
 
         var validationError = getValidationError(reminder);
-        if (validationError) return interaction.followUp({ content: `An error occurred: ${validationError}` });
+        if (validationError) return interaction.followUp(await interaction.translate('commands.shared.errors.unknown_error', { errorMessage: validationError }));
 
         await reminder.save();
 
-        var date = new Date(reminder.expire_at).toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
+        var date = new Date(reminder.expire_at).toLocaleString(await interaction.user.getLanguage(), { dateStyle: 'full', timeStyle: 'short' });
 
-        interaction.followUp({ content: `Reminder #${reminder._id} has been created and will be sent in **${date}**.` });
+        interaction.followUp(await interaction.translate('commands.reminder.subcommands.create.success', { reminderId: reminder._id, date }));
         break;
       case 'delete':
         var reminderId = interaction.options.getString('reminder');
         var foundReminder = await Reminder.findOne({ _id: reminderId, 'user.id': interaction.user.id });
-        if (!foundReminder) return interaction.reply({ content: 'Reminder not found.', ephemeral: true });
+        if (!foundReminder) return interaction.reply({ 
+          content: await interaction.translate('commands.reminder.errors.reminder_not_found'),
+          ephemeral: true
+        });
 
         await foundReminder.deleteOne();
 
-        interaction.reply({ content: `Reminder #${reminderId} has been deleted.`, ephemeral: true });
+        interaction.reply({ 
+          content: await interaction.translate('commands.reminder.subcommands.delete.success'),
+          ephemeral: true
+        });
     }
   },
   autocomplete: async interaction => {
@@ -100,7 +116,7 @@ module.exports = {
         var reminders = await Reminder.find({ 'user.id': interaction.user.id });
         if (!reminders.length) return;
 
-        interaction.customRespond(reminders.map(reminder => ({ name: `Reminder #${reminder._id} | About: ${reminder.about}`, value: reminder._id })));
+        interaction.customRespond(await Promise.all(reminders.map(async reminder => ({ name: await interaction.translate('commands.reminder.subcommands.delete.autocomplete.item', { reminderId: reminder._id, about: reminder.about }), value: reminder._id }))));
         break;
     }
   }

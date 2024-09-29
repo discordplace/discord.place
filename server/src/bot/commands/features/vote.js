@@ -21,17 +21,17 @@ module.exports = {
       { type: 'USER_ID', value: interaction.user.id, restriction: 'SERVERS_VOTE' },
       { type: 'GUILD_ID', value: interaction.guild.id, restriction: 'SERVERS_VOTE' }
     ]).catch(() => false);
-    if (userOrGuildQuarantined) return interaction.followUp(await interaction.guild.translate('commands.shared.errors.user_or_guild_quarantined'));
+    if (userOrGuildQuarantined) return interaction.followUp(await interaction.translate('commands.shared.errors.user_or_guild_quarantined'));
 
     const server = await Server.findOne({ id: interaction.guild.id });
-    if (!server) return interaction.followUp(await interaction.guild.translate('commands.vote.errors.server_not_listed'));
+    if (!server) return interaction.followUp(await interaction.translate('commands.vote.errors.server_not_listed'));
 
     const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': interaction.guild.id });
-    if (timeout) return interaction.followUp(await interaction.guild.translate('commands.vote.errors.already_voted', { hours: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000), minutes: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60 }));
+    if (timeout) return interaction.followUp(await interaction.translate('commands.vote.errors.already_voted', { hours: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000), minutes: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60 }));
 
     if (client.humanVerificationTimeouts.has(interaction.user.id)) {
       const timeout = client.humanVerificationTimeouts.get(interaction.user.id);
-      if (timeout.guild === interaction.guild.id && timeout.expiresAt > Date.now()) return interaction.followUp(await interaction.guild.translate('commands.vote.errors.human_verification_timeout', { seconds: Math.floor((timeout.expiresAt - Date.now()) / 1000) }));
+      if (timeout.guild === interaction.guild.id && timeout.expiresAt > Date.now()) return interaction.followUp(await interaction.translate('commands.vote.errors.human_verification_timeout', { seconds: Math.floor((timeout.expiresAt - Date.now()) / 1000) }));
     }
 
     const givenVotes = server.voters.find(voter => voter.user.id === interaction.user.id)?.vote || 0;
@@ -79,7 +79,7 @@ module.exports = {
   
     const attachment = new Discord.AttachmentBuilder(`public/${imageToShow}`, { name: 'vote.gif' });
     
-    await interaction.followUp(await interaction.guild.translate('commands.vote.human_verification_text', { guildName: interaction.guild.name }));
+    await interaction.followUp(await interaction.translate('commands.vote.human_verification_text', { guildName: interaction.guild.name }));
 
     await sleep(5000);
 
@@ -91,7 +91,7 @@ module.exports = {
     await sleep(5500);
 
     await interaction.editReply({
-      content: await interaction.guild.translate('commands.vote.gif_hidden_now'),
+      content: await interaction.translate('commands.vote.gif_hidden_now'),
       components,
       files: []
     });
@@ -103,7 +103,7 @@ module.exports = {
       client.humanVerificationData.delete(interaction.user.id);
       client.humanVerificationTimeouts.set(interaction.user.id, { guild: interaction.guild.id, expiresAt: Date.now() + 60000 });
       
-      return interaction.editReply(await interaction.guild.translate('commands.vote.errors.human_verification_failed'));
+      return interaction.editReply(await interaction.translate('commands.vote.errors.human_verification_failed'));
     }
   },
   continueVote(interaction) {
@@ -113,13 +113,13 @@ module.exports = {
           new Discord.ActionRowBuilder().addComponents(
             new Discord.ButtonBuilder()
               .setStyle(Discord.ButtonStyle.Primary)
-              .setLabel(await interaction.guild.translate('commands.vote.create_reminder_button_label'))
+              .setLabel(await interaction.translate('commands.vote.create_reminder_button_label'))
               .setCustomId(`create-reminder-${interaction.guild.id}`)
           )
         ];
 
         return interaction.followUp({
-          content: await interaction.guild.translate('commands.vote.success'),
+          content: await interaction.translate('commands.vote.success'),
           components,
           ephemeral: true
         });
@@ -127,7 +127,7 @@ module.exports = {
       .catch(async error => {
         logger.error('Error incrementing vote:', error);
 
-        return interaction.followUp(await interaction.guild.translate('commands.shared.errors.unknown_error', { errorMessage: error.message }));
+        return interaction.followUp(await interaction.translate('commands.shared.errors.unknown_error', { errorMessage: error.message }));
       });
   }
 };

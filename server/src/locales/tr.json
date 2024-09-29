@@ -482,6 +482,12 @@
     },
     "reminder": {
       "name": "hatırlatıcı",
+      "errors": {
+        "reminder_too_long": "Hatırlatıcı 512 karakter veya daha az olmalıdır.",
+        "invalid_time": "Geçersiz zaman dilimi. Örnekler: `tomorrow`, `in 9 hours`, `next week`, `next Friday at 3pm`",
+        "reminder_too_short": "Hatırlatıcı süresi en az 5 dakika olmalıdır.",
+        "too_many_reminders": "Aynı anda en fazla 5 hatırlatıcınız olabilir."
+      },
       "subcommands": {
         "create": {
           "name": "oluştur",
@@ -493,9 +499,10 @@
             },
             "when": {
               "name": "zaman",
-              "description": "Örneğin: tomorrow, in 9 hours, next week, next Friday at 3pm"
+              "description": "Örnekler: tomorrow, in 9 hours, next week, next Friday at 3pm"
             }
-          }
+          },
+          "success": "Hatırlatıcı #{reminderId} oluşturuldu ve {date} tarihinde gönderilecek."
         },
         "delete": {
           "name": "sil",
@@ -503,8 +510,12 @@
           "options": {
             "reminder": {
               "name": "hatırlatıcı",
-              "description": "Silmek istediğiniz hatırlatıcıyı seçin."
+              "description": "Silmek için hatırlatıcıyı seçin."
             }
+          },
+          "success": "Hatırlatıcı #{reminderId} silindi.",
+          "autocomplete": {
+            "item": "Hatırlatıcı #{reminderId} | Hakkında: {about}"
           }
         }
       }

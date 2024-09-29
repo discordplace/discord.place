@@ -30,14 +30,14 @@ module.exports = {
 
     return interaction.followUp({
       content: `\`\`\`ansi
-${ansiColors.bold(`${ansiColors.blue(await interaction.guild.translate('commands.ping.fields.0.name'))} ${websocketHeartbeat}ms
-${ansiColors.reset(await interaction.guild.translate('commands.ping.fields.0.value'))}
+${ansiColors.bold(`${ansiColors.blue(await interaction.translate('commands.ping.fields.0.name'))} ${websocketHeartbeat}ms
+${ansiColors.reset(await interaction.translate('commands.ping.fields.0.value'))}
 
-${ansiColors.blue(await interaction.guild.translate('commands.ping.fields.1.name'))} ${serverResponseTime}
-${ansiColors.reset(await interaction.guild.translate('commands.ping.fields.1.value'))}
+${ansiColors.blue(await interaction.translate('commands.ping.fields.1.name'))} ${serverResponseTime}
+${ansiColors.reset(await interaction.translate('commands.ping.fields.1.value'))}
 
-${ansiColors.blue(await interaction.guild.translate('commands.ping.fields.2.name'))} ${mongoosePing}
-${ansiColors.reset(await interaction.guild.translate('commands.ping.fields.2.value'))}
+${ansiColors.blue(await interaction.translate('commands.ping.fields.2.name'))} ${mongoosePing}
+${ansiColors.reset(await interaction.translate('commands.ping.fields.2.value'))}
 `)}\`\`\``
     });
   }

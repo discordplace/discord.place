@@ -2,10 +2,6 @@
 const Discord = require('discord.js');
 const { CronJob } = require('cron');
 const axios = require('axios');
-const i18n = require('i18next');
-const intervalPlural = require('i18next-intervalplural-postprocessor');
-const fs = require('node:fs');
-const path = require('node:path');
 const CloudflareAPI = require('cloudflare');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
@@ -31,9 +27,7 @@ const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const Reward = require('@/schemas/Server/Vote/Reward');
-const ServerLanguage = require('@/schemas/Server/Language');
-const translate = require('@/utils/localization/translate');
-const moment = require('moment');
+const localizationInitialize = require('@/utils/localization/initialize');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -70,65 +64,7 @@ module.exports = class Client {
     this.client.humanVerificationTimeouts = new Discord.Collection();
     this.client.languageCache = new Discord.Collection();
 
-    // Get all stored server languages and add them to the cache
-    ServerLanguage.find()
-      .then(languages => languages.forEach(language => this.client.languageCache.set(language.id, language.language)));
-
-    logger.info('Client created.');
-
-    // Localization Setup for moment
-    if (!config.availableLocales.find(locale => locale.default)) {
-      logger.error('Default locale is not found in the available locales. Please set the default locale in the config file.');
-      process.exit(1);
-    }
-
-    moment.locale(config.availableLocales.find(locale => locale.default).code);
-
-    // i18n Setup
-    i18n
-      .use(intervalPlural)
-      .init({
-        fallbackLng: config.availableLocales.find(locale => locale.default).code,
-        postProcess: [],
-        interpolation: {
-          escapeValue: false,
-          prefix: '{',
-          suffix: '}'
-        }
-      });
-
-    global.i18n = i18n;
-
-    config.availableLocales.forEach(locale => {
-      const localePath = path.join(__dirname, `./locales/${locale.code}.json`);
-      const localeContent = fs.readFileSync(localePath, 'utf8');
-
-      i18n.addResourceBundle(locale.code, 'translation', JSON.parse(localeContent), true, true);
-
-      if (!Object.values(Discord.Locale).some(localeCode => localeCode === locale.code)) logger.warn(`Locale ${locale.code} is not supported by Discord.`);
-    });
-
-    // Add a translate method to the Discord.js guild object.
-
-    Discord.Guild.prototype.translate = async function(key, variables = {}) {
-      const cachedLanguage = client.languageCache.get(this.id);
-
-      const serverLanguage = cachedLanguage ? { language: cachedLanguage } : await ServerLanguage.findOne({ id: this.id }).select('language').lean();
-      const language = serverLanguage ? serverLanguage.language : config.availableLocales.find(locale => locale.default).code;
-
-      return translate(key, variables, language);
-    };
-
-    // Add a getLanguage method to the Discord.js guild object.
-    
-    Discord.Guild.prototype.getLanguage = async function() {
-      const cachedLanguage = client.languageCache.get(this.id);
-
-      const serverLanguage = cachedLanguage ? { language: cachedLanguage } : await ServerLanguage.findOne({ id: this.id }).select('language').lean();
-      const language = serverLanguage ? serverLanguage.language : config.availableLocales.find(locale => locale.default).code;
-
-      return language;
-    };
+    localizationInitialize();
 
     return this;
   }

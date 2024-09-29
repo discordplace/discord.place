@@ -369,8 +369,26 @@
         }
       ]
     },
+    "reminder": {
+      "errors": {
+        "reminder_too_long": "The reminder must be 512 characters or less.",
+        "invalid_time": "Invalid time duration. Examples: `tomorrow`, `in 9 hours`, `next week`, `next Friday at 3pm`",
+        "reminder_too_short": "The reminder time must be at least 5 minutes.",
+        "too_many_reminders": "You can only have up to 5 reminders at a time."
+      },
+      "subcommands": {
+        "create": {
+          "success": "Reminder #{reminderId} has been created and will be sent in {date}."
+        },
+        "delete": {
+          "success": "Reminder #{reminderId} has been deleted.",
+          "autocomplete": {
+            "item": "Reminder #{reminderId} | About: {about}"
+          }
+        }
+      }
+    },
     "reminders": {
-      "name": "reminders",
       "errors": {
         "no_reminders_found": "You have no active reminders."
       },
