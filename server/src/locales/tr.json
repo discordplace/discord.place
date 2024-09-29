@@ -563,7 +563,9 @@
           "guild_not_found": "Sunucuyu bulamadım.",
           "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
           "member_not_found": "Sunucuda değilsiniz."
-        }
+        },
+        "button_label": "Hızlıca Oy Ver: {guildName}",
+        "reminder": "**{guildName}** sunucusu için tekrar oy verebilirsiniz."
       },
       "create_reminder": {
         "errors": {

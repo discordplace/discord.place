@@ -51,12 +51,15 @@ Model.watch().on('change', async data => {
         .addComponents(
           new Discord.ButtonBuilder()
             .setStyle(Discord.ButtonStyle.Secondary)
-            .setLabel((`Quickly vote ${guild.name}`).slice(0, 80))
+            .setLabel((await guild.translate('interaction.buttons.quick_vote.button_label', { guildName: guild.name })).slice(0, 80))
             .setCustomId(`quick-vote-${guild.id}`)
         )
     ];
 
-    channel.send({ content: `You can vote again for the server **${guild.name}**.`, components });
+    channel.send({
+      content: await guild.translate('interaction.buttons.quick_vote.reminder', { guildName: guild.name }),
+      components
+    });
   }
 
   if (operationType === 'insert') {

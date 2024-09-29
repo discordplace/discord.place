@@ -429,7 +429,9 @@
           "guild_not_found": "I couldn't find the server.",
           "server_not_listed": "This server is not listed on discord.place.",
           "member_not_found": "You are not in the server."
-        }
+        },
+        "button_label": "Quickly Vote {guildName}",
+        "reminder": "You can vote again for the server **{guildName}**."
       },
       "create_reminder": {
         "errors": {
