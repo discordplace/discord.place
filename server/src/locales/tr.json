@@ -390,6 +390,93 @@
           "value": "Bot ile veritabanı arasındaki gecikme."
         }
       ]
+    },
+    "stats": {
+      "blocks": [
+        {
+          "title": "Sistem",
+          "fields": [
+            {
+              "name": "Platform",
+              "value": "{platform} {arch}"
+            },
+            {
+              "name": "İşletim Sistemi",
+              "value": "{version} {release}"
+            },
+            {
+              "name": "Bellek",
+              "value": "{totalMemory} GB toplam, {freeMemory} GB boş"
+            },
+            {
+              "name": "CPU",
+              "value": "{cpuModel} | Çalışma Süresi: {uptime}"
+            },
+            {
+              "name": "Kendi sanal özel sunucunuzu alın",
+              "value": "{nodestyText} 🔥"
+            }
+          ]
+        },
+        {
+          "title": "Bot",
+          "fields": [
+            {
+              "name": "Sürümler",
+              "value": "Node.js: {nodeVersion} | Discord.js: {discordVersion}"
+            },
+            {
+              "name": "Çalışma Süresi",
+              "value": "{uptime}"
+            },
+            {
+              "name": "Sunucular",
+              "value": "{guildsCount}"
+            },
+            {
+              "name": "Kullanıcılar",
+              "value": "{usersCount}"
+            }
+          ]
+        },
+        {
+          "title": "Veritabanı Koleksiyonları",
+          "fields": [
+            {
+              "name": "Botlar",
+              "value": "{botsCount}"
+            },
+            {
+              "name": "Emojiler",
+              "value": "{emojisCount}"
+            },
+            {
+              "name": "Emoji Paketleri",
+              "value": "{emojiPacksCount}"
+            },
+            {
+              "name": "Profiller",
+              "value": "{profilesCount}"
+            },
+            {
+              "name": "Sunucular",
+              "value": "{serversCount}"
+            },
+            {
+              "name": "Şablonlar",
+              "value": "{templatesCount}"
+            },
+            {
+              "name": "Sesler",
+              "value": "{soundsCount}"
+            },
+            {
+              "name": "Temalar",
+              "value": "{themesCount}"
+            }
+          ]
+        }
+      ]
     }
   }
 }

@@ -281,6 +281,93 @@
           "value": "Latency between the bot and the database."
         }
       ]
+    },
+    "stats": {
+      "blocks": [
+        {
+          "title": "System",
+          "fields": [
+            {
+              "name": "Platform",
+              "value": "{platform} {arch}"
+            },
+            {
+              "name": "Operating System",
+              "value": "{version} {release}"
+            },
+            {
+              "name": "Memory",
+              "value": "{totalMemory} GB total, {freeMemory} GB free"
+            },
+            {
+              "name": "CPU",
+              "value": "{cpuModel} | Uptime: {uptime}"
+            },
+            {
+              "name": "Get your own virtual private server at",
+              "value": "{nodestyText} 🔥"
+            }
+          ]
+        },
+        {
+          "title": "Bot",
+          "fields": [
+            {
+              "name": "Versions",
+              "value": "Node.js: {nodeVersion} | Discord.js: {discordVersion}"
+            },
+            {
+              "name": "Uptime",
+              "value": "{uptime}"
+            },
+            {
+              "name": "Servers",
+              "value": "{guildsCount}"
+            },
+            {
+              "name": "Users",
+              "value": "{usersCount}"
+            }
+          ]
+        },
+        {
+          "title": "Database Collections",
+          "fields": [
+            {
+              "name": "Bots",
+              "value": "{botsCount}"
+            },
+            {
+              "name": "Emojis",
+              "value": "{emojisCount}"
+            },
+            {
+              "name": "Emoji Packs",
+              "value": "{emojiPacksCount}"
+            },
+            {
+              "name": "Profiles",
+              "value": "{profilesCount}"
+            },
+            {
+              "name": "Servers",
+              "value": "{serversCount}"
+            },
+            {
+              "name": "Templates",
+              "value": "{templatesCount}"
+            },
+            {
+              "name": "Sounds",
+              "value": "{soundsCount}"
+            },
+            {
+              "name": "Themes",
+              "value": "{themesCount}"
+            }
+          ]
+        }
+      ]
     }
   }
 }
