@@ -2,16 +2,50 @@ const Reminder = require('@/schemas/Reminder');
 const Discord = require('discord.js');
 const parseTimeDuration = require('@/utils/parseTimeDuration');
 const getValidationError = require('@/utils/getValidationError');
+const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('reminder')
     .setDescription('reminder')
-    .addSubcommand(subcommand => subcommand.setName('create').setDescription('Create a reminder about something.')
-      .addStringOption(option => option.setName('about').setDescription('What is the reminder about?').setRequired(true))
-      .addStringOption(option => option.setName('when').setDescription('Examples: tomorrow, in 9 hours, next week, next Friday at 3pm').setRequired(true)))
-    .addSubcommand(subcommand => subcommand.setName('delete').setDescription('Delete a reminder.')
-      .addStringOption(option => option.setName('reminder').setDescription('Select the reminder to delete.').setRequired(true).setAutocomplete(true))),
+    .setNameLocalizations(getLocalizedCommand('reminder').names)
+
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('create')
+        .setDescription('Create a reminder about something.')
+        .setNameLocalizations(getLocalizedCommand('reminder.subcommands.create').names)
+        .setDescriptionLocalizations(getLocalizedCommand('reminder.subcommands.create').descriptions)
+        .addStringOption(option =>
+          option
+            .setName('about')
+            .setDescription('What is the reminder about?')
+            .setNameLocalizations(getLocalizedCommand('reminder.subcommands.create.options.about').names)
+            .setDescriptionLocalizations(getLocalizedCommand('reminder.subcommands.create.options.about').descriptions)
+            .setRequired(true))
+        .addStringOption(option =>
+          option
+            .setName('when')
+            .setDescription('Examples: tomorrow, in 9 hours, next week, next Friday at 3pm')
+            .setNameLocalizations(getLocalizedCommand('reminder.subcommands.create.options.when').names)
+            .setDescriptionLocalizations(getLocalizedCommand('reminder.subcommands.create.options.when').descriptions)
+            .setRequired(true)))
+
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('delete')
+        .setDescription('Delete a reminder.')
+        .setNameLocalizations(getLocalizedCommand('reminder.subcommands.delete').names)
+        .setDescriptionLocalizations(getLocalizedCommand('reminder.subcommands.delete').descriptions)
+        .addStringOption(option =>
+          option
+            .setName('reminder')
+            .setDescription('Select the reminder to delete.')
+            .setNameLocalizations(getLocalizedCommand('reminder.subcommands.delete.options.reminder').names)
+            .setDescriptionLocalizations(getLocalizedCommand('reminder.subcommands.delete.options.reminder').descriptions)
+            .setRequired(true)
+            .setAutocomplete(true))),
+
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
     
@@ -36,7 +70,7 @@ module.exports = {
             id: interaction.user.id
           },
           about,
-          expire_at: new Date(Date.now() + reminderTime)
+          expire_at: reminderTime
         });
 
         var validationError = getValidationError(reminder);
@@ -44,7 +78,9 @@ module.exports = {
 
         await reminder.save();
 
-        interaction.followUp({ content: `Reminder #${reminder._id} has been created and will be sent in ${when}.` });
+        var date = new Date(reminder.expire_at).toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
+
+        interaction.followUp({ content: `Reminder #${reminder._id} has been created and will be sent in **${date}**.` });
         break;
       case 'delete':
         var reminderId = interaction.options.getString('reminder');

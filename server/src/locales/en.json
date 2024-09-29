@@ -368,6 +368,19 @@
           ]
         }
       ]
+    },
+    "reminders": {
+      "name": "reminders",
+      "errors": {
+        "no_reminders_found": "You have no active reminders."
+      },
+      "embed": {
+        "title": "Active Reminders",
+        "description": [
+          "You have {reminderCount} active reminders.",
+          "You will be able to vote again for this server {time}."
+        ]
+      }
     }
   }
 }

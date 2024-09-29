@@ -375,7 +375,7 @@
       }
     },
     "ping": {
-      "description": "Bot ile Discord API'si arasındaki gecikmeyi, sunucunun yanıt süresini ve bot ile veritabanı arasındaki gecikmeyi verir.",
+      "description": "Gecikme değerlerini gösterir.",
       "fields": [
         {
           "name": "Websocket Gecikmesi",
@@ -479,6 +479,49 @@
           ]
         }
       ]
-    }
+    },
+    "reminder": {
+      "name": "hatırlatıcı",
+      "subcommands": {
+        "create": {
+          "name": "oluştur",
+          "description": "Bir şey hakkında hatırlatıcı oluştur.",
+          "options": {
+            "about": {
+              "name": "hakkında",
+              "description": "Hatırlatıcı ne hakkında?"
+            },
+            "when": {
+              "name": "zaman",
+              "description": "Örneğin: tomorrow, in 9 hours, next week, next Friday at 3pm"
+            }
+          }
+        },
+        "delete": {
+          "name": "sil",
+          "description": "Bir hatırlatıcıyı sil.",
+          "options": {
+            "reminder": {
+              "name": "hatırlatıcı",
+              "description": "Silmek istediğiniz hatırlatıcıyı seçin."
+            }
+          }
+        }
+      }
+    },
+    "reminders": {
+      "name": "hatırlatıcılar",
+      "description": "Oy sistemi için şu anda aktif olan hatırlatıcıları listeler.",
+      "errors": {
+        "no_reminders_found": "Aktif hatırlatıcı bulunamadı."
+      },
+      "embed": {
+        "title": "Aktif Hatırlatıcılar",
+        "description": [
+          "{reminderCount} aktif hatırlatıcınız var.",
+          "Bu sunucu için {time} tekrar oy kullanabileceksiniz."
+        ]
+      }
+    }  
   }
 }

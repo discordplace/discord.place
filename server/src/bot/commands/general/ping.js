@@ -6,7 +6,7 @@ const getLocalizedCommand = require('@/src/utils/localization/getLocalizedComman
 module.exports = {
   data: {
     name: 'ping',
-    description: 'Gives you the latency between the bot and the Discord API, the response time of the server, and the latency between the bot and the database.',
+    description: 'Shows latency values.',
     name_localizations: getLocalizedCommand('ping').names,
     description_localizations: getLocalizedCommand('ping').descriptions
   },
