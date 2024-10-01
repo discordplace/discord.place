@@ -3,6 +3,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const { router } = require('express-file-routing');
 const path = require('path');
+const mongoose = require('mongoose');
 
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -18,6 +19,7 @@ const User = require('@/schemas/User');
 const UserHashes = require('@/schemas/User/Hashes');
 const DiscordStrategy = require('passport-discord').Strategy;
 const encrypt = require('@/utils/encryption/encrypt');
+const sleep = require('@/utils/sleep');
 
 module.exports = class Server {
   constructor() {
@@ -31,11 +33,12 @@ module.exports = class Server {
     this.server.disable('x-powered-by');
     this.server.disable('etag');
 
-    logger.info('Server created.');
     return this;
   }
 
   async start(port = 8000) {
+    while (mongoose.connection.readyState !== mongoose.STATES.connected) await sleep(1000);
+
     this.addMiddlewares();
     this.configureSessions();
     this.createDiscordAuth();

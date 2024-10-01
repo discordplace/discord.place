@@ -7,6 +7,7 @@ const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
 const updateClientActivity = require('@/utils/updateClientActivity');
 const syncMemberRoles = require('@/utils/syncMemberRoles');
+const sleep = require('@/utils/sleep');
 
 // Schemas
 const Server = require('@/schemas/Server');
@@ -23,11 +24,13 @@ const EmojiPack = require('@/schemas/Emoji/Pack');
 const Template = require('@/schemas/Template');
 const Sound = require('@/schemas/Sound');
 const Theme = require('@/schemas/Theme');
+const User = require('@/schemas/User');
 const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const localizationInitialize = require('@/utils/localization/initialize');
+const mongoose = require('mongoose');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -64,12 +67,14 @@ module.exports = class Client {
     this.client.humanVerificationTimeouts = new Discord.Collection();
     this.client.languageCache = new Discord.Collection();
 
-    localizationInitialize();
-
     return this;
   }
 
-  start(token, options = {}) {
+  async start(token, options = {}) {
+    while (mongoose.connection.readyState !== mongoose.STATES.connected) await sleep(1000);
+
+    localizationInitialize();
+
     global.client = this.client;
 
     this.client.login(token).catch(error => {
@@ -124,6 +129,7 @@ module.exports = class Client {
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
       if (options.startup.checkReminerMetadatas) this.checkReminerMetadatas();
       if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
+      if (options.startup.checkExpiredPremiums) this.checkExpiredPremiums();
       if (options.startup.updateBotStats) this.updateBotStats();
       if (options.startup.createNewDashboardData) this.createNewDashboardData();
       if (options.startup.syncMemberRoles) syncMemberRoles();
@@ -137,6 +143,7 @@ module.exports = class Client {
           this.checkVoteReminderMetadatas();
           this.checkReminerMetadatas();
           this.checkExpiredBlockedIPs();
+          this.checkExpiredPremiums();
           this.checkDeletedInviteCodes();
           this.checkDeletedRewardsRoles();
           updateClientActivity();
@@ -291,6 +298,18 @@ module.exports = class Client {
     } catch (error) {
       logger.error('Failed to check expired blocked IPs collections:', error);
     }
+  }
+
+  async checkExpiredPremiums() {
+    User.updateMany({ 'subscription.expiresAt': { $lt: new Date() } }, {
+      $set: {
+        subscription: null
+      }
+    }).then(updated => {
+      if (updated.modifiedCount <= 0) return;
+
+      logger.info(`Deleted ${updated.modifiedCount} expired premiums.`);
+    }).catch(error => logger.error('Failed to delete expired premiums:', error));
   }
 
   async createNewDashboardData() {

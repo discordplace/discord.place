@@ -48,6 +48,12 @@ module.exports = async interaction => {
 
       if (collected.customId === 'accept-policies') {
         user.acceptedPolicies = true;
+        user.data = {
+          username: interaction.user.username,
+          global_name: interaction.user.globalName,
+          flags: interaction.user.flags
+        };
+
         await user.save();
 
         await message.edit({

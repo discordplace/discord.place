@@ -16,6 +16,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     checkVoteReminderMetadatas: false,
     checkReminerMetadatas: false,
     checkExpiredBlockedIPs: false,
+    checkExpiredPremiums: false,
     updateBotStats: false,
     createNewDashboardData: false,
     syncMemberRoles: false,
@@ -29,3 +30,6 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
   registerCommands: false,
   unregisterCommands: true
 });
+
+const connectDatabase = require('@/src/database/connect.js');
+connectDatabase(process.env.MONGO_URL, { backup: false });

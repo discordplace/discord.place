@@ -11,9 +11,7 @@ async function initialize() {
   try {
     // Get all stored server languages and add them to the cache
     const languages = await ServerLanguage.find();
-    languages.forEach(language => this.client.languageCache.set(language.id, language.language));
-
-    logger.info('Client created.');
+    languages.forEach(language => client.languageCache.set(language.id, language.language));
 
     const defaultLocale = config.availableLocales.find(locale => locale.default);
     if (!defaultLocale) {
