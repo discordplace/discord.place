@@ -120,10 +120,12 @@ export default function NewServer() {
 
       <div className='max-w-[800px] flex items-center w-full'>
         <div className='flex flex-col w-full mt-8 gap-y-1'>
-          <div className={cn(
-            'flex-col w-full p-6 mb-8 border-2 h-max rounded-xl',
-            allRequirementsIsMet ? 'border-green-500' : 'dark:border-neutral-500 border-neutral-400'
-          )}>
+          <div
+            className={cn(
+              'flex-col w-full p-6 mb-8 border-2 h-max rounded-xl',
+              allRequirementsIsMet ? 'border-green-500' : 'dark:border-neutral-500 border-neutral-400'
+            )}
+          >
             <div className='flex items-start justify-between w-full'>
               <span className='flex items-center text-lg font-semibold gap-x-2'>
                 <BsFire
@@ -138,7 +140,7 @@ export default function NewServer() {
               <div className='flex flex-col items-center gap-y-2'>
                 <div className='items-center hidden sm:flex gap-x-1'>
                   <span className='text-base font-semibold'>
-                    {completedPercent.toFixed(1)}%
+                    {completedPercent}%
                   </span>
 
                   <span className='text-sm font-medium text-tertiary'>
@@ -170,7 +172,7 @@ export default function NewServer() {
             <div className='flex flex-col mt-6 gap-y-4 sm:hidden'>
               <div className='flex items-center justify-center gap-x-1'>
                 <span className='text-base font-semibold'>
-                  {currentlyAddingServer.requirements.filter(requirement => requirement.met).length / currentlyAddingServer.requirements.length * 100}%
+                  {completedPercent}%
                 </span>
 
                 <span className='text-sm font-medium text-tertiary'>
@@ -179,24 +181,24 @@ export default function NewServer() {
               </div>
             </div>
 
-            <div className='flex flex-col mt-8 gap-y-4'>
+            <div className='flex flex-col mt-8 overflow-hidden gap-y-4'>
               {currentlyAddingServer.requirements.map(requirement => (
                 <div
                   className='flex items-center gap-x-4'
                   key={requirement.id}
                 >
                   {requirement.met ? (
-                    <IoMdCheckmarkCircle className='text-green-500' size={24} />
+                    <IoMdCheckmarkCircle className='text-green-500 min-w-[24px]' size={24} />
                   ) : (
-                    <IoMdCloseCircle className='text-tertiary' size={24} />
+                    <IoMdCloseCircle className='text-tertiary min-w-[24px]' size={24} />
                   )}
 
                   <div className='flex flex-col gap-y-1'>
-                    <span className='text-lg font-semibold truncate max-w-[700px]'>
+                    <span className='text-lg font-semibold truncate max-w-[200px] sm:max-w-[700px]'>
                       {t(`accountPage.tabs.myServers.sections.newServer.requirements.items.${requirement.id}.name`)}
                     </span>
                     
-                    <span className='text-sm font-medium text-tertiary max-w-[250px] sm:max-w-[700px]'>
+                    <span className='text-sm font-medium text-tertiary max-w-[200px] sm:max-w-[700px]'>
                       {t(`accountPage.tabs.myServers.sections.newServer.requirements.items.${requirement.id}.description`)}
                     </span>
                   </div>
