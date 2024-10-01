@@ -5,7 +5,7 @@ import { FaQuestion } from 'react-icons/fa6';
 import { nanoid } from 'nanoid';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdOpenInNew } from 'react-icons/md';
+import { MdArrowOutward } from 'react-icons/md';
 import { useState, useEffect } from 'react';
 import useThemeStore from '@/stores/theme';
 import addSocial from '@/lib/request/profiles/addSocial';
@@ -29,11 +29,11 @@ export default function Socials({ profile }) {
     tiktok: '255 0 80',
     facebook: '66 103 178',
     steam: '0 0 0',
-    github: '0 3 51',
+    github: '110 84 148',
     twitch: '145 70 255',
     youtube: '255 0 0',
     telegram: '36 161 222',
-    custom: '0 0 0',
+    custom: '150 150 150',
     unknown: '0 0 0'
   };
 
@@ -165,7 +165,7 @@ export default function Socials({ profile }) {
       <div className='flex flex-wrap gap-4 mt-4'>
         {socials.map(social => (
           <div 
-            className='flex w-full max-w-[calc(50%_-_1rem)] h-10 rounded-lg px-2 text-sm font-semibold bg-[rgb(var(--brand-color))]/10 items-center justify-between gap-x-2 text-secondary'
+            className='flex w-full max-w-[calc(50%_-_1rem)] h-10 rounded-lg px-2 text-sm font-semibold items-center border-[rgb(var(--brand-color)/0.5)] border-2 justify-between gap-x-2 text-secondary bg-gradient-to-r from-[rgb(var(--brand-color)/0.2)]'
             key={nanoid()}
             style={{
               '--brand-color': colors[social.type]
@@ -195,7 +195,7 @@ export default function Socials({ profile }) {
               </button>
 
               <Link className='text-tertiary hover:text-primary' href={social.link} target='_blank'>
-                <MdOpenInNew size={18} />
+                <MdArrowOutward size={18} />
               </Link>
             </div>
           </div>

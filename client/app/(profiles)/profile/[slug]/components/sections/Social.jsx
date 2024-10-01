@@ -2,13 +2,13 @@
 
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
-import Link from 'next/link';
 import { IoEarth } from 'react-icons/io5';
-import { MdOpenInNew } from 'react-icons/md';
+import { MdArrowOutward } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import getIconPath from '@/lib/utils/profiles/getIconPath';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import { t } from '@/stores/language';
+import MotionLink from '@/app/components/Motion/Link';
 
 export default function Social({ data }) {
   const colors = {
@@ -18,11 +18,11 @@ export default function Social({ data }) {
     tiktok: '255 0 80',
     facebook: '66 103 178',
     steam: '0 0 0',
-    github: '0 3 51',
+    github: '110 84 148',
     twitch: '145 70 255',
     youtube: '255 0 0',
     telegram: '36 161 222',
-    custom: '0 0 0',
+    custom: '150 150 150',
     unknown: '0 0 0'
   };
 
@@ -52,8 +52,8 @@ export default function Social({ data }) {
         )}
             
         {data.map((social, index) => (
-          <motion.div 
-            className='flex w-full h-10 rounded-lg px-2 text-sm font-semibold bg-[rgb(var(--brand-color))]/10 items-center justify-between gap-x-2 text-secondary'
+          <MotionLink 
+            className='flex group items-center justify-between w-full h-10 px-2 text-sm font-semibold border-2 rounded-lg hover:bg-secondary border-[rgb(var(--brand-color)/0.5)] hover:border-[rgb(var(--brand-color)/0.8)] gap-x-2 bg-gradient-to-r from-[rgb(var(--brand-color)/0.2)] hover:from-[rgb(var(--brand-color)/0.3)] text-secondary'
             key={social.link}
             style={{
               '--brand-color': colors[social.type]
@@ -61,11 +61,14 @@ export default function Social({ data }) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.40 + (.20 * index) }}
+            href={social.link}
+            target='_blank'
           >
             <div className='flex gap-x-2 max-w-[80%] sm:max-w-[90%] flex-auto'>
               {social.type === 'custom' ? (
                 <>
-                  <IoEarth className='flex-auto' size={20} />
+                  <IoEarth className='flex-auto text-primary' size={20} />
+                  
                   <span className='w-full truncate'>
                     {getDisplayableURL(social.link)}
                   </span>
@@ -80,10 +83,8 @@ export default function Social({ data }) {
               )}
             </div>
 
-            <Link className='text-tertiary hover:text-primary' href={social.link} target='_blank'>
-              <MdOpenInNew size={18} />
-            </Link>
-          </motion.div>
+            <MdArrowOutward className='text-[rgba(var(--brand-color))]' size={18} />
+          </MotionLink>
         ))}
       </motion.div>
     </div>
