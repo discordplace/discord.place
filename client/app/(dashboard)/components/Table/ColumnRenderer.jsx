@@ -333,6 +333,35 @@ export default function ColumnRenderer({ data }) {
         </span>
       );
     case 'userSubscription':
+      if (data.value?.expiresAt) {
+        return (
+          <div className='flex flex-col gap-y-1'>
+            <div className='flex items-center gap-x-2'>
+              <h2 className='text-sm font-semibold'>
+                Premium Membership
+              </h2>
+
+              <span className='text-xs font-medium text-tertiary'>
+                Expires {getRelativeTime(data.value.expiresAt, 'en')}
+              </span>
+            </div>
+
+            <div className='flex items-center text-xs gap-x-1 text-secondary'>
+              <FiArrowRightCircle
+                size={16}
+                className='text-green-500 -rotate-45'
+              />
+
+              {new Date(data.value.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+
+              <span className='text-tertiary'>
+                ({getRelativeTime(data.value.createdAt, 'en')})
+              </span>
+            </div>
+          </div>
+        );
+      }  
+
       var foundPlan = dashboardData?.plans?.find(plan => plan.id === data.value?.planId);
 
       if (!foundPlan) return (
