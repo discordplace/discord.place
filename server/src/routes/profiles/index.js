@@ -1,13 +1,14 @@
 const slugValidation = require('@/validations/profiles/slug');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body, validationResult, matchedData } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const User = require('@/schemas/User');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const DashboardData = require('@/schemas/Dashboard/Data');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -21,10 +22,8 @@ module.exports = {
     body('preferredHost')
       .isString().withMessage('Preferred host must be a string.')
       .isIn(['discord.place/p', ...config.customHostnames]).withMessage('Preferred host is not valid.'),
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-      
+    validateBody,
+    async (request, response) => {      
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'PROFILES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create profiles.', 403);
 

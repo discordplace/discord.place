@@ -7,6 +7,7 @@ const checkCaptcha = require('@/utils/middlewares/checkCaptcha');
 const bodyParser = require('body-parser');
 const incrementVote = require('@/utils/servers/incrementVote');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -15,6 +16,7 @@ module.exports = {
     checkAuthentication,
     checkCaptcha,
     param('id'),
+    validateBody,
     async (request, response) => {
       const { id } = matchedData(request);
 

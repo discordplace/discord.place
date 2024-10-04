@@ -3,12 +3,14 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const { router } = require('express-file-routing');
 const path = require('path');
+const mongoose = require('mongoose');
 
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const ip = require('@/utils/middlewares/ip');
 const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
+const languageDetection = require('@/utils/middlewares/languageDetection');
 const compression = require('compression');
 const morgan = require('morgan');
 
@@ -17,6 +19,7 @@ const User = require('@/schemas/User');
 const UserHashes = require('@/schemas/User/Hashes');
 const DiscordStrategy = require('passport-discord').Strategy;
 const encrypt = require('@/utils/encryption/encrypt');
+const sleep = require('@/utils/sleep');
 
 module.exports = class Server {
   constructor() {
@@ -30,11 +33,12 @@ module.exports = class Server {
     this.server.disable('x-powered-by');
     this.server.disable('etag');
 
-    logger.info('Server created.');
     return this;
   }
 
   async start(port = 8000) {
+    while (mongoose.connection.readyState !== mongoose.STATES.connected) await sleep(1000);
+
     this.addMiddlewares();
     this.configureSessions();
     this.createDiscordAuth();
@@ -58,7 +62,7 @@ module.exports = class Server {
     });
 
     this.server.use(morganMiddleware);
-
+    
     this.server.use(compression());
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
@@ -77,6 +81,8 @@ module.exports = class Server {
       if (client.blockedIps.has(request.clientIp)) return response.sendError('Forbidden', 403);
       next();
     });
+
+    this.server.use(languageDetection);
 
     if (process.env.NODE_ENV === 'production' && config.globalRateLimit.enabled === true) this.server.use(require('@/utils/middlewares/globalRateLimiter'));
     

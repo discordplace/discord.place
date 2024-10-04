@@ -55,6 +55,10 @@ const UserSchema = new Schema({
     createdAt: {
       type: Date,
       required: false
+    },
+    expiresAt: {
+      type: Date,
+      required: false
     }
   },
   oldSubscriptions: [

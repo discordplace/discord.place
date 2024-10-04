@@ -25,7 +25,7 @@ module.exports = async member => {
       if (!role) {
         await Reward.deleteOne({ 'role.id': reward.role.id });
 
-        sendLog(member.guild.id, `Role with ID ${reward.role.id} has been deleted from the database because it was not found in the server.`)
+        sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_deleted', { roleId: reward.role.id }))
           .catch(() => null);
         
         logger.warn(`Role with ID ${reward.role.id} has been deleted from the database because it was not found in server ${member.guild.id}.`);
@@ -35,16 +35,16 @@ module.exports = async member => {
 
       if (member.roles.cache.has(role.id)) break;
 
-      member.roles.add(role, `Voted ${voter.vote} times for the server. This role was given as a reward.`)
+      member.roles.add(role, await member.guild.translate('vote_rewards.reward_role_added_audit_reason', { requiredVotes: voter.vote }))
         .then(async () => {
-          sendLog(member.guild.id, `**@${Discord.escapeMarkdown(member.user.username)}** (${member.user.id}) has been given the reward role **${role.name}** for voting ${voter.vote} times. (Newly joined)`)
+          sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_added', { username: member.user.username, userId: member.user.id, roleName: role.name, vote: voter.vote }))  
             .catch(() => null);
 
           const dmChannel = member.user.dmChannel || await member.user.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYou have been given the reward role **${role.name}** in **${member.guild.name}** for voting ${voter.vote} times!` }).catch(() => null);
+          if (dmChannel) dmChannel.send(await member.guild.translate('vote_rewards.reward_role_added_dm_message', { roleName: role.name, guildName: member.guild.name, vote: voter.vote })).catch(() => null);
         })
-        .catch(error => {
-          sendLog(member.guild.id, `Failed to give the reward role **${role.name}** to **@${Discord.escapeMarkdown(member.user.username)}** (${member.user.id}). (Error: ${error.message})`)
+        .catch(async error => {
+          sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_add_error', { roleName: role.name, username: Discord.escapeMarkdown(member.user.username), userId: member.user.id, errorMessage: error.message }))
             .catch(() => null);
         });
 

@@ -1,0 +1,593 @@
+{
+  "time": {
+    "seconds": "saniye",
+    "minutes": "dakika",
+    "hours": "saat",
+    "days": "gün"
+  },
+  "commands": {
+    "accept_policies": {
+      "embed": {
+        "title": "Politikalarımız Hakkında",
+        "description": "Botu kullanmadan önce politikalarımızı kabul etmeniz gerekiyor.\nPolitikaları kabul ettikten sonra, botu istediğiniz gibi kullanabilirsiniz.\n\n- [Gizlilik Politikası](https://discord.place/legal/privacy)\n- [Hizmet Şartları](https://discord.place/legal/terms)\n- [Çerez Politikası](https://discord.place/legal/cookie)\n- [İçerik Politikası](https://discord.place/legal/content-policy)\n- [Satın Alma Politikası](https://discord.place/legal/purchase-policy)\n\nHerhangi bir sorunuz varsa, **legal@discord.place** adresinden bize ulaşabilirsiniz."
+      },
+      "button_label": "Politikaları Kabul Et",
+      "timeout": "Politikaları zamanında kabul etmediniz.",
+      "success": "Politikaları kabul ettiniz."
+    },    
+    "shared": {
+      "errors": {
+        "missing_permissions": "Bu komutu kullanmak için yetkiniz yok.",
+        "user_quarantined": "Hesabınız karantinaya alındığından bu komutu kullanamazsınız.",
+        "server_quarantined": "Bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
+        "user_or_guild_quarantined": "Hesabınız veya bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
+        "server_owner_only": "Bu komutu kullanabilmek için sunucu sahibi olmalısınız.",
+        "unknown_error": "Bir hata oluştu: {errorMessage}",
+        "guild_only": "Bu komut sadece bir sunucuda kullanılabilir.",
+        "command_error": "Komutu çalıştırırken bir hata oluştu."
+      }
+    },
+    "emoji": {
+      "errors": {
+        "missing_bot_permissions": "Emoji yüklemek için yetkim yok. Lütfen \"İfadeleri Yönet\" ve \"İfadeler Oluştur\" izinlerine sahip olduğumdan emin olun.",
+        "pack_not_found": "Emoji paketi bulunamadı.",
+        "currently_uploading": {
+          "message": "Şu anda **{packName}** paketini yüklüyorum. Lütfen bitene kadar bekleyin.",
+          "button_label": "Durumu Görüntüle"
+        },
+        "no_emojis_uploaded": "Paket **{packName}** yüklenemedi.",
+        "pack_failed": "{index}. emoji yüklenemedi. Göz ardı ediliyor.. **{remainingSeconds} saniye** kaldı.",
+        "emoji_not_found": "Emoji bulunamadı.",
+        "emoji_failed": "Emoji yüklenemedi."
+      },
+      "subcommands": {
+        "upload": {
+          "name": "yükle",
+          "description": "Seçilen emojiyi sunucuya yükler.",
+          "options": {
+            "emoji": {
+              "description": "Yüklenecek emoji."
+            }
+          },
+          "uploaded": "Emoji başarıyla yüklendi."
+        }
+      },
+      "groups": {
+        "pack": {
+          "name": "paket",
+          "subcommands": {
+            "upload": {
+              "name": "yükle",
+              "description": "Seçilen emoji paketini sunucuya yükler.",
+              "options": {
+                "pack": {
+                  "name": "paket",
+                  "description": "Yüklenecek emoji paketi."
+                }
+              },
+              "uploading": "{emojiCount} emoji yükleniyor. Tahminen **{remainingSeconds} saniye** kaldı.",
+              "reason": "@{username} ({userId}) tarafından {packId} paketinden yüklendi. {index} / {total} emoji.",
+              "uploaded": "{total} emoji arasından {index}. emoji yüklendi. **{remainingSeconds} saniye** kaldı.",
+              "completed": "Başarıyla **{packName}** yüklendi!"
+            }
+          }
+        }
+      }
+    },
+    "server": {
+      "name": "sunucu",
+      "errors": {
+        "same_invite_code": "Davet kodu mevcut olan ile aynı.",
+        "invalid_invite_code": "Davet kodu geçerli değil.",
+        "missing_bot_permissions": "Bu kanalda mesaj göndermek için yetkim yok.",
+        "panel_server_not_listed": "Sunucunuzu listelemeden bir panel kanalı ayarlayamazsınız. Bu sunucuyu listelemek için [buraya]({link}) gidin.",
+        "invalid_language": "Dil bulunamadı.",
+        "panel_not_set": "Panel kanalı ayarlanmadı.",
+        "role_is_managed": "Yönetilen bir rolü ödül olarak ekleyemezsiniz.",
+        "role_is_higher": "Ödül olarak, en yüksek rolümden daha yüksek veya eşit bir rol ekleyemezsiniz.",
+        "invalid_votes": "Gerekli oy sayısı en az 1 olmalıdır.",
+        "reward_server_not_listed": "Sunucunuzu listelemeden ödül ekleyemezsiniz. Bu sunucuyu listelemek için [buraya]({link}) gidin.",
+        "max_rewards_reached": "{count} ödülden fazlasına sahip olamazsınız.",
+        "reward_exists": "Bu rolle zaten bir ödül mevcut."
+      },
+      "groups": {
+        "set": {
+          "name": "ayarla",
+          "subcommands": {
+            "invite": {
+              "name": "davet",
+              "description": "Sunucunun davet bağlantısını değiştirir.",
+              "options": {
+                "code": {
+                  "name": "kod",
+                  "description": "Yeni davet kodu."
+                }
+              },
+              "updated": "Davet kodu güncellendi."
+            },
+            "log": {
+              "name": "log",
+              "description": "Sunucunun log kanalını ayarlar.",
+              "options": {
+                "channel": {
+                  "name": "kanal",
+                  "description": "Yeni log kanalı."
+                }
+              },
+              "updated": "Log kanalı güncellendi.",
+              "set": "Log kanalı ayarlandı."
+            },
+            "panel": {
+              "name": "panel",
+              "description": "Sunucunun panel kanalını ayarlar.",
+              "options": {
+                "channel": {
+                  "name": "kanal",
+                  "description": "Yeni panel kanalı."
+                }
+              },
+              "updated": "Panel kanalı güncellendi.",
+              "set": "Panel kanalı ayarlandı."
+            },
+            "language": {
+              "name": "dil",
+              "description": "Sunucunun dilini değiştirir.",
+              "options": {
+                "language": {
+                  "name": "dil",
+                  "description": "Yeni dil."
+                }
+              },
+              "updated": "Sunucunun dili Türkçe olarak güncellendi."
+            }
+          }
+        },
+        "unset": {
+          "name": "kaldır",
+          "subcommands": {
+            "panel": {
+              "name": "panel",
+              "description": "Sunucunun panel kanalını devredışı bırakır.",
+              "unset": "Panel kanalı devredışı bırakıldı."
+            },
+            "log": {
+              "name": "log",
+              "description": "Sunucunun log kanalını devredışı bırakır.",
+              "unset": "Log kanalı devredışı bırakıldı."
+            }
+          }
+        },
+        "refresh": {
+          "name": "yenile",
+          "subcommands": {
+            "panel": {
+              "name": "panel",
+              "description": "Sunucunun panel mesajını yeniler.",
+              "refreshed": "Panel mesajı yenilendi."
+            }
+          }
+        },
+        "add": {
+          "name": "ekle",
+          "subcommands": {
+            "reward": {
+              "name": "ödül",
+              "description": "Sunucuya yeni bir oy ödülü ekler.",
+              "options": {
+                "role": {
+                  "name": "rol",
+                  "description": "Ödül olarak verilecek rol."
+                },
+                "required-votes": {
+                  "name": "gerekli-oy",
+                  "description": "Ödülü kazanmak için gerekli oy sayısı."
+                }
+              },
+              "errors": {
+                "missing_bot_permissions": "Kullanıcılara rol eklemek için yetkim yok."
+              },
+              "added": "Yeni oy ödülü eklendi! **{requiredVotes}** oya ulaşan kullanıcılara {role} rolünü vereceğim."
+            }
+          }
+        },
+        "remove": {
+          "name": "sil",
+          "subcommands": {
+            "reward": {
+              "name": "ödül",
+              "description": "Sunucudan seçilen oy ödülünü kaldırır.",
+              "options": {
+                "reward": {
+                  "name": "ödül",
+                  "description": "Kaldırılacak ödül."
+                }
+              },
+              "errors": {
+                "reward_not_found": "Ödül bulunamadı."
+              },
+              "removed": "Ödül kaldırıldı.",
+              "autocomplete": {
+                "item": "Rol: @{role} | Gerekli Oy: {requiredVotes}"
+              }
+            }
+          }
+        },
+        "list": {
+          "name": "listele",
+          "subcommands": {
+            "rewards": {
+              "name": "ödüller",
+              "description": "Sunucunun tüm oy ödüllerini listeler.",
+              "errors": {
+                "no_rewards": "Bu sunucuda ödül bulunmuyor."
+              },
+              "embed": {
+                "title": "{serverName} | Oy Ödülleri",
+                "description": "**{count}** ödül bulundu.",
+                "item": "- Ödül {role}\n - Gerekli Oy: **{requiredVotes}**"
+              }
+            }
+          }
+        }
+      },
+      "logging_messages": {
+        "invite_code_updated": "Davet kodu {user} tarafından {newInviteCode} olarak güncellendi.",
+        "panel_channel_updated": "Panel kanalı {user} tarafından {channel} olarak güncellendi.",
+        "language_updated": "Dil {user} tarafından İngilizce olarak güncellendi.",
+        "panel_channel_unset": "Panel kanalı {user} tarafından devredışı bırakıldı.",
+        "panel_message_refreshed": "Panel mesajı {user} tarafından yenilendi.",
+        "reward_added": "Yeni ödül {user} tarafından eklendi. Bu rol, **{requiredVotes}** oya ulaşan kullanıcılara verilecek.",
+        "reward_removed": "Ödül {user} tarafından kaldırıldı."
+      }
+    },
+    "templates": {
+      "name": "şablon",
+      "errors": {
+        "too_many_currently": "Şu anda çok fazla şablon uygulanıyor. Lütfen mevcut şablonların uygulanmasını bekleyin ve ardından komutu tekrar kullanın.",
+        "currently_applying": "Bu sunucu şu anda bir şablon uyguluyor. Lütfen mevcut şablonun uygulanmasını bekleyin ve ardından komutu tekrar kullanın.",
+        "server_wait_for_applying": "Bu sunucuda başka bir şablon kullanmadan önce lütfen {remainingMinutes} dakika bekleyin.",
+        "user_wait_for_applying": "Başka bir şablon kullanmadan önce lütfen {remainingMinutes} dakika bekleyin.",
+        "template_not_found": "Şablon bulunamadı.",
+        "confirmation_timeout": "İşlemi zamanında onaylamadınız. Şablon uygulanmadı.",
+        "dms_disabled": "Size özel mesaj gönderemedim. Lütfen DM'lerinizin açık olduğundan emin olun ve tekrar deneyin.",
+        "missing_highest_role": "Bu sunucuda en yüksek role sahip değilim. Lütfen en yüksek role sahip olduğumdan emin olun ve tekrar deneyin.",
+        "missing_bot_permissions": "En yüksek rolüm 'Yönetici' iznine sahip değil. Lütfen en yüksek rolümün 'Yönetici' iznine sahip olduğundan emin olun ve tekrar deneyin."
+      },
+      "subcommands": {
+        "use": {
+          "name": "kullan",
+          "description": "Şablonu kullanır.",
+          "options": {
+            "template": {
+              "name": "şablon",
+              "description": "Kullanılacak şablon."
+            }
+          },
+          "confirmation_text": "Sonuçları anlıyorum ve devam etmek istiyorum.",
+          "last_chance": {
+            "button_label": "İptal",
+            "message": "{loadingEmoji} **{templateName}** şablonunu **{guildName}** sunucusuna uygulamak istediğinize emin misiniz?\n(__BU SON ŞANSINIZ!__)"
+          },
+          "cancelled": "{checkEmoji} Zamanında işlemi iptal ettiniz. Şablon uygulanmadı.",
+          "steps": [
+            "{loadingEmoji} **{templateName}** şablonu **{guildName}** sunucusuna uygulanıyor. Lütfen bekleyin..",
+            "{loadingEmoji} Tüm kanallar ve roller siliniyor.. Bu biraz zaman alabilir. Tahmini süre: **{estimatedTime}**.",
+            "{loadingEmoji} Kanallar ve roller oluşturuluyor.. Bu biraz zaman alabilir. Tahmini süre: **{estimatedTime}**.",
+            "{loadingEmoji} Ayarlar uygulanıyor..",
+            "{loadingEmoji} Neredeyse bitti..",
+            "{checkEmoji} **{templateName}** şablonu başarıyla **{guildName}** sunucusuna uygulandı."
+          ],
+          "embeds": {
+            "warning": {
+              "title": "Şablon {templateName} | ID: {templateId}",
+              "description": "### Durun!\nBu sunucuda **{templateName}** şablonunu kullanmak üzeresiniz.\n\n__**Ne olacak?**__\n- Tüm kanallar silinecek.\n- Tüm roller silinecek.\n- Tüm webhooklar silinecek.\n- Tüm ayarlar sıfırlanacak.\n\n__**Emin misiniz?**__\nBu işlem geri alınamaz ve geri döndürülemez.\n\n__**Onaylamak için lütfen şunu yazın:**__\n`Sonuçları anlıyorum ve devam etmek istiyorum.`\n\n__**Not:**__\nBu mesajı onaylamak için yukarıdaki metni cevap olarak göndermeyi unutmayın."
+            },
+            "success": {
+              "title": "Şablon {templateId}",
+              "description": "{checkEmoji} **{templateName}** şablonu başarıyla **{guildName}** sunucusuna {user} tarafından uygulandı.\n\n__**Şimdi ne yapmalı?**__\n- Bu kanalı silebilirsiniz.\n- Sunucuyu kullanmaya başlayabilirsiniz."
+            }
+          },
+          "buttons": {
+            "preview_template": "Şablonu discord.place'de Önizle"
+          }
+        }
+      }
+    },
+    "vote": {
+      "name": "oy-ver",
+      "description": "Bulunduğunuz sunucuya oy verirsiniz.",
+      "errors": {
+        "server_not_listed": "Web sitemizde listelenmeyen sunuculara oy veremezsiniz.",
+        "already_voted": "{hours} saat {minutes} dakika içinde tekrar oy verebilirsiniz.",
+        "human_verification_timeout": "Bu sunucuya oy vermeye çalıştınız ve insan doğrulamasını geçemediniz. {seconds} saniye sonra tekrar deneyebilirsiniz."
+      },
+      "human_verification_text": "Şu an **{guildName}** sunucusuna oy vereceksiniz.\n**İnsan Doğrulaması Hakkında:**\n- Size birkaç saniye içinde bir gif gösterilecek.\n- Gif'te 3 tekrar eden sayı olacak.\n- Bu sayıları ezberlemeniz gerekiyor.\n- Son sayı kaybolduktan sonra, ezberlediğiniz sayıların sırasına göre butonlara tıklamanız gerekiyor.\n- Tüm butonlara tıklamak için 10 saniyeniz olacak.\n- Başarısız olursanız, 1 dakika sonra tekrar deneyebilirsiniz.\n\n**Not:** Bu doğrulama, spam'i önlemek için sadece her üçüncü oyda gösterilir.",
+      "gif_hidden_now": "Gif şimdi gizlendi. Lütfen ezberlediğiniz sayıların sırasına göre butonlara tıklayın.",
+      "human_verification_failed": "Kendinizi doğrulayamadınız. 1 dakika sonra tekrar deneyebilirsiniz.",
+      "create_reminder_button_label": "Hatırlatıcı Oluştur",
+      "success": "Oy verdiğiniz için teşekkürler!",
+      "logging_messages": {
+        "user_voted": "**@{username}** ({userId}) oy verdi."
+      }
+    },
+    "info": {
+      "name": "bilgi",
+      "errors": {
+        "server_not_listed": "Bu sunucu discord.place üzerinde listelenmemiş.",
+        "invite_was_deleted": "Davet bağlantısı silindi.",
+        "user_not_found": "Kullanıcı bulunamadı.",
+        "not_set": "Belirtilmemiş",
+        "no_biography": "Biyografi bulunamadı."
+      },
+      "subcommands": {
+        "server": {
+          "name": "sunucu",
+          "description": "Sunucu hakkında bilgi gösterir.",
+          "options": {
+            "server_id": {
+              "name": "sunucu-id",
+              "description": "Bilgileri gösterilecek sunucunun ID'si."
+            }
+          },
+          "embed": {
+            "fields": [
+              {
+                "name": "Davet",
+                "value": "[Katılmak için buraya tıkla.]({inviteUrl})"
+              },
+              {
+                "name": "Oylar",
+                "value": "(0)[Bu sunucunun **{totalVotes}** oyu var.];(1-inf)[Bu sunucunun **{totalVotes}** oyu var.\nSon oy {lastVoter} tarafından **{date}** tarihinde verildi.];"
+              },
+              {
+                "name": "Destek Sunucusu",
+                "value": "Bu sunucu Bot {bot} için destek sunucusudur."
+              }
+            ]
+          },
+          "buttons": {
+            "view_on_discord_place": "discord.place'de görüntüle",
+            "view_server_owner": "Sunucu Sahibini Görüntüle (@{ownerUsername})"
+          }
+        },
+        "user": {
+          "name": "kullanıcı",
+          "description": "Kullanıcı hakkında bilgi gösterir.",
+          "options": {
+            "user": {
+              "name": "kullanıcı",
+              "description": "Bilgileri gösterilecek kullanıcı."
+            }
+          },
+          "embed": {
+            "description": [
+              "Bu kullanıcının discord.place üzerinde **{totalVotes}** oyu var.",
+              "Bu kullanıcı, **{guildName}** sunucusuna **{totalVotes}** oy verdi."
+            ],
+            "fields": [
+              {
+                "name": "Premium",
+                "value": "Bu kullanıcı **{premiumSince}** tarihinden beri premium sahibi."
+              },
+              {
+                "name": "Profil",
+                "value": {
+                  "occupation": "- **Meslek** 🔨 {occupation}",
+                  "gender": "- **Cinsiyet** {gender_icon} {gender}",
+                  "location": "- **Konum** 📌 {location}",
+                  "birthday": "- **Doğum Günü** 🎂 {birthday}",
+                  "stats": "👁️ **{views}** ❤️ **{likes_count}**"
+                }
+              }
+            ]
+          },
+          "buttons": {
+            "view_on_discord_place": "discord.place'de görüntüle",
+            "view_discord_place_profile": "discord.place Profilini Görüntüle"
+          }
+        }
+      }
+    },
+    "ping": {
+      "description": "Gecikme değerlerini gösterir.",
+      "fields": [
+        {
+          "name": "Websocket Gecikmesi",
+          "value": "Bot ile Discord API'si arasındaki gecikme."
+        },
+        {
+          "name": "Sunucu Yanıt Süresi",
+          "value": "Sunucumuzun yanıt süresi."
+        },
+        {
+          "name": "Veritabanı Gecikmesi",
+          "value": "Bot ile veritabanı arasındaki gecikme."
+        }
+      ]
+    },
+    "stats": {
+      "name": "istatistikler",
+      "description": "Botun istatistiklerini görüntüler.",
+      "blocks": [
+        {
+          "title": "Sistem",
+          "fields": [
+            {
+              "name": "Platform",
+              "value": "{platform} {arch}"
+            },
+            {
+              "name": "İşletim Sistemi",
+              "value": "{version} {release}"
+            },
+            {
+              "name": "Bellek",
+              "value": "{totalMemory} GB toplam, {freeMemory} GB boş"
+            },
+            {
+              "name": "CPU",
+              "value": "{cpuModel} | Çalışma Süresi: {uptime}"
+            },
+            {
+              "name": "Kendi sanal özel sunucunuzu alın",
+              "value": "{nodestyText} 🔥"
+            }
+          ]
+        },
+        {
+          "title": "Bot",
+          "fields": [
+            {
+              "name": "Sürümler",
+              "value": "Node.js: {nodeVersion} | Discord.js: {discordVersion}"
+            },
+            {
+              "name": "Çalışma Süresi",
+              "value": "{uptime}"
+            },
+            {
+              "name": "Sunucular",
+              "value": "{guildsCount}"
+            },
+            {
+              "name": "Kullanıcılar",
+              "value": "{usersCount}"
+            }
+          ]
+        },
+        {
+          "title": "Veritabanı Koleksiyonları",
+          "fields": [
+            {
+              "name": "Botlar",
+              "value": "{botsCount}"
+            },
+            {
+              "name": "Emojiler",
+              "value": "{emojisCount}"
+            },
+            {
+              "name": "Emoji Paketleri",
+              "value": "{emojiPacksCount}"
+            },
+            {
+              "name": "Profiller",
+              "value": "{profilesCount}"
+            },
+            {
+              "name": "Sunucular",
+              "value": "{serversCount}"
+            },
+            {
+              "name": "Şablonlar",
+              "value": "{templatesCount}"
+            },
+            {
+              "name": "Sesler",
+              "value": "{soundsCount}"
+            },
+            {
+              "name": "Temalar",
+              "value": "{themesCount}"
+            }
+          ]
+        }
+      ]
+    },
+    "reminder": {
+      "name": "hatırlatıcı",
+      "errors": {
+        "reminder_too_long": "Hatırlatıcı 512 karakter veya daha az olmalıdır.",
+        "invalid_time": "Geçersiz zaman dilimi. Örnekler: `tomorrow`, `in 9 hours`, `next week`, `next Friday at 3pm`",
+        "reminder_too_short": "Hatırlatıcı süresi en az 5 dakika olmalıdır.",
+        "too_many_reminders": "Aynı anda en fazla 5 hatırlatıcınız olabilir."
+      },
+      "subcommands": {
+        "create": {
+          "name": "oluştur",
+          "description": "Bir şey hakkında hatırlatıcı oluştur.",
+          "options": {
+            "about": {
+              "name": "hakkında",
+              "description": "Hatırlatıcı ne hakkında?"
+            },
+            "when": {
+              "name": "zaman",
+              "description": "Örnekler: tomorrow, in 9 hours, next week, next Friday at 3pm"
+            }
+          },
+          "success": "Hatırlatıcı #{reminderId} oluşturuldu ve {date} tarihinde gönderilecek."
+        },
+        "delete": {
+          "name": "sil",
+          "description": "Bir hatırlatıcıyı sil.",
+          "options": {
+            "reminder": {
+              "name": "hatırlatıcı",
+              "description": "Silmek için hatırlatıcıyı seçin."
+            }
+          },
+          "success": "Hatırlatıcı #{reminderId} silindi.",
+          "autocomplete": {
+            "item": "Hatırlatıcı #{reminderId} | Hakkında: {about}"
+          }
+        }
+      }
+    },
+    "reminders": {
+      "name": "hatırlatıcılar",
+      "description": "Oy sistemi için şu anda aktif olan hatırlatıcıları listeler.",
+      "errors": {
+        "no_reminders_found": "Aktif hatırlatıcı bulunamadı."
+      },
+      "embed": {
+        "title": "Aktif Hatırlatıcılar",
+        "description": [
+          "{reminderCount} aktif hatırlatıcınız var.",
+          "Bu sunucu için {time} tekrar oy kullanabileceksiniz."
+        ]
+      }
+    }  
+  },
+  "vote_rewards": {
+    "reward_role_deleted": "{roleId} ID'li rol, sunucuda bulunamadığı için veritabanından silindi.",
+    "reward_role_added": "**@{username}** ({userId}) kullanıcısı {vote} kez oy verdiği için **{roleName}** ödül rolü verildi.",
+    "reward_role_add_error": "**@{username}** ({userId}) kullanıcısına **{roleName}** ödül rolü verilemedi. (Hata: {errorMessage})",
+    "reward_role_added_audit_reason": "Sunucu için {requiredVotes} kez oy verdi. Bu rol ödül olarak verildi.",
+    "reward_role_added_dm_message": "### Tebrikler!\n**{guildName}** sunucusunda {vote} kez oy verdiğiniz için size **{roleName}** ödül rolü verildi!"
+  },
+  "interaction": {
+    "buttons": {
+      "quick_vote": {
+        "errors": {
+          "guild_not_found": "Sunucuyu bulamadım.",
+          "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
+          "member_not_found": "Sunucuda değilsiniz."
+        },
+        "button_label": "Hızlıca Oy Ver: {guildName}",
+        "reminder": "**{guildName}** sunucusu için tekrar oy verebilirsiniz."
+      },
+      "create_reminder": {
+        "errors": {
+          "guild_not_found": "Sunucuyu bulamadım.",
+          "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
+          "user_not_voted": "Oy vermediğiniz bir sunucu için hatırlatıcı oluşturamazsınız.",
+          "reminder_already_created": "Bu sunucu için zaten bir hatırlatıcı oluşturmuşsunuz."
+        },
+        "success": "Hatırlatıcı oluşturuldu ve {date} tarihinde gönderilecek."
+      },
+      "human_verification": {
+        "errors": {
+          "guild_not_found": "Sunucuyu bulamadım.",
+          "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
+          "member_not_found": "Sunucuda değilsiniz.",
+          "timeout": "{seconds} saniye sonra tekrar deneyebilirsiniz.",
+          "failed": "Kendinizi doğrulamada başarısız oldunuz. 1 dakika sonra tekrar deneyebilirsiniz.",
+          "number_already_selected": "Bu numarayı zaten seçtiniz."
+        },
+        "success": "Başarıyla kendinizi doğruladınız.",
+        "numbers_selected": "Seçilen numaralar: {numbers}"
+      }
+    }
+  }
+}

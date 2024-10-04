@@ -11,7 +11,7 @@ async function syncMemberRoles() {
 
   const premiumUsers = await User.find({ subscription: { $ne: null } });
 
-  const translatorsArray = fs.readFileSync(path.resolve(__dirname, '../../../client/locales/translators.json'), 'utf8');
+  const translatorsArray = fs.readFileSync(path.resolve(__dirname, '../../../translators.json'), 'utf8');
   const translators = JSON.parse(translatorsArray);
 
   const roles = [

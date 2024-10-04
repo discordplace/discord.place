@@ -5,7 +5,7 @@ const lodash = require('lodash');
 
 if (!process.env.DEFAULT_LOCALE_CODE) core.setFailed('DEFAULT_LOCALE_CODE is not set');
 
-const localesDir = path.join(__dirname, '..', '..', 'client', 'locales');
+const localesDir = path.join(__dirname, '..', '..', '..', 'client', 'locales');
 const locales = fs.readdirSync(localesDir);
 const filteredLocales = locales.filter(locale => locale !== 'translators.json');
 

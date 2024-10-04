@@ -4,6 +4,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const User = require('@/schemas/User');
 const getUserHashes = require('@/utils/getUserHashes');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 const Discord = require('discord.js');
 
@@ -11,6 +12,7 @@ module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     checkAuthentication,
+    validateBody,
     async (request, response) => {
       const user = await User.findOne({ id: request.user.id });
       if (!user) return response.sendError('User not found.', 404);

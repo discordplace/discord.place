@@ -1,7 +1,8 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, validationResult, matchedData } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Template = require('@/schemas/Template');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
@@ -9,10 +10,8 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .isLength({ min: 12, max: 12 }).withMessage('ID must be 12 characters.'),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
       
       const template = await Template.findOne({ id });
@@ -39,10 +38,8 @@ module.exports = {
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,
     param('id'),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const template = await Template.findOne({ id });

@@ -2,11 +2,13 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const Discord = require('discord.js');
 const getUserGuilds = require('@/utils/getUserGuilds');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     checkAuthentication,
+    validateBody,
     async (request, response) => {
       const guilds = await getUserGuilds(request.user.id).catch(() => null);
       if (!guilds) return response.sendError('There was an error getting the guilds. Try logging out and back in.', 500);

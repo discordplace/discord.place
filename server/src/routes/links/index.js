@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body, validationResult, matchedData } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const nameValidation = require('@/validations/links/name');
 const destinationURLValidation = require('@/validations/links/destinationURL');
 const Link = require('@/schemas/Link');
@@ -9,6 +9,7 @@ const crypto = require('node:crypto');
 const getValidationError = require('@/utils/getValidationError');
 const User = require('@/schemas/User');
 const Discord = require('discord.js');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -21,10 +22,8 @@ module.exports = {
     body('destinationURL')
       .isString().withMessage('Destination URL should be a string.')
       .custom(destinationURLValidation),
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-      
+    validateBody,
+    async (request, response) => {      
       const { name, destinationURL } = matchedData(request);
       
       const foundLink = await Link.findOne({ name: name.toLocaleLowerCase('en-US') });

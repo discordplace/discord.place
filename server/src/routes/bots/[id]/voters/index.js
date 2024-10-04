@@ -1,7 +1,8 @@
-const { query, param, validationResult, matchedData } = require('express-validator');
+const { query, param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const Bot = require('@/schemas/Bot');
 const getUserHashes = require('@/utils/getUserHashes');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
@@ -15,10 +16,8 @@ module.exports = {
       .optional()
       .isInt({ min: 1, max: 12 }).withMessage('Limit must be an integer between 1 and 12.')
       .toInt(),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id, page = 1, limit = 12 } = matchedData(request);
 
       const user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);

@@ -79,7 +79,7 @@ async function incrementVote(guildId, userId) {
       id: userId,
       username: user.username
     }, 
-    guild: { 
+    guild: {
       id: guild.id,
       name: guild.name
     } 
@@ -104,7 +104,7 @@ async function incrementVote(guildId, userId) {
 
   client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
 
-  sendLog(guild.id, `**@${Discord.escapeMarkdown(user.username)}** (${user.id}) has voted for the server!`)
+  sendLog(guild.id, await guild.translate('commands.vote.logging_messages.user_voted', { username: Discord.escapeMarkdown(user.username), userId: user.id }))
     .catch(() => null);
 
   const rewards = await Reward.find({ 'guild.id': guild.id });
@@ -116,7 +116,7 @@ async function incrementVote(guildId, userId) {
       if (!role) {
         await Reward.deleteOne({ 'role.id': reward.role.id });
 
-        sendLog(guild.id, `Role with ID ${reward.role.id} has been deleted from the database because it was not found in the server.`)
+        sendLog(guild.id, await guild.translate('vote_rewards.reward_role_deleted', { roleId: reward.role.id }))
           .catch(() => null);
         
         logger.warn(`Role with ID ${reward.role.id} has been deleted from the database because it was not found in server ${guild.id}.`);
@@ -129,16 +129,16 @@ async function incrementVote(guildId, userId) {
 
       if (member.roles.cache.has(role.id)) break;
 
-      member.roles.add(role, `Voted ${voterVotes} times for the server. This role was given as a reward.`)
+      member.roles.add(role, await guild.translate('vote_rewards.reward_role_added_audit_reason', { requiredVotes: voterVotes }))
         .then(async () => {
-          sendLog(guild.id, `**@${Discord.escapeMarkdown(user.username)}** (${user.id}) has been given the reward role **${role.name}** for voting ${voterVotes} times.`)
+          await sendLog(guild.id, await guild.translate('vote_rewards.reward_role_added', { username: Discord.escapeMarkdown(user.username), userId: user.id, roleName: role.name, vote: voterVotes }))
             .catch(() => null);
 
           const dmChannel = user.dmChannel || await user.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYou have been given the reward role **${role.name}** in **${guild.name}** for voting ${voterVotes} times!` }).catch(() => null);
+          if (dmChannel) dmChannel.send(await guild.translate('vote_rewards.reward_role_added', { roleName: role.name, guildName: guild.name, vote: voterVotes }));
         })
-        .catch(error => {
-          sendLog(guild.id, `Failed to give the reward role **${role.name}** to **@${Discord.escapeMarkdown(user.username)}** (${user.id}). (Error: ${error.message})`)
+        .catch(async error => {
+          sendLog(await guild.translate('vote_rewards.reward_role_add_error', { roleName: role.name, username: Discord.escapeMarkdown(user.username), userId: user.id, errorMessage: error.message }))
             .catch(() => null);
         });
 
@@ -149,7 +149,9 @@ async function incrementVote(guildId, userId) {
   }
 
   if (server.webhook_url) {
-    const headers = {};
+    const headers = {
+      'User-Agent': 'discord.place (https://discord.place)'
+    };
     if (server.webhook_token) headers['Authorization'] = server.webhook_token;
 
     axios({

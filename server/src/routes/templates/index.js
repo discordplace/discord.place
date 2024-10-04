@@ -2,12 +2,13 @@ const categoriesValidation = require('@/utils/validations/templates/categories')
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body, validationResult, matchedData } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Template = require('@/schemas/Template');
 const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const fetchTemplateDetails = require('@/utils/templates/fetchTemplateDetails');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -28,10 +29,8 @@ module.exports = {
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id, name, description, categories } = matchedData(request);
 
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'TEMPLATES_CREATE').catch(() => false);

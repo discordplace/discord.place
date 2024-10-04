@@ -1,6 +1,7 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { query, validationResult } = require('express-validator');
+const { query} = require('express-validator');
 const Sound = require('@/schemas/Sound');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
@@ -28,10 +29,8 @@ module.exports = {
       .optional()
       .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
       .toInt(),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { query, category = 'All', sort = 'Newest', limit = 9, page = 1 } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, approved: true } : { approved: true };

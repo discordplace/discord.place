@@ -1,7 +1,8 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, validationResult } = require('express-validator');
+const { param, matchedData} = require('express-validator');
 const snowflakeValidation = require('@/validations/snowflakeValidation');
 const UserHashes = require('@/schemas/User/Hashes');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
@@ -10,10 +11,8 @@ module.exports = {
       .isNumeric().withMessage('User ID must be a number')
       .isLength({ min: 17, max: 19 }).withMessage('Invalid user ID length')
       .custom(snowflakeValidation),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const userHashes = (await UserHashes.findOne({ id })) || new UserHashes({ id });

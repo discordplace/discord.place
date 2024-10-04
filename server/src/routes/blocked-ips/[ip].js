@@ -1,7 +1,8 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BlockedIp = require('@/schemas/BlockedIp');
-const { param, validationResult, matchedData } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   delete: [
@@ -9,10 +10,8 @@ module.exports = {
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('ip')
       .isIP().withMessage('Invalid IP address'),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const canDelete = config.permissions.canDeleteBlockedIps.includes(request.user.id);
       if (!canDelete) return response.sendError('You do not have permission to delete blocked IPs.', 403);
 

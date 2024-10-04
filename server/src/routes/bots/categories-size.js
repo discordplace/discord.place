@@ -1,9 +1,11 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const Bot = require('@/schemas/Bot');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
+    validateBody,
     async (request, response) => {
       const categories = config.botCategories;
       const counts = {};

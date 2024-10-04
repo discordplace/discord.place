@@ -1,8 +1,9 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, validationResult, matchedData } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const idValidation = require('@/utils/validations/sounds/id');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -20,10 +21,8 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
       
       const sound = await Sound.findOne({ id });
@@ -51,10 +50,8 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id } = matchedData(request);
 
       const sound = await Sound.findOne({ id });

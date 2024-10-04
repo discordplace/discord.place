@@ -1,9 +1,10 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, validationResult, body } = require('express-validator');
+const { param, matchedData, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const bodyParser = require('body-parser');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -17,10 +18,8 @@ module.exports = {
       .optional()
       .isString().withMessage('Reason must be a string.')
       .isLength({ min: 1, max: 200 }).withMessage('Reason must be between 1 and 200 characters.'),
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-      
+    validateBody,
+    async (request, response) => {      
       const canDeny = request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDeny) return response.sendError('You are not allowed to deny reviews.', 403);
 

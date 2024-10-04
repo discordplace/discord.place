@@ -2,8 +2,9 @@ const Profile = require('@/schemas/Profile');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
-const { param, validationResult, matchedData } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   patch: [
@@ -13,10 +14,8 @@ module.exports = {
       .isString().withMessage('Slug must be a string.')
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'PROFILES_LIKE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to like profiles.', 403);
       

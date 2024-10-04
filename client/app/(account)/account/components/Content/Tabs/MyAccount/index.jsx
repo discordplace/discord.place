@@ -93,6 +93,8 @@ export default function MyAccount() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug, preferredHost]);
 
+  const currentPlan = plans.find(plan => plan.id === user?.premium?.planId);
+
   return (
     <div className='flex flex-col px-6 mt-16 mb-8 lg:px-16 gap-y-6'>      
       <div className='flex flex-col gap-y-2'>
@@ -180,14 +182,18 @@ export default function MyAccount() {
                 <GoHeartFill className='text-xl' />
 
                 <div className='flex flex-col'>
-                  <h2 className='flex flex-wrap items-center font-semibold gap-x-2'>
+                  <h2 className='flex flex-wrap items-center font-semibold gap-x-2'>                    
                     {plansLoading ? (
                       <>
                         <TbLoader className='animate-spin' />
                         {t('accountPage.tabs.myAccount.sections.premium.plansLoading')}
                       </>
                     ) : (
-                      t(`accountPage.tabs.myAccount.sections.premium.plans.${plans.find(plan => plan.id === user.premium.planId)?.name}`)
+                      currentPlan ? (
+                        t(`accountPage.tabs.myAccount.sections.premium.plans.${currentPlan?.name}`)
+                      ) : (
+                        t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }) })
+                      )
                     )}
 
                     <span className='text-xs text-tertiary'>

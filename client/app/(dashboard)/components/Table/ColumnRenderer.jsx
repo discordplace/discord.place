@@ -17,7 +17,7 @@ import { FiArrowRightCircle } from 'react-icons/fi';
 
 function CategoryBadge({ children, icons }) {
   return (
-    <div className='text-xs flex border border-primary items-center gap-x-2 font-medium px-1.5 py-0.5 bg-secondary text-white rounded-lg'>
+    <div className='text-xs flex border border-primary items-center gap-x-2 font-medium px-1.5 py-0.5 bg-secondary text-primary rounded-lg'>
       <span className='text-tertiary'>
         {icons[children]}
       </span>

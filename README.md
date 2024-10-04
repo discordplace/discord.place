@@ -250,6 +250,7 @@ We use YML files for the configuration of the server. You can find the configura
 | `instatus.page_id` | String | Page ID for the Instatus. |
 | `instatus.metric_id` | String | Metric ID for the Instatus. |
 | `lemonSqueezy.variantIds` | Object | Variant IDs for the Lemon Squeezy. |
+| `availableLocales` | Array<Object> | Available locales for the website. |
 
 > [!NOTE]
 > - The `discordScopes` value is used for the Discord OAuth scopes required for the website. You can change these values to your own required scopes. Usually, the `identify`, `email`, and `guilds` scopes are required.
@@ -271,9 +272,11 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `instatus.page_id` and `instatus.metric_id` values are used for the page ID and metric ID for the Instatus. You can change these values to your own page ID and metric ID.
 > - The `lemonSqueezy.variantIds` value is used for the variant IDs for the Lemon Squeezy. We sell some products on Lemon Squeezy with different variants. You should create these variants on the Lemon Squeezy and get the variant IDs from there.
 > - Make sure to fill all fields that end with `ChannelId` with the correct channel IDs from the base guild.
+> - The `availableLocales` value is used for the available locales for the server. You can change these values to your own available locales. Locale files should be in the `server/src/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
 
 ### New Languages
 
+#### Client
 To add a new language to the website, follow these steps:
 
 1. Create a new JSON file in the `client/locales` directory with the format `xx.json`, where `xx` is the language code. For example, `fr.json` for French. You can use the existing language files as a reference.
@@ -288,6 +291,23 @@ To add a new language to the website, follow these steps:
   "key2": "value2"
 }
 ```
+
+#### Server
+To add a new language to the server, follow these steps:
+
+1. Create a new JSON file in the `server/src/locales` directory with the format `xx.json`, where `xx` is the language code. For example, `fr.json` for French. You can use the existing language files as a reference.
+2. Add the language code to the `availableLocales` value in the `server/config.yml` file.
+3. Add the translations for the new language to the JSON file you created. The JSON file should have the following structure:
+
+```json
+{
+  "key": "value",
+  "key2": "value2"
+}
+```
+
+> [!NOTE]
+> - Some languages may not supported by Discord client. If you want to add a language that is not supported by Discord client, you can just copy & paste the `tr.json` file to the new language file and change the translations in the new language file. Otherwise, you can copy & paste the `az.json` file to the new language file which is not supported by Discord client.
 
 ## Contributing
 
@@ -304,15 +324,30 @@ Please make sure to follow the [Code of Conduct](.github/CODE_OF_CONDUCT.md) and
 <details>
 <summary>
   <strong>
-    Contributing Translations
+    Contributing Translations to the Website
   </strong>
 </summary>
-
   If you'd like to contribute translations to the discord.place website, follow these steps:
 
   1. Fork the repository and clone it locally.
   2. Create a new branch for your translation.
   3. Find the language file you want to translate in the `client/locales` directory.
+  4. Add the translations for the missing keys in the language file or update the existing translations.
+  5. Commit your changes with descriptive commit messages.
+  6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
+</details>
+
+<details>
+<summary>
+  <strong>
+    Contributing Translations to the Server
+  </strong>
+</summary>
+  If you'd like to contribute translations to the discord.place server, follow these steps:
+
+  1. Fork the repository and clone it locally.
+  2. Create a new branch for your translation.
+  3. Find the language file you want to translate in the `server/src/locales` directory.
   4. Add the translations for the missing keys in the language file or update the existing translations.
   5. Commit your changes with descriptive commit messages.
   6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.

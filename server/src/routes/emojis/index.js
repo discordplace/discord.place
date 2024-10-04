@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body, validationResult, matchedData } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const nameValidation = require('@/validations/emojis/name');
 const categoriesValidation = require('@/validations/emojis/categories');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
@@ -11,6 +11,7 @@ const crypto = require('node:crypto');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 const multer = require('multer');
 const upload = multer({
@@ -48,10 +49,8 @@ module.exports = {
       .customSanitizer(value => value.split(','))
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
-    async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-  
+    validateBody,
+    async (request, response) => {  
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'EMOJIS_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create emojis.', 403);
       

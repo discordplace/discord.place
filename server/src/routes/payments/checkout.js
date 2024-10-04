@@ -1,7 +1,7 @@
 const Plan = require('@/schemas/LemonSqueezy/Plan');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { matchedData, validationResult, body } = require('express-validator');
+const { matchedData, body } = require('express-validator');
 const createCheckout = require('@/utils/payments/createCheckout');
 const createTripledVotesCheckout = require('@/utils/payments/createTripledVotesCheckout');
 const createStandedOutCheckout = require('@/utils/payments/createStandedOutCheckout');
@@ -11,6 +11,7 @@ const Bot = require('@/schemas/Bot');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
@@ -29,10 +30,8 @@ module.exports = {
     body('botId')
       .optional()
       .isNumeric().withMessage('Bot ID must be a string.'),
+    validateBody,
     async (request, response) => {
-      const errors = validationResult(request);
-      if (!errors.isEmpty()) return response.sendError(errors.array()[0].msg, 400);
-
       const { id, planId, serverId, botId } = matchedData(request);
 
       if (id === 'standed-out') {

@@ -3,10 +3,12 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const syncMemberRoles = require('@/utils/syncMemberRoles');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   post: [
     bodyParser.json(),
+    validateBody,
     async (request, response) => {
       const signature = request.headers['x-hub-signature-256'];
       if (!signature) return response.sendError('No signature provided', 400);
@@ -25,7 +27,7 @@ module.exports = {
 
       if (request.body.ref !== 'refs/heads/main') return response.sendError('Not the main branch', 400);
 
-      if (!request.body.commits.some(commit => commit.modified.includes('client/locales/translators.json'))) return response.sendError('No changes to translators.json', 400);
+      if (!request.body.commits.some(commit => commit.modified.includes('translators.json'))) return response.sendError('No changes to translators.json', 400);
 
       try {
         await exec('git pull');
