@@ -238,7 +238,7 @@
               },
               {
                 "name": "Support Server",
-                "value": "This server is the support server fot Bot {bot}."
+                "value": "This server is the support server for Bot {bot}."
               }
             ]
           },
