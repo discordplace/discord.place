@@ -1523,7 +1523,7 @@ export default function Page() {
 
                     setSelectedItems([]);
 
-                    router.push(`/profile/u/${column[0].id}`);
+                    router.push(`/profile/u/${column[1].id}`);
                   }
                 },
                 {
