@@ -452,5 +452,31 @@
         "numbers_selected": "Seçilen numaralar: {numbers}"
       }
     }
+  },
+  "server_panel_message": {
+    "embeds": [
+      {
+        "title": "**Oylar**",
+        "description": "- Bu sunucuya toplamda ***{serverVotes}*** kez ***{totalVoters}*** kullanıcı tarafından oy verilmiştir.",
+        "table": {
+          "vote": "Oy"
+        }
+      },
+      {
+        "title": "**Aylık Oylar**",
+        "description": "- Bu sunucu, bu ay ***{count}*** oy kazanmıştır."
+      },
+      {
+        "title": "**Ödüller**",
+        "description": "- Bu sunucunun ***{count}*** oy ödülü vardır.",
+        "table": {
+          "unknown_role": "bilinmeyen"
+        }
+      }
+    ],
+    "buttons": {
+      "vote": "Oy Ver",
+      "view_on_discord_place": "discord.place'de Görüntüle"
+    }
   }
 }

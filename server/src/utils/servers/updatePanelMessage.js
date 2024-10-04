@@ -66,7 +66,7 @@ async function createPanelMessageOptions(guild, server) {
     new Discord.EmbedBuilder()
       .setAuthor({ name: guild.name, iconURL: guild.iconURL() })
       .setColor(embedColor.hex)
-      .setDescription(`**Votes**\n- ***${formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0))}*** time this server has been voted in total by ***${server.voters.length}*** users.\n\`\`\`ansi\n${topVotersTable.map(([index, votes, username]) => `${ansiColors.reset.bold(`${index}${index == 10 ? '' : ' '} |`)} ${ansiColors.reset.bold.blue(`${votes}${' '.repeat(Math.max(...topVotersTable.map(([, votes]) => votes)).toString().length - votes.toString().length)} Vote`)} ${ansiColors.reset.bold(`‒ ${username}`)}`).join('\n')}\`\`\``)
+      .setDescription(`${await guild.translate('server_panel_message.embeds.0.title')}\n${await guild.translate('server_panel_message.embeds.0.description', { serverVotes: formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0)), totalVoters: server.voters.length })}\n\`\`\`ansi\n${(await Promise.all(topVotersTable.map(async ([index, votes, username]) => `${ansiColors.reset.bold(`${index}${index == 10 ? '' : ' '} |`)} ${ansiColors.reset.bold.blue(`${votes}${' '.repeat(Math.max(...topVotersTable.map(([, votes]) => votes)).toString().length - votes.toString().length)} ${await guild.translate('server_panel_message.embeds.0.table.vote')}`)} ${ansiColors.reset.bold(`‒ ${username}`)}`))).join('\n')}\`\`\``)
   ];
 
   const monthlyVotes = await ServerMonthlyVotes.findOne({ identifier: guild.id });
@@ -74,7 +74,7 @@ async function createPanelMessageOptions(guild, server) {
     embeds.push(
       new Discord.EmbedBuilder()
         .setColor(embedColor.hex)
-        .setDescription(`**Monthly Votes**\n- This server has gained ***${formatter.format(server.votes)}*** votes in this month.\n\`\`\`ansi\n${monthlyVotes.data.map(month => [formatter.format(month.votes), new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' })]).map(([votes, date]) => `${ansiColors.reset.bold(`${date} ‒`)} ${ansiColors.reset.bold.blue(votes)}`).join('\n')}\`\`\``)
+        .setDescription(`${await guild.translate('server_panel_message.embeds.1.title')}\n${await guild.translate('server_panel_message.embeds.1.description', { count: formatter.format(server.votes) })}\n\`\`\`ansi\n${monthlyVotes.data.map(month => [formatter.format(month.votes), new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' })]).map(([votes, date]) => `${ansiColors.reset.bold(`${date} ‒`)} ${ansiColors.reset.bold.blue(votes)}`).join('\n')}\`\`\``)
     );
   }
 
@@ -82,7 +82,7 @@ async function createPanelMessageOptions(guild, server) {
     embeds.push(
       new Discord.EmbedBuilder()
         .setColor(embedColor.hex)
-        .setDescription(`**Rewards**\n- This server has ***${rewards.length}*** reward${rewards.length > 1 ? 's' : ''}.\n\`\`\`ansi\n${rewards.map(reward => ansiColors.reset.bold(`${reward.required_votes} ‒ @${guild.roles.cache.get(reward.role.id)?.name || 'unknown'}`)).join('\n')}\`\`\``)
+        .setDescription(`${await guild.translate('server_panel_message.embeds.2.title')}\n${await guild.translate('server_panel_message.embeds.2.description', { postProcess: 'interval', count: rewards.length })}\n\`\`\`ansi\n${(await Promise.all(rewards.map(async reward => `${ansiColors.reset.bold(`${reward.required_votes} ‒`)} ${ansiColors.reset.bold.blue(`@${guild.roles.cache.get(reward.role.id)?.name || await guild.translate('server_panel_message.embeds.2.table.unknown_role')}`)}`))).join('\n')}\`\`\``)
     );
   }
 
@@ -99,10 +99,11 @@ async function createPanelMessageOptions(guild, server) {
       .addComponents(
         new Discord.ButtonBuilder()
           .setCustomId('vote')
-          .setLabel('Vote')
+          .setLabel(await guild.translate('server_panel_message.buttons.vote'))
+          .setEmoji(config.emojis.pink_heart)
           .setStyle(Discord.ButtonStyle.Secondary),
         new Discord.ButtonBuilder()
-          .setLabel('View on discord.place')
+          .setLabel(await guild.translate('server_panel_message.buttons.view_on_discord_place'))
           .setStyle(Discord.ButtonStyle.Link)
           .setURL(`${config.frontendUrl}/servers/${guild.id}`)
       )

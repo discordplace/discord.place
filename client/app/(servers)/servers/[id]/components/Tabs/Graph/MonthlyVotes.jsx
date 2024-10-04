@@ -29,7 +29,7 @@ export default function MonthlyVotesGraph({ server }) {
 
         <Tooltip
           side={isMobile ? 'bottom' : 'right'}
-          content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChanges'}`, { postProcess: 'interval', count: 1, difference})}
+          content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChanges'}`, { postProcess: 'interval', count: 1, difference })}
         >
           <div className={cn(
             'select-none flex w-max gap-x-1 px-2 items-center py-1 text-xs font-semibold rounded-lg',

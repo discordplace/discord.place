@@ -15,6 +15,7 @@ supportInviteUrl: 'https://invite.discord.place'
 emojis:
   loading: '<a:loading:1247786499076915252>'
   checkmark: '<:yes:1226129515718381568>'
+  pink_heart: '<:heart:1211809043564339290>'
   badges:
     admin: '<:white_admin:1267620006183571530>'
     moderator: '<:white_moderator:1251538987592712345>'

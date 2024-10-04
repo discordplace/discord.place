@@ -452,5 +452,31 @@
         "numbers_selected": "You selected {numbers}."
       }
     }
+  },
+  "server_panel_message": {
+    "embeds": [
+      {
+        "title": "**Votes**",
+        "description": "- ***{serverVotes}*** time this server has been voted in total by ***${totalVoters}*** users.",
+        "table": {
+          "vote": "Vote"
+        }
+      },
+      {
+        "title": "**Monthly Votes**",
+        "description": "- This server has gained ***{count}*** votes in this month."
+      },
+      {
+        "title": "**Rewards**",
+        "description": "(1)[- This server has ***{count}*** reward.];(2-inf)[- This server has ***{count}*** rewards.]",
+        "table": {
+          "unknown_role": "unknown"
+        }
+      }
+    ],
+    "buttons": {
+      "vote": "Vote",
+      "view_on_discord_place": "View on discord.place"
+    }
   }
 }
