@@ -252,6 +252,8 @@ module.exports = {
       }
 
       if (subcommand === 'language') {
+        if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.ManageGuild)) return interaction.followUp(await interaction.translate('commands.shared.errors.missing_permissions'));
+  
         const language = interaction.options.getString('language');
         if (!config.availableLocales.some(locale => locale.code === language)) return interaction.reply(await interaction.translate('commands.server.errors.invalid_language'));
   
