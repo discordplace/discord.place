@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const parseTimeDuration = require('@/utils/parseTimeDuration');
 const User = require('@/schemas/User');
+const syncMemberRoles = require('@/utils/syncMemberRoles');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -31,6 +32,8 @@ module.exports = {
     if (foundUser.subscription?.createdAt) return interaction.followUp({ content: 'User already has a subscription.' });
     
     await foundUser.updateOne({ subscription: { createdAt: new Date(), expiresAt: reminderTime } });
+
+    await syncMemberRoles();
 
     const readableDate = reminderTime.toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
 
