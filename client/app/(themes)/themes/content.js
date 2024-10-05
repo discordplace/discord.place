@@ -43,13 +43,13 @@ export default function Content() {
   return (
     <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 sm:px-0">
       <Square
-        column='5'
-        row='5'
+        column='10'
+        row='10'
         transparentEffectDirection='bottomToTop'
         blockColor='rgba(var(--bg-secondary))'
       />
 
-      <div className='absolute top-0 left-0 -z-[1] w-full h-full [background:linear-gradient(180deg,_rgba(153,_153,_153,_0.075)_0%,_transparent_100%)]' />
+      <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
 
       <div className='max-w-[700px] flex flex-col w-full'>
         <motion.h1 
