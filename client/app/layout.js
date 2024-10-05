@@ -41,18 +41,12 @@ export const viewport = {
 
 export default function RootLayout(props) {
   return (
-    <html
-      lang='en'
-      translate='no'
-      className='dark'
-    >
-      <body
-        className={cn(
-          'flex flex-col',
-          GeistSans.className,
-          GeistSans.variable
-        )}
-      >
+    <html lang="en" translate="no" className='dark'>
+      <body className={cn(
+        'flex flex-col',
+        GeistSans.className,
+        GeistSans.variable
+      )}>
         <AuthProvider>
           <LayoutContent>
             {props.children}
