@@ -4,7 +4,7 @@ import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import { Bricolage_Grotesque } from 'next/font/google';
 import cn from '@/lib/cn';
-import { MdAccountCircle, MdEmojiEmotions, MdHome } from 'react-icons/md';
+import { MdAccountCircle, MdEmojiEmotions, MdHome, MdSync } from 'react-icons/md';
 import useDashboardStore from '@/stores/dashboard';
 import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCompass, FaEye, FaUsers } from 'react-icons/fa';
@@ -31,6 +31,7 @@ import Tooltip from '@/app/components/Tooltip';
 import Link from 'next/link';
 import { useMedia } from 'react-use';
 import { useEffect } from 'react';
+import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
@@ -142,6 +143,17 @@ export default function Sidebar() {
           href: `${config.analytics.url}/websites/${config.analytics.websiteId}`,
           name: 'Analytics',
           icon: SiGoogleanalytics
+        },
+        {
+          id: 'syncPlans',
+          name: 'Sync Plans',
+          icon: MdSync,
+          onClick: () => toast.promise(syncLemonSqueezyPlans(), {
+            loading: 'Syncing Lemon Squeezy plans..',
+            success: () => 'Successfully synced Lemon Squeezy plans.',
+            error: message => message
+          }),
+          disabled: data?.permissions?.canSyncLemonSqueezyPlans === false
         }
       ]
     }
