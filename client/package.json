@@ -29,6 +29,7 @@
     "@wavesurfer/react": "^1.0.7",
     "apexcharts": "^3.46.0",
     "axios": "^1.6.7",
+    "chrono-node": "^2.7.7",
     "clsx": "^2.1.0",
     "colord": "^2.9.3",
     "date-fns": "^3.6.0",

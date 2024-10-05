@@ -10,7 +10,7 @@ export const useDashboardStore = create(set => ({
   loading: true,
   setLoading: loading => set({ loading }),
   fetchData: async keys => {
-    set({ loading: true });
+    set({ loading: true, searchQuery: null });
     
     fetchData(keys)
       .then(data => set({ data, loading: false }))
@@ -22,7 +22,9 @@ export const useDashboardStore = create(set => ({
   isCollapsed: false,
   setIsCollapsed: isCollapsed => set({ isCollapsed }),
   selectedItems: [],
-  setSelectedItems: selectedItems => set({ selectedItems })
+  setSelectedItems: selectedItems => set({ selectedItems }),
+  searchQuery: null,
+  setSearchQuery: searchQuery => set({ searchQuery })
 }));
 
 export default useDashboardStore;

@@ -6,7 +6,7 @@ import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
 import { AnimatePresence } from 'framer-motion';
 import useDashboardStore from '@/stores/dashboard';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { HiCursorClick } from 'react-icons/hi';
@@ -15,6 +15,8 @@ import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
 import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
 import { FiX } from 'react-icons/fi';
 import { isEqual } from 'lodash';
+import { IoSearch } from 'react-icons/io5';
+import * as chrono from 'chrono-node';
 
 export default function Table({ tabs }) {
   const selectedItems = useDashboardStore(state => state.selectedItems);
@@ -36,10 +38,32 @@ export default function Table({ tabs }) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTab, currentSort]);
+  
+  const [currentlySearching, setCurrentlySearching] = useState(false);
+  const searchQuery = useDashboardStore(state => state.searchQuery);
+  const setSearchQuery = useDashboardStore(state => state.setSearchQuery);
+  const searchInputRef = useRef(null);
 
   if (!currentTabData || !currentTabData.columns) return null;
 
-  const sortedColumns = currentTabData.columns
+  const hasSearchableColumns = currentTabData.columns.some(column => column.some(({ searchValues, type }) => type === 'date' || Array.isArray(searchValues)));
+
+  const filteredColumns = currentTabData.columns
+    .filter(column => {
+      if (!searchQuery) return true;
+      return column.filter(({ searchValues, type }) => type === 'date' || Array.isArray(searchValues)).some(({ searchValues, type, value }) => {
+        if (type === 'date') {
+          const parsedDate = chrono.parseDate(searchQuery);
+          if (!parsedDate) return false;
+
+          return new Date(value).getTime() >= parsedDate.getTime();
+        }
+
+        return searchValues.some(value => String(value).toLowerCase().includes(searchQuery.toLowerCase()));
+      });
+    });
+
+  const sortedColumns = filteredColumns
     .toSorted((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b]));
 
   // Paginate columns
@@ -85,7 +109,7 @@ export default function Table({ tabs }) {
           >
             {tab.label}
 
-            <span className='text-xs rounded-full bg-quaternary sm:bg-quaternary text-primary px-1.5 py-0.5'>
+            <span className='flex items-center justify-center w-4 h-4 text-xs rounded-full bg-quaternary sm:bg-quaternary text-primary'>
               {tab.count}
             </span>
 
@@ -97,10 +121,52 @@ export default function Table({ tabs }) {
             )}
           </div>
         ))}
+
+        {hasSearchableColumns && (
+          <div
+            className={cn(
+              'select-none relative z-10 flex items-center font-medium text-xs text-tertiary gap-x-1.5 bg-tertiary hover:text-primary hover:bg-quaternary rounded-full py-1 px-2.5',
+              currentlySearching ? 'cursor-text' : 'cursor-pointer'
+            )}
+            onClick={() => {
+              if (currentlySearching) {
+                searchInputRef.current.focus();
+              } else setCurrentlySearching(true);
+            }}
+          >
+            <IoSearch />
+            
+            {currentlySearching ? (
+              <input
+                type='text'
+                className='w-24 bg-transparent outline-none sm:w-36 text-secondary'
+                placeholder='Search anything...'
+                value={searchQuery}
+                onChange={event => setSearchQuery(event.target.value)}
+                autoFocus
+                ref={searchInputRef}
+              />
+            ) : (
+              'Search'
+            )}
+
+            {currentlySearching && (
+              <button
+                className='flex items-center text-xs transition-colors text-tertiary hover:text-primary'
+                onClick={() => {
+                  setSearchQuery(null);
+                  setCurrentlySearching(false);
+                }}
+              >
+                <FiX />
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <div className='relative w-full -mt-8 overflow-auto lg:max-w-[unset] max-w-[230px] mobile:max-w-[360px] sm:max-w-[430px]'>
-        {currentTabData.columns.length === 0 && (
+        {(currentTabData.columns.length === 0 || displayedColumns.length === 0) && (
           <div className='flex items-center max-w-[calc(100vw_-_65px)] sm:max-w-[unset] justify-center min-h-[calc(100dvh_-_420px)]'>
             <ErrorState
               title={
@@ -115,7 +181,7 @@ export default function Table({ tabs }) {
         )}
 
         <table className='w-full table-auto'>
-          {currentTabData.columns.length > 0 && (
+          {displayedColumns.length > 0 && (
             <thead className='relative text-left select-none'>
               <tr>
                 {currentTabData.rows?.map((row, index) => (

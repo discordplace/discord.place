@@ -138,6 +138,12 @@ export default function ColumnRenderer({ data }) {
           <span className='text-sm font-medium text-primary'>
             {data.name || 'Unknown'}
           </span>
+
+          {data.showId && (
+            <span className='text-xs text-tertiary'>
+              {data.id}
+            </span>
+          )}
         </div>
       );
     case 'bot':
@@ -159,6 +165,12 @@ export default function ColumnRenderer({ data }) {
               #{data.discriminator}
             </span>
           </div>
+
+          {data.showId && (
+            <span className='text-xs text-tertiary'>
+              {data.id}
+            </span>
+          )}
         </div>
       );
     case 'category':
