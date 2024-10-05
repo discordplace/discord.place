@@ -1791,7 +1791,7 @@ export default function Page() {
 
           {loading && (
             <AnimatePresence>
-              <div className="absolute top-0 left-0 flex flex-col items-center justify-center h-full w-full bg-background z-[10]">
+              <div className="absolute top-0 left-0 flex flex-col items-center justify-center h-full w-full max-h-[919px] bg-background z-[10]">
                 <MotionImage
                   className='w-[64px] h-[64px]'
                   src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
