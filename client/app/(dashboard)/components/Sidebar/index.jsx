@@ -1,60 +1,60 @@
 'use client';
 
-import Image from 'next/image';
 import useThemeStore from '@/stores/theme';
-import Link from 'next/link';
-import { MdEmojiEmotions, MdHome } from 'react-icons/md';
+import Image from 'next/image';
+import { Bricolage_Grotesque } from 'next/font/google';
 import cn from '@/lib/cn';
+import { MdAccountCircle, MdEmojiEmotions, MdHome } from 'react-icons/md';
 import useDashboardStore from '@/stores/dashboard';
-import useAuthStore from '@/stores/auth';
-import { CgLogOut } from 'react-icons/cg';
-import logout from '@/lib/request/auth/logout';
-import { toast } from 'sonner';
-import Tooltip from '@/app/components/Tooltip';
-import { motion } from 'framer-motion';
 import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import { FaCompass, FaEye, FaUsers } from 'react-icons/fa';
 import { MdMyLocation } from 'react-icons/md';
-import { IoChevronBackOutline } from 'react-icons/io5';
-import { useMedia } from 'react-use';
-import { useEffect } from 'react';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { FaUserTimes } from 'react-icons/fa';
 import config from '@/config';
 import { SiGoogleanalytics } from 'react-icons/si';
-import { MdArrowOutward } from 'react-icons/md';
 import { HiTemplate } from 'react-icons/hi';
-import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
-import { MdSync } from 'react-icons/md';
 import { CgBlock } from 'react-icons/cg';
 import { PiWaveformBold } from 'react-icons/pi';
 import { FiLink } from 'react-icons/fi';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import useAuthStore from '@/stores/auth';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { useRouter } from 'next-nprogress-bar';
+import { IoMdLogOut } from 'react-icons/io';
+import logout from '@/lib/request/auth/logout';
+import { toast } from 'sonner';
+import BlockItem from '@/app/(dashboard)/components/Sidebar/BlockItem';
+import CollapseIcon from '@/app/(dashboard)/components/Sidebar/Icons/Collapse';
+import { BiSolidChevronRight } from 'react-icons/bi';
+import Tooltip from '@/app/components/Tooltip';
+import Link from 'next/link';
+import { useMedia } from 'react-use';
+import { useEffect } from 'react';
+
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
   const data = useDashboardStore(state => state.data);
+  const isCollapsed = useDashboardStore(state => state.isCollapsed);
+  const setIsCollapsed = useDashboardStore(state => state.setIsCollapsed);
 
   const blocks = [
     {
-      name: 'Main Menu',
-      tabs: [
-        {
-          id: 'home',
-          name: 'Home',
-          icon: MdHome
-        },
-        {
-          id: 'users',
-          name: 'Users',
-          icon: FaUsers
-        },
-        {
-          id: 'guilds',
-          name: 'Guilds',
-          icon: FaCompass
-        }
-      ]
+      id: 'home',
+      name: 'Home',
+      icon: MdHome
+    },
+    {
+      id: 'users',
+      name: 'Users',
+      icon: FaUsers
+    },
+    {
+      id: 'guilds',
+      name: 'Guilds',
+      icon: FaCompass
     },
     {
       name: 'Queues',
@@ -63,37 +63,43 @@ export default function Sidebar() {
           id: 'emojisQueue',
           name: 'Emojis',
           icon: MdEmojiEmotions,
-          disabled: data?.permissions?.canApproveEmojis === false
+          disabled: data?.permissions?.canApproveEmojis === false,
+          badge: data?.importantCounts?.emojis
         },
         {
           id: 'botsQueue',
           name: 'Bots',
           icon: RiRobot2Fill,
-          disabled: data?.permissions?.canApproveBots === false
+          disabled: data?.permissions?.canApproveBots === false,
+          badge: data?.importantCounts?.bots
         },
         {
           id: 'templatesQueue',
           name: 'Templates',
           icon: HiTemplate,
-          disabled: data?.permissions?.canApproveTemplates === false
+          disabled: data?.permissions?.canApproveTemplates === false,
+          badge: data?.importantCounts?.templates
         },
         {
           id: 'soundsQueue',
           name: 'Sounds',
           icon: PiWaveformBold,
-          disabled: data?.permissions?.canApproveSounds === false
+          disabled: data?.permissions?.canApproveSounds === false,
+          badge: data?.importantCounts?.sounds
         },
         {
           id: 'reviewsQueue',
           name: 'Reviews',
           icon: FaEye,
-          disabled: data?.permissions?.canApproveReviews === false && data?.permissions?.canDeleteReviews === false
+          disabled: data?.permissions?.canApproveReviews === false && data?.permissions?.canDeleteReviews === false,
+          badge: data?.importantCounts?.reviews
         },
         {
           id: 'themesQueue',
           name: 'Themes',
           icon: RiBrush2Fill,
-          disabled: data?.permissions?.canApproveThemes === false
+          disabled: data?.permissions?.canApproveThemes === false,
+          badge: data?.importantCounts?.themes
         }
       ]
     },
@@ -136,29 +142,13 @@ export default function Sidebar() {
           href: `${config.analytics.url}/websites/${config.analytics.websiteId}`,
           name: 'Analytics',
           icon: SiGoogleanalytics
-        },
-        {
-          id: 'syncPlans',
-          name: 'Sync Plans',
-          icon: MdSync,
-          onClick: () => toast.promise(syncLemonSqueezyPlans(), {
-            loading: 'Syncing Lemon Squeezy plans..',
-            success: () => 'Successfully synced Lemon Squeezy plans.',
-            error: message => message
-          }),
-          disabled: data?.permissions?.canSyncLemonSqueezyPlans === false
         }
       ]
     }
   ];
 
-  const activeTab = useDashboardStore(state => state.activeTab);
-  const setActiveTab = useDashboardStore(state => state.setActiveTab);
-  const loading = useDashboardStore(state => state.loading);
-
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
-  const loggedIn = useAuthStore(state => state.loggedIn);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
 
   function logOut() {
@@ -174,181 +164,194 @@ export default function Sidebar() {
     });
   }
 
-  const isCollapsed = useDashboardStore(state => state.isCollapsed);
-  const setIsCollapsed = useDashboardStore(state => state.setIsCollapsed);
-  const isMobile = useMedia('(max-width: 768px)', false);
+  const router = useRouter();
+  const isMobile = useMedia('(max-width: 768px)');
 
   useEffect(() => {
-    if (isMobile) setIsCollapsed(true);
+    setIsCollapsed(isMobile);
 
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
-  
+
   return (
     <div
       className={cn(
-        'bg-secondary sticky left-0 top-0 h-max z-[10] border-r border-r-[rgba(var(--bg-quaternary))] min-w-[300px] flex flex-col gap-y-6 p-6',
-        isCollapsed && 'min-w-[60px] max-w-[120px]',
-        isMobile && isCollapsed && 'min-w-[0px] max-w-[0px] p-3 min-h-[100dvh]',
-        isMobile && !isCollapsed && 'scrollbar-hide fixed'
+        'flex',
+        isCollapsed ? 'min-w-[60px] w-[60px]' : 'min-w-[250px]'
       )}
     >
-      <div
-        className={cn(
-          'flex items-center w-full',
-          isCollapsed ? 'justify-center' : 'justify-between'
-        )}
-      >
-        <Link 
-          href='/'
-          className='relative flex items-center transition-opacity gap-x-6 hover:opacity-70'
-        >
-          <Image 
-            src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-            width={200} 
-            height={200} 
-            className='w-[32px] h-[32px]' 
-            alt='discord.placeLogo' 
-          />
-
-          <h1 className={cn(
-            'text-lg font-semibold',
-            isCollapsed && 'hidden'
-          )}>Dashboard</h1>
-        </Link>
-
+      <div className='sticky top-0 w-full h-max'>
         <div
-          className='absolute ml-auto -right-[1rem] cursor-pointer bg-secondary p-1.5 hover:bg-quaternary text-secondary hover:text-primary rounded-full border border-[rgba(var(--bg-quaternary))]'
-          onClick={() => setIsCollapsed(!isCollapsed)}
+          className={cn(
+            'flex items-center pt-8 select-none gap-4',
+            isCollapsed ? 'flex-col pl-4' : 'pl-8'
+          )}
         >
-          <IoChevronBackOutline className={cn(
-            'transition-transform transform duration-200 ease-in-out',
-            isCollapsed && 'rotate-180'
-          )} />
-        </div>
-      </div>
+          <Link
+            className='flex gap-x-4 hover:opacity-60'
+            href='/'
+          >
+            <Image 
+              src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
+              width={64} 
+              height={64} 
+              alt="discord.place Logo" 
+              className='w-6 h-6'
+            />
 
-      {blocks.map(block => (
-        <div className={cn(
-          'flex flex-col gap-y-2',
-          isMobile && isCollapsed && 'hidden'
-        )} key={block.name}>
-          <h2 className={cn(
-            'text-sm font-semibold select-none text-tertiary',
-            isCollapsed && 'text-xs truncate'
-          )}>{block.name}</h2>
+            <h1
+              className={cn(
+                'text-lg font-semibold',
+                isCollapsed && 'hidden',
+                BricolageGrotesque.className
+              )}
+            >
+              Dashboard
+            </h1>
+          </Link>
 
-          {block.tabs.map(link => (
-            isCollapsed ? (
-              <Tooltip
-                content={link.name}
-                key={link.name}
-                side='right'
-              >
-                <div
-                  className={cn(
-                    'relative group transition-all cursor-pointer flex items-center justify-center px-3 py-2 rounded-lg hover:bg-tertiary font-medium gap-x-2 select-noe text-secondary hover:text-primary',
-                    activeTab === link.id && 'bg-quaternary text-primary pointer-events-none',
-                    (loading || link.disabled) && 'opacity-50 pointer-events-none'
-                  )}
-                  onClick={() => {
-                    if (link.onClick) return link.onClick();
-                    if (link.type === 'redirect') return window.open(link.href, '_blank');
-
-                    setActiveTab(link.id);
-                    if (isMobile) setIsCollapsed(true);
-                  }}
-                >
-                  <div className='relative'>
-                    <link.icon size={20} />
-                    {link.type === 'redirect' && (
-                      <MdArrowOutward size={18} className='absolute p-0.5 -right-3 rounded-full bg-[rgba(var(--bg-secondary))] group-hover:bg-[rgba(var(--bg-tertiary))] -bottom-2 text-tertiary' />
-                    )}
-                  </div>
-
-                  {activeTab === link.id && (
-                    <motion.div
-                      layoutId='activeTabIndicator'
-                      className='absolute -left-6 bg-black dark:bg-white w-[3px] h-[50%] rounded-lg'
-                    />
-                  )}
-                </div>
-              </Tooltip>
-            ) : (
-              <div
-                key={link.name}
+          {!isMobile && (
+            <Tooltip
+              content={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+              side='right'
+            >
+              <span
                 className={cn(
-                  'relative transition-all cursor-pointer flex items-center px-3 py-2 rounded-lg hover:bg-tertiary font-medium gap-x-2 select-noe text-secondary hover:text-primary',
-                  activeTab === link.id && 'bg-quaternary text-primary pointer-events-none',
-                  (loading || link.disabled) && 'opacity-50 pointer-events-none'
+                  'cursor-pointer',
+                  !isCollapsed && 'ml-auto'
                 )}
-                onClick={() => {
-                  if (link.onClick) return link.onClick();
-                  if (link.type === 'redirect') return window.open(link.href, '_blank');
-                  
-                  setActiveTab(link.id);
-                  if (isMobile) setIsCollapsed(true);
-                }}
               >
-                <link.icon size={20} />
-                {link.name}
-
-                {link.type === 'redirect' && (
-                  <MdArrowOutward size={18} className='ml-auto text-tertiary' />
-                )}
-
-                {activeTab === link.id && (
-                  <motion.div
-                    layoutId='activeTabIndicator'
-                    className='absolute -left-6 bg-black dark:bg-white w-[3px] h-[50%] rounded-lg'
+                {isCollapsed ? (
+                  <BiSolidChevronRight
+                    className='text-secondary hover:text-tertiary'
+                    size={20}
+                    onClick={() => setIsCollapsed(!isCollapsed)}
+                  />
+                ) : (
+                  <CollapseIcon
+                    className='text-secondary hover:text-tertiary'
+                    height={20}
+                    width={20}
+                    onClick={() => setIsCollapsed(!isCollapsed)}
                   />
                 )}
-              </div>
-            )
-          ))}
-        </div>
-      ))}
-
-      <div className={cn(
-        'flex justify-between pt-6 mt-auto mb-6 border-t border-t-primary',
-        isMobile && isCollapsed && 'hidden'
-      )}>
-        <div className='flex items-center gap-x-4'>        
-          {loggedIn && (
-            <>
-              <UserAvatar
-                id={user.id}
-                hash={user.avatar}
-                size={32}
-                width={32}
-                height={32}
-                className='rounded-full'
-              />
-
-              <div className={cn(
-                'flex flex-col select-none',
-                isCollapsed && 'hidden'
-              )}>
-                <h2 className='text-lg font-semibold'>
-                  {user.global_name}
-                </h2>
-
-                <span className='text-sm font-medium text-tertiary'>
-                  @{user.username}
-                </span>
-              </div>
-            </>
+              </span>
+            </Tooltip>
           )}
         </div>
 
-        <Tooltip content='Log Out'>
-          <button
-            className='flex items-center justify-between text-lg outline-none text-secondary hover:text-primary'
-            onClick={logOut}
-          >
-            <CgLogOut />
-          </button>
-        </Tooltip>
+        <div className='flex flex-col w-full pl-4 mt-8 gap-y-1'>
+          {blocks.filter(({ tabs }) => !tabs).map(block => (
+            <BlockItem
+              key={block.id}
+              id={block.id}
+              name={block.name}
+              icon={block.icon}
+            />
+          ))}
+
+          {blocks.filter(({ tabs }) => tabs).map(block => (
+            <div
+              key={block.id}
+              className={cn(
+                'flex flex-col gap-y-1',
+                !isCollapsed && 'mt-3' 
+              )}
+            >
+              <span
+                className={cn(
+                  'pl-4 text-sm font-semibold text-tertiary',
+                  isCollapsed && 'hidden'
+                )}
+              >
+                {block.name}  
+              </span>
+
+              <div
+                className={cn(
+                  'h-[1px] bg-quaternary w-full',
+                  !isCollapsed && 'hidden'
+                )}
+              />
+
+              <div className='flex flex-col gap-y-1'>
+                {block.tabs.map(tab => (
+                  <BlockItem
+                    key={tab.id}
+                    id={tab.id}
+                    name={tab.name}
+                    icon={tab.icon}
+                    href={tab.href}
+                    onClick={tab.onClick}
+                    badge={tab.badge}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <DropdownMenu.Root modal={false}>
+          <DropdownMenu.Trigger asChild>
+            <div
+              className={cn(
+                'my-4 w-full flex items-center gap-x-2 rounded-2xl max-w-[calc(100%-1rem)] cursor-pointer',
+                isCollapsed ? 'ml-5' : 'ml-4 hover:bg-quaternary border bg-tertiary border-[rgba(var(--bg-quaternary))] p-3'
+              )}
+            >
+              <UserAvatar
+                id={user?.id}
+                hash={user?.avatar}
+                size={64}
+                width={36}
+                height={36}
+                className='rounded-full'
+              />
+
+              <div
+                className={cn(
+                  'flex flex-col text-sm select-none',
+                  isCollapsed && 'hidden'
+                )}
+              >
+                <span className='font-semibold'>
+                  {user?.global_name}
+                </span>
+
+                <span className='text-xs text-tertiary'>
+                  @{user?.username}
+                </span>
+              </div>
+            </div>
+          </DropdownMenu.Trigger>
+
+          <DropdownMenu.Portal>
+            <DropdownMenu.Content
+              className={cn(
+                'z-10 flex flex-col p-1.5 mb-4 border outline-none min-w-[235px] bg-secondary rounded-xl border-primary',
+                isCollapsed ? 'shadow-[0px_-15px_20px_0px_rgba(var(--bg-background))]' : 'shadow-[0px_-15px_20px_0px_rgba(var(--bg-secondary))]'
+              )}
+              sideOffset={5}
+              side={isCollapsed ? 'right' : 'bottom'}
+            >
+              <DropdownMenu.Item
+                className='flex items-center px-2.5 py-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2 data-[highlighted]:bg-quaternary text-tertiary data-[highlighted]:text-primary'
+                onSelect={() => router.push('/account')}
+              >
+                <MdAccountCircle />
+                My Account        
+              </DropdownMenu.Item>
+
+              <DropdownMenu.Item
+                className='flex items-center py-2 px-2.5 font-medium rounded-xl outline-none cursor-pointer gap-x-2 data-[highlighted]:bg-quaternary text-tertiary data-[highlighted]:text-primary'
+                onSelect={logOut}
+              >
+                <IoMdLogOut />
+                Logout
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Root>
       </div>
     </div>
   );
