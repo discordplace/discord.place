@@ -296,6 +296,7 @@ export default function Sidebar() {
                     href={tab.href}
                     onClick={tab.onClick}
                     badge={tab.badge}
+                    disabled={tab.disabled}
                   />
                 ))}
               </div>

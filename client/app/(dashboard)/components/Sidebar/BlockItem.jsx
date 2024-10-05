@@ -3,10 +3,11 @@ import cn from '@/lib/cn';
 import useDashboardStore from '@/stores/dashboard';
 import Link from 'next/link';
 
-export default function BlockItem({ id, name, icon, href, onClick, badge }) {
+export default function BlockItem({ id, name, icon, href, onClick, badge, disabled }) {
   const isCollapsed = useDashboardStore(state => state.isCollapsed);
   const activeTab = useDashboardStore(state => state.activeTab);
   const setActiveTab = useDashboardStore(state => state.setActiveTab);
+  const loading = useDashboardStore(state => state.loading);
  
   const IconComponent = icon;
   const ContainerComponent = href ? Link : onClick ? 'button' : 'div';
@@ -23,7 +24,9 @@ export default function BlockItem({ id, name, icon, href, onClick, badge }) {
           activeTab === id ? 'bg-quaternary text-primary pointer-events-none' : 'cursor-pointer hover:bg-quaternary text-secondary hover:text-primary',
           badge > 0 && 'hover:bg-tertiary hover:bg-gradient-to-l hover:from-red-600/20',
           activeTab === id && badge > 0 && 'bg-tertiary bg-gradient-to-l from-red-600/20',
-          isCollapsed ? 'justify-center' : 'pl-4'
+          isCollapsed ? 'justify-center' : 'pl-4',
+          disabled && 'opacity-50 pointer-events-none',
+          loading && 'pointer-events-none'
         )}
         key={id}
         onClick={() => onClick ? onClick() : !href && setActiveTab(id)}
