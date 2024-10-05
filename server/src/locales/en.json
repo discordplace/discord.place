@@ -457,7 +457,7 @@
     "embeds": [
       {
         "title": "**Votes**",
-        "description": "- ***{serverVotes}*** time this server has been voted in total by ***${totalVoters}*** users.",
+        "description": "- ***{serverVotes}*** time this server has been voted in total by ***{totalVoters}*** users.",
         "table": {
           "vote": "Vote"
         }
