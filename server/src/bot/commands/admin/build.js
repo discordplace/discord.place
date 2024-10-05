@@ -15,13 +15,7 @@ module.exports = {
     logger.info('Building the site...');
 
     try {
-      const { stdout, stderr } = await exec(process.env.CLIENT_BUILD_FILE_PATH, { cwd: process.env.HOME });
-
-      if (stderr) {
-        logger.error('Error building the site:', stderr);
-
-        return interaction.followUp({ content: 'Error building the site. Check the logs for more information.' });
-      }
+      const { stdout } = await exec(process.env.CLIENT_BUILD_FILE_PATH, { cwd: process.env.HOME });
 
       logger.info('Build completed:', stdout);
 
