@@ -83,7 +83,15 @@ module.exports = {
 
       const responseData = {
         permissions,
-        queue: {}
+        queue: {},
+        importantCounts: {
+          emojis: await Emoji.countDocuments({ approved: false }) + await EmojiPack.countDocuments({ approved: false }),
+          bots: await Bot.countDocuments({ approved: false }),
+          templates: await Template.countDocuments({ approved: false }),
+          sounds: await Sound.countDocuments({ approved: false }),
+          themes: await Theme.countDocuments({ approved: false }),
+          reviews: await BotReview.countDocuments({ approved: false }) + await ServerReview.countDocuments({ approved: false })
+        }
       };
 
       if (keys?.includes('stats')) {

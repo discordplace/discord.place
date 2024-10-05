@@ -10,8 +10,6 @@ import { CgBlock, CgFormatSlash } from 'react-icons/cg';
 import useThemeStore from '@/stores/theme';
 import { motion, AnimatePresence } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
-import cn from '@/lib/cn';
-import { useMedia } from 'react-use';
 import Queue from '@/app/(dashboard)/components/Queue';
 import { MdAlternateEmail, MdEmojiEmotions, MdHttps, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility } from 'react-icons/md';
 import { FaCompass, FaCrown, FaEye, FaUserCircle } from 'react-icons/fa';
@@ -1769,20 +1767,13 @@ export default function Page() {
     return () => document.body.style.overflow = 'auto';
   }, [loading]);
 
-  const isCollapsed = useDashboardStore(state => state.isCollapsed);
-  const isMobile = useMedia('(max-width: 768px)', false);
-
   return (
-    <div className='relative flex'>
+    <div className='relative flex w-full overflow-x-clip bg-secondary'>
       <Sidebar />
       
-      <div className={cn(
-        'relative z-[5] flex flex-1 w-full min-h-[100dvh] max-w-[calc(100%_-_300px)]',
-        isCollapsed && 'max-w-[90%]',
-        isMobile && !isCollapsed && 'max-w-full'
-      )}>
-        <div className='flex-1 w-full'>
-          <div className='flex items-center mt-4 ml-6 text-sm font-medium sm:mt-12 sm:ml-12'>
+      <div className='flex w-full min-h-[100dvh] pt-4 pl-4 pr-2 pb-4'>
+        <div className='flex flex-col flex-1 w-full p-6 overflow-x-auto border sm:p-8 rounded-3xl bg-background border-primary'>
+          <div className='flex items-center text-sm font-medium'>
             <span className='text-tertiary'>
               Dashboard
             </span>
@@ -1794,18 +1785,7 @@ export default function Page() {
             </span>
           </div>
 
-          <AnimatePresence>
-            {isMobile && !isCollapsed && (
-              <motion.div
-                className='absolute top-0 left-0 w-full h-full dark:bg-black/70 bg-white/70 z-[1]'
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              />
-            )}
-          </AnimatePresence>
-
-          <div className='mt-4 ml-4 sm:mt-12 sm:ml-12'>
+          <div className='mt-4'>
             {tabs.find(tab => tab.id === activeTab)?.component || <Queue key={activeTab} {...tabs.find(tab => tab.id === activeTab)?.data} />}
           </div>
 

@@ -86,7 +86,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col my-8 gap-y-4">
-      <div className='grid grid-cols-1 gap-6 mr-6 sm:grid-cols-2 2xl:grid-cols-4'>
+      <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-4'>
         <StatsBlock
           icon={<FaCompass />}
           label='Servers'

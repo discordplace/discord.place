@@ -99,9 +99,9 @@ export default function Table({ tabs }) {
         ))}
       </div>
 
-      <div className='relative -mt-8 min-w-[1000px] w-full overflow-scroll'>
+      <div className='relative w-full -mt-8 overflow-auto lg:max-w-[unset] max-w-[230px] mobile:max-w-[360px] sm:max-w-[430px]'>
         {currentTabData.columns.length === 0 && (
-          <div className='flex items-center max-w-[calc(100vw_-_65px)] sm:max-w-[unset] justify-center min-h-[calc(100dvh_-_400px)]'>
+          <div className='flex items-center max-w-[calc(100vw_-_65px)] sm:max-w-[unset] justify-center min-h-[calc(100dvh_-_420px)]'>
             <ErrorState
               title={
                 <div className='flex items-center gap-x-2'>
@@ -223,7 +223,7 @@ export default function Table({ tabs }) {
         <AnimatePresence>
           {selectedItems.length > 0 && (
             <motion.div
-              className='left-8 px-2 py-2 sm:p-[unset] sm:left-[unset] z-[10] font-medium text-sm gap-x-2 fixed bottom-4 rounded-2xl flex items-center border-2 border-primary w-full max-w-[calc(100%_-_40px)] sm:min-w-[500px] sm:w-max h-max sm:h-[50px] bg-secondary'
+              className='left-8 px-2 py-2 sm:p-[unset] sm:left-[unset] z-[10] font-medium text-sm gap-x-2 fixed bottom-8 rounded-2xl flex items-center border-2 border-primary w-full max-w-[calc(100%_-_40px)] sm:min-w-[500px] sm:w-max h-max sm:h-[50px] bg-secondary'
               initial={{
                 opacity: 0,
                 y: 60,
