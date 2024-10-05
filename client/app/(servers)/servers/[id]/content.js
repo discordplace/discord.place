@@ -10,12 +10,13 @@ import Script from 'next/script';
 import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';
-import { t } from '@/stores/language';
+import useLanguageStore, { t } from '@/stores/language';
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 
 export default function Content({ server }) {
   const theme = useThemeStore(state => state.theme);
+  const language = useLanguageStore(state => state.language);
 
   return (
     <div className='flex justify-center w-full mt-32'>
@@ -66,7 +67,16 @@ export default function Content({ server }) {
           <div className='flex items-center ml-4 gap-x-2'>
             {server.badges.length > 0 && (
               server.badges.map(badge => (
-                <Tooltip key={badge} content={badge}>
+                <Tooltip
+                  key={badge}
+                  content={t(`badges.${badge.toLowerCase()}`, {
+                    premiumSince: server.ownerSubscriptionCreatedAt,
+                    lng: language,
+                    formatParams: {
+                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
+                    }
+                  })}
+                >
                   <MotionImage 
                     src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.toLowerCase()}.svg`} 
                     width={24} 

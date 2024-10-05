@@ -52,7 +52,7 @@ module.exports = {
         }));
 
       const badges = [];
-      const foundPremium = await User.exists({ 'id': guild.ownerId, subscription: { $ne: null } });
+      const foundPremium = await User.findOne({ 'id': guild.ownerId, subscription: { $ne: null } });
       if (foundPremium) badges.push('Premium');
 
       const permissions = {
@@ -117,7 +117,8 @@ module.exports = {
         }).filter(Boolean),
         monthly_votes: monthlyVotes,
         webhook: permissions.canEdit && server.webhook,
-        joined_at: guild.joinedTimestamp
+        joined_at: guild.joinedTimestamp,
+        ownerSubscriptionCreatedAt: foundPremium ? new Date(foundPremium.subscription.createdAt).getTime() : null
       });
     }
   ],

@@ -88,7 +88,8 @@ export default function Content({ bot }) {
                     formatParams: {
                       premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
                     }
-                  })}                >
+                  })}
+                >
                   <MotionImage 
                     src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeName.toLowerCase()}.svg`} 
                     width={24} 
