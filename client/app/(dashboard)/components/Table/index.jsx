@@ -109,7 +109,7 @@ export default function Table({ tabs }) {
           >
             {tab.label}
 
-            <span className='flex items-center justify-center w-4 h-4 text-xs rounded-full bg-quaternary sm:bg-quaternary text-primary'>
+            <span className='flex items-center justify-center w-max px-1.5 h-4 text-xs rounded-full bg-quaternary sm:bg-quaternary text-primary'>
               {tab.count}
             </span>
 
