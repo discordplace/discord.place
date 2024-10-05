@@ -12,10 +12,13 @@ export default function WithText({ className}) {
   const theme = useThemeStore(state => state.theme);
 
   return (
-    <Link className={cn(
-      'flex items-center select-none gap-x-6 w-max',
-      className
-    )} href='/'>
+    <Link
+      className={cn(
+        'flex items-center select-none gap-x-6 w-max',
+        className
+      )}
+      href='/'
+    >
       <Image 
         src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
         width={64} 
