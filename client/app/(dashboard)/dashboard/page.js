@@ -1772,7 +1772,7 @@ export default function Page() {
       <Sidebar />
       
       <div className='flex w-full min-h-[100dvh] pt-4 pl-4 pr-2 pb-4'>
-        <div className='flex flex-col flex-1 w-full p-6 overflow-x-auto border sm:p-8 rounded-3xl bg-background border-primary'>
+        <div className='relative flex flex-col flex-1 w-full p-6 overflow-x-auto border sm:p-8 rounded-3xl bg-background border-primary'>
           <div className='flex items-center text-sm font-medium'>
             <span className='text-tertiary'>
               Dashboard
@@ -1791,7 +1791,7 @@ export default function Page() {
 
           {loading && (
             <AnimatePresence>
-              <div className="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-[100dvh] bg-background z-[10]">
+              <div className="absolute top-0 left-0 flex flex-col items-center justify-center h-full w-full bg-background z-[10]">
                 <MotionImage
                   className='w-[64px] h-[64px]'
                   src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
