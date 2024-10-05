@@ -116,6 +116,8 @@ permissions:
   canExecuteEval:
     - '957840712404193290'
     - '937316083533230110'
+  canExecuteBuild:
+    - '957840712404193290'
   canExecuteFetchRoles:
     - '1206032198562742312'
     - '1206354879321210900'
