@@ -116,7 +116,8 @@ export default function Page() {
                   id: user.id,
                   username: user.username,
                   avatar: user.avatar,
-                  showId: true
+                  showId: true,
+                  searchValues: [user.username, user.id]
                 },
                 {
                   type: 'userSubscription',
@@ -124,7 +125,8 @@ export default function Page() {
                 },
                 {
                   type: 'email',
-                  value: user.email || 'N/A'
+                  value: user.email || 'N/A',
+                  searchValues: [user.email]
                 },
                 {
                   type: 'date',
@@ -203,11 +205,14 @@ export default function Page() {
                   type: 'server',
                   id: guild.id,
                   name: guild.name,
-                  icon: guild.icon
+                  icon: guild.icon,
+                  showId: true,
+                  searchValues: [guild.name, guild.id]
                 },
                 {
                   type: 'number',
-                  value: guild.memberCount
+                  value: guild.memberCount,
+                  searchValues: [guild.memberCount]
                 },
                 {
                   type: 'date',
@@ -254,13 +259,19 @@ export default function Page() {
                   id: emoji.id,
                   name: emoji.name,
                   animated: emoji.animated,
-                  emoji_ids: emoji.emoji_ids
+                  emoji_ids: emoji.emoji_ids,
+                  showId: true,
+                  searchValues: emoji.emoji_ids ?
+                    [emoji.name, ...emoji.emoji_ids, emoji.emoji_ids.some(({ animated }) => animated) ? 'animated' : 'static'] :
+                    [emoji.name, emoji.id, emoji.animated ? 'animated' : 'static']
                 },
                 {
                   type: 'user',
                   id: emoji.user.id,
                   username: emoji.user.username,
-                  avatar: emoji.user.avatar
+                  avatar: emoji.user.avatar,
+                  showId: true,
+                  searchValues: [emoji.user.username, emoji.user.id]
                 },
                 {
                   type: 'date',
@@ -327,13 +338,18 @@ export default function Page() {
                   id: emoji.id,
                   name: emoji.name,
                   animated: emoji.animated,
-                  emoji_ids: emoji.emoji_ids
+                  emoji_ids: emoji.emoji_ids,
+                  searchValues: emoji.emoji_ids ?
+                    [emoji.name, ...emoji.emoji_ids, emoji.emoji_ids.some(({ animated }) => animated) ? 'animated' : 'static'] :
+                    [emoji.name, emoji.id, emoji.animated ? 'animated' : 'static']
                 },
                 {
                   type: 'user',
                   id: emoji.user.id,
                   username: emoji.user.username,
-                  avatar: emoji.user.avatar
+                  avatar: emoji.user.avatar,
+                  showId: true,
+                  searchValues: [emoji.user.username, emoji.user.id]
                 },
                 {
                   type: 'date',
@@ -413,18 +429,23 @@ export default function Page() {
                   id: bot.id,
                   username: bot.username,
                   discriminator: bot.discriminator,
-                  avatar: bot.avatar
+                  avatar: bot.avatar,
+                  showId: true,
+                  searchValues: [bot.username, bot.id]
                 },
                 {
                   type: 'user',
                   id: bot.owner.id,
                   username: bot.owner.username,
-                  avatar: bot.owner.avatar
+                  avatar: bot.owner.avatar,
+                  showId: true,
+                  searchValues: [bot.owner.username, bot.owner.id]
                 },
                 {
                   type: 'category',
                   value: bot.categories,
-                  icons: config.botCategoriesIcons
+                  icons: config.botCategoriesIcons,
+                  searchValues: bot.categories
                 },
                 {
                   type: 'date',
@@ -498,18 +519,23 @@ export default function Page() {
                   id: bot.id,
                   username: bot.username,
                   discriminator: bot.discriminator,
-                  avatar: bot.avatar
+                  avatar: bot.avatar,
+                  showId: true,
+                  searchValues: [bot.username, bot.id]
                 },
                 {
                   type: 'user',
                   id: bot.owner.id,
                   username: bot.owner.username,
-                  avatar: bot.owner.avatar
+                  avatar: bot.owner.avatar,
+                  showId: true,
+                  searchValues: [bot.owner.username, bot.owner.id]
                 },
                 {
                   type: 'category',
                   value: bot.categories,
-                  icons: config.botCategoriesIcons
+                  icons: config.botCategoriesIcons,
+                  searchValues: bot.categories
                 },
                 {
                   type: 'date',
@@ -582,18 +608,22 @@ export default function Page() {
                 {
                   type: 'template',
                   id: template.id,
-                  name: template.name
+                  name: template.name,
+                  searchValues: [template.name, template.id]
                 },
                 {
                   type: 'user',
                   id: template.user.id,
                   username: template.user.username,
-                  avatar: template.user.avatar
+                  avatar: template.user.avatar,
+                  showId: true,
+                  searchValues: [template.user.username, template.user.id]
                 },
                 {
                   type: 'category',
                   value: template.categories,
-                  icons: config.templateCategoriesIcons
+                  icons: config.templateCategoriesIcons,
+                  searchValues: template.categories
                 },
                 {
                   type: 'date',
@@ -666,18 +696,22 @@ export default function Page() {
                 {
                   type: 'template',
                   id: template.id,
-                  name: template.name
+                  name: template.name,
+                  searchValues: [template.name, template.id]
                 },
                 {
                   type: 'user',
                   id: template.user.id,
                   username: template.user.username,
-                  avatar: template.user.avatar
+                  avatar: template.user.avatar,
+                  showId: true,
+                  searchValues: [template.user.username, template.user.id]
                 },
                 {
                   type: 'category',
                   value: template.categories,
-                  icons: config.templateCategoriesIcons
+                  icons: config.templateCategoriesIcons,
+                  searchValues: template.categories
                 },
                 {
                   type: 'date',
@@ -750,18 +784,22 @@ export default function Page() {
                 {
                   type: 'sound',
                   id: sound.id,
-                  name: sound.name
+                  name: sound.name,
+                  searchValues: [sound.name, sound.id]
                 },
                 {
                   type: 'user',
                   id: sound.publisher.id,
                   username: sound.publisher.username,
-                  avatar: sound.publisher.avatar
+                  avatar: sound.publisher.avatar,
+                  showId: true,
+                  searchValues: [sound.publisher.username, sound.publisher.id]
                 },
                 {
                   type: 'category',
                   value: sound.categories,
-                  icons: config.soundCategoriesIcons
+                  icons: config.soundCategoriesIcons,
+                  searchValues: sound.categories
                 },
                 {
                   type: 'date',
@@ -835,18 +873,22 @@ export default function Page() {
                 {
                   type: 'sound',
                   id: sound.id,
-                  name: sound.name
+                  name: sound.name,
+                  searchValues: [sound.name, sound.id]
                 },
                 {
                   type: 'user',
                   id: sound.publisher.id,
                   username: sound.publisher.username,
-                  avatar: sound.publisher.avatar
+                  avatar: sound.publisher.avatar,
+                  showId: true,
+                  searchValues: [sound.publisher.username, sound.publisher.id]
                 },
                 {
                   type: 'category',
                   value: sound.categories,
-                  icons: config.soundCategoriesIcons
+                  icons: config.soundCategoriesIcons,
+                  searchValues: sound.categories
                 },
                 {
                   type: 'date',
@@ -922,21 +964,26 @@ export default function Page() {
                   custom: {
                     type: review.server ? 'server' : 'bot',
                     id: review._id
-                  }
+                  },
+                  searchValues: [review.server ? review.server.id : review.bot.id]
                 },
                 {
                   type: 'user',
                   id: review.user.id,
                   username: review.user.username,
-                  avatar: review.user.avatar
+                  avatar: review.user.avatar,
+                  showId: true,
+                  searchValues: [review.user.username, review.user.id]
                 },
                 {
                   type: 'rating',
-                  value: review.rating
+                  value: review.rating,
+                  searchValues: [`${review.rating} star${review.rating > 1 ? 's' : ''}`]
                 },
                 {
                   type: 'long-text',
-                  value: review.content
+                  value: review.content,
+                  searchValues: [review.content]
                 },
                 {
                   type: 'date',
@@ -1017,21 +1064,26 @@ export default function Page() {
                   custom: {
                     type: review.server ? 'server' : 'bot',
                     id: review._id
-                  }
+                  },
+                  searchValues: [review.server ? review.server.id : review.bot.id]
                 },
                 {
                   type: 'user',
                   id: review.user.id,
                   username: review.user.username,
-                  avatar: review.user.avatar
+                  avatar: review.user.avatar,
+                  showId: true,
+                  searchValues: [review.user.username, review.user.id]
                 },
                 {
                   type: 'rating',
-                  value: review.rating
+                  value: review.rating,
+                  searchValues: [`${review.rating} star${review.rating > 1 ? 's' : ''}`]
                 },
                 {
                   type: 'long-text',
-                  value: review.content
+                  value: review.content,
+                  searchValues: [review.content]
                 },
                 {
                   type: 'date',
@@ -1107,18 +1159,22 @@ export default function Page() {
                 {
                   type: 'theme',
                   id: theme.id,
-                  colors: theme.colors
+                  colors: theme.colors,
+                  searchValues: [theme.colors.primary, theme.colors.secondary]
                 },
                 {
                   type: 'user',
                   id: theme.publisher.id,
                   username: theme.publisher.username,
-                  avatar: theme.publisher.avatar
+                  avatar: theme.publisher.avatar,
+                  showId: true,
+                  searchValues: [theme.publisher.username, theme.publisher.id]
                 },
                 {
                   type: 'category',
                   value: theme.categories,
-                  icons: config.themeCategoriesIcons
+                  icons: config.themeCategoriesIcons,
+                  searchValues: theme.categories
                 },
                 {
                   type: 'date',
@@ -1191,18 +1247,22 @@ export default function Page() {
                 {
                   type: 'theme',
                   id: theme.id,
-                  colors: theme.colors
+                  colors: theme.colors,
+                  searchValues: [theme.colors.primary, theme.colors.secondary]
                 },
                 {
                   type: 'user',
                   id: theme.publisher.id,
                   username: theme.publisher.username,
-                  avatar: theme.publisher.avatar
+                  avatar: theme.publisher.avatar,
+                  showId: true,
+                  searchValues: [theme.publisher.username, theme.publisher.id]
                 },
                 {
                   type: 'category',
                   value: theme.categories,
-                  icons: config.themeCategoriesIcons
+                  icons: config.themeCategoriesIcons,
+                  searchValues: theme.categories
                 },
                 {
                   type: 'date',
@@ -1275,17 +1335,21 @@ export default function Page() {
                 {
                   type: 'link',
                   name: item.name,
-                  redirectTo: item.redirectTo
+                  redirectTo: item.redirectTo,
+                  searchValues: [item.name, item.redirectTo]
                 },
                 {
                   type: 'number',
-                  value: item.visits
+                  value: item.visits,
+                  searchValues: [item.visits]
                 },
                 {
                   type: 'user',
                   id: item.createdBy.id,
                   username: item.createdBy.username,
-                  avatar: item.createdBy.avatar
+                  avatar: item.createdBy.avatar,
+                  showId: true,
+                  searchValues: [item.createdBy.username, item.createdBy.id]
                 },
                 {
                   type: 'date',
@@ -1360,23 +1424,30 @@ export default function Page() {
                   id: item.bot.id,
                   username: item.bot.username,
                   discriminator: item.bot.discriminator,
-                  avatar: item.bot.avatar
+                  avatar: item.bot.avatar,
+                  showId: true,
+                  searchValues: [item.bot.username, item.bot.id]
                 },
                 {
                   type: 'user',
                   id: item.user.id,
                   username: item.user.username,
-                  avatar: item.user.avatar
+                  avatar: item.user.avatar,
+                  showId: true,
+                  searchValues: [item.user.username, item.user.id]
                 },
                 {
                   type: 'user',
                   id: item.reviewer.id,
                   username: item.reviewer.username,
-                  avatar: item.reviewer.avatar
+                  avatar: item.reviewer.avatar,
+                  showId: true,
+                  searchValues: [item.reviewer.username, item.reviewer.id]
                 },
                 {
                   type: 'reason',
-                  value: item.reason
+                  value: item.reason,
+                  searchValues: [item.reason]
                 },
                 {
                   type: 'date',
@@ -1456,19 +1527,25 @@ export default function Page() {
                     id: item.bot.id,
                     username: item.bot.username,
                     discriminator: item.bot.discriminator,
-                    avatar: item.bot.avatar
+                    avatar: item.bot.avatar,
+                    showId: true,
+                    searchValues: [item.bot.username, item.bot.id]
                   } :
                   {
                     type: 'server',
                     id: item.guild.id,
                     name: item.guild.name,
-                    icon: item.guild.icon
+                    icon: item.guild.icon,
+                    showId: true,
+                    searchValues: [item.guild.name, item.guild.id]
                   },
                 {
                   type: 'user',
                   id: item.user.id,
                   username: item.user.username,
-                  avatar: item.user.avatar
+                  avatar: item.user.avatar,
+                  showId: true,
+                  searchValues: [item.user.username, item.user.id]
                 },
                 {
                   type: 'date',
@@ -1572,28 +1649,35 @@ export default function Page() {
                     id: item.user.id,
                     username: item.user.username,
                     avatar: item.user.avatar,
-                    showId: true
+                    showId: true,
+                    searchValues: [item.user.username, item.user.id]
                   } : 
                   {
                     type: 'server',
                     _id: item.id,
                     id: item.guild.id,
                     name: item.guild.name,
-                    icon: item.guild.icon
+                    icon: item.guild.icon,
+                    showId: true,
+                    searchValues: [item.guild.name, item.guild.id]
                   },
                 {
                   type: 'user',
                   id: item.created_by.id,
                   username: item.created_by.username,
-                  avatar: item.created_by.avatar
+                  avatar: item.created_by.avatar,
+                  showId: true,
+                  searchValues: [item.created_by.username, item.created_by.id]
                 },
                 {
                   type: 'restriction',
-                  value: item.restriction
+                  value: item.restriction,
+                  searchValues: [item.restriction]
                 },
                 {
                   type: 'long-text',
-                  value: item.reason
+                  value: item.reason,
+                  searchValues: [item.reason]
                 },
                 {
                   type: 'date',
@@ -1666,7 +1750,8 @@ export default function Page() {
               columns: data?.blockedIps?.map(item => [
                 {
                   type: 'ipAddress',
-                  value: item.ip
+                  value: item.ip,
+                  searchValues: [item.ip]
                 },
                 {
                   type: 'date',
