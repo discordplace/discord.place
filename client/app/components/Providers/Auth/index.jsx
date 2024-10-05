@@ -19,16 +19,14 @@ export default function AuthProvider({ children }) {
         setUser(user);
         setLoggedIn(true);
 
-        if ('umami' in window) {
-          const discord_metadata = {
-            user_id: user.id,
-            username: user.username
-          };
+        const discord_metadata = {
+          user_id: user.id,
+          username: user.username
+        };
 
-          window.umami.identify({ discord_metadata });
+        window.umami?.identify?.({ discord_metadata });
 
-          console.log(`[Analytics] User identified: ${user.username} (${user.id})`);
-        }
+        console.log(`[Analytics] User identified: ${user.username} (${user.id})`);
       })
       .catch(() => setUser(null))
       .finally(() => {
