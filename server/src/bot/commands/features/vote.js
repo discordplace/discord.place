@@ -44,6 +44,7 @@ module.exports = {
 
     if (!showVerification) return this.continueVote(interaction);
 
+    client.humanVerificationTimeouts.set(interaction.user.id, { guild: interaction.guild.id, expiresAt: Date.now() + 60000 });
     client.humanVerificationData.set(interaction.user.id, []);
 
     const files = [
@@ -101,8 +102,7 @@ module.exports = {
     const data = client.humanVerificationData.get(interaction.user.id);
     if (data && data.length < 3) {
       client.humanVerificationData.delete(interaction.user.id);
-      client.humanVerificationTimeouts.set(interaction.user.id, { guild: interaction.guild.id, expiresAt: Date.now() + 60000 });
-      
+
       return interaction.editReply(await interaction.translate('commands.vote.errors.human_verification_failed'));
     }
   },
