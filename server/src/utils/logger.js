@@ -106,7 +106,7 @@ module.exports = class Logger {
 
   error(...messages) {
     for (const message of messages) {
-      this.logger.error(inspect(message, { depth: null }));
+      this.logger.error(typeof message === 'object' ? inspect(message, { depth: 4 }) : message);
     }
   }
 
