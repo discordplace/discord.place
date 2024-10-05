@@ -8,6 +8,7 @@ import useGeneralStore from '@/stores/general';
 import config from '@/config';
 
 export default function AuthProvider({ children }) {
+  const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
   const setLanguage = useLanguageStore(state => state.setLanguage);
@@ -18,15 +19,6 @@ export default function AuthProvider({ children }) {
       .then(user => {
         setUser(user);
         setLoggedIn(true);
-
-        const discord_metadata = {
-          user_id: user.id,
-          username: user.username
-        };
-
-        window.umami?.identify?.({ discord_metadata });
-
-        console.log(`[Analytics] User identified: ${user.username} (${user.id})`);
       })
       .catch(() => setUser(null))
       .finally(() => {
@@ -54,6 +46,19 @@ export default function AuthProvider({ children }) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!user || user === 'loading') return;
+    
+    const discord_metadata = {
+      user_id: user.id,
+      username: user.username
+    };
+
+    window.umami?.identify?.({ discord_metadata });
+
+    console.log(`[Analytics] User identified: ${user.username} (${user.id})`);
+  }, [user]);
 
   return children;
 }
