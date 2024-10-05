@@ -55,9 +55,13 @@ export default function AuthProvider({ children }) {
       username: user.username
     };
 
-    window.umami?.identify?.({ discord_metadata });
+    async function waitUntilUmamiFound() {
+      while (!window.umami) await new Promise(resolve => setTimeout(resolve, 100));
+      return window.umami;
+    }
 
-    console.log(`[Analytics] User identified: ${user.username} (${user.id})`);
+    waitUntilUmamiFound()
+      .then(() => window.umami.identify({ discord_metadata }));
   }, [user]);
 
   return children;
