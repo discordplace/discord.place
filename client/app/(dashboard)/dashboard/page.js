@@ -109,7 +109,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Users',
-              count: data?.users?.length,
               columns: data?.users?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map(user => [
                 {
                   type: 'user',
@@ -199,7 +198,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Guilds',
-              count: data?.guilds?.length,
               columns: data?.guilds?.sort((a, b) => new Date(b.joinedAt).getTime() - new Date(a.joinedAt).getTime()).map(guild => [
                 {
                   type: 'server',
@@ -252,7 +250,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Waiting Approval',
-              count: data?.queue?.emojis?.filter(emoji => !emoji.approved).length,
               columns: data?.queue?.emojis?.filter(emoji => !emoji.approved).map(emoji => [
                 {
                   type: emoji.emoji_ids ? 'emojiPack' : 'emoji',
@@ -331,7 +328,6 @@ export default function Page() {
             },
             {
               label: 'Approved',
-              count: data?.queue?.emojis?.filter(emoji => emoji.approved).length,
               columns: data?.queue?.emojis?.filter(emoji => emoji.approved).map(emoji => [
                 {
                   type: emoji.emoji_ids ? 'emojiPack' : 'emoji',
@@ -422,7 +418,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Waiting Approval',
-              count: data?.queue?.bots?.filter(bot => !bot.verified).length,
               columns: data?.queue?.bots?.filter(bot => !bot.verified).map(bot => [
                 {
                   type: 'bot',
@@ -512,7 +507,6 @@ export default function Page() {
             },
             {
               label: 'Approved',
-              count: data?.queue?.bots?.filter(bot => bot.verified).length,
               columns: data?.queue?.bots?.filter(bot => bot.verified).map(bot => [
                 {
                   type: 'bot',
@@ -603,7 +597,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Waiting Approval',
-              count: data?.queue?.templates?.filter(template => !template.approved).length,
               columns: data?.queue?.templates?.filter(template => !template.approved).map(template => [
                 {
                   type: 'template',
@@ -691,7 +684,6 @@ export default function Page() {
             },
             {
               label: 'Approved',
-              count: data?.queue?.templates?.filter(template => template.approved).length,
               columns: data?.queue?.templates?.filter(template => template.approved).map(template => [
                 {
                   type: 'template',
@@ -779,7 +771,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Waiting Approval',
-              count: data?.queue?.sounds?.filter(sound => !sound.approved).length,
               columns: data?.queue?.sounds?.filter(sound => !sound.approved).map(sound => [
                 {
                   type: 'sound',
@@ -868,7 +859,6 @@ export default function Page() {
             },
             {
               label: 'Approved',
-              count: data?.queue?.sounds?.filter(sound => sound.approved).length,
               columns: data?.queue?.sounds?.filter(sound => sound.approved).map(sound => [
                 {
                   type: 'sound',
@@ -956,7 +946,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Waiting Approval',
-              count: data?.queue?.reviews?.filter(review => !review.approved).length,
               columns: data?.queue?.reviews?.filter(review => !review.approved).map(review => [
                 {
                   type: 'text',
@@ -1056,7 +1045,6 @@ export default function Page() {
             },
             {
               label: 'Approved',
-              count: data?.queue?.reviews?.filter(review => review.approved).length,
               columns: data?.queue?.reviews?.filter(review => review.approved).map(review => [
                 {
                   type: 'text',
@@ -1154,7 +1142,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Waiting Approval',
-              count: data?.queue?.themes?.filter(theme => !theme.approved).length,
               columns: data?.queue?.themes?.filter(theme => !theme.approved).map(theme => [
                 {
                   type: 'theme',
@@ -1242,7 +1229,6 @@ export default function Page() {
             },
             {
               label: 'Approved',
-              count: data?.queue?.themes?.filter(theme => theme.approved).length,
               columns: data?.queue?.themes?.filter(theme => theme.approved).map(theme => [
                 {
                   type: 'theme',
@@ -1330,7 +1316,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Links',
-              count: data?.links?.length,
               columns: data?.links?.map(item => [
                 {
                   type: 'link',
@@ -1417,7 +1402,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Denied Bots',
-              count: data?.botDenies?.length,
               columns: data?.botDenies?.map(item => [
                 {
                   type: 'bot',
@@ -1519,7 +1503,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Timeouts',
-              count: data?.timeouts?.length,
               columns: data?.timeouts?.map(item => [
                 typeof item.bot === 'object' ? 
                   {
@@ -1640,7 +1623,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Quarantines',
-              count: data?.quarantines?.length,
               columns: data?.quarantines?.map(item => [
                 item.type === 'USER_ID' ?
                   {
@@ -1746,7 +1728,6 @@ export default function Page() {
           tabs: [
             {
               label: 'Blocked IPs',
-              count: data?.blockedIps?.length,
               columns: data?.blockedIps?.map(item => [
                 {
                   type: 'ipAddress',
