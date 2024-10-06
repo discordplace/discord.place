@@ -17,6 +17,7 @@ import { FiX } from 'react-icons/fi';
 import { isEqual } from 'lodash';
 import { IoSearch } from 'react-icons/io5';
 import * as chrono from 'chrono-node';
+import { useMedia } from 'react-use';
 
 export default function Table({ tabs }) {
   const selectedItems = useDashboardStore(state => state.selectedItems);
@@ -43,6 +44,12 @@ export default function Table({ tabs }) {
   const searchQuery = useDashboardStore(state => state.searchQuery);
   const setSearchQuery = useDashboardStore(state => state.setSearchQuery);
   const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    if (searchQuery) setPage(1);
+  }, [searchQuery]);
+
+  const isMobile = useMedia('(max-width: 640px)');
 
   if (!currentTabData || !currentTabData.columns) return null;
 
@@ -125,8 +132,9 @@ export default function Table({ tabs }) {
         {hasSearchableColumns && (
           <div
             className={cn(
-              'select-none relative z-10 flex items-center font-medium text-xs text-tertiary gap-x-1.5 bg-tertiary hover:text-primary hover:bg-quaternary rounded-full py-1 px-2.5',
-              currentlySearching ? 'cursor-text' : 'cursor-pointer'
+              'select-none relative z-10 w-full sm:w-max justify-center flex-row flex items-center font-medium text-sm sm:text-xs text-tertiary gap-x-1.5 bg-secondary sm:bg-tertiary hover:text-primary transition-colors sm:transition-none sm:hover:bg-quaternary rounded-lg sm:rounded-full py-1.5 sm:py-1 px-2.5',
+              currentlySearching ? 'cursor-text' : 'cursor-pointer',
+              isMobile && currentlySearching && 'transition-none bg-transparent ring-2 ring-[rgba(var(--border-primary))] [&:has(input:is(:focus-visible))]:ring-purple-500'
             )}
             onClick={() => {
               if (currentlySearching) {
@@ -134,32 +142,68 @@ export default function Table({ tabs }) {
               } else setCurrentlySearching(true);
             }}
           >
-            <IoSearch />
-            
-            {currentlySearching ? (
-              <input
-                type='text'
-                className='w-24 bg-transparent outline-none sm:w-36 text-secondary'
-                placeholder='Search anything...'
-                value={searchQuery}
-                onChange={event => setSearchQuery(event.target.value)}
-                autoFocus
-                ref={searchInputRef}
-              />
-            ) : (
-              'Search'
-            )}
+            {isMobile ? (
+              currentlySearching ? (
+                <div className='relative flex items-center w-full'>
+                  <input
+                    type='text'
+                    className='w-full peer focus-visible:text-primary placeholder-[rgba(var(--text-tertiary))] pl-5 bg-transparent outline-none sm:w-36 text-secondary'
+                    placeholder='Search anything...'
+                    value={searchQuery}
+                    onChange={event => setSearchQuery(event.target.value)}
+                    autoFocus
+                    ref={searchInputRef}
+                  />
 
-            {currentlySearching && (
-              <button
-                className='flex items-center text-xs transition-colors text-tertiary hover:text-primary'
-                onClick={() => {
-                  setSearchQuery(null);
-                  setCurrentlySearching(false);
-                }}
-              >
-                <FiX />
-              </button>
+                  <IoSearch className='absolute left-0 text-tertiary' />
+
+                  <button
+                    className='flex items-center text-lg text-tertiary hover:text-primary'
+                    onClick={() => {
+                      setSearchQuery(null);
+                      setCurrentlySearching(false);
+                    }}
+                  >
+                    <FiX />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  Search
+                  
+                  <IoSearch />
+                </>
+              )
+            ) : (
+              <>
+                <IoSearch />
+              
+                {currentlySearching ? (
+                  <input
+                    type='text'
+                    className='w-24 bg-transparent outline-none sm:w-36 text-secondary'
+                    placeholder='Search anything...'
+                    value={searchQuery}
+                    onChange={event => setSearchQuery(event.target.value)}
+                    autoFocus
+                    ref={searchInputRef}
+                  />
+                ) : (
+                  'Search'
+                )}
+
+                {currentlySearching && (
+                  <button
+                    className='flex items-center text-xs transition-colors text-tertiary hover:text-primary'
+                    onClick={() => {
+                      setSearchQuery(null);
+                      setCurrentlySearching(false);
+                    }}
+                  >
+                    <FiX />
+                  </button>
+                )}
+              </>
             )}
           </div>
         )}
