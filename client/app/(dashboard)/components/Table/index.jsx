@@ -69,7 +69,7 @@ export default function Table({ tabs }) {
   // Paginate columns
   const displayedColumns = sortedColumns.slice((page - 1) * 10, page * 10);
 
-  const showPagination = currentTabData.columns.length > 10;
+  const showPagination = filteredColumns.length > 10;
 
   const CurrentSortIcon = currentTabData.rows[currentSort.key]?.icon;
 
@@ -275,10 +275,10 @@ export default function Table({ tabs }) {
         <div className='flex justify-center w-full'>
           <Pagination
             page={page}
-            totalPages={Math.ceil(filteredColumns.columns?.length / 10)}
+            totalPages={Math.ceil(filteredColumns?.length / 10)}
             setPage={setPage}
             loading={false}
-            total={filteredColumns.columns?.length}
+            total={filteredColumns?.length}
             limit={10}
             disableAnimation
           />
