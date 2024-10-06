@@ -275,10 +275,10 @@ export default function Table({ tabs }) {
         <div className='flex justify-center w-full'>
           <Pagination
             page={page}
-            totalPages={Math.ceil(currentTabData.columns?.length / 10)}
+            totalPages={Math.ceil(filteredColumns.columns?.length / 10)}
             setPage={setPage}
             loading={false}
-            total={currentTabData.columns?.length}
+            total={filteredColumns.columns?.length}
             limit={10}
             disableAnimation
           />
