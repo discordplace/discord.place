@@ -110,7 +110,7 @@ export default function Table({ tabs }) {
             {tab.label}
 
             <span className='flex items-center justify-center w-max px-1.5 h-4 text-xs rounded-full bg-quaternary sm:bg-quaternary text-primary'>
-              {filteredColumns.length}
+              {currentTab === tab.label ? filteredColumns.length : tab.columns.length}
             </span>
 
             {currentTab === tab.label && (
