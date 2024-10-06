@@ -96,7 +96,7 @@ export default function MyAccount() {
   const currentPlan = plans.find(plan => plan.id === user?.premium?.planId);
 
   return (
-    <div className='flex flex-col px-6 mt-16 mb-8 lg:px-16 gap-y-6'>      
+    <div className='flex flex-col px-6 mt-16 mb-2 lg:px-16 gap-y-6'>      
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
           {t('accountPage.tabs.myAccount.title')}
@@ -179,7 +179,7 @@ export default function MyAccount() {
               <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500/25 via-purple-500/10 rounded-xl'></div>
             
               <div className='flex items-center gap-x-4'>
-                <GoHeartFill className='text-xl' />
+                <GoHeartFill className='min-w-[20px] min-h-[20px]' />
 
                 <div className='flex flex-col'>
                   <h2 className='flex flex-wrap items-center font-semibold gap-x-2'>                    
