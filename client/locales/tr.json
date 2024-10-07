@@ -1617,7 +1617,6 @@
     "sidebar": {
       "newBadge": "YENİ",
       "labels": {
-        "account": "Hesap",
         "myAccount": "Hesabım",
         "myUserProfile": "Discord Profilim",
         "activeTimeouts": "Aktif Zaman Aşımları",
@@ -1632,6 +1631,7 @@
         "myThemes": "Temalarım",
         "adminDashboard": "Yönetici Paneli",
         "switchTheme": "Tema Değiştir",
+        "logout": "Çıkış Yap",
         "backToHome": "Ana Sayfaya Dön"
       }
     },
@@ -1650,6 +1650,8 @@
             }
           },
           "premium": {
+            "title": "Premium Üyeliğiniz",
+            "subtitle": "Bir premium üyeliğiniz var. Bizi desteklediğiniz için teşekkür ederiz!",
             "plansLoading": "Planlar yükleniyor..",
             "plans": {
               "Premium Membership Monthly": "Aylık Premium Üyelik",

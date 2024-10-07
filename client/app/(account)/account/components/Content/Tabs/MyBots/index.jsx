@@ -21,11 +21,9 @@ export default function MyBots() {
 
   return (
     currentlyAddingBot ? (
-      <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
-        <NewBot />
-      </div>
+      <NewBot />
     ) : (
-      <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
+      <>
         <div className='flex flex-col gap-y-2'>
           <h1 className='text-xl font-bold text-primary'>
             {t('accountPage.tabs.myBots.title')}
@@ -138,7 +136,7 @@ export default function MyBots() {
         
           <div className={cn(
             'flex flex-col items-center w-full max-w-[800px] gap-y-4',
-            (data.denies || []).length === 0 && 'mt-20'
+            (data.denies || []).length === 0 && 'my-20'
           )}>
             {(data.denies || []).length === 0 ? (
               <ErrorState
@@ -213,7 +211,7 @@ export default function MyBots() {
             )}
           </div>
         </div>
-      </div>
+      </>
     )
   );
 }

@@ -17,6 +17,7 @@ import { useRouter } from 'next-nprogress-bar';
 import useLanguageStore, { t } from '@/stores/language';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import { useMedia } from 'react-use';
 
 export default function MyAccount() {
   const user = useAuthStore(state => state.user);
@@ -95,8 +96,10 @@ export default function MyAccount() {
 
   const currentPlan = plans.find(plan => plan.id === user?.premium?.planId);
 
+  const isMobile = useMedia('(max-width: 640px)');
+
   return (
-    <div className='flex flex-col px-6 mt-16 mb-2 lg:px-16 gap-y-6'>      
+    <>      
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
           {t('accountPage.tabs.myAccount.title')}
@@ -124,10 +127,10 @@ export default function MyAccount() {
               size={512}
               width={500}
               height={150}
-              className='w-full h-[150px] rounded-2xl object-cover'
+              className='w-full h-[100px] mobile:h-[150px] rounded-2xl object-cover'
             />
           ) : (
-            <div className='w-full h-[150px] rounded-2xl bg-quaternary' />
+            <div className='w-full h-[100px] mobile:h-[150px] rounded-2xl bg-quaternary' />
           )}
 
           <UserAvatar
@@ -175,14 +178,18 @@ export default function MyAccount() {
         
         {user?.premium?.createdAt && (
           <div className='flex flex-col mt-8 gap-y-2'>
-            <div className='border-2 border-purple-500 p-2.5 max-w-[500px] rounded-xl relative'>
-              <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500/25 via-purple-500/10 rounded-xl'></div>
-            
-              <div className='flex items-center gap-x-4'>
-                <GoHeartFill className='min-w-[20px] min-h-[20px]' />
+            {isMobile ? (
+              <>
+                <h2 className='text-sm font-bold text-secondary'>
+                  {t('accountPage.tabs.myAccount.sections.premium.title')}
+                </h2>
 
-                <div className='flex flex-col'>
-                  <h2 className='flex flex-wrap items-center font-semibold gap-x-2'>                    
+                <p className='text-sm text-tertiary'>
+                  {t('accountPage.tabs.myAccount.sections.premium.subtitle')}
+                </p>
+
+                <div className='flex flex-wrap items-center gap-2 select-none'>
+                  <span className='text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600'>
                     {plansLoading ? (
                       <>
                         <TbLoader className='animate-spin' />
@@ -195,18 +202,47 @@ export default function MyAccount() {
                         t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }) })
                       )
                     )}
+                  </span>
 
-                    <span className='text-xs text-tertiary'>
-                      {new Date(user.premium.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
-                    </span>
-                  </h2>
-
-                  <p className='mt-1.5 text-sm mobile:mt-0 text-tertiary'>
-                    {t('accountPage.tabs.myAccount.sections.premium.thanks')}
+                  <p className='text-xs text-tertiary'>
+                    {new Date(user.premium.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
                   </p>
                 </div>
+              </>
+            ) : (
+              <div className='border-2 border-purple-500 p-2.5 max-w-[500px] rounded-xl relative'>
+                <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500/25 via-purple-500/10 rounded-xl'></div>
+              
+                <div className='flex items-center gap-x-4'>
+                  <GoHeartFill className='min-w-[20px] min-h-[20px]' />
+
+                  <div className='flex flex-col'>
+                    <h2 className='flex flex-wrap items-center font-semibold gap-x-2'>                    
+                      {plansLoading ? (
+                        <>
+                          <TbLoader className='animate-spin' />
+                          {t('accountPage.tabs.myAccount.sections.premium.plansLoading')}
+                        </>
+                      ) : (
+                        currentPlan ? (
+                          t(`accountPage.tabs.myAccount.sections.premium.plans.${currentPlan?.name}`)
+                        ) : (
+                          t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }) })
+                        )
+                      )}
+
+                      <span className='text-xs text-tertiary'>
+                        {new Date(user.premium.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
+                      </span>
+                    </h2>
+
+                    <p className='mt-1.5 text-sm mobile:mt-0 text-tertiary'>
+                      {t('accountPage.tabs.myAccount.sections.premium.thanks')}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         )}
 
@@ -265,6 +301,6 @@ export default function MyAccount() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

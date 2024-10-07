@@ -1617,7 +1617,6 @@
     "sidebar": {
       "newBadge": "YENİ",
       "labels": {
-        "account": "Hesab",
         "myAccount": "Hesabım",
         "myUserProfile": "İstifadəçi Profilim",
         "activeTimeouts": "Aktiv Taymoutlar",
@@ -1632,6 +1631,7 @@
         "myThemes": "Mənim Temalarım",
         "adminDashboard": "İdarəetmə Paneli",
         "switchTheme": "Mövzunu dəyişdirin",
+        "logout": "Çıxış",
         "backToHome": "Evə qayıt"
       }
     },
@@ -1650,6 +1650,8 @@
             }
           },
           "premium": {
+            "title": "Premium Üzvlük",
+            "subtitle": "Bir Premium Üzvlüyünüz var. Bizi dəstəklədiyiniz üçün təşəkkür edirik!",
             "plansLoading": "Planlar yüklənir...",
             "plans": {
               "Premium Membership Monthly": "Aylıq Premium Üzvlük",

@@ -21,11 +21,9 @@ export default function MySounds() {
   
   return (
     currentlyAddingSound ? (
-      <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
-        <NewSound />
-      </div>
+      <NewSound />
     ) : (
-      <div className='flex flex-col px-6 mt-16 lg:px-16 gap-y-6'>
+      <>
         <div className='flex flex-col gap-y-2'>
           <h1 className='text-xl font-bold text-primary'>
             {t('accountPage.tabs.mySounds.title')}
@@ -105,7 +103,7 @@ export default function MySounds() {
             </button>
           </div>
         </div>
-      </div>
+      </>
     )
   );
 }

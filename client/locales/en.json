@@ -1617,7 +1617,6 @@
     "sidebar": {
       "newBadge": "NEW",
       "labels": {
-        "account": "Account",
         "myAccount": "My Account",
         "myUserProfile": "My User Profile",
         "activeTimeouts": "Active Timeouts",
@@ -1632,6 +1631,7 @@
         "myThemes": "My Themes",
         "adminDashboard": "Admin Dashboard",
         "switchTheme": "Switch Theme",
+        "logout": "Logout",
         "backToHome": "Back to Home"
       }
     },
@@ -1650,6 +1650,8 @@
             }
           },
           "premium": {
+            "title": "Your Premium Membership",
+            "subtitle": "You have a premium membership. Thank you for supporting us!",
             "plansLoading": "Plans loading...",
             "plans": {
               "Premium Membership Monthly": "Premium Membership Monthly",

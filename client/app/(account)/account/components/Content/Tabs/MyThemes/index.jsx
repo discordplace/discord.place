@@ -21,11 +21,9 @@ export default function MyThemes() {
   
   return (
     currentlyAddingTheme ? (
-      <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
-        <NewTheme />
-      </div>
+      <NewTheme />
     ) : (
-      <div className='flex flex-col px-6 mt-16 lg:px-16 gap-y-6'>
+      <>
         <div className='flex flex-col gap-y-2'>
           <h1 className='text-xl font-bold text-primary'>
             {t('accountPage.tabs.myThemes.title')}
@@ -106,7 +104,7 @@ export default function MyThemes() {
             </button>
           </div>
         </div>
-      </div>
+      </>
     )
   );
 }
