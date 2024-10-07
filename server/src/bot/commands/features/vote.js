@@ -31,7 +31,7 @@ module.exports = {
 
     if (client.humanVerificationTimeouts.has(interaction.user.id)) {
       const timeout = client.humanVerificationTimeouts.get(interaction.user.id);
-      if (timeout.guild === interaction.guild.id && timeout.expiresAt > Date.now()) return interaction.followUp(await interaction.translate('commands.vote.errors.human_verification_timeout', { seconds: Math.floor((timeout.expiresAt - Date.now()) / 1000) }));
+      if (timeout.guild === interaction.guild.id && timeout.expiresAt > Date.now()) return interaction.followUp(await interaction.translate('commands.vote.human_verification_failed', { count: Math.floor((timeout.expiresAt - Date.now()) / 1000), postProcess: 'interval' }));
     }
 
     const givenVotes = server.voters.find(voter => voter.user.id === interaction.user.id)?.vote || 0;
@@ -103,7 +103,7 @@ module.exports = {
     if (data && data.length < 3) {
       client.humanVerificationData.delete(interaction.user.id);
 
-      return interaction.editReply(await interaction.translate('commands.vote.human_verification_failed'));
+      return interaction.editReply(await interaction.translate('commands.vote.human_verification_failed', { count: 60, postProcess: 'interval' }));
     }
   },
   continueVote(interaction) {
