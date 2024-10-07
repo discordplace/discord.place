@@ -208,7 +208,6 @@
       },
       "human_verification_text": "You are going to vote for **{guildName}**.\n**About Human Verification:**\n- A gif will be shown to you in a few seconds.\n- The gif includes 3 repeated numbers in it.\n- You need to memorize these numbers.\n- After the last number is hidden, you need to click the buttons in the order of the numbers you memorized.\n- You have 10 seconds to click all the buttons.\n- If you fail, you can try again after 1 minute.\n\n**Note:** This verification is only shown every third vote to prevent spamming.",
       "gif_hidden_now": "The gif is hidden now. Please click the buttons in the order of the numbers you memorized.",
-      "human_verification_failed": "(1)[You failed to verify yourself. You can try again after 1 second.];(2-inf)[You failed to verify yourself. You can try again after {count} seconds.];",
       "create_reminder_button_label": "Create Reminder",
       "success": "Thank you for voting!",
       "logging_messages": {

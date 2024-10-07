@@ -29,11 +29,6 @@ module.exports = {
     const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': interaction.guild.id });
     if (timeout) return interaction.followUp(await interaction.translate('commands.vote.errors.already_voted', { hours: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000), minutes: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60 }));
 
-    if (client.humanVerificationTimeouts.has(interaction.user.id)) {
-      const timeout = client.humanVerificationTimeouts.get(interaction.user.id);
-      if (timeout.guild === interaction.guild.id && timeout.expiresAt > Date.now()) return interaction.followUp(await interaction.translate('commands.vote.human_verification_failed', { count: Math.floor((timeout.expiresAt - Date.now()) / 1000), postProcess: 'interval' }));
-    }
-
     const givenVotes = server.voters.find(voter => voter.user.id === interaction.user.id)?.vote || 0;
     const accountAge = Date.now() - interaction.user.createdAt.getTime();
 
@@ -44,7 +39,6 @@ module.exports = {
 
     if (!showVerification) return this.continueVote(interaction);
 
-    client.humanVerificationTimeouts.set(interaction.user.id, { guild: interaction.guild.id, expiresAt: Date.now() + 60000 });
     client.humanVerificationData.set(interaction.user.id, []);
 
     const files = [
@@ -103,7 +97,10 @@ module.exports = {
     if (data && data.length < 3) {
       client.humanVerificationData.delete(interaction.user.id);
 
-      return interaction.editReply(await interaction.translate('commands.vote.human_verification_failed', { count: 60, postProcess: 'interval' }));
+      return interaction.editReply({
+        content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
+        components: []
+      });
     }
   },
   continueVote(interaction) {
