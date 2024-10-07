@@ -88,7 +88,7 @@ module.exports = {
 
         await reminder.save();
 
-        var date = new Date(reminder.expire_at).toLocaleString(await interaction.user.getLanguage(), { dateStyle: 'full', timeStyle: 'short' });
+        var date = new Date(reminder.expire_at).toLocaleString(await interaction.getLanguage(), { dateStyle: 'full', timeStyle: 'short' });
 
         interaction.followUp(await interaction.translate('commands.reminder.subcommands.create.success', { reminderId: reminder._id, date }));
         break;

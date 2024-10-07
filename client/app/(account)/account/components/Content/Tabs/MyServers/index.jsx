@@ -17,11 +17,9 @@ export default function MyServers() {
 
   return (
     currentlyAddingServer !== null ? (
-      <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
-        <NewServer />
-      </div>
+      <NewServer />
     ) : (
-      <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
+      <>
         <div className='flex flex-col gap-y-2'>
           <h1 className='text-xl font-bold text-primary'>
             {t('accountPage.tabs.myServers.title')}
@@ -117,7 +115,7 @@ export default function MyServers() {
           </p>
 
           <div className='mt-4 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>
-            <h2 className='flex items-center text-lg font-semibold gap-x-2'>
+            <h2 className='flex items-center text-base font-semibold mobile:text-lg gap-x-2'>
               <BsQuestionCircleFill /> {t('accountPage.tabs.myServers.sections.unlistedServers.missingServerInfo.title')}
             </h2>
 
@@ -151,7 +149,7 @@ export default function MyServers() {
             </div>
           )}
         </div>
-      </div>
+      </>
     )
   );
 }

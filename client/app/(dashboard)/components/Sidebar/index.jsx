@@ -308,7 +308,7 @@ export default function Sidebar() {
           <DropdownMenu.Trigger asChild>
             <div
               className={cn(
-                'my-4 w-full flex items-center gap-x-2 rounded-2xl max-w-[calc(100%-1rem)] cursor-pointer',
+                'my-2 w-full flex items-center gap-x-2 rounded-2xl max-w-[calc(100%-1rem)] cursor-pointer',
                 isCollapsed ? 'ml-5' : 'ml-4 hover:bg-quaternary border bg-tertiary border-[rgba(var(--bg-quaternary))] p-3'
               )}
             >

@@ -91,6 +91,7 @@ module.exports = {
               return {
                 id: timeout.bot.id,
                 username: timeout.bot.username,
+                discriminator: timeout.bot.discriminator,
                 avatar: hashes.avatar,
                 createdAt: timeout.createdAt
               };

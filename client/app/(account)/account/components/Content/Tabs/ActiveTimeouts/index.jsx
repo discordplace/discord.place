@@ -18,7 +18,7 @@ export default function ActiveTimeouts() {
   const timeoutedServersCount = data?.timeouts?.servers?.length || 0;
 
   return (
-    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
+    <>
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
           {t('accountPage.tabs.activeTimeouts.title')}
@@ -30,7 +30,7 @@ export default function ActiveTimeouts() {
       </div>
 
       {(timeoutedBotsCount === 0 && timeoutedServersCount === 0) ? (
-        <div className='max-w-[800px] mt-20'>
+        <div className='mt-20'>
           <ErrorState 
             title={
               <div className='flex items-center gap-x-2'>
@@ -147,6 +147,10 @@ export default function ActiveTimeouts() {
                           <div className='flex flex-col'>
                             <p className='text-sm font-bold text-secondary'>
                               {timeout.username}
+
+                              <span className='text-xs font-medium text-tertiary'>
+                                #{timeout.discriminator}
+                              </span>
                             </p>
 
                             <p className='text-xs text-tertiary'>
@@ -182,6 +186,6 @@ export default function ActiveTimeouts() {
           )}
         </>
       )}
-    </div>
+    </>
   );
 }

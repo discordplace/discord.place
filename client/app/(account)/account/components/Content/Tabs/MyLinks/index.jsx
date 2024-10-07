@@ -116,7 +116,7 @@ export default function MyLinks() {
   }
 
   return (
-    <div className='flex flex-col px-6 my-16 lg:px-16 gap-y-6 lg:mb-4'>
+    <>
       <div className='flex flex-col gap-y-2'>
         <h1 className='flex items-center text-xl font-bold gap-x-2 text-primary'>
           {t('accountPage.tabs.myLinks.title')}
@@ -185,8 +185,12 @@ export default function MyLinks() {
                 </span>
 
                 <div className='flex items-center ml-auto text-xs font-medium gap-x-2 text-tertiary'>
-                  <span className='flex items-center gap-x-1'>
+                  <span className='items-center hidden mobile:flex gap-x-1'>
                     {t('accountPage.tabs.myLinks.visits', { count: link.visits })}
+                  </span>
+
+                  <span className='flex items-center mobile:hidden gap-x-1'>
+                    {link.visits}
                   </span>
 
                   <CopyButton
@@ -243,6 +247,6 @@ export default function MyLinks() {
           ))
         )}
       </div>
-    </div>
+    </>
   );
 }
