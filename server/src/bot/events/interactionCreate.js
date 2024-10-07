@@ -174,14 +174,6 @@ module.exports = async interaction => {
       const numbers = interaction.customId.split('-')[2].split('');
       const selectNumber = interaction.customId.split('-')[3];
 
-      if (client.humanVerificationTimeouts.has(interaction.user.id)) {
-        const timeout = client.humanVerificationTimeouts.get(interaction.user.id);
-        if (timeout.guild === guildId && timeout.expiresAt > Date.now()) return interaction.reply({
-          content: await interaction.translate('interaction.buttons.human_verification.errors.timeout', { seconds: Math.floor((timeout.expiresAt - Date.now()) / 1000) }),
-          ephemeral: true
-        });
-      }
-    
       if (!client.humanVerificationData.has(interaction.user.id)) client.humanVerificationData.set(interaction.user.id, []);
 
       const data = client.humanVerificationData.get(interaction.user.id);
@@ -195,7 +187,6 @@ module.exports = async interaction => {
 
       if (data.length === 3) {
         client.humanVerificationData.delete(interaction.user.id);
-        client.humanVerificationTimeouts.set(interaction.user.id, { guild: guildId, expiresAt: Date.now() + 60000 });
 
         const isCorrect = data.every((number, index) => number === numbers[index]);
         if (!isCorrect) return interaction.update({

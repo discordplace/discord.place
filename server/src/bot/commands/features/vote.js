@@ -103,7 +103,7 @@ module.exports = {
     if (data && data.length < 3) {
       client.humanVerificationData.delete(interaction.user.id);
 
-      return interaction.editReply(await interaction.translate('commands.vote.errors.human_verification_failed'));
+      return interaction.editReply(await interaction.translate('commands.vote.human_verification_failed'));
     }
   },
   continueVote(interaction) {
