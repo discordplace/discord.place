@@ -443,7 +443,7 @@
           "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
           "member_not_found": "Sunucuda değilsiniz.",
           "timeout": "{seconds} saniye sonra tekrar deneyebilirsiniz.",
-          "failed": "Kendinizi doğrulamada başarısız oldunuz. 1 dakika sonra tekrar deneyebilirsiniz.",
+          "failed": "Kendinizi doğrulamada başarısız oldunuz.",
           "number_already_selected": "Bu numarayı zaten seçtiniz."
         },
         "success": "Başarıyla kendinizi doğruladınız.",

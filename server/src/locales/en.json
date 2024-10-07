@@ -443,7 +443,7 @@
           "server_not_listed": "This server is not listed on discord.place.",
           "member_not_found": "You are not in the server.",
           "timeout": "You can try again after {seconds} seconds.",
-          "failed": "You failed to verify yourself. You can try again after 1 minute.",
+          "failed": "You failed to verify yourself.",
           "number_already_selected": "You already selected this number."
         },
         "success": "You successfully verified yourself.",
