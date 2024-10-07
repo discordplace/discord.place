@@ -318,7 +318,7 @@ export default function Sidebar() {
                 size={64}
                 width={36}
                 height={36}
-                className='rounded-full'
+                className='rounded-full min-w-[36px] min-h-[36px]'
               />
 
               <div
