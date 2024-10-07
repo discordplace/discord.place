@@ -186,7 +186,7 @@ export default function CreateQuarantineModal() {
                 <h2 className='text-sm font-semibold text-secondary'>Restriction</h2>
                 <p className='text-xs text-tertiary'>Select the type of restriction you want to apply to the quarantine.</p>
 
-                <div className='relative grid grid-cols-1 gap-2 mt-4 overflow-y-auto max-h-[20dvh] scrollbar-hide'>
+                <div className='relative grid grid-cols-1 gap-2 mt-4 overflow-y-auto max-h-[20svh] scrollbar-hide'>
                   {Object.keys(config.quarantineRestrictions)
                     .filter(quarantineRestriction => !type || config.quarantineRestrictions[quarantineRestriction].available_to.includes(type))
                     .map(quarantineRestriction => (

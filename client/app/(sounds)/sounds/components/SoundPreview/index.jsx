@@ -186,7 +186,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
       'flex flex-col gap-y-4 rounded-3xl overflow-hidden w-full h-max bg-secondary border-2 transition-all p-6',
       currentlyPlaying === sound.id ? 'border-purple-500' : 'border-primary'
     )}>
-      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100dvh]">
+      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100svh]">
         {renderConfetti && (
           <Lottie
             options={{ 

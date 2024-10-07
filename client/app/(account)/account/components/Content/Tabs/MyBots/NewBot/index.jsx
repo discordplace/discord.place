@@ -108,7 +108,7 @@ export default function NewBot() {
 
   return (
     <>
-      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100dvh]">
+      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100svh]">
         <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
       </div>
 

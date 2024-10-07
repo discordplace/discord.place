@@ -20,7 +20,7 @@ export default function Channels({ data, focusedChannel, setFocusedChannel, curr
   
   return (
     <div className={cn(
-      'overflow-y-auto max-h-[100dvh] scrollbar-hide pb-4 min-h-full flex flex-col w-full max-w-[240px] bg-[#2b2d31]',
+      'overflow-y-auto max-h-[100svh] scrollbar-hide pb-4 min-h-full flex flex-col w-full max-w-[240px] bg-[#2b2d31]',
       isMobile && 'max-w-[unset]',
       currentlyOpenedSection !== 'channels' && 'hidden'
     )}>

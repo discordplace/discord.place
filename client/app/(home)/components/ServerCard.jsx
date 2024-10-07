@@ -27,7 +27,7 @@ export default function ServerCard({ data }) {
         </div>
       )}
 
-      <span className='font-medium text-xs overflow-clip whitespace-nowrap text-tertiary max-w-[100px]'>
+      <span className='font-medium text-xs overflow-hidden whitespace-nowrap  text-tertiary max-w-[100px]'>
         {data.name}
       </span>
 

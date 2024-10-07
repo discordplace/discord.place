@@ -1837,7 +1837,7 @@ export default function Page() {
     <div className='relative flex w-full overflow-x-clip bg-secondary'>
       <Sidebar />
       
-      <div className='flex w-full min-h-[100dvh] pt-4 pl-4 pr-2 pb-4'>
+      <div className='flex w-full min-h-[100svh] pt-4 pl-4 pr-2 pb-4'>
         <div className='relative flex flex-col flex-1 w-full p-6 overflow-x-auto border sm:p-8 rounded-3xl bg-background border-primary'>
           <div className='flex items-center text-sm font-medium'>
             <span className='text-tertiary'>

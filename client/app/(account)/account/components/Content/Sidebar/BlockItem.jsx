@@ -66,7 +66,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
           </span>
         ) : ''}
 
-        {!visited && (
+        {!visited && !isCollapsed && (
           <span className='text-white ml-auto mr-4 px-2 py-0.5 text-xs font-bold bg-purple-600 rounded-full'>
             {t('accountPage.sidebar.newBadge')}
           </span>

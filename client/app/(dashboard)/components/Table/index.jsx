@@ -211,7 +211,7 @@ export default function Table({ tabs }) {
 
       <div className='relative w-full -mt-8 overflow-auto lg:max-w-[unset] max-w-[230px] mobile:max-w-[360px] sm:max-w-[430px]'>
         {(currentTabData.columns.length === 0 || displayedColumns.length === 0) && (
-          <div className='flex items-center max-w-[calc(100vw_-_65px)] sm:max-w-[unset] justify-center min-h-[calc(100dvh_-_420px)]'>
+          <div className='flex items-center max-w-[calc(100vw_-_65px)] sm:max-w-[unset] justify-center min-h-[calc(100svh_-_420px)]'>
             <ErrorState
               title={
                 <div className='flex items-center gap-x-2'>

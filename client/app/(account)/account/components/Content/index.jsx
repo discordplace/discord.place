@@ -20,7 +20,7 @@ import Image from 'next/image';
 import { IoMdArrowBack, IoMdLogOut } from 'react-icons/io';
 import { useRouter } from 'next-nprogress-bar';
 import { FaCompass, FaBell, FaShieldAlt, FaDiscord } from 'react-icons/fa';
-import { RiRobot2Fill } from 'react-icons/ri';
+import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import useAuthStore from '@/stores/auth';
 import { HiTemplate } from 'react-icons/hi';
 import { useLocalStorage, useMedia } from 'react-use';
@@ -142,7 +142,7 @@ export default function Content() {
         },
         {
           id: 'my-themes',
-          icon: MdSunny,
+          icon: RiBrush2Fill,
           name: t('accountPage.sidebar.labels.myThemes'),
           component: <MyThemes />,
           badge: data.counts?.themes || 0,
@@ -238,7 +238,7 @@ export default function Content() {
   }, [isMobile]);
 
   return (
-    <div className='flex min-h-[100dvh] bg-secondary gap-x-4'>
+    <div className='flex min-h-[100svh] bg-secondary gap-x-4'>
       <Sidebar blocks={sidebar} />
 
       <div className='flex w-full sm:pb-4 sm:pr-4 sm:pt-4'>

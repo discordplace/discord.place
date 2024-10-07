@@ -14,8 +14,8 @@ export default function Members({ template, isMobile, currentlyOpenedSection }) 
   
   return (
     <div className={cn(
-      'px-4 pt-6 max-w-[250px] flex flex-col overflow-y-auto max-h-[calc(100dvh_-_49px)] pb-4 scrollbar-hide gap-y-6 h-full bg-[#2b2d31] w-full',
-      isMobile && currentlyOpenedSection === 'members' && 'max-h-[100dvh] max-w-[unset]'
+      'px-4 pt-6 max-w-[250px] flex flex-col overflow-y-auto max-h-[calc(100svh_-_49px)] pb-4 scrollbar-hide gap-y-6 h-full bg-[#2b2d31] w-full',
+      isMobile && currentlyOpenedSection === 'members' && 'max-h-[100svh] max-w-[unset]'
     )}>
       {template.data.roles.map((role, index) => (
         <div className='flex flex-col' key={index}>

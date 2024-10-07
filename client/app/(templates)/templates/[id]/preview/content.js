@@ -30,7 +30,7 @@ export default function Content({ template }) {
   if (!focusedChannel) return <FullPageLoading />;
   
   return (
-    <div className="w-full h-full min-h-[100dvh] flex">
+    <div className="w-full h-full min-h-[100svh] flex">
       <Sidebar
         template={template}
         focusedChannel={focusedChannel}
