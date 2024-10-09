@@ -4,7 +4,7 @@ const { body, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Discord = require('discord.js');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   put: [
@@ -18,7 +18,7 @@ module.exports = {
       .isString().withMessage('Reason must be a string.')
       .trim()
       .isLength({ min: 1, max: config.reportReasonMaxLength }).withMessage(`Reason must be between 1 and ${config.reportReasonMaxLength} characters long.`),
-    validateBody,
+    validateRequest,
     async (request, response) => {      
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'REPORTS_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create reports.', 403);

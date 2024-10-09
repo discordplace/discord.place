@@ -5,7 +5,7 @@ const Theme = require('@/schemas/Theme');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const idValidation = require('@/validations/themes/id');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -18,7 +18,7 @@ module.exports = {
     body('reason')
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.themeDenyReasons)).withMessage('Invalid reason.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {      
       const { id, reason } = matchedData(request);
       if (!config.themeDenyReasons[reason]) return response.sendError('Invalid reason.', 400);

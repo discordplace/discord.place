@@ -3,7 +3,7 @@ const { param, matchedData } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const idValidation = require('@/utils/validations/sounds/id');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -21,7 +21,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
       
@@ -50,7 +50,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
 

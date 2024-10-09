@@ -11,7 +11,7 @@ const colorsValidation = require('@/validations/profiles/colors');
 const Server = require('@/schemas/Server');
 const randomizeArray = require('@/utils/randomizeArray');
 const getValidationError = require('@/utils/getValidationError');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -20,7 +20,7 @@ module.exports = {
       .isString().withMessage('Slug must be a string.')
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {      
       const { slug } = matchedData(request);
 
@@ -145,7 +145,7 @@ module.exports = {
     body('verified')
       .optional()
       .isBoolean().withMessage('Verified must be a boolean.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {      
       const { slug, newSlug, occupation: newOccupation, gender: newGender, location: newLocation, birthday: newBirthday, bio: newBio, preferredHost: newPreferredHost, colors: newColors, socials, verified } = matchedData(request);
       const profile = await Profile.findOne({ slug });

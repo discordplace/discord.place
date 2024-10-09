@@ -1,14 +1,14 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 100, perMinutes: 5 }),
     param('id'),
     param('user_id'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id, user_id } = matchedData(request);
 

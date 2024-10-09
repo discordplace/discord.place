@@ -4,7 +4,7 @@ const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const shuffle = require('lodash.shuffle');
 const getUserHashes = require('@/utils/getUserHashes');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -12,7 +12,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
       

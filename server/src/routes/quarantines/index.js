@@ -7,7 +7,7 @@ const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
 const Discord = require('discord.js');
 const User = require('@/schemas/User');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -38,7 +38,7 @@ module.exports = {
        
         return true;
       }),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const canCreateQuarantine = request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canCreateQuarantine) return response.sendError('You do not have permission to create quarantines.', 403);

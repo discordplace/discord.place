@@ -18,13 +18,13 @@ const DashboardData = require('@/schemas/Dashboard/Data');
 const getUserHashes = require('@/utils/getUserHashes');
 const requirementChecks = require('@/utils/servers/requirementChecks');
 const Discord = require('discord.js');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('id'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
 
@@ -141,7 +141,7 @@ module.exports = {
       .isString().withMessage('Invite link must be a string.')
       .trim()
       .custom(inviteLinkValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id, description, category, keywords, invite_link } = matchedData(request);
 
@@ -237,7 +237,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,
     param('id'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
 
@@ -284,7 +284,7 @@ module.exports = {
       .optional()
       .isArray().withMessage('Keywords should be an array.')
       .custom(keywordsValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {  
       const { id, description, invite_url, category, keywords } = matchedData(request);
   

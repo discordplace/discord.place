@@ -4,14 +4,14 @@ const bodyParser = require('body-parser');
 const { param, body, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const getValidationError = require('@/utils/getValidationError');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   delete: [
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,
     param('id'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
 
@@ -50,7 +50,7 @@ module.exports = {
       .isString().withMessage('Token should be a string.')
       .isLength({ min: 1, max: config.serverWebhookTokenMaxLength }).withMessage(`Token must be between 1 and ${config.serverWebhookTokenMaxLength} characters.`)
       .trim(),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id, url, token } = matchedData(request);
 
