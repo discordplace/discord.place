@@ -113,7 +113,9 @@ async function getAccessToken(code) {
     scope: config.discordScopes.join(' ')
   });
 
-  const response = await axios.post('https://discord.com/api/oauth2/token', searchParams.toString()).catch(error => error);
+  const response = await axios.post('https://discord.com/api/oauth2/token', searchParams.toString()).catch(() => null);
+
+  if (!response || response.status !== 200) throw new Error(response?.data?.error || 'Unknown error.');
 
   return response.data.access_token;
 }
