@@ -87,18 +87,6 @@ module.exports = class Server {
     });
 
     if (process.env.NODE_ENV === 'production') this.server.use(blockSimultaneousRequests);
-    
-    this.server.use('*', (request, response, next) => {
-      if (request.user?.id) {
-        const guild = client.guilds.cache.get(config.guildId);
-        if (guild) {
-          const member = guild.members.cache.get(request.user.id);
-          if (member) request.member = member;
-        }
-      }
-
-      next();
-    });
 
     logger.info('Middlewares added.');
   }

@@ -32,6 +32,12 @@ module.exports = async function checkAuthentication(request, response, next) {
       id: decoded.id
     };
 
+    const guild = client.guilds.cache.get(config.guildId);
+    if (guild) {
+      const member = guild.members.cache.get(request.user.id);
+      if (member) request.member = member;
+    }
+
     next();
   } catch (error) {
     response.clearCookie('token');
