@@ -3,8 +3,8 @@ const { param, matchedData } = require('express-validator');
 const Theme = require('@/schemas/Theme');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const idValidation = require('@/utils/validations/themes/id');
-const getUserHashes = require('@/src/utils/getUserHashes');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const getUserHashes = require('@/utils/getUserHashes');
+const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
   get: [
@@ -12,7 +12,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateRequest,
+    validateBody,
     async (request, response) => {
       const { id } = matchedData(request);
       
@@ -44,7 +44,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateRequest,
+    validateBody,
     async (request, response) => {
       const { id } = matchedData(request);
 
