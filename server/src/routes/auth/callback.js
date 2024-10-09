@@ -1,4 +1,4 @@
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 const { query, matchedData, cookie } = require('express-validator');
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
@@ -25,7 +25,7 @@ module.exports = {
           throw new Error('Invalid redirect URL saved in cookies.');
         }
       }),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { code, state, redirect: redirectCookie } = matchedData(request);
 
