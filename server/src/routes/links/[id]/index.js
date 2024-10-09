@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { matchedData, param } = require('express-validator');
 const Link = require('@/schemas/Link');
 const Discord = require('discord.js');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   delete: [
@@ -14,7 +14,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID should be a string.')
       .isLength({ min: 16, max: 16 }).withMessage('ID should be 16 characters long.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {      
       const { id } = matchedData(request);
 

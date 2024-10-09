@@ -6,7 +6,7 @@ const { param, matchedData, body } = require('express-validator');
 const Discord = require('discord.js');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
 const bodyParser = require('body-parser');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -21,7 +21,7 @@ module.exports = {
     body('guildId')
       .isString().withMessage('Guild ID must be an string.')
       .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id, packIndex, guildId } = matchedData(request);
 

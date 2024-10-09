@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const idValidation = require('@/validations/sounds/id');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -16,7 +16,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
 

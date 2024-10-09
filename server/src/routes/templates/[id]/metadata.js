@@ -2,7 +2,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData } = require('express-validator');
 const Template = require('@/schemas/Template');
 const getUserHashes = require('@/utils/getUserHashes');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -10,7 +10,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .isLength({ min: 12, max: 12 }).withMessage('ID must be 12 characters.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
       

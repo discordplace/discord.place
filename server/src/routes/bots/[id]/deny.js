@@ -6,7 +6,7 @@ const BotDeny = require('@/schemas/Bot/Deny');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const User = require('@/schemas/User');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -17,7 +17,7 @@ module.exports = {
     body('reason')
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.botsDenyReasons)).withMessage('Invalid reason.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {      
       const { id, reason } = matchedData(request);
       if (!config.botsDenyReasons[reason]) return response.sendError('Invalid reason.', 400);

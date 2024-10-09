@@ -5,7 +5,7 @@ const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const Discord = require('discord.js');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const bodyParser = require('body-parser');
@@ -30,7 +30,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.emojisDenyReasons)).withMessage('Invalid reason.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {      
       const canDeny = request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDeny) return response.sendError('You are not allowed to deny this emoji.', 403);

@@ -11,7 +11,7 @@ const crypto = require('node:crypto');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const multer = require('multer');
 const upload = multer({
@@ -49,7 +49,7 @@ module.exports = {
       .customSanitizer(value => value.split(','))
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {  
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'EMOJIS_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create emojis.', 403);

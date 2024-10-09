@@ -4,7 +4,7 @@ const categoriesValidation = require('@/validations/bots/categories');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const { StandedOutBot } = require('@/schemas/StandedOut');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -32,7 +32,7 @@ module.exports = {
       .optional()
       .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
       .toInt(),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = request.query;
       const skip = (page - 1) * limit;

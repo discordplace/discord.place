@@ -4,7 +4,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/emojis/id');
 const { param, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   patch: [
@@ -13,7 +13,7 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SOUNDS_LIKE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to like sounds.', 403);
