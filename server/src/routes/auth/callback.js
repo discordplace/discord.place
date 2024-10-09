@@ -83,7 +83,7 @@ module.exports = {
             },
             email: user.email,
             accessToken: encrypt(access_token, process.env.USER_TOKEN_ENCRYPT_SECRET),
-            lastLogin: new Date(currentDate)
+            lastLoginAt: new Date(currentDate)
           }, 
           { upsert: true, new: true }
         );
