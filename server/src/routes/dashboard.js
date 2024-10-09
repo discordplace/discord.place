@@ -148,6 +148,8 @@ module.exports = {
           avatar: hashes.find(hash => hash.id === user.id)?.avatar || null,
           email: user.email,
           createdAt: user.createdAt,
+          lastLoginAt: user.lastLoginAt,
+          lastLogoutAt: user.lastLogoutAt,
           subscription: user.subscription?.createdAt ? user.subscription : null
         }));
 

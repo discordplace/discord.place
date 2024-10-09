@@ -130,6 +130,14 @@ export default function Page() {
                 {
                   type: 'date',
                   value: new Date(user.createdAt)
+                },
+                {
+                  type: 'date',
+                  value: new Date(user.lastLoginAt)
+                },
+                {
+                  type: 'date',
+                  value: new Date(user.lastLogoutAt)
                 }
               ]),
               rows: [
@@ -150,6 +158,16 @@ export default function Page() {
                 },
                 {
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Last Login',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Last Logout',
                   icon: FiArrowRightCircle,
                   sortable: true
                 }
