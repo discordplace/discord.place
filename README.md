@@ -96,8 +96,6 @@ Create a `.env` file in the `server` directory with the following environment va
 
 ```env
 COOKIE_SECRET=
-SESSION_SECRET=
-SESSION_STORE_SECRET=
 GITHUB_AUTO_DEPLOY_SECRET=
 GITHUB_AUTO_SYNC_TRANSLATORS_SECRET=
 BOT_API_KEY_ENCRYPT_SECRET=
@@ -134,8 +132,6 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 | Name | Description |
 | ---- | ----------- |
 | `COOKIE_SECRET` | Secret key for cookie encryption. |
-| `SESSION_SECRET` | Secret key for session encryption. |
-| `SESSION_STORE_SECRET` | Secret key for session store encryption. |
 | `GITHUB_AUTO_DEPLOY_SECRET` | Secret key for GitHub auto-deploy webhook. (not required) |
 | `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` | Secret key for GitHub trigger to sync translators roles. (not required) |
 | `BOT_API_KEY_ENCRYPT_SECRET` | Secret key for bot API key encryption. |
@@ -233,7 +229,6 @@ We use YML files for the configuration of the server. You can find the configura
 | `botPresenceStatus` | String | Presence status for the bots. |
 | `rateLimitWhitelist` | Array<String> | Whitelisted user IDs for bypassing rate limits. |
 | `trustProxy` | Number | Trust proxy setting for the server. |
-| `session.cookieDomain` | String | Domain for the session cookie. |
 | `frontendUrl` | String | Client website URL for the website. |
 | `backendUrl` | String | Server API URL for the website. |
 | `cdnUrl` | String | CDN URL for the website. |
@@ -261,7 +256,6 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `botPresenceStatus` value is used for the presence status of the bot. You can change this value to your own presence status.
 > - The `rateLimitWhitelist` value is used for whitelisted user IDs for bypassing rate limits. You can change these values to your own whitelisted user IDs.
 > - The `trustProxy` value is used for the trust proxy setting for the server. You can change this value to your own trust proxy setting.
-> - The `session.cookieDomain` value is used for the domain for the session cookie. You can change this value to your own domain. Make sure to include the `.` before the domain and only use the domain name without any subdomains.
 > - The `frontendUrl`, `backendUrl`, and `cdnUrl` values are used for the client website URL, server API URL, and CDN URL for the website. You can change these values to your own URLs.
 > - The `supportInviteUrl` value is used for the support server invite URL. You can change this value to your own support server invite URL.
 > - The `emojis` value is used for the emojis used in the bot. You should change these values to your own emojis.

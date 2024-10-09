@@ -6,8 +6,6 @@ botPresenceStatus: 'online'
 rateLimitWhitelist:
   - '957840712404193290'
 trustProxy: true
-session:
-  cookieDomain: '.discord.place'
 frontendUrl: 'https://discord.place'
 backendUrl: 'https://api.discord.place'
 cdnUrl: 'https://cdn.discord.place'
@@ -247,7 +245,6 @@ portalChannelId: '1238654829916585984'
 joinLeaveLogsChannelId: '1267553398337572905'
 quarantineLogsChannelId: '1267553398337572905'
 excludeCollectionsInBackup:
-  - 'sessions'
   - 'botdenies'
   - 'botvotetimeouts'
   - 'servervoteremindermetadas'

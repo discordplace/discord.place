@@ -1,6 +1,4 @@
 const express = require('express');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
 const { router } = require('express-file-routing');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -35,7 +33,6 @@ module.exports = class Server {
     while (mongoose.connection.readyState !== mongoose.STATES.connected) await sleep(1000);
 
     this.addMiddlewares();
-    this.configureSessions();
 
     this.server.use('/', await router({ directory: path.join(__dirname, 'routes') }));
     this.server.use('/public', express.static(path.join(__dirname, '..', 'public')));
@@ -104,31 +101,5 @@ module.exports = class Server {
     });
 
     logger.info('Middlewares added.');
-  }
-
-  configureSessions() {
-    const store = MongoStore.create({
-      mongoUrl: process.env.MONGO_URL,
-      dbName: process.env.NODE_ENV === 'production' ? 'api' : 'development',
-      touchAfter: 24 * 3600,
-      crypto: {
-        secret: process.env.SESSION_STORE_SECRET
-      }
-    });
-
-    this.server.use(session({
-      name: 'discordplace.sid',
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
-      store,
-      cookie: {
-        domain: process.env.NODE_ENV === 'production' ? new URL(config.frontendUrl).hostname : 'localhost',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 7
-      }
-    }));
   }
 };
