@@ -11,7 +11,7 @@ const Bot = require('@/schemas/Bot');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -30,7 +30,7 @@ module.exports = {
     body('botId')
       .optional()
       .isNumeric().withMessage('Bot ID must be a string.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id, planId, serverId, botId } = matchedData(request);
 

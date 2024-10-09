@@ -3,7 +3,7 @@ const slugValidation = require('@/validations/profiles/slug');
 const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -13,7 +13,7 @@ module.exports = {
       .isString().withMessage('Slug must be a string.')
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {      
       const { slug } = matchedData(request);
       const profile = await Profile.findOne({ slug });

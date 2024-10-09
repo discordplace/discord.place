@@ -5,7 +5,7 @@ const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const bodyParser = require('body-parser');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -13,7 +13,7 @@ module.exports = {
     bodyParser.json(),
     checkAuthentication,
     param('id'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
 

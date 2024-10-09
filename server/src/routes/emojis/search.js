@@ -2,7 +2,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { query, matchedData } = require('express-validator');
 const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -30,7 +30,7 @@ module.exports = {
       .optional()
       .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
       .toInt(),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { query, limit = 9, page = 1, category = 'All', sort = 'Newest' } = matchedData(request);
       const skip = (page - 1) * limit;

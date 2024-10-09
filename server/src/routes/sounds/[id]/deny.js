@@ -5,7 +5,7 @@ const Sound = require('@/schemas/Sound');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const idValidation = require('@/validations/sounds/id');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -28,7 +28,7 @@ module.exports = {
     body('reason')
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.soundDenyReasons)).withMessage('Invalid reason.'),
-    validateBody,
+    validateRequest,
     async (request, response) => {      
       const { id, reason } = matchedData(request);
       if (!config.soundDenyReasons[reason]) return response.sendError('Invalid reason.', 400);

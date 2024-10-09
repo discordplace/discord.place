@@ -16,13 +16,13 @@ const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount'
 const githubRepositoryValidation = require('@/validations/bots/githubRepository');
 const findRepository = require('@/utils/bots/findRepository');
 const getUserHashes = require('@/utils/getUserHashes');
-const validateBody = require('@/utils/middlewares/validateBody');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('id'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
 
@@ -132,7 +132,7 @@ module.exports = {
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id, short_description, description, invite_url, categories } = matchedData(request);
 
@@ -234,7 +234,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,
     param('id'),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
 
@@ -292,7 +292,7 @@ module.exports = {
       .optional()
       .isString().withMessage('GitHub Repository should be a string.')
       .custom(githubRepositoryValidation),
-    validateBody,
+    validateRequest,
     async (request, response) => {
       const { id, short_description, description, invite_url, categories, support_server_id, github_repository } = matchedData(request);
 
