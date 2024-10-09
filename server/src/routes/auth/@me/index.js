@@ -19,11 +19,9 @@ module.exports = {
 
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'LOGIN').catch(() => false);
       if (userQuarantined) {
-        return request.logout(error => {      
-          if (error) return response.sendError(error, 500);
-        
-          return response.sendError('You are not allowed to login.', 403);
-        });
+        response.clearCookie('token');
+
+        return response.sendError('You are not allowed to login.', 403);
       }
 
       const userHashes = await getUserHashes(user.id);

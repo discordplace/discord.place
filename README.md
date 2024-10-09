@@ -103,6 +103,7 @@ GITHUB_AUTO_SYNC_TRANSLATORS_SECRET=
 BOT_API_KEY_ENCRYPT_SECRET=
 USER_TOKEN_ENCRYPT_SECRET=
 PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY=
+JWT_SECRET=
 DISCORD_CLIENT_TOKEN=
 DISCORD_CLIENT_SECRET=
 DISCORD_CLIENT_ID=
@@ -140,6 +141,7 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 | `BOT_API_KEY_ENCRYPT_SECRET` | Secret key for bot API key encryption. |
 | `USER_TOKEN_ENCRYPT_SECRET` | Used for encrypting user access tokens. |
 | `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` | Secret key for encrypting custom data in the payments. |
+| `JWT_SECRET` | Secret key for JWT token encryption. |
 | `DISCORD_CLIENT_TOKEN` | Discord bot token. |
 | `DISCORD_CLIENT_SECRET` | Discord OAuth client secret. |
 | `DISCORD_CLIENT_ID` | Discord OAuth client ID. |
