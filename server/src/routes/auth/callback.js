@@ -55,8 +55,13 @@ module.exports = {
         const userQuarantined = await findQuarantineEntry.single('USER_ID', user.id, 'LOGIN').catch(() => false);
         if (userQuarantined) return response.sendError('You are not allowed to login.', 403);
    
+        const currentDate = new Date();
+
         const token = jwt.sign(
-          { id: user.id },
+          { 
+            id: user.id,
+            iat: currentDate.getTime()
+          },
           process.env.JWT_SECRET,
           {
             expiresIn: '30d',
@@ -77,7 +82,8 @@ module.exports = {
               flags: user.flags
             },
             email: user.email,
-            accessToken: encrypt(access_token, process.env.USER_TOKEN_ENCRYPT_SECRET)
+            accessToken: encrypt(access_token, process.env.USER_TOKEN_ENCRYPT_SECRET),
+            lastLogin: new Date(currentDate)
           }, 
           { upsert: true, new: true }
         );
@@ -87,7 +93,7 @@ module.exports = {
           {
             $set: {
               avatar: user.avatar,
-              banner: user.banner
+              banner: user.banner 
             }
           },
           { upsert: true }
