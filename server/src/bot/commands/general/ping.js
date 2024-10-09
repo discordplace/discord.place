@@ -1,7 +1,7 @@
 const axios = require('axios');
 const mongoose = require('mongoose');
 const ansiColors = require('ansi-colors');
-const getLocalizedCommand = require('@/src/utils/localization/getLocalizedCommand');
+const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 
 module.exports = {
   data: {

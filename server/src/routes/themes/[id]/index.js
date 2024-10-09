@@ -3,7 +3,7 @@ const { param, matchedData } = require('express-validator');
 const Theme = require('@/schemas/Theme');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const idValidation = require('@/utils/validations/themes/id');
-const getUserHashes = require('@/src/utils/getUserHashes');
+const getUserHashes = require('@/utils/getUserHashes');
 const validateBody = require('@/utils/middlewares/validateBody');
 
 module.exports = {
