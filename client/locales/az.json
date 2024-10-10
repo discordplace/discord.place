@@ -34,11 +34,6 @@
     ]
   },
   "header": {
-    "links": [
-      "Xidmətlər",
-      "Blog",
-      "Premium"
-    ],
     "servicesDropdownLinks": [
       "Profillər",
       "Serverlər",
@@ -55,6 +50,9 @@
     "templates": "Şablonlar",
     "sounds": "Səslər",
     "themes": "Temalar",
+    "services": "Xidmətlər",
+    "blog": "Blog",
+    "premium": "Premium",
     "logout": "Çıxın"
   },
   "footer": {

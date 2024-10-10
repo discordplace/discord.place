@@ -34,11 +34,6 @@
     ]
   },
   "header": {
-    "links": [
-      "Servislerimiz",
-      "Blog",
-      "Premium"
-    ],
     "servicesDropdownLinks": [
       "Profiller",
       "Sunucular",
@@ -55,6 +50,9 @@
     "templates": "Şablonlar",
     "sounds": "Sesler",
     "themes": "Temalar",
+    "services": "Servislerimiz",
+    "blog": "Blog",
+    "premium": "Premium",
     "logout": "Çıkış Yap"
   },
   "footer": {

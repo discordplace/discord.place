@@ -7,14 +7,14 @@ import { BiSolidCategory, BiSolidHappy, BiSolidMusic } from 'react-icons/bi';
 import { IoMusicalNotesSharp, IoGameController, IoLanguage, IoHeart } from 'react-icons/io5';
 import { GiTwoCoins } from 'react-icons/gi';
 import { ImUser } from 'react-icons/im';
-import { HiDesktopComputer, HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { HiDesktopComputer, HiNewspaper, HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { HiMiniExclamationCircle, HiMiniPaintBrush } from 'react-icons/hi2';
 import { RiInstagramFill } from 'react-icons/ri';
 import { MdMenuBook } from 'react-icons/md';
 import { TiPlus, TiStar } from 'react-icons/ti';
 import { HiTemplate } from 'react-icons/hi';
 import { TbBrush, TbCategoryFilled, TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { BsThreeDots } from 'react-icons/bs';
+import { BsStars, BsThreeDots } from 'react-icons/bs';
 import { FaRegImage } from 'react-icons/fa6';
 import { IoIosChatboxes } from 'react-icons/io';
 import { PiWaveformBold } from 'react-icons/pi';
@@ -66,45 +66,48 @@ const config = {
   headerLinks: [
     {
       id: 'profiles',
-      title: 'Profiles',
       href: '/profiles',
       icon: CgProfile
     },
     {
       id: 'servers',
-      title: 'Servers',
       href: '/servers',
       icon: FaCompass
     },
     {
       id: 'bots',
-      title: 'Bots',
       href: '/bots',
       icon: RiRobot2Fill
     },
     {
       id: 'emojis',
-      title: 'Emojis',
       href: '/emojis',
       icon: MdEmojiEmotions
     },
     {
       id: 'templates',
-      title: 'Templates',
       href: '/templates',
       icon: HiTemplate
     },
     {
       id: 'sounds',
-      title: 'Sounds',
       href: '/sounds',
       icon: PiWaveformBold
     },
     {
       id: 'themes',
-      title: 'Themes',
       href: '/themes',
       icon: RiBrush2Fill
+    },
+    {
+      id: 'blog',
+      icon: HiNewspaper,
+      href: '/blogs'
+    },
+    {
+      id: 'premium',
+      icon: BsStars,
+      href: '/premium'
     }
   ],
   errorMessages: {

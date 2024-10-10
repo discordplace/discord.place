@@ -23,18 +23,18 @@ export default function NotCollapsedHeader() {
     {
       id: 'services',
       icon: MdMiscellaneousServices,
-      name: t('header.links.0')
+      name: t('header.services')
     },
     {
       id: 'blog',
       icon: HiNewspaper,
-      name: t('header.links.1'),
+      name: t('header.blog'),
       href: '/blogs'
     },
     {
       id: 'premium',
       icon: BsStars,
-      name: t('header.links.2'),
+      name: t('header.premium'),
       href: '/premium'
     }
   ];

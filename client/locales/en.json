@@ -34,11 +34,6 @@
     ]
   },
   "header": {
-    "links": [
-      "Services",
-      "Blog",
-      "Premium"
-    ],
     "servicesDropdownLinks": [
       "Profiles",
       "Servers",
@@ -55,6 +50,9 @@
     "templates": "Templates",
     "sounds": "Sounds",
     "themes": "Themes",
+    "services": "Services",
+    "blog": "Blog",
+    "premium": "Premium",
     "logout": "Logout"
   },
   "footer": {
