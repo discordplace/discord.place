@@ -5,7 +5,6 @@ const User = require('@/schemas/User');
 const getUserHashes = require('@/utils/getUserHashes');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-
 const Discord = require('discord.js');
 
 module.exports = {
@@ -14,23 +13,27 @@ module.exports = {
     checkAuthentication,
     validateRequest,
     async (request, response) => {
-      const user = await User.findOne({ id: request.user.id });
+      const [user, userQuarantined] = await Promise.all([
+        User.findOne({ id: request.user.id }),
+        findQuarantineEntry.single('USER_ID', request.user.id, 'LOGIN').catch(() => false)
+      ]);
+
       if (!user) return response.sendError('User not found.', 404);
 
-      const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'LOGIN').catch(() => false);
       if (userQuarantined) {
         response.clearCookie('token');
 
         return response.sendError('You are not allowed to login.', 403);
       }
 
-      const userHashes = await getUserHashes(user.id);
+      const [userHashes, profile] = await Promise.all([
+        getUserHashes(user.id),
+        Profile.findOne({ 'user.id': user.id })
+      ]);
 
-      const profile = await Profile.findOne({ 'user.id': user.id });
       const canViewDashboard = request.member && config.permissions.canViewDashboardRoles.some(roleId => request.member.roles.cache.has(roleId));
 
       const userFlags = new Discord.UserFlagsBitField(user.data.flags).toArray();
-
       const validUserFlags = [
         'Staff',
         'Partner',
@@ -54,9 +57,7 @@ module.exports = {
         flags: userFlags.filter(flag => validUserFlags.includes(flag)),
         avatar: userHashes.avatar,
         banner: userHashes.banner,
-        profile: profile?.slug ? {
-          slug: profile.slug
-        } : null,
+        profile: profile?.slug ? { slug: profile.slug } : null,
         premium: user?.subscription?.createdAt ? user.subscription : null,
         can_view_dashboard: canViewDashboard
       });
