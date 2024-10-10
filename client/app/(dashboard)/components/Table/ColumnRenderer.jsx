@@ -15,11 +15,11 @@ import Countdown from '@/app/components/Countdown';
 import useDashboardStore from '@/stores/dashboard';
 import { FiArrowRightCircle } from 'react-icons/fi';
 
-function CategoryBadge({ children, icons }) {
+function CategoryBadge({ children, iconsKey }) {
   return (
     <div className='text-xs flex border border-primary items-center gap-x-2 font-medium px-1.5 py-0.5 bg-secondary text-primary rounded-lg'>
       <span className='text-tertiary'>
-        {icons[children]}
+        {config[iconsKey][children]}
       </span>
 
       {children}
@@ -179,12 +179,12 @@ export default function ColumnRenderer({ data }) {
           {Array.isArray(data.value) ? data.value.slice(0, 5).map(category => (
             <CategoryBadge
               key={category}
-              icons={data.icons}
+              iconsKey={data.iconsKey}
             >
               {category}
             </CategoryBadge>
           )) : (
-            <CategoryBadge icons={data.icons}>
+            <CategoryBadge iconsKey={data.iconsKey}>
               {data.value}
             </CategoryBadge>
           )}

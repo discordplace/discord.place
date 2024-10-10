@@ -457,7 +457,7 @@ export default function Page() {
                 {
                   type: 'category',
                   value: bot.categories,
-                  icons: config.botCategoriesIcons,
+                  iconsKey: 'botCategoriesIcons',
                   searchValues: bot.categories
                 },
                 {
@@ -546,7 +546,7 @@ export default function Page() {
                 {
                   type: 'category',
                   value: bot.categories,
-                  icons: config.botCategoriesIcons,
+                  iconsKey: 'botCategoriesIcons',
                   searchValues: bot.categories
                 },
                 {
@@ -633,7 +633,7 @@ export default function Page() {
                 {
                   type: 'category',
                   value: template.categories,
-                  icons: config.templateCategoriesIcons,
+                  iconsKey: 'templateCategoriesIcons',
                   searchValues: template.categories
                 },
                 {
@@ -720,7 +720,7 @@ export default function Page() {
                 {
                   type: 'category',
                   value: template.categories,
-                  icons: config.templateCategoriesIcons,
+                  iconsKey: 'templateCategoriesIcons',
                   searchValues: template.categories
                 },
                 {
@@ -807,7 +807,7 @@ export default function Page() {
                 {
                   type: 'category',
                   value: sound.categories,
-                  icons: config.soundCategoriesIcons,
+                  iconsKey: 'soundCategoriesIcons',
                   searchValues: sound.categories
                 },
                 {
@@ -895,7 +895,7 @@ export default function Page() {
                 {
                   type: 'category',
                   value: sound.categories,
-                  icons: config.soundCategoriesIcons,
+                  iconsKey: 'soundCategoriesIcons',
                   searchValues: sound.categories
                 },
                 {
@@ -1178,7 +1178,7 @@ export default function Page() {
                 {
                   type: 'category',
                   value: theme.categories,
-                  icons: config.themeCategoriesIcons,
+                  iconsKey: 'themeCategoriesIcons',
                   searchValues: theme.categories
                 },
                 {
@@ -1265,7 +1265,7 @@ export default function Page() {
                 {
                   type: 'category',
                   value: theme.categories,
-                  icons: config.themeCategoriesIcons,
+                  iconsKey: 'themeCategoriesIcons',
                   searchValues: theme.categories
                 },
                 {
