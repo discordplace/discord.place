@@ -9,7 +9,6 @@ module.exports = {
     client: 'readonly',
     config: 'readonly',
     logger: 'readonly',
-    passport: 'readonly',
     i18n: 'readonly'
   },
   extends: 'eslint:recommended',

@@ -70,13 +70,15 @@ export default function Table({ tabs }) {
       });
     });
 
-  const sortedColumns = filteredColumns
-    .toSorted((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b]));
+  const deepCopiedColumns = JSON.parse(JSON.stringify(filteredColumns));
+
+  const sortedColumns = deepCopiedColumns
+    .sort((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b]));
 
   // Paginate columns
   const displayedColumns = sortedColumns.slice((page - 1) * 10, page * 10);
 
-  const showPagination = filteredColumns.length > 10;
+  const showPagination = deepCopiedColumns.length > 10;
 
   const CurrentSortIcon = currentTabData.rows[currentSort.key]?.icon;
 
@@ -117,7 +119,7 @@ export default function Table({ tabs }) {
             {tab.label}
 
             <span className='flex items-center justify-center w-max px-1.5 h-4 text-xs rounded-full bg-quaternary sm:bg-quaternary text-primary'>
-              {currentTab === tab.label ? filteredColumns.length : tab.columns.length}
+              {currentTab === tab.label ? deepCopiedColumns.length : tab.columns.length}
             </span>
 
             {currentTab === tab.label && (
@@ -275,7 +277,7 @@ export default function Table({ tabs }) {
                   <td
                     key={`row-${rowIndex}`}
                     className={cn(
-                      'p-2 h-[60px] border-y border-[rgba(var(--bg-tertiary))] transition-colors group-hover:cursor-pointer',
+                      'p-2 min-w-[300px] sm:min-w-[unset] h-[60px] border-y border-[rgba(var(--bg-tertiary))] transition-colors group-hover:cursor-pointer',
                       selectedItems.find(col => isEqual(col, column)) ? 'bg-tertiary border-[rgba(var(--bg-quaternary))] select-none' : 'group-hover:bg-secondary'
                     )}
                     onClick={() => handleSelect(column)}
@@ -319,10 +321,10 @@ export default function Table({ tabs }) {
         <div className='flex justify-center w-full'>
           <Pagination
             page={page}
-            totalPages={Math.ceil(filteredColumns?.length / 10)}
+            totalPages={Math.ceil(deepCopiedColumns?.length / 10)}
             setPage={setPage}
             loading={false}
-            total={filteredColumns?.length}
+            total={deepCopiedColumns?.length}
             limit={10}
             disableAnimation
           />

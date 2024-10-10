@@ -35,6 +35,14 @@ const UserSchema = new Schema({
       required: false
     }
   },
+  lastLoginAt: {
+    type: Date,
+    required: false
+  },
+  lastLogoutAt: {
+    type: Date,
+    required: false
+  },
   subscription: {
     id: {
       type: String,

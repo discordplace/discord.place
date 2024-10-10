@@ -1,6 +1,4 @@
 const express = require('express');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
 const { router } = require('express-file-routing');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -14,11 +12,6 @@ const languageDetection = require('@/utils/middlewares/languageDetection');
 const compression = require('compression');
 const morgan = require('morgan');
 
-const passport = require('passport');
-const User = require('@/schemas/User');
-const UserHashes = require('@/schemas/User/Hashes');
-const DiscordStrategy = require('passport-discord').Strategy;
-const encrypt = require('@/utils/encryption/encrypt');
 const sleep = require('@/utils/sleep');
 
 module.exports = class Server {
@@ -40,8 +33,6 @@ module.exports = class Server {
     while (mongoose.connection.readyState !== mongoose.STATES.connected) await sleep(1000);
 
     this.addMiddlewares();
-    this.configureSessions();
-    this.createDiscordAuth();
 
     this.server.use('/', await router({ directory: path.join(__dirname, 'routes') }));
     this.server.use('/public', express.static(path.join(__dirname, '..', 'public')));
@@ -96,106 +87,7 @@ module.exports = class Server {
     });
 
     if (process.env.NODE_ENV === 'production') this.server.use(blockSimultaneousRequests);
-    
+
     logger.info('Middlewares added.');
-  }
-
-  configureSessions() {
-    const store = MongoStore.create({
-      mongoUrl: process.env.MONGO_URL,
-      dbName: process.env.NODE_ENV === 'production' ? 'api' : 'development',
-      touchAfter: 24 * 3600,
-      crypto: {
-        secret: process.env.SESSION_STORE_SECRET
-      }
-    });
-
-    this.server.use(session({
-      name: 'discordplace.sid',
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
-      store,
-      cookie: {
-        domain: process.env.NODE_ENV === 'production' ? new URL(config.frontendUrl).hostname : 'localhost',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 7
-      }
-    }));
-  }
-
-  createDiscordAuth() {
-    const Strategy = new DiscordStrategy({
-      clientID: process.env.DISCORD_CLIENT_ID,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      callbackURL: '/auth/callback',
-      scope: config.discordScopes
-    }, (accessToken, refreshToken, profile, done) => process.nextTick(async () => {
-      done(null, profile);
-    }));
-
-    Strategy.authorizationParams = () => ({ prompt: 'none' });
-
-    passport.use(Strategy);
-
-    this.server.use(passport.initialize());
-    this.server.use(passport.session());
-
-    passport.serializeUser(async (user, done) => {
-      if (!user.email) throw new Error('User email not found.');
-
-      done(null, user);
-
-      await User.findOneAndUpdate({ id: user.id },
-        {
-          id: user.id,
-          data: {
-            username: user.username,
-            global_name: user.global_name,
-            flags: user.flags
-          },
-          email: user.email,
-          accessToken: encrypt(user.accessToken, process.env.USER_TOKEN_ENCRYPT_SECRET)
-        }, 
-        { upsert: true, new: true }
-      ).catch(error => {
-        logger.error('Error while saving user:', error);
-        throw new Error('Error while logging in. Please try again.');
-      });
-
-      // Save avatar and banner to UserHashes
-      await UserHashes.findOneAndUpdate(
-        { id: user.id },
-        {
-          $set: {
-            avatar: user.avatar,
-            banner: user.banner
-          }
-        },
-        { upsert: true }
-      ).catch(() => null);
-    });
-    passport.deserializeUser((obj, done) => done(null, obj));
-
-    global.passport = passport;
-
-    this.server.use('*', (request, response, next) => {
-      if (!request.user && request.session?.passport?.user) request.user = request.session.passport.user;
-      next();
-    });
-
-    this.server.use('*', (request, response, next) => {
-      if (request.user) {
-        const guild = client.guilds.cache.get(config.guildId);
-        if (guild) {
-          const member = guild.members.cache.get(request.user.id);
-          if (member) request.member = member;
-        }
-      }
-      
-      next();
-    });
   }
 };

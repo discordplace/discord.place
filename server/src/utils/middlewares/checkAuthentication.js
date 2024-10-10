@@ -1,4 +1,51 @@
-module.exports = function checkAuthentication(request, response, next) {
-  if (!request.user?.username) return response.status(401).json({ error: 'Unauthorized' });
-  next();
+const jwt = require('jsonwebtoken');
+const User = require('@/schemas/User');
+
+class AuthError extends Error {
+  constructor(message) {
+    super(message);
+
+    this.name = 'AuthError';
+  }
+}
+
+module.exports = async function checkAuthentication(request, response, next) {
+  const token = request.cookies.token;
+
+  try {
+    if (!token) throw new AuthError('Unauthorized');
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+      issuer: 'api.discord.place',
+      audience: 'discord.place',
+      subject: 'user'
+    });
+    
+    if (!decoded) throw new AuthError('Token invalid.');
+
+    const user = await User.findOne({ id: decoded.id }).select('lastLogoutAt').lean();
+    if (!user) throw new AuthError('User not found.');
+
+    if (decoded.iat < new Date(user.lastLogoutAt).getTime()) throw new AuthError('Token expired.');
+
+    request.user = { 
+      id: decoded.id
+    };
+
+    const guild = client.guilds.cache.get(config.guildId);
+    if (guild) {
+      const member = guild.members.cache.get(request.user.id);
+      if (member) request.member = member;
+    }
+
+    next();
+  } catch (error) {
+    response.clearCookie('token');
+
+    if (error instanceof AuthError) return response.sendError(error.message, 401);
+    
+    logger.error(`There was an error while checking authentication: ${error}`);
+
+    return response.sendError('An error occurred while checking authentication.', 500);
+  }
 };
