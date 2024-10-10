@@ -38,8 +38,11 @@ export default function sortColumns(key, order, [a, b]) {
 
   if (checkType('email')) return first.value.localeCompare(second.value);
 
+  // Sort by the date
+  if (checkType('date')) return new Date(first.value) - new Date(second.value);
+
   // Sort by the number of the value
-  if (checkType('date') || checkType('number') || checkType('rating') || checkType('countdown')) return first.value - second.value;
+  if (checkType('number') || checkType('rating') || checkType('countdown')) return first.value - second.value;
 
   // Sort by the size of the array
   if (checkType('category')) return first.value.length - second.value.length;
