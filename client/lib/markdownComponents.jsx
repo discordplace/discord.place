@@ -30,20 +30,19 @@ const markdownComponents = {
       {!children.key?.startsWith('img-') && <FiArrowUpRight />}
     </Link>
   ),
-  code: ({ children, className, ...rest }) => {
+  code: ({ children, className }) => {
     const languageMatch = /language-(\w+)/.exec(className || '');
 
     return languageMatch ? (
-      <div className='relative'>
+      <div className='relative max-w-5xl'>
         <SyntaxHighlighter
-          {...rest}
           PreTag={'div'}
           // eslint-disable-next-line react/no-children-prop
           children={String(children).replace(/\n$/, '')}
           language={languageMatch[1]}
           style={darcula}
           wrapLongLines={false}
-          className='!pr-12 rounded-lg overflow-auto max-w-5xl'
+          className='!pr-12 rounded-lg overflow-auto'
         />
 
         <div className='absolute flex items-center p-1 top-2 right-2 gap-x-4'>
