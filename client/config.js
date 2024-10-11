@@ -45,6 +45,8 @@ const config = {
   baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place',
   supportInviteUrl: 'https://invite.discord.place',
   docsUrl: 'https://docs.discord.place',
+  statusUrl: 'https://status.discord.place',
+  statusBadgeUrl: 'https://status.discord.place/badge',
   api: {
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place'
   },
@@ -53,10 +55,6 @@ const config = {
     script: 'https://analytics.discord.place/script.js',
     websiteId: 'b8fea5b8-7789-4381-97a0-0b474d9bb87a',
     domains: ['discord.place', 'www.discord.place']
-  },
-  instatus: {
-    summaryUrl: 'https://status.discord.place/summary.json',
-    baseUrl: 'https://status.discord.place'
   },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;

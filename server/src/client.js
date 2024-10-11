@@ -351,29 +351,6 @@ module.exports = class Client {
       logger.info(`Failed to get response time:\n${error}`);
     }
   }
-      
-  async postNewMetric() {
-    if (!config.instatus.page_id || !config.instatus.metric_id) return logger.warn('[Instatus] Page ID or Metric ID is not defined.');
-    if (!process.env.DISCORD_PLACE_INSTATUS_API_KEY) return logger.warn('[Instatus] API key is not defined. Please define DISCORD_PLACE_INSTATUS_API_KEY in your environment variables.');
-
-    const baseUrl = 'https://api.instatus.com';
-    const responseTime = await this.getResponseTime();
-
-    try {
-      const response = await axios.post(`${baseUrl}/v1/${config.instatus.page_id}/metrics/${config.instatus.metric_id}`, {
-        timestamp: new Date().getTime(),
-        value: responseTime
-      }, {
-        headers: {
-          Authorization: `Bearer ${process.env.DISCORD_PLACE_INSTATUS_API_KEY}`
-        }
-      });
-
-      if (response.status === 200) logger.info('Posted new metric to Instatus.');
-    } catch (error) {
-      logger.error('Failed to post new metric to Instatus:', error);
-    }
-  }
 
   async syncLemonSqueezyPlans() {
     if (!process.env.LEMON_SQUEEZY_API_KEY) return logger.warn('[Lemon Squeezy] API key is not defined. Please define LEMON_SQUEEZY_API_KEY in your environment variables.');

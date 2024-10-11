@@ -12,7 +12,6 @@ import CookieBanner from '@/app/components/CookieBanner';
 import { Suspense, useEffect } from 'react';
 import ModalProvider from '@/app/components/Providers/Modal';
 import config from '@/config';
-import Status from '@/app/components/Providers/Status';
 import useGeneralStore from '@/stores/general';
 import FullPageLoading from './components/FullPageLoading';
 import useLanguageStore from '@/stores/language';
@@ -49,11 +48,11 @@ export default function RootLayoutContent({ children }) {
       </Script>
 
       <ProgressBarProvider>
-        <Toaster toastOptions={{
-          className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
-        }} />
-
-        <Status />
+        <Toaster
+          toastOptions={{
+            className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
+          }} 
+        />
 
         <ThemeProvider>
           <VaulWrapperProvider>

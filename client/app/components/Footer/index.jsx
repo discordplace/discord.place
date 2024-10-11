@@ -9,7 +9,6 @@ import Image from 'next/image';
 import config from '@/config';
 import { FaXTwitter } from 'react-icons/fa6';
 import { usePathname } from 'next/navigation';
-import useGeneralStore from '@/stores/general';
 import { MdSunny } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import { IoIosMoon } from 'react-icons/io';
@@ -19,7 +18,6 @@ import Twemoji from 'react-twemoji';
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
   const toggleTheme = useThemeStore(state => state.toggleTheme);
-  const summary = useGeneralStore(state => state.status.summary);
   const language = useLanguageStore(state => state.language);
   const setLanguage = useLanguageStore(state => state.setLanguage);
   
@@ -46,7 +44,7 @@ export default function Footer() {
         },
         {
           label: t('footer.blocks.0.links.2'),
-          href: config.instatus.baseUrl,
+          href: config.statusUrl,
           target: '_blank'
         },
         {
@@ -155,38 +153,6 @@ export default function Footer() {
     }
   ];
 
-  function StatusButton({ status }) {
-    const statusTextIndex = status === 'UP' ? 0 : status === 'HASISSUES' ? 1 : 2;
-    const statusText = t(`footer.statusText.${statusTextIndex}`);
-
-    return (
-      <Link
-        className='flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-tertiary hover:bg-quaternary border border-primary hover:border-[rgba(var(--bg-secondary))] gap-x-3 text-secondary w-max ring-2 ring-[rgba(var(--bg-secondary))] transition-all hover:ring-purple-500 ring-offset-2 ring-offset-[rgba(var(--bg-secondary))]'
-        href={config.instatus.baseUrl}
-      >
-        <span
-          className={cn(
-            'w-2.5 h-2.5 rounded-full animate-ping',
-            status === 'UP' && 'bg-green-500',
-            status === 'HASISSUES' && 'bg-yellow-500',
-            (status !== 'UP' && status !== 'HASISSUES') && 'bg-red-500'
-          )}
-        />
-
-        <span
-          className={cn(
-            'w-2.5 h-2.5 rounded-full absolute',
-            status === 'UP' && 'bg-green-500',
-            status === 'HASISSUES' && 'bg-yellow-500',
-            (status !== 'UP' && status !== 'HASISSUES') && 'bg-red-500'
-          )}
-        />
-  
-        {statusText}
-      </Link>
-    );
-  }
-
   return (
     <section className="flex flex-col 2xl:max-h-[800px] flex-wrap flex-1 w-full gap-16 px-6 py-16 mt-auto border-t 2xl:flex-row 2xl:gap-x-48 sm:px-24 xl:px-32 bg-secondary border-primary">
       <div className='flex flex-col gap-y-6 max-w-[400px] w-full'>
@@ -206,9 +172,12 @@ export default function Footer() {
           {t('footer.subtitle')}
         </span>
 
-        {summary?.page?.status && (
-          <StatusButton status={summary.page.status} />
-        )}
+        <iframe
+          src={`${config.statusBadgeUrl}?theme=${theme === 'dark' ? 'dark' : 'light'}`}
+          width="250"
+          height="30"
+          frameborder="0"
+        />
       </div>
 
       <div className='grid grid-cols-1 mobile:grid-cols-2 lg:flex justify-between 2xl:w-[calc(100%_-_400px_-_12rem)] gap-8 sm:gap-16'>

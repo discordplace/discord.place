@@ -434,9 +434,6 @@ themeDenyReasons:
   proper-categorization:
     name: 'Proper Categorization'
     description: 'Ensure your theme is categorized correctly. Misleading categorization can result in rejection.'
-instatus:
-  page_id: 'clwx1az6k27335bhobasj52b6y'
-  metric_id: 'clwx1tevy38905bhobroucjm8j'
 lemonSqueezy:
   variantIds:
     tripledVotes:
