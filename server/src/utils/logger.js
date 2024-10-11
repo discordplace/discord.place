@@ -4,9 +4,6 @@ require('winston-daily-rotate-file');
 const { combine, errors, printf, timestamp } = winston.format;
 const { Console, File, DailyRotateFile } = winston.transports;
 
-const { Logtail } = require('@logtail/node');
-const { LogtailTransport } = require('@logtail/winston');
-
 const { inspect } = require('util');
 
 module.exports = class Logger {
@@ -47,22 +44,6 @@ module.exports = class Logger {
         maxFiles: '14d'
       })
     ];
-
-    if (process.env.NODE_ENV === 'production') {
-      if (!process.env.LOGTAIL_SOURCE_TOKEN) {
-        console.warn('LOGTAIL_SOURCE_TOKEN is not set in production environment.');
-      } else {
-        const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
-        const transport = new LogtailTransport(logtail);
-
-        transports.push(transport);
-
-        const httpLogtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN);
-        const httpTransport = new LogtailTransport(httpLogtail);
-
-        httpTransports.push(httpTransport);
-      }
-    }
 
     this.logger = winston.createLogger({
       levels: {
