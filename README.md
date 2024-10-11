@@ -121,7 +121,6 @@ CLOUDFLARE_API_KEY=
 CLOUDFLARE_EMAIL=
 CLOUDFLARE_ACCOUNT_ID=
 CLOUDFLARE_BLOCK_IP_LIST_ID=
-LOGTAIL_SOURCE_TOKEN=
 LEMON_SQUEEZY_WEBHOOK_SECRET=
 LEMON_SQUEEZY_API_KEY=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL=
@@ -158,7 +157,6 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID. |
 | `CLOUDFLARE_BLOCK_IP_LIST_ID` | Cloudflare block IP list ID. |
 | `DISCORD_PLACE_INSTATUS_API_KEY` | discord.place Instatus API key. (not required) |
-| `LOGTAIL_SOURCE_TOKEN` | Logtail source token. (not required) |
 | `LEMON_SQUEEZY_WEBHOOK_SECRET` | Lemon Squeezy webhook secret. (not required) |
 | `LEMON_SQUEEZY_API_KEY` | Lemon Squeezy API key. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
@@ -175,7 +173,6 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 > - The `CLOUDFLARE_API_KEY`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_ACCOUNT_ID` values are required for interacting with the Cloudflare API. You can get the API key from the Cloudflare dashboard.
 > - The `CLOUDFLARE_BLOCK_IP_LIST_ID` is used for blocking IP addresses within the Cloudflare firewall. Refer to the [Cloudflare WAF documentation](https://developers.cloudflare.com/waf/tools/lists/create-dashboard/) to create a list. After creating the list, you can get the list ID from the URL. (usually should be in the end of the URL)
 > - The `DISCORD_PLACE_INSTATUS_API_KEY` is used for authenticating requests to the discord.place Instatus API endpoints. This is not required for self-hosting. We use this for displaying the current status of the discord.place on the homepage. You can get this from the Instatus dashboard. Refer to the [Instatus API documentation](https://instatus.com/help/api) for more information.
-> - The `LOGTAIL_SOURCE_TOKEN` is used for sending logs to Logtail. This is not required for self-hosting. We actually not use this in our production environment. But we wanted to keep this in the repository for future use.
 > - The `LEMON_SQUEEZY_WEBHOOK_SECRET` is used for verifying the Lemon Squeezy webhook. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy documentation](https://docs.lemonsqueezy.com/help/webhooks) for more information.
 > - The `LEMON_SQUEEZY_API_KEY` is used for authenticating requests to the Lemon Squeezy API. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy Developer Guide](https://docs.lemonsqueezy.com/guides/developer-guide/getting-started#create-an-api-key) to get your API key.
 > - The `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` and `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` values are used for getting the approximate guild count of a bot. This is half required for self-hosting. If you don't want to use this feature, you can leave these values empty, but this will result in bots not being able to update server_count using the API. For now, we use private API for this because Discord doesn't provide an official API for getting the approximate guild count of a bot. We don't want to share this API source code with everyone.
