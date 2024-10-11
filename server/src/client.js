@@ -169,8 +169,6 @@ module.exports = class Client {
           this.createNewDashboardData();
           this.saveDailyProfileStats();
         }, null, true);
-
-        new CronJob('*/5 * * * *', this.postNewMetric.bind(this), null, true);
       }
     });
   }
