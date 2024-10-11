@@ -59,11 +59,6 @@
     "title": "All things related to Discord all in one place.",
     "subtitle": "This site is not affiliated with Discord Inc. All trademarks are property of their respective owners.",
     "copyRight": "{{year}} discord.place. All rights reserved.",
-    "statusText": [
-      "All systems operational",
-      "Partial outage",
-      "Major outage"
-    ],
     "theme": {
       "light": "Light",
       "dark": "Dark"
@@ -217,18 +212,6 @@
   },
   "pagination": {
     "inputOpened": "Type a page number between 1 and {{totalPages}} and press Enter to navigate to that page."
-  },
-  "status": {
-    "incidentDescription": "We are currently experiencing some issues. Check our status page for updates.",
-    "incidentContent": "This incident started at {{startedAt}}.",
-    "maintenanceDescription": {
-      "planned": "We are scheduled to perform maintenance on our services.",
-      "started": "We are currently performing maintenance on our services. Check our status page for updates."
-    },
-    "maintenanceContent": {
-      "planned": "Routine maintenance is scheduled to start at {{date}}.",
-      "started": "We are currently undergoing routine maintenance since {{date}}."
-    }
   },
   "buttons": {
     "cancel": "Cancel",

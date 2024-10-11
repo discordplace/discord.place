@@ -156,7 +156,6 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 | `CLOUDFLARE_EMAIL` | Cloudflare email. |
 | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID. |
 | `CLOUDFLARE_BLOCK_IP_LIST_ID` | Cloudflare block IP list ID. |
-| `DISCORD_PLACE_INSTATUS_API_KEY` | discord.place Instatus API key. (not required) |
 | `LEMON_SQUEEZY_WEBHOOK_SECRET` | Lemon Squeezy webhook secret. (not required) |
 | `LEMON_SQUEEZY_API_KEY` | Lemon Squeezy API key. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
@@ -172,7 +171,6 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 > - The `CLOUDFLARE_TURNSTILE_SECRET_KEY` is used for verifying the Turnstile token. We use Cloudflare Turnstile for ensuring that the user is a human and not a bot on the website. Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile secret key.
 > - The `CLOUDFLARE_API_KEY`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_ACCOUNT_ID` values are required for interacting with the Cloudflare API. You can get the API key from the Cloudflare dashboard.
 > - The `CLOUDFLARE_BLOCK_IP_LIST_ID` is used for blocking IP addresses within the Cloudflare firewall. Refer to the [Cloudflare WAF documentation](https://developers.cloudflare.com/waf/tools/lists/create-dashboard/) to create a list. After creating the list, you can get the list ID from the URL. (usually should be in the end of the URL)
-> - The `DISCORD_PLACE_INSTATUS_API_KEY` is used for authenticating requests to the discord.place Instatus API endpoints. This is not required for self-hosting. We use this for displaying the current status of the discord.place on the homepage. You can get this from the Instatus dashboard. Refer to the [Instatus API documentation](https://instatus.com/help/api) for more information.
 > - The `LEMON_SQUEEZY_WEBHOOK_SECRET` is used for verifying the Lemon Squeezy webhook. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy documentation](https://docs.lemonsqueezy.com/help/webhooks) for more information.
 > - The `LEMON_SQUEEZY_API_KEY` is used for authenticating requests to the Lemon Squeezy API. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy Developer Guide](https://docs.lemonsqueezy.com/guides/developer-guide/getting-started#create-an-api-key) to get your API key.
 > - The `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` and `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` values are used for getting the approximate guild count of a bot. This is half required for self-hosting. If you don't want to use this feature, you can leave these values empty, but this will result in bots not being able to update server_count using the API. For now, we use private API for this because Discord doesn't provide an official API for getting the approximate guild count of a bot. We don't want to share this API source code with everyone.
@@ -188,13 +186,13 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 | `availableLocales` | Array<String> | Available locales for the website. |
 | `supportInviteUrl` | String | URL for the your Discord support server invite. Used in the many places in the website. |
 | `docsUrl` | String | URL for the your website documentation website. |
+| `statusUrl` | String | URL for the your website status page. |
+| `statusBadgeUrl` | String | URL for the embeddable status badge for the website. |
 | `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:3001`. |
 | `analytics.url` | String | Your analytics website URL. |
 | `analytics.script` | String | Your analytics script URL. |
 | `analytics.websiteId` | String | Your analytics website ID. |
 | `analytics.domains` | Array<String> | Your analytics allowed domains. |
-| `instatus.summaryUrl` | String | URL for the get the summary.json file from the Instatus. |
-| `instatus.baseUrl` | String | Base URL for the Instatus website. |
 | `botTestGuildId` | String | Your test guild ID for the bots testing. |
 | `getEmojiURL` | Function | Function for getting the emoji URL. You may need to change this to your own CDN URL. |
 | `getSoundURL` | Function | Function for getting the sound URL. You may need to change this to your own CDN URL. |
@@ -206,7 +204,6 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 > - The `supportInviteUrl` and `docsUrl` values are used in the website for the support server and documentation links. You can change these values to your own support server and documentation links.
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL.
 > - The `analytics.url`, `analytics.script`, `analytics.websiteId`, and `analytics.domains` values are used for setting up analytics on the website. We use [Umami Analytics](https://umami.is) for analytics. Any other analytics service is not supported.
-> - The `instatus.summaryUrl` and `instatus.baseUrl` values are used for getting the status of the discord.place from the Instatus. You can change these values to your own Instatus URL.
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `getEmojiURL` and `getSoundURL` functions are used for getting the emoji and sound URLs. You should change these functions to your own CDN URL.
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
@@ -243,8 +240,6 @@ We use YML files for the configuration of the server. You can find the configura
 | `globalRateLimit.maxRequests` | Number | Maximum requests allowed in the global rate limit. |
 | `globalRateLimit.perMinutes` | Number | Requests allowed per minute in the global rate limit. |
 | `globalRateLimit.cleanUpIntervalInMinutes` | Number | Clean-up interval for the global rate limit. |
-| `instatus.page_id` | String | Page ID for the Instatus. |
-| `instatus.metric_id` | String | Metric ID for the Instatus. |
 | `lemonSqueezy.variantIds` | Object | Variant IDs for the Lemon Squeezy. |
 | `availableLocales` | Array<Object> | Available locales for the website. |
 
@@ -264,7 +259,6 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `excludeCollectionsInBackup` value is used for collections to exclude from database backups. We take daily backups of the database. If you don't want to take backups of some collections, you can add those collections to this value. Make sure to add the collection name exactly as it is in the database.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the website with different ports and use a reverse proxy to redirect the requests to the correct port.
 > - The `globalRateLimit.maxRequests`, `globalRateLimit.perMinutes`, and `globalRateLimit.cleanUpIntervalInMinutes` values are used for the global rate limit settings. You can change these values to your own rate limit settings.
-> - The `instatus.page_id` and `instatus.metric_id` values are used for the page ID and metric ID for the Instatus. You can change these values to your own page ID and metric ID.
 > - The `lemonSqueezy.variantIds` value is used for the variant IDs for the Lemon Squeezy. We sell some products on Lemon Squeezy with different variants. You should create these variants on the Lemon Squeezy and get the variant IDs from there.
 > - Make sure to fill all fields that end with `ChannelId` with the correct channel IDs from the base guild.
 > - The `availableLocales` value is used for the available locales for the server. You can change these values to your own available locales. Locale files should be in the `server/src/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.

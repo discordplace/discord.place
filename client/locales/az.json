@@ -59,11 +59,6 @@
     "title": "Discord ilə əlaqəli hər şey bir yerdə.",
     "subtitle": "Bu sayt Discord Inc. ilə əlaqəli deyil. Bütün ticarət markaları müvafiq sahiblərinin mülkiyyətindədir.",
     "copyRight": "{{year}} discord.place ",
-    "statusText": [
-      "Bütün sistemlər işləyir",
-      "Qismən kəsilmə",
-      "Böyük fasilə"
-    ],
     "theme": {
       "light": "İşıq",
       "dark": "Qaranlıq"
@@ -217,18 +212,6 @@
   },
   "pagination": {
     "inputOpened": "1 ilə arasında bir səhifə nömrəsi yazın {{totalPages}} və həmin səhifəyə getmək üçün Enter düyməsini basın."
-  },
-  "status": {
-    "incidentDescription": "Hazırda bəzi problemlər yaşayırıq. ",
-    "incidentContent": "Bu hadisə başlandı {{startedAt}}.",
-    "maintenanceDescription": {
-      "planned": "Xidmətlərimizə texniki qulluq göstərməyi planlaşdırırıq.",
-      "started": "Hazırda xidmətlərimizə texniki xidmət göstəririk. "
-    },
-    "maintenanceContent": {
-      "planned": "Müntəzəm baxımın başlaması planlaşdırılır {{date}}.",
-      "started": "Biz hal-hazırda rutin təmirdən keçirik {{date}}."
-    }
   },
   "buttons": {
     "cancel": "Ləğv et",

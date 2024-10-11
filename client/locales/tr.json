@@ -59,11 +59,6 @@
     "title": "Discord ile alakalı her şey, bir arada.",
     "subtitle": "Bu site Discord Inc. ile ilişkili değildir. Tüm ticari markalar ilgili sahiplerine aittir.",
     "copyRight": "{{year}} discord.place. Tüm hakları saklıdır.",
-    "statusText": [
-      "Tüm sistemler çalışıyor",
-      "Kısmi kesinti",
-      "Kesinti"
-    ],
     "theme": {
       "light": "Aydınlık",
       "dark": "Karanlık"
@@ -217,18 +212,6 @@
   },
   "pagination": {
     "inputOpened": "1 ile {{totalPages}} arasında bir sayfa numarası yazın ve Enter tuşuna basarak onaylayın."
-  },
-  "status": {
-    "incidentDescription": "Şu anda sistemlerimizde bazı sorunlar yaşıyoruz. Güncellemeler için servis durumu sayfamıza göz atın.",
-    "incidentContent": "Bu sorun {{startedAt}} tarihinde başladı.",
-    "maintenanceDescription": {
-      "planned": "Hizmetlerimizde bakım yapmayı planlıyoruz.",
-      "started": "Şu anda hizmetlerimizde bakım yapıyoruz. Güncellemeler için servis durumu sayfamıza göz atın."
-    },
-    "maintenanceContent": {
-      "planned": "Bu bakımın {{date}} tarihinde başlaması planlanıyor.",
-      "started": "Bu bakım {{date}} tarihinde başladı ve şu anda devam ediyor."
-    }
   },
   "buttons": {
     "cancel": "İptal",
