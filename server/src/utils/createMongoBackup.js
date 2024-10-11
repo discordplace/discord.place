@@ -5,6 +5,7 @@ const moment = require('moment');
 const fs = require('node:fs');
 const path = require('node:path');
 const archiver = require('archiver');
+const sendHeartbeat = require('@/utils/sendHeartbeat');
 
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -34,9 +35,13 @@ async function createMongoBackup() {
     await zipBackupFolder(backupPath);
     await uploadBackupToS3(`${backupPath}/backup.zip`, `${formattedDate}/backup.zip`);
 
+    sendHeartbeat(process.env.HEARTBEAT_ID_DAILY_DATABASE_BACKUP, 0);
+
     logger.info('Database backup uploaded to S3 successfully.');
   } catch (error) {
     logger.error('Failed to take backup:', error);
+
+    sendHeartbeat(process.env.HEARTBEAT_ID_DAILY_DATABASE_BACKUP, 1);
   }
 }
 
