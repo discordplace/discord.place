@@ -83,7 +83,7 @@ module.exports = {
       files: [attachment]
     });
 
-    await sleep(5500);
+    await sleep(7500);
 
     await interaction.editReply({
       content: await interaction.translate('commands.vote.gif_hidden_now'),
