@@ -1,7 +1,8 @@
 const express = require('express');
 const { router } = require('express-file-routing');
-const path = require('path');
+const path = require('node:path');
 const mongoose = require('mongoose');
+const swaggerJsdoc = require('swagger-jsdoc');
 
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -33,6 +34,7 @@ module.exports = class Server {
     while (mongoose.connection.readyState !== mongoose.STATES.connected) await sleep(1000);
 
     this.addMiddlewares();
+    this.setupSwagger();
 
     this.server.use('/', await router({ directory: path.join(__dirname, 'routes') }));
     this.server.use('/public', express.static(path.join(__dirname, '..', 'public')));
@@ -89,5 +91,33 @@ module.exports = class Server {
     if (process.env.NODE_ENV === 'production') this.server.use(blockSimultaneousRequests);
 
     logger.info('Middlewares added.');
+  }
+
+  setupSwagger() {
+    const swaggerOptions = {
+      definition: {
+        openapi: '3.0.0',
+        info: {
+          title: 'discord.place API',
+          version: '1.0.0',
+          description: 'discord.place API Documentation',
+          contact: {
+            name: 'discord.place',
+            url: 'https://discord.place',
+            email: 'support@discord.place'
+          }
+        },
+        servers: [
+          {
+            url: 'https://api.discord.place'
+          }
+        ]
+      },
+      apis: ['./src/routes/*.js']
+    };
+
+    const swaggerSpec = swaggerJsdoc(swaggerOptions);
+    
+    this.server.get('/swagger.json', (request, response) => response.json(swaggerSpec));
   }
 };
