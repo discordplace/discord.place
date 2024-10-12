@@ -1,7 +1,6 @@
 // Modules
 const Discord = require('discord.js');
 const { CronJob } = require('cron');
-const axios = require('axios');
 const CloudflareAPI = require('cloudflare');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
@@ -334,20 +333,6 @@ module.exports = class Client {
     }).save();
 
     logger.info('Created new dashboard data.');
-  }
-
-  async getResponseTime() {
-    const baseUrl = config.backendUrl;
-
-    try {
-      await axios.post(`${baseUrl}/response-time`);
-
-      const response = await axios.get(`${baseUrl}/response-time`);
-
-      return response.data.responseTime;
-    } catch (error) {
-      logger.info(`Failed to get response time:\n${error}`);
-    }
   }
 
   async syncLemonSqueezyPlans() {
