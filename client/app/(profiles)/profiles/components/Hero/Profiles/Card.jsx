@@ -133,7 +133,10 @@ export default function Card(props) {
                   size={64}
                   width={64}
                   height={64}
-                  className='rounded-full [mask-image:radial-gradient(circle_at_86%_86%,_transparent_12px,_black_12px)]'
+                  className={cn(
+                    'rounded-full',
+                    userStatus && '[mask-image:radial-gradient(circle_at_86%_86%,_transparent_12px,_black_12px)]'
+                  )}
                 />
               ) : (
                 <Image
@@ -141,7 +144,10 @@ export default function Card(props) {
                   alt='Default Avatar'
                   width={64}
                   height={64}
-                  className='rounded-full [mask-image:radial-gradient(circle_at_86%_86%,_transparent_12px,_black_12px)]'
+                  className={cn(
+                    'rounded-full',
+                    userStatus && '[mask-image:radial-gradient(circle_at_86%_86%,_transparent_12px,_black_12px)]'
+                  )}
                 />
               )}
 
