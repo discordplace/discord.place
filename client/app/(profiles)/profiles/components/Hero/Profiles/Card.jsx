@@ -135,7 +135,7 @@ export default function Card(props) {
                   height={64}
                   className={cn(
                     'rounded-full',
-                    userStatus && '[mask-image:radial-gradient(circle_at_86%_86%,_transparent_12px,_black_12px)]'
+                    userStatus && '[mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10px)]'
                   )}
                 />
               ) : (
@@ -146,7 +146,7 @@ export default function Card(props) {
                   height={64}
                   className={cn(
                     'rounded-full',
-                    userStatus && '[mask-image:radial-gradient(circle_at_86%_86%,_transparent_12px,_black_12px)]'
+                    userStatus && '[mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10px)]'
                   )}
                 />
               )}
