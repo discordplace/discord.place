@@ -28,16 +28,6 @@ module.exports = async function checkAuthentication(request, response, next) {
 
     if (decoded.iat < new Date(user.lastLogoutAt).getTime()) throw new AuthError('Token expired.');
 
-    request.user = { 
-      id: decoded.id
-    };
-
-    const guild = client.guilds.cache.get(config.guildId);
-    if (guild) {
-      const member = guild.members.cache.get(request.user.id);
-      if (member) request.member = member;
-    }
-
     next();
   } catch (error) {
     response.clearCookie('token');

@@ -2,6 +2,7 @@ const express = require('express');
 const { router } = require('express-file-routing');
 const path = require('node:path');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -13,6 +14,7 @@ const compression = require('compression');
 const morgan = require('morgan');
 
 const sleep = require('@/utils/sleep');
+const User = require('@/schemas/User');
 
 module.exports = class Server {
   constructor() {
@@ -87,6 +89,47 @@ module.exports = class Server {
     });
 
     if (process.env.NODE_ENV === 'production') this.server.use(blockSimultaneousRequests);
+
+    this.server.use(async (request, response, next) => {
+      if (request.cookies.token) {
+        const token = request.cookies.token;
+
+        try {
+          const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+            issuer: 'api.discord.place',
+            audience: 'discord.place',
+            subject: 'user'
+          });
+
+          if (!decoded) throw new Error('Token invalid.');
+
+          const user = await User.findOne({ id: decoded.id }).select('lastLogoutAt').lean();
+          if (!user) throw new Error('User not found.');
+
+          if (decoded.iat < new Date(user.lastLogoutAt).getTime()) throw new Error('Token expired.');
+
+          request.user = {
+            id: decoded.id
+          };
+
+          const guild = client.guilds.cache.get(config.guildId);
+          if (guild) {
+            const member = guild.members.cache.get(request.user.id);
+            if (member) {
+              request.member = member;
+            }
+          }
+
+          next();
+        } catch (error) {
+          response.clearCookie('token');
+
+          return response.sendError('Unauthorized', 401);
+        }
+      } else {
+        next();
+      }
+    });
 
     logger.info('Middlewares added.');
   }
