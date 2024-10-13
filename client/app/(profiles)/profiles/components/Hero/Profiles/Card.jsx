@@ -133,10 +133,7 @@ export default function Card(props) {
                   size={64}
                   width={64}
                   height={64}
-                  className={cn(
-                    'border-2 rounded-full border-transparent',
-                    props.banner && 'shadow-lg shadow-black/70'
-                  )}
+                  className='rounded-full [mask-image:radial-gradient(circle_at_86%_86%,_transparent_12px,_black_12px)]'
                 />
               ) : (
                 <Image
@@ -144,10 +141,7 @@ export default function Card(props) {
                   alt='Default Avatar'
                   width={64}
                   height={64}
-                  className={cn(
-                    'border-2 rounded-full border-transparent',
-                    props.banner && 'shadow-lg shadow-black/70'
-                  )}
+                  className='rounded-full [mask-image:radial-gradient(circle_at_86%_86%,_transparent_12px,_black_12px)]'
                 />
               )}
 
@@ -158,10 +152,7 @@ export default function Card(props) {
                     alt={userStatus}
                     width={20}
                     height={20}
-                    className={cn(
-                      'absolute bottom-0 right-0 p-0.5 rounded-full',
-                      !haveCustomColors && !props.banner ? 'bg-secondary' : 'bg-black/30'
-                    )}
+                    className='absolute bottom-0 right-0 p-0.5 rounded-full'
                   />
                 </Tooltip>
               )}
