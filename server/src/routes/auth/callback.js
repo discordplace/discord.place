@@ -71,7 +71,11 @@ module.exports = {
           }
         );
 
-        response.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7 });
+        response.cookie('token', token, {
+          httpOnly: true,
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          domain: `.${new URL(config.frontendUrl).hostname}`
+        });
 
         await User.findOneAndUpdate({ id: user.id },
           {
