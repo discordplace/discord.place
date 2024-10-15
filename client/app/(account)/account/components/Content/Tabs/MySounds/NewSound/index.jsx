@@ -2,7 +2,7 @@
 
 import config from '@/config';
 import { MdChevronLeft } from 'react-icons/md';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import cn from '@/lib/cn';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
@@ -60,6 +60,14 @@ export default function NewSound() {
   }
 
   const [dragging, setDragging] = useState(false);
+
+  useEffect(() => {
+    if (file) {
+      if (soundName !== '') {
+        setSoundName(file.name.replace('.mp3', ''));
+      }
+    }
+  }, [file, soundName]);
 
   return (
     <>
