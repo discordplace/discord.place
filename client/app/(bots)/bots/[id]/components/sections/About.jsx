@@ -59,7 +59,7 @@ export default function About({ bot }) {
       icon: <FaCompass />,
       component: (
         <>
-          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
+          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date(bot.servers_updated_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
       )
     },
