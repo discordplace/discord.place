@@ -35,7 +35,7 @@ export default function NewSound() {
     formData.append('file', file);
 
     toast.promise(createSound(formData), {
-      loading: t('accountPage.tabs.mySounds.sections.addSound.toast.addingSound'),
+      loading: t('accountPage.tabs.mySounds.sections.addSound.toast.addingSound', { soundName }),
       success: data => {
         setTimeout(() => {
           router.push(`/sounds/${data.id}`);
@@ -49,7 +49,7 @@ export default function NewSound() {
 
         setRenderConfetti(true);
 
-        return t('accountPage.tabs.mySounds.sections.addSound.toast.soundAdded');
+        return t('accountPage.tabs.mySounds.sections.addSound.toast.soundAdded', { soundName });
       },
       error: error => {
         setLoading(false);

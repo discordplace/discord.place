@@ -102,7 +102,6 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     }
 
     disableButton('upload-sound-to-discord', 'upload');
-    console.log(sound.id, guildId);
 
     toast.promise(uploadSoundToGuild(sound.id, guildId), {
       loading: t('soundCard.uploadSoundToDiscordModal.toast.uploadingSound', { soundName: sound.name }),
