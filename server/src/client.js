@@ -30,6 +30,7 @@ const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const localizationInitialize = require('@/utils/localization/initialize');
 const mongoose = require('mongoose');
+const sendHeartbeat = require('./utils/sendHeartbeat');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -40,6 +41,17 @@ const CLOUDFLARE_BLOCK_IP_LIST_ID = process.env.CLOUDFLARE_BLOCK_IP_LIST_ID;
 const cloudflare = new CloudflareAPI({
   email: CLOUDFLARE_EMAIL,
   key: CLOUDFLARE_API_KEY
+});
+
+// S3 Setup
+const { S3Client, HeadBucketCommand } = require('@aws-sdk/client-s3');
+const S3 = new S3Client({
+  region: process.env.S3_REGION,
+  endpoint: process.env.S3_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+  }
 });
 
 module.exports = class Client {
@@ -136,6 +148,7 @@ module.exports = class Client {
       if (options.startup.saveMonthlyVotes) this.saveMonthlyVotes();
       if (options.startup.saveDailyProfileStats) this.saveDailyProfileStats();
       if (options.startup.checkExpiredProducts) this.checkExpiredProducts();
+      if (options.startup.checkBucketAvailability) this.checkBucketAvailability();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', () => {
@@ -168,6 +181,8 @@ module.exports = class Client {
           this.createNewDashboardData();
           this.saveDailyProfileStats();
         }, null, true);
+
+        new CronJob('*/10 * * * *', this.checkBucketAvailability, null, true);
       }
     });
   }
@@ -390,5 +405,19 @@ module.exports = class Client {
     if (expiredServerTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredServerTripledVotes.deletedCount} expired server tripled votes.`);
     if (expiredStandedOutBots.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutBots.deletedCount} expired standed out bots.`);
     if (expiredStandedOutServers.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutServers.deletedCount} expired standed out servers.`);
+  }
+
+  async checkBucketAvailability() {
+    try {
+      const command = new HeadBucketCommand({ Bucket: process.env.S3_BUCKET_NAME });
+      
+      await S3.send(command);
+
+      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 0);   
+    } catch (error) {
+      logger.error('Failed to check S3 bucket availability:', error);
+
+      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 1);
+    }
   }
 };

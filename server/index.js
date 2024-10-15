@@ -33,6 +33,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     saveMonthlyVotes: false,
     saveDailyProfileStats: false,
     checkExpiredProducts: true,
+    checkBucketAvailability: true,
     listenEvents: true,
     listenCrons: process.env.NODE_ENV === 'production'
   },
