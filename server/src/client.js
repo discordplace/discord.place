@@ -30,7 +30,7 @@ const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const localizationInitialize = require('@/utils/localization/initialize');
 const mongoose = require('mongoose');
-const sendHeartbeat = require('./utils/sendHeartbeat');
+const sendHeartbeat = require('@/utils/sendHeartbeat');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
