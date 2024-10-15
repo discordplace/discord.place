@@ -63,7 +63,7 @@ export default function NewSound() {
 
   useEffect(() => {
     if (file) {
-      if (soundName !== '') {
+      if (soundName === '') {
         setSoundName(file.name.replace('.mp3', ''));
       }
     }
