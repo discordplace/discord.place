@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://discord.place
+
+# Sitemaps
+Sitemap: https://discord.place/sitemap.xml

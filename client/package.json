@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "next build",
+    "build": "next-sitemap && next build",
+    "pre:build": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -44,6 +45,7 @@
     "nanoid": "^5.0.5",
     "next": "14.2.3",
     "next-nprogress-bar": "^2.1.2",
+    "next-sitemap": "^4.2.3",
     "react": "^18",
     "react-animate-height": "^3.2.3",
     "react-animated-numbers": "^0.18.0",
