@@ -14,7 +14,7 @@ const Theme = require('@/schemas/Theme');
 
 async function getBlogs() {
   try {
-    const response = await axios.get(config.frontendUrl + '/api/blogs');
+    const response = await axios.get('https://discord.place/api/blogs');
     return response.data;
   } catch (error) {
     logger.error('There was an error while fetching blogs:', error);
