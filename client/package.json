@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "next-sitemap && next build",
-    "pre:build": "next-sitemap",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
