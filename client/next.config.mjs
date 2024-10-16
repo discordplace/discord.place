@@ -19,6 +19,14 @@ const nextConfig = withBundleAnalyzer({
         hostname: 'cdn.discord.place'
       }
     ]
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: 'https://api.discord.place/sitemap.xml'
+      }
+    ];
   }
 });
 
