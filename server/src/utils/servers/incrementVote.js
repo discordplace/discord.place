@@ -135,7 +135,7 @@ async function incrementVote(guildId, userId) {
             .catch(() => null);
 
           const dmChannel = user.dmChannel || await user.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send(await guild.translate('vote_rewards.reward_role_added', { roleName: role.name, guildName: guild.name, vote: voterVotes }));
+          if (dmChannel) dmChannel.send(await guild.translate('vote_rewards.reward_role_added_dm_message', { roleName: role.name, guildName: guild.name, vote: voterVotes }));
         })
         .catch(async error => {
           sendLog(await guild.translate('vote_rewards.reward_role_add_error', { roleName: role.name, username: Discord.escapeMarkdown(user.username), userId: user.id, errorMessage: error.message }))
