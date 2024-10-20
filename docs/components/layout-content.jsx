@@ -7,6 +7,7 @@ import { useWindowScroll } from 'react-use';
 import { useParams } from 'next/navigation';
 import { useGeneralStore } from '@/stores/general';
 import Footer from '@/components/footer';
+import EmptyHeadings from '@/components/empty-headings';
 
 export default function LayoutContent({ children}) {
   const params = useParams();
@@ -56,6 +57,8 @@ export default function LayoutContent({ children}) {
     <div className='h-[100dvh] flex flex-col'>
       <div className='flex mx-auto my-8 space-x-8 sm:px-4 lg:px-0 lg:max-w-3xl'>
         <div className='hidden sm:flex flex-col space-y-3 w-full h-[85svh] max-w-[150px] mt-2.5 sticky top-8'>
+          {headings.length === 0 && <EmptyHeadings />}
+          
           {headings.map(({ id, name, level }) => {
             const Tag = id.startsWith('endpoint-') ? 'div' : Link;
 
