@@ -81,6 +81,7 @@ function CollapsedHeader({ pathname }) {
   useClickAway(menuContentRef, () => setIsOpen(false));
 
   const headings = useGeneralStore(state => state.headings);
+  const setActiveEndpoint = useGeneralStore(state => state.setActiveEndpoint);
 
   return (
     <>
@@ -95,7 +96,7 @@ function CollapsedHeader({ pathname }) {
             />
           </Link>
         
-          <button className='text-[rgba(var(--light-text-primary))]' onClick={() => setIsOpen(true)}>
+          <button className='text-[rgba(var(--dark-text-primary))]' onClick={() => setIsOpen(true)}>
             <IoMenu size={24} />
           </button>
         </div>
@@ -142,21 +143,34 @@ function CollapsedHeader({ pathname }) {
             <h2 className='text-lg font-bold text-[rgba(var(--dark-text-primary))]'>Table of Contents</h2>
 
             <div className='flex flex-col space-y-1'>
-              {headings.map(({ id, name, level }) => (
-                level !== 'H1' && (
-                  <Link
-                    className={cn(
-                      'text-[rgba(var(--dark-text-primary))]/60 hover:text-[rgba(var(--dark-text-primary))]/80',
-                      pathname === `#${id}` && 'text-[rgba(var(--dark-text-primary))]'
-                    )}
-                    href={`#${id}`}
-                    key={id}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {name}
-                  </Link>
-                )
-              ))}
+              {headings.map(({ id, name, level }) => {
+                const Tag = id.startsWith('endpoint-') ? 'div' : Link;
+                
+                return (
+                  level !== 'H1' && (
+                    <Tag
+                      className={cn(
+                        'text-[rgba(var(--dark-text-primary))]/60 hover:text-[rgba(var(--dark-text-primary))]/80',
+                        pathname === `#${id}` && 'text-[rgba(var(--dark-text-primary))]'
+                      )}
+                      href={`#${id}`}
+                      key={id}
+                      onClick={() => {
+                        setIsOpen(false);
+
+                        if (id.startsWith('endpoint-')) {
+                          const element = document.getElementById(id);
+                          if (element) element.scrollIntoView({ behavior: 'smooth' });
+
+                          return setActiveEndpoint(id.split('endpoint-')[1]);
+                        }
+                      }}
+                    >
+                      {name}
+                    </Tag>
+                  )
+                );
+              })}
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ export default function LayoutContent({ children}) {
   
   const headings = useGeneralStore(state => state.headings);
   const setHeadings = useGeneralStore(state => state.setHeadings);
+  const setActiveEndpoint = useGeneralStore(state => state.setActiveEndpoint);
   const [visibleHeading, setVisibleHeading] = useState(null);
 
   useEffect(() => {
@@ -41,9 +42,7 @@ export default function LayoutContent({ children}) {
         entries.forEach(entry => {
           if (entry.isIntersecting) setVisibleHeading(entry.target.id);
         });
-      }, {
-        rootMargin: '0px 0px -80% 0px'
-      });
+      }, { rootMargin: '0px 0px -80% 0px' });
       
       headingElements.forEach(heading => observer.observe(heading));
       
@@ -57,36 +56,48 @@ export default function LayoutContent({ children}) {
     <div className='h-[100dvh] flex flex-col'>
       <div className='flex mx-auto my-8 space-x-8 sm:px-4 lg:px-0 lg:max-w-3xl'>
         <div className='hidden sm:flex flex-col space-y-3 w-full h-[85svh] max-w-[150px] mt-2.5 sticky top-8'>
-          {headings.map(({ id, name, level }) => (
-            level === 'H1' ? (
-              <span
-                className={cn(
-                  'select-none py-2 first:pt-0 last:pb-0 tracking-wider uppercase text-xs font-semibold text-primary'
-                )}
-                key={id}
-              >
-                {name}
-              </span>
-            ) : (
-              <Link
-                className={cn(
-                  'relative group transition-all text-sm first:pt-0 last:pb-0 text-primary/60',
-                  visibleHeading === id ? 'pointer-events-none text-purple-400' : 'hover:text-primary/80'
-                )}
-                href={`#${id}`}
-                key={id}
-              >
-                <div
-                  className={cn(
-                    'absolute top-0 transition-colors left-0 w-[calc(100%_+_20px)] h-[calc(100%_+_10px)] -z-10 rounded-lg translate-x-[-10px] translate-y-[-5px]',
-                    visibleHeading === id ? 'bg-purple-400/5' : 'group-hover:bg-tertiary'
-                  )}
-                />
+          {headings.map(({ id, name, level }) => {
+            const Tag = id.startsWith('endpoint-') ? 'div' : Link;
 
-                {name}
-              </Link>
-            )
-          ))}
+            return (
+              level === 'H1' ? (
+                <span
+                  className={cn(
+                    'select-none py-2 first:pt-0 last:pb-0 tracking-wider uppercase text-xs font-semibold text-primary'
+                  )}
+                  key={id}
+                >
+                  {name}
+                </span>
+              ) : (
+                <Tag
+                  className={cn(
+                    'relative select-none cursor-pointer group transition-all text-sm first:pt-0 last:pb-0 text-primary/60',
+                    visibleHeading === id ? 'pointer-events-none text-purple-400' : 'hover:text-primary/80'
+                  )}
+                  href={`#${id}`}
+                  key={id}
+                  onClick={() => {
+                    if (id.startsWith('endpoint-')) {
+                      const element = document.getElementById(id);
+                      if (element) element.scrollIntoView({ behavior: 'smooth' });
+
+                      return setActiveEndpoint(id.split('endpoint-')[1]);
+                    }
+                  }}
+                >
+                  <div
+                    className={cn(
+                      'absolute top-0 transition-colors left-0 w-[calc(100%_+_20px)] h-[calc(100%_+_10px)] -z-10 rounded-lg translate-x-[-10px] translate-y-[-5px]',
+                      visibleHeading === id ? 'bg-purple-400/5' : 'group-hover:bg-tertiary'
+                    )}
+                  />
+
+                  {name}
+                </Tag>
+              )
+            );
+          })}
         </div>
 
         <div
