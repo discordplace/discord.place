@@ -1,5 +1,5 @@
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import cn from '@/utils/cn';
 import Link from 'next/link';
 import { RiLinkM } from 'react-icons/ri';
@@ -48,9 +48,9 @@ export function useMDXComponents(components) {
           // eslint-disable-next-line react/no-children-prop
           children={String(children).replace(/\n$/, '')}
           language={languageMatch[1]}
-          style={vscDarkPlus}
+          style={oneDark}
           wrapLongLines={false}
-          className='!bg-[rgba(var(--dark-bg-tertiary))] rounded-lg max-w-[calc(100vw_-_4rem)]'
+          className='syntax-highlighter !bg-[rgba(var(--dark-bg-tertiary))] rounded-lg max-w-[calc(100vw_-_4rem)] [&>code]:!bg-[unset]'
         />
       ) : (
         <code
