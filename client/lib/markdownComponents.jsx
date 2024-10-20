@@ -39,25 +39,25 @@ const markdownComponents = {
     switch (languageMatch?.[1]) {
       case 'js':
         fileName = 'index.js';
-        FileIcon = IoLogoJavascript;
+        FileIcon = <IoLogoJavascript />;
         break;
       case 'python':
         fileName = 'script.py';
-        FileIcon = IoLogoPython;
+        FileIcon = <IoLogoPython />;
         break;
       case 'json':
         fileName = 'data.json';
-        FileIcon = BiCodeCurly;
+        FileIcon = <BiCodeCurly />;
         break;
       case 'cURL':
         fileName = 'request.sh';
-        FileIcon = BiCodeCurly;
+        FileIcon = <BiCodeCurly />;
         break;
     }
 
     return languageMatch ? (
       <CodeBlock
-        FileIcon={FileIcon}
+        FileIcon={<FileIcon />}
         fileName={fileName}
         language={languageMatch[1]}
       >

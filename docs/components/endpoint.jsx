@@ -307,7 +307,7 @@ export default function Endpoint({ id }) {
 
               {activeResponseTab && (
                 <CodeBlock
-                  FileIcon={BiCodeCurly}
+                  FileIcon={<BiCodeCurly />}
                   fileName='response.json'
                   language='json'
                   dimmed={true}

@@ -18,7 +18,7 @@ export default function CodeBlock({ children, FileIcon, fileName, language, dimm
         )}
       >
         <div className='text-xs flex items-center gap-x-1.5 text-tertiary'>
-          <FileIcon />
+          {FileIcon}
 
           {fileName}
         </div>

@@ -45,24 +45,24 @@ export function useMDXComponents(components) {
       const languageMatch = /language-(\w+)/.exec(className || '');
   
       let fileName = languageMatch?.[1];
-      let FileIcon = FaFileCode;
+      let FileIcon = <FaFileCode />;
 
       switch (languageMatch?.[1]) {
         case 'js':
           fileName = 'index.js';
-          FileIcon = IoLogoJavascript;
+          FileIcon = <IoLogoJavascript />;
           break;
         case 'python':
           fileName = 'script.py';
-          FileIcon = IoLogoPython;
+          FileIcon = <IoLogoPython />;
           break;
         case 'json':
           fileName = 'data.json';
-          FileIcon = BiCodeCurly;
+          FileIcon = <BiCodeCurly />;
           break;
         case 'cURL':
           fileName = 'request.sh';
-          FileIcon = BiCodeCurly;
+          FileIcon = <BiCodeCurly />;
           break;
       }
 
