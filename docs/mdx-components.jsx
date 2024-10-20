@@ -1,8 +1,10 @@
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import cn from '@/utils/cn';
 import Link from 'next/link';
 import { RiLinkM } from 'react-icons/ri';
+import { IoLogoJavascript, IoLogoPython } from 'react-icons/io5';
+import { BiCodeCurly } from 'react-icons/bi';
+import { FaFileCode } from 'react-icons/fa6';
+import CodeBlock from '@/components/code-block';
 
 export function useMDXComponents(components) {
   const H = ({ level, children }) => {
@@ -42,16 +44,37 @@ export function useMDXComponents(components) {
     code: ({ children, className }) => {
       const languageMatch = /language-(\w+)/.exec(className || '');
   
+      let fileName = languageMatch?.[1];
+      let FileIcon = FaFileCode;
+
+      switch (languageMatch?.[1]) {
+        case 'js':
+          fileName = 'index.js';
+          FileIcon = IoLogoJavascript;
+          break;
+        case 'python':
+          fileName = 'script.py';
+          FileIcon = IoLogoPython;
+          break;
+        case 'json':
+          fileName = 'data.json';
+          FileIcon = BiCodeCurly;
+          break;
+        case 'cURL':
+          fileName = 'request.sh';
+          FileIcon = BiCodeCurly;
+          break;
+      }
+
       return languageMatch ? (
-        <SyntaxHighlighter
-          PreTag={'div'}
-          // eslint-disable-next-line react/no-children-prop
-          children={String(children).replace(/\n$/, '')}
+        <CodeBlock
+          FileIcon={FileIcon}
+          fileName={fileName}
           language={languageMatch[1]}
-          style={oneDark}
-          wrapLongLines={false}
-          className='syntax-highlighter !bg-[rgba(var(--dark-bg-tertiary))] rounded-lg max-w-[calc(100vw_-_4rem)] [&>code]:!bg-[unset]'
-        />
+          dimmed={false}
+        >
+          {children}
+        </CodeBlock>
       ) : (
         <code
           className={cn(

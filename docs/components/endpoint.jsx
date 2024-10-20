@@ -5,8 +5,8 @@ import cn from '@/utils/cn';
 import { useState } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { FiChevronDown } from 'react-icons/fi';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import CodeBlock from '@/components/code-block';
+import { BiCodeCurly } from 'react-icons/bi';
 
 const endpoints = [
   {
@@ -306,15 +306,24 @@ export default function Endpoint({ id }) {
               </div>
 
               {activeResponseTab && (
-                <SyntaxHighlighter
-                  className='syntax-highlighter max-w-[calc(100vw_-_4rem)] w-full !p-3 mt-2 !bg-[rgba(var(--dark-bg-quaternary))] !rounded-2xl [&>code]:!bg-[unset]'
-                  PreTag={'div'}
-                  // eslint-disable-next-line react/no-children-prop
-                  children={JSON.stringify(data.responses.find(response => response.code === activeResponseTab).body, null, 2)}
-                  language={'json'}
-                  style={oneDark}
-                  wrapLongLines={false}
-                />
+                <CodeBlock
+                  FileIcon={BiCodeCurly}
+                  fileName='response.json'
+                  language='json'
+                  dimmed={true}
+                >
+                  {JSON.stringify(data.responses.find(response => response.code === activeResponseTab).body, null, 2)}
+                </CodeBlock>
+
+              // <SyntaxHighlighter
+              //   className='max-w-[calc(100vw_-_4rem)] w-full !p-3 mt-2 !bg-[rgba(var(--dark-bg-quaternary))] !rounded-2xl [&>code]:!bg-[unset]'
+              //   PreTag={'div'}
+              //   // eslint-disable-next-line react/no-children-prop
+              //   children={JSON.stringify(data.responses.find(response => response.code === activeResponseTab).body, null, 2)}
+              //   language={'json'}
+              //   style={oneDark}
+              //   wrapLongLines={false}
+              // />
               )}
             </div>
           </div>
