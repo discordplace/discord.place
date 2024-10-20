@@ -3,7 +3,7 @@
 import cn from '@/utils/cn';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useClickAway, useLockBodyScroll, useMedia, useWindowScroll } from 'react-use';
+import { useClickAway, useLockBodyScroll, useMedia } from 'react-use';
 import AnimateHeight from 'react-animate-height';
 import Image from 'next/image';
 import { FaDiscord } from 'react-icons/fa';
@@ -74,8 +74,6 @@ function ExpandedHeader({ pathname }) {
 function CollapsedHeader({ pathname }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { y } = useWindowScroll();
-
   useLockBodyScroll(isOpen);
 
   const menuContentRef = useRef(null);
@@ -86,7 +84,7 @@ function CollapsedHeader({ pathname }) {
 
   return (
     <>
-      <header className="sticky top-0 z-10 bg-purple-800">
+      <header className="z-10 bg-purple-800">
         <div className='flex justify-between p-4 mx-auto lg:max-w-3xl'>
           <Link href='/home'>
             <Image
@@ -108,9 +106,6 @@ function CollapsedHeader({ pathname }) {
           'absolute top-0 left-0 transition-opacity z-10 flex justify-end w-full h-full bg-black/50',
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         )}
-        style={{
-          top: `${y}px`
-        }}
       >
         <div
           className={cn(
