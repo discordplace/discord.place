@@ -2,11 +2,11 @@
 import Link from 'next/link';
 import cn from './cn';
 import Zoom from 'react-medium-image-zoom';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import CopyButton from '@/app/components/CopyButton';
-import { t } from '@/stores/language';
 import { FiArrowUpRight } from 'react-icons/fi';
+import { IoLogoJavascript, IoLogoPython } from 'react-icons/io5';
+import { BiCodeCurly } from 'react-icons/bi';
+import { FaFileCode } from 'react-icons/fa6';
+import CodeBlock from '@/app/components/CodeBlock';
 
 const markdownComponents = {
   img: ({ src, alt, width, height }) => {
@@ -32,30 +32,37 @@ const markdownComponents = {
   ),
   code: ({ children, className }) => {
     const languageMatch = /language-(\w+)/.exec(className || '');
+      
+    let fileName = languageMatch?.[1];
+    let FileIcon = FaFileCode;
+
+    switch (languageMatch?.[1]) {
+      case 'js':
+        fileName = 'index.js';
+        FileIcon = IoLogoJavascript;
+        break;
+      case 'python':
+        fileName = 'script.py';
+        FileIcon = IoLogoPython;
+        break;
+      case 'json':
+        fileName = 'data.json';
+        FileIcon = BiCodeCurly;
+        break;
+      case 'cURL':
+        fileName = 'request.sh';
+        FileIcon = BiCodeCurly;
+        break;
+    }
 
     return languageMatch ? (
-      <div className='relative max-w-5xl'>
-        <SyntaxHighlighter
-          PreTag={'div'}
-          // eslint-disable-next-line react/no-children-prop
-          children={String(children).replace(/\n$/, '')}
-          language={languageMatch[1]}
-          style={darcula}
-          wrapLongLines={false}
-          className='!pr-12 rounded-lg overflow-auto'
-        />
-
-        <div className='absolute flex items-center p-1 top-2 right-2 gap-x-4'>
-          <span className='text-xs font-bold text-tertiary'>{languageMatch[1]}</span>
-
-          <CopyButton
-            className='hidden p-0 text-xs mobile:flex'
-            copyText={String(children).replace(/\n$/, '')}
-          >
-            {t('buttons.copy')}
-          </CopyButton>
-        </div>
-      </div>
+      <CodeBlock
+        FileIcon={FileIcon}
+        fileName={fileName}
+        language={languageMatch[1]}
+      >
+        {children}
+      </CodeBlock>
     ) : (
       <code
         className={cn(

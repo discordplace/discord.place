@@ -38,7 +38,7 @@ Once installed, you can incorporate it into your Express application by followin
 
 1. **Import and Create Router:** Import the necessary functions from the package and create a router instance:
 
-```javascript
+```js
 import express from 'express';
 import createRouter from 'express-file-routing';
 
@@ -50,7 +50,7 @@ await createRouter(app);
 
 2. **Define Routes in Files:** Create separate files within a designated directory (defaults to `routes/`) to define your routes. These files can be structured based on your application's needs, allowing for nested routes if desired.
 
-```javascript
+```js
 // routes/home.js
 export const get = (request, response) => {
   response.json({ hello: 'world' });
@@ -66,7 +66,7 @@ export const get = async (request, response) => {
 
 3. **Start the Server:** Finally, start your Express server as usual:
 
-```javascript
+```js
 app.listen(3000, () => console.log('Server listening on port 3000'));
 ```
 
