@@ -176,7 +176,6 @@ export default function Footer() {
           src={`${config.statusBadgeUrl}?theme=${theme === 'dark' ? 'dark' : 'light'}`}
           width="250"
           height="30"
-          frameborder="0"
         />
       </div>
 

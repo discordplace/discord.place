@@ -1,5 +1,4 @@
 @import 'tailwind.css';
-@import 'radix-animations.css';
 
 html, body {
   width: 100%;
@@ -38,16 +37,18 @@ html {
   --border-primary: var(--light-border-primary);
 }
 
-html.dark {
-  --bg-background: var(--dark-bg-background);
-  --bg-secondary: var(--dark-bg-secondary);
-  --bg-tertiary: var(--dark-bg-tertiary);
-  --bg-quaternary: var(--dark-bg-quaternary);
-  --text-primary: var(--dark-text-primary);
-  --text-secondary: var(--dark-text-secondary);
-  --text-tertiary: var(--dark-text-tertiary);
-  --text-placeholder: var(--dark-text-placeholder);
-  --border-primary: var(--dark-border-primary);
+@media (prefers-color-scheme: dark) {
+  html {
+    --bg-background: var(--dark-bg-background);
+    --bg-secondary: var(--dark-bg-secondary);
+    --bg-tertiary: var(--dark-bg-tertiary);
+    --bg-quaternary: var(--dark-bg-quaternary);
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    --text-tertiary: var(--dark-text-tertiary);
+    --text-placeholder: var(--dark-text-placeholder);
+    --border-primary: var(--dark-border-primary);
+  }
 }
 
 ::-webkit-scrollbar {
@@ -65,68 +66,19 @@ html.dark {
 }
 
 ::selection {
-  background-color: #4e92ff;
+  background-color: #b569cc;
   color: #e3eeff;
-}
-
-.apexcharts-tooltip {
-  border: 0 !important;
-  background: none !important;
-  box-shadow: none !important;
-}
-
-.apexcharts-toolbar {
-  display: none !important;
-}
-
-[data-rmiz-modal-img] {
-  border-radius: 0.5rem !important;
-}
-[data-rmiz-modal-overlay] {
-  transition: background-color 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
-}
-[data-rmiz-modal-overlay="visible"] {
-  background-color: rgba(var(--dark-bg-background), 0.85) !important;
-  backdrop-filter: blur(5px) !important;
-}
-
-/* For Webkit-based browsers (Chrome, Safari and Opera) */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* For IE, Edge and Firefox */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-/* styles.css */
-.ScrollAreaRoot {
-  width: 100%;
-  height: 100%;
-}
-
-.ScrollAreaViewport {
-  width: 100%;
-  height: 100%;
-}
-
-.ScrollAreaScrollbar {
-  width: 4px;
-  padding: 5px 2px;
-}
-
-.ScrollAreaThumb {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-}
-
-[id^="rmiz-modal-img-"] {
-  border-radius: 12px;
 }
 
 iframe {
   overflow: hidden;
   border: 0;
+}
+
+[class*='language-'] {
+  white-space: pre-wrap !important;
+}
+
+* {
+  scroll-behavior: smooth;
 }

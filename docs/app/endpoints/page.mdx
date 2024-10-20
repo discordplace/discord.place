@@ -1,0 +1,59 @@
+export const metadata = {
+  title: 'Endpoints',
+}
+
+# Endpoints
+
+Below you can find all the endpoints that you can use to interact with our API. If you have any questions or need help, feel free to join our [Discord server](https://invite.discord.place).
+
+Base URL: `https://api.discord.place`
+
+## Bots
+
+### Update Bot Stats
+
+- **Endpoint**: `/bots/:bot_id/stats`
+- **Method**: `POST`
+
+Using this endpoint, you can update the command value that appear on the bot page. We recommend you to do this every 24 hours and keep the page updated with this endpoint.
+
+#### Headers
+
+- `Content-Type`: `application/json`
+- `Authorization`: `YOUR_API_KEY`
+
+#### Body
+
+```json
+{
+  "commands_count": "integer", // Bot's commands size
+  "server_count": "integer" // Bot's guilds count
+}
+```
+
+> Note that, even though you set the server count, this value can only be at most 50 more or less than the actual server count of your bot.
+
+#### Responses
+
+- `200 OK`: Successfully updated the bot stats.
+- `400 Bad Request`: Invalid request body.
+- `401 Unauthorized`: Invalid API key.
+- `404 Not Found`: Bot not found.
+
+### Fetch Vote Status
+
+- **Endpoint**: `/bots/:bot_id/voters/:user_id`
+- **Method**: `GET`
+
+Using this endpoint, check if user has voted for your bot in the last 24 hours.
+
+#### Headers
+
+- `Content-Type`: `application/json`
+- `Authorization`: `YOUR_API_KEY`
+
+#### Responses
+
+- `200 OK`: You can access current vote count and last vote time in the response body. If the user has voted in the last 24 hours, the `lastVote` field will be the time of the last vote. If the user has not voted in the last 24 hours, the `lastVote` field will be `null`.
+- `401 Unauthorized`: Invalid API key.
+- `404 Not Found`: Bot not found.

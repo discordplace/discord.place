@@ -2,7 +2,6 @@
   "$schema": "https://json.schemastore.org/package.json",
   "name": "client",
   "private": true,
-  "main": "index.js",
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
@@ -12,10 +11,10 @@
   "contributors": [
     "chimpdev <skyhancloud@gmail.com>"
   ],
-  "license": "ISC",
+  "license": "GPL v3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/discordplace/discord.place/tree/main/apps/server"
+    "url": "https://github.com/discordplace/discord.place/tree/main/apps/client"
   },
   "bugs": {
     "url": "https://github.com/discordplace/discord.place/issues"
