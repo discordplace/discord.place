@@ -1,9 +1,8 @@
-name: ESLint
+name: "ESLint: server"
 
 on:
   pull_request:
     paths:
-      - 'client/**'
       - 'server/**'
 
 jobs:
@@ -19,24 +18,11 @@ jobs:
         with:
           node-version: '18'
           
-      - name: Install dependencies to /client
-        run: |
-          cd client
-          npm install
-          
-      - name: Run lint script on /client
-        run: |
-          cd client
-          npm run lint
-
-      - name: Back to root
-        run: cd ..
-
       - name: Install dependencies to /server
         run: |
           cd server
           npm install
-
+          
       - name: Run lint script on /server
         run: |
           cd server
