@@ -7,6 +7,9 @@ import { IoLogoJavascript, IoLogoPython } from 'react-icons/io5';
 import { BiCodeCurly } from 'react-icons/bi';
 import { FaFileCode } from 'react-icons/fa6';
 import CodeBlock from '@/app/components/CodeBlock';
+import { TbFileTypeXml } from 'react-icons/tb';
+import { MdHttps } from 'react-icons/md';
+import { SiPhp } from 'react-icons/si';
 
 const markdownComponents = {
   img: ({ src, alt, width, height }) => {
@@ -52,6 +55,22 @@ const markdownComponents = {
       case 'cURL':
         fileName = 'request.sh';
         FileIcon = <BiCodeCurly />;
+        break;
+      case 'html':
+        fileName = 'index.html';
+        FileIcon = <FaFileCode />;
+        break;
+      case 'xml':
+        fileName = 'data.xml';
+        FileIcon = <TbFileTypeXml />;
+        break;
+      case 'http':
+        fileName = 'request.http';
+        FileIcon = <MdHttps />;
+        break;
+      case 'php':
+        fileName = 'index.php';
+        FileIcon = <SiPhp />;
         break;
     }
 
