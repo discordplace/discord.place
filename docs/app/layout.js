@@ -47,7 +47,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`overflow-x-hidden overflow-y-scroll ${geistSans.variable} antialiased font-geist text-primary`}>
+      <body className={`overflow-y-scroll ${geistSans.variable} antialiased font-geist text-primary`}>
         <Suspense>
           <Header />
         </Suspense>

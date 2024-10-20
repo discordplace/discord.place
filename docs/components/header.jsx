@@ -108,13 +108,10 @@ function CollapsedHeader({ pathname }) {
         )}
       >
         <div
-          className={cn(
-            'w-[300px] relative duration-500 transition-transform flex flex-col px-8 pb-8 pt-16 bg-purple-800',
-            !isOpen && 'translate-x-full' 
-          )}
+          className='w-[300px] relative duration-500 transition-transform flex flex-col px-8 pb-8 pt-16 bg-purple-800'
           ref={menuContentRef}
         >
-          <div className='absolute top-4 flex justify-between w-full max-w-[calc(100%_-_4rem)]'>
+          <div className='absolute top-4 flex justify-between w-full max-w-[calc(100%_-_3rem)]'>
             <Image
               alt='Discord Place Logo'
               height={32}
