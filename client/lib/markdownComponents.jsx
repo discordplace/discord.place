@@ -34,7 +34,7 @@ const markdownComponents = {
     const languageMatch = /language-(\w+)/.exec(className || '');
       
     let fileName = languageMatch?.[1];
-    let FileIcon = FaFileCode;
+    let FileIcon = <FaFileCode />;
 
     switch (languageMatch?.[1]) {
       case 'js':
@@ -57,7 +57,7 @@ const markdownComponents = {
 
     return languageMatch ? (
       <CodeBlock
-        FileIcon={<FileIcon />}
+        FileIcon={FileIcon}
         fileName={fileName}
         language={languageMatch[1]}
       >
