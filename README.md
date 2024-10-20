@@ -171,6 +171,7 @@ DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` | Secret key for getting approximate guild count of a bot. (not required) |
 | `CLIENT_BUILD_FILE_PATH` | Path for the build.sh file. (not required) |
+| `DOCS_BUILD_FILE_PATH` | Path for the build.sh file for the docs. (not required) |
 
 > [!NOTE]
 > - The `GITHUB_AUTO_DEPLOY_SECRET` is used for auto-deploying the server when a new release created in the GitHub repository. When this secret is set and you have set up the GitHub webhook, the server will automatically deploy the new release when a new release is created in the repository.
