@@ -95,7 +95,7 @@ function CollapsedHeader({ pathname }) {
             />
           </Link>
         
-          <button onClick={() => setIsOpen(true)}>
+          <button className='text-[rgba(var(--light-text-primary))]' onClick={() => setIsOpen(true)}>
             <IoMenu size={24} />
           </button>
         </div>
