@@ -57,8 +57,8 @@ function ExpandedHeader({ pathname }) {
         {HEADER_LINKS.map(({ name, href }) => (
           <Link
             className={cn(
-              'p-4 text-sm font-medium text-[rgba(var(--light-text-primary))] first:pl-0 last:pr-0',
-              pathname === href ? 'cursor-default' : 'text-[rgba(var(--light-text-primary))]/60 hover:text-[rgba(var(--light-text-primary))]/80'
+              'p-4 text-sm font-medium text-[rgba(var(--dark-text-primary))] first:pl-0 last:pr-0',
+              pathname === href ? 'cursor-default' : 'text-[rgba(var(--dark-text-primary))]/60 hover:text-[rgba(var(--dark-text-primary))]/80'
             )}
             key={name}
             href={href}
@@ -127,8 +127,8 @@ function CollapsedHeader({ pathname }) {
           {HEADER_LINKS.map(({ name, href }) => (
             <Link
               className={cn(
-                'py-2 text-lg font-medium text-[rgba(var(--light-text-primary))]',
-                pathname === href ? 'cursor-default' : 'text-[rgba(var(--light-text-primary))]/60 hover:text-[rgba(var(--light-text-primary))]/80'
+                'py-2 text-lg font-medium text-[rgba(var(--dark-text-primary))]',
+                pathname === href ? 'cursor-default' : 'text-[rgba(var(--dark-text-primary))]/60 hover:text-[rgba(var(--dark-text-primary))]/80'
               )}
               key={name}
               href={href}
@@ -139,15 +139,15 @@ function CollapsedHeader({ pathname }) {
           ))}
 
           <div className='flex flex-col mt-4 space-y-2'>
-            <h2 className='text-lg font-bold text-[rgba(var(--light-text-primary))]'>Table of Contents</h2>
+            <h2 className='text-lg font-bold text-[rgba(var(--dark-text-primary))]'>Table of Contents</h2>
 
             <div className='flex flex-col space-y-1'>
               {headings.map(({ id, name, level }) => (
                 level !== 'H1' && (
                   <Link
                     className={cn(
-                      'text-[rgba(var(--light-text-primary))]/60 hover:text-[rgba(var(--light-text-primary))]/80',
-                      pathname === `#${id}` && 'text-[rgba(var(--light-text-primary))]'
+                      'text-[rgba(var(--dark-text-primary))]/60 hover:text-[rgba(var(--dark-text-primary))]/80',
+                      pathname === `#${id}` && 'text-[rgba(var(--dark-text-primary))]'
                     )}
                     href={`#${id}`}
                     key={id}
@@ -167,14 +167,14 @@ function CollapsedHeader({ pathname }) {
 
 function HomeHeader() {
   return (
-    <div className='px-4 bg-purple-900 lg:px-0 text-[rgba(var(--light-text-primary))]'>
+    <div className='px-4 bg-purple-900 lg:px-0 text-[rgba(var(--dark-text-primary))]'>
       <div className='flex mx-auto space-x-24 lg:max-w-3xl py-7'>
         <div className='flex flex-col space-y-2'>
-          <h1 className='text-3xl font-bold text-[rgba(var(--light-text-primary))]'>
+          <h1 className='text-3xl font-bold text-[rgba(var(--dark-text-primary))]'>
             Discord Place API Documentation
           </h1>
 
-          <p className='max-w-lg text-[rgba(var(--light-text-primary))]/90'>
+          <p className='max-w-lg text-[rgba(var(--dark-text-primary))]/90'>
             The official documentation for Discord Place, a platform that provides a variety of tools and services for Discord users, developers, and server owners.
           </p>
 
