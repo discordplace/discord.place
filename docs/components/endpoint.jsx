@@ -307,7 +307,7 @@ export default function Endpoint({ id }) {
 
               {activeResponseTab && (
                 <SyntaxHighlighter
-                  className='max-w-[calc(100vw_-_4rem)] w-full p-3 mt-2 !bg-quaternary rounded-2xl'
+                  className='max-w-[calc(100vw_-_4rem)] w-full p-3 mt-2 !bg-[rgba(var(--dark-bg-quaternary))] rounded-2xl'
                   PreTag={'div'}
                   // eslint-disable-next-line react/no-children-prop
                   children={JSON.stringify(data.responses.find(response => response.code === activeResponseTab).body, null, 2)}

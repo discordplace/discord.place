@@ -50,7 +50,7 @@ export function useMDXComponents(components) {
           language={languageMatch[1]}
           style={vscDarkPlus}
           wrapLongLines={false}
-          className='!bg-tertiary rounded-lg max-w-[calc(100vw_-_4rem)]'
+          className='!bg-[rgba(var(--dark-bg-tertiary))] rounded-lg max-w-[calc(100vw_-_4rem)]'
         />
       ) : (
         <code
