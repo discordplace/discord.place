@@ -56,7 +56,7 @@ export default function LayoutContent({ children}) {
   return (
     <div className='h-[100svh] flex flex-col'>
       <div className='flex mx-auto my-8 space-x-8 sm:px-4 lg:px-0 lg:max-w-3xl'>
-        <div className='hidden sm:flex flex-col space-y-3 w-full h-full max-w-[150px] mt-2.5 sticky top-8'>
+        <div className='hidden sm:flex flex-col space-y-3 w-full h-[85svh] max-w-[150px] mt-2.5 sticky top-8'>
           {headings.map(({ id, name, level }) => (
             level === 'H1' ? (
               <span
