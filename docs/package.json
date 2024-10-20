@@ -3,9 +3,9 @@
   "name": "docs",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo -p 3002",
+    "dev": "next dev --turbo -p 3535",
     "build": "next build",
-    "start": "next start -p 3002",
+    "start": "next start -p 3535",
     "lint": "next lint"
   },
   "contributors": [
