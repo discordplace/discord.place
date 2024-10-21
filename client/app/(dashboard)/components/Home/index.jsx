@@ -35,7 +35,7 @@ export default function Home() {
           </h2>
 
           <h1 className='text-3xl font-bold text-primary'>
-            {value}
+            {value.toLocaleString('en-US')}
           </h1>
 
           <div className='flex items-center text-sm text-tertiary gap-x-1'>
@@ -46,7 +46,7 @@ export default function Home() {
                 isDecreased && 'text-red-400'
               )}
             >
-              {diffInPercentClean.toFixed(1)}%
+              {diffInPercentClean.toFixed(2)}%
             </span>
             from yesterday
           </div>

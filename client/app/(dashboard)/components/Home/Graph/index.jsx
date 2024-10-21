@@ -33,7 +33,7 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
       }}
     >
       {data.length === 0 && (
-        <div className='absolute top-0 z-[11] left-0 flex items-center justify-center w-full h-full bg-background/50 backdrop-blur-sm'>
+        <div className='absolute top-0 z-[1] left-0 flex items-center justify-center w-full h-full bg-background/50 backdrop-blur-sm'>
           <span className='text-sm font-medium select-none text-tertiary'>
             {t('graph.noData')}
           </span>
@@ -41,7 +41,7 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
       )}
 
       <DynamicApexCharts
-        className='relative z-10'
+        className='relative z-[0]'
         type='area'
         height={height}
         width='100%'
