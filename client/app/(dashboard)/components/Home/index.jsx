@@ -11,7 +11,7 @@ export default function Home() {
   const user = useAuthStore(state => state.user);
   const isCollapsed = useDashboardStore(state => state.isCollapsed);
 
-  const [activeStatBlock, setActiveStatBlock] = useState('Servers');
+  const [activeStatBlock, setActiveStatBlock] = useState('Guilds');
 
   function StatBlock({ label, value, previous }) {
     const isIncreased = value > previous;
