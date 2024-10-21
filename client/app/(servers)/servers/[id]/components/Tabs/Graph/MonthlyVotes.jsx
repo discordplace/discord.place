@@ -54,12 +54,7 @@ export default function MonthlyVotesGraph({ server }) {
           id='monthlyVotes'
           data={server.monthly_votes.map(({ created_at, votes }) => ({ createdAt: created_at, value: votes })).reverse()}
           tooltipFormatter={value => value.toLocaleString('en-US')}
-          tooltipIcon='<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M9 13l3 -3l3 3"></path><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path></svg>'
-          color={
-            isIncreased ? '#64b071' :
-              isDecreased ? '#e75f62' :
-                '#b4b4b4'
-          }
+          color={(isIncreased || isDecreased) ? 'rgb(168, 85, 247)' : '#b4b4b4'}
           xaxisRange={server.monthly_votes.length}
           xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { year: 'numeric', month: 'long' }))}
         />

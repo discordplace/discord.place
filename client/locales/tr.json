@@ -1004,12 +1004,15 @@
     }
   },
   "graph": {
+    "noData": "Gösterilecek veri yok.",
     "tooltip": {
       "increased": "(0)[Dün'e oranla arttı ({{difference}})];(1)[Geçen ay'a oranla arttı ({{difference}})];",
       "decreased": "(0)[Dün'e oranla azaldı ({{difference}})];(1)[Geçen ay'a oranla azaldı ({{difference}})];",
       "noChanges": "(0)[Dün'e oranla değişiklik yok];(1)[Geçen ay'a oranla değişiklik yok];",
-      "Total Servers": "{{count}} Sunucu",
-      "Total Users": "{{count}} Kullanıcı",
+      "dashboard-servers": "{{count}} Sunucu",
+      "dashboard-guilds": "{{count}} Sunucu",
+      "dashboard-users": "{{count}} Kullanıcı",
+      "dashboard-bots": "{{count}} Bot",
       "profileLikes": "{{count}} Beğeni",
       "profileViews": "{{count}} Ziyaretçi",
       "monthlyVotes": "{{count}} Oy"

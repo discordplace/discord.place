@@ -114,7 +114,7 @@ export default function Content({ profile }) {
           </div>
         </div>
 
-        {profile.dailyStats?.length > 0 && <Graph profile={profile} />}
+        <Graph profile={profile} />
 
         {profile.servers.length > 0 && <Servers profile={profile} />}
       </div>
