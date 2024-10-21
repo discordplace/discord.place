@@ -35,7 +35,7 @@ export default function CopyCodeButton({ code }) {
 
       <FaCheck
         className={cn(
-          'absolute transition-all',
+          'absolute transition-all pointer-events-none',
           copied ? 'text-green-500' : 'scale-50 opacity-0'
         )}
       />
