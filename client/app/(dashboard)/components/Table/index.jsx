@@ -9,7 +9,6 @@ import useDashboardStore from '@/stores/dashboard';
 import { useEffect, useRef, useState } from 'react';
 import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
-import { HiCursorClick } from 'react-icons/hi';
 import Pagination from '@/app/components/Pagination';
 import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
 import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
@@ -18,6 +17,8 @@ import { isEqual } from 'lodash';
 import { IoSearch } from 'react-icons/io5';
 import * as chrono from 'chrono-node';
 import { useMedia } from 'react-use';
+import { FaBookBookmark, FaXmark } from 'react-icons/fa6';
+import Drawer from '@/app/components/Drawer';
 
 export default function Table({ tabs }) {
   const selectedItems = useDashboardStore(state => state.selectedItems);
@@ -50,6 +51,8 @@ export default function Table({ tabs }) {
   }, [searchQuery]);
 
   const isMobile = useMedia('(max-width: 640px)');
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mobileSelectedAction] = useState(null);
 
   if (!currentTabData || !currentTabData.columns) return null;
 
@@ -333,9 +336,61 @@ export default function Table({ tabs }) {
       
       <div className='flex items-center justify-center'>
         <AnimatePresence>
-          {selectedItems.length > 0 && (
+          {(isMobile && selectedItems.length > 0) && (
+            <>
+              <motion.button
+                className='fixed flex items-center px-4 py-2 text-sm font-medium transition-colors rounded-full gap-x-2 bottom-8 right-6 text-secondary bg-tertiary'
+                onClick={() => setDrawerOpen(true)}
+                initial={{
+                  opacity: 0,
+                  y: 60,
+                  scale: 0.8,
+                  filter: 'blur(10px)'
+                }}
+                animate={{ 
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: 'blur(0px)'
+                }}
+                exit={{
+                  opacity: 0,
+                  y: 60,
+                  scale: 0.85,
+                  filter: 'blur(10px)'
+                }}
+              >
+                <FaBookBookmark size={14} />
+                Actions
+              </motion.button>
+
+              <Drawer
+                openState={drawerOpen}
+                setOpenState={setDrawerOpen}
+                state={mobileSelectedAction}
+                setState={value => {
+                  value.action(selectedItems);
+                  
+                  setDrawerOpen(false);
+                }}
+                items={currentTabData.actions.map(action => (
+                  {
+                    label: (
+                      <div className='flex items-center gap-x-2'>
+                        {action.icon && <action.icon size={16} />}
+                        {action.name}
+                      </div>
+                    ),
+                    value: action
+                  }
+                ))}
+              />
+            </>
+          )}
+
+          {(!isMobile && selectedItems.length > 0) && (
             <motion.div
-              className='left-8 px-2 py-2 sm:p-[unset] sm:left-[unset] z-[10] font-medium text-sm gap-x-2 fixed bottom-8 rounded-2xl flex items-center border-2 border-primary w-full max-w-[calc(100%_-_40px)] sm:min-w-[500px] sm:w-max h-max sm:h-[50px] bg-secondary'
+              className='w-max h-[50px] p-3 shadow-lg shadow-[rgba(var(--bg-secondary))] z-[10] font-medium text-sm gap-x-4 fixed bottom-8 rounded-2xl flex items-center border-2 border-primary bg-secondary'
               initial={{
                 opacity: 0,
                 y: 60,
@@ -359,46 +414,46 @@ export default function Table({ tabs }) {
                 duration: 0.2
               }}
             >
-              <div className='items-center hidden sm:flex gap-x-2'>
-                <div className='ml-4 w-max gap-x-1 px-1.5 py-0.5 min-w-[18px] min-h-[18px] font-medium flex items-center justify-center text-white bg-purple-600 rounded-lg'>
-                  <HiCursorClick size={16} />            
-                  {selectedItems.length} Selected
-                </div>
-
-                <button
-                  className='flex items-center text-sm hover:bg-purple-600 hover:text-white transition-all gap-x-2 hover:ring-purple-500 text-primary px-2.5 py-0.5 rounded-lg'
-                  onClick={() => setSelectedItems([])}
-                >
-                  Clear
-                </button>
+              <div className='p-1 text-purple-500 border border-purple-500 rounded-lg shadow-lg shadow-purple-500/30'>
+                <FaCheck size={12} />
               </div>
 
-              <div className='sm:mr-2 w-full grid grid-cols-1 mobile:grid-cols-2 sm:flex items-center sm:justify-end justify-center text-tertiary gap-1.5'>                
-                {(currentTabData.actions && currentTabData.actions.length > 0) && (
-                  currentTabData.actions?.map((action, index) => {
-                    const Trigger = action.trigger || 'div';
+              <span className='py-1 pr-4 border-r gap-x-1 border-primary'>
+                {selectedItems.length} Items
+              </span>
 
-                    return (
-                      <Trigger
-                        key={`action-${index}`}
-                        {...action.triggerProps}
-                        className='flex w-full sm:w-[unset]'
-                      >
-                        <button
-                          className={cn(
-                            'flex w-full flex-1 sm:flex-[unset] justify-center sm:w-max items-center text-sm hover:bg-tertiary transition-all gap-x-2 hover:ring-purple-500 ring-2 ring-[rgba(var(--bg-secondary))] text-primary bg-quaternary px-2.5 py-1.5 rounded-xl',
-                            typeof action.hide === 'function' ? action.hide?.(selectedItems) : action.hide === true && 'hidden'
-                          )}
-                          onClick={() => action.action?.(selectedItems)}
-                        >
-                          {action.icon && <action.icon size={16} className='text-tertiary' />}
-                          {action.name}
-                        </button>
-                      </Trigger>
-                    );
-                  })
-                )}
-              </div>
+              {currentTabData.actions?.map((action, index) => {
+                const Trigger = action.trigger || 'div';
+
+                return (
+                  <Trigger
+                    key={`action-${index}`}
+                    {...action.triggerProps}
+                    className={cn(
+                      'flex items-center gap-x-2',
+                      index !== currentTabData.actions.length - 1 && 'border-r border-primary pr-4'
+                    )}
+                  >
+                    <button
+                      className={cn(
+                        'flex items-center gap-x-2 text-sm text-tertiary hover:text-primary hover:bg-quaternary transition-all px-3 py-1.5 rounded-xl',
+                        typeof action.hide === 'function' ? action.hide?.(selectedItems) : action.hide === true && 'hidden'
+                      )}
+                      onClick={() => action.action?.(selectedItems)}
+                    >
+                      {action.icon && <action.icon size={16} />}
+                      {action.name}
+                    </button>
+                  </Trigger>
+                );
+              })}
+
+              <button
+                className='p-1 border border-[rgba(var(--bg-quaternary))] rounded-lg bg-quaternary hover:bg-tertiary'
+                onClick={() => setSelectedItems([])}
+              >
+                <FaXmark size={14} />
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
