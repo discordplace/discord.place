@@ -4,13 +4,15 @@ import cn from '@/utils/cn';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useWindowScroll } from 'react-use';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useGeneralStore } from '@/stores/general';
 import Footer from '@/components/footer';
 import EmptyHeadings from '@/components/empty-headings';
+import { FaGithub } from 'react-icons/fa6';
 
 export default function LayoutContent({ children}) {
   const params = useParams();
+  const pathname = usePathname();
   
   const headings = useGeneralStore(state => state.headings);
   const setHeadings = useGeneralStore(state => state.setHeadings);
@@ -52,7 +54,7 @@ export default function LayoutContent({ children}) {
   
     handleScroll();
   }, [headings, y]);
-
+  
   return (
     <div className='h-[100dvh] flex flex-col'>
       <div className='flex mx-auto my-8 space-x-8 sm:px-4 lg:px-0 lg:max-w-3xl'>
@@ -101,6 +103,17 @@ export default function LayoutContent({ children}) {
               )
             );
           })}
+
+          <div className='w-full h-[1px] bg-quaternary' />
+
+          <Link
+            href={`https://github.com/discordplace/discord.place/edit/main/docs/app${pathname}/page.mdx`}
+            className='flex items-center text-xs font-semibold transition-colors hover:text-primary text-tertiary gap-x-2'
+          >
+            <FaGithub />
+
+            Edit this page
+          </Link>
         </div>
 
         <div
@@ -117,7 +130,7 @@ export default function LayoutContent({ children}) {
           {children}
         </div>
       </div>
-    
+
       <Footer />
     </div>
   );

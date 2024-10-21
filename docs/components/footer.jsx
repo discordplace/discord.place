@@ -8,7 +8,7 @@ export default function Footer() {
 
         <div>
           Thanks to{' '}
-          <span className="cursor-pointer text-secondary hover:text-purple-400 hover:underline underline-offset-3">Nodesty</span>{' '}
+          <span className="cursor-pointer text-secondary hover:text-purple-400 hover:underline underline-offset-2">Nodesty</span>{' '}
           for supporting this project.
         </div>
       </div>
