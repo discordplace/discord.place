@@ -1530,7 +1530,11 @@ export default function Page() {
                     discriminator: item.bot.discriminator,
                     avatar: item.bot.avatar,
                     showId: true,
-                    searchValues: [item.bot.username, item.bot.id]
+                    searchValues: [item.bot.username, item.bot.id],
+                    custom: {
+                      type: 'bot',
+                      userId: item.user.id
+                    }
                   } :
                   {
                     type: 'server',
@@ -1538,7 +1542,11 @@ export default function Page() {
                     name: item.guild.name,
                     icon: item.guild.icon,
                     showId: true,
-                    searchValues: [item.guild.name, item.guild.id]
+                    searchValues: [item.guild.name, item.guild.id],
+                    custom: {
+                      type: 'server',
+                      userId: item.user.id
+                    }
                   },
                 {
                   type: 'user',
@@ -1607,7 +1615,7 @@ export default function Page() {
                   icon: IoMdCloseCircle,
                   action: () => bulkActionWithConfirmationModal({
                     name: 'timeout',
-                    action: item => typeof item.bot === 'object' ? deleteBotTimeout(item.bot.id, item.user.id) : deleteServerTimeout(item.guild.id, item.user.id),
+                    action: item => item.custom.type === 'bot' ? deleteBotTimeout(item.id, item.custom.userId) : deleteServerTimeout(item.id, item.custom.userId),
                     fetchKey: 'timeouts'
                   }),
                   hide: !data.permissions?.canDeleteTimeouts
