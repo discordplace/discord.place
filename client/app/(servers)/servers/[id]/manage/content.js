@@ -244,6 +244,7 @@ export default function Content({ server }) {
           serverId={server.id}
           webhookURL={server.webhook?.url || null}
           webhookToken={server.webhook?.token || null}
+          records={server.webhook?.records || []}
         />
 
         {server.permissions.canDelete && (

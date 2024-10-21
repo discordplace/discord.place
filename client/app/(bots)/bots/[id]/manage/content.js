@@ -257,6 +257,7 @@ export default function Content({ bot }) {
           botId={bot.id}
           webhookURL={bot.webhook?.url || null}
           webhookToken={bot.webhook?.token || null}
+          records={bot.webhook?.records || []}
         />
 
         <div className='w-full h-[1px] bg-tertiary' />

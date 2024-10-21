@@ -148,19 +148,35 @@ async function incrementVote(guildId, userId) {
     }
   }
 
-  if (server.webhook_url) {
+  if (server.webhook.url) {
     const headers = {
       'User-Agent': 'discord.place (https://discord.place)'
     };
-    if (server.webhook_token) headers['Authorization'] = server.webhook_token;
 
-    axios({
-      method: 'post',
-      url: server.webhook_url,
-      data: { server: guild.id, user: user.id },
-      headers,
-      timeout: 2000
-    }).catch(() => null);
+    if (server.webhook.token) headers['Authorization'] = server.webhook.token;
+
+    const response = await axios
+      .post(server.webhook.url, { server: guild.id, user: user.id }, { headers, timeout: 2000, responseType: 'text' })
+      .catch(() => null);
+
+    const data = {
+      url: server.webhook.url,
+      response_status_code: response.status,
+      request_body: {
+        server: guild.id,
+        user: user.id
+      },
+      response_body: response.data,
+      created_at: Date.now()
+    };
+
+    if (!server.webhook.records) server.webhook.records = [];
+
+    server.webhook.records.push(data);
+
+    if (server.webhook.records.length > 10) server.webhook.records.shift();
+
+    await server.save();
   }  
 
   return true;

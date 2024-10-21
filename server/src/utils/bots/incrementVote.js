@@ -103,15 +103,31 @@ async function incrementVote(botId, userId, botWebhook) {
     const headers = {
       'User-Agent': 'discord.place (https://discord.place)'
     };
-    if (botWebhook.token) headers['Authorization'] = botWebhook.token;
     
-    axios({
-      method: 'post',
+    if (botWebhook.token) headers['Authorization'] = botWebhook.token;
+
+    const response = await axios
+      .post(botWebhook.url, { bot: bot.id, user: user.id }, { headers, timeout: 2000, responseType: 'text' })
+      .catch(error => error.response);
+    
+    const data = {
       url: botWebhook.url,
-      data: { bot: bot.id, user: user.id },
-      headers,
-      timeout: 2000
-    }).catch(() => null);
+      response_status_code: response.status,
+      request_body: {
+        bot: bot.id,
+        user: user.id
+      },
+      response_body: response.data,
+      created_at: new Date()
+    };
+
+    if (!bot.webhook.records) bot.webhook.records = [];
+
+    bot.webhook.records.push(data);
+
+    if (bot.webhook.records.length > 10) bot.webhook.records.shift();
+
+    await bot.save();
   }
 
   return true;

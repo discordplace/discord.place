@@ -93,7 +93,31 @@ const BotSchema = new Schema({
       type: String,
       max: config.botWebhookTokenMaxLength,
       required: false
-    }
+    },
+    records: [
+      {
+        url: {
+          type: String,
+          required: true
+        },
+        response_status_code: {
+          type: Number,
+          required: true
+        },
+        request_body: {
+          type: Object,
+          required: false
+        },
+        response_body: {
+          type: String,
+          required: false
+        },
+        created_at: {
+          type: Date,
+          required: true
+        }
+      }
+    ]
   },
   command_count: {
     value: {
