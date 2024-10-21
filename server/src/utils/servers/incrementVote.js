@@ -157,7 +157,7 @@ async function incrementVote(guildId, userId) {
 
     const response = await axios
       .post(server.webhook.url, { server: guild.id, user: user.id }, { headers, timeout: 2000, responseType: 'text' })
-      .catch(() => null);
+      .catch(error => error.response);
 
     const data = {
       url: server.webhook.url,
