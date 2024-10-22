@@ -2,7 +2,7 @@
   "include-component-in-tag": true,
   "include-v-in-tag": true,
   "tag-separator": "@",
-  "separate-pull-requests": true,
+  "separate-pull-requests": false,
   "packages": {
     "server": {
       "path": "server",
