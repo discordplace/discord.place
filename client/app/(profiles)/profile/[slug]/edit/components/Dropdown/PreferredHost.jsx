@@ -1,7 +1,7 @@
+import config from '@/config';
+import cn from '@/lib/cn';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
-import cn from '@/lib/cn';
-import config from '@/config';
 
 export default function PreferredHostDropdown({ currentlyEditingValue, setCurrentlyEditingValue }) {
   return (
@@ -27,11 +27,11 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
 
           {config.customHostnames.map(hostname => (
             <DropdownMenu.Item
-              key={hostname}
               className={cn(
                 'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
                 currentlyEditingValue === hostname ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
               )}
+              key={hostname}
               onSelect={() => setCurrentlyEditingValue(hostname)}
             >
               {hostname}

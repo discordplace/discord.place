@@ -1,15 +1,15 @@
 import config from '@/config';
 import { FaStar } from 'react-icons/fa';
 
-export default function Profile({ data, avatar_base64 }) {
+export default function Profile({ avatar_base64, data }) {
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
+    maximumFractionDigits: 2,
     notation: 'compact',
-    maximumFractionDigits: 2
+    style: 'decimal'
   });
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0px' }}>
+    <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0px' }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <h1
         style={{
@@ -25,17 +25,17 @@ export default function Profile({ data, avatar_base64 }) {
 
       <p
         style={{
+          color: 'rgba(153, 153, 153)',
+          display: '-webkit-box',
           fontSize: '24px',
           fontWeight: 500,
-          textAlign: 'center',
-          textWrap: 'pretty',
-          color: 'rgba(153, 153, 153)',
-          maxWidth: '800px',
-          lineHeight: '1.5',
           lineClamp: 2,
-          display: '-webkit-box',
+          lineHeight: '1.5',
+          maxWidth: '800px',
           overflow: 'hidden',
+          textAlign: 'center',
           textOverflow: 'ellipsis',
+          textWrap: 'pretty',
           WebkitBoxOrient: 'vertical',
           WebkitLineClamp: 2
         }}
@@ -45,8 +45,8 @@ export default function Profile({ data, avatar_base64 }) {
 
       <div
         style={{
-          display: 'flex',
           alignItems: 'center',
+          display: 'flex',
           gap: '8px'
         }}
       >
@@ -54,16 +54,16 @@ export default function Profile({ data, avatar_base64 }) {
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : 'https://cdn.discordapp.com/embed/avatars/0.png'}
           alt={`${data.username}'s avatar`}
-          style={{ width: '32px', height: '32px', borderRadius: '50%' }}
+          src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : 'https://cdn.discordapp.com/embed/avatars/0.png'}
+          style={{ borderRadius: '50%', height: '32px', width: '32px' }}
         />
 
         <span
           style={{
+            color: 'rgba(153, 153, 153)',
             fontSize: '24px',
-            fontWeight: 500,
-            color: 'rgba(153, 153, 153)'
+            fontWeight: 500
           }}
         >
           {data.username}
@@ -72,15 +72,15 @@ export default function Profile({ data, avatar_base64 }) {
 
       <div
         style={{
-          display: 'flex',
           alignItems: 'center',
-          gap: '24px',
           color: 'rgba(153, 153, 153)',
+          display: 'flex',
+          gap: '24px',
           marginTop: '24px'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <FaStar size={32} color='#c7c7c7' />
+        <div style={{ alignItems: 'center', display: 'flex', gap: '12px' }}>
+          <FaStar color='#c7c7c7' size={32} />
 
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
             {formatter.format(data.uses)}
@@ -89,10 +89,10 @@ export default function Profile({ data, avatar_base64 }) {
 
         {data.categories.map(category => (
           <div
-            style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
             key={category}
+            style={{ alignItems: 'center', display: 'flex', gap: '12px' }}
           >
-            <span style={{ fontSize: '32px', color: '#c7c7c7' }}>
+            <span style={{ color: '#c7c7c7', fontSize: '32px' }}>
               {config.templateCategoriesIcons[category]}
             </span>
 

@@ -1,21 +1,21 @@
 'use client';
 
+import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Pagination from '@/app/components/Pagination';
+import ReportableArea from '@/app/components/ReportableArea';
+import config from '@/config';
+import cn from '@/lib/cn';
+import createReview from '@/lib/request/bots/createReview';
 import useAuthStore from '@/stores/auth';
+import useLanguageStore, { t } from '@/stores/language';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Suspense, useEffect, useState } from 'react';
+import { RiErrorWarningFill } from 'react-icons/ri';
 import { TbLoader } from 'react-icons/tb';
 import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline } from 'react-icons/ti';
 import { toast } from 'sonner';
-import createReview from '@/lib/request/bots/createReview';
-import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import cn from '@/lib/cn';
-import Link from 'next/link';
-import config from '@/config';
-import useLanguageStore, { t } from '@/stores/language';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import ReportableArea from '@/app/components/ReportableArea';
-import Image from 'next/image';
 
 export default function Reviews({ bot }) {
   const [page, setPage] = useState(1);
@@ -50,7 +50,12 @@ export default function Reviews({ bot }) {
   function submitReview() {
     setLoading(true);
 
-    toast.promise(createReview(bot.id, { rating: selectedRating, content: review }), {
+    toast.promise(createReview(bot.id, { content: review, rating: selectedRating }), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('botPage.tabs.reviews.toast.submittingReview'),
       success: () => {
         setLoading(false);
@@ -59,11 +64,6 @@ export default function Reviews({ bot }) {
         setReviewSubmitted(true);
 
         return t('botPage.tabs.reviews.toast.reviewSubmitted');
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -86,19 +86,19 @@ export default function Reviews({ bot }) {
               if (rating >= index + 1) return <TiStarFullOutline key={index} />;
               if (rating >= index + 0.5) return <TiStarHalfOutline key={index} />;
 
-              return <TiStarOutline key={index} className='text-tertiary' />;
+              return <TiStarOutline className='text-tertiary' key={index} />;
             })}
           </div>
 
           <span className='text-sm text-tertiary'>
-            {t('botPage.tabs.reviews.totalReviews', { postProcess: 'interval', count: bot.reviews.length })}
+            {t('botPage.tabs.reviews.totalReviews', { count: bot.reviews.length, postProcess: 'interval' })}
           </span>
         </div>
 
         <div className='flex w-full flex-1'>
           <div className='flex w-full flex-col gap-y-2'>
             {new Array(5).fill(null).map((_, index) => (
-              <div key={index} className='flex w-full items-center gap-x-4'>
+              <div className='flex w-full items-center gap-x-4' key={index}>
                 <span className='font-semibold'>{5 - index}</span>
 
                 <div className='flex h-[5px] w-full rounded-lg bg-tertiary'>
@@ -143,20 +143,20 @@ export default function Reviews({ bot }) {
                 {loggedIn ? (
 
                   <UserAvatar
-                    id={user?.id}
+                    className='size-[48px] rounded-2xl'
                     hash={user?.avatar}
+                    height={48}
+                    id={user?.id}
                     size={64}
                     width={48}
-                    height={48}
-                    className='size-[48px] rounded-2xl'
                   />
                 ) : (
                   <Image
-                    src='https://cdn.discordapp.com/embed/avatars/0.png'
                     alt='Placeholder Avatar'
-                    width={48}
-                    height={48}
                     className='size-[48px] rounded-2xl'
+                    height={48}
+                    src='https://cdn.discordapp.com/embed/avatars/0.png'
+                    width={48}
                   />
                 )}
 
@@ -174,8 +174,8 @@ export default function Reviews({ bot }) {
                     {[...Array(5)].map((_, index) => (
                       hoveredRating >= index + 1 || (selectedRating >= index + 1) ? (
                         <TiStarFullOutline
-                          key={index}
                           className='cursor-pointer text-yellow-500'
+                          key={index}
                           onClick={() => {
                             if (selectedRating === index + 1) setSelectedRating(0);
                             else setSelectedRating(index + 1);
@@ -185,8 +185,8 @@ export default function Reviews({ bot }) {
                         />
                       ) : (
                         <TiStarOutline
-                          key={index}
                           className='cursor-pointer text-tertiary'
+                          key={index}
                           onClick={() => setSelectedRating(index + 1)}
                           onMouseEnter={() => setHoveredRating(index + 1)}
                           onMouseLeave={() => setHoveredRating(0)}
@@ -224,11 +224,11 @@ export default function Reviews({ bot }) {
 
               <div className='relative'>
                 <textarea
-                  disabled={loading || reviewSubmitted || !loggedIn}
                   className='scrollbar-hide peer mt-4 block max-h-[200px] min-h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base lg:max-w-[450px] [&:not(:disabled)]:cursor-text'
-                  value={review}
-                  onChange={event => setReview(event.target.value)}
+                  disabled={loading || reviewSubmitted || !loggedIn}
                   maxLength={config.reviewsMaxCharacters}
+                  onChange={event => setReview(event.target.value)}
+                  value={review}
                 />
 
                 <span
@@ -243,9 +243,9 @@ export default function Reviews({ bot }) {
 
               {loggedIn ? (
                 <button
-                  onClick={submitReview}
                   className='mt-4 flex items-center justify-center gap-x-1.5 rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                   disabled={selectedRating === 0 || loading || reviewSubmitted || review.length < config.reviewsMinCharacters}
+                  onClick={submitReview}
                 >
                   {loading && <TbLoader className='animate-spin' />}
                   {t('buttons.submitReview')}
@@ -264,23 +264,23 @@ export default function Reviews({ bot }) {
         <div className='mt-8 flex w-full flex-col gap-y-4 sm:flex-row' key={review._id}>
           <div className='flex w-full gap-x-4 sm:w-[35%]'>
             <Link
-              href={`/profile/u/${review.user.id}`}
               className='transition-opacity hover:opacity-70'
+              href={`/profile/u/${review.user.id}`}
             >
               <UserAvatar
-                id={review.user.id}
+                className='size-[48px] rounded-2xl'
                 hash={review.user.avatar}
+                height={48}
+                id={review.user.id}
                 size={64}
                 width={48}
-                height={48}
-                className='size-[48px] rounded-2xl'
               />
             </Link>
 
             <div className='flex flex-col gap-y-1'>
               <Link
-                href={`/profile/u/${review.user.id}`}
                 className='flex items-center text-base font-semibold transition-opacity hover:opacity-70'
+                href={`/profile/u/${review.user.id}`}
               >
                 <span className='max-w-[100px] truncate mobile:max-w-[150px] sm:max-w-[100px] lg:max-w-[160px]'>
                   {review.user.username}
@@ -294,22 +294,22 @@ export default function Reviews({ bot }) {
           </div>
 
           <ReportableArea
-            type='review'
             active={user?.id !== review.user.id}
-            metadata={{
-              reviewer: {
-                id: review.user.id,
-                username: review.user.username,
-                avatar: review.user.avatar
-              },
-              rating: review.rating,
-              content: review.content
-            }}
             identifier={`bot-${bot.id}-review-${review._id}`}
+            metadata={{
+              content: review.content,
+              rating: review.rating,
+              reviewer: {
+                avatar: review.user.avatar,
+                id: review.user.id,
+                username: review.user.username
+              }
+            }}
+            type='review'
           >
             <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0'>
               <span className='text-xs font-medium text-tertiary'>
-                {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                {new Date(review.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', year: 'numeric' })}
               </span>
 
               {review.content}
@@ -321,11 +321,11 @@ export default function Reviews({ bot }) {
       {maxPages > 1 && (
         <div className='flex w-full items-center justify-center'>
           <Pagination
+            limit={limit}
+            loading={loading}
             page={page}
             setPage={setPage}
-            loading={loading}
             total={bot.reviews.length}
-            limit={limit}
           />
         </div>
       )}

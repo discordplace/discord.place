@@ -1,18 +1,18 @@
 'use client';
 
-import useThemeStore from '@/stores/theme';
-import { nanoid } from 'nanoid';
-import Link from 'next/link';
-import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa';
-import cn from '@/lib/cn';
-import Image from 'next/image';
 import config from '@/config';
-import { FaXTwitter } from 'react-icons/fa6';
-import { usePathname } from 'next/navigation';
-import { MdSunny } from 'react-icons/md';
-import { motion } from 'framer-motion';
-import { IoIosMoon } from 'react-icons/io';
+import cn from '@/lib/cn';
 import useLanguageStore, { t } from '@/stores/language';
+import useThemeStore from '@/stores/theme';
+import { motion } from 'framer-motion';
+import { nanoid } from 'nanoid';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { IoIosMoon } from 'react-icons/io';
+import { MdSunny } from 'react-icons/md';
 import Twemoji from 'react-twemoji';
 
 export default function Footer() {
@@ -31,125 +31,125 @@ export default function Footer() {
 
   const blocks = [
     {
-      title: t('footer.blocks.0.title'), // Pages
       links: [
         {
-          label: t('footer.blocks.0.links.0'),
-          href: '/'
+          href: '/',
+          label: t('footer.blocks.0.links.0')
         },
         {
-          label: t('footer.blocks.0.links.1'),
           href: config.docsUrl,
+          label: t('footer.blocks.0.links.1'),
           target: '_blank'
         },
         {
-          label: t('footer.blocks.0.links.2'),
           href: config.statusUrl,
+          label: t('footer.blocks.0.links.2'),
           target: '_blank'
         },
         {
-          label: t('footer.blocks.0.links.3'),
-          href: '/premium'
+          href: '/premium',
+          label: t('footer.blocks.0.links.3')
         },
         {
-          label: t('footer.blocks.0.links.4'),
-          href: '/blogs'
+          href: '/blogs',
+          label: t('footer.blocks.0.links.4')
         }
-      ]
+      ],
+      title: t('footer.blocks.0.title') // Pages
     },
     {
-      title: t('footer.blocks.1.title'), // Our Services
       links: [
         {
-          label: t('footer.blocks.1.links.0'),
-          href: '/profiles'
+          href: '/profiles',
+          label: t('footer.blocks.1.links.0')
         },
         {
-          label: t('footer.blocks.1.links.1'),
-          href: '/servers'
+          href: '/servers',
+          label: t('footer.blocks.1.links.1')
         },
         {
-          label: t('footer.blocks.1.links.2'),
-          href: '/bots'
+          href: '/bots',
+          label: t('footer.blocks.1.links.2')
         },
         {
-          label: t('footer.blocks.1.links.3'),
-          href: '/emojis'
+          href: '/emojis',
+          label: t('footer.blocks.1.links.3')
         },
         {
-          label: t('footer.blocks.1.links.4'),
-          href: '/templates'
+          href: '/templates',
+          label: t('footer.blocks.1.links.4')
         },
         {
-          label: t('footer.blocks.1.links.5'),
-          href: '/sounds'
+          href: '/sounds',
+          label: t('footer.blocks.1.links.5')
         },
         {
-          label: t('footer.blocks.1.links.6'),
           href: '/themes',
+          label: t('footer.blocks.1.links.6'),
           new: true
         },
         {
-          label: 'Lantern',
-          href: 'https://github.com/discordplace/lantern'
+          href: 'https://github.com/discordplace/lantern',
+          label: 'Lantern'
         }
-      ]
+      ],
+      title: t('footer.blocks.1.title') // Our Services
     },
     {
-      title: t('footer.blocks.2.title'), // Legal
       links: [
         {
-          label: t('footer.blocks.2.links.0'),
-          href: '/legal/privacy'
+          href: '/legal/privacy',
+          label: t('footer.blocks.2.links.0')
         },
         {
-          label: t('footer.blocks.2.links.1'),
-          href: '/legal/terms'
+          href: '/legal/terms',
+          label: t('footer.blocks.2.links.1')
         },
         {
-          label: t('footer.blocks.2.links.2'),
-          href: '/legal/cookie-policy'
+          href: '/legal/cookie-policy',
+          label: t('footer.blocks.2.links.2')
         },
         {
-          label: t('footer.blocks.2.links.3'),
-          href: '/legal/content-policy'
+          href: '/legal/content-policy',
+          label: t('footer.blocks.2.links.3')
         },
         {
-          label: t('footer.blocks.2.links.4'),
-          href: '/legal/purchase-policy'
+          href: '/legal/purchase-policy',
+          label: t('footer.blocks.2.links.4')
         }
-      ]
+      ],
+      title: t('footer.blocks.2.title') // Legal
     },
     {
-      title: t('footer.blocks.3.title'), // Social
       links: [
         {
-          label: 'X',
+          disabled: false,
           href: 'https://x.com/discord_place',
           icon: FaXTwitter,
-          disabled: false,
+          label: 'X',
           target: '_blank'
         },
         {
-          label: 'Discord',
           href: 'https://invite.discord.place',
           icon: FaDiscord,
+          label: 'Discord',
           target: '_blank'
         },
         {
-          label: 'GitHub',
           href: 'https://github.com/discordplace',
           icon: FaGithub,
+          label: 'GitHub',
           target: '_blank'
         },
         {
-          label: 'LinkedIn',
+          disabled: true,
           href: '#',
           icon: FaLinkedin,
-          disabled: true,
+          label: 'LinkedIn',
           target: '_blank'
         }
-      ]
+      ],
+      title: t('footer.blocks.3.title') // Social
     }
   ];
 
@@ -157,11 +157,11 @@ export default function Footer() {
     <section className='mt-auto flex w-full flex-1 flex-col flex-wrap gap-16 border-t border-primary bg-secondary px-6 py-16 sm:px-24 xl:px-32 2xl:max-h-[800px] 2xl:flex-row 2xl:gap-x-48'>
       <div className='flex w-full max-w-[400px] flex-col gap-y-6'>
         <Image
+          alt='discord.placeLogo'
+          className='size-[48px]'
+          height={200}
           src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
           width={200}
-          height={200}
-          className='size-[48px]'
-          alt='discord.placeLogo'
         />
 
         <h2 className='max-w-[350px] text-2xl font-bold text-primary'>
@@ -173,9 +173,9 @@ export default function Footer() {
         </span>
 
         <iframe
+          height='30'
           src={`${config.statusBadgeUrl}?theme=${theme === 'dark' ? 'dark' : 'light'}`}
           width='250'
-          height='30'
         />
       </div>
 
@@ -189,12 +189,12 @@ export default function Footer() {
             <div className='flex flex-col gap-y-4'>
               {block.links.map(link => (
                 <Link
-                  key={nanoid()}
-                  href={link.href}
                   className={cn(
                     'flex items-center gap-x-2 text-secondary w-max',
                     link.disabled ? 'pointer-events-none opacity-70' : 'hover:text-primary'
                   )}
+                  href={link.href}
+                  key={nanoid()}
                   target={link.target || '_self'}
                 >
                   {link.icon && <link.icon />}
@@ -221,15 +221,15 @@ export default function Footer() {
           </p>
 
           <Link
+            className='w-max'
             href='https://nodesty.com'
             target='_blank'
-            className='w-max'
           >
             <Image
+              alt='nodesty.com Logo'
+              height={25}
               src={theme === 'dark' ? '/nodesty-logo-white.png' : '/nodesty-logo-blue.png'}
               width={100}
-              height={25}
-              alt='nodesty.com Logo'
             />
           </Link>
         </div>
@@ -273,10 +273,10 @@ export default function Footer() {
                   className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary'
                   layoutId='theme-switcher-button-background'
                   transition={{
+                    damping: 25,
                     duration: 0.5,
-                    type: 'spring',
                     stiffness: 300,
-                    damping: 25
+                    type: 'spring'
                   }}
                 />
               )}
@@ -286,11 +286,11 @@ export default function Footer() {
           <div className='flex flex-wrap justify-center gap-1 rounded-xl p-[3px] lg:justify-end lg:bg-quaternary lg:dark:bg-background'>
             {config.availableLocales.map(locale => (
               <button
-                key={locale.code}
                 className={cn(
                   'select-none justify-center relative gap-x-1.5 flex items-center text-sm font-semibold px-3 py-1',
                   locale.code !== language ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
                 )}
+                key={locale.code}
                 onClick={() => setLanguage(locale.code)}
               >
                 <span className='relative z-10 flex items-center gap-x-1.5'>
@@ -310,10 +310,10 @@ export default function Footer() {
                     className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary'
                     layoutId='language-switcher-button-background'
                     transition={{
+                      damping: 25,
                       duration: 0.5,
-                      type: 'spring',
                       stiffness: 300,
-                      damping: 25
+                      type: 'spring'
                     }}
                   />
                 )}

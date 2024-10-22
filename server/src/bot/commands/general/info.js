@@ -1,10 +1,10 @@
-const Discord = require('discord.js');
-const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const Profile = require('@/schemas/Profile');
+const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
-const getBadges = require('@/utils/profiles/getBadges');
 const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
+const getBadges = require('@/utils/profiles/getBadges');
+const Discord = require('discord.js');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()
@@ -77,15 +77,15 @@ module.exports = {
               {
                 name: await interaction.translate('commands.info.subcommands.server.embed.fields.1.name'),
                 value: await interaction.translate('commands.info.subcommands.server.embed.fields.1.value', {
-                  postProcess: 'interval',
                   count: lastVoter ? 1 : 0,
-                  totalVotes: server.votes,
+                  date: lastVoter ? server.lastVoter.date.toLocaleDateString(await interaction.getLanguage(), { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', year: 'numeric' }) : null,
                   lastVoter: lastVoter ? `[@${lastVoter.username}](${config.frontendUrl}/profile/u/${lastVoter.id})` : null,
-                  date: lastVoter ? server.lastVoter.date.toLocaleDateString(await interaction.getLanguage(), { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) : null
+                  postProcess: 'interval',
+                  totalVotes: server.votes
                 })
               }
             ])
-            .setFooter({ text: server.category, iconURL: guild.iconURL() })
+            .setFooter({ iconURL: guild.iconURL(), text: server.category })
         ];
 
         if (bot) embeds[0].addFields([
@@ -116,7 +116,7 @@ module.exports = {
             .setEmoji('👑')
         );
 
-        interaction.followUp({ embeds, components });
+        interaction.followUp({ components, embeds });
 
         break;
       case 'user':
@@ -162,7 +162,7 @@ module.exports = {
         if (user.banner) embeds[0].setImage(user.bannerURL({ extension: 'png', size: 4096 }));
 
         if (userData?.subscription?.createdAt) {
-          const premiumSince = new Date(userData.subscription.createdAt).toLocaleDateString(await interaction.getLanguage(), { year: 'numeric', month: 'long', day: 'numeric' });
+          const premiumSince = new Date(userData.subscription.createdAt).toLocaleDateString(await interaction.getLanguage(), { day: 'numeric', month: 'long', year: 'numeric' });
 
           embeds[0].addFields([
             {
@@ -174,7 +174,7 @@ module.exports = {
 
         if (currentServer) {
           var totalVotesForCurrentServer = currentServer.voters.find(voter => voter.user.id === user.id)?.vote || 0;
-          embeds[0].setDescription(await interaction.translate('commands.info.subcommands.user.embed.description.1', { totalVotes: totalVotesForCurrentServer, guildName: interaction.guild.name }));
+          embeds[0].setDescription(await interaction.translate('commands.info.subcommands.user.embed.description.1', { guildName: interaction.guild.name, totalVotes: totalVotesForCurrentServer }));
         }
 
         if (profile) {
@@ -199,11 +199,11 @@ module.exports = {
             {
               name: 'Profile',
               value: `${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.occupation', { occupation: profile.occupation || notSetText })}
-${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.gender', { gender_icon: profile.gender === 'Male' ? '♂️' : '♀️', gender: profile.gender || notSetText })}
+${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.gender', { gender: profile.gender || notSetText, gender_icon: profile.gender === 'Male' ? '♂️' : '♀️' })}
 ${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.location', { location: profile.location || notSetText })}
 ${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.birthday', { birthday: profile.birthday || notSetText })}
 
-${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.stats', { views: profile.views.toLocaleString('en-US'), likes_count: profile.likes_count.toLocaleString('en-US') })}`
+${await interaction.translate('commands.info.subcommands.user.embed.fields.1.value.stats', { likes_count: profile.likes_count.toLocaleString('en-US'), views: profile.views.toLocaleString('en-US') })}`
             },
             {
               name: 'Biography',
@@ -225,7 +225,7 @@ ${await interaction.translate('commands.info.subcommands.user.embed.fields.1.val
           );
         }
 
-        interaction.followUp({ embeds, components });
+        interaction.followUp({ components, embeds });
 
         break;
     }

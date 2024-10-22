@@ -2,34 +2,34 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const BotReviewSchema = new Schema({
+  approved: {
+    default: false,
+    type: Boolean
+  },
   bot: {
     id: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     }
+  },
+  content: {
+    max: 256,
+    required: true,
+    type: String
+  },
+  rating: {
+    required: true,
+    type: Number
   },
   user: {
     id: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     },
     username: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     }
-  },
-  rating: {
-    type: Number,
-    required: true
-  },
-  content: {
-    type: String,
-    required: true,
-    max: 256
-  },
-  approved: {
-    type: Boolean,
-    default: false
   }
 }, {
   timestamps: true

@@ -1,10 +1,10 @@
 'use client';
 
-import useDashboardStore from '@/stores/dashboard';
+import Graph from '@/app/(dashboard)/components/Home/Graph';
 import cn from '@/lib/cn';
 import useAuthStore from '@/stores/auth';
+import useDashboardStore from '@/stores/dashboard';
 import { useState } from 'react';
-import Graph from '@/app/(dashboard)/components/Home/Graph';
 
 export default function Home() {
   const data = useDashboardStore(state => state.data);
@@ -13,7 +13,7 @@ export default function Home() {
 
   const [activeStatBlock, setActiveStatBlock] = useState('Guilds');
 
-  function StatBlock({ label, value, previous }) {
+  function StatBlock({ label, previous, value }) {
     const isIncreased = value > previous;
     const isDecreased = value < previous;
     const diffInPercent = ((value - previous) / previous) * 100;
@@ -57,8 +57,8 @@ export default function Home() {
     );
   }
 
-  const currentDay = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric' });
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toLocaleString('en-US', { month: 'short', day: 'numeric' });
+  const currentDay = new Date().toLocaleString('en-US', { day: 'numeric', month: 'short' });
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toLocaleString('en-US', { day: 'numeric', month: 'short' });
 
   return (
     <div className='my-8 flex flex-col gap-y-4'>
@@ -78,26 +78,26 @@ export default function Home() {
       >
         <StatBlock
           label='Guilds'
-          value={data.guilds?.[0]?.value || 0}
           previous={data.guilds?.[1]?.value || 0}
+          value={data.guilds?.[0]?.value || 0}
         />
 
         <StatBlock
           label='Servers'
-          value={data.servers?.[0]?.value || 0}
           previous={data.servers?.[1]?.value || 0}
+          value={data.servers?.[0]?.value || 0}
         />
 
         <StatBlock
           label='Users'
-          value={data.users?.[0]?.value || 0}
           previous={data.users?.[1]?.value || 0}
+          value={data.users?.[0]?.value || 0}
         />
 
         <StatBlock
           label='Bots'
-          value={data.bots?.[0]?.value || 0}
           previous={data.bots?.[1]?.value || 0}
+          value={data.bots?.[0]?.value || 0}
         />
       </div>
 
@@ -110,45 +110,45 @@ export default function Home() {
 
         {activeStatBlock === 'Servers' && (
           <Graph
-            id='dashboard-servers'
+            color={'rgb(168, 85, 247)'}
             data={data.servers || []}
+            height={400}
+            id='dashboard-servers'
             tooltipFormatter={value => `${value} Servers`}
             tooltipLabel={'Servers'}
-            color={'rgb(168, 85, 247)'}
-            height={400}
           />
         )}
 
         {activeStatBlock === 'Guilds' && (
           <Graph
-            id='dashboard-guilds'
+            color={'rgb(168, 85, 247)'}
             data={data.guilds || []}
+            height={400}
+            id='dashboard-guilds'
             tooltipFormatter={value => `${value} Guilds`}
             tooltipLabel={'Guilds'}
-            color={'rgb(168, 85, 247)'}
-            height={400}
           />
         )}
 
         {activeStatBlock === 'Users' && (
           <Graph
-            id='dashboard-users'
+            color={'rgb(168, 85, 247)'}
             data={data.users || []}
+            height={400}
+            id='dashboard-users'
             tooltipFormatter={value => `${value} Users`}
             tooltipLabel={'Users'}
-            color={'rgb(168, 85, 247)'}
-            height={400}
           />
         )}
 
         {activeStatBlock === 'Bots' && (
           <Graph
-            id='dashboard-bots'
+            color={'rgb(168, 85, 247)'}
             data={data.bots || []}
+            height={400}
+            id='dashboard-bots'
             tooltipFormatter={value => `${value} Bots`}
             tooltipLabel={'Bots'}
-            color={'rgb(168, 85, 247)'}
-            height={400}
           />
         )}
       </div>

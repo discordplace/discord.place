@@ -1,6 +1,6 @@
 const User = require('@/schemas/User');
-const axios = require('axios');
 const decrypt = require('@/utils/encryption/decrypt');
+const axios = require('axios');
 
 async function getUserGuilds(userId) {
   const userData = await User.findOne({ id: userId });

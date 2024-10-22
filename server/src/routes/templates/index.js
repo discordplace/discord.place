@@ -1,14 +1,14 @@
-const categoriesValidation = require('@/utils/validations/templates/categories');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
-const { body, matchedData } = require('express-validator');
-const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Template = require('@/schemas/Template');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
-const Discord = require('discord.js');
-const fetchTemplateDetails = require('@/utils/templates/fetchTemplateDetails');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const fetchTemplateDetails = require('@/utils/templates/fetchTemplateDetails');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const categoriesValidation = require('@/utils/validations/templates/categories');
+const bodyParser = require('body-parser');
+const Discord = require('discord.js');
+const { body, matchedData } = require('express-validator');
 
 module.exports = {
   post: [
@@ -17,7 +17,7 @@ module.exports = {
     bodyParser.json(),
     body('id')
       .isString().withMessage('ID should be a string.')
-      .isLength({ min: 12, max: 12 }).withMessage('ID must be 12 characters.'),
+      .isLength({ max: 12, min: 12 }).withMessage('ID must be 12 characters.'),
     body('name')
       .isString().withMessage('Name should be a string.')
       .trim()
@@ -25,13 +25,13 @@ module.exports = {
     body('description')
       .isString().withMessage('Description should be a string.')
       .trim()
-      .isLength({ min: config.templateDescriptionMinLength, max: config.templateDescriptionMaxLength }).withMessage(`Description must be between ${config.templateDescriptionMinLength} and ${config.templateDescriptionMaxLength} characters.`),
+      .isLength({ max: config.templateDescriptionMaxLength, min: config.templateDescriptionMinLength }).withMessage(`Description must be between ${config.templateDescriptionMinLength} and ${config.templateDescriptionMaxLength} characters.`),
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
     validateRequest,
     async (request, response) => {
-      const { id, name, description, categories } = matchedData(request);
+      const { categories, description, id, name } = matchedData(request);
 
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'TEMPLATES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create templates.', 403);
@@ -45,17 +45,17 @@ module.exports = {
       if (!templateDetails) return response.sendError('Invalid template ID.', 400);
 
       const template = new Template({
-        id,
+        approved: false,
+        categories,
         data: templateDetails.serialized_source_guild,
+        description,
+        id,
+        name,
         user: {
           id: request.user.id,
           username: request.user.username
         },
-        name,
-        description,
-        categories,
-        uses: 0,
-        approved: false
+        uses: 0
       });
 
       const validationError = getValidationError(template);
@@ -68,17 +68,17 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setTitle('New Template Submitted')
-          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
+          .setAuthor({ iconURL: requestUser.displayAvatarURL(), name: requestUser.username })
           .setFields([
             {
+              inline: true,
               name: 'Template',
-              value: `${name} (ID: ${id})`,
-              inline: true
+              value: `${name} (ID: ${id})`
             },
             {
+              inline: true,
               name: 'Description',
-              value: description,
-              inline: true
+              value: description
             }
           ])
           .setTimestamp()
@@ -95,7 +95,7 @@ module.exports = {
           )
       ];
 
-      client.channels.cache.get(config.templateQueueChannelId).send({ embeds, components });
+      client.channels.cache.get(config.templateQueueChannelId).send({ components, embeds });
 
       return response.json(template);
     }

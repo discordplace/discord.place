@@ -1,63 +1,63 @@
 import { create } from 'zustand';
 
 const useGeneralStore = create(set => ({
-  createQuarantineModal: {
-    step: 0,
-    setStep: step => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, step } })),
-    type: null,
-    setType: type => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, type } })),
-    value: '',
-    setValue: value => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, value } })),
-    restriction: null,
-    setRestriction: restriction => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, restriction } })),
-    reason: '',
-    setReason: reason => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, reason } })),
-    time: '',
-    setTime: time => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, time } }))
+  createLinkModal: {
+    destinationURL: '',
+    name: '',
+    setDestinationURL: destinationURL => set(state => ({ createLinkModal: { ...state.createLinkModal, destinationURL } })),
+    setName: name => set(state => ({ createLinkModal: { ...state.createLinkModal, name } }))
   },
   createProfileModal: {
     preferredHost: 'discord.place/p',
     setPreferredHost: preferredHost => set(state => ({ createProfileModal: { ...state.createProfileModal, preferredHost } })),
-    slug: '',
-    setSlug: slug => set(state => ({ createProfileModal: { ...state.createProfileModal, slug } }))
+    setSlug: slug => set(state => ({ createProfileModal: { ...state.createProfileModal, slug } })),
+    slug: ''
   },
-  uploadEmojiToDiscordModal: {
-    selectedGuildId: '',
-    setSelectedGuildId: selectedGuildId => set(state => ({ uploadEmojiToDiscordModal: { ...state.uploadEmojiToDiscordModal, selectedGuildId } })),
-    selectedEmojiURL: '',
-    setSelectedEmojiURL: selectedEmojiURL => set(state => ({ uploadEmojiToDiscordModal: { ...state.uploadEmojiToDiscordModal, selectedEmojiURL } }))
+  createQuarantineModal: {
+    reason: '',
+    restriction: null,
+    setReason: reason => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, reason } })),
+    setRestriction: restriction => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, restriction } })),
+    setStep: step => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, step } })),
+    setTime: time => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, time } })),
+    setType: type => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, type } })),
+    setValue: value => set(state => ({ createQuarantineModal: { ...state.createQuarantineModal, value } })),
+    step: 0,
+    time: '',
+    type: null,
+    value: ''
   },
-  uploadSoundToDiscordModal: {
-    selectedGuildId: '',
-    setSelectedGuildId: selectedGuildId => set(state => ({ uploadSoundToDiscordModal: { ...state.uploadSoundToDiscordModal, selectedGuildId } })),
-    selectedSoundId: '',
-    setSelectedSoundId: selectedSoundId => set(state => ({ uploadSoundToDiscordModal: { ...state.uploadSoundToDiscordModal, selectedSoundId } }))
+  header: {
+    hoveringHeaderTab: null,
+    lastMouseOut: 0,
+    setHoveringHeaderTab: hoveringHeaderTab => set(state => ({ header: { ...state.header, hoveringHeaderTab } })),
+    setLastMouseOut: lastMouseOut => set(state => ({ header: { ...state.header, lastMouseOut } }))
   },
-  createLinkModal: {
-    name: '',
-    setName: name => set(state => ({ createLinkModal: { ...state.createLinkModal, name } })),
-    destinationURL: '',
-    setDestinationURL: destinationURL => set(state => ({ createLinkModal: { ...state.createLinkModal, destinationURL } }))
-  },
-  sounds: {
-    currentlyPlaying: '',
-    setCurrentlyPlaying: soundId => set(state => ({ sounds: { ...state.sounds, currentlyPlaying: soundId } })),
-    volume: 1,
-    setVolume: volume => set(state => ({ sounds: { ...state.sounds, volume } }))
-  },
-  showFullPageLoading: true,
-  setShowFullPageLoading: showFullPageLoading => set({ showFullPageLoading }),
-  showReportableAreas: false,
-  setShowReportableAreas: showReportableAreas => set({ showReportableAreas }),
   reportAreaModal: {
     reason: '',
     setReason: reason => set(state => ({ reportAreaModal: { ...state.reportAreaModal, reason } }))
   },
-  header: {
-    hoveringHeaderTab: null,
-    setHoveringHeaderTab: hoveringHeaderTab => set(state => ({ header: { ...state.header, hoveringHeaderTab } })),
-    lastMouseOut: 0,
-    setLastMouseOut: lastMouseOut => set(state => ({ header: { ...state.header, lastMouseOut } }))
+  setShowFullPageLoading: showFullPageLoading => set({ showFullPageLoading }),
+  setShowReportableAreas: showReportableAreas => set({ showReportableAreas }),
+  showFullPageLoading: true,
+  showReportableAreas: false,
+  sounds: {
+    currentlyPlaying: '',
+    setCurrentlyPlaying: soundId => set(state => ({ sounds: { ...state.sounds, currentlyPlaying: soundId } })),
+    setVolume: volume => set(state => ({ sounds: { ...state.sounds, volume } })),
+    volume: 1
+  },
+  uploadEmojiToDiscordModal: {
+    selectedEmojiURL: '',
+    selectedGuildId: '',
+    setSelectedEmojiURL: selectedEmojiURL => set(state => ({ uploadEmojiToDiscordModal: { ...state.uploadEmojiToDiscordModal, selectedEmojiURL } })),
+    setSelectedGuildId: selectedGuildId => set(state => ({ uploadEmojiToDiscordModal: { ...state.uploadEmojiToDiscordModal, selectedGuildId } }))
+  },
+  uploadSoundToDiscordModal: {
+    selectedGuildId: '',
+    selectedSoundId: '',
+    setSelectedGuildId: selectedGuildId => set(state => ({ uploadSoundToDiscordModal: { ...state.uploadSoundToDiscordModal, selectedGuildId } })),
+    setSelectedSoundId: selectedSoundId => set(state => ({ uploadSoundToDiscordModal: { ...state.uploadSoundToDiscordModal, selectedSoundId } }))
   }
 }));
 

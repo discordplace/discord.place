@@ -1,18 +1,17 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
-const idValidation = require('@/validations/emojis/id');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-
-const { S3Client, DeleteObjectsCommand } = require('@aws-sdk/client-s3');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const idValidation = require('@/validations/emojis/id');
+const { DeleteObjectsCommand, S3Client } = require('@aws-sdk/client-s3');
+const { matchedData, param } = require('express-validator');
 const S3 = new S3Client({
-  region: process.env.S3_REGION,
-  endpoint: process.env.S3_ENDPOINT,
   credentials: {
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
-  }
+  },
+  endpoint: process.env.S3_ENDPOINT,
+  region: process.env.S3_REGION
 });
 
 module.exports = {

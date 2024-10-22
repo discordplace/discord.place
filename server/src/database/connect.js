@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
 const createMongoBackup = require('@/utils/createMongoBackup');
 const { CronJob } = require('cron');
+const mongoose = require('mongoose');
 
 module.exports = function connectDatabase(url, options = {}) {
   if (!url) throw new Error('Missing database URL.');

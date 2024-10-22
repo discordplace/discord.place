@@ -1,14 +1,13 @@
-import getTheme from '@/lib/request/themes/getTheme';
-import { redirect } from 'next/navigation';
 import Content from '@/app/(themes)/themes/[id]/content';
+import getTheme from '@/lib/request/themes/getTheme';
 import getThemeMetadata from '@/lib/request/themes/getThemeMetadata';
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata({ params }) {
   const metadata = await getThemeMetadata(params.id).catch(error => error);
   if (typeof metadata === 'string') return;
 
   return {
-    title: 'Theme',
     keywords: [
       metadata.colors.primary,
       metadata.colors.secondary,
@@ -20,16 +19,17 @@ export async function generateMetadata({ params }) {
       `discord ${metadata.colors.secondary} theme`
     ],
     openGraph: {
-      title: 'Discord Place - Theme',
-      url: `/themes/${params.id}`,
       images: [
         {
+          height: 630,
           url: '/og.png',
-          width: 1200,
-          height: 630
+          width: 1200
         }
-      ]
-    }
+      ],
+      title: 'Discord Place - Theme',
+      url: `/themes/${params.id}`
+    },
+    title: 'Theme'
   };
 }
 

@@ -1,8 +1,8 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { matchedData, param } = require('express-validator');
 
 module.exports = {
   delete: [
@@ -18,7 +18,7 @@ module.exports = {
 
       const { id, review_id } = matchedData(request);
 
-      const review = await Review.findOne({ 'server.id': id, _id: review_id });
+      const review = await Review.findOne({ _id: review_id, 'server.id': id });
       if (!review) return response.sendError('Review not found.', 404);
 
       await review.deleteOne();

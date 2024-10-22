@@ -1,21 +1,21 @@
 'use client';
 
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import cn from '@/lib/cn';
 import useAuthStore from '@/stores/auth';
 import { colord, extend } from 'colord';
-import mixPlugin from 'colord/plugins/mix';
 import a11yPlugin from 'colord/plugins/a11y';
-import cn from '@/lib/cn';
-import Link from 'next/link';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import mixPlugin from 'colord/plugins/mix';
 import Image from 'next/image';
+import Link from 'next/link';
 
 extend([
   mixPlugin,
   a11yPlugin
 ]);
 
-export default function ThemeCard({ id, primaryColor, secondaryColor, className }) {
+export default function ThemeCard({ className, id, primaryColor, secondaryColor }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
 
@@ -39,45 +39,45 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
         'hover:opacity-80 transition-all rounded-lg select-none w-full h-max p-0.5',
         className
       )}
+      href={`/themes/${id}`}
       style={{
         background: `linear-gradient(${primaryColor}, ${secondaryColor})`
       }}
-      href={`/themes/${id}`}
     >
       <div className='flex size-full flex-col rounded-lg bg-black/50'>
         {loggedIn && user.banner ? (
           <UserBanner
-            id={user.id}
-            hash={user.banner}
             className='h-[60px] w-full rounded-t-lg object-cover'
-            width={200}
+            hash={user.banner}
             height={60}
+            id={user.id}
+            width={200}
           />
         ) : (
           <Image
-            className='h-[60px] w-full rounded-t-lg object-cover'
-            src='/og-black.png'
             alt='Placeholder Banner'
-            width={200}
+            className='h-[60px] w-full rounded-t-lg object-cover'
             height={60}
+            src='/og-black.png'
+            width={200}
           />
         )}
 
         {loggedIn ? (
           <UserAvatar
-            id={user.id}
-            hash={user.avatar}
             className='-mt-8 ml-3 size-[56px] rounded-full shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]'
-            width={64}
+            hash={user.avatar}
             height={64}
+            id={user.id}
+            width={64}
           />
         ) : (
           <Image
-            className='-mt-8 ml-3 size-[56px] rounded-full shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]'
-            src='https://cdn.discordapp.com/embed/avatars/1.png'
             alt='Placeholder Avatar'
-            width={64}
+            className='-mt-8 ml-3 size-[56px] rounded-full shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]'
             height={64}
+            src='https://cdn.discordapp.com/embed/avatars/1.png'
+            width={64}
           />
         )}
 
@@ -105,12 +105,12 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
               <div className='flex size-max gap-x-0.5 rounded-md border border-white/[0.085] bg-black/20 px-1 py-0.5'>
                 {badges.map((badge, index) => (
                   <Image
-                    key={`theme-${primaryColor}-${secondaryColor}-badge-${index}`}
-                    className='size-[14px] rounded'
-                    src={badge}
                     alt='Badge'
-                    width={20}
+                    className='size-[14px] rounded'
                     height={20}
+                    key={`theme-${primaryColor}-${secondaryColor}-badge-${index}`}
+                    src={badge}
+                    width={20}
                   />
                 ))}
               </div>

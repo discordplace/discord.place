@@ -8,7 +8,7 @@ function encrypt(text, secret) {
   const encrypted = Buffer.concat([cipher.update(text, 'utf-8'), cipher.final()]);
   const tag = cipher.getAuthTag();
 
-  return { iv: iv.toString('hex'), encryptedText: encrypted.toString('hex'), tag: tag.toString('hex') };
+  return { encryptedText: encrypted.toString('hex'), iv: iv.toString('hex'), tag: tag.toString('hex') };
 }
 
 module.exports = encrypt;

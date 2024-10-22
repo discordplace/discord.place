@@ -2,28 +2,28 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const BotVoteTimeoutSchema = new Schema({
-  user: {
+  bot: {
+    discriminator: {
+      required: true,
+      type: String
+    },
     id: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     },
     username: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     }
   },
-  bot: {
+  user: {
     id: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     },
     username: {
-      type: String,
-      required: true
-    },
-    discriminator: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     }
   }
 }, {

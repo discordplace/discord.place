@@ -2,18 +2,18 @@ import { FiArrowRightCircle } from 'react-icons/fi';
 
 export default function Blog({ data }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0px' }}>
+    <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0px' }}>
       <h1
         style={{
+          alignItems: 'center',
+          display: 'flex',
           fontSize: '64px',
           fontWeight: 700,
-          display: 'flex',
-          alignItems: 'center',
           gap: '2px',
-          whiteSpace: 'nowrap',
+          maxWidth: '1100px',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
-          maxWidth: '1100px'
+          whiteSpace: 'nowrap'
         }}
       >
         {data.name}
@@ -21,17 +21,17 @@ export default function Blog({ data }) {
 
       <p
         style={{
+          color: 'rgba(153, 153, 153)',
+          display: '-webkit-box',
           fontSize: '24px',
           fontWeight: 500,
-          textAlign: 'center',
-          textWrap: 'pretty',
-          color: 'rgba(153, 153, 153)',
-          maxWidth: '800px',
-          lineHeight: '1.5',
           lineClamp: 2,
-          display: '-webkit-box',
+          lineHeight: '1.5',
+          maxWidth: '800px',
           overflow: 'hidden',
+          textAlign: 'center',
           textOverflow: 'ellipsis',
+          textWrap: 'pretty',
           WebkitBoxOrient: 'vertical',
           WebkitLineClamp: 2
         }}
@@ -41,18 +41,18 @@ export default function Blog({ data }) {
 
       <div
         style={{
-          display: 'flex',
           alignItems: 'center',
-          gap: '24px',
           color: 'rgba(153, 153, 153)',
+          display: 'flex',
+          gap: '24px',
           marginTop: '24px'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <FiArrowRightCircle size={32} color='#43b459' style={{ transform: 'rotate(-45deg)' }} />
+        <div style={{ alignItems: 'center', display: 'flex', gap: '12px' }}>
+          <FiArrowRightCircle color='#43b459' size={32} style={{ transform: 'rotate(-45deg)' }} />
 
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
-            {new Date(data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+            {new Date(data.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
           </span>
         </div>
       </div>

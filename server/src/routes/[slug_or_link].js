@@ -1,6 +1,6 @@
+const Link = require('@/schemas/Link');
 const Profile = require('@/schemas/Profile');
 const User = require('@/schemas/User');
-const Link = require('@/schemas/Link');
 
 module.exports = {
   get: [

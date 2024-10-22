@@ -1,21 +1,21 @@
 'use client';
 
+import NewTheme from '@/app/(account)/account/components/Content/Tabs/MyThemes/NewTheme';
+import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import ErrorState from '@/app/components/ErrorState';
+import config from '@/config';
 import useAccountStore from '@/stores/account';
+import { t } from '@/stores/language';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
-import { LuPlus } from 'react-icons/lu';
 import { BsQuestionCircleFill } from 'react-icons/bs';
-import config from '@/config';
-import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
-import NewTheme from '@/app/(account)/account/components/Content/Tabs/MyThemes/NewTheme';
+import { LuPlus } from 'react-icons/lu';
 import { useShallow } from 'zustand/react/shallow';
-import { t } from '@/stores/language';
 
 export default function MyThemes() {
-  const { data, currentlyAddingTheme, setCurrentlyAddingTheme } = useAccountStore(useShallow(state => ({
-    data: state.data,
+  const { currentlyAddingTheme, data, setCurrentlyAddingTheme } = useAccountStore(useShallow(state => ({
     currentlyAddingTheme: state.currentlyAddingTheme,
+    data: state.data,
     setCurrentlyAddingTheme: state.setCurrentlyAddingTheme
   })));
 
@@ -50,21 +50,21 @@ export default function MyThemes() {
           {(data.themes || []).length === 0 ? (
             <div className='mt-20 max-w-[800px]'>
               <ErrorState
+                message={t('accountPage.tabs.myThemes.sections.listedThemes.emptyErrorState.message')}
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
                     {t('accountPage.tabs.myThemes.sections.listedThemes.emptyErrorState.title')}
                   </div>
                 }
-                message={t('accountPage.tabs.myThemes.sections.listedThemes.emptyErrorState.message')}
               />
             </div>
           ) : (
             <div className='mt-2 grid max-w-[800px] grid-cols-1 gap-4 mobile:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3'>
               {data.themes.map(theme => (
                 <ThemeCard
-                  key={theme.id}
                   id={theme.id}
+                  key={theme.id}
                   primaryColor={theme.colors.primary}
                   secondaryColor={theme.colors.secondary}
                 />

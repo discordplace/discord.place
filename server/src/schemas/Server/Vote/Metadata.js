@@ -3,16 +3,16 @@ const Schema = mongoose.Schema;
 
 const MetadataSchema = new Schema({
   documentId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true
-  },
-  userId: {
-    type: String,
-    required: true
+    required: true,
+    type: mongoose.Schema.Types.ObjectId
   },
   guildId: {
-    type: String,
-    required: true
+    required: true,
+    type: String
+  },
+  userId: {
+    required: true,
+    type: String
   }
 });
 

@@ -3,10 +3,10 @@ module.exports = {
     const data = client.guilds.cache.map(guild => guild).sort((a, b) => b.memberCount - a.memberCount)
       .slice(0, 5)
       .map(guild => ({
+        icon_url: guild.iconURL({ format: 'png', size: 32 }),
         id: guild.id,
-        name: guild.name,
         member_count: guild.memberCount,
-        icon_url: guild.iconURL({ format: 'png', size: 32 })
+        name: guild.name
       }));
 
     return response.json({

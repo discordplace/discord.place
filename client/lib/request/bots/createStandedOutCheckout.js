@@ -7,7 +7,7 @@ export default function createStandedOutCheckout(botId) {
     const url = `${config.api.url}/payments/checkout`;
 
     try {
-      const response = await axios.post(url, { id: 'standed-out', botId }, { withCredentials: true });
+      const response = await axios.post(url, { botId, id: 'standed-out' }, { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

@@ -1,23 +1,23 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
-const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
-const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
+const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
-const Theme = require('@/schemas/Theme');
-const Template = require('@/schemas/Template');
-const VoteReminder = require('@/schemas/Server/Vote/Reminder');
+const Link = require('@/schemas/Link');
 const Reminder = require('@/schemas/Reminder');
+const Server = require('@/schemas/Server');
+const VoteReminder = require('@/schemas/Server/Vote/Reminder');
+const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
+const Sound = require('@/schemas/Sound');
+const Template = require('@/schemas/Template');
+const Theme = require('@/schemas/Theme');
+const Deny = require('@/src/schemas/Bot/Deny');
+const getUserHashes = require('@/utils/getUserHashes');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateRequest = require('@/utils/middlewares/validateRequest');
+const requirementChecks = require('@/utils/servers/requirementChecks');
+const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
-const Deny = require('@/src/schemas/Bot/Deny');
-const Sound = require('@/schemas/Sound');
-const Link = require('@/schemas/Link');
-const getUserHashes = require('@/utils/getUserHashes');
-const requirementChecks = require('@/utils/servers/requirementChecks');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const validKeys = [
   'timeouts',
@@ -65,19 +65,19 @@ module.exports = {
       const [botTimeouts, serverTimeouts, links, bots, emojis, emojiPacks, templates, sounds, themes, reminders, voteReminders] = await Promise.all(bulkOperations);
 
       responseData.counts = {
-        timeouts: botTimeouts + serverTimeouts,
+        bots,
+        emojis: emojis + emojiPacks,
+        links,
+        reminders: reminders + voteReminders,
         servers: (await Promise.all(ownedGuilds.map(async guild => {
           const foundServer = await Server.exists({ id: guild.id });
 
           return foundServer ? 1 : 0;
         }))).reduce((a, b) => a + b, 0),
-        links,
-        bots,
-        emojis: emojis + emojiPacks,
         sounds,
-        themes,
         templates,
-        reminders: reminders + voteReminders
+        themes,
+        timeouts: botTimeouts + serverTimeouts
       };
 
       if (keys.includes('timeouts')) {
@@ -90,21 +90,21 @@ module.exports = {
               const hashes = await getUserHashes(timeout.bot.id);
 
               return {
-                id: timeout.bot.id,
-                username: timeout.bot.username,
-                discriminator: timeout.bot.discriminator,
                 avatar: hashes.avatar,
-                createdAt: timeout.createdAt
+                createdAt: timeout.createdAt,
+                discriminator: timeout.bot.discriminator,
+                id: timeout.bot.id,
+                username: timeout.bot.username
               };
             })),
             servers: serverTimeouts.map(timeout => {
               const guild = client.guilds.cache.get(timeout.guild.id);
 
               return {
-                id: timeout.guild.id,
-                name: timeout.guild.name,
+                createdAt: timeout.createdAt,
                 icon: guild?.icon || null,
-                createdAt: timeout.createdAt
+                id: timeout.guild.id,
+                name: timeout.guild.name
               };
             })
           }
@@ -121,23 +121,23 @@ module.exports = {
         const servers = await Server.find();
 
         const data = ownedGuilds.map(guild => {
-          const { id, name, icon, memberCount } = guild;
+          const { icon, id, memberCount, name } = guild;
 
           return {
-            id,
-            name,
             icon,
+            id,
             is_created: servers.some(server => server.id === id),
             members: memberCount,
-            requirements: config.serverListingRequirements.map(({ id: reqId, name: reqName, description }) => {
+            name,
+            requirements: config.serverListingRequirements.map(({ description, id: reqId, name: reqName }) => {
               const checkFunction = requirementChecks[reqId];
               const isMet = checkFunction ? checkFunction(guild) : false;
 
               return {
-                id: reqId,
-                name: reqName,
                 description,
-                met: isMet
+                id: reqId,
+                met: isMet,
+                name: reqName
               };
             })
           };
@@ -157,17 +157,17 @@ module.exports = {
 
             return {
               bot: {
-                id: deny.bot.id,
-                username: deny.bot.username,
+                avatar: botHashes.avatar,
                 discriminator: deny.bot.discriminator,
-                avatar: botHashes.avatar
+                id: deny.bot.id,
+                username: deny.bot.username
               },
+              createdAt: deny.createdAt,
+              reason: deny.reason,
               reviewer: {
                 id: deny.reviewer.id,
                 username: deny.reviewer.username
-              },
-              reason: deny.reason,
-              createdAt: deny.createdAt
+              }
             };
           }))
         });
@@ -178,8 +178,8 @@ module.exports = {
         const emojiPacks = await EmojiPack.find({ 'user.id': request.user.id });
 
         Object.assign(responseData, {
-          emojis: await Promise.all(emojis.map(async emoji => await emoji.toPubliclySafe())),
-          emojiPacks: await Promise.all(emojiPacks.map(async pack => await pack.toPubliclySafe()))
+          emojiPacks: await Promise.all(emojiPacks.map(async pack => await pack.toPubliclySafe())),
+          emojis: await Promise.all(emojis.map(async emoji => await emoji.toPubliclySafe()))
         });
       }
 
@@ -218,13 +218,13 @@ module.exports = {
 
             return {
               _id: reminder._id,
-              id: reminder.id,
+              createdAt: reminder.createdAt,
               guild: {
+                icon: guild?.icon || null,
                 id: reminder.guild.id,
-                name: reminder.guild.name,
-                icon: guild?.icon || null
+                name: reminder.guild.name
               },
-              createdAt: reminder.createdAt
+              id: reminder.id
             };
           })
         });

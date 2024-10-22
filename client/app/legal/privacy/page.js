@@ -2,10 +2,10 @@ import config from '@/config';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Privacy Policy',
   openGraph: {
     title: 'Discord Place - Privacy Policy'
-  }
+  },
+  title: 'Privacy Policy'
 };
 
 export default function Page() {
@@ -68,15 +68,15 @@ export default function Page() {
 
       <div className='mt-2 flex gap-x-2'>
         <Link
-          href={config.supportInviteUrl}
           className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'
+          href={config.supportInviteUrl}
         >
           Discord Server
         </Link>
 
         <Link
-          href='mailto:legal@discord.place'
           className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'
+          href='mailto:legal@discord.place'
         >
           Email
         </Link>

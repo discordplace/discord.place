@@ -7,7 +7,7 @@ export default function setWebhookSettings(id, webhookURL, webhookToken) {
     const url = `${config.api.url}/servers/${id}/webhook-settings`;
 
     try {
-      await axios.patch(url, { url: webhookURL, token: webhookToken }, { withCredentials: true });
+      await axios.patch(url, { token: webhookToken, url: webhookURL }, { withCredentials: true });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

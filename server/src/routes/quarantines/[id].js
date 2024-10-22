@@ -1,9 +1,9 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const Quarantine = require('@/schemas/Quarantine');
-const { param, matchedData } = require('express-validator');
-const Discord = require('discord.js');
-const useRateLimiter = require('@/utils/useRateLimiter');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const Discord = require('discord.js');
+const { matchedData, param } = require('express-validator');
 
 module.exports = {
   delete: [
@@ -29,27 +29,27 @@ module.exports = {
               .setTitle('Quarantine Entry Removed')
               .setFields([
                 {
+                  inline: true,
                   name: 'Entry Target',
-                  value: `${quarantine.type === 'USER_ID' ? quarantine.user.id : quarantine.guild.id} (${quarantine.type})`,
-                  inline: true
+                  value: `${quarantine.type === 'USER_ID' ? quarantine.user.id : quarantine.guild.id} (${quarantine.type})`
                 },
                 {
+                  inline: true,
                   name: 'Reason',
-                  value: quarantine.reason,
-                  inline: true
+                  value: quarantine.reason
                 },
                 {
+                  inline: true,
                   name: 'Created By',
-                  value: `<@${quarantine.created_by.id}>`,
-                  inline: true
+                  value: `<@${quarantine.created_by.id}>`
                 },
                 {
+                  inline: true,
                   name: 'Restriction',
-                  value: quarantine.restriction,
-                  inline: true
+                  value: quarantine.restriction
                 }
               ])
-              .setFooter({ text: `${requestUser.username} | Would expire at: ${quarantine.expire_at ? new Date(quarantine.expire_at).toLocaleString() : 'Never'}`, iconURL: requestUser.displayAvatarURL() })
+              .setFooter({ iconURL: requestUser.displayAvatarURL(), text: `${requestUser.username} | Would expire at: ${quarantine.expire_at ? new Date(quarantine.expire_at).toLocaleString() : 'Never'}` })
           ];
 
           client.channels.cache.get(config.quarantineLogsChannelId).send({ embeds });

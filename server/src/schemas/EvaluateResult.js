@@ -2,21 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const EvaluateResultSchema = new Schema({
-  id: {
-    type: String,
-    required: true
-  },
-  result: {
-    type: String,
-    required: true
+  executedCode: {
+    required: true,
+    type: String
   },
   hasError: {
-    type: Boolean,
-    required: true
+    required: true,
+    type: Boolean
   },
-  executedCode: {
-    type: String,
-    required: true
+  id: {
+    required: true,
+    type: String
+  },
+  result: {
+    required: true,
+    type: String
   }
 }, {
   timestamps: true

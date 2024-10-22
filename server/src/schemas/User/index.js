@@ -4,106 +4,106 @@ const Schema = mongoose.Schema;
 const decrypt = require('@/utils/encryption/decrypt');
 
 const UserSchema = new Schema({
-  id: {
-    type: String,
-    required: true
-  },
-  data: {
-    type: Object,
-    required: false
-  },
   acceptedPolicies: {
-    type: Boolean,
+    default: false,
     required: true,
-    default: false
-  },
-  email: {
-    type: String,
-    required: false
+    type: Boolean
   },
   accessToken: {
-    iv: {
-      type: String,
-      required: false
-    },
     encryptedText: {
-      type: String,
-      required: false
+      required: false,
+      type: String
+    },
+    iv: {
+      required: false,
+      type: String
     },
     tag: {
-      type: String,
-      required: false
+      required: false,
+      type: String
     }
+  },
+  data: {
+    required: false,
+    type: Object
+  },
+  email: {
+    required: false,
+    type: String
+  },
+  id: {
+    required: true,
+    type: String
   },
   lastLoginAt: {
-    type: Date,
-    required: false
+    required: false,
+    type: Date
   },
   lastLogoutAt: {
-    type: Date,
-    required: false
-  },
-  subscription: {
-    id: {
-      type: String,
-      required: false
-    },
-    orderId: {
-      type: String,
-      required: false
-    },
-    productId: {
-      type: String,
-      required: false
-    },
-    planId: {
-      type: Number,
-      required: false
-    },
-    createdAt: {
-      type: Date,
-      required: false
-    },
-    expiresAt: {
-      type: Date,
-      required: false
-    }
+    required: false,
+    type: Date
   },
   oldSubscriptions: [
     {
-      id: {
-        type: String,
-        required: false
-      },
-      orderId: {
-        type: String,
-        required: false
-      },
-      productId: {
-        type: String,
-        required: false
-      },
-      planId: {
-        type: Number,
-        required: false
-      },
       createdAt: {
-        type: Date,
-        required: false
+        required: false,
+        type: Date
       },
       expiredAt: {
-        type: Date,
-        required: false
+        required: false,
+        type: Date
+      },
+      id: {
+        required: false,
+        type: String
+      },
+      orderId: {
+        required: false,
+        type: String
+      },
+      planId: {
+        required: false,
+        type: Number
+      },
+      productId: {
+        required: false,
+        type: String
       }
     }
-  ]
+  ],
+  subscription: {
+    createdAt: {
+      required: false,
+      type: Date
+    },
+    expiresAt: {
+      required: false,
+      type: Date
+    },
+    id: {
+      required: false,
+      type: String
+    },
+    orderId: {
+      required: false,
+      type: String
+    },
+    planId: {
+      required: false,
+      type: Number
+    },
+    productId: {
+      required: false,
+      type: String
+    }
+  }
 }, {
-  timestamps: true,
   methods: {
     getDecryptedAccessToken() {
       return decrypt(this.accessToken, process.env.USER_TOKEN_ENCRYPT_SECRET);
     }
-  }
+  },
+  timestamps: true
 });
 
 module.exports = mongoose.model('User', UserSchema);

@@ -2,10 +2,10 @@ import config from '@/config';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Cookie Policy',
   openGraph: {
     title: 'Discord Place - Cookie Policy'
-  }
+  },
+  title: 'Cookie Policy'
 };
 
 export default function ContentPolicy() {
@@ -71,10 +71,10 @@ export default function ContentPolicy() {
       </p>
 
       <div className='mt-2 flex gap-x-2'>
-        <Link href={config.supportInviteUrl} className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'>
+        <Link className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70' href={config.supportInviteUrl}>
           Discord Server
         </Link>
-        <Link href='mailto:legal@discord.place' className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'>
+        <Link className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70' href='mailto:legal@discord.place'>
           Email
         </Link>
       </div>

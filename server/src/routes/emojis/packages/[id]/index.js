@@ -1,10 +1,10 @@
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
-const idValidation = require('@/validations/emojis/id');
-const shuffle = require('lodash.shuffle');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const idValidation = require('@/validations/emojis/id');
+const { matchedData, param } = require('express-validator');
+const shuffle = require('lodash.shuffle');
 
 module.exports = {
   get: [
@@ -20,21 +20,21 @@ module.exports = {
       if (!emojiPack) return response.sendError('Emoji pack not found.', 404);
 
       const permissions = {
+        canApprove: request.user && request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDelete: request.user && (
           request.user.id == emojiPack.user.id ||
           (request.member && config.permissions.canDeleteEmojisRoles.some(role => request.member.roles.cache.has(role)))
-        ),
-        canApprove: request.user && request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId))
+        )
       };
 
       if (!emojiPack.approved && !permissions.canApprove && !permissions.canDelete) return response.sendError('You can\'t view this emoji until confirmed.', 404);
 
       const similarEmojiPacks = await EmojiPack.find({
-        categories: {
-          $in: emojiPack.categories
-        },
         _id: {
           $ne: emojiPack._id
+        },
+        categories: {
+          $in: emojiPack.categories
         }
       });
       const shuffledEmojiPacks = shuffle(similarEmojiPacks);

@@ -27,6 +27,10 @@ module.exports = class Commands {
     logger.info(`Fetched ${this.commands.size} commands.`);
   }
 
+  pushToDiscord(body, route) {
+    return client.rest.put(route, { body });
+  }
+
   registerCommands() {
     logger.info('Started refreshing application (/) commands.');
 
@@ -67,9 +71,5 @@ module.exports = class Commands {
         reject(error);
       }
     });
-  }
-
-  pushToDiscord(body, route) {
-    return client.rest.put(route, { body });
   }
 };

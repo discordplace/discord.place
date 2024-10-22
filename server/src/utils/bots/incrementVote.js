@@ -2,8 +2,8 @@ const Bot = require('@/schemas/Bot');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const User = require('@/schemas/User');
-const Discord = require('discord.js');
 const axios = require('axios');
+const Discord = require('discord.js');
 
 async function incrementVote(botId, userId, botWebhook) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -12,7 +12,7 @@ async function incrementVote(botId, userId, botWebhook) {
   const bot = await Bot.findOne({ id: botId });
   if (!bot) throw new Error(`Bot ${botId} not found.`);
 
-  const timeout = await VoteTimeout.findOne({ 'user.id': userId, 'bot.id': botId });
+  const timeout = await VoteTimeout.findOne({ 'bot.id': botId, 'user.id': userId });
   if (timeout) throw new Error(`User ${userId} has already voted for bot ${botId}.`);
 
   const ownerHasPremium = await User.exists({ id: bot.owner.id, subscription: { $ne: null } });
@@ -24,17 +24,17 @@ async function incrementVote(botId, userId, botWebhook) {
   if (bot.voters.some(voter => voter.user.id === userId)) {
     const updateQuery = {
       $inc: {
-        votes: incrementCount,
-        'voters.$[element].vote': 1
+        'voters.$[element].vote': 1,
+        votes: incrementCount
       },
       $set: {
-        'voters.$[element].lastVote': Date.now(),
         last_voter: {
+          date: Date.now(),
           user: {
             id: userId
-          },
-          date: Date.now()
-        }
+          }
+        },
+        'voters.$[element].lastVote': Date.now()
       }
     };
 
@@ -59,10 +59,10 @@ async function incrementVote(botId, userId, botWebhook) {
       },
       $set: {
         last_voter: {
+          date: Date.now(),
           user: {
             id: userId
-          },
-          date: Date.now()
+          }
         }
       }
     };
@@ -71,20 +71,20 @@ async function incrementVote(botId, userId, botWebhook) {
   }
 
   await new VoteTimeout({
+    bot: {
+      discriminator: botUser.discriminator,
+      id: botId,
+      username: botUser.username
+    },
     user: {
       id: userId,
       username: user.username
-    },
-    bot: {
-      id: botId,
-      username: botUser.username,
-      discriminator: botUser.discriminator
     }
   }).save();
 
   const embed = new Discord.EmbedBuilder()
     .setColor(Discord.Colors.Purple)
-    .setAuthor({ name: `${botUser.tag} has received a vote!`, iconURL: botUser.displayAvatarURL() })
+    .setAuthor({ iconURL: botUser.displayAvatarURL(), name: `${botUser.tag} has received a vote!` })
     .setFields([
       {
         name: 'Given by',
@@ -107,18 +107,18 @@ async function incrementVote(botId, userId, botWebhook) {
     if (botWebhook.token) headers['Authorization'] = botWebhook.token;
 
     const response = await axios
-      .post(botWebhook.url, { bot: bot.id, user: user.id }, { headers, timeout: 2000, responseType: 'text' })
+      .post(botWebhook.url, { bot: bot.id, user: user.id }, { headers, responseType: 'text', timeout: 2000 })
       .catch(error => error.response);
 
     const data = {
-      url: botWebhook.url,
-      response_status_code: response.status,
+      created_at: new Date(),
       request_body: {
         bot: bot.id,
         user: user.id
       },
       response_body: response.data,
-      created_at: new Date()
+      response_status_code: response.status,
+      url: botWebhook.url
     };
 
     if (!bot.webhook.records) bot.webhook.records = [];

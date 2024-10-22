@@ -1,10 +1,10 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
-const { param, body, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const getValidationError = require('@/utils/getValidationError');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const bodyParser = require('body-parser');
+const { body, matchedData, param } = require('express-validator');
 
 module.exports = {
   delete: [
@@ -31,7 +31,7 @@ module.exports = {
 
       if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
 
-      bot.webhook = { url: null, token: null };
+      bot.webhook = { token: null, url: null };
 
       await bot.save();
 
@@ -51,11 +51,11 @@ module.exports = {
     body('token')
       .optional({ values: 'null' })
       .isString().withMessage('Token should be a string.')
-      .isLength({ min: 1, max: config.botWebhookTokenMaxLength }).withMessage(`Token must be between 1 and ${config.botWebhookTokenMaxLength} characters.`)
+      .isLength({ max: config.botWebhookTokenMaxLength, min: 1 }).withMessage(`Token must be between 1 and ${config.botWebhookTokenMaxLength} characters.`)
       .trim(),
     validateRequest,
     async (request, response) => {
-      const { id, url, token } = matchedData(request);
+      const { id, token, url } = matchedData(request);
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
@@ -72,13 +72,13 @@ module.exports = {
       if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
 
       if ((!url || url === '') && (!token || token === '')) {
-        bot.webhook = { url: null, token: null };
+        bot.webhook = { token: null, url: null };
 
         await bot.save();
       } else {
         if (!url && token) return response.sendError('If you provide a Webhook Token, you should also provide a Webhook URL.', 400);
 
-        bot.webhook = { url, token: token || null };
+        bot.webhook = { token: token || null, url };
       }
 
       const validationError = getValidationError(bot);

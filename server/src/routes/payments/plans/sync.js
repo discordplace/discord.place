@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
+const useRateLimiter = require('@/utils/useRateLimiter');
 
 module.exports = {
   post: [

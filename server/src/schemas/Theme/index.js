@@ -5,72 +5,72 @@ const categoriesValidation = require('@/validations/themes/categories');
 const colorValidation = require('@/validations/themes/color');
 
 const ThemeSchema = new Schema({
-  id: {
-    type: String,
-    required: true
+  approved: {
+    default: false,
+    type: Boolean
   },
-  publisher: {
-    id: {
-      type: String,
-      required: true
-    },
-    username: {
-      type: String,
-      required: true
+  categories: {
+    required: true,
+    type: [
+      {
+        enum: config.themeCategories,
+        type: String
+      }
+    ],
+    validate: {
+      message: ({ reason }) => reason.message,
+      validator: categoriesValidation
     }
   },
   colors: {
     primary: {
-      type: String,
       required: true,
+      type: String,
       validate: {
-        validator: colorValidation,
-        message: ({ reason }) => reason.message
+        message: ({ reason }) => reason.message,
+        validator: colorValidation
       }
     },
     secondary: {
-      type: String,
       required: true,
+      type: String,
       validate: {
-        validator: colorValidation,
-        message: ({ reason }) => reason.message
+        message: ({ reason }) => reason.message,
+        validator: colorValidation
       }
     }
   },
-  categories: {
-    type: [
-      {
-        type: String,
-        enum: config.themeCategories
-      }
-    ],
+  id: {
     required: true,
-    validate: {
-      validator: categoriesValidation,
-      message: ({ reason }) => reason.message
-    }
+    type: String
   },
-  approved: {
-    type: Boolean,
-    default: false
+  publisher: {
+    id: {
+      required: true,
+      type: String
+    },
+    username: {
+      required: true,
+      type: String
+    }
   }
 }, {
-  timestamps: true,
   methods: {
     toPubliclySafe() {
       return {
+        approved: this.approved,
+        categories: this.categories,
+        colors: this.colors,
+        createdAt: this.createdAt,
         id: this.id,
         publisher: {
           id: this.publisher.id,
           username: this.publisher.username
-        },
-        colors: this.colors,
-        categories: this.categories,
-        approved: this.approved,
-        createdAt: this.createdAt
+        }
       };
     }
-  }
+  },
+  timestamps: true
 });
 
 module.exports = mongoose.model('Theme', ThemeSchema);

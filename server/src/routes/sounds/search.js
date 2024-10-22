@@ -1,7 +1,7 @@
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { query } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { query } = require('express-validator');
 
 module.exports = {
   get: [
@@ -10,7 +10,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Search query must be a string.')
       .trim()
-      .isLength({ min: 1, max: 128 }).withMessage('Search query must be between 1 and 128 characters.'),
+      .isLength({ max: 128, min: 1 }).withMessage('Search query must be between 1 and 128 characters.'),
     query('category')
       .optional()
       .isString().withMessage('Category must be a string.')
@@ -23,7 +23,7 @@ module.exports = {
       .isIn(['Downloads', 'Likes', 'Newest', 'Oldest']).withMessage('Sort must be one of: Downloads, Likes, Newest, Oldest.'),
     query('limit')
       .optional()
-      .isInt({ min: 1, max: 9 }).withMessage('Limit must be an integer between 1 and 9.')
+      .isInt({ max: 9, min: 1 }).withMessage('Limit must be an integer between 1 and 9.')
       .toInt(),
     query('page')
       .optional()
@@ -31,15 +31,15 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { query, category = 'All', sort = 'Newest', limit = 9, page = 1 } = request.query;
+      const { category = 'All', limit = 9, page = 1, query, sort = 'Newest' } = request.query;
       const skip = (page - 1) * limit;
-      const baseFilter = category !== 'All' ? { categories: { $in: [category] }, approved: true } : { approved: true };
+      const baseFilter = category !== 'All' ? { approved: true, categories: { $in: [category] } } : { approved: true };
       const findQuery = query ? {
         ...baseFilter,
         $or: [
-          { id: { $regex: query, $options: 'i' } },
-          { 'publisher.id': { $regex: query, $options: 'i' } },
-          { name: { $regex: query, $options: 'i' } }
+          { id: { $options: 'i', $regex: query } },
+          { 'publisher.id': { $options: 'i', $regex: query } },
+          { name: { $options: 'i', $regex: query } }
         ]
       } : baseFilter;
 
@@ -68,11 +68,11 @@ module.exports = {
       const maxReached = skip + sounds.length >= total;
 
       return response.json({
-        maxReached,
-        total,
-        page,
         limit,
-        sounds: sounds.map(sound => sound.toPubliclySafe({ isLiked: request.user ? sound.likers.includes(request.user.id) : false }))
+        maxReached,
+        page,
+        sounds: sounds.map(sound => sound.toPubliclySafe({ isLiked: request.user ? sound.likers.includes(request.user.id) : false })),
+        total
       });
     }
   ]

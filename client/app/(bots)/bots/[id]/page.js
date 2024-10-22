@@ -1,28 +1,28 @@
-import getBotMetadata from '@/lib/request/bots/getBotMetadata';
-import getBot from '@/lib/request/bots/getBot';
 import Content from '@/app/(bots)/bots/[id]/content';
-import { redirect } from 'next/navigation';
 import config from '@/config';
+import getBot from '@/lib/request/bots/getBot';
+import getBotMetadata from '@/lib/request/bots/getBotMetadata';
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata({ params }) {
   const metadata = await getBotMetadata(params.id).catch(error => error);
   if (typeof metadata === 'string') return;
 
   return {
-    title: `Bot ${metadata.username}`,
     description: metadata.short_description,
     openGraph: {
-      title: `Discord Place - ${metadata.username} Bot`,
       description: metadata.short_description,
-      url: `${config.baseUrl}/bots/${params.id}`,
       images: [
         {
-          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'bot', metadata }))}`,
-          width: 1200,
-          height: 630
+          height: 630,
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'bot' }))}`,
+          width: 1200
         }
-      ]
-    }
+      ],
+      title: `Discord Place - ${metadata.username} Bot`,
+      url: `${config.baseUrl}/bots/${params.id}`
+    },
+    title: `Bot ${metadata.username}`
   };
 }
 

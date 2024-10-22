@@ -1,147 +1,147 @@
 'use client';
 
+import CodeBlock from '@/components/code-block';
 import { useGeneralStore } from '@/stores/general';
 import cn from '@/utils/cn';
 import { useState } from 'react';
 import AnimateHeight from 'react-animate-height';
-import { FiChevronDown } from 'react-icons/fi';
-import CodeBlock from '@/components/code-block';
 import { BiCodeCurly } from 'react-icons/bi';
+import { FiChevronDown } from 'react-icons/fi';
 
 const endpoints = [
   {
-    id: 'update-bot-stats',
-    name: 'Update Bot Stats',
-    endpoint: 'api.discord.place/bots/{id}/stats',
-    params: [
-      {
-        key: 'id',
-        type: 'string',
-        description: 'Bot ID that you want to update the stats.'
-      }
-    ],
-    headers: [
-      {
-        key: 'Authorization',
-        type: 'string',
-        description: 'Your bot token that you can get from the dashboard.'
-      },
-      {
-        key: 'Content-Type',
-        type: 'string',
-        description: 'application/json'
-      }
-    ],
     body: {
       command_count: 'number',
       server_count: 'number'
     },
-    responses: [
-      {
-        code: 200,
-        name: 'OK',
-        description: 'Successfully updated the bot stats.',
-        body: {
-          success: true
-        }
-      },
-      {
-        code: 400,
-        name: 'Bad Request',
-        description: 'Invalid request body.',
-        body: {
-          success: false,
-          error: 'string',
-          status: 400
-        }
-      },
-      {
-        code: 401,
-        name: 'Unauthorized',
-        description: 'Unauthorized request.',
-        body: {
-          success: false,
-          error: 'string',
-          status: 401
-        }
-      },
-      {
-        code: 404,
-        name: 'Not Found',
-        description: 'Bot not found.',
-        body: {
-          success: false,
-          error: 'string',
-          status: 404
-        }
-      }
-    ],
     body_information: 'Note that, even though you set the server count, this value can only be at most 50 more or less than the actual server count of your bot.',
-    method: 'PATCH',
-    description: 'Using this endpoint, you can update the command & server value that appear on the bot page. We recommend you to do this every 24 hours and keep the page updated with this endpoint.'
-  },
-  {
-    id: 'fetch-vote-status',
-    name: 'Fetch Vote Status',
-    endpoint: 'api.discord.place/bots/{id}/voters/{user_id}',
-    params: [
-      {
-        key: 'id',
-        type: 'string',
-        description: 'Bot ID that you want to check the vote status.'
-      },
-      {
-        key: 'user_id',
-        type: 'string',
-        description: 'User ID that you want to check the vote status.'
-      }
-    ],
+    description: 'Using this endpoint, you can update the command & server value that appear on the bot page. We recommend you to do this every 24 hours and keep the page updated with this endpoint.',
+    endpoint: 'api.discord.place/bots/{id}/stats',
     headers: [
       {
+        description: 'Your bot token that you can get from the dashboard.',
         key: 'Authorization',
-        type: 'string',
-        description: 'Your bot token that you can get from the dashboard.'
+        type: 'string'
       },
       {
+        description: 'application/json',
         key: 'Content-Type',
-        type: 'string',
-        description: 'application/json'
+        type: 'string'
+      }
+    ],
+    id: 'update-bot-stats',
+    method: 'PATCH',
+    name: 'Update Bot Stats',
+    params: [
+      {
+        description: 'Bot ID that you want to update the stats.',
+        key: 'id',
+        type: 'string'
       }
     ],
     responses: [
       {
+        body: {
+          success: true
+        },
         code: 200,
-        name: 'OK',
-        description: 'Successfully fetched the vote status. If the user has voted in the last 24 hours, the lastVote field will be the timestamp of the last vote. Otherwise, it will be null.',
-        body: {
-          voted: true,
-          vote: 'number',
-          lastVote: 1729462649777
-        }
+        description: 'Successfully updated the bot stats.',
+        name: 'OK'
       },
       {
+        body: {
+          error: 'string',
+          status: 400,
+          success: false
+        },
+        code: 400,
+        description: 'Invalid request body.',
+        name: 'Bad Request'
+      },
+      {
+        body: {
+          error: 'string',
+          status: 401,
+          success: false
+        },
         code: 401,
-        name: 'Unauthorized',
         description: 'Unauthorized request.',
-        body: {
-          success: false,
-          error: 'string',
-          status: 401
-        }
+        name: 'Unauthorized'
       },
       {
-        code: 404,
-        name: 'Not Found',
-        description: 'Bot not found.',
         body: {
-          success: false,
           error: 'string',
-          status: 404
-        }
+          status: 404,
+          success: false
+        },
+        code: 404,
+        description: 'Bot not found.',
+        name: 'Not Found'
+      }
+    ]
+  },
+  {
+    description: 'Using this endpoint, check if user has voted for your bot in the last 24 hours.',
+    endpoint: 'api.discord.place/bots/{id}/voters/{user_id}',
+    headers: [
+      {
+        description: 'Your bot token that you can get from the dashboard.',
+        key: 'Authorization',
+        type: 'string'
+      },
+      {
+        description: 'application/json',
+        key: 'Content-Type',
+        type: 'string'
       }
     ],
+    id: 'fetch-vote-status',
     method: 'GET',
-    description: 'Using this endpoint, check if user has voted for your bot in the last 24 hours.'
+    name: 'Fetch Vote Status',
+    params: [
+      {
+        description: 'Bot ID that you want to check the vote status.',
+        key: 'id',
+        type: 'string'
+      },
+      {
+        description: 'User ID that you want to check the vote status.',
+        key: 'user_id',
+        type: 'string'
+      }
+    ],
+    responses: [
+      {
+        body: {
+          lastVote: 1729462649777,
+          vote: 'number',
+          voted: true
+        },
+        code: 200,
+        description: 'Successfully fetched the vote status. If the user has voted in the last 24 hours, the lastVote field will be the timestamp of the last vote. Otherwise, it will be null.',
+        name: 'OK'
+      },
+      {
+        body: {
+          error: 'string',
+          status: 401,
+          success: false
+        },
+        code: 401,
+        description: 'Unauthorized request.',
+        name: 'Unauthorized'
+      },
+      {
+        body: {
+          error: 'string',
+          status: 404,
+          success: false
+        },
+        code: 404,
+        description: 'Bot not found.',
+        name: 'Not Found'
+      }
+    ]
   }
 ];
 
@@ -199,9 +199,9 @@ export default function Endpoint({ id }) {
       </div>
 
       <AnimateHeight
+        animateOpacity={true}
         duration={500}
         height={activeEndpoint === id ? 'auto' : 0}
-        animateOpacity={true}
       >
         <div className='not-prose pb-4 pt-0.5'>
           <div className='flex flex-col gap-y-2 rounded-3xl bg-secondary p-4'>
@@ -223,7 +223,7 @@ export default function Endpoint({ id }) {
               </h2>
 
               {data.params.map(param => (
-                <div key={param.key} className='flex gap-2'>
+                <div className='flex gap-2' key={param.key}>
                   <div className='text-xs text-primary'>
                     {param.key}
 
@@ -241,7 +241,7 @@ export default function Endpoint({ id }) {
               </h2>
 
               {data.headers.map(header => (
-                <div key={header.key} className='flex flex-wrap gap-2'>
+                <div className='flex flex-wrap gap-2' key={header.key}>
                   <div className='text-xs text-primary'>
                     {header.key}
 
@@ -264,7 +264,7 @@ export default function Endpoint({ id }) {
                 </p>
 
                 {Object.entries(data.body).map(([key, value]) => (
-                  <div key={key} className='flex gap-2'>
+                  <div className='flex gap-2' key={key}>
                     <div className='text-xs text-primary'>
                       {key}
 
@@ -293,11 +293,11 @@ export default function Endpoint({ id }) {
               <div className='mt-2 flex flex-col gap-2 sm:flex-row'>
                 {data.responses.map(response => (
                   <div
-                    key={response.code}
                     className={cn(
                       'text-xs w-full font-semibold text-center py-2 rounded-2xl border border-primary select-none',
                       activeResponseTab === response.code ? 'bg-quaternary border-[rgba(var(--bg-quaternary))] text-primary' : 'text-tertiary hover:text-secondary cursor-pointer hover:bg-tertiary'
                     )}
+                    key={response.code}
                     onClick={() => setActiveResponseTab(response.code)}
                   >
                     {response.code} {response.name}
@@ -307,10 +307,10 @@ export default function Endpoint({ id }) {
 
               {activeResponseTab && (
                 <CodeBlock
+                  dimmed={true}
                   FileIcon={<BiCodeCurly />}
                   fileName='response.json'
                   language='json'
-                  dimmed={true}
                 >
                   {JSON.stringify(data.responses.find(response => response.code === activeResponseTab).body, null, 2)}
                 </CodeBlock>

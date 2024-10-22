@@ -3,7 +3,7 @@ import cn from '@/lib/cn';
 import useDashboardStore from '@/stores/dashboard';
 import Link from 'next/link';
 
-export default function BlockItem({ id, name, icon, href, onClick, badge, disabled }) {
+export default function BlockItem({ badge, disabled, href, icon, id, name, onClick }) {
   const isCollapsed = useDashboardStore(state => state.isCollapsed);
   const activeTab = useDashboardStore(state => state.activeTab);
   const setActiveTab = useDashboardStore(state => state.setActiveTab);
@@ -28,9 +28,9 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
           disabled && 'opacity-50 pointer-events-none',
           loading && 'pointer-events-none'
         )}
+        href={href}
         key={id}
         onClick={() => onClick ? onClick() : !href && setActiveTab(id)}
-        href={href}
         target='_blank'
       >
         <IconComponent className='size-4' />

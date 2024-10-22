@@ -1,23 +1,24 @@
 'use client';
 
-import config from '@/config';
-import cn from '@/lib/cn';
-import { FaCirclePlus } from 'react-icons/fa6';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import getData from '@/lib/request/auth/getData';
-import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import HashServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import { BsGithub } from 'react-icons/bs';
-import Input from '../Input';
-import { TbLoader } from 'react-icons/tb';
-import { IoCheckmarkCircle } from 'react-icons/io5';
+import config from '@/config';
+import cn from '@/lib/cn';
+import getData from '@/lib/request/auth/getData';
 import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
 import { t } from '@/stores/language';
+import { useEffect, useState } from 'react';
+import { BsGithub } from 'react-icons/bs';
+import { FaCirclePlus } from 'react-icons/fa6';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
+import { IoCheckmarkCircle } from 'react-icons/io5';
+import { TbLoader } from 'react-icons/tb';
+import { toast } from 'sonner';
 
-export default function Other({ botId, categories, setCategories, canEditSupportServer, supportServerId, setSupportServerId, githubRepository: currentGithubRepository }) {
+import Input from '../Input';
+
+export default function Other({ botId, canEditSupportServer, categories, githubRepository: currentGithubRepository, setCategories, setSupportServerId, supportServerId }) {
   const [ownedServers, setOwnedServers] = useState([]);
   const [ownedServersLoading, setOwnedServersLoading] = useState(true);
 
@@ -49,6 +50,11 @@ export default function Other({ botId, categories, setCategories, canEditSupport
     setSavingGithubRepository(true);
 
     toast.promise(editBot(botId, [{ key: 'github_repository', value: githubRepository }]), {
+      error: error => {
+        setSavingGithubRepository(false);
+
+        return error;
+      },
       loading: t('botManagePage.other.githubRepository.toast.savingRepository'),
       success: () => {
         setSavingGithubRepository(false);
@@ -56,11 +62,6 @@ export default function Other({ botId, categories, setCategories, canEditSupport
         revalidateBot(botId);
 
         return t('botManagePage.other.githubRepository.toast.repositorySaved');
-      },
-      error: error => {
-        setSavingGithubRepository(false);
-
-        return error;
       }
     });
   }
@@ -68,7 +69,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
   return (
     <div className='flex w-full flex-col gap-y-4'>
       <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
-        <FaCirclePlus size={24} className='text-purple-500' />
+        <FaCirclePlus className='text-purple-500' size={24} />
         {t('botManagePage.other.title')}
       </h3>
 
@@ -91,11 +92,11 @@ export default function Other({ botId, categories, setCategories, canEditSupport
           <div className='mt-2 flex flex-wrap items-center gap-2'>
             {config.botCategories.map(category => (
               <button
-                key={category}
                 className={cn(
                   'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-tertiary',
                   categories.includes(category) && 'bg-quaternary'
                 )}
+                key={category}
                 onClick={() => {
                   if (categories.includes(category)) setCategories(oldCategories => oldCategories.filter(oldCategory => oldCategory !== category));
                   else setCategories(oldCategories => [...oldCategories, category]);
@@ -131,7 +132,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                 disabled={githubRepository === defaultGithubRepository || savingGithubRepository}
                 onClick={saveGithubRepository}
               >
-                {savingGithubRepository ? <TbLoader size={18} className='animate-spin' /> : <IoCheckmarkCircle size={18} />}
+                {savingGithubRepository ? <TbLoader className='animate-spin' size={18} /> : <IoCheckmarkCircle size={18} />}
                 {t('buttons.saveRepository')}
               </button>
             </div>
@@ -144,11 +145,11 @@ export default function Other({ botId, categories, setCategories, canEditSupport
 
             <Input
               className='-mt-2 pl-[6.525rem] focus-visible:text-secondary'
+              onChange={event => event.target.value === '' ? setGithubRepository(undefined) : setGithubRepository(event.target.value)}
+              onKeyUp={event => event.key === 'Enter' && saveGithubRepository()}
+              placeholder={t('botManagePage.other.githubRepository.usernameRepositoryInputPlaceholder')}
               type='text'
               value={githubRepository}
-              onChange={event => event.target.value === '' ? setGithubRepository(undefined) : setGithubRepository(event.target.value)}
-              placeholder={t('botManagePage.other.githubRepository.usernameRepositoryInputPlaceholder')}
-              onKeyUp={event => event.key === 'Enter' && saveGithubRepository()}
             />
           </div>
         </div>
@@ -172,7 +173,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
             <div className='mt-2 flex w-full flex-wrap gap-4'>
               {ownedServersLoading ? (
                 new Array(9).fill().map((_, index) => (
-                  <div key={index} className='size-24 animate-pulse rounded-xl bg-secondary' />
+                  <div className='size-24 animate-pulse rounded-xl bg-secondary' key={index} />
                 ))
               ) : (
                 ownedServers.length === 0 ? (
@@ -188,21 +189,21 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                     >
                       {server.icon ? (
                         <HashServerIcon
+                          className='cursor-pointer rounded-xl hover:opacity-70'
+                          hash={server.icon}
+                          height={96}
                           id={server.id}
                           name={server.name}
-                          hash={server.icon}
                           size={96}
-                          className='cursor-pointer rounded-xl hover:opacity-70'
                           width={96}
-                          height={96}
                         />
                       ) : (
                         <ServerIcon
-                          width={96}
-                          height={96}
-                          name={server.name}
-                          icon_url={server.icon_url}
                           className='cursor-pointer rounded-xl hover:opacity-70'
+                          height={96}
+                          icon_url={server.icon_url}
+                          name={server.name}
+                          width={96}
                         />
                       )}
 

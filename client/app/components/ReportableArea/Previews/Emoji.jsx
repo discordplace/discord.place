@@ -9,26 +9,26 @@ export default function EmojiPreview({ metadata }) {
           <div className='flex max-w-[90px] flex-wrap gap-1'>
             {metadata.emoji_ids.map(packagedEmoji => (
               <Image
+                alt={`Emoji ${metadata.name}`}
+                className='rounded-md bg-quaternary'
+                height={24}
                 key={packagedEmoji.id}
                 src={config.getEmojiURL(`packages/${metadata.id}/${packagedEmoji.id}`, packagedEmoji.animated)}
-                alt={`Emoji ${metadata.name}`}
                 width={24}
-                height={24}
-                className='rounded-md bg-quaternary'
               />
             ))}
 
             {new Array(9 - metadata.emoji_ids.length).fill(0).map((_, index) => (
-              <div key={index} className='size-6 rounded-md bg-quaternary' />
+              <div className='size-6 rounded-md bg-quaternary' key={index} />
             ))}
           </div>
         ) : (
           <Image
-            src={config.getEmojiURL(metadata.id, metadata.animated)}
             alt={`Emoji ${metadata.name}`}
-            width={64}
-            height={64}
             className='object-contain'
+            height={64}
+            src={config.getEmojiURL(metadata.id, metadata.animated)}
+            width={64}
           />
         )}
 

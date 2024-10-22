@@ -3,36 +3,36 @@ const Schema = mongoose.Schema;
 
 const PlanSchema = new Schema({
   id: {
-    type: Number,
-    required: true
-  },
-  storeId: {
-    type: Number,
-    required: true
-  },
-  variantId: {
-    type: Number,
-    required: true
+    required: true,
+    type: Number
   },
   name: {
-    type: String,
-    required: true
-  },
-  slug: {
-    type: String,
-    required: true
-  },
-  status: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   },
   price: {
-    type: Number,
-    required: true
+    required: true,
+    type: Number
   },
   price_formatted: {
-    type: String,
-    required: true
+    required: true,
+    type: String
+  },
+  slug: {
+    required: true,
+    type: String
+  },
+  status: {
+    required: true,
+    type: String
+  },
+  storeId: {
+    required: true,
+    type: Number
+  },
+  variantId: {
+    required: true,
+    type: Number
   }
 });
 

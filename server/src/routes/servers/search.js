@@ -1,10 +1,10 @@
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { query, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
-const User = require('@/schemas/User');
 const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const { StandedOutServer } = require('@/schemas/StandedOut');
+const User = require('@/schemas/User');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { matchedData, query } = require('express-validator');
 
 module.exports = {
   get: [
@@ -13,7 +13,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Search query must be a string.')
       .trim()
-      .isLength({ min: 1, max: 128 }).withMessage('Search query must be between 1 and 128 characters.'),
+      .isLength({ max: 128, min: 1 }).withMessage('Search query must be between 1 and 128 characters.'),
     query('category')
       .optional()
       .isString().withMessage('Category must be a string.')
@@ -26,7 +26,7 @@ module.exports = {
       .isIn(['Votes', 'LatestVoted', 'Members', 'Newest', 'Oldest', 'Boosts']).withMessage('Sort must be one of: Votes, LatestVoted, Members, Newest, Oldest, Boosts.'),
     query('limit')
       .optional()
-      .isInt({ min: 1, max: 12 }).withMessage('Limit must be an integer between 1 and 12.')
+      .isInt({ max: 12, min: 1 }).withMessage('Limit must be an integer between 1 and 12.')
       .toInt(),
     query('page')
       .optional()
@@ -34,16 +34,16 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = matchedData(request);
+      const { category = 'All', limit = 12, page = 1, query, sort = 'Votes' } = matchedData(request);
       const skip = (page - 1) * limit;
       const baseFilter = {
-        id: { $in: Array.from(client.guilds.cache.filter(guild => guild.available).keys()) },
-        category: category === 'All' ? { $in: config.serverCategories } : category
+        category: category === 'All' ? { $in: config.serverCategories } : category,
+        id: { $in: Array.from(client.guilds.cache.filter(guild => guild.available).keys()) }
       };
       const findQuery = query ? {
         ...baseFilter,
         $or: [
-          { description: { $regex: query, $options: 'i' } },
+          { description: { $options: 'i', $regex: query } },
           { keywords: { $in: query.split(' ') } },
           { id: { $in: Array.from(client.guilds.cache.filter(guild => guild.name.toLowerCase().includes(query.toLowerCase())).keys()) } }
         ]
@@ -63,12 +63,12 @@ module.exports = {
         if (bStandedOutData) return 1;
 
         switch (sort) {
-          case 'Votes': return b.votes - a.votes;
+          case 'Boosts': return bGuild.premiumSubscriptionCount - aGuild.premiumSubscriptionCount;
           case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
           case 'Members': return bGuild.memberCount - aGuild.memberCount;
           case 'Newest': return bGuild.joinedTimestamp - aGuild.joinedTimestamp;
           case 'Oldest': return aGuild.joinedTimestamp - bGuild.joinedTimestamp;
-          case 'Boosts': return bGuild.premiumSubscriptionCount - aGuild.premiumSubscriptionCount;
+          case 'Votes': return b.votes - a.votes;
         }
       }).slice(skip, skip + limit);
       const total = await Server.countDocuments(findQuery);
@@ -85,47 +85,47 @@ module.exports = {
       const voteTripleEnabledServerIds = await ServerVoteTripleEnabled.find({ id: { $in: sortedServers.map(server => server.id) } });
 
       return response.json({
-        maxReached,
-        total,
-        page,
         limit,
+        maxReached,
+        page,
         servers: sortedServers.map(server => {
           const guild = client.guilds.cache.get(server.id);
           if (guild) {
             const data = {
-              members: guild.memberCount,
-              latest_voted_at: server.last_voter?.date || null
+              latest_voted_at: server.last_voter?.date || null,
+              members: guild.memberCount
             };
 
             switch (sort) {
-              case 'Votes': data.votes = server.votes; break;
               case 'Boosts': data.boosts = guild.premiumSubscriptionCount; break;
+              case 'Votes': data.votes = server.votes; break;
             }
 
             return {
-              id: guild.id,
-              name: guild.name,
-              icon: guild.icon,
-              icon_url: guild.iconURL(),
               banner: guild.banner,
               banner_url: guild.bannerURL({ extension: 'png', size: 512 }),
               category: server.category,
-              description: server.description,
-              premium: premiumUserIds.some(premium => premium.id === guild.ownerId),
-              joined_at: guild.joinedTimestamp,
               data,
-              vote_triple_enabled: voteTripleEnabledServerIds.find(({ id }) => id === guild.id) ? {
-                created_at: voteTripleEnabledServerIds.find(({ id }) => id === guild.id).createdAt
-              } : null,
+              description: server.description,
+              icon: guild.icon,
+              icon_url: guild.iconURL(),
+              id: guild.id,
+              joined_at: guild.joinedTimestamp,
+              name: guild.name,
+              owner: {
+                id: guild.ownerId
+              },
+              premium: premiumUserIds.some(premium => premium.id === guild.ownerId),
               standed_out: standedOutServerIds.find(({ identifier }) => identifier === guild.id) ? {
                 created_at: standedOutServerIds.find(({ identifier }) => identifier === guild.id).createdAt
               } : null,
-              owner: {
-                id: guild.ownerId
-              }
+              vote_triple_enabled: voteTripleEnabledServerIds.find(({ id }) => id === guild.id) ? {
+                created_at: voteTripleEnabledServerIds.find(({ id }) => id === guild.id).createdAt
+              } : null
             };
           }
-        })
+        }),
+        total
       });
     }
   ]

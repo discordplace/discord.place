@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ServerLogChannelSchema = new Schema({
-  guildId: {
-    type: String,
-    required: true
-  },
   channelId: {
-    type: String,
-    required: true
+    required: true,
+    type: String
+  },
+  guildId: {
+    required: true,
+    type: String
   }
 }, {
   timestamps: true

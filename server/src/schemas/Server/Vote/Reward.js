@@ -4,19 +4,19 @@ const Schema = mongoose.Schema;
 const ServerVoteRewardSchema = new Schema({
   guild: {
     id: {
-      type: String,
-      required: true
-    }
-  },
-  role: {
-    id: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     }
   },
   required_votes: {
-    type: Number,
-    required: true
+    required: true,
+    type: Number
+  },
+  role: {
+    id: {
+      required: true,
+      type: String
+    }
   }
 }, {
   timestamps: true

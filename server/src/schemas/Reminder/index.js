@@ -5,19 +5,19 @@ const MetadataModel = require('@/schemas/Reminder/Metadata');
 const Discord = require('discord.js');
 
 const ReminderSchema = new Schema({
-  user: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
   about: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   },
   expire_at: {
-    type: Date,
-    default: null
+    default: null,
+    type: Date
+  },
+  user: {
+    id: {
+      required: true,
+      type: String
+    }
   }
 }, {
   timestamps: true
@@ -28,7 +28,7 @@ ReminderSchema.index({ expire_at: 1 }, { expireAfterSeconds: 0 });
 const Model = mongoose.model('Reminder', ReminderSchema);
 
 Model.watch().on('change', async data => {
-  const { operationType, documentKey, fullDocument } = data;
+  const { documentKey, fullDocument, operationType } = data;
   if (operationType === 'delete') {
     const metadata = await MetadataModel.findOne({ documentId: documentKey._id });
     if (!metadata) return;
@@ -59,10 +59,10 @@ Model.watch().on('change', async data => {
 
   if (operationType === 'insert') {
     const metadata = new MetadataModel({
-      documentId: documentKey._id,
-      userId: fullDocument.user.id,
       about: fullDocument.about,
-      createdAt: fullDocument.createdAt
+      createdAt: fullDocument.createdAt,
+      documentId: documentKey._id,
+      userId: fullDocument.user.id
     });
 
     await metadata.save();

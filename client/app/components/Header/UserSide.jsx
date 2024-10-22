@@ -1,15 +1,15 @@
-import useAuthStore from '@/stores/auth';
-import Link from 'next/link';
-import config from '@/config';
-import { usePathname } from 'next/navigation';
-import cn from '@/lib/cn';
-import { useEffect, useState } from 'react';
-import { useWindowScroll } from 'react-use';
-import { BiLogOut } from 'react-icons/bi';
-import logout from '@/lib/request/auth/logout';
-import { toast } from 'sonner';
-import { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import config from '@/config';
+import cn from '@/lib/cn';
+import logout from '@/lib/request/auth/logout';
+import useAuthStore from '@/stores/auth';
+import { t } from '@/stores/language';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { BiLogOut } from 'react-icons/bi';
+import { useWindowScroll } from 'react-use';
+import { toast } from 'sonner';
 
 export default function UserSide({ className }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -28,14 +28,14 @@ export default function UserSide({ className }) {
 
   function logOut() {
     toast.promise(logout, {
+      error: error => `Failed to log out: ${error}`,
       loading: 'Logging out..',
       success: () => {
         setUser(null);
         setLoggedIn(false);
 
         return 'Logged out successfully';
-      },
-      error: error => `Failed to log out: ${error}`
+      }
     });
   }
 
@@ -58,17 +58,17 @@ export default function UserSide({ className }) {
 
           <Link
             className='pointer-events-auto flex items-center gap-x-2 rounded font-medium outline-none'
-            onClick={() => setOpen(!open)}
             href='/account'
+            onClick={() => setOpen(!open)}
           >
             <UserAvatar
-              id={user.id}
+              className='rounded-full bg-tertiary'
+              format='png'
               hash={user.avatar}
+              height={32}
+              id={user.id}
               size={32}
               width={32}
-              height={32}
-              format='png'
-              className='rounded-full bg-tertiary'
             />
           </Link>
         </>

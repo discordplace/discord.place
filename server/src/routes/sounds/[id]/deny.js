@@ -1,20 +1,19 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body } = require('express-validator');
 const Sound = require('@/schemas/Sound');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const idValidation = require('@/validations/sounds/id');
+const { DeleteObjectCommand, S3Client } = require('@aws-sdk/client-s3');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
-const idValidation = require('@/validations/sounds/id');
-const validateRequest = require('@/utils/middlewares/validateRequest');
-
-const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { body, matchedData, param } = require('express-validator');
 const S3 = new S3Client({
-  region: process.env.S3_REGION,
-  endpoint: process.env.S3_ENDPOINT,
   credentials: {
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
-  }
+  },
+  endpoint: process.env.S3_ENDPOINT,
+  region: process.env.S3_REGION
 });
 
 module.exports = {
@@ -63,7 +62,7 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setColor(Discord.Colors.Red)
-          .setAuthor({ name: `Sound Denied | ${sound.name}`, iconURL: publisher?.displayAvatarURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png' })
+          .setAuthor({ iconURL: publisher?.displayAvatarURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png', name: `Sound Denied | ${sound.name}` })
           .setTimestamp()
           .setFields([
             {

@@ -1,9 +1,9 @@
 'use client';
 
-import config from '@/config';
-import { useSearchParams } from 'next/navigation';
 import Square from '@/app/components/Background/Square';
+import config from '@/config';
 import { t } from '@/stores/language';
+import { useSearchParams } from 'next/navigation';
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <div className='relative z-0 flex h-svh w-full flex-col items-center justify-center px-8 sm:px-0'>
-      <Square column='5' row='5' transparentEffectDirection='leftRightBottomTop' blockColor='rgba(var(--bg-tertiary))' />
+      <Square blockColor='rgba(var(--bg-tertiary))' column='5' row='5' transparentEffectDirection='leftRightBottomTop' />
 
       <span className='rounded-lg bg-red-400/10 px-2 py-1 text-xs font-semibold uppercase text-red-400'>
         {t('errorPage.badge')}

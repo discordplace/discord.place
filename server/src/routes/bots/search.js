@@ -1,10 +1,10 @@
-const { query } = require('express-validator');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const categoriesValidation = require('@/validations/bots/categories');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const { StandedOutBot } = require('@/schemas/StandedOut');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const categoriesValidation = require('@/validations/bots/categories');
+const { query } = require('express-validator');
 
 module.exports = {
   get: [
@@ -13,7 +13,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Search query must be a string.')
       .trim()
-      .isLength({ min: 1, max: 128 }).withMessage('Search query must be between 1 and 128 characters.'),
+      .isLength({ max: 128, min: 1 }).withMessage('Search query must be between 1 and 128 characters.'),
     query('category')
       .optional()
       .isString().withMessage('Category must be a string.')
@@ -26,7 +26,7 @@ module.exports = {
       .isIn(['Votes', 'LatestVoted', 'Servers', 'Most Reviewed', 'Newest', 'Oldest']).withMessage('Sort must be one of: Votes, LatestVoted, Servers, Most Reviewed, Newest, Oldest.'),
     query('limit')
       .optional()
-      .isInt({ min: 1, max: 12 }).withMessage('Limit must be an integer between 1 and 12.')
+      .isInt({ max: 12, min: 1 }).withMessage('Limit must be an integer between 1 and 12.')
       .toInt(),
     query('page')
       .optional()
@@ -34,16 +34,16 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = request.query;
+      const { category = 'All', limit = 12, page = 1, query, sort = 'Votes' } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, verified: true } : { verified: true };
       const findQuery = query ? {
         ...baseFilter,
         $or: [
-          { id: { $regex: query, $options: 'i' } },
-          { 'owner.id': { $regex: query, $options: 'i' } },
-          { short_description: { $regex: query, $options: 'i' } },
-          { description: { $regex: query, $options: 'i' } }
+          { id: { $options: 'i', $regex: query } },
+          { 'owner.id': { $options: 'i', $regex: query } },
+          { short_description: { $options: 'i', $regex: query } },
+          { description: { $options: 'i', $regex: query } }
         ]
       } : baseFilter;
 
@@ -60,12 +60,12 @@ module.exports = {
         if (bStandedOutData) return 1;
 
         switch (sort) {
-          case 'Votes': return b.votes - a.votes;
           case 'LatestVoted': return new Date(b.last_voter?.date || 0).getTime() - new Date(a.last_voter?.date || 0).getTime();
-          case 'Servers': return b.server_count.value - a.server_count.value;
           case 'Most Reviewed': return reviews.filter(review => review.bot.id === b.id).length - reviews.filter(review => review.bot.id === a.id).length;
           case 'Newest': return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
           case 'Oldest': return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          case 'Servers': return b.server_count.value - a.server_count.value;
+          case 'Votes': return b.votes - a.votes;
         }
       }).slice(skip, skip + limit);
 
@@ -73,19 +73,19 @@ module.exports = {
       const maxReached = skip + foundBots.length >= total;
 
       return response.json({
-        maxReached,
-        total,
-        page,
-        limit,
         bots: await Promise.all(sortedBots.map(async bot => {
           const publiclySafeBot = await bot.toPubliclySafe();
 
           return {
             ...publiclySafeBot,
-            reviews: reviews.filter(review => review.bot.id === bot.id).length,
-            latest_voted_at: bot.last_voter?.date || null
+            latest_voted_at: bot.last_voter?.date || null,
+            reviews: reviews.filter(review => review.bot.id === bot.id).length
           };
-        }))
+        })),
+        limit,
+        maxReached,
+        page,
+        total
       });
     }
   ]

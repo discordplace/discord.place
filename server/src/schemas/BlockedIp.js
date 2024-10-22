@@ -14,12 +14,12 @@ const cloudflare = new CloudflareAPI({
 
 const BlockedIpSchema = new Schema({
   _id: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   },
   ip: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   }
 }, {
   timestamps: true
@@ -30,14 +30,14 @@ BlockedIpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 21600 });
 const Model = mongoose.model('BlockedIps', BlockedIpSchema);
 
 Model.watch().on('change', async data => {
-  const { operationType, fullDocument, documentKey } = data;
+  const { documentKey, fullDocument, operationType } = data;
   if (operationType === 'insert') {
     await cloudflare.rules.lists.items.create(CLOUDFLARE_BLOCK_IP_LIST_ID, {
       account_id: CLOUDFLARE_ACCOUNT_ID,
       body: [
         {
-          ip: fullDocument.ip,
-          comment: `Blocked by global rate limiter at ${new Date().toISOString()}.`
+          comment: `Blocked by global rate limiter at ${new Date().toISOString()}.`,
+          ip: fullDocument.ip
         }
       ]
     });

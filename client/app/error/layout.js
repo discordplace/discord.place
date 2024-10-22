@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+
 import FullPageLoading from '../components/FullPageLoading';
 
 export default function Layout({ children }) {

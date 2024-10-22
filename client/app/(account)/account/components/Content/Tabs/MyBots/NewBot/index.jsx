@@ -1,21 +1,21 @@
 'use client';
 
-import config from '@/config';
-import { MdChevronLeft } from 'react-icons/md';
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { toast } from 'sonner';
-import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
-import cn from '@/lib/cn';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import createBot from '@/lib/request/bots/createBot';
-import { useRouter } from 'next/navigation';
-import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';
-import { TbLoader } from 'react-icons/tb';
 import Markdown from '@/app/components/Markdown';
+import config from '@/config';
+import cn from '@/lib/cn';
+import confetti from '@/lib/lotties/confetti.json';
+import createBot from '@/lib/request/bots/createBot';
 import useAccountStore from '@/stores/account';
-import { useLocalStorage } from 'react-use';
 import { t } from '@/stores/language';
+import { useRouter } from 'next/navigation';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
+import { MdChevronLeft } from 'react-icons/md';
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+import { TbLoader } from 'react-icons/tb';
+import Lottie from 'react-lottie';
+import { useLocalStorage } from 'react-use';
+import { toast } from 'sonner';
 
 export default function NewBot() {
   const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
@@ -31,11 +31,11 @@ export default function NewBot() {
   const [botCategories, setBotCategories] = useState([]);
 
   const [localData, setLocalData] = useLocalStorage('bot-stored-data', {
-    botId: '',
-    botShortDescription: '',
+    botCategories: [],
     botDescription: '',
+    botId: '',
     botInviteUrl: '',
-    botCategories: []
+    botShortDescription: ''
   });
 
   useLayoutEffect(() => {
@@ -58,11 +58,11 @@ export default function NewBot() {
     if (botId === '' && botShortDescription === '' && botDescription === '' && botInviteUrl === '' && botCategories.length === 0) return;
 
     setLocalData({
-      botId,
-      botShortDescription,
+      botCategories,
       botDescription,
+      botId,
       botInviteUrl,
-      botCategories
+      botShortDescription
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,13 +74,18 @@ export default function NewBot() {
     setLoading(true);
 
     const botData = {
-      short_description: botShortDescription,
+      categories: botCategories,
       description: botDescription,
       invite_url: botInviteUrl,
-      categories: botCategories
+      short_description: botShortDescription
     };
 
     toast.promise(createBot(botId, botData), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.myBots.sections.addBot.toast.addingBot', { botId }),
       success: () => {
         setTimeout(() => {
@@ -97,11 +102,6 @@ export default function NewBot() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.myBots.sections.addBot.toast.botAdded', { botId });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -109,7 +109,7 @@ export default function NewBot() {
   return (
     <>
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
+        <Lottie height='100%' isStopped={!renderConfetti} options={{ animationData: confetti, autoplay: false, loop: false }} width='100%'/>
       </div>
 
       <div className='flex w-full max-w-[800px] flex-col justify-center gap-y-4'>
@@ -160,8 +160,8 @@ export default function NewBot() {
             <input
               className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
               maxLength={config.botShortDescriptionMaxLength}
-              value={botShortDescription}
               onChange={event => setBotShortDescription(event.target.value)}
+              value={botShortDescription}
             />
 
             <h2 className='mt-8 text-lg font-semibold'>
@@ -196,9 +196,9 @@ export default function NewBot() {
             ) : (
               <textarea
                 className='mt-4 block h-[250px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
-                value={botDescription}
-                onChange={event => setBotDescription(event.target.value)}
                 maxLength={config.botDescriptionMaxLength}
+                onChange={event => setBotDescription(event.target.value)}
+                value={botDescription}
               />
             )}
 
@@ -212,8 +212,8 @@ export default function NewBot() {
 
             <input
               className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
-              value={botInviteUrl}
               onChange={event => setBotInviteUrl(event.target.value)}
+              value={botInviteUrl}
             />
 
             <h2 className='mt-8 text-lg font-semibold'>
@@ -229,11 +229,11 @@ export default function NewBot() {
                 .filter(category => category !== 'All')
                 .map(category => (
                   <button
-                    key={category}
                     className={cn(
                       'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-quaternary',
                       botCategories.includes(category) && 'bg-quaternary'
                     )}
+                    key={category}
                     onClick={() => {
                       if (botCategories.includes(category)) setBotCategories(oldCategories => oldCategories.filter(oldCategory => oldCategory !== category));
                       else setBotCategories(oldCategories => [...oldCategories, category]);
@@ -277,6 +277,7 @@ export default function NewBot() {
               </button>
 
               <button className='flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
+                disabled={loading}
                 onClick={() => {
                   setBotId('');
                   setBotShortDescription('');
@@ -284,7 +285,6 @@ export default function NewBot() {
                   setBotCategories([]);
                   setCurrentlyAddingBot(false);
                 }}
-                disabled={loading}
               >
                 {t('buttons.cancel')}
               </button>

@@ -1,21 +1,22 @@
 'use client';
 
-import { Toaster } from 'sonner';
-import Header from '@/app/components/Header';
-import Footer from '@/app/components/Footer';
-import ThemeProvider from '@/app/components/Providers/Theme';
-import ProgressBarProvider from '@/app/components/Providers/ProgressBar';
-import ErrorBoundary from '@/app/components/Providers/Boundary/Error';
-import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
-import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
-import { Suspense, useEffect } from 'react';
+import Footer from '@/app/components/Footer';
+import Header from '@/app/components/Header';
+import ErrorBoundary from '@/app/components/Providers/Boundary/Error';
 import ModalProvider from '@/app/components/Providers/Modal';
+import ProgressBarProvider from '@/app/components/Providers/ProgressBar';
+import ReportButtonProvider from '@/app/components/Providers/ReportButton';
+import ThemeProvider from '@/app/components/Providers/Theme';
+import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
 import config from '@/config';
 import useGeneralStore from '@/stores/general';
-import FullPageLoading from './components/FullPageLoading';
 import useLanguageStore from '@/stores/language';
-import ReportButtonProvider from '@/app/components/Providers/ReportButton';
+import Script from 'next/script';
+import { Suspense, useEffect } from 'react';
+import { Toaster } from 'sonner';
+
+import FullPageLoading from './components/FullPageLoading';
 
 export default function RootLayoutContent({ children }) {
   const language = useLanguageStore(state => state.language);
@@ -31,10 +32,10 @@ export default function RootLayoutContent({ children }) {
   return (
     <section key={language}>
       <Script
+        data-domains={config.analytics.domains.join(',')}
+        data-website-id={config.analytics.websiteId}
         defer={true}
         src={config.analytics.script}
-        data-website-id={config.analytics.websiteId}
-        data-domains={config.analytics.domains.join(',')}
       />
       <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
       <Script id='google-analytics'>

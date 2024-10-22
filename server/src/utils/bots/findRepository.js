@@ -1,5 +1,5 @@
-const axios = require('axios');
 const GitHubCache = require('@/schemas/Bot/GitHubCache');
+const axios = require('axios');
 
 async function findRepository(repository, bypassCache) {
   const usernameRepositoryRegex = /^([a-zA-Z\d]{1}[-a-zA-Z\d]+)(\/){1}([-\w.]+)$/i;
@@ -9,7 +9,7 @@ async function findRepository(repository, bypassCache) {
 
   try {
     if (!bypassCache) {
-      const foundCache = await GitHubCache.findOne({ 'data.owner.login': username, 'data.name': repositoryName });
+      const foundCache = await GitHubCache.findOne({ 'data.name': repositoryName, 'data.owner.login': username });
       if (foundCache) return foundCache.data;
     }
 
@@ -18,16 +18,16 @@ async function findRepository(repository, bypassCache) {
 
     new GitHubCache({
       data: {
+        description: response.data.description,
+        forks_count: response.data.forks_count,
         html_url: response.data.html_url,
         language: response.data.language,
-        owner: {
-          login: response.data.owner.login,
-          avatar_url: response.data.owner.avatar_url
-        },
         name: response.data.name,
-        description: response.data.description,
-        stargazers_count: response.data.stargazers_count,
-        forks_count: response.data.forks_count
+        owner: {
+          avatar_url: response.data.owner.avatar_url,
+          login: response.data.owner.login
+        },
+        stargazers_count: response.data.stargazers_count
       }
     }).save();
 

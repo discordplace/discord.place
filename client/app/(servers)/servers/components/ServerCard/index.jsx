@@ -1,22 +1,22 @@
 'use client';
 
-import Link from 'next/link';
-import { FaUsers } from 'react-icons/fa';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import useSearchStore from '@/stores/servers/search';
-import { MdUpdate } from 'react-icons/md';
-import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import { TiStar } from 'react-icons/ti';
-import { IoHeart } from 'react-icons/io5';
-import { useMedia } from 'react-use';
-import cn from '@/lib/cn';
-import getRelativeTime from '@/lib/getRelativeTime';
-import { BsFire } from 'react-icons/bs';
-import config from '@/config';
-import { GiInfinity } from 'react-icons/gi';
-import useLanguageStore, { t } from '@/stores/language';
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import config from '@/config';
+import cn from '@/lib/cn';
+import getRelativeTime from '@/lib/getRelativeTime';
+import useLanguageStore, { t } from '@/stores/language';
+import useSearchStore from '@/stores/servers/search';
+import Link from 'next/link';
+import { BsFire } from 'react-icons/bs';
+import { FaUsers } from 'react-icons/fa';
+import { GiInfinity } from 'react-icons/gi';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { IoHeart } from 'react-icons/io5';
+import { MdUpdate } from 'react-icons/md';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { TiStar } from 'react-icons/ti';
+import { useMedia } from 'react-use';
 
 export default function ServerCard(props) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -25,49 +25,49 @@ export default function ServerCard(props) {
   const sort = props.overridedSort || storedSort;
 
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    notation: 'compact'
+    notation: 'compact',
+    style: 'decimal'
   });
 
   const infos = [
     {
-      icon: IoHeart,
-      value: null,
       condition: props.server.premium === true && !isMobile,
-      transform: () => 'Premium'
+      icon: IoHeart,
+      transform: () => 'Premium',
+      value: null
     },
     {
+      condition: true,
       icon: FaUsers,
-      value: props.server.data.members,
-      condition: true
+      value: props.server.data.members
     },
     {
+      condition: sort === 'Votes',
       icon: TbSquareRoundedChevronUp,
-      value: props.server.data.votes,
-      condition: sort === 'Votes'
+      value: props.server.data.votes
     },
     {
-      icon: MdUpdate,
-      value: props.server.data.latest_voted_at,
       condition: sort === 'LatestVoted',
-      transform: date => date ? getRelativeTime(date, language) : t('serverCard.neverVoted')
+      icon: MdUpdate,
+      transform: date => date ? getRelativeTime(date, language) : t('serverCard.neverVoted'),
+      value: props.server.data.latest_voted_at
     },
     {
-      icon: HiSortAscending,
-      value: props.server.joined_at,
       condition: sort === 'Newest',
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      icon: HiSortAscending,
+      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
+      value: props.server.joined_at
     },
     {
-      icon: HiSortDescending,
-      value: props.server.joined_at,
       condition: sort === 'Oldest',
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      icon: HiSortDescending,
+      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
+      value: props.server.joined_at
     },
     {
+      condition: sort === 'Boosts',
       icon: TiStar,
-      value: props.server.data.boosts,
-      condition: sort === 'Boosts'
+      value: props.server.data.boosts
     }
   ];
 
@@ -87,12 +87,12 @@ export default function ServerCard(props) {
       <div className='relative z-20 flex size-full rounded-3xl border-4 border-primary'>
         {props.server.banner ? (
           <ServerBanner
-            id={props.server.id}
-            hash={props.server.banner}
             className='absolute left-0 top-0 z-[1] h-[calc(100%_-_1px)] w-full rounded-[1.25rem] bg-quaternary'
+            hash={props.server.banner}
+            height={200}
+            id={props.server.id}
             size={512}
             width={350}
-            height={200}
           />
         ) : (
           <div className='absolute left-0 top-0 z-[1] h-[calc(100%_-_1px)] w-full rounded-[1.25rem] bg-quaternary' />
@@ -101,15 +101,15 @@ export default function ServerCard(props) {
         <div className='relative top-[30px] z-10 h-[calc(100%_-_30px)] w-full rounded-b-[1.25rem] rounded-t-3xl bg-secondary transition-colors group-hover:bg-tertiary'>
           <div className='relative'>
             <ServerIcon
-              id={props.server.id}
-              hash={props.server.icon}
-              size={64}
-              width={64}
-              height={64}
               className={cn(
                 'absolute top-[-25px] left-4 border-[4px] border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl',
                 props.server.icon && 'bg-secondary group-hover:bg-tertiary'
               )}
+              hash={props.server.icon}
+              height={64}
+              id={props.server.id}
+              size={64}
+              width={64}
             />
 
             {typeof props.index === 'number' && (
@@ -144,8 +144,8 @@ export default function ServerCard(props) {
               className='mt-1 min-h-[40px] overflow-hidden text-sm text-tertiary'
               style={{
                 display: '-webkit-box',
-                WebkitLineClamp: '2',
-                WebkitBoxOrient: 'vertical'
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: '2'
               }}
             >
               {props.server.description || t('serverCard.noDescription')}
@@ -153,7 +153,7 @@ export default function ServerCard(props) {
 
             <div className='mt-3 flex items-center gap-x-3'>
               {infos.filter(info => info.condition === true).map(info => (
-                <div key={info.icon} className='flex items-center gap-x-1.5 text-sm'>
+                <div className='flex items-center gap-x-1.5 text-sm' key={info.icon}>
                   <info.icon className='text-tertiary' />
                   <span className='max-w-[115px] truncate text-secondary'>{info.transform ? info.transform(info.value) : formatter.format(info.value)}</span>
                 </div>

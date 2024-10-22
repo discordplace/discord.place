@@ -1,23 +1,23 @@
 'use client';
 
+import CreateLinkModal from '@/app/(account)/account/components/Content/Tabs/MyLinks/CreateLinkModal';
+import CopyButton from '@/app/components/CopyButton/CustomTrigger';
 import ErrorState from '@/app/components/ErrorState';
+import createLink from '@/lib/request/links/createLink';
+import deleteLink from '@/lib/request/links/deleteLink';
+import useAccountStore from '@/stores/account';
 import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
+import { t } from '@/stores/language';
 import useModalsStore from '@/stores/modals';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { FiExternalLink, FiLink, FiTrash2 } from 'react-icons/fi';
 import { LuPlus } from 'react-icons/lu';
-import { useShallow } from 'zustand/react/shallow';
-import deleteLink from '@/lib/request/links/deleteLink';
-import { toast } from 'sonner';
-import CreateLinkModal from '@/app/(account)/account/components/Content/Tabs/MyLinks/CreateLinkModal';
-import useGeneralStore from '@/stores/general';
-import createLink from '@/lib/request/links/createLink';
-import useAccountStore from '@/stores/account';
-import { PiWarningCircleFill } from 'react-icons/pi';
-import CopyButton from '@/app/components/CopyButton/CustomTrigger';
 import { MdOutlineCopyAll } from 'react-icons/md';
-import { t } from '@/stores/language';
+import { PiWarningCircleFill } from 'react-icons/pi';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function MyLinks() {
   const user = useAuthStore(state => state.user);
@@ -27,48 +27,42 @@ export default function MyLinks() {
   const canCreateNewLink = user?.premium?.createdAt ?
     data.links?.length < 5 : data.links?.length < 1;
 
-  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+  const { closeModal, disableButton, enableButton, openModal } = useModalsStore(useShallow(state => ({
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   function continueDeleteLink(id) {
     disableButton('delete-link', 'confirm');
 
     toast.promise(deleteLink(id), {
+      error: error => {
+        enableButton('delete-link', 'confirm');
+
+        return error;
+      },
       loading: t('accountPage.tabs.myLinks.toast.deletingLink'),
       success: () => {
         closeModal('delete-link');
         fetchData(['links']);
 
         return t('accountPage.tabs.myLinks.toast.linkDeleted');
-      },
-      error: error => {
-        enableButton('delete-link', 'confirm');
-
-        return error;
       }
     });
   }
 
   function continueCreateLink() {
     openModal('create-link', {
-      title: t('accountPage.tabs.myLinks.createLinkModal.title'),
-      description: t('accountPage.tabs.myLinks.createLinkModal.description'),
-      content: <CreateLinkModal />,
       buttons: [
         {
+          actionType: 'close',
           id: 'cancel',
           label: t('buttons.cancel'),
-          variant: 'ghost',
-          actionType: 'close'
+          variant: 'ghost'
         },
         {
-          id: 'create',
-          label: t('buttons.create'),
-          variant: 'solid',
           action: () => {
             const name = useGeneralStore.getState().createLinkModal.name;
             const destinationURL = useGeneralStore.getState().createLinkModal.destinationURL;
@@ -90,7 +84,12 @@ export default function MyLinks() {
 
               disableButton('create-link', 'create');
 
-              toast.promise(createLink({ name, destinationURL }), {
+              toast.promise(createLink({ destinationURL, name }), {
+                error: error => {
+                  enableButton('create-link', 'create');
+
+                  return error;
+                },
                 loading: t('accountPage.tabs.myLinks.createLinkModal.toast.creatingLink'),
                 success: () => {
                   closeModal('create-link');
@@ -99,19 +98,20 @@ export default function MyLinks() {
                   fetchData(['links']);
 
                   return t('accountPage.tabs.myLinks.createLinkModal.toast.linkCreated');
-                },
-                error: error => {
-                  enableButton('create-link', 'create');
-
-                  return error;
                 }
               });
             } catch {
               return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.invalidDestinationUrl'));
             }
-          }
+          },
+          id: 'create',
+          label: t('buttons.create'),
+          variant: 'solid'
         }
-      ]
+      ],
+      content: <CreateLinkModal />,
+      description: t('accountPage.tabs.myLinks.createLinkModal.description'),
+      title: t('accountPage.tabs.myLinks.createLinkModal.title')
     });
   }
 
@@ -152,7 +152,7 @@ export default function MyLinks() {
 
               <p className='text-xs font-medium text-tertiary mobile:text-sm'>
                 {t('accountPage.tabs.myLinks.maximumLinksReachedInfo.description', {
-                  link: <Link href='/premium' className='text-secondary hover:text-primary'>{t('accountPage.tabs.myLinks.maximumLinksReachedInfo.linkText')}</Link>
+                  link: <Link className='text-secondary hover:text-primary' href='/premium'>{t('accountPage.tabs.myLinks.maximumLinksReachedInfo.linkText')}</Link>
                 })}
               </p>
             </div>
@@ -161,19 +161,19 @@ export default function MyLinks() {
 
         {data.links?.length === 0 ? (
           <ErrorState
+            message={t('accountPage.tabs.myLinks.emptyErrorState.message')}
             title={
               <div className='mt-8 flex items-center gap-x-2'>
                 <BsEmojiAngry />
                 {t('accountPage.tabs.myLinks.emptyErrorState.title')}
               </div>
             }
-            message={t('accountPage.tabs.myLinks.emptyErrorState.message')}
           />
         ) : (
           data.links?.map(link => (
             <div
-              key={link.id}
               className='flex items-center gap-4 rounded-3xl bg-secondary p-4 hover:bg-quaternary'
+              key={link.id}
             >
               <FiLink className='text-primary' size={20} />
 
@@ -194,8 +194,8 @@ export default function MyLinks() {
                   </span>
 
                   <CopyButton
-                    successText='Link copied!'
                     copyText={`https://dsc.ink/${link.name}`}
+                    successText='Link copied!'
                   >
                     <div className='cursor-pointer hover:opacity-70'>
                       <MdOutlineCopyAll size={15} />
@@ -203,10 +203,10 @@ export default function MyLinks() {
                   </CopyButton>
 
                   <Link
-                    href={link.redirectTo}
-                    target='_blank'
-                    rel='noreferrer'
                     className='hover:opacity-70'
+                    href={link.redirectTo}
+                    rel='noreferrer'
+                    target='_blank'
                   >
                     <FiExternalLink size={15} />
                   </Link>
@@ -215,27 +215,27 @@ export default function MyLinks() {
                     className='hover:opacity-70'
                     onClick={() =>
                       openModal('delete-link', {
-                        title: t('accountPage.tabs.myLinks.deleteLinkModal.title'),
-                        description: t('accountPage.tabs.myLinks.deleteLinkModal.description'),
+                        buttons: [
+                          {
+                            actionType: 'close',
+                            id: 'cancel',
+                            label: t('buttons.cancel'),
+                            variant: 'ghost'
+                          },
+                          {
+                            action: () => continueDeleteLink(link.id),
+                            id: 'confirm',
+                            label: t('buttons.confirm'),
+                            variant: 'solid'
+                          }
+                        ],
                         content: (
                           <p className='text-sm text-tertiary'>
                             {t('accountPage.tabs.myLinks.deleteLinkModal.note', { br: <br /> })}
                           </p>
                         ),
-                        buttons: [
-                          {
-                            id: 'cancel',
-                            label: t('buttons.cancel'),
-                            variant: 'ghost',
-                            actionType: 'close'
-                          },
-                          {
-                            id: 'confirm',
-                            label: t('buttons.confirm'),
-                            variant: 'solid',
-                            action: () => continueDeleteLink(link.id)
-                          }
-                        ]
+                        description: t('accountPage.tabs.myLinks.deleteLinkModal.description'),
+                        title: t('accountPage.tabs.myLinks.deleteLinkModal.title')
                       })
                     }
                   >

@@ -1,12 +1,12 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
+const DashboardData = require('@/schemas/Dashboard/Data');
 const Theme = require('@/schemas/Theme');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const idValidation = require('@/validations/themes/id');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
-const DashboardData = require('@/schemas/Dashboard/Data');
-const idValidation = require('@/validations/themes/id');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const { matchedData, param } = require('express-validator');
 
 module.exports = {
   post: [
@@ -45,7 +45,7 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setColor(Discord.Colors.Green)
-          .setAuthor({ name: 'Theme Approved', iconURL: publisher?.displayAvatarURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png' })
+          .setAuthor({ iconURL: publisher?.displayAvatarURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png', name: 'Theme Approved' })
           .setTimestamp()
           .setFields([
             {
@@ -71,7 +71,7 @@ module.exports = {
           )
       ];
 
-      client.channels.cache.get(config.portalChannelId).send({ embeds, components });
+      client.channels.cache.get(config.portalChannelId).send({ components, embeds });
 
       return response.status(204).end();
     }

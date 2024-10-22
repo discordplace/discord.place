@@ -1,26 +1,26 @@
 'use client';
 
 import CopyButton from '@/app/components/CopyButton';
-import MotionLink from '@/app/components/Motion/Link';
-import { AnimatePresence, motion } from 'framer-motion';
-import { BiPencil, BiSolidEnvelope } from 'react-icons/bi';
-import { PiShareFat, PiShareFatFill } from 'react-icons/pi';
-import { TbLoader, TbSquareRoundedChevronUpFilled, TbSquareRoundedChevronUp } from 'react-icons/tb';
-import useAuthStore from '@/stores/auth';
-import cn from '@/lib/cn';
-import Script from 'next/script';
-import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
-import voteBot from '@/lib/request/bots/voteBot';
 import VoteCountdown from '@/app/components/Countdown/Vote';
-import revalidateBot from '@/lib/revalidate/bot';
-import useThemeStore from '@/stores/theme';
-import { BsFire } from 'react-icons/bs';
-import createTripledVotesCheckout from '@/lib/request/bots/createTripledVotesCheckout';
+import MotionLink from '@/app/components/Motion/Link';
+import cn from '@/lib/cn';
 import createStandedOutCheckout from '@/lib/request/bots/createStandedOutCheckout';
-import { useRouter } from 'next-nprogress-bar';
-import { AiOutlineRise } from 'react-icons/ai';
+import createTripledVotesCheckout from '@/lib/request/bots/createTripledVotesCheckout';
+import voteBot from '@/lib/request/bots/voteBot';
+import revalidateBot from '@/lib/revalidate/bot';
+import useAuthStore from '@/stores/auth';
 import { t } from '@/stores/language';
+import useThemeStore from '@/stores/theme';
+import { AnimatePresence, motion } from 'framer-motion';
+import Script from 'next/script';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect, useRef, useState } from 'react';
+import { AiOutlineRise } from 'react-icons/ai';
+import { BiPencil, BiSolidEnvelope } from 'react-icons/bi';
+import { BsFire } from 'react-icons/bs';
+import { PiShareFat, PiShareFatFill } from 'react-icons/pi';
+import { TbLoader, TbSquareRoundedChevronUp, TbSquareRoundedChevronUpFilled } from 'react-icons/tb';
+import { toast } from 'sonner';
 
 export default function Actions({ bot }) {
   const theme = useThemeStore(state => state.theme);
@@ -33,8 +33,8 @@ export default function Actions({ bot }) {
   const router = useRouter();
 
   const formatter = new Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    compactDisplay: 'short'
+    compactDisplay: 'short',
+    notation: 'compact'
   });
 
   const captchaRef = useRef(null);
@@ -55,6 +55,11 @@ export default function Actions({ bot }) {
           clearInterval(captchaIntervalRef.current);
 
           toast.promise(voteBot(bot.id, response), {
+            error: error => {
+              setLoading(false);
+
+              return error;
+            },
             loading: t('botPage.actions.toast.voting', { botName: bot.username }),
             success: () => {
               setLoading(false);
@@ -62,11 +67,6 @@ export default function Actions({ bot }) {
               revalidateBot(bot.id);
 
               return t('botPage.actions.toast.voted', { botName: bot.username });
-            },
-            error: error => {
-              setLoading(false);
-
-              return error;
             }
           });
         }
@@ -81,16 +81,16 @@ export default function Actions({ bot }) {
     setBuyTripledVotesLoading(true);
 
     toast.promise(createTripledVotesCheckout(bot.id), {
+      error: error => {
+        setBuyTripledVotesLoading(false);
+
+        return error;
+      },
       loading: t('botPage.actions.toast.creatingCheckout'),
       success: data => {
         setTimeout(() => router.push(data.url), 3000);
 
         return t('botPage.actions.toast.checkoutCreated');
-      },
-      error: error => {
-        setBuyTripledVotesLoading(false);
-
-        return error;
       }
     });
   }
@@ -99,16 +99,16 @@ export default function Actions({ bot }) {
     setBuyStandedOutLoading(true);
 
     toast.promise(createStandedOutCheckout(bot.id), {
+      error: error => {
+        setBuyStandedOutLoading(false);
+
+        return error;
+      },
       loading: t('botPage.actions.toast.creatingCheckout'),
       success: data => {
         setTimeout(() => router.push(data.url), 3000);
 
         return t('botPage.actions.toast.checkoutCreated');
-      },
-      error: error => {
-        setBuyStandedOutLoading(false);
-
-        return error;
       }
     });
   }
@@ -116,57 +116,57 @@ export default function Actions({ bot }) {
   return (
     <div>
       <motion.h2
+        animate={{ opacity: 1, y: 0 }}
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+        transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {t('botPage.actions.title')}
       </motion.h2>
 
       <motion.div
+        animate={{ opacity: 1 }}
         className='mt-4 grid grid-cols-1 gap-2 mobile:grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-col'
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .15 }}
+        transition={{ damping: 10, delay: .15, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {loggedIn && (
           <Script
-            src='https://challenges.cloudflare.com/turnstile/v0/api.js'
             async={true}
             defer={true}
+            src='https://challenges.cloudflare.com/turnstile/v0/api.js'
           />
         )}
 
         <AnimatePresence>
           {showCaptcha && (
             <motion.div
+              animate={{ opacity: 1 }}
               /* eslint-disable-next-line tailwindcss/no-custom-classname */
               className='cf-turnstile [&>iframe]:max-w-full'
               data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY}
-              ref={captchaRef}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               data-theme={theme === 'dark' ? 'dark' : 'light'}
+              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              ref={captchaRef}
             />
           )}
         </AnimatePresence>
 
         <motion.button
+          animate={{ opacity: 1, y: 0 }}
           className={cn(
             'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-black rounded-lg group gap-x-2 hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70',
             loading && 'cursor-default !opacity-70 hover:bg-black dark:hover:bg-white'
           )}
           initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
           onClick={() => {
             if (!loggedIn) return toast.error(t('botPage.actions.toast.loginRequiredForVote'));
             if (voteTimeout && new Date(voteTimeout.createdAt).getTime() + 86400000 > new Date().getTime()) return;
 
             setShowCaptcha(true);
           }}
+          transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
         >
           <div className='flex items-center gap-x-1.5'>
             {loading && <TbLoader className='animate-spin' />}
@@ -186,24 +186,24 @@ export default function Actions({ bot }) {
         </motion.button>
 
         <MotionLink
-          className='group flex w-full items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
-          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+          className='group flex w-full items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
           href={bot.invite_url}
+          initial={{ opacity: 0, y: -10 }}
           target='_blank'
+          transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
         >
           {t('buttons.inviteBot')}
           <BiSolidEnvelope />
         </MotionLink>
 
-        <motion.button className='cursor-auto' initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}>
+        <motion.button animate={{ opacity: 1, y: 0 }} className='cursor-auto' initial={{ opacity: 0, y: -10 }} transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}>
           <CopyButton
             className='group flex w-full cursor-pointer items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
-            successText='Bot URL copied to clipboard!'
             copyText={bot.invite_url}
             defaultIcon={PiShareFat}
             hoverIcon={PiShareFatFill}
+            successText='Bot URL copied to clipboard!'
           >
             {t('buttons.shareBot')}
           </CopyButton>
@@ -212,11 +212,11 @@ export default function Actions({ bot }) {
         {bot.permissions.canEdit && (
           <>
             <MotionLink
-              className='group flex w-full items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
-              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+              className='group flex w-full items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
               href={`/bots/${bot.id}/manage`}
+              initial={{ opacity: 0, y: -10 }}
+              transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
             >
               {t('buttons.manageBot')}
               <BiPencil />
@@ -224,14 +224,14 @@ export default function Actions({ bot }) {
 
             {!bot.vote_triple_enabled?.created_at && (
               <motion.button
+                animate={{ opacity: 1, y: 0 }}
                 className={cn(
                   'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-orange-500 rounded-lg group gap-x-2 hover:bg-orange-600',
                   buyTripledVotesLoading && '!opacity-70 pointer-events-none'
                 )}
                 initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
                 onClick={buyTripledVotes}
+                transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
               >
                 <div className='flex items-center gap-x-1.5'>
                   {buyTripledVotesLoading && <TbLoader className='animate-spin' />}
@@ -246,14 +246,14 @@ export default function Actions({ bot }) {
 
             {!bot.standed_out?.created_at && (
               <motion.button
+                animate={{ opacity: 1, y: 0 }}
                 className={cn(
                   'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-green-800 rounded-lg group gap-x-2 hover:bg-green-900',
                   buyStandedOutLoading && '!opacity-70 pointer-events-none'
                 )}
                 initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
                 onClick={buyStandedOut}
+                transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
               >
                 <div className='flex items-center gap-x-1.5'>
                   {buyStandedOutLoading && <TbLoader className='animate-spin' />}

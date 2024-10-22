@@ -1,13 +1,13 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
-const bodyParser = require('body-parser');
-const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const bodyParser = require('body-parser');
+const Discord = require('discord.js');
+const { body, matchedData, param } = require('express-validator');
 
 module.exports = {
   post: [
@@ -16,16 +16,16 @@ module.exports = {
     checkAuthentication,
     param('id'),
     body('rating')
-      .isInt({ min: 1, max: 5 }).withMessage('Rating must be between 1 and 5.'),
+      .isInt({ max: 5, min: 1 }).withMessage('Rating must be between 1 and 5.'),
     body('content')
       .trim()
-      .isLength({ min: config.reviewsMinCharacters, max: config.reviewsMaxCharacters }).withMessage(`Content must be between ${config.reviewsMinCharacters} and ${config.reviewsMaxCharacters} characters.`),
+      .isLength({ max: config.reviewsMaxCharacters, min: config.reviewsMinCharacters }).withMessage(`Content must be between ${config.reviewsMinCharacters} and ${config.reviewsMaxCharacters} characters.`),
     validateRequest,
     async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'BOTS_CREATE_REVIEW').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to review bots.', 403);
 
-      const { id, rating, content } = matchedData(request);
+      const { content, id, rating } = matchedData(request);
 
       const user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('User not found.', 404);
@@ -37,7 +37,7 @@ module.exports = {
 
       if (bot.owner.id == request.user.id) return response.sendError('You can\'t leave a review for your own bot.', 400);
 
-      const userReview = await Review.findOne({ 'user.id': request.user.id, 'bot.id': id });
+      const userReview = await Review.findOne({ 'bot.id': id, 'user.id': request.user.id });
       if (userReview) return response.sendError('You already reviewed this bot.', 400);
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
@@ -46,12 +46,12 @@ module.exports = {
         bot: {
           id: bot.id
         },
+        content,
+        rating,
         user: {
           id: request.user.id,
           username: requestUser.username
-        },
-        rating,
-        content
+        }
       });
 
       const validationError = getValidationError(review);
@@ -61,18 +61,18 @@ module.exports = {
 
       const embeds = [
         new Discord.EmbedBuilder()
-          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
+          .setAuthor({ iconURL: requestUser.displayAvatarURL(), name: requestUser.username })
           .setTitle('New Review')
           .setFields([
             {
+              inline: true,
               name: 'Bot',
-              value: `${user.tag} (${user.id})`,
-              inline: true
+              value: `${user.tag} (${user.id})`
             },
             {
+              inline: true,
               name: 'Rating',
-              value: rating.toString(),
-              inline: true
+              value: rating.toString()
             },
             {
               name: 'Content',

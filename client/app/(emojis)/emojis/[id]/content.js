@@ -1,24 +1,24 @@
 'use client';
 
-import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';
 import ChatMockup from '@/app/(emojis)/emojis/[id]/components/ChatMockup';
-import AnimatedCount from '@/app/components/AnimatedCount';
-import useAuthStore from '@/stores/auth';
-import config from '@/config';
-import { LuShieldQuestion } from 'react-icons/lu';
 import FaQs from '@/app/(emojis)/emojis/[id]/components/FaQs';
-import { MdEmojiEmotions } from 'react-icons/md';
+import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';
 import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
-import { motion } from 'framer-motion';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import Link from 'next/link';
-import { toast } from 'sonner';
-import { useRouter } from 'next-nprogress-bar';
-import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
-import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
-import useLanguageStore, { t } from '@/stores/language';
+import AnimatedCount from '@/app/components/AnimatedCount';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import config from '@/config';
+import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
+import useAuthStore from '@/stores/auth';
+import useLanguageStore, { t } from '@/stores/language';
+import useModalsStore from '@/stores/modals';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { LuShieldQuestion } from 'react-icons/lu';
+import { MdEmojiEmotions } from 'react-icons/md';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Content({ emoji }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -27,28 +27,28 @@ export default function Content({ emoji }) {
 
   const router = useRouter();
 
-  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+  const { closeModal, disableButton, enableButton, openModal } = useModalsStore(useShallow(state => ({
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   function continueDeleteEmoji() {
     disableButton('delete-emoji', 'confirm');
 
     toast.promise(deleteEmoji(emoji.id), {
+      error: error => {
+        enableButton('delete-emoji', 'confirm');
+
+        return error;
+      },
       loading: t('emojiPage.toast.deletingEmoji'),
       success: () => {
         closeModal('delete-emoji');
         setTimeout(() => router.push('/'), 3000);
 
         return t('emojiPage.toast.emojiDeleted', { emojiName: emoji.name });
-      },
-      error: error => {
-        enableButton('delete-emoji', 'confirm');
-
-        return error;
       }
     });
   }
@@ -65,7 +65,7 @@ export default function Content({ emoji }) {
 
             <p className='text-sm font-medium text-tertiary'>
               {t('emojiPage.notApprovedInfo.description', {
-                link: <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>{t('emojiPage.notApprovedInfo.linkText')}</Link>
+                link: <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>{t('emojiPage.notApprovedInfo.linkText')}</Link>
               })}
             </p>
           </div>
@@ -74,11 +74,11 @@ export default function Content({ emoji }) {
         <div className='flex flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
             <EmojiPreview
-              id={emoji.id}
-              name={emoji.name}
-              image_url={config.getEmojiURL(emoji.id, emoji.animated)}
               ableToChange={false}
               defaultSize='enlarge'
+              id={emoji.id}
+              image_url={config.getEmojiURL(emoji.id, emoji.animated)}
+              name={emoji.name}
             />
           </motion.div>
 
@@ -99,7 +99,7 @@ export default function Content({ emoji }) {
               </h1>
 
               <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
-                {new Date(emoji.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/,/g,'')}
+                {new Date(emoji.created_at).toLocaleDateString(language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(/,/g,'')}
               </span>
             </div>
 
@@ -140,12 +140,12 @@ export default function Content({ emoji }) {
 
               <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 <UserAvatar
-                  id={emoji.user.id}
+                  className='rounded-full'
                   hash={emoji.user.avatar}
+                  height={18}
+                  id={emoji.user.id}
                   size={32}
                   width={18}
-                  height={18}
-                  className='rounded-full'
                 />
 
                 {emoji.user.username}
@@ -157,23 +157,23 @@ export default function Content({ emoji }) {
         <div className='flex w-full flex-col gap-4 lg:flex-row'>
           <div className='flex w-full flex-col lg:max-w-[400px]'>
             <ChatMockup
-              id={loggedIn ? user.id : emoji.user.id}
               avatar={loggedIn ? user.avatar : emoji.user.avatar}
-              username={loggedIn ? user.username : emoji.user.username}
-              message='Chipi chipi chapa chapa dubi dubi daba daba'
               emoji_url={config.getEmojiURL(emoji.id, emoji.animated)}
-              theme='dark'
+              id={loggedIn ? user.id : emoji.user.id}
               index={0}
+              message='Chipi chipi chapa chapa dubi dubi daba daba'
+              theme='dark'
+              username={loggedIn ? user.username : emoji.user.username}
             />
 
             <ChatMockup
-              id={loggedIn ? user.id : emoji.user.id}
               avatar={loggedIn ? user.avatar : emoji.user.avatar}
-              username={loggedIn ? user.username : emoji.user.username}
-              message='Chipi chipi chapa chapa dubi dubi daba daba'
               emoji_url={config.getEmojiURL(emoji.id, emoji.animated)}
-              theme='light'
+              id={loggedIn ? user.id : emoji.user.id}
               index={1}
+              message='Chipi chipi chapa chapa dubi dubi daba daba'
+              theme='light'
+              username={loggedIn ? user.username : emoji.user.username}
             />
 
             <div className='mt-4 flex w-full flex-col gap-y-2 lg:max-w-[400px]'>
@@ -190,12 +190,12 @@ export default function Content({ emoji }) {
                 <div className='grid w-full grid-cols-1 gap-4 mobile:grid-cols-2 lg:grid-cols-2 lg:grid-rows-2'>
                   {emoji.similarEmojis.map(similarEmoji => (
                     <EmojiCard
-                      key={similarEmoji.id}
-                      id={similarEmoji.id}
-                      name={similarEmoji.name}
                       animated={similarEmoji.animated}
                       categories={similarEmoji.categories}
                       downloads={similarEmoji.downloads}
+                      id={similarEmoji.id}
+                      key={similarEmoji.id}
+                      name={similarEmoji.name}
                     />
                   ))}
                 </div>
@@ -229,27 +229,27 @@ export default function Content({ emoji }) {
                 className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 onClick={() =>
                   openModal('delete-emoji', {
-                    title: t('emojiPage.dangerZone.deleteEmojiModal.title'),
-                    description: t('emojiPage.dangerZone.deleteEmojiModal.description', { emojiName: emoji.name }),
+                    buttons: [
+                      {
+                        actionType: 'close',
+                        id: 'cancel',
+                        label: t('buttons.cancel'),
+                        variant: 'ghost'
+                      },
+                      {
+                        action: continueDeleteEmoji,
+                        id: 'confirm',
+                        label: t('buttons.confirm'),
+                        variant: 'solid'
+                      }
+                    ],
                     content: (
                       <p className='text-sm text-tertiary'>
                         {t('emojiPage.dangerZone.deleteEmojiModal.content', { br: <br /> })}
                       </p>
                     ),
-                    buttons: [
-                      {
-                        id: 'cancel',
-                        label: t('buttons.cancel'),
-                        variant: 'ghost',
-                        actionType: 'close'
-                      },
-                      {
-                        id: 'confirm',
-                        label: t('buttons.confirm'),
-                        variant: 'solid',
-                        action: continueDeleteEmoji
-                      }
-                    ]
+                    description: t('emojiPage.dangerZone.deleteEmojiModal.description', { emojiName: emoji.name }),
+                    title: t('emojiPage.dangerZone.deleteEmojiModal.title')
                   })
                 }
               >

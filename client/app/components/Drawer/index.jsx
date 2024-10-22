@@ -5,13 +5,13 @@ import { nanoid } from 'nanoid';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { Drawer } from 'vaul';
 
-export default function CustomDrawer({ openState, setOpenState, state, setState, items }) {
+export default function CustomDrawer({ items, openState, setOpenState, setState, state }) {
   return (
     <Drawer.Root
-      shouldScaleBackground={true}
       closeThreshold={0.5}
-      open={openState}
       onOpenChange={setOpenState}
+      open={openState}
+      shouldScaleBackground={true}
     >
       <Drawer.Portal>
         <Drawer.Content className='fixed inset-x-0 bottom-0 z-[10001] flex h-max flex-col gap-y-1 rounded-t-3xl bg-secondary p-4 outline-none'>
@@ -19,15 +19,15 @@ export default function CustomDrawer({ openState, setOpenState, state, setState,
           <div className='flex max-h-[80svh] w-full flex-col gap-y-2 overflow-y-auto'>
             {items.map(item => (
               <button
+                className={cn(
+                  'flex items-center justify-between px-4 py-3 text-base font-medium rounded-lg disabled:pointer-events-none',
+                  state === item.value ? 'pointer-events-none bg-quaternary text-primary' : 'sm:hover:bg-quaternary text-tertiary sm:hover:text-primary'
+                )}
                 key={nanoid()}
                 onClick={() => {
                   setState(item.value);
                   setOpenState(false);
                 }}
-                className={cn(
-                  'flex items-center justify-between px-4 py-3 text-base font-medium rounded-lg disabled:pointer-events-none',
-                  state === item.value ? 'pointer-events-none bg-quaternary text-primary' : 'sm:hover:bg-quaternary text-tertiary sm:hover:text-primary'
-                )}
               >
                 {item.label}
                 {state === item.value && <IoMdCheckmarkCircle />}

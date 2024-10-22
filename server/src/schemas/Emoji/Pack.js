@@ -4,92 +4,92 @@ const Schema = mongoose.Schema;
 const nameValidation = require('@/validations/emojis/name');
 
 const EmojiPackSchema = new Schema({
-  id: {
-    type: String,
-    required: true
-  },
-  user: {
-    id: {
-      type: String,
-      required: true
-    },
-    username: {
-      type: String,
-      required: true
-    }
-  },
-  name: {
-    type: String,
-    required: true,
-    validate: {
-      validator: value => nameValidation(value),
-      message: ({ reason }) => reason.message
-    }
+  approved: {
+    default: false,
+    type: Boolean
   },
   categories: {
+    max: config.emojiMaxCategoriesLength,
+    required: true,
     type: [
       {
-        type: String,
-        enum: config.emojiCategories
+        enum: config.emojiCategories,
+        type: String
       }
-    ],
-    required: true,
-    max: config.emojiMaxCategoriesLength
+    ]
   },
   downloads: {
-    type: Number,
-    default: 0
-  },
-  approved: {
-    type: Boolean,
-    default: false
+    default: 0,
+    type: Number
   },
   emoji_ids: {
+    required: true,
     type: [
       {
-        id: {
-          type: String,
-          required: true
-        },
         animated: {
-          type: Boolean,
-          required: true
+          required: true,
+          type: Boolean
+        },
+        id: {
+          required: true,
+          type: String
         }
       }
     ],
-    required: true,
     validate: {
+      message: ({ reason }) => reason.message,
       validator: value => {
         if (value.length > config.packagesMaxEmojisLength) return false;
         if (value.length < config.packagesMinEmojisLength) return false;
 
         return true;
-      },
-      message: ({ reason }) => reason.message
+      }
+    }
+  },
+  id: {
+    required: true,
+    type: String
+  },
+  name: {
+    required: true,
+    type: String,
+    validate: {
+      message: ({ reason }) => reason.message,
+      validator: value => nameValidation(value)
+    }
+  },
+  user: {
+    id: {
+      required: true,
+      type: String
+    },
+    username: {
+      required: true,
+      type: String
     }
   }
 }, {
-  timestamps: true,
   methods: {
     toPubliclySafe() {
       const newEmojiPackage = {};
 
       return {
         ...newEmojiPackage,
+        approved: this.approved,
+        categories: this.categories,
+        created_at: new Date(this.createdAt),
+        downloads: this.downloads,
+        emoji_ids: this.emoji_ids,
         id: this.id,
+        name: this.name,
         user: {
           id: this.user.id,
           username: this.user.username
-        },
-        name: this.name,
-        categories: this.categories,
-        downloads: this.downloads,
-        approved: this.approved,
-        emoji_ids: this.emoji_ids,
-        created_at: new Date(this.createdAt)
+        }
       };
     }
-  }
+  },
+  timestamps: true
 });
 
 module.exports = mongoose.model('EmojiPack', EmojiPackSchema);

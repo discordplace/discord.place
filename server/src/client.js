@@ -1,36 +1,35 @@
+const BlockedIp = require('@/schemas/BlockedIp');
+const Bot = require('@/schemas/Bot');
+const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
+const DashboardData = require('@/schemas/Dashboard/Data');
+const Emoji = require('@/schemas/Emoji');
+const EmojiPack = require('@/schemas/Emoji/Pack');
+const Profile = require('@/schemas/Profile');
+const Reminder = require('@/schemas/Reminder');
+const ReminderMetadata = require('@/schemas/Reminder/Metadata');
+const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
+const sleep = require('@/utils/sleep');
+const syncMemberRoles = require('@/utils/syncMemberRoles');
+const updateClientActivity = require('@/utils/updateClientActivity');
+const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
+const CloudflareAPI = require('cloudflare');
+const { CronJob } = require('cron');
 // Modules
 const Discord = require('discord.js');
-const { CronJob } = require('cron');
-const CloudflareAPI = require('cloudflare');
-const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
-const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
-const updateClientActivity = require('@/utils/updateClientActivity');
-const syncMemberRoles = require('@/utils/syncMemberRoles');
-const sleep = require('@/utils/sleep');
-
 // Schemas
 const Server = require('@/schemas/Server');
 const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
-const ReminderMetadata = require('@/schemas/Reminder/Metadata');
-const Reminder = require('@/schemas/Reminder');
-const BlockedIp = require('@/schemas/BlockedIp');
-const DashboardData = require('@/schemas/Dashboard/Data');
-const Profile = require('@/schemas/Profile');
-const Bot = require('@/schemas/Bot');
-const Emoji = require('@/schemas/Emoji');
-const EmojiPack = require('@/schemas/Emoji/Pack');
-const Template = require('@/schemas/Template');
+const Reward = require('@/schemas/Server/Vote/Reward');
+const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const Sound = require('@/schemas/Sound');
+const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
+const Template = require('@/schemas/Template');
 const Theme = require('@/schemas/Theme');
 const User = require('@/schemas/User');
-const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
-const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
-const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
-const Reward = require('@/schemas/Server/Vote/Reward');
 const localizationInitialize = require('@/utils/localization/initialize');
-const mongoose = require('mongoose');
 const sendHeartbeat = require('@/utils/sendHeartbeat');
+const mongoose = require('mongoose');
 
 // Cloudflare Setup
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -44,19 +43,160 @@ const cloudflare = new CloudflareAPI({
 });
 
 // S3 Setup
-const { S3Client, HeadBucketCommand } = require('@aws-sdk/client-s3');
+const { HeadBucketCommand, S3Client } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
-  region: process.env.S3_REGION,
-  endpoint: process.env.S3_ENDPOINT,
   credentials: {
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
-  }
+  },
+  endpoint: process.env.S3_ENDPOINT,
+  region: process.env.S3_REGION
 });
 
 module.exports = class Client {
   constructor() {
     return this;
+  }
+
+  async checkBucketAvailability() {
+    try {
+      const command = new HeadBucketCommand({ Bucket: process.env.S3_BUCKET_NAME });
+
+      await S3.send(command);
+
+      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 0);
+    } catch (error) {
+      logger.error('Failed to check S3 bucket availability:', error);
+
+      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 1);
+    }
+  }
+
+  async checkDeletedInviteCodes() {
+    const servers = await Server.find({ 'invite_code.type': 'Invite' });
+    for (const server of servers) {
+      const guild = client.guilds.cache.get(server.id);
+      if (!guild) continue;
+
+      const invite = await guild.invites.fetch().catch(() => null);
+      if (!invite || !invite.find(invite => invite.code === server.invite_code.code)) {
+        await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
+
+        logger.info(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
+      }
+    }
+  }
+
+  async checkDeletedRewardsRoles() {
+    const rewards = await Reward.find();
+
+    const serversToCheck = new Set(rewards.map(reward => reward.guild.id));
+
+    const deleteServerOperations = [];
+    const deleteRoleOperations = [];
+
+    for (const serverId of serversToCheck) {
+      const guild = client.guilds.cache.get(serverId);
+      if (!guild) deleteServerOperations.push({
+        deleteMany: {
+          filter: { 'guild.id': serverId }
+        }
+      });
+    }
+
+    for (const reward of rewards) {
+      const guild = client.guilds.cache.get(reward.guild.id);
+      if (guild) {
+        const role = guild.roles.cache.get(reward.role.id);
+        if (!role) deleteRoleOperations.push({
+          deleteOne: {
+            filter: { 'role.id': reward.role.id }
+          }
+        });
+      }
+    }
+
+    if (deleteServerOperations.length > 0) await Reward.bulkWrite(deleteServerOperations);
+    if (deleteRoleOperations.length > 0) await Reward.bulkWrite(deleteRoleOperations);
+
+    if (deleteServerOperations.length > 0 || deleteRoleOperations.length > 0) {
+      logger.info(`Deleted vote rewards that associated with deleted servers or roles. (Operations: ${deleteServerOperations.length + deleteRoleOperations.length})`);
+    }
+  }
+
+  async checkExpiredBlockedIPs() {
+    try {
+      const blockedIps = await BlockedIp.find();
+      const response = await cloudflare.rules.lists.items.list(CLOUDFLARE_BLOCK_IP_LIST_ID, {
+        account_id: CLOUDFLARE_ACCOUNT_ID
+      });
+
+      let deletedCount = 0;
+
+      for (const { ip } of blockedIps) {
+        const item = response.result.find(item => item?.ip === ip);
+        if (!item) {
+          await BlockedIp.deleteOne({ _id: ip });
+          deletedCount++;
+        }
+      }
+
+      if (deletedCount <= 0) return;
+
+      logger.info(`Deleted ${deletedCount} expired blocked IPs.`);
+    } catch (error) {
+      logger.error('Failed to check expired blocked IPs collections:', error);
+    }
+  }
+
+  async checkExpiredPremiums() {
+    User.updateMany({ 'subscription.expiresAt': { $lt: new Date() } }, {
+      $set: {
+        subscription: null
+      }
+    }).then(updated => {
+      if (updated.modifiedCount <= 0) return;
+
+      logger.info(`Deleted ${updated.modifiedCount} expired premiums.`);
+    }).catch(error => logger.error('Failed to delete expired premiums:', error));
+  }
+
+  async checkExpiredProducts() {
+    const expiredBotTripledVotes = await deleteExpiredProducts(BotVoteTripledEnabled, 86400000);
+    const expiredServerTripledVotes = await deleteExpiredProducts(ServerVoteTripledEnabled, 86400000);
+    const expiredStandedOutBots = await deleteExpiredProducts(StandedOutBot, 43200000);
+    const expiredStandedOutServers = await deleteExpiredProducts(StandedOutServer, 43200000);
+
+    function deleteExpiredProducts(Model, expireTime) {
+      return Model.deleteMany({ createdAt: { $lt: new Date(Date.now() - expireTime) } });
+    }
+
+    if (expiredBotTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredBotTripledVotes.deletedCount} expired bot tripled votes.`);
+    if (expiredServerTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredServerTripledVotes.deletedCount} expired server tripled votes.`);
+    if (expiredStandedOutBots.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutBots.deletedCount} expired standed out bots.`);
+    if (expiredStandedOutServers.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutServers.deletedCount} expired standed out servers.`);
+  }
+
+  async checkReminerMetadatas() {
+    const reminders = await Reminder.find();
+    ReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
+      .then(deleted => {
+        if (deleted.deletedCount <= 0) return;
+
+        logger.info(`Deleted ${deleted.deletedCount} reminder metadata.`);
+      })
+      .catch(error => logger.error('Failed to delete reminder metadata:', error));
+  }
+
+  async checkVoteReminderMetadatas() {
+    const reminders = await VoteReminder.find();
+    VoteReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
+      .then(deleted => {
+        if (deleted.deletedCount <= 0) return;
+
+        logger.info(`Deleted ${deleted.deletedCount} vote reminder metadata.`);
+      })
+      .catch(error => logger.error('Failed to delete vote reminder metadata:', error));
   }
 
   create() {
@@ -79,6 +219,76 @@ module.exports = class Client {
     this.client.languageCache = new Discord.Collection();
 
     return this;
+  }
+
+  async createNewDashboardData() {
+    const emojiPacks = await EmojiPack.find();
+
+    const totalServers = await Server.countDocuments();
+    const totalProfiles = await Profile.countDocuments();
+    const totalBots = await Bot.countDocuments();
+    const totalEmojis = (await Emoji.countDocuments()) + emojiPacks.reduce((acc, pack) => acc + pack.emoji_ids.length, 0);
+    const totalTemplates = await Template.countDocuments();
+    const totalSounds = await Sound.countDocuments();
+    const totalThemes = await Theme.countDocuments();
+
+    await new DashboardData({
+      bots: totalBots,
+      emojis: totalEmojis,
+      guilds: client.guilds.cache.size,
+      profiles: totalProfiles,
+      servers: totalServers,
+      sounds: totalSounds,
+      templates: totalTemplates,
+      themes: totalThemes,
+      users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0)
+    }).save();
+
+    logger.info('Created new dashboard data.');
+  }
+
+  async saveDailyProfileStats() {
+    const updatedProfiles = await Profile.updateMany({}, [
+      {
+        $set: {
+          dailyStats: {
+            $let: {
+              in: {
+                $slice: ['$$updatedDailyStats', -7] // Keep only the last 7 elements
+              },
+              vars: {
+                updatedDailyStats: {
+                  $concatArrays: [
+                    {
+                      $ifNull: ['$dailyStats', []] // If dailyLikes doesn't exist, use an empty array
+                    },
+                    [
+                      {
+                        createdAt: new Date(),
+                        likes: '$likes_count',
+                        views: '$views'
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    ]);
+
+    logger.info(`Saved daily stats for ${updatedProfiles.modifiedCount} profiles.`);
+  }
+
+  async saveMonthlyVotes() {
+    try {
+      await updateMonthlyVotes();
+
+      logger.info('Monthly votes saved.');
+    } catch (error) {
+      logger.error('Failed to save monthly votes:', error);
+    }
   }
 
   async start(token, options = {}) {
@@ -187,88 +397,11 @@ module.exports = class Client {
     });
   }
 
-  async checkDeletedInviteCodes() {
-    const servers = await Server.find({ 'invite_code.type': 'Invite' });
-    for (const server of servers) {
-      const guild = client.guilds.cache.get(server.id);
-      if (!guild) continue;
+  async syncLemonSqueezyPlans() {
+    if (!process.env.LEMON_SQUEEZY_API_KEY) return logger.warn('[Lemon Squeezy] API key is not defined. Please define LEMON_SQUEEZY_API_KEY in your environment variables.');
 
-      const invite = await guild.invites.fetch().catch(() => null);
-      if (!invite || !invite.find(invite => invite.code === server.invite_code.code)) {
-        await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
-
-        logger.info(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
-      }
-    }
-  }
-
-  async checkDeletedRewardsRoles() {
-    const rewards = await Reward.find();
-
-    const serversToCheck = new Set(rewards.map(reward => reward.guild.id));
-
-    const deleteServerOperations = [];
-    const deleteRoleOperations = [];
-
-    for (const serverId of serversToCheck) {
-      const guild = client.guilds.cache.get(serverId);
-      if (!guild) deleteServerOperations.push({
-        deleteMany: {
-          filter: { 'guild.id': serverId }
-        }
-      });
-    }
-
-    for (const reward of rewards) {
-      const guild = client.guilds.cache.get(reward.guild.id);
-      if (guild) {
-        const role = guild.roles.cache.get(reward.role.id);
-        if (!role) deleteRoleOperations.push({
-          deleteOne: {
-            filter: { 'role.id': reward.role.id }
-          }
-        });
-      }
-    }
-
-    if (deleteServerOperations.length > 0) await Reward.bulkWrite(deleteServerOperations);
-    if (deleteRoleOperations.length > 0) await Reward.bulkWrite(deleteRoleOperations);
-
-    if (deleteServerOperations.length > 0 || deleteRoleOperations.length > 0) {
-      logger.info(`Deleted vote rewards that associated with deleted servers or roles. (Operations: ${deleteServerOperations.length + deleteRoleOperations.length})`);
-    }
-  }
-
-  async saveMonthlyVotes() {
-    try {
-      await updateMonthlyVotes();
-
-      logger.info('Monthly votes saved.');
-    } catch (error) {
-      logger.error('Failed to save monthly votes:', error);
-    }
-  }
-
-  async checkVoteReminderMetadatas() {
-    const reminders = await VoteReminder.find();
-    VoteReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
-      .then(deleted => {
-        if (deleted.deletedCount <= 0) return;
-
-        logger.info(`Deleted ${deleted.deletedCount} vote reminder metadata.`);
-      })
-      .catch(error => logger.error('Failed to delete vote reminder metadata:', error));
-  }
-
-  async checkReminerMetadatas() {
-    const reminders = await Reminder.find();
-    ReminderMetadata.deleteMany({ documentId: { $nin: reminders.map(reminder => reminder.id) } })
-      .then(deleted => {
-        if (deleted.deletedCount <= 0) return;
-
-        logger.info(`Deleted ${deleted.deletedCount} reminder metadata.`);
-      })
-      .catch(error => logger.error('Failed to delete reminder metadata:', error));
+    return syncLemonSqueezyPlans()
+      .catch(error => logger.error('There was an error while syncing Lemon Squeezy plans:', error));
   }
 
   async updateBotStats() {
@@ -278,146 +411,12 @@ module.exports = class Client {
     await Bot.updateOne({ id: client.user.id }, {
       $set: {
         command_count: {
-          value: client.commands.size,
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          value: client.commands.size
         }
       }
     });
 
     logger.info('Updated bot stats.');
-  }
-
-  async checkExpiredBlockedIPs() {
-    try {
-      const blockedIps = await BlockedIp.find();
-      const response = await cloudflare.rules.lists.items.list(CLOUDFLARE_BLOCK_IP_LIST_ID, {
-        account_id: CLOUDFLARE_ACCOUNT_ID
-      });
-
-      let deletedCount = 0;
-
-      for (const { ip } of blockedIps) {
-        const item = response.result.find(item => item?.ip === ip);
-        if (!item) {
-          await BlockedIp.deleteOne({ _id: ip });
-          deletedCount++;
-        }
-      }
-
-      if (deletedCount <= 0) return;
-
-      logger.info(`Deleted ${deletedCount} expired blocked IPs.`);
-    } catch (error) {
-      logger.error('Failed to check expired blocked IPs collections:', error);
-    }
-  }
-
-  async checkExpiredPremiums() {
-    User.updateMany({ 'subscription.expiresAt': { $lt: new Date() } }, {
-      $set: {
-        subscription: null
-      }
-    }).then(updated => {
-      if (updated.modifiedCount <= 0) return;
-
-      logger.info(`Deleted ${updated.modifiedCount} expired premiums.`);
-    }).catch(error => logger.error('Failed to delete expired premiums:', error));
-  }
-
-  async createNewDashboardData() {
-    const emojiPacks = await EmojiPack.find();
-
-    const totalServers = await Server.countDocuments();
-    const totalProfiles = await Profile.countDocuments();
-    const totalBots = await Bot.countDocuments();
-    const totalEmojis = (await Emoji.countDocuments()) + emojiPacks.reduce((acc, pack) => acc + pack.emoji_ids.length, 0);
-    const totalTemplates = await Template.countDocuments();
-    const totalSounds = await Sound.countDocuments();
-    const totalThemes = await Theme.countDocuments();
-
-    await new DashboardData({
-      servers: totalServers,
-      profiles: totalProfiles,
-      bots: totalBots,
-      emojis: totalEmojis,
-      templates: totalTemplates,
-      sounds: totalSounds,
-      themes: totalThemes,
-      users: client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0),
-      guilds: client.guilds.cache.size
-    }).save();
-
-    logger.info('Created new dashboard data.');
-  }
-
-  async syncLemonSqueezyPlans() {
-    if (!process.env.LEMON_SQUEEZY_API_KEY) return logger.warn('[Lemon Squeezy] API key is not defined. Please define LEMON_SQUEEZY_API_KEY in your environment variables.');
-
-    return syncLemonSqueezyPlans()
-      .catch(error => logger.error('There was an error while syncing Lemon Squeezy plans:', error));
-  }
-
-  async saveDailyProfileStats() {
-    const updatedProfiles = await Profile.updateMany({}, [
-      {
-        $set: {
-          dailyStats: {
-            $let: {
-              vars: {
-                updatedDailyStats: {
-                  $concatArrays: [
-                    {
-                      $ifNull: ['$dailyStats', []] // If dailyLikes doesn't exist, use an empty array
-                    },
-                    [
-                      {
-                        likes: '$likes_count',
-                        views: '$views',
-                        createdAt: new Date()
-                      }
-                    ]
-                  ]
-                }
-              },
-              in: {
-                $slice: ['$$updatedDailyStats', -7] // Keep only the last 7 elements
-              }
-            }
-          }
-        }
-      }
-    ]);
-
-    logger.info(`Saved daily stats for ${updatedProfiles.modifiedCount} profiles.`);
-  }
-
-  async checkExpiredProducts() {
-    const expiredBotTripledVotes = await deleteExpiredProducts(BotVoteTripledEnabled, 86400000);
-    const expiredServerTripledVotes = await deleteExpiredProducts(ServerVoteTripledEnabled, 86400000);
-    const expiredStandedOutBots = await deleteExpiredProducts(StandedOutBot, 43200000);
-    const expiredStandedOutServers = await deleteExpiredProducts(StandedOutServer, 43200000);
-
-    function deleteExpiredProducts(Model, expireTime) {
-      return Model.deleteMany({ createdAt: { $lt: new Date(Date.now() - expireTime) } });
-    }
-
-    if (expiredBotTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredBotTripledVotes.deletedCount} expired bot tripled votes.`);
-    if (expiredServerTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredServerTripledVotes.deletedCount} expired server tripled votes.`);
-    if (expiredStandedOutBots.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutBots.deletedCount} expired standed out bots.`);
-    if (expiredStandedOutServers.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutServers.deletedCount} expired standed out servers.`);
-  }
-
-  async checkBucketAvailability() {
-    try {
-      const command = new HeadBucketCommand({ Bucket: process.env.S3_BUCKET_NAME });
-
-      await S3.send(command);
-
-      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 0);
-    } catch (error) {
-      logger.error('Failed to check S3 bucket availability:', error);
-
-      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 1);
-    }
   }
 };

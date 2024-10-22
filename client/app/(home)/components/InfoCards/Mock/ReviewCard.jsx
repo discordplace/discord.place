@@ -1,17 +1,17 @@
+import cn from '@/lib/cn';
 import Image from 'next/image';
 import { TiStarFullOutline } from 'react-icons/ti';
-import cn from '@/lib/cn';
 
-export default function MockReviewCard({ username, content, rating }) {
+export default function MockReviewCard({ content, rating, username }) {
   return (
     <div className='relative top-3 flex h-max max-w-[300px] rotate-[10deg] flex-col gap-y-2 rounded-2xl bg-tertiary p-2 mobile:p-4'>
       <div className='flex items-center gap-x-2'>
         <Image
-          src={`/dicebear/${username}.jpg`}
           alt='Avatar'
-          width={32}
-          height={32}
           className='size-[24px] rounded-full mobile:size-[32px]'
+          height={32}
+          src={`/dicebear/${username}.jpg`}
+          width={32}
         />
 
         <h3 className='truncate text-sm font-medium mobile:text-base'>

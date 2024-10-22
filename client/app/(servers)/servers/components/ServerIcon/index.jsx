@@ -3,7 +3,7 @@
 import cn from '@/lib/cn';
 import Image from 'next/image';
 
-export default function ServerIcon({ width, height, className, icon_url, name }) {
+export default function ServerIcon({ className, height, icon_url, name, width }) {
 
   function getCompressedName(name, limit) {
     const noVowels = name.replace(/[AEIOUaeiou\s]/g, '');
@@ -22,18 +22,18 @@ export default function ServerIcon({ width, height, className, icon_url, name })
     <div>
       {icon_url ? (
         <Image
-          src={icon_url}
           alt={`${name} guild icon`}
-          width={width}
-          height={height}
           className={cn(
             'rounded-lg',
             className
           )}
+          height={height}
+          src={icon_url}
           style={{
-            width: `${width}px`,
-            height: `${height}px`
+            height: `${height}px`,
+            width: `${width}px`
           }}
+          width={width}
         />
       ) : (
         <div
@@ -42,8 +42,8 @@ export default function ServerIcon({ width, height, className, icon_url, name })
             className
           )}
           style={{
-            width: `${width}px`,
-            height: `${height}px`
+            height: `${height}px`,
+            width: `${width}px`
           }}
         >
           <h2 className='text-3xl font-bold'>

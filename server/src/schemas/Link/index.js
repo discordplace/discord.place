@@ -2,31 +2,31 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const LinkSchema = new Schema({
-  id: {
-    type: String,
-    required: true
-  },
   createdBy: {
     id: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     },
     username: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     }
   },
+  id: {
+    required: true,
+    type: String
+  },
   name: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   },
   redirectTo: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   },
   visits: {
-    type: Number,
-    default: 0
+    default: 0,
+    type: Number
   }
 }, {
   timestamps: true

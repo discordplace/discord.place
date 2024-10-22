@@ -6,12 +6,12 @@ export default function ProfilePreview({ metadata }) {
     <div className='flex flex-col gap-y-4'>
       <div className='flex gap-x-2'>
         <UserAvatar
-          id={metadata.id}
+          className='rounded-full'
           hash={metadata.avatar}
+          height={40}
+          id={metadata.id}
           size={64}
           width={40}
-          height={40}
-          className='rounded-full'
         />
 
         <div className='flex flex-col justify-center'>

@@ -1,9 +1,9 @@
 
 module.exports = {
   env: {
+    browser: true,
     es2021: true,
-    node: true,
-    browser: true
+    node: true
   },
   extends: [
     'eslint:recommended',
@@ -12,131 +12,9 @@ module.exports = {
     'next',
     'plugin:depend/recommended',
     'plugin:tailwindcss/recommended',
-    'plugin:security/recommended-legacy'
+    'plugin:security/recommended-legacy',
+    'plugin:perfectionist/recommended-natural-legacy'
   ],
-  plugins: ['react'],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
-  },
-  rules: {
-    'react/prop-types': 'off',
-    'jsx-quotes': [
-      'error',
-      'prefer-single'
-    ],
-    'react/self-closing-comp': [
-      'error',
-      {
-        component: true,
-        html: false
-      }
-    ],
-    'react/jsx-indent-props': ['error', 2],
-    indent: [
-      'error',
-      2,
-      { SwitchCase: 1 }
-    ],
-    'linebreak-style': 'off',
-    quotes: [
-      'error',
-      'single'
-    ],
-    semi: [
-      'error',
-      'always'
-    ],
-    'comma-dangle': [
-      'error',
-      'never'
-    ],
-    'no-trailing-spaces': 'error',
-    'no-multiple-empty-lines': [
-      'error',
-      { max: 1 }
-    ],
-    'arrow-spacing': [
-      'error',
-      {
-        before: true,
-        after: true
-      }
-    ],
-    'object-curly-spacing': [
-      'error',
-      'always'
-    ],
-    'key-spacing': [
-      'error',
-      {
-        beforeColon: false,
-        afterColon: true
-      }
-    ],
-    'space-in-parens': [
-      'error',
-      'never'
-    ],
-    'brace-style': [
-      'error',
-      '1tbs',
-      { allowSingleLine: true }
-    ],
-    'no-empty-function': 'error',
-    'no-lonely-if': 'error',
-    'no-useless-return': 'error',
-    'spaced-comment': [
-      'error',
-      'always',
-      { markers: ['/'] }
-    ],
-    'func-call-spacing': [
-      'error',
-      'never'
-    ],
-    'template-curly-spacing': [
-      'error',
-      'never'
-    ],
-    'default-param-last': 'error',
-    'newline-before-return': 'error',
-    'no-duplicate-imports': [
-      'error',
-      { includeExports: true }
-    ],
-    'prefer-template': 'error',
-    'prefer-arrow-callback': 'error',
-    'arrow-parens': [
-      'error',
-      'as-needed'
-    ],
-    'no-return-assign': 'error',
-    'object-shorthand': 'error',
-    'func-style': [
-      'error',
-      'declaration',
-      { allowArrowFunctions: true }
-    ],
-    'array-bracket-spacing': ['error', 'never'],
-    'space-infix-ops': 'error',
-    'keyword-spacing': [
-      'error',
-      { before: true, after: true }
-    ],
-    'no-unneeded-ternary': 'error',
-    'no-multi-spaces': 'error',
-    'depend/ban-dependencies': [
-      2,
-      {
-        allowed: [
-          'moment',
-          'lodash'
-        ]
-      }
-    ],
-    'security/detect-object-injection': 'off'
-  },
   overrides: [
     {
       files: ['*.{js,jsx}'],
@@ -152,5 +30,128 @@ module.exports = {
         'no-duplicate-imports': 'off'
       }
     }
-  ]
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  plugins: ['react', 'perfectionist'],
+  rules: {
+    'array-bracket-spacing': ['error', 'never'],
+    'arrow-parens': [
+      'error',
+      'as-needed'
+    ],
+    'arrow-spacing': [
+      'error',
+      {
+        after: true,
+        before: true
+      }
+    ],
+    'brace-style': [
+      'error',
+      '1tbs',
+      { allowSingleLine: true }
+    ],
+    'comma-dangle': [
+      'error',
+      'never'
+    ],
+    'default-param-last': 'error',
+    'depend/ban-dependencies': [
+      2,
+      {
+        allowed: [
+          'moment',
+          'lodash'
+        ]
+      }
+    ],
+    'func-call-spacing': [
+      'error',
+      'never'
+    ],
+    'func-style': [
+      'error',
+      'declaration',
+      { allowArrowFunctions: true }
+    ],
+    indent: [
+      'error',
+      2,
+      { SwitchCase: 1 }
+    ],
+    'jsx-quotes': [
+      'error',
+      'prefer-single'
+    ],
+    'key-spacing': [
+      'error',
+      {
+        afterColon: true,
+        beforeColon: false
+      }
+    ],
+    'keyword-spacing': [
+      'error',
+      { after: true, before: true }
+    ],
+    'linebreak-style': 'off',
+    'newline-before-return': 'error',
+    'no-duplicate-imports': [
+      'error',
+      { includeExports: true }
+    ],
+    'no-empty-function': 'error',
+    'no-lonely-if': 'error',
+    'no-multi-spaces': 'error',
+    'no-multiple-empty-lines': [
+      'error',
+      { max: 1 }
+    ],
+    'no-return-assign': 'error',
+    'no-trailing-spaces': 'error',
+    'no-unneeded-ternary': 'error',
+    'no-useless-return': 'error',
+    'object-curly-spacing': [
+      'error',
+      'always'
+    ],
+    'object-shorthand': 'error',
+    'prefer-arrow-callback': 'error',
+    'prefer-template': 'error',
+    quotes: [
+      'error',
+      'single'
+    ],
+    'react/jsx-indent-props': ['error', 2],
+    'react/prop-types': 'off',
+    'react/self-closing-comp': [
+      'error',
+      {
+        component: true,
+        html: false
+      }
+    ],
+    'security/detect-object-injection': 'off',
+    semi: [
+      'error',
+      'always'
+    ],
+    'space-in-parens': [
+      'error',
+      'never'
+    ],
+    'space-infix-ops': 'error',
+    'spaced-comment': [
+      'error',
+      'always',
+      { markers: ['/'] }
+    ],
+    'template-curly-spacing': [
+      'error',
+      'never'
+    ]
+  }
 };

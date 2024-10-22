@@ -1,48 +1,48 @@
 'use client';
 
 import cn from '@/lib/cn';
-import { useState } from 'react';
-import { MdChevronLeft } from 'react-icons/md';
-import AnimateHeight from 'react-animate-height';
-import { motion } from 'framer-motion';
 import { t } from '@/stores/language';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import AnimateHeight from 'react-animate-height';
+import { MdChevronLeft } from 'react-icons/md';
 
 export default function FaQs() {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.0.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.0.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.0.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.0.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.1.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.1.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.1.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.1.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.2.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.2.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.2.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.2.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.3.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.3.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.3.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.3.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.4.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.4.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.4.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.4.label')
     }
   ];
 
-  return QA.map(({ label, content }, index) => (
+  return QA.map(({ content, label }, index) => (
     <motion.div
+      animate={{ opacity: 1, y: 0 }}
       className={cn(
         'overflow-hidden flex flex-col w-full p-3 rounded-md group',
         activeQA === index ? 'bg-quaternary' : 'cursor-pointer bg-secondary hover:bg-tertiary'
       )}
+      initial={{ opacity: 0, y: 30 }}
       key={label}
       onClick={() => setActiveQA(index)}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 1.1 + (index * 0.2) }}
+      transition={{ delay: 1.1 + (index * 0.2), duration: 0.5 }}
     >
       <div className='flex items-center justify-between text-clip'>
         <div className='flex items-center gap-x-4'>
@@ -63,9 +63,9 @@ export default function FaQs() {
       </div>
 
       <AnimateHeight
-        duration={500}
         animateOpacity={true}
         className='text-sm text-secondary'
+        duration={500}
         height={activeQA === index ? 'auto' : 0}
       >
         {content}

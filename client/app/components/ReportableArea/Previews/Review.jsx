@@ -7,12 +7,12 @@ export default function ReviewPreview({ metadata }) {
     <div className='flex flex-col gap-y-4'>
       <div className='flex items-center gap-x-3'>
         <UserAvatar
-          id={metadata.reviewer.id}
+          className='rounded-lg'
           hash={metadata.reviewer.avatar}
+          height={40}
+          id={metadata.reviewer.id}
           size={64}
           width={40}
-          height={40}
-          className='rounded-lg'
         />
 
         <div className='flex flex-col gap-y-2'>

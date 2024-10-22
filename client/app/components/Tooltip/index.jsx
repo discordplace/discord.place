@@ -4,7 +4,7 @@ import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { useState } from 'react';
 import { useMedia } from 'react-use';
 
-export default function Tooltip({ children, content, side, sideOffset, hide }) {
+export default function Tooltip({ children, content, hide, side, sideOffset }) {
   const [open, setOpen] = useState(false);
   const isMobile = useMedia('(max-width: 640px)', false);
 
@@ -18,12 +18,12 @@ export default function Tooltip({ children, content, side, sideOffset, hide }) {
         open={open}
       >
         <RadixTooltip.Trigger
+          asChild
           onClick={() => {
             if (hide) return;
 
             if (isMobile) setOpen(!open);
           }}
-          asChild
         >
           {children}
         </RadixTooltip.Trigger>
@@ -31,8 +31,8 @@ export default function Tooltip({ children, content, side, sideOffset, hide }) {
           <RadixTooltip.Portal>
             <RadixTooltip.Content
               className='z-[10000] max-w-[300px] rounded-lg bg-black px-3 py-1 text-center text-sm font-semibold text-white [transform-origin:var(--radix-tooltip-content-transform-origin)] dark:bg-white dark:text-black sm:max-w-[unset]'
-              sideOffset={sideOffset || 5}
               side={side || 'top'}
+              sideOffset={sideOffset || 5}
             >
               {content}
               <RadixTooltip.Arrow className='fill-black dark:fill-white'/>

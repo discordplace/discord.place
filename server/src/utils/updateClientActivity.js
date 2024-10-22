@@ -12,9 +12,9 @@ function updateClientActivity() {
   const state = `nodesty.com | ${formatter.format(serversCount)} servers (${formatter.format(membersCount)} members)`;
 
   client.user.setActivity({
-    type: Discord.ActivityType.Custom,
     name: 'status',
-    state
+    state,
+    type: Discord.ActivityType.Custom
   });
 
   logger.info(`Updated client activity to: "${state}"`);

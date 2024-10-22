@@ -16,9 +16,9 @@ export default function AnimatedCount({ data }) {
 
   return loaded ? (
     <AnimatedNumbers
-      includeComma
       animateToNumber={data}
-      config={{ tension: 100, friction: 10 }}
+      config={{ friction: 10, tension: 100 }}
+      includeComma
       locale='en-US'
     />
   ) : '0';

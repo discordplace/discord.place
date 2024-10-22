@@ -1,14 +1,14 @@
 'use client';
 
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
+import useLanguageStore, { t } from '@/stores/language';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
-import useLanguageStore, { t } from '@/stores/language';
 
 export default function ActiveTimeouts() {
   const data = useAccountStore(state => state.data);
@@ -32,13 +32,13 @@ export default function ActiveTimeouts() {
       {(timeoutedBotsCount === 0 && timeoutedServersCount === 0) ? (
         <div className='mt-20'>
           <ErrorState
+            message={t('accountPage.tabs.activeTimeouts.emptyErrorState.message')}
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
                 {t('accountPage.tabs.activeTimeouts.emptyErrorState.title')}
               </div>
             }
-            message={t('accountPage.tabs.activeTimeouts.emptyErrorState.message')}
           />
         </div>
       ) : (
@@ -56,24 +56,24 @@ export default function ActiveTimeouts() {
               <div className='flex flex-col divide-y rounded-xl border-2 border-primary'>
                 {data.timeouts.servers.map((timeout, index) => (
                   <div
-                    key={timeout.id}
                     className={cn(
                       'flex items-center flex-wrap p-3 gap-4 justify-center sm:justify-between bg-secondary border-y-primary',
                       index === data.timeouts.servers.length - 1 ? 'rounded-b-xl' : '',
                       index === 0 ? 'rounded-t-xl' : ''
                     )}
+                    key={timeout.id}
                   >
                     <Link
                       className='flex items-center gap-x-4 transition-opacity hover:opacity-70'
                       href={`/servers/${timeout.id}`}
                     >
                       <ServerIcon
-                        id={timeout.id}
+                        className='rounded-lg bg-quaternary'
                         hash={timeout.icon}
+                        height={32}
+                        id={timeout.id}
                         size={32}
                         width={32}
-                        height={32}
-                        className='rounded-lg bg-quaternary'
                       />
 
                       <div className='flex flex-col'>
@@ -91,7 +91,7 @@ export default function ActiveTimeouts() {
                       <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
                           date={new Date(timeout.createdAt).getTime() + 86400000}
-                          renderer={({ hours, minutes, seconds, completed }) => {
+                          renderer={({ completed, hours, minutes, seconds }) => {
                             if (completed) return t('accountPage.tabs.activeTimeouts.countdown.expired');
 
                             return t('accountPage.tabs.activeTimeouts.countdown.remaining', { hours, minutes, seconds });
@@ -100,7 +100,7 @@ export default function ActiveTimeouts() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(timeout.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                        {new Date(timeout.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
                   </div>
@@ -122,12 +122,12 @@ export default function ActiveTimeouts() {
               <div className='flex flex-col divide-y rounded-xl border-2 border-primary'>
                 {data.timeouts.bots.map((timeout, index) => (
                   <div
-                    key={timeout.id}
                     className={cn(
                       'flex items-center flex-wrap justify-center p-3 gap-4 sm:justify-between bg-secondary border-y-primary',
                       index === data.timeouts.bots.length - 1 ? 'rounded-b-xl' : '',
                       index === 0 ? 'rounded-t-xl' : ''
                     )}
+                    key={timeout.id}
                   >
                     <Link
                       className='flex items-center gap-x-4 transition-opacity hover:opacity-70'
@@ -136,12 +136,12 @@ export default function ActiveTimeouts() {
                       {timeout.username ? (
                         <>
                           <UserAvatar
-                            id={timeout.id}
+                            className='rounded-lg'
                             hash={timeout.avatar}
+                            height={32}
+                            id={timeout.id}
                             size={32}
                             width={32}
-                            height={32}
-                            className='rounded-lg'
                           />
 
                           <div className='flex flex-col'>
@@ -167,7 +167,7 @@ export default function ActiveTimeouts() {
                       <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
                           date={new Date(timeout.createdAt).getTime() + 86400000}
-                          renderer={({ hours, minutes, seconds, completed }) => {
+                          renderer={({ completed, hours, minutes, seconds }) => {
                             if (completed) return t('accountPage.tabs.activeTimeouts.countdown.expired');
 
                             return t('accountPage.tabs.activeTimeouts.countdown.remaining', { hours, minutes, seconds });
@@ -176,7 +176,7 @@ export default function ActiveTimeouts() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(timeout.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                        {new Date(timeout.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
                   </div>

@@ -1,9 +1,9 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
-const Discord = require('discord.js');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const Discord = require('discord.js');
+const { matchedData, param } = require('express-validator');
 
 module.exports = {
   post: [
@@ -19,7 +19,7 @@ module.exports = {
 
       const { id, review_id } = matchedData(request);
 
-      const review = await Review.findOne({ 'server.id': id, _id: review_id });
+      const review = await Review.findOne({ _id: review_id, 'server.id': id });
       if (!review) return response.sendError('Review not found.', 404);
 
       if (review.approved === true) return response.sendError('Review already approved.', 400);
@@ -39,25 +39,25 @@ module.exports = {
         const embeds = [
           new Discord.EmbedBuilder()
             .setColor(Discord.Colors.Green)
-            .setAuthor({ name: `Review Approved | ${guild.name}`, iconURL: guild.iconURL() })
+            .setAuthor({ iconURL: guild.iconURL(), name: `Review Approved | ${guild.name}` })
             .setTimestamp()
             .setFields([
               {
+                inline: true,
                 name: 'Review',
-                value: review.content,
-                inline: true
+                value: review.content
               },
               {
+                inline: true,
                 name: 'Rating',
-                value: '⭐'.repeat(review.rating),
-                inline: true
+                value: '⭐'.repeat(review.rating)
               },
               {
                 name: 'Moderator',
                 value: `<@${request.user.id}>`
               }
             ])
-            .setFooter({ text: `Review from @${publisher.username}`, iconURL: publisher.displayAvatarURL() })
+            .setFooter({ iconURL: publisher.displayAvatarURL(), text: `Review from @${publisher.username}` })
         ];
 
         const components = [
@@ -70,7 +70,7 @@ module.exports = {
             )
         ];
 
-        client.channels.cache.get(config.portalChannelId).send({ embeds, components });
+        client.channels.cache.get(config.portalChannelId).send({ components, embeds });
       }
 
       return response.status(204).end();

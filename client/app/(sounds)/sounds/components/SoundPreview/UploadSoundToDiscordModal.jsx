@@ -1,15 +1,15 @@
 'use client';
 
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import ErrorState from '@/app/components/ErrorState';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
+import { t } from '@/stores/language';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { HiPlus } from 'react-icons/hi';
-import { t } from '@/stores/language';
 
 export default function UploadSoundToDiscordModal({ guilds }) {
   const selectedGuildId = useGeneralStore(state => state.uploadSoundToDiscordModal.selectedGuildId);
@@ -20,13 +20,13 @@ export default function UploadSoundToDiscordModal({ guilds }) {
       {guilds.length === 0 ? (
         <div className='mt-4 flex flex-col gap-y-2'>
           <ErrorState
+            message={t('soundCard.uploadSoundToDiscordModal.emptyErrorState.message')}
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
                 {t('soundCard.uploadSoundToDiscordModal.emptyErrorState.title')}
               </div>
             }
-            message={t('soundCard.uploadSoundToDiscordModal.emptyErrorState.message')}
           />
 
           <div className='my-4 h-px w-full bg-quaternary' />
@@ -54,15 +54,15 @@ export default function UploadSoundToDiscordModal({ guilds }) {
                     onClick={() => setSelectedGuildId(guild.id)}
                   >
                     <ServerIcon
-                      id={guild.id}
-                      hash={guild.icon}
-                      size={48}
-                      width={48}
-                      height={48}
                       className={cn(
                         'rounded-full bg-quaternary hover:bg-secondary cursor-pointer hover:ring-2 transition-all ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))]',
                         selectedGuildId === guild.id && 'ring-2 ring-purple-600'
                       )}
+                      hash={guild.icon}
+                      height={48}
+                      id={guild.id}
+                      size={48}
+                      width={48}
                     />
                   </div>
                 ) : (
@@ -75,15 +75,15 @@ export default function UploadSoundToDiscordModal({ guilds }) {
                     </div>
 
                     <ServerIcon
-                      id={guild.id}
-                      hash={guild.icon}
-                      size={48}
-                      width={48}
-                      height={48}
                       className={cn(
                         'rounded-full bg-quaternary hover:bg-secondary cursor-pointer hover:ring-2 transition-all ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))]',
                         selectedGuildId === guild.id && 'ring-2 ring-purple-600'
                       )}
+                      hash={guild.icon}
+                      height={48}
+                      id={guild.id}
+                      size={48}
+                      width={48}
                     />
                   </Link>
                 )}

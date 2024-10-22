@@ -1,10 +1,10 @@
 const Profile = require('@/schemas/Profile');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
 const User = require('@/schemas/User');
-const getUserHashes = require('@/utils/getUserHashes');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const getUserHashes = require('@/utils/getUserHashes');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
 const Discord = require('discord.js');
 
 module.exports = {
@@ -51,15 +51,15 @@ module.exports = {
       ];
 
       return response.json({
-        id: user.id,
-        username: user.data.username,
-        global_name: user.data.global_name,
-        flags: userFlags.filter(flag => validUserFlags.includes(flag)),
         avatar: userHashes.avatar,
         banner: userHashes.banner,
-        profile: profile?.slug ? { slug: profile.slug } : null,
+        can_view_dashboard: canViewDashboard,
+        flags: userFlags.filter(flag => validUserFlags.includes(flag)),
+        global_name: user.data.global_name,
+        id: user.id,
         premium: user?.subscription?.createdAt ? user.subscription : null,
-        can_view_dashboard: canViewDashboard
+        profile: profile?.slug ? { slug: profile.slug } : null,
+        username: user.data.username
       });
     }
   ]

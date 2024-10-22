@@ -1,30 +1,30 @@
-import { useEffect, useState } from 'react';
-import { PiHeart, PiHeartFill } from 'react-icons/pi';
-import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
-import cn from '@/lib/cn';
-import useGeneralStore from '@/stores/general';
-import { PiWaveformBold } from 'react-icons/pi';
-import { MdAccountCircle, MdDownload } from 'react-icons/md';
-import { IoMdCalendar } from 'react-icons/io';
-import { toast } from 'sonner';
-import useAuthStore from '@/stores/auth';
-import likeSound from '@/lib/request/sounds/likeSound';
-import revalidateSound from '@/lib/revalidate/sound';
-import { TbLoader } from 'react-icons/tb';
-import useSearchStore from '@/stores/sounds/search';
-import Tooltip from '@/app/components/Tooltip';
-import useThemeStore from '@/stores/theme';
-import { FaCloudUploadAlt } from 'react-icons/fa';
 import UploadSoundToDiscordModal from '@/app/(sounds)/sounds/components/SoundPreview/UploadSoundToDiscordModal';
-import getSoundUploadableGuilds from '@/lib/request/auth/getSoundUploadableGuilds';
-import uploadSoundToGuild from '@/lib/request/sounds/uploadSoundToGuild';
+import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
+import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
 import confetti from '@/lib/lotties/confetti.json';
-import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
-import Lottie from 'react-lottie';
+import getSoundUploadableGuilds from '@/lib/request/auth/getSoundUploadableGuilds';
+import likeSound from '@/lib/request/sounds/likeSound';
+import uploadSoundToGuild from '@/lib/request/sounds/uploadSoundToGuild';
+import revalidateSound from '@/lib/revalidate/sound';
+import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
 import useLanguageStore, { t } from '@/stores/language';
+import useModalsStore from '@/stores/modals';
+import useSearchStore from '@/stores/sounds/search';
+import useThemeStore from '@/stores/theme';
+import { useEffect, useState } from 'react';
+import { FaCloudUploadAlt } from 'react-icons/fa';
+import { IoMdCalendar } from 'react-icons/io';
+import { MdAccountCircle, MdDownload } from 'react-icons/md';
+import { PiHeart, PiHeartFill } from 'react-icons/pi';
+import { PiWaveformBold } from 'react-icons/pi';
+import { TbLoader } from 'react-icons/tb';
+import Lottie from 'react-lottie';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
 
-export default function SoundPreview({ sound, overridedSort, showUploadToGuildButton }) {
+export default function SoundPreview({ overridedSort, showUploadToGuildButton, sound }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const language = useLanguageStore(state => state.language);
   const [liked, setLiked] = useState(sound.isLiked);
@@ -36,6 +36,11 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     setLoading(true);
 
     toast.promise(likeSound(sound.id), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t(`soundCard.toast.${liked ? 'unliking' : 'liking'}`, { soundName: sound.name }),
       success: isLiked => {
         setLiked(isLiked);
@@ -43,11 +48,6 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         revalidateSound(sound.id);
 
         return t(`soundCard.toast.${isLiked ? 'liked' : 'unliked'}`, { soundName: sound.name });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   };
@@ -58,25 +58,25 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
   const sort = overridedSort || storedSort;
 
   const formatter = new Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    compactDisplay: 'short'
+    compactDisplay: 'short',
+    notation: 'compact'
   });
 
   const info = [
     {
+      condition: sort === 'Downloads',
       icon: MdDownload,
-      value: formatter.format(sound.downloadsCount),
-      condition: sort === 'Downloads'
+      value: formatter.format(sound.downloadsCount)
     },
     {
+      condition: sort === 'Likes',
       icon: PiHeartFill,
-      value: formatter.format(sound.likesCount),
-      condition: sort === 'Likes'
+      value: formatter.format(sound.likesCount)
     },
     {
+      condition: sort === 'Newest' || sort === 'Oldest',
       icon: IoMdCalendar,
-      value: new Date(sound.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' }),
-      condition: sort === 'Newest' || sort === 'Oldest'
+      value: new Date(sound.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })
     }
   ];
 
@@ -105,6 +105,11 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     disableButton('upload-sound-to-discord', 'upload');
 
     toast.promise(uploadSoundToGuild(sound.id, guildId), {
+      error: error => {
+        enableButton('upload-sound-to-discord', 'upload');
+
+        return error;
+      },
       loading: t('soundCard.uploadSoundToDiscordModal.toast.uploadingSound', { soundName: sound.name }),
       success: () => {
         closeModal('upload-sound-to-discord');
@@ -112,22 +117,17 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         revalidateSound(sound.id);
 
         return t('soundCard.uploadSoundToDiscordModal.toast.soundUploaded', { soundName: sound.name });
-      },
-      error: error => {
-        enableButton('upload-sound-to-discord', 'upload');
-
-        return error;
       }
     });
   }
 
-  const { openModal, openedModals, updateModal, closeModal, disableButton, enableButton } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
-    openedModals: state.openedModals,
-    updateModal: state.updateModal,
+  const { closeModal, disableButton, enableButton, openedModals, openModal, updateModal } = useModalsStore(useShallow(state => ({
     closeModal: state.closeModal,
     disableButton: state.disableButton,
-    enableButton: state.enableButton
+    enableButton: state.enableButton,
+    openedModals: state.openedModals,
+    openModal: state.openModal,
+    updateModal: state.updateModal
   })));
 
   const selectedGuildId = useGeneralStore(state => state.uploadSoundToDiscordModal.selectedGuildId);
@@ -138,16 +138,16 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
       updateModal('upload-sound-to-discord', {
         buttons: [
           {
+            actionType: 'close',
             id: 'cancel',
             label: t('buttons.cancel'),
-            variant: 'ghost',
-            actionType: 'close'
+            variant: 'ghost'
           },
           {
+            action: () => continueUploadSoundToGuild(selectedGuildId),
             id: 'upload',
             label: t('buttons.upload'),
-            variant: 'solid',
-            action: () => continueUploadSoundToGuild(selectedGuildId)
+            variant: 'solid'
           }
         ]
       });
@@ -156,26 +156,26 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     }
 
     openModal('upload-sound-to-discord', {
+      buttons: [
+        {
+          actionType: 'close',
+          id: 'cancel',
+          label: 'Cancel',
+          variant: 'ghost'
+        },
+        {
+          action: () => continueUploadSoundToGuild(selectedGuildId),
+          id: 'uplaod',
+          label: 'Upload',
+          variant: 'solid'
+        }
+      ],
+      content: <UploadSoundToDiscordModal guilds={uploadableGuilds} />,
+      description: t('soundCard.uploadSoundToDiscordModal.description'),
       title: <>
         <PiWaveformBold className='mr-1 inline' />
         {sound.name}
-      </>,
-      description: t('soundCard.uploadSoundToDiscordModal.description'),
-      content: <UploadSoundToDiscordModal guilds={uploadableGuilds} />,
-      buttons: [
-        {
-          id: 'cancel',
-          label: 'Cancel',
-          variant: 'ghost',
-          actionType: 'close'
-        },
-        {
-          id: 'uplaod',
-          label: 'Upload',
-          variant: 'solid',
-          action: () => continueUploadSoundToGuild(selectedGuildId)
-        }
-      ]
+      </>
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -191,12 +191,12 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
         {renderConfetti && (
           <Lottie
-            options={{
-              loop: false,
-              autoplay: true,
-              animationData: confetti
-            }}
             height='100%'
+            options={{
+              animationData: confetti,
+              autoplay: true,
+              loop: false
+            }}
             width='100%'
           />
         )}
@@ -236,8 +236,8 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         <div className='flex gap-x-2'>
           <button
             className='text-lg hover:opacity-60 disabled:pointer-events-none disabled:opacity-60'
-            onClick={handleLike}
             disabled={loading}
+            onClick={handleLike}
           >
             {loading ? (
               <TbLoader className='animate-spin' />
@@ -256,12 +256,12 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
                   theme === 'dark' ? 'bg-white text-black' : ' bg-black text-white',
                   loggedIn && (theme === 'dark' ? 'hover:bg-white/70' : 'hover:bg-black/70')
                 )}
+                disabled={!loggedIn || uploadToDiscordButtonLoading}
                 onClick={() => {
                   if (!loggedIn) return;
 
                   uploadToDiscord();
                 }}
-                disabled={!loggedIn || uploadToDiscordButtonLoading}
               >
                 {uploadToDiscordButtonLoading ? (
                   <TbLoader className='animate-spin' />

@@ -1,33 +1,10 @@
-import { create } from 'zustand';
-import { toast } from 'sonner';
 import fetchServers from '@/lib/request/servers/fetchServers';
+import { toast } from 'sonner';
+import { create } from 'zustand';
 
 const useSearchStore = create((set, get) => ({
-  loading: true,
-  setLoading: loading => set({ loading }),
-  search: '',
-  setSearch: search => set({ search }),
-  page: 1,
-  setPage: page => set({ page }),
-  limit: 12,
-  setLimit: limit => set({ limit }),
   category: 'All',
-  setCategory: category => {
-    set({ category, page: 1 });
-
-    get().fetchServers(get().search);
-  },
-  sort: 'Votes',
-  setSort: sort => {
-    set({ sort, page: 1 });
-
-    get().fetchServers(get().search);
-  },
-  servers: [],
-  setServers: servers => set({ servers }),
-  maxReached: false,
-  totalServers: 0,
-  setTotalServers: totalServers => set({ totalServers }),
+  currentDataType: 'votes',
   fetchServers: async (search, page, limit, category, sort) => {
     if (page) set({ page });
     if (limit) set({ limit });
@@ -37,14 +14,37 @@ const useSearchStore = create((set, get) => ({
     set({ loading: true, search });
 
     fetchServers(search, get().page, get().limit, get().category, get().sort)
-      .then(data => set({ servers: data.servers, loading: false, maxReached: data.maxReached, totalServers: data.total }))
+      .then(data => set({ loading: false, maxReached: data.maxReached, servers: data.servers, totalServers: data.total }))
       .catch(error => {
         toast.error(error);
         set({ loading: false });
       });
   },
-  currentDataType: 'votes',
-  setCurrentDataType: currentDataType => set({ currentDataType })
+  limit: 12,
+  loading: true,
+  maxReached: false,
+  page: 1,
+  search: '',
+  servers: [],
+  setCategory: category => {
+    set({ category, page: 1 });
+
+    get().fetchServers(get().search);
+  },
+  setCurrentDataType: currentDataType => set({ currentDataType }),
+  setLimit: limit => set({ limit }),
+  setLoading: loading => set({ loading }),
+  setPage: page => set({ page }),
+  setSearch: search => set({ search }),
+  setServers: servers => set({ servers }),
+  setSort: sort => {
+    set({ page: 1, sort });
+
+    get().fetchServers(get().search);
+  },
+  setTotalServers: totalServers => set({ totalServers }),
+  sort: 'Votes',
+  totalServers: 0
 }));
 
 export default useSearchStore;

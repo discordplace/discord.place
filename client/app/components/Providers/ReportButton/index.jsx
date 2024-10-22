@@ -1,17 +1,17 @@
 'use client';
 
+import ReportableArea from '@/app/components/ReportableArea';
+import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
+import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
+import { t } from '@/stores/language';
+import { motion, useAnimationControls } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
-import Tooltip from '@/app/components/Tooltip';
 import { HiFlag } from 'react-icons/hi';
-import useGeneralStore from '@/stores/general';
 import { IoClose } from 'react-icons/io5';
-import cn from '@/lib/cn';
-import { motion, useAnimationControls } from 'framer-motion';
 import { MdBugReport } from 'react-icons/md';
-import ReportableArea from '@/app/components/ReportableArea';
-import useAuthStore from '@/stores/auth';
-import { t } from '@/stores/language';
 
 export default function ReportButtonProvider() {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -52,8 +52,8 @@ export default function ReportButtonProvider() {
 
   return (
     <motion.div
-      className='fixed bottom-4 right-4 z-[999]'
       animate={animate}
+      className='fixed bottom-4 right-4 z-[999]'
     >
       <Tooltip content={t('inAppReporting.tooltip.hide')}>
         <button
@@ -81,10 +81,10 @@ export default function ReportButtonProvider() {
 
       {showReportableAreas && (
         <ReportableArea
-          triggerButtonRef={reportSomethingTriggerButtonRef}
           active={false}
-          type='something'
           identifier={`report-something-${pathname}`}
+          triggerButtonRef={reportSomethingTriggerButtonRef}
+          type='something'
         />
       )}
 

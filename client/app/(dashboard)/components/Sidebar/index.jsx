@@ -1,39 +1,39 @@
 'use client';
 
-import useThemeStore from '@/stores/theme';
-import Image from 'next/image';
-import { Bricolage_Grotesque } from 'next/font/google';
-import cn from '@/lib/cn';
-import { MdAccountCircle, MdEmojiEmotions, MdHome, MdSync } from 'react-icons/md';
-import useDashboardStore from '@/stores/dashboard';
-import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
-import { FaCompass, FaEye, FaUsers } from 'react-icons/fa';
-import { MdMyLocation } from 'react-icons/md';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { FaUserTimes } from 'react-icons/fa';
-import config from '@/config';
-import { SiGoogleanalytics } from 'react-icons/si';
-import { HiTemplate } from 'react-icons/hi';
-import { CgBlock } from 'react-icons/cg';
-import { PiWaveformBold } from 'react-icons/pi';
-import { FiLink } from 'react-icons/fi';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import useAuthStore from '@/stores/auth';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { useRouter } from 'next-nprogress-bar';
-import { IoMdLogOut } from 'react-icons/io';
-import logout from '@/lib/request/auth/logout';
-import { toast } from 'sonner';
 import BlockItem from '@/app/(dashboard)/components/Sidebar/BlockItem';
 import CollapseIcon from '@/app/(dashboard)/components/Sidebar/Icons/Collapse';
-import { BiSolidChevronRight } from 'react-icons/bi';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Tooltip from '@/app/components/Tooltip';
-import Link from 'next/link';
-import { useMedia } from 'react-use';
-import { useEffect } from 'react';
+import config from '@/config';
+import cn from '@/lib/cn';
+import logout from '@/lib/request/auth/logout';
 import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
+import useAuthStore from '@/stores/auth';
+import useDashboardStore from '@/stores/dashboard';
+import useThemeStore from '@/stores/theme';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { Bricolage_Grotesque } from 'next/font/google';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect } from 'react';
+import { BiSolidChevronRight } from 'react-icons/bi';
+import { CgBlock } from 'react-icons/cg';
+import { FaCompass, FaEye, FaUsers } from 'react-icons/fa';
+import { FaUserTimes } from 'react-icons/fa';
+import { FiLink } from 'react-icons/fi';
+import { HiTemplate } from 'react-icons/hi';
+import { IoMdLogOut } from 'react-icons/io';
+import { MdAccountCircle, MdEmojiEmotions, MdHome, MdSync } from 'react-icons/md';
+import { MdMyLocation } from 'react-icons/md';
+import { PiWaveformBold } from 'react-icons/pi';
+import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
+import { SiGoogleanalytics } from 'react-icons/si';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { useMedia } from 'react-use';
+import { toast } from 'sonner';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -43,64 +43,64 @@ export default function Sidebar() {
 
   const blocks = [
     {
+      icon: MdHome,
       id: 'home',
-      name: 'Home',
-      icon: MdHome
+      name: 'Home'
     },
     {
+      icon: FaUsers,
       id: 'users',
-      name: 'Users',
-      icon: FaUsers
+      name: 'Users'
     },
     {
+      icon: FaCompass,
       id: 'guilds',
-      name: 'Guilds',
-      icon: FaCompass
+      name: 'Guilds'
     },
     {
       name: 'Queues',
       tabs: [
         {
-          id: 'emojisQueue',
-          name: 'Emojis',
-          icon: MdEmojiEmotions,
+          badge: data?.importantCounts?.emojis,
           disabled: data?.permissions?.canApproveEmojis === false,
-          badge: data?.importantCounts?.emojis
+          icon: MdEmojiEmotions,
+          id: 'emojisQueue',
+          name: 'Emojis'
         },
         {
-          id: 'botsQueue',
-          name: 'Bots',
-          icon: RiRobot2Fill,
+          badge: data?.importantCounts?.bots,
           disabled: data?.permissions?.canApproveBots === false,
-          badge: data?.importantCounts?.bots
+          icon: RiRobot2Fill,
+          id: 'botsQueue',
+          name: 'Bots'
         },
         {
-          id: 'templatesQueue',
-          name: 'Templates',
-          icon: HiTemplate,
+          badge: data?.importantCounts?.templates,
           disabled: data?.permissions?.canApproveTemplates === false,
-          badge: data?.importantCounts?.templates
+          icon: HiTemplate,
+          id: 'templatesQueue',
+          name: 'Templates'
         },
         {
-          id: 'soundsQueue',
-          name: 'Sounds',
-          icon: PiWaveformBold,
+          badge: data?.importantCounts?.sounds,
           disabled: data?.permissions?.canApproveSounds === false,
-          badge: data?.importantCounts?.sounds
+          icon: PiWaveformBold,
+          id: 'soundsQueue',
+          name: 'Sounds'
         },
         {
-          id: 'reviewsQueue',
-          name: 'Reviews',
-          icon: FaEye,
+          badge: data?.importantCounts?.reviews,
           disabled: data?.permissions?.canApproveReviews === false && data?.permissions?.canDeleteReviews === false,
-          badge: data?.importantCounts?.reviews
+          icon: FaEye,
+          id: 'reviewsQueue',
+          name: 'Reviews'
         },
         {
-          id: 'themesQueue',
-          name: 'Themes',
-          icon: RiBrush2Fill,
+          badge: data?.importantCounts?.themes,
           disabled: data?.permissions?.canApproveThemes === false,
-          badge: data?.importantCounts?.themes
+          icon: RiBrush2Fill,
+          id: 'themesQueue',
+          name: 'Themes'
         }
       ]
     },
@@ -108,52 +108,52 @@ export default function Sidebar() {
       name: 'Extra',
       tabs: [
         {
-          id: 'links',
-          name: 'Links',
+          disabled: data?.permissions?.canDeleteLinks === false,
           icon: FiLink,
-          disabled: data?.permissions?.canDeleteLinks === false
+          id: 'links',
+          name: 'Links'
         },
         {
-          id: 'botDenies',
-          name: `Bot Denies${data?.botDenies?.length ? ` (${data.botDenies.length})` : ''}`,
+          disabled: data?.permissions?.canDeleteBotDenies === false,
           icon: FaUserTimes,
-          disabled: data?.permissions?.canDeleteBotDenies === false
+          id: 'botDenies',
+          name: `Bot Denies${data?.botDenies?.length ? ` (${data.botDenies.length})` : ''}`
         },
         {
-          id: 'timeouts',
-          name: 'Timeouts',
+          disabled: data?.permissions?.canViewTimeouts === false || data?.permissions?.canDeleteTimeouts === false,
           icon: TbSquareRoundedChevronUp,
-          disabled: data?.permissions?.canViewTimeouts === false || data?.permissions?.canDeleteTimeouts === false
+          id: 'timeouts',
+          name: 'Timeouts'
         },
         {
-          id: 'quarantines',
-          name: 'Quarantines',
+          disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false,
           icon: CgBlock,
-          disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false
+          id: 'quarantines',
+          name: 'Quarantines'
         },
         {
-          id: 'blockedIPs',
-          name: `Blocked IPs${data?.blockedIps?.length ? ` (${data.blockedIps.length})` : ''}`,
+          disabled: data?.permissions?.canViewBlockedIps === false || data?.permissions?.canDeleteBlockedIps === false,
           icon: MdMyLocation,
-          disabled: data?.permissions?.canViewBlockedIps === false || data?.permissions?.canDeleteBlockedIps === false
+          id: 'blockedIPs',
+          name: `Blocked IPs${data?.blockedIps?.length ? ` (${data.blockedIps.length})` : ''}`
         },
         {
-          type: 'redirect',
-          id: 'analytics',
           href: `${config.analytics.url}/websites/${config.analytics.websiteId}`,
+          icon: SiGoogleanalytics,
+          id: 'analytics',
           name: 'Analytics',
-          icon: SiGoogleanalytics
+          type: 'redirect'
         },
         {
+          disabled: data?.permissions?.canSyncLemonSqueezyPlans === false,
+          icon: MdSync,
           id: 'syncPlans',
           name: 'Sync Plans',
-          icon: MdSync,
           onClick: () => toast.promise(syncLemonSqueezyPlans(), {
+            error: message => message,
             loading: 'Syncing Lemon Squeezy plans..',
-            success: () => 'Successfully synced Lemon Squeezy plans.',
-            error: message => message
-          }),
-          disabled: data?.permissions?.canSyncLemonSqueezyPlans === false
+            success: () => 'Successfully synced Lemon Squeezy plans.'
+          })
         }
       ]
     }
@@ -165,14 +165,14 @@ export default function Sidebar() {
 
   function logOut() {
     toast.promise(logout(), {
+      error: message => message,
       loading: 'Please wait while we log you out..',
       success: () => {
         setLoggedIn(false);
         setUser(null);
 
         return 'Logged out successfully.';
-      },
-      error: message => message
+      }
     });
   }
 
@@ -204,11 +204,11 @@ export default function Sidebar() {
             href='/'
           >
             <Image
-              src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
-              width={64}
-              height={64}
               alt='discord.place Logo'
               className='size-6'
+              height={64}
+              src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+              width={64}
             />
 
             <h1
@@ -236,15 +236,15 @@ export default function Sidebar() {
                 {isCollapsed ? (
                   <BiSolidChevronRight
                     className='text-secondary hover:text-tertiary'
-                    size={20}
                     onClick={() => setIsCollapsed(!isCollapsed)}
+                    size={20}
                   />
                 ) : (
                   <CollapseIcon
                     className='text-secondary hover:text-tertiary'
                     height={20}
-                    width={20}
                     onClick={() => setIsCollapsed(!isCollapsed)}
+                    width={20}
                   />
                 )}
               </span>
@@ -255,20 +255,20 @@ export default function Sidebar() {
         <div className='mt-8 flex w-full flex-col gap-y-1 pl-4'>
           {blocks.filter(({ tabs }) => !tabs).map(block => (
             <BlockItem
-              key={block.id}
-              id={block.id}
-              name={block.name}
               icon={block.icon}
+              id={block.id}
+              key={block.id}
+              name={block.name}
             />
           ))}
 
           {blocks.filter(({ tabs }) => tabs).map(block => (
             <div
-              key={block.id}
               className={cn(
                 'flex flex-col gap-y-1',
                 !isCollapsed && 'mt-3'
               )}
+              key={block.id}
             >
               <span
                 className={cn(
@@ -289,14 +289,14 @@ export default function Sidebar() {
               <div className='flex flex-col gap-y-1'>
                 {block.tabs.map(tab => (
                   <BlockItem
-                    key={tab.id}
-                    id={tab.id}
-                    name={tab.name}
-                    icon={tab.icon}
-                    href={tab.href}
-                    onClick={tab.onClick}
                     badge={tab.badge}
                     disabled={tab.disabled}
+                    href={tab.href}
+                    icon={tab.icon}
+                    id={tab.id}
+                    key={tab.id}
+                    name={tab.name}
+                    onClick={tab.onClick}
                   />
                 ))}
               </div>
@@ -313,12 +313,12 @@ export default function Sidebar() {
               )}
             >
               <UserAvatar
-                id={user?.id}
+                className='min-h-[36px] min-w-[36px] rounded-full'
                 hash={user?.avatar}
+                height={36}
+                id={user?.id}
                 size={64}
                 width={36}
-                height={36}
-                className='min-h-[36px] min-w-[36px] rounded-full'
               />
 
               <div
@@ -344,8 +344,8 @@ export default function Sidebar() {
                 'z-10 flex flex-col p-1.5 mb-4 border outline-none min-w-[235px] bg-secondary rounded-xl border-primary',
                 isCollapsed ? 'shadow-[0px_-15px_20px_0px_rgba(var(--bg-background))]' : 'shadow-[0px_-15px_20px_0px_rgba(var(--bg-secondary))]'
               )}
-              sideOffset={5}
               side={isCollapsed ? 'right' : 'bottom'}
+              sideOffset={5}
             >
               <DropdownMenu.Item
                 className='flex cursor-pointer items-center gap-x-2 rounded-xl px-2.5 py-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'

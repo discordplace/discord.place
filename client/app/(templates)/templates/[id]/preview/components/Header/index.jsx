@@ -1,14 +1,14 @@
 'use client';
 
+import HelpIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Help';
+import InboxIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Inbox';
+import MemberListIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/MemberList';
+import NotificationSettingsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/NotificationSettings';
+import PinnedMessagesIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/PinnedMessages';
+import SearchIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Search';
 import TextChannelIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/TextChannel';
 import TextChannelNSFWIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/TextChannelNSFW';
 import ThreadsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Threads';
-import NotificationSettingsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/NotificationSettings';
-import PinnedMessagesIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/PinnedMessages';
-import MemberListIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/MemberList';
-import InboxIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Inbox';
-import HelpIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Help';
-import SearchIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Search';
 import Tooltip from '@/app/components/Tooltip/Discord';
 import { t } from '@/stores/language';
 

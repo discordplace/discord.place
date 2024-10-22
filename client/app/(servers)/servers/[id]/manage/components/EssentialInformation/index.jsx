@@ -1,14 +1,14 @@
 'use client';
 
-import { FaDisplay } from 'react-icons/fa6';
 import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 import { t } from '@/stores/language';
+import { FaDisplay } from 'react-icons/fa6';
 
-export default function EssentialInformation({ description, setDescription, inviteURL, setInviteURL }) {
+export default function EssentialInformation({ description, inviteURL, setDescription, setInviteURL }) {
   return (
     <div className='flex w-full flex-col gap-y-4'>
       <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
-        <FaDisplay size={24} className='text-purple-500' />
+        <FaDisplay className='text-purple-500' size={24} />
         {t('serverManagePage.essentialInformation.title')}
       </h3>
 
@@ -18,20 +18,20 @@ export default function EssentialInformation({ description, setDescription, invi
 
       <div className='mt-4 flex w-full flex-col gap-8'>
         <Input
-          label={t('serverManagePage.essentialInformation.inputs.description.label')}
+          className='h-[150px]'
           description={t('serverManagePage.essentialInformation.inputs.description.description')}
+          label={t('serverManagePage.essentialInformation.inputs.description.label')}
+          onChange={event => setDescription(event.target.value)}
           placeholder={t('serverManagePage.essentialInformation.inputs.description.placeholder')}
           type='paragraph'
-          onChange={event => setDescription(event.target.value)}
           value={description}
-          className='h-[150px]'
         />
 
         <Input
-          label={t('serverManagePage.essentialInformation.inputs.inviteUrl.label')}
           description={t('serverManagePage.essentialInformation.inputs.inviteUrl.description')}
-          placeholder={t('serverManagePage.essentialInformation.inputs.inviteUrl.placeholder')}
+          label={t('serverManagePage.essentialInformation.inputs.inviteUrl.label')}
           onChange={event => setInviteURL(event.target.value)}
+          placeholder={t('serverManagePage.essentialInformation.inputs.inviteUrl.placeholder')}
           value={inviteURL}
         />
       </div>

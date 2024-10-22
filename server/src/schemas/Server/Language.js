@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const ServerLanguageSchema = new Schema({
   id: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   },
   language: {
-    type: String,
+    default: config.availableLocales.find(locale => locale.default).code,
     required: false,
-    default: config.availableLocales.find(locale => locale.default).code
+    type: String
   }
 }, {
   timestamps: true

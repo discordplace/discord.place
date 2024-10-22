@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
-import useAuthStore from '@/stores/auth';
-import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
-import useLanguageStore from '@/stores/language';
-import useGeneralStore from '@/stores/general';
 import config from '@/config';
+import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
+import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
+import useLanguageStore from '@/stores/language';
+import { useEffect } from 'react';
 
 export default function AuthProvider({ children }) {
   const user = useAuthStore(state => state.user);

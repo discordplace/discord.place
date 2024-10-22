@@ -1,15 +1,15 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
-const { body, matchedData } = require('express-validator');
-const nameValidation = require('@/validations/links/name');
-const destinationURLValidation = require('@/validations/links/destinationURL');
 const Link = require('@/schemas/Link');
-const crypto = require('node:crypto');
-const getValidationError = require('@/utils/getValidationError');
 const User = require('@/schemas/User');
-const Discord = require('discord.js');
+const getValidationError = require('@/utils/getValidationError');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const destinationURLValidation = require('@/validations/links/destinationURL');
+const nameValidation = require('@/validations/links/name');
+const bodyParser = require('body-parser');
+const Discord = require('discord.js');
+const { body, matchedData } = require('express-validator');
+const crypto = require('node:crypto');
 
 module.exports = {
   post: [
@@ -24,7 +24,7 @@ module.exports = {
       .custom(destinationURLValidation),
     validateRequest,
     async (request, response) => {
-      const { name, destinationURL } = matchedData(request);
+      const { destinationURL, name } = matchedData(request);
 
       const foundLink = await Link.findOne({ name: name.toLocaleLowerCase('en-US') });
       if (foundLink) return response.sendError('Link name is already in use.', 400);
@@ -40,11 +40,11 @@ module.exports = {
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
       const link = new Link({
-        id,
         createdBy: {
           id: request.user.id,
           username: requestUser.username
         },
+        id,
         name: name.toLocaleLowerCase('en-US'),
         redirectTo: destinationURL
       });
@@ -57,12 +57,12 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setTitle('New Link')
-          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
+          .setAuthor({ iconURL: requestUser.displayAvatarURL(), name: requestUser.username })
           .setFields([
             {
+              inline: true,
               name: 'Name',
-              value: `${name.toLocaleLowerCase('en-US')} (${id})`,
-              inline: true
+              value: `${name.toLocaleLowerCase('en-US')} (${id})`
             },
             {
               name: 'Destination URL',
@@ -83,7 +83,7 @@ module.exports = {
           )
       ];
 
-      client.channels.cache.get(config.linksLogsChannelId).send({ embeds, components });
+      client.channels.cache.get(config.linksLogsChannelId).send({ components, embeds });
 
       return response.status(204).end();
     }

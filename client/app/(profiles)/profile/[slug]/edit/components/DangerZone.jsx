@@ -1,24 +1,29 @@
 'use client';
 
-import { toast } from 'sonner';
 import deleteProfile from '@/lib/request/profiles/deleteProfile';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
 import { t } from '@/stores/language';
+import useModalsStore from '@/stores/modals';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function DangerZone({ profile }) {
-  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+  const { closeModal, disableButton, enableButton, openModal } = useModalsStore(useShallow(state => ({
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   function continueDeleteProfile() {
     disableButton('delete-profile', 'confirm');
 
     toast.promise(deleteProfile(profile.slug), {
+      error: message => {
+        enableButton('delete-profile', 'confirm');
+
+        return message;
+      },
       loading: t('editProfilePage.toast.deletingProfile'),
       success: () => {
         closeModal('delete-profile');
@@ -27,11 +32,6 @@ export default function DangerZone({ profile }) {
         window.location.href = '/profiles';
 
         return t('editProfilePage.toast.profileDeleted');
-      },
-      error: message => {
-        enableButton('delete-profile', 'confirm');
-
-        return message;
       }
     });
   }
@@ -52,27 +52,27 @@ export default function DangerZone({ profile }) {
           className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
           onClick={() =>
             openModal('delete-profile', {
-              title: t('editProfilePage.dangerZone.deleteProfileModal.title'),
-              description: t('editProfilePage.dangerZone.deleteProfileModal.description'),
+              buttons: [
+                {
+                  actionType: 'close',
+                  id: 'cancel',
+                  label: t('buttons.cancel'),
+                  variant: 'ghost'
+                },
+                {
+                  action: continueDeleteProfile,
+                  id: 'confirm',
+                  label: t('buttons.delete'),
+                  variant: 'solid'
+                }
+              ],
               content: (
                 <p className='text-sm text-tertiary'>
                   {t('editProfilePage.dangerZone.deleteProfileModal.note', { br: <br /> })}
                 </p>
               ),
-              buttons: [
-                {
-                  id: 'cancel',
-                  label: t('buttons.cancel'),
-                  variant: 'ghost',
-                  actionType: 'close'
-                },
-                {
-                  id: 'confirm',
-                  label: t('buttons.delete'),
-                  variant: 'solid',
-                  action: continueDeleteProfile
-                }
-              ]
+              description: t('editProfilePage.dangerZone.deleteProfileModal.description'),
+              title: t('editProfilePage.dangerZone.deleteProfileModal.title')
             })
           }
         >

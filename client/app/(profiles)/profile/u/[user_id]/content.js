@@ -1,22 +1,22 @@
 'use client';
 
-import Tooltip from '@/app/components/Tooltip';
-import Image from 'next/image';
-import { FaDiscord } from 'react-icons/fa';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { BiSolidInfoCircle } from 'react-icons/bi';
-import { FaLink } from 'react-icons/fa6';
-import { MdOutlineArrowOutward } from 'react-icons/md';
-import Link from 'next/link';
-import { IoMdHeart } from 'react-icons/io';
-import { HiCheck } from 'react-icons/hi';
-import cn from '@/lib/cn';
-import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
-import useThemeStore from '@/stores/theme';
-import useLanguageStore, { t } from '@/stores/language';
-import config from '@/config';
+import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import ReportableArea from '@/app/components/ReportableArea';
+import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
+import cn from '@/lib/cn';
+import useLanguageStore, { t } from '@/stores/language';
+import useThemeStore from '@/stores/theme';
+import Image from 'next/image';
+import Link from 'next/link';
+import { BiSolidInfoCircle } from 'react-icons/bi';
+import { FaDiscord } from 'react-icons/fa';
+import { FaLink } from 'react-icons/fa6';
+import { HiCheck } from 'react-icons/hi';
+import { IoMdHeart } from 'react-icons/io';
+import { MdOutlineArrowOutward } from 'react-icons/md';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 
 function StatBlock({ fields, index }) {
   return (
@@ -24,7 +24,7 @@ function StatBlock({ fields, index }) {
       alignItems: index % 2 === 0 ? 'flex-start' : 'flex-end'
     }}>
       <div className='flex w-full flex-col gap-y-2 rounded-[2rem] bg-background px-4 py-2'>
-        {fields.map(({ Icon, label, value, tooltip, disabled }, index) => (
+        {fields.map(({ disabled, Icon, label, tooltip, value }, index) => (
           <>
             <div
               className={cn(
@@ -66,19 +66,19 @@ export default function Content({ user }) {
   const language = useLanguageStore(state => state.language);
 
   const userFlags = {
-    'Staff': t('userProfile.flags.Staff'),
-    'Partner': t('userProfile.flags.Partner'),
-    'Hypesquad': t('userProfile.flags.Hypesquad'),
+    'ActiveDeveloper': t('userProfile.flags.ActiveDeveloper'),
     'BugHunterLevel1': t('userProfile.flags.BugHunterLevel1'),
     'BugHunterLevel2': t('userProfile.flags.BugHunterLevel2'),
+    'CertifiedModerator': t('userProfile.flags.CertifiedModerator'),
+    'Hypesquad': t('userProfile.flags.Hypesquad'),
     'HypeSquadOnlineHouse1': t('userProfile.flags.HypeSquadOnlineHouse1'),
     'HypeSquadOnlineHouse2': t('userProfile.flags.HypeSquadOnlineHouse2'),
     'HypeSquadOnlineHouse3': t('userProfile.flags.HypeSquadOnlineHouse3'),
+    'Nitro': t('userProfile.flags.Nitro'),
+    'Partner': t('userProfile.flags.Partner'),
     'PremiumEarlySupporter': t('userProfile.flags.PremiumEarlySupporter'),
-    'VerifiedDeveloper': t('userProfile.flags.VerifiedDeveloper'),
-    'CertifiedModerator': t('userProfile.flags.CertifiedModerator'),
-    'ActiveDeveloper': t('userProfile.flags.ActiveDeveloper'),
-    'Nitro': t('userProfile.flags.Nitro')
+    'Staff': t('userProfile.flags.Staff'),
+    'VerifiedDeveloper': t('userProfile.flags.VerifiedDeveloper')
   };
 
   const flagsPositions = [
@@ -103,11 +103,11 @@ export default function Content({ user }) {
         {user.bannerURL ? (
           <div className='relative'>
             <Image
-              src={user.bannerURL}
               alt={`${user.username}'s banner`}
-              width={1024}
-              height={256}
               className='h-[200px] rounded-[2.5rem] object-cover'
+              height={256}
+              src={user.bannerURL}
+              width={1024}
             />
 
             {user.bannerURL.includes('.gif') && (
@@ -122,12 +122,12 @@ export default function Content({ user }) {
 
         <div className='pointer-events-none relative bottom-16 left-8 -mb-12 flex w-full items-center sm:mb-[-7.5rem]'>
           <Image
-            src={user.avatarURL || 'https://cdn.discordapp.com/embed/avatars/0.png'}
             alt={`${user.username}'s avatar`}
-            width={128}
+            className='size-[100px] rounded-full border-8 border-[rgba(var(--bg-secondary))] sm:size-[128px]'
             height={128}
             objectFit='cover'
-            className='size-[100px] rounded-full border-8 border-[rgba(var(--bg-secondary))] sm:size-[128px]'
+            src={user.avatarURL || 'https://cdn.discordapp.com/embed/avatars/0.png'}
+            width={128}
           />
         </div>
 
@@ -144,14 +144,14 @@ export default function Content({ user }) {
                     .sort((a, b) => flagsPositions.indexOf(a) - flagsPositions.indexOf(b))
                     .map(flag => (
                       <Tooltip
-                        key={flag}
                         content={userFlags[flag]}
+                        key={flag}
                       >
                         <Image
-                          src={`/user-flags/${flag}.svg`}
                           alt={`${flag} Badge`}
-                          width={18}
                           height={18}
+                          src={`/user-flags/${flag}.svg`}
+                          width={18}
                         />
                       </Tooltip>
                     ))}
@@ -183,14 +183,14 @@ export default function Content({ user }) {
                   .sort((a, b) => flagsPositions.indexOf(a) - flagsPositions.indexOf(b))
                   .map(flag => (
                     <Tooltip
-                      key={flag}
                       content={userFlags[flag]}
+                      key={flag}
                     >
                       <Image
-                        src={`/user-flags/${flag}.svg`}
                         alt={`${flag} Badge`}
-                        width={18}
                         height={18}
+                        src={`/user-flags/${flag}.svg`}
+                        width={18}
                       />
                     </Tooltip>
                   ))}
@@ -207,19 +207,19 @@ export default function Content({ user }) {
               {(user.profile?.badges || []).map(badgeId => (
                 <Tooltip
                   content={t(`badges.${badgeId}`, {
-                    premiumSince: user.subscriptionCreatedAt,
-                    lng: language,
                     formatParams: {
-                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                    }
+                      premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                    },
+                    lng: language,
+                    premiumSince: user.subscriptionCreatedAt
                   })}
                   key={badgeId}
                 >
                   <Image
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeId}.svg`}
                     alt={`${badgeId} Badge`}
-                    width={20}
                     height={20}
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeId}.svg`}
+                    width={20}
                   />
                 </Tooltip>
               ))}
@@ -261,19 +261,19 @@ export default function Content({ user }) {
               {(user.profile?.badges || []).map(badgeId => (
                 <Tooltip
                   content={t(`badges.${badgeId}`, {
-                    premiumSince: user.subscriptionCreatedAt,
-                    lng: language,
                     formatParams: {
-                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                    }
+                      premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                    },
+                    lng: language,
+                    premiumSince: user.subscriptionCreatedAt
                   })}
                   key={badgeId}
                 >
                   <Image
-                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeId}.svg`}
                     alt={`${badgeId} Badge`}
-                    width={20}
                     height={20}
+                    src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badgeId}.svg`}
+                    width={20}
                   />
                 </Tooltip>
               ))}
@@ -291,14 +291,14 @@ export default function Content({ user }) {
               {
                 Icon: FaDiscord,
                 label: t('userProfile.fields.memberSince'),
-                value: new Date(user.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })
+                value: new Date(user.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })
               },
               {
+                disabled: user.bot,
                 Icon: TbSquareRoundedChevronUp,
                 label: t('userProfile.fields.votesGiven.label'),
-                value: user.votesGiven || 0,
                 tooltip: t('userProfile.fields.votesGiven.tooltip'),
-                disabled: user.bot
+                value: user.votesGiven || 0
               }
             ]}
             index='0'
@@ -307,6 +307,7 @@ export default function Content({ user }) {
           <StatBlock
             fields={[
               {
+                disabled: user.bot,
                 Icon: FaLink,
                 label: t('userProfile.fields.profile.label'),
                 value: user.profile ? (
@@ -322,15 +323,14 @@ export default function Content({ user }) {
                       <MdOutlineArrowOutward />
                     </Link>
                   </div>
-                ) : t('userProfile.fields.profile.noProfile'),
-                disabled: user.bot
+                ) : t('userProfile.fields.profile.noProfile')
               },
               {
+                disabled: user.bot,
                 Icon: IoMdHeart,
                 label: t('userProfile.fields.likesReceived.label'),
-                value: user.profile?.likesCount || 0,
                 tooltip: t('userProfile.fields.likesReceived.tooltip'),
-                disabled: user.bot
+                value: user.profile?.likesCount || 0
               }
             ]}
             index='1'
@@ -353,34 +353,34 @@ export default function Content({ user }) {
               <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2'>
                 {user.servers.map(server => (
                   <ReportableArea
-                    key={server.id}
                     active={user?.id !== server.owner.id}
-                    type='server'
-                    metadata={{
-                      id: server.id,
-                      name: server.name,
-                      icon: server.icon,
-                      description: server.description
-                    }}
                     identifier={`server-${server.id}`}
+                    key={server.id}
+                    metadata={{
+                      description: server.description,
+                      icon: server.icon,
+                      id: server.id,
+                      name: server.name
+                    }}
+                    type='server'
                   >
                     <div className='flex'>
                       <ServerCard
+                        overridedSort='Votes'
                         server={{
-                          premium: server.premium,
+                          banner: server.banner,
+                          category: server.category,
                           data: {
                             members: server.total_members,
                             votes: server.votes
                           },
-                          joined_at: server.joined_at,
-                          id: server.id,
-                          banner: server.banner,
-                          icon: server.icon,
-                          name: server.name,
                           description: server.description,
-                          category: server.category
+                          icon: server.icon,
+                          id: server.id,
+                          joined_at: server.joined_at,
+                          name: server.name,
+                          premium: server.premium
                         }}
-                        overridedSort='Votes'
                       />
                     </div>
                   </ReportableArea>
@@ -402,17 +402,17 @@ export default function Content({ user }) {
               <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2'>
                 {user.bots.map(bot => (
                   <ReportableArea
-                    key={bot.id}
                     active={user?.id !== bot.owner.id}
-                    type='bot'
-                    metadata={{
-                      id: bot.id,
-                      username: bot.username,
-                      discriminator: bot.discriminator,
-                      avatar: bot.avatar,
-                      short_description: bot.short_description
-                    }}
                     identifier={`bot-${bot.id}`}
+                    key={bot.id}
+                    metadata={{
+                      avatar: bot.avatar,
+                      discriminator: bot.discriminator,
+                      id: bot.id,
+                      short_description: bot.short_description,
+                      username: bot.username
+                    }}
+                    type='bot'
                   >
                     <BotCard
                       data={bot}

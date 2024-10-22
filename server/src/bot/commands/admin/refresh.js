@@ -1,5 +1,5 @@
-const Discord = require('discord.js');
 const UserHashes = require('@/schemas/User/Hashes');
+const Discord = require('discord.js');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()

@@ -1,9 +1,9 @@
 const Profile = require('@/schemas/Profile');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
-const { param, matchedData } = require('express-validator');
 const bodyParser = require('body-parser');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const { matchedData, param } = require('express-validator');
 
 module.exports = {
   post: [
@@ -11,7 +11,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('slug')
       .isString().withMessage('Slug must be a string.')
-      .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
+      .isLength({ max: 32, min: 3 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     validateRequest,
     async (request, response) => {

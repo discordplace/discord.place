@@ -1,54 +1,54 @@
 'use client';
 
-import { IoEarth } from 'react-icons/io5';
-import { FaQuestion } from 'react-icons/fa6';
+import config from '@/config';
+import cn from '@/lib/cn';
+import addSocial from '@/lib/request/profiles/addSocial';
+import deleteSocial from '@/lib/request/profiles/deleteSocial';
+import revalidateProfile from '@/lib/revalidate/profile';
+import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
+import getIconPath from '@/lib/utils/profiles/getIconPath';
+import { t } from '@/stores/language';
+import useThemeStore from '@/stores/theme';
 import { nanoid } from 'nanoid';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdArrowOutward } from 'react-icons/md';
-import { useState, useEffect } from 'react';
-import useThemeStore from '@/stores/theme';
-import addSocial from '@/lib/request/profiles/addSocial';
-import deleteSocial from '@/lib/request/profiles/deleteSocial';
-import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
+import { FaQuestion } from 'react-icons/fa6';
 import { FiX } from 'react-icons/fi';
-import cn from '@/lib/cn';
-import config from '@/config';
-import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
-import getIconPath from '@/lib/utils/profiles/getIconPath';
-import revalidateProfile from '@/lib/revalidate/profile';
-import { t } from '@/stores/language';
+import { IoEarth } from 'react-icons/io5';
+import { MdArrowOutward } from 'react-icons/md';
+import { toast } from 'sonner';
 
 export default function Socials({ profile }) {
   const [socials, setSocials] = useState(profile.socials);
 
   const colors = {
-    instagram: '225 48 108',
-    x: '0 0 0',
-    twitter: '29 161 242',
-    tiktok: '255 0 80',
-    facebook: '66 103 178',
-    steam: '0 0 0',
-    github: '110 84 148',
-    twitch: '145 70 255',
-    youtube: '255 0 0',
-    telegram: '36 161 222',
     custom: '150 150 150',
-    unknown: '0 0 0'
+    facebook: '66 103 178',
+    github: '110 84 148',
+    instagram: '225 48 108',
+    steam: '0 0 0',
+    telegram: '36 161 222',
+    tiktok: '255 0 80',
+    twitch: '145 70 255',
+    twitter: '29 161 242',
+    unknown: '0 0 0',
+    x: '0 0 0',
+    youtube: '255 0 0'
   };
 
   const typeRegexps = {
-    instagram: /(?:http(?:s)?:\/\/)?(?:www\.)?instagram\.com\/([\w](?!.*?\.{2})[\w.]{1,28}[\w])/,
-    x: /(?:http(?:s)?:\/\/)?(?:www\.)?x\.com\/([a-zA-Z0-9_]+)/,
-    twitter: /(?:http(?:s)?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)/,
-    tiktok: /(?:http(?:s)?:\/\/)?(?:www\.)?tiktok\.com\/@([a-zA-Z0-9_]+)/,
+    custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/,
     facebook: /(?:http(?:s)?:\/\/)?(?:www\.)?facebook\.com\/([a-zA-Z0-9_]+)/,
-    steam: /(?:http(?:s)?:\/\/)?(?:www\.)?steamcommunity\.com\/id\/([a-zA-Z0-9_]+)/,
     github: /(?:http(?:s)?:\/\/)?(?:www\.)?github\.com\/([a-zA-Z0-9_]+)/,
-    twitch: /(?:http(?:s)?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/,
-    youtube: /(?:http(?:s)?:\/\/)?(?:www\.)?youtube\.com\/@([a-zA-Z0-9_]+)/,
+    instagram: /(?:http(?:s)?:\/\/)?(?:www\.)?instagram\.com\/([\w](?!.*?\.{2})[\w.]{1,28}[\w])/,
+    steam: /(?:http(?:s)?:\/\/)?(?:www\.)?steamcommunity\.com\/id\/([a-zA-Z0-9_]+)/,
     telegram: /(?:http(?:s)?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]+)/,
-    custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/
+    tiktok: /(?:http(?:s)?:\/\/)?(?:www\.)?tiktok\.com\/@([a-zA-Z0-9_]+)/,
+    twitch: /(?:http(?:s)?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/,
+    twitter: /(?:http(?:s)?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)/,
+    x: /(?:http(?:s)?:\/\/)?(?:www\.)?x\.com\/([a-zA-Z0-9_]+)/,
+    youtube: /(?:http(?:s)?:\/\/)?(?:www\.)?youtube\.com\/@([a-zA-Z0-9_]+)/
   };
 
   const theme = useThemeStore(state => state.theme);
@@ -82,6 +82,11 @@ export default function Socials({ profile }) {
 
         toast.promise(addSocial(profile.slug, `https://${match[0]}`, 'custom'),
           {
+            error: message => {
+              setLoading(false);
+
+              return message;
+            },
             loading: t('editProfilePage.toast.socialAdding'),
             success: newSocials => {
               setCurrentlyAddingNewSocial(false);
@@ -92,11 +97,6 @@ export default function Socials({ profile }) {
               revalidateProfile(profile.slug);
 
               return t('editProfilePage.toast.socialAdded');
-            },
-            error: message => {
-              setLoading(false);
-
-              return message;
             }
           }
         );
@@ -108,6 +108,11 @@ export default function Socials({ profile }) {
         const handle = match[1];
         toast.promise(addSocial(profile.slug, handle, newSocialType),
           {
+            error: message => {
+              setLoading(false);
+
+              return message;
+            },
             loading: t('editProfilePage.toast.socialMediaAdding'),
             success: newSocials => {
               setCurrentlyAddingNewSocial(false);
@@ -118,11 +123,6 @@ export default function Socials({ profile }) {
               revalidateProfile(profile.slug);
 
               return t('editProfilePage.toast.socialMediaAdded');
-            },
-            error: message => {
-              setLoading(false);
-
-              return message;
             }
           }
         );
@@ -135,6 +135,11 @@ export default function Socials({ profile }) {
 
     toast.promise(deleteSocial(profile.slug, id),
       {
+        error: message => {
+          setLoading(false);
+
+          return message;
+        },
         loading: t('editProfilePage.toast.deletingSocial'),
         success: newSocials => {
           setCurrentlyAddingNewSocial(false);
@@ -145,11 +150,6 @@ export default function Socials({ profile }) {
           revalidateProfile(profile.slug);
 
           return t('editProfilePage.toast.socialDeleted');
-        },
-        error: message => {
-          setLoading(false);
-
-          return message;
         }
       }
     );
@@ -184,7 +184,7 @@ export default function Socials({ profile }) {
                 </>
               ) : (
                 <>
-                  <Image src={getIconPath(social.type, theme)} width={20} height={20} alt={`${social.type} Icon`} />
+                  <Image alt={`${social.type} Icon`} height={20} src={getIconPath(social.type, theme)} width={20} />
                   <span className='w-full truncate'>
                     {social.handle}
                   </span>
@@ -193,7 +193,7 @@ export default function Socials({ profile }) {
             </div>
 
             <div className='flex gap-x-1'>
-              <button className='text-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => deleteSelectedSocial(social._id)} disabled={loading}>
+              <button className='text-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70' disabled={loading} onClick={() => deleteSelectedSocial(social._id)}>
                 <FiX size={18} />
               </button>
 
@@ -219,19 +219,19 @@ export default function Socials({ profile }) {
             ) : newSocialType === 'custom' ? (
               <IoEarth className='flex-auto' size={20} />
             ) : (
-              <Image src={getIconPath(newSocialType, theme)} width={20} height={20} alt={`${newSocialType} Icon`} />
+              <Image alt={`${newSocialType} Icon`} height={20} src={getIconPath(newSocialType, theme)} width={20} />
             )}
 
             <input
-              type='text'
-              value={newSocialValue}
+              autoComplete='off'
+              autoFocus
+              className='w-full bg-transparent font-medium text-secondary outline-none placeholder:text-placeholder disabled:pointer-events-none disabled:opacity-70'
+              disabled={loading}
               onChange={event => setNewSocialValue(event.target.value)}
               onKeyUp={event => event.key === 'Enter' && saveNewSocial()}
-              autoFocus
-              autoComplete='off'
               spellCheck='false'
-              disabled={loading}
-              className='w-full bg-transparent font-medium text-secondary outline-none placeholder:text-placeholder disabled:pointer-events-none disabled:opacity-70'
+              type='text'
+              value={newSocialValue}
             />
           </div>
         </div>
@@ -243,17 +243,17 @@ export default function Socials({ profile }) {
           )}
         >
           <button
-            className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-lg bg-tertiary text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => {
+            className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-lg bg-tertiary text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' disabled={loading}
+            onClick={() => {
               setCurrentlyAddingNewSocial(false);
               setNewSocialType('unknown');
               setNewSocialValue('');
             }}
-            disabled={loading}
           >
             {t('buttons.cancel')}
           </button>
 
-          <button className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-lg bg-tertiary text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={saveNewSocial} disabled={loading}>
+          <button className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-lg bg-tertiary text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' disabled={loading} onClick={saveNewSocial}>
             {t('buttons.add')}
           </button>
         </div>
@@ -264,8 +264,8 @@ export default function Socials({ profile }) {
               'flex w-full max-w-[calc(50%_-_1rem)] h-10 rounded-lg justify-center text-sm font-semibold border-primary border hover:bg-tertiary hover:border-[rgb(var(--bg-tertiary))] items-center gap-x-2 text-secondary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
               currentlyAddingNewSocial && 'hidden'
             )}
-            onClick={() => setCurrentlyAddingNewSocial(true)}
             disabled={loading}
+            onClick={() => setCurrentlyAddingNewSocial(true)}
           >
             {t('buttons.addNew')}
           </button>

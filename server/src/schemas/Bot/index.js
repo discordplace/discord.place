@@ -1,203 +1,210 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const categoriesValidation = require('@/validations/bots/categories');
-const inviteURLValidation = require('@/validations/bots/inviteUrl');
-const githubRepositoryValidation = require('@/validations/bots/githubRepository');
-const webhookUrlValidation = require('@/validations/bots/webhookUrl');
 const User = require('@/schemas/User');
-const encrypt = require('@/utils/encryption/encrypt');
 const decrypt = require('@/utils/encryption/decrypt');
+const encrypt = require('@/utils/encryption/encrypt');
 const getUserHashes = require('@/utils/getUserHashes');
+const categoriesValidation = require('@/validations/bots/categories');
+const githubRepositoryValidation = require('@/validations/bots/githubRepository');
+const inviteURLValidation = require('@/validations/bots/inviteUrl');
+const webhookUrlValidation = require('@/validations/bots/webhookUrl');
 
 const BotSchema = new Schema({
-  id: {
-    type: String,
-    required: true
-  },
-  data: {
-    type: Object,
-    required: false
-  },
-  owner: {
-    id: {
-      type: String,
-      required: true
+  api_key: {
+    encryptedText: {
+      required: false,
+      type: String
+    },
+    iv: {
+      required: false,
+      type: String
+    },
+    tag: {
+      required: false,
+      type: String
     }
   },
+  categories: {
+    required: true,
+    type: [
+      {
+        enum: config.botCategories,
+        type: String
+      }
+    ],
+    validate: {
+      message: ({ reason }) => reason.message,
+      validator: categoriesValidation
+    }
+  },
+  command_count: {
+    updatedAt: {
+      default: Date.now,
+      type: Date
+    },
+    value: {
+      default: 0,
+      type: Number
+    }
+  },
+  data: {
+    required: false,
+    type: Object
+  },
+  description: {
+    max: config.botDescriptionMaxLength,
+    min: config.botDescriptionMinLength,
+    required: true,
+    type: String
+  },
   extra_owners: {
+    default: [],
+    required: false,
     type: [
       {
         type: String
       }
-    ],
-    required: false,
-    default: []
-  },
-  short_description: {
-    type: String,
-    required: true,
-    min: config.botShortDescriptionMinLength,
-    max: config.botShortDescriptionMaxLength
-  },
-  description: {
-    type: String,
-    required: true,
-    min: config.botDescriptionMinLength,
-    max: config.botDescriptionMaxLength
-  },
-  invite_url: {
-    type: String,
-    required: true,
-    validate: {
-      validator: inviteURLValidation,
-      message: ({ reason }) => reason.message
-    }
-  },
-  categories: {
-    type: [
-      {
-        type: String,
-        enum: config.botCategories
-      }
-    ],
-    required: true,
-    validate: {
-      validator: categoriesValidation,
-      message: ({ reason }) => reason.message
-    }
-  },
-  support_server_id: {
-    type: String,
-    required: false
+    ]
   },
   github_repository: {
+    default: null,
+    required: false,
     type: String,
     validate: {
-      validator: githubRepositoryValidation,
-      message: ({ reason }) => reason.message
-    },
-    required: false,
-    default: null
-  },
-  webhook: {
-    url: {
-      type: String,
-      required: false,
-      validate: {
-        validator: webhookUrlValidation,
-        message: ({ reason }) => reason.message
-      }
-    },
-    token: {
-      type: String,
-      max: config.botWebhookTokenMaxLength,
-      required: false
-    },
-    records: [
-      {
-        url: {
-          type: String,
-          required: true
-        },
-        response_status_code: {
-          type: Number,
-          required: true
-        },
-        request_body: {
-          type: Object,
-          required: false
-        },
-        response_body: {
-          type: String,
-          required: false
-        },
-        created_at: {
-          type: Date,
-          required: true
-        }
-      }
-    ]
-  },
-  command_count: {
-    value: {
-      type: Number,
-      default: 0
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now
+      message: ({ reason }) => reason.message,
+      validator: githubRepositoryValidation
     }
   },
-  server_count: {
-    value: {
-      type: Number,
-      default: 0
-    },
-    updatedAt: {
-      type: Date,
-      default: 0
+  id: {
+    required: true,
+    type: String
+  },
+  invite_url: {
+    required: true,
+    type: String,
+    validate: {
+      message: ({ reason }) => reason.message,
+      validator: inviteURLValidation
     }
-  },
-  votes: {
-    type: Number,
-    default: 0
-  },
-  verified: {
-    type: Boolean,
-    default: false
-  },
-  voters: {
-    type: [
-      {
-        user: {
-          id: {
-            type: String,
-            required: true
-          },
-          username: {
-            type: String,
-            required: true
-          }
-        },
-        vote: {
-          type: Number,
-          required: true
-        },
-        lastVote: {
-          type: Date,
-          default: Date.now
-        }
-      }
-    ]
   },
   last_voter: {
+    date: {
+      type: Date
+    },
     user: {
       id: {
         type: String
       }
-    },
-    date: {
-      type: Date
     }
   },
-  api_key: {
-    iv: {
-      type: String,
-      required: false
+  owner: {
+    id: {
+      required: true,
+      type: String
+    }
+  },
+  server_count: {
+    updatedAt: {
+      default: 0,
+      type: Date
     },
-    encryptedText: {
-      type: String,
-      required: false
+    value: {
+      default: 0,
+      type: Number
+    }
+  },
+  short_description: {
+    max: config.botShortDescriptionMaxLength,
+    min: config.botShortDescriptionMinLength,
+    required: true,
+    type: String
+  },
+  support_server_id: {
+    required: false,
+    type: String
+  },
+  verified: {
+    default: false,
+    type: Boolean
+  },
+  voters: {
+    type: [
+      {
+        lastVote: {
+          default: Date.now,
+          type: Date
+        },
+        user: {
+          id: {
+            required: true,
+            type: String
+          },
+          username: {
+            required: true,
+            type: String
+          }
+        },
+        vote: {
+          required: true,
+          type: Number
+        }
+      }
+    ]
+  },
+  votes: {
+    default: 0,
+    type: Number
+  },
+  webhook: {
+    records: [
+      {
+        created_at: {
+          required: true,
+          type: Date
+        },
+        request_body: {
+          required: false,
+          type: Object
+        },
+        response_body: {
+          required: false,
+          type: String
+        },
+        response_status_code: {
+          required: true,
+          type: Number
+        },
+        url: {
+          required: true,
+          type: String
+        }
+      }
+    ],
+    token: {
+      max: config.botWebhookTokenMaxLength,
+      required: false,
+      type: String
     },
-    tag: {
+    url: {
+      required: false,
       type: String,
-      required: false
+      validate: {
+        message: ({ reason }) => reason.message,
+        validator: webhookUrlValidation
+      }
     }
   }
 }, {
-  timestamps: true,
   methods: {
+    encryptApiKey(apiKey) {
+      return encrypt(apiKey, process.env.BOT_API_KEY_ENCRYPT_SECRET);
+    },
+    getDecryptedApiKey() {
+      if (!this.api_key) return null;
+
+      return decrypt(this.api_key, process.env.BOT_API_KEY_ENCRYPT_SECRET);
+    },
     async toPubliclySafe() {
       const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
       const { StandedOutBot } = require('@/schemas/StandedOut');
@@ -225,11 +232,11 @@ const BotSchema = new Schema({
 
         Object.assign(newBot, {
           owner: {
-            id: user.id,
-            username: user.data.username,
             avatar: userHashes.avatar,
+            id: user.id,
             premium: !!ownerHasPremium,
-            subscriptionCreatedAt: ownerHasPremium ? new Date(user.subscription.createdAt).getTime() : null
+            subscriptionCreatedAt: ownerHasPremium ? new Date(user.subscription.createdAt).getTime() : null,
+            username: user.data.username
           }
         });
       } else {
@@ -244,36 +251,29 @@ const BotSchema = new Schema({
 
       return {
         ...newBot,
-        id: this.id,
-        username: this.data.username,
-        discriminator: this.data.discriminator,
-        flags: this.data.flags,
         avatar: botHashes.avatar,
         banner: botHashes.banner,
-        short_description: this.short_description,
-        description: this.description,
-        invite_url: this.invite_url,
         categories: this.categories,
         commands: this.command_count.value,
         commands_updated_at: this.command_count.updatedAt,
+        created_at: this.createdAt,
+        description: this.description,
+        discriminator: this.data.discriminator,
+        flags: this.data.flags,
+        github_repository: this.github_repository,
+        id: this.id,
+        invite_url: this.invite_url,
         servers: this.server_count.value,
         servers_updated_at: this.server_count.updatedAt,
-        votes: this.votes,
+        short_description: this.short_description,
         totalVoters: this.voters.length,
+        username: this.data.username,
         verified: this.verified,
-        github_repository: this.github_repository,
-        created_at: this.createdAt
+        votes: this.votes
       };
-    },
-    encryptApiKey(apiKey) {
-      return encrypt(apiKey, process.env.BOT_API_KEY_ENCRYPT_SECRET);
-    },
-    getDecryptedApiKey() {
-      if (!this.api_key) return null;
-
-      return decrypt(this.api_key, process.env.BOT_API_KEY_ENCRYPT_SECRET);
     }
-  }
+  },
+  timestamps: true
 });
 
 module.exports = mongoose.model('Bot', BotSchema);

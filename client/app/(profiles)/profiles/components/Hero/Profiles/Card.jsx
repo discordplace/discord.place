@@ -1,23 +1,23 @@
 'use client';
 
-import Image from 'next/image';
-import { FiArrowUpRight } from 'react-icons/fi';
-import { TbWorldShare } from 'react-icons/tb';
 import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import ReportableArea from '@/app/components/ReportableArea';
+import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';
-import useThemeStore from '@/stores/theme';
-import Tooltip from '@/app/components/Tooltip';
-import Link from 'next/link';
-import { colord, extend } from 'colord';
-import mixPlugin from 'colord/plugins/mix';
-import a11yPlugin from 'colord/plugins/a11y';
-import useLanguageStore, { t } from '@/stores/language';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import useSearchStore from '@/stores/profiles/search';
-import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
+import useLanguageStore, { t } from '@/stores/language';
+import useSearchStore from '@/stores/profiles/search';
+import useThemeStore from '@/stores/theme';
+import { colord, extend } from 'colord';
+import a11yPlugin from 'colord/plugins/a11y';
+import mixPlugin from 'colord/plugins/mix';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FiArrowUpRight } from 'react-icons/fi';
+import { TbWorldShare } from 'react-icons/tb';
 
 extend([
   mixPlugin,
@@ -29,9 +29,9 @@ export default function Card(props) {
   const language = useLanguageStore(state => state.language);
 
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
+    maximumFractionDigits: 2,
     notation: 'compact',
-    maximumFractionDigits: 2
+    style: 'decimal'
   });
 
   const theme = useThemeStore(state => state.theme);
@@ -56,15 +56,15 @@ export default function Card(props) {
   return (
     <ReportableArea
       active={user?.id !== props.id}
-      type='profile'
       identifier={`profile-${props.id}-${props.username}`}
       metadata={{
-        id: props.id,
         avatar: props.avatar,
+        bio: props.bio,
         global_name: props.global_name,
-        username: props.username,
-        bio: props.bio
+        id: props.id,
+        username: props.username
       }}
+      type='profile'
     >
       <div className='group relative z-[1] h-[461px] w-[300px] overflow-hidden rounded-3xl p-0.5'>
         {props.premium === true && (
@@ -82,8 +82,8 @@ export default function Card(props) {
         <div className='hidden'>
           {classesToGenerate.map(classToGenerate => (
             <div
-              key={classToGenerate}
               className={classToGenerate}
+              key={classToGenerate}
             />
           ))}
         </div>
@@ -101,12 +101,12 @@ export default function Card(props) {
           {props.banner ? (
             <div className='relative size-full max-h-[136px]'>
               <UserBanner
-                id={props.id}
+                className='size-full rounded-3xl object-cover'
                 hash={props.banner}
+                height={512}
+                id={props.id}
                 size={512}
                 width={512}
-                height={512}
-                className='size-full rounded-3xl object-cover'
               />
 
               {props.banner.startsWith('a_') && (
@@ -128,37 +128,37 @@ export default function Card(props) {
             <div className='relative w-max'>
               {props.avatar ? (
                 <UserAvatar
-                  id={props.id}
-                  hash={props.avatar}
-                  size={64}
-                  width={64}
-                  height={64}
                   className={cn(
                     'rounded-full',
                     userStatus && '[mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10.2px)]'
                   )}
+                  hash={props.avatar}
+                  height={64}
+                  id={props.id}
+                  size={64}
+                  width={64}
                 />
               ) : (
                 <Image
-                  src='https://cdn.discordapp.com/embed/avatars/0.png'
                   alt='Default Avatar'
-                  width={64}
-                  height={64}
                   className={cn(
                     'rounded-full',
                     userStatus && '[mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10.2px)]'
                   )}
+                  height={64}
+                  src='https://cdn.discordapp.com/embed/avatars/0.png'
+                  width={64}
                 />
               )}
 
               {userStatus && (
                 <Tooltip content={t(`profileCard.tooltip.status.${userStatus}`)}>
                   <Image
-                    src={`/status/${userStatus}.svg`}
                     alt={userStatus}
-                    width={20}
-                    height={20}
                     className='absolute bottom-0 right-0 rounded-full p-0.5'
+                    height={20}
+                    src={`/status/${userStatus}.svg`}
+                    width={20}
                   />
                 </Tooltip>
               )}
@@ -185,34 +185,34 @@ export default function Card(props) {
                 {props.badges.map(badgeId => (
                   <Tooltip
                     content={t(`badges.${badgeId}`, {
-                      premiumSince: props.subscriptionCreatedAt,
-                      lng: language,
                       formatParams: {
-                        premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                      }
+                        premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                      },
+                      lng: language,
+                      premiumSince: props.subscriptionCreatedAt
                     })}
                     key={badgeId}
                   >
                     {badgeId === 'poweredByLantern' ? (
                       <Link
-                        href='https://github.com/discordplace/lantern'
-                        target='_blank'
-                        rel='noopener noreferrer'
                         className='flex items-center'
+                        href='https://github.com/discordplace/lantern'
+                        rel='noopener noreferrer'
+                        target='_blank'
                       >
                         <Image
+                          alt={'poweredByLantern Badge'}
+                          height={16}
                           src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_poweredByLantern.svg`}
                           width={16}
-                          height={16}
-                          alt={'poweredByLantern Badge'}
                         />
                       </Link>
                     ) : (
                       <Image
+                        alt={`${badgeId} Badge`}
+                        height={16}
                         src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_${badgeId}.svg`}
                         width={16}
-                        height={16}
-                        alt={`${badgeId} Badge`}
                       />
                     )}
                   </Tooltip>
@@ -312,7 +312,7 @@ export default function Card(props) {
                       !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
                     )}
                   >
-                    {new Date(props.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })}
+                    {new Date(props.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
                   </p>
                 </div>
               </div>
@@ -330,8 +330,8 @@ export default function Card(props) {
                 </Link>
 
                 <CopyButtonCustomTrigger
-                  successText={t('profileCard.toast.profileUrlCopied')}
                   copyText={config.getProfileURL(props.slug, props.preferredHost)}
+                  successText={t('profileCard.toast.profileUrlCopied')}
                 >
                   <button
                     className={cn(

@@ -3,47 +3,47 @@ const Schema = mongoose.Schema;
 
 const BotDenySchema = new Schema({
   bot: {
+    discriminator: {
+      required: true,
+      type: String
+    },
     id: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     },
     username: {
-      type: String,
-      required: true
-    },
-    discriminator: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     }
   },
-  user: {
-    id: {
-      type: String,
-      required: true
+  reason: {
+    description: {
+      required: true,
+      type: String
     },
-    username: {
-      type: String,
-      required: true
+    title: {
+      required: true,
+      type: String
     }
   },
   reviewer: {
     id: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     },
     username: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     }
   },
-  reason: {
-    title: {
-      type: String,
-      required: true
+  user: {
+    id: {
+      required: true,
+      type: String
     },
-    description: {
-      type: String,
-      required: true
+    username: {
+      required: true,
+      type: String
     }
   }
 }, {

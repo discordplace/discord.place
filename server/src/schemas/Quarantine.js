@@ -2,10 +2,51 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const QuarantineSchema = new Schema({
-  type: {
+  created_by: {
+    id: {
+      required: true,
+      type: String
+    },
+    username: {
+      required: false,
+      type: String
+    }
+  },
+  expire_at: {
+    default: null,
+    type: Date
+  },
+  guild: {
+    id: {
+      required: false,
+      type: String
+    },
+    name: {
+      required: false,
+      type: String
+    }
+  },
+  reason: {
+    required: true,
+    type: String
+  },
+  restriction: {
+    enum: Object.keys(config.quarantineRestrictions),
+    required: false,
     type: String,
+    validate: {
+      message: 'Invalid restriction for this type',
+      validator: function validateRestriction(value) {
+        const restriction = config.quarantineRestrictions[value];
+
+        return restriction.available_to.includes(this.type);
+      }
+    }
+  },
+  type: {
     enum: config.quarantineTypes,
     required: true,
+    type: String,
     validate: {
       validator: function validateType(value) {
         if (value === 'USER_ID' && !this?.user?.id) throw new Error('user.id is required for this type');
@@ -18,57 +59,15 @@ const QuarantineSchema = new Schema({
   },
   user: {
     id: {
-      type: String,
-      required: false
+      required: false,
+      type: String
     },
     username: {
-      type: String,
-      required: false
+      required: false,
+      type: String
     }
-  },
-  guild: {
-    id: {
-      type: String,
-      required: false
-    },
-    name: {
-      type: String,
-      required: false
-    }
-  },
-  restriction: {
-    type: String,
-    required: false,
-    enum: Object.keys(config.quarantineRestrictions),
-    validate: {
-      validator: function validateRestriction(value) {
-        const restriction = config.quarantineRestrictions[value];
-
-        return restriction.available_to.includes(this.type);
-      },
-      message: 'Invalid restriction for this type'
-    }
-  },
-  reason: {
-    type: String,
-    required: true
-  },
-  created_by: {
-    id: {
-      type: String,
-      required: true
-    },
-    username: {
-      type: String,
-      required: false
-    }
-  },
-  expire_at: {
-    type: Date,
-    default: null
   }
 }, {
-  timestamps: true,
   methods: {
     toPubliclySafe() {
       const newQuarantine = {};
@@ -92,16 +91,17 @@ const QuarantineSchema = new Schema({
 
       return {
         ...newQuarantine,
-        id: this._id,
-        type: this.type,
-        restriction: this.restriction,
-        reason: this.reason,
-        created_by: this.created_by,
         created_at: this.createdAt,
-        expire_at: this.expire_at
+        created_by: this.created_by,
+        expire_at: this.expire_at,
+        id: this._id,
+        reason: this.reason,
+        restriction: this.restriction,
+        type: this.type
       };
     }
-  }
+  },
+  timestamps: true
 });
 
 QuarantineSchema.index({ expire_at: 1 }, { expireAfterSeconds: 0 });

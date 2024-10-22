@@ -1,11 +1,11 @@
-const validateRequest = require('@/utils/middlewares/validateRequest');
-const { query, matchedData, cookie } = require('express-validator');
-const axios = require('axios');
-const jwt = require('jsonwebtoken');
 const User = require('@/schemas/User');
-const encrypt = require('@/utils/encryption/encrypt');
 const UserHashes = require('@/schemas/User/Hashes');
+const encrypt = require('@/utils/encryption/encrypt');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateRequest = require('@/utils/middlewares/validateRequest');
+const axios = require('axios');
+const { cookie, matchedData, query } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   get: [
@@ -28,7 +28,7 @@ module.exports = {
       }),
     validateRequest,
     async (request, response) => {
-      const { code, state, redirect: redirectCookie } = matchedData(request);
+      const { code, redirect: redirectCookie, state } = matchedData(request);
 
       if (redirectCookie) {
         const redirectUrl = new URL(redirectCookie);
@@ -60,37 +60,37 @@ module.exports = {
 
         const token = jwt.sign(
           {
-            id: user.id,
-            iat: currentDate.getTime()
+            iat: currentDate.getTime(),
+            id: user.id
           },
           process.env.JWT_SECRET,
           {
+            audience: 'discord.place',
             expiresIn: '30d',
             issuer: 'api.discord.place',
-            audience: 'discord.place',
             subject: 'user'
           }
         );
 
         response.cookie('token', token, {
+          domain: `.${new URL(config.frontendUrl).hostname}`,
           httpOnly: true,
-          maxAge: 1000 * 60 * 60 * 24 * 7,
-          domain: `.${new URL(config.frontendUrl).hostname}`
+          maxAge: 1000 * 60 * 60 * 24 * 7
         });
 
         await User.findOneAndUpdate({ id: user.id },
           {
-            id: user.id,
+            accessToken: encrypt(access_token, process.env.USER_TOKEN_ENCRYPT_SECRET),
             data: {
-              username: user.username,
+              flags: user.flags,
               global_name: user.global_name,
-              flags: user.flags
+              username: user.username
             },
             email: user.email,
-            accessToken: encrypt(access_token, process.env.USER_TOKEN_ENCRYPT_SECRET),
+            id: user.id,
             lastLoginAt: new Date(currentDate)
           },
-          { upsert: true, new: true }
+          { new: true, upsert: true }
         );
 
         await UserHashes.findOneAndUpdate(
@@ -118,8 +118,8 @@ async function getAccessToken(code) {
   const searchParams = new URLSearchParams({
     client_id: process.env.DISCORD_CLIENT_ID,
     client_secret: process.env.DISCORD_CLIENT_SECRET,
-    grant_type: 'authorization_code',
     code,
+    grant_type: 'authorization_code',
     redirect_uri: `${config.backendUrl}/auth/callback`,
     scope: config.discordScopes.join(' ')
   });

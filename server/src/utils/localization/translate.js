@@ -15,8 +15,8 @@ function translate(key, variables, language = config.availableLocales.find(local
 
   return i18n.t(key, {
     ...variables,
-    lng: language,
-    defaultValue: key
+    defaultValue: key,
+    lng: language
   });
 }
 

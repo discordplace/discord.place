@@ -1,13 +1,13 @@
 'use client';
 
+import DangerZone from '@/app/(profiles)/profile/[slug]/edit/components/DangerZone';
+import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
+import PatchVerifyButton from '@/app/(profiles)/profile/[slug]/edit/components/PatchVerifyButton';
+import VerifiedBadge from '@/app/(profiles)/profile/[slug]/edit/components/VerifiedBadge';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import { t } from '@/stores/language';
 import Link from 'next/link';
 import { MdChevronLeft } from 'react-icons/md';
-import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
-import DangerZone from '@/app/(profiles)/profile/[slug]/edit/components/DangerZone';
-import VerifiedBadge from '@/app/(profiles)/profile/[slug]/edit/components/VerifiedBadge';
-import PatchVerifyButton from '@/app/(profiles)/profile/[slug]/edit/components/PatchVerifyButton';
-import { t } from '@/stores/language';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ profile }) {
   return (
@@ -15,7 +15,7 @@ export default function Content({ profile }) {
       <div className='flex w-full max-w-[650px] justify-center'>
         <div className='flex w-full flex-col'>
           <div className='flex items-center gap-x-4'>
-            <Link href={`/profile/${profile.slug}`} className='rounded-xl bg-secondary p-1.5 hover:bg-tertiary'>
+            <Link className='rounded-xl bg-secondary p-1.5 hover:bg-tertiary' href={`/profile/${profile.slug}`}>
               <MdChevronLeft size={24} />
             </Link>
 
@@ -26,12 +26,12 @@ export default function Content({ profile }) {
 
           <div className='mt-16 flex flex-wrap items-center gap-x-4'>
             <UserAvatar
-              id={profile.id}
+              className='size-[64px] rounded-full'
               hash={profile.avatar}
+              height={128}
+              id={profile.id}
               size={128}
               width={128}
-              height={128}
-              className='size-[64px] rounded-full'
             />
 
             <div className='flex flex-col'>

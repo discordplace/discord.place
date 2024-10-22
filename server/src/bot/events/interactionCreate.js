@@ -1,10 +1,10 @@
-const Server = require('@/schemas/Server');
-const User = require('@/schemas/User');
-const Discord = require('discord.js');
 const EvaluateResult = require('@/schemas/EvaluateResult');
-const evaluate = require('@/utils/evaluate');
-const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
+const Server = require('@/schemas/Server');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
+const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
+const User = require('@/schemas/User');
+const evaluate = require('@/utils/evaluate');
+const Discord = require('discord.js');
 
 module.exports = async interaction => {
   if (interaction.isCommand()) {
@@ -16,7 +16,7 @@ module.exports = async interaction => {
       ephemeral: true
     });
 
-    const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, new: true });
+    const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { new: true, upsert: true });
 
     if (!user.acceptedPolicies) {
       const embeds = [
@@ -24,7 +24,7 @@ module.exports = async interaction => {
           .setTitle(await interaction.translate('commands.accept_policies.embed.title'))
           .setDescription(await interaction.translate('commands.accept_policies.embed.description'))
           .setColor(Discord.Colors.Blurple)
-          .setFooter({ text: 'discord.place', iconURL: client.user.displayAvatarURL() })
+          .setFooter({ iconURL: client.user.displayAvatarURL(), text: 'discord.place' })
       ];
 
       const components = [
@@ -38,28 +38,28 @@ module.exports = async interaction => {
           )
       ];
 
-      const message = await interaction.reply({ embeds, components, fetchReply: true });
+      const message = await interaction.reply({ components, embeds, fetchReply: true });
       const collected = await message.awaitMessageComponent({ time: 60000 }).catch(() => null);
       if (!collected) return message.edit({
+        components: [],
         content: await interaction.translate('commands.accept_policies.timeout'),
-        embeds: [],
-        components: []
+        embeds: []
       });
 
       if (collected.customId === 'accept-policies') {
         user.acceptedPolicies = true;
         user.data = {
-          username: interaction.user.username,
+          flags: interaction.user.flags,
           global_name: interaction.user.globalName,
-          flags: interaction.user.flags
+          username: interaction.user.username
         };
 
         await user.save();
 
         await message.edit({
+          components: [],
           content: await interaction.translate('commands.accept_policies.success'),
-          embeds: [],
-          components: []
+          embeds: []
         });
 
         await collected.deferUpdate();
@@ -138,19 +138,19 @@ module.exports = async interaction => {
       const server = await Server.findOne({ id: guild.id });
       if (!server) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.server_not_listed'));
 
-      const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
+      const timeout = await VoteTimeout.findOne({ 'guild.id': guildId, 'user.id': interaction.user.id });
       if (!timeout) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.user_not_voted'));
 
-      const reminder = await VoteReminder.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
+      const reminder = await VoteReminder.findOne({ 'guild.id': guildId, 'user.id': interaction.user.id });
       if (reminder) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.reminder_already_created'));
 
       const newReminder = new VoteReminder({
-        user: {
-          id: interaction.user.id
-        },
         guild: {
           id: guildId,
           name: guild.name
+        },
+        user: {
+          id: interaction.user.id
         }
       });
 
@@ -192,14 +192,14 @@ module.exports = async interaction => {
 
         const isCorrect = data.every((number, index) => number === numbers[index]);
         if (!isCorrect) return interaction.update({
-          content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
           components: [],
+          content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
           files: []
         });
 
         await interaction.update({
-          content: await interaction.translate('interaction.buttons.human_verification.success'),
           components: [],
+          content: await interaction.translate('interaction.buttons.human_verification.success'),
           files: []
         });
 
@@ -221,8 +221,8 @@ module.exports = async interaction => {
         selectedButtonComponent.setStyle(Discord.ButtonStyle.Primary);
 
         return interaction.update({
-          content: await interaction.translate('interaction.buttons.human_verification.numbers_selected', { numbers: data.join('') }),
-          components: currentComponents
+          components: currentComponents,
+          content: await interaction.translate('interaction.buttons.human_verification.numbers_selected', { numbers: data.join('') })
         });
       }
     }
@@ -245,13 +245,13 @@ module.exports = async interaction => {
       const data = await EvaluateResult.findOne({ id });
       if (!data || !data.executedCode) return;
 
-      const { result, hasError } = await evaluate(data.executedCode);
+      const { hasError, result } = await evaluate(data.executedCode);
 
       const embed = new Discord.EmbedBuilder()
         .setColor(hasError ? '#f04e51' : '#adadad')
         .setFields([
           { name: 'Code', value: `\`\`\`js\n${data.executedCode.slice(0, 1000)}\n\`\`\`` },
-          { name: 'Repeated At', value: new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) }
+          { name: 'Repeated At', value: new Date().toLocaleDateString('tr-TR', { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', year: 'numeric' }) }
         ])
         .setDescription(`### ${hasError ? 'Error' : 'Success'}\n\`\`\`js\n${String(result).slice(0, 4000)}\n\`\`\``);
 

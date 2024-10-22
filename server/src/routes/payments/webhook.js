@@ -1,20 +1,20 @@
 /* eslint no-redeclare: 0 */
 
-const bodyParser = require('body-parser');
-const crypto = require('crypto');
+const Bot = require('@/schemas/Bot');
+const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
-const User = require('@/schemas/User');
 const Profile = require('@/schemas/Profile');
 const Server = require('@/schemas/Server');
 const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
-const Bot = require('@/schemas/Bot');
-const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
-const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
-const Discord = require('discord.js');
+const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
+const User = require('@/schemas/User');
 const decrypt = require('@/utils/encryption/decrypt');
 const getImageFromHash = require('@/utils/getImageFromHash');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const bodyParser = require('body-parser');
+const crypto = require('crypto');
+const Discord = require('discord.js');
 
 module.exports = {
   post: [
@@ -38,16 +38,16 @@ module.exports = {
       const body = JSON.parse(request.body.toString());
 
       const colors = {
-        tripledVote: '#f97316',
+        premium: '#a855f7',
         standedOut: '#166534',
-        premium: '#a855f7'
+        tripledVote: '#f97316'
       };
 
       function sendPurchaseMessage(color, text, iconUrl, message) {
         var embeds = [
           new Discord.EmbedBuilder()
             .setColor(color)
-            .setAuthor({ name: text, iconURL: iconUrl || 'https://cdn.discordapp.com/embed/avatars/0.png' })
+            .setAuthor({ iconURL: iconUrl || 'https://cdn.discordapp.com/embed/avatars/0.png', name: text })
             .setFooter({ text: message })
         ];
 
@@ -67,7 +67,7 @@ module.exports = {
           var [iv, encryptedText, tag] = base64DecodedToken.split(':');
           if (!iv || !encryptedText || !tag) return logger.warn('[Lemon Squeezy] Invalid token:', `\n${JSON.stringify(body, null, 2)}`);
 
-          var decryptedData = decrypt({ iv, encryptedText, tag }, process.env.PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY);
+          var decryptedData = decrypt({ encryptedText, iv, tag }, process.env.PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY);
           if (!decryptedData) return logger.warn('[Lemon Squeezy] Error decrypting token:', `\n${JSON.stringify(body, null, 2)}`);
 
           var isTripledVoteProduct = body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.tripledVotes.servers || body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.tripledVotes.bots;
@@ -144,11 +144,11 @@ module.exports = {
             if (!plan) return logger.warn('[Lemon Squeezy] Plan not found:', `\n${JSON.stringify(body, null, 2)}`);
 
             user.subscription = {
+              createdAt: new Date(body.data.attributes.created_at),
               id: body.data.id,
               orderId: body.data.attributes.order_number,
-              productId: body.data.attributes.first_order_item.product_id,
               planId: plan.id,
-              createdAt: new Date(body.data.attributes.created_at)
+              productId: body.data.attributes.first_order_item.product_id
             };
 
             await user.save();
@@ -191,12 +191,12 @@ module.exports = {
           if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
 
           user.oldSubscriptions.push({
+            createdAt: user.subscription.createdAt,
+            expiredAt: new Date(body.data.attributes.ends_at),
             id: user.subscription.id,
             orderId: user.subscription.orderId,
-            productId: user.subscription.productId,
             planId: user.subscription.planId,
-            createdAt: user.subscription.createdAt,
-            expiredAt: new Date(body.data.attributes.ends_at)
+            productId: user.subscription.productId
           });
 
           user.subscription = null;

@@ -1,12 +1,12 @@
 const Server = require('@/schemas/Server');
+const Reward = require('@/schemas/Server/Vote/Reward');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const User = require('@/schemas/User');
-const Discord = require('discord.js');
-const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
-const Reward = require('@/schemas/Server/Vote/Reward');
+const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const axios = require('axios');
+const Discord = require('discord.js');
 
 async function incrementVote(guildId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -18,7 +18,7 @@ async function incrementVote(guildId, userId) {
   const server = await Server.findOne({ id: guild.id });
   if (!server) throw new Error(`Server ${guild.id} not found.`);
 
-  const timeout = await VoteTimeout.findOne({ 'user.id': userId, 'guild.id': guild.id });
+  const timeout = await VoteTimeout.findOne({ 'guild.id': guild.id, 'user.id': userId });
   if (timeout) throw new Error(`User ${userId} has already voted for server ${guild.id}.`);
 
   const ownerHasPremium = await User.exists({ id: guild.ownerId, subscription: { $ne: null } });
@@ -29,15 +29,15 @@ async function incrementVote(guildId, userId) {
   if (server.voters.some(voter => voter.user.id === userId)) {
     const updateQuery = {
       $inc: {
-        votes: incrementCount,
-        'voters.$[element].vote': 1
+        'voters.$[element].vote': 1,
+        votes: incrementCount
       },
       $set: {
         last_voter: {
+          date: Date.now(),
           user: {
             id: userId
-          },
-          date: Date.now()
+          }
         }
       }
     };
@@ -63,10 +63,10 @@ async function incrementVote(guildId, userId) {
       },
       $set: {
         last_voter: {
+          date: Date.now(),
           user: {
             id: userId
-          },
-          date: Date.now()
+          }
         }
       }
     };
@@ -75,13 +75,13 @@ async function incrementVote(guildId, userId) {
   }
 
   await new VoteTimeout({
-    user: {
-      id: userId,
-      username: user.username
-    },
     guild: {
       id: guild.id,
       name: guild.name
+    },
+    user: {
+      id: userId,
+      username: user.username
     }
   }).save();
 
@@ -89,7 +89,7 @@ async function incrementVote(guildId, userId) {
 
   const embed = new Discord.EmbedBuilder()
     .setColor(Discord.Colors.Purple)
-    .setAuthor({ name: `${guild.name} has received a vote!`, iconURL: guild.iconURL() })
+    .setAuthor({ iconURL: guild.iconURL(), name: `${guild.name} has received a vote!` })
     .setFields([
       {
         name: 'Given by',
@@ -104,7 +104,7 @@ async function incrementVote(guildId, userId) {
 
   client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
 
-  sendLog(guild.id, await guild.translate('commands.vote.logging_messages.user_voted', { username: Discord.escapeMarkdown(user.username), userId: user.id }))
+  sendLog(guild.id, await guild.translate('commands.vote.logging_messages.user_voted', { userId: user.id, username: Discord.escapeMarkdown(user.username) }))
     .catch(() => null);
 
   const rewards = await Reward.find({ 'guild.id': guild.id });
@@ -131,14 +131,14 @@ async function incrementVote(guildId, userId) {
 
       member.roles.add(role, await guild.translate('vote_rewards.reward_role_added_audit_reason', { requiredVotes: voterVotes }))
         .then(async () => {
-          await sendLog(guild.id, await guild.translate('vote_rewards.reward_role_added', { username: Discord.escapeMarkdown(user.username), userId: user.id, roleName: role.name, vote: voterVotes }))
+          await sendLog(guild.id, await guild.translate('vote_rewards.reward_role_added', { roleName: role.name, userId: user.id, username: Discord.escapeMarkdown(user.username), vote: voterVotes }))
             .catch(() => null);
 
           const dmChannel = user.dmChannel || await user.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send(await guild.translate('vote_rewards.reward_role_added_dm_message', { roleName: role.name, guildName: guild.name, vote: voterVotes }));
+          if (dmChannel) dmChannel.send(await guild.translate('vote_rewards.reward_role_added_dm_message', { guildName: guild.name, roleName: role.name, vote: voterVotes }));
         })
         .catch(async error => {
-          sendLog(await guild.translate('vote_rewards.reward_role_add_error', { roleName: role.name, username: Discord.escapeMarkdown(user.username), userId: user.id, errorMessage: error.message }))
+          sendLog(await guild.translate('vote_rewards.reward_role_add_error', { errorMessage: error.message, roleName: role.name, userId: user.id, username: Discord.escapeMarkdown(user.username) }))
             .catch(() => null);
         });
 
@@ -156,18 +156,18 @@ async function incrementVote(guildId, userId) {
     if (server.webhook.token) headers['Authorization'] = server.webhook.token;
 
     const response = await axios
-      .post(server.webhook.url, { server: guild.id, user: user.id }, { headers, timeout: 2000, responseType: 'text' })
+      .post(server.webhook.url, { server: guild.id, user: user.id }, { headers, responseType: 'text', timeout: 2000 })
       .catch(error => error.response);
 
     const data = {
-      url: server.webhook.url,
-      response_status_code: response.status,
+      created_at: Date.now(),
       request_body: {
         server: guild.id,
         user: user.id
       },
       response_body: response.data,
-      created_at: Date.now()
+      response_status_code: response.status,
+      url: server.webhook.url
     };
 
     if (!server.webhook.records) server.webhook.records = [];

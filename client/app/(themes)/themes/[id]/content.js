@@ -1,48 +1,48 @@
 'use client';
 
-import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
-import config from '@/config';
-import { LuShieldQuestion } from 'react-icons/lu';
 import FaQs from '@/app/(themes)/themes/[id]/components/FaQs';
-import { motion } from 'framer-motion';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import Link from 'next/link';
-import { toast } from 'sonner';
-import { useRouter } from 'next-nprogress-bar';
-import deleteTheme from '@/lib/request/themes/deleteTheme';
-import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
-import useLanguageStore, { t } from '@/stores/language';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import CopyButton from '@/app/components/CopyButton/CustomTrigger';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import config from '@/config';
+import deleteTheme from '@/lib/request/themes/deleteTheme';
+import useLanguageStore, { t } from '@/stores/language';
+import useModalsStore from '@/stores/modals';
 import { colord } from 'colord';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { LuShieldQuestion } from 'react-icons/lu';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Content({ theme }) {
   const language = useLanguageStore(state => state.language);
   const router = useRouter();
 
-  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+  const { closeModal, disableButton, enableButton, openModal } = useModalsStore(useShallow(state => ({
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   function continueDeleteTheme() {
     disableButton('delete-theme', 'confirm');
 
     toast.promise(deleteTheme(theme.id), {
+      error: error => {
+        enableButton('delete-theme', 'confirm');
+
+        return error;
+      },
       loading: t('themePage.toast.deletingTheme', { id: theme.id }),
       success: () => {
         closeModal('delete-theme');
         setTimeout(() => router.push('/'), 3000);
 
         return t('themePage.toast.themeDeleted', { id: theme.id });
-      },
-      error: error => {
-        enableButton('delete-theme', 'confirm');
-
-        return error;
       }
     });
   }
@@ -58,7 +58,7 @@ export default function Content({ theme }) {
             </h1>
 
             <p className='text-sm font-medium text-tertiary'>
-              {t('themePage.notApprovedInfo.description', { link: <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>{t('themePage.notApprovedInfo.linkText')}</Link> })}
+              {t('themePage.notApprovedInfo.description', { link: <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>{t('themePage.notApprovedInfo.linkText')}</Link> })}
             </p>
           </div>
         )}
@@ -96,8 +96,8 @@ export default function Content({ theme }) {
                 <div className='flex items-center gap-2'>
                   {theme.categories.map(category => (
                     <span
-                      key={category}
                       className='flex select-none items-center gap-x-1 rounded-lg text-sm font-semibold text-tertiary'
+                      key={category}
                     >
                       {config.themeCategoriesIcons[category]}
                       {t(`categories.${category}`)}
@@ -112,15 +112,15 @@ export default function Content({ theme }) {
                 </span>
 
                 <Link
-                  href={`/profile/u/${theme.publisher.id}`}
                   className='flex items-center gap-x-1 text-sm font-semibold text-primary transition-opacity hover:opacity-70'
+                  href={`/profile/u/${theme.publisher.id}`}
                 >
                   <UserAvatar
-                    id={theme.publisher.id}
-                    hash={theme.publisher.avatar}
                     className='size-[20px] rounded-full'
-                    width={32}
+                    hash={theme.publisher.avatar}
                     height={32}
+                    id={theme.publisher.id}
+                    width={32}
                   />
 
                   @{theme.publisher.username}
@@ -131,8 +131,8 @@ export default function Content({ theme }) {
             <div className='mt-auto flex w-full flex-col gap-2 mobile:flex-row'>
               <CopyButton
                 className='w-full'
-                successText={t('themePage.themeDetails.colors.copied', { color: theme.colors.primary })}
                 copyText={theme.colors.primary}
+                successText={t('themePage.themeDetails.colors.copied', { color: theme.colors.primary })}
               >
                 <div
                   className='flex w-full cursor-pointer items-center justify-center gap-x-2 rounded-lg py-2 text-center text-sm font-medium text-primary transition-all hover:opacity-80'
@@ -152,8 +152,8 @@ export default function Content({ theme }) {
 
               <CopyButton
                 className='w-full'
-                successText={t('themePage.themeDetails.colors.copied', { color: theme.colors.secondary })}
                 copyText={theme.colors.secondary}
+                successText={t('themePage.themeDetails.colors.copied', { color: theme.colors.secondary })}
               >
                 <div
                   className='flex w-full cursor-pointer items-center justify-center gap-x-2 rounded-lg py-2 text-center text-sm font-medium text-primary transition-all hover:opacity-80'
@@ -201,27 +201,27 @@ export default function Content({ theme }) {
                 className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 onClick={() =>
                   openModal('delete-theme', {
-                    title: t('themePage.dangerZone.deleteThemeModal.title'),
-                    description: t('themePage.dangerZone.deleteThemeModal.description', { id: theme.id }),
+                    buttons: [
+                      {
+                        actionType: 'close',
+                        id: 'cancel',
+                        label: t('buttons.cancel'),
+                        variant: 'ghost'
+                      },
+                      {
+                        action: continueDeleteTheme,
+                        id: 'confirm',
+                        label: t('buttons.delete'),
+                        variant: 'solid'
+                      }
+                    ],
                     content: (
                       <p className='text-sm text-tertiary'>
                         {t('themePage.dangerZone.deleteThemeModal.content')}
                       </p>
                     ),
-                    buttons: [
-                      {
-                        id: 'cancel',
-                        label: t('buttons.cancel'),
-                        variant: 'ghost',
-                        actionType: 'close'
-                      },
-                      {
-                        id: 'confirm',
-                        label: t('buttons.delete'),
-                        variant: 'solid',
-                        action: continueDeleteTheme
-                      }
-                    ]
+                    description: t('themePage.dangerZone.deleteThemeModal.description', { id: theme.id }),
+                    title: t('themePage.dangerZone.deleteThemeModal.title')
                   })
                 }
               >

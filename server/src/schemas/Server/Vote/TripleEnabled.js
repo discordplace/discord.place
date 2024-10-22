@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const BotVoteTripleEnabledSchema = new Schema({
   id: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   }
 }, {
   timestamps: true

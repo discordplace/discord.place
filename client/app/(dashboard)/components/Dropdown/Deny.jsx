@@ -1,7 +1,7 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useState } from 'react';
 
-export default function DenyDropdown({ description, reasons, onDeny, customReason = false, children }) {
+export default function DenyDropdown({ children, customReason = false, description, onDeny, reasons }) {
   const [value, setValue] = useState('');
 
   return (
@@ -28,8 +28,8 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
 
               {Object.entries(reasons).map(([key, value]) => (
                 <DropdownMenu.Item
-                  key={key}
                   className='flex cursor-pointer items-center justify-between gap-x-2 rounded-lg px-2 py-1.5 text-sm font-medium text-secondary outline-none hover:bg-quaternary'
+                  key={key}
                   onSelect={() => onDeny(key)}
                 >
                   {value.name}
@@ -39,11 +39,11 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
           ) : (
             <div className='flex flex-col items-center gap-2'>
               <input
-                type='text'
-                placeholder='Enter a reason..'
                 className='w-full rounded-xl bg-tertiary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-quaternary hover:ring-2'
-                value={value}
                 onChange={event => setValue(event.target.value)}
+                placeholder='Enter a reason..'
+                type='text'
+                value={value}
               />
 
               <button

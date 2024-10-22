@@ -3,8 +3,8 @@
 import cn from '@/lib/cn';
 import MarkdownComponents from '@/lib/markdownComponents';
 import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
 import raw from 'rehype-raw';
+import gfm from 'remark-gfm';
 
 export default function Markdown({ children, className, rawEnabled }) {
   return (
@@ -20,9 +20,9 @@ export default function Markdown({ children, className, rawEnabled }) {
       )}
     >
       <ReactMarkdown
-        remarkPlugins={[gfm]}
-        rehypePlugins={rawEnabled ? [raw] : []}
         components={MarkdownComponents}
+        rehypePlugins={rawEnabled ? [raw] : []}
+        remarkPlugins={[gfm]}
       >
         {children}
       </ReactMarkdown>

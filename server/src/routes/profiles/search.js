@@ -1,7 +1,7 @@
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { query, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { matchedData, query } = require('express-validator');
 
 module.exports = {
   get: [
@@ -10,7 +10,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Search query must be a string.')
       .trim()
-      .isLength({ min: 1, max: 128 }).withMessage('Search query must be between 1 and 128 characters.'),
+      .isLength({ max: 128, min: 1 }).withMessage('Search query must be between 1 and 128 characters.'),
     query('sort')
       .optional()
       .isString().withMessage('Sort must be a string.')
@@ -18,7 +18,7 @@ module.exports = {
       .isIn(['Likes', 'MostViewed', 'Newest', 'Oldest']).withMessage('Sort must be one of: Likes, MostViewed, Newest, Oldest.'),
     query('limit')
       .optional()
-      .isInt({ min: 1, max: 9 }).withMessage('Limit must be an integer between 1 and 9.')
+      .isInt({ max: 9, min: 1 }).withMessage('Limit must be an integer between 1 and 9.')
       .toInt(),
     query('page')
       .optional()
@@ -26,16 +26,16 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { query, sort = 'Likes', limit = 9, page = 1 } = matchedData(request);
+      const { limit = 9, page = 1, query, sort = 'Likes' } = matchedData(request);
       const skip = (page - 1) * limit;
       const findQuery = query ? {
         $or: [
-          { slug: { $regex: query, $options: 'i' } },
-          { occupation: { $regex: query, $options: 'i' } },
-          { location: { $regex: query, $options: 'i' } },
-          { bio: { $regex: query, $options: 'i' } },
-          { birthday: { $regex: query, $options: 'i' } },
-          { gender: { $regex: query, $options: 'i' } }
+          { slug: { $options: 'i', $regex: query } },
+          { occupation: { $options: 'i', $regex: query } },
+          { location: { $options: 'i', $regex: query } },
+          { bio: { $options: 'i', $regex: query } },
+          { birthday: { $options: 'i', $regex: query } },
+          { gender: { $options: 'i', $regex: query } }
         ]
       } : {};
       const sortQuery = sort === 'Likes' ?
@@ -54,12 +54,12 @@ module.exports = {
       const maxReached = page >= totalPages;
 
       return response.json({
-        maxReached,
-        total,
-        page,
+        count: profiles.length,
         limit,
+        maxReached,
+        page,
         profiles: await Promise.all(paginatedProfiles.map(async profile => await profile.toPubliclySafe())),
-        count: profiles.length
+        total
       });
     }
   ]

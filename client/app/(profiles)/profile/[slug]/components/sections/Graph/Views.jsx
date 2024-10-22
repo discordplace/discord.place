@@ -1,11 +1,11 @@
 'use client';
 
 import Graph from '@/app/(dashboard)/components/Home/Graph/index';
-import cn from '@/lib/cn';
-import { MdOutlineArrowOutward } from 'react-icons/md';
 import Tooltip from '@/app/components/Tooltip';
-import { useMedia } from 'react-use';
+import cn from '@/lib/cn';
 import { t } from '@/stores/language';
+import { MdOutlineArrowOutward } from 'react-icons/md';
+import { useMedia } from 'react-use';
 
 export default function ViewsGraph({ profile }) {
   const data = profile.dailyStats || [];
@@ -26,8 +26,8 @@ export default function ViewsGraph({ profile }) {
         {t('profilePage.graph.views.title')}
 
         <Tooltip
+          content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChanges'}`, { count: 0, difference, postProcess: 'interval' })}
           side={isMobile ? 'bottom' : 'right'}
-          content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChanges'}`, { postProcess: 'interval', count: 0, difference })}
         >
           <div
             className={cn(
@@ -51,10 +51,10 @@ export default function ViewsGraph({ profile }) {
 
       <div className='mt-8 w-full'>
         <Graph
-          id='profileViews'
-          data={profile.dailyStats.map(({ createdAt, views }) => ({ createdAt, value: views })).reverse()}
-          tooltipFormatter={value => value.toLocaleString('en-US')}
           color={(isIncreased || isDecreased) ? 'rgb(168, 85, 247)' : '#b4b4b4'}
+          data={profile.dailyStats.map(({ createdAt, views }) => ({ createdAt, value: views })).reverse()}
+          id='profileViews'
+          tooltipFormatter={value => value.toLocaleString('en-US')}
         />
       </div>
     </>

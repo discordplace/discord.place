@@ -1,8 +1,8 @@
 'use client';
 
+import { t } from '@/stores/language';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { t } from '@/stores/language';
 
 const ReactCountdown = dynamic(() => import('react-countdown'), {
   ssr: false
@@ -18,7 +18,8 @@ export default function Countdown({ date }) {
   return loaded ? (
     <ReactCountdown
       date={date}
-      renderer={({ hours, minutes, seconds, completed }) => {
+      daysInHours={true}
+      renderer={({ completed, hours, minutes, seconds }) => {
         if (completed) return t('buttons.vote');
 
         return (
@@ -33,7 +34,6 @@ export default function Countdown({ date }) {
           </>
         );
       }}
-      daysInHours={true}
     />
   ) : 'Loading..';
 }

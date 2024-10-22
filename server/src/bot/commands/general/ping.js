@@ -1,14 +1,14 @@
+const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
+const ansiColors = require('ansi-colors');
 const axios = require('axios');
 const mongoose = require('mongoose');
-const ansiColors = require('ansi-colors');
-const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 
 module.exports = {
   data: {
-    name: 'ping',
     description: 'Shows latency values.',
-    name_localizations: getLocalizedCommand('ping').names,
-    description_localizations: getLocalizedCommand('ping').descriptions
+    description_localizations: getLocalizedCommand('ping').descriptions,
+    name: 'ping',
+    name_localizations: getLocalizedCommand('ping').names
   },
   execute: async interaction => {
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply();

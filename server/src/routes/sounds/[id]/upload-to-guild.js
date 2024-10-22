@@ -1,13 +1,13 @@
 const Sound = require('@/schemas/Sound');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateRequest = require('@/utils/middlewares/validateRequest');
+const getSoundURL = require('@/utils/sounds/getSoundURL');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/sounds/id');
-const { param, matchedData, body } = require('express-validator');
-const Discord = require('discord.js');
-const getSoundURL = require('@/utils/sounds/getSoundURL');
-const bodyParser = require('body-parser');
 const axios = require('axios');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const bodyParser = require('body-parser');
+const Discord = require('discord.js');
+const { body, matchedData, param } = require('express-validator');
 
 module.exports = {
   post: [
@@ -19,10 +19,10 @@ module.exports = {
       .custom(idValidation),
     body('guildId')
       .isString().withMessage('Guild ID must be an string.')
-      .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
+      .isLength({ max: 19, min: 17 }).withMessage('Guild ID must be 17-19 characters long.'),
     validateRequest,
     async (request, response) => {
-      const { id, guildId } = matchedData(request);
+      const { guildId, id } = matchedData(request);
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);
@@ -42,9 +42,9 @@ module.exports = {
 
         client.rest.post(`/guilds/${guildId}/soundboard-sounds`, {
           body: {
-            sound: `data:audio/ogg;base64,${Buffer.from(fileResponse.data).toString('base64')}`,
-            name: sound.name,
             emoji_name: '🎵',
+            name: sound.name,
+            sound: `data:audio/ogg;base64,${Buffer.from(fileResponse.data).toString('base64')}`,
             volume: 1
           }
         })

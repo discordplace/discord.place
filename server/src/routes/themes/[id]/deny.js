@@ -1,11 +1,11 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body } = require('express-validator');
 const Theme = require('@/schemas/Theme');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const idValidation = require('@/validations/themes/id');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
-const idValidation = require('@/validations/themes/id');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const { body, matchedData, param } = require('express-validator');
 
 module.exports = {
   post: [
@@ -46,7 +46,7 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setColor(Discord.Colors.Red)
-          .setAuthor({ name: 'Theme Denied', iconURL: publisher?.displayAvatarURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png' })
+          .setAuthor({ iconURL: publisher?.displayAvatarURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png', name: 'Theme Denied' })
           .setTimestamp()
           .setFields([
             {

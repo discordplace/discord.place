@@ -1,8 +1,8 @@
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BlockedIp = require('@/schemas/BlockedIp');
-const { param, matchedData } = require('express-validator');
-const useRateLimiter = require('@/utils/useRateLimiter');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { matchedData, param } = require('express-validator');
 
 module.exports = {
   delete: [

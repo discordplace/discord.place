@@ -1,21 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { HiBell } from 'react-icons/hi';
 import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
-import { TbLoader } from 'react-icons/tb';
-import { IoCheckmarkCircle } from 'react-icons/io5';
-import { toast } from 'sonner';
+import CodeBlock from '@/app/components/CodeBlock';
+import cn from '@/lib/cn';
 import deleteWebhookSettings from '@/lib/request/servers/deleteWebhookSettings';
 import setWebhookSettings from '@/lib/request/servers/setWebhookSettings';
+import revalidateServer from '@/lib/revalidate/server';
 import useLanguageStore, { t } from '@/stores/language';
-import cn from '@/lib/cn';
-import CodeBlock from '@/app/components/CodeBlock';
+import { useEffect, useState } from 'react';
 import { BiCodeCurly } from 'react-icons/bi';
 import { FaFileCode } from 'react-icons/fa';
-import revalidateServer from '@/lib/revalidate/server';
+import { HiBell } from 'react-icons/hi';
+import { IoCheckmarkCircle } from 'react-icons/io5';
+import { TbLoader } from 'react-icons/tb';
+import { toast } from 'sonner';
 
-export default function Webhook({ serverId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, records }) {
+export default function Webhook({ records, serverId, webhookToken: currentWebhookToken, webhookURL: currentWebhookURL }) {
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
   const [defaultWebhookToken, setDefaultWebhookToken] = useState(currentWebhookToken);
   const [webhookURL, setWebhookURL] = useState(currentWebhookURL);
@@ -50,6 +50,11 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
       );
 
       toast.promise(functionToCall(serverId, webhookURL || null, webhookToken || null), {
+        error: error => {
+          setSavingChanges(false);
+
+          return error;
+        },
         loading: t('serverManagePage.webhook.toast.saving'),
         success: () => {
           revalidateServer(serverId);
@@ -61,11 +66,6 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
           setDefaultWebhookToken(webhookToken || null);
 
           return t('serverManagePage.webhook.toast.saved');
-        },
-        error: error => {
-          setSavingChanges(false);
-
-          return error;
         }
       });
     } catch {
@@ -89,7 +89,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
       <div className='flex w-full flex-col items-center justify-between sm:flex-row'>
         <div className='flex flex-col gap-y-4'>
           <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
-            <HiBell size={24} className='text-purple-500' />
+            <HiBell className='text-purple-500' size={24} />
             {t('serverManagePage.webhook.title')}
 
             <span className='-ml-2 rounded-full bg-black/30 px-2 py-0.5 text-xs text-white dark:bg-white/30 dark:text-white'>
@@ -108,7 +108,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
             disabled={!changesMade || savingChanges}
             onClick={saveChanges}
           >
-            {savingChanges ? <TbLoader size={18} className='animate-spin' /> : <IoCheckmarkCircle size={18} />}
+            {savingChanges ? <TbLoader className='animate-spin' size={18} /> : <IoCheckmarkCircle size={18} />}
             {t('buttons.saveWebhookSettings')}
           </button>
         </div>
@@ -116,19 +116,19 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
 
       <div className='mt-4 flex flex-col gap-8 sm:flex-row'>
         <Input
-          label={t('serverManagePage.webhook.inputs.url.label')}
           description={t('serverManagePage.webhook.inputs.url.description')}
+          label={t('serverManagePage.webhook.inputs.url.label')}
+          onChange={event => setWebhookURL(event.target.value)}
           placeholder={t('serverManagePage.webhook.inputs.url.placeholder')}
           value={webhookURL}
-          onChange={event => setWebhookURL(event.target.value)}
         />
 
         <Input
-          label={t('serverManagePage.webhook.inputs.secret.label')}
           description={t('serverManagePage.webhook.inputs.secret.description')}
+          label={t('serverManagePage.webhook.inputs.secret.label')}
+          onChange={event => setWebhookToken(event.target.value)}
           placeholder={t('serverManagePage.webhook.inputs.secret.placeholder')}
           value={webhookToken}
-          onChange={event => setWebhookToken(event.target.value)}
         />
       </div>
 
@@ -151,11 +151,11 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
               <div className='flex w-full flex-col gap-y-1'>
                 {records.map(record => (
                   <button
-                    key={`record-${record.created_at}`}
                     className={cn(
                       'flex gap-x-2 select-none items-center bg-secondary py-2 px-4 rounded-lg',
                       selectedRecord === record ? 'bg-quaternary cursor-default' : 'hover:bg-tertiary'
                     )}
+                    key={`record-${record.created_at}`}
                     onClick={() => setSelectedRecord(record)}
                   >
                     <span
@@ -177,7 +177,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
                     </span>
 
                     <span className='ml-auto flex text-xs text-tertiary'>
-                      {new Date(record.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                      {new Date(record.created_at).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'short', year: 'numeric' })}
                     </span>
                   </button>
                 ))}
@@ -187,26 +187,26 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
                 <div className='flex w-full flex-col gap-y-2 text-xs'>
                   {responseIsJSON ? (
                     <CodeBlock
-                      language='json'
-                      fileName='response-body.json'
                       FileIcon={<BiCodeCurly />}
+                      fileName='response-body.json'
+                      language='json'
                     >
                       {JSON.stringify(JSON.parse(selectedRecord?.response_body), null, 2)}
                     </CodeBlock>
                   ) : (
                     <CodeBlock
-                      language='txt'
-                      fileName='response-body.txt'
                       FileIcon={<FaFileCode />}
+                      fileName='response-body.txt'
+                      language='txt'
                     >
                       {selectedRecord?.response_body || 'N/A'}
                     </CodeBlock>
                   )}
 
                   <CodeBlock
-                    language='json'
-                    fileName='request-body.json'
                     FileIcon={<BiCodeCurly size={16} />}
+                    fileName='request-body.json'
+                    language='json'
                   >
                     {selectedRecord?.request_body ? JSON.stringify(selectedRecord?.request_body, null, 2) : 'N/A'}
                   </CodeBlock>

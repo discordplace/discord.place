@@ -2,41 +2,41 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const DashboardDataSchema = new Schema({
-  servers: {
-    type: Number,
-    default: 0
-  },
-  profiles: {
-    type: Number,
-    default: 0
-  },
   bots: {
-    type: Number,
-    default: 0
+    default: 0,
+    type: Number
   },
   emojis: {
-    type: Number,
-    default: 0
-  },
-  templates: {
-    type: Number,
-    default: 0
-  },
-  users: {
-    type: Number,
-    default: 0
+    default: 0,
+    type: Number
   },
   guilds: {
-    type: Number,
-    default: 0
+    default: 0,
+    type: Number
+  },
+  profiles: {
+    default: 0,
+    type: Number
+  },
+  servers: {
+    default: 0,
+    type: Number
   },
   sounds: {
-    type: Number,
-    default: 0
+    default: 0,
+    type: Number
+  },
+  templates: {
+    default: 0,
+    type: Number
   },
   themes: {
-    type: Number,
-    default: 0
+    default: 0,
+    type: Number
+  },
+  users: {
+    default: 0,
+    type: Number
   }
 }, {
   timestamps: true

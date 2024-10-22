@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import downloadSound from '@/lib/utils/sounds/downloadSound';
-import Link from 'next/link';
 import config from '@/config';
+import downloadSound from '@/lib/utils/sounds/downloadSound';
 import { t } from '@/stores/language';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Question2({ sound }) {
   const [activeMethod, setActiveMethod] = useState(0);
@@ -42,7 +42,7 @@ export default function Question2({ sound }) {
               <div className='flex gap-x-2'>
                 <span className='select-none font-bold text-primary'>1.</span>
                 <span>
-                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.text', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.linkText')}</Link> })}
+                  {t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.text', { link: <Link className='underline hover:text-primary' href={config.botInviteURL} target='_blank'>{t('soundPage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.linkText')}</Link> })}
                 </span>
               </div>
 

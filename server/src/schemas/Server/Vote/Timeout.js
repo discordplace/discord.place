@@ -2,24 +2,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ServerVoteTimeoutSchema = new Schema({
-  user: {
-    id: {
-      type: String,
-      required: true
-    },
-    username: {
-      type: String,
-      required: true
-    }
-  },
   guild: {
     id: {
-      type: String,
-      required: true
+      required: true,
+      type: String
     },
     name: {
-      type: String,
-      required: true
+      required: true,
+      type: String
+    }
+  },
+  user: {
+    id: {
+      required: true,
+      type: String
+    },
+    username: {
+      required: true,
+      type: String
     }
   }
 }, {

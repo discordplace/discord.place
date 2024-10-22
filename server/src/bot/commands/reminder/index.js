@@ -1,10 +1,23 @@
 const Reminder = require('@/schemas/Reminder');
-const Discord = require('discord.js');
-const parseTimeDuration = require('@/utils/parseTimeDuration');
 const getValidationError = require('@/utils/getValidationError');
 const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
+const parseTimeDuration = require('@/utils/parseTimeDuration');
+const Discord = require('discord.js');
 
 module.exports = {
+  autocomplete: async interaction => {
+    const subcommand = interaction.options.getSubcommand();
+
+    switch (subcommand) {
+      case 'delete':
+        var reminders = await Reminder.find({ 'user.id': interaction.user.id });
+        if (!reminders.length) return;
+
+        interaction.customRespond(await Promise.all(reminders.map(async reminder => ({ name: await interaction.translate('commands.reminder.subcommands.delete.autocomplete.item', { about: reminder.about, reminderId: reminder._id }), value: reminder._id }))));
+        break;
+    }
+  },
+
   data: new Discord.SlashCommandBuilder()
     .setName('reminder')
     .setDescription('reminder')
@@ -45,7 +58,6 @@ module.exports = {
             .setDescriptionLocalizations(getLocalizedCommand('reminder.subcommands.delete.options.reminder').descriptions)
             .setRequired(true)
             .setAutocomplete(true))),
-
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
 
@@ -76,11 +88,11 @@ module.exports = {
         if (totalReminders >= 5) return interaction.followUp(await interaction.translate('commands.reminder.errors.too_many_reminders'));
 
         var reminder = new Reminder({
+          about,
+          expire_at: reminderTime,
           user: {
             id: interaction.user.id
-          },
-          about,
-          expire_at: reminderTime
+          }
         });
 
         var validationError = getValidationError(reminder);
@@ -90,7 +102,7 @@ module.exports = {
 
         var date = new Date(reminder.expire_at).toLocaleString(await interaction.getLanguage(), { dateStyle: 'full', timeStyle: 'short' });
 
-        interaction.followUp(await interaction.translate('commands.reminder.subcommands.create.success', { reminderId: reminder._id, date }));
+        interaction.followUp(await interaction.translate('commands.reminder.subcommands.create.success', { date, reminderId: reminder._id }));
         break;
       case 'delete':
         var reminderId = interaction.options.getString('reminder');
@@ -106,18 +118,6 @@ module.exports = {
           content: await interaction.translate('commands.reminder.subcommands.delete.success'),
           ephemeral: true
         });
-    }
-  },
-  autocomplete: async interaction => {
-    const subcommand = interaction.options.getSubcommand();
-
-    switch (subcommand) {
-      case 'delete':
-        var reminders = await Reminder.find({ 'user.id': interaction.user.id });
-        if (!reminders.length) return;
-
-        interaction.customRespond(await Promise.all(reminders.map(async reminder => ({ name: await interaction.translate('commands.reminder.subcommands.delete.autocomplete.item', { reminderId: reminder._id, about: reminder.about }), value: reminder._id }))));
-        break;
     }
   }
 };

@@ -1,15 +1,44 @@
-const Discord = require('discord.js');
 const Server = require('@/schemas/Server');
-const Panel = require('@/schemas/Server/Panel');
-const LogChannel = require('@/schemas/Server/LogChannel');
-const Reward = require('@/schemas/Server/Vote/Reward');
-const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
-const sendLog = require('@/utils/servers/sendLog');
-const User = require('@/schemas/User');
 const Language = require('@/schemas/Server/Language');
+const LogChannel = require('@/schemas/Server/LogChannel');
+const Panel = require('@/schemas/Server/Panel');
+const Reward = require('@/schemas/Server/Vote/Reward');
+const User = require('@/schemas/User');
 const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
+const sendLog = require('@/utils/servers/sendLog');
+const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
+const Discord = require('discord.js');
 
 module.exports = {
+  autocomplete: async interaction => {
+    const subcommand = interaction.options.getSubcommand();
+    const group = interaction.options.getSubcommandGroup();
+
+    if (group === 'set') {
+      if (subcommand === 'invite') {
+        const invites = await interaction.guild.invites.fetch().catch(() => null);
+        if (!invites) return;
+
+        const server = await Server.findOne({ id: interaction.guild.id });
+
+        return interaction.customRespond(
+          [interaction.guild.vanityURLCode ? { name: `https://discord.com/invite/${interaction.guild.vanityURLCode} (Vanity)`, value: interaction.guild.vanityURLCode } : null]
+            .filter(Boolean)
+            .concat(invites.map(invite => ({ name: `https://discord.com/invite/${invite.code}`, value: invite.code })))
+            .filter(choice => server?.invite_code?.type === 'Vanity' ? choice.value !== interaction.guild.vanityURLCode : choice.value !== server?.invite_code?.code)
+        );
+      }
+    }
+
+    if (group === 'remove') {
+      if (subcommand === 'reward') {
+        const rewards = await Reward.find({ guild: { id: interaction.guild.id } });
+
+        return interaction.customRespond(await Promise.all(rewards.map(async reward => ({ name: await interaction.translate('commands.server.groups.remove.subcommands.reward.autocomplete.item', { requiredVotes: reward.required_votes, role: `${interaction.guild.roles.cache.get(reward.role.id)?.name || reward.role.id}` }), value: reward.role.id }))));
+      }
+    }
+  },
+
   data: new Discord.SlashCommandBuilder()
     .setName('server')
     .setDescription('server')
@@ -162,8 +191,6 @@ module.exports = {
             .setDescription('Lists all the vote rewards of the server.')
             .setNameLocalizations(getLocalizedCommand('server.groups.list.subcommands.rewards').names)
             .setDescriptionLocalizations(getLocalizedCommand('server.groups.list.subcommands.rewards').descriptions))),
-
-  isGuildOnly: true,
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
     const group = interaction.options.getSubcommandGroup();
@@ -183,7 +210,7 @@ module.exports = {
           const invite = await interaction.guild.invites.fetch(newInviteCode).catch(() => null);
           if (!invite) return interaction.followUp(await interaction.translate('commands.server.errors.invalid_invite_code'));
 
-          await Server.findOneAndUpdate({ id: interaction.guild.id }, { invite_code: { type: 'Invite', code: newInviteCode } });
+          await Server.findOneAndUpdate({ id: interaction.guild.id }, { invite_code: { code: newInviteCode, type: 'Invite' } });
         }
 
         sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.invite_code_updated', { newInviteCode, user: interaction.user.toString() }))
@@ -207,8 +234,8 @@ module.exports = {
           return interaction.followUp(await interaction.translate('commands.server.groups.set.subcommands.log.updated'));
         } else {
           await new LogChannel({
-            guildId: interaction.guild.id,
-            channelId: channel.id
+            channelId: channel.id,
+            guildId: interaction.guild.id
           }).save();
 
           return interaction.followUp(await interaction.translate('commands.server.groups.set.subcommands.log.set'));
@@ -238,8 +265,8 @@ module.exports = {
           return interaction.followUp(await interaction.translate('commands.server.groups.set.subcommands.panel.updated'));
         } else {
           await new Panel({
-            guildId: interaction.guild.id,
-            channelId: channel.id
+            channelId: channel.id,
+            guildId: interaction.guild.id
           }).save();
 
           await updatePanelMessage(interaction.guild.id);
@@ -352,18 +379,18 @@ module.exports = {
           guild: {
             id: interaction.guild.id
           },
+          required_votes: requiredVotes,
           role: {
             id: role.id
-          },
-          required_votes: requiredVotes
+          }
         }).save();
 
-        sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.vote_reward_added', { role: role.toString(), requiredVotes, user: interaction.user.toString() }))
+        sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.vote_reward_added', { requiredVotes, role: role.toString(), user: interaction.user.toString() }))
           .catch(() => null);
 
         return interaction.followUp({
-          content: await interaction.translate('commands.server.groups.add.subcommands.reward.reward_added', { role: role.toString(), requiredVotes }),
-          allowedMentions: { parse: [] }
+          allowedMentions: { parse: [] },
+          content: await interaction.translate('commands.server.groups.add.subcommands.reward.reward_added', { requiredVotes, role: role.toString() })
         });
       }
     }
@@ -396,41 +423,14 @@ module.exports = {
 
         const embed = new Discord.EmbedBuilder()
           .setColor('Random')
-          .setAuthor({ name: await interaction.translate('commands.server.groups.list.subcommands.rewards.embed.title', { serverName: interaction.guild.name }), iconURL: interaction.guild.iconURL() })
+          .setAuthor({ iconURL: interaction.guild.iconURL(), name: await interaction.translate('commands.server.groups.list.subcommands.rewards.embed.title', { serverName: interaction.guild.name }) })
           .setDescription(`${await interaction.translate('commands.server.groups.list.subcommands.rewards.embed.description', { count: rewards.length })}
 
-${(await Promise.all(rewards.sort((a, b) => a.required_votes - b.required_votes).map(async reward => await interaction.translate('commands.server.groups.list.subcommands.rewards.embed.item', { role: `<@&${reward.role.id}>`, requiredVotes: reward.required_votes })))).join('\n\n')}`);
+${(await Promise.all(rewards.sort((a, b) => a.required_votes - b.required_votes).map(async reward => await interaction.translate('commands.server.groups.list.subcommands.rewards.embed.item', { requiredVotes: reward.required_votes, role: `<@&${reward.role.id}>` })))).join('\n\n')}`);
 
         return interaction.followUp({ embeds: [embed] });
       }
     }
   },
-  autocomplete: async interaction => {
-    const subcommand = interaction.options.getSubcommand();
-    const group = interaction.options.getSubcommandGroup();
-
-    if (group === 'set') {
-      if (subcommand === 'invite') {
-        const invites = await interaction.guild.invites.fetch().catch(() => null);
-        if (!invites) return;
-
-        const server = await Server.findOne({ id: interaction.guild.id });
-
-        return interaction.customRespond(
-          [interaction.guild.vanityURLCode ? { name: `https://discord.com/invite/${interaction.guild.vanityURLCode} (Vanity)`, value: interaction.guild.vanityURLCode } : null]
-            .filter(Boolean)
-            .concat(invites.map(invite => ({ name: `https://discord.com/invite/${invite.code}`, value: invite.code })))
-            .filter(choice => server?.invite_code?.type === 'Vanity' ? choice.value !== interaction.guild.vanityURLCode : choice.value !== server?.invite_code?.code)
-        );
-      }
-    }
-
-    if (group === 'remove') {
-      if (subcommand === 'reward') {
-        const rewards = await Reward.find({ guild: { id: interaction.guild.id } });
-
-        return interaction.customRespond(await Promise.all(rewards.map(async reward => ({ name: await interaction.translate('commands.server.groups.remove.subcommands.reward.autocomplete.item', { role: `${interaction.guild.roles.cache.get(reward.role.id)?.name || reward.role.id}`, requiredVotes: reward.required_votes }), value: reward.role.id }))));
-      }
-    }
-  }
+  isGuildOnly: true
 };

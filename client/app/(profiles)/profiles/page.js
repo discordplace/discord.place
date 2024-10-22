@@ -2,24 +2,24 @@ import Hero from '@/app/(profiles)/profiles/components/Hero';
 import Profiles from '@/app/(profiles)/profiles/components/Hero/Profiles';
 
 export const metadata = {
-  title: 'Profiles',
   description: 'Find, share and explore the customized page of Discord profiles!',
   openGraph: {
-    title: 'Discord Place - Profiles',
     description: 'Find, share and explore the customized page of Discord profiles!',
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://discord.place/profiles',
-    site_name: 'Discord Place',
     images: [
       {
-        url: '/og.png',
-        width: 960,
+        alt: 'Discord Place',
         height: 540,
-        alt: 'Discord Place'
+        url: '/og.png',
+        width: 960
       }
-    ]
-  }
+    ],
+    locale: 'en_US',
+    site_name: 'Discord Place',
+    title: 'Discord Place - Profiles',
+    type: 'website',
+    url: 'https://discord.place/profiles'
+  },
+  title: 'Profiles'
 };
 
 export default function Page() {

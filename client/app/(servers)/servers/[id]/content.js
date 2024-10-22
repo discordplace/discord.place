@@ -1,18 +1,18 @@
 'use client';
 
-import MotionImage from '@/app/components/Motion/Image';
-import { motion } from 'framer-motion';
 import About from '@/app/(servers)/servers/[id]/components/sections/About';
 import RightSide from '@/app/(servers)/servers/[id]/components/sections/RightSide';
 import Tabs from '@/app/(servers)/servers/[id]/components/Tabs';
-import Tooltip from '@/app/components/Tooltip';
-import Script from 'next/script';
-import cn from '@/lib/cn';
-import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';
-import useLanguageStore, { t } from '@/stores/language';
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import MotionImage from '@/app/components/Motion/Image';
+import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
+import useLanguageStore, { t } from '@/stores/language';
+import useThemeStore from '@/stores/theme';
+import { motion } from 'framer-motion';
+import Script from 'next/script';
 
 export default function Content({ server }) {
   const theme = useThemeStore(state => state.theme);
@@ -26,40 +26,40 @@ export default function Content({ server }) {
         <div className='relative h-[300px] w-full rounded-xl bg-secondary'>
           {server.banner && (
             <ServerBanner
-              id={server.id}
-              hash={server.banner}
-              className='absolute left-0 top-0 z-[1] size-full rounded-xl object-cover'
-              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              className='absolute left-0 top-0 z-[1] size-full rounded-xl object-cover'
+              hash={server.banner}
+              height={2048}
+              id={server.id}
+              initial={{ opacity: 0 }}
               size={2048}
               width={2048}
-              height={2048}
             />
           )}
 
           <div className='absolute -bottom-14 left-10 z-[3] w-[calc(100%_-_2.5rem)]'>
             <ServerIcon
-              id={server.id}
-              hash={server.icon}
-              size={256}
-              width={150}
-              height={150}
+              animate={{ opacity: 1, y: 0 }}
               className={cn(
                 'border-[10px] border-[rgb(var(--bg-background))] rounded-3xl w-[128px] h-[128px]',
                 server.icon && 'bg-background'
               )}
+              hash={server.icon}
+              height={150}
+              id={server.id}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              size={256}
+              width={150}
             />
           </div>
         </div>
 
         <div className='mt-[70px] flex w-full px-8 lg:px-0'>
           <motion.h1
-            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
             className='text-3xl font-bold'
+            initial={{ opacity: 0 }}
+            transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
           >
             {server.name}
           </motion.h1>
@@ -68,22 +68,22 @@ export default function Content({ server }) {
             {server.badges.length > 0 && (
               server.badges.map(badge => (
                 <Tooltip
-                  key={badge}
                   content={t(`badges.${badge.toLowerCase()}`, {
-                    premiumSince: server.ownerSubscriptionCreatedAt,
-                    lng: language,
                     formatParams: {
-                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                    }
+                      premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                    },
+                    lng: language,
+                    premiumSince: server.ownerSubscriptionCreatedAt
                   })}
+                  key={badge}
                 >
                   <MotionImage
+                    alt={`${badge} Badge`}
+                    animate={{ opacity: 1, y: 0 }}
+                    height={24}
+                    initial={{ opacity: 0, y: 20 }}
                     src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_${badge.toLowerCase()}.svg`}
                     width={24}
-                    height={24}
-                    alt={`${badge} Badge`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
                   />
                 </Tooltip>
               ))
@@ -103,12 +103,12 @@ export default function Content({ server }) {
                 </>
               }>
                 <MotionImage
+                  alt={'Votes Tripled Badge'}
+                  animate={{ opacity: 1, y: 0 }}
+                  height={24}
+                  initial={{ opacity: 0, y: 20 }}
                   src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_votes_tripled.svg`}
                   width={24}
-                  height={24}
-                  alt={'Votes Tripled Badge'}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
                 />
               </Tooltip>
             )}
@@ -127,12 +127,12 @@ export default function Content({ server }) {
                 </>
               }>
                 <MotionImage
+                  alt={'Standed Out Badge'}
+                  animate={{ opacity: 1, y: 0 }}
+                  height={24}
+                  initial={{ opacity: 0, y: 20 }}
                   src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_standed_out.svg`}
                   width={24}
-                  height={24}
-                  alt={'Standed Out Badge'}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
                 />
               </Tooltip>
             )}
@@ -145,9 +145,9 @@ export default function Content({ server }) {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .8 }}
+          initial={{ opacity: 0 }}
+          transition={{ damping: 10, delay: .8, duration: 0.3, stiffness: 100, type: 'spring' }}
         >
           <Tabs server={server} />
         </motion.div>

@@ -10,7 +10,7 @@ function findSingleQuarantineEntry(type, value, restriction) {
 
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    const entry = await Quarantine.findOne({ type, [type === 'USER_ID' ? 'user.id' : 'guild.id']: value, restriction });
+    const entry = await Quarantine.findOne({ restriction, type, [type === 'USER_ID' ? 'user.id' : 'guild.id']: value });
     if (!entry) return reject('Quarantine entry not found');
 
     resolve(entry);
@@ -24,7 +24,7 @@ function findMultipleQuarantineEntry(entries) {
 
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    const entry = await Quarantine.find({ $or: entries.map(entry => ({ type: entry.type, [entry.type === 'USER_ID' ? 'user.id' : 'guild.id']: entry.value, restriction: entry.restriction })) });
+    const entry = await Quarantine.find({ $or: entries.map(entry => ({ [entry.type === 'USER_ID' ? 'user.id' : 'guild.id']: entry.value, restriction: entry.restriction, type: entry.type })) });
     if (entry.length <= 0) return reject('Quarantine entry not found');
 
     resolve(entry);
@@ -32,6 +32,6 @@ function findMultipleQuarantineEntry(entries) {
 }
 
 module.exports = {
-  single: findSingleQuarantineEntry,
-  multiple: findMultipleQuarantineEntry
+  multiple: findMultipleQuarantineEntry,
+  single: findSingleQuarantineEntry
 };

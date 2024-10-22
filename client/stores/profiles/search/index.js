@@ -1,29 +1,10 @@
-import { create } from 'zustand';
-import { toast } from 'sonner';
-import fetchProfiles from '@/lib/request/profiles/fetchProfiles';
 import fetchPresences from '@/lib/request/profiles/fetchPresences';
+import fetchProfiles from '@/lib/request/profiles/fetchProfiles';
+import { toast } from 'sonner';
+import { create } from 'zustand';
 
 const useSearchStore = create((set, get) => ({
-  loading: true,
-  setLoading: loading => set({ loading }),
-  search: '',
-  setSearch: search => set({ search }),
-  page: 1,
-  setPage: page => set({ page }),
-  limit: 9,
-  setLimit: limit => set({ limit }),
-  profiles: [],
-  setProfiles: profiles => set({ profiles }),
-  totalProfiles: 0,
   count: 0,
-  maxReached: false,
-  presences: [],
-  sort: 'Likes',
-  setSort: sort => {
-    set({ sort, page: 1 });
-
-    get().fetchProfiles(get().search);
-  },
   fetchProfiles: async search => {
     const page = get().page;
     const limit = get().limit;
@@ -33,7 +14,7 @@ const useSearchStore = create((set, get) => ({
 
     fetchProfiles(search, page, limit, sort)
       .then(data => {
-        set({ profiles: data.profiles, loading: false, totalProfiles: data.total, maxReached: data.maxReached, count: data.count });
+        set({ count: data.count, loading: false, maxReached: data.maxReached, profiles: data.profiles, totalProfiles: data.total });
 
         if (data.profiles.length > 0) {
           const userIds = data.profiles.map(profile => profile.id);
@@ -47,7 +28,26 @@ const useSearchStore = create((set, get) => ({
         toast.error(error);
         set({ loading: false });
       });
-  }
+  },
+  limit: 9,
+  loading: true,
+  maxReached: false,
+  page: 1,
+  presences: [],
+  profiles: [],
+  search: '',
+  setLimit: limit => set({ limit }),
+  setLoading: loading => set({ loading }),
+  setPage: page => set({ page }),
+  setProfiles: profiles => set({ profiles }),
+  setSearch: search => set({ search }),
+  setSort: sort => {
+    set({ page: 1, sort });
+
+    get().fetchProfiles(get().search);
+  },
+  sort: 'Likes',
+  totalProfiles: 0
 }));
 
 export default useSearchStore;

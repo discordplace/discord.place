@@ -8,7 +8,7 @@ function downloadEmoji(emoji) {
     const zip = new JSZip();
     const fetchPromises = [];
 
-    emoji.emoji_ids.forEach(({ id, animated }) => {
+    emoji.emoji_ids.forEach(({ animated, id }) => {
       const extension = animated ? 'gif' : 'png';
       const filename = `${id}.${extension}`;
       const url = config.getEmojiURL(`packages/${emoji.id}/${id}`, animated);

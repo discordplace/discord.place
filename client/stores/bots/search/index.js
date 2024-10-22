@@ -1,34 +1,10 @@
-import { create } from 'zustand';
-import { toast } from 'sonner';
-
 import fetchBots from '@/lib/request/bots/fetchBots';
+import { toast } from 'sonner';
+import { create } from 'zustand';
 
 const useSearchStore = create((set, get) => ({
-  loading: true,
-  setLoading: loading => set({ loading }),
-  search: '',
-  setSearch: search => set({ search }),
-  sort: 'Votes',
-  setSort: sort => {
-    set({ sort, page: 1 });
-
-    get().fetchBots(get().search);
-  },
-  category: 'All',
-  setCategory: category => {
-    set({ category, page: 1 });
-
-    get().fetchBots(get().search);
-  },
-  page: 1,
-  setPage: page => set({ page }),
-  limit: 12,
-  setLimit: limit => set({ limit }),
   bots: [],
-  setBots: bots => set({ bots }),
-  total: 0,
-  setTotal: total => set({ total }),
-  maxReached: false,
+  category: 'All',
   fetchBots: async (search, page, limit, category, sort) => {
     if (page) set({ page });
     if (limit) set({ limit });
@@ -43,7 +19,30 @@ const useSearchStore = create((set, get) => ({
         toast.error(error);
         set({ loading: false });
       });
-  }
+  },
+  limit: 12,
+  loading: true,
+  maxReached: false,
+  page: 1,
+  search: '',
+  setBots: bots => set({ bots }),
+  setCategory: category => {
+    set({ category, page: 1 });
+
+    get().fetchBots(get().search);
+  },
+  setLimit: limit => set({ limit }),
+  setLoading: loading => set({ loading }),
+  setPage: page => set({ page }),
+  setSearch: search => set({ search }),
+  setSort: sort => {
+    set({ page: 1, sort });
+
+    get().fetchBots(get().search);
+  },
+  setTotal: total => set({ total }),
+  sort: 'Votes',
+  total: 0
 }));
 
 export default useSearchStore;

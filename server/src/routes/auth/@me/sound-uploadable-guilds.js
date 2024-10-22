@@ -1,8 +1,8 @@
+const getUserGuilds = require('@/utils/getUserGuilds');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const Discord = require('discord.js');
-const getUserGuilds = require('@/utils/getUserGuilds');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -22,10 +22,10 @@ module.exports = {
       const botGuilds = client.guilds.cache.map(guild => guild.id);
 
       return response.json(soundUploadableGuilds.map(guild => ({
-        id: guild.id,
-        name: guild.name,
+        bot_in_guild: botGuilds.includes(guild.id),
         icon: guild.icon,
-        bot_in_guild: botGuilds.includes(guild.id)
+        id: guild.id,
+        name: guild.name
       })));
     }
   ]

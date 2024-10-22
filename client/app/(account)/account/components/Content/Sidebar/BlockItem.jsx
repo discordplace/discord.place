@@ -5,7 +5,7 @@ import { t } from '@/stores/language';
 import Link from 'next/link';
 import { MdOpenInNew } from 'react-icons/md';
 
-export default function BlockItem({ id, name, icon, href, onClick, badge, disabled, condition, visited = true }) {
+export default function BlockItem({ badge, condition, disabled, href, icon, id, name, onClick, visited = true }) {
   const isCollapsed = useAccountStore(state => state.isCollapsed);
   const activeTab = useAccountStore(state => state.activeTab);
   const setActiveTab = useAccountStore(state => state.setActiveTab);
@@ -40,9 +40,9 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
           disabled && 'opacity-50 pointer-events-none',
           loading && 'pointer-events-none'
         )}
+        href={href}
         key={id}
         onClick={() => onClick ? onClick() : !href && setActiveTab(id)}
-        href={href}
         target='_blank'
       >
         <IconComponent className='size-4' />

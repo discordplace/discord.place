@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
 const User = require('@/schemas/User');
+const jwt = require('jsonwebtoken');
 
 class AuthError extends Error {
   constructor(message) {
@@ -16,8 +16,8 @@ module.exports = async function checkAuthentication(request, response, next) {
     if (!token) throw new AuthError('Unauthorized');
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET, {
-      issuer: 'api.discord.place',
       audience: 'discord.place',
+      issuer: 'api.discord.place',
       subject: 'user'
     });
 

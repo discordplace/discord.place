@@ -1,12 +1,12 @@
 const Emoji = require('@/schemas/Emoji');
+const getEmojiURL = require('@/utils/emojis/getEmojiURL');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/emojis/id');
-const { param, matchedData, body } = require('express-validator');
-const Discord = require('discord.js');
-const getEmojiURL = require('@/utils/emojis/getEmojiURL');
 const bodyParser = require('body-parser');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const Discord = require('discord.js');
+const { body, matchedData, param } = require('express-validator');
 
 module.exports = {
   post: [
@@ -18,10 +18,10 @@ module.exports = {
       .custom(idValidation),
     body('guildId')
       .isString().withMessage('Guild ID must be an string.')
-      .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
+      .isLength({ max: 19, min: 17 }).withMessage('Guild ID must be 17-19 characters long.'),
     validateRequest,
     async (request, response) => {
-      const { id, guildId } = matchedData(request);
+      const { guildId, id } = matchedData(request);
 
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return response.sendError('Guild not found.', 404);

@@ -1,13 +1,13 @@
 'use client';
 
-import * as RadixSelect from '@radix-ui/react-select';
-import { IoChevronDownSharp, IoCheckmarkCircleSharp } from 'react-icons/io5';
-import { useMedia } from 'react-use';
 import Drawer from '@/app/components/Drawer';
-import { useState } from 'react';
 import cn from '@/lib/cn';
+import * as RadixSelect from '@radix-ui/react-select';
+import { useState } from 'react';
+import { IoCheckmarkCircleSharp, IoChevronDownSharp } from 'react-icons/io5';
+import { useMedia } from 'react-use';
 
-export default function Select({ mobileOverride, triggerClassName, placeholder, options, value, onChange, disabled }) {
+export default function Select({ disabled, mobileOverride, onChange, options, placeholder, triggerClassName, value }) {
   const isMobile = useMedia('(max-width: 640px)', false);
   const [openState, setOpenState] = useState(false);
 
@@ -15,6 +15,7 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
     (mobileOverride || isMobile) ? (
       <>
         <div
+          aria-label={placeholder}
           className={cn(
             'inline-flex cursor-pointer items-center justify-center rounded-lg py-[1rem] w-full leading-none border-2 border-primary px-2 sm:px-4 gap-1 sm:gap-4 bg-secondary transition-all text-tertiary select-none font-medium outline-none',
             openState && 'border-purple-500 bg-quaternary',
@@ -22,7 +23,6 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
             triggerClassName
           )}
           onClick={() => setOpenState(!openState)}
-          aria-label={placeholder}
         >
           {options.find(option => option.value === value)?.label || placeholder}
 
@@ -35,27 +35,27 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
         </div>
 
         <Drawer
+          items={options}
           openState={openState}
           setOpenState={setOpenState}
-          state={value}
           setState={onChange}
-          items={options}
+          state={value}
         />
       </>
     ) : (
       <RadixSelect.Root
-        open={openState}
         onOpenChange={setOpenState}
-        value={value}
         onValueChange={onChange}
+        open={openState}
+        value={value}
       >
         <RadixSelect.Trigger
+          aria-label={placeholder}
           className={cn(
             'inline-flex items-center justify-center rounded-lg py-[1rem] w-max leading-none border-2 border-primary px-4 gap-4 bg-secondary hover:bg-tertiary focus-visible:border-purple-500 transition-all focus-visible:bg-quaternary text-tertiary select-none font-medium outline-none data-[state=open]:border-purple-500 data-[state=open]:bg-quaternary',
             disabled && 'opacity-50 pointer-events-none',
             triggerClassName
           )}
-          aria-label={placeholder}
         >
           <RadixSelect.Value placeholder={placeholder} />
 
@@ -71,8 +71,8 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
             <RadixSelect.Viewport>
               {options.map(option => (
                 <RadixSelect.Item
-                  key={option.value}
                   className='relative flex cursor-pointer select-none items-center gap-x-2 p-4 font-medium leading-none text-tertiary transition-colors data-[disabled]:pointer-events-none data-[state=checked]:pointer-events-none data-[highlighted]:bg-tertiary data-[state=checked]:bg-quaternary data-[highlighted]:text-primary data-[state=checked]:text-primary data-[disabled]:opacity-50 data-[highlighted]:outline-none'
+                  key={option.value}
                   value={option.value}
                 >
                   <RadixSelect.ItemText>

@@ -1,6 +1,6 @@
-const { createCheckout: createLemonSqueezyCheckout } = require('@lemonsqueezy/lemonsqueezy.js');
 const Plans = require('@/schemas/LemonSqueezy/Plan');
 const encrypt = require('@/utils/encryption/encrypt');
+const { createCheckout: createLemonSqueezyCheckout } = require('@lemonsqueezy/lemonsqueezy.js');
 
 async function createStandedOutCheckout(id, type) {
   if (!process.env.LEMON_SQUEEZY_API_KEY) throw new Error('LEMON_SQUEEZY_API_KEY environment variable is not defined.');
@@ -26,8 +26,8 @@ async function createStandedOutCheckout(id, type) {
       }
     },
     productOptions: {
-      name: `Standed out for 12 hours - ${type === 'server' ? 'Server' : 'Bot'} ${id}`,
-      enabledVariants: [config.lemonSqueezy.variantIds.standedOut[type === 'server' ? 'servers' : 'bots']]
+      enabledVariants: [config.lemonSqueezy.variantIds.standedOut[type === 'server' ? 'servers' : 'bots']],
+      name: `Standed out for 12 hours - ${type === 'server' ? 'Server' : 'Bot'} ${id}`
     }
   });
 

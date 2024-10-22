@@ -2,7 +2,7 @@ const winston = require('winston');
 require('winston-daily-rotate-file');
 
 const { combine, errors, printf, timestamp } = winston.format;
-const { Console, File, DailyRotateFile } = winston.transports;
+const { Console, DailyRotateFile, File } = winston.transports;
 
 const { inspect } = require('util');
 
@@ -20,14 +20,14 @@ module.exports = class Logger {
         zippedArchive: true
       }),
       new DailyRotateFile({
-        filename: 'logs/%DATE%-error.log',
         datePattern: 'YYYY-MM-DD',
-        maxFiles: '14d',
-        level: 'error'
+        filename: 'logs/%DATE%-error.log',
+        level: 'error',
+        maxFiles: '14d'
       }),
       new DailyRotateFile({
-        filename: 'logs/%DATE%-combined.log',
         datePattern: 'YYYY-MM-DD',
+        filename: 'logs/%DATE%-combined.log',
         maxFiles: '14d'
       })
     ];
@@ -39,63 +39,47 @@ module.exports = class Logger {
         zippedArchive: true
       }),
       new DailyRotateFile({
-        filename: 'logs/%DATE%-http.log',
         datePattern: 'YYYY-MM-DD',
+        filename: 'logs/%DATE%-http.log',
         maxFiles: '14d'
       })
     ];
 
     this.logger = winston.createLogger({
-      levels: {
-        error: 0,
-        warn: 1,
-        info: 2,
-        debug: 3
-      },
-      level: 'info',
       format: combine(
         errors({ stack: true }),
         timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
-        printf(({ level, message, timestamp, stack }) => {
+        printf(({ level, message, stack, timestamp }) => {
           if (stack) return `${timestamp} ${level}: ${stack}`;
 
           return `${timestamp} ${level}: ${message}`;
         })
       ),
+      level: 'info',
+      levels: {
+        debug: 3,
+        error: 0,
+        info: 2,
+        warn: 1
+      },
       transports
     });
 
     this.httpLogger = winston.createLogger({
-      levels: {
-        http: 0
-      },
-      level: 'http',
       format: combine(
         timestamp({
           format: 'YYYY-MM-DD hh:mm:ss.SSS A'
         }),
         printf(({ level, message, timestamp }) => `${timestamp} ${level}: ${message}`)
       ),
+      level: 'http',
+      levels: {
+        http: 0
+      },
       transports: httpTransports
     });
 
     global.logger = this;
-  }
-
-  info(...messages) {
-    this.logger.info(messages.join(' '));
-  }
-
-  error(...messages) {
-    for (const message of messages) {
-      this.logger.error(typeof message === 'object' ? inspect(message, { depth: 4 }) : message);
-    }
-  }
-
-  warn(...messages) {
-    for (const message of messages) {
-      this.logger.warn(message);
-    }
   }
 
   debug(...messages) {
@@ -104,9 +88,25 @@ module.exports = class Logger {
     }
   }
 
+  error(...messages) {
+    for (const message of messages) {
+      this.logger.error(typeof message === 'object' ? inspect(message, { depth: 4 }) : message);
+    }
+  }
+
   http(...messages) {
     for (const message of messages) {
       this.httpLogger.log('http', message);
+    }
+  }
+
+  info(...messages) {
+    this.logger.info(messages.join(' '));
+  }
+
+  warn(...messages) {
+    for (const message of messages) {
+      this.logger.warn(message);
     }
   }
 };

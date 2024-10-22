@@ -1,14 +1,14 @@
 'use client';
 
+import Chat from '@/app/(templates)/templates/[id]/preview/components/Chat';
+import Header from '@/app/(templates)/templates/[id]/preview/components/Header';
+import Members from '@/app/(templates)/templates/[id]/preview/components/Members';
 import Sidebar from '@/app/(templates)/templates/[id]/preview/components/Sidebar';
 import Channels from '@/app/(templates)/templates/[id]/preview/components/Sidebar/Channels';
-import Header from '@/app/(templates)/templates/[id]/preview/components/Header';
-import Chat from '@/app/(templates)/templates/[id]/preview/components/Chat';
-import Members from '@/app/(templates)/templates/[id]/preview/components/Members';
-import { useState, useEffect } from 'react';
 import FullPageLoading from '@/app/components/FullPageLoading';
-import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
+import { useEffect, useState } from 'react';
+import { useMedia } from 'react-use';
 
 export default function Content({ template }) {
   const [focusedChannel, setFocusedChannel] = useState(
@@ -32,20 +32,20 @@ export default function Content({ template }) {
   return (
     <div className='flex size-full min-h-svh'>
       <Sidebar
-        template={template}
-        focusedChannel={focusedChannel}
         currentlyOpenedSection={currentlyOpenedSection}
-        setCurrentlyOpenedSection={setCurrentlyOpenedSection}
+        focusedChannel={focusedChannel}
         isMobile={isMobile}
+        setCurrentlyOpenedSection={setCurrentlyOpenedSection}
         setMemberListCollapsed={setMemberListCollapsed}
+        template={template}
       />
 
       <Channels
+        currentlyOpenedSection={currentlyOpenedSection}
         data={template.data.channels}
         focusedChannel={focusedChannel}
-        setFocusedChannel={setFocusedChannel}
-        currentlyOpenedSection={currentlyOpenedSection}
         isMobile={isMobile}
+        setFocusedChannel={setFocusedChannel}
       />
 
       <div
@@ -67,9 +67,9 @@ export default function Content({ template }) {
 
           {!memberListCollapsed && (
             <Members
-              template={template}
-              isMobile={isMobile}
               currentlyOpenedSection={currentlyOpenedSection}
+              isMobile={isMobile}
+              template={template}
             />
           )}
         </div>

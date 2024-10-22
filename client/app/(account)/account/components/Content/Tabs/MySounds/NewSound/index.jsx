@@ -1,18 +1,18 @@
 'use client';
 
 import config from '@/config';
-import { MdChevronLeft } from 'react-icons/md';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 import cn from '@/lib/cn';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import createSound from '@/lib/request/sounds/createSound';
-import { useRouter } from 'next/navigation';
-import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
-import { TbLoader } from 'react-icons/tb';
+import createSound from '@/lib/request/sounds/createSound';
 import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
+import { MdChevronLeft } from 'react-icons/md';
+import { TbLoader } from 'react-icons/tb';
+import Lottie from 'react-lottie';
+import { toast } from 'sonner';
 
 export default function NewSound() {
   const setCurrentlyAddingSound = useAccountStore(state => state.setCurrentlyAddingSound);
@@ -35,6 +35,11 @@ export default function NewSound() {
     formData.append('file', file);
 
     toast.promise(createSound(formData), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.mySounds.sections.addSound.toast.addingSound', { soundName }),
       success: data => {
         setTimeout(() => {
@@ -50,11 +55,6 @@ export default function NewSound() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.mySounds.sections.addSound.toast.soundAdded', { soundName });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -72,7 +72,7 @@ export default function NewSound() {
   return (
     <>
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
+        <Lottie height='100%' isStopped={!renderConfetti} options={{ animationData: confetti, autoplay: false, loop: false }} width='100%'/>
       </div>
 
       <div className='flex w-full max-w-[800px] flex-col justify-center gap-y-4'>
@@ -110,8 +110,8 @@ export default function NewSound() {
                 'w-full bg-quaternary cursor-pointer group hover:bg-purple-500/10 hover:border-purple-500 transition-all gap-y-2 flex-col border-2 border-primary h-[150px] mt-4 rounded-xl flex items-center justify-center',
                 (file || dragging) && 'border-purple-500 bg-purple-500/10'
               )}
-              htmlFor='file'
               draggable={true}
+              htmlFor='file'
               onDragEnter={() => setDragging(true)}
               onDragLeave={() => setDragging(false)}
               onDragOver={event => event.preventDefault()}
@@ -141,10 +141,9 @@ export default function NewSound() {
               }}
             >
               <input
+                accept='.mp3'
                 className='hidden'
                 id='file'
-                type='file'
-                accept='.mp3'
                 onChange={event => {
                   const file = event.target.files[0];
                   if (file) {
@@ -166,6 +165,7 @@ export default function NewSound() {
                     reader.readAsDataURL(file);
                   }
                 }}
+                type='file'
               />
 
               <p className='flex items-center gap-x-2 text-sm font-medium text-tertiary transition-all group-hover:text-white'>
@@ -190,9 +190,9 @@ export default function NewSound() {
 
             <input
               className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              maxLength={config.soundNameMaxLength}
               onChange={event => setSoundName(event.target.value)}
               value={soundName}
-              maxLength={config.soundNameMaxLength}
             />
 
             <h2 className='mt-8 text-lg font-semibold'>
@@ -208,11 +208,11 @@ export default function NewSound() {
                 .filter(category => category !== 'All')
                 .map(category => (
                   <button
-                    key={category}
                     className={cn(
                       'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-quaternary',
                       soundCategories.includes(category) && 'bg-quaternary'
                     )}
+                    key={category}
                     onClick={() => {
                       if (soundCategories.includes(category)) setSoundCategories(oldCategories => oldCategories.filter(oldCategory => oldCategory !== category));
                       else setSoundCategories(oldCategories => [...oldCategories, category]);
@@ -254,12 +254,12 @@ export default function NewSound() {
               </button>
 
               <button className='flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
+                disabled={loading}
                 onClick={() => {
                   setSoundName('');
                   setSoundCategories([]);
                   setCurrentlyAddingSound(false);
                 }}
-                disabled={loading}
               >
                 {t('buttons.cancel')}
               </button>

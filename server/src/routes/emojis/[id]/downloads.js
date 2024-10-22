@@ -1,8 +1,8 @@
 const Emoji = require('@/src/schemas/Emoji');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/emojis/id');
-const { param, matchedData } = require('express-validator');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const { matchedData, param } = require('express-validator');
 
 module.exports = {
   post: [

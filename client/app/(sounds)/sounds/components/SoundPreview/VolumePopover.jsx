@@ -1,9 +1,9 @@
 'use client';
 
 import useGeneralStore from '@/stores/general';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import { t } from '@/stores/language';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
 
 export default function VolumePopover() {
   const volume = useGeneralStore(state => state.sounds.volume);
@@ -37,13 +37,13 @@ export default function VolumePopover() {
             )}
 
             <input
-              value={volume}
-              onChange={event => setVolume(parseFloat(event.target.value))}
-              type='range'
-              min='0'
-              max='1'
-              step='0.01'
               className='h-2.5 w-full cursor-pointer appearance-none rounded-lg bg-quaternary accent-black outline-none dark:accent-white'
+              max='1'
+              min='0'
+              onChange={event => setVolume(parseFloat(event.target.value))}
+              step='0.01'
+              type='range'
+              value={volume}
             />
 
             <span className='flex min-w-[32px] justify-end text-xs font-medium text-tertiary'>

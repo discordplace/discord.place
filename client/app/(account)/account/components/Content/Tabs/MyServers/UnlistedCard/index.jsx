@@ -16,20 +16,20 @@ export default function UnlistedCard({ server }) {
       <div className='relative size-12'>
         {server.icon ? (
           <ServerIcon
-            id={server.id}
+            className='rounded-xl'
             hash={server.icon}
+            height={48}
+            id={server.id}
             size={64}
             width={48}
-            height={48}
-            className='rounded-xl'
           />
         ) : (
           <Image
-            src='https://cdn.discordapp.com/embed/avatars/0.png'
             alt='Server Icon'
-            width={48}
-            height={48}
             className='rounded-xl'
+            height={48}
+            src='https://cdn.discordapp.com/embed/avatars/0.png'
+            width={48}
           />
         )}
       </div>

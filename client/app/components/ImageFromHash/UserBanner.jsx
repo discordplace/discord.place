@@ -4,7 +4,7 @@ import MotionImage from '@/app/components/Motion/Image';
 import getHashes from '@/lib/request/getHashes';
 import { useState } from 'react';
 
-export default function UserBanner({ id, hash, format, size, className, motionOptions, ...props }) {
+export default function UserBanner({ className, format, hash, id, motionOptions, size, ...props }) {
   const [error, setError] = useState(false);
 
   if (!id || !hash) return null;
@@ -22,7 +22,6 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
 
   return (
     <MotionImage
-      src={`https://cdn.discordapp.com/banners/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`}
       alt={`Image ${hash}`}
       className={className}
       onError={async event => {
@@ -47,6 +46,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
 
         element.src = `https://cdn.discordapp.com/banners/${id}/${newHash}.${newHash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`;
       }}
+      src={`https://cdn.discordapp.com/banners/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`}
       {...motionOptions}
       {...props}
     />

@@ -1,7 +1,7 @@
-const Discord = require('discord.js');
-const parseTimeDuration = require('@/utils/parseTimeDuration');
 const User = require('@/schemas/User');
+const parseTimeDuration = require('@/utils/parseTimeDuration');
 const syncMemberRoles = require('@/utils/syncMemberRoles');
+const Discord = require('discord.js');
 
 module.exports = {
   data: new Discord.SlashCommandBuilder()

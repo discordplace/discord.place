@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
 const EvaluateResult = require('@/schemas/EvaluateResult');
 const evaluate = require('@/utils/evaluate');
+const Discord = require('discord.js');
 const { inspect } = require('util');
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
     await interaction.followUp({ content: 'Please send the code you want to evaluate (reply to this message or mention me).', ephemeral: true });
 
     const filter = message => message.author.id === interaction.user.id;
-    const collected = await interaction.channel.awaitMessages({ filter, time: 300000, max: 1 }).catch(error => {
+    const collected = await interaction.channel.awaitMessages({ filter, max: 1, time: 300000 }).catch(error => {
       const errorMessage = inspect(error, { depth: Infinity });
       logger.error('Error while waiting for the code to evaluate:', error);
 
@@ -27,7 +27,7 @@ module.exports = {
     const message = collected.first();
     // eslint-disable-next-line security/detect-non-literal-regexp
     const code = message.mentions.has(interaction.client.user.id) ? message.content.replace(new RegExp(`<@!?${interaction.client.user.id}>`), '') : message.content;
-    const { result, hasError, id } = await evaluate(code);
+    const { hasError, id, result } = await evaluate(code);
 
     const embeds = [
       new Discord.EmbedBuilder()
@@ -53,12 +53,12 @@ module.exports = {
     ];
 
     await new EvaluateResult({
-      id,
-      result,
+      executedCode: code,
       hasError,
-      executedCode: code
+      id,
+      result
     }).save();
 
-    return interaction.editReply({ embeds, components, content: null });
+    return interaction.editReply({ components, content: null, embeds });
   }
 };

@@ -5,29 +5,29 @@ import useModalsStore from '@/stores/modals';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { TbLoader } from 'react-icons/tb';
-import { useShallow } from 'zustand/react/shallow';
-import { Drawer } from 'vaul';
 import { useMedia } from 'react-use';
+import { Drawer } from 'vaul';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function ModalProvider({ children }) {
-  const { openedModals, activeModalId, closeModal } = useModalsStore(useShallow(state => ({
-    openedModals: state.openedModals,
+  const { activeModalId, closeModal, openedModals } = useModalsStore(useShallow(state => ({
     activeModalId: state.activeModalId,
-    closeModal: state.closeModal
+    closeModal: state.closeModal,
+    openedModals: state.openedModals
   })));
 
   const isMobile = useMedia('(max-width: 640px)', false);
 
   return (
     <>
-      {openedModals.map(({ id, data }) => (
+      {openedModals.map(({ data, id }) => (
         isMobile ? (
           <>
             <Drawer.Root
-              shouldScaleBackground={false}
               closeThreshold={0.5}
-              open={activeModalId === id}
               onOpenChange={open => !open && closeModal(id)}
+              open={activeModalId === id}
+              shouldScaleBackground={false}
             >
               <Drawer.Portal>
                 <Drawer.Content className='fixed inset-x-0 bottom-0 z-[10001] flex h-max flex-col gap-y-1 rounded-t-3xl bg-quaternary p-6 outline-none dark:bg-background'>
@@ -49,8 +49,6 @@ export default function ModalProvider({ children }) {
 
                       {([...new Set(data.buttons || [])]).reverse().map((button, index) => (
                         <button
-                          key={index}
-                          onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}
                           className={cn(
                             'w-full rounded-full justify-center py-2 px-4 flex select-none items-center gap-x-1 font-medium outline-none',
                             button.variant === 'solid' && 'font-semibold dark:bg-white dark:text-black dark:hover:bg-white/70 text-white bg-black hover:bg-black/70',
@@ -59,6 +57,8 @@ export default function ModalProvider({ children }) {
                             button.disabled && 'opacity-50 pointer-events-none'
                           )}
                           disabled={button.disabled}
+                          key={index}
+                          onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}
                         >
                           {button.label}
                           {button.disabled && button.actionType !== 'close' && <TbLoader className='animate-spin' />}
@@ -74,8 +74,8 @@ export default function ModalProvider({ children }) {
         ) : (
           <Dialog.Root
             key={id}
-            open={activeModalId === id}
             onOpenChange={open => !open && closeModal(id)}
+            open={activeModalId === id}
           >
             {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
             <Dialog.Overlay className='radix-overlay fixed inset-0 z-[9999] bg-white/50 backdrop-blur-sm dark:bg-black/50' />
@@ -107,8 +107,6 @@ export default function ModalProvider({ children }) {
                     <div className='flex justify-end gap-x-3 rounded-b-2xl bg-tertiary px-4 py-3 text-sm dark:bg-secondary'>
                       {data.buttons.map((button, index) => (
                         <button
-                          key={index}
-                          onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}
                           className={cn(
                             'w-max py-2 px-4 flex select-none items-center gap-x-1 font-medium rounded-lg outline-none',
                             button.variant === 'solid' && 'font-semibold dark:bg-white dark:text-black dark:hover:bg-white/70 text-white bg-black hover:bg-black/70',
@@ -117,6 +115,8 @@ export default function ModalProvider({ children }) {
                             button.disabled && 'opacity-50 pointer-events-none'
                           )}
                           disabled={button.disabled}
+                          key={index}
+                          onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}
                         >
                           {button.label}
                           {button.disabled && button.actionType !== 'close' && <TbLoader className='animate-spin' />}

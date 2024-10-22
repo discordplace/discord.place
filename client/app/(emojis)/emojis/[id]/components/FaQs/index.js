@@ -1,32 +1,32 @@
 'use client';
 
-import cn from '@/lib/cn';
-import { useState } from 'react';
-import { MdChevronLeft } from 'react-icons/md';
 import Question1 from '@/app/(emojis)/emojis/[id]/components/FaQs/Questions/1';
 import Question2 from '@/app/(emojis)/emojis/[id]/components/FaQs/Questions/2';
 import Question3 from '@/app/(emojis)/emojis/[id]/components/FaQs/Questions/3';
-import AnimateHeight from 'react-animate-height';
+import cn from '@/lib/cn';
 import { t } from '@/stores/language';
+import { useState } from 'react';
+import AnimateHeight from 'react-animate-height';
+import { MdChevronLeft } from 'react-icons/md';
 
 export default function FaQs({ emoji }) {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: t('emojiPage.frequentlyAskedQuestions.labels.0'),
-      content: <Question1 emoji={emoji} />
+      content: <Question1 emoji={emoji} />,
+      label: t('emojiPage.frequentlyAskedQuestions.labels.0')
     },
     {
-      label: t('emojiPage.frequentlyAskedQuestions.labels.1'),
-      content: <Question2 emoji={emoji} />
+      content: <Question2 emoji={emoji} />,
+      label: t('emojiPage.frequentlyAskedQuestions.labels.1')
     },
     {
-      label: t('emojiPage.frequentlyAskedQuestions.labels.2'),
-      content: <Question3 />
+      content: <Question3 />,
+      label: t('emojiPage.frequentlyAskedQuestions.labels.2')
     }
   ];
 
-  return QA.map(({ label, content }, index) => (
+  return QA.map(({ content, label }, index) => (
     <div
       className={cn(
         'overflow-hidden flex flex-col w-full p-3 rounded-md group',
@@ -60,9 +60,9 @@ export default function FaQs({ emoji }) {
       </div>
 
       <AnimateHeight
-        duration={500}
         animateOpacity={true}
         className='text-sm text-secondary'
+        duration={500}
         height={activeQA === index ? 'auto' : 0}
       >
         {content}

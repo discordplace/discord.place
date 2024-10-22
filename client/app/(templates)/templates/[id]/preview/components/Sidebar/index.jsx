@@ -1,53 +1,53 @@
 'use client';
 
-import Tooltip from '@/app/components/Tooltip/Discord';
-import Image from 'next/image';
-import { FaDiscord } from 'react-icons/fa';
-import { HiPlus } from 'react-icons/hi';
-import { FaCompass } from 'react-icons/fa';
 import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';
-import { IoMdArrowRoundBack } from 'react-icons/io';
+import Tooltip from '@/app/components/Tooltip/Discord';
+import cn from '@/lib/cn';
+import deleteTemplate from '@/lib/request/templates/deleteTemplate';
+import { t } from '@/stores/language';
+import useModalsStore from '@/stores/modals';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next-nprogress-bar';
+import { useEffect, useRef, useState } from 'react';
+import { BiSolidCopy } from 'react-icons/bi';
+import { FaDiscord } from 'react-icons/fa';
+import { FaCompass } from 'react-icons/fa';
+import { FaPenFancy } from 'react-icons/fa';
+import { FaTrashAlt } from 'react-icons/fa';
+import { HiPlus } from 'react-icons/hi';
 import { HiAtSymbol } from 'react-icons/hi';
 import { HiHashtag } from 'react-icons/hi';
-import { FaPenFancy } from 'react-icons/fa';
-import useModalsStore from '@/stores/modals';
-import cn from '@/lib/cn';
-import { toast } from 'sonner';
-import { FaTrashAlt } from 'react-icons/fa';
-import { useShallow } from 'zustand/react/shallow';
-import deleteTemplate from '@/lib/request/templates/deleteTemplate';
-import { BiSolidCopy } from 'react-icons/bi';
-import { useEffect, useRef, useState } from 'react';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoCheckmarkCircle } from 'react-icons/io5';
-import Link from 'next/link';
-import { t } from '@/stores/language';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
 
-export default function Sidebar({ template, focusedChannel, currentlyOpenedSection, setCurrentlyOpenedSection, isMobile, setMemberListCollapsed }) {
+export default function Sidebar({ currentlyOpenedSection, focusedChannel, isMobile, setCurrentlyOpenedSection, setMemberListCollapsed, template }) {
   const router = useRouter();
 
-  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+  const { closeModal, disableButton, enableButton, openModal } = useModalsStore(useShallow(state => ({
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   async function continueDeleteTemplate() {
     disableButton('delete-template', 'confirm');
 
     toast.promise(deleteTemplate(template.id), {
+      error: error => {
+        enableButton('delete-template', 'confirm');
+
+        return error;
+      },
       loading: t('templatePreviewPage.toast.deletingTempalte'),
       success: () => {
         closeModal('delete-template');
         setTimeout(() => router.push('/'), 3000);
 
         return t('templatePreviewPage.toast.templateDeleted', { templateName: template.name });
-      },
-      error: error => {
-        enableButton('delete-template', 'confirm');
-
-        return error;
       }
     });
   }
@@ -87,11 +87,11 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           theme='discord'
         >
           <Image
-            src='/templates/square_logo.png'
             alt='discord.place Square Logo'
-            width={48}
-            height={48}
             className='select-none rounded-2xl'
+            height={48}
+            src='/templates/square_logo.png'
+            width={48}
           />
         </Tooltip>
       </div>
@@ -113,11 +113,11 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           theme='discord'
         >
           <Image
-            src='/templates/disbot_logo.png'
             alt='Disbot Square Logo'
-            width={48}
-            height={48}
             className='select-none rounded-2xl'
+            height={48}
+            src='/templates/disbot_logo.png'
+            width={48}
           />
         </Tooltip>
       </Link>
@@ -169,19 +169,19 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                 !focusedChannel.topic ?
                   toast.error(t('templatePreviewPage.noTopic', { focusedChannelName: focusedChannel.name })) :
                   openModal('view-topic', {
-                    title: t('templatePreviewPage.topicModal.title'),
-                    description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
+                    buttons: [
+                      {
+                        actionType: 'close',
+                        id: 'cancel',
+                        label: t('buttons.close'),
+                        variant: 'ghost'
+                      }
+                    ],
                     content: <>
                       <p className='break-words text-sm font-medium text-[#dbdee1]'>{focusedChannel.topic}</p>
                     </>,
-                    buttons: [
-                      {
-                        id: 'cancel',
-                        label: t('buttons.close'),
-                        variant: 'ghost',
-                        actionType: 'close'
-                      }
-                    ]
+                    description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
+                    title: t('templatePreviewPage.topicModal.title')
                   })
               }
             >
@@ -221,18 +221,18 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           }}
         >
           <IoCheckmarkCircle
-            size={20}
             className={cn(
               'transition-[opacity] ease-in-out absolute',
               !templateIdCopied && 'opacity-0'
             )}
+            size={20}
           />
           <BiSolidCopy
-            size={20}
             className={cn(
               'transition-[opacity] ease-in-out',
               templateIdCopied && 'opacity-0'
             )}
+            size={20}
           />
         </div>
       </Tooltip>
@@ -246,27 +246,27 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
             className='flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#ff4d4d] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#ff4d4d] hover:text-white'
             onClick={() =>
               openModal('delete-template', {
-                title: t('templatePreviewPage.deleteTemplateModal.title'),
-                description: t('templatePreviewPage.deleteTemplateModal.description', { templateName: template.name }),
+                buttons: [
+                  {
+                    actionType: 'close',
+                    id: 'cancel',
+                    label: t('buttons.cancel'),
+                    variant: 'ghost'
+                  },
+                  {
+                    action: continueDeleteTemplate,
+                    id: 'confirm',
+                    label: t('buttons.confirm'),
+                    variant: 'solid'
+                  }
+                ],
                 content: (
                   <p className='text-sm text-tertiary'>
                     {t('templatePreviewPage.deleteTemplateModal.note')}
                   </p>
                 ),
-                buttons: [
-                  {
-                    id: 'cancel',
-                    label: t('buttons.cancel'),
-                    variant: 'ghost',
-                    actionType: 'close'
-                  },
-                  {
-                    id: 'confirm',
-                    label: t('buttons.confirm'),
-                    variant: 'solid',
-                    action: continueDeleteTemplate
-                  }
-                ]
+                description: t('templatePreviewPage.deleteTemplateModal.description', { templateName: template.name }),
+                title: t('templatePreviewPage.deleteTemplateModal.title')
               })
             }
           >

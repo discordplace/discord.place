@@ -1,9 +1,9 @@
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
 const Emoji = require('@/schemas/Emoji');
-const idValidation = require('@/validations/emojis/id');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const idValidation = require('@/validations/emojis/id');
+const { matchedData, param } = require('express-validator');
 
 module.exports = {
   get: [
@@ -21,14 +21,14 @@ module.exports = {
       const hashes = await getUserHashes(emoji.user.id);
 
       return response.json({
+        animated: emoji.animated,
+        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${emoji.user.id}/${hashes.avatar}.png?size=64` : null,
+        category: emoji.categories[0],
+        downloads: emoji.downloads,
         id: emoji.id,
         is_pack: false,
         name: emoji.name,
-        animated: emoji.animated,
-        username: emoji.user.username,
-        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${emoji.user.id}/${hashes.avatar}.png?size=64` : null,
-        downloads: emoji.downloads,
-        category: emoji.categories[0]
+        username: emoji.user.username
       });
     }
   ]

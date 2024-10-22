@@ -1,17 +1,18 @@
 'use client';
 
-import cn from '@/lib/cn';
-import { Suspense, useEffect } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
 import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
-import UserSide from './UserSide';
-import Link from 'next/link';
-import useGeneralStore from '@/stores/general';
 import LogoWithText from '@/app/components/Logo/WithText';
+import cn from '@/lib/cn';
+import useGeneralStore from '@/stores/general';
 import { t } from '@/stores/language';
-import { MdMiscellaneousServices } from 'react-icons/md';
+import Link from 'next/link';
+import { Suspense, useEffect } from 'react';
 import { BsStars } from 'react-icons/bs';
+import { FiChevronDown } from 'react-icons/fi';
 import { HiNewspaper } from 'react-icons/hi';
+import { MdMiscellaneousServices } from 'react-icons/md';
+
+import UserSide from './UserSide';
 
 export default function NotCollapsedHeader() {
   const hoveringHeaderTab = useGeneralStore(state => state.header.hoveringHeaderTab);
@@ -21,21 +22,21 @@ export default function NotCollapsedHeader() {
 
   const links = [
     {
-      id: 'services',
       icon: MdMiscellaneousServices,
+      id: 'services',
       name: t('header.services')
     },
     {
-      id: 'blog',
+      href: '/blogs',
       icon: HiNewspaper,
-      name: t('header.blog'),
-      href: '/blogs'
+      id: 'blog',
+      name: t('header.blog')
     },
     {
-      id: 'premium',
+      href: '/premium',
       icon: BsStars,
-      name: t('header.premium'),
-      href: '/premium'
+      id: 'premium',
+      name: t('header.premium')
     }
   ];
 
@@ -77,9 +78,9 @@ export default function NotCollapsedHeader() {
           <div className='relative flex gap-x-2' id='headerTabs'>
             {links.map(link => (
               <Link
-                key={link.name}
-                href={link.href || '#'}
                 className='relative flex items-start justify-center'
+                href={link.href || '#'}
+                key={link.name}
                 onMouseEnter={() => setHoveringHeaderTab(link.name)}
                 onMouseLeave={() => {
                   setLastMouseOut(Date.now());
@@ -96,11 +97,11 @@ export default function NotCollapsedHeader() {
 
                   {link.id === 'services' && (
                     <FiChevronDown
-                      size={14}
                       className={cn(
                         'transition-transform transform',
                         hoveringHeaderTab === link.name && '-rotate-180'
                       )}
+                      size={14}
                     />
                   )}
                 </div>

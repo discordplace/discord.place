@@ -3,20 +3,20 @@
 import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 import config from '@/config';
 import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 import { useState } from 'react';
 import { FaCirclePlus } from 'react-icons/fa6';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { LuHash } from 'react-icons/lu';
 import { toast } from 'sonner';
-import { t } from '@/stores/language';
 
-export default function Other({ category, setCategory, keywords, setKeywords }) {
+export default function Other({ category, keywords, setCategory, setKeywords }) {
   const [value, setValue] = useState('');
 
   return (
     <div className='flex w-full flex-col gap-y-4'>
       <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
-        <FaCirclePlus size={24} className='text-purple-500' />
+        <FaCirclePlus className='text-purple-500' size={24} />
         {t('serverManagePage.other.title')}
       </h3>
 
@@ -39,12 +39,12 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
           <div className='mt-2 flex flex-wrap items-center gap-2'>
             {config.serverCategories.map(serverCategory => (
               <button
-                key={serverCategory}
                 className={cn(
                   'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-tertiary',
                   category === serverCategory && 'bg-quaternary'
                 )}
                 disabled={category === serverCategory}
+                key={serverCategory}
                 onClick={() => setCategory(serverCategory)}
               >
                 {category === serverCategory ? <IoMdCheckmarkCircle /> : config.serverCategoriesIcons[serverCategory]}
@@ -56,10 +56,9 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
         </div>
 
         <Input
-          label={t('serverManagePage.other.inputs.keywords.label')}
           description={t('serverManagePage.other.inputs.keywords.description')}
-          placeholder={t('serverManagePage.other.inputs.keywords.placeholder')}
-          value={value}
+          disabled={keywords.length >= config.serverKeywordsMaxLength}
+          label={t('serverManagePage.other.inputs.keywords.label')}
           onChange={event => {
             if (event.target.value.includes(',')) {
               const validatedValue = value.replace(',', '').trim();
@@ -93,26 +92,18 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
               setValue('');
             }
           }}
-          disabled={keywords.length >= config.serverKeywordsMaxLength}
+          placeholder={t('serverManagePage.other.inputs.keywords.placeholder')}
+          value={value}
         />
 
         {keywords.length > 0 && (
           <Input
-            label={t('serverManagePage.other.addedKeywords.label')}
-            customLabelPeer={
-              <span className='text-xs font-semibold text-tertiary'>
-                {keywords.length} {keywords.length >= config.serverKeywordsMaxLength && t('serverManagePage.other.addedKeywords.max')}
-              </span>
-            }
-            description={t('serverManagePage.other.addedKeywords.description')}
-            value={keywords.join(', ')}
-            disabled
             CustomInput={
               <div className='mt-2 flex flex-wrap gap-2'>
                 {keywords.map(keyword => (
                   <button
-                    key={keyword}
                     className='flex size-max items-center gap-x-1 rounded-lg bg-secondary px-3 py-1.5 text-sm font-semibold hover:bg-tertiary'
+                    key={keyword}
                     onClick={() => setKeywords(keywords.filter(k => k !== keyword))}
                   >
                     <LuHash />
@@ -121,6 +112,15 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
                 ))}
               </div>
             }
+            customLabelPeer={
+              <span className='text-xs font-semibold text-tertiary'>
+                {keywords.length} {keywords.length >= config.serverKeywordsMaxLength && t('serverManagePage.other.addedKeywords.max')}
+              </span>
+            }
+            description={t('serverManagePage.other.addedKeywords.description')}
+            disabled
+            label={t('serverManagePage.other.addedKeywords.label')}
+            value={keywords.join(', ')}
           />
         )}
       </div>
