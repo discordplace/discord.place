@@ -7,9 +7,9 @@ import Header from '@/app/(blogs)/blogs/[id]/components/Header';
 import { redirect } from 'next/navigation';
 
 export async function generateMetadata({ params }) {
-  if (!fs.existsSync(process.cwd() + `/blogs/${params.id}.md`)) return;
+  if (!fs.existsSync(`${process.cwd()}/blogs/${params.id}.md`)) return;
 
-  const source = fs.readFileSync(process.cwd() + `/blogs/${params.id}.md`, 'utf-8');
+  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf-8');
   const { data } = matter(source);
 
   return {
@@ -31,19 +31,19 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  if (!fs.existsSync(process.cwd() + `/blogs/${params.id}.md`)) return redirect('/error?code=90001');
+  if (!fs.existsSync(`${process.cwd()}/blogs/${params.id}.md`)) return redirect('/error?code=90001');
 
-  const source = fs.readFileSync(process.cwd() + `/blogs/${params.id}.md`, 'utf-8');
+  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf-8');
   const { data, content } = matter(source);
 
   return (
-    <div className='flex items-center justify-center w-full'>
-      <div className='flex flex-col w-full max-w-5xl px-4 my-32 mobile:px-8 lg:px-0'>
+    <div className='flex w-full items-center justify-center'>
+      <div className='my-32 flex w-full max-w-5xl flex-col px-4 mobile:px-8 lg:px-0'>
         <BackButton />
 
         <Header data={data} />
 
-        <div className='flex items-center justify-center w-full h-full mt-12'>
+        <div className='mt-12 flex size-full items-center justify-center'>
           <Markdown rawEnabled={true}>
             {content}
           </Markdown>

@@ -16,7 +16,7 @@ const ProfileSchema = new Schema({
     data: {
       type: Object,
       required: false
-    } 
+    }
   },
   occupation: {
     type: String,

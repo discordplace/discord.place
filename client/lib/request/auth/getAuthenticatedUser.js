@@ -2,7 +2,7 @@ import config from '@/config';
 import axios from 'axios';
 import { cache } from 'react';
 
-export default cache(function getAuthenticatedUser() {
+export default cache(() => {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const url = `${config.api.url}/auth/@me`;

@@ -27,13 +27,14 @@ async function updatePanelMessage(guildId) {
     if (!message) return panel.deleteOne();
 
     await panel.updateOne({ messageId: message.id });
+
     return logger.info(`Panel message created in guild ${guild.name} (${guild.id}).`);
   }
 
   const message = await channel.messages.fetch(panel.messageId).catch(() => null);
   if (!message) {
     logger.info(`Panel message not found in guild ${guild.name} (${guild.id}). Creating a new one.`);
-    
+
     const message = await channel.send(await createPanelMessageOptions(guild, server)).catch(() => null);
     if (!message) return panel.deleteOne();
 
@@ -48,7 +49,7 @@ async function createPanelMessageOptions(guild, server) {
   const formatter = new Intl.NumberFormat('en-US');
   const topVoters = server.voters.sort((a, b) => b.vote - a.vote).slice(0, 10);
   const premiumUsers = await User.find({ id: { $in: topVoters.map(voter => voter.user.id) }, subscription: { $ne: null } });
-  
+
   const topVotersTable = [];
 
   for (const [index, voter] of topVoters.entries()) {

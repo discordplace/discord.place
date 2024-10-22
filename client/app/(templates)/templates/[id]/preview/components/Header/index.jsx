@@ -14,23 +14,23 @@ import { t } from '@/stores/language';
 
 export default function Header({ focusedChannel, memberListCollapsed, setMemberListCollapsed }) {
   return (
-    <div className='hidden lg:flex bg-[#313338] justify-between w-full px-[8px] py-[12px] border-b border-b-[#26282c]'>
-      <div className='flex items-center ml-2 text-sm gap-x-2'>
+    <div className='hidden w-full justify-between border-b border-b-[#26282c] bg-[#313338] px-[8px] py-[12px] lg:flex'>
+      <div className='ml-2 flex items-center gap-x-2 text-sm'>
         {focusedChannel.type === 'text' && (
           focusedChannel.nsfw ? (
-            <TextChannelNSFWIcon className='min-w-6 min-h-6 w-6 h-6 text-[#80848e]' />
+            <TextChannelNSFWIcon className='size-6 min-h-6 min-w-6 text-[#80848e]' />
           ) : (
-            <TextChannelIcon className='min-w-6 min-h-6 w-6 h-6 text-[#80848e]' />
+            <TextChannelIcon className='size-6 min-h-6 min-w-6 text-[#80848e]' />
           )
         )}
 
-        <span className='text-[#dbdee1] font-semibold truncate'>{focusedChannel.name}</span>
+        <span className='truncate font-semibold text-[#dbdee1]'>{focusedChannel.name}</span>
 
         {focusedChannel.topic && (
           <>
-            <div className='w-[1px] h-full mx-[8px] bg-[#3f4147]' />
+            <div className='mx-[8px] h-full w-px bg-[#3f4147]' />
 
-            <span className='text-[#b5bac1] mr-4 truncate max-w-[100px] xl:max-w-full'>
+            <span className='mr-4 max-w-[100px] truncate text-[#b5bac1] xl:max-w-full'>
               {focusedChannel.topic.length > 50 ? `${focusedChannel.topic.slice(0, 50)}...` : focusedChannel.topic}
             </span>
           </>
@@ -45,7 +45,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
           size='small'
         >
           <div className='cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]'>
-            <ThreadsIcon className='w-6 h-6' />
+            <ThreadsIcon className='size-6' />
           </div>
         </Tooltip>
 
@@ -56,7 +56,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
           size='small'
         >
           <div className='cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]'>
-            <NotificationSettingsIcon className='w-6 h-6' />
+            <NotificationSettingsIcon className='size-6' />
           </div>
         </Tooltip>
 
@@ -67,7 +67,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
           size='small'
         >
           <div className='cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]'>
-            <PinnedMessagesIcon className='w-6 h-6' />
+            <PinnedMessagesIcon className='size-6' />
           </div>
         </Tooltip>
 
@@ -81,14 +81,14 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
             className='cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]'
             onClick={() => setMemberListCollapsed(!memberListCollapsed)}
           >
-            <MemberListIcon className='w-6 h-6' />
+            <MemberListIcon className='size-6' />
           </div>
         </Tooltip>
 
-        <div className='cursor-text select-none justify-between text-[#949ba4] text-sm px-2 items-center flex rounded-md w-[150px] bg-[#1e1f22]'>
+        <div className='flex w-[150px] cursor-text select-none items-center justify-between rounded-md bg-[#1e1f22] px-2 text-sm text-[#949ba4]'>
           {t('templatePreviewPage.searchInputPlaceholder')}
-            
-          <SearchIcon className='w-4 h-4' />
+
+          <SearchIcon className='size-4' />
         </div>
 
         <Tooltip
@@ -98,7 +98,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
           size='small'
         >
           <div className='cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]'>
-            <InboxIcon className='w-6 h-6' />
+            <InboxIcon className='size-6' />
           </div>
         </Tooltip>
 
@@ -109,7 +109,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
           size='small'
         >
           <div className='cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]'>
-            <HelpIcon className='w-6 h-6' />
+            <HelpIcon className='size-6' />
           </div>
         </Tooltip>
       </div>

@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData} = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
 const Discord = require('discord.js');
 const validateRequest = require('@/utils/middlewares/validateRequest');
@@ -13,7 +13,7 @@ module.exports = {
     param('review_id')
       .isMongoId().withMessage('Invalid review ID'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const canApprove = request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve reviews.', 403);
 
@@ -30,7 +30,7 @@ module.exports = {
       if (guild) {
         const publisher = await client.users.fetch(review.user.id).catch(() => null);
         const isPublisherFoundInGuild = guild.members.cache.has(publisher.id) || await guild.members.fetch(publisher.id).then(() => true).catch(() => false);
-        
+
         if (isPublisherFoundInGuild) {
           const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `### Congratulations!\nYour review to **${guild.name}** has been approved!` }).catch(() => null);

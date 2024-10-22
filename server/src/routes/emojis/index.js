@@ -22,6 +22,7 @@ const upload = multer({
   fileFilter: (req, file, cb) => {
     if (!file || !file.mimetype) return cb(null, false);
     if (file.mimetype === 'image/png' || file.mimetype === 'image/gif') return cb(null, true);
+
     return cb(null, false);
   }
 }).array('file', 9);
@@ -43,17 +44,20 @@ module.exports = {
     upload,
     bodyParser.json(),
     body('name')
-      .isString().withMessage('Name should be a string.')
-      .custom(nameValidation).withMessage('Name should be a valid emoji name.'),
+      .isString()
+      .withMessage('Name should be a string.')
+      .custom(nameValidation)
+      .withMessage('Name should be a valid emoji name.'),
     body('categories')
       .customSanitizer(value => value.split(','))
-      .isArray().withMessage('Categories should be an array.')
+      .isArray()
+      .withMessage('Categories should be an array.')
       .custom(categoriesValidation),
     validateRequest,
-    async (request, response) => {  
+    async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'EMOJIS_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create emojis.', 403);
-      
+
       const userEmojiInQueue = await Emoji.findOne({ 'user.id': request.user.id, approved: false });
       if (userEmojiInQueue) return response.sendError(`You are already waiting for approval for emoji ${userEmojiInQueue.name}! Please wait for it to be processed first.`);
 
@@ -69,7 +73,7 @@ module.exports = {
         const packageHasAnimatedEmoji = request.files.some(file => file.mimetype === 'image/gif');
         if (packageHasAnimatedEmoji && !categories.includes('Animated')) return response.sendError('Packages that have animated emojis must have the Animated category.', 400);
         if (!packageHasAnimatedEmoji && categories.includes('Animated')) return response.sendError('Packages that doesn\'t have animated emojis should\'t have the Animated category.', 400);
-      
+
         const emojiPack = new EmojiPack({
           id,
           user: {
@@ -139,7 +143,7 @@ module.exports = {
             ];
 
             client.channels.cache.get(config.emojiQueueChannelId).send({ embeds, components });
-          
+
             return response.json({
               success: true,
               emoji: emojiPack.toPubliclySafe()
@@ -148,13 +152,13 @@ module.exports = {
           .catch(error => {
             emojiPack.deleteOne();
             logger.error(`There was an error uploading the emoji ${id}:`, error);
+
             return response.sendError('There was an error uploading the emojis.', 500);
           });
       } else {
         const emojiIsAnimated = request.files[0].mimetype === 'image/gif';
         if (emojiIsAnimated && !categories.includes('Animated')) return response.sendError('Animated emojis must have the Animated category.', 400);
         if (!emojiIsAnimated && categories.includes('Animated')) return response.sendError('Non-animated emojis shouldn\'t have the Animated category.', 400);
-
 
         const emoji = new Emoji({
           id,
@@ -215,7 +219,7 @@ module.exports = {
             ];
 
             client.channels.cache.get(config.emojiQueueChannelId).send({ embeds, components });
-          
+
             return response.json({
               success: true,
               emoji: emoji.toPubliclySafe()
@@ -224,6 +228,7 @@ module.exports = {
           .catch(error => {
             emoji.deleteOne();
             logger.error(`There was an error uploading the emoji ${id}:`, error);
+
             return response.sendError('There was an error uploading the emoji.', 500);
           });
       }

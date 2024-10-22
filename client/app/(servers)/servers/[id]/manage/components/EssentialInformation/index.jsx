@@ -6,17 +6,17 @@ import { t } from '@/stores/language';
 
 export default function EssentialInformation({ description, setDescription, inviteURL, setInviteURL }) {
   return (
-    <div className='flex flex-col w-full gap-y-4'>
-      <h3 className='flex items-center text-xl font-semibold gap-x-4'>
+    <div className='flex w-full flex-col gap-y-4'>
+      <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
         <FaDisplay size={24} className='text-purple-500' />
         {t('serverManagePage.essentialInformation.title')}
       </h3>
 
-      <p className='text-sm sm:text-base text-tertiary'>
+      <p className='text-sm text-tertiary sm:text-base'>
         {t('serverManagePage.essentialInformation.subtitle')}
       </p>
 
-      <div className='flex flex-col w-full gap-8 mt-4'>
+      <div className='mt-4 flex w-full flex-col gap-8'>
         <Input
           label={t('serverManagePage.essentialInformation.inputs.description.label')}
           description={t('serverManagePage.essentialInformation.inputs.description.description')}

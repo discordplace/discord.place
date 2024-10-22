@@ -11,12 +11,12 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className='z-10 flex flex-col p-2 mb-4 border outline-none min-w-[200px] bg-secondary rounded-xl border-primary gap-y-1'>
-          <div className='flex flex-col m-2 gap-y-1'>
+        <DropdownMenu.Content className='z-10 mb-4 flex min-w-[200px] flex-col gap-y-1 rounded-xl border border-primary bg-secondary p-2 outline-none'>
+          <div className='m-2 flex flex-col gap-y-1'>
             <h2 className='text-lg font-semibold text-primary'>
               Reason
             </h2>
-            
+
             <p className='text-sm text-tertiary'>
               {description}
             </p>
@@ -24,12 +24,12 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
 
           {!customReason ? (
             <>
-              <div className='w-full h-[1px] bg-quaternary' />
+              <div className='h-px w-full bg-quaternary' />
 
               {Object.entries(reasons).map(([key, value]) => (
-                <DropdownMenu.Item 
+                <DropdownMenu.Item
                   key={key}
-                  className='flex text-secondary items-center justify-between px-2 py-1.5 font-medium rounded-lg outline-none cursor-pointer hover:bg-quaternary text-sm gap-x-2'
+                  className='flex cursor-pointer items-center justify-between gap-x-2 rounded-lg px-2 py-1.5 text-sm font-medium text-secondary outline-none hover:bg-quaternary'
                   onSelect={() => onDeny(key)}
                 >
                   {value.name}
@@ -41,13 +41,13 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
               <input
                 type="text"
                 placeholder="Enter a reason.."
-                className="w-full px-3 py-2 text-sm transition-all outline-none rounded-xl placeholder-placeholder text-secondary bg-tertiary hover:bg-quaternary hover:ring-2 ring-purple-500"
+                className="w-full rounded-xl bg-tertiary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-quaternary hover:ring-2"
                 value={value}
                 onChange={event => setValue(event.target.value)}
               />
 
               <button
-                className='w-full px-4 py-2 text-sm font-semibold transition-all rounded-xl text-primary bg-tertiary hover:bg-quaternary'
+                className='w-full rounded-xl bg-tertiary px-4 py-2 text-sm font-semibold text-primary transition-all hover:bg-quaternary'
                 onClick={() => onDeny(value)}
                 onKeyUp={event => event.key === 'Enter' && onDeny(value)}
               >

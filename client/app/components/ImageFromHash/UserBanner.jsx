@@ -36,7 +36,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
         const fallback = '/discord-logo-banner.png';
 
         element.src = fallback;
-        
+
         const hashes = await getHashes(id);
         if (!hashes) return;
 

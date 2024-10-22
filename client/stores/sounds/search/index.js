@@ -16,7 +16,7 @@ const useSearchStore = create((set, get) => ({
   category: 'All',
   setCategory: category => {
     set({ category, page: 1 });
-  
+
     get().fetchSounds(get().search);
   },
   page: 1,
@@ -34,7 +34,7 @@ const useSearchStore = create((set, get) => ({
     if (sort) set({ sort });
 
     set({ loading: true, search });
-    
+
     fetchSounds(search, get().page, get().limit, get().category, get().sort)
       .then(data => set({ sounds: data.sounds, loading: false, maxReached: data.maxReached, totalSounds: data.total }))
       .catch(error => {

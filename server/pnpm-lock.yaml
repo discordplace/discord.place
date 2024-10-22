@@ -132,6 +132,12 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      eslint-plugin-ban:
+        specifier: ^1.6.0
+        version: 1.6.0
+      eslint-plugin-depend:
+        specifier: ^0.11.0
+        version: 0.11.0
 
 packages:
 
@@ -1106,6 +1112,13 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
+  eslint-plugin-ban@1.6.0:
+    resolution: {integrity: sha512-gZptoV+SFHOHO57/5lmPvizMvSXrjFatP9qlVQf3meL/WHo9TxSoERygrMlESl19CPh95U86asTxohT8OprwDw==}
+    engines: {node: '>=0.10.0'}
+
+  eslint-plugin-depend@0.11.0:
+    resolution: {integrity: sha512-IwF06BrcdYoELuFd18sdVHhvDfF23xbr8pG/ONqrwB4gXjJ7281mEDEmACKWyvMY63afph8+2aOLbeuvr9mbdg==}
+
   eslint-scope@7.2.2:
     resolution: {integrity: sha512-dOt21O7lTMhDM+X9mB4GX+DZrZtCUJPL/wlcTqxyrx5IvO0IYtILdtrQGQp+8n5S0gwSVmOf9NQrjMOgfQZlIg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -1196,6 +1209,9 @@ packages:
 
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
+
+  fd-package-json@1.2.0:
+    resolution: {integrity: sha512-45LSPmWf+gC5tdCQMNH4s9Sr00bIkiD9aN7dc5hqkrEw1geRYyDQS1v1oMHAW3ysfxfndqGsrDREHHjNNbKUfA==}
 
   fecha@4.2.3:
     resolution: {integrity: sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==}
@@ -1534,6 +1550,9 @@ packages:
   module-alias@2.2.3:
     resolution: {integrity: sha512-23g5BFj4zdQL/b6tor7Ji+QY4pEfNH784BMslY9Qb0UnJWRAt+lQGLYmRaM0KDBwIG23ffEBELhZDP2rhi9f/Q==}
 
+  module-replacements@2.5.0:
+    resolution: {integrity: sha512-m00JBwLSr7sur96PeAfAwNcyQk5MEm/GzZtZSRM+UjdzjNcgzPrWsWpsCpaRP+Fq+ROykt1TCr4GSR/ajcB83w==}
+
   moment@2.30.1:
     resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
 
@@ -1748,6 +1767,10 @@ packages:
   regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
 
+  requireindex@1.2.0:
+    resolution: {integrity: sha512-L9jEkOi3ASd9PYit2cwRfyppc9NoABujTP8/5gFcbERmo5jUoAKovIC3fsF17pkTnGsrByysqX+Kxd2OTNI1ww==}
+    engines: {node: '>=0.10.5'}
+
   resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -1955,6 +1978,9 @@ packages:
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+
+  walk-up-path@3.0.1:
+    resolution: {integrity: sha512-9YlCL/ynK3CTlrSRrDxZvUauLzAswPCrsaCgilqFevUYpeEW0/3ScEjaa3kbW/T0ghhkEr7mv+fpjqn1Y1YuTA==}
 
   web-streams-polyfill@3.3.3:
     resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
@@ -3478,6 +3504,16 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
+  eslint-plugin-ban@1.6.0:
+    dependencies:
+      requireindex: 1.2.0
+
+  eslint-plugin-depend@0.11.0:
+    dependencies:
+      fd-package-json: 1.2.0
+      module-replacements: 2.5.0
+      semver: 7.6.3
+
   eslint-scope@7.2.2:
     dependencies:
       esrecurse: 4.3.0
@@ -3623,6 +3659,10 @@ snapshots:
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
+
+  fd-package-json@1.2.0:
+    dependencies:
+      walk-up-path: 3.0.1
 
   fecha@4.2.3: {}
 
@@ -3943,6 +3983,8 @@ snapshots:
 
   module-alias@2.2.3: {}
 
+  module-replacements@2.5.0: {}
+
   moment@2.30.1: {}
 
   mongodb-connection-string-url@3.0.0:
@@ -4144,6 +4186,8 @@ snapshots:
       minimatch: 5.1.6
 
   regenerator-runtime@0.14.1: {}
+
+  requireindex@1.2.0: {}
 
   resolve-from@4.0.0: {}
 
@@ -4368,6 +4412,8 @@ snapshots:
   validator@13.11.0: {}
 
   vary@1.1.2: {}
+
+  walk-up-path@3.0.1: {}
 
   web-streams-polyfill@3.3.3: {}
 

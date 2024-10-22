@@ -5,7 +5,7 @@ const useModalsStore = create((set, get) => ({
   openedModals: [],
   openModal: (modalId, modalData) => {
     const openedModals = get().openedModals;
-    
+
     set({
       activeModalId: modalId,
       openedModals: [...openedModals, { id: modalId, data: modalData }]
@@ -14,7 +14,7 @@ const useModalsStore = create((set, get) => ({
   updateModal: (modalId, newModalData) => {
     const openedModals = get().openedModals;
 
-    set({ 
+    set({
       openedModals: openedModals.map(modal => {
         if (modal.id === modalId) {
           return {
@@ -27,7 +27,7 @@ const useModalsStore = create((set, get) => ({
         }
 
         return modal;
-      }) 
+      })
     });
   },
   closeModal: modalId => {
@@ -47,7 +47,7 @@ const useModalsStore = create((set, get) => ({
   disableButton: (modalId, buttonId) => {
     const openedModals = get().openedModals;
 
-    set({ 
+    set({
       openedModals: openedModals.map(modal => {
         if (modal.id === modalId) {
           return {
@@ -56,6 +56,7 @@ const useModalsStore = create((set, get) => ({
               ...modal.data,
               buttons: modal.data.buttons.map(button => {
                 if (button.id === buttonId) return { ...button, disabled: true };
+
                 return button;
               })
             }
@@ -63,13 +64,13 @@ const useModalsStore = create((set, get) => ({
         }
 
         return modal;
-      }) 
+      })
     });
   },
   enableButton: (modalId, buttonId) => {
     const openedModals = get().openedModals;
 
-    set({ 
+    set({
       openedModals: openedModals.map(modal => {
         if (modal.id === modalId) {
           return {
@@ -78,6 +79,7 @@ const useModalsStore = create((set, get) => ({
               ...modal.data,
               buttons: modal.data.buttons.map(button => {
                 if (button.id === buttonId) return { ...button, disabled: false };
+
                 return button;
               })
             }
@@ -85,7 +87,7 @@ const useModalsStore = create((set, get) => ({
         }
 
         return modal;
-      }) 
+      })
     });
   }
 }));

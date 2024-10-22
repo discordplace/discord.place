@@ -19,7 +19,7 @@ const ReminderSchema = new Schema({
     type: Date,
     default: null
   }
-}, { 
+}, {
   timestamps: true
 });
 
@@ -64,7 +64,7 @@ Model.watch().on('change', async data => {
       about: fullDocument.about,
       createdAt: fullDocument.createdAt
     });
-    
+
     await metadata.save();
   }
 });

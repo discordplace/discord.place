@@ -3,12 +3,12 @@ export default function SoundPreview({ metadata }) {
     <div className="flex items-center gap-x-2">
       <div className="relative flex items-center justify-center">
         <span
-          className='block w-8 h-8 rounded-full'
+          className='block size-8 rounded-full'
           style={{ backgroundColor: metadata.colors.primary }}
         />
 
         <span
-          className='absolute block w-8 h-8 rounded-full'
+          className='absolute block size-8 rounded-full'
           style={{
             backgroundColor: metadata.colors.secondary,
             clipPath: 'polygon(100% 0, 100% 48%, 100% 100%, 0 100%)'

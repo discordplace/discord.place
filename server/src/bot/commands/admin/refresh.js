@@ -16,7 +16,7 @@ module.exports = {
     const id = interaction.options.getString('id');
 
     await interaction.reply({ content: `Updating the cached hashes of user **${id}**..` });
-    
+
     try {
       const userHashes = (await UserHashes.findOne({ id })) || new UserHashes({ id });
       await userHashes.getNewHashes();
@@ -24,6 +24,7 @@ module.exports = {
       return interaction.editReply({ content: `Successfully updated the cached hashes of user **${id}**.` });
     } catch (error) {
       logger.error(`An error occurred while updating the cached hashes of user ${id}:`, error);
+
       return interaction.editReply({ content: `An error occurred while updating the cached hashes of user **${id}**.` });
     }
   }

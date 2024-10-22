@@ -36,7 +36,7 @@ export default function Content() {
   const user = useAuthStore(state => state.user);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
   const setUser = useAuthStore(state => state.setUser);
-  
+
   const theme = useThemeStore(state => state.theme);
   const toggleTheme = useThemeStore(state => state.toggleTheme);
 
@@ -67,7 +67,7 @@ export default function Content() {
       error: message => message
     });
   }
-  
+
   const sidebar = [
     {
       id: 'my-account',
@@ -222,7 +222,7 @@ export default function Content() {
     setCurrentlyAddingServer(null);
     setCurrentlyAddingBot(false);
     setCurrentlyAddingSound(false);
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
@@ -238,11 +238,11 @@ export default function Content() {
   }, [isMobile]);
 
   return (
-    <div className='flex min-h-[100svh] bg-secondary gap-x-4'>
+    <div className='flex min-h-svh gap-x-4 bg-secondary'>
       <Sidebar blocks={sidebar} />
 
-      <div className='flex w-full sm:pb-4 sm:pr-4 sm:pt-4'>
-        <div className='relative flex flex-col w-full overflow-y-auto border bg-background border-primary sm:rounded-3xl'>
+      <div className='flex w-full sm:py-4 sm:pr-4'>
+        <div className='relative flex w-full flex-col overflow-y-auto border border-primary bg-background sm:rounded-3xl'>
           {!loading && (
             <AnimatePresence>
               {sidebar.filter(({ tabs }) => tabs).map(({ tabs }) => (
@@ -253,7 +253,7 @@ export default function Content() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={transition}
-                      className='flex flex-col w-full h-full p-4 sm:p-8 gap-y-4'
+                      className='flex size-full flex-col gap-y-4 p-4 sm:p-8'
                     >
                       {component}
                     </motion.div>
@@ -268,7 +268,7 @@ export default function Content() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={transition}
-                    className='flex flex-col w-full h-full p-4 sm:p-8 gap-y-4'
+                    className='flex size-full flex-col gap-y-4 p-4 sm:p-8'
                   >
                     {component}
                   </motion.div>
@@ -280,25 +280,25 @@ export default function Content() {
           <AnimatePresence>
             {loading && (
               <motion.div
-                className="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full bg-background z-[10]"
+                className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center bg-background"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
                 <Image
-                  className='w-[64px] h-[64px]'
-                  src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-                  alt="discord.place Logo" 
-                  width={256} 
+                  className='size-[64px]'
+                  src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+                  alt="discord.place Logo"
+                  width={256}
                   height={256}
                 />
-            
-                <div className='overflow-hidden mt-8 bg-quaternary w-[150px] h-[6px] rounded-full relative'>
-                  <div 
-                    className='absolute h-[6px] dark:bg-white bg-black rounded-full animate-loading' style={{
+
+                <div className='relative mt-8 h-[6px] w-[150px] overflow-hidden rounded-full bg-quaternary'>
+                  <div
+                    className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
                       width: '50%',
                       transform: 'translateX(-100%)'
-                    }} 
+                    }}
                   />
                 </div>
               </motion.div>

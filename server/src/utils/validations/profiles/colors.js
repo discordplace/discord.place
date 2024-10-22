@@ -9,7 +9,7 @@ function colorsValidation(value, isMongoValidation) {
   if (value.primary !== null) {
     const primary = colord(value.primary);
     if (!primary.isValid()) throw new Error('Primary color must be a valid hex code.');
-  } 
+  }
 
   if (value.secondary !== null) {
     const secondary = colord(value.secondary);
@@ -19,7 +19,7 @@ function colorsValidation(value, isMongoValidation) {
   if (!isMongoValidation && value.primary && !value.secondary) {
     throw new Error('Secondary color is required.');
   }
-  
+
   if (!isMongoValidation && value.secondary && !value.primary) {
     throw new Error('Primary color is required.');
   }

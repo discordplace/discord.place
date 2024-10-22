@@ -20,7 +20,7 @@ module.exports = async function checkAuthentication(request, response, next) {
       audience: 'discord.place',
       subject: 'user'
     });
-    
+
     if (!decoded) throw new AuthError('Token invalid.');
 
     const user = await User.findOne({ id: decoded.id }).select('lastLogoutAt').lean();
@@ -33,7 +33,7 @@ module.exports = async function checkAuthentication(request, response, next) {
     response.clearCookie('token');
 
     if (error instanceof AuthError) return response.sendError(error.message, 401);
-    
+
     logger.error(`There was an error while checking authentication: ${error}`);
 
     return response.sendError('An error occurred while checking authentication.', 500);

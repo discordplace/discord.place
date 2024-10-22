@@ -23,7 +23,7 @@ const useSearchStore = create((set, get) => ({
     const sort = get().sort;
 
     set({ loading: true, search });
-    
+
     fetchEmojis(search, category, sort, page, limit)
       .then(data => set({ emojis: data.emojis, loading: false, totalEmojis: data.totalEmojis, total: data.total, maxReached: data.maxReached }))
       .catch(error => {
@@ -34,7 +34,7 @@ const useSearchStore = create((set, get) => ({
   category: 'All',
   setCategory: category => {
     set({ category, page: 1 });
-  
+
     get().fetchEmojis(get().search);
   },
   sort: 'Newest',

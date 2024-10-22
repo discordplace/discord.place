@@ -12,7 +12,7 @@ import useLanguageStore, { t } from '@/stores/language';
 export default function ActiveReminders() {
   const data = useAccountStore(state => state.data);
   const language = useLanguageStore(state => state.language);
-  
+
   const remindersCount = data.reminders?.length || 0;
   const voteRemindersCount = data.voteReminders?.length || 0;
 
@@ -29,8 +29,8 @@ export default function ActiveReminders() {
       </div>
 
       {(remindersCount === 0 && voteRemindersCount === 0) ? (
-        <div className='max-w-[800px] mt-20'>
-          <ErrorState 
+        <div className='mt-20 max-w-[800px]'>
+          <ErrorState
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
@@ -43,7 +43,7 @@ export default function ActiveReminders() {
       ) : (
         <>
           {remindersCount > 0 && (
-            <div className='flex flex-col gap-y-4 max-w-[800px]'>
+            <div className='flex max-w-[800px] flex-col gap-y-4'>
               <h2 className='text-sm font-bold text-secondary'>
                 {t('accountPage.tabs.activeReminders.fields.reminders.title')}
 
@@ -52,7 +52,7 @@ export default function ActiveReminders() {
                 </span>
               </h2>
 
-              <div className='flex flex-col border-2 divide-y border-primary rounded-xl'>
+              <div className='flex flex-col divide-y rounded-xl border-2 border-primary'>
                 {data.reminders.map((reminder, index) => (
                   <div
                     key={reminder._id}
@@ -62,19 +62,19 @@ export default function ActiveReminders() {
                       index === 0 ? 'rounded-t-xl' : ''
                     )}
                   >
-                    <div className='flex flex-wrap items-center w-full gap-4 sm:items-start'>
+                    <div className='flex w-full flex-wrap items-center gap-4 sm:items-start'>
                       <div className='flex flex-col items-start'>
                         <div className='hidden text-base font-semibold text-primary sm:block'>
                           {t('accountPage.tabs.activeReminders.fields.reminders.about')}
                         </div>
 
-                        <div className='text-xs font-medium text-tertiary max-w-[300px] break-words line-clamp-6'>
+                        <div className='line-clamp-6 max-w-[300px] break-words text-xs font-medium text-tertiary'>
                           {reminder.about}
                         </div>
                       </div>
 
-                      <div className='flex flex-col items-center flex-1 w-full sm:items-end'>
-                        <div className='text-base font-semibold text-center text-primary'>
+                      <div className='flex w-full flex-1 flex-col items-center sm:items-end'>
+                        <div className='text-center text-base font-semibold text-primary'>
                           <Countdown
                             date={new Date(reminder.expire_at).getTime()}
                             renderer={({ days, hours, minutes, seconds, completed }) => {
@@ -97,7 +97,7 @@ export default function ActiveReminders() {
           )}
 
           {voteRemindersCount > 0 && (
-            <div className='flex flex-col gap-y-4 max-w-[800px]'>
+            <div className='flex max-w-[800px] flex-col gap-y-4'>
               <h2 className='text-sm font-bold text-secondary'>
                 {t('accountPage.tabs.activeReminders.fields.voteReminders.title')}
 
@@ -106,7 +106,7 @@ export default function ActiveReminders() {
                 </span>
               </h2>
 
-              <div className='flex flex-col border-2 divide-y border-primary rounded-xl'>
+              <div className='flex flex-col divide-y rounded-xl border-2 border-primary'>
 
                 {data.voteReminders.map((voteReminder, index) => (
                   <div
@@ -118,7 +118,7 @@ export default function ActiveReminders() {
                     )}
                   >
                     <Link
-                      className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
+                      className='flex items-center gap-x-4 transition-opacity hover:opacity-70'
                       href={`/servers/${voteReminder.guild.id}`}
                     >
                       <ServerIcon
@@ -129,20 +129,20 @@ export default function ActiveReminders() {
                         height={32}
                         className='rounded-lg'
                       />
-                  
+
                       <div className='flex flex-col'>
                         <p className='text-sm font-bold text-secondary'>
                           {voteReminder.guild.name}
                         </p>
-  
+
                         <p className='text-xs text-tertiary'>
                           {voteReminder.guild.id}
                         </p>
                       </div>
                     </Link>
-  
+
                     <div className='flex flex-col items-center sm:items-end'>
-                      <div className='text-base font-semibold text-center text-primary'>
+                      <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
                           date={new Date(voteReminder.createdAt).getTime() + 86400000}
                           renderer={({ hours, minutes, seconds, completed }) => {
@@ -152,7 +152,7 @@ export default function ActiveReminders() {
                           }}
                         />
                       </div>
-  
+
                       <div className='text-xs font-medium text-tertiary'>
                         {new Date(voteReminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
                       </div>

@@ -51,13 +51,14 @@ module.exports = {
               ])
               .setFooter({ text: `${requestUser.username} | Would expire at: ${quarantine.expire_at ? new Date(quarantine.expire_at).toLocaleString() : 'Never'}`, iconURL: requestUser.displayAvatarURL() })
           ];
-  
-          client.channels.cache.get(config.quarantineLogsChannelId).send({ embeds });  
-        
+
+          client.channels.cache.get(config.quarantineLogsChannelId).send({ embeds });
+
           return response.status(204).end();
         })
         .catch(error => {
           logger.error('There was an error while trying to delete a quarantine record:', error);
+
           return response.sendError('Failed to delete quarantine record.', 500);
         });
     }

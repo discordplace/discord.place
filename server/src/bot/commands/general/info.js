@@ -12,8 +12,8 @@ module.exports = {
     .setDescription('info')
     .setNameLocalizations(getLocalizedCommand('info').names)
     .setDMPermission(false)
-    
-    .addSubcommand(subcommand => 
+
+    .addSubcommand(subcommand =>
       subcommand
         .setName('server')
         .setDescription('Get information about the server.')
@@ -25,7 +25,7 @@ module.exports = {
             .setDescription('Server ID to get information about.')
             .setNameLocalizations(getLocalizedCommand('info.subcommands.server.options.server_id').names)
             .setDescriptionLocalizations(getLocalizedCommand('info.subcommands.server.options.server_id').descriptions)))
-    
+
     .addSubcommand(subcommand =>
       subcommand
         .setName('user')
@@ -71,7 +71,7 @@ module.exports = {
               {
                 name: await interaction.translate('commands.info.subcommands.server.embed.fields.0.name'),
                 value: !inviteLinkNotAvailable ?
-                  await interaction.translate('commands.info.subcommands.server.embed.fields.0.value', { inviteUrl: `https://discord.gg/${server.invite_code.type === 'Vanity' ? guild.vanityURLCode : server.invite_code.code}` }) : 
+                  await interaction.translate('commands.info.subcommands.server.embed.fields.0.value', { inviteUrl: `https://discord.gg/${server.invite_code.type === 'Vanity' ? guild.vanityURLCode : server.invite_code.code}` }) :
                   await interaction.translate('commands.info.errors.invite_was_deleted')
               },
               {
@@ -96,7 +96,7 @@ module.exports = {
         ]);
 
         if (guild.banner) embeds[0].setImage(guild.bannerURL({ extension: 'png', size: 4096 }));
-        
+
         var components = [
           new Discord.ActionRowBuilder()
             .addComponents(
@@ -160,7 +160,7 @@ module.exports = {
         ];
 
         if (user.banner) embeds[0].setImage(user.bannerURL({ extension: 'png', size: 4096 }));
-      
+
         if (userData?.subscription?.createdAt) {
           const premiumSince = new Date(userData.subscription.createdAt).toLocaleDateString(await interaction.getLanguage(), { year: 'numeric', month: 'long', day: 'numeric' });
 
@@ -181,13 +181,13 @@ module.exports = {
           var badgesText = '';
           var maxBadges = 9;
           var maxRows = 3;
-        
+
           var emptySlotEmoji = config.emojis.empty_badge_slot;
 
           var fetchedBadges = getBadges(profile, userData?.subscription?.createdAt);
           var emptySlots = maxBadges - fetchedBadges.length;
           var badges = fetchedBadges.map(badgeId => config.emojis.badges[badgeId] || emptySlotEmoji);
-        
+
           for (var i = 0; i < emptySlots; i++) badges.push(emptySlotEmoji);
 
           // eslint-disable-next-line no-redeclare
@@ -224,9 +224,9 @@ ${await interaction.translate('commands.info.subcommands.user.embed.fields.1.val
               .setEmoji('👤')
           );
         }
-      
+
         interaction.followUp({ embeds, components });
-      
+
         break;
     }
   }

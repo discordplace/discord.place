@@ -30,9 +30,9 @@ export default function RootLayoutContent({ children }) {
 
   return (
     <section key={language}>
-      <Script 
+      <Script
         defer={true}
-        src={config.analytics.script} 
+        src={config.analytics.script}
         data-website-id={config.analytics.websiteId}
         data-domains={config.analytics.domains.join(',')}
       />
@@ -50,8 +50,8 @@ export default function RootLayoutContent({ children }) {
       <ProgressBarProvider>
         <Toaster
           toastOptions={{
-            className:'!bg-secondary !shadow-lg !border !border-primary !text-primary'
-          }} 
+            className: '!bg-secondary !shadow-lg !border !border-primary !text-primary'
+          }}
         />
 
         <ThemeProvider>
@@ -60,7 +60,7 @@ export default function RootLayoutContent({ children }) {
               <Suspense fallback={<></>}>
                 <ReportButtonProvider />
               </Suspense>
-              
+
               <Suspense fallback={<></>}>
                 <Header />
               </Suspense>
@@ -68,11 +68,11 @@ export default function RootLayoutContent({ children }) {
               <ErrorBoundary>
                 {children}
               </ErrorBoundary>
-      
+
               <Suspense fallback={<></>}>
                 <Footer />
               </Suspense>
-          
+
               <CookieBanner />
             </ModalProvider>
           </VaulWrapperProvider>

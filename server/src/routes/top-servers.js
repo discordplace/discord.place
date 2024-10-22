@@ -2,7 +2,7 @@ module.exports = {
   get: (request, response) => {
     const data = client.guilds.cache.map(guild => guild).sort((a, b) => b.memberCount - a.memberCount)
       .slice(0, 5)
-      .map((guild) => ({
+      .map(guild => ({
         id: guild.id,
         name: guild.name,
         member_count: guild.memberCount,

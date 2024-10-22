@@ -15,40 +15,42 @@ export default function EmojiCard({ overridedImage, id, name, animated, categori
   });
 
   return (
-    <div className={cn(
-      'flex flex-col w-full min-w-[155px]',
-      className
-    )}>
-      <Link 
-        className='group relative flex items-center justify-center h-[110px] rounded-t-2xl bg-secondary lg:hover:bg-quaternary transition-colors group overflow-clip' 
+    <div
+      className={cn(
+        'flex flex-col w-full min-w-[155px]',
+        className
+      )}
+    >
+      <Link
+        className='group relative flex h-[110px] items-center justify-center text-clip rounded-t-2xl bg-secondary transition-colors lg:hover:bg-quaternary'
         href={`/emojis/${id}`}
       >
-        <MotionImage 
+        <MotionImage
           src={overridedImage || config.getEmojiURL(id, animated)}
-          alt={`${name} emoji`} 
-          className='transition-all ease-in-out group-hover:w-[86px] w-[50px] group-hover:h-[86px] h-[50px]'
+          alt={`${name} emoji`}
+          className='size-[50px] transition-all ease-in-out group-hover:size-[86px]'
           width={128}
           height={128}
         />
 
         {animated && (
-          <div className='absolute px-2 text-xs font-semibold uppercase transition-colors group-hover:bg-secondary bg-quaternary rounded-full right-2 top-1.5'>
+          <div className='absolute right-2 top-1.5 rounded-full bg-quaternary px-2 text-xs font-semibold uppercase transition-colors group-hover:bg-secondary'>
             {t('emojiCard.gifBadge')}
           </div>
         )}
       </Link>
 
-      <div className='flex flex-col px-2 py-2 border-t-2 bg-tertiary rounded-b-2xl border-t-primary'>
+      <div className='flex flex-col rounded-b-2xl border-t-2 border-t-primary bg-tertiary p-2'>
         <div className='flex justify-between'>
-          <h3 className='text-sm font-semibold text-primary max-w-[75%] truncate'>{name}</h3>
+          <h3 className='max-w-[75%] truncate text-sm font-semibold text-primary'>{name}</h3>
 
-          <div className='flex items-center text-sm gap-x-0.5 text-tertiary font-medium'>
+          <div className='flex items-center gap-x-0.5 text-sm font-medium text-tertiary'>
             <HiDocumentDownload />
             {formatter.format(downloads)}
           </div>
         </div>
 
-        <p className='text-xs font-medium text-tertiary max-w-[100%] truncate'>
+        <p className='max-w-full truncate text-xs font-medium text-tertiary'>
           {categories.map(category => t(`categories.${category}`)).join(', ')}
         </p>
       </div>

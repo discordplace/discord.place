@@ -9,11 +9,11 @@ export default function UnlistedCard({ server }) {
   const setCurrentlyAddingServer = useAccountStore(state => state.setCurrentlyAddingServer);
 
   return (
-    <div 
-      className='flex items-center gap-4 p-4 transition-opacity cursor-pointer bg-secondary rounded-xl hover:opacity-70'
+    <div
+      className='flex cursor-pointer items-center gap-4 rounded-xl bg-secondary p-4 transition-opacity hover:opacity-70'
       onClick={() => setCurrentlyAddingServer(server)}
     >
-      <div className='relative w-12 h-12'>
+      <div className='relative size-12'>
         {server.icon ? (
           <ServerIcon
             id={server.id}

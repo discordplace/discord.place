@@ -77,7 +77,7 @@ export default function Page() {
         params.action(item[0]);
 
         await sleep(config.dashboardRequestDelay);
-      
+
         if (data.indexOf(item) === data.length - 1) fetchData([params.fetchKey]);
       }
     }
@@ -178,7 +178,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/profile/u/${column[0].id}`);
@@ -315,7 +315,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     router.push(`/emojis/${column[0].emoji_ids ? 'packages/' : ''}${column[0].id}`);
                   }
                 },
@@ -392,7 +392,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/emojis/${column[0].emoji_ids ? 'packages/' : ''}${column[0].id}`);
@@ -405,7 +405,7 @@ export default function Page() {
                     const columns = useDashboardStore.getState().selectedItems;
 
                     setSelectedItems([]);
-                    
+
                     columns.forEach(column => downloadEmoji(column[0]));
                   }
                 },
@@ -492,7 +492,7 @@ export default function Page() {
                   icon: FiArrowUpRight,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     window.open(`https://discord.com/oauth2/authorize?client_id=${column[0].id}&permissions=0&integration_type=0&scope=bot+applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`, '_blank');
@@ -506,7 +506,7 @@ export default function Page() {
                     fetchKey: 'bots'
                   }),
                   hide: !data.permissions?.canApproveBots
-                }, 
+                },
                 {
                   name: 'Deny',
                   icon: IoMdCloseCircle,
@@ -582,7 +582,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/bots/${column[0].id}`);
@@ -669,7 +669,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/templates/${column[0].id}/preview`);
@@ -756,7 +756,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/templates/${column[0].id}/preview`);
@@ -843,7 +843,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/sounds/${column[0].id}`);
@@ -931,7 +931,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/sounds/${column[0].id}`);
@@ -1127,7 +1127,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const [column] = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/${column.custom.type === 'server' ? 'servers' : 'bots'}/${column.value}`);
@@ -1214,7 +1214,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/themes/${column[0].id}`);
@@ -1301,7 +1301,7 @@ export default function Page() {
                   icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     router.push(`/themes/${column[0].id}`);
@@ -1387,7 +1387,7 @@ export default function Page() {
                   icon: MdOpenInNew,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
-                    
+
                     setSelectedItems([]);
 
                     window.open(column[0].redirectTo, '_blank');
@@ -1522,7 +1522,7 @@ export default function Page() {
             {
               label: 'Timeouts',
               columns: data?.timeouts?.map(item => [
-                typeof item.bot === 'object' ? 
+                typeof item.bot === 'object' ?
                   {
                     type: 'bot',
                     id: item.bot.id,
@@ -1596,7 +1596,7 @@ export default function Page() {
 
                     setSelectedItems([]);
 
-                    router.push(column[0].discriminator ? '/bots/' : '/servers/' + column[0].id);
+                    router.push(column[0].discriminator ? '/bots/' : `/servers/${column[0].id}`);
                   }
                 },
                 {
@@ -1659,7 +1659,7 @@ export default function Page() {
                     avatar: item.user.avatar,
                     showId: true,
                     searchValues: [item.user.username, item.user.id]
-                  } : 
+                  } :
                   {
                     type: 'server',
                     _id: item.id,
@@ -1843,7 +1843,7 @@ export default function Page() {
         fetchData(['links']);
         break;
     }
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
@@ -1855,16 +1855,18 @@ export default function Page() {
       document.body.style.overflow = 'hidden';
       window.scrollTo(0, 0);
     } else document.body.style.overflow = 'auto';
-    
-    return () => document.body.style.overflow = 'auto';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, [loading]);
 
   return (
     <div className='relative flex w-full overflow-x-clip bg-secondary'>
       <Sidebar />
-      
-      <div className='flex w-full min-h-[100svh] pt-4 pl-4 pr-2 pb-4'>
-        <div className='relative flex flex-col flex-1 w-full p-6 overflow-x-auto border sm:p-8 rounded-3xl bg-background border-primary'>
+
+      <div className='flex min-h-svh w-full py-4 pl-4 pr-2'>
+        <div className='relative flex w-full flex-1 flex-col overflow-x-auto rounded-3xl border border-primary bg-background p-6 sm:p-8'>
           <div className='flex items-center text-sm font-medium'>
             <span className='text-tertiary'>
               Dashboard
@@ -1883,31 +1885,31 @@ export default function Page() {
 
           {loading && (
             <AnimatePresence>
-              <div className="absolute top-0 left-0 flex flex-col items-center justify-center h-full w-full max-h-[919px] bg-background z-[10]">
+              <div className="absolute left-0 top-0 z-10 flex size-full max-h-[919px] flex-col items-center justify-center bg-background">
                 <MotionImage
-                  className='w-[64px] h-[64px]'
-                  src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-                  alt="discord.place Logo" 
-                  width={256} 
+                  className='size-[64px]'
+                  src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+                  alt="discord.place Logo"
+                  width={256}
                   height={256}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={transition}
                 />
-            
-                <motion.div 
-                  className='overflow-hidden mt-8 bg-tertiary w-[150px] h-[6px] rounded-full relative'
+
+                <motion.div
+                  className='relative mt-8 h-[6px] w-[150px] overflow-hidden rounded-full bg-tertiary'
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={transition}
                 >
                   <div
-                    className='absolute h-[6px] dark:bg-white bg-black rounded-full animate-loading' style={{
+                    className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
                       width: '50%',
                       transform: 'translateX(-100%)'
-                    }} 
+                    }}
                   />
                 </motion.div>
               </div>

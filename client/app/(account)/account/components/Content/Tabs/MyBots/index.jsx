@@ -15,7 +15,7 @@ import { t } from '@/stores/language';
 
 export default function MyBots() {
   const data = useAccountStore(state => state.data);
-  
+
   const currentlyAddingBot = useAccountStore(state => state.currentlyAddingBot);
   const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
 
@@ -34,7 +34,7 @@ export default function MyBots() {
           </p>
         </div>
 
-        <div className='flex flex-col mt-8 gap-y-2'>
+        <div className='mt-8 flex flex-col gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
             {t('accountPage.tabs.myBots.sections.listedBots.title')}
 
@@ -48,8 +48,8 @@ export default function MyBots() {
           </p>
 
           {(data.bots || []).length === 0 ? (
-            <div className='max-w-[800px] mt-20'>
-              <ErrorState 
+            <div className='mt-20 max-w-[800px]'>
+              <ErrorState
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
@@ -60,14 +60,14 @@ export default function MyBots() {
               />
             </div>
           ) : (
-            <div className='flex gap-4 flex-wrap max-w-[800px] mt-2'>
+            <div className='mt-2 flex max-w-[800px] flex-wrap gap-4'>
               {data.bots.map(bot => (
                 <Link
                   key={bot.id}
-                  className='flex items-center gap-4 p-4 transition-opacity bg-secondary rounded-xl hover:opacity-70'
+                  className='flex items-center gap-4 rounded-xl bg-secondary p-4 transition-opacity hover:opacity-70'
                   href={`/bots/${bot.id}`}
                 >
-                  <div className='relative w-12 h-12'>
+                  <div className='relative size-12'>
                     <UserAvatar
                       id={bot.id}
                       hash={bot.avatar}
@@ -93,7 +93,7 @@ export default function MyBots() {
           )}
         </div>
 
-        <div className='flex flex-col mt-8 gap-y-2'>
+        <div className='mt-8 flex flex-col gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
             {t('accountPage.tabs.myBots.sections.newBot.title')}
           </h2>
@@ -102,8 +102,8 @@ export default function MyBots() {
             {t('accountPage.tabs.myBots.sections.newBot.subtitle')}
           </p>
 
-          <div className='mt-2 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>
-            <h2 className='flex items-center text-lg font-semibold gap-x-2'>
+          <div className='relative mt-2 flex w-full max-w-[800px] flex-col gap-y-2 rounded-xl border border-blue-500 bg-blue-500/10 p-4 transition-[margin,opacity] duration-1000 ease-in-out'>
+            <h2 className='flex items-center gap-x-2 text-lg font-semibold'>
               <BsQuestionCircleFill /> {t('accountPage.tabs.myBots.sections.newBot.note.title')}
             </h2>
 
@@ -114,9 +114,9 @@ export default function MyBots() {
             </p>
           </div>
 
-          <div className='flex flex-col mt-4 text-sm text-tertiary gap-y-4'>
+          <div className='mt-4 flex flex-col gap-y-4 text-sm text-tertiary'>
             <button
-              className='px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
+              className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
               onClick={() => setCurrentlyAddingBot(true)}
             >
               {t('buttons.letsGo')}
@@ -125,7 +125,7 @@ export default function MyBots() {
           </div>
         </div>
 
-        <div className='flex flex-col mt-8 gap-y-2'>
+        <div className='mt-8 flex flex-col gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
             {t('accountPage.tabs.myBots.sections.pastDenials.title')}
           </h2>
@@ -133,11 +133,13 @@ export default function MyBots() {
           <p className='text-sm text-tertiary'>
             {t('accountPage.tabs.myBots.sections.pastDenials.subtitle')}
           </p>
-        
-          <div className={cn(
-            'flex flex-col items-center w-full max-w-[800px] gap-y-4',
-            (data.denies || []).length === 0 && 'my-20'
-          )}>
+
+          <div
+            className={cn(
+              'flex flex-col items-center w-full max-w-[800px] gap-y-4',
+              (data.denies || []).length === 0 && 'my-20'
+            )}
+          >
             {(data.denies || []).length === 0 ? (
               <ErrorState
                 title={
@@ -150,13 +152,13 @@ export default function MyBots() {
               />
             ) : (
               data.denies.map(deny => (
-                <div 
-                  className='relative flex flex-col gap-y-2 w-full max-w-[1000px] bg-red-500/10 border border-red-500 p-4 rounded-xl mt-4 transition-[margin,opacity] duration-1000 ease-in-out' 
+                <div
+                  className='relative mt-4 flex w-full max-w-[1000px] flex-col gap-y-2 rounded-xl border border-red-500 bg-red-500/10 p-4 transition-[margin,opacity] duration-1000 ease-in-out'
                   key={deny.bot.id}
                 >
-                  <h2 className='flex flex-wrap items-center text-lg font-semibold gap-x-2'>
+                  <h2 className='flex flex-wrap items-center gap-x-2 text-lg font-semibold'>
                     <FaCircleExclamation />
-                    
+
                     <UserAvatar
                       id={deny.bot.id}
                       hash={deny.bot.avatar}
@@ -168,8 +170,8 @@ export default function MyBots() {
 
                     {deny.bot.username}#{deny.bot.discriminator}
                   </h2>
-  
-                  <div className='flex flex-wrap text-sm font-medium text-tertiary gap-x-1'>
+
+                  <div className='flex flex-wrap gap-x-1 text-sm font-medium text-tertiary'>
                     {t('accountPage.tabs.myBots.sections.pastDenials.deniedBy', {
                       moderator: (
                         <span className='text-secondary'>
@@ -194,10 +196,11 @@ export default function MyBots() {
                       <span>
                         {t('accountPage.tabs.myBots.sections.pastDenials.countdown.expiresIn', {
                           countdown: (
-                            <Countdown 
-                              date={new Date(deny.createdAt).getTime() + 21600000} 
+                            <Countdown
+                              date={new Date(deny.createdAt).getTime() + 21600000}
                               renderer={({ hours, minutes, seconds, completed }) => {
                                 if (completed) return t('accountPage.tabs.myBots.sections.pastDenials.countdown.completed');
+
                                 return t('accountPage.tabs.myBots.sections.pastDenials.countdown.renderer', { hours, minutes, seconds });
                               }}
                             />

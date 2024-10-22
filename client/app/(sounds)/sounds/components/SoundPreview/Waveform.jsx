@@ -21,7 +21,7 @@ export default function Waveform({ id }) {
     setCurrentlyPlaying: state.sounds.setCurrentlyPlaying,
     volume: state.sounds.volume,
     setVolume: state.sounds.setVolume
-  })));  
+  })));
 
   const [wavesurfer, setWavesurfer] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
@@ -85,22 +85,22 @@ export default function Waveform({ id }) {
         onSeeking={wavesurfer => setCurrentTime(wavesurfer.getCurrentTime())}
       />
 
-      <div className='flex items-center justify-between mt-2 select-none'>
+      <div className='mt-2 flex select-none items-center justify-between'>
         <span className='min-w-[40px] text-xs font-medium text-tertiary'>
           {currentTime > totalTime ? totalTime.toFixed(2) : currentTime.toFixed(2)}s
         </span>
-          
-        <div className='flex items-center text-lg gap-x-4'>
+
+        <div className='flex items-center gap-x-4 text-lg'>
           <VolumePopover />
 
           <button
-            className='outline-none text-[rgba(var(--bg-secondary))] bg-black hover:bg-black/70 dark:bg-white dark:hover:bg-white/70 w-[30px] h-[30px] items-center flex justify-center rounded-full'
+            className='flex size-[30px] items-center justify-center rounded-full bg-black text-[rgba(var(--bg-secondary))] outline-none hover:bg-black/70 dark:bg-white dark:hover:bg-white/70'
             onClick={onPlayPause}
           >
             {currentlyPlaying === id ? (
               <FaPause />
             ) : (
-              <HiPlay className='relative left-[1px]' />
+              <HiPlay className='relative left-px' />
             )}
           </button>
 
@@ -111,7 +111,7 @@ export default function Waveform({ id }) {
             <MdOutlineArrowOutward />
           </Link>
         </div>
-        
+
         <span className='min-w-[40px] text-xs font-medium text-tertiary'>
           {totalTime.toFixed(2)}s
         </span>

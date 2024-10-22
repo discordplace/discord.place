@@ -47,6 +47,7 @@ async function createMongoBackup() {
 
 function generateBackupCommand(url, backupPath, excludeCollections) {
   const collectionsToExclude = excludeCollections.map(collection => `--excludeCollection=${collection}`).join(' ');
+
   return `mongodump --uri="${url}" --gzip --forceTableScan --quiet --db=api --out=${backupPath} ${collectionsToExclude}`;
 }
 
@@ -60,7 +61,7 @@ async function executeBackupCommand(cmd) {
 
 async function zipBackupFolder(backupPath) {
   return new Promise((resolve, reject) => {
-    const files = fs.readdirSync(backupPath + '/api');
+    const files = fs.readdirSync(`${backupPath}/api`);
 
     const zipFileName = `${backupPath}/backup.zip`;
 

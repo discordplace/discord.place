@@ -13,7 +13,7 @@ export default function ReportableArea(props) {
   const state_showReportableAreas = useGeneralStore(state => state.showReportableAreas);
   const showReportableAreas = props.active !== false && state_showReportableAreas;
   const setShowReportableAreas = useGeneralStore(state => state.setShowReportableAreas);
-  
+
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
     openModal: state.openModal,
     disableButton: state.disableButton,
@@ -41,7 +41,7 @@ export default function ReportableArea(props) {
       },
       error: message => {
         enableButton('report-area', 'createReport');
-        
+
         return message;
       }
     });

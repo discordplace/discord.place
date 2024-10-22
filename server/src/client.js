@@ -110,7 +110,7 @@ module.exports = class Client {
       const CommandsHandler = require('@/src/bot/handlers/commands.js');
       const commandsHandler = new CommandsHandler();
       commandsHandler.fetchCommands();
-      
+
       if (options.registerCommands) {
         commandsHandler.registerCommands().then(() => process.exit(0)).catch(error => {
           logger.error('Failed to register commands:', error);
@@ -162,15 +162,15 @@ module.exports = class Client {
           syncMemberRoles();
           this.syncLemonSqueezyPlans();
         }, null, true);
-        
+
         new CronJob('59 23 * * *', () => {
           const today = new Date();
           const nextDay = new Date(today);
           nextDay.setDate(today.getDate() + 1);
-          
+
           if (nextDay.getDate() === 1) {
             logger.info('Reached the end of the month. Saving monthly votes.');
-            
+
             this.saveMonthlyVotes();
           }
         }, null, true);
@@ -204,12 +204,12 @@ module.exports = class Client {
 
   async checkDeletedRewardsRoles() {
     const rewards = await Reward.find();
-  
+
     const serversToCheck = new Set(rewards.map(reward => reward.guild.id));
-      
+
     const deleteServerOperations = [];
     const deleteRoleOperations = [];
-  
+
     for (const serverId of serversToCheck) {
       const guild = client.guilds.cache.get(serverId);
       if (!guild) deleteServerOperations.push({
@@ -218,7 +218,7 @@ module.exports = class Client {
         }
       });
     }
-  
+
     for (const reward of rewards) {
       const guild = client.guilds.cache.get(reward.guild.id);
       if (guild) {
@@ -230,10 +230,10 @@ module.exports = class Client {
         });
       }
     }
-  
+
     if (deleteServerOperations.length > 0) await Reward.bulkWrite(deleteServerOperations);
     if (deleteRoleOperations.length > 0) await Reward.bulkWrite(deleteRoleOperations);
-  
+
     if (deleteServerOperations.length > 0 || deleteRoleOperations.length > 0) {
       logger.info(`Deleted vote rewards that associated with deleted servers or roles. (Operations: ${deleteServerOperations.length + deleteRoleOperations.length})`);
     }
@@ -242,7 +242,7 @@ module.exports = class Client {
   async saveMonthlyVotes() {
     try {
       await updateMonthlyVotes();
-    
+
       logger.info('Monthly votes saved.');
     } catch (error) {
       logger.error('Failed to save monthly votes:', error);
@@ -396,7 +396,7 @@ module.exports = class Client {
     const expiredServerTripledVotes = await deleteExpiredProducts(ServerVoteTripledEnabled, 86400000);
     const expiredStandedOutBots = await deleteExpiredProducts(StandedOutBot, 43200000);
     const expiredStandedOutServers = await deleteExpiredProducts(StandedOutServer, 43200000);
-    
+
     function deleteExpiredProducts(Model, expireTime) {
       return Model.deleteMany({ createdAt: { $lt: new Date(Date.now() - expireTime) } });
     }
@@ -410,10 +410,10 @@ module.exports = class Client {
   async checkBucketAvailability() {
     try {
       const command = new HeadBucketCommand({ Bucket: process.env.S3_BUCKET_NAME });
-      
+
       await S3.send(command);
 
-      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 0);   
+      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 0);
     } catch (error) {
       logger.error('Failed to check S3 bucket availability:', error);
 

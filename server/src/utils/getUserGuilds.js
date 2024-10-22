@@ -26,6 +26,7 @@ async function getUserGuilds(userId) {
     return response.data;
   } catch (error) {
     logger.error(`There was an error getting the guilds for user ${userId}:`, error);
+
     return null;
   }
 }

@@ -42,20 +42,22 @@ export default function Page() {
 
   function publishTemplate() {
     setLoading(true);
-    
+
     toast.promise(createTemplate({
       id: templateId,
-      name: templateName, 
+      name: templateName,
       description: templateDescription,
       categories: selectedCategories
     }), {
       loading: t('publishTemplatePage.toast.publishingTemplate'),
       success: () => {
         router.push(`/templates/${templateId}/preview`);
+
         return t('publishTemplatePage.toast.templatePublished');
       },
       error: error => {
         setLoading(false);
+
         return error;
       }
     });
@@ -63,10 +65,10 @@ export default function Page() {
 
   return (
     <AuthProtected>
-      <div className="relative z-0 flex justify-center w-full px-6 lg:px-0">      
+      <div className="relative z-0 flex w-full justify-center px-6 lg:px-0">
         <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
-        <div className="mt-48 mb-16 max-w-[600px] flex flex-col gap-y-2 w-full">
+        <div className="mb-16 mt-48 flex w-full max-w-[600px] flex-col gap-y-2">
           <h1 className="text-4xl font-bold text-primary">
             {t('publishTemplatePage.title')}
           </h1>
@@ -75,14 +77,14 @@ export default function Page() {
             {t('publishTemplatePage.subtitle')}
           </p>
 
-          <div className='flex flex-col mt-6 gap-y-4'>
-            <div className='flex justify-between pb-4 border-b gap-x-4 border-y-primary'>
+          <div className='mt-6 flex flex-col gap-y-4'>
+            <div className='flex justify-between gap-x-4 border-b border-y-primary pb-4'>
               {steps.map((step, index) => (
                 <div className='flex flex-col items-center gap-x-2' key={step}>
                   <div className='text-xs uppercase text-tertiary'>
                     {t('step', { currentStep: index + 1 })}
                   </div>
-                  
+
                   <h2 className={cn(
                     'text-sm mobile:text-base transition-colors font-medium text-secondary flex items-center',
                     activeStep === index && 'text-primary'
@@ -96,7 +98,7 @@ export default function Page() {
 
           {activeStep === 0 && (
             <>
-              <h2 className='mt-4 text-lg font-medium sm:text-xl text-primary'>
+              <h2 className='mt-4 text-lg font-medium text-primary sm:text-xl'>
                 {t('publishTemplatePage.steps.0.inputs.templateId.title')}
               </h2>
 
@@ -106,7 +108,7 @@ export default function Page() {
 
               <input
                 id='templateId'
-                className='w-full px-3 py-2 text-sm rounded-lg outline-none placeholder-placeholder bg-secondary hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary text-tertiary'
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={templateId}
                 onChange={event => setTemplateId(event.target.value)}
@@ -118,7 +120,7 @@ export default function Page() {
 
           {activeStep === 1 && (
             <>
-              <h2 className='mt-4 text-lg font-medium sm:text-xl text-primary'>
+              <h2 className='mt-4 text-lg font-medium text-primary sm:text-xl'>
                 {t('publishTemplatePage.steps.1.inputs.templateCategories.title')}
               </h2>
 
@@ -126,7 +128,7 @@ export default function Page() {
                 {t('publishTemplatePage.steps.1.inputs.templateCategories.subtitle')}
               </p>
 
-              <div className='flex flex-wrap items-center justify-center gap-4 mt-4'>
+              <div className='mt-4 flex flex-wrap items-center justify-center gap-4'>
                 {config.templateCategories
                   .filter(category => category !== 'All')
                   .map(category => (
@@ -144,7 +146,7 @@ export default function Page() {
                     >
                       {t(`categories.${category}`)}
                       {selectedCategories.includes(category) && (
-                        <div className='absolute top-0 left-0 flex items-center justify-center w-full h-full bg-secondary/90 rounded-2xl'>
+                        <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-2xl bg-secondary/90'>
                           <MdCheckCircle className='text-primary' />
                         </div>
                       )}
@@ -152,7 +154,7 @@ export default function Page() {
                   ))}
               </div>
 
-              <label className='flex flex-col mt-6 gap-y-2' htmlFor='templateName'>
+              <label className='mt-6 flex flex-col gap-y-2' htmlFor='templateName'>
                 <h2 className='text-xl font-medium text-primary'>
                   {t('publishTemplatePage.steps.1.inputs.templateName.title')}
                 </h2>
@@ -164,7 +166,7 @@ export default function Page() {
 
               <input
                 id='templateName'
-                className='w-full px-3 py-2 text-sm rounded-lg outline-none placeholder-placeholder bg-secondary hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary text-tertiary'
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={templateName}
                 onChange={event => setTemplateName(event.target.value)}
@@ -172,7 +174,7 @@ export default function Page() {
                 maxLength={20}
               />
 
-              <label className='flex flex-col mt-6 gap-y-2' htmlFor='templateDescription'>
+              <label className='mt-6 flex flex-col gap-y-2' htmlFor='templateDescription'>
                 <h2 className='text-xl font-medium text-primary'>
                   {t('publishTemplatePage.steps.1.inputs.templateDescription.title')}
                 </h2>
@@ -184,7 +186,7 @@ export default function Page() {
 
               <textarea
                 id='templateDescription'
-                className='ring-0 focus:ring-2 resize-none ring-purple-500 h-[100px] scrollbar-hide w-full px-3 py-2 text-sm rounded-lg outline-none placeholder-placeholder bg-secondary hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary text-tertiary'
+                className='scrollbar-hide h-[100px] w-full resize-none rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none ring-0 ring-purple-500 placeholder:text-placeholder hover:bg-tertiary focus:ring-2 focus-visible:bg-quaternary focus-visible:text-secondary'
                 value={templateDescription}
                 onChange={event => setTemplateDescription(event.target.value)}
                 placeholder={t('publishTemplatePage.steps.1.inputs.templateDescription.placeholder', { min: config.templateDescriptionMinLength })}
@@ -195,7 +197,7 @@ export default function Page() {
 
           {activeStep === 2 && (
             <>
-              <h2 className='mt-2 text-lg font-medium sm:text-xl text-primary'>
+              <h2 className='mt-2 text-lg font-medium text-primary sm:text-xl'>
                 {t('publishTemplatePage.steps.2.heading')}
               </h2>
 
@@ -203,7 +205,7 @@ export default function Page() {
                 {t('publishTemplatePage.steps.2.description')}
               </p>
 
-              <div className='flex flex-col mt-4 gap-y-2'>
+              <div className='mt-4 flex flex-col gap-y-2'>
                 <div className='flex justify-between'>
                   <h3 className='text-sm text-tertiary'>
                     {t('publishTemplatePage.steps.2.fields.categories')}
@@ -226,28 +228,28 @@ export default function Page() {
                   <h3 className='text-sm text-tertiary'>
                     {t('publishTemplatePage.steps.2.fields.templateDescription')}
                   </h3>
-                  <p className='text-sm text-tertiary max-w-[250px] break-words'>
+                  <p className='max-w-[250px] break-words text-sm text-tertiary'>
                     {templateDescription}
                   </p>
                 </div>
               </div>
 
-              <p className='mt-2 text-xs mobile:text-sm text-tertiary'>
+              <p className='mt-2 text-xs text-tertiary mobile:text-sm'>
                 {t('publishTemplatePage.steps.2.disclaimer.content', { contentPolicyLink: <Link href='/legal/terms-of-service' className='hover:text-primary hover:underline'>{t('publishTemplatePage.steps.2.disclaimer.linkText')}</Link> })}
               </p>
             </>
           )}
 
-          <div className='flex justify-between w-full mt-8'>
-            <button className='flex items-center px-3 py-1 text-sm font-semibold text-white bg-black rounded-lg gap-x-1 dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => setActiveStep(activeStep - 1)} disabled={activeStep === 0 || loading}>
+          <div className='mt-8 flex w-full justify-between'>
+            <button className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70' onClick={() => setActiveStep(activeStep - 1)} disabled={activeStep === 0 || loading}>
               {t('buttons.back')}
             </button>
 
-            <button 
-              className='flex items-center px-3 py-1 text-sm font-semibold text-white bg-black rounded-lg gap-x-1 dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' 
+            <button
+              className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
               onClick={async () => {
                 let templateDetailsFound = false;
-              
+
                 if (activeStep === 0) {
                   setTemplateDetailsLoading(true);
 
@@ -263,7 +265,7 @@ export default function Page() {
                       );
                     })
                     .finally(() => setTemplateDetailsLoading(false));
-                    
+
                   if (!templateDetailsFound) return;
                 }
 
@@ -276,7 +278,7 @@ export default function Page() {
               }
             >
               {activeStep === steps.length - 1 ? t('buttons.publish') : t('buttons.next')}
-              
+
               {(loading || templateDetailsLoading) && (
                 <TbLoader className='animate-spin' />
               )}

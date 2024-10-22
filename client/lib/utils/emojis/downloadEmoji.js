@@ -31,14 +31,14 @@ function downloadEmoji(emoji) {
           document.body.removeChild(link);
         });
       })
-      .catch(error => toast.error('An unknown error occurred: ' + error.message));
+      .catch(error => toast.error(`An unknown error occurred: ${error.message}`));
 
     incrementDownloads(emoji.id, true);
   } else {
     const extension = emoji.animated ? 'gif' : 'png';
     const filename = `${emoji.name}.${extension}`;
     const url = config.getEmojiURL(emoji.id, emoji.animated);
-    
+
     fetch(url)
       .then(response => response.blob())
       .then(blob => {

@@ -32,11 +32,11 @@ export default function PatchVerifyButton({ profile }) {
   }
 
   return (
-    <div className='flex justify-end flex-1 w-full'>
+    <div className='flex w-full flex-1 justify-end'>
       <button
         onClick={handleVerify}
         disabled={loading}
-        className='mobile:w-max mobile:mt-0 mt-4 w-full justify-center select-none px-4 mobile:py-1.5 py-2 flex items-center gap-x-1.5 text-sm font-semibold rounded-full mobile:rounded-lg disabled:opacity-70 disabled:pointer-events-none text-secondary bg-tertiary hover:text-primary hover:bg-quaternary'
+        className='mt-4 flex w-full select-none items-center justify-center gap-x-1.5 rounded-full bg-tertiary px-4 py-2 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70 mobile:mt-0 mobile:w-max mobile:rounded-lg mobile:py-1.5'
       >
         {profile.verified ? t('buttons.unverify') : t('buttons.verify')}
         {loading && <TbLoader className='animate-spin' />}

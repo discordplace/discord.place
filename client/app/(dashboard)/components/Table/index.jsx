@@ -13,7 +13,7 @@ import Pagination from '@/app/components/Pagination';
 import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
 import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
 import { FiX } from 'react-icons/fi';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { IoSearch } from 'react-icons/io5';
 import * as chrono from 'chrono-node';
 import { useMedia } from 'react-use';
@@ -23,7 +23,7 @@ import Drawer from '@/app/components/Drawer';
 export default function Table({ tabs }) {
   const selectedItems = useDashboardStore(state => state.selectedItems);
   const setSelectedItems = useDashboardStore(state => state.setSelectedItems);
-  
+
   function handleSelect(item) {
     if (selectedItems.find(column => isEqual(column, item))) setSelectedItems(selectedItems.filter(selectedRow => !isEqual(selectedRow, item)));
     else setSelectedItems([...selectedItems, item]);
@@ -40,7 +40,7 @@ export default function Table({ tabs }) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTab, currentSort]);
-  
+
   const [currentlySearching, setCurrentlySearching] = useState(false);
   const searchQuery = useDashboardStore(state => state.searchQuery);
   const setSearchQuery = useDashboardStore(state => state.setSearchQuery);
@@ -61,6 +61,7 @@ export default function Table({ tabs }) {
   const filteredColumns = currentTabData.columns
     .filter(column => {
       if (!searchQuery) return true;
+
       return column.filter(({ searchValues, type }) => type === 'date' || Array.isArray(searchValues)).some(({ searchValues, type, value }) => {
         if (type === 'date') {
           const parsedDate = chrono.parseDate(searchQuery);
@@ -98,7 +99,7 @@ export default function Table({ tabs }) {
         </span>
 
         <button
-          className='flex hover:bg-quaternary items-center pl-1.5 pr-2 text-xs rounded-full gap-x-1.5 py-0.5 text-secondary border bg-secondary border-primary'
+          className='flex items-center gap-x-1.5 rounded-full border border-primary bg-secondary py-0.5 pl-1.5 pr-2 text-xs text-secondary hover:bg-quaternary'
           onClick={() => setCurrentSort({ name: '', key: '', order: '' })}
         >
           {CurrentSortIcon && <CurrentSortIcon size={14} />}
@@ -108,8 +109,8 @@ export default function Table({ tabs }) {
           <FiX size={14} />
         </button>
       </div>
-      
-      <div className='flex flex-wrap pb-5 gap-x-4 gap-y-2 sm:flex-nowrap sm:border-b sm:overflow-hidden border-b-primary'>
+
+      <div className='flex flex-wrap gap-x-4 gap-y-2 border-b-primary pb-5 sm:flex-nowrap sm:overflow-hidden sm:border-b'>
         {tabs?.map(tab => (
           <div
             key={tab.label}
@@ -121,14 +122,14 @@ export default function Table({ tabs }) {
           >
             {tab.label}
 
-            <span className='flex items-center justify-center w-max px-1.5 h-4 text-xs rounded-full bg-quaternary sm:bg-quaternary text-primary'>
+            <span className='flex h-4 w-max items-center justify-center rounded-full bg-quaternary px-1.5 text-xs text-primary sm:bg-quaternary'>
               {currentTab === tab.label ? deepCopiedColumns.length : tab.columns.length}
             </span>
 
             {currentTab === tab.label && (
               <motion.div
                 layoutId='emojisQueueCurrentTabIndicator'
-                className='sm:block hidden absolute w-full rounded-lg left-0 h-[35px] bg-black dark:bg-white -bottom-[52.5px]'
+                className='absolute bottom-[-52.5px] left-0 hidden h-[35px] w-full rounded-lg bg-black dark:bg-white sm:block'
               />
             )}
           </div>
@@ -149,10 +150,10 @@ export default function Table({ tabs }) {
           >
             {isMobile ? (
               currentlySearching ? (
-                <div className='relative flex items-center w-full'>
+                <div className='relative flex w-full items-center'>
                   <input
                     type='text'
-                    className='w-full peer focus-visible:text-primary placeholder-[rgba(var(--text-tertiary))] pl-5 bg-transparent outline-none sm:w-36 text-secondary'
+                    className='peer w-full bg-transparent pl-5 text-secondary outline-none placeholder:text-[rgba(var(--text-tertiary))] focus-visible:text-primary sm:w-36'
                     placeholder='Search anything...'
                     value={searchQuery}
                     onChange={event => setSearchQuery(event.target.value)}
@@ -175,18 +176,18 @@ export default function Table({ tabs }) {
               ) : (
                 <>
                   Search
-                  
+
                   <IoSearch />
                 </>
               )
             ) : (
               <>
                 <IoSearch />
-              
+
                 {currentlySearching ? (
                   <input
                     type='text'
-                    className='w-24 bg-transparent outline-none sm:w-36 text-secondary'
+                    className='w-24 bg-transparent text-secondary outline-none sm:w-36'
                     placeholder='Search anything...'
                     value={searchQuery}
                     onChange={event => setSearchQuery(event.target.value)}
@@ -199,7 +200,7 @@ export default function Table({ tabs }) {
 
                 {currentlySearching && (
                   <button
-                    className='flex items-center text-xs transition-colors text-tertiary hover:text-primary'
+                    className='flex items-center text-xs text-tertiary transition-colors hover:text-primary'
                     onClick={() => {
                       setSearchQuery(null);
                       setCurrentlySearching(false);
@@ -214,9 +215,9 @@ export default function Table({ tabs }) {
         )}
       </div>
 
-      <div className='relative w-full -mt-8 overflow-auto lg:max-w-[unset] max-w-[230px] mobile:max-w-[360px] sm:max-w-[430px]'>
+      <div className='relative -mt-8 w-full max-w-[230px] overflow-auto mobile:max-w-[360px] sm:max-w-[430px] lg:max-w-[unset]'>
         {(currentTabData.columns.length === 0 || displayedColumns.length === 0) && (
-          <div className='flex items-center max-w-[calc(100vw_-_65px)] sm:max-w-[unset] justify-center min-h-[calc(100svh_-_420px)]'>
+          <div className='flex min-h-[calc(100svh_-_420px)] max-w-[calc(100vw_-_65px)] items-center justify-center sm:max-w-[unset]'>
             <ErrorState
               title={
                 <div className='flex items-center gap-x-2'>
@@ -231,7 +232,7 @@ export default function Table({ tabs }) {
 
         <table className='w-full table-auto'>
           {displayedColumns.length > 0 && (
-            <thead className='relative text-left select-none'>
+            <thead className='relative select-none text-left'>
               <tr>
                 {currentTabData.rows?.map((row, index) => (
                   <th
@@ -243,7 +244,7 @@ export default function Table({ tabs }) {
                     )}
                     onClick={() => {
                       if (!row.sortable) return;
-                     
+
                       setCurrentSort({
                         name: row.name,
                         key: index,
@@ -251,9 +252,9 @@ export default function Table({ tabs }) {
                       });
                     }}
                   >
-                    <div className="flex items-center text-xs font-bold uppercase gap-x-2">
+                    <div className="flex items-center gap-x-2 text-xs font-bold uppercase">
                       {row.icon && <row.icon size={18} />}
-                
+
                       {row.name}
 
                       {(currentSort.name === row.name && currentSort.key === index) && (
@@ -273,7 +274,7 @@ export default function Table({ tabs }) {
           <tbody>
             {displayedColumns.map((column, columnIndex) => (
               <tr
-                className='text-sm text-secondary group'
+                className='group text-sm text-secondary'
                 key={`column-${columnIndex}`}
               >
                 {currentTabData.rows?.map((_, rowIndex) => (
@@ -289,8 +290,8 @@ export default function Table({ tabs }) {
                       className='flex items-center gap-x-2'
                     >
                       {rowIndex === 0 && (
-                        <div 
-                          className='flex items-center cursor-pointer gap-x-2 group'
+                        <div
+                          className='group flex cursor-pointer items-center gap-x-2'
                           onClick={() => handleSelect(column)}
                         >
                           <button
@@ -300,7 +301,7 @@ export default function Table({ tabs }) {
                             )}
                           >
                             <FaCheck
-                              size={10} 
+                              size={10}
                               className={cn(
                                 'transition-opacity opacity-0',
                                 selectedItems.find(col => isEqual(col, column)) && 'opacity-100'
@@ -321,7 +322,7 @@ export default function Table({ tabs }) {
       </div>
 
       {showPagination && (
-        <div className='flex justify-center w-full'>
+        <div className='flex w-full justify-center'>
           <Pagination
             page={page}
             totalPages={Math.ceil(deepCopiedColumns?.length / 10)}
@@ -333,13 +334,13 @@ export default function Table({ tabs }) {
           />
         </div>
       )}
-      
+
       <div className='flex items-center justify-center'>
         <AnimatePresence>
           {(isMobile && selectedItems.length > 0) && (
             <>
               <motion.button
-                className='fixed flex items-center px-4 py-2 text-sm font-medium transition-colors rounded-full gap-x-2 bottom-8 right-6 text-secondary bg-tertiary'
+                className='fixed bottom-8 right-6 flex items-center gap-x-2 rounded-full bg-tertiary px-4 py-2 text-sm font-medium text-secondary transition-colors'
                 onClick={() => setDrawerOpen(true)}
                 initial={{
                   opacity: 0,
@@ -347,7 +348,7 @@ export default function Table({ tabs }) {
                   scale: 0.8,
                   filter: 'blur(10px)'
                 }}
-                animate={{ 
+                animate={{
                   opacity: 1,
                   y: 0,
                   scale: 1,
@@ -370,7 +371,7 @@ export default function Table({ tabs }) {
                 state={mobileSelectedAction}
                 setState={value => {
                   value.action(selectedItems);
-                  
+
                   setDrawerOpen(false);
                 }}
                 items={currentTabData.actions.map(action => (
@@ -390,14 +391,14 @@ export default function Table({ tabs }) {
 
           {(!isMobile && selectedItems.length > 0) && (
             <motion.div
-              className='w-max h-[50px] p-3 shadow-lg shadow-[rgba(var(--bg-secondary))] z-[10] font-medium text-sm gap-x-4 fixed bottom-8 rounded-2xl flex items-center border-2 border-primary bg-secondary'
+              className='fixed bottom-8 z-10 flex h-[50px] w-max items-center gap-x-4 rounded-2xl border-2 border-primary bg-secondary p-3 text-sm font-medium shadow-[rgba(var(--bg-secondary))]'
               initial={{
                 opacity: 0,
                 y: 60,
                 scale: 0.8,
                 filter: 'blur(10px)'
               }}
-              animate={{ 
+              animate={{
                 opacity: 1,
                 y: 0,
                 scale: 1,
@@ -414,11 +415,11 @@ export default function Table({ tabs }) {
                 duration: 0.2
               }}
             >
-              <div className='p-1 text-purple-500 border border-purple-500 rounded-lg shadow-lg shadow-purple-500/30'>
+              <div className='rounded-lg border border-purple-500 p-1 text-purple-500 shadow-lg shadow-purple-500/30'>
                 <FaCheck size={12} />
               </div>
 
-              <span className='py-1 pr-4 border-r gap-x-1 border-primary'>
+              <span className='gap-x-1 border-r border-primary py-1 pr-4'>
                 {selectedItems.length} Items
               </span>
 
@@ -449,7 +450,7 @@ export default function Table({ tabs }) {
               })}
 
               <button
-                className='p-1 border border-[rgba(var(--bg-quaternary))] rounded-lg bg-quaternary hover:bg-tertiary'
+                className='rounded-lg border border-[rgba(var(--bg-quaternary))] bg-quaternary p-1 hover:bg-tertiary'
                 onClick={() => setSelectedItems([])}
               >
                 <FaXmark size={14} />

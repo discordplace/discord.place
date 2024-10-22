@@ -60,7 +60,7 @@ export default function Socials({ profile }) {
   useEffect(() => {
     const type = Object.keys(typeRegexps).find(type => typeRegexps[type].test(newSocialValue));
     if (type) return setNewSocialType(type);
-    
+
     setNewSocialType('unknown');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newSocialValue]);
@@ -90,11 +90,12 @@ export default function Socials({ profile }) {
               setLoading(false);
               setSocials(newSocials);
               revalidateProfile(profile.slug);
-              
+
               return t('editProfilePage.toast.socialAdded');
             },
             error: message => {
               setLoading(false);
+
               return message;
             }
           }
@@ -120,6 +121,7 @@ export default function Socials({ profile }) {
             },
             error: message => {
               setLoading(false);
+
               return message;
             }
           }
@@ -146,6 +148,7 @@ export default function Socials({ profile }) {
         },
         error: message => {
           setLoading(false);
+
           return message;
         }
       }
@@ -153,25 +156,25 @@ export default function Socials({ profile }) {
   }
 
   return (
-    <div className='flex flex-col w-full h-full p-6 rounded-2xl bg-secondary'>
+    <div className='flex size-full flex-col rounded-2xl bg-secondary p-6'>
       <h2 className='font-medium text-tertiary'>
         {t('editProfilePage.socials.title')}
       </h2>
-      
+
       <p className='font-medium text-primary'>
         {t('editProfilePage.socials.subtitle')}
       </p>
 
-      <div className='flex flex-wrap gap-4 mt-4'>
+      <div className='mt-4 flex flex-wrap gap-4'>
         {socials.map(social => (
-          <div 
-            className='flex w-full max-w-[calc(50%_-_1rem)] h-10 rounded-lg px-2 text-sm font-semibold items-center border-[rgb(var(--brand-color)/0.5)] border-2 justify-between gap-x-2 text-secondary bg-gradient-to-r from-[rgb(var(--brand-color)/0.2)]'
+          <div
+            className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-between gap-x-2 rounded-lg border-2 border-[rgb(var(--brand-color)/0.5)] bg-gradient-to-r from-[rgb(var(--brand-color)/0.2)] px-2 text-sm font-semibold text-secondary'
             key={nanoid()}
             style={{
               '--brand-color': colors[social.type]
             }}
           >
-            <div className='flex gap-x-2 max-w-[90%] flex-auto'>
+            <div className='flex max-w-[90%] flex-auto gap-x-2'>
               {social.type === 'custom' ? (
                 <>
                   <IoEarth className='flex-auto' size={20} />
@@ -201,7 +204,7 @@ export default function Socials({ profile }) {
           </div>
         ))}
 
-        <div 
+        <div
           className={cn(
             'transition-all w-full max-w-[calc(50%_-_1rem)] h-10 rounded-lg px-2 text-sm font-semibold bg-[rgb(var(--brand-color))]/10 items-center justify-between gap-x-2 text-secondary',
             currentlyAddingNewSocial ? 'flex' : 'hidden'
@@ -210,7 +213,7 @@ export default function Socials({ profile }) {
             '--brand-color': colors[newSocialType]
           }}
         >
-          <div className='flex items-center w-full gap-x-2'>
+          <div className='flex w-full items-center gap-x-2'>
             {newSocialType === 'unknown' ? (
               <FaQuestion className='flex-auto' size={20} />
             ) : newSocialType === 'custom' ? (
@@ -228,17 +231,19 @@ export default function Socials({ profile }) {
               autoComplete='off'
               spellCheck='false'
               disabled={loading}
-              className='w-full font-medium bg-transparent outline-none disabled:pointer-events-none disabled:opacity-70 text-secondary placeholder-placeholder'
+              className='w-full bg-transparent font-medium text-secondary outline-none placeholder:text-placeholder disabled:pointer-events-none disabled:opacity-70'
             />
           </div>
         </div>
 
-        <div className={cn(
-          'w-full gap-x-4',
-          currentlyAddingNewSocial ? 'flex' : 'hidden'
-        )}>
+        <div
+          className={cn(
+            'w-full gap-x-4',
+            currentlyAddingNewSocial ? 'flex' : 'hidden'
+          )}
+        >
           <button
-            className='disabled:pointer-events-none disabled:opacity-70 flex items-center justify-center max-w-[calc(50%_-_1rem)] w-full h-10 text-sm font-semibold rounded-lg gap-x-2 text-secondary hover:text-primary bg-tertiary hover:bg-quaternary' onClick={() => {
+            className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-lg bg-tertiary text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => {
               setCurrentlyAddingNewSocial(false);
               setNewSocialType('unknown');
               setNewSocialValue('');
@@ -248,11 +253,11 @@ export default function Socials({ profile }) {
             {t('buttons.cancel')}
           </button>
 
-          <button className='disabled:pointer-events-none disabled:opacity-70 flex items-center justify-center max-w-[calc(50%_-_1rem)] w-full h-10 text-sm font-semibold rounded-lg gap-x-2 text-secondary hover:text-primary bg-tertiary hover:bg-quaternary' onClick={saveNewSocial} disabled={loading}>
+          <button className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-lg bg-tertiary text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={saveNewSocial} disabled={loading}>
             {t('buttons.add')}
           </button>
         </div>
-        
+
         {socials.length < config.profilesMaxSocialsLength && (
           <button
             className={cn(

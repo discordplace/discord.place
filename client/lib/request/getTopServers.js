@@ -7,7 +7,7 @@ export default function getTopServers() {
 
     fetch(url, {
       next: {
-        revalidate: 60 * 60 * 24 
+        revalidate: 60 * 60 * 24
       }
     })
       .then(async response => {

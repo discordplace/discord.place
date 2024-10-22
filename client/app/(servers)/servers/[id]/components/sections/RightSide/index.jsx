@@ -5,7 +5,7 @@ import Keywords from '@/app/(servers)/servers/[id]/components/sections/RightSide
 
 export default function RightSide({ server }) {
   return (
-    <div className='w-full lg:w-[30%] flex flex-col'>
+    <div className='flex w-full flex-col lg:w-[30%]'>
       <Actions server={server} />
       <Keywords server={server} />
     </div>

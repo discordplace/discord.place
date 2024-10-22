@@ -12,7 +12,7 @@ function getLocalizedCommand(key) {
     if (!i18n.getResource(locale.code, 'translation', `commands.${key}.description`)) return descriptions;
 
     descriptions[locale.code] = i18n.getResource(locale.code, 'translation', `commands.${key}.description`);
-    
+
     return descriptions;
   }, {});
 
@@ -20,7 +20,7 @@ function getLocalizedCommand(key) {
     if (!i18n.getResource(locale.code, 'translation', `commands.${key}.name`)) return names;
 
     names[locale.code] = i18n.getResource(locale.code, 'translation', `commands.${key}.name`);
-    
+
     return names;
   }, {});
 

@@ -45,6 +45,7 @@ module.exports = {
         return response.status(204).end();
       } catch (error) {
         logger.warn(`Emoji ${emoji.name} (${emoji.id}) could not be uploaded to guild ${guild.name} (${guild.id}):`, error);
+
         return response.sendError(`An error occurred: ${error.message}`, 500);
       }
     }

@@ -17,7 +17,7 @@ export default function InfoCards() {
   const pathname = usePathname();
 
   return (
-    <div className='flex flex-col items-center justify-center w-full max-w-5xl px-4 mt-48 lg:px-0 gap-y-32'>
+    <div className='mt-48 flex w-full max-w-5xl flex-col items-center justify-center gap-y-32 px-4 lg:px-0'>
       <InfoCard
         index={0}
         title={t('home.infoCards.0.title')}
@@ -27,7 +27,7 @@ export default function InfoCards() {
           href: 'https://github.com/discordplace/discord.place'
         }}
         content={(
-          <div className='relative z-10 flex items-center justify-center w-full h-full overflow-hidden rounded-3xl'>
+          <div className='relative z-10 flex size-full items-center justify-center overflow-hidden rounded-3xl'>
             <Square
               column='1'
               row='1'
@@ -35,7 +35,7 @@ export default function InfoCards() {
               transparentEffectDirection='leftRightBottomTop'
             />
 
-            <FaGithub className='rounded-full text-9xl text-primary bg-secondary' />
+            <FaGithub className='rounded-full bg-secondary text-9xl text-primary' />
           </div>
         )}
       />
@@ -50,7 +50,7 @@ export default function InfoCards() {
           target: '_self'
         }}
         content={(
-          <div className='grid w-full h-full grid-cols-1 overflow-hidden sm:grid-cols-2 gap-x-40 gap-y-8 rounded-3xl'>
+          <div className='grid size-full grid-cols-1 gap-x-40 gap-y-8 overflow-hidden rounded-3xl sm:grid-cols-2'>
             <MockServerCard />
             <MockServerCard />
             <MockServerCard />
@@ -64,7 +64,7 @@ export default function InfoCards() {
         title={t('home.infoCards.2.title')}
         description={t('home.infoCards.2.description')}
         content={(
-          <div className='grid w-full h-full grid-cols-1 overflow-hidden place-items-center mobile:[place-items:unset] mobile:grid-cols-2 mobile:gap-x-40 rounded-3xl'>
+          <div className='grid size-full grid-cols-1 place-items-center overflow-hidden rounded-3xl mobile:grid-cols-2 mobile:gap-x-40 mobile:[place-items:unset]'>
             <MockProfileCard />
             <MockProfileCard />
           </div>
@@ -76,13 +76,13 @@ export default function InfoCards() {
         title={t('home.infoCards.3.title')}
         description={t('home.infoCards.3.description')}
         content={(
-          <div className='relative grid w-full h-full grid-rows-2 gap-4 overflow-hidden mobile:grid-cols-2 rounded-3xl'>
-            <div className='z-[1] absolute top-0 left-0 w-full h-full'
+          <div className='relative grid size-full grid-rows-2 gap-4 overflow-hidden rounded-3xl mobile:grid-cols-2'>
+            <div className='absolute left-0 top-0 z-[1] size-full'
               style={{
                 background: 'radial-gradient(circle, transparent, rgba(var(--bg-background)) 100%)'
               }}
             />
-            
+
             <MockReviewCard
               username='dylan'
               content={t('home.infoCards.3.reviews.0')}

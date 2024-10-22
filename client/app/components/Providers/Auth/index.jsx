@@ -49,7 +49,7 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     if (!user || user === 'loading') return;
-    
+
     const discord_metadata = {
       user_id: user.id,
       username: user.username
@@ -57,6 +57,7 @@ export default function AuthProvider({ children }) {
 
     async function waitUntilUmamiFound() {
       while (!window.umami) await new Promise(resolve => setTimeout(resolve, 100));
+
       return window.umami;
     }
 

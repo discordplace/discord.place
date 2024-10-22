@@ -10,10 +10,10 @@ import Footer from '@/components/footer';
 import EmptyHeadings from '@/components/empty-headings';
 import { FaGithub } from 'react-icons/fa6';
 
-export default function LayoutContent({ children}) {
+export default function LayoutContent({ children }) {
   const params = useParams();
   const pathname = usePathname();
-  
+
   const headings = useGeneralStore(state => state.headings);
   const setHeadings = useGeneralStore(state => state.setHeadings);
   const setActiveEndpoint = useGeneralStore(state => state.setActiveEndpoint);
@@ -21,12 +21,12 @@ export default function LayoutContent({ children}) {
 
   useEffect(() => {
     const hash = window.location.hash;
-    
+
     if (hash) {
       const element = document.getElementById(hash.slice(1));
       if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
-  
+
     const headings = Array.from(document.querySelectorAll('h1, h2, h3')).filter(h => h.dataset.name);
     setHeadings(headings.map(h => ({ id: h.id, name: h.dataset.name, level: h.tagName })));
 
@@ -40,27 +40,27 @@ export default function LayoutContent({ children}) {
       const headingElements = headings
         .filter(({ level }) => level !== 'H1')
         .map(({ id }) => document.getElementById(id));
-      
+
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) setVisibleHeading(entry.target.id);
         });
       }, { rootMargin: '0px 0px -80% 0px' });
-      
+
       headingElements.forEach(heading => observer.observe(heading));
-      
+
       return () => headingElements.forEach(heading => observer.unobserve(heading));
     };
-  
+
     handleScroll();
   }, [headings, y]);
-  
+
   return (
-    <div className='h-[100dvh] flex flex-col'>
-      <div className='flex mx-auto my-8 space-x-8 sm:px-4 lg:px-0 lg:max-w-3xl'>
-        <div className='hidden sm:flex flex-col space-y-3 w-full h-[85svh] max-w-[150px] mt-2.5 sticky top-8'>
+    <div className='flex h-dvh flex-col'>
+      <div className='mx-auto my-8 flex space-x-8 sm:px-4 lg:max-w-3xl lg:px-0'>
+        <div className='sticky top-8 mt-2.5 hidden h-[85svh] w-full max-w-[150px] flex-col space-y-3 sm:flex'>
           {headings.length === 0 && <EmptyHeadings />}
-          
+
           {headings.map(({ id, name, level }) => {
             const Tag = id.startsWith('endpoint-') ? 'div' : Link;
 
@@ -104,11 +104,11 @@ export default function LayoutContent({ children}) {
             );
           })}
 
-          <div className='w-full h-[1px] bg-quaternary' />
+          <div className='h-px w-full bg-quaternary' />
 
           <Link
             href={`https://github.com/discordplace/discord.place/edit/main/docs/app${pathname}/page.mdx`}
-            className='flex items-center text-xs font-semibold transition-colors hover:text-primary text-tertiary gap-x-2'
+            className='flex items-center gap-x-2 text-xs font-semibold text-tertiary transition-colors hover:text-primary'
           >
             <FaGithub />
 
@@ -135,4 +135,3 @@ export default function LayoutContent({ children}) {
     </div>
   );
 }
-  

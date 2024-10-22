@@ -15,7 +15,7 @@ module.exports = {
     validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
-      
+
       const theme = await Theme.findOne({ id });
       if (!theme) return response.sendError('Theme not found.', 404);
 

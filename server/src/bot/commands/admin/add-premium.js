@@ -23,14 +23,14 @@ module.exports = {
 
     var reminderTime = parseTimeDuration(when);
     if (!reminderTime) return interaction.reply({ content: 'Invalid time duration. Examples: `tomorrow`, `in 9 hours`, `next week`, `next Friday at 3pm`' });
-      
+
     await interaction.deferReply();
-    
+
     const foundUser = await User.findOne({ id: user.id });
     if (!foundUser) return interaction.followUp({ content: 'User not found.' });
-    
+
     if (foundUser.subscription?.createdAt) return interaction.followUp({ content: 'User already has a subscription.' });
-    
+
     await foundUser.updateOne({ subscription: { createdAt: new Date(), expiresAt: reminderTime } });
 
     await syncMemberRoles();

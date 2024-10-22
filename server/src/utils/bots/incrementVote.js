@@ -17,7 +17,7 @@ async function incrementVote(botId, userId, botWebhook) {
 
   const ownerHasPremium = await User.exists({ id: bot.owner.id, subscription: { $ne: null } });
   const botUser = client.users.cache.get(bot.id) || await client.users.fetch(bot.id).catch(() => null);
- 
+
   const isVoteTripleEnabled = await BotVoteTripleEnabled.findOne({ id: bot.id }).then(data => !!data);
   const incrementCount = isVoteTripleEnabled ? 3 : (ownerHasPremium ? 2 : 1);
 
@@ -37,7 +37,7 @@ async function incrementVote(botId, userId, botWebhook) {
         }
       }
     };
-    
+
     const arrayFilters = [
       { 'element.user.id': userId }
     ];
@@ -70,21 +70,21 @@ async function incrementVote(botId, userId, botWebhook) {
     await bot.updateOne(updateQuery);
   }
 
-  await new VoteTimeout({ 
-    user: { 
+  await new VoteTimeout({
+    user: {
       id: userId,
       username: user.username
-    }, 
-    bot: { 
+    },
+    bot: {
       id: botId,
       username: botUser.username,
       discriminator: botUser.discriminator
-    } 
+    }
   }).save();
 
   const embed = new Discord.EmbedBuilder()
     .setColor(Discord.Colors.Purple)
-    .setAuthor({ name: botUser.tag + ' has received a vote!', iconURL: botUser.displayAvatarURL() })
+    .setAuthor({ name: `${botUser.tag} has received a vote!`, iconURL: botUser.displayAvatarURL() })
     .setFields([
       {
         name: 'Given by',
@@ -103,13 +103,13 @@ async function incrementVote(botId, userId, botWebhook) {
     const headers = {
       'User-Agent': 'discord.place (https://discord.place)'
     };
-    
+
     if (botWebhook.token) headers['Authorization'] = botWebhook.token;
 
     const response = await axios
       .post(botWebhook.url, { bot: bot.id, user: user.id }, { headers, timeout: 2000, responseType: 'text' })
       .catch(error => error.response);
-    
+
     const data = {
       url: botWebhook.url,
       response_status_code: response.status,
@@ -133,4 +133,4 @@ async function incrementVote(botId, userId, botWebhook) {
   return true;
 }
 
-module.exports = incrementVote; 
+module.exports = incrementVote;

@@ -53,13 +53,13 @@ export default function Content({ bot }) {
 
       // if the key already exists, update the value
       // otherwise, add the key and value to the array
-      
-      setChangedKeys(oldKeys => 
+
+      setChangedKeys(oldKeys =>
         oldKeys
           .filter(({ key: oldKey }) => oldKey !== key)
-          .concat({ 
-            key, 
-            value: isEqual(value, '') ? null : value 
+          .concat({
+            key,
+            value: isEqual(value, '') ? null : value
           })
       );
     }
@@ -73,7 +73,7 @@ export default function Content({ bot }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shortDescription, description, inviteURL, categories, supportServerId]);
 
-  function resetChanges() {    
+  function resetChanges() {
     changedKeys.forEach(({ key }) => {
       switch (key) {
         case 'short_description':
@@ -112,7 +112,7 @@ export default function Content({ bot }) {
       },
       error: error => {
         setSavingChanges(false);
-        
+
         return error;
       }
     });
@@ -134,7 +134,7 @@ export default function Content({ bot }) {
 
         if (changesMade) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
-          
+
           openModal('confirm-exit', {
             title: t('botManagePage.discardChangesModal.title'),
             description: t('botManagePage.discardChangesModal.description'),
@@ -166,20 +166,20 @@ export default function Content({ bot }) {
 
     document.addEventListener('keydown', handleEscape);
 
-    return () => document.removeEventListener('keydown', handleEscape); 
+    return () => document.removeEventListener('keydown', handleEscape);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [changesMade, openedModals]);
 
   return (
-    <div className="flex items-center justify-center w-full h-full px-4 mb-24 sm:px-12">
-      <div className="w-full h-full max-w-[1000px] flex flex-col items-start gap-y-8 mt-48">
-        <div className="flex flex-col w-full sm:items-center sm:flex-row sm:justify-between">
+    <div className="mb-24 flex size-full items-center justify-center px-4 sm:px-12">
+      <div className="mt-48 flex size-full max-w-[1000px] flex-col items-start gap-y-8">
+        <div className="flex w-full flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-y-1">
-            <h2 className="flex items-center text-3xl font-bold gap-x-2">
+            <h2 className="flex items-center gap-x-2 text-3xl font-bold">
               {t('botManagePage.title')}
-            
-              <div className='p-2 text-xs font-bold uppercase rounded-lg select-none bg-quaternary'>
+
+              <div className='select-none rounded-lg bg-quaternary p-2 text-xs font-bold uppercase'>
                 {t('botManagePage.escToCloseBadge')}
               </div>
             </h2>
@@ -187,8 +187,8 @@ export default function Content({ bot }) {
             <p className="text-tertiary">
               {t('botManagePage.subtitle')}
             </p>
-            
-            <div className='flex items-center mt-2 font-medium gap-x-2 text-secondary'>
+
+            <div className='mt-2 flex items-center gap-x-2 font-medium text-secondary'>
               <UserAvatar
                 id={bot.id}
                 hash={bot.avatar}
@@ -199,16 +199,16 @@ export default function Content({ bot }) {
               />
 
               {bot.username}
-              
+
               <span className='-ml-2 text-tertiary'>
                 #{bot.discriminator}
               </span>
             </div>
           </div>
 
-          <div className='flex justify-end flex-1 w-full mt-8 sm:mt-0 gap-x-2'>
+          <div className='mt-8 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
             <button
-              className='w-full text-xs sm:text-sm px-2 sm:w-max justify-center disabled:opacity-70 border border-primary hover:border-[rgba(var(--bg-tertiary))] disabled:pointer-events-none sm:px-4 flex items-center gap-x-1.5 py-1.5 font-semibold hover:bg-tertiary hover:text-primary text-tertiary rounded-xl'
+              className='flex w-full items-center justify-center gap-x-1.5 rounded-xl border border-primary px-2 py-1.5 text-xs font-semibold text-tertiary hover:border-[rgba(var(--bg-tertiary))] hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
               onClick={resetChanges}
               disabled={!changesMade || savingChanges}
             >
@@ -216,7 +216,7 @@ export default function Content({ bot }) {
             </button>
 
             <button
-              className='w-full text-xs sm:text-sm sm:w-max justify-center px-2 sm:px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold hover:bg-purple-600 bg-purple-500 rounded-xl'
+              className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-purple-500 px-2 py-1.5 text-xs font-semibold text-white hover:bg-purple-600 disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
               disabled={!changesMade || savingChanges}
               onClick={saveChanges}
             >
@@ -226,7 +226,7 @@ export default function Content({ bot }) {
           </div>
         </div>
 
-        <div className='w-full h-[1px] bg-tertiary' />
+        <div className='h-px w-full bg-tertiary' />
 
         <EssentialInformation
           shortDescription={shortDescription}
@@ -239,7 +239,7 @@ export default function Content({ bot }) {
           setMarkdownPreviewing={setMarkdownPreviewing}
         />
 
-        <div className='w-full h-[1px] bg-tertiary' />
+        <div className='h-px w-full bg-tertiary' />
 
         <Other
           botId={bot.id}
@@ -250,8 +250,8 @@ export default function Content({ bot }) {
           setSupportServerId={setSupportServerId}
           githubRepository={bot.github_repository?.value || null}
         />
-        
-        <div className='w-full h-[1px] bg-tertiary' />
+
+        <div className='h-px w-full bg-tertiary' />
 
         <Webhook
           botId={bot.id}
@@ -260,14 +260,14 @@ export default function Content({ bot }) {
           records={bot.webhook?.records || []}
         />
 
-        <div className='w-full h-[1px] bg-tertiary' />
+        <div className='h-px w-full bg-tertiary' />
 
         <ExtraOwners
           botId={bot.id}
           canEditExtraOwners={bot.permissions.canEditExtraOwners}
         />
 
-        <div className='w-full h-[1px] bg-tertiary' />
+        <div className='h-px w-full bg-tertiary' />
 
         <ApiKey
           botId={bot.id}
@@ -276,7 +276,7 @@ export default function Content({ bot }) {
 
         {bot.permissions.canDelete && (
           <>
-            <div className='w-full h-[1px] bg-tertiary' />
+            <div className='h-px w-full bg-tertiary' />
 
             <DangerZone botId={bot.id} />
           </>

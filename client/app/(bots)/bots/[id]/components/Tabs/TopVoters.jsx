@@ -27,35 +27,35 @@ export default function TopVoters({ bot }) {
       })
       .catch(error => toast.error(error))
       .finally(() => setLoading(false));
-        
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (
-    <div className='lg:max-w-[70%] w-full px-8 lg:px-0'>
+    <div className='w-full px-8 lg:max-w-[70%] lg:px-0'>
       <h2 className='text-xl font-semibold'>
         {t('botPage.tabs.topVoters.title')}
       </h2>
 
       {loading ? (
-        <div className='grid w-full grid-cols-1 mt-4' key='loading'>
+        <div className='mt-4 grid w-full grid-cols-1' key='loading'>
           {new Array(limit).fill().map((_, index) => (
-            <div key={index} className='flex items-center w-full gap-4 px-4 h-[72px] odd:bg-secondary even:bg-tertiary first:rounded-t-xl last:rounded-b-xl'>
-              <div className='w-10 h-10 rounded-full bg-quaternary animate-pulse' />
-              <div className='w-1/3 h-4 rounded-lg bg-quaternary animate-pulse' />
-              <div className='flex items-center justify-end flex-1 w-full gap-x-2'>
+            <div key={index} className='flex h-[72px] w-full items-center gap-4 px-4 first:rounded-t-xl last:rounded-b-xl odd:bg-secondary even:bg-tertiary'>
+              <div className='size-10 animate-pulse rounded-full bg-quaternary' />
+              <div className='h-4 w-1/3 animate-pulse rounded-lg bg-quaternary' />
+              <div className='flex w-full flex-1 items-center justify-end gap-x-2'>
                 <span className='text-xl font-bold'>0</span>
-                <div className='w-5 h-5 rounded-md bg-quaternary animate-pulse' />
+                <div className='size-5 animate-pulse rounded-md bg-quaternary' />
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className='grid w-full grid-cols-1 mt-4' key='voters'>
+        <div className='mt-4 grid w-full grid-cols-1' key='voters'>
           {voters.map((voter, index) => (
-            <Link 
+            <Link
               href={`/profile/u/${voter.user.id}`}
-              key={voter.id} 
+              key={voter.id}
               className={cn(
                 'flex items-center w-full gap-4 p-4 odd:bg-secondary even:bg-tertiary hover:opacity-70 transition-opacity',
                 index === 0 && 'rounded-t-xl',
@@ -70,8 +70,8 @@ export default function TopVoters({ bot }) {
                   id={voter.user.id}
                   hash={voter.user.avatar}
                   size={64}
-                  width={40} 
-                  height={40} 
+                  width={40}
+                  height={40}
                   className='rounded-full'
                 />
 
@@ -88,11 +88,11 @@ export default function TopVoters({ bot }) {
                 )}
               </div>
 
-              <h2 className='text-lg font-semibold truncate'>
+              <h2 className='truncate text-lg font-semibold'>
                 @{voter.user.username}
               </h2>
 
-              <div className='flex items-center ml-auto text-xl font-bold gap-x-2'>
+              <div className='ml-auto flex items-center gap-x-2 text-xl font-bold'>
                 {voter.votes}
                 <TbSquareRoundedChevronUp />
               </div>
@@ -102,9 +102,9 @@ export default function TopVoters({ bot }) {
       )}
 
       {totalPages > 1 && (
-        <div className='flex items-center justify-center w-full'>
-          <Pagination 
-            page={page} 
+        <div className='flex w-full items-center justify-center'>
+          <Pagination
+            page={page}
             setPage={setPage}
             loading={false}
             total={totalVoters}

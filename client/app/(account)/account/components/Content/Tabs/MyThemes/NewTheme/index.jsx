@@ -14,7 +14,7 @@ import { TbLoader } from 'react-icons/tb';
 import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
 import { HexColorPicker } from 'react-colorful';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 
 export default function NewTheme() {
@@ -63,14 +63,14 @@ export default function NewTheme() {
 
   return (
     <>
-      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100svh]">
+      <div className="pointer-events-none fixed left-0 top-0 z-10 h-svh w-full">
         <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
       </div>
 
-      <div className="flex justify-center w-full gap-y-4 max-w-[800px] flex-col">
+      <div className="flex w-full max-w-[800px] flex-col justify-center gap-y-4">
         <div className="flex items-center gap-x-4">
           <button
-            className="p-1.5 rounded-xl bg-secondary hover:bg-tertiary"
+            className="rounded-xl bg-secondary p-1.5 hover:bg-tertiary"
             onClick={() => {
               setThemeCategories([]);
               setCurrentlyAddingTheme(false);
@@ -79,17 +79,17 @@ export default function NewTheme() {
             <MdChevronLeft size={24}/>
           </button>
 
-          <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
+          <h1 className="flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl">
             {t('accountPage.tabs.myThemes.sections.addTheme.title')}
           </h1>
         </div>
 
-        <p className="text-sm sm:text-base max-w-[800px] text-tertiary">
+        <p className="max-w-[800px] text-sm text-tertiary sm:text-base">
           {t('accountPage.tabs.myThemes.sections.addTheme.subtitle')}
         </p>
 
-        <div className="flex items-center justify-center w-full mt-12">
-          <div className="max-w-[800px] w-full flex flex-col gap-y-1">
+        <div className="mt-12 flex w-full items-center justify-center">
+          <div className="flex w-full max-w-[800px] flex-col gap-y-1">
 
             <h2 className="text-lg font-semibold">
               {t('accountPage.tabs.myThemes.sections.addTheme.fields.colors.label')}
@@ -101,14 +101,14 @@ export default function NewTheme() {
 
             <div className='flex items-center gap-x-16 gap-y-4'>
               <div className='flex items-center gap-x-4'>
-                <div className="flex flex-col mt-4 gap-y-2">
-                  <h2 className='flex items-center text-sm font-medium text-secondary gap-x-2'>
+                <div className="mt-4 flex flex-col gap-y-2">
+                  <h2 className='flex items-center gap-x-2 text-sm font-medium text-secondary'>
                     {t('accountPage.tabs.myThemes.sections.addTheme.fields.colors.primaryLabel')}
 
-                    <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.primary || '#000000' }} />
+                    <div className='size-3 rounded-full' style={{ backgroundColor: colors.primary || '#000000' }} />
                   </h2>
 
-                  <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[10px] [&_.react-colorful\_\_pointer]:h-[10px]'>
+                  <div className='[&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
                     <HexColorPicker
                       color={colors.primary || '#000000'}
                       onChange={color => setColors(oldColors => ({ ...oldColors, primary: color }))}
@@ -119,19 +119,19 @@ export default function NewTheme() {
                       value={colors.primary || '#000000'}
                       maxLength={7}
                       onChange={event => setColors(oldColors => ({ ...oldColors, primary: event.target.value }))}
-                      className='w-full px-2 py-1 mt-4 text-sm max-w-[120px] font-medium rounded-md outline-none text-secondary placeholder-placeholder bg-secondary hover:bg-quaternary focus-visible:bg-quaternary'
+                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                     />
                   </div>
                 </div>
 
-                <div className="flex flex-col mt-4 gap-y-2">
-                  <h2 className='flex items-center text-sm font-medium text-secondary gap-x-2'>
+                <div className="mt-4 flex flex-col gap-y-2">
+                  <h2 className='flex items-center gap-x-2 text-sm font-medium text-secondary'>
                     {t('accountPage.tabs.myThemes.sections.addTheme.fields.colors.secondaryLabel')}
 
-                    <div className='w-3 h-3 rounded-full' style={{ backgroundColor: colors.secondary || '#000000' }} />
+                    <div className='size-3 rounded-full' style={{ backgroundColor: colors.secondary || '#000000' }} />
                   </h2>
 
-                  <div className='[&_.react-colorful]:h-[120px] [&_.react-colorful]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:w-[10px] [&_.react-colorful\_\_pointer]:h-[10px]'>
+                  <div className='[&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
                     <HexColorPicker
                       color={colors.secondary || '#000000'}
                       onChange={color => setColors(oldColors => ({ ...oldColors, secondary: color }))}
@@ -142,7 +142,7 @@ export default function NewTheme() {
                       value={colors.secondary || '#000000'}
                       maxLength={7}
                       onChange={event => setColors(oldColors => ({ ...oldColors, secondary: event.target.value }))}
-                      className='w-full px-2 py-1 mt-4 text-sm max-w-[120px] font-medium rounded-md outline-none text-secondary placeholder-placeholder bg-secondary hover:bg-quaternary focus-visible:bg-quaternary'
+                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                     />
                   </div>
                 </div>
@@ -164,7 +164,7 @@ export default function NewTheme() {
               {t('accountPage.tabs.myThemes.sections.addTheme.fields.categories.description')}
             </p>
 
-            <div className="flex flex-wrap mt-4 gap-x-2 gap-y-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               {config.themeCategories
                 .map(category => (
                   <button
@@ -188,7 +188,7 @@ export default function NewTheme() {
               {t('accountPage.tabs.myThemes.sections.addTheme.fields.contentPolicy.label')}
             </h2>
 
-            <p className="flex flex-col text-sm sm:text-base gap-y-1 text-tertiary">
+            <p className="flex flex-col gap-y-1 text-sm text-tertiary sm:text-base">
               {t('accountPage.tabs.myThemes.sections.addTheme.fields.contentPolicy.description', {
                 note: <span className="mt-2 text-xs text-tertiary">{t('accountPage.tabs.myThemes.sections.addTheme.fields.contentPolicy.note')}</span>
               })}
@@ -198,9 +198,9 @@ export default function NewTheme() {
               {t('accountPage.tabs.myThemes.sections.addTheme.fields.areYouReady.label')}
             </h2>
 
-            <div className="flex flex-col w-full gap-2 mt-2 sm:flex-row">
+            <div className="mt-2 flex w-full flex-col gap-2 sm:flex-row">
               <button
-                className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-full justify-center hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70"
+                className="flex w-full items-center justify-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70"
                 disabled={
                   loading ||
                   themeCategories.length < 1
@@ -212,7 +212,7 @@ export default function NewTheme() {
               </button>
 
               <button
-                className="flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
+                className="flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
                 onClick={() => {
                   setThemeCategories([]);
                   setCurrentlyAddingTheme(false);

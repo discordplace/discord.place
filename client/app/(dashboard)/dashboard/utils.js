@@ -77,7 +77,7 @@ export const approveEmoji = id => sendRequest({
 });
 
 export const denyEmoji = (id, reason) => sendRequest({
-  params: { id, reason }, 
+  params: { id, reason },
   promise: INTERNAL_denyEmoji,
   successMessage: `Emoji ${id} denied successfully`,
   loadingMessage: `Denying emoji ${id}..`

@@ -44,7 +44,7 @@ export default function FaQs() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 1.1 + (index * 0.2) }}
     >
-      <div className='flex items-center justify-between overflow-clip'>
+      <div className='flex items-center justify-between text-clip'>
         <div className='flex items-center gap-x-4'>
           <span className='text-lg font-bold lg:text-xl'>
             {index + 1}.

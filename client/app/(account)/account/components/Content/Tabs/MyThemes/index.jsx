@@ -18,7 +18,7 @@ export default function MyThemes() {
     currentlyAddingTheme: state.currentlyAddingTheme,
     setCurrentlyAddingTheme: state.setCurrentlyAddingTheme
   })));
-  
+
   return (
     currentlyAddingTheme ? (
       <NewTheme />
@@ -34,7 +34,7 @@ export default function MyThemes() {
           </p>
         </div>
 
-        <div className='flex flex-col mt-8 gap-y-2'>
+        <div className='mt-8 flex flex-col gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
             {t('accountPage.tabs.myThemes.sections.listedThemes.title')}
 
@@ -48,8 +48,8 @@ export default function MyThemes() {
           </p>
 
           {(data.themes || []).length === 0 ? (
-            <div className='max-w-[800px] mt-20'>
-              <ErrorState 
+            <div className='mt-20 max-w-[800px]'>
+              <ErrorState
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
@@ -60,7 +60,7 @@ export default function MyThemes() {
               />
             </div>
           ) : (
-            <div className='gap-4 max-w-[800px] mt-2 grid grid-cols-1 mobile:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3'>
+            <div className='mt-2 grid max-w-[800px] grid-cols-1 gap-4 mobile:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3'>
               {data.themes.map(theme => (
                 <ThemeCard
                   key={theme.id}
@@ -73,7 +73,7 @@ export default function MyThemes() {
           )}
         </div>
 
-        <div className='flex flex-col mt-8 gap-y-2'>
+        <div className='mt-8 flex flex-col gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
             {t('accountPage.tabs.myThemes.sections.newTheme.title')}
           </h2>
@@ -82,8 +82,8 @@ export default function MyThemes() {
             {t('accountPage.tabs.myThemes.sections.newTheme.subtitle')}
           </p>
 
-          <div className='mt-2 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>
-            <h2 className='flex items-center text-lg font-semibold gap-x-2'>
+          <div className='relative mt-2 flex w-full max-w-[800px] flex-col gap-y-2 rounded-xl border border-blue-500 bg-blue-500/10 p-4 transition-[margin,opacity] duration-1000 ease-in-out'>
+            <h2 className='flex items-center gap-x-2 text-lg font-semibold'>
               <BsQuestionCircleFill />  {t('accountPage.tabs.myThemes.sections.newTheme.note.title')}
             </h2>
 
@@ -94,9 +94,9 @@ export default function MyThemes() {
             </p>
           </div>
 
-          <div className='flex flex-col mt-4 text-sm text-tertiary gap-y-4'>
+          <div className='mt-4 flex flex-col gap-y-4 text-sm text-tertiary'>
             <button
-              className='px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
+              className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
               onClick={() => setCurrentlyAddingTheme(true)}
             >
               {t('buttons.letsGo')}

@@ -25,6 +25,7 @@ module.exports = {
     if (reminders.length > 9) {
       const template = (await Promise.all(reminders.map(async reminder => {
         const guild = client.guilds.cache.get(reminder.guild.id) || await client.guilds.fetch(reminder.guild.id).catch(() => null);
+
         return `${guild?.name || reminder.guild.id} <t:${Math.floor((reminder.createdAt.getTime() + 86400000) / 1000)}:R>`;
       }))).join('\n');
 

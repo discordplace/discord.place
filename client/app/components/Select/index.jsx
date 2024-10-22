@@ -63,30 +63,30 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
             <IoChevronDownSharp />
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
-    
+
         <RadixSelect.Portal>
-          <RadixSelect.Content className="z-[9999] overflow-hidden border-2 rounded-lg border-primary bg-secondary">
-            <RadixSelect.ScrollUpButton className="absolute flex items-center justify-center w-full py-3 rounded-b bg-gradient-to-b from-quaternary via-quaternary/50" />
+          <RadixSelect.Content className="z-[9999] overflow-hidden rounded-lg border-2 border-primary bg-secondary">
+            <RadixSelect.ScrollUpButton className="absolute flex w-full items-center justify-center rounded-b bg-gradient-to-b from-quaternary via-quaternary/50 py-3" />
 
             <RadixSelect.Viewport>
               {options.map(option => (
                 <RadixSelect.Item
                   key={option.value}
-                  className='transition-colors leading-none font-medium text-tertiary flex items-center p-4 gap-x-2 relative select-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none data-[highlighted]:outline-none cursor-pointer data-[highlighted]:bg-tertiary data-[highlighted]:text-primary data-[state=checked]:bg-quaternary data-[state=checked]:pointer-events-none data-[state=checked]:text-primary'
+                  className='relative flex cursor-pointer select-none items-center gap-x-2 p-4 font-medium leading-none text-tertiary transition-colors data-[disabled]:pointer-events-none data-[state=checked]:pointer-events-none data-[highlighted]:bg-tertiary data-[state=checked]:bg-quaternary data-[highlighted]:text-primary data-[state=checked]:text-primary data-[disabled]:opacity-50 data-[highlighted]:outline-none'
                   value={option.value}
                 >
                   <RadixSelect.ItemText>
                     {option.label}
                   </RadixSelect.ItemText>
 
-                  <RadixSelect.ItemIndicator className="inline-flex ml-auto">
+                  <RadixSelect.ItemIndicator className="ml-auto inline-flex">
                     <IoCheckmarkCircleSharp />
                   </RadixSelect.ItemIndicator>
                 </RadixSelect.Item>
               ))}
             </RadixSelect.Viewport>
 
-            <RadixSelect.ScrollDownButton className="absolute left-[2.5px] flex items-center justify-center w-full max-w-[97%] bottom-0 rounded-b py-3 bg-gradient-to-t from-quaternary via-quaternary/50" />
+            <RadixSelect.ScrollDownButton className="absolute bottom-0 left-[2.5px] flex w-full max-w-[97%] items-center justify-center rounded-b bg-gradient-to-t from-quaternary via-quaternary/50 py-3" />
           </RadixSelect.Content>
         </RadixSelect.Portal>
       </RadixSelect.Root>

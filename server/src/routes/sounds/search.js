@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { query} = require('express-validator');
+const { query } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 
@@ -34,8 +34,8 @@ module.exports = {
       const { query, category = 'All', sort = 'Newest', limit = 9, page = 1 } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, approved: true } : { approved: true };
-      const findQuery = query ? { 
-        ...baseFilter, 
+      const findQuery = query ? {
+        ...baseFilter,
         $or: [
           { id: { $regex: query, $options: 'i' } },
           { 'publisher.id': { $regex: query, $options: 'i' } },
@@ -63,7 +63,7 @@ module.exports = {
       }
 
       sounds = sounds.slice(skip, skip + limit);
-      
+
       const total = await Sound.countDocuments(findQuery);
       const maxReached = skip + sounds.length >= total;
 
@@ -72,7 +72,7 @@ module.exports = {
         total,
         page,
         limit,
-        sounds: sounds.map(sound => sound.toPubliclySafe({ isLiked: request.user ? sound.likers.includes(request.user.id) : false}))
+        sounds: sounds.map(sound => sound.toPubliclySafe({ isLiked: request.user ? sound.likers.includes(request.user.id) : false }))
       });
     }
   ]

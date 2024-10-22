@@ -20,6 +20,7 @@ const upload = multer({
   fileFilter: (req, file, cb) => {
     if (!file || !file.mimetype) return cb(null, false);
     if (file.mimetype === 'audio/mpeg') return cb(null, true);
+
     return cb(null, false);
   }
 }).array('file', 1);
@@ -48,10 +49,10 @@ module.exports = {
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
     validateRequest,
-    async (request, response) => {  
+    async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SOUNDS_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create sounds.', 403);
-      
+
       const userSoundInQueue = await Sound.findOne({ 'publisher.id': request.user.id, approved: false });
       if (userSoundInQueue) return response.sendError(`You are already waiting for approval for sound ${userSoundInQueue.name}! Please wait for it to be processed first.`);
 
@@ -118,13 +119,14 @@ module.exports = {
           ];
 
           client.channels.cache.get(config.soundQueueChannelId).send({ embeds, components });
-          
+
           return response.json(sound.toPubliclySafe({ isLiked: false }));
         })
         .catch(error => {
           sound.deleteOne();
 
           logger.error(`There was an error uploading the sound ${id}:`, error);
+
           return response.sendError('There was an error uploading the sound.', 500);
         });
     }

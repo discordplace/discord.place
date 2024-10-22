@@ -153,7 +153,7 @@ export default function Endpoint({ id }) {
   const [activeResponseTab, setActiveResponseTab] = useState(data?.responses?.[0].code || null);
 
   if (!data) return null;
-  
+
   return (
     <>
       <div
@@ -170,7 +170,7 @@ export default function Endpoint({ id }) {
         >
           {data.id}
         </h2>
-        
+
         <div className='flex items-center justify-between'>
           <div className="flex items-center gap-x-2">
             <span
@@ -182,8 +182,8 @@ export default function Endpoint({ id }) {
             >
               {data.method}
             </span>
-      
-            <span className='text-sm font-medium select-none'>
+
+            <span className='select-none text-sm font-medium'>
               {data.name}
             </span>
           </div>
@@ -203,8 +203,8 @@ export default function Endpoint({ id }) {
         height={activeEndpoint === id ? 'auto' : 0}
         animateOpacity={true}
       >
-        <div className='pt-0.5 pb-4 not-prose'>
-          <div className='flex flex-col p-4 gap-y-2 rounded-3xl bg-secondary'>
+        <div className='not-prose pb-4 pt-0.5'>
+          <div className='flex flex-col gap-y-2 rounded-3xl bg-secondary p-4'>
             <div
               className='text-xs text-tertiary'
               dangerouslySetInnerHTML={{
@@ -217,7 +217,7 @@ export default function Endpoint({ id }) {
               {data.description}
             </p>
 
-            <div className='flex flex-col mt-2 gap-y-2'>
+            <div className='mt-2 flex flex-col gap-y-2'>
               <h2 className='text-xs font-semibold text-primary'>
                 Parameters
               </h2>
@@ -229,13 +229,13 @@ export default function Endpoint({ id }) {
 
                     <span className='text-tertiary'>: {param.type}</span>
                   </div>
-                  
+
                   <p className='text-xs text-secondary'>{param.description}</p>
                 </div>
               ))}
             </div>
 
-            <div className='flex flex-col mt-2 gap-y-2'>
+            <div className='mt-2 flex flex-col gap-y-2'>
               <h2 className='text-xs font-semibold text-primary'>
                 Headers
               </h2>
@@ -247,14 +247,14 @@ export default function Endpoint({ id }) {
 
                     <span className='text-tertiary'>: {header.type}</span>
                   </div>
-                  
+
                   <p className='text-xs text-secondary'>{header.description}</p>
                 </div>
               ))}
             </div>
 
             {data.body && (
-              <div className='flex flex-col mt-2 gap-y-2'>
+              <div className='mt-2 flex flex-col gap-y-2'>
                 <h2 className='text-xs font-semibold text-primary'>
                   Body Parameters
                 </h2>
@@ -281,7 +281,7 @@ export default function Endpoint({ id }) {
               </div>
             )}
 
-            <div className='flex flex-col mt-2 gap-y-2'>
+            <div className='mt-2 flex flex-col gap-y-2'>
               <h2 className='text-xs font-semibold text-primary'>
                 Responses
               </h2>
@@ -290,7 +290,7 @@ export default function Endpoint({ id }) {
                 The responses that you can get from the endpoint.
               </p>
 
-              <div className='flex flex-col gap-2 mt-2 sm:flex-row'>
+              <div className='mt-2 flex flex-col gap-2 sm:flex-row'>
                 {data.responses.map(response => (
                   <div
                     key={response.code}
@@ -331,4 +331,4 @@ export default function Endpoint({ id }) {
       </AnimateHeight>
     </>
   );
-} 
+}

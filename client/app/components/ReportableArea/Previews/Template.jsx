@@ -5,7 +5,7 @@ export default function TemplatePreview({ metadata }) {
   return (
     <div className='flex flex-col gap-y-4'>
       <div className="flex items-center gap-x-2">
-        <div className="w-[64px] h-[64px] rounded-2xl font-bold bg-quaternary flex items-center justify-center text-xl">
+        <div className="flex size-[64px] items-center justify-center rounded-2xl bg-quaternary text-xl font-bold">
           {getCompressedName(metadata.name, 4)}
         </div>
 
@@ -25,7 +25,7 @@ export default function TemplatePreview({ metadata }) {
           {t('inAppReporting.reportModal.labels.description')}
         </h2>
 
-        <p className='text-xs font-medium whitespace-pre-wrap text-tertiary line-clamp-2'>
+        <p className='line-clamp-2 whitespace-pre-wrap text-xs font-medium text-tertiary'>
           {metadata.description}
         </p>
       </div>

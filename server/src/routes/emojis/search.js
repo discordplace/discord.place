@@ -38,17 +38,17 @@ module.exports = {
         approved: true
       };
       const sortQuery = {};
-      
+
       if (query) findQuery.name = { $regex: query, $options: 'i' };
       if (category !== 'All') findQuery.categories = { $in: [category] };
       if (sort === 'Popular') sortQuery.downloads = -1;
       if (sort === 'Newest') sortQuery.createdAt = -1;
       if (sort === 'Oldest') sortQuery.createdAt = 1;
-      
+
       const [emojis, emojiPacks] = await Promise.all([Emoji.find(findQuery), EmojiPack.find(findQuery)]);
-      
+
       const allEmojis = emojis.concat(emojiPacks);
-      
+
       allEmojis.sort((a, b) => {
         if (sort === 'Popular') {
           return b.downloads - a.downloads;
@@ -58,11 +58,11 @@ module.exports = {
           return new Date(a.createdAt) - new Date(b.createdAt);
         }
       });
-      
+
       const totalEmojis = allEmojis.length;
       const totalPages = Math.ceil(totalEmojis / limit);
-      const maxReached = page >= totalPages;   
-      
+      const maxReached = page >= totalPages;
+
       return response.json({
         maxReached,
         totalEmojis,
@@ -70,7 +70,7 @@ module.exports = {
         page,
         limit,
         emojis: allEmojis.slice(skip, skip + limit).map(emoji => emoji.toPubliclySafe())
-      });      
+      });
     }
   ]
 };

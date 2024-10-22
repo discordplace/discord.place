@@ -15,7 +15,7 @@ module.exports = {
     .setDescription('server')
     .setNameLocalizations(getLocalizedCommand('server').names)
 
-    .addSubcommandGroup(group => 
+    .addSubcommandGroup(group =>
       group
         .setName('set')
         .setDescription('set')
@@ -74,7 +74,7 @@ module.exports = {
                 .setDescription('The new language of the server.')
                 .setRequired(true)
                 .addChoices(...config.availableLocales.map(locale => ({ name: locale.name, value: locale.code }))))))
-    
+
     .addSubcommandGroup(group =>
       group
         .setName('unset')
@@ -104,7 +104,7 @@ module.exports = {
             .setDescription('Refreshes the panel message of the server.')
             .setNameLocalizations(getLocalizedCommand('server.groups.refresh.subcommands.panel').names)
             .setDescriptionLocalizations(getLocalizedCommand('server.groups.refresh.subcommands.panel').descriptions)))
-            
+
     .addSubcommandGroup(group =>
       group
         .setName('add')
@@ -150,7 +150,7 @@ module.exports = {
                 .setAutocomplete(true)
                 .setNameLocalizations(getLocalizedCommand('server.groups.remove.subcommands.reward.options.reward').names)
                 .setDescriptionLocalizations(getLocalizedCommand('server.groups.remove.subcommands.reward.options.reward').descriptions))))
-    
+
     .addSubcommandGroup(group =>
       group
         .setName('list')
@@ -162,7 +162,7 @@ module.exports = {
             .setDescription('Lists all the vote rewards of the server.')
             .setNameLocalizations(getLocalizedCommand('server.groups.list.subcommands.rewards').names)
             .setDescriptionLocalizations(getLocalizedCommand('server.groups.list.subcommands.rewards').descriptions))),
-            
+
   isGuildOnly: true,
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
@@ -182,7 +182,7 @@ module.exports = {
         else {
           const invite = await interaction.guild.invites.fetch(newInviteCode).catch(() => null);
           if (!invite) return interaction.followUp(await interaction.translate('commands.server.errors.invalid_invite_code'));
-          
+
           await Server.findOneAndUpdate({ id: interaction.guild.id }, { invite_code: { type: 'Invite', code: newInviteCode } });
         }
 
@@ -206,8 +206,8 @@ module.exports = {
 
           return interaction.followUp(await interaction.translate('commands.server.groups.set.subcommands.log.updated'));
         } else {
-          await new LogChannel({ 
-            guildId: interaction.guild.id, 
+          await new LogChannel({
+            guildId: interaction.guild.id,
             channelId: channel.id
           }).save();
 
@@ -237,28 +237,28 @@ module.exports = {
 
           return interaction.followUp(await interaction.translate('commands.server.groups.set.subcommands.panel.updated'));
         } else {
-          await new Panel({ 
-            guildId: interaction.guild.id, 
-            channelId: channel.id 
+          await new Panel({
+            guildId: interaction.guild.id,
+            channelId: channel.id
           }).save();
-          
+
           await updatePanelMessage(interaction.guild.id);
 
           sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.panel_channel_updated', { channel: channel.toString(), user: interaction.user.toString() }))
             .catch(() => null);
-          
+
           return interaction.followUp(await interaction.translate('commands.server.groups.set.subcommands.panel.set'));
         }
       }
 
       if (subcommand === 'language') {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.ManageGuild)) return interaction.followUp(await interaction.translate('commands.shared.errors.missing_permissions'));
-  
+
         const language = interaction.options.getString('language');
         if (!config.availableLocales.some(locale => locale.code === language)) return interaction.reply(await interaction.translate('commands.server.errors.invalid_language'));
-  
+
         if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
-  
+
         await Language.findOneAndUpdate(
           { id: interaction.guild.id },
           { language },
@@ -269,7 +269,7 @@ module.exports = {
 
         await sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.language_updated', { user: interaction.user.toString() }))
           .catch(() => null);
-          
+
         return interaction.followUp(await interaction.translate('commands.server.groups.set.subcommands.language.updated'));
       }
     }
@@ -348,7 +348,7 @@ module.exports = {
         const rewardExists = foundRewards.some(reward => reward.role.id === role.id);
         if (rewardExists) return interaction.followUp(await interaction.translate('commands.server.groups.add.subcommands.reward.errors.reward_exists'));
 
-        await new Reward({ 
+        await new Reward({
           guild: {
             id: interaction.guild.id
           },
@@ -417,7 +417,7 @@ ${(await Promise.all(rewards.sort((a, b) => a.required_votes - b.required_votes)
         const server = await Server.findOne({ id: interaction.guild.id });
 
         return interaction.customRespond(
-          [interaction.guild.vanityURLCode ? { name: `https://discord.com/invite/${interaction.guild.vanityURLCode} (Vanity)`, value: interaction.guild.vanityURLCode }: null]
+          [interaction.guild.vanityURLCode ? { name: `https://discord.com/invite/${interaction.guild.vanityURLCode} (Vanity)`, value: interaction.guild.vanityURLCode } : null]
             .filter(Boolean)
             .concat(invites.map(invite => ({ name: `https://discord.com/invite/${invite.code}`, value: invite.code })))
             .filter(choice => server?.invite_code?.type === 'Vanity' ? choice.value !== interaction.guild.vanityURLCode : choice.value !== server?.invite_code?.code)

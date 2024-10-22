@@ -16,7 +16,7 @@ module.exports = {
       const hmac = crypto.createHmac('sha256', process.env.GITHUB_AUTO_SYNC_TRANSLATORS_SECRET);
       hmac.update(JSON.stringify(request.body));
 
-      const digest = Buffer.from('sha256=' + hmac.digest('hex'), 'utf8');
+      const digest = Buffer.from(`sha256=${hmac.digest('hex')}`, 'utf8');
       const hash = Buffer.from(signature, 'utf8');
 
       try {

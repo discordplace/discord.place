@@ -8,17 +8,17 @@ import { t } from '@/stores/language';
 
 export default function EssentialInformation({ shortDescription, setShortDescription, description, setDescription, inviteURL, setInviteURL, markdownPreviewing, setMarkdownPreviewing }) {
   return (
-    <div className='flex flex-col w-full gap-y-4'>
-      <h3 className='flex items-center text-xl font-semibold gap-x-4'>
+    <div className='flex w-full flex-col gap-y-4'>
+      <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
         <FaDisplay size={24} className='text-purple-500' />
         {t('botManagePage.essentialInformation.title')}
       </h3>
 
-      <p className='text-sm sm:text-base text-tertiary'>
+      <p className='text-sm text-tertiary sm:text-base'>
         {t('botManagePage.essentialInformation.subtitle')}
       </p>
 
-      <div className='flex flex-col w-full gap-8 mt-4'>
+      <div className='mt-4 flex w-full flex-col gap-8'>
         <Input
           label={t('botManagePage.essentialInformation.inputs.shortDescription.label')}
           description={t('botManagePage.essentialInformation.inputs.shortDescription.description')}
@@ -29,15 +29,15 @@ export default function EssentialInformation({ shortDescription, setShortDescrip
 
         <Input
           label={
-            <div className='flex items-center gap-x-2 w-max'>
+            <div className='flex w-max items-center gap-x-2'>
               <span>
                 {t('botManagePage.essentialInformation.inputs.longDescription.label')}
               </span>
             </div>
           }
           customLabelPeer={
-            <button 
-              className='flex items-center gap-x-1.5 py-0.5 px-2 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70' 
+            <button
+              className='flex size-max items-center gap-x-1.5 rounded-lg bg-black px-2 py-0.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
               onClick={() => setMarkdownPreviewing(!markdownPreviewing)}
             >
               {markdownPreviewing ? (
@@ -63,7 +63,7 @@ export default function EssentialInformation({ shortDescription, setShortDescrip
           onChange={event => setDescription(event.target.value)}
           value={description}
           CustomInput={markdownPreviewing && (
-            <Markdown className='overflow-y-auto mt-2 w-full h-[250px] px-4 py-2 text-tertiary focus-visible:text-primary bg-secondary rounded-xl'>
+            <Markdown className='mt-2 h-[250px] w-full overflow-y-auto rounded-xl bg-secondary px-4 py-2 text-tertiary focus-visible:text-primary'>
               {description}
             </Markdown>
           )}

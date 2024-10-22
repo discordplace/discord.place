@@ -28,7 +28,7 @@ module.exports = {
       await template.updateOne({ approved: true });
 
       await DashboardData.findOneAndUpdate({}, { $inc: { templates: 1 } }, { sort: { createdAt: -1 } });
-      
+
       const guild = client.guilds.cache.get(config.guildId);
 
       const publisher = await client.users.fetch(template.user.id).catch(() => null);

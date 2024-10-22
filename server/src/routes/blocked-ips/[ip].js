@@ -16,11 +16,12 @@ module.exports = {
       if (!canDelete) return response.sendError('You do not have permission to delete blocked IPs.', 403);
 
       const { ip } = matchedData(request);
-      
+
       await BlockedIp.findOneAndDelete({ ip })
         .then(() => response.status(204).end())
         .catch(error => {
           logger.error('There was an error while trying to delete a blocked IP address:', error);
+
           return response.sendError('Failed to unblock IP address.', 500);
         });
     }

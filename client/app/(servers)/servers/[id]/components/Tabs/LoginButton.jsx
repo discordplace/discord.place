@@ -12,9 +12,9 @@ export default function LoginButton() {
   return (
     <Link
       href={config.getLoginURL(pathname)}
-      className='flex gap-x-1.5 items-center justify-center px-4 py-2 mt-4 text-sm font-semibold text-white bg-black rounded-lg dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70'
+      className='mt-4 flex items-center justify-center gap-x-1.5 rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
     >
-      <FaDiscord className='w-5 h-5' />
+      <FaDiscord className='size-5' />
       {t('buttons.loginWithDiscord')}
     </Link>
   );

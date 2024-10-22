@@ -39,7 +39,7 @@ export default function Card(props) {
   const averageColor = colord(props.colors.primary).mix(colord(props.colors.secondary)).toHex();
   const contrast = colord(averageColor).contrast();
   const contrastColor = contrast > 2 ? 'dark' : 'light';
-  
+
   const variables = {
     textPrimary: `rgba(var(--${contrastColor}-text-primary))`,
     textSecondary: `rgba(var(--${contrastColor}-text-secondary))`,
@@ -66,9 +66,9 @@ export default function Card(props) {
         bio: props.bio
       }}
     >
-      <div className='w-[300px] p-0.5 h-[461px] rounded-3xl relative overflow-hidden group z-[1]'>
+      <div className='group relative z-[1] h-[461px] w-[300px] overflow-hidden rounded-3xl p-0.5'>
         {props.premium === true && (
-          <div 
+          <div
             className={cn(
               'w-full h-full z-[20] absolute inset-0',
               !haveCustomColors && 'animate-rotate rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none'
@@ -81,13 +81,13 @@ export default function Card(props) {
 
         <div className='hidden'>
           {classesToGenerate.map(classToGenerate => (
-            <div 
+            <div
               key={classToGenerate}
               className={classToGenerate}
             />
           ))}
         </div>
-        
+
         <div
           className={cn(
             'z-[20] relative flex flex-col w-full h-full p-3 rounded-3xl',
@@ -99,18 +99,18 @@ export default function Card(props) {
           }}
         >
           {props.banner ? (
-            <div className='relative w-full h-full max-h-[136px]'>
+            <div className='relative size-full max-h-[136px]'>
               <UserBanner
                 id={props.id}
                 hash={props.banner}
                 size={512}
                 width={512}
                 height={512}
-                className='object-cover w-full h-full rounded-3xl'
+                className='size-full rounded-3xl object-cover'
               />
 
               {props.banner.startsWith('a_') && (
-                <div className='absolute top-3 right-3 pointer-events-none text-white backdrop-blur-2xl px-2 py-0.5 rounded-full font-bold text-xs'>
+                <div className='pointer-events-none absolute right-3 top-3 rounded-full px-2 py-0.5 text-xs font-bold text-white backdrop-blur-2xl'>
                   GIF
                 </div>
               )}
@@ -123,8 +123,8 @@ export default function Card(props) {
               )}
             />
           )}
-          
-          <div className='-mt-[4.5rem] relative left-[10px]'>
+
+          <div className='relative left-[10px] mt-[-4.5rem]'>
             <div className='relative w-max'>
               {props.avatar ? (
                 <UserAvatar
@@ -158,20 +158,22 @@ export default function Card(props) {
                     alt={userStatus}
                     width={20}
                     height={20}
-                    className='absolute bottom-0 right-0 p-0.5 rounded-full'
+                    className='absolute bottom-0 right-0 rounded-full p-0.5'
                   />
                 </Tooltip>
               )}
             </div>
           </div>
 
-          <div className={cn(
-            'flex flex-col flex-1 w-full mt-6 rounded-2xl',
-            !haveCustomColors ? 'bg-secondary' : 'bg-black/20'
-          )}>
-            <div className='px-5 pt-5 mb-auto'>
+          <div
+            className={cn(
+              'flex flex-col flex-1 w-full mt-6 rounded-2xl',
+              !haveCustomColors ? 'bg-secondary' : 'bg-black/20'
+            )}
+          >
+            <div className='mb-auto px-5 pt-5'>
               <div className='flex gap-x-1'>
-                <h2 
+                <h2
                   className={cn(
                     'text-lg font-medium truncate max-w-[170px] mr-1',
                     !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
@@ -216,7 +218,7 @@ export default function Card(props) {
                   </Tooltip>
                 ))}
               </div>
-              <h3 
+              <h3
                 className={cn(
                   '-mt-1 text-sm font-medium',
                   !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
@@ -225,7 +227,7 @@ export default function Card(props) {
                 @{props.username}
               </h3>
 
-              <div className='flex flex-col mt-4 gap-y-1'>
+              <div className='mt-4 flex flex-col gap-y-1'>
                 <h3
                   className={cn(
                     'text-sm font-medium',
@@ -252,14 +254,14 @@ export default function Card(props) {
             <div
               className={cn(
                 'w-full my-4 h-[1px]',
-                !haveCustomColors ? 'bg-quaternary' : 'bg-black/20' 
+                !haveCustomColors ? 'bg-quaternary' : 'bg-black/20'
               )}
             />
 
-            <div className='flex flex-col px-5 pb-3 gap-y-4'>
+            <div className='flex flex-col gap-y-4 px-5 pb-3'>
               <div className='flex gap-x-4'>
                 <div className='flex flex-col gap-y-1'>
-                  <h3 
+                  <h3
                     className={cn(
                       'text-sm font-medium',
                       !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
@@ -267,7 +269,7 @@ export default function Card(props) {
                   >
                     {t('profileCard.fields.likes')}
                   </h3>
-                  
+
                   <p className={cn(
                     'text-sm font-medium',
                     !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
@@ -277,7 +279,7 @@ export default function Card(props) {
                 </div>
 
                 <div className='flex flex-col gap-y-1'>
-                  <h3 
+                  <h3
                     className={cn(
                       'text-sm font-medium',
                       !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
@@ -285,7 +287,7 @@ export default function Card(props) {
                   >
                     {t('profileCard.fields.views')}
                   </h3>
-                  
+
                   <p className={cn(
                     'text-sm font-medium',
                     !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
@@ -295,7 +297,7 @@ export default function Card(props) {
                 </div>
 
                 <div className='flex flex-col gap-y-1'>
-                  <h3 
+                  <h3
                     className={cn(
                       'text-sm font-medium',
                       !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
@@ -303,7 +305,7 @@ export default function Card(props) {
                   >
                     {t('profileCard.fields.createdAt')}
                   </h3>
-                  
+
                   <p
                     className={cn(
                       'text-sm font-medium truncate w-[130px]',
@@ -319,7 +321,7 @@ export default function Card(props) {
                 <Link
                   className={cn(
                     'flex text-white items-center px-2 py-1.5 font-semibold text-sm gap-x-0.5 rounded-lg',
-                    !haveCustomColors ? 'hover:bg-purple-700 bg-purple-600' : 'shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-sm' 
+                    !haveCustomColors ? 'hover:bg-purple-700 bg-purple-600' : 'shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-sm'
                   )}
                   href={`/profile/${props.slug}`}
                 >
@@ -334,7 +336,7 @@ export default function Card(props) {
                   <button
                     className={cn(
                       'flex items-center px-2 py-1.5 font-semibold text-sm gap-x-0.5 rounded-lg',
-                      !haveCustomColors ? 'bg-quaternary hover:bg-purple-600 text-tertiary hover:text-white' : 'text-white shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-sm' 
+                      !haveCustomColors ? 'bg-quaternary hover:bg-purple-600 text-tertiary hover:text-white' : 'text-white shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-sm'
                     )}
                   >
                     <TbWorldShare size={16} />

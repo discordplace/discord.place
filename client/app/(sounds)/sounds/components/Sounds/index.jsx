@@ -27,32 +27,32 @@ export default function Sounds() {
     totalSounds: state.totalSounds,
     limit: state.limit
   })));
-  
+
   const stateVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0
     },
-    visible: { 
+    visible: {
       opacity: 1
     },
-    exit: { 
+    exit: {
       opacity: 0
     }
   };
-  
+
   const showPagination = !loading && totalSounds > limit;
 
   return (
     !loading && sounds.length <= 0 ? (
       <AnimatePresence>
-        <motion.div 
-          className='flex flex-col px-4 sm:px-0 gap-y-2'
+        <motion.div
+          className='flex flex-col gap-y-2 px-4 sm:px-0'
           variants={stateVariants}
           initial='hidden'
           animate='visible'
           exit='hidden'
         >
-          <ErrorState 
+          <ErrorState
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
@@ -62,7 +62,7 @@ export default function Sounds() {
             message={t('soundsPage.emptyErrorState.message')}
           />
 
-          <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
+          <button className='text-tertiary hover:text-primary hover:underline' onClick={() => {
             fetchSounds('', 1, limit, 'All', 'Downloads');
             setPage(1);
           }}>
@@ -72,14 +72,14 @@ export default function Sounds() {
       </AnimatePresence>
     ) : (
       <>
-        <motion.div 
-          className='max-w-[1000px] w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:px-0 px-2 sm:px-4'
+        <motion.div
+          className='grid w-full max-w-[1000px] grid-cols-1 gap-8 px-2 sm:grid-cols-2 sm:px-4 lg:grid-cols-3 lg:px-0'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           {loading ? (
             new Array(9).fill(0).map((_, index) => (
-              <div key={index} className="h-[196px] rounded-2xl bg-secondary animate-pulse w-full" />
+              <div key={index} className="h-[196px] w-full animate-pulse rounded-2xl bg-secondary" />
             ))
           ) : (
             sounds.map(sound => (
@@ -100,16 +100,16 @@ export default function Sounds() {
           )}
         </motion.div>
 
-        <div className='flex items-center justify-center w-full' key='pagination'> 
+        <div className='flex w-full items-center justify-center' key='pagination'>
           {showPagination && (
-            <Pagination 
-              page={page} 
+            <Pagination
+              page={page}
               setPage={newPage => {
                 fetchSounds(search, newPage, limit, category, sort);
-              }} 
-              loading={loading} 
-              total={totalSounds} 
-              limit={limit} 
+              }}
+              loading={loading}
+              total={totalSounds}
+              limit={limit}
             />
           )}
         </div>

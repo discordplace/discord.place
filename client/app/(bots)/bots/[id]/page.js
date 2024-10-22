@@ -29,6 +29,6 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const bot = await getBot(params.id).catch(error => error);
   if (typeof bot === 'string') return redirect(`/error?message=${encodeURIComponent(bot)}`);
-  
+
   return <Content bot={bot} />;
 }

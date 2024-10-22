@@ -9,15 +9,15 @@ import CodeBlock from '@/components/code-block';
 export function useMDXComponents(components) {
   const H = ({ level, children }) => {
     const Tag = `h${level}`;
-  
+
     return (
       <Tag
-        className='relative flex items-center group scroll-mt-8'
+        className='group relative flex scroll-mt-8 items-center'
         id={children.toLowerCase().replace(/\s/g, '-')}
         data-name={children}
       >
         <Link
-          className='absolute pr-3 transition-opacity opacity-0 -left-8 group-hover:opacity-100'
+          className='absolute -left-8 pr-3 opacity-0 transition-opacity group-hover:opacity-100'
           href={`#${children.toLowerCase().replace(/\s/g, '-')}`}
         >
           <RiLinkM size={20} className='text-purple-400' />
@@ -37,13 +37,13 @@ export function useMDXComponents(components) {
     h5: props => <H level={5} {...props} />,
     h6: props => <H level={6} {...props} />,
     a: ({ children, href }) => (
-      <Link href={href} className='[text-decoration:unset] hover:underline underline-offset-4'>
+      <Link href={href} className='underline-offset-4 [text-decoration:unset] hover:underline'>
         {children}
       </Link>
     ),
     code: ({ children, className }) => {
       const languageMatch = /language-(\w+)/.exec(className || '');
-  
+
       let fileName = languageMatch?.[1];
       let FileIcon = <FaFileCode />;
 

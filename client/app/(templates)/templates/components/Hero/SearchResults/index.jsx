@@ -29,20 +29,20 @@ export default function SearchResults() {
   useEffect(() => {
     fetchTemplates()
       .catch(toast.error);
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showPagination = !loading && totalTemplates > limit;
 
   const stateVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0
     },
-    visible: { 
+    visible: {
       opacity: 1
     },
-    exit: { 
+    exit: {
       opacity: 0
     }
   };
@@ -50,14 +50,14 @@ export default function SearchResults() {
   return (
     !loading && templates.length <= 0 ? (
       <AnimatePresence>
-        <motion.div 
-          className='flex flex-col px-4 sm:px-0 gap-y-2'
+        <motion.div
+          className='flex flex-col gap-y-2 px-4 sm:px-0'
           variants={stateVariants}
           initial='hidden'
           animate='visible'
           exit='hidden'
         >
-          <ErrorState 
+          <ErrorState
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
@@ -67,7 +67,7 @@ export default function SearchResults() {
             message={t('templatesPage.emptyErrorState.message')}
           />
 
-          <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
+          <button className='text-tertiary hover:text-primary hover:underline' onClick={() => {
             fetchTemplates('', 1, limit, 'All', 'Popular');
           }}>
             {t('buttons.resetSearch')}
@@ -76,14 +76,14 @@ export default function SearchResults() {
       </AnimatePresence>
     ) : (
       <>
-        <motion.div 
-          className='grid grid-cols-1 gap-4 sm:px-4 xl:px-0 sm:grid-cols-2 xl:grid-cols-3'
+        <motion.div
+          className='grid grid-cols-1 gap-4 sm:grid-cols-2 sm:px-4 xl:grid-cols-3 xl:px-0'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           {loading ? (
             new Array(9).fill(0).map((_, index) => (
-              <div key={index} className='w-full h-[164px] bg-secondary rounded-3xl animate-pulse' />
+              <div key={index} className='h-[164px] w-full animate-pulse rounded-3xl bg-secondary' />
             ))
           ) : (
             templates.map(template => (
@@ -104,17 +104,17 @@ export default function SearchResults() {
           )}
         </motion.div>
 
-        <div className='flex items-center justify-center w-full' key='pagination'> 
+        <div className='flex w-full items-center justify-center' key='pagination'>
           {showPagination && (
-            <Pagination 
-              page={page} 
+            <Pagination
+              page={page}
               setPage={newPage => {
                 setPage(newPage);
                 fetchTemplates(search);
-              }} 
-              loading={loading} 
+              }}
+              loading={loading}
               total={totalTemplates}
-              limit={limit} 
+              limit={limit}
             />
           )}
         </div>

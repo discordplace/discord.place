@@ -29,8 +29,8 @@ export default function Social({ data }) {
   const theme = useThemeStore(state => state.theme);
 
   return (
-    <div className='flex flex-col w-full'>
-      <motion.h2 
+    <div className='flex w-full flex-col'>
+      <motion.h2
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -39,8 +39,8 @@ export default function Social({ data }) {
         {t('profilePage.social.title')}
       </motion.h2>
 
-      <motion.div 
-        className='grid grid-cols-1 gap-2 mt-4 mobile:grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-col'
+      <motion.div
+        className='mt-4 grid grid-cols-1 gap-2 mobile:grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-col'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.15 }}
@@ -50,10 +50,10 @@ export default function Social({ data }) {
             {t('profilePage.social.noSocials')}
           </p>
         )}
-            
+
         {data.map((social, index) => (
-          <MotionLink 
-            className='flex group items-center justify-between w-full h-10 px-2 text-sm font-semibold border-2 rounded-lg hover:bg-secondary border-[rgb(var(--brand-color)/0.5)] hover:border-[rgb(var(--brand-color)/0.8)] gap-x-2 bg-gradient-to-r from-[rgb(var(--brand-color)/0.2)] hover:from-[rgb(var(--brand-color)/0.3)] text-secondary'
+          <MotionLink
+            className='group flex h-10 w-full items-center justify-between gap-x-2 rounded-lg border-2 border-[rgb(var(--brand-color)/0.5)] bg-gradient-to-r from-[rgb(var(--brand-color)/0.2)] px-2 text-sm font-semibold text-secondary hover:border-[rgb(var(--brand-color)/0.8)] hover:bg-secondary hover:from-[rgb(var(--brand-color)/0.3)]'
             key={social.link}
             style={{
               '--brand-color': colors[social.type]
@@ -64,11 +64,11 @@ export default function Social({ data }) {
             href={social.link}
             target='_blank'
           >
-            <div className='flex gap-x-2 max-w-[80%] sm:max-w-[90%] flex-auto'>
+            <div className='flex max-w-[80%] flex-auto gap-x-2 sm:max-w-[90%]'>
               {social.type === 'custom' ? (
                 <>
                   <IoEarth className='flex-auto text-primary' size={20} />
-                  
+
                   <span className='w-full truncate'>
                     {getDisplayableURL(social.link)}
                   </span>

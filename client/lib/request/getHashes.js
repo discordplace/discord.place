@@ -5,7 +5,7 @@ export default function getHashes(id) {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     let url = `${config.api.url}/users/${id}/hashes`;
-    
+
     try {
       const response = await axios.get(url, { withCredentials: true });
       resolve(response.data);

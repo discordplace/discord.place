@@ -8,28 +8,28 @@ export default function Header({ data }) {
 
   return (
     <>
-      <div className='flex flex-col items-center justify-center w-full my-8 gap-y-4'>
+      <div className='my-8 flex w-full flex-col items-center justify-center gap-y-4'>
         <div className='flex gap-x-2'>
           {data.tags.map(tag => (
             <span
               key={tag}
-              className='px-4 py-2 text-xs font-medium rounded-full text-primary bg-tertiary'
+              className='rounded-full bg-tertiary px-4 py-2 text-xs font-medium text-primary'
             >
               {tag}
             </span>
           ))}
         </div>
 
-        <h1 className='text-2xl font-semibold text-center max-w-[400px] text-pretty text-primary'>
+        <h1 className='max-w-[400px] text-pretty text-center text-2xl font-semibold text-primary'>
           {data.name}
         </h1>
 
-        <span className='flex items-center text-sm text-center text-tertiary gap-x-2'>
+        <span className='flex items-center gap-x-2 text-center text-sm text-tertiary'>
           {new Date(data.date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
-            
-          <span className='w-1.5 h-1.5 rounded-full bg-quaternary' />
-            
-          {new Date(data.date).toLocaleTimeString(language, { hour: 'numeric', minute: 'numeric'})}
+
+          <span className='size-1.5 rounded-full bg-quaternary' />
+
+          {new Date(data.date).toLocaleTimeString(language, { hour: 'numeric', minute: 'numeric' })}
         </span>
       </div>
 
@@ -38,7 +38,7 @@ export default function Header({ data }) {
         alt={data.name}
         width={512}
         height={512}
-        className='bg-tertiary w-full h-full max-h-[440px] object-cover rounded-lg'
+        className='size-full max-h-[440px] rounded-lg bg-tertiary object-cover'
       />
     </>
   );

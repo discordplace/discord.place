@@ -15,7 +15,7 @@ module.exports = {
 
       const emojiUploadableGuilds = guilds.filter(guild => {
         const permissions = new Discord.PermissionsBitField(guild.permissions_new);
-        
+
         return guild.owner === true || permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions);
       });
 

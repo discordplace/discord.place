@@ -14,6 +14,6 @@ export function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const user = await getUser(params.user_id).catch(error => error);
   if (typeof user === 'string') return redirect(`/error?message=${encodeURIComponent(user)}`);
-  
+
   return <Content user={user} />;
 }

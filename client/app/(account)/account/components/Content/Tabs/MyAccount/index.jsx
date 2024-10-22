@@ -26,7 +26,7 @@ export default function MyAccount() {
 
   const [plans, setPlans] = useState([]);
   const [plansLoading, setPlansLoading] = useState(true);
-    
+
   const { openModal, disableButton, enableButton, closeModal, updateModal } = useModalsStore(useShallow(state => ({
     openModal: state.openModal,
     disableButton: state.disableButton,
@@ -50,8 +50,8 @@ export default function MyAccount() {
   })));
 
   function continueCreateProfile(slug, preferredHost) {
-    disableButton('create-profile', 'create'); 
-  
+    disableButton('create-profile', 'create');
+
     toast.promise(createProfile(slug, preferredHost), {
       loading: t('accountPage.tabs.myAccount.toast.creatingProfile'),
       success: () => {
@@ -62,7 +62,7 @@ export default function MyAccount() {
       },
       error: error => {
         enableButton('create-profile', 'create');
-        
+
         return error;
       }
     });
@@ -99,7 +99,7 @@ export default function MyAccount() {
   const isMobile = useMedia('(max-width: 640px)');
 
   return (
-    <>      
+    <>
       <div className='flex flex-col gap-y-2'>
         <h1 className='text-xl font-bold text-primary'>
           {t('accountPage.tabs.myAccount.title')}
@@ -110,7 +110,7 @@ export default function MyAccount() {
         </p>
       </div>
 
-      <div className='flex flex-col mt-8 gap-y-2'>
+      <div className='mt-8 flex flex-col gap-y-2'>
         <h2 className='text-sm font-bold text-secondary'>
           {t('accountPage.tabs.myAccount.sections.connectedAccount.title')}
         </h2>
@@ -119,7 +119,7 @@ export default function MyAccount() {
           {t('accountPage.tabs.myAccount.sections.connectedAccount.subtitle')}
         </p>
 
-        <div className='flex max-w-[500px] flex-col w-full p-2 mt-2 h-max rounded-3xl bg-secondary'>
+        <div className='mt-2 flex h-max w-full max-w-[500px] flex-col rounded-3xl bg-secondary p-2'>
           {user?.banner ? (
             <UserBanner
               id={user.id}
@@ -127,10 +127,10 @@ export default function MyAccount() {
               size={512}
               width={500}
               height={150}
-              className='w-full h-[100px] mobile:h-[150px] rounded-2xl object-cover'
+              className='h-[100px] w-full rounded-2xl object-cover mobile:h-[150px]'
             />
           ) : (
-            <div className='w-full h-[100px] mobile:h-[150px] rounded-2xl bg-quaternary' />
+            <div className='h-[100px] w-full rounded-2xl bg-quaternary mobile:h-[150px]' />
           )}
 
           <UserAvatar
@@ -139,17 +139,17 @@ export default function MyAccount() {
             size={96}
             width={80}
             height={80}
-            className='relative z-[1] -mb-20 border-8 border-[rgba(var(--bg-secondary))] rounded-full bottom-10 left-4'
+            className='relative bottom-10 left-4 z-[1] -mb-20 rounded-full border-8 border-[rgba(var(--bg-secondary))]'
           />
 
-          <div className='mt-2 ml-28'>
+          <div className='ml-28 mt-2'>
             <div className='flex flex-col'>
               <h3 className='text-lg font-bold text-primary'>{user?.global_name || user?.username}</h3>
               <p className='text-sm font-medium text-tertiary'>@{user?.username}</p>
             </div>
           </div>
 
-          <div className='mx-auto flex flex-col w-[98%] p-4 mb-1.5 mt-4 bg-tertiary h-max rounded-2xl gap-y-4'>
+          <div className='mx-auto mb-1.5 mt-4 flex h-max w-[98%] flex-col gap-y-4 rounded-2xl bg-tertiary p-4'>
             <div className='flex flex-col'>
               <h3 className='text-sm font-bold text-primary'>
                 {t('accountPage.tabs.myAccount.sections.connectedAccount.fields.displayName')}
@@ -175,9 +175,9 @@ export default function MyAccount() {
             </div>
           </div>
         </div>
-        
+
         {user?.premium?.createdAt && (
-          <div className='flex flex-col mt-8 gap-y-2'>
+          <div className='mt-8 flex flex-col gap-y-2'>
             {isMobile ? (
               <>
                 <h2 className='text-sm font-bold text-secondary'>
@@ -188,8 +188,8 @@ export default function MyAccount() {
                   {t('accountPage.tabs.myAccount.sections.premium.subtitle')}
                 </p>
 
-                <div className='flex flex-wrap items-center gap-2 select-none'>
-                  <span className='text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600'>
+                <div className='flex select-none flex-wrap items-center gap-2'>
+                  <span className='bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-sm font-semibold text-transparent'>
                     {plansLoading ? (
                       <>
                         <TbLoader className='animate-spin' />
@@ -210,14 +210,14 @@ export default function MyAccount() {
                 </div>
               </>
             ) : (
-              <div className='border-2 border-purple-500 p-2.5 max-w-[500px] rounded-xl relative'>
-                <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500/25 via-purple-500/10 rounded-xl'></div>
-              
+              <div className='relative max-w-[500px] rounded-xl border-2 border-purple-500 p-2.5'>
+                <div className='absolute left-0 top-0 size-full rounded-xl bg-gradient-to-r from-purple-500/25 via-purple-500/10'></div>
+
                 <div className='flex items-center gap-x-4'>
-                  <GoHeartFill className='min-w-[20px] min-h-[20px]' />
+                  <GoHeartFill className='min-h-[20px] min-w-[20px]' />
 
                   <div className='flex flex-col'>
-                    <h2 className='flex flex-wrap items-center font-semibold gap-x-2'>                    
+                    <h2 className='flex flex-wrap items-center gap-x-2 font-semibold'>
                       {plansLoading ? (
                         <>
                           <TbLoader className='animate-spin' />
@@ -236,7 +236,7 @@ export default function MyAccount() {
                       </span>
                     </h2>
 
-                    <p className='mt-1.5 text-sm mobile:mt-0 text-tertiary'>
+                    <p className='mt-1.5 text-sm text-tertiary mobile:mt-0'>
                       {t('accountPage.tabs.myAccount.sections.premium.thanks')}
                     </p>
                   </div>
@@ -246,19 +246,19 @@ export default function MyAccount() {
           </div>
         )}
 
-        <div className='flex flex-col mt-8 gap-y-2'>
+        <div className='mt-8 flex flex-col gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
             {t('accountPage.tabs.myAccount.sections.yourProfile.title')}
           </h2>
 
-          <div className='flex flex-col text-sm text-tertiary gap-y-4'>
+          <div className='flex flex-col gap-y-4 text-sm text-tertiary'>
 
             {user?.profile ? (
               <>
                 {t('accountPage.tabs.myAccount.sections.yourProfile.profileFound')}
 
                 <Link
-                  className='px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
+                  className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                   href={`/profile/${user.profile.slug}`}
                 >
                   {t('buttons.viewProfile')}
@@ -270,8 +270,8 @@ export default function MyAccount() {
                 {t('accountPage.tabs.myAccount.sections.yourProfile.noProfile')}
 
                 <button
-                  className='outline-none px-4 py-1.5 flex items-center gap-x-1 font-semibold text-white bg-black w-max rounded-xl dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70'
-                  onClick={() => 
+                  className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white outline-none hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
+                  onClick={() =>
                     openModal('create-profile', {
                       title: 'Create Profile',
                       description: 'Create your customizable profile to show off to your friends!',

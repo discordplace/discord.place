@@ -8,6 +8,7 @@ module.exports = {
       .customSanitizer(value => decodeURIComponent(value)).custom(value => {
         try {
           new URL(value);
+
           return true;
         } catch {
           throw new Error('Invalid redirect URL.');

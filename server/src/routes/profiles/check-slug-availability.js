@@ -14,7 +14,7 @@ module.exports = {
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { slug } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (profile) return response.status(200).json({ available: false });

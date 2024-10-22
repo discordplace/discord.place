@@ -8,7 +8,7 @@ export default function BackButton() {
   return (
     <Link
       href='/blogs'
-      className='flex items-center font-medium w-max text-secondary hover:text-primary gap-x-2'
+      className='flex w-max items-center gap-x-2 font-medium text-secondary hover:text-primary'
     >
       <LuChevronLeft />
       {t('buttons.back')}

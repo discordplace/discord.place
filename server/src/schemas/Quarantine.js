@@ -8,7 +8,7 @@ const QuarantineSchema = new Schema({
     required: true,
     validate: {
       validator: function validateType(value) {
-        if (value === 'USER_ID' && !this?.user?.id) throw new Error('user.id is required for this type'); 
+        if (value === 'USER_ID' && !this?.user?.id) throw new Error('user.id is required for this type');
         if (value === 'GUILD_ID' && !this?.guild?.id) throw new Error('guild.id is required for this type');
 
         const restriction = config.quarantineRestrictions[this.restriction];
@@ -43,6 +43,7 @@ const QuarantineSchema = new Schema({
     validate: {
       validator: function validateRestriction(value) {
         const restriction = config.quarantineRestrictions[value];
+
         return restriction.available_to.includes(this.type);
       },
       message: 'Invalid restriction for this type'

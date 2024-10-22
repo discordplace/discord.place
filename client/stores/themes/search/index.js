@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { toast } from 'sonner';
+
 import fetchThemes from '@/lib/request/themes/fetchThemes';
 
 const useSearchStore = create((set, get) => ({
@@ -16,7 +17,7 @@ const useSearchStore = create((set, get) => ({
   category: 'All',
   setCategory: category => {
     set({ category, page: 1 });
-  
+
     get().fetchThemes(get().search);
   },
   page: 1,
@@ -34,7 +35,7 @@ const useSearchStore = create((set, get) => ({
     if (sort) set({ sort });
 
     set({ loading: true, search });
-    
+
     fetchThemes(search, get().page, get().limit, get().category, get().sort)
       .then(data => set({ themes: data.themes, loading: false, maxReached: data.maxReached, totalThemes: data.total }))
       .catch(error => {

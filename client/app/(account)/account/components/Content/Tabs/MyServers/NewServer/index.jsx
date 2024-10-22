@@ -27,7 +27,7 @@ export default function NewServer() {
   const [serverDescription, setServerDescription] = useState('');
   const [serverInviteLink, setServerInviteLink] = useState('');
   const [serverCategory, setServerCategory] = useState('');
-    
+
   const [keywordsInputValue, setKeywordsInputValue] = useState('');
   const [serverKeywords, setServerKeywords] = useState([]);
 
@@ -54,12 +54,12 @@ export default function NewServer() {
           setServerKeywords([]);
         }, 3000);
         setRenderConfetti(true);
-        
+
         return t('accountPage.tabs.myServers.sections.newServer.toast.serverAdded', { serverName: currentlyAddingServer.name });
       },
       error: error => {
         setLoading(false);
-        
+
         return error;
       }
     });
@@ -70,13 +70,13 @@ export default function NewServer() {
 
   return (
     <>
-      <div className='fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100svh]'>
+      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
         <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%' />
       </div>
 
-      <div className="max-w-[800px] flex flex-col justify-center w-full gap-y-4">
+      <div className="flex w-full max-w-[800px] flex-col justify-center gap-y-4">
         <div className='flex items-center gap-x-4'>
-          <button className="p-1.5 rounded-xl bg-secondary hover:bg-quaternary" onClick={() => {
+          <button className="rounded-xl bg-secondary p-1.5 hover:bg-quaternary" onClick={() => {
             setCurrentlyAddingServer(null);
             setServerDescription('');
             setServerInviteLink('');
@@ -86,7 +86,7 @@ export default function NewServer() {
             <MdChevronLeft size={24} />
           </button>
 
-          <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
+          <h1 className="flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl">
             {t('accountPage.tabs.myServers.sections.newServer.title', {
               serverName: <span className='truncate'>{currentlyAddingServer.name}</span>,
               serverIcon: (
@@ -112,33 +112,33 @@ export default function NewServer() {
             })}
           </h1>
         </div>
-        
-        <p className='text-sm sm:text-base text-tertiary'>
+
+        <p className='text-sm text-tertiary sm:text-base'>
           {t('accountPage.tabs.myServers.sections.newServer.subtitle', { serverName: currentlyAddingServer.name })}
         </p>
       </div>
 
-      <div className='max-w-[800px] flex items-center w-full'>
-        <div className='flex flex-col w-full mt-8 gap-y-1'>
+      <div className='flex w-full max-w-[800px] items-center'>
+        <div className='mt-8 flex w-full flex-col gap-y-1'>
           <div
             className={cn(
               'flex-col w-full p-6 mb-8 border-2 h-max rounded-xl',
               allRequirementsIsMet ? 'border-green-500' : 'dark:border-neutral-500 border-neutral-400'
             )}
           >
-            <div className='flex items-start justify-between w-full'>
-              <span className='flex items-center text-lg font-semibold gap-x-2'>
+            <div className='flex w-full items-start justify-between'>
+              <span className='flex items-center gap-x-2 text-lg font-semibold'>
                 <BsFire
                   className={cn(
                     allRequirementsIsMet ? 'text-green-500' : 'text-tertiary'
                   )}
                 />
-                
+
                 {t('accountPage.tabs.myServers.sections.newServer.requirements.title')}
               </span>
 
               <div className='flex flex-col items-center gap-y-2'>
-                <div className='items-center hidden sm:flex gap-x-1'>
+                <div className='hidden items-center gap-x-1 sm:flex'>
                   <span className='text-base font-semibold'>
                     {completedPercent}%
                   </span>
@@ -147,8 +147,8 @@ export default function NewServer() {
                     {t('accountPage.tabs.myServers.sections.newServer.requirements.completedBadge')}
                   </span>
                 </div>
-                
-                <div 
+
+                <div
                   className={cn(
                     'w-full h-1 rounded-lg',
                     allRequirementsIsMet ? 'bg-green-600' : 'bg-neutral-600/30'
@@ -165,11 +165,11 @@ export default function NewServer() {
               </div>
             </div>
 
-            <p className='mt-2 text-sm sm:mt-0 text-tertiary'>
+            <p className='mt-2 text-sm text-tertiary sm:mt-0'>
               {t('accountPage.tabs.myServers.sections.newServer.requirements.subtitle')}
             </p>
 
-            <div className='flex flex-col mt-6 gap-y-4 sm:hidden'>
+            <div className='mt-6 flex flex-col gap-y-4 sm:hidden'>
               <div className='flex items-center justify-center gap-x-1'>
                 <span className='text-base font-semibold'>
                   {completedPercent}%
@@ -181,24 +181,24 @@ export default function NewServer() {
               </div>
             </div>
 
-            <div className='flex flex-col mt-8 overflow-hidden gap-y-4'>
+            <div className='mt-8 flex flex-col gap-y-4 overflow-hidden'>
               {currentlyAddingServer.requirements.map(requirement => (
                 <div
                   className='flex items-center gap-x-4'
                   key={requirement.id}
                 >
                   {requirement.met ? (
-                    <IoMdCheckmarkCircle className='text-green-500 min-w-[24px]' size={24} />
+                    <IoMdCheckmarkCircle className='min-w-[24px] text-green-500' size={24} />
                   ) : (
-                    <IoMdCloseCircle className='text-tertiary min-w-[24px]' size={24} />
+                    <IoMdCloseCircle className='min-w-[24px] text-tertiary' size={24} />
                   )}
 
                   <div className='flex flex-col gap-y-1'>
-                    <span className='text-lg font-semibold truncate max-w-[200px] sm:max-w-[700px]'>
+                    <span className='max-w-[200px] truncate text-lg font-semibold sm:max-w-[700px]'>
                       {t(`accountPage.tabs.myServers.sections.newServer.requirements.items.${requirement.id}.name`)}
                     </span>
-                    
-                    <span className='text-sm font-medium text-tertiary max-w-[200px] sm:max-w-[700px]'>
+
+                    <span className='max-w-[200px] text-sm font-medium text-tertiary sm:max-w-[700px]'>
                       {t(`accountPage.tabs.myServers.sections.newServer.requirements.items.${requirement.id}.description`)}
                     </span>
                   </div>
@@ -206,29 +206,31 @@ export default function NewServer() {
               ))}
             </div>
           </div>
-        
-          <div className={cn(
-            'flex flex-col gap-y-1',
-            !allRequirementsIsMet && 'opacity-50 pointer-events-none select-none filter grayscale'
-          )}>
+
+          <div
+            className={cn(
+              'flex flex-col gap-y-1',
+              !allRequirementsIsMet && 'opacity-50 pointer-events-none select-none filter grayscale'
+            )}
+          >
             <h2 className='text-lg font-semibold'>
               {t('accountPage.tabs.myServers.sections.newServer.fields.description.label')}
             </h2>
-            
-            <p className='text-sm sm:text-base text-tertiary'>
+
+            <p className='text-sm text-tertiary sm:text-base'>
               {t('accountPage.tabs.myServers.sections.newServer.fields.description.description', { br: <br /> })}
             </p>
 
             <span
               contentEditable
               suppressContentEditableWarning
-              className='block w-full h-[150px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              className='mt-4 block h-[150px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
               onKeyUp={event => {
                 if (event.target.innerText.length > config.serverDescriptionMaxCharacters) {
                   event.target.innerText = event.target.innerText.slice(0, config.serverDescriptionMaxCharacters);
                   event.preventDefault();
                   event.stopPropagation();
-                  
+
                   return toast.error(`Description can be maximum ${config.serverDescriptionMaxCharacters} characters long.`);
                 }
 
@@ -240,12 +242,12 @@ export default function NewServer() {
               {t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.label')}
             </h2>
 
-            <p className='text-sm sm:text-base text-tertiary'>
+            <p className='text-sm text-tertiary sm:text-base'>
               {t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.description')}
             </p>
 
             <input
-              className='block w-full p-2 mt-4 overflow-y-auto text-sm border-2 border-transparent rounded-lg outline-none placeholder-placeholder bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+              className='mt-4 block w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary'
               placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.placeholder')}
               autoComplete='off'
               spellCheck='false'
@@ -253,7 +255,7 @@ export default function NewServer() {
               onChange={event => setServerInviteLink(event.target.value)}
             />
 
-            <div className='flex flex-col gap-4 mt-8 sm:flex-row'>
+            <div className='mt-8 flex flex-col gap-4 sm:flex-row'>
               <div className='flex flex-col gap-y-2'>
                 <h2 className='text-lg font-semibold'>
                   {t('accountPage.tabs.myServers.sections.newServer.fields.category.label')}
@@ -263,7 +265,7 @@ export default function NewServer() {
                   {t('accountPage.tabs.myServers.sections.newServer.fields.category.description')}
                 </p>
 
-                <div className='w-full mt-4'>
+                <div className='mt-4 w-full'>
                   <Select
                     mobileOverride={true}
                     triggerClassName='w-full py-2.5'
@@ -300,7 +302,7 @@ export default function NewServer() {
 
                 <div className='relative'>
                   <input
-                    className='block w-full h-[40px] px-2 mt-4 overflow-y-auto text-sm border-2 border-transparent rounded-lg outline-none disabled:pointer-events-none disabled:opacity-70 placeholder-placeholder bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+                    className='mt-4 block h-[40px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary px-2 text-sm text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-70'
                     autoComplete='off'
                     spellCheck='false'
                     value={keywordsInputValue}
@@ -326,18 +328,18 @@ export default function NewServer() {
                 </div>
               </div>
             </div>
-            
+
             {serverKeywords.filter(keyword => keyword.length > 0).length > 0 && (
               <>
                 <h3 className='mt-4 text-sm font-medium text-secondary'>
                   {t('accountPage.tabs.myServers.sections.newServer.fields.keywords.count', { count: serverKeywords.filter(keyword => keyword.length > 0).length })}
                 </h3>
 
-                <div className='flex flex-wrap mt-2 gap-x-2 gap-y-1'>
+                <div className='mt-2 flex flex-wrap gap-x-2 gap-y-1'>
                   {serverKeywords
                     .filter(keyword => keyword.length > 0)
                     .map((keyword, i) => (
-                      <button key={i} className='flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm' onClick={() => setServerKeywords(serverKeywords.filter(k => k !== keyword))}>
+                      <button key={i} className='flex items-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70' onClick={() => setServerKeywords(serverKeywords.filter(k => k !== keyword))}>
                         {keyword}
                       </button>
                     ))}
@@ -348,8 +350,8 @@ export default function NewServer() {
             <h2 className='mt-8 text-lg font-semibold'>
               {t('accountPage.tabs.myServers.sections.newServer.fields.contentPolicy.label')}
             </h2>
-            
-            <p className='flex flex-col text-sm sm:text-base gap-y-1 text-tertiary'>
+
+            <p className='flex flex-col gap-y-1 text-sm text-tertiary sm:text-base'>
               {t('accountPage.tabs.myServers.sections.newServer.fields.contentPolicy.description', {
                 note: <span className='text-xs'>{t('accountPage.tabs.myServers.sections.newServer.fields.contentPolicy.note')}</span>
               })}
@@ -358,17 +360,17 @@ export default function NewServer() {
             <h2 className='mt-8 text-lg font-semibold'>
               {t('accountPage.tabs.myServers.sections.newServer.fields.areYouReady.label')}
             </h2>
-            
-            <div className='flex flex-col w-full gap-2 mt-2 sm:flex-row'>
-              <button 
-                className='flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-full justify-center hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70' 
+
+            <div className='mt-2 flex w-full flex-col gap-2 sm:flex-row'>
+              <button
+                className='flex w-full items-center justify-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 disabled={
                   loading ||
                   serverDescription.length < 1 ||
                   serverInviteLink.length < 1 ||
                   !serverCategory ||
                   serverKeywords.length < 1
-                } 
+                }
                 onClick={addServer}
               >
                 {loading && <TbLoader className='animate-spin' />}
@@ -398,7 +400,7 @@ export default function NewServer() {
                 })}
               </button>
 
-              <button className='flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
+              <button className='flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
                 onClick={() => {
                   setCurrentlyAddingServer(null);
                   setServerDescription('');

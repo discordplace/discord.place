@@ -8,7 +8,7 @@ import EssentialInformation from '@/app/(servers)/servers/[id]/manage/components
 import Other from '@/app/(servers)/servers/[id]/manage/components/Other';
 import Webhook from '@/app/(servers)/servers/[id]/manage/components/Webhook';
 import DangerZone from '@/app/(servers)/servers/[id]/manage/components/DangerZone';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { toast } from 'sonner';
 import editServer from '@/lib/request/servers/editServer';
 import revalidateServer from '@/lib/revalidate/server';
@@ -32,7 +32,7 @@ export default function Content({ server }) {
   const [inviteURL, setInviteURL] = useState(parsedInviteUrl);
   const [category, setCategory] = useState(server.category);
   const [keywords, setKeywords] = useState(server.keywords);
-  
+
   useEffect(() => {
     const isDescriptionChanged = !isEqual(description, server.description);
     const isInviteURLChanged = !isEqual(inviteURL, parsedInviteUrl);
@@ -52,13 +52,13 @@ export default function Content({ server }) {
 
       // if the key already exists, update the value
       // otherwise, add the key and value to the array
-      
-      setChangedKeys(oldKeys => 
+
+      setChangedKeys(oldKeys =>
         oldKeys
           .filter(({ key: oldKey }) => oldKey !== key)
-          .concat({ 
-            key, 
-            value: isEqual(value, '') ? null : value 
+          .concat({
+            key,
+            value: isEqual(value, '') ? null : value
           })
       );
     }
@@ -71,7 +71,7 @@ export default function Content({ server }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description, inviteURL, category, keywords]);
 
-  function resetChanges() {    
+  function resetChanges() {
     changedKeys.forEach(({ key }) => {
       switch (key) {
         case 'description':
@@ -112,7 +112,7 @@ export default function Content({ server }) {
       },
       error: error => {
         setSavingChanges(false);
-        
+
         return error;
       }
     });
@@ -131,7 +131,7 @@ export default function Content({ server }) {
       if (event.key === 'Escape') {
         if (changesMade) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
-          
+
           openModal('confirm-exit', {
             title: t('serverManagePage.discardChangesModal.title'),
             description: t('serverManagePage.discardChangesModal.description'),
@@ -163,20 +163,20 @@ export default function Content({ server }) {
 
     document.addEventListener('keydown', handleEscape);
 
-    return () => document.removeEventListener('keydown', handleEscape); 
+    return () => document.removeEventListener('keydown', handleEscape);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [changesMade, openedModals]);
 
   return (
-    <div className="flex items-center justify-center w-full h-full px-4 mb-24 sm:px-12">
-      <div className="w-full h-full max-w-[1000px] flex flex-col items-start gap-y-8 mt-48">
-        <div className="flex flex-col w-full sm:items-center sm:flex-row sm:justify-between">
+    <div className="mb-24 flex size-full items-center justify-center px-4 sm:px-12">
+      <div className="mt-48 flex size-full max-w-[1000px] flex-col items-start gap-y-8">
+        <div className="flex w-full flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-y-1">
-            <h2 className="flex items-center text-3xl font-bold gap-x-2">
+            <h2 className="flex items-center gap-x-2 text-3xl font-bold">
               {t('serverManagePage.title')}
-            
-              <div className='p-2 text-xs font-bold uppercase rounded-lg select-none bg-quaternary'>
+
+              <div className='select-none rounded-lg bg-quaternary p-2 text-xs font-bold uppercase'>
                 {t('serverManagePage.escToCloseBadge')}
               </div>
             </h2>
@@ -184,9 +184,8 @@ export default function Content({ server }) {
             <p className="text-tertiary">
               {t('serverManagePage.subtitle')}
             </p>
-            
-            
-            <div className='flex items-center mt-2 font-medium gap-x-2 text-secondary'>
+
+            <div className='mt-2 flex items-center gap-x-2 font-medium text-secondary'>
               <ServerIcon
                 id={server.id}
                 hash={server.icon}
@@ -200,9 +199,9 @@ export default function Content({ server }) {
             </div>
           </div>
 
-          <div className='flex justify-end flex-1 w-full mt-8 sm:mt-0 gap-x-2'>
+          <div className='mt-8 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
             <button
-              className='w-full text-xs sm:text-sm px-2 sm:w-max justify-center disabled:opacity-70 border border-primary hover:border-[rgba(var(--bg-tertiary))] disabled:pointer-events-none sm:px-4 flex items-center gap-x-1.5 py-1.5 font-semibold hover:bg-tertiary hover:text-primary text-tertiary rounded-xl'
+              className='flex w-full items-center justify-center gap-x-1.5 rounded-xl border border-primary px-2 py-1.5 text-xs font-semibold text-tertiary hover:border-[rgba(var(--bg-tertiary))] hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
               onClick={resetChanges}
               disabled={!changesMade || savingChanges}
             >
@@ -210,7 +209,7 @@ export default function Content({ server }) {
             </button>
 
             <button
-              className='w-full text-xs sm:text-sm sm:w-max justify-center px-2 sm:px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold hover:bg-purple-600 bg-purple-500 rounded-xl'
+              className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-purple-500 px-2 py-1.5 text-xs font-semibold text-white hover:bg-purple-600 disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
               disabled={!changesMade || savingChanges}
               onClick={saveChanges}
             >
@@ -220,7 +219,7 @@ export default function Content({ server }) {
           </div>
         </div>
 
-        <div className='w-full h-[1px] bg-tertiary' />
+        <div className='h-px w-full bg-tertiary' />
 
         <EssentialInformation
           description={description}
@@ -229,7 +228,7 @@ export default function Content({ server }) {
           setInviteURL={setInviteURL}
         />
 
-        <div className='w-full h-[1px] bg-tertiary' />
+        <div className='h-px w-full bg-tertiary' />
 
         <Other
           category={category}
@@ -238,8 +237,8 @@ export default function Content({ server }) {
           setKeywords={setKeywords}
         />
 
-        <div className='w-full h-[1px] bg-tertiary' />
-        
+        <div className='h-px w-full bg-tertiary' />
+
         <Webhook
           serverId={server.id}
           webhookURL={server.webhook?.url || null}
@@ -249,7 +248,7 @@ export default function Content({ server }) {
 
         {server.permissions.canDelete && (
           <>
-            <div className='w-full h-[1px] bg-tertiary' />
+            <div className='h-px w-full bg-tertiary' />
 
             <DangerZone serverId={server.id} />
           </>

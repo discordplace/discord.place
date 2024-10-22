@@ -7,7 +7,7 @@ import config from '@/config';
 export async function generateMetadata({ params }) {
   const metadata = await getEmojiMetadata(params.id).catch(error => error);
   if (typeof metadata === 'string') return;
-  
+
   return {
     title: `Emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'}`,
     openGraph: {
@@ -27,6 +27,6 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const emoji = await getEmoji(params.id).catch(error => error);
   if (typeof emoji === 'string') return redirect(`/error?message=${encodeURIComponent(emoji)}`);
-  
+
   return <Content emoji={emoji} />;
 }

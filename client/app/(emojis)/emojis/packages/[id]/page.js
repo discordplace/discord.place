@@ -27,6 +27,6 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const emoji = await getEmoji(params.id, true).catch(error => error);
   if (typeof emoji === 'string') return redirect(`/error?message=${encodeURIComponent(emoji)}`);
-  
+
   return <Content emoji={emoji} />;
 }

@@ -31,7 +31,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
 
   function continueRemoveExtraOwner(userId) {
     setExtraOwnerRemoving(userId);
-    
+
     toast.promise(removeExtraOwner(botId, userId), {
       loading: t('botManagePage.extraOwners.toast.removingOwner'),
       success: () => {
@@ -42,7 +42,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
       },
       error: error => {
         setExtraOwnerRemoving('');
-        
+
         return error;
       }
     });
@@ -81,15 +81,15 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
   }
 
   return (
-    <div className='flex flex-col w-full gap-y-4'>
+    <div className='flex w-full flex-col gap-y-4'>
       <h3 className='flex flex-wrap items-center gap-4 text-xl font-semibold'>
         <ImHammer2 size={24} className='text-purple-500' />
         {t('botManagePage.extraOwners.title')}
 
         {canEditExtraOwners && (
           <button
-            className='text-white -ml-2 text-xs bg-purple-500 hover:bg-purple-600 px-2 py-0.5 rounded-full'
-            onClick={() => 
+            className='-ml-2 rounded-full bg-purple-500 px-2 py-0.5 text-xs text-white hover:bg-purple-600'
+            onClick={() =>
               openModal('add-extra-owner', {
                 title: t('botManagePage.extraOwners.addExtraOwnerModal.title'),
                 description: t('botManagePage.extraOwners.addExtraOwnerModal.description'),
@@ -97,7 +97,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
                   <input
                     type="text"
                     placeholder={botId}
-                    className="w-full px-3 py-2 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
+                    className="w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
                     ref={newExtraOwnerIdInputRef}
                   />
                 ),
@@ -120,9 +120,9 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
           >
             {t('buttons.addNew')}
           </button>
-        )}       
+        )}
 
-        <span className='-ml-2 text-xs text-white dark:text-white px-2 py-0.5 dark:bg-white/30 bg-black/30 rounded-full'>
+        <span className='-ml-2 rounded-full bg-black/30 px-2 py-0.5 text-xs text-white dark:bg-white/30 dark:text-white'>
           {t('botManagePage.extraOwners.optionalBadge')}
         </span>
       </h3>
@@ -147,8 +147,8 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
               key={index}
               className='flex items-center gap-x-2'
             >
-              <div className='w-8 h-8 rounded-full animate-pulse bg-tertiary' />
-              <div className='flex-1 w-[85px] h-4 bg-tertiary animate-pulse rounded' />
+              <div className='size-8 animate-pulse rounded-full bg-tertiary' />
+              <div className='h-4 w-[85px] flex-1 animate-pulse rounded bg-tertiary' />
             </div>
           ))
         ) : extraOwners.length === 0 ? (
@@ -177,7 +177,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
                   height={32}
                   className='rounded-full'
                 />
-                
+
                 <span className='font-medium text-secondary'>
                   {extraOwner.username}
                 </span>

@@ -36,12 +36,12 @@ module.exports = {
     async (request, response) => {
       const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
-      const baseFilter = { 
+      const baseFilter = {
         id: { $in: Array.from(client.guilds.cache.filter(guild => guild.available).keys()) },
         category: category === 'All' ? { $in: config.serverCategories } : category
       };
-      const findQuery = query ? { 
-        ...baseFilter, 
+      const findQuery = query ? {
+        ...baseFilter,
         $or: [
           { description: { $regex: query, $options: 'i' } },
           { keywords: { $in: query.split(' ') } },
@@ -73,11 +73,11 @@ module.exports = {
       }).slice(skip, skip + limit);
       const total = await Server.countDocuments(findQuery);
       const maxReached = skip + servers.length >= total;
-      const premiumUserIds = await User.find({ 
+      const premiumUserIds = await User.find({
         id: {
           $in: servers.map(server => client.guilds.cache.get(server.id)).map(guild => guild.ownerId)
         },
-        subscription: { 
+        subscription: {
           $ne: null
         }
       }).select('id');

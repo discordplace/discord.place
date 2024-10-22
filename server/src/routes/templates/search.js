@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { query} = require('express-validator');
+const { query } = require('express-validator');
 const Template = require('@/schemas/Template');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 
@@ -34,8 +34,8 @@ module.exports = {
       const { query, category = 'All', sort = 'Popular', limit = 9, page = 1 } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, approved: true } : { approved: true };
-      const findQuery = query ? { 
-        ...baseFilter, 
+      const findQuery = query ? {
+        ...baseFilter,
         $or: [
           { id: { $regex: query, $options: 'i' } },
           { 'user.id': { $regex: query, $options: 'i' } },

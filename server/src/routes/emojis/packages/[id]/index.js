@@ -15,7 +15,7 @@ module.exports = {
     validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
-      
+
       const emojiPack = await EmojiPack.findOne({ id });
       if (!emojiPack) return response.sendError('Emoji pack not found.', 404);
 
@@ -30,17 +30,17 @@ module.exports = {
       if (!emojiPack.approved && !permissions.canApprove && !permissions.canDelete) return response.sendError('You can\'t view this emoji until confirmed.', 404);
 
       const similarEmojiPacks = await EmojiPack.find({
-        categories: { 
-          $in: emojiPack.categories 
+        categories: {
+          $in: emojiPack.categories
         },
-        _id: { 
+        _id: {
           $ne: emojiPack._id
         }
       });
       const shuffledEmojiPacks = shuffle(similarEmojiPacks);
       const limitedEmojiPacks = shuffledEmojiPacks.slice(0, 4);
       const publiclySafeEmojiPacks = limitedEmojiPacks.map(e => e.toPubliclySafe());
-      
+
       const publiclySafe = emojiPack.toPubliclySafe();
       Object.assign(publiclySafe, { permissions });
 

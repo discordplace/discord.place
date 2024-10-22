@@ -7,7 +7,7 @@ const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 
 module.exports = async interaction => {
-  if (interaction.isCommand()) {    
+  if (interaction.isCommand()) {
     const foundCommand = client.commands.find(command => typeof command.data?.toJSON === 'function' ? command.data.toJSON().name === interaction.commandName : command.data.name === interaction.commandName);
     if (!foundCommand) return;
 
@@ -86,7 +86,8 @@ module.exports = async interaction => {
           if (interaction.options.getFocused() === '') return true;
           else return option.name.toLowerCase().includes(interaction.options.getFocused().toLowerCase());
         }).slice(0, 25).map(option => {
-          if (option.name.length >= 100) option.name = option.name.slice(0, 97) + '...';
+          if (option.name.length >= 100) option.name = `${option.name.slice(0, 97)}...`;
+
           return option;
         })
       );
@@ -110,7 +111,7 @@ module.exports = async interaction => {
       const guildId = interaction.customId.split('-')[2];
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return interaction.reply(await interaction.translate('interaction.buttons.quick_vote.errors.guild_not_found'));
-      
+
       const member = guild.members.cache.get(interaction.user.id) || await guild.members.fetch(interaction.user.id).catch(() => null);
       if (!member) return interaction.reply(await interaction.translate('interaction.buttons.quick_vote.errors.member_not_found'));
 
@@ -120,8 +121,9 @@ module.exports = async interaction => {
       Object.defineProperty(interaction, 'user', { value: member.user });
       Object.defineProperty(interaction, 'member', { value: member });
       Object.defineProperty(interaction, 'guild', { value: guild });
-      
+
       const voteCommand = require('@/src/bot/commands/features/vote');
+
       return voteCommand.execute(interaction);
     }
 
@@ -218,7 +220,7 @@ module.exports = async interaction => {
         const selectedButtonComponent = currentComponents.find(row => row.components.find(component => component.data.custom_id === interaction.customId)).components.find(component => component.data.custom_id === interaction.customId);
         selectedButtonComponent.setStyle(Discord.ButtonStyle.Primary);
 
-        return interaction.update({ 
+        return interaction.update({
           content: await interaction.translate('interaction.buttons.human_verification.numbers_selected', { numbers: data.join('') }),
           components: currentComponents
         });
@@ -227,11 +229,11 @@ module.exports = async interaction => {
 
     if (interaction.customId.startsWith('deleteEvalResultMessage-')) {
       const [id, userId] = interaction.customId.split('-').slice(1);
-      
+
       if (interaction.user.id !== userId) return;
 
       await EvaluateResult.deleteOne({ id });
-      
+
       return interaction.message.delete();
     }
 

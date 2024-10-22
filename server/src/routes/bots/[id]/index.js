@@ -52,7 +52,7 @@ module.exports = {
       const parsedReviews = await Promise.all(foundReviews
         .map(async review => {
           const userHashes = await getUserHashes(review.user.id);
-            
+
           return {
             ...review.toJSON(),
             user: {
@@ -87,7 +87,7 @@ module.exports = {
           data: github_repository
         }
       };
-      
+
       if (permissions.canEditAPIKey && bot.api_key?.iv) {
         const apiKey = bot.getDecryptedApiKey();
         responseData.api_key = apiKey;
@@ -309,7 +309,7 @@ module.exports = {
       };
 
       if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
-      
+
       if (short_description) bot.short_description = short_description;
       if (description) bot.description = description;
       if (invite_url) bot.invite_url = invite_url;
@@ -343,6 +343,6 @@ module.exports = {
       await bot.save();
 
       return response.json(await bot.toPubliclySafe());
-    }   
+    }
   ]
 };

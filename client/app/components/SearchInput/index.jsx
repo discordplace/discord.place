@@ -12,6 +12,7 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
   function validateValue(throwError = true) {
     function returnError(message) {
       if (throwError) toast.error(message);
+
       return false;
     }
 
@@ -38,9 +39,9 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
 
   return (
     <motion.div
-      className='relative flex items-center w-full overflow-hidden'
-      initial={{ opacity: 0, y: -25 }} 
-      animate={{ opacity: 1, y: 0 }} 
+      className='relative flex w-full items-center overflow-hidden'
+      initial={{ opacity: 0, y: -25 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ ...sequenceTransition, delay: animationDelay }}
     >
       <button
@@ -72,7 +73,7 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
       >
         <FiX className='text-xl' />
       </button>
-      
+
       <input
         placeholder={placeholder}
         className={cn(

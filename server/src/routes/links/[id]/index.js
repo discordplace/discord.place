@@ -15,7 +15,7 @@ module.exports = {
       .isString().withMessage('ID should be a string.')
       .isLength({ min: 16, max: 16 }).withMessage('ID should be 16 characters long.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { id } = matchedData(request);
 
       const foundLink = await Link.findOne({ id });
@@ -47,9 +47,8 @@ module.exports = {
           .setColor(Discord.Colors.Red)
       ];
 
-
       client.channels.cache.get(config.linksLogsChannelId).send({ embeds });
-      
+
       return response.status(204).end();
     }
   ]

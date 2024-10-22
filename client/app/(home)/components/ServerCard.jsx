@@ -12,7 +12,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 
 export default function ServerCard({ data }) {
   return (
-    <div className='flex items-center py-1 pl-1 pr-3 border rounded-full pointer-events-none select-none border-primary gap-x-1 bg-secondary'>
+    <div className='pointer-events-none flex select-none items-center gap-x-1 rounded-full border border-primary bg-secondary py-1 pl-1 pr-3'>
       {data.icon_url ? (
         <Image
           src={data.icon_url}
@@ -22,12 +22,12 @@ export default function ServerCard({ data }) {
           className='rounded-full'
         />
       ) : (
-        <div className='w-[24px] h-[24px] rounded-full bg-quaternary text-xs flex items-center justify-center font-semibold'>
+        <div className='flex size-[24px] items-center justify-center rounded-full bg-quaternary text-xs font-semibold'>
           {getCompressedName(data.name, 2)}
         </div>
       )}
 
-      <span className='font-medium text-xs overflow-hidden whitespace-nowrap  text-tertiary max-w-[100px]'>
+      <span className='max-w-[100px] overflow-hidden whitespace-nowrap text-xs  font-medium text-tertiary'>
         {data.name}
       </span>
 

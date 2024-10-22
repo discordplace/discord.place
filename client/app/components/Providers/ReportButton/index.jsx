@@ -25,14 +25,14 @@ export default function ReportButtonProvider() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
-  
+
   const animate = useAnimationControls();
-  
+
   useEffect(() => {
     /*
       I couldn't get this to work with animate-wiggle with custom keyframes in tailwind.config.js
-      also tried with motion component props (animate, variants, etc) 
-      this is the only way I could get wiggle animation to work.. 
+      also tried with motion component props (animate, variants, etc)
+      this is the only way I could get wiggle animation to work..
       time is 05:43 AM here rn and I don't want to spend more time on this
     */
 
@@ -47,12 +47,12 @@ export default function ReportButtonProvider() {
   const reportSomethingTriggerButtonRef = useRef(null);
 
   const disabledPaths = ['/dashboard'];
-  
+
   if (disabledPaths.includes(pathname)) return null;
 
   return (
     <motion.div
-      className='fixed z-[999] right-4 bottom-4'
+      className='fixed bottom-4 right-4 z-[999]'
       animate={animate}
     >
       <Tooltip content={t('inAppReporting.tooltip.hide')}>

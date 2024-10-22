@@ -6,10 +6,11 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   // get all .md files in /blogs directory
-  const files = fs.readdirSync(process.cwd() + '/blogs').filter(file => file.endsWith('.md'));
+  const files = fs.readdirSync(`${process.cwd()}/blogs`).filter(file => file.endsWith('.md'));
 
   const data = files.map(file => {
-    const content = fs.readFileSync(process.cwd() + '/blogs/' + file, 'utf8');
+    const content = fs.readFileSync(`${process.cwd()}/blogs/${file}`, 'utf8');
+
     return matter(content).data;
   });
 

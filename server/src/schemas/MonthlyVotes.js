@@ -28,13 +28,13 @@ MonthlyVotesSchema.statics.updateMonthlyVotes = async function (identifier, vote
   const year = new Date().getFullYear();
 
   const mostVoted = await Model.findOne({ id: identifier }).sort({ votes: -1 }).limit(1);
-  const query = { identifier: identifier };
+  const query = { identifier };
   const updateData = { month, year, votes, created_at: new Date(), most_voted: mostVoted ? mostVoted.id : null };
 
   // Try to update the existing document
   const result = await this.updateOne(
-    { identifier: identifier, 'data.month': month, 'data.year': year },
-    { 
+    { identifier, 'data.month': month, 'data.year': year },
+    {
       $set: {
         'data.$.votes': votes,
         'data.$.most_voted': mostVoted ? mostVoted.id : null

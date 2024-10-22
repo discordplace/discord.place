@@ -18,7 +18,7 @@ export default function Sidebar({ blocks }) {
   const theme = useThemeStore(state => state.theme);
   const isCollapsed = useAccountStore(state => state.isCollapsed);
   const setIsCollapsed = useAccountStore(state => state.setIsCollapsed);
-  
+
   const isMobile = useMedia('(max-width: 768px)');
 
   return (
@@ -28,7 +28,7 @@ export default function Sidebar({ blocks }) {
         isCollapsed ? 'min-w-[60px] w-[60px]' : 'min-w-[250px]'
       )}
     >
-      <div className='sticky top-0 w-full h-max'>
+      <div className='sticky top-0 h-max w-full'>
         <div
           className={cn(
             'flex items-center pt-8 select-none gap-4',
@@ -39,12 +39,12 @@ export default function Sidebar({ blocks }) {
             className='flex gap-x-4 hover:opacity-60'
             href='/'
           >
-            <Image 
-              src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-              width={64} 
-              height={64} 
-              alt="discord.place Logo" 
-              className='w-6 h-6'
+            <Image
+              src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+              width={64}
+              height={64}
+              alt="discord.place Logo"
+              className='size-6'
             />
 
             <h1
@@ -88,7 +88,7 @@ export default function Sidebar({ blocks }) {
           )}
         </div>
 
-        <div className='flex flex-col w-full pl-4 mt-8 gap-y-1'>
+        <div className='mt-8 flex w-full flex-col gap-y-1 pl-4'>
           {blocks.filter(({ tabs }) => !tabs).map(block => (
             <BlockItem
               key={block.id}
@@ -101,7 +101,7 @@ export default function Sidebar({ blocks }) {
               key={block.id}
               className={cn(
                 'flex flex-col gap-y-1',
-                !isCollapsed && 'mt-3' 
+                !isCollapsed && 'mt-3'
               )}
             >
               <span
@@ -110,7 +110,7 @@ export default function Sidebar({ blocks }) {
                   isCollapsed && 'hidden'
                 )}
               >
-                {block.name}  
+                {block.name}
               </span>
 
               <div

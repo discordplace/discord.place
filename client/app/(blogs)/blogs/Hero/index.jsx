@@ -36,13 +36,13 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-6 mobile:px-12 lg:px-0">
+    <div className="relative z-0 flex flex-col items-center px-6 pt-56 mobile:px-12 lg:px-0">
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
-      <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
+      <div className='absolute top-[-15%] h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
 
-      <div className='flex flex-col items-center w-full max-w-5xl sm:items-start'>
-        <motion.h1 
+      <div className='flex w-full max-w-5xl flex-col items-center sm:items-start'>
+        <motion.h1
           className={cn(
             'text-5xl relative font-medium max-w-[800px] text-center text-primary',
             BricolageGrotesque.className
@@ -58,16 +58,16 @@ export default function Hero() {
             alt=''
             width={32}
             height={5}
-            className='absolute hidden sm:block -top-2 -right-8 -rotate-12'
+            className='absolute -right-8 -top-2 hidden -rotate-12 sm:block'
           />
         </motion.h1>
 
-        <motion.span className="sm:text-left text-center sm:text-lg max-w-[700px] mt-8 text-tertiary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+        <motion.span className="mt-8 max-w-[700px] text-center text-tertiary sm:text-left sm:text-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
           {t('blogsPage.subtitle')}
         </motion.span>
 
         <motion.div
-          className='flex flex-wrap items-center w-full gap-2 mt-24 lg:border-b-2 lg:gap-x-6 lg:border-b-primary'
+          className='mt-24 flex w-full flex-wrap items-center gap-2 lg:gap-x-6 lg:border-b-2 lg:border-b-primary'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ ...sequenceTransition, delay: 0.3 }}
@@ -89,7 +89,7 @@ export default function Hero() {
                   <motion.div
                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                     layoutId='blogActiveTagIndicator'
-                    className='hidden lg:block absolute -bottom-0.5 left-0 w-full h-[2px] bg-black dark:bg-white'
+                    className='absolute -bottom-0.5 left-0 hidden h-[2px] w-full bg-black dark:bg-white lg:block'
                   />
                 )}
               </button>
@@ -97,7 +97,7 @@ export default function Hero() {
         </motion.div>
 
         <motion.div
-          className='flex flex-wrap w-full gap-12 mt-12 mb-24'
+          className='mb-24 mt-12 flex w-full flex-wrap gap-12'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ ...sequenceTransition, delay: 0.4 }}

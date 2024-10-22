@@ -18,7 +18,7 @@ module.exports = {
     async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'PROFILES_LIKE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to like profiles.', 403);
-      
+
       const { slug } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);

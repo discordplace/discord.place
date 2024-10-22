@@ -7,18 +7,18 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
   return (
     <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild>
-        <button className='flex max-w-[200px] px-2 py-1 bg-tertiary text-tertiary hover:text-primary hover:bg-quaternary rounded-lg outline-none'>
+        <button className='flex max-w-[200px] rounded-lg bg-tertiary px-2 py-1 text-tertiary outline-none hover:bg-quaternary hover:text-primary'>
           {currentlyEditingValue || 'Unknown'}
         </button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className='z-10 flex flex-col p-2 mt-2 border outline-none min-w-[200px] bg-secondary rounded-xl border-primary gap-y-1'>
-          <DropdownMenu.Item 
+        <DropdownMenu.Content className='z-10 mt-2 flex min-w-[200px] flex-col gap-y-1 rounded-xl border border-primary bg-secondary p-2 outline-none'>
+          <DropdownMenu.Item
             className={cn(
               'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
               currentlyEditingValue === 'discord.place/p' ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
-            )} 
+            )}
             onSelect={() => setCurrentlyEditingValue('discord.place/p')}
           >
             discord.place/p
@@ -26,12 +26,12 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
           </DropdownMenu.Item>
 
           {config.customHostnames.map(hostname => (
-            <DropdownMenu.Item 
+            <DropdownMenu.Item
               key={hostname}
               className={cn(
                 'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
                 currentlyEditingValue === hostname ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
-              )} 
+              )}
               onSelect={() => setCurrentlyEditingValue(hostname)}
             >
               {hostname}
@@ -40,6 +40,6 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
           ))}
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
-    </DropdownMenu.Root>   
+    </DropdownMenu.Root>
   );
 }

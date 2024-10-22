@@ -70,11 +70,11 @@ export default function ContentPolicy() {
         You can reach us via the emails below or on our Discord server.
       </p>
 
-      <div className="flex mt-2 gap-x-2">
-        <Link href={config.supportInviteUrl} className='px-3 py-1 text-sm font-medium !text-white no-underline bg-black rounded-lg dark:bg-white dark:!text-black dark:hover:bg-white/70 hover:bg-black/70'>
+      <div className="mt-2 flex gap-x-2">
+        <Link href={config.supportInviteUrl} className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'>
           Discord Server
         </Link>
-        <Link href='mailto:legal@discord.place' className='px-3 py-1 text-sm font-medium !text-white no-underline bg-black rounded-lg dark:bg-white dark:!text-black dark:hover:bg-white/70 hover:bg-black/70'>
+        <Link href='mailto:legal@discord.place' className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'>
           Email
         </Link>
       </div>

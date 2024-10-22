@@ -10,7 +10,7 @@ export const useAccountStore = create(set => ({
   loading: false,
   fetchData: async keys => {
     set({ loading: true });
-    
+
     fetchData(keys)
       .then(data => set({ data, loading: false }))
       .catch(error => {

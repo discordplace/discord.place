@@ -64,7 +64,7 @@ export default function NewBot() {
       botInviteUrl,
       botCategories
     });
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [botId, botShortDescription, botDescription, botInviteUrl, botCategories]);
 
@@ -108,13 +108,13 @@ export default function NewBot() {
 
   return (
     <>
-      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100svh]">
+      <div className="pointer-events-none fixed left-0 top-0 z-10 h-svh w-full">
         <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
       </div>
 
-      <div className="flex justify-center w-full gap-y-4 max-w-[800px] flex-col">
+      <div className="flex w-full max-w-[800px] flex-col justify-center gap-y-4">
         <div className="flex items-center gap-x-4">
-          <button className="p-1.5 rounded-xl bg-secondary hover:bg-tertiary" onClick={() => {
+          <button className="rounded-xl bg-secondary p-1.5 hover:bg-tertiary" onClick={() => {
             setBotId('');
             setBotShortDescription('');
             setBotDescription('');
@@ -124,27 +124,27 @@ export default function NewBot() {
             <MdChevronLeft size={24}/>
           </button>
 
-          <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
+          <h1 className="flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl">
             {t('accountPage.tabs.myBots.sections.addBot.title')}
           </h1>
         </div>
 
-        <p className="text-sm sm:text-base max-w-[800px] text-tertiary">
+        <p className="max-w-[800px] text-sm text-tertiary sm:text-base">
           {t('accountPage.tabs.myBots.sections.addBot.subtitle')}
         </p>
 
-        <div className="flex items-center justify-center w-full mt-12">
-          <div className="max-w-[800px] w-full flex flex-col gap-y-1">
+        <div className="mt-12 flex w-full items-center justify-center">
+          <div className="flex w-full max-w-[800px] flex-col gap-y-1">
             <h2 className="text-lg font-semibold">
               {t('accountPage.tabs.myBots.sections.addBot.fields.botId.label')}
             </h2>
 
-            <p className="text-sm sm:text-base text-tertiary">
+            <p className="text-sm text-tertiary sm:text-base">
               {t('accountPage.tabs.myBots.sections.addBot.fields.botId.description')}
             </p>
 
             <input
-              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
+              className="mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary"
               onChange={event => setBotId(event.target.value)}
               value={botId}
             />
@@ -153,12 +153,12 @@ export default function NewBot() {
               {t('accountPage.tabs.myBots.sections.addBot.fields.shortDescription.label')}
             </h2>
 
-            <p className="text-sm sm:text-base text-tertiary">
+            <p className="text-sm text-tertiary sm:text-base">
               {t('accountPage.tabs.myBots.sections.addBot.fields.shortDescription.description')}
             </p>
 
             <input
-              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
+              className="mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary"
               maxLength={config.botShortDescriptionMaxLength}
               value={botShortDescription}
               onChange={event => setBotShortDescription(event.target.value)}
@@ -168,12 +168,12 @@ export default function NewBot() {
               {t('accountPage.tabs.myBots.sections.addBot.fields.longDescription.label')}
             </h2>
 
-            <p className="text-sm sm:text-base text-tertiary">
+            <p className="text-sm text-tertiary sm:text-base">
               {t('accountPage.tabs.myBots.sections.addBot.fields.longDescription.description')}
             </p>
 
             <button
-              className="mt-4 flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-max h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70"
+              className="mt-4 flex size-max items-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70"
               onClick={() => setMarkdownPreviewing(!markdownPreviewing)}
             >
               {markdownPreviewing ? (
@@ -195,7 +195,7 @@ export default function NewBot() {
               </Markdown>
             ) : (
               <textarea
-                className="block w-full resize-none h-[250px] p-2 mt-4 overflow-y-auto border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
+                className="mt-4 block h-[250px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary"
                 value={botDescription}
                 onChange={event => setBotDescription(event.target.value)}
                 maxLength={config.botDescriptionMaxLength}
@@ -206,12 +206,12 @@ export default function NewBot() {
               {t('accountPage.tabs.myBots.sections.addBot.fields.inviteUrl.label')}
             </h2>
 
-            <p className="text-sm sm:text-base text-tertiary">
+            <p className="text-sm text-tertiary sm:text-base">
               {t('accountPage.tabs.myBots.sections.addBot.fields.inviteUrl.description')}
             </p>
 
             <input
-              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
+              className="mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary"
               value={botInviteUrl}
               onChange={event => setBotInviteUrl(event.target.value)}
             />
@@ -224,7 +224,7 @@ export default function NewBot() {
               {t('accountPage.tabs.myBots.sections.addBot.fields.categories.description')}
             </p>
 
-            <div className="flex flex-wrap mt-4 gap-x-2 gap-y-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               {config.botCategories
                 .filter(category => category !== 'All')
                 .map(category => (
@@ -249,7 +249,7 @@ export default function NewBot() {
               {t('accountPage.tabs.myBots.sections.addBot.fields.contentPolicy.label')}
             </h2>
 
-            <p className='flex flex-col text-sm sm:text-base gap-y-1 text-tertiary'>
+            <p className='flex flex-col gap-y-1 text-sm text-tertiary sm:text-base'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.contentPolicy.description', {
                 note: <span className='text-xs'>{t('accountPage.tabs.myBots.sections.addBot.fields.contentPolicy.note')}</span>
               })}
@@ -259,9 +259,9 @@ export default function NewBot() {
               {t('accountPage.tabs.myBots.sections.addBot.fields.areYouReady.label')}
             </h2>
 
-            <div className="flex flex-col w-full gap-2 mt-2 sm:flex-row">
+            <div className="mt-2 flex w-full flex-col gap-2 sm:flex-row">
               <button
-                className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-full justify-center hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70"
+                className="flex w-full items-center justify-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70"
                 disabled={
                   loading ||
                   !botId ||
@@ -276,7 +276,7 @@ export default function NewBot() {
                 {t('buttons.addBot')}
               </button>
 
-              <button className="flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
+              <button className="flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
                 onClick={() => {
                   setBotId('');
                   setBotShortDescription('');

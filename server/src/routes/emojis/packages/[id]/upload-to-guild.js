@@ -27,7 +27,7 @@ module.exports = {
 
       if (!parseInt(packIndex)) return response.sendError('Pack index must be an integer.', 400);
       if (packIndex < 0 || packIndex > config.packagesMaxEmojisLength) return response.sendError(`Pack index must be between 0 and ${config.packagesMaxEmojisLength}.`, 400);
-      
+
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return response.sendError('Guild not found.', 404);
 
@@ -53,6 +53,7 @@ module.exports = {
         return response.status(204).end();
       } catch (error) {
         logger.warn(`Emoji pack ${pack.name} (${pack.id}) could not be uploaded to guild ${guild.name} (${guild.id}):`, error);
+
         return response.sendError(`An error occurred: ${error.message}`, 500);
       }
     }

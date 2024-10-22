@@ -4,17 +4,17 @@ import cn from '@/lib/cn';
 
 export default function MockReviewCard({ username, content, rating }) {
   return (
-    <div className='relative top-3 flex flex-col rotate-[10deg] gap-y-2 max-w-[300px] h-max bg-tertiary p-2 mobile:p-4 rounded-2xl'>
+    <div className='relative top-3 flex h-max max-w-[300px] rotate-[10deg] flex-col gap-y-2 rounded-2xl bg-tertiary p-2 mobile:p-4'>
       <div className='flex items-center gap-x-2'>
         <Image
           src={`/dicebear/${username}.jpg`}
           alt='Avatar'
           width={32}
           height={32}
-          className='w-[24px] h-[24px] mobile:w-[32px] mobile:h-[32px] rounded-full'
+          className='size-[24px] rounded-full mobile:size-[32px]'
         />
 
-        <h3 className='text-sm font-medium truncate mobile:text-base'>
+        <h3 className='truncate text-sm font-medium mobile:text-base'>
           @{username}
         </h3>
 
@@ -32,7 +32,7 @@ export default function MockReviewCard({ username, content, rating }) {
         </div>
       </div>
 
-      <p className='text-xs mobile:text-sm line-clamp-3 text-tertiary'>
+      <p className='line-clamp-3 text-xs text-tertiary mobile:text-sm'>
         {content}
       </p>
     </div>

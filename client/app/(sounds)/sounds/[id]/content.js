@@ -34,23 +34,23 @@ export default function Content({ sound }) {
       success: () => {
         closeModal('delete-sound');
         setTimeout(() => router.push('/'), 3000);
-        
+
         return t('soundPage.toast.soundDeleted', { soundName: sound.name });
       },
       error: error => {
         enableButton('delete-sound', 'confirm');
-        
+
         return error;
       }
     });
   }
 
   return (
-    <div className='flex items-center justify-center w-full'>
-      <div className='flex w-full max-w-[1000px] mt-48 mb-16 flex-col gap-y-4 px-4 lg:px-0'>
+    <div className='flex w-full items-center justify-center'>
+      <div className='mb-16 mt-48 flex w-full max-w-[1000px] flex-col gap-y-4 px-4 lg:px-0'>
         {!sound.approved && (
-          <div className='flex flex-col p-4 border border-yellow-500 gap-y-2 bg-yellow-500/10 rounded-xl'>
-            <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
+          <div className='flex flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4'>
+            <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>
               <RiErrorWarningFill />
               Beep beep!
             </h1>
@@ -60,7 +60,7 @@ export default function Content({ sound }) {
           </div>
         )}
 
-        <div className='flex flex-col w-full h-full gap-4 lg:flex-row'>
+        <div className='flex size-full flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
             <SoundPreview
               sound={sound}
@@ -68,13 +68,13 @@ export default function Content({ sound }) {
             />
           </motion.div>
 
-          <div className='flex flex-col flex-1 w-full gap-y-4'>
+          <div className='flex w-full flex-1 flex-col gap-y-4'>
             <h2 className='text-xl font-semibold text-primary'>
               {t('soundPage.soundDetails.title', { soundName: sound.name })}
             </h2>
 
             <div className='flex flex-col gap-y-2'>
-              <div className='flex items-center justify-between w-full'>
+              <div className='flex w-full items-center justify-between'>
                 <span className='text-sm font-medium text-tertiary'>
                   {t('soundPage.soundDetails.fields.uploadedAt')}
                 </span>
@@ -84,7 +84,7 @@ export default function Content({ sound }) {
                 </span>
               </div>
 
-              <div className='flex items-center justify-between w-full'>
+              <div className='flex w-full items-center justify-between'>
                 <span className='text-sm font-medium text-tertiary'>
                   {t('soundPage.soundDetails.fields.downloads')}
                 </span>
@@ -94,7 +94,7 @@ export default function Content({ sound }) {
                 </span>
               </div>
 
-              <div className='flex items-center justify-between w-full'>
+              <div className='flex w-full items-center justify-between'>
                 <span className='text-sm font-medium text-tertiary'>
                   {t('soundPage.soundDetails.fields.likes')}
                 </span>
@@ -104,7 +104,7 @@ export default function Content({ sound }) {
                 </span>
               </div>
 
-              <div className='flex items-center justify-between w-full'>
+              <div className='flex w-full items-center justify-between'>
                 <span className='text-sm font-medium text-tertiary'>
                   {t('soundPage.soundDetails.fields.categories')}
                 </span>
@@ -113,7 +113,7 @@ export default function Content({ sound }) {
                   {sound.categories.map(category => (
                     <span
                       key={category}
-                      className='flex items-center text-sm font-semibold rounded-lg select-none gap-x-1 text-tertiary'
+                      className='flex select-none items-center gap-x-1 rounded-lg text-sm font-semibold text-tertiary'
                     >
                       {config.soundCategoriesIcons[category]}
                       {t(`categories.${category}`)}
@@ -122,14 +122,14 @@ export default function Content({ sound }) {
                 </div>
               </div>
 
-              <div className='flex items-center justify-between w-full'>
+              <div className='flex w-full items-center justify-between'>
                 <span className='text-sm font-medium text-tertiary'>
                   {t('soundPage.soundDetails.fields.publisher')}
                 </span>
 
                 <Link
                   href={`/profile/u/${sound.publisher.id}`}
-                  className='flex items-center text-sm font-semibold transition-opacity gap-x-1 text-primary hover:opacity-70'
+                  className='flex items-center gap-x-1 text-sm font-semibold text-primary transition-opacity hover:opacity-70'
                 >
                   @{sound.publisher.username}
                 </Link>
@@ -138,9 +138,9 @@ export default function Content({ sound }) {
           </div>
         </div>
 
-        <div className='flex flex-col w-full gap-4 lg:flex-row'>          
-          <div className='flex flex-col w-full gap-y-4'>
-            <h2 className='flex items-center mt-4 text-lg font-semibold sm:text-xl gap-x-1'>
+        <div className='flex w-full flex-col gap-4 lg:flex-row'>
+          <div className='flex w-full flex-col gap-y-4'>
+            <h2 className='mt-4 flex items-center gap-x-1 text-lg font-semibold sm:text-xl'>
               <LuShieldQuestion />
               {t('soundPage.frequentlyAskedQuestions.title')}
             </h2>
@@ -150,19 +150,19 @@ export default function Content({ sound }) {
         </div>
 
         {sound.permissions.canDelete && (
-          <div className='flex flex-col p-4 mt-8 border border-red-500 gap-y-2 bg-red-500/10 rounded-xl'>
-            <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
+          <div className='mt-8 flex flex-col gap-y-2 rounded-xl border border-red-500 bg-red-500/10 p-4'>
+            <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>
               <RiErrorWarningFill />
               {t('soundPage.dangerZone.title')}
             </h1>
-            
+
             <p className='text-sm font-medium text-tertiary'>
               {t('soundPage.dangerZone.description')}
             </p>
-            
-            <div className='flex mt-1 gap-x-2'>
-              <button 
-                className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
+
+            <div className='mt-1 flex gap-x-2'>
+              <button
+                className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 onClick={() =>
                   openModal('delete-sound', {
                     title: t('soundPage.dangerZone.deleteSoundModal.title'),

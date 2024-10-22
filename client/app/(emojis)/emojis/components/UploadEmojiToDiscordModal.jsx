@@ -16,10 +16,10 @@ export default function UploadEmojiToDiscordModal({ guilds }) {
   const setSelectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.setSelectedGuildId);
 
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex size-full items-center justify-center">
       {guilds.length === 0 ? (
-        <div className="flex flex-col mt-4 gap-y-2">
-          <ErrorState 
+        <div className="mt-4 flex flex-col gap-y-2">
+          <ErrorState
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
@@ -29,14 +29,14 @@ export default function UploadEmojiToDiscordModal({ guilds }) {
             message={t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.emptyErrorState.message')}
           />
 
-          <div className='w-full bg-quaternary my-4 h-[1px]' />
-          
+          <div className='my-4 h-px w-full bg-quaternary' />
+
           <p className='text-xs text-tertiary'>
             {t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.notes', { br: <br /> })}
           </p>
         </div>
       ) : (
-        <div className='flex flex-wrap items-center justify-center w-full gap-4'>
+        <div className='flex w-full flex-wrap items-center justify-center gap-4'>
           {guilds
             .sort((a, b) => b.bot_in_guild - a.bot_in_guild)
             .map(guild => (
@@ -70,10 +70,10 @@ export default function UploadEmojiToDiscordModal({ guilds }) {
                     className='relative'
                     href={config.botInviteURL}
                   >
-                    <div className='absolute top-0 left-0 flex items-center justify-center w-full h-full rounded-full bg-white/60 dark:bg-black/60'>
+                    <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-full bg-white/60 dark:bg-black/60'>
                       <HiPlus className='text-black dark:text-white' size={20} />
                     </div>
-                    
+
                     <ServerIcon
                       id={guild.id}
                       hash={guild.icon}

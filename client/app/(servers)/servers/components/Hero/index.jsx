@@ -52,13 +52,13 @@ export default function Hero() {
   };
 
   const stateVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0
     },
-    visible: { 
+    visible: {
       opacity: 1
     },
-    exit: { 
+    exit: {
       opacity: 0
     }
   };
@@ -66,13 +66,13 @@ export default function Hero() {
   const showPagination = !loading && totalServers > limit;
 
   return (
-    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 lg:px-0">
+    <div className="relative z-0 flex flex-col items-center px-4 pt-56 lg:px-0">
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
-      <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
+      <div className='absolute top-[-15%] h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
 
-      <div className='max-w-[800px] flex flex-col w-full items-center'>
-        <motion.h1 
+      <div className='flex w-full max-w-[800px] flex-col items-center'>
+        <motion.h1
           className={cn(
             'text-5xl font-medium max-w-[800px] text-center text-primary',
             BricolageGrotesque.className
@@ -83,11 +83,11 @@ export default function Hero() {
         >
           {t('serversPage.title')}
         </motion.h1>
-        <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-tertiary" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+        <motion.span className="mt-8 max-w-[700px] text-center text-tertiary sm:text-lg" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
           {t('serversPage.subtitle')}
         </motion.span>
 
-        <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
+        <div className='mt-8 flex w-full flex-col items-center justify-center gap-2 sm:flex-row'>
           <SearchInput
             placeholder={t('serversPage.searchInputPlaceholder')}
             loading={loading}
@@ -98,7 +98,7 @@ export default function Hero() {
           />
 
           <motion.div
-            className='flex flex-col items-center w-full gap-2 mobile:flex-row sm:w-max'
+            className='flex w-full flex-col items-center gap-2 mobile:flex-row sm:w-max'
             initial={{ opacity: 0, y: -25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...sequenceTransition, delay: 0.3 }}
@@ -167,21 +167,21 @@ export default function Hero() {
       </div>
 
       <motion.div
-        className='max-w-[1000px] w-full flex flex-col my-8 gap-y-2'
+        className='my-8 flex w-full max-w-[1000px] flex-col gap-y-2'
         initial={{ opacity: 0, y: -25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...sequenceTransition, delay: 0.5 }}
       >
         {!loading && servers.length <= 0 ? (
           <AnimatePresence>
-            <motion.div 
+            <motion.div
               className='flex flex-col gap-y-2'
               variants={stateVariants}
               initial='hidden'
               animate='visible'
               exit='hidden'
             >
-              <ErrorState 
+              <ErrorState
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
@@ -191,7 +191,7 @@ export default function Hero() {
                 message={t('serversPage.emptyErrorState.message')}
               />
 
-              <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
+              <button className='text-tertiary hover:text-primary hover:underline' onClick={() => {
                 fetchServers('', 1, limit, 'All', 'Votes');
               }}>
                 {t('buttons.resetSearch')}
@@ -207,10 +207,10 @@ export default function Hero() {
             >
               {loading ? (
                 new Array(limit).fill(0).map((_, index) => (
-                  <div key={index} className='animate-pulse h-[250px] w-[322px] bg-secondary rounded-3xl' />
+                  <div key={index} className='h-[250px] w-[322px] animate-pulse rounded-3xl bg-secondary' />
                 ))
               ) : (
-                <>                  
+                <>
                   {servers.map(server => (
                     <ReportableArea
                       key={server.id}
@@ -236,17 +236,17 @@ export default function Hero() {
               )}
             </motion.div>
 
-            <div className='flex items-center justify-center w-full' key='pagination'> 
+            <div className='flex w-full items-center justify-center' key='pagination'>
               {showPagination && (
-                <div className='flex justify-center w-full'>
-                  <Pagination 
-                    page={page} 
+                <div className='flex w-full justify-center'>
+                  <Pagination
+                    page={page}
                     setPage={newPage => {
                       fetchServers(search, newPage);
-                    }} 
-                    loading={loading} 
-                    total={totalServers} 
-                    limit={limit} 
+                    }}
+                    loading={loading}
+                    total={totalServers}
+                    limit={limit}
                   />
                 </div>
               )}

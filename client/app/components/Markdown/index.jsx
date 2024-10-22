@@ -8,15 +8,17 @@ import raw from 'rehype-raw';
 
 export default function Markdown({ children, className, rawEnabled }) {
   return (
-    <div className={cn(
-      'markdown prose max-w-5xl min-w-[0px] dark:prose-invert',
-      'prose-blockquote:border-l-primary prose-blockquote:text-tertiary',
-      'prose-li:marker:text-tertiary',
-      'prose-thead:border-b-[rgba(var(--bg-quaternary))] prose-tr:border-b-[rgba(var(--bg-tertiary))]',
-      'prose-p:whitespace-pre-wrap',
-      'prose-pre:bg-[unset] prose-pre:p-0',
-      className
-    )}>
+    <div
+      className={cn(
+        'markdown prose max-w-5xl min-w-[0px] dark:prose-invert',
+        'prose-blockquote:border-l-primary prose-blockquote:text-tertiary',
+        'prose-li:marker:text-tertiary',
+        'prose-thead:border-b-[rgba(var(--bg-quaternary))] prose-tr:border-b-[rgba(var(--bg-tertiary))]',
+        'prose-p:whitespace-pre-wrap',
+        'prose-pre:bg-[unset] prose-pre:p-0',
+        className
+      )}
+    >
       <ReactMarkdown
         remarkPlugins={[gfm]}
         rehypePlugins={rawEnabled ? [raw] : []}

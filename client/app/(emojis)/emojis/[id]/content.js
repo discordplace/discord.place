@@ -24,7 +24,7 @@ export default function Content({ emoji }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
   const language = useLanguageStore(state => state.language);
-  
+
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -42,23 +42,23 @@ export default function Content({ emoji }) {
       success: () => {
         closeModal('delete-emoji');
         setTimeout(() => router.push('/'), 3000);
-        
+
         return t('emojiPage.toast.emojiDeleted', { emojiName: emoji.name });
       },
       error: error => {
         enableButton('delete-emoji', 'confirm');
-        
+
         return error;
       }
     });
   }
 
   return (
-    <div className='flex items-center justify-center w-full'>
-      <div className='flex w-full max-w-[1000px] mt-48 mb-16 flex-col gap-y-4 px-4 lg:px-0'>
+    <div className='flex w-full items-center justify-center'>
+      <div className='mb-16 mt-48 flex w-full max-w-[1000px] flex-col gap-y-4 px-4 lg:px-0'>
         {!emoji.approved && (
-          <div className='flex flex-col p-4 border border-yellow-500 gap-y-2 bg-yellow-500/10 rounded-xl'>
-            <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
+          <div className='flex flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4'>
+            <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>
               <RiErrorWarningFill />
               Beep beep!
             </h1>
@@ -70,75 +70,75 @@ export default function Content({ emoji }) {
             </p>
           </div>
         )}
-        
+
         <div className='flex flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
             <EmojiPreview
               id={emoji.id}
               name={emoji.name}
-              image_url={config.getEmojiURL(emoji.id, emoji.animated)} 
-              ableToChange={false} 
-              defaultSize='enlarge' 
+              image_url={config.getEmojiURL(emoji.id, emoji.animated)}
+              ableToChange={false}
+              defaultSize='enlarge'
             />
           </motion.div>
 
           <div className='grid w-full grid-cols-2 grid-rows-2 gap-4 sm:grid-cols-3'>
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPage.fields.name')}
               </h1>
-              
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 {emoji.name}
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPage.fields.uploaded')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 {new Date(emoji.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/,/g,'')}
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPage.fields.downloads')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 <AnimatedCount data={emoji.downloads} />
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPage.fields.animated')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 {emoji.animated ? t('emojiPage.fields.yes') : t('emojiPage.fields.no')}
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPage.fields.categories')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 {emoji.categories.map(category => t(`categories.${category}`)).join(', ')}
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPage.fields.publisher')}
               </h1>
-              
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 <UserAvatar
                   id={emoji.user.id}
                   hash={emoji.user.avatar}
@@ -147,15 +147,15 @@ export default function Content({ emoji }) {
                   height={18}
                   className='rounded-full'
                 />
-                
+
                 {emoji.user.username}
               </span>
             </div>
           </div>
         </div>
 
-        <div className='flex flex-col w-full gap-4 lg:flex-row'>
-          <div className='flex lg:max-w-[400px] w-full flex-col'>
+        <div className='flex w-full flex-col gap-4 lg:flex-row'>
+          <div className='flex w-full flex-col lg:max-w-[400px]'>
             <ChatMockup
               id={loggedIn ? user.id : emoji.user.id}
               avatar={loggedIn ? user.avatar : emoji.user.avatar}
@@ -165,7 +165,7 @@ export default function Content({ emoji }) {
               theme='dark'
               index={0}
             />
-            
+
             <ChatMockup
               id={loggedIn ? user.id : emoji.user.id}
               avatar={loggedIn ? user.avatar : emoji.user.avatar}
@@ -176,8 +176,8 @@ export default function Content({ emoji }) {
               index={1}
             />
 
-            <div className='mt-4 lg:max-w-[400px] w-full flex flex-col gap-y-2'>
-              <h2 className='flex items-center text-lg font-semibold sm:text-xl gap-x-1'>
+            <div className='mt-4 flex w-full flex-col gap-y-2 lg:max-w-[400px]'>
+              <h2 className='flex items-center gap-x-1 text-lg font-semibold sm:text-xl'>
                 <MdEmojiEmotions />
                 {t('emojiPage.similarEmojis.title')}
               </h2>
@@ -202,9 +202,9 @@ export default function Content({ emoji }) {
               )}
             </div>
           </div>
-          
-          <div className='flex flex-col w-full gap-y-4'>
-            <h2 className='flex items-center mt-4 text-lg font-semibold sm:text-xl gap-x-1'>
+
+          <div className='flex w-full flex-col gap-y-4'>
+            <h2 className='mt-4 flex items-center gap-x-1 text-lg font-semibold sm:text-xl'>
               <LuShieldQuestion />
               {t('emojiPage.frequentlyAskedQuestions.title')}
             </h2>
@@ -214,19 +214,19 @@ export default function Content({ emoji }) {
         </div>
 
         {emoji.permissions.canDelete && (
-          <div className='flex flex-col p-4 mt-8 border border-red-500 gap-y-2 bg-red-500/10 rounded-xl'>
-            <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
+          <div className='mt-8 flex flex-col gap-y-2 rounded-xl border border-red-500 bg-red-500/10 p-4'>
+            <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>
               <RiErrorWarningFill />
               {t('emojiPage.dangerZone.title')}
             </h1>
-            
+
             <p className='text-sm font-medium text-tertiary'>
               {t('emojiPage.dangerZone.description')}
             </p>
-            
-            <div className='flex mt-1 gap-x-2'>
-              <button 
-                className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
+
+            <div className='mt-1 flex gap-x-2'>
+              <button
+                className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 onClick={() =>
                   openModal('delete-emoji', {
                     title: t('emojiPage.dangerZone.deleteEmojiModal.title'),

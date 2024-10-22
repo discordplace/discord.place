@@ -23,14 +23,14 @@ module.exports = {
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { id } = matchedData(request);
       const emoji = await Emoji.findOne({ id });
       if (!emoji) return response.sendError('Emoji not found.', 404);
 
       const canDelete = request.user.id == emoji.user.id || config.permissions.canDeleteEmojisRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete this emoji.', 403);
-    
+
       const command = new DeleteObjectCommand({
         Bucket: process.env.S3_BUCKET_NAME,
         Key: `emojis/${emoji.emoji_ids ? `packages/${emoji.id}/` : `.${emoji.animated ? 'gif' : 'png'}`}`

@@ -8,10 +8,10 @@ import { useMedia } from 'react-use';
 export default function Tooltip({ children, content, side, sideOffset, size, hide }) {
   const [open, setOpen] = useState(false);
   const isMobile = useMedia('(max-width: 640px)', false);
-  
+
   return (
-    <RadixTooltip.Provider 
-      delayDuration='0' 
+    <RadixTooltip.Provider
+      delayDuration='0'
       skipDelayDuration='0'
       disableHoverableContent={true}
     >
@@ -19,10 +19,10 @@ export default function Tooltip({ children, content, side, sideOffset, size, hid
         onOpenChange={newOpenState => !hide && setOpen(newOpenState)}
         open={open}
       >
-        <RadixTooltip.Trigger 
+        <RadixTooltip.Trigger
           onClick={() => {
             if (hide) return;
-            
+
             if (isMobile) setOpen(!open);
           }}
           asChild

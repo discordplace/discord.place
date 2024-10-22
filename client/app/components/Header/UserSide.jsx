@@ -40,14 +40,16 @@ export default function UserSide({ className }) {
   }
 
   return (
-    <div className={cn(
-      'flex items-center gap-x-4',
-      className
-    )}>
+    <div
+      className={cn(
+        'flex items-center gap-x-4',
+        className
+      )}
+    >
       {loggedIn ? (
         <>
-          <button 
-            className='relative flex items-center px-4 py-1.5 overflow-hidden text-sm font-semibold text-white bg-black rounded-full pointer-events-auto dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 gap-x-1'
+          <button
+            className='pointer-events-auto relative flex items-center gap-x-1 overflow-hidden rounded-full bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
             onClick={logOut}
           >
             {t('header.logout')}
@@ -55,9 +57,9 @@ export default function UserSide({ className }) {
           </button>
 
           <Link
-            className="flex items-center font-medium rounded outline-none pointer-events-auto gap-x-2"
+            className="pointer-events-auto flex items-center gap-x-2 rounded font-medium outline-none"
             onClick={() => setOpen(!open)}
-            href='/account'  
+            href='/account'
           >
             <UserAvatar
               id={user.id}
@@ -71,8 +73,8 @@ export default function UserSide({ className }) {
           </Link>
         </>
       ) : (
-        <Link 
-          className='relative flex items-center px-4 py-1.5 overflow-hidden text-sm font-semibold text-white bg-black rounded-full pointer-events-auto dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 gap-x-1'
+        <Link
+          className='pointer-events-auto relative flex items-center gap-x-1 overflow-hidden rounded-full bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
           href={config.getLoginURL(pathname)}
         >
           {t('buttons.loginWithDiscord')}

@@ -5,7 +5,7 @@ export default function EmptyHeadings() {
   return (
     new Array(totalLoaders).fill(null).map((_, i) => (
       <div
-        className='h-4 rounded bg-tertiary animate-pulse'
+        className='h-4 animate-pulse rounded bg-tertiary'
         key={i}
         style={{ width: `${widths[i]}%` }}
       />

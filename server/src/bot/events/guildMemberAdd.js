@@ -27,7 +27,7 @@ module.exports = async member => {
 
         sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_deleted', { roleId: reward.role.id }))
           .catch(() => null);
-        
+
         logger.warn(`Role with ID ${reward.role.id} has been deleted from the database because it was not found in server ${member.guild.id}.`);
 
         continue;
@@ -37,7 +37,7 @@ module.exports = async member => {
 
       member.roles.add(role, await member.guild.translate('vote_rewards.reward_role_added_audit_reason', { requiredVotes: voter.vote }))
         .then(async () => {
-          sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_added', { username: member.user.username, userId: member.user.id, roleName: role.name, vote: voter.vote }))  
+          sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_added', { username: member.user.username, userId: member.user.id, roleName: role.name, vote: voter.vote }))
             .catch(() => null);
 
           const dmChannel = member.user.dmChannel || await member.user.createDM().catch(() => null);

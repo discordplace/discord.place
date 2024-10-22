@@ -70,7 +70,7 @@ module.exports = {
       };
 
       if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
-      
+
       if ((!url || url === '') && (!token || token === '')) {
         bot.webhook = { url: null, token: null };
 
@@ -87,6 +87,6 @@ module.exports = {
       await bot.save();
 
       return response.status(204).end();
-    }   
+    }
   ]
 };

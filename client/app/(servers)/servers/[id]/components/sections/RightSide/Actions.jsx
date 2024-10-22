@@ -35,7 +35,7 @@ export default function Actions({ server }) {
   const [buyTripledVotesLoading, setBuyTripledVotesLoading] = useState(false);
   const [buyStandedOutLoading, setBuyStandedOutLoading] = useState(false);
   const router = useRouter();
-  
+
   const formatter = new Intl.NumberFormat('en-US', {
     notation: 'compact',
     compactDisplay: 'short'
@@ -47,7 +47,7 @@ export default function Actions({ server }) {
   useEffect(() => {
     if (showCaptcha) {
       if (!window.turnstile) return setShowCaptcha(false);
-      
+
       setLoading(true);
       const turnstile = window.turnstile;
       turnstile?.render('.cf-turnstile');
@@ -71,6 +71,7 @@ export default function Actions({ server }) {
             },
             error: error => {
               setLoading(false);
+
               return error;
             }
           });
@@ -95,6 +96,7 @@ export default function Actions({ server }) {
       },
       error: error => {
         setCreateReminderLoading(false);
+
         return error;
       }
     });
@@ -105,14 +107,14 @@ export default function Actions({ server }) {
 
     toast.promise(createTripledVotesCheckout(server.id), {
       loading: t('serverPage.actions.toast.creatingCheckout'),
-      success: data => {        
+      success: data => {
         setTimeout(() => router.push(data.url), 3000);
 
         return t('serverPage.actions.toast.checkoutCreated');
       },
       error: error => {
         setBuyTripledVotesLoading(false);
-        
+
         return error;
       }
     });
@@ -140,17 +142,17 @@ export default function Actions({ server }) {
 
   return (
     <div>
-      <motion.h2 
-        className='text-xl font-semibold' 
-        initial={{ opacity: 0, y: -10 }} 
-        animate={{ opacity: 1, y: 0 }} 
+      <motion.h2
+        className='text-xl font-semibold'
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
       >
         {t('serverPage.actions.title')}
       </motion.h2>
 
-      <motion.div 
-        className='grid grid-cols-1 gap-2 mt-4 mobile:grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-col'
+      <motion.div
+        className='mt-4 grid grid-cols-1 gap-2 mobile:grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-col'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .15 }}
@@ -162,10 +164,11 @@ export default function Actions({ server }) {
             defer={true}
           />
         )}
-        
+
         <AnimatePresence>
           {showCaptcha && (
-            <motion.div className="cf-turnstile [&>iframe]:max-w-[100%]" data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY} ref={captchaRef} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
+            /* eslint-disable-next-line tailwindcss/no-custom-classname */
+            <motion.div className="cf-turnstile [&>iframe]:max-w-full" data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY} ref={captchaRef} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
           )}
         </AnimatePresence>
 
@@ -184,21 +187,21 @@ export default function Actions({ server }) {
               setReminder();
             }}
           >
-            <div className='flex gap-x-1.5 items-center'>
+            <div className='flex items-center gap-x-1.5'>
               {createReminderLoading && <TbLoader className='animate-spin' />}
               {t('buttons.createReminder')}
             </div>
 
-            <div className='flex items-center font-bold gap-x-1'>
+            <div className='flex items-center gap-x-1 font-bold'>
               <div className='relative'>
-                <FaBell className='absolute transition-transform opacity-0 group-hover:opacity-100 group-hover:scale-[1.2]' />
-                <FaRegBell className='opacity-100 transition-[transform] group-hover:opacity-0' />
+                <FaBell className='absolute opacity-0 transition-transform group-hover:scale-[1.2] group-hover:opacity-100' />
+                <FaRegBell className='opacity-100 transition-transform group-hover:opacity-0' />
               </div>
             </div>
           </motion.button>
         )}
 
-        <motion.button 
+        <motion.button
           className={cn(
             'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-black rounded-lg group gap-x-2 hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70',
             loading && 'cursor-default !opacity-70 hover:bg-black dark:hover:bg-white'
@@ -209,31 +212,31 @@ export default function Actions({ server }) {
           onClick={() => {
             if (!loggedIn) return toast.error(t('serverPage.actions.toast.loginRequiredForVote'));
             if (voteTimeout && new Date(voteTimeout.createdAt).getTime() + 86400000 > new Date().getTime()) return;
-            
+
             setShowCaptcha(true);
           }}
         >
-          <div className='flex gap-x-1.5 items-center'>
+          <div className='flex items-center gap-x-1.5'>
             {loading && <TbLoader className='animate-spin' />}
             {voteTimeout ? (
               <VoteCountdown date={new Date(voteTimeout.createdAt).getTime() + 86400000} />
             ) : t('buttons.vote')}
           </div>
 
-          <div className='flex items-center font-bold gap-x-1'>
+          <div className='flex items-center gap-x-1 font-bold'>
             <div className='relative'>
-              <TbSquareRoundedChevronUpFilled className='absolute transition-transform opacity-0 group-hover:opacity-100 group-hover:scale-[1.2]' />
-              <TbSquareRoundedChevronUp className='opacity-100 transition-[transform] group-hover:opacity-0' />
+              <TbSquareRoundedChevronUpFilled className='absolute opacity-0 transition-transform group-hover:scale-[1.2] group-hover:opacity-100' />
+              <TbSquareRoundedChevronUp className='opacity-100 transition-transform group-hover:opacity-0' />
             </div>
 
             {formatter.format(serverVotes)}
           </div>
         </motion.button>
-        
+
         {inviteLinkNotAvailable ? (
           <Tooltip content={t('serverPage.actions.tooltip.noInviteLinkAvailable')}>
             <motion.div
-              className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg cursor-default !opacity-70 bg-secondary gap-x-2 text-secondary'
+              className='flex w-full cursor-default items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary !opacity-70'
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
@@ -245,8 +248,8 @@ export default function Actions({ server }) {
             </motion.div>
           </Tooltip>
         ) : (
-          <MotionLink 
-            className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg group disabled:pointer-events-none disabled:opacity-70 hover:text-primary hover:bg-tertiary bg-secondary gap-x-2 text-secondary'
+          <MotionLink
+            className='group flex w-full items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
@@ -256,10 +259,10 @@ export default function Actions({ server }) {
             <BiSolidEnvelope />
           </MotionLink>
         )}
-        
+
         <motion.button className='cursor-auto' initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}>
           <CopyButton
-            className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg cursor-pointer group disabled:pointer-events-none disabled:opacity-70 hover:text-primary hover:bg-tertiary bg-secondary gap-x-2 text-secondary'
+            className='group flex w-full cursor-pointer items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
             successText={t('serverPage.actions.toast.serverUrlCopied')}
             copyText={server.vanity_url ? server.vanity_url : `https://discord.com/invite/${server.invite_code.code}`}
             defaultIcon={PiShareFat}
@@ -272,7 +275,7 @@ export default function Actions({ server }) {
         {server.permissions.canEdit && (
           <>
             <MotionLink
-              className='flex items-center justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg group disabled:pointer-events-none disabled:opacity-70 hover:text-primary hover:bg-tertiary bg-secondary gap-x-2 text-secondary'
+              className='group flex w-full items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
@@ -283,7 +286,7 @@ export default function Actions({ server }) {
             </MotionLink>
 
             {!server.vote_triple_enabled?.created_at && (
-              <motion.button 
+              <motion.button
                 className={cn(
                   'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-orange-500 rounded-lg group gap-x-2 hover:bg-orange-600',
                   buyTripledVotesLoading && '!opacity-70 pointer-events-none'
@@ -293,19 +296,19 @@ export default function Actions({ server }) {
                 transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
                 onClick={buyTripledVotes}
               >
-                <div className='flex gap-x-1.5 items-center'>
+                <div className='flex items-center gap-x-1.5'>
                   {buyTripledVotesLoading && <TbLoader className='animate-spin' />}
                   {t('buttons.buyTripleVotes')}
                 </div>
 
-                <div className='flex items-center font-bold gap-x-1'>
+                <div className='flex items-center gap-x-1 font-bold'>
                   <BsFire />
                 </div>
               </motion.button>
             )}
 
             {!server.standed_out?.created_at && (
-              <motion.button 
+              <motion.button
                 className={cn(
                   'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-green-800 rounded-lg group gap-x-2 hover:bg-green-900',
                   buyStandedOutLoading && '!opacity-70 pointer-events-none'
@@ -315,12 +318,12 @@ export default function Actions({ server }) {
                 transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
                 onClick={buyStandedOut}
               >
-                <div className='flex gap-x-1.5 items-center'>
+                <div className='flex items-center gap-x-1.5'>
                   {buyStandedOutLoading && <TbLoader className='animate-spin' />}
                   {t('buttons.standOut')}
                 </div>
 
-                <div className='flex items-center font-bold gap-x-1'>
+                <div className='flex items-center gap-x-1 font-bold'>
                   <AiOutlineRise />
                 </div>
               </motion.button>

@@ -30,7 +30,7 @@ export default function MyServers() {
           </p>
         </div>
 
-        <div className='flex flex-col mt-8 gap-y-2'>
+        <div className='mt-8 flex flex-col gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
             {t('accountPage.tabs.myServers.sections.listedServers.title')}
 
@@ -44,8 +44,8 @@ export default function MyServers() {
           </p>
 
           {(data.servers || []).length === 0 ? (
-            <div className='max-w-[800px] mt-20'>
-              <ErrorState 
+            <div className='mt-20 max-w-[800px]'>
+              <ErrorState
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
@@ -56,16 +56,16 @@ export default function MyServers() {
               />
             </div>
           ) : (
-            <div className='flex gap-4 flex-wrap max-w-[800px] mt-2'>
+            <div className='mt-2 flex max-w-[800px] flex-wrap gap-4'>
               {data.servers
                 .filter(server => server.is_created === true)
                 .map(server => (
                   <Link
                     key={server.id}
-                    className='flex items-center gap-4 p-4 transition-opacity bg-secondary rounded-xl hover:opacity-70'
+                    className='flex items-center gap-4 rounded-xl bg-secondary p-4 transition-opacity hover:opacity-70'
                     href={`/servers/${server.id}`}
                   >
-                    <div className='relative w-12 h-12'>
+                    <div className='relative size-12'>
                       {server.icon ? (
                         <ServerIcon
                           id={server.id}
@@ -101,7 +101,7 @@ export default function MyServers() {
           )}
         </div>
 
-        <div className='flex flex-col mt-8 gap-y-2'>
+        <div className='mt-8 flex flex-col gap-y-2'>
           <h2 className='text-sm font-bold text-secondary'>
             {t('accountPage.tabs.myServers.sections.unlistedServers.title')}
 
@@ -114,8 +114,8 @@ export default function MyServers() {
             {t('accountPage.tabs.myServers.sections.unlistedServers.subtitle')}
           </p>
 
-          <div className='mt-4 relative flex flex-col gap-y-2 w-full max-w-[800px] bg-blue-500/10 border border-blue-500 p-4 rounded-xl transition-[margin,opacity] duration-1000 ease-in-out'>
-            <h2 className='flex items-center text-base font-semibold mobile:text-lg gap-x-2'>
+          <div className='relative mt-4 flex w-full max-w-[800px] flex-col gap-y-2 rounded-xl border border-blue-500 bg-blue-500/10 p-4 transition-[margin,opacity] duration-1000 ease-in-out'>
+            <h2 className='flex items-center gap-x-2 text-base font-semibold mobile:text-lg'>
               <BsQuestionCircleFill /> {t('accountPage.tabs.myServers.sections.unlistedServers.missingServerInfo.title')}
             </h2>
 
@@ -129,7 +129,7 @@ export default function MyServers() {
 
           {(data.servers || []).length === 0 ? (
             <div className='max-w-[800px]'>
-              <ErrorState 
+              <ErrorState
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
@@ -140,7 +140,7 @@ export default function MyServers() {
               />
             </div>
           ) : (
-            <div className='flex gap-4 flex-wrap max-w-[800px] mt-2'>
+            <div className='mt-2 flex max-w-[800px] flex-wrap gap-4'>
               {data.servers
                 .filter(server => server.is_created === false)
                 .map(server => (

@@ -22,21 +22,23 @@ export default function LikesGraph({ profile }) {
 
   return (
     <>
-      <h2 className='flex items-center text-xl font-semibold gap-x-2'>
+      <h2 className='flex items-center gap-x-2 text-xl font-semibold'>
         {t('profilePage.graph.likes.title')}
 
         <Tooltip
           side={isMobile ? 'bottom' : 'right'}
           content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChanges'}`, { postProcess: 'interval', count: 0, difference })}
         >
-          <div className={cn(
-            'select-none flex w-max gap-x-1 px-2 items-center py-1 text-xs font-semibold rounded-lg',
-            isIncreased && 'dark:bg-emerald-300/10 dark:text-emerald-300 bg-emerald-600/10 text-emerald-600',
-            isDecreased && 'dark:bg-red-400/10 dark:text-red-400 bg-red-600/10 text-red-600', 
-            isEqual && 'bg-quaternary text-tertiary'
-          )}>
+          <div
+            className={cn(
+              'select-none flex w-max gap-x-1 px-2 items-center py-1 text-xs font-semibold rounded-lg',
+              isIncreased && 'dark:bg-emerald-300/10 dark:text-emerald-300 bg-emerald-600/10 text-emerald-600',
+              isDecreased && 'dark:bg-red-400/10 dark:text-red-400 bg-red-600/10 text-red-600',
+              isEqual && 'bg-quaternary text-tertiary'
+            )}
+          >
             <span>{diffInPercentClean.toFixed(1)}%</span>
-              
+
             {isIncreased && <MdOutlineArrowOutward />}
             {isDecreased && <MdOutlineArrowOutward className='rotate-180' />}
           </div>
@@ -47,7 +49,7 @@ export default function LikesGraph({ profile }) {
         {t('profilePage.graph.likes.subtitle')}
       </p>
 
-      <div className='w-full mt-8'>
+      <div className='mt-8 w-full'>
         <Graph
           id='profileLikes'
           data={profile.dailyStats.map(({ createdAt, likes }) => ({ createdAt, value: likes })).reverse()}

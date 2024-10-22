@@ -82,7 +82,7 @@ export default function Profile({ data, avatar_base64 }) {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <FaHeart size={32} color="#ff0036" />
-        
+
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
             {formatter.format(data.likes)}
           </span>
@@ -90,7 +90,7 @@ export default function Profile({ data, avatar_base64 }) {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <FaRegEye size={32} color="#c7c7c7" />
-        
+
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
             {formatter.format(data.views)}
           </span>
@@ -98,7 +98,7 @@ export default function Profile({ data, avatar_base64 }) {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <FiArrowRightCircle size={32} color="#43b459" style={{ transform: 'rotate(-45deg)' }} />
-        
+
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
             {new Date(data.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
           </span>

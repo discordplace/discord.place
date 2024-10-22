@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('Fetches a user/guild.')
 
     .addStringOption(option => option.setName('type').setDescription('The type of the fetch.').setRequired(true).addChoices({ name: 'User', value: 'user' }, { name: 'Guild', value: 'guild' }))
-    .addStringOption(option => option.setName('id').setDescription('The ID of the user/guild.').setRequired(true)) 
+    .addStringOption(option => option.setName('id').setDescription('The ID of the user/guild.').setRequired(true))
 
     .toJSON(),
   execute: async interaction => {
@@ -16,10 +16,10 @@ module.exports = {
     const id = interaction.options.getString('id');
 
     await interaction.reply({ content: `Fetching ${type === 'user' ? 'User' : 'Guild'} with **ID ${id}**..` });
-    
+
     try {
       switch (type) {
-        case 'user': 
+        case 'user':
           await client.users.fetch(id, { force: true });
           break;
         case 'guild':

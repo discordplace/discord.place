@@ -28,15 +28,15 @@ export default function Graph({ profile }) {
   const isMobile = useMedia('(max-width: 640px)', false);
 
   return (
-    <div className="px-8 lg:px-0 rounded-3xl p-[.75rem]">
-      <motion.div 
+    <div className="rounded-3xl p-[.75rem] px-8 lg:px-0">
+      <motion.div
         className='w-full'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.6 }}
       >
         {isMobile ? (
-          <div className='grid grid-cols-2 grid-rows-1 gap-2 my-8'>
+          <div className='my-8 grid grid-cols-2 grid-rows-1 gap-2'>
             {tabs.map(tab => (
               <div
                 key={tab.id}
@@ -50,39 +50,41 @@ export default function Graph({ profile }) {
                 <span className='truncate'>
                   {tab.label}
                 </span>
-              
+
                 {activeTab === tab.id && (
                   <motion.div
                     layoutId='tabIndicator'
-                    className='absolute bottom-0 left-0 -z-[1] w-full h-full bg-black rounded-full pointer-events-none dark:bg-white'
+                    className='pointer-events-none absolute bottom-0 left-0 z-[-1] size-full rounded-full bg-black dark:bg-white'
                   />
                 )}
               </div>
             ))}
           </div>
         ) : (
-          <div className='flex my-8 rounded-full lg:mx-0 bg-tertiary w-max'>
+          <div className='my-8 flex w-max rounded-full bg-tertiary lg:mx-0'>
             {tabs.map(tab => (
-              <div className='relative cursor-pointer select-none group' key={tab.id} onClick={() => !tab.disabled && setActiveTab(tab.id)}>
-                <div className={cn(
-                  'px-4 py-2 font-semibold text-sm z-10 relative transition-colors',
-                  activeTab === tab.id ? 'text-white dark:text-black duration-500' : 'group-hover:text-tertiary',
-                  tab.disabled && 'opacity-50 cursor-not-allowed group-hover:text-primary'
-                )}>
+              <div className='group relative cursor-pointer select-none' key={tab.id} onClick={() => !tab.disabled && setActiveTab(tab.id)}>
+                <div
+                  className={cn(
+                    'px-4 py-2 font-semibold text-sm z-10 relative transition-colors',
+                    activeTab === tab.id ? 'text-white dark:text-black duration-500' : 'group-hover:text-tertiary',
+                    tab.disabled && 'opacity-50 cursor-not-allowed group-hover:text-primary'
+                  )}
+                >
                   {tab.label}
                 </div>
 
                 {activeTab === tab.id && (
                   <motion.div
                     layoutId='tabIndicator'
-                    className='absolute bottom-0 left-0 w-full h-full bg-black rounded-full pointer-events-none dark:bg-white'
+                    className='pointer-events-none absolute bottom-0 left-0 size-full rounded-full bg-black dark:bg-white'
                   />
                 )}
               </div>
             ))}
           </div>
         )}
-        
+
         {tabs.find(tab => tab.id === activeTab)?.component}
       </motion.div>
     </div>

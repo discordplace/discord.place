@@ -8,13 +8,13 @@ export default function getTheme(id) {
     const url = `${config.api.url}/themes/${id}`;
 
     try {
-      const response = await axios.get(url, { 
+      const response = await axios.get(url, {
         headers: {
           cookie: cookies().toString()
         },
         withCredentials: true
       });
-      
+
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

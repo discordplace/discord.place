@@ -20,6 +20,7 @@ import { PiWaveformBold } from 'react-icons/pi';
 
 function getFontData(fontName) {
   const file = fs.readFileSync(`${process.cwd()}/public/fonts/${fontName}.ttf`);
+
   return file.buffer;
 }
 
@@ -30,7 +31,7 @@ function sendError(message, status) {
 export async function GET(request) {
   const url = new URL(request.url);
   let data = url.searchParams.get('data');
-  
+
   try {
     data = JSON.parse(decodeURIComponent(data));
   } catch (error) {
@@ -64,7 +65,7 @@ export async function GET(request) {
     },
     {
       name: 'Geist',
-      data:  getFontData('Geist-Medium'),
+      data: getFontData('Geist-Medium'),
       style: 'normal',
       weight: 500
     }
@@ -165,7 +166,7 @@ export async function GET(request) {
 
           <h1 style={{ fontSize: '32px', fontWeight: 700 }}>discord.place</h1>
 
-          <div 
+          <div
             style={{
               display: 'block',
               width: '4px',
@@ -187,7 +188,7 @@ export async function GET(request) {
             }}
           >
             {icons[data.type]({ size: 32 })}
-            
+
             {fuc(data.type)}s
           </span>
         </div>

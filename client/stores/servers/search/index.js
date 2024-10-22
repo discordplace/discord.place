@@ -14,7 +14,7 @@ const useSearchStore = create((set, get) => ({
   category: 'All',
   setCategory: category => {
     set({ category, page: 1 });
-  
+
     get().fetchServers(get().search);
   },
   sort: 'Votes',
@@ -35,7 +35,7 @@ const useSearchStore = create((set, get) => ({
     if (sort) set({ sort });
 
     set({ loading: true, search });
-    
+
     fetchServers(search, get().page, get().limit, get().category, get().sort)
       .then(data => set({ servers: data.servers, loading: false, maxReached: data.maxReached, totalServers: data.total }))
       .catch(error => {

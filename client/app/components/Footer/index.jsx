@@ -20,12 +20,12 @@ export default function Footer() {
   const toggleTheme = useThemeStore(state => state.toggleTheme);
   const language = useLanguageStore(state => state.language);
   const setLanguage = useLanguageStore(state => state.setLanguage);
-  
+
   const pathname = usePathname();
-  
+
   const isDashboard = pathname === '/dashboard';
-  const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview'); 
-  const isAccount = pathname === '/account'; 
+  const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview');
+  const isAccount = pathname === '/account';
 
   if (isDashboard || isTemplatePreview || isAccount) return null;
 
@@ -154,17 +154,17 @@ export default function Footer() {
   ];
 
   return (
-    <section className="flex flex-col 2xl:max-h-[800px] flex-wrap flex-1 w-full gap-16 px-6 py-16 mt-auto border-t 2xl:flex-row 2xl:gap-x-48 sm:px-24 xl:px-32 bg-secondary border-primary">
-      <div className='flex flex-col gap-y-6 max-w-[400px] w-full'>
-        <Image 
-          src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-          width={200} 
-          height={200} 
-          className='w-[48px] h-[48px]' 
-          alt='discord.placeLogo' 
+    <section className="mt-auto flex w-full flex-1 flex-col flex-wrap gap-16 border-t border-primary bg-secondary px-6 py-16 sm:px-24 xl:px-32 2xl:max-h-[800px] 2xl:flex-row 2xl:gap-x-48">
+      <div className='flex w-full max-w-[400px] flex-col gap-y-6'>
+        <Image
+          src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+          width={200}
+          height={200}
+          className='size-[48px]'
+          alt='discord.placeLogo'
         />
 
-        <h2 className='text-2xl font-bold text-primary max-w-[350px]'>
+        <h2 className='max-w-[350px] text-2xl font-bold text-primary'>
           {t('footer.title')}
         </h2>
 
@@ -179,7 +179,7 @@ export default function Footer() {
         />
       </div>
 
-      <div className='grid grid-cols-1 mobile:grid-cols-2 lg:flex justify-between 2xl:w-[calc(100%_-_400px_-_12rem)] gap-8 sm:gap-16'>
+      <div className='grid grid-cols-1 justify-between gap-8 mobile:grid-cols-2 sm:gap-16 lg:flex 2xl:w-[calc(100%_-_400px_-_12rem)]'>
         {blocks.map(block => (
           <div className='flex flex-col gap-y-6' key={nanoid()}>
             <h2 className='text-sm font-medium text-tertiary'>
@@ -188,7 +188,7 @@ export default function Footer() {
 
             <div className='flex flex-col gap-y-4'>
               {block.links.map(link => (
-                <Link 
+                <Link
                   key={nanoid()}
                   href={link.href}
                   className={cn(
@@ -201,7 +201,7 @@ export default function Footer() {
                   {link.label}
 
                   {link.new && (
-                    <span className='px-2.5 py-0.5 text-xs font-bold bg-purple-500 rounded-full text-white'>
+                    <span className='rounded-full bg-purple-500 px-2.5 py-0.5 text-xs font-bold text-white'>
                       {t('footer.newBadge')}
                     </span>
                   )}
@@ -212,10 +212,10 @@ export default function Footer() {
         ))}
       </div>
 
-      <div className='lg:mt-24 w-full h-[1px] bg-[rgb(var(--border-primary))]' />
+      <div className='h-px w-full bg-[rgb(var(--border-primary))] lg:mt-24' />
 
-      <div className='flex flex-col items-center justify-between w-full gap-4 -mt-8 lg:flex-row'>
-        <div className='flex flex-col items-center lg:items-start gap-y-4'>
+      <div className='-mt-8 flex w-full flex-col items-center justify-between gap-4 lg:flex-row'>
+        <div className='flex flex-col items-center gap-y-4 lg:items-start'>
           <p className='text-sm text-tertiary'>
             &copy; {t('footer.copyRight', { year: new Date().getFullYear() })}
           </p>
@@ -234,8 +234,8 @@ export default function Footer() {
           </Link>
         </div>
 
-        <div className='flex flex-col items-center mt-4 lg:items-end gap-y-2'>
-          <div className='gap-x-1 flex rounded-xl p-[3px] bg-quaternary dark:bg-background'>
+        <div className='mt-4 flex flex-col items-center gap-y-2 lg:items-end'>
+          <div className='flex gap-x-1 rounded-xl bg-quaternary p-[3px] dark:bg-background'>
             <button
               className={cn(
                 'z-10 select-none justify-center relative flex items-center text-sm font-medium px-3 py-1',
@@ -250,7 +250,7 @@ export default function Footer() {
 
               {theme === 'light' && (
                 <motion.div
-                  className='absolute w-full h-full rounded-xl bg-secondary dark:bg-quaternary'
+                  className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary'
                   layoutId='theme-switcher-button-background'
                 />
               )}
@@ -263,16 +263,16 @@ export default function Footer() {
               )}
               onClick={() => toggleTheme('dark')}
             >
-              <span className='flex items-center gap-x-1.5 z-10 relative'>
+              <span className='relative z-10 flex items-center gap-x-1.5'>
                 <IoIosMoon size={16} />
                 {t('footer.theme.dark')}
               </span>
 
               {theme === 'dark' && (
                 <motion.div
-                  className='absolute w-full h-full rounded-xl bg-secondary dark:bg-quaternary'
+                  className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary'
                   layoutId='theme-switcher-button-background'
-                  transition={{ 
+                  transition={{
                     duration: 0.5,
                     type: 'spring',
                     stiffness: 300,
@@ -283,7 +283,7 @@ export default function Footer() {
             </button>
           </div>
 
-          <div className='gap-1 justify-center lg:justify-end flex rounded-xl p-[3px] flex-wrap lg:bg-quaternary lg:dark:bg-background'>
+          <div className='flex flex-wrap justify-center gap-1 rounded-xl p-[3px] lg:justify-end lg:bg-quaternary lg:dark:bg-background'>
             {config.availableLocales.map(locale => (
               <button
                 key={locale.code}
@@ -301,15 +301,15 @@ export default function Footer() {
                   >
                     {locale.flag}
                   </Twemoji>
-                  
+
                   {t(`footer.language.${locale.code}`)}
                 </span>
 
                 {locale.code === language && (
                   <motion.div
-                    className='absolute w-full h-full rounded-xl bg-secondary dark:bg-quaternary'
+                    className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary'
                     layoutId='language-switcher-button-background'
-                    transition={{ 
+                    transition={{
                       duration: 0.5,
                       type: 'spring',
                       stiffness: 300,

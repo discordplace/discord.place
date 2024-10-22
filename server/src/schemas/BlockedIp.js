@@ -55,7 +55,7 @@ Model.watch().on('change', async data => {
 
     const item = response.result.find(item => item?.ip === documentKey._id);
     if (!item) return;
-    
+
     await cloudflare.rules.lists.items.delete(CLOUDFLARE_BLOCK_IP_LIST_ID, {
       account_id: CLOUDFLARE_ACCOUNT_ID
     }, {

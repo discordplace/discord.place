@@ -11,7 +11,7 @@ const axios = require('axios');
 async function incrementVote(guildId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
   if (!user) throw new Error(`User ${userId} not found.`);
-  
+
   const guild = client.guilds.cache.get(guildId);
   if (!guild) throw new Error(`Guild ${guildId} not found.`);
 
@@ -41,7 +41,7 @@ async function incrementVote(guildId, userId) {
         }
       }
     };
-    
+
     const arrayFilters = [
       { 'element.user.id': userId }
     ];
@@ -74,22 +74,22 @@ async function incrementVote(guildId, userId) {
     await server.updateOne(updateQuery);
   }
 
-  await new VoteTimeout({ 
-    user: { 
+  await new VoteTimeout({
+    user: {
       id: userId,
       username: user.username
-    }, 
+    },
     guild: {
       id: guild.id,
       name: guild.name
-    } 
+    }
   }).save();
 
   updatePanelMessage(guild.id);
 
   const embed = new Discord.EmbedBuilder()
     .setColor(Discord.Colors.Purple)
-    .setAuthor({ name: guild.name + ' has received a vote!', iconURL: guild.iconURL() })
+    .setAuthor({ name: `${guild.name} has received a vote!`, iconURL: guild.iconURL() })
     .setFields([
       {
         name: 'Given by',
@@ -118,7 +118,7 @@ async function incrementVote(guildId, userId) {
 
         sendLog(guild.id, await guild.translate('vote_rewards.reward_role_deleted', { roleId: reward.role.id }))
           .catch(() => null);
-        
+
         logger.warn(`Role with ID ${reward.role.id} has been deleted from the database because it was not found in server ${guild.id}.`);
 
         continue;
@@ -177,9 +177,9 @@ async function incrementVote(guildId, userId) {
     if (server.webhook.records.length > 10) server.webhook.records.shift();
 
     await server.save();
-  }  
+  }
 
   return true;
 }
 
-module.exports = incrementVote; 
+module.exports = incrementVote;

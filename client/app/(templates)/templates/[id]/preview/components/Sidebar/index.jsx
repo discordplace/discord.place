@@ -46,7 +46,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       },
       error: error => {
         enableButton('delete-template', 'confirm');
-        
+
         return error;
       }
     });
@@ -65,20 +65,20 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
   }, [templateIdCopied]);
 
   return (
-    <div className="flex items-center flex-col gap-y-2 bg-[#1e1f22] w-max min-h-full pt-4 px-[14px]">
-      <div className="bg-[#313338] w-[48px] items-center justify-center flex h-[48px] hover:bg-[#5865F2] transition-all ease-in-out duration-100 cursor-pointer rounded-[100%] hover:rounded-2xl">
+    <div className="flex min-h-full w-max flex-col items-center gap-y-2 bg-[#1e1f22] px-[14px] pt-4">
+      <div className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#5865F2]">
         <FaDiscord className="text-[#dbdee1]" size={28} />
       </div>
 
-      <div className='w-[65%] h-[2px] bg-[#35363c] rounded-[1px]' />
+      <div className='h-[2px] w-[65%] rounded-[1px] bg-[#35363c]' />
 
-      <div className='relative flex items-center cursor-pointer'>
-        <div className='absolute h-[80%] w-[4px] bg-white -left-3.5 rounded-r-[4px]' />
+      <div className='relative flex cursor-pointer items-center'>
+        <div className='absolute -left-3.5 h-4/5 w-[4px] rounded-r-[4px] bg-white' />
 
         <Tooltip
           content={
             <>
-              <CommunityServerBoostedIcon className='inline mr-2 w-[18px] h-[18px]' />
+              <CommunityServerBoostedIcon className='mr-2 inline size-[18px]' />
 
               discord.place
             </>
@@ -97,14 +97,14 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       </div>
 
       <Link
-        className='relative flex items-center cursor-pointer'
+        className='relative flex cursor-pointer items-center'
         href='https://disbot.com.tr'
         target='_blank'
       >
         <Tooltip
           content={
             <>
-              <CommunityServerBoostedIcon className='inline mr-2 w-[18px] h-[18px]' />
+              <CommunityServerBoostedIcon className='mr-2 inline size-[18px]' />
 
               Disbot
             </>
@@ -126,7 +126,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
         content={t('templatePreviewPage.tooltip.addAServer')}
         side='right'
       >
-        <div className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl">
+        <div className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white">
           <HiPlus size={24} />
         </div>
       </Tooltip>
@@ -135,7 +135,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
         content={t('templatePreviewPage.tooltip.exploreDiscoverableServers')}
         side='right'
       >
-        <div className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl">
+        <div className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white">
           <FaCompass size={24} />
         </div>
       </Tooltip>
@@ -143,7 +143,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       {isMobile && (
         <>
           <div
-            className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl"
+            className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white"
             onClick={() => {
               if (currentlyOpenedSection === 'members') setCurrentlyOpenedSection('channels');
               else {
@@ -165,14 +165,14 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                 'bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl',
                 !focusedChannel.topic && 'opacity-50'
               )}
-              onClick={() => 
-                !focusedChannel.topic ? 
+              onClick={() =>
+                !focusedChannel.topic ?
                   toast.error(t('templatePreviewPage.noTopic', { focusedChannelName: focusedChannel.name })) :
                   openModal('view-topic', {
                     title: t('templatePreviewPage.topicModal.title'),
                     description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
                     content: <>
-                      <p className='text-[#dbdee1] text-sm font-medium break-words'>{focusedChannel.topic}</p>
+                      <p className='break-words text-sm font-medium text-[#dbdee1]'>{focusedChannel.topic}</p>
                     </>,
                     buttons: [
                       {
@@ -196,7 +196,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
         side='right'
       >
         <div
-          className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl"
+          className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white"
           onClick={() => router.back()}
         >
           <IoMdArrowRoundBack size={24} />
@@ -220,12 +220,12 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
             toast.success(t('templatePreviewPage.toast.templateIdCopied', { templateId: template.id }));
           }}
         >
-          <IoCheckmarkCircle 
-            size={20} 
+          <IoCheckmarkCircle
+            size={20}
             className={cn(
               'transition-[opacity] ease-in-out absolute',
               !templateIdCopied && 'opacity-0'
-            )} 
+            )}
           />
           <BiSolidCopy
             size={20}
@@ -243,8 +243,8 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           side='right'
         >
           <div
-            className="bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#ff4d4d] text-[#ff4d4d] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl"
-            onClick={() => 
+            className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#ff4d4d] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#ff4d4d] hover:text-white"
+            onClick={() =>
               openModal('delete-template', {
                 title: t('templatePreviewPage.deleteTemplateModal.title'),
                 description: t('templatePreviewPage.deleteTemplateModal.description', { templateName: template.name }),

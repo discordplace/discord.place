@@ -33,15 +33,15 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
       }}
     >
       {data.length === 0 && (
-        <div className='absolute top-0 z-[1] left-0 flex items-center justify-center w-full h-full bg-background/50 backdrop-blur-sm'>
-          <span className='text-sm font-medium select-none text-tertiary'>
+        <div className='absolute left-0 top-0 z-[1] flex size-full items-center justify-center bg-background/50 backdrop-blur-sm'>
+          <span className='select-none text-sm font-medium text-tertiary'>
             {t('graph.noData')}
           </span>
         </div>
       )}
 
       <DynamicApexCharts
-        className='relative z-[0]'
+        className='relative z-0'
         type='area'
         height={height}
         width='100%'
@@ -87,7 +87,7 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
             enabled: false
           },
           stroke: {
-            curve: 'smooth', 
+            curve: 'smooth',
             colors: [color],
             width: 2
           },
@@ -120,7 +120,7 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
             range: xaxisRange || 6,
             categories: xAxisCategories || reversedData.map(({ createdAt }) => {
               const date = new Date(createdAt);
-    
+
               return date.toLocaleString(language, { month: 'short', day: 'numeric' });
             }),
             tooltip: {
@@ -128,7 +128,7 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
             },
             crosshairs: {
               show: true,
-              width: 1,       
+              width: 1,
               stroke: {
                 color: 'rgba(var(--bg-quaternary))',
                 width: 1,

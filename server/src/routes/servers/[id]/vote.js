@@ -38,6 +38,7 @@ module.exports = {
       return incrementVote(id, request.user.id)
         .then(async () => {
           const userInGuild = guild.members.cache.get(request.user.id) || await guild.members.fetch(request.user.id).catch(() => false);
+
           return response.json({ inGuild: !!userInGuild });
         })
         .catch(error => response.sendError(error.message, 400));

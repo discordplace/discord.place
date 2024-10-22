@@ -3,12 +3,12 @@ import Image from 'next/image';
 
 export default function BlogCard({ data, loading }) {
   if (loading) return (
-    <div className='flex flex-col animate-pulse bg-secondary rounded-xl gap-y-3 w-full h-[312px] max-w-[calc(33%_-_2rem)]' />
+    <div className='flex h-[312px] w-full max-w-[calc(33%_-_2rem)] animate-pulse flex-col gap-y-3 rounded-xl bg-secondary' />
   );
 
   return (
     <Link
-      className='flex flex-col h-full gap-y-3 w-full max-w-full sm:max-w-[calc(50%_-_2rem)] lg:max-w-[calc(33%_-_2rem)] hover:opacity-80 transition-opacity'
+      className='flex size-full max-w-full flex-col gap-y-3 transition-opacity hover:opacity-80 sm:max-w-[calc(50%_-_2rem)] lg:max-w-[calc(33%_-_2rem)]'
       href={`/blogs/${data.id}`}
     >
       <div className='relative'>
@@ -17,16 +17,16 @@ export default function BlogCard({ data, loading }) {
           alt={data.name}
           width={400}
           height={200}
-          className='object-cover w-full rounded-xl h-[200px]'
+          className='h-[200px] w-full rounded-xl object-cover'
         />
 
-        <div className='absolute top-0 left-0 w-full h-full bg-black/50 rounded-xl' />
+        <div className='absolute top-0 left-0 size-full rounded-xl bg-black/50' />
 
         <div className='absolute left-4 top-4'>
           {data.tags.map(tag => (
             <span
               key={tag}
-              className='px-3 py-1.5 text-xs rounded-full text-white bg-black/70 font-semibold'
+              className='rounded-full bg-black/70 px-3 py-1.5 text-xs font-semibold text-white'
             >
               {tag}
             </span>
@@ -34,11 +34,11 @@ export default function BlogCard({ data, loading }) {
         </div>
       </div>
 
-      <h2 className='font-medium whitespace-nowrap line-clamp-1 text-pretty text text-primary'>
+      <h2 className='font-medium line-clamp-1 whitespace-nowrap text-pretty text-primary'>
         {data.name}
       </h2>
-      
-      <p className='text-sm whitespace-pre-wrap text-tertiary line-clamp-3'>
+
+      <p className='text-sm whitespace-pre-wrap line-clamp-3 text-tertiary'>
         {data.description}
       </p>
     </Link>

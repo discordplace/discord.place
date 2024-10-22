@@ -28,9 +28,9 @@ export default function Content({ template }) {
   }, [isMobile, currentlyOpenedSection]);
 
   if (!focusedChannel) return <FullPageLoading />;
-  
+
   return (
-    <div className="w-full h-full min-h-[100svh] flex">
+    <div className="flex size-full min-h-svh">
       <Sidebar
         template={template}
         focusedChannel={focusedChannel}
@@ -47,18 +47,20 @@ export default function Content({ template }) {
         currentlyOpenedSection={currentlyOpenedSection}
         isMobile={isMobile}
       />
-      
-      <div className={cn(
-        'flex flex-col w-full',
-        (isMobile && currentlyOpenedSection !== 'members') && 'hidden'
-      )}>
+
+      <div
+        className={cn(
+          'flex flex-col w-full',
+          (isMobile && currentlyOpenedSection !== 'members') && 'hidden'
+        )}
+      >
         <Header
           focusedChannel={focusedChannel}
           memberListCollapsed={memberListCollapsed}
           setMemberListCollapsed={setMemberListCollapsed}
         />
 
-        <div className='flex w-full h-full'>
+        <div className='flex size-full'>
           <Chat
             focusedChannel={focusedChannel}
           />

@@ -29,6 +29,6 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const server = await getServer(params.id).catch(error => error);
   if (typeof server === 'string') return redirect(`/error?message=${encodeURIComponent(server)}`);
-  
+
   return <Content server={server} />;
 }

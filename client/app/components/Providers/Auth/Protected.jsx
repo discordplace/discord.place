@@ -8,9 +8,9 @@ import { useLayoutEffect } from 'react';
 export default function Protected({ children }) {
   const user = useAuthStore(state => state.user);
 
-  useLayoutEffect(() => {    
+  useLayoutEffect(() => {
     if (process.env.NODE_ENV === 'development') return;
-    
+
     if (user === 'loading') return;
     if (!user) redirect('/error?code=401');
   }, [user]);

@@ -13,7 +13,7 @@ module.exports = {
     validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
-      
+
       const template = await Template.findOne({ id });
       if (!template) return response.sendError('Template not found.', 404);
 

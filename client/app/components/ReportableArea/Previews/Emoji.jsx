@@ -6,7 +6,7 @@ export default function EmojiPreview({ metadata }) {
     <div className='flex flex-col gap-y-4'>
       <div className="flex items-center gap-x-2">
         {metadata.emoji_ids?.length > 0 ? (
-          <div className='flex flex-wrap max-w-[90px] gap-1'>
+          <div className='flex max-w-[90px] flex-wrap gap-1'>
             {metadata.emoji_ids.map(packagedEmoji => (
               <Image
                 key={packagedEmoji.id}
@@ -19,7 +19,7 @@ export default function EmojiPreview({ metadata }) {
             ))}
 
             {new Array(9 - metadata.emoji_ids.length).fill(0).map((_, index) => (
-              <div key={index} className='w-6 h-6 rounded-md bg-quaternary' />
+              <div key={index} className='size-6 rounded-md bg-quaternary' />
             ))}
           </div>
         ) : (

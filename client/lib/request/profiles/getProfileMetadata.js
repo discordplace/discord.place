@@ -2,7 +2,7 @@ import config from '@/config';
 import axios from 'axios';
 import { cache } from 'react';
 
-export default cache(function getProfile(slug) {
+export default cache(slug => {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const url = `${config.api.url}/profiles/${slug}/metadata`;

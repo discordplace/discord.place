@@ -57,14 +57,14 @@ export default function Page() {
 
     const regexp = /^[a-z0-9_]{0,20}$/;
     if (!regexp.test(emoji.name)) return toast.error(t('createEmojiPage.toast.invalidEmojiName'));
-    
+
     setLoading(true);
-    
+
     const formData = new FormData();
     formData.append('name', emoji.name);
     formData.append('categories', selectedCategories);
     emoji.files.map(file => formData.append('file', file));
-    
+
     toast.promise(createEmoji(formData), {
       loading: t('createEmojiPage.toast.publishingEmojis', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 }),
       success: emojiId => {
@@ -74,6 +74,7 @@ export default function Page() {
       },
       error: error => {
         setLoading(false);
+
         return error;
       }
     });
@@ -81,10 +82,10 @@ export default function Page() {
 
   return (
     <AuthProtected>
-      <div className="relative z-0 flex justify-center w-full px-6 lg:px-0">      
+      <div className="relative z-0 flex w-full justify-center px-6 lg:px-0">
         <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
-        <div className="mt-48 mb-16 max-w-[600px] flex flex-col gap-y-2 w-full">
+        <div className="mb-16 mt-48 flex w-full max-w-[600px] flex-col gap-y-2">
           <h1 className="text-4xl font-bold text-primary">
             {t('createEmojiPage.title')}
           </h1>
@@ -93,8 +94,8 @@ export default function Page() {
             {t('createEmojiPage.subtitle')}
           </p>
 
-          <div className='flex flex-col mt-6 gap-y-4'>
-            <div className='flex justify-between pb-4 border-b gap-x-4 border-y-primary'>
+          <div className='mt-6 flex flex-col gap-y-4'>
+            <div className='flex justify-between gap-x-4 border-b border-y-primary pb-4'>
               {steps.map((step, index) => (
                 <div className='flex flex-col items-center gap-x-2' key={step}>
                   <div className='text-xs uppercase text-tertiary'>
@@ -114,7 +115,7 @@ export default function Page() {
 
           {activeStep === 0 && (
             <>
-              <h2 className='mt-4 text-lg font-medium sm:text-xl text-primary'>
+              <h2 className='mt-4 text-lg font-medium text-primary sm:text-xl'>
                 {t('createEmojiPage.steps.0.inputs.emojiCategories.title')}
               </h2>
 
@@ -122,7 +123,7 @@ export default function Page() {
                 {t('createEmojiPage.steps.0.inputs.emojiCategories.subtitle')}
               </p>
 
-              <div className='flex flex-wrap items-center justify-center gap-4 mt-4'>
+              <div className='mt-4 flex flex-wrap items-center justify-center gap-4'>
                 {config.emojiCategories
                   .filter(category => category !== 'All')
                   .map(category => (
@@ -145,7 +146,7 @@ export default function Page() {
                   ))}
               </div>
 
-              <label className='flex flex-col mt-6 gap-y-2' htmlFor='emojiName'>
+              <label className='mt-6 flex flex-col gap-y-2' htmlFor='emojiName'>
                 <h2 className='text-xl font-medium text-primary'>
                   {t('createEmojiPage.steps.0.inputs.emojiName.title')}
                 </h2>
@@ -157,7 +158,7 @@ export default function Page() {
 
               <input
                 id='emojiName'
-                className='w-full px-3 py-2 text-sm rounded-lg outline-none placeholder-placeholder bg-secondary hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary text-tertiary'
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={emoji.name}
                 onChange={event => setEmoji({ ...emoji, name: event.target.value })}
@@ -198,7 +199,7 @@ export default function Page() {
 
           {activeStep === 2 && (
             <>
-              <h2 className='mt-2 text-lg font-medium sm:text-xl text-primary'>
+              <h2 className='mt-2 text-lg font-medium text-primary sm:text-xl'>
                 {t('createEmojiPage.steps.2.title')}
               </h2>
 
@@ -207,8 +208,8 @@ export default function Page() {
               </p>
 
               {emoji.files.length > 1 && (
-                <div className='flex flex-col p-4 mt-2 border border-blue-500 bg-blue-500/10 rounded-xl gap-y-2'>
-                  <h3 className='flex items-center text-lg font-bold text-primary gap-x-1.5'>
+                <div className='mt-2 flex flex-col gap-y-2 rounded-xl border border-blue-500 bg-blue-500/10 p-4'>
+                  <h3 className='flex items-center gap-x-1.5 text-lg font-bold text-primary'>
                     <RiErrorWarningFill /> {t('createEmojiPage.steps.2.packageInfo.title')}
                   </h3>
 
@@ -218,7 +219,7 @@ export default function Page() {
                 </div>
               )}
 
-              <div className='flex flex-col mt-4 gap-y-2'>
+              <div className='mt-4 flex flex-col gap-y-2'>
                 <div className='flex justify-between'>
                   <h3 className='text-sm text-tertiary'>
                     {t('createEmojiPage.steps.2.fields.categories')}
@@ -240,20 +241,20 @@ export default function Page() {
                 </div>
               </div>
 
-              <p className='mt-2 text-xs mobile:text-sm text-tertiary'>
-                {t('createEmojiPage.steps.2.disclaimer.content', { 
+              <p className='mt-2 text-xs text-tertiary mobile:text-sm'>
+                {t('createEmojiPage.steps.2.disclaimer.content', {
                   contentPolicyLink: <Link href='/legal/content-policy' className='hover:text-primary hover:underline'>{t('createEmojiPage.steps.2.disclaimer.linkText')}</Link>
                 })}
               </p>
             </>
           )}
 
-          <div className='flex justify-between w-full mt-8'>
-            <button className='flex items-center px-3 py-1 text-sm font-semibold text-white bg-black rounded-lg gap-x-1 dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => setActiveStep(activeStep - 1)} disabled={activeStep === 0 || loading}>
+          <div className='mt-8 flex w-full justify-between'>
+            <button className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70' onClick={() => setActiveStep(activeStep - 1)} disabled={activeStep === 0 || loading}>
               {t('buttons.previous')}
             </button>
 
-            <button className='flex items-center px-3 py-1 text-sm font-semibold text-white bg-black rounded-lg gap-x-1 dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70' onClick={() => {
+            <button className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70' onClick={() => {
               if (activeStep === steps.length - 1) publishEmoji();
               else setActiveStep(activeStep + 1);
             }} disabled={

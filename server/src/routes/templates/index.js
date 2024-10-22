@@ -45,7 +45,7 @@ module.exports = {
       if (!templateDetails) return response.sendError('Invalid template ID.', 400);
 
       const template = new Template({
-        id: id,
+        id,
         data: templateDetails.serialized_source_guild,
         user: {
           id: request.user.id,

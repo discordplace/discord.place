@@ -58,6 +58,7 @@ async function initialize() {
 function extendDiscordPrototypes() {
   Discord.BaseInteraction.prototype.translate = async function(key, variables = {}) {
     const language = await this.getLanguage();
+
     return translate(key, variables, language);
   };
 
@@ -65,11 +66,13 @@ function extendDiscordPrototypes() {
     if (this.guildId) {
       return getGuildLanguage(this.guildId);
     }
+
     return getDefaultLanguage(this.locale);
   };
 
   Discord.BaseGuild.prototype.translate = async function(key, variables = {}) {
     const language = await this.getLanguage();
+
     return translate(key, variables, language);
   };
 
@@ -85,7 +88,7 @@ async function getGuildLanguage(guildId) {
     language = serverLanguageData ? serverLanguageData.language : getDefaultLanguage();
     client.languageCache.set(guildId, language);
   }
-  
+
   return language;
 }
 

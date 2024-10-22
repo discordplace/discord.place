@@ -22,7 +22,7 @@ const ServerVoteTimeoutSchema = new Schema({
       required: true
     }
   }
-}, { 
+}, {
   timestamps: true
 });
 

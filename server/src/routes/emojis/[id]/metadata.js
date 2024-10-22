@@ -14,7 +14,7 @@ module.exports = {
     validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
-      
+
       const emoji = await Emoji.findOne({ id });
       if (!emoji) return response.sendError('Emoji not found.', 404);
 

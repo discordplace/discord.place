@@ -18,7 +18,7 @@ module.exports = {
       .isString().withMessage('Type should be a string.')
       .isIn(config.quarantineTypes).withMessage(`Type must be one of: ${config.quarantineTypes.join(', ')}`),
     body('value')
-      .isInt().withMessage('Value should be an integer.')  
+      .isInt().withMessage('Value should be an integer.')
       .isLength({ min: 17, max: 19 }).withMessage('Value should be between 17 and 19 characters.')
       .isString().withMessage('Value should be a string.'),
     body('restriction')
@@ -31,11 +31,11 @@ module.exports = {
       .isString().withMessage('Time should be a string.')
       .custom(value => {
         if (value === '') return true;
-        
+
         const quarantineTime = ms(value);
         if (typeof quarantineTime !== 'number') throw new Error('Invalid time format.');
         if (quarantineTime && quarantineTime > 31557600000) throw new Error('Time should be less than 1 year.');
-       
+
         return true;
       }),
     validateRequest,
@@ -52,7 +52,7 @@ module.exports = {
       if (existingQuarantine) return response.sendError(`There is already a quarantine entry with the same values. ID: ${existingQuarantine._id}.`, 400);
 
       const quarantineTime = time ? ms(time) : null;
-      
+
       const requestUser = await User.findOne({ id: request.user.id });
 
       const quarantineData = {
@@ -70,7 +70,7 @@ module.exports = {
         const user = await client.users.fetch(value).catch(() => null);
         if (!user) return response.sendError('User not found.', 404);
 
-        Object.assign(quarantineData, { 
+        Object.assign(quarantineData, {
           user: {
             id: user.id,
             username: user.username
@@ -78,7 +78,7 @@ module.exports = {
         });
 
         const isUserFoundInGuild = client.guilds.cache.get(config.guildId).members.cache.has(value) || await client.guilds.cache.get(config.guildId).members.fetch(value).then(() => true).catch(() => false);
-  
+
         if (isUserFoundInGuild) {
           const dmChannel = client.dmChannel || await user.createDM().catch(() => null);
           if (dmChannel) dmChannel.send({ content: `Hey there,
@@ -103,7 +103,7 @@ Use the following ID to refer to your quarantine: \`${quarantineData._id}\`` });
         const owner = await guild.fetchOwner();
         const ownerIsInGuild = guild?.members.cache.has(guild.ownerId) || await guild.members.fetch(guild.ownerId).then(() => true).catch(() => false);
         const dmChannel = (
-          (owner.user.dmChannel || await owner.user.createDM().catch(() => null)) || 
+          (owner.user.dmChannel || await owner.user.createDM().catch(() => null)) ||
           (ownerIsInGuild ? (await guild.members.cache.get(guild.ownerId).createDM().catch(() => null)) : null)
         );
 

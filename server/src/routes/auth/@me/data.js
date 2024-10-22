@@ -63,11 +63,12 @@ module.exports = {
       ];
 
       const [botTimeouts, serverTimeouts, links, bots, emojis, emojiPacks, templates, sounds, themes, reminders, voteReminders] = await Promise.all(bulkOperations);
-      
+
       responseData.counts = {
         timeouts: botTimeouts + serverTimeouts,
         servers: (await Promise.all(ownedGuilds.map(async guild => {
           const foundServer = await Server.exists({ id: guild.id });
+
           return foundServer ? 1 : 0;
         }))).reduce((a, b) => a + b, 0),
         links,
@@ -82,7 +83,7 @@ module.exports = {
       if (keys.includes('timeouts')) {
         const botTimeouts = await BotTimeout.find({ 'user.id': request.user.id });
         const serverTimeouts = await ServerTimeout.find({ 'user.id': request.user.id });
-        
+
         Object.assign(responseData, {
           timeouts: {
             bots: await Promise.all(botTimeouts.map(async timeout => {
@@ -119,9 +120,9 @@ module.exports = {
       if (keys.includes('servers')) {
         const servers = await Server.find();
 
-        const data = ownedGuilds.map((guild) => {
+        const data = ownedGuilds.map(guild => {
           const { id, name, icon, memberCount } = guild;
-        
+
           return {
             id,
             name,
@@ -131,7 +132,7 @@ module.exports = {
             requirements: config.serverListingRequirements.map(({ id: reqId, name: reqName, description }) => {
               const checkFunction = requirementChecks[reqId];
               const isMet = checkFunction ? checkFunction(guild) : false;
-        
+
               return {
                 id: reqId,
                 name: reqName,
@@ -149,7 +150,7 @@ module.exports = {
         const bots = await Bot.find({ 'owner.id': request.user.id });
         const denies = await Deny.find({ 'user.id': request.user.id });
 
-        Object.assign(responseData, { 
+        Object.assign(responseData, {
           bots: await Promise.all(bots.map(async bot => await bot.toPubliclySafe())),
           denies: await Promise.all(denies.map(async deny => {
             const botHashes = await getUserHashes(deny.bot.id);
@@ -214,7 +215,7 @@ module.exports = {
           reminders,
           voteReminders: voteReminders.map(reminder => {
             const guild = client.guilds.cache.get(reminder.guild.id);
-            
+
             return {
               _id: reminder._id,
               id: reminder.id,

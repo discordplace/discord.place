@@ -29,7 +29,7 @@ async function syncMemberRoles() {
     roles.map(async ({ roleId, condition }) => {
       const role = guild.roles.cache.get(roleId);
       if (!role) throw new Error(`Role with ID ${roleId} not found.`);
-  
+
       const membersToGiveRole = members.filter(member => condition(member) && !member.roles.cache.has(roleId));
       const membersToRemoveRole = members.filter(member => !condition(member) && member.roles.cache.has(roleId));
       const membersToUpdate = membersToGiveRole.concat(membersToRemoveRole).map(member => member.user.id);
@@ -56,9 +56,9 @@ async function syncMemberRoles() {
                 Hey there, Language Legend! 🌍✨
 
                 A huge thank you for stepping up and helping us localize the site. You've earned the Translator role, and we couldn’t be more grateful for your contribution! 🎉
-              `}).catch(() => null);
+              ` }).catch(() => null);
             }
-          } 
+          }
         }
         if (membersToRemoveRole.some(collectedMember => collectedMember.user.id == member.user.id)) await member.roles.remove(role);
 

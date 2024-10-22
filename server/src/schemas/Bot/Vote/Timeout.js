@@ -26,7 +26,7 @@ const BotVoteTimeoutSchema = new Schema({
       required: true
     }
   }
-}, { 
+}, {
   timestamps: true
 });
 

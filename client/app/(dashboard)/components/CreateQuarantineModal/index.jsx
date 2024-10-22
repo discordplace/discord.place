@@ -45,7 +45,7 @@ export default function CreateQuarantineModal() {
   }, [type]);
 
   function continueCreateQuarantine(type, value, restriction, reason, time) {
-    try {    
+    try {
       disableButton('create-quarantine-record', 'confirm');
 
       toast.promise(createQuarantine({ type, value, restriction, reason, time }), {
@@ -60,12 +60,12 @@ export default function CreateQuarantineModal() {
           setRestriction(null);
           setReason('');
           setTime('');
-  
+
           return 'Created quarantine successfully.';
         },
         error: error => {
           enableButton('create-quarantine-record', 'confirm');
-  
+
           return error;
         }
       });
@@ -129,8 +129,8 @@ export default function CreateQuarantineModal() {
           <div className='flex flex-col'>
             <h2 className='text-sm font-semibold text-secondary'>Quarantine Type</h2>
             <p className='text-xs text-tertiary'>Select the type of quarantine you want to create.</p>
-            
-            <div className="flex w-full gap-4 mt-4">
+
+            <div className="mt-4 flex w-full gap-4">
               <div
                 className={cn(
                   'relative flex flex-1 transition-all select-none font-bold text-lg gap-x-2 items-center justify-center w-full h-[80px] rounded-xl cursor-pointer bg-secondary hover:bg-background',
@@ -142,12 +142,12 @@ export default function CreateQuarantineModal() {
                 User ID
 
                 {type === 'USER_ID' && (
-                  <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-2xl bg-secondary/80 bg-opacity-10 rounded-xl">
+                  <div className="absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl">
                     <IoMdCheckmarkCircle className="text-primary" />
                   </div>
                 )}
               </div>
-            
+
               <div
                 className={cn(
                   'relative flex flex-1 transition-all select-none font-bold text-lg gap-x-2 items-center justify-center w-full h-[80px] rounded-xl cursor-pointer bg-secondary hover:bg-background',
@@ -159,7 +159,7 @@ export default function CreateQuarantineModal() {
                 Guild ID
 
                 {type === 'GUILD_ID' && (
-                  <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-2xl bg-secondary/80 bg-opacity-10 rounded-xl">
+                  <div className="absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl">
                     <IoMdCheckmarkCircle className="text-primary" />
                   </div>
                 )}
@@ -172,11 +172,11 @@ export default function CreateQuarantineModal() {
               <div className='flex flex-col'>
                 <h2 className='text-sm font-semibold text-secondary'>{type === 'USER_ID' ? 'User ID' : 'Guild ID'}</h2>
                 <p className='text-xs text-tertiary'>Enter the ID of the {type === 'USER_ID' ? 'user' : 'guild'} you want to quarantine.</p>
-            
+
                 <input
                   type="text"
                   placeholder={`${type === 'USER_ID' ? 'User' : 'Guild'} ID`}
-                  className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
+                  className="mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
                   value={value}
                   onChange={event => setValue(event.target.value)}
                 />
@@ -186,7 +186,7 @@ export default function CreateQuarantineModal() {
                 <h2 className='text-sm font-semibold text-secondary'>Restriction</h2>
                 <p className='text-xs text-tertiary'>Select the type of restriction you want to apply to the quarantine.</p>
 
-                <div className='relative grid grid-cols-1 gap-2 mt-4 overflow-y-auto max-h-[20svh] scrollbar-hide'>
+                <div className='scrollbar-hide relative mt-4 grid max-h-[20svh] grid-cols-1 gap-2 overflow-y-auto'>
                   {Object.keys(config.quarantineRestrictions)
                     .filter(quarantineRestriction => !type || config.quarantineRestrictions[quarantineRestriction].available_to.includes(type))
                     .map(quarantineRestriction => (
@@ -207,7 +207,7 @@ export default function CreateQuarantineModal() {
                         </div>
 
                         {restriction === quarantineRestriction && (
-                          <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-2xl bg-secondary/80 bg-opacity-10 rounded-xl">
+                          <div className="absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl">
                             <IoMdCheckmarkCircle className="text-primary" />
                           </div>
                         )}
@@ -226,11 +226,11 @@ export default function CreateQuarantineModal() {
           <div className='flex flex-col'>
             <h2 className='text-sm font-semibold text-secondary'>Reason</h2>
             <p className='text-xs text-tertiary'>Reason for quarantining the {type === 'USER_ID' ? 'user' : 'guild'}.</p>
-        
+
             <input
               type="text"
               placeholder="Reason"
-              className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
+              className="mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
               value={reason}
               onChange={event => setReason(event.target.value)}
             />
@@ -239,11 +239,11 @@ export default function CreateQuarantineModal() {
           <div className='flex flex-col'>
             <h2 className='text-sm font-semibold text-secondary'>Time</h2>
             <p className='text-xs text-tertiary'>Expiration time for the quarantine. (Optional, 20m, 6h, 3d, 1w, 30d, 1y)</p>
-        
+
             <input
               type="text"
               placeholder="Time"
-              className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
+              className="mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
               value={time}
               onChange={event => setTime(event.target.value)}
             />

@@ -2,10 +2,10 @@ import Square from '@/app/components/Background/Square';
 
 export default function Error() {
   return (
-    <div className='z-0 relative flex flex-col items-center w-full h-[100svh] justify-center px-8 sm:px-0'>
+    <div className='relative z-0 flex h-svh w-full flex-col items-center justify-center px-8 sm:px-0'>
       <Square column='5' row='5' transparentEffectDirection='leftRightBottomTop' blockColor='rgba(var(--bg-tertiary))' />
 
-      <span className='px-2 py-1 text-xs font-semibold text-red-400 uppercase rounded-lg bg-red-400/10'>
+      <span className='rounded-lg bg-red-400/10 px-2 py-1 text-xs font-semibold uppercase text-red-400'>
         error
       </span>
 
@@ -13,7 +13,7 @@ export default function Error() {
         We{'\''}re sorry, an error occurred.
       </h1>
 
-      <p className='text-center mt-2 text-base text-tertiary max-w-[800px] w-full max-h-[200px]'>
+      <p className='mt-2 max-h-[200px] w-full max-w-[800px] text-center text-base text-tertiary'>
         The page you are looking for does not exist.
       </p>
     </div>

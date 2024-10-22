@@ -28,6 +28,6 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const template = await getTemplate(params.id).catch(error => error);
   if (typeof template === 'string') return redirect(`/error?message=${encodeURIComponent(template)}`);
-  
+
   return <Content template={template} />;
 }

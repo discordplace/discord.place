@@ -45,7 +45,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
       const usernameRepositoryRegex = /^([a-zA-Z\d]{1}[-a-zA-Z\d]+)(\/){1}([-\w.]+)$/i;
       if (!usernameRepositoryRegex.test(githubRepository)) return toast.error(t('botManagePage.other.toast.notValidRepositoryFormat'));
     }
-    
+
     setSavingGithubRepository(true);
 
     toast.promise(editBot(botId, [{ key: 'github_repository', value: githubRepository }]), {
@@ -66,18 +66,18 @@ export default function Other({ botId, categories, setCategories, canEditSupport
   }
 
   return (
-    <div className='flex flex-col w-full gap-y-4'>
-      <h3 className='flex items-center text-xl font-semibold gap-x-4'>
+    <div className='flex w-full flex-col gap-y-4'>
+      <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
         <FaCirclePlus size={24} className='text-purple-500' />
         {t('botManagePage.other.title')}
       </h3>
 
-      <p className='text-sm sm:text-base text-tertiary'>
+      <p className='text-sm text-tertiary sm:text-base'>
         {t('botManagePage.other.subtitle')}
       </p>
 
-      <div className='flex flex-col w-full gap-8 mt-4'>
-        <div className='flex flex-col flex-1 gap-y-2'>
+      <div className='mt-4 flex w-full flex-col gap-8'>
+        <div className='flex flex-1 flex-col gap-y-2'>
           <label
             className='font-medium text-secondary'
           >
@@ -88,10 +88,10 @@ export default function Other({ botId, categories, setCategories, canEditSupport
             {t('botManagePage.other.inputs.categories.description')}
           </p>
 
-          <div className='flex flex-wrap items-center gap-2 mt-2'>
+          <div className='mt-2 flex flex-wrap items-center gap-2'>
             {config.botCategories.map(category => (
-              <button 
-                key={category} 
+              <button
+                key={category}
                 className={cn(
                   'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-tertiary',
                   categories.includes(category) && 'bg-quaternary'
@@ -108,14 +108,14 @@ export default function Other({ botId, categories, setCategories, canEditSupport
           </div>
         </div>
 
-        <div className='flex flex-col flex-1 gap-y-2'>
-          <div className='flex flex-col items-center justify-between w-full sm:flex-row'>
+        <div className='flex flex-1 flex-col gap-y-2'>
+          <div className='flex w-full flex-col items-center justify-between sm:flex-row'>
             <div className='flex flex-col gap-y-2'>
-              <h3 className='flex items-center font-medium text-secondary gap-x-2'>
+              <h3 className='flex items-center gap-x-2 font-medium text-secondary'>
                 <BsGithub className='text-2xl text-black dark:text-white' />
                 {t('botManagePage.other.githubRepository.title')}
 
-                <span className='text-xs text-white dark:text-white px-2 py-0.5 dark:bg-white/30 bg-black/30 rounded-full'>
+                <span className='rounded-full bg-black/30 px-2 py-0.5 text-xs text-white dark:bg-white/30 dark:text-white'>
                   {t('botManagePage.other.githubRepository.optionalBadge')}
                 </span>
               </h3>
@@ -125,9 +125,9 @@ export default function Other({ botId, categories, setCategories, canEditSupport
               </p>
             </div>
 
-            <div className='flex justify-end flex-1 w-full mt-4 sm:mt-0 gap-x-2'>
+            <div className='mt-4 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
               <button
-                className='px-4 w-full justify-center sm:w-max flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold bg-black/30 hover:bg-black/40 dark:hover:bg-white/40 dark:bg-white/30 rounded-xl'
+                className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-black/30 px-4 py-1.5 font-semibold text-white hover:bg-black/40 disabled:pointer-events-none disabled:opacity-70 dark:bg-white/30 dark:hover:bg-white/40 sm:w-max'
                 disabled={githubRepository === defaultGithubRepository || savingGithubRepository}
                 onClick={saveGithubRepository}
               >
@@ -136,14 +136,14 @@ export default function Other({ botId, categories, setCategories, canEditSupport
               </button>
             </div>
           </div>
-          
+
           <div className='relative flex items-center'>
-            <span className='absolute mt-2 pointer-events-none text-primary left-4'>
+            <span className='pointer-events-none absolute left-4 mt-2 text-primary'>
               github.com/
             </span>
-            
+
             <Input
-              className='pl-[6.525rem] -mt-2 focus-visible:text-secondary'
+              className='-mt-2 pl-[6.525rem] focus-visible:text-secondary'
               type='text'
               value={githubRepository}
               onChange={event => event.target.value === '' ? setGithubRepository(undefined) : setGithubRepository(event.target.value)}
@@ -154,25 +154,25 @@ export default function Other({ botId, categories, setCategories, canEditSupport
         </div>
 
         {canEditSupportServer && (
-          <div className='flex flex-col flex-1 gap-y-2'>
+          <div className='flex flex-1 flex-col gap-y-2'>
             <label
               className='font-medium text-secondary'
             >
               {t('botManagePage.other.supportServer.title')}
 
-              <span className='ml-2 text-xs text-white dark:text-white px-2 py-0.5 dark:bg-white/30 bg-black/30 rounded-full'>
+              <span className='ml-2 rounded-full bg-black/30 px-2 py-0.5 text-xs text-white dark:bg-white/30 dark:text-white'>
                 {t('botManagePage.other.supportServer.optionalBadge')}
               </span>
             </label>
-        
+
             <p className='text-sm text-tertiary'>
               {t('botManagePage.other.supportServer.subtitle')}
             </p>
 
-            <div className='flex flex-wrap w-full gap-4 mt-2'>
+            <div className='mt-2 flex w-full flex-wrap gap-4'>
               {ownedServersLoading ? (
                 new Array(9).fill().map((_, index) => (
-                  <div key={index} className='w-24 h-24 rounded-xl bg-secondary animate-pulse' />
+                  <div key={index} className='size-24 animate-pulse rounded-xl bg-secondary' />
                 ))
               ) : (
                 ownedServers.length === 0 ? (
@@ -192,7 +192,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                           name={server.name}
                           hash={server.icon}
                           size={96}
-                          className='cursor-pointer hover:opacity-70 rounded-xl'
+                          className='cursor-pointer rounded-xl hover:opacity-70'
                           width={96}
                           height={96}
                         />
@@ -202,12 +202,12 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                           height={96}
                           name={server.name}
                           icon_url={server.icon_url}
-                          className='cursor-pointer hover:opacity-70 rounded-xl'
+                          className='cursor-pointer rounded-xl hover:opacity-70'
                         />
                       )}
 
                       {supportServerId === server.id && (
-                        <div className='absolute p-1 text-2xl rounded-full pointer-events-none -right-1 -bottom-1 bg-background'>
+                        <div className='pointer-events-none absolute -bottom-1 -right-1 rounded-full bg-background p-1 text-2xl'>
                           <IoMdCheckmarkCircle />
                         </div>
                       )}

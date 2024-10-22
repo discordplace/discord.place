@@ -98,6 +98,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
   function continueUploadSoundToGuild(guildId) {
     if (!guildId) {
       toast.error(t('soundCard.uploadSoundToDiscordModal.toast.guildNotFound'));
+
       return;
     }
 
@@ -156,7 +157,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
 
     openModal('upload-sound-to-discord', {
       title: <>
-        <PiWaveformBold className='inline mr-1' />
+        <PiWaveformBold className='mr-1 inline' />
         {sound.name}
       </>,
       description: t('soundCard.uploadSoundToDiscordModal.description'),
@@ -181,14 +182,16 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
   }, [uploadableGuilds, selectedGuildId]);
 
   return (
-    <div className={cn(
-      'flex flex-col gap-y-4 rounded-3xl overflow-hidden w-full h-max bg-secondary border-2 transition-all p-6',
-      currentlyPlaying === sound.id ? 'border-purple-500' : 'border-primary'
-    )}>
-      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100svh]">
+    <div
+      className={cn(
+        'flex flex-col gap-y-4 rounded-3xl overflow-hidden w-full h-max bg-secondary border-2 transition-all p-6',
+        currentlyPlaying === sound.id ? 'border-purple-500' : 'border-primary'
+      )}
+    >
+      <div className="pointer-events-none fixed left-0 top-0 z-10 h-svh w-full">
         {renderConfetti && (
           <Lottie
-            options={{ 
+            options={{
               loop: false,
               autoplay: true,
               animationData: confetti
@@ -198,18 +201,18 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
           />
         )}
       </div>
-      
+
       <div className="flex items-start justify-between">
-        <div className="flex flex-col max-w-[90%]">
-          <h2 className="text-base font-semibold truncate text-primary">
-            <PiWaveformBold className='inline mr-2' />
+        <div className="flex max-w-[90%] flex-col">
+          <h2 className="truncate text-base font-semibold text-primary">
+            <PiWaveformBold className='mr-2 inline' />
             {sound.name}
           </h2>
-          
+
           <div className="flex items-center gap-2 text-base font-medium text-tertiary">
             <div className='flex items-center gap-x-2'>
               <MdAccountCircle />
-            
+
               <span className='text-xs'>
                 @{sound.publisher.username}
               </span>
@@ -221,12 +224,12 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
                 key={`sound-${sound.id}-info`}
               >
                 <Icon />
-                
+
                 <span className='text-xs'>
                   {value}
                 </span>
               </div>
-            ))}            
+            ))}
           </div>
         </div>
 

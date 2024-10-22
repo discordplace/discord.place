@@ -14,18 +14,18 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
   const [value, setValue] = useState('');
 
   return (
-    <div className='flex flex-col w-full gap-y-4'>
-      <h3 className='flex items-center text-xl font-semibold gap-x-4'>
+    <div className='flex w-full flex-col gap-y-4'>
+      <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
         <FaCirclePlus size={24} className='text-purple-500' />
         {t('serverManagePage.other.title')}
       </h3>
 
-      <p className='text-sm sm:text-base text-tertiary'>
+      <p className='text-sm text-tertiary sm:text-base'>
         {t('serverManagePage.other.subtitle')}
       </p>
 
-      <div className='flex flex-col w-full gap-8 mt-4'>
-        <div className='flex flex-col flex-1 gap-y-2'>
+      <div className='mt-4 flex w-full flex-col gap-8'>
+        <div className='flex flex-1 flex-col gap-y-2'>
           <label
             className='font-medium text-secondary'
           >
@@ -36,10 +36,10 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
             {t('serverManagePage.other.inputs.category.description')}
           </p>
 
-          <div className='flex flex-wrap items-center gap-2 mt-2'>
+          <div className='mt-2 flex flex-wrap items-center gap-2'>
             {config.serverCategories.map(serverCategory => (
-              <button 
-                key={serverCategory} 
+              <button
+                key={serverCategory}
                 className={cn(
                   'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-tertiary',
                   category === serverCategory && 'bg-quaternary'
@@ -48,7 +48,7 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
                 onClick={() => setCategory(serverCategory)}
               >
                 {category === serverCategory ? <IoMdCheckmarkCircle /> : config.serverCategoriesIcons[serverCategory]}
-                
+
                 {t(`categories.${serverCategory}`)}
               </button>
             ))}
@@ -65,7 +65,7 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
               const validatedValue = value.replace(',', '').trim();
               if (validatedValue.length === 0) return toast.error(t('serverManagePage.other.toast.notValidKeyword'));
               if (keywords.includes(validatedValue)) return toast.error(t('serverManagePage.other.toast.keywordExists'));
-              
+
               const regexp = new RegExp(/[^a-zA-Z0-9-]/g);
               if (regexp.test(validatedValue)) return toast.error(t('serverManagePage.other.toast.keywordHasInvalidCharacters'));
 
@@ -80,7 +80,7 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
           onKeyPress={event => {
             if (event.key === 'Enter') {
               event.preventDefault();
-              
+
               const trimmedValue = event.target.value.trim();
 
               if (trimmedValue.length === 0) return toast.error(t('serverManagePage.other.toast.notValidKeyword'));
@@ -108,11 +108,11 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
             value={keywords.join(', ')}
             disabled
             CustomInput={
-              <div className='flex flex-wrap gap-2 mt-2'>
+              <div className='mt-2 flex flex-wrap gap-2'>
                 {keywords.map(keyword => (
-                  <button 
-                    key={keyword} 
-                    className='rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-tertiary'
+                  <button
+                    key={keyword}
+                    className='flex size-max items-center gap-x-1 rounded-lg bg-secondary px-3 py-1.5 text-sm font-semibold hover:bg-tertiary'
                     onClick={() => setKeywords(keywords.filter(k => k !== keyword))}
                   >
                     <LuHash />

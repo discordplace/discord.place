@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 export default function ServerBanner({ id, hash, format, size, className, motionOptions, ...props }) {
   const [error, setError] = useState(false);
-  
+
   if (!id || !hash) return null;
 
   const defaultOptions = {

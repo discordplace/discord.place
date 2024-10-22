@@ -4,6 +4,7 @@ const fs = require('node:fs');
 module.exports = class Commands {
   constructor() {
     this.commands = new Discord.Collection();
+
     return this;
   }
 
@@ -69,6 +70,6 @@ module.exports = class Commands {
   }
 
   pushToDiscord(body, route) {
-    return client.rest.put(route, { body: body });
+    return client.rest.put(route, { body });
   }
 };

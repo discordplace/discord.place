@@ -31,7 +31,7 @@ export default function ReviewPreview({ metadata }) {
           {t('inAppReporting.reportModal.labels.review')}
         </h2>
 
-        <p className='overflow-hidden text-xs font-medium break-words whitespace-pre-wrap text-tertiary'>
+        <p className='overflow-hidden whitespace-pre-wrap break-words text-xs font-medium text-tertiary'>
           {metadata.content}
         </p>
       </div>

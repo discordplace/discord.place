@@ -11,7 +11,7 @@ export default function FullPageLoading() {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    
+
     return () => {
       document.body.style.overflow = 'auto';
     };
@@ -21,12 +21,12 @@ export default function FullPageLoading() {
 
   return (
     <AnimatePresence>
-      <div className="fixed top-0 flex flex-col items-center justify-center w-full h-full bg-background z-[10]">
+      <div className="fixed top-0 z-10 flex size-full flex-col items-center justify-center bg-background">
         <MotionImage
-          className='w-[64px] h-[64px]'
-          src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-          alt="discord.place Logo" 
-          width={256} 
+          className='size-[64px]'
+          src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+          alt="discord.place Logo"
+          width={256}
           height={256}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -34,14 +34,14 @@ export default function FullPageLoading() {
           transition={transition}
         />
 
-        <motion.div 
-          className='overflow-hidden mt-8 bg-tertiary w-[150px] h-[6px] rounded-full relative'
+        <motion.div
+          className='relative mt-8 h-[6px] w-[150px] overflow-hidden rounded-full bg-tertiary'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={transition}
         >
-          <div className='absolute h-[6px] dark:bg-white bg-black rounded-full animate-loading' style={{
+          <div className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
             width: '50%',
             transform: 'translateX(-100%)'
           }} />

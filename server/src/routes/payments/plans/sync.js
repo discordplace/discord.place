@@ -16,6 +16,7 @@ module.exports = {
         .then(() => response.status(204).end())
         .catch(error => {
           logger.error('There was an error syncing Lemon Squeezy plans:', error);
+
           return response.sendError('Failed to sync Lemon Squeezy plans.', 500);
         });
     }

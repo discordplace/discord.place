@@ -12,8 +12,8 @@ export default async function Page() {
   const { data, totalServers } = result || { data: [], totalServers: 0 };
 
   return (
-    <div className="relative z-10 flex flex-col items-center w-full mb-24">
-      <div className='relative min-h-[60svh] w-full flex items-center flex-col'>
+    <div className="relative z-10 mb-24 flex w-full flex-col items-center">
+      <div className='relative flex min-h-[60svh] w-full flex-col items-center'>
         <Square
           column='5'
           row='5'
@@ -21,11 +21,11 @@ export default async function Page() {
           blockColor='rgba(var(--bg-secondary))'
         />
 
-        <div className='absolute top-0 left-0 -z-[1] w-full h-full [background:linear-gradient(180deg,_rgba(168,_85,_247,_0.075)_0%,_transparent_100%)]' />
+        <div className='absolute left-0 top-0 z-[-1] size-full [background:linear-gradient(180deg,_rgba(168,_85,_247,_0.075)_0%,_transparent_100%)]' />
 
         <Heading />
 
-        <div className='flex flex-col items-center justify-center w-full max-w-5xl mt-24 gap-y-4'>
+        <div className='mt-24 flex w-full max-w-5xl flex-col items-center justify-center gap-y-4'>
           <TrustedByHeading totalServers={totalServers} />
 
           <div className='flex flex-col flex-wrap justify-center gap-4 sm:flex-row'>
@@ -35,10 +35,10 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      
+
       <Suspense fallback={<></>}>
         <InfoCards />
       </Suspense>
     </div>
   );
-} 
+}

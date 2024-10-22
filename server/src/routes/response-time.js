@@ -4,7 +4,7 @@ module.exports = {
   get: async (request, response) => response.json({ responseTime: Number(calculatedResponseTime) }),
   post: async (request, response) => {
     const current_time = process.hrtime();
-    
+
     response.on('finish', () => {
       const end_time = process.hrtime(current_time);
       /// process.hrtime() returns nanoseconds, this converts the result to milliseconds.

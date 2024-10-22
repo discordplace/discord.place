@@ -173,7 +173,7 @@ module.exports = {
       const allRequirementsIsMet = config.serverListingRequirements.map(({ id: reqId, name: reqName, description }) => {
         const checkFunction = requirementChecks[reqId];
         const isMet = checkFunction ? checkFunction(guild) : false;
-  
+
         return {
           id: reqId,
           name: reqName,
@@ -205,7 +205,7 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       const channel = client.guilds.cache.get(config.guildId).channels.cache.get(config.serverLogsChannelId);
-  
+
       const embeds = [
         new Discord.EmbedBuilder()
           .setAuthor({ name: 'Guild Listed', iconURL: guild.iconURL() })
@@ -223,7 +223,7 @@ module.exports = {
           .setFooter({ text: guild.name, iconURL: guild.iconURL() })
           .setTimestamp()
       ];
-    
+
       channel.send({ embeds });
 
       await newServer.save();
@@ -285,9 +285,9 @@ module.exports = {
       .isArray().withMessage('Keywords should be an array.')
       .custom(keywordsValidation),
     validateRequest,
-    async (request, response) => {  
+    async (request, response) => {
       const { id, description, invite_url, category, keywords } = matchedData(request);
-  
+
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Server not found.', 404);
 
@@ -300,30 +300,30 @@ module.exports = {
 
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404);
-        
+
       if (description) server.description = description;
       if (invite_url) {
         const inviteLinkMatch = invite_url.match(/(https?:\/\/|http?:\/\/)?(www.)?(discord.(gg)|discordapp.com\/invite|discord.com\/invite)\/[^\s/]+?(?=\b)/g);
         if (!inviteLinkMatch || !inviteLinkMatch?.[0]) return response.sendError('Invite link is not valid.', 400);
-  
+
         const inviteCode = inviteLinkMatch[0].split('/').pop();
         if (inviteCode !== guild.vanityURLCode) {
           const invite = await guild.invites.fetch(inviteCode).catch(() => null);
           if (!invite) return response.sendError('Invite link is not valid.', 400);
         }
-  
+
         server.invite_code = {
           type: inviteCode === guild.vanityURLCode ? 'Vanity' : 'Invite',
           code: inviteCode === guild.vanityURLCode ? null : inviteCode
         };
       }
-      
+
       if (category) server.category = category;
       if (keywords) server.keywords = keywords;
-  
+
       const validationError = getValidationError(server);
       if (validationError) return response.sendError(validationError, 400);
-  
+
       if (!server.isModified()) return response.sendError('No changes were made.', 400);
 
       await server.save();
@@ -331,6 +331,6 @@ module.exports = {
       await updatePanelMessage(id);
 
       return response.json(await server.toPubliclySafe());
-    }   
+    }
   ]
 };

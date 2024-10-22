@@ -21,7 +21,7 @@ module.exports = {
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { slug } = matchedData(request);
 
       const profile = await Profile.findOne({ slug });
@@ -44,15 +44,15 @@ module.exports = {
       const isLiked = profile.likes.includes(request.user?.id || request.clientIp);
 
       const publiclySafe = await profile.toPubliclySafe();
-      
+
       Object.assign(publiclySafe, { permissions, isLiked });
 
       const ownedServers = client.guilds.cache.filter(({ ownerId }) => ownerId === profile.user.id);
       if (ownedServers.size > 0) {
         const listedServers = randomizeArray(await Server.find({ id: { $in: ownedServers.map(({ id }) => id) } })).slice(0, 3);
 
-        Object.assign(publiclySafe, { 
-          servers: listedServers.map( server => {
+        Object.assign(publiclySafe, {
+          servers: listedServers.map(server => {
             let guild = ownedServers.find(({ id }) => id === server.id);
 
             return {
@@ -89,7 +89,7 @@ module.exports = {
           logger.warn(`Profile ${profile.slug} colors were reset because user is not premium anymore.`);
         }
       }
-      
+
       return response.json(publiclySafe);
     }
   ],
@@ -146,7 +146,7 @@ module.exports = {
       .optional()
       .isBoolean().withMessage('Verified must be a boolean.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { slug, newSlug, occupation: newOccupation, gender: newGender, location: newLocation, birthday: newBirthday, bio: newBio, preferredHost: newPreferredHost, colors: newColors, socials, verified } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
@@ -184,7 +184,7 @@ module.exports = {
               const url = new URL(socials[key]);
               if (url.protocol !== 'http:' && url.protocol !== 'https:') throw new Error('Custom social link is not valid.');
               if (profile.socials.some(({ link }) => link === socials[key])) throw new Error('You have already added this social.');
-              
+
               profile.socials.push({ type: 'custom', link: socials[key] });
             } catch (error) {
               return response.sendError(error, 400);
@@ -203,7 +203,7 @@ module.exports = {
               twitter: 'https://twitter.com/'
             };
 
-            profile.socials.push({ 
+            profile.socials.push({
               type: key,
               handle: socials[key],
               link: baseUrls[key] + socials[key]
@@ -235,7 +235,7 @@ module.exports = {
 
       await profile.save();
 
-      return response.status(200).json({ 
+      return response.status(200).json({
         success: true,
         profile: await profile.toPubliclySafe()
       });

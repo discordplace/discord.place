@@ -15,7 +15,8 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.error === true && process.env.NODE_ENV !== 'development') return redirect('/error?code=0');
-    return this.props.children; 
+
+    return this.props.children;
   }
 }
 

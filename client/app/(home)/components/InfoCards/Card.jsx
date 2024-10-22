@@ -16,11 +16,11 @@ export default function InfoCard({ index, title, description, button, content })
       )}
     >
 
-      <div className='relative h-[300px] w-full max-w-full sm:max-w-[75%] overflow-hidden lg:w-1/2 border shadow-lg rounded-3xl border-primary bg-secondary'>
+      <div className='relative h-[300px] w-full max-w-full overflow-hidden rounded-3xl border border-primary bg-secondary shadow-lg sm:max-w-[75%] lg:w-1/2'>
         {content}
       </div>
 
-      <div className='flex flex-col max-w-full sm:max-w-[75%] w-full lg:w-1/2 gap-4'>
+      <div className='flex w-full max-w-full flex-col gap-4 sm:max-w-[75%] lg:w-1/2'>
         <h2
           className={cn(
             'text-3xl font-medium',
@@ -30,7 +30,7 @@ export default function InfoCard({ index, title, description, button, content })
           {title}
         </h2>
 
-        <p className='text-lg font-light text-balance text-secondary'>
+        <p className='text-balance text-lg font-light text-secondary'>
           {description}
         </p>
 
@@ -38,7 +38,7 @@ export default function InfoCard({ index, title, description, button, content })
           <Link
             href={button.href}
             target={button.target || '_blank'}
-            className='flex items-center -ml-4 text-tertiary hover:text-primary hover:ml-0 px-4 py-2 mt-2 text-sm hover:font-semibold transition-all ring-offset-2 ring-offset-[rgba(var(--bg-background))] rounded-full hover:ring-2 ring-purple-500 w-max hover:bg-purple-500/20 gap-x-1'
+            className='-ml-4 mt-2 flex w-max items-center gap-x-1 rounded-full px-4 py-2 text-sm text-tertiary ring-purple-500 ring-offset-2 ring-offset-[rgba(var(--bg-background))] transition-all hover:ml-0 hover:bg-purple-500/20 hover:font-semibold hover:text-primary hover:ring-2'
           >
             {button.text}
 

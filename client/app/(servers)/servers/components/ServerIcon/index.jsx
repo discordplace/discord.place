@@ -7,17 +7,17 @@ export default function ServerIcon({ width, height, className, icon_url, name })
 
   function getCompressedName(name, limit) {
     const noVowels = name.replace(/[AEIOUaeiou\s]/g, '');
-  
+
     let compressedName = '';
-  
+
     for (let i = 0; i < 3; i++) {
       compressedName += noVowels[i];
       if (compressedName.length === limit) break;
     }
-  
+
     return compressedName;
   }
-  
+
   return (
     <div>
       {icon_url ? (
@@ -30,17 +30,17 @@ export default function ServerIcon({ width, height, className, icon_url, name })
             'rounded-lg',
             className
           )}
-          style={{ 
-            width: `${width}px`, 
-            height: `${height}px` 
+          style={{
+            width: `${width}px`,
+            height: `${height}px`
           }}
         />
       ) : (
-        <div 
+        <div
           className={cn(
             'select-none bg-quaternary rounded-lg flex items-center justify-center',
             className
-          )} 
+          )}
           style={{
             width: `${width}px`,
             height: `${height}px`

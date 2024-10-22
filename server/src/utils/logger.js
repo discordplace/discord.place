@@ -58,10 +58,11 @@ module.exports = class Logger {
         timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
         printf(({ level, message, timestamp, stack }) => {
           if (stack) return `${timestamp} ${level}: ${stack}`;
+
           return `${timestamp} ${level}: ${message}`;
         })
       ),
-      transports: transports
+      transports
     });
 
     this.httpLogger = winston.createLogger({

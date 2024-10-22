@@ -17,12 +17,13 @@ export default function Countdown({ date }) {
 
   return loaded ? (
     <ReactCountdown
-      date={date} 
+      date={date}
       renderer={({ hours, minutes, seconds, completed }) => {
         if (completed) return t('buttons.vote');
+
         return (
           <>
-            <span className='items-center hidden gap-x-1 lg:flex'>
+            <span className='hidden items-center gap-x-1 lg:flex'>
               {t('voteCountdown.desktop', { hours, minutes, seconds })}
             </span>
 

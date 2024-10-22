@@ -16,7 +16,7 @@ import useAuthStore from '@/stores/auth';
 
 export default function SearchResults() {
   const user = useAuthStore(state => state.user);
-  
+
   const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
     loading: state.loading,
     bots: state.bots,
@@ -31,20 +31,20 @@ export default function SearchResults() {
   useEffect(() => {
     fetchBots()
       .catch(toast.error);
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showPagination = !loading && totalBots > limit;
 
   const stateVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0
     },
-    visible: { 
+    visible: {
       opacity: 1
     },
-    exit: { 
+    exit: {
       opacity: 0
     }
   };
@@ -52,14 +52,14 @@ export default function SearchResults() {
   return (
     !loading && bots.length <= 0 ? (
       <AnimatePresence>
-        <motion.div 
+        <motion.div
           className='flex flex-col gap-y-2'
           variants={stateVariants}
           initial='hidden'
           animate='visible'
           exit='hidden'
         >
-          <ErrorState 
+          <ErrorState
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
@@ -70,7 +70,7 @@ export default function SearchResults() {
           />
 
           <button
-            className='text-tertiary hover:underline hover:text-primary'
+            className='text-tertiary hover:text-primary hover:underline'
             onClick={() => {
               fetchBots('', 1, limit, 'All', 'Votes');
             }}
@@ -81,14 +81,14 @@ export default function SearchResults() {
       </AnimatePresence>
     ) : (
       <>
-        <motion.div 
+        <motion.div
           className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-        >              
+        >
           {loading ? (
             new Array(limit).fill(0).map((_, index) => (
-              <div key={index} className='w-full h-[240px] bg-secondary rounded-3xl animate-pulse' />
+              <div key={index} className='h-[240px] w-full animate-pulse rounded-3xl bg-secondary' />
             ))
           ) : (
             <>
@@ -113,17 +113,17 @@ export default function SearchResults() {
           )}
         </motion.div>
 
-        <div className='flex items-center justify-center w-full' key='pagination'> 
+        <div className='flex w-full items-center justify-center' key='pagination'>
           {showPagination && (
-            <Pagination 
-              page={page} 
+            <Pagination
+              page={page}
               setPage={newPage => {
                 setPage(newPage);
                 fetchBots(search);
-              }} 
-              loading={loading} 
+              }}
+              loading={loading}
               total={totalBots}
-              limit={limit} 
+              limit={limit}
             />
           )}
         </div>

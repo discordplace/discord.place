@@ -16,7 +16,7 @@ module.exports = {
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const canApprove = request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve this emoji.', 403);
 
@@ -29,7 +29,7 @@ module.exports = {
       if (emoji.approved === true) return response.sendError(`Emoji${isPack ? ' pack' : ''} already approved.`, 400);
 
       await emoji.updateOne({ approved: true });
-      
+
       await DashboardData.findOneAndUpdate({}, { $inc: { emojis: 1 } }, { sort: { createdAt: -1 } });
 
       const guild = client.guilds.cache.get(config.guildId);

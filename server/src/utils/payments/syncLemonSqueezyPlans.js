@@ -18,7 +18,7 @@ async function syncLemonSqueezyPlans() {
       const isPlanChanged = currentPlan.storeId !== plan.attributes.store_id || currentPlan.variantId !== variantsData.data.find(variant => variant.attributes.product_id == plan.id).id || currentPlan.name !== plan.attributes.name || currentPlan.slug !== plan.attributes.slug || currentPlan.status !== plan.attributes.status || currentPlan.price !== plan.attributes.price || currentPlan.price_formatted !== plan.attributes.price_formatted;
 
       if (isPlanChanged) {
-        await currentPlan.updateOne({ 
+        await currentPlan.updateOne({
           $set: {
             storeId: plan.attributes.store_id,
             variantId: variantsData.data.find(variant => variant.attributes.product_id == plan.id).id,
@@ -27,7 +27,7 @@ async function syncLemonSqueezyPlans() {
             status: plan.attributes.status,
             price: plan.attributes.price,
             price_formatted: plan.attributes.price_formatted
-          } 
+          }
         });
       }
     } else {

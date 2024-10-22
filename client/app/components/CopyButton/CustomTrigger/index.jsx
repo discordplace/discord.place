@@ -21,7 +21,7 @@ export default function CopyButton({ timeout = 2000, successText, copyText, clas
   };
 
   return (
-    <div 
+    <div
       onClick={handleCopy}
       className={cn(
         'transition-all',

@@ -34,7 +34,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
 
   useEffect(() => {
     if (image_urls.length <= 0) setIsPackage(false);
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image_urls]);
 
@@ -53,6 +53,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
   function continueUploadEmojiToGuild(emojiUrl, guildId) {
     if (!guildId) {
       toast.error(t('createEmojiPage.emojisPreview.toast.guildNotFound'));
+
       return;
     }
 
@@ -117,7 +118,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
           alt='Emoji Preview'
           width={48}
           height={48}
-          className='h-[20px] w-auto inline'
+          className='inline h-[20px] w-auto'
         />
 
         {t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.title')}
@@ -145,21 +146,21 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
 
   return (
     <div className='flex flex-col gap-y-4'>
-      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100svh]">
+      <div className="pointer-events-none fixed left-0 top-0 z-10 h-svh w-full">
         <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
       </div>
-      
+
       {ableToChange && (
         <div className='flex w-full gap-x-2'>
-          <button 
-            className='px-3 py-1.5 w-full text-sm font-medium rounded-lg cursor-pointer bg-black hover:bg-black/70 text-white dark:hover:bg-white/70 dark:bg-white dark:text-black' 
+          <button
+            className='w-full cursor-pointer rounded-lg bg-black px-3 py-1.5 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
             onClick={() => setPatternDarkMode(!patternDarkMode)}
           >
             {patternDarkMode ? t('buttons.lightMode') : t('buttons.darkMode')}
           </button>
 
-          <button 
-            className='px-3 py-1.5 w-full text-sm font-medium rounded-lg cursor-pointer bg-black hover:bg-black/70 text-white dark:hover:bg-white/70 dark:bg-white dark:text-black' 
+          <button
+            className='w-full cursor-pointer rounded-lg bg-black px-3 py-1.5 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
             onClick={() => {
               setImageURLs([]);
               setIsPackage(false);
@@ -171,14 +172,14 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
         </div>
       )}
 
-      <div className='grid w-full h-full grid-cols-3 gap-4 place-content-center'>
+      <div className='grid size-full grid-cols-3 place-content-center gap-4'>
         {image_urls.map(url => (
-          <motion.div 
-            className='relative flex items-center justify-center w-full h-full rounded-xl bg-tertiary min-h-[120px] group' 
-            key={url} 
+          <motion.div
+            className='group relative flex size-full min-h-[120px] items-center justify-center rounded-xl bg-tertiary'
+            key={url}
             style={{
               backgroundImage: `url(/${patternDarkMode ? 'transparent-pattern-dark' : 'transparent-pattern-light'}.png)`
-            }} 
+            }}
             layoutId={url}
           >
             {!ableToChange && (
@@ -198,9 +199,9 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
                     uploadToDiscord();
                   }}
                   disabled={!loggedIn || (selectedEmojiURL === url && uploadToDiscordButtonLoading)}
-                >                
+                >
                   {(selectedEmojiURL === url && uploadToDiscordButtonLoading) ? (
-                    <TbLoader className='animate-spin' /> 
+                    <TbLoader className='animate-spin' />
                   ) : (
                     <FaCloudUploadAlt />
                   )}
@@ -213,13 +214,13 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
               width={64}
               height={64}
               alt={''}
-              className='w-[46px] h-[46px] sm:w-[64px] sm:h-[64px] object-contain'
+              className='size-[46px] object-contain sm:size-[64px]'
             />
           </motion.div>
         ))}
-        
+
         {new Array(9 - image_urls.length).fill(0).map((_, index) => (
-          <div className='flex items-center justify-center w-full h-full rounded-xl bg-secondary min-h-[120px]' key={index}>
+          <div className='flex size-full min-h-[120px] items-center justify-center rounded-xl bg-secondary' key={index}>
             <MdEmojiEmotions size={64} className='text-tertiary' />
           </div>
         ))}

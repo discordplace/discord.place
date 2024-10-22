@@ -3,13 +3,13 @@ import axios from 'axios';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
 
-export default cache(function getProfile(slug) {
+export default cache(slug => {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const url = `${config.api.url}/profiles/${slug}`;
 
     try {
-      const response = await axios.get(url, { 
+      const response = await axios.get(url, {
         headers: {
           cookie: cookies().toString()
         },

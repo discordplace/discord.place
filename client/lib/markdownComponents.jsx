@@ -27,7 +27,7 @@ const markdownComponents = {
     );
   },
   a: ({ children, href }) => (
-    <Link href={href} className='inline-flex items-center gap-x-2 [text-decoration:unset] hover:underline underline-offset-4'>
+    <Link href={href} className='inline-flex items-center gap-x-2 underline-offset-4 [text-decoration:unset] hover:underline'>
       {children}
 
       {!children.key?.startsWith('img-') && <FiArrowUpRight />}
@@ -35,7 +35,7 @@ const markdownComponents = {
   ),
   code: ({ children, className }) => {
     const languageMatch = /language-(\w+)/.exec(className || '');
-      
+
     let fileName = languageMatch?.[1];
     let FileIcon = <FaFileCode />;
 

@@ -22,11 +22,11 @@ export default function CreateLinkModal() {
         <p className='text-xs text-tertiary'>
           {t('accountPage.tabs.myLinks.createLinkModal.inputs.name.description')}
         </p>
-            
+
         <input
           type="text"
           placeholder={t('accountPage.tabs.myLinks.createLinkModal.inputs.name.placeholder')}
-          className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
+          className="mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
           value={name}
           onChange={event => setName(event.target.value)}
         />
@@ -40,11 +40,11 @@ export default function CreateLinkModal() {
         <p className='text-xs text-tertiary'>
           {t('accountPage.tabs.myLinks.createLinkModal.inputs.destinationUrl.description')}
         </p>
-            
+
         <input
           type="text"
           placeholder={t('accountPage.tabs.myLinks.createLinkModal.inputs.destinationUrl.placeholder')}
-          className="w-full px-3 py-2 mt-3 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
+          className="mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
           value={destinationURL}
           onChange={event => setDestinationURL(event.target.value)}
         />

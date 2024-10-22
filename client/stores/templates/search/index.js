@@ -16,7 +16,7 @@ const useSearchStore = create((set, get) => ({
   category: 'All',
   setCategory: category => {
     set({ category, page: 1 });
-  
+
     get().fetchTemplates(get().search);
   },
   page: 1,
@@ -35,7 +35,7 @@ const useSearchStore = create((set, get) => ({
     if (sort) set({ sort });
 
     set({ loading: true, search });
-    
+
     fetchTemplates(search, get().page, get().limit, get().category, get().sort)
       .then(data => set({ templates: data.templates, loading: false, maxReached: data.maxReached, total: data.total }))
       .catch(error => {

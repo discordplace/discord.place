@@ -34,11 +34,11 @@ export default function About({ bot }) {
       label: t('botPage.about.labels.owner'),
       icon: <RiUserAddLine />,
       component: (
-        <Link 
-          className='flex items-center transition-opacity gap-x-2 hover:opacity-50'
+        <Link
+          className='flex items-center gap-x-2 transition-opacity hover:opacity-50'
           href={`/profile/u/${bot.owner.id}`}
         >
-          <span className='font-medium truncate'>
+          <span className='truncate font-medium'>
             @{bot.owner.username}
           </span>
 
@@ -48,7 +48,7 @@ export default function About({ bot }) {
             size={16}
             width={16}
             height={16}
-            className='rounded-full w-[16px] h-[16px]'
+            className='size-[16px] rounded-full'
           />
         </Link>
       )
@@ -90,7 +90,7 @@ export default function About({ bot }) {
     component: <>
       {isMobile ? (
         <Link
-          className='underline text-tertiary hover:text-primary'
+          className='text-tertiary underline hover:text-primary'
           href={bot.github_repository.data.html_url}
         >
           {t('botPage.about.labels.githubRepository.openSourceDisclaimer')}
@@ -102,13 +102,13 @@ export default function About({ bot }) {
       )}
 
       <Link
-        className='hidden sm:flex flex-col p-4 mt-6 border-2 max-w-[90%] rounded-lg cursor-pointer gap-y-3 h-max bg-tertiary hover:bg-quaternary border-primary'
+        className='mt-6 hidden h-max max-w-[90%] cursor-pointer flex-col gap-y-3 rounded-lg border-2 border-primary bg-tertiary p-4 hover:bg-quaternary sm:flex'
         href={bot.github_repository.data.html_url}
         target='_blank'
         rel='noopener noreferrer'
       >
         {bot.github_repository.data.language && (
-          <span className='px-2 py-0.5 text-xs font-medium dark:bg-white/20 border dark:border-white/40 select-none bg-blasck/20 border-black/40 rounded-full text-primary w-max'>
+          <span className='w-max select-none rounded-full border border-black/40 bg-black/20 px-2 py-0.5 text-xs font-medium text-primary dark:border-white/40 dark:bg-white/20'>
             {bot.github_repository.data.language}
           </span>
         )}
@@ -128,22 +128,22 @@ export default function About({ bot }) {
           )}
           {bot.github_repository.data.owner.login}/
 
-          <span className='font-semibold truncate text-primary'>
+          <span className='truncate font-semibold text-primary'>
             {bot.github_repository.data.name}
           </span>
         </div>
 
-        <p className='-mt-2 text-xs whitespace-pre-wrap text-tertiary line-clamp-3'>
+        <p className='-mt-2 line-clamp-3 whitespace-pre-wrap text-xs text-tertiary'>
           {bot.github_repository.data.description}
         </p>
 
         <div className='flex items-center gap-x-2 text-tertiary'>
-          <div className='font-medium text-tertiary text-ms flex gap-x-1.5 items-center'>
+          <div className='flex items-center gap-x-1.5 text-sm font-medium text-tertiary'>
             <TiStarFullOutline />
             {formatter.format(bot.github_repository.data.stargazers_count)}
           </div>
 
-          <div className='font-medium text-tertiary text-sm flex gap-x-1.5 items-center'>
+          <div className='flex items-center gap-x-1.5 text-sm font-medium text-tertiary'>
             <PiGitForkBold />
             {formatter.format(bot.github_repository.data.forks_count)}
           </div>
@@ -153,19 +153,19 @@ export default function About({ bot }) {
   });
 
   return (
-    <div className='w-full lg:w-[70%] flex flex-col'>
-      <motion.h2 
-        className='text-xl font-semibold' 
-        initial={{ opacity: 0, y: -10 }} 
-        animate={{ opacity: 1, y: 0 }} 
+    <div className='flex w-full flex-col lg:w-[70%]'>
+      <motion.h2
+        className='text-xl font-semibold'
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
       >
         {t('botPage.about.title')}
       </motion.h2>
 
-      <motion.p className='mt-2 whitespace-pre-wrap text-tertiary' 
-        initial={{ opacity: 0, y: -10 }} 
-        animate={{ opacity: 1, y: 0 }} 
+      <motion.p className='mt-2 whitespace-pre-wrap text-tertiary'
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.15 }}
       >
         {bot.short_description}
@@ -181,15 +181,15 @@ export default function About({ bot }) {
         </Markdown>
       </motion.div>
 
-      <motion.div 
-        className='grid grid-cols-1 gap-8 p-4 py-8 mt-8 sm:grid-cols-2 h-max rounded-xl bg-secondary'
+      <motion.div
+        className='mt-8 grid h-max grid-cols-1 gap-8 rounded-xl bg-secondary p-4 py-8 sm:grid-cols-2'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.35 }}
       >
         {keys.map(({ key, label, icon, value, component }, index) => (
-          <motion.div 
-            key={key} 
+          <motion.div
+            key={key}
             className={cn(
               'flex w-full items-start h-max gap-x-4',
               index === keys.length - 1 && index % 2 === 0 && 'sm:col-span-2'
@@ -198,11 +198,11 @@ export default function About({ bot }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.20 + (.05 * index) }}
           >
-            <div className='p-3 rounded-full bg-tertiary text-secondary'>
+            <div className='rounded-full bg-tertiary p-3 text-secondary'>
               {icon}
             </div>
 
-            <div className='flex flex-col w-full'>
+            <div className='flex w-full flex-col'>
               <h3 className='font-semibold'>
                 {label}
               </h3>

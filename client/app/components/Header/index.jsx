@@ -11,8 +11,8 @@ export default function Header() {
 
   const isDashboard = pathname === '/dashboard';
   const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview');
-  const isAccount = pathname === '/account'; 
-  
+  const isAccount = pathname === '/account';
+
   if (isDashboard || isTemplatePreview || isAccount) return null;
 
   return collapseHeader ? <CollapsedHeader pathname={pathname} /> : <NotCollapsedHeader pathname={pathname} />;

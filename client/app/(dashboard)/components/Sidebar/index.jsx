@@ -192,7 +192,7 @@ export default function Sidebar() {
         isCollapsed ? 'min-w-[60px] w-[60px]' : 'min-w-[250px]'
       )}
     >
-      <div className='sticky top-0 w-full h-max'>
+      <div className='sticky top-0 h-max w-full'>
         <div
           className={cn(
             'flex items-center pt-8 select-none gap-4',
@@ -203,12 +203,12 @@ export default function Sidebar() {
             className='flex gap-x-4 hover:opacity-60'
             href='/'
           >
-            <Image 
-              src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-              width={64} 
-              height={64} 
-              alt="discord.place Logo" 
-              className='w-6 h-6'
+            <Image
+              src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+              width={64}
+              height={64}
+              alt="discord.place Logo"
+              className='size-6'
             />
 
             <h1
@@ -252,7 +252,7 @@ export default function Sidebar() {
           )}
         </div>
 
-        <div className='flex flex-col w-full pl-4 mt-8 gap-y-1'>
+        <div className='mt-8 flex w-full flex-col gap-y-1 pl-4'>
           {blocks.filter(({ tabs }) => !tabs).map(block => (
             <BlockItem
               key={block.id}
@@ -267,7 +267,7 @@ export default function Sidebar() {
               key={block.id}
               className={cn(
                 'flex flex-col gap-y-1',
-                !isCollapsed && 'mt-3' 
+                !isCollapsed && 'mt-3'
               )}
             >
               <span
@@ -276,7 +276,7 @@ export default function Sidebar() {
                   isCollapsed && 'hidden'
                 )}
               >
-                {block.name}  
+                {block.name}
               </span>
 
               <div
@@ -318,7 +318,7 @@ export default function Sidebar() {
                 size={64}
                 width={36}
                 height={36}
-                className='rounded-full min-w-[36px] min-h-[36px]'
+                className='min-h-[36px] min-w-[36px] rounded-full'
               />
 
               <div
@@ -348,15 +348,15 @@ export default function Sidebar() {
               side={isCollapsed ? 'right' : 'bottom'}
             >
               <DropdownMenu.Item
-                className='flex items-center px-2.5 py-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2 data-[highlighted]:bg-quaternary text-tertiary data-[highlighted]:text-primary'
+                className='flex cursor-pointer items-center gap-x-2 rounded-xl px-2.5 py-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'
                 onSelect={() => router.push('/account')}
               >
                 <MdAccountCircle />
-                My Account        
+                My Account
               </DropdownMenu.Item>
 
               <DropdownMenu.Item
-                className='flex items-center py-2 px-2.5 font-medium rounded-xl outline-none cursor-pointer gap-x-2 data-[highlighted]:bg-quaternary text-tertiary data-[highlighted]:text-primary'
+                className='flex cursor-pointer items-center gap-x-2 rounded-xl px-2.5 py-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'
                 onSelect={logOut}
               >
                 <IoMdLogOut />

@@ -36,6 +36,6 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const theme = await getTheme(params.id).catch(error => error);
   if (typeof theme === 'string') return redirect(`/error?message=${encodeURIComponent(theme)}`);
-  
+
   return <Content theme={theme} />;
 }

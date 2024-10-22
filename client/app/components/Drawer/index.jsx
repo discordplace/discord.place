@@ -14,9 +14,9 @@ export default function CustomDrawer({ openState, setOpenState, state, setState,
       onOpenChange={setOpenState}
     >
       <Drawer.Portal>
-        <Drawer.Content className='outline-none gap-y-1 p-4 z-[10001] bg-secondary flex flex-col rounded-t-3xl h-max fixed bottom-0 left-0 right-0'>
-          <div className='mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-quaternary mb-8' />
-          <div className='max-h-[80svh] overflow-y-auto gap-y-2 w-full flex flex-col'>
+        <Drawer.Content className='fixed inset-x-0 bottom-0 z-[10001] flex h-max flex-col gap-y-1 rounded-t-3xl bg-secondary p-4 outline-none'>
+          <div className='mx-auto mb-8 h-1.5 w-12 shrink-0 rounded-full bg-quaternary' />
+          <div className='flex max-h-[80svh] w-full flex-col gap-y-2 overflow-y-auto'>
             {items.map(item => (
               <button
                 key={nanoid()}
@@ -35,7 +35,7 @@ export default function CustomDrawer({ openState, setOpenState, state, setState,
             ))}
           </div>
         </Drawer.Content>
-        <Drawer.Overlay className='fixed inset-0 bg-white/40 dark:bg-black/40 z-[10000]' />
+        <Drawer.Overlay className='fixed inset-0 z-[10000] bg-white/40 dark:bg-black/40' />
       </Drawer.Portal>
     </Drawer.Root>
   );

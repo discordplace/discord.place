@@ -35,6 +35,6 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const sound = await getSound(params.id).catch(error => error);
   if (typeof sound === 'string') return redirect(`/error?message=${encodeURIComponent(sound)}`);
-  
+
   return <Content sound={sound} />;
 }

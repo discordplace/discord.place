@@ -7,6 +7,7 @@ function humanizeMs(ms, strings) {
   if (days > 0) return `${days} ${strings.days}, ${hours % 24} ${strings.hours}, ${minutes % 60} ${strings.minutes}, ${seconds % 60} ${strings.seconds}`;
   if (hours > 0) return `${hours} ${strings.hours}, ${minutes % 60} ${strings.minutes}, ${seconds % 60} ${strings.seconds}`;
   if (minutes > 0) return `${minutes} ${strings.minutes}, ${seconds % 60} ${strings.seconds}`;
+
   return `${seconds} ${strings.seconds}`;
 }
 

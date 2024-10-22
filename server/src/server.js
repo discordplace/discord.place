@@ -55,7 +55,7 @@ module.exports = class Server {
     });
 
     this.server.use(morganMiddleware);
-    
+
     this.server.use(compression());
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
@@ -69,7 +69,7 @@ module.exports = class Server {
     }));
     this.server.use(ip);
     this.server.use(require('@/utils/middlewares/error'));
-    
+
     this.server.use((request, response, next) => {
       if (client.blockedIps.has(request.clientIp)) return response.sendError('Forbidden', 403);
       next();
@@ -78,7 +78,7 @@ module.exports = class Server {
     this.server.use(languageDetection);
 
     if (process.env.NODE_ENV === 'production' && config.globalRateLimit.enabled === true) this.server.use(require('@/utils/middlewares/globalRateLimiter'));
-    
+
     this.server.use((request, response, next) => {
       if (config.customHostnames.includes(request.headers.host)) {
         const slashLength = request.url.split('/').filter(Boolean).length;

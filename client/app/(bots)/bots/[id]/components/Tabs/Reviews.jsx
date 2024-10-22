@@ -35,15 +35,15 @@ export default function Reviews({ bot }) {
     const start = (page - 1) * limit;
     const end = start + limit;
     setReviews(bot.reviews.slice(start, end));
-        
+
     // eslint-disable-next-line
   }, [page]);
 
-  const calcRating = (rating) => {
+  const calcRating = rating => {
     const totalReviews = bot.reviews.length;
     const ratingCount = bot.reviews.filter(review => review.rating === rating).length;
     const percentage = (ratingCount / totalReviews) * 100;
-    
+
     return `${percentage}%`;
   };
 
@@ -62,28 +62,30 @@ export default function Reviews({ bot }) {
       },
       error: error => {
         setLoading(false);
+
         return error;
       }
     });
   }
-  
+
   return (
-    <div className="flex flex-col lg:w-[70%] px-8 lg:px-0">
+    <div className="flex flex-col px-8 lg:w-[70%] lg:px-0">
       <h1 className="text-xl font-semibold">
         {t('botPage.tabs.reviews.title')}
       </h1>
 
-      <div className="flex flex-col w-full mt-8 gap-y-4 sm:flex-row">
-        <div className="flex-col gap-y-4 flex w-[35%]">
+      <div className="mt-8 flex w-full flex-col gap-y-4 sm:flex-row">
+        <div className="flex w-[35%] flex-col gap-y-4">
           <h2 className="text-5xl font-bold sm:text-7xl">
             {((bot.reviews.reduce((acc, review) => acc + review.rating, 0) / bot.reviews.length) || 0).toFixed(1)}
           </h2>
-          
-          <div className="flex text-lg text-yellow-500 gap-x-0.5 sm:gap-x-2">
+
+          <div className="flex gap-x-0.5 text-lg text-yellow-500 sm:gap-x-2">
             {[...Array(5)].map((_, index) => {
               const rating = bot.reviews.reduce((acc, review) => acc + review.rating, 0) / bot.reviews.length;
               if (rating >= index + 1) return <TiStarFullOutline key={index} />;
               if (rating >= index + 0.5) return <TiStarHalfOutline key={index} />;
+
               return <TiStarOutline key={index} className='text-tertiary' />;
             })}
           </div>
@@ -93,16 +95,16 @@ export default function Reviews({ bot }) {
           </span>
         </div>
 
-        <div className="flex flex-1 w-full">
-          <div className='flex flex-col w-full gap-y-2'>
+        <div className="flex w-full flex-1">
+          <div className='flex w-full flex-col gap-y-2'>
             {new Array(5).fill(null).map((_, index) => (
-              <div key={index} className='flex items-center w-full gap-x-4'>
+              <div key={index} className='flex w-full items-center gap-x-4'>
                 <span className='font-semibold'>{5 - index}</span>
 
-                <div className='flex w-full h-[5px] rounded-lg bg-tertiary'>
-                  <div className='bg-yellow-500 rounded-lg' style={{ width: calcRating(5 - index) }} />
+                <div className='flex h-[5px] w-full rounded-lg bg-tertiary'>
+                  <div className='rounded-lg bg-yellow-500' style={{ width: calcRating(5 - index) }} />
                 </div>
-                
+
                 <span className='text-sm font-medium text-tertiary'>
                   {bot.reviews.filter(review => review.rating === 5 - index).length}
                 </span>
@@ -113,19 +115,19 @@ export default function Reviews({ bot }) {
       </div>
 
       {reviewSubmitted && (
-        <div className='flex flex-col p-4 mt-4 border border-blue-500 rounded-lg gap-y-2 bg-blue-500/10'>
-          <h3 className='flex items-center text-lg font-semibold gap-x-2'>
+        <div className='mt-4 flex flex-col gap-y-2 rounded-lg border border-blue-500 bg-blue-500/10 p-4'>
+          <h3 className='flex items-center gap-x-2 text-lg font-semibold'>
             <RiErrorWarningFill />
             {t('botPage.tabs.reviews.reviewSubmitted.info.title')}
           </h3>
-          
-          <span className='text-xs font-medium sm:text-sm text-tertiary'>
+
+          <span className='text-xs font-medium text-tertiary sm:text-sm'>
             {t('botPage.tabs.reviews.reviewSubmitted.info.description')}
           </span>
         </div>
       )}
 
-      <div className="flex flex-col w-full mt-8 gap-y-8 sm:gap-y-0 sm:flex-row">
+      <div className="mt-8 flex w-full flex-col gap-y-8 sm:flex-row sm:gap-y-0">
         {bot.has_reviewed ? (
           <span className='text-sm font-medium text-tertiary'>
             {t('botPage.tabs.reviews.reviewSubmitted.alreadyReviewed')}
@@ -136,7 +138,7 @@ export default function Reviews({ bot }) {
           </span>
         ) : (
           <>
-            <div className='w-[35%] flex flex-col gap-y-3'>
+            <div className='flex w-[35%] flex-col gap-y-3'>
               <div className="flex gap-x-4">
                 {loggedIn ? (
 
@@ -146,7 +148,7 @@ export default function Reviews({ bot }) {
                     size={64}
                     width={48}
                     height={48}
-                    className='rounded-2xl w-[48px] h-[48px]'
+                    className='size-[48px] rounded-2xl'
                   />
                 ) : (
                   <Image
@@ -154,7 +156,7 @@ export default function Reviews({ bot }) {
                     alt='Placeholder Avatar'
                     width={48}
                     height={48}
-                    className='rounded-2xl w-[48px] h-[48px]'
+                    className='size-[48px] rounded-2xl'
                   />
                 )}
 
@@ -163,27 +165,29 @@ export default function Reviews({ bot }) {
                     {user?.username || t('botPage.tabs.reviews.unknown')}
                   </h3>
 
-                  <div className={cn(
-                    'flex items-center text-lg text-tertiary',
-                    loading || reviewSubmitted ? 'pointer-events-none' : 'cursor-pointer'
-                  )}>
+                  <div
+                    className={cn(
+                      'flex items-center text-lg text-tertiary',
+                      loading || reviewSubmitted ? 'pointer-events-none' : 'cursor-pointer'
+                    )}
+                  >
                     {[...Array(5)].map((_, index) => (
                       hoveredRating >= index + 1 || (selectedRating >= index + 1) ? (
                         <TiStarFullOutline
-                          key={index} 
-                          className='text-yellow-500 cursor-pointer'
+                          key={index}
+                          className='cursor-pointer text-yellow-500'
                           onClick={() => {
                             if (selectedRating === index + 1) setSelectedRating(0);
                             else setSelectedRating(index + 1);
-                          }} 
+                          }}
                           onMouseEnter={() => setHoveredRating(index + 1)}
                           onMouseLeave={() => setHoveredRating(0)}
                         />
                       ) : (
-                        <TiStarOutline 
-                          key={index} 
+                        <TiStarOutline
+                          key={index}
                           className='cursor-pointer text-tertiary'
-                          onClick={() => setSelectedRating(index + 1)} 
+                          onClick={() => setSelectedRating(index + 1)}
                           onMouseEnter={() => setHoveredRating(index + 1)}
                           onMouseLeave={() => setHoveredRating(0)}
                         />
@@ -192,7 +196,7 @@ export default function Reviews({ bot }) {
                   </div>
                 </div>
               </div>
-            
+
               {loggedIn && (
                 <span
                   className={cn(
@@ -208,29 +212,31 @@ export default function Reviews({ bot }) {
                 </span>
               )}
             </div>
-              
-            <div className="flex flex-col flex-1 w-full font-medium whitespace-pre-wrap gap-y-1 text-secondary">
+
+            <div className="flex w-full flex-1 flex-col gap-y-1 whitespace-pre-wrap font-medium text-secondary">
               <h3 className='font-medium text-primary'>
                 {t('botPage.tabs.reviews.input.label')}
               </h3>
 
-              <p className='text-xs sm:text-sm text-tertiary'>
+              <p className='text-xs text-tertiary sm:text-sm'>
                 {loggedIn ? t('botPage.tabs.reviews.input.description') : t('botPage.tabs.reviews.loginRequiredForReview')}
               </p>
 
               <div className='relative'>
                 <textarea
                   disabled={loading || reviewSubmitted || !loggedIn}
-                  className='peer text-sm scrollbar-hide sm:text-base resize-none block w-full lg:max-w-[450px] min-h-[100px] max-h-[200px] p-2 mt-4 border-2 disabled:pointer-events-none disabled:opacity-80 [&:not(:disabled)]:cursor-text border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+                  className='scrollbar-hide peer mt-4 block max-h-[200px] min-h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base lg:max-w-[450px] [&:not(:disabled)]:cursor-text'
                   value={review}
                   onChange={event => setReview(event.target.value)}
                   maxLength={config.reviewsMaxCharacters}
                 />
 
-                <span className={cn(
-                  'absolute text-xs transition-opacity opacity-0 peer-focus-visible:opacity-100 -top-2 right-2 text-tertiary',
-                  review.length > 0 && review.length < config.reviewsMinCharacters && 'text-red-400'
-                )}>
+                <span
+                  className={cn(
+                    'absolute text-xs transition-opacity opacity-0 peer-focus-visible:opacity-100 -top-2 right-2 text-tertiary',
+                    review.length > 0 && review.length < config.reviewsMinCharacters && 'text-red-400'
+                  )}
+                >
                   {review.length}/{config.reviewsMaxCharacters}
                 </span>
               </div>
@@ -238,7 +244,7 @@ export default function Reviews({ bot }) {
               {loggedIn ? (
                 <button
                   onClick={submitReview}
-                  className='flex gap-x-1.5 items-center justify-center px-4 py-2 mt-4 text-sm font-semibold text-white bg-black rounded-lg dark:text-black dark:bg-white dark:hover:bg-white/70 hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70'
+                  className='mt-4 flex items-center justify-center gap-x-1.5 rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                   disabled={selectedRating === 0 || loading || reviewSubmitted || review.length < config.reviewsMinCharacters}
                 >
                   {loading && <TbLoader className='animate-spin' />}
@@ -255,10 +261,10 @@ export default function Reviews({ bot }) {
       </div>
 
       {reviews.map(review => (
-        <div className="flex flex-col w-full mt-8 sm:flex-row gap-y-4" key={review._id}>
-          <div className="flex gap-x-4 w-full sm:w-[35%]">
-            <Link 
-              href={`/profile/u/${review.user.id}`} 
+        <div className="mt-8 flex w-full flex-col gap-y-4 sm:flex-row" key={review._id}>
+          <div className="flex w-full gap-x-4 sm:w-[35%]">
+            <Link
+              href={`/profile/u/${review.user.id}`}
               className='transition-opacity hover:opacity-70'
             >
               <UserAvatar
@@ -267,16 +273,16 @@ export default function Reviews({ bot }) {
                 size={64}
                 width={48}
                 height={48}
-                className='rounded-2xl w-[48px] h-[48px]'
+                className='size-[48px] rounded-2xl'
               />
             </Link>
 
             <div className='flex flex-col gap-y-1'>
-              <Link 
+              <Link
                 href={`/profile/u/${review.user.id}`}
                 className='flex items-center text-base font-semibold transition-opacity hover:opacity-70'
               >
-                <span className='max-w-[100px] mobile:max-w-[150px] sm:max-w-[100px] lg:max-w-[160px] truncate'>
+                <span className='max-w-[100px] truncate mobile:max-w-[150px] sm:max-w-[100px] lg:max-w-[160px]'>
                   {review.user.username}
                 </span>
               </Link>
@@ -301,11 +307,11 @@ export default function Reviews({ bot }) {
             }}
             identifier={`bot-${bot.id}-review-${review._id}`}
           >
-            <div className="flex flex-col justify-between max-w-[440px] break-words flex-1 w-full font-medium whitespace-pre-wrap sm:gap-y-0 gap-y-2 text-secondary">
+            <div className="flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0">
               <span className='text-xs font-medium text-tertiary'>
                 {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
               </span>
-            
+
               {review.content}
             </div>
           </ReportableArea>
@@ -313,13 +319,13 @@ export default function Reviews({ bot }) {
       ))}
 
       {maxPages > 1 && (
-        <div className='flex items-center justify-center w-full'>
-          <Pagination 
-            page={page} 
-            setPage={setPage} 
-            loading={loading} 
-            total={bot.reviews.length} 
-            limit={limit} 
+        <div className='flex w-full items-center justify-center'>
+          <Pagination
+            page={page}
+            setPage={setPage}
+            loading={loading}
+            total={bot.reviews.length}
+            limit={limit}
           />
         </div>
       )}

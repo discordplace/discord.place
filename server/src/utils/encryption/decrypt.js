@@ -6,7 +6,7 @@ function decrypt(encryptedData, secret) {
   const decipher = crypto.createDecipheriv('aes-256-gcm', Buffer.from(secret, 'hex'), Buffer.from(encryptedData.iv, 'hex'));
   decipher.setAuthTag(Buffer.from(encryptedData.tag, 'hex'));
   const decrypted = Buffer.concat([decipher.update(Buffer.from(encryptedData.encryptedText, 'hex')), decipher.final()]);
-  
+
   return decrypted.toString('utf-8');
 }
 

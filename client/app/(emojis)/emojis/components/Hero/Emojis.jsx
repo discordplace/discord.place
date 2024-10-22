@@ -14,7 +14,7 @@ import useAuthStore from '@/stores/auth';
 
 export default function Emojis() {
   const user = useAuthStore(state => state.user);
-  
+
   const { page, setPage, search, setSearch, loading, emojis, fetchEmojis, setSort, setCategory, totalEmojis, limit } = useSearchStore(useShallow(state => ({
     page: state.page,
     setPage: state.setPage,
@@ -29,32 +29,32 @@ export default function Emojis() {
     totalEmojis: state.totalEmojis,
     limit: state.limit
   })));
-  
+
   const stateVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0
     },
-    visible: { 
+    visible: {
       opacity: 1
     },
-    exit: { 
+    exit: {
       opacity: 0
     }
   };
-  
+
   const showPagination = !loading && totalEmojis > limit;
 
   return (
     !loading && emojis.length <= 0 ? (
       <AnimatePresence>
-        <motion.div 
-          className='flex flex-col px-4 sm:px-0 gap-y-2'
+        <motion.div
+          className='flex flex-col gap-y-2 px-4 sm:px-0'
           variants={stateVariants}
           initial='hidden'
           animate='visible'
           exit='hidden'
         >
-          <ErrorState 
+          <ErrorState
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
@@ -64,7 +64,7 @@ export default function Emojis() {
             message={t('emojisPage.emptyErrorState.message')}
           />
 
-          <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
+          <button className='text-tertiary hover:text-primary hover:underline' onClick={() => {
             setSearch('');
             setSort('Newest');
             setCategory('All');
@@ -77,14 +77,14 @@ export default function Emojis() {
       </AnimatePresence>
     ) : (
       <>
-        <motion.div 
-          className='grid grid-cols-1 gap-4 sm:px-4 xl:px-0 sm:grid-cols-2 xl:grid-cols-3'
+        <motion.div
+          className='grid grid-cols-1 gap-4 sm:grid-cols-2 sm:px-4 xl:grid-cols-3 xl:px-0'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           {loading ? (
             new Array(12).fill(0).map((_, index) => (
-              <div key={index} className="h-[164px] rounded-2xl bg-secondary animate-pulse w-[322px]" />
+              <div key={index} className="h-[164px] w-[322px] animate-pulse rounded-2xl bg-secondary" />
             ))
           ) : (
             emojis.map(emoji => (
@@ -109,7 +109,7 @@ export default function Emojis() {
                     emoji_ids={emoji.emoji_ids}
                   />
                 ) : (
-                  <EmojiCard 
+                  <EmojiCard
                     id={emoji.id}
                     name={emoji.name}
                     animated={emoji.animated}
@@ -122,17 +122,17 @@ export default function Emojis() {
           )}
         </motion.div>
 
-        <div className='flex items-center justify-center w-full' key='pagination'> 
+        <div className='flex w-full items-center justify-center' key='pagination'>
           {showPagination && (
-            <Pagination 
-              page={page} 
+            <Pagination
+              page={page}
               setPage={newPage => {
                 setPage(newPage);
                 fetchEmojis(search);
-              }} 
-              loading={loading} 
-              total={totalEmojis} 
-              limit={limit} 
+              }}
+              loading={loading}
+              total={totalEmojis}
+              limit={limit}
             />
           )}
         </div>

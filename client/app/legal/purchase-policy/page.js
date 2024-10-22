@@ -24,7 +24,6 @@ export default function PurchasePolicy() {
         Welcome to discord.place. By purchasing our premium products/services, you agree to be bound by the following terms and conditions.
       </p>
 
-      
       <h2>2. Purchase and Payment</h2>
       <ul>
         <li>All prices are listed in USD and are subject to change without notice.</li>
@@ -57,23 +56,23 @@ export default function PurchasePolicy() {
         <li>Cancellations will take effect at the end of the current billing period, and no partial refunds will be provided.</li>
       </ul>
       <p><strong>One-Time Purchases</strong>: Once a purchase is completed, it cannot be canceled or modified.</p>
-      
+
       <h2>6. Access and Usage</h2>
       <ul>
         <li>Upon purchase, you will receive access to the premium product/service for the duration specified (if applicable).</li>
         <li>You agree not to share, distribute, or resell the purchased product/service without explicit permission from discord.place.</li>
       </ul>
-      
+
       <h2>7. Account Termination</h2>
       <p>
         We reserve the right to terminate your access to premium products/services without refund if you violate any terms of this policy or our general Terms of Service.
       </p>
-      
+
       <h2>8. Changes to Policy</h2>
       <p>
         We may update this policy from time to time. Any changes will be posted on this page, and your continued use of our premium products/services constitutes acceptance of those changes.
       </p>
-      
+
       <h2>
         9. Contact Us
       </h2>
@@ -82,11 +81,11 @@ export default function PurchasePolicy() {
         You can reach us via the emails below or on our Discord server.
       </p>
 
-      <div className="flex mt-2 gap-x-2">
-        <Link href={config.supportInviteUrl} className='px-3 py-1 text-sm font-medium !text-white no-underline bg-black rounded-lg dark:bg-white dark:!text-black dark:hover:bg-white/70 hover:bg-black/70'>
+      <div className="mt-2 flex gap-x-2">
+        <Link href={config.supportInviteUrl} className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'>
           Discord Server
         </Link>
-        <Link href='mailto:legal@discord.place' className='px-3 py-1 text-sm font-medium !text-white no-underline bg-black rounded-lg dark:bg-white dark:!text-black dark:hover:bg-white/70 hover:bg-black/70'>
+        <Link href='mailto:legal@discord.place' className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'>
           Email
         </Link>
       </div>

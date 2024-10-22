@@ -16,8 +16,8 @@ module.exports = {
     const websocketHeartbeat = interaction.client.ws.ping;
     let serverResponseTime = 'N/A';
 
-    const response = await axios.get(config.backendUrl + '/response-time', { timeout: 1000 }).catch(() => null);
-    if (response?.data?.responseTime) serverResponseTime = response.data.responseTime + 'ms';
+    const response = await axios.get(`${config.backendUrl}/response-time`, { timeout: 1000 }).catch(() => null);
+    if (response?.data?.responseTime) serverResponseTime = `${response.data.responseTime}ms`;
 
     let mongoosePing = 'N/A';
 

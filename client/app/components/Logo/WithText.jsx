@@ -8,7 +8,7 @@ import { Bricolage_Grotesque } from 'next/font/google';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
-export default function WithText({ className}) {
+export default function WithText({ className }) {
   const theme = useThemeStore(state => state.theme);
 
   return (
@@ -19,18 +19,20 @@ export default function WithText({ className}) {
       )}
       href='/'
     >
-      <Image 
-        src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} 
-        width={64} 
-        height={64} 
-        alt="discord.place Logo" 
-        className='w-[32px] h-[32px]'
+      <Image
+        src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+        width={64}
+        height={64}
+        alt="discord.place Logo"
+        className='size-[32px]'
       />
 
-      <div className={cn(
-        'flex flex-col',
-        BricolageGrotesque.className
-      )}>
+      <div
+        className={cn(
+          'flex flex-col',
+          BricolageGrotesque.className
+        )}
+      >
         <h1 className='text-lg font-bold'>
           Discord
         </h1>

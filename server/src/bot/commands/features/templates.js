@@ -32,7 +32,7 @@ module.exports = {
   isGuildOnly: true,
   execute: async interaction => {
     if (interaction.guild.ownerId !== interaction.user.id) return interaction.reply(await interaction.translate('commands.shared.errors.server_owner_only'));
-    
+
     if (currentlyApplyingTemplates.size >= 5) return interaction.reply(await interaction.translate('commands.templates.errors.too_many_templates'));
     if (currentlyApplyingTemplates.has(interaction.guild.id)) return interaction.reply(await interaction.translate('commands.templates.errors.already_applying_template'));
 
@@ -49,10 +49,10 @@ module.exports = {
       { type: 'GUILD_ID', value: interaction.guild.id, restriction: 'TEMPLATES_USE' }
     ]).catch(() => false);
     if (userOrGuildQuarantined) return interaction.followUp(await interaction.translate('commands.shared.errors.user_or_guild_quarantined'));
-  
+
     const templateId = interaction.options.getString('template');
     const template = await Template.findOne({ id: templateId, approved: true });
-    
+
     if (!template) return interaction.followUp(await interaction.translate('commands.templates.errors.template_not_found'));
 
     currentlyApplyingTemplates.set(interaction.guild.id, true);
@@ -79,7 +79,7 @@ module.exports = {
 
     const filter = async message => message.author.id === interaction.user.id && message.channel.id === interaction.channel.id && message.content === await interaction.translate('commands.templates.subcommands.use.confirmation_text');
     const collected = await interaction.channel.awaitMessages({ filter, time: 30000, max: 1, errors: ['time'] }).catch(() => false);
-   
+
     if (!collected) {
       currentlyApplyingTemplates.delete(interaction.guild.id);
 
@@ -89,7 +89,7 @@ module.exports = {
         components: []
       });
     }
-  
+
     const collectedMessage = collected.first();
 
     const dmChannel = interaction.user.dmChannel || await interaction.user.createDM().catch(() => false);
@@ -113,7 +113,7 @@ module.exports = {
     }).catch(async () => {
       // Check here also if the user has DMs disabled
       currentlyApplyingTemplates.delete(interaction.guild.id);
-      
+
       collectedMessage.reply(await interaction.translate('commands.templates.errors.dms_disabled'));
     });
 
@@ -123,9 +123,10 @@ module.exports = {
       currentlyApplyingTemplates.delete(interaction.guild.id);
 
       await collectedMessage.reply({ content: message, components: [] });
+
       return dmMessage.edit({ content: message, components: [] });
     }
-    
+
     const cancelled = await dmMessage.awaitMessageComponent({ time: 10000, errors: ['time'] }).catch(() => false);
     if (cancelled) return sendError(await interaction.translate('commands.templates.subcommands.use.cancelled', { checkEmoji: config.emojis.checkmark }));
 
@@ -141,7 +142,7 @@ module.exports = {
           .setTitle('New Template Apply Request Received')
           .setTimestamp()
           .setFields([
-            { name: 'Requester', value: `${interaction.user} (${interaction.user.id})`, inline: true }, 
+            { name: 'Requester', value: `${interaction.user} (${interaction.user.id})`, inline: true },
             { name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true },
             { name: 'Template', value: `${template.name} (${template.id})`, inline: true }
           ])
@@ -156,7 +157,7 @@ module.exports = {
           )
       ]
     });
-    
+
     latestUses.set(interaction.guild.id, Date.now() + 1800000);
     latestUses.set(interaction.user.id, Date.now() + 1800000);
 
@@ -166,7 +167,7 @@ module.exports = {
       content: await interaction.translate('commands.templates.subcommands.steps.0', { loadingEmoji: config.emojis.loading, templateName: template.name, guildName: interaction.guild.name }),
       components: []
     });
-  
+
     await sleep(1000);
 
     const guildChannels = await interaction.guild.channels.fetch();
@@ -184,9 +185,9 @@ module.exports = {
         await role.delete().catch(() => null);
         await sleep(500);
       }));
-    
+
     await sleep(1000);
-  
+
     const categoriesLength = template.data.channels.filter(channel => channel.type === Discord.ChannelType.GuildCategory).length;
     const channelsLength = template.data.channels.filter(channel => channel.type !== Discord.ChannelType.GuildCategory).length;
     const rolesLength = template.data.roles.length;
@@ -276,9 +277,9 @@ module.exports = {
         topic: channel.topic,
         nsfw: channel.nsfw,
         rateLimitPerUser: channel.rate_limit_per_user,
-        userLimit: channel.user_limit 
+        userLimit: channel.user_limit
       });
-      
+
       createdChannels.push({
         id: channel.id,
         channel: createdChannel
@@ -307,8 +308,8 @@ module.exports = {
 
     const doneMessageChannel = await interaction.guild.channels.create({ name: 'template-applied', type: Discord.ChannelType.GuildText });
 
-    await doneMessageChannel.send({ 
-      content: `${interaction.user}`, 
+    await doneMessageChannel.send({
+      content: `${interaction.user}`,
       embeds: [
         new Discord.EmbedBuilder()
           .setColor('#5865F2')
@@ -317,9 +318,9 @@ module.exports = {
           .setTimestamp()
           .setFooter({ text: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
           .setDescription(await interaction.translate('commands.templates.subcommands.use.embeds.success.description', { checkEmoji: config.emojis.checkmark, templateName: template.name, guildName: interaction.guild.name, user: interaction.user }))
-      ] 
+      ]
     });
-    
+
     return dmMessage.edit(await interaction.translate('commands.templates.subcommands.use.steps.5', { checkEmoji: config.emojis.checkmark, templateName: template.name, guildName: interaction.guild.name }));
   },
   autocomplete: async interaction => {

@@ -30,23 +30,23 @@ export default function ModalProvider({ children }) {
               onOpenChange={open => !open && closeModal(id)}
             >
               <Drawer.Portal>
-                <Drawer.Content className='outline-none gap-y-1 p-6 z-[10001] bg-quaternary dark:bg-background flex flex-col rounded-t-3xl h-max fixed bottom-0 left-0 right-0'>
-                  <div className='mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-background dark:bg-quaternary mb-8' />
+                <Drawer.Content className='fixed inset-x-0 bottom-0 z-[10001] flex h-max flex-col gap-y-1 rounded-t-3xl bg-quaternary p-6 outline-none dark:bg-background'>
+                  <div className='mx-auto mb-8 h-1.5 w-12 shrink-0 rounded-full bg-background dark:bg-quaternary' />
 
                   <div className='flex flex-col gap-y-2'>
                     <h2 className='text-lg font-semibold text-primary'>{data.title}</h2>
                     <p className='text-sm text-secondary'>{data.description}</p>
 
-                    <div className='flex flex-col text-sm gap-y-2'>
+                    <div className='flex flex-col gap-y-2 text-sm'>
                       {data.content}
                     </div>
 
-                    <div className='flex flex-col mt-4 gap-y-2'>
+                    <div className='mt-4 flex flex-col gap-y-2'>
                       {/*
                         Using [...new Set(data.buttons || [])] to create a new array with buttons
                         so when we use data.buttons again, it won't be reversed and will be in the original order
                       */}
-                      
+
                       {([...new Set(data.buttons || [])]).reverse().map((button, index) => (
                         <button
                           key={index}
@@ -67,7 +67,7 @@ export default function ModalProvider({ children }) {
                     </div>
                   </div>
                 </Drawer.Content>
-                <Drawer.Overlay className='fixed inset-0 bg-white/50 dark:bg-black/50 z-[10000]' />
+                <Drawer.Overlay className='fixed inset-0 z-[10000] bg-white/50 dark:bg-black/50' />
               </Drawer.Portal>
             </Drawer.Root>
           </>
@@ -77,14 +77,15 @@ export default function ModalProvider({ children }) {
             open={activeModalId === id}
             onOpenChange={open => !open && closeModal(id)}
           >
-            <Dialog.Overlay className='backdrop-blur-sm radix-overlay fixed z-[9999] inset-0 bg-white/50 dark:bg-black/50' />
-            <Dialog.Content className="radix-dialog-content fixed focus:outline-none z-[9999] flex items-center justify-center w-full h-full">
+            {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
+            <Dialog.Overlay className='radix-overlay fixed inset-0 z-[9999] bg-white/50 backdrop-blur-sm dark:bg-black/50' />
+            <Dialog.Content className="radix-dialog-content fixed z-[9999] flex size-full items-center justify-center focus:outline-none">
               <div
-                className='border border-primary bg-secondary dark:bg-tertiary rounded-2xl flex flex-col gap-y-2 max-h-[85vh] w-[90vw]'
+                className='flex max-h-[85vh] w-[90vw] flex-col gap-y-2 rounded-2xl border border-primary bg-secondary dark:bg-tertiary'
                 style={{ maxWidth: data.maxWidth || '450px' }}
               >
                 <div className='flex items-center justify-between px-6 pt-6'>
-                  <Dialog.Title className='flex items-center text-lg font-semibold text-primary gap-x-2'>
+                  <Dialog.Title className='flex items-center gap-x-2 text-lg font-semibold text-primary'>
                     {data.title}
                   </Dialog.Title>
 
@@ -92,18 +93,18 @@ export default function ModalProvider({ children }) {
                     <IoMdCloseCircle className='cursor-pointer hover:opacity-70' />
                   </Dialog.Close>
                 </div>
-                                
+
                 <Dialog.Description className='px-6 text-base text-secondary'>
                   {data.description}
                 </Dialog.Description>
 
-                <div className='flex flex-col px-6 my-2 text-sm'>
+                <div className='my-2 flex flex-col px-6 text-sm'>
                   {data.content}
                 </div>
 
                 {(data.buttons || [])?.length > 0 && (
-                  <>                    
-                    <div className='flex justify-end px-4 py-3 text-sm gap-x-3 bg-tertiary dark:bg-secondary rounded-b-2xl'>
+                  <>
+                    <div className='flex justify-end gap-x-3 rounded-b-2xl bg-tertiary px-4 py-3 text-sm dark:bg-secondary'>
                       {data.buttons.map((button, index) => (
                         <button
                           key={index}

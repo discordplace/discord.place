@@ -27,7 +27,7 @@ export default function FaQs({ emoji }) {
   ];
 
   return QA.map(({ label, content }, index) => (
-    <div 
+    <div
       className={cn(
         'overflow-hidden flex flex-col w-full p-3 rounded-md group',
         activeQA === index ? 'bg-quaternary' : 'cursor-pointer bg-secondary hover:bg-tertiary'
@@ -35,7 +35,7 @@ export default function FaQs({ emoji }) {
       key={label}
       onClick={() => setActiveQA(index)}
     >
-      <div className='flex items-center justify-between overflow-clip'>
+      <div className='flex items-center justify-between text-clip'>
         <div className='flex items-center gap-x-4'>
           <span className='text-lg font-bold lg:text-xl'>
             {index + 1}.
@@ -54,7 +54,7 @@ export default function FaQs({ emoji }) {
         <MdChevronLeft
           className={cn(
             activeQA === index ? 'rotate-[90deg]' : 'rotate-[-90deg]'
-          )} 
+          )}
           size={20}
         />
       </div>

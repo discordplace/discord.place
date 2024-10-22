@@ -16,7 +16,7 @@ module.exports = {
       .custom(slugValidation).withMessage('Slug is not valid.'),
     param('id'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { slug, id } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);

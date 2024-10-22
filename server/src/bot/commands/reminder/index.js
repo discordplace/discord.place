@@ -48,7 +48,7 @@ module.exports = {
 
   execute: async interaction => {
     const subcommand = interaction.options.getSubcommand();
-    
+
     switch (subcommand) {
       case 'create':
         var about = interaction.options.getString('about');
@@ -58,13 +58,13 @@ module.exports = {
           content: await interaction.translate('commands.reminder.errors.reminder_too_long'),
           ephemeral: true
         });
-      
+
         var reminderTime = parseTimeDuration(when);
         if (!reminderTime) return interaction.reply({
           content: await interaction.translate('commands.reminder.errors.invalid_time'),
           ephemeral: true
         });
-        
+
         if (reminderTime < (60000 * 5)) return interaction.reply({
           content: await interaction.translate('commands.reminder.errors.time_too_short'),
           ephemeral: true
@@ -95,14 +95,14 @@ module.exports = {
       case 'delete':
         var reminderId = interaction.options.getString('reminder');
         var foundReminder = await Reminder.findOne({ _id: reminderId, 'user.id': interaction.user.id });
-        if (!foundReminder) return interaction.reply({ 
+        if (!foundReminder) return interaction.reply({
           content: await interaction.translate('commands.reminder.errors.reminder_not_found'),
           ephemeral: true
         });
 
         await foundReminder.deleteOne();
 
-        interaction.reply({ 
+        interaction.reply({
           content: await interaction.translate('commands.reminder.subcommands.delete.success'),
           ephemeral: true
         });

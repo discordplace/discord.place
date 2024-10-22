@@ -169,7 +169,7 @@ const BotSchema = new Schema({
           default: Date.now
         }
       }
-    ] 
+    ]
   },
   last_voter: {
     user: {
@@ -228,7 +228,7 @@ const BotSchema = new Schema({
             id: user.id,
             username: user.data.username,
             avatar: userHashes.avatar,
-            premium: ownerHasPremium ? true : false,
+            premium: !!ownerHasPremium,
             subscriptionCreatedAt: ownerHasPremium ? new Date(user.subscription.createdAt).getTime() : null
           }
         });

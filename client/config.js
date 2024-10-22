@@ -1,3 +1,5 @@
+/* eslint no-duplicate-imports: 0 */ // Disable eslint no-duplicate-imports
+
 import { CgProfile } from 'react-icons/cg';
 import { MdDownload, MdEmojiEmotions, MdEvent, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
 import { RiBrush2Fill, RiCommunityFill, RiRobot2Fill } from 'react-icons/ri';
@@ -39,7 +41,7 @@ const config = {
       code: 'az',
       dateFnsKey: 'az',
       flag: '🇦🇿'
-    }     
+    }
   ],
   baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place',
   supportInviteUrl: 'https://invite.discord.place',
@@ -57,6 +59,7 @@ const config = {
   },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;
+
     return url;
   },
   dashboardRequestDelay: 1000,
@@ -119,8 +122,8 @@ const config = {
     '90001': 'The blog you are looking for does not exist.'
   },
   profilesMaxSocialsLength: 8,
-  getLoginURL: function (pathname) {
-    return this.api.url + `/auth/login?redirect=${encodeURIComponent(
+  getLoginURL (pathname) {
+    return `${this.api.url}/auth/login?redirect=${encodeURIComponent(
       (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place') + pathname
     )}`;
   },
@@ -295,16 +298,16 @@ const config = {
   },
   themeCategoriesIcons: {
     'All': <BiSolidCategory />,
-    'Gradient': <span className='block w-[14px] h-[14px] rounded-full bg-gradient-to-r from-pink-400 to-purple-500' />,
-    'Light': <span className='block w-[14px] h-[14px] bg-white rounded-full' />,
-    'Dark': <span className='block w-[14px] h-[14px] bg-black rounded-full' />,
-    'Red': <span className='block w-[14px] h-[14px] bg-red-500 rounded-full' />,
-    'Orange': <span className='block w-[14px] h-[14px] bg-orange-500 rounded-full' />,
-    'Yellow': <span className='block w-[14px] h-[14px] bg-yellow-500 rounded-full' />,
-    'Green': <span className='block w-[14px] h-[14px] bg-green-500 rounded-full' />,
-    'Blue': <span className='block w-[14px] h-[14px] bg-blue-500 rounded-full' />,
-    'Purple': <span className='block w-[14px] h-[14px] bg-purple-500 rounded-full' />,
-    'Pink': <span className='block w-[14px] h-[14px] bg-pink-500 rounded-full' />
+    'Gradient': <span className='block size-[14px] rounded-full bg-gradient-to-r from-pink-400 to-purple-500' />,
+    'Light': <span className='block size-[14px] rounded-full bg-white' />,
+    'Dark': <span className='block size-[14px] rounded-full bg-black' />,
+    'Red': <span className='block size-[14px] rounded-full bg-red-500' />,
+    'Orange': <span className='block size-[14px] rounded-full bg-orange-500' />,
+    'Yellow': <span className='block size-[14px] rounded-full bg-yellow-500' />,
+    'Green': <span className='block size-[14px] rounded-full bg-green-500' />,
+    'Blue': <span className='block size-[14px] rounded-full bg-blue-500' />,
+    'Purple': <span className='block size-[14px] rounded-full bg-purple-500' />,
+    'Pink': <span className='block size-[14px] rounded-full bg-pink-500' />
   },
   sortIcons: {
     'Servers': <FaCompass />,
@@ -319,7 +322,7 @@ const config = {
     'Downloads': <MdDownload />,
     'Likes': <IoHeart />,
     'MostViewed': <FaEye />
-  },  
+  },
   customHostnames: ['dsc.wtf', 'dsc.dog', 'dsc.mom'],
   emojisDenyReasons: {
     'reposted-emoji': {

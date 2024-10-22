@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 function convertToHex(color) {
-  return '#' + color.toString(16).padStart(6, '0');
+  return `#${color.toString(16).padStart(6, '0')}`;
 }
 
 const TemplateSchema = new Schema({
@@ -78,7 +78,7 @@ const TemplateSchema = new Schema({
               .map(channel => ({
                 id: channel.id,
                 type: (
-                  channel.type === 4 ? 'category' : 
+                  channel.type === 4 ? 'category' :
                     channel.type === 0 ? 'text' :
                       'voice'
                 ),
@@ -92,11 +92,11 @@ const TemplateSchema = new Schema({
                 type: 'category',
                 name: category.name,
                 channels: this.data.channels
-                  .filter(channel => channel.parent_id === category.id)  
+                  .filter(channel => channel.parent_id === category.id)
                   .map(channel => ({
                     id: channel.id,
                     type: (
-                      channel.type === 4 ? 'category' : 
+                      channel.type === 4 ? 'category' :
                         channel.type === 0 ? 'text' :
                           'voice'
                     ),

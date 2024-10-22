@@ -6,8 +6,8 @@ export default function Input({ label, customLabelPeer, description, type, Custo
   const ignoreProps = ['label', 'customLabelPeer', 'description', 'type', 'CustomInput', 'className'];
 
   return (
-    <div className='flex flex-col flex-1 gap-y-2'>
-      <div className="flex items-center w-full h-full gap-x-2">
+    <div className='flex flex-1 flex-col gap-y-2'>
+      <div className="flex size-full items-center gap-x-2">
         <label
           className='font-medium text-secondary'
         >
@@ -34,6 +34,7 @@ export default function Input({ label, customLabelPeer, description, type, Custo
               value={props.value || ''}
               {...Object.keys(props).reduce((acc, key) => {
                 if (!ignoreProps.includes(key)) acc[key] = props[key];
+
                 return acc;
               }, {})}
             />
@@ -49,6 +50,7 @@ export default function Input({ label, customLabelPeer, description, type, Custo
               value={props.value || ''}
               {...Object.keys(props).reduce((acc, key) => {
                 if (!ignoreProps.includes(key)) acc[key] = props[key];
+
                 return acc;
               }, {})}
             />

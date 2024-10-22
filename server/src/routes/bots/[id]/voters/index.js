@@ -36,7 +36,7 @@ module.exports = {
       const maxReached = voters.length <= skip + limit;
       const fetchedVotes = await Promise.all(paginatedVoters.map(async voter => {
         const userHashes = await getUserHashes(voter.user.id);
-        
+
         return {
           id: voter.id,
           user: {

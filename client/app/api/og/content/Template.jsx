@@ -81,7 +81,7 @@ export default function Profile({ data, avatar_base64 }) {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <FaStar size={32} color="#c7c7c7" />
-        
+
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
             {formatter.format(data.uses)}
           </span>

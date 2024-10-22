@@ -4,6 +4,7 @@ const fs = require('node:fs');
 module.exports = class Events {
   constructor() {
     this.events = new Discord.Collection();
+
     return this;
   }
 

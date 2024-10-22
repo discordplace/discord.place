@@ -7,9 +7,9 @@ import { useMedia } from 'react-use';
 export default function Tooltip({ children, content, side, sideOffset, hide }) {
   const [open, setOpen] = useState(false);
   const isMobile = useMedia('(max-width: 640px)', false);
-  
+
   return (
-    <RadixTooltip.Provider 
+    <RadixTooltip.Provider
       delayDuration='0'
       skipDelayDuration='0'
     >
@@ -17,10 +17,10 @@ export default function Tooltip({ children, content, side, sideOffset, hide }) {
         onOpenChange={newOpenState => !hide && setOpen(newOpenState)}
         open={open}
       >
-        <RadixTooltip.Trigger 
+        <RadixTooltip.Trigger
           onClick={() => {
             if (hide) return;
-            
+
             if (isMobile) setOpen(!open);
           }}
           asChild
@@ -30,12 +30,12 @@ export default function Tooltip({ children, content, side, sideOffset, hide }) {
         {content && (
           <RadixTooltip.Portal>
             <RadixTooltip.Content
-              className='[transform-origin:var(--radix-tooltip-content-transform-origin)] text-sm max-w-[300px] sm:max-w-[unset] text-center z-[10000] px-3 py-1 font-semibold rounded-lg dark:bg-white dark:text-black text-white bg-black'
+              className='z-[10000] max-w-[300px] rounded-lg bg-black px-3 py-1 text-center text-sm font-semibold text-white [transform-origin:var(--radix-tooltip-content-transform-origin)] dark:bg-white dark:text-black sm:max-w-[unset]'
               sideOffset={sideOffset || 5}
               side={side || 'top'}
             >
               {content}
-              <RadixTooltip.Arrow className='dark:fill-white fill-black'/>
+              <RadixTooltip.Arrow className='fill-black dark:fill-white'/>
             </RadixTooltip.Content>
           </RadixTooltip.Portal>
         )}

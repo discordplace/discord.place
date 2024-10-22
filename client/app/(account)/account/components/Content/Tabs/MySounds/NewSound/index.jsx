@@ -71,13 +71,13 @@ export default function NewSound() {
 
   return (
     <>
-      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100svh]">
+      <div className="pointer-events-none fixed left-0 top-0 z-10 h-svh w-full">
         <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
       </div>
 
-      <div className="flex justify-center w-full gap-y-4 max-w-[800px] flex-col">
+      <div className="flex w-full max-w-[800px] flex-col justify-center gap-y-4">
         <div className="flex items-center gap-x-4">
-          <button className="p-1.5 rounded-xl bg-secondary hover:bg-tertiary" onClick={() => {
+          <button className="rounded-xl bg-secondary p-1.5 hover:bg-tertiary" onClick={() => {
             setSoundName('');
             setSoundCategories([]);
             setFile(null);
@@ -86,22 +86,22 @@ export default function NewSound() {
             <MdChevronLeft size={24}/>
           </button>
 
-          <h1 className="flex flex-wrap items-center text-lg font-bold sm:text-3xl gap-x-1">
+          <h1 className="flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl">
             {t('accountPage.tabs.mySounds.sections.addSound.title')}
           </h1>
         </div>
 
-        <p className="text-sm sm:text-base max-w-[800px] text-tertiary">
+        <p className="max-w-[800px] text-sm text-tertiary sm:text-base">
           {t('accountPage.tabs.mySounds.sections.addSound.subtitle')}
         </p>
 
-        <div className="flex items-center justify-center w-full mt-12">
-          <div className="max-w-[800px] w-full flex flex-col gap-y-1">
+        <div className="mt-12 flex w-full items-center justify-center">
+          <div className="flex w-full max-w-[800px] flex-col gap-y-1">
             <h2 className="text-lg font-semibold">
               File
             </h2>
 
-            <p className="text-sm sm:text-base text-tertiary">
+            <p className="text-sm text-tertiary sm:text-base">
               Upload your sound file here. Only mp3 files are allowed.
             </p>
 
@@ -168,7 +168,7 @@ export default function NewSound() {
                 }}
               />
 
-              <p className="flex items-center text-sm font-medium transition-all gap-x-2 text-tertiary group-hover:text-white">
+              <p className="flex items-center gap-x-2 text-sm font-medium text-tertiary transition-all group-hover:text-white">
                 {file ? (
                   <>
                     <IoMdCheckmarkCircle/>
@@ -184,12 +184,12 @@ export default function NewSound() {
               {t('accountPage.tabs.mySounds.sections.addSound.fields.name.label')}
             </h2>
 
-            <p className="text-sm sm:text-base text-tertiary">
+            <p className="text-sm text-tertiary sm:text-base">
               {t('accountPage.tabs.mySounds.sections.addSound.fields.name.description')}
             </p>
 
             <input
-              className="block w-full p-2 mt-4 text-sm border-2 border-transparent rounded-lg outline-none bg-secondary text-placeholder focus-visible:text-primary focus-visible:border-purple-500"
+              className="mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary"
               onChange={event => setSoundName(event.target.value)}
               value={soundName}
               maxLength={config.soundNameMaxLength}
@@ -203,7 +203,7 @@ export default function NewSound() {
               {t('accountPage.tabs.mySounds.sections.addSound.fields.categories.description')}
             </p>
 
-            <div className="flex flex-wrap mt-4 gap-x-2 gap-y-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               {config.soundCategories
                 .filter(category => category !== 'All')
                 .map(category => (
@@ -228,7 +228,7 @@ export default function NewSound() {
               {t('accountPage.tabs.mySounds.sections.addSound.fields.contentPolicy.label')}
             </h2>
 
-            <p className="flex flex-col text-sm sm:text-base gap-y-1 text-tertiary">
+            <p className="flex flex-col gap-y-1 text-sm text-tertiary sm:text-base">
               {t('accountPage.tabs.mySounds.sections.addSound.fields.contentPolicy.description', {
                 note: <span className="mt-2 text-xs text-tertiary">{t('accountPage.tabs.mySounds.sections.addSound.fields.contentPolicy.note')}</span>
               })}
@@ -238,9 +238,9 @@ export default function NewSound() {
               {t('accountPage.tabs.mySounds.sections.addSound.fields.areYouReady.label')}
             </h2>
 
-            <div className="flex flex-col w-full gap-2 mt-2 sm:flex-row">
+            <div className="mt-2 flex w-full flex-col gap-2 sm:flex-row">
               <button
-                className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg font-semibold text-white bg-black w-full justify-center hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm disabled:pointer-events-none disabled:opacity-70"
+                className="flex w-full items-center justify-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70"
                 disabled={
                   loading ||
                   soundName.trim().length <= 0 ||
@@ -253,7 +253,7 @@ export default function NewSound() {
                 {t('buttons.addSound')}
               </button>
 
-              <button className="flex items-center justify-center w-full py-2 text-sm font-medium rounded-lg hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
+              <button className="flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
                 onClick={() => {
                   setSoundName('');
                   setSoundCategories([]);

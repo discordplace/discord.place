@@ -1,4 +1,4 @@
-const { query} = require('express-validator');
+const { query } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const categoriesValidation = require('@/validations/bots/categories');
 const Bot = require('@/schemas/Bot');
@@ -37,8 +37,8 @@ module.exports = {
       const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = request.query;
       const skip = (page - 1) * limit;
       const baseFilter = category !== 'All' ? { categories: { $in: [category] }, verified: true } : { verified: true };
-      const findQuery = query ? { 
-        ...baseFilter, 
+      const findQuery = query ? {
+        ...baseFilter,
         $or: [
           { id: { $regex: query, $options: 'i' } },
           { 'owner.id': { $regex: query, $options: 'i' } },
@@ -49,7 +49,7 @@ module.exports = {
 
       const foundBots = await Bot.find(findQuery);
       const standedOutBotIds = await StandedOutBot.find({ identifier: { $in: foundBots.map(bot => bot.id) } });
-      const reviews = await Review.find({ 'bot.id': { $in: foundBots.map(bot => bot.id) } });    
+      const reviews = await Review.find({ 'bot.id': { $in: foundBots.map(bot => bot.id) } });
 
       const sortedBots = foundBots.sort((a, b) => {
         const aStandedOutData = standedOutBotIds.find(({ identifier }) => identifier === a.id);
@@ -68,7 +68,7 @@ module.exports = {
           case 'Oldest': return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
         }
       }).slice(skip, skip + limit);
-       
+
       const total = await Bot.countDocuments(findQuery);
       const maxReached = skip + foundBots.length >= total;
 
@@ -80,8 +80,8 @@ module.exports = {
         bots: await Promise.all(sortedBots.map(async bot => {
           const publiclySafeBot = await bot.toPubliclySafe();
 
-          return { 
-            ...publiclySafeBot, 
+          return {
+            ...publiclySafeBot,
             reviews: reviews.filter(review => review.bot.id === bot.id).length,
             latest_voted_at: bot.last_voter?.date || null
           };

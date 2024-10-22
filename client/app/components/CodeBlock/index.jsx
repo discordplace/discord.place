@@ -9,9 +9,10 @@ export default function CodeBlock({ children, FileIcon, fileName, language }) {
   const theme = useThemeStore(state => state.theme);
 
   return (
-    <div className='border border-primary rounded-xl'>
-      <div className='flex justify-between w-full px-4 py-2 -mb-2 border-b font-geist border-b-primary bg-secondary rounded-t-xl'>
-        <div className='text-xs flex items-center gap-x-1.5 text-tertiary'>
+    <div className='rounded-xl border border-primary'>
+      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
+      <div className='font-geist -mb-2 flex w-full justify-between rounded-t-xl border-b border-b-primary bg-secondary px-4 py-2'>
+        <div className='flex items-center gap-x-1.5 text-xs text-tertiary'>
           {FileIcon}
 
           {fileName}
@@ -25,7 +26,7 @@ export default function CodeBlock({ children, FileIcon, fileName, language }) {
           />
         </div>
       </div>
-    
+
       <SyntaxHighlighter
         PreTag={'div'}
         // eslint-disable-next-line react/no-children-prop
@@ -33,7 +34,7 @@ export default function CodeBlock({ children, FileIcon, fileName, language }) {
         language={language}
         style={theme === 'dark' ? oneDark : oneLight}
         wrapLongLines={false}
-        className='!bg-[unset] !mb-0 max-w-[calc(100vw_-_4rem)] [&>code]:!bg-[unset]'
+        className='!mb-0 max-w-[calc(100vw_-_4rem)] !bg-[unset] [&>code]:!bg-[unset]'
       />
     </div>
   );

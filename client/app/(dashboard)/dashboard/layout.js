@@ -10,7 +10,7 @@ export const metadata = {
 export default function Layout({ children }) {
   return (
     <AuthProtected>
-      <div className='flex w-full h-full min-h-[100svh] flex-col'>
+      <div className='flex size-full min-h-svh flex-col'>
         {children}
       </div>
     </AuthProtected>

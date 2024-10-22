@@ -17,7 +17,7 @@ export default function ReportAreaModal({ type, metadata }) {
 
   return (
     <div className='flex flex-col gap-y-4'>
-      <div className='w-full p-4 border rounded-2xl bg-secondary border-primary h-max'>
+      <div className='h-max w-full rounded-2xl border border-primary bg-secondary p-4'>
         {type === 'profile' && <ProfilePreview metadata={metadata} />}
         {type === 'server' && <ServerPreview metadata={metadata} />}
         {type === 'bot' && <BotPreview metadata={metadata} />}
@@ -37,16 +37,16 @@ export default function ReportAreaModal({ type, metadata }) {
         <p className='text-xs text-tertiary'>
           {t('inAppReporting.reportModal.inputs.reason.description')}
         </p>
-            
+
         <div className='relative'>
           <textarea
-            className='bg-quaternary peer text-sm mt-2 font-medium placeholder-placeholder scrollbar-hide sm:text-base resize-none block w-full h-[100px] p-2 border-2 disabled:pointer-events-none disabled:opacity-80 [&:not(:disabled)]:cursor-text border-transparent rounded-lg outline-none text-placeholder focus-visible:text-primary focus-visible:border-purple-500'
+            className='scrollbar-hide peer mt-2 block h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-quaternary p-2 text-sm font-medium text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base [&:not(:disabled)]:cursor-text'
             value={reason}
             onChange={event => setReason(event.target.value)}
             maxLength={config.reportReasonMaxCharacters}
           />
 
-          <span 
+          <span
             className={cn(
               'absolute text-xs transition-opacity opacity-0 peer-focus-visible:opacity-100 -top-4 right-2 text-tertiary',
               reason.length > 0 && reason.length < config.reportReasonMinCharacters && 'text-red-400'

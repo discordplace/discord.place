@@ -12,7 +12,7 @@ export async function generateMetadata({ params }) {
     title: `${params.slug}'s Profile`,
     openGraph: {
       title: `Discord Place - ${params.slug}'s Profile`,
-      url: config.baseUrl + `/profile/${params.slug}`,
+      url: `${config.baseUrl}/profile/${params.slug}`,
       images: [
         {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'profile', metadata }))}`,
@@ -27,6 +27,6 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const profile = await getProfile(params.slug).catch(error => error);
   if (typeof profile === 'string') return redirect(`/error?message=${encodeURIComponent(profile)}`);
-  
+
   return <Content profile={profile} />;
 }

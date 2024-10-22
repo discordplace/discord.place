@@ -26,17 +26,17 @@ module.exports = {
 
         const isSecondaryColorValid = colorValidation(colors.secondary);
         if (!isSecondaryColorValid) throw new Error('Secondary color is invalid.');
-        
+
         return true;
       }),
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
     validateRequest,
-    async (request, response) => {  
+    async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'THEMES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create themes.', 403);
-      
+
       const userThemeInQueue = await Theme.findOne({ 'publisher.id': request.user.id, approved: false });
       if (userThemeInQueue) return response.sendError(`You are already waiting for approval for theme ${userThemeInQueue.id}! Please wait for it to be processed first.`);
 
@@ -101,7 +101,7 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.themeQueueChannelId).send({ embeds, components });
-      
+
       return response.json(theme.toPubliclySafe());
     }
   ]

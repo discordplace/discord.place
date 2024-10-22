@@ -11,7 +11,7 @@ export const useDashboardStore = create(set => ({
   setLoading: loading => set({ loading }),
   fetchData: async keys => {
     set({ loading: true, searchQuery: null });
-    
+
     fetchData(keys)
       .then(data => set({ data, loading: false }))
       .catch(error => {

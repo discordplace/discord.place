@@ -8,24 +8,24 @@ import { t } from '@/stores/language';
 
 export default function Question2({ emoji }) {
   const [activeMethod, setActiveMethod] = useState(0);
-  
+
   return (
-    <div className='flex flex-col mt-2 gap-y-1'>
+    <div className='mt-2 flex flex-col gap-y-1'>
       <p>
         {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.title')}
       </p>
 
       <div className='flex gap-x-2'>
-        <button 
-          className='px-3 py-1 mt-2 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white/20 dark:hover:bg-white/30 disabled:pointer-events-none disabled:opacity-70'
+        <button
+          className='mt-2 w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white disabled:pointer-events-none disabled:opacity-70 dark:bg-white/20 dark:hover:bg-white/30'
           disabled={activeMethod === 0}
           onClick={() => setActiveMethod(0)}
         >
           {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.0.buttonText')}
         </button>
 
-        <button 
-          className='px-3 py-1 mt-2 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white/20 dark:hover:bg-white/30 disabled:pointer-events-none disabled:opacity-70'
+        <button
+          className='mt-2 w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white disabled:pointer-events-none disabled:opacity-70 dark:bg-white/20 dark:hover:bg-white/30'
           disabled={activeMethod === 1}
           onClick={() => setActiveMethod(1)}
         >
@@ -37,10 +37,10 @@ export default function Question2({ emoji }) {
         {activeMethod === 0 && (
           <>
             {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.0.instructionsBefore')}
-            
-            <div className='flex flex-col mt-2 gap-y-1'>
+
+            <div className='mt-2 flex flex-col gap-y-1'>
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>1.</span>
+                <span className='select-none font-bold text-primary'>1.</span>
 
                 <span>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('emojiPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0.linkText')}</Link> })}
@@ -48,7 +48,7 @@ export default function Question2({ emoji }) {
               </div>
 
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>2.</span>
+                <span className='select-none font-bold text-primary'>2.</span>
 
                 <span>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.1')}
@@ -56,7 +56,7 @@ export default function Question2({ emoji }) {
               </div>
 
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>4.</span>
+                <span className='select-none font-bold text-primary'>4.</span>
 
                 <span className='flex gap-x-2'>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.2')}
@@ -64,7 +64,7 @@ export default function Question2({ emoji }) {
               </div>
 
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>5.</span>
+                <span className='select-none font-bold text-primary'>5.</span>
 
                 <span className='flex gap-x-2'>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.3')}
@@ -78,15 +78,15 @@ export default function Question2({ emoji }) {
           <>
             {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructionsBefore')}
 
-            <div className='flex flex-col mt-2 gap-y-1'>
+            <div className='mt-2 flex flex-col gap-y-1'>
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>1.</span>
+                <span className='select-none font-bold text-primary'>1.</span>
 
                 <span>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0')}
-                  
+
                   <button
-                    className='px-3 py-0 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white/20 dark:hover:bg-white/30'
+                    className='w-max rounded-lg bg-black px-3 py-0 text-sm font-medium text-white dark:bg-white/20 dark:hover:bg-white/30'
                     onClick={() => downloadEmoji(emoji)}
                   >
                     {t('buttons.download')}
@@ -95,7 +95,7 @@ export default function Question2({ emoji }) {
               </div>
 
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>2.</span>
+                <span className='select-none font-bold text-primary'>2.</span>
 
                 <span className='flex gap-x-2'>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.1')}
@@ -103,7 +103,7 @@ export default function Question2({ emoji }) {
               </div>
 
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>3.</span>
+                <span className='select-none font-bold text-primary'>3.</span>
 
                 <span className='flex gap-x-2'>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.2')}
@@ -111,14 +111,14 @@ export default function Question2({ emoji }) {
               </div>
 
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>4.</span>
+                <span className='select-none font-bold text-primary'>4.</span>
                 <span className='flex gap-x-2'>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.3')}
                 </span>
               </div>
 
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>5.</span>
+                <span className='select-none font-bold text-primary'>5.</span>
 
                 <span className='flex gap-x-2'>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.4')}
@@ -126,8 +126,8 @@ export default function Question2({ emoji }) {
               </div>
 
               <div className='flex gap-x-2'>
-                <span className='font-bold select-none text-primary'>6.</span>
-                
+                <span className='select-none font-bold text-primary'>6.</span>
+
                 <span className='flex gap-x-2'>
                   {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.5')}
                 </span>

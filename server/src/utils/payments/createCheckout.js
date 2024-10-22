@@ -10,7 +10,7 @@ async function createCheckout(user, planId) {
   });
 
   if (!plan) throw new Error('Plan not found.');
-  
+
   // Use API key as secret key to encrypt user id
   const encryptedData = encrypt(user.id, process.env.PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY);
   if (!encryptedData || !encryptedData.iv) throw new Error('Error encrypting user id.');

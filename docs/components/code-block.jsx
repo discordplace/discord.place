@@ -10,14 +10,14 @@ export default function CodeBlock({ children, FileIcon, fileName, language, dimm
   const prefersDark = useMedia('(prefers-color-scheme: dark)', false);
 
   return (
-    <div className='border border-primary rounded-xl'>
+    <div className='rounded-xl border border-primary'>
       <div
         className={cn(
           'flex justify-between w-full px-4 py-2 -mb-2 border-b font-geist border-b-primary bg-secondary rounded-t-xl',
           dimmed && 'bg-[rgba(var(--bg-quaternary))]'
         )}
       >
-        <div className='text-xs flex items-center gap-x-1.5 text-tertiary'>
+        <div className='flex items-center gap-x-1.5 text-xs text-tertiary'>
           {FileIcon}
 
           {fileName}
@@ -25,7 +25,7 @@ export default function CodeBlock({ children, FileIcon, fileName, language, dimm
 
         <CopyCodeButton code={children} />
       </div>
-      
+
       <SyntaxHighlighter
         PreTag={'div'}
         // eslint-disable-next-line react/no-children-prop

@@ -26,7 +26,7 @@ function findMultipleQuarantineEntry(entries) {
   return new Promise(async (resolve, reject) => {
     const entry = await Quarantine.find({ $or: entries.map(entry => ({ type: entry.type, [entry.type === 'USER_ID' ? 'user.id' : 'guild.id']: entry.value, restriction: entry.restriction })) });
     if (entry.length <= 0) return reject('Quarantine entry not found');
-  
+
     resolve(entry);
   });
 }

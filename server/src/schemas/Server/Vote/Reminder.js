@@ -21,7 +21,7 @@ const VoteReminderSchema = new Schema({
       required: true
     }
   }
-}, { 
+}, {
   timestamps: true
 });
 
@@ -68,7 +68,7 @@ Model.watch().on('change', async data => {
       userId: fullDocument.user.id,
       guildId: fullDocument.guild.id
     });
-    
+
     await metadata.save();
   }
 });

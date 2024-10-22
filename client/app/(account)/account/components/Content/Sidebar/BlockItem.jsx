@@ -10,7 +10,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
   const activeTab = useAccountStore(state => state.activeTab);
   const setActiveTab = useAccountStore(state => state.setActiveTab);
   const loading = useAccountStore(state => state.loading);
- 
+
   const IconComponent = icon;
   const ContainerComponent = href ? Link : onClick ? 'button' : 'div';
   const TooltipContainer = isCollapsed ? Tooltip : 'div';
@@ -21,7 +21,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
 
   if (id.startsWith('divider-')) {
     return (
-      <div className='w-full h-px my-2 bg-quaternary' />
+      <div className='my-2 h-px w-full bg-quaternary' />
     );
   }
 
@@ -45,7 +45,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
         href={href}
         target='_blank'
       >
-        <IconComponent className='w-4 h-4' />
+        <IconComponent className='size-4' />
 
         <span
           className={cn(
@@ -57,17 +57,17 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
         </span>
 
         {!isCollapsed && href ? (
-          <MdOpenInNew className='w-4 h-4 ml-auto mr-4 text-tertiary' />
+          <MdOpenInNew className='ml-auto mr-4 size-4 text-tertiary' />
         ) : ''}
 
         {visited && !isCollapsed && badge ? (
-          <span className='text-white ml-auto mr-4 px-2 py-0.5 text-xs font-bold bg-purple-600 rounded-full'>
+          <span className='ml-auto mr-4 rounded-full bg-purple-600 px-2 py-0.5 text-xs font-bold text-white'>
             {badge}
           </span>
         ) : ''}
 
         {!visited && !isCollapsed && (
-          <span className='text-white ml-auto mr-4 px-2 py-0.5 text-xs font-bold bg-purple-600 rounded-full'>
+          <span className='ml-auto mr-4 rounded-full bg-purple-600 px-2 py-0.5 text-xs font-bold text-white'>
             {t('accountPage.sidebar.newBadge')}
           </span>
         )}

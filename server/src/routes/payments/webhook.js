@@ -24,7 +24,7 @@ module.exports = {
       const hmac = crypto.createHmac('sha256', process.env.LEMON_SQUEEZY_WEBHOOK_SECRET);
       const digest = Buffer.from(hmac.update(request.body).digest('hex'), 'utf-8');
       const signature = Buffer.from(request.headers['x-signature'], 'utf-8');
-    
+
       try {
         if (digest.length !== signature.length || !crypto.timingSafeEqual(digest, signature)) {
           return response.sendError('Invalid signature', 403);
@@ -72,7 +72,7 @@ module.exports = {
 
           var isTripledVoteProduct = body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.tripledVotes.servers || body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.tripledVotes.bots;
           if (isTripledVoteProduct) {
-            if (type === 'server') {        
+            if (type === 'server') {
               var guild = client.guilds.cache.get(decryptedData);
               if (!guild) return logger.warn('[Lemon Squeezy] Guild not found:', `\n${JSON.stringify(body, null, 2)}`);
 
@@ -87,7 +87,7 @@ module.exports = {
               sendPurchaseMessage(colors.tripledVote, guild.name, guild.iconURL(), 'Purchased tripled votes.');
             }
 
-            if (type === 'bot') {        
+            if (type === 'bot') {
               var bot = await Bot.findOne({ id: decryptedData });
               if (!bot) return logger.warn('[Lemon Squeezy] Bot not found:', `\n${JSON.stringify(body, null, 2)}`);
 
@@ -101,10 +101,10 @@ module.exports = {
               sendPurchaseMessage(colors.tripledVote, bot.data.tag || decryptedData, getImageFromHash(bot.id, userHashes.avatar), 'Purchased tripled votes.');
             }
           }
-        
+
           var isStandedOutProduct = body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.standedOut.servers || body.data.attributes.first_order_item.variant_id == config.lemonSqueezy.variantIds.standedOut.bots;
           if (isStandedOutProduct) {
-            if (type === 'server') {        
+            if (type === 'server') {
               var guild = client.guilds.cache.get(decryptedData);
               if (!guild) return logger.warn('[Lemon Squeezy] Guild not found:', `\n${JSON.stringify(body, null, 2)}`);
 
@@ -132,7 +132,7 @@ module.exports = {
             }
           }
 
-          if (!isTripledVoteProduct && !isStandedOutProduct) { 
+          if (!isTripledVoteProduct && !isStandedOutProduct) {
             var user_id = decryptedData;
 
             var user = await User.findOne({ id: user_id });
@@ -168,7 +168,7 @@ module.exports = {
         case 'order_refunded':
           var user = await User.findOne({ 'subscription.orderId': body.data.attributes.order_number });
           if (!user) return logger.warn('[Lemon Squeezy] User not found:', `\n${JSON.stringify(body, null, 2)}`);
-        
+
           user.subscription = null;
 
           await user.save();
@@ -202,7 +202,7 @@ module.exports = {
           user.subscription = null;
 
           await user.save();
-        
+
           var profile = await Profile.findOne({ id: user.id });
           if (profile) {
             profile.preferredHost = 'discord.place/p',

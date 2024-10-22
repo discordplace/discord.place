@@ -9,7 +9,7 @@ import { t } from '@/stores/language';
 
 function generateClickableNumbers(currentPage, totalPages, limit) {
   currentPage = Math.max(1, Math.min(currentPage, totalPages));
-  
+
   const halfLimit = Math.floor(limit / 2);
   let startPage = Math.max(1, currentPage - halfLimit);
   let endPage = Math.min(totalPages, currentPage + halfLimit);
@@ -63,19 +63,19 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
 
   return (
     <motion.div
-      className='flex my-6 gap-x-2.5'
+      className='my-6 flex gap-x-2.5'
       initial={initial}
       animate={animate}
       exit={exit}
     >
       <button
-        className='outline-none px-1.5 py-1 bg-secondary select-none hover:bg-quaternary rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))] disabled:pointer-events-none disabled:opacity-60'
+        className='select-none rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-1.5 py-1 text-sm font-bold outline-none hover:bg-quaternary disabled:pointer-events-none disabled:opacity-60'
         onClick={() => setPage(page - 1)}
         disabled={loading || page === 1}
       >
         <LuChevronLeft strokeWidth={3} />
       </button>
-      
+
       {pages.map(pageNumber => (
         <>
           <button
@@ -94,18 +94,20 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
             inputOpened ? (
               <input
                 ref={inputRef}
-                className='focus-visible:bg-quaternary caret-[rgba(var(--text-secondary))] text-secondary placeholder-[rgba(var(--text-tertiary))] max-w-[50px] text-center outline-none px-2.5 py-1 relative overflow-hidden bg-secondary select-none hover:bg-quaternary duration-300 rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))]'
+                className='relative max-w-[50px] select-none overflow-hidden rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-2.5 py-1 text-center text-sm font-bold text-secondary caret-[rgba(var(--text-secondary))] outline-none duration-300 placeholder:text-[rgba(var(--text-tertiary))] hover:bg-quaternary focus-visible:bg-quaternary'
                 value={inputValue}
                 onChange={event => {
                   // dont allow to type 0 as the first digit
                   if (event.target.value.length === 1 && event.target.value === '0') {
                     setInputValue('');
+
                     return;
                   }
 
                   // dont allow to type max number of pages + 1
                   if (parseInt(event.target.value) > totalPages) {
                     setInputValue(totalPages.toString());
+
                     return;
                   }
 
@@ -121,12 +123,12 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
               />
             ) : (
               <button
-                className='outline-none gap-x-0.5 flex items-center justify-center px-2.5 py-1 relative overflow-hidden bg-secondary select-none hover:bg-quaternary duration-300 [&:not(:disabled)]:hover:border-purple-500 rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))]'
+                className='relative flex select-none items-center justify-center gap-x-0.5 overflow-hidden rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-2.5 py-1 text-sm font-bold outline-none duration-300 hover:bg-quaternary [&:not(:disabled)]:hover:border-purple-500'
                 onClick={() => setInputOpened(true)}
               >
-                <span className='bg-[rgba(var(--text-primary))] w-[2.5px] h-[2.5px] block rounded-full' />
-                <span className='bg-[rgba(var(--text-primary))] w-[2.5px] h-[2.5px] block rounded-full' />
-                <span className='bg-[rgba(var(--text-primary))] w-[2.5px] h-[2.5px] block rounded-full' />
+                <span className='block size-[2.5px] rounded-full bg-[rgba(var(--text-primary))]' />
+                <span className='block size-[2.5px] rounded-full bg-[rgba(var(--text-primary))]' />
+                <span className='block size-[2.5px] rounded-full bg-[rgba(var(--text-primary))]' />
               </button>
             )
           )}
@@ -134,7 +136,7 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
       ))}
 
       <button
-        className='outline-none px-1.5 py-1 bg-secondary select-none hover:bg-quaternary rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))] disabled:pointer-events-none disabled:opacity-60'
+        className='select-none rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-1.5 py-1 text-sm font-bold outline-none hover:bg-quaternary disabled:pointer-events-none disabled:opacity-60'
         onClick={() => setPage(page + 1)}
         disabled={loading || page === totalPages}
       >

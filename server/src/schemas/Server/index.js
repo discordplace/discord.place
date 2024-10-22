@@ -61,7 +61,7 @@ const ServerSchema = new Schema({
           required: true
         }
       }
-    ] 
+    ]
   },
   last_voter: {
     user: {
@@ -148,7 +148,7 @@ const ServerSchema = new Schema({
   }
 });
 
-ServerSchema.post('remove', async function (doc) {
+ServerSchema.post('remove', async doc => {
   await Bot.updateMany({ support_server_id: doc.id }, { support_server_id: null });
 });
 

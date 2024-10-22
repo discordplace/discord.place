@@ -59,6 +59,7 @@ module.exports = {
             });
           } catch (error) {
             logger.error('There was an error creating a checkout:', error);
+
             return response.sendError('Failed to create checkout.', 500);
           }
         }
@@ -81,6 +82,7 @@ module.exports = {
             });
           } catch (error) {
             logger.error('There was an error creating a checkout:', error);
+
             return response.sendError('Failed to create checkout.', 500);
           }
         }
@@ -111,6 +113,7 @@ module.exports = {
             });
           } catch (error) {
             logger.error('There was an error creating a checkout:', error);
+
             return response.sendError('Failed to create checkout.', 500);
           }
         }
@@ -120,7 +123,7 @@ module.exports = {
           if (!bot) return response.sendError('Bot not found.', 404);
 
           const canEdit = request.user.id === bot.owner.id || (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId)));
-          if (!canEdit) return response.sendError('You are not allowed to create a checkout for this bot.', 403); 
+          if (!canEdit) return response.sendError('You are not allowed to create a checkout for this bot.', 403);
 
           const isVoteTripleEnabled = await BotVoteTripledEnabled.findOne({ id: botId });
           if (isVoteTripleEnabled) return response.sendError('This bot already has tripled votes enabled.', 400);
@@ -133,6 +136,7 @@ module.exports = {
             });
           } catch (error) {
             logger.error('There was an error creating a checkout:', error);
+
             return response.sendError('Failed to create checkout.', 500);
           }
         }
@@ -145,10 +149,11 @@ module.exports = {
         .then(data => {
           return response.json({
             url: data.data.attributes.url
-          }); 
+          });
         })
         .catch(error => {
           logger.error('There was an error creating a checkout:', error);
+
           return response.sendError('Failed to create checkout.', 500);
         });
     }

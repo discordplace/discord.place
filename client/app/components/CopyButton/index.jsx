@@ -23,7 +23,7 @@ export default function CopyButton({ timeout = 2000, successText, copyText, clas
   };
 
   return (
-    <div 
+    <div
       className={cn(
         'flex items-center cursor-pointer justify-between w-full px-3 py-2 text-sm font-semibold rounded-lg group hover:text-primary gap-x-2 text-secondary',
         className,

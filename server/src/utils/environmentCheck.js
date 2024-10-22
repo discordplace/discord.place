@@ -19,8 +19,8 @@ function environmentCheck() {
     'USER_TOKEN_ENCRYPT_SECRET',
     'JWT_SECRET'
   ];
-  
-  if (requiredEnvironmentVariables.some(key => !process.env[key])) throw new Error(`Some environment variables are missing: ${requiredEnvironmentVariables.filter(key => !process.env[key]).join(', ')}`);  
+
+  if (requiredEnvironmentVariables.some(key => !process.env[key])) throw new Error(`Some environment variables are missing: ${requiredEnvironmentVariables.filter(key => !process.env[key]).join(', ')}`);
 
   return true;
 }

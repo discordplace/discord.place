@@ -24,7 +24,7 @@ export default function BotPreview({ metadata }) {
           {t('inAppReporting.reportModal.labels.shortDescription')}
         </h2>
 
-        <p className='text-xs font-medium whitespace-pre-wrap text-tertiary line-clamp-2'>
+        <p className='line-clamp-2 whitespace-pre-wrap text-xs font-medium text-tertiary'>
           {metadata.short_description}
         </p>
       </div>

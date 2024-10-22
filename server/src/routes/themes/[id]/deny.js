@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body} = require('express-validator');
+const { param, matchedData, body } = require('express-validator');
 const Theme = require('@/schemas/Theme');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
@@ -19,7 +19,7 @@ module.exports = {
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.themeDenyReasons)).withMessage('Invalid reason.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { id, reason } = matchedData(request);
       if (!config.themeDenyReasons[reason]) return response.sendError('Invalid reason.', 400);
 

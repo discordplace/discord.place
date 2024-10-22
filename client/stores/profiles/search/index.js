@@ -30,14 +30,14 @@ const useSearchStore = create((set, get) => ({
     const sort = get().sort;
 
     set({ loading: true, search });
-    
+
     fetchProfiles(search, page, limit, sort)
       .then(data => {
         set({ profiles: data.profiles, loading: false, totalProfiles: data.total, maxReached: data.maxReached, count: data.count });
 
         if (data.profiles.length > 0) {
           const userIds = data.profiles.map(profile => profile.id);
-          
+
           fetchPresences(userIds)
             .then(presences => set({ presences }))
             .catch(error => toast.error(error));

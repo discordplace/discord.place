@@ -15,9 +15,9 @@ module.exports = {
       const hmac = crypto.createHmac('sha256', process.env.GITHUB_AUTO_DEPLOY_SECRET);
       hmac.update(JSON.stringify(request.body));
 
-      const digest = Buffer.from('sha256=' + hmac.digest('hex'), 'utf8');
+      const digest = Buffer.from(`sha256=${hmac.digest('hex')}`, 'utf8');
       const hash = Buffer.from(signature, 'utf8');
-      
+
       try {
         if (hash.length !== digest.length || !crypto.timingSafeEqual(digest, hash)) return response.sendError('Invalid signature', 403);
       } catch (error) {
@@ -30,7 +30,7 @@ module.exports = {
           const { stdout, stderr } = await exec('git pull');
           logger.info(stdout);
           if (stderr) logger.info(stderr);
-          
+
           logger.info('Auto deploy successful. Exiting process..');
           response.status(201).end();
           process.exit(0);

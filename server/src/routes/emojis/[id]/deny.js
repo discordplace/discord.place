@@ -31,7 +31,7 @@ module.exports = {
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.emojisDenyReasons)).withMessage('Invalid reason.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const canDeny = request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDeny) return response.sendError('You are not allowed to deny this emoji.', 403);
 
@@ -82,7 +82,8 @@ module.exports = {
           return response.status(204).end();
         })
         .catch(error => {
-          logger.error(`There was an error during delete the emoji ${emoji.id}:`, error); 
+          logger.error(`There was an error during delete the emoji ${emoji.id}:`, error);
+
           return response.sendError('There was an error during delete the emoji.', 500);
         });
     }

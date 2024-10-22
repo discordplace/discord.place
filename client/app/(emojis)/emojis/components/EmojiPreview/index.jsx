@@ -47,6 +47,7 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
   function continueUploadEmojiToGuild(guildId) {
     if (!guildId) {
       toast.error(t('createEmojiPage.emojisPreview.toast.guildNotFound'));
+
       return;
     }
 
@@ -105,7 +106,7 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     openModal('upload-emoji-to-discord', {
       title: (
         t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.titleWithEmoji', {
-          emojiImage: <Image src={image_url} alt={name} width={24} height={24} className='h-[16px] w-auto inline' />,
+          emojiImage: <Image src={image_url} alt={name} width={24} height={24} className='inline h-[16px] w-auto' />,
           emojiName: name
         })
       ),
@@ -131,14 +132,14 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
   }, [uploadableGuilds, selectedGuildId]);
 
   return (
-    <div className='w-full h-[250px] bg-secondary rounded-md overflow-hidden flex items-center justify-center flex-col gap-y-2 relative' style={{
+    <div className='relative flex h-[250px] w-full flex-col items-center justify-center gap-y-2 overflow-hidden rounded-md bg-secondary' style={{
       backgroundImage: `url(/${patternDarkMode ? 'transparent-pattern-dark' : 'transparent-pattern-light'}.png)`
     }}>
 
-      <div className="fixed pointer-events-none z-[10] top-0 left-0 w-full h-[100svh]">
+      <div className="pointer-events-none fixed left-0 top-0 z-10 h-svh w-full">
         <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
       </div>
-      
+
       <AnimatePresence>
         {image_url ? (
           <>
@@ -154,20 +155,20 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
               exit={{ opacity: 0 }}
             />
 
-            <motion.div 
-              className='absolute flex w-full left-2 bottom-2 gap-x-2'
+            <motion.div
+              className='absolute bottom-2 left-2 flex w-full gap-x-2'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               layoutId='base'
             >
               {ableToChange ? (
-                <label 
+                <label
                   className={cn(
                     'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
                     patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
-                  )} 
-                  htmlFor='emojiFiles' 
+                  )}
+                  htmlFor='emojiFiles'
                 >
                   {t('buttons.change')}
                 </label>
@@ -195,21 +196,21 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
                 </Tooltip>
               )}
 
-              <button 
+              <button
                 className={cn(
                   'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
                   patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
-                )} 
+                )}
                 onClick={() => setPatternDarkMode(!patternDarkMode)}
               >
                 {patternDarkMode ? t('buttons.lightMode') : t('buttons.darkMode')}
               </button>
 
-              <button 
+              <button
                 className={cn(
                   'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
                   patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
-                )}  
+                )}
                 onClick={() => setPreviewSize(previewSize === 32 ? 96 : 32)}
               >
                 {previewSize === 32 ? t('buttons.enlarge') : t('buttons.shrink')}
@@ -218,11 +219,11 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
           </>
         ) : (
           ableToChange && (
-            <motion.label 
+            <motion.label
               className={cn(
                 'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
                 patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
-              )}  
+              )}
               htmlFor='emojiFiles'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

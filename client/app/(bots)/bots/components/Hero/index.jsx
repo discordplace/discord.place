@@ -34,13 +34,13 @@ export default function Hero() {
   };
 
   return (
-    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 sm:px-0">
+    <div className="relative z-0 flex flex-col items-center px-4 pt-56 sm:px-0">
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
-  
-      <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
-  
-      <div className='max-w-[800px] flex flex-col items-center w-full'>
-        <motion.h1 
+
+      <div className='absolute top-[-15%] h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
+
+      <div className='flex w-full max-w-[800px] flex-col items-center'>
+        <motion.h1
           className={cn(
             'text-5xl font-medium max-w-[800px] text-center text-primary',
             BricolageGrotesque.className
@@ -51,12 +51,12 @@ export default function Hero() {
         >
           {t('botsPage.title')}
         </motion.h1>
-        
-        <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-tertiary" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+
+        <motion.span className="mt-8 max-w-[700px] text-center text-tertiary sm:text-lg" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
           {t('botsPage.subtitle')}
         </motion.span>
 
-        <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
+        <div className='mt-8 flex w-full flex-col items-center justify-center gap-2 sm:flex-row'>
           <SearchInput
             placeholder={t('botsPage.searchInputPlaceholder')}
             loading={loading}
@@ -67,7 +67,7 @@ export default function Hero() {
           />
 
           <motion.div
-            className='flex flex-col items-center w-full gap-2 mobile:flex-row sm:w-max'
+            className='flex w-full flex-col items-center gap-2 mobile:flex-row sm:w-max'
             initial={{ opacity: 0, y: -25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...sequenceTransition, delay: 0.3 }}
@@ -135,8 +135,8 @@ export default function Hero() {
         </div>
       </div>
 
-      <motion.div 
-        className='my-16 max-w-[1200px] w-full'
+      <motion.div
+        className='my-16 w-full max-w-[1200px]'
         initial={{ opacity: 0, y: -25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...sequenceTransition, delay: 0.5 }}

@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body} = require('express-validator');
+const { param, matchedData, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const BotDeny = require('@/schemas/Bot/Deny');
 const bodyParser = require('body-parser');
@@ -18,7 +18,7 @@ module.exports = {
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.botsDenyReasons)).withMessage('Invalid reason.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { id, reason } = matchedData(request);
       if (!config.botsDenyReasons[reason]) return response.sendError('Invalid reason.', 400);
 

@@ -8,7 +8,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
   const activeTab = useDashboardStore(state => state.activeTab);
   const setActiveTab = useDashboardStore(state => state.setActiveTab);
   const loading = useDashboardStore(state => state.loading);
- 
+
   const IconComponent = icon;
   const ContainerComponent = href ? Link : onClick ? 'button' : 'div';
   const TooltipContainer = isCollapsed ? Tooltip : 'div';
@@ -33,7 +33,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
         href={href}
         target='_blank'
       >
-        <IconComponent className='w-4 h-4' />
+        <IconComponent className='size-4' />
 
         <span
           className={cn(
@@ -45,7 +45,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
         </span>
 
         {!isCollapsed && badge ? (
-          <span className='text-white ml-auto mr-4 px-2 py-0.5 text-xs font-bold bg-red-600 rounded-full'>
+          <span className='ml-auto mr-4 rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white'>
             {badge}
           </span>
         ) : ''}

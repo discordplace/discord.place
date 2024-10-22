@@ -31,7 +31,7 @@ module.exports = {
       await theme.updateOne({ approved: true });
 
       await DashboardData.findOneAndUpdate({}, { $inc: { sounds: 1 } }, { sort: { createdAt: -1 } });
-      
+
       const guild = client.guilds.cache.get(config.guildId);
 
       const publisher = await client.users.fetch(theme.publisher.id).catch(() => null);

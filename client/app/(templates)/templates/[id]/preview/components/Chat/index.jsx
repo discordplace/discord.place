@@ -8,97 +8,97 @@ import EmojiIcon from '@/app/(templates)/templates/[id]/preview/components/Icons
 
 export default function Chat({ focusedChannel }) {
   return (
-    <div className='pt-4 relative gap-y-6 hidden lg:flex w-full overflow-y-hidden h-[calc(100svh_-_49px)] flex-1 bg-[#313338] flex-col'>
-      <div className='flex px-4 gap-x-4'>
-        <div className='w-[48px] h-[48px] rounded-full bg-[#3f4146] flex-shrink-0' />
+    <div className='relative hidden h-[calc(100svh_-_49px)] w-full flex-1 flex-col gap-y-6 overflow-y-hidden bg-[#313338] pt-4 lg:flex'>
+      <div className='flex gap-x-4 px-4'>
+        <div className='size-[48px] shrink-0 rounded-full bg-[#3f4146]' />
         <div className='flex flex-col flex-wrap gap-2'>
-          <div className='h-[20px] rounded-xl bg-[#4e5155] w-[80px]' />
+          <div className='h-[20px] w-[80px] rounded-xl bg-[#4e5155]' />
           <div className='flex flex-wrap gap-x-1 gap-y-2'>
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[100px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[60px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[80px]'  />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[100px]' />
+            <div className='h-[20px] w-[100px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[60px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[80px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[100px] rounded-xl bg-[#3f4146]' />
           </div>
           <div className='flex flex-wrap gap-x-1 gap-y-2'>
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[50px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[80px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[90px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[70px]' />
+            <div className='h-[20px] w-[50px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[80px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[90px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[70px] rounded-xl bg-[#3f4146]' />
           </div>
-          <div className='w-full max-w-[150px] h-[200px] rounded-xl bg-[#3b3d43]' /> 
+          <div className='h-[200px] w-full max-w-[150px] rounded-xl bg-[#3b3d43]' />
         </div>
       </div>
 
-      <div className='flex px-4 gap-x-4'>
-        <div className='w-[48px] h-[48px] rounded-full bg-[#3f4146] flex-shrink-0' />
+      <div className='flex gap-x-4 px-4'>
+        <div className='size-[48px] shrink-0 rounded-full bg-[#3f4146]' />
         <div className='flex flex-col flex-wrap gap-2'>
-          <div className='h-[20px] rounded-xl bg-[#4e5155] w-[80px]' />
+          <div className='h-[20px] w-[80px] rounded-xl bg-[#4e5155]' />
           <div className='flex flex-wrap gap-x-1 gap-y-2'>
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[70px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[90px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[65px]'  />
+            <div className='h-[20px] w-[70px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[90px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[65px] rounded-xl bg-[#3f4146]' />
           </div>
           <div className='flex flex-wrap gap-x-1 gap-y-2'>
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[80px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[100px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[50px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[70px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[90px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[80px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[100px]' />
-          </div>
-        </div>
-      </div>
-
-      <div className='flex px-4 gap-x-4'>
-        <div className='w-[48px] h-[48px] rounded-full bg-[#3f4146] flex-shrink-0' />
-        <div className='flex flex-col flex-wrap gap-2'>
-          <div className='h-[20px] rounded-xl bg-[#4e5155] w-[80px]' />
-          <div className='flex flex-wrap gap-x-1 gap-y-2'>
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[95px]' />
-          </div>
-          <div className='flex flex-wrap gap-x-1 gap-y-2'>
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[55px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[80px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[90px]' />
-          </div>
-          <div className='max-w-[350px] w-full h-[200px] rounded-xl bg-[#3b3d43]' />
-        </div>
-      </div>
-
-      <div className='flex px-4 gap-x-4'>
-        <div className='w-[48px] h-[48px] rounded-full bg-[#3f4146] flex-shrink-0' />
-        <div className='flex flex-col flex-wrap gap-2'>
-          <div className='h-[20px] rounded-xl bg-[#4e5155] w-[80px]' />
-          <div className='flex flex-wrap gap-x-1 gap-y-2'>
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[60px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[95px]' />
-            <div className='h-[20px] rounded-xl bg-[#3f4146] w-[120px]' />
+            <div className='h-[20px] w-[80px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[100px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[50px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[70px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[90px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[80px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[100px] rounded-xl bg-[#3f4146]' />
           </div>
         </div>
       </div>
 
-      <div className='flex px-4 gap-x-4'>
-        <div className='w-[48px] h-[48px] rounded-full bg-[#3f4146] flex-shrink-0' />
+      <div className='flex gap-x-4 px-4'>
+        <div className='size-[48px] shrink-0 rounded-full bg-[#3f4146]' />
         <div className='flex flex-col flex-wrap gap-2'>
-          <div className='h-[20px] rounded-xl bg-[#4e5155] w-[80px]' />
-          <div className='w-full max-w-[150px] h-[250px] rounded-xl bg-[#3b3d43]' /> 
+          <div className='h-[20px] w-[80px] rounded-xl bg-[#4e5155]' />
+          <div className='flex flex-wrap gap-x-1 gap-y-2'>
+            <div className='h-[20px] w-[95px] rounded-xl bg-[#3f4146]' />
+          </div>
+          <div className='flex flex-wrap gap-x-1 gap-y-2'>
+            <div className='h-[20px] w-[55px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[80px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[90px] rounded-xl bg-[#3f4146]' />
+          </div>
+          <div className='h-[200px] w-full max-w-[350px] rounded-xl bg-[#3b3d43]' />
         </div>
       </div>
 
-      <div className='px-4 bg-[#313338] w-full absolute bottom-0 pb-[24px]'>
-        <div className='items-center flex w-full min-h-[44px] bg-[#383a40] rounded-lg'>
-          <CirclePlusIcon className='min-w-6 min-h-6 w-6 h-6 ml-5 hover:text-[#dbdee1] cursor-pointer text-[#b5bac1]' />
-        
-          <span className='text-[#6d6f78] truncate ml-4 mr-2 select-none cursor-text'>
+      <div className='flex gap-x-4 px-4'>
+        <div className='size-[48px] shrink-0 rounded-full bg-[#3f4146]' />
+        <div className='flex flex-col flex-wrap gap-2'>
+          <div className='h-[20px] w-[80px] rounded-xl bg-[#4e5155]' />
+          <div className='flex flex-wrap gap-x-1 gap-y-2'>
+            <div className='h-[20px] w-[60px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[95px] rounded-xl bg-[#3f4146]' />
+            <div className='h-[20px] w-[120px] rounded-xl bg-[#3f4146]' />
+          </div>
+        </div>
+      </div>
+
+      <div className='flex gap-x-4 px-4'>
+        <div className='size-[48px] shrink-0 rounded-full bg-[#3f4146]' />
+        <div className='flex flex-col flex-wrap gap-2'>
+          <div className='h-[20px] w-[80px] rounded-xl bg-[#4e5155]' />
+          <div className='h-[250px] w-full max-w-[150px] rounded-xl bg-[#3b3d43]' />
+        </div>
+      </div>
+
+      <div className='absolute bottom-0 w-full bg-[#313338] px-4 pb-[24px]'>
+        <div className='flex min-h-[44px] w-full items-center rounded-lg bg-[#383a40]'>
+          <CirclePlusIcon className='ml-5 size-6 min-h-6 min-w-6 cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]' />
+
+          <span className='ml-4 mr-2 cursor-text select-none truncate text-[#6d6f78]'>
             Message #{focusedChannel.name}
           </span>
 
-          <div className='flex justify-end flex-1 w-full mr-4 gap-x-4'>
-            <NitroIcon className='w-6 h-6 hover:text-[#dbdee1] cursor-pointer text-[#b5bac1]' />
-            <GifIcon className='w-6 h-6 hover:text-[#dbdee1] cursor-pointer text-[#b5bac1]' />
-            <StickersIcon className='w-6 h-6 hover:text-[#dbdee1] cursor-pointer text-[#b5bac1]' />
-            <EmojiIcon className='w-6 h-6 hover:text-[#dbdee1] cursor-pointer text-[#b5bac1]' />
+          <div className='mr-4 flex w-full flex-1 justify-end gap-x-4'>
+            <NitroIcon className='size-6 cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]' />
+            <GifIcon className='size-6 cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]' />
+            <StickersIcon className='size-6 cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]' />
+            <EmojiIcon className='size-6 cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]' />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { PiWaveformBold } from 'react-icons/pi';
 export default function SoundPreview({ metadata }) {
   return (
     <div className="flex items-center gap-x-2">
-      <PiWaveformBold className='w-8 h-8 text-tertiary' />
+      <PiWaveformBold className='size-8 text-tertiary' />
 
       <div className='flex flex-col gap-y-1'>
         <div className='flex items-center gap-x-2'>

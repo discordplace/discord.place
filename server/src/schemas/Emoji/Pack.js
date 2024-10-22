@@ -59,9 +59,10 @@ const EmojiPackSchema = new Schema({
     ],
     required: true,
     validate: {
-      validator: value =>  {
+      validator: value => {
         if (value.length > config.packagesMaxEmojisLength) return false;
         if (value.length < config.packagesMinEmojisLength) return false;
+
         return true;
       },
       message: ({ reason }) => reason.message

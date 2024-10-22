@@ -19,7 +19,7 @@ module.exports = {
       .isString().withMessage('Reason must be a string.')
       .isLength({ min: 1, max: 200 }).withMessage('Reason must be between 1 and 200 characters.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const canDeny = request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDeny) return response.sendError('You are not allowed to deny reviews.', 403);
 

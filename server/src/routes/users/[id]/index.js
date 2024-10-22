@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData} = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const Profile = require('@/schemas/Profile');
@@ -59,12 +59,12 @@ module.exports = {
 
       if (user.bot) {
         if (responseData.flags.includes('VerifiedBot')) {
-          Object.assign(responseData, { 
+          Object.assign(responseData, {
             bot_verified: true,
             flags: responseData.flags.filter(flag => flag !== 'VerifiedBot')
           });
         }
-        
+
         return response.json(responseData);
       }
 
@@ -78,7 +78,7 @@ module.exports = {
       const profile = await Profile.findOne({ 'user.id': id });
       if (profile) {
         const profileBadges = profile ? getBadges(profile, userData?.subscription?.createdAt || null) : [];
-        
+
         Object.assign(responseData, {
           profile: {
             bio: profile.bio,
@@ -87,14 +87,14 @@ module.exports = {
             preferredHost: profile.preferredHost,
             likesCount: profile.likes_count
           }
-        });  
-      } 
-      
+        });
+      }
+
       const ownedServers = client.guilds.cache.filter(({ ownerId }) => ownerId === id);
       if (ownedServers.size > 0) {
         const listedServers = randomizeArray(await Server.find({ id: { $in: ownedServers.map(({ id }) => id) } })).slice(0, 2);
 
-        Object.assign(responseData, { 
+        Object.assign(responseData, {
           servers: await Promise.all(listedServers.map(async server => {
             let guild = ownedServers.find(({ id }) => id === server.id);
 
@@ -122,7 +122,7 @@ module.exports = {
       if (ownedBots.length > 0) {
         const listedBots = randomizeArray(ownedBots).slice(0, 2);
 
-        Object.assign(responseData, { 
+        Object.assign(responseData, {
           bots: await Promise.all(listedBots.map(async bot => await bot.toPubliclySafe()))
         });
       } else Object.assign(responseData, { bots: [] });

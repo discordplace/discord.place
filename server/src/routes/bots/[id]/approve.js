@@ -31,7 +31,7 @@ module.exports = {
       await bot.updateOne({ verified: true });
 
       await DashboardData.findOneAndUpdate({}, { $inc: { bots: 1 } }, { sort: { createdAt: -1 } });
-      
+
       const guild = client.guilds.cache.get(config.guildId);
 
       const publisher = guild.members.cache.get(bot.owner.id) || await guild.members.fetch(bot.owner.id).catch(() => null);

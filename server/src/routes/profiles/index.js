@@ -23,7 +23,7 @@ module.exports = {
       .isString().withMessage('Preferred host must be a string.')
       .isIn(['discord.place/p', ...config.customHostnames]).withMessage('Preferred host is not valid.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'PROFILES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create profiles.', 403);
 
@@ -40,7 +40,7 @@ module.exports = {
       }
 
       const requestUser = await User.findOne({ id: request.user.id });
-      
+
       const newProfile = new Profile({
         user: {
           id: request.user.id,

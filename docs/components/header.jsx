@@ -52,8 +52,8 @@ export default function Header() {
 
 function ExpandedHeader({ pathname }) {
   return (
-    <header className="px-4 bg-purple-800 lg:px-0">
-      <div className='flex mx-auto lg:max-w-3xl'>
+    <header className="bg-purple-800 px-4 lg:px-0">
+      <div className='mx-auto flex lg:max-w-3xl'>
         {HEADER_LINKS.map(({ name, href }) => (
           <Link
             className={cn(
@@ -86,7 +86,7 @@ function CollapsedHeader({ pathname }) {
   return (
     <>
       <header className="z-10 bg-purple-800">
-        <div className='flex justify-between p-4 mx-auto lg:max-w-3xl'>
+        <div className='mx-auto flex justify-between p-4 lg:max-w-3xl'>
           <Link href='/home'>
             <Image
               alt='Discord Place Logo'
@@ -95,7 +95,7 @@ function CollapsedHeader({ pathname }) {
               width={32}
             />
           </Link>
-        
+
           <button className='text-[rgba(var(--dark-text-primary))]' onClick={() => setIsOpen(true)}>
             <IoMenu size={24} />
           </button>
@@ -109,10 +109,10 @@ function CollapsedHeader({ pathname }) {
         )}
       >
         <div
-          className='w-[300px] relative duration-500 transition-transform flex flex-col px-8 pb-8 pt-16 bg-purple-800'
+          className='relative flex w-[300px] flex-col bg-purple-800 px-8 pb-8 pt-16 transition-transform duration-500'
           ref={menuContentRef}
         >
-          <div className='absolute top-4 flex justify-between w-full max-w-[calc(100%_-_3rem)]'>
+          <div className='absolute top-4 flex w-full max-w-[calc(100%_-_3rem)] justify-between'>
             <Image
               alt='Discord Place Logo'
               height={32}
@@ -139,13 +139,13 @@ function CollapsedHeader({ pathname }) {
             </Link>
           ))}
 
-          <div className='flex flex-col mt-4 space-y-2'>
+          <div className='mt-4 flex flex-col space-y-2'>
             <h2 className='text-lg font-bold text-[rgba(var(--dark-text-primary))]'>Table of Contents</h2>
 
             <div className='flex flex-col space-y-1'>
               {headings.map(({ id, name, level }) => {
                 const Tag = id.startsWith('endpoint-') ? 'div' : Link;
-                
+
                 return (
                   level !== 'H1' && (
                     <Tag
@@ -181,8 +181,8 @@ function CollapsedHeader({ pathname }) {
 
 function HomeHeader() {
   return (
-    <div className='px-4 bg-purple-900 lg:px-0 text-[rgba(var(--dark-text-primary))]'>
-      <div className='flex mx-auto space-x-24 lg:max-w-3xl py-7'>
+    <div className='bg-purple-900 px-4 text-[rgba(var(--dark-text-primary))] lg:px-0'>
+      <div className='mx-auto flex space-x-24 py-7 lg:max-w-3xl'>
         <div className='flex flex-col space-y-2'>
           <h1 className='text-3xl font-bold text-[rgba(var(--dark-text-primary))]'>
             Discord Place API Documentation
@@ -192,7 +192,7 @@ function HomeHeader() {
             The official documentation for Discord Place, a platform that provides a variety of tools and services for Discord users, developers, and server owners.
           </p>
 
-          <div className='flex items-center mt-4'>
+          <div className='mt-4 flex items-center'>
             <iframe
               src="https://ghbtns.com/github-btn.html?user=discordplace&repo=discord.place&type=star&count=true"
               width="90"
@@ -201,7 +201,7 @@ function HomeHeader() {
             />
 
             <Link
-              className='flex items-center px-2 text-sm bg-purple-600 py-0.5 hover:bg-purple-500 font-medium rounded-full gap-x-1'
+              className='flex items-center gap-x-1 rounded-full bg-purple-600 px-2 py-0.5 text-sm font-medium hover:bg-purple-500'
               href='https://invite.discord.place'
               target='_blank'
             >
@@ -211,7 +211,7 @@ function HomeHeader() {
           </div>
         </div>
 
-        <div className='items-center justify-center hidden lg:flex'>
+        <div className='hidden items-center justify-center lg:flex'>
           <Link href='https://discord.place'>
             <Image
               alt='Discord Place Logo'

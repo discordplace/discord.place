@@ -23,9 +23,9 @@ module.exports = {
       .isString().withMessage('Destination URL should be a string.')
       .custom(destinationURLValidation),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { name, destinationURL } = matchedData(request);
-      
+
       const foundLink = await Link.findOne({ name: name.toLocaleLowerCase('en-US') });
       if (foundLink) return response.sendError('Link name is already in use.', 400);
 
@@ -34,7 +34,7 @@ module.exports = {
       const foundPremium = await User.exists({ id: request.user.id, subscription: { $ne: null } });
       if (!foundPremium && userLinksCount >= 1) return response.sendError('You have reached the maximum amount of links. Please buy a premium subscription to create up to 5 links.', 400);
       if (foundPremium && userLinksCount >= 5) return response.sendError('You have reached the maximum amount of links.', 400);
-  
+
       const id = crypto.randomBytes(8).toString('hex');
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
@@ -84,7 +84,7 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.linksLogsChannelId).send({ embeds, components });
-      
+
       return response.status(204).end();
     }
   ]

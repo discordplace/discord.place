@@ -182,11 +182,11 @@ export default function Page({ plans }) {
   const currentPlanId = loggedIn ? user.premium?.planId : null;
   const lifetimePlan = plans.find(plan => !plan.price_formatted.includes('month') && !plan.price_formatted.includes('year'));
   const annualPlan = plans.find(plan => plan.price_formatted.includes('year'));
-  const monthlyPlan = plans.find(plan => plan.price_formatted.includes('month'));  
+  const monthlyPlan = plans.find(plan => plan.price_formatted.includes('month'));
 
   const actualAnnualPrice = monthlyPlan.price * 12;
   const savePercentage = `${(((actualAnnualPrice - annualPlan.price) / actualAnnualPrice) * 100).toFixed(1)}%`;
-  
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -198,7 +198,9 @@ export default function Page({ plans }) {
     toast.promise(createCheckout(planIdToPurchase), {
       loading: t('premiumPage.toast.creatingCheckout'),
       success: data => {
-        setTimeout(() => window.location.href = data.url, 3000);
+        setTimeout(() => {
+          window.location.href = data.url;
+        }, 3000);
 
         return t('premiumPage.toast.checkoutCreated');
       },
@@ -211,13 +213,19 @@ export default function Page({ plans }) {
   }
 
   return (
-    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 lg:px-0">
+    <div className="relative z-0 flex flex-col items-center px-4 pt-56 lg:px-0">
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
-      
-      <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
-      
-      <div className='max-w-[800px] flex flex-col w-full'>
-        <motion.h1 
+
+      <div className='absolute top-[-15%] h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
+
+      <div>
+        <div>
+          asd
+        </div>
+      </div>
+
+      <div className='flex w-full max-w-[800px] flex-col'>
+        <motion.h1
           className={cn(
             'text-5xl font-medium max-w-[800px] text-center text-primary',
             BricolageGrotesque.className
@@ -229,19 +237,19 @@ export default function Page({ plans }) {
           {t('premiumPage.title')}
         </motion.h1>
 
-        <motion.span className="sm:text-lg max-w-[800px] text-center mt-8 text-tertiary" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.1 }}>
+        <motion.span className="mt-8 max-w-[800px] text-center text-tertiary sm:text-lg" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.1 }}>
           {t('premiumPage.subtitle')}
         </motion.span>
       </div>
 
       <motion.div
-        className='max-w-[800px] grid grid-cols-1 sm:grid-cols-3 mt-16 gap-4 w-full'
+        className='mt-16 grid w-full max-w-[800px] grid-cols-1 gap-4 sm:grid-cols-3'
         initial='hidden'
         animate='visible'
         variants={containerVariants}
       >
         {billingCycles.map(cycle => (
-          <motion.div 
+          <motion.div
             key={cycle}
             className={cn(
               'select-none flex items-center w-full gap-x-2 p-4 rounded-lg',
@@ -250,19 +258,21 @@ export default function Page({ plans }) {
             onClick={() => setPreferredBillingCycle(cycle)}
             variants={itemVariants}
           >
-            <span className={cn(
-              'w-[15px] h-[15px] rounded-full border-4',
-              preferredBillingCycle === cycle ? 'bg-white border-purple-500' : 'border-primary'
-            )} />
-        
+            <span
+              className={cn(
+                'w-[15px] h-[15px] rounded-full border-4',
+                preferredBillingCycle === cycle ? 'bg-white border-purple-500' : 'border-primary'
+              )}
+            />
+
             <div className='flex items-center gap-x-2'>
               <h2 className='text-base font-semibold'>
                 {t(`premiumPage.billingCycle.${cycle}`)}
               </h2>
 
-              <div className='flex flex-col text-xs font-medium gap-y-0.5'>
+              <div className='flex flex-col gap-y-0.5 text-xs font-medium'>
                 {currentPlanId === (cycle === 'monthly' ? monthlyPlan.id : cycle === 'annual' ? annualPlan.id : lifetimePlan.id) ? (
-                  <span 
+                  <span
                     className={cn(
                       'text-purple-500 flex items-center gap-x-1',
                       SourceSerif4.className
@@ -272,7 +282,7 @@ export default function Page({ plans }) {
                   </span>
                 ) : (
                   cycle === 'annual' && (
-                    <span 
+                    <span
                       className={cn(
                         'text-purple-500',
                         SourceSerif4.className
@@ -293,35 +303,35 @@ export default function Page({ plans }) {
       </motion.div>
 
       <motion.div
-        className='w-full max-w-[800px] my-12'
+        className='my-12 w-full max-w-[800px]'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ ...sequenceTransition, delay: 0.8 }}
       >
-        <div className='flex flex-col w-full gap-y-2'>
+        <div className='flex w-full flex-col gap-y-2'>
           <div className='flex items-center justify-between'>
-            <span className='flex w-full text-sm font-semibold sm:text-lg text-primary'>
+            <span className='flex w-full text-sm font-semibold text-primary sm:text-lg'>
               {t('premiumPage.featureHighlights')}
             </span>
 
-            <span className='flex justify-center w-full text-sm font-medium text-tertiary'>
+            <span className='flex w-full justify-center text-sm font-medium text-tertiary'>
               {t('premiumPage.plans.free')}
             </span>
 
-            <span className='flex justify-center w-full text-sm font-medium text-yellow-600 dark:text-yellow-500 text-tertiary'>
+            <span className='flex w-full justify-center text-sm font-medium text-yellow-600 dark:text-yellow-500'>
               {t('premiumPage.plans.premium')}
             </span>
           </div>
 
-          <div className='w-full h-[1px] bg-tertiary my-2' />
+          <div className='my-2 h-px w-full bg-tertiary' />
 
           <div className='flex flex-col'>
             {features.map((feature, index) => (
               <div
-                className='flex items-center justify-between p-4 even:bg-tertiary odd:bg-secondary first:rounded-t-xl last:rounded-b-xl'
+                className='flex items-center justify-between p-4 first:rounded-t-xl last:rounded-b-xl odd:bg-secondary even:bg-tertiary'
                 key={index}
               >
-                <h2 className='flex items-center w-full text-sm font-semibold gap-x-2 text-tertiary'>
+                <h2 className='flex w-full items-center gap-x-2 text-sm font-semibold text-tertiary'>
                   {feature.label}
 
                   {feature.info && (
@@ -338,12 +348,12 @@ export default function Page({ plans }) {
                     </Tooltip>
                   )}
                 </h2>
-                
-                <div className='flex justify-center w-full text-sm font-medium text-tertiary'>
+
+                <div className='flex w-full justify-center text-sm font-medium'>
                   {feature.available_to.find(item => item.id === 'free').value}
                 </div>
 
-                <div className='flex justify-center w-full text-sm font-medium text-yellow-600 dark:text-yellow-500 text-tertiary'>
+                <div className='flex w-full justify-center text-sm font-medium text-yellow-600 dark:text-yellow-500'>
                   {feature.available_to.find(item => item.id === 'premium').value}
                 </div>
               </div>
@@ -375,13 +385,13 @@ export default function Page({ plans }) {
         )}
       </motion.div>
 
-      <motion.div 
-        className='flex flex-col w-full mb-12 gap-y-2 max-w-[800px]'
+      <motion.div
+        className='mb-12 flex w-full max-w-[800px] flex-col gap-y-2'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ ...sequenceTransition, duration: 0.5, delay: 1 }}
       >
-        <h2 className='flex items-center mt-4 text-lg font-semibold sm:text-xl gap-x-1'>
+        <h2 className='mt-4 flex items-center gap-x-1 text-lg font-semibold sm:text-xl'>
           <LuShieldQuestion />
           {t('premiumPage.frequentlyAskedQuestions.title')}
         </h2>

@@ -34,15 +34,14 @@ export default function Content() {
     damping: 20
   };
 
-  
   useEffect(() => {
     fetchSounds('');
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   return (
-    <div className="z-0 relative flex flex-col pt-[14rem] items-center px-4 sm:px-0">
+    <div className="relative z-0 flex flex-col items-center px-4 pt-56 sm:px-0">
       <Square
         column='10'
         row='10'
@@ -50,10 +49,10 @@ export default function Content() {
         blockColor='rgba(var(--bg-secondary))'
       />
 
-      <div className='absolute top-[-15%] max-w-[800px] w-full h-[300px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
+      <div className='absolute top-[-15%] h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
 
-      <div className='max-w-[700px] flex flex-col w-full'>
-        <motion.h1 
+      <div className='flex w-full max-w-[700px] flex-col'>
+        <motion.h1
           className={cn(
             'text-5xl font-medium max-w-[700px] text-center text-primary',
             BricolageGrotesque.className
@@ -65,11 +64,11 @@ export default function Content() {
           {t('soundsPage.title')}
         </motion.h1>
 
-        <motion.span className="sm:text-lg max-w-[700px] text-center mt-8 text-tertiary" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+        <motion.span className="mt-8 max-w-[700px] text-center text-tertiary sm:text-lg" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
           {t('soundsPage.subtitle')}
         </motion.span>
 
-        <div className='flex flex-col items-center justify-center w-full gap-2 mt-8 sm:flex-row'>
+        <div className='mt-8 flex w-full flex-col items-center justify-center gap-2 sm:flex-row'>
           <SearchInput
             placeholder={t('soundsPage.searchInputPlaceholder')}
             loading={false}
@@ -80,7 +79,7 @@ export default function Content() {
           />
 
           <motion.div
-            className='flex flex-col items-center w-full gap-2 mobile:flex-row sm:w-max'
+            className='flex w-full flex-col items-center gap-2 mobile:flex-row sm:w-max'
             initial={{ opacity: 0, y: -25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...sequenceTransition, delay: 0.3 }}
@@ -142,7 +141,7 @@ export default function Content() {
       </div>
 
       <motion.div
-        className='max-w-[1000px] my-16 w-full flex flex-col gap-y-8 lg:px-0 px-2 sm:px-4'
+        className='my-16 flex w-full max-w-[1000px] flex-col gap-y-8 px-2 sm:px-4 lg:px-0'
         initial={{ opacity: 0, y: -25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...sequenceTransition, delay: 0.6 }}

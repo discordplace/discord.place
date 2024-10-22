@@ -55,12 +55,12 @@ module.exports = {
           })
           .catch(error => {
             logger.warn(`Sound ${sound.name} (${sound.id}) could not be uploaded to guild ${guild.name} (${guild.id}):`, error);
-            
+
             return response.sendError(`An error occurred: ${error.message}`, 500);
           });
       } catch (error) {
         logger.warn(`Sound ${sound.name} (${sound.id}) could not be uploaded to guild ${guild.name} (${guild.id}):`, error);
-        
+
         return response.sendError(`An error occurred: ${error.message}`, 500);
       }
     }

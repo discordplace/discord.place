@@ -26,7 +26,7 @@ export default function DangerZone({ botId }) {
       success: () => {
         closeModal('delete-bot');
         setTimeout(() => router.push('/'), 3000);
-        
+
         return t('botManagePage.dangerZone.toast.botDeleted');
       },
       error: error => {
@@ -38,8 +38,8 @@ export default function DangerZone({ botId }) {
   }
 
   return (
-    <div className='flex flex-col w-full gap-y-4'>
-      <h3 className='flex items-center text-xl font-semibold gap-x-4'>
+    <div className='flex w-full flex-col gap-y-4'>
+      <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
         <RiErrorWarningFill size={24} className='text-red-500' />
         {t('botManagePage.dangerZone.title')}
       </h3>
@@ -49,8 +49,8 @@ export default function DangerZone({ botId }) {
       </p>
 
       <button
-        className='px-4 py-1.5 text-sm font-semibold text-white bg-black rounded-xl w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
-        onClick={() => 
+        className='w-max rounded-xl bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
+        onClick={() =>
           openModal('delete-bot', {
             title: t('botManagePage.dangerZone.deleteBotModal.title'),
             description: t('botManagePage.dangerZone.deleteBotModal.description'),

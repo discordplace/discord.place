@@ -13,7 +13,7 @@ import useLanguageStore, { t } from '@/stores/language';
 export default function ActiveTimeouts() {
   const data = useAccountStore(state => state.data);
   const language = useLanguageStore(state => state.language);
-  
+
   const timeoutedBotsCount = data?.timeouts?.bots?.length || 0;
   const timeoutedServersCount = data?.timeouts?.servers?.length || 0;
 
@@ -31,7 +31,7 @@ export default function ActiveTimeouts() {
 
       {(timeoutedBotsCount === 0 && timeoutedServersCount === 0) ? (
         <div className='mt-20'>
-          <ErrorState 
+          <ErrorState
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
@@ -44,7 +44,7 @@ export default function ActiveTimeouts() {
       ) : (
         <>
           {timeoutedServersCount > 0 && (
-            <div className='flex flex-col gap-y-4 max-w-[800px]'>
+            <div className='flex max-w-[800px] flex-col gap-y-4'>
               <h2 className='text-sm font-bold text-secondary'>
                 {t('accountPage.tabs.activeTimeouts.fields.servers.title')}
 
@@ -53,7 +53,7 @@ export default function ActiveTimeouts() {
                 </span>
               </h2>
 
-              <div className='flex flex-col border-2 divide-y border-primary rounded-xl'>
+              <div className='flex flex-col divide-y rounded-xl border-2 border-primary'>
                 {data.timeouts.servers.map((timeout, index) => (
                   <div
                     key={timeout.id}
@@ -64,7 +64,7 @@ export default function ActiveTimeouts() {
                     )}
                   >
                     <Link
-                      className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
+                      className='flex items-center gap-x-4 transition-opacity hover:opacity-70'
                       href={`/servers/${timeout.id}`}
                     >
                       <ServerIcon
@@ -75,7 +75,7 @@ export default function ActiveTimeouts() {
                         height={32}
                         className='rounded-lg bg-quaternary'
                       />
-                  
+
                       <div className='flex flex-col'>
                         <p className='text-sm font-bold text-secondary'>
                           {timeout.name}
@@ -88,12 +88,12 @@ export default function ActiveTimeouts() {
                     </Link>
 
                     <div className='flex flex-col items-center sm:items-end'>
-                      <div className='text-base font-semibold text-center text-primary'>
+                      <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
                           date={new Date(timeout.createdAt).getTime() + 86400000}
                           renderer={({ hours, minutes, seconds, completed }) => {
                             if (completed) return t('accountPage.tabs.activeTimeouts.countdown.expired');
-                            
+
                             return t('accountPage.tabs.activeTimeouts.countdown.remaining', { hours, minutes, seconds });
                           }}
                         />
@@ -110,7 +110,7 @@ export default function ActiveTimeouts() {
           )}
 
           {timeoutedBotsCount > 0 && (
-            <div className='flex flex-col gap-y-4 max-w-[800px]'>
+            <div className='flex max-w-[800px] flex-col gap-y-4'>
               <h2 className='text-sm font-bold text-secondary'>
                 {t('accountPage.tabs.activeTimeouts.fields.bots.title')}
 
@@ -119,7 +119,7 @@ export default function ActiveTimeouts() {
                 </span>
               </h2>
 
-              <div className='flex flex-col border-2 divide-y border-primary rounded-xl'>
+              <div className='flex flex-col divide-y rounded-xl border-2 border-primary'>
                 {data.timeouts.bots.map((timeout, index) => (
                   <div
                     key={timeout.id}
@@ -130,7 +130,7 @@ export default function ActiveTimeouts() {
                     )}
                   >
                     <Link
-                      className='flex items-center transition-opacity gap-x-4 hover:opacity-70'
+                      className='flex items-center gap-x-4 transition-opacity hover:opacity-70'
                       href={`/bots/${timeout.id}`}
                     >
                       {timeout.username ? (
@@ -164,7 +164,7 @@ export default function ActiveTimeouts() {
                     </Link>
 
                     <div className='flex flex-col items-center sm:items-end'>
-                      <div className='text-base font-semibold text-center text-primary'>
+                      <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
                           date={new Date(timeout.createdAt).getTime() + 86400000}
                           renderer={({ hours, minutes, seconds, completed }) => {

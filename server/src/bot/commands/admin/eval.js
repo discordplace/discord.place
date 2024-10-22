@@ -51,10 +51,10 @@ module.exports = {
         )
     ];
 
-    await new EvaluateResult({ 
-      id, 
-      result, 
-      hasError, 
+    await new EvaluateResult({
+      id,
+      result,
+      hasError,
       executedCode: code
     }).save();
 

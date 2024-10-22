@@ -33,7 +33,7 @@ export default function Card({ data, className }) {
   });
 
   return (
-    <div 
+    <div
       className={cn(
         'inline-flex rounded-3xl w-full [&>div]:w-full',
         isClicked && 'pointer-events-none',
@@ -45,29 +45,29 @@ export default function Card({ data, className }) {
         during={1000}
       >
         <Link
-          className="flex items-center w-full p-3 transition-all cursor-pointer select-none hover:opacity-70 gap-x-4 bg-secondary h-max rounded-3xl"
+          className="flex h-max w-full cursor-pointer select-none items-center gap-x-4 rounded-3xl bg-secondary p-3 transition-all hover:opacity-70"
           onClick={() => setIsClicked(true)}
           href={`/templates/${data.id}/preview`}
         >
-          <div className="min-w-[100px] min-h-[100px] w-[100px] h-[100px] mobile:min-w-[140px] mobile:min-h-[140px] mobile:w-[140px] mobile:h-[140px] rounded-2xl font-bold bg-quaternary flex items-center justify-center text-3xl sm:text-5xl">
+          <div className="flex size-[100px] min-h-[100px] min-w-[100px] items-center justify-center rounded-2xl bg-quaternary text-3xl font-bold mobile:size-[140px] mobile:min-h-[140px] mobile:min-w-[140px] sm:text-5xl">
             {getCompressedName(data.name)}
           </div>
 
           <div className="flex flex-col gap-y-2">
-            <h2 className="mt-2 text-lg font-semibold truncate max-w-[130px] mobile:max-w-[230px] text-primary">
+            <h2 className="mt-2 max-w-[130px] truncate text-lg font-semibold text-primary mobile:max-w-[230px]">
               {data.name}
             </h2>
-    
-            <div className="flex truncate gap-x-1">
+
+            <div className="flex gap-x-1 truncate">
               {data.categories.map(category => (
-                <span className="flex items-center px-2 py-1 text-xs font-medium rounded-md gap-x-1 text-secondary bg-quaternary" key={category}>
+                <span className="flex items-center gap-x-1 rounded-md bg-quaternary px-2 py-1 text-xs font-medium text-secondary" key={category}>
                   {config.templateCategoriesIcons[category]}
                   {t(`categories.${category}`)}
                 </span>
               ))}
             </div>
 
-            <p className="text-xs break-all whitespace-pre-wrap mobile:text-sm text-tertiary line-clamp-2">
+            <p className="line-clamp-2 whitespace-pre-wrap break-all text-xs text-tertiary mobile:text-sm">
               {data.description}
             </p>
 
@@ -76,7 +76,7 @@ export default function Card({ data, className }) {
                 {sort === 'Popular' && (
                   <>
                     <TiStar className='text-tertiary' />
-                    <span className='text-xs font-medium text-secondary truncate max-w-[50px] mobile:max-w-[unset]'>
+                    <span className='max-w-[50px] truncate text-xs font-medium text-secondary mobile:max-w-[unset]'>
                       {t('templateCard.uses', { count: formatter.format(data.uses) })}
                     </span>
                   </>
@@ -101,7 +101,7 @@ export default function Card({ data, className }) {
                 )}
               </div>
 
-              <span className='text-xs font-medium text-tertiary truncate max-w-[50px] mobile:max-w-[unset]'>
+              <span className='max-w-[50px] truncate text-xs font-medium text-tertiary mobile:max-w-[unset]'>
                 @{data.user.username}
               </span>
             </div>

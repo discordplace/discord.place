@@ -17,7 +17,7 @@ export default function DangerZone({ profile }) {
 
   function continueDeleteProfile() {
     disableButton('delete-profile', 'confirm');
-    
+
     toast.promise(deleteProfile(profile.slug), {
       loading: t('editProfilePage.toast.deletingProfile'),
       success: () => {
@@ -30,26 +30,26 @@ export default function DangerZone({ profile }) {
       },
       error: message => {
         enableButton('delete-profile', 'confirm');
-        
+
         return message;
       }
     });
   }
 
   return (
-    <div className='flex flex-col p-4 border border-red-500 gap-y-2 bg-red-500/10 rounded-xl'>
-      <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
+    <div className='flex flex-col gap-y-2 rounded-xl border border-red-500 bg-red-500/10 p-4'>
+      <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>
         <RiErrorWarningFill />
         {t('editProfilePage.dangerZone.title')}
       </h1>
-      
-      <p className='text-sm font-medium text-tertiary'> 
+
+      <p className='text-sm font-medium text-tertiary'>
         {t('editProfilePage.dangerZone.subtitle')}
       </p>
-    
-      <div className='flex mt-1 gap-x-2'>
+
+      <div className='mt-1 flex gap-x-2'>
         <button
-          className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
+          className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
           onClick={() =>
             openModal('delete-profile', {
               title: t('editProfilePage.dangerZone.deleteProfileModal.title'),

@@ -17,7 +17,7 @@ import { FiArrowRightCircle } from 'react-icons/fi';
 
 function CategoryBadge({ children, iconsKey }) {
   return (
-    <div className='text-xs flex border border-primary items-center gap-x-2 font-medium px-1.5 py-0.5 bg-secondary text-primary rounded-lg'>
+    <div className='flex items-center gap-x-2 rounded-lg border border-primary bg-secondary px-1.5 py-0.5 text-xs font-medium text-primary'>
       <span className='text-tertiary'>
         {config[iconsKey][children]}
       </span>
@@ -71,12 +71,12 @@ export default function ColumnRenderer({ data }) {
             width={32}
             height={32}
             alt={`Emoji ${data.id}`}
-            className='pointer-events-none object-contain w-[32px] h-[32px]'
+            className='pointer-events-none size-[32px] object-contain'
           />
-          
+
           <span className='font-medium'>
             {data.name}
-          </span> 
+          </span>
         </div>
       );
     case 'emojiPack':
@@ -86,23 +86,23 @@ export default function ColumnRenderer({ data }) {
             {data.emoji_ids.map(packedEmoji => (
               <Image
                 key={packedEmoji.id}
-                src={config.getEmojiURL(`packages/${data.id}/${packedEmoji.id}`, packedEmoji.animated)} 
+                src={config.getEmojiURL(`packages/${data.id}/${packedEmoji.id}`, packedEmoji.animated)}
                 alt={`Emoji ${data.name}`}
                 width={32}
                 height={32}
-                className='pointer-events-none object-contain w-[32px] h-[32px]'
+                className='pointer-events-none size-[32px] object-contain'
               />
             ))}
           </div>
-          
+
           <span className='font-medium'>
             {data.name}
-          </span> 
+          </span>
         </div>
       );
     case 'user':
       return (
-        <div className='flex items-center gap-x-2 pl-1 pr-2 rounded-full w-max py-0.5 bg-quaternary'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
           <UserAvatar
             id={data.id}
             hash={data.avatar}
@@ -125,7 +125,7 @@ export default function ColumnRenderer({ data }) {
       );
     case 'server':
       return (
-        <div className='flex items-center gap-x-2 pl-1 pr-2 rounded-full w-max py-0.5 bg-quaternary'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
           <ServerIcon
             id={data.id}
             hash={data.icon}
@@ -148,7 +148,7 @@ export default function ColumnRenderer({ data }) {
       );
     case 'bot':
       return (
-        <div className='flex items-center gap-x-2 pl-1 pr-2 rounded-full w-max py-0.5 bg-quaternary'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
           <UserAvatar
             id={data.id}
             hash={data.avatar}
@@ -201,7 +201,7 @@ export default function ColumnRenderer({ data }) {
       var now = new Date();
 
       var yesterday = new Date(now);
-      yesterday.setDate(now.getDate() - 1); 
+      yesterday.setDate(now.getDate() - 1);
 
       return (
         <span>
@@ -211,7 +211,7 @@ export default function ColumnRenderer({ data }) {
     case 'long-text':
       return (
         <div className='flex items-center gap-x-2'>
-          <div className='text-xs font-medium overflow-hidden max-w-[200px] text-tertiary line-clamp-2'>
+          <div className='line-clamp-2 max-w-[200px] overflow-hidden text-xs font-medium text-tertiary'>
             {data.value}
           </div>
         </div>
@@ -225,10 +225,10 @@ export default function ColumnRenderer({ data }) {
     case 'template':
       return (
         <div className='flex items-center gap-x-2'>
-          <div className='w-[32px] h-[32px] rounded-md bg-quaternary flex items-center justify-center font-bold'>
+          <div className='flex size-[32px] items-center justify-center rounded-md bg-quaternary font-bold'>
             {getCompressedName(data.name)}
           </div>
-          
+
           <span className='font-medium'>
             {data.name}
           </span>
@@ -236,15 +236,15 @@ export default function ColumnRenderer({ data }) {
       );
     case 'sound':
       return (
-        <div className='flex items-center ml-2 gap-x-2'>
+        <div className='ml-2 flex items-center gap-x-2'>
           <button
-            className='outline-none text-[rgba(var(--bg-secondary))] bg-black hover:bg-black/70 dark:bg-white dark:hover:bg-white/70 w-[24px] h-[24px] items-center flex justify-center rounded-full'
+            className='flex size-[24px] items-center justify-center rounded-full bg-black text-[rgba(var(--bg-secondary))] outline-none hover:bg-black/70 dark:bg-white dark:hover:bg-white/70'
             onClick={onPlayPause}
           >
             {currentlyPlaying === data.id ? (
               <FaPause size={10} />
             ) : (
-              <HiPlay className='relative left-[1px]' />
+              <HiPlay className='relative left-px' />
             )}
           </button>
 
@@ -279,13 +279,13 @@ export default function ColumnRenderer({ data }) {
       );
     case 'ipAddress':
       return (
-        <span className='rounded-full bg-quaternary font-medium text-xs text-primary px-2 py-0.5'>
+        <span className='rounded-full bg-quaternary px-2 py-0.5 text-xs font-medium text-primary'>
           {data.value}
         </span>
       );
     case 'link':
       return (
-        <div className='flex flex-col ml-2 gap-y-1'>
+        <div className='ml-2 flex flex-col gap-y-1'>
           <span className='text-xs font-medium text-tertiary'>
             dsc.ink/<span className='text-sm text-primary'>{data.name}</span>
           </span>
@@ -299,7 +299,7 @@ export default function ColumnRenderer({ data }) {
       var formatter = new Intl.NumberFormat('en-US', { style: 'decimal', notation: 'compact', maximumFractionDigits: 2 });
 
       return (
-        <span className='font-semibold text-xs text-primary px-2 py-1.5 rounded-full border border-primary bg-secondary'>
+        <span className='rounded-full border border-primary bg-secondary px-2 py-1.5 text-xs font-semibold text-primary'>
           {formatter.format(data.value)}
         </span>
       );
@@ -310,7 +310,7 @@ export default function ColumnRenderer({ data }) {
             {data.value.title}
           </h2>
 
-          <div className='text-xs font-medium overflow-hidden max-w-[200px] text-tertiary line-clamp-2'>
+          <div className='line-clamp-2 max-w-[200px] overflow-hidden text-xs font-medium text-tertiary'>
             {data.value.description}
           </div>
         </div>
@@ -334,13 +334,13 @@ export default function ColumnRenderer({ data }) {
       );
     case 'restriction':
       return (
-        <span className='px-2 py-1 text-xs font-medium border rounded-full text-secondary bg-secondary border-primary'>
+        <span className='rounded-full border border-primary bg-secondary px-2 py-1 text-xs font-medium text-secondary'>
           {data.value.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase())}
         </span>
       );
     case 'email':
       return (
-        <span className='px-2 py-1 text-xs font-medium border rounded-full text-secondary bg-secondary border-primary'>
+        <span className='rounded-full border border-primary bg-secondary px-2 py-1 text-xs font-medium text-secondary'>
           {data.value}
         </span>
       );
@@ -358,10 +358,10 @@ export default function ColumnRenderer({ data }) {
               </span>
             </div>
 
-            <div className='flex items-center text-xs gap-x-1 text-secondary'>
+            <div className='flex items-center gap-x-1 text-xs text-secondary'>
               <FiArrowRightCircle
                 size={16}
-                className='text-green-500 -rotate-45'
+                className='-rotate-45 text-green-500'
               />
 
               {new Date(data.value.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -372,7 +372,7 @@ export default function ColumnRenderer({ data }) {
             </div>
           </div>
         );
-      }  
+      }
 
       var foundPlan = dashboardData?.plans?.find(plan => plan.id === data.value?.planId);
 
@@ -388,14 +388,14 @@ export default function ColumnRenderer({ data }) {
             {foundPlan.name}
           </h2>
 
-          <div className='flex items-center text-xs gap-x-1 text-secondary'>
+          <div className='flex items-center gap-x-1 text-xs text-secondary'>
             <FiArrowRightCircle
               size={16}
-              className='text-green-500 -rotate-45'
+              className='-rotate-45 text-green-500'
             />
 
             {new Date(data.value.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-            
+
             <span className='text-tertiary'>
               ({getRelativeTime(data.value.createdAt, 'en')})
             </span>
@@ -404,15 +404,15 @@ export default function ColumnRenderer({ data }) {
       );
     case 'theme':
       return (
-        <div className='flex items-center gap-x-2 pl-1 pr-2 rounded-full w-max py-0.5 bg-quaternary'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
           <div className="relative flex items-center justify-center">
             <span
-              className='block w-4 h-4 rounded-full'
+              className='block size-4 rounded-full'
               style={{ backgroundColor: data.colors.primary }}
             />
 
             <span
-              className='absolute block w-4 h-4 rounded-full'
+              className='absolute block size-4 rounded-full'
               style={{
                 backgroundColor: data.colors.secondary,
                 clipPath: 'polygon(100% 0, 100% 48%, 100% 100%, 0 100%)'

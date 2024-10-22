@@ -5,7 +5,7 @@ import { t } from '@/stores/language';
 
 export default function MockServerCard() {
   return (
-    <div className='min-w-[300px] flex rotate-[15deg] relative sm:bottom-8'>
+    <div className='relative flex min-w-[300px] rotate-[15deg] sm:bottom-8'>
       <ServerCard
         server={{
           data: {

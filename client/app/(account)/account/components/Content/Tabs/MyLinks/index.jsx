@@ -36,18 +36,18 @@ export default function MyLinks() {
 
   function continueDeleteLink(id) {
     disableButton('delete-link', 'confirm');
-  
+
     toast.promise(deleteLink(id), {
       loading: t('accountPage.tabs.myLinks.toast.deletingLink'),
       success: () => {
         closeModal('delete-link');
         fetchData(['links']);
-        
+
         return t('accountPage.tabs.myLinks.toast.linkDeleted');
       },
       error: error => {
         enableButton('delete-link', 'confirm');
-  
+
         return error;
       }
     });
@@ -87,7 +87,7 @@ export default function MyLinks() {
               const parsedURL = new URL(destinationURL);
               if (parsedURL.protocol !== 'https:') return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.destinationUrlNotHTTPS'));
               if (parsedURL.port) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.destinationUrlHavePort'));
-              
+
               disableButton('create-link', 'create');
 
               toast.promise(createLink({ name, destinationURL }), {
@@ -97,12 +97,12 @@ export default function MyLinks() {
                   setName('');
                   setDestinationURL('');
                   fetchData(['links']);
-                  
+
                   return t('accountPage.tabs.myLinks.createLinkModal.toast.linkCreated');
                 },
                 error: error => {
                   enableButton('create-link', 'create');
-                  
+
                   return error;
                 }
               });
@@ -118,7 +118,7 @@ export default function MyLinks() {
   return (
     <>
       <div className='flex flex-col gap-y-2'>
-        <h1 className='flex items-center text-xl font-bold gap-x-2 text-primary'>
+        <h1 className='flex items-center gap-x-2 text-xl font-bold text-primary'>
           {t('accountPage.tabs.myLinks.title')}
 
           <span className='text-xs font-semibold text-tertiary'>
@@ -131,26 +131,26 @@ export default function MyLinks() {
         </p>
       </div>
 
-      <div className='max-w-[800px] flex flex-col gap-y-4'>
+      <div className='flex max-w-[800px] flex-col gap-y-4'>
         <div className='flex flex-col gap-y-2'>
           {canCreateNewLink ? (
             <div
-              className='flex w-full gap-4 p-4 cursor-pointer rounded-3xl bg-secondary hover:bg-quaternary'
+              className='flex w-full cursor-pointer gap-4 rounded-3xl bg-secondary p-4 hover:bg-quaternary'
               onClick={continueCreateLink}
             >
               <LuPlus className='text-primary' size={20} />
-            
+
               <span className='text-sm font-medium text-tertiary'>
                 {t('buttons.newLink')}
               </span>
             </div>
           ) : (
-            <div className='flex flex-col w-full p-4 mt-4 border border-yellow-500 rounded-xl bg-yellow-500/10 gap-y-2'>
-              <h2 className='flex items-center font-bold mobile:text-lg gap-x-2 text-primary'>
+            <div className='mt-4 flex w-full flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4'>
+              <h2 className='flex items-center gap-x-2 font-bold text-primary mobile:text-lg'>
                 <PiWarningCircleFill /> {t('accountPage.tabs.myLinks.maximumLinksReachedInfo.title')}
               </h2>
 
-              <p className='text-xs font-medium mobile:text-sm text-tertiary'>
+              <p className='text-xs font-medium text-tertiary mobile:text-sm'>
                 {t('accountPage.tabs.myLinks.maximumLinksReachedInfo.description', {
                   link: <Link href='/premium' className='text-secondary hover:text-primary'>{t('accountPage.tabs.myLinks.maximumLinksReachedInfo.linkText')}</Link>
                 })}
@@ -160,9 +160,9 @@ export default function MyLinks() {
         </div>
 
         {data.links?.length === 0 ? (
-          <ErrorState 
+          <ErrorState
             title={
-              <div className='flex items-center mt-8 gap-x-2'>
+              <div className='mt-8 flex items-center gap-x-2'>
                 <BsEmojiAngry />
                 {t('accountPage.tabs.myLinks.emptyErrorState.title')}
               </div>
@@ -171,25 +171,25 @@ export default function MyLinks() {
           />
         ) : (
           data.links?.map(link => (
-            <div 
+            <div
               key={link.id}
-              className='flex items-center gap-4 p-4 bg-secondary rounded-3xl hover:bg-quaternary'
+              className='flex items-center gap-4 rounded-3xl bg-secondary p-4 hover:bg-quaternary'
             >
               <FiLink className='text-primary' size={20} />
 
-              <span className='flex items-center w-full text-sm font-medium text-secondary'>
+              <span className='flex w-full items-center text-sm font-medium text-secondary'>
                 dsc.ink/{link.name}
 
-                <span className='sm:block hidden ml-2 text-xs font-medium truncate text-tertiary max-w-[70%]'>
+                <span className='ml-2 hidden max-w-[70%] truncate text-xs font-medium text-tertiary sm:block'>
                   ({link.redirectTo})
                 </span>
 
-                <div className='flex items-center ml-auto text-xs font-medium gap-x-2 text-tertiary'>
-                  <span className='items-center hidden mobile:flex gap-x-1'>
+                <div className='ml-auto flex items-center gap-x-2 text-xs font-medium text-tertiary'>
+                  <span className='hidden items-center gap-x-1 mobile:flex'>
                     {t('accountPage.tabs.myLinks.visits', { count: link.visits })}
                   </span>
 
-                  <span className='flex items-center mobile:hidden gap-x-1'>
+                  <span className='flex items-center gap-x-1 mobile:hidden'>
                     {link.visits}
                   </span>
 
@@ -213,7 +213,7 @@ export default function MyLinks() {
 
                   <button
                     className='hover:opacity-70'
-                    onClick={() => 
+                    onClick={() =>
                       openModal('delete-link', {
                         title: t('accountPage.tabs.myLinks.deleteLinkModal.title'),
                         description: t('accountPage.tabs.myLinks.deleteLinkModal.description'),

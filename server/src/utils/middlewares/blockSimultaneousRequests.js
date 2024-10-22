@@ -4,7 +4,7 @@ const { promisify } = require('util');
 
 const lock = new AsyncLock();
 
-const generateRequestKey = (request) => {
+const generateRequestKey = request => {
   const { method, originalUrl, body } = request;
   const bodyString = JSON.stringify(body);
   const requestIp = request.clientIp;
@@ -14,9 +14,9 @@ const generateRequestKey = (request) => {
 
 const blockSimultaneousRequests = async (request, response, next) => {
   const { method } = request;
-  
+
   if (!['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) return next();
-  
+
   const requestKey = generateRequestKey(request);
 
   try {

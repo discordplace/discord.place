@@ -4,15 +4,15 @@ const GitHubCache = require('@/schemas/Bot/GitHubCache');
 async function findRepository(repository, bypassCache) {
   const usernameRepositoryRegex = /^([a-zA-Z\d]{1}[-a-zA-Z\d]+)(\/){1}([-\w.]+)$/i;
   if (!usernameRepositoryRegex.test(repository)) return null;
-  
+
   const [username, repositoryName] = repository.split('/');
-  
+
   try {
     if (!bypassCache) {
       const foundCache = await GitHubCache.findOne({ 'data.owner.login': username, 'data.name': repositoryName });
       if (foundCache) return foundCache.data;
     }
-    
+
     const response = await axios.get(`https://api.github.com/repos/${username}/${repositoryName}`);
     if (response.status !== 200) return null;
 

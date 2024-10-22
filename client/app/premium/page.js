@@ -18,6 +18,6 @@ export async function generateMetadata() {
 export default async function Page() {
   const plans = await getPlans().catch(error => error);
   if (typeof plans === 'string') return redirect(`/error?message=${encodeURIComponent(plans)}`);
-  
+
   return <Content plans={plans} />;
 }

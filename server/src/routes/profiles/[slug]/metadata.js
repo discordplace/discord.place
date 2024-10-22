@@ -12,14 +12,14 @@ module.exports = {
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     validateRequest,
-    async (request, response) => {      
+    async (request, response) => {
       const { slug } = matchedData(request);
 
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 
       const publiclySafe = await profile.toPubliclySafe();
-      
+
       return response.json({
         username: publiclySafe.username,
         avatar_url: publiclySafe.avatar ? `https://cdn.discordapp.com/avatars/${publiclySafe.id}/${publiclySafe.avatar}.png?size=64` : null,

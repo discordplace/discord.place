@@ -7,7 +7,7 @@ function encrypt(text, secret) {
   const cipher = crypto.createCipheriv('aes-256-gcm', Buffer.from(secret, 'hex'), iv);
   const encrypted = Buffer.concat([cipher.update(text, 'utf-8'), cipher.final()]);
   const tag = cipher.getAuthTag();
-  
+
   return { iv: iv.toString('hex'), encryptedText: encrypted.toString('hex'), tag: tag.toString('hex') };
 }
 

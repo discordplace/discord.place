@@ -17,7 +17,7 @@ export default function ApiKey({ botId, apiKey }) {
   const [currentApiKey, setCurrentApiKey] = useState(apiKey);
   const [apiKeyCreating, setApiKeyCreating] = useState(false);
   const [apiKeyDeleting, setApiKeyDeleting] = useState(false);
-  
+
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
     openModal: state.openModal,
     disableButton: state.disableButton,
@@ -36,6 +36,7 @@ export default function ApiKey({ botId, apiKey }) {
 
         if ('clipboard' in navigator) {
           navigator.clipboard.writeText(apiKey);
+
           return t('botManagePage.apiKey.toast.createdApiKeyAndCopied');
         }
 
@@ -72,12 +73,12 @@ export default function ApiKey({ botId, apiKey }) {
   }
 
   return (
-    <div className='flex flex-col w-full gap-y-4'>
-      <h3 className='flex items-center text-xl font-semibold gap-x-4'>
+    <div className='flex w-full flex-col gap-y-4'>
+      <h3 className='flex items-center gap-x-4 text-xl font-semibold'>
         <IoKey size={24} className='text-purple-500' />
         {t('botManagePage.apiKey.title')}
 
-        <span className='-ml-2 text-xs text-white dark:text-white px-2 py-0.5 dark:bg-white/30 bg-black/30 rounded-full'>
+        <span className='-ml-2 rounded-full bg-black/30 px-2 py-0.5 text-xs text-white dark:bg-white/30 dark:text-white'>
           {t('botManagePage.apiKey.optionalBadge')}
         </span>
       </h3>
@@ -89,7 +90,7 @@ export default function ApiKey({ botId, apiKey }) {
       {!currentApiKey ? (
         <>
           <button
-            className='text-sm w-max px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold bg-gradient-to-r hover:opacity-80 from-purple-600 via-purple-600 border border-purple-600 to-purple-900 rounded-xl'
+            className='flex w-max items-center gap-x-1 rounded-xl border border-purple-600 bg-gradient-to-r from-purple-600 via-purple-600 to-purple-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70'
             onClick={() => createNewApiKey(true)}
             disabled={apiKeyCreating}
           >
@@ -101,7 +102,7 @@ export default function ApiKey({ botId, apiKey }) {
           <div className='flex flex-col gap-y-2'>
             <div className='flex flex-col items-center gap-2 sm:flex-row'>
               <button
-                className='text-sm w-full sm:w-max px-4 flex text-white disabled:opacity-70 disabled:pointer-events-none items-center gap-x-1 py-1.5 font-semibold bg-gradient-to-r hover:opacity-80 from-red-600 via-red-600 border border-red-600 to-red-900 rounded-xl'
+                className='flex w-full items-center gap-x-1 rounded-xl border border-red-600 bg-gradient-to-r from-red-600 via-red-600 to-red-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70 sm:w-max'
                 onClick={() => {
                   openModal('delete-api-key', {
                     title: t('botManagePage.apiKey.deleteApiKeyModal.title'),
@@ -133,7 +134,7 @@ export default function ApiKey({ botId, apiKey }) {
               </button>
 
               <CopyButton
-                className='text-sm w-full sm:w-max outline-none px-4 flex disabled:opacity-70 disabled:pointer-events-none items-center gap-x-2 py-1.5 font-semibold bg-gradient-to-r bg-quaternary hover:bg-tertiary hover:text-primary border border-primary rounded-xl'
+                className='flex w-full items-center gap-x-2 rounded-xl border border-primary bg-quaternary bg-gradient-to-r px-4 py-1.5 text-sm font-semibold outline-none hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max'
                 successText={t('botManagePage.apiKey.toast.apiKeyCopied')}
                 copyText={currentApiKey}
               >
@@ -144,7 +145,7 @@ export default function ApiKey({ botId, apiKey }) {
                 href={config.docsUrl}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='flex w-full sm:w-max items-center gap-x-1.5 px-4 py-1.5 rounded-lg font-semibold text-white bg-black h-max hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 text-sm'
+                className='flex h-max w-full items-center gap-x-1.5 rounded-lg bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 sm:w-max'
               >
                 {t('buttons.apiDocumentation')}
                 <HiExternalLink className='ml-auto' />

@@ -76,7 +76,7 @@ module.exports = {
         canDeleteQuarantines: request.member && config.permissions.canDeleteQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canCreateQuarantines: request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canSyncLemonSqueezyPlans: config.permissions.canSyncLemonSqueezyPlans.includes(request.user.id),
-        canRefreshCache: request.member && config.permissions.canExecuteRefreshCacheRoles.some(roleId => request.member.roles.cache.has(roleId)) 
+        canRefreshCache: request.member && config.permissions.canExecuteRefreshCacheRoles.some(roleId => request.member.roles.cache.has(roleId))
       };
 
       if (!permissions.canViewDashboard) return response.sendError('You do not have permission to view the dashboard.', 403);
@@ -186,7 +186,7 @@ module.exports = {
             }
           });
 
-          return publiclySafeEmoji;       
+          return publiclySafeEmoji;
         }));
       }
 
@@ -291,7 +291,7 @@ module.exports = {
         if (!permissions.canDeleteBotDenies) return response.sendError('You do not have permission to delete bot denies.', 403);
 
         const botDenies = await BotDeny.find().sort({ createdAt: -1 });
-        
+
         responseData.botDenies = await Promise.all(botDenies.map(async botDeny => {
           const botHashes = await getUserHashes(botDeny.bot.id);
           const userHashes = await getUserHashes(botDeny.user.id);
@@ -329,7 +329,7 @@ module.exports = {
 
         responseData.timeouts = await Promise.all(sortedTimeouts.map(async timeout => {
           const userHashes = await getUserHashes(timeout.user.id);
-        
+
           const baseObject = {
             ...timeout._doc,
             user: {
@@ -370,7 +370,7 @@ module.exports = {
         if (!permissions.canViewQuarantines && !permissions.canCreateQuarantines && !permissions.canDeleteQuarantines) return response.sendError('You do not have permission to view, create, or delete quarantines.', 403);
 
         const quarantines = await Quarantine.find().sort({ createdAt: -1 });
-        
+
         responseData.quarantines = await Promise.all(quarantines.map(async quarantine => {
           const publiclySafeQuarantine = quarantine.toPubliclySafe();
           const createdByUserHashes = await getUserHashes(quarantine.created_by.id);
@@ -389,7 +389,7 @@ module.exports = {
 
           if (quarantine.type === 'GUILD_ID') {
             const guild = client.guilds.cache.get(quarantine.guild.id);
-            
+
             Object.assign(publiclySafeQuarantine, {
               guild: {
                 id: quarantine.guild.id,
@@ -415,7 +415,7 @@ module.exports = {
         if (!permissions.canDeleteLinks) return response.sendError('You do not have permission to delete links.', 403);
 
         const links = await Link.find().sort({ createdAt: -1 });
-        
+
         responseData.links = await Promise.all(links.map(async link => {
           const userHashes = await getUserHashes(link.createdBy.id);
 

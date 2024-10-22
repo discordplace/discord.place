@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 import i18n from 'i18next';
+import ReactPostprocessor from 'i18next-react-postprocessor';
+import intervalPlural from 'i18next-intervalplural-postprocessor';
+
 import config from '@/config';
 import useGeneralStore from '@/stores/general';
 import sleep from '@/lib/sleep';
-import ReactPostprocessor from 'i18next-react-postprocessor';
-import intervalPlural from 'i18next-intervalplural-postprocessor';
 import en from '@/locales/en.json';
 import tr from '@/locales/tr.json';
 import az from '@/locales/az.json';
@@ -27,7 +28,7 @@ const useLanguageStore = create(set => ({
   setLanguage: async language => {
     const availableLanguages = config.availableLocales.map(locale => locale.code);
     if (!availableLanguages.includes(language)) language = config.availableLocales.find(locale => locale.default).code;
-    
+
     if ('localStorage' in window) window.localStorage.setItem('language', language);
 
     set({ language });
@@ -36,9 +37,9 @@ const useLanguageStore = create(set => ({
     if (!languageFirstlyChanged) languageFirstlyChanged = true;
     else {
       useGeneralStore.getState().setShowFullPageLoading(true);
-    
+
       await sleep(Math.random() * 500 + 1000);
-    
+
       useGeneralStore.getState().setShowFullPageLoading(false);
     }
   }
@@ -59,6 +60,7 @@ export function t(key, variables = {}) {
 
   if (!i18n.getResource(language, 'translation', key)) {
     if (process.env.NODE_ENV === 'development') return `${key} (missing translation)`;
+
     return key;
   }
 

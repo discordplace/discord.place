@@ -6,6 +6,6 @@ module.exports = function (request, response, next) {
       status: status || 500
     });
   };
-  
+
   next();
 };

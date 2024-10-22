@@ -38,7 +38,7 @@ module.exports = {
           { gender: { $regex: query, $options: 'i' } }
         ]
       } : {};
-      const sortQuery = sort === 'Likes' ? 
+      const sortQuery = sort === 'Likes' ?
         { likes_count: -1 } :
         sort === 'MostViewed' ?
           { views: -1 } :
@@ -52,7 +52,7 @@ module.exports = {
       const total = await Profile.countDocuments({});
       const totalPages = Math.ceil(totalProfiles / limit);
       const maxReached = page >= totalPages;
-      
+
       return response.json({
         maxReached,
         total,

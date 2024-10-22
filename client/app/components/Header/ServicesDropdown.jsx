@@ -61,7 +61,7 @@ export default function ServicesDropdown() {
   ];
 
   return (
-    <div className="grid grid-cols-2 max-w-[500px] h-max relative">
+    <div className="relative grid h-max max-w-[500px] grid-cols-2">
       {links.map((link, index) => (
         <Link
           key={index}
@@ -74,14 +74,14 @@ export default function ServicesDropdown() {
             links.length % 2 === 1 && index === links.length - 1 ? 'col-span-2' : 'col-span-1'
           )}
         >
-          <div className="flex items-center px-4 py-2 cursor-pointer gap-x-3 group hover:bg-tertiary rounded-xl">
-            <div className="flex items-center justify-center flex-shrink-0 rounded-lg w-[40px] h-[40px] text-lg text-primary bg-quaternary">
+          <div className="group flex cursor-pointer items-center gap-x-3 rounded-xl px-4 py-2 hover:bg-tertiary">
+            <div className="flex size-[40px] shrink-0 items-center justify-center rounded-lg bg-quaternary text-lg text-primary">
               <link.icon className='transition-all group-hover:scale-110' />
             </div>
 
             <div className="flex flex-col">
               <h1 className="text-sm font-semibold text-secondary group-hover:text-primary">{link.name}</h1>
-              <p className="overflow-hidden text-xs font-medium whitespace-pre-wrap group-hover:text-secondary text-tertiary line-clamp-2">{link.description}</p>
+              <p className="line-clamp-2 overflow-hidden whitespace-pre-wrap text-xs font-medium text-tertiary group-hover:text-secondary">{link.description}</p>
             </div>
           </div>
         </Link>

@@ -44,12 +44,12 @@ module.exports = {
                 .setAutocomplete(true)
                 .setNameLocalizations(getLocalizedCommand('emoji.groups.pack.subcommands.upload.options.pack').names)
                 .setDescriptionLocalizations(getLocalizedCommand('emoji.groups.pack.subcommands.upload.options.pack').descriptions)))),
-                
+
   isGuildOnly: true,
   execute: async interaction => {
     if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.translate('commands.shared.errors.missing_permissions'));
     if (!interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions) && !interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.translate('commands.emoji.errors.missing_bot_permissions'));
-    
+
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
     const userQuarantined = await findQuarantineEntry.single('USER_ID', interaction.user.id, 'EMOJIS_QUICKLY_UPLOAD').catch(() => false);
@@ -96,7 +96,7 @@ module.exports = {
         await sleep(2000);
 
         for (const emoji of pack.emoji_ids) {
-          const createdEmoji = await interaction.guild.emojis.create({ 
+          const createdEmoji = await interaction.guild.emojis.create({
             attachment: getEmojiURL(`packages/${packId}/${emoji.id}`, emoji.animated),
             name: `${pack.name}_${pack.emoji_ids.indexOf(emoji) + 1}`,
             reason: await interaction.translate('commands.emoji.groups.pack.subcommands.upload.reason', {
@@ -113,22 +113,22 @@ module.exports = {
               index,
               remainingSeconds: pack.emoji_ids.length - index
             }));
-           
+
             logger.error(`Failed to upload emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
-          
+
             await sleep(1000);
-          
+
             continue;
           }
-  
+
           logger.info(`Uploaded emoji ${emoji.id} from pack ${packId} to ${interaction.guild.id}`);
-         
+
           createdEmojis.push({ emoji: createdEmoji, index });
-          
+
           index++;
 
           await message.edit(await interaction.translate('commands.emoji.groups.pack.subcommands.upload.uploaded', {
-            index: index,
+            index,
             total: pack.emoji_ids.length,
             remainingSeconds: pack.emoji_ids.length - index
           }));
@@ -142,7 +142,7 @@ module.exports = {
 
         await EmojiPack.updateOne({ id: packId }, { $inc: { downloads: 1 } });
 
-        return message.edit({ content: `${await interaction.translate('commands.emoji.groups.pack.subcommands.upload.completed', { packName: pack.name  })}\n\n${createdEmojis.map(({ emoji }, index) => `${index + 1}. ${emoji}`).join('\n')}` });
+        return message.edit({ content: `${await interaction.translate('commands.emoji.groups.pack.subcommands.upload.completed', { packName: pack.name })}\n\n${createdEmojis.map(({ emoji }, index) => `${index + 1}. ${emoji}`).join('\n')}` });
       case null:
         var id = interaction.options.getString('emoji');
         var emoji = await Emoji.findOne({ id });
@@ -156,7 +156,7 @@ module.exports = {
           })
           .catch(async error => {
             logger.error(`Failed to upload emoji ${emoji.id} to ${interaction.guild.id}: ${error.message}`);
-            
+
             return interaction.followUp(await interaction.translate('commands.emoji.errors.emoji_failed'));
           });
 
@@ -171,10 +171,12 @@ module.exports = {
     switch (group) {
       case 'pack':
         var packs = await EmojiPack.find();
+
         return interaction.customRespond(packs.map(pack => ({ name: `${pack.name} | ID: ${pack.id} | ${pack.emoji_ids.length} Emojis`, value: pack.id })));
       case null:
         var emojis = await Emoji.find();
-        return interaction.customRespond(emojis.map(emoji => ({ name: `${emoji.name}${emoji.emoji_ids ? '' : `.${emoji.animated ? 'gif' : 'png'}`} | ID: ${emoji.id}`, value: emoji.id })));            
+
+        return interaction.customRespond(emojis.map(emoji => ({ name: `${emoji.name}${emoji.emoji_ids ? '' : `.${emoji.animated ? 'gif' : 'png'}`} | ID: ${emoji.id}`, value: emoji.id })));
     }
   }
 };

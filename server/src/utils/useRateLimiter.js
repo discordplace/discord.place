@@ -8,6 +8,7 @@ module.exports = function ({ maxRequests, perMinutes }) {
     legacyHeaders: false,
     keyGenerator: request => {
       if (request.user) return request.user.id;
+
       return request.clientIp?.replace(/:\d+[^:]*$/, '');
     },
     message: {

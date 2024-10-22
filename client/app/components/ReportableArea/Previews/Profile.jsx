@@ -18,7 +18,7 @@ export default function ProfilePreview({ metadata }) {
           <h2 className="text-sm font-semibold text-secondary">
             {metadata.global_name || metadata.username}{'\''}s Profile
           </h2>
-          
+
           <p className="text-xs text-tertiary">
             @{metadata.username}
           </p>
@@ -30,7 +30,7 @@ export default function ProfilePreview({ metadata }) {
           {t('inAppReporting.reportModal.labels.biography')}
         </h2>
 
-        <p className='text-xs font-medium whitespace-pre-wrap text-tertiary line-clamp-2'>
+        <p className='line-clamp-2 whitespace-pre-wrap text-xs font-medium text-tertiary'>
           {metadata.bio === 'No bio provided.' ? t('profileCard.noBio') : metadata.bio}
         </p>
       </div>

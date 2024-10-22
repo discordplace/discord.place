@@ -70,6 +70,8 @@
     "@/validations": "./src/utils/validations"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "eslint-plugin-ban": "^1.6.0",
+    "eslint-plugin-depend": "^0.11.0"
   }
 }

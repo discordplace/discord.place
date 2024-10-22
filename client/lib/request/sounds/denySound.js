@@ -1,5 +1,6 @@
-import config from '@/config';
 import axios from 'axios';
+
+import config from '@/config';
 
 export default function denySound(id, reason) {
   // eslint-disable-next-line no-async-promise-executor

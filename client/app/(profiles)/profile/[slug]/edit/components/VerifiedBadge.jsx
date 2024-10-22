@@ -8,7 +8,7 @@ export default function VerifiedBadge() {
   const theme = useThemeStore(state => state.theme);
 
   return (
-    <div className='select-none sm:px-3 sm:py-0.5 flex sm:bg-black/10 sm:dark:bg-white/20 items-center gap-x-1 border-black rounded-full text-sm font-semibold sm:border-2 dark:border-white'>
+    <div className='flex select-none items-center gap-x-1 rounded-full border-black text-sm font-semibold dark:border-white sm:border-2 sm:bg-black/10 sm:px-3 sm:py-0.5 sm:dark:bg-white/20'>
       <Image
         src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_verified.svg`}
         width={16}

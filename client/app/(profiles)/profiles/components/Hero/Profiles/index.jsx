@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Pagination from '@/app/components/Pagination';
 
 export default function Profiles() {
-  const { search, setSearch, profiles, fetchProfiles, loading, page, setPage, limit, count } = useSearchStore(useShallow(state => ({ 
+  const { search, setSearch, profiles, fetchProfiles, loading, page, setPage, limit, count } = useSearchStore(useShallow(state => ({
     search: state.search,
     setSearch: state.setSearch,
     profiles: state.profiles,
@@ -22,15 +22,15 @@ export default function Profiles() {
   })));
 
   const showPagination = !loading && count > limit;
-  
+
   const stateVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0
     },
-    visible: { 
+    visible: {
       opacity: 1
     },
-    exit: { 
+    exit: {
       opacity: 0
     }
   };
@@ -43,22 +43,22 @@ export default function Profiles() {
   };
 
   return (
-    <motion.div 
-      className='flex flex-col my-16'
+    <motion.div
+      className='my-16 flex flex-col'
       initial={{ opacity: 0, y: -25 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...sequenceTransition, delay: 0.5 }}
     >
       {!loading && profiles.length <= 0 ? (
         <AnimatePresence>
-          <motion.div 
+          <motion.div
             className='flex flex-col gap-y-2'
             variants={stateVariants}
             initial='hidden'
             animate='visible'
             exit='hidden'
           >
-            <ErrorState 
+            <ErrorState
               title={
                 <div className='flex items-center gap-x-2'>
                   <BsEmojiAngry />
@@ -68,7 +68,7 @@ export default function Profiles() {
               message={'There are no profiles to display. Maybe that\'s a sign to create one?'}
             />
 
-            <button className='text-tertiary hover:underline hover:text-primary' onClick={() => {
+            <button className='text-tertiary hover:text-primary hover:underline' onClick={() => {
               setSearch('');
               fetchProfiles('');
               setPage(1);
@@ -79,14 +79,14 @@ export default function Profiles() {
         </AnimatePresence>
       ) : (
         <>
-          <motion.div 
-            className='grid self-center grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'
+          <motion.div
+            className='grid grid-cols-1 gap-8 self-center sm:grid-cols-2 lg:grid-cols-3'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
             {loading ? (
               new Array(limit).fill(0).map((_, index) => (
-                <div key={index} className='w-[300px] h-[461px] bg-secondary rounded-3xl animate-pulse' />
+                <div key={index} className='h-[461px] w-[300px] animate-pulse rounded-3xl bg-secondary' />
               ))
             ) : (
               profiles.map(profile => (
@@ -98,18 +98,18 @@ export default function Profiles() {
             )}
           </motion.div>
 
-          <div className='flex items-center justify-center w-full' key='pagination'> 
+          <div className='flex w-full items-center justify-center' key='pagination'>
             {showPagination && (
-              <Pagination 
-                page={page} 
+              <Pagination
+                page={page}
                 setPage={newPage => {
                   setPage(newPage);
                   fetchProfiles(search);
-                }} 
-                loading={loading} 
-                total={count} 
-                limit={limit} 
-              />      
+                }}
+                loading={loading}
+                total={count}
+                limit={limit}
+              />
             )}
           </div>
         </>

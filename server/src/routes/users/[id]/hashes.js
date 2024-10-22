@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData} = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const snowflakeValidation = require('@/validations/snowflakeValidation');
 const UserHashes = require('@/schemas/User/Hashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');

@@ -44,18 +44,18 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
       }}
       href={`/themes/${id}`}
     >
-      <div className='flex flex-col w-full h-full rounded-lg bg-black/50'>
+      <div className='flex size-full flex-col rounded-lg bg-black/50'>
         {loggedIn && user.banner ? (
           <UserBanner
             id={user.id}
             hash={user.banner}
-            className='w-full rounded-t-lg h-[60px] object-cover'
+            className='h-[60px] w-full rounded-t-lg object-cover'
             width={200}
             height={60}
           />
         ) : (
           <Image
-            className='w-full rounded-t-lg h-[60px] object-cover'
+            className='h-[60px] w-full rounded-t-lg object-cover'
             src='/og-black.png'
             alt='Placeholder Banner'
             width={200}
@@ -67,13 +67,13 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
           <UserAvatar
             id={user.id}
             hash={user.avatar}
-            className='shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)] rounded-full h-[56px] w-[56px] -mt-8 ml-3'
+            className='-mt-8 ml-3 size-[56px] rounded-full shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]'
             width={64}
             height={64}
           />
         ) : (
           <Image
-            className='rounded-full h-[56px] w-[56px] -mt-8 ml-3 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]'
+            className='-mt-8 ml-3 size-[56px] rounded-full shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]'
             src='https://cdn.discordapp.com/embed/avatars/1.png'
             alt='Placeholder Avatar'
             width={64}
@@ -81,7 +81,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
           />
         )}
 
-        <div className='flex flex-col w-full h-full px-4'>
+        <div className='flex size-full flex-col px-4'>
           <span
             className={cn(
               'mt-2 text-sm font-bold',
@@ -102,11 +102,11 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
             </span>
 
             {badges.length > 0 && (
-              <div className='flex gap-x-0.5 py-0.5 px-1 w-max h-max bg-black/20 rounded-md border border-white/[0.085]'>
+              <div className='flex size-max gap-x-0.5 rounded-md border border-white/[0.085] bg-black/20 px-1 py-0.5'>
                 {badges.map((badge, index) => (
                   <Image
                     key={`theme-${primaryColor}-${secondaryColor}-badge-${index}`}
-                    className='w-[14px] h-[14px] rounded'
+                    className='size-[14px] rounded'
                     src={badge}
                     alt='Badge'
                     width={20}

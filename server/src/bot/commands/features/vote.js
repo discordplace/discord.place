@@ -14,7 +14,7 @@ module.exports = {
     description_localizations: getLocalizedCommand('vote').descriptions
   },
   isGuildOnly: true,
-  execute: async function (interaction) {
+  async execute (interaction) {
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
 
     const userOrGuildQuarantined = await findQuarantineEntry.multiple([
@@ -55,7 +55,7 @@ module.exports = {
     ];
 
     const imageToShow = files[Math.floor(Math.random() * files.length)];
-    
+
     const components = [];
 
     for (let i = 0; i < 3; i++) {
@@ -71,9 +71,9 @@ module.exports = {
       }
       components.push(row);
     }
-  
+
     const attachment = new Discord.AttachmentBuilder(`public/${imageToShow}`, { name: 'vote.gif' });
-    
+
     await interaction.followUp(await interaction.translate('commands.vote.human_verification_text', { guildName: interaction.guild.name }));
 
     await sleep(5000);

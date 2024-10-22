@@ -35,6 +35,7 @@ export default function CreateProfile() {
   useEffect(() => {
     if (debouncedSlug === '') {
       setSlugStatus('idle');
+
       return;
     }
 
@@ -51,7 +52,7 @@ export default function CreateProfile() {
 
       return;
     }
-    
+
     setSlugStatus('loading');
 
     checkSlugAvailability(debouncedSlug)
@@ -62,7 +63,7 @@ export default function CreateProfile() {
         toast.error(error);
         setSlugStatus('idle');
       });
-      
+
   }, [debouncedSlug]);
 
   return (
@@ -85,8 +86,8 @@ export default function CreateProfile() {
         <p className='text-xs text-tertiary'>
           {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.host.description')}
         </p>
-            
-        <div className="flex w-full mt-2">
+
+        <div className="mt-2 flex w-full">
           {['discord.place/p', ...config.customHostnames]
             .map(hostname => (
               <div
@@ -101,7 +102,7 @@ export default function CreateProfile() {
                 {hostname}
 
                 {preferredHost === hostname && (
-                  <div className='absolute top-0 left-0 flex items-center justify-center w-full h-full group-first:rounded-l-xl group-last:rounded-r-xl bg-secondary/80'>
+                  <div className='absolute left-0 top-0 flex size-full items-center justify-center bg-secondary/80 group-first:rounded-l-xl group-last:rounded-r-xl'>
                     <IoMdCheckmarkCircle className='text-primary' />
                   </div>
                 )}
@@ -117,12 +118,14 @@ export default function CreateProfile() {
           </h2>
 
           {slugStatus !== 'idle' && (
-            <div className={cn(
-              'flex text-xs items-center gap-x-1 font-medium',
-              slugStatus === 'available' && 'text-green-500',
-              slugStatus === 'unavailable' && 'text-red-500',
-              slugStatus === 'loading' && 'text-yellow-500'
-            )}>
+            <div
+              className={cn(
+                'flex text-xs items-center gap-x-1 font-medium',
+                slugStatus === 'available' && 'text-green-500',
+                slugStatus === 'unavailable' && 'text-red-500',
+                slugStatus === 'loading' && 'text-yellow-500'
+              )}
+            >
               {slugStatus === 'available' ? (
                 <>
                   <IoMdCheckmarkCircle />
@@ -148,11 +151,11 @@ export default function CreateProfile() {
         <p className='text-xs text-tertiary'>
           {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.slug.description')}
         </p>
-            
+
         <input
           type="text"
           placeholder={t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.slug.placeholder')}
-          className="w-full px-3 py-2 mt-2 text-sm transition-all outline-none placeholder-placeholder text-secondary bg-secondary hover:bg-background focus-visible:bg-background hover:ring-2 ring-purple-500 rounded-xl"
+          className="mt-2 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
           value={slug}
           maxLength={32}
           onChange={event => setSlug(event.target.value)}

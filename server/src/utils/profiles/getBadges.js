@@ -5,14 +5,16 @@ function getBadges(profile, premiumSince) {
     {
       id: 'admin',
       condition: () => {
-        const member = guild.members.cache.get(profile.user.id); 
+        const member = guild.members.cache.get(profile.user.id);
+
         return member && member.roles.cache.has(config.roles.admin);
       }
     },
     {
       id: 'moderator',
       condition: () => {
-        const member = guild.members.cache.get(profile.user.id); 
+        const member = guild.members.cache.get(profile.user.id);
+
         return member && (
           member.roles.cache.has(config.roles.headModerator) ||
           member.roles.cache.has(config.roles.moderator) ||

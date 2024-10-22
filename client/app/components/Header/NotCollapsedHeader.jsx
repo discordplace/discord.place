@@ -67,8 +67,8 @@ export default function NotCollapsedHeader() {
   }, [hoveringHeaderTab, lastMouseOut]);
 
   return (
-    <div className="absolute flex items-center justify-center top-0 left-0 w-full z-[9998]">
-      <div className="flex items-center justify-between w-full max-w-5xl mt-8">
+    <div className="absolute left-0 top-0 z-[9998] flex w-full items-center justify-center">
+      <div className="mt-8 flex w-full max-w-5xl items-center justify-between">
         <div className='flex items-center gap-x-12'>
           <Link href='/'>
             <LogoWithText />
@@ -87,7 +87,7 @@ export default function NotCollapsedHeader() {
                 }}
               >
                 <div
-                  className='relative z-[2] flex items-center px-3 py-1 text-sm font-semibold transition-all cursor-pointer group gap-x-2 text-tertiary hover:text-primary'
+                  className='group relative z-[2] flex cursor-pointer items-center gap-x-2 px-3 py-1 text-sm font-semibold text-tertiary transition-all hover:text-primary'
                   id={`headerTab-${link.name}`}
                 >
                   <link.icon />
@@ -118,8 +118,8 @@ export default function NotCollapsedHeader() {
                         hoveringHeaderTab === link.name ? 'opacity-100' : 'opacity-0 scale-90 -translate-y-2'
                       )}
                     >
-                      <div className='absolute top-0 left-0 flex justify-center w-full h-full'>
-                        <div className='w-3 h-3 rounded-t-[2px] rounded-l-[2px] transform rotate-45 -translate-y-2 border-t-2 border-l-2 border-primary bg-secondary' />
+                      <div className='absolute left-0 top-0 flex size-full justify-center'>
+                        <div className='size-3 -translate-y-2 rotate-45 rounded-t-[2px] border-l-2 border-t-2 border-primary bg-secondary' />
                       </div>
 
                       <ServicesDropdown />
@@ -138,7 +138,7 @@ export default function NotCollapsedHeader() {
             />
           </div>
         </div>
-        
+
         <Suspense fallback={<></>}>
           <UserSide />
         </Suspense>

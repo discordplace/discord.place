@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { toast } from 'sonner';
+
 import fetchBots from '@/lib/request/bots/fetchBots';
 
 const useSearchStore = create((set, get) => ({
@@ -16,7 +17,7 @@ const useSearchStore = create((set, get) => ({
   category: 'All',
   setCategory: category => {
     set({ category, page: 1 });
-  
+
     get().fetchBots(get().search);
   },
   page: 1,
@@ -35,7 +36,7 @@ const useSearchStore = create((set, get) => ({
     if (sort) set({ sort });
 
     set({ loading: true, search });
-    
+
     fetchBots(search, get().page, get().limit, get().category, get().sort)
       .then(data => set({ bots: data.bots, loading: false, maxReached: data.maxReached, total: data.total }))
       .catch(error => {

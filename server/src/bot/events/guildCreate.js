@@ -8,7 +8,7 @@ module.exports = async guild => {
   updateClientActivity();
 
   const channel = client.guilds.cache.get(config.guildId).channels.cache.get(config.joinLeaveLogsChannelId);
-  
+
   const embeds = [
     new Discord.EmbedBuilder()
       .setAuthor({ name: 'Joined Guild', iconURL: guild.iconURL() })

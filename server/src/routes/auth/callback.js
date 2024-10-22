@@ -20,6 +20,7 @@ module.exports = {
       .customSanitizer(value => decodeURIComponent(value)).custom(value => {
         try {
           new URL(value);
+
           return true;
         } catch {
           throw new Error('Invalid redirect URL saved in cookies.');
@@ -43,7 +44,7 @@ module.exports = {
 
       try {
         const access_token = await getAccessToken(code);
-        
+
         const { data: user } = await axios.get('https://discord.com/api/users/@me', {
           headers: {
             Authorization: `Bearer ${access_token}`
@@ -54,11 +55,11 @@ module.exports = {
 
         const userQuarantined = await findQuarantineEntry.single('USER_ID', user.id, 'LOGIN').catch(() => false);
         if (userQuarantined) return response.sendError('You are not allowed to login.', 403);
-   
+
         const currentDate = new Date();
 
         const token = jwt.sign(
-          { 
+          {
             id: user.id,
             iat: currentDate.getTime()
           },
@@ -88,7 +89,7 @@ module.exports = {
             email: user.email,
             accessToken: encrypt(access_token, process.env.USER_TOKEN_ENCRYPT_SECRET),
             lastLoginAt: new Date(currentDate)
-          }, 
+          },
           { upsert: true, new: true }
         );
 
@@ -97,7 +98,7 @@ module.exports = {
           {
             $set: {
               avatar: user.avatar,
-              banner: user.banner 
+              banner: user.banner
             }
           },
           { upsert: true }

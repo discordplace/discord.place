@@ -6,7 +6,7 @@ import SupportServer from '@/app/(bots)/bots/[id]/components/sections/RightSide/
 
 export default function RightSide({ bot }) {
   return (
-    <div className='w-full lg:w-[30%] flex flex-col'>
+    <div className='flex w-full flex-col lg:w-[30%]'>
       <Actions bot={bot} />
       <Categories bot={bot} />
       {bot.support_server?.id && <SupportServer bot={bot} />}

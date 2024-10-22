@@ -9,7 +9,7 @@ export default function MockProfileCard() {
   const user = useAuthStore(state => state.user);
 
   return (
-    <div className='rotate-[15deg] relative bottom-24 right-2 pointer-events-none select-none'>
+    <div className='pointer-events-none relative bottom-24 right-2 rotate-[15deg] select-none'>
       <ProfileCard
         id={loggedIn ? user.id : '1207874300070199356'}
         avatar={loggedIn ? user.avatar : '68a13ad820feae82feaa86e5a5930570'}
@@ -24,7 +24,7 @@ export default function MockProfileCard() {
         global_name={loggedIn ? user.global_name : 'discord.place'}
         bio={loggedIn ? 'No bio provided.' : t('home.infoCards.2.profileCardBio')}
         createdAt={loggedIn ? Date.now() : '2024-02-16T00:00:00.000Z'}
-      /> 
+      />
     </div>
   );
 }

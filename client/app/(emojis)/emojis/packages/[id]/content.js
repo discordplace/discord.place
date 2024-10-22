@@ -43,22 +43,23 @@ export default function Content({ emoji }) {
         return t('emojiPackagePage.toast.emojiPackageDeleted');
       },
       error: error => {
-        enableButton('delete-emoji-package', 'confirm');        
+        enableButton('delete-emoji-package', 'confirm');
+
         return error;
       }
     });
   }
 
   return (
-    <div className='flex items-center justify-center w-full'>
-      <div className='flex w-full max-w-[1000px] mt-48 mb-16 flex-col gap-y-4 px-4 lg:px-0'>
+    <div className='flex w-full items-center justify-center'>
+      <div className='mb-16 mt-48 flex w-full max-w-[1000px] flex-col gap-y-4 px-4 lg:px-0'>
         {!emoji.approved && (
-          <div className='flex flex-col p-4 border border-yellow-500 gap-y-2 bg-yellow-500/10 rounded-xl'>
-            <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
+          <div className='flex flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4'>
+            <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>
               <RiErrorWarningFill />
               Beep beep!
             </h1>
-            
+
             <p className='text-sm font-medium text-tertiary'>
               {t('emojiPackagePage.notApprovedInfo.description', {
                 link: <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>{t('emojiPackagePage.notApprovedInfo.linkText')}</Link>
@@ -69,70 +70,70 @@ export default function Content({ emoji }) {
 
         <div className='flex flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
-            <PackagePreview 
-              image_urls={imageURLs} 
+            <PackagePreview
+              image_urls={imageURLs}
               set_image_urls={setImageURLs}
               ableToChange={false}
             />
           </motion.div>
 
-          <div className='grid w-full gap-4 grid-cols-21 sm:grid-cols-3'>
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+          <div className='grid w-full gap-4 sm:grid-cols-3'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPackagePage.fields.name')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 {emoji.name}
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPackagePage.fields.uploaded')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 {new Date(emoji.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/,/g,'')}
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPackagePage.fields.downloads')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 <AnimatedCount data={emoji.downloads} />
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPackagePage.fields.emojiCount')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 <AnimatedCount data={emoji.emoji_ids.length} />
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPackagePage.fields.categories')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 {emoji.categories.map(category => t(`categories.${category}`)).join(', ')}
               </span>
             </div>
 
-            <div className='flex flex-col items-center justify-center w-full h-full px-2 rounded-md bg-secondary gap-y-2 min-h-[115px]'>
+            <div className='flex size-full min-h-[115px] flex-col items-center justify-center gap-y-2 rounded-md bg-secondary px-2'>
               <h1 className='text-base font-semibold text-tertiary'>
                 {t('emojiPackagePage.fields.publisher')}
               </h1>
 
-              <span className='flex items-center text-sm text-center text-primary gap-x-1'>
+              <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
                 <UserAvatar
                   id={emoji.user.id}
                   hash={emoji.user.avatar}
@@ -148,10 +149,10 @@ export default function Content({ emoji }) {
           </div>
         </div>
 
-        <div className='flex flex-col w-full gap-4 lg:flex-row'>
-          <div className='flex lg:max-w-[400px] w-full flex-col'>
-            <div className='mt-4 lg:max-w-[400px] w-full flex flex-col gap-y-2'>
-              <h2 className='flex items-center text-lg font-semibold sm:text-xl gap-x-1'>
+        <div className='flex w-full flex-col gap-4 lg:flex-row'>
+          <div className='flex w-full flex-col lg:max-w-[400px]'>
+            <div className='mt-4 flex w-full flex-col gap-y-2 lg:max-w-[400px]'>
+              <h2 className='flex items-center gap-x-1 text-lg font-semibold sm:text-xl'>
                 <MdEmojiEmotions />
                 {t('emojiPackagePage.similarEmojiPacks.title')}
               </h2>
@@ -176,9 +177,9 @@ export default function Content({ emoji }) {
               )}
             </div>
           </div>
-          
-          <div className='flex flex-col w-full gap-y-4'>
-            <h2 className='flex items-center mt-4 text-lg font-semibold sm:text-xl gap-x-1'>
+
+          <div className='flex w-full flex-col gap-y-4'>
+            <h2 className='mt-4 flex items-center gap-x-1 text-lg font-semibold sm:text-xl'>
               <LuShieldQuestion />
               {t('emojiPackagePage.frequentlyAskedQuestions.title')}
             </h2>
@@ -188,19 +189,19 @@ export default function Content({ emoji }) {
         </div>
 
         {emoji.permissions.canDelete && (
-          <div className='flex flex-col p-4 mt-8 border border-red-500 gap-y-2 bg-red-500/10 rounded-xl'>
-            <h1 className='text-lg text-primary flex items-center font-semibold gap-x-1.5'>
+          <div className='mt-8 flex flex-col gap-y-2 rounded-xl border border-red-500 bg-red-500/10 p-4'>
+            <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>
               <RiErrorWarningFill />
               {t('emojiPackagePage.dangerZone.title')}
             </h1>
-            
+
             <p className='text-sm font-medium text-tertiary'>
               {t('emojiPackagePage.dangerZone.description')}
             </p>
-            
-            <div className='flex mt-1 gap-x-2'>
+
+            <div className='mt-1 flex gap-x-2'>
               <button
-                className='px-3 py-1 text-sm font-medium text-white bg-black rounded-lg w-max dark:bg-white dark:text-black dark:hover:bg-white/70 hover:bg-black/70'
+                className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 onClick={() =>
                   openModal('delete-emoji-package', {
                     title: t('emojiPackagePage.dangerZone.deleteEmojiModal.title'),
