@@ -95,9 +95,9 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
                 description: t('botManagePage.extraOwners.addExtraOwnerModal.description'),
                 content: (
                   <input
-                    type="text"
+                    type='text'
                     placeholder={botId}
-                    className="w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
+                    className='w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
                     ref={newExtraOwnerIdInputRef}
                   />
                 ),

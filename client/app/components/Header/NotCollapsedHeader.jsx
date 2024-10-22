@@ -67,8 +67,8 @@ export default function NotCollapsedHeader() {
   }, [hoveringHeaderTab, lastMouseOut]);
 
   return (
-    <div className="absolute left-0 top-0 z-[9998] flex w-full items-center justify-center">
-      <div className="mt-8 flex w-full max-w-5xl items-center justify-between">
+    <div className='absolute left-0 top-0 z-[9998] flex w-full items-center justify-center'>
+      <div className='mt-8 flex w-full max-w-5xl items-center justify-between'>
         <div className='flex items-center gap-x-12'>
           <Link href='/'>
             <LogoWithText />

@@ -53,7 +53,7 @@ export default function Page() {
         <li>Request the deletion of your information.</li>
         <li>Object to the processing of your data.</li>
       </ul>
-      <p>To exercise these rights, please contact us at <a href="mailto:legal@discord.place">legal@discord.place</a>.</p>
+      <p>To exercise these rights, please contact us at <a href='mailto:legal@discord.place'>legal@discord.place</a>.</p>
 
       <h2>7. Changes to This Privacy Policy</h2>
       <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page. You are advised to review this privacy policy periodically for any changes.</p>
@@ -66,7 +66,7 @@ export default function Page() {
         You can reach us via the emails below or on our Discord server.
       </p>
 
-      <div className="mt-2 flex gap-x-2">
+      <div className='mt-2 flex gap-x-2'>
         <Link
           href={config.supportInviteUrl}
           className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'

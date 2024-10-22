@@ -49,7 +49,7 @@ export default function Blog({ data }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <FiArrowRightCircle size={32} color="#43b459" style={{ transform: 'rotate(-45deg)' }} />
+          <FiArrowRightCircle size={32} color='#43b459' style={{ transform: 'rotate(-45deg)' }} />
 
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
             {new Date(data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}

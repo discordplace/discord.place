@@ -57,7 +57,7 @@ export default function UserSide({ className }) {
           </button>
 
           <Link
-            className="pointer-events-auto flex items-center gap-x-2 rounded font-medium outline-none"
+            className='pointer-events-auto flex items-center gap-x-2 rounded font-medium outline-none'
             onClick={() => setOpen(!open)}
             href='/account'
           >

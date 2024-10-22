@@ -213,7 +213,7 @@ export default function Page({ plans }) {
   }
 
   return (
-    <div className="relative z-0 flex flex-col items-center px-4 pt-56 lg:px-0">
+    <div className='relative z-0 flex flex-col items-center px-4 pt-56 lg:px-0'>
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
       <div className='absolute top-[-15%] h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
@@ -237,7 +237,7 @@ export default function Page({ plans }) {
           {t('premiumPage.title')}
         </motion.h1>
 
-        <motion.span className="mt-8 max-w-[800px] text-center text-tertiary sm:text-lg" initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.1 }}>
+        <motion.span className='mt-8 max-w-[800px] text-center text-tertiary sm:text-lg' initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.1 }}>
           {t('premiumPage.subtitle')}
         </motion.span>
       </div>

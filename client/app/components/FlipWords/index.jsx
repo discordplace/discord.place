@@ -68,7 +68,7 @@ export default function FlipWords({ words, duration = 3000, className, onStartAn
               delay: index * 0.08,
               duration: 0.4
             }}
-            className="inline-block"
+            className='inline-block'
           >
             {letter}
           </motion.span>

@@ -172,11 +172,11 @@ export default function Content({ bot }) {
   }, [changesMade, openedModals]);
 
   return (
-    <div className="mb-24 flex size-full items-center justify-center px-4 sm:px-12">
-      <div className="mt-48 flex size-full max-w-[1000px] flex-col items-start gap-y-8">
-        <div className="flex w-full flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col gap-y-1">
-            <h2 className="flex items-center gap-x-2 text-3xl font-bold">
+    <div className='mb-24 flex size-full items-center justify-center px-4 sm:px-12'>
+      <div className='mt-48 flex size-full max-w-[1000px] flex-col items-start gap-y-8'>
+        <div className='flex w-full flex-col sm:flex-row sm:items-center sm:justify-between'>
+          <div className='flex flex-col gap-y-1'>
+            <h2 className='flex items-center gap-x-2 text-3xl font-bold'>
               {t('botManagePage.title')}
 
               <div className='select-none rounded-lg bg-quaternary p-2 text-xs font-bold uppercase'>
@@ -184,7 +184,7 @@ export default function Content({ bot }) {
               </div>
             </h2>
 
-            <p className="text-tertiary">
+            <p className='text-tertiary'>
               {t('botManagePage.subtitle')}
             </p>
 
@@ -195,7 +195,7 @@ export default function Content({ bot }) {
                 size={32}
                 width={18}
                 height={18}
-                className="rounded-full bg-secondary"
+                className='rounded-full bg-secondary'
               />
 
               {bot.username}

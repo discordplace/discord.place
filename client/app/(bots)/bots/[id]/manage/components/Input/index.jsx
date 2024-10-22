@@ -7,7 +7,7 @@ export default function Input({ label, customLabelPeer, description, type, Custo
 
   return (
     <div className='flex flex-1 flex-col gap-y-2'>
-      <div className="flex size-full items-center gap-x-2">
+      <div className='flex size-full items-center gap-x-2'>
         <label
           className='font-medium text-secondary'
         >

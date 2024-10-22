@@ -280,7 +280,7 @@ export default function Content() {
           <AnimatePresence>
             {loading && (
               <motion.div
-                className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center bg-background"
+                className='absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center bg-background'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -288,7 +288,7 @@ export default function Content() {
                 <Image
                   className='size-[64px]'
                   src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
-                  alt="discord.place Logo"
+                  alt='discord.place Logo'
                   width={256}
                   height={256}
                 />

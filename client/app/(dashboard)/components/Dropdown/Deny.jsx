@@ -39,9 +39,9 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
           ) : (
             <div className='flex flex-col items-center gap-2'>
               <input
-                type="text"
-                placeholder="Enter a reason.."
-                className="w-full rounded-xl bg-tertiary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-quaternary hover:ring-2"
+                type='text'
+                placeholder='Enter a reason..'
+                className='w-full rounded-xl bg-tertiary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-quaternary hover:ring-2'
                 value={value}
                 onChange={event => setValue(event.target.value)}
               />

@@ -84,7 +84,7 @@ export default function Emojis() {
         >
           {loading ? (
             new Array(12).fill(0).map((_, index) => (
-              <div key={index} className="h-[164px] w-[322px] animate-pulse rounded-2xl bg-secondary" />
+              <div key={index} className='h-[164px] w-[322px] animate-pulse rounded-2xl bg-secondary' />
             ))
           ) : (
             emojis.map(emoji => (

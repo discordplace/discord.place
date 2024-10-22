@@ -58,7 +58,7 @@ export default function Page() {
       <p>These Terms are governed by and construed in accordance with the laws of the Republic of Turkey, without regard to its conflict of law principles.</p>
 
       <h2>9. Contact Information</h2>
-      <p>If you have any questions about these Terms, please contact us at <a href="mailto:legal@discord.place">legal@discord.place</a>.</p>
+      <p>If you have any questions about these Terms, please contact us at <a href='mailto:legal@discord.place'>legal@discord.place</a>.</p>
 
       <h2>
         10. Contact Us
@@ -68,7 +68,7 @@ export default function Page() {
         You can reach us via the emails below or on our Discord server.
       </p>
 
-      <div className="mt-2 flex gap-x-2">
+      <div className='mt-2 flex gap-x-2'>
         <Link
           href={config.supportInviteUrl}
           className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'

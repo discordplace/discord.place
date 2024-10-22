@@ -20,7 +20,7 @@ export default function BlogCard({ data, loading }) {
           className='h-[200px] w-full rounded-xl object-cover'
         />
 
-        <div className='absolute top-0 left-0 size-full rounded-xl bg-black/50' />
+        <div className='absolute left-0 top-0 size-full rounded-xl bg-black/50' />
 
         <div className='absolute left-4 top-4'>
           {data.tags.map(tag => (
@@ -34,11 +34,11 @@ export default function BlogCard({ data, loading }) {
         </div>
       </div>
 
-      <h2 className='font-medium line-clamp-1 whitespace-nowrap text-pretty text-primary'>
+      <h2 className='line-clamp-1 whitespace-nowrap text-pretty font-medium text-primary'>
         {data.name}
       </h2>
 
-      <p className='text-sm whitespace-pre-wrap line-clamp-3 text-tertiary'>
+      <p className='line-clamp-3 whitespace-pre-wrap text-sm text-tertiary'>
         {data.description}
       </p>
     </Link>

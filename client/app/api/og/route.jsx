@@ -161,7 +161,7 @@ export async function GET(request) {
           <img
             src={`http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/symbol_white.png`}
             style={{ width: '56px', height: '56px', marginLeft: '20px' }}
-            alt="discord.place Logo"
+            alt='discord.place Logo'
           />
 
           <h1 style={{ fontSize: '32px', fontWeight: 700 }}>discord.place</h1>

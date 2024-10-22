@@ -36,7 +36,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="relative z-0 flex flex-col items-center px-6 pt-56 mobile:px-12 lg:px-0">
+    <div className='relative z-0 flex flex-col items-center px-6 pt-56 mobile:px-12 lg:px-0'>
       <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
       <div className='absolute top-[-15%] h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
@@ -62,7 +62,7 @@ export default function Hero() {
           />
         </motion.h1>
 
-        <motion.span className="mt-8 max-w-[700px] text-center text-tertiary sm:text-left sm:text-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+        <motion.span className='mt-8 max-w-[700px] text-center text-tertiary sm:text-left sm:text-lg' initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
           {t('blogsPage.subtitle')}
         </motion.span>
 

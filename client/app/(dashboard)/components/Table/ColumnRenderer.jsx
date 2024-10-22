@@ -405,7 +405,7 @@ export default function ColumnRenderer({ data }) {
     case 'theme':
       return (
         <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
-          <div className="relative flex items-center justify-center">
+          <div className='relative flex items-center justify-center'>
             <span
               className='block size-4 rounded-full'
               style={{ backgroundColor: data.colors.primary }}

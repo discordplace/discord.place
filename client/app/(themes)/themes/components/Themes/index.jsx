@@ -82,7 +82,7 @@ export default function Themes() {
         >
           {loading ? (
             new Array(limit).fill(0).map((_, index) => (
-              <div key={index} className="h-[200px] w-full animate-pulse rounded-2xl bg-secondary" />
+              <div key={index} className='h-[200px] w-full animate-pulse rounded-2xl bg-secondary' />
             ))
           ) : (
             themes.map(theme => (

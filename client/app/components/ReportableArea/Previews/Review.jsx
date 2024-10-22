@@ -5,18 +5,18 @@ import { TiStarFullOutline } from 'react-icons/ti';
 export default function ReviewPreview({ metadata }) {
   return (
     <div className='flex flex-col gap-y-4'>
-      <div className="flex items-center gap-x-3">
+      <div className='flex items-center gap-x-3'>
         <UserAvatar
           id={metadata.reviewer.id}
           hash={metadata.reviewer.avatar}
           size={64}
           width={40}
           height={40}
-          className="rounded-lg"
+          className='rounded-lg'
         />
 
         <div className='flex flex-col gap-y-2'>
-          <h2 className="text-sm font-semibold text-primary">
+          <h2 className='text-sm font-semibold text-primary'>
             @{metadata.reviewer.username}
           </h2>
 

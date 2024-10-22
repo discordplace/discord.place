@@ -16,9 +16,9 @@ export default function UploadEmojiToDiscordModal({ guilds }) {
   const setSelectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.setSelectedGuildId);
 
   return (
-    <div className="flex size-full items-center justify-center">
+    <div className='flex size-full items-center justify-center'>
       {guilds.length === 0 ? (
-        <div className="mt-4 flex flex-col gap-y-2">
+        <div className='mt-4 flex flex-col gap-y-2'>
           <ErrorState
             title={
               <div className='flex items-center gap-x-2'>

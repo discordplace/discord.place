@@ -129,7 +129,7 @@ export default function Emoji({ data, avatar_base64 }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <HiDocumentDownload size={32} color="#c7c7c7" />
+          <HiDocumentDownload size={32} color='#c7c7c7' />
 
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
             {formatter.format(data.downloads)}

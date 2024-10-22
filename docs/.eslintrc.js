@@ -20,6 +20,10 @@ module.exports = {
   },
   rules: {
     'react/prop-types': 'off',
+    'jsx-quotes': [
+      'error',
+      'prefer-single'
+    ],
     'react/self-closing-comp': [
       'error',
       {

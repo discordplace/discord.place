@@ -11,15 +11,15 @@ import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ profile }) {
   return (
-    <div className="mb-8 mt-36 flex w-full justify-center px-4 sm:px-0">
-      <div className="flex w-full max-w-[650px] justify-center">
-        <div className="flex w-full flex-col">
-          <div className="flex items-center gap-x-4">
-            <Link href={`/profile/${profile.slug}`} className="rounded-xl bg-secondary p-1.5 hover:bg-tertiary">
+    <div className='mb-8 mt-36 flex w-full justify-center px-4 sm:px-0'>
+      <div className='flex w-full max-w-[650px] justify-center'>
+        <div className='flex w-full flex-col'>
+          <div className='flex items-center gap-x-4'>
+            <Link href={`/profile/${profile.slug}`} className='rounded-xl bg-secondary p-1.5 hover:bg-tertiary'>
               <MdChevronLeft size={24} />
             </Link>
 
-            <h1 className="text-3xl font-bold">
+            <h1 className='text-3xl font-bold'>
               {t('editProfilePage.title')}
             </h1>
           </div>
@@ -43,7 +43,7 @@ export default function Content({ profile }) {
                 {profile.verified && <VerifiedBadge />}
               </div>
 
-              <div className="select-none">
+              <div className='select-none'>
                 <span className='text-sm text-tertiary sm:text-base'>
                   {profile.preferredHost}/
                 </span>

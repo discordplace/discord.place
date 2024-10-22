@@ -108,13 +108,13 @@ export default function NewBot() {
 
   return (
     <>
-      <div className="pointer-events-none fixed left-0 top-0 z-10 h-svh w-full">
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
+      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
       </div>
 
-      <div className="flex w-full max-w-[800px] flex-col justify-center gap-y-4">
-        <div className="flex items-center gap-x-4">
-          <button className="rounded-xl bg-secondary p-1.5 hover:bg-tertiary" onClick={() => {
+      <div className='flex w-full max-w-[800px] flex-col justify-center gap-y-4'>
+        <div className='flex items-center gap-x-4'>
+          <button className='rounded-xl bg-secondary p-1.5 hover:bg-tertiary' onClick={() => {
             setBotId('');
             setBotShortDescription('');
             setBotDescription('');
@@ -124,56 +124,56 @@ export default function NewBot() {
             <MdChevronLeft size={24}/>
           </button>
 
-          <h1 className="flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl">
+          <h1 className='flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl'>
             {t('accountPage.tabs.myBots.sections.addBot.title')}
           </h1>
         </div>
 
-        <p className="max-w-[800px] text-sm text-tertiary sm:text-base">
+        <p className='max-w-[800px] text-sm text-tertiary sm:text-base'>
           {t('accountPage.tabs.myBots.sections.addBot.subtitle')}
         </p>
 
-        <div className="mt-12 flex w-full items-center justify-center">
-          <div className="flex w-full max-w-[800px] flex-col gap-y-1">
-            <h2 className="text-lg font-semibold">
+        <div className='mt-12 flex w-full items-center justify-center'>
+          <div className='flex w-full max-w-[800px] flex-col gap-y-1'>
+            <h2 className='text-lg font-semibold'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.botId.label')}
             </h2>
 
-            <p className="text-sm text-tertiary sm:text-base">
+            <p className='text-sm text-tertiary sm:text-base'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.botId.description')}
             </p>
 
             <input
-              className="mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary"
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
               onChange={event => setBotId(event.target.value)}
               value={botId}
             />
 
-            <h2 className="mt-8 text-lg font-semibold">
+            <h2 className='mt-8 text-lg font-semibold'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.shortDescription.label')}
             </h2>
 
-            <p className="text-sm text-tertiary sm:text-base">
+            <p className='text-sm text-tertiary sm:text-base'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.shortDescription.description')}
             </p>
 
             <input
-              className="mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary"
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
               maxLength={config.botShortDescriptionMaxLength}
               value={botShortDescription}
               onChange={event => setBotShortDescription(event.target.value)}
             />
 
-            <h2 className="mt-8 text-lg font-semibold">
+            <h2 className='mt-8 text-lg font-semibold'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.longDescription.label')}
             </h2>
 
-            <p className="text-sm text-tertiary sm:text-base">
+            <p className='text-sm text-tertiary sm:text-base'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.longDescription.description')}
             </p>
 
             <button
-              className="mt-4 flex size-max items-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70"
+              className='mt-4 flex size-max items-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
               onClick={() => setMarkdownPreviewing(!markdownPreviewing)}
             >
               {markdownPreviewing ? (
@@ -190,41 +190,41 @@ export default function NewBot() {
             </button>
 
             {markdownPreviewing ? (
-              <Markdown className="mt-4 h-[250px] overflow-y-auto rounded-lg border-2 border-transparent">
+              <Markdown className='mt-4 h-[250px] overflow-y-auto rounded-lg border-2 border-transparent'>
                 {botDescription}
               </Markdown>
             ) : (
               <textarea
-                className="mt-4 block h-[250px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary"
+                className='mt-4 block h-[250px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
                 value={botDescription}
                 onChange={event => setBotDescription(event.target.value)}
                 maxLength={config.botDescriptionMaxLength}
               />
             )}
 
-            <h2 className="mt-8 text-lg font-semibold">
+            <h2 className='mt-8 text-lg font-semibold'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.inviteUrl.label')}
             </h2>
 
-            <p className="text-sm text-tertiary sm:text-base">
+            <p className='text-sm text-tertiary sm:text-base'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.inviteUrl.description')}
             </p>
 
             <input
-              className="mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary"
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
               value={botInviteUrl}
               onChange={event => setBotInviteUrl(event.target.value)}
             />
 
-            <h2 className="mt-8 text-lg font-semibold">
+            <h2 className='mt-8 text-lg font-semibold'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.categories.label')}
             </h2>
 
-            <p className="text-sm text-tertiary">
+            <p className='text-sm text-tertiary'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.categories.description')}
             </p>
 
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className='mt-4 flex flex-wrap gap-2'>
               {config.botCategories
                 .filter(category => category !== 'All')
                 .map(category => (
@@ -245,7 +245,7 @@ export default function NewBot() {
                 ))}
             </div>
 
-            <h2 className="mt-8 text-lg font-semibold">
+            <h2 className='mt-8 text-lg font-semibold'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.contentPolicy.label')}
             </h2>
 
@@ -255,13 +255,13 @@ export default function NewBot() {
               })}
             </p>
 
-            <h2 className="mt-8 text-lg font-semibold">
+            <h2 className='mt-8 text-lg font-semibold'>
               {t('accountPage.tabs.myBots.sections.addBot.fields.areYouReady.label')}
             </h2>
 
-            <div className="mt-2 flex w-full flex-col gap-2 sm:flex-row">
+            <div className='mt-2 flex w-full flex-col gap-2 sm:flex-row'>
               <button
-                className="flex w-full items-center justify-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70"
+                className='flex w-full items-center justify-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 disabled={
                   loading ||
                   !botId ||
@@ -272,11 +272,11 @@ export default function NewBot() {
                 }
                 onClick={addBot}
               >
-                {loading && <TbLoader className="animate-spin"/>}
+                {loading && <TbLoader className='animate-spin'/>}
                 {t('buttons.addBot')}
               </button>
 
-              <button className="flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70"
+              <button className='flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
                 onClick={() => {
                   setBotId('');
                   setBotShortDescription('');

@@ -99,7 +99,7 @@ export default function Content({ user }) {
 
   return (
     <div className='mb-8 mt-32 flex w-full flex-col items-center gap-y-8 px-8 lg:px-0'>
-      <div className="relative h-max w-full max-w-[600px] rounded-[2rem] bg-secondary p-3">
+      <div className='relative h-max w-full max-w-[600px] rounded-[2rem] bg-secondary p-3'>
         {user.bannerURL ? (
           <div className='relative'>
             <Image
@@ -107,7 +107,7 @@ export default function Content({ user }) {
               alt={`${user.username}'s banner`}
               width={1024}
               height={256}
-              className="h-[200px] rounded-[2.5rem] object-cover"
+              className='h-[200px] rounded-[2.5rem] object-cover'
             />
 
             {user.bannerURL.includes('.gif') && (
@@ -117,7 +117,7 @@ export default function Content({ user }) {
             )}
           </div>
         ) : (
-          <div className="h-[200px] rounded-[2.5rem] bg-tertiary" />
+          <div className='h-[200px] rounded-[2.5rem] bg-tertiary' />
         )}
 
         <div className='pointer-events-none relative bottom-16 left-8 -mb-12 flex w-full items-center sm:mb-[-7.5rem]'>
@@ -126,8 +126,8 @@ export default function Content({ user }) {
             alt={`${user.username}'s avatar`}
             width={128}
             height={128}
-            objectFit="cover"
-            className="size-[100px] rounded-full border-8 border-[rgba(var(--bg-secondary))] sm:size-[128px]"
+            objectFit='cover'
+            className='size-[100px] rounded-full border-8 border-[rgba(var(--bg-secondary))] sm:size-[128px]'
           />
         </div>
 

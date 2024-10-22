@@ -61,7 +61,7 @@ export default function Home() {
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toLocaleString('en-US', { month: 'short', day: 'numeric' });
 
   return (
-    <div className="my-8 flex flex-col gap-y-4">
+    <div className='my-8 flex flex-col gap-y-4'>
       <h1 className='text-4xl font-bold text-primary'>
         Welcome back, {user.global_name}!
       </h1>

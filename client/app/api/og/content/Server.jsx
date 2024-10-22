@@ -88,7 +88,7 @@ export default function Server({ data, icon_base64 }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <FaUsers size={32} color="#c7c7c7" />
+          <FaUsers size={32} color='#c7c7c7' />
 
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
             {membersFormatter.format(data.members)}
@@ -96,7 +96,7 @@ export default function Server({ data, icon_base64 }) {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <TbSquareRoundedChevronUp size={32} color="#c7c7c7" />
+          <TbSquareRoundedChevronUp size={32} color='#c7c7c7' />
 
           <span style={{ fontSize: '32px', fontWeight: 500 }}>
             {formatter.format(data.votes)}

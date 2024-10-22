@@ -69,18 +69,18 @@ export default function Reviews({ server }) {
   }
 
   return (
-    <div className="flex flex-col px-8 lg:w-[70%] lg:px-0">
-      <h1 className="text-xl font-semibold">
+    <div className='flex flex-col px-8 lg:w-[70%] lg:px-0'>
+      <h1 className='text-xl font-semibold'>
         {t('serverPage.tabs.reviews.title')}
       </h1>
 
-      <div className="mt-8 flex w-full flex-col gap-y-4 sm:flex-row">
-        <div className="flex w-[35%] flex-col gap-y-4">
-          <h2 className="text-5xl font-bold sm:text-7xl">
+      <div className='mt-8 flex w-full flex-col gap-y-4 sm:flex-row'>
+        <div className='flex w-[35%] flex-col gap-y-4'>
+          <h2 className='text-5xl font-bold sm:text-7xl'>
             {((server.reviews.reduce((acc, review) => acc + review.rating, 0) / server.reviews.length) || 0).toFixed(1)}
           </h2>
 
-          <div className="flex gap-x-0.5 text-lg text-yellow-500 sm:gap-x-2">
+          <div className='flex gap-x-0.5 text-lg text-yellow-500 sm:gap-x-2'>
             {[...Array(5)].map((_, index) => {
               const rating = server.reviews.reduce((acc, review) => acc + review.rating, 0) / server.reviews.length;
               if (rating >= index + 1) return <TiStarFullOutline key={index} />;
@@ -95,7 +95,7 @@ export default function Reviews({ server }) {
           </span>
         </div>
 
-        <div className="flex w-full flex-1">
+        <div className='flex w-full flex-1'>
           <div className='flex w-full flex-col gap-y-2'>
             {new Array(5).fill(null).map((_, index) => (
               <div key={index} className='flex w-full items-center gap-x-4'>
@@ -127,7 +127,7 @@ export default function Reviews({ server }) {
         </div>
       )}
 
-      <div className="mt-8 flex w-full flex-col gap-y-8 sm:flex-row sm:gap-y-0">
+      <div className='mt-8 flex w-full flex-col gap-y-8 sm:flex-row sm:gap-y-0'>
         {server.has_reviewed ? (
           <span className='text-sm font-medium text-tertiary'>
             {t('serverPage.tabs.reviews.reviewSubmitted.alreadyReviewed')}
@@ -139,7 +139,7 @@ export default function Reviews({ server }) {
         ) : (
           <>
             <div className='flex w-[35%] flex-col gap-y-3'>
-              <div className="flex gap-x-4">
+              <div className='flex gap-x-4'>
                 {loggedIn ? (
                   <UserAvatar
                     id={user?.id}
@@ -212,7 +212,7 @@ export default function Reviews({ server }) {
               )}
             </div>
 
-            <div className="flex w-full flex-1 flex-col gap-y-1 whitespace-pre-wrap font-medium text-secondary">
+            <div className='flex w-full flex-1 flex-col gap-y-1 whitespace-pre-wrap font-medium text-secondary'>
               <h3 className='font-medium text-primary'>
                 {t('serverPage.tabs.reviews.input.label')}
               </h3>
@@ -261,8 +261,8 @@ export default function Reviews({ server }) {
       </div>
 
       {reviews.map(review => (
-        <div className="mt-8 flex w-full flex-col gap-y-4 sm:flex-row" key={review._id}>
-          <div className="flex w-full gap-x-4 sm:w-[35%]">
+        <div className='mt-8 flex w-full flex-col gap-y-4 sm:flex-row' key={review._id}>
+          <div className='flex w-full gap-x-4 sm:w-[35%]'>
             <Link
               href={`/profile/u/${review.user.id}`}
               className='transition-opacity hover:opacity-70'
@@ -307,7 +307,7 @@ export default function Reviews({ server }) {
             }}
             identifier={`server-${server.id}-review-${review._id}`}
           >
-            <div className="flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0">
+            <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0'>
               <span className='text-xs font-medium text-tertiary'>
                 {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
               </span>

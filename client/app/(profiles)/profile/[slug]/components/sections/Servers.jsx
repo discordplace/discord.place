@@ -10,7 +10,7 @@ export default function Servers({ profile }) {
   const user = useAuthStore(state => state.user);
 
   return (
-    <div className="mt-8 px-8 lg:px-0">
+    <div className='mt-8 px-8 lg:px-0'>
       <motion.h2
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}

@@ -77,10 +77,10 @@ export default function ServerCard(props) {
       href={`/servers/${props.server.id}`}
     >
       {props.server.standed_out?.created_at ? (
-        <div className="pointer-events-none absolute inset-0 z-20 size-full animate-rotate rounded-full bg-[conic-gradient(#22c55e_20deg,transparent_120deg)] transition-opacity group-hover:opacity-0" />
+        <div className='pointer-events-none absolute inset-0 z-20 size-full animate-rotate rounded-full bg-[conic-gradient(#22c55e_20deg,transparent_120deg)] transition-opacity group-hover:opacity-0' />
       ) : (
         props.server.premium === true && (
-          <div className="pointer-events-none absolute inset-0 z-20 size-full animate-rotate rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] transition-opacity group-hover:opacity-0" />
+          <div className='pointer-events-none absolute inset-0 z-20 size-full animate-rotate rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] transition-opacity group-hover:opacity-0' />
         )
       )}
 
@@ -168,7 +168,7 @@ export default function ServerCard(props) {
 
               {props.server.vote_triple_enabled?.created_at && (
                 <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
-                  <div className="pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)]"></div>
+                  <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)]'></div>
 
                   <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-orange-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md'>
                     <BsFire /> {t('serverCard.tripledVoteBadge')}

@@ -67,7 +67,7 @@ export default function CreateProfile() {
   }, [debouncedSlug]);
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className='flex flex-col gap-y-4'>
       <div className='flex flex-col'>
         <div className='flex items-center gap-x-2'>
           <h2 className='text-sm font-semibold text-secondary'>
@@ -87,7 +87,7 @@ export default function CreateProfile() {
           {t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.host.description')}
         </p>
 
-        <div className="mt-2 flex w-full">
+        <div className='mt-2 flex w-full'>
           {['discord.place/p', ...config.customHostnames]
             .map(hostname => (
               <div
@@ -153,9 +153,9 @@ export default function CreateProfile() {
         </p>
 
         <input
-          type="text"
+          type='text'
           placeholder={t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.slug.placeholder')}
-          className="mt-2 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
+          className='mt-2 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
           value={slug}
           maxLength={32}
           onChange={event => setSlug(event.target.value)}

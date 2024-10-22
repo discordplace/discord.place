@@ -28,7 +28,7 @@ export default function Graph({ profile }) {
   const isMobile = useMedia('(max-width: 640px)', false);
 
   return (
-    <div className="rounded-3xl p-[.75rem] px-8 lg:px-0">
+    <div className='rounded-3xl p-[.75rem] px-8 lg:px-0'>
       <motion.div
         className='w-full'
         initial={{ opacity: 0, y: -10 }}

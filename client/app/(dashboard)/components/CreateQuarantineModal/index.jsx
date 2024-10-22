@@ -123,14 +123,14 @@ export default function CreateQuarantineModal() {
   }, [step, type, value, restriction, reason, time]);
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className='flex flex-col gap-y-4'>
       {step === 0 && (
         <>
           <div className='flex flex-col'>
             <h2 className='text-sm font-semibold text-secondary'>Quarantine Type</h2>
             <p className='text-xs text-tertiary'>Select the type of quarantine you want to create.</p>
 
-            <div className="mt-4 flex w-full gap-4">
+            <div className='mt-4 flex w-full gap-4'>
               <div
                 className={cn(
                   'relative flex flex-1 transition-all select-none font-bold text-lg gap-x-2 items-center justify-center w-full h-[80px] rounded-xl cursor-pointer bg-secondary hover:bg-background',
@@ -142,8 +142,8 @@ export default function CreateQuarantineModal() {
                 User ID
 
                 {type === 'USER_ID' && (
-                  <div className="absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl">
-                    <IoMdCheckmarkCircle className="text-primary" />
+                  <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl'>
+                    <IoMdCheckmarkCircle className='text-primary' />
                   </div>
                 )}
               </div>
@@ -159,8 +159,8 @@ export default function CreateQuarantineModal() {
                 Guild ID
 
                 {type === 'GUILD_ID' && (
-                  <div className="absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl">
-                    <IoMdCheckmarkCircle className="text-primary" />
+                  <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl'>
+                    <IoMdCheckmarkCircle className='text-primary' />
                   </div>
                 )}
               </div>
@@ -174,9 +174,9 @@ export default function CreateQuarantineModal() {
                 <p className='text-xs text-tertiary'>Enter the ID of the {type === 'USER_ID' ? 'user' : 'guild'} you want to quarantine.</p>
 
                 <input
-                  type="text"
+                  type='text'
                   placeholder={`${type === 'USER_ID' ? 'User' : 'Guild'} ID`}
-                  className="mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
+                  className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
                   value={value}
                   onChange={event => setValue(event.target.value)}
                 />
@@ -207,8 +207,8 @@ export default function CreateQuarantineModal() {
                         </div>
 
                         {restriction === quarantineRestriction && (
-                          <div className="absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl">
-                            <IoMdCheckmarkCircle className="text-primary" />
+                          <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl'>
+                            <IoMdCheckmarkCircle className='text-primary' />
                           </div>
                         )}
                       </div>
@@ -228,9 +228,9 @@ export default function CreateQuarantineModal() {
             <p className='text-xs text-tertiary'>Reason for quarantining the {type === 'USER_ID' ? 'user' : 'guild'}.</p>
 
             <input
-              type="text"
-              placeholder="Reason"
-              className="mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
+              type='text'
+              placeholder='Reason'
+              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
               value={reason}
               onChange={event => setReason(event.target.value)}
             />
@@ -241,9 +241,9 @@ export default function CreateQuarantineModal() {
             <p className='text-xs text-tertiary'>Expiration time for the quarantine. (Optional, 20m, 6h, 3d, 1w, 30d, 1y)</p>
 
             <input
-              type="text"
-              placeholder="Time"
-              className="mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background"
+              type='text'
+              placeholder='Time'
+              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
               value={time}
               onChange={event => setTime(event.target.value)}
             />

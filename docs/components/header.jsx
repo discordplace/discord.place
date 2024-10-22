@@ -52,7 +52,7 @@ export default function Header() {
 
 function ExpandedHeader({ pathname }) {
   return (
-    <header className="bg-purple-800 px-4 lg:px-0">
+    <header className='bg-purple-800 px-4 lg:px-0'>
       <div className='mx-auto flex lg:max-w-3xl'>
         {HEADER_LINKS.map(({ name, href }) => (
           <Link
@@ -85,7 +85,7 @@ function CollapsedHeader({ pathname }) {
 
   return (
     <>
-      <header className="z-10 bg-purple-800">
+      <header className='z-10 bg-purple-800'>
         <div className='mx-auto flex justify-between p-4 lg:max-w-3xl'>
           <Link href='/home'>
             <Image
@@ -194,10 +194,10 @@ function HomeHeader() {
 
           <div className='mt-4 flex items-center'>
             <iframe
-              src="https://ghbtns.com/github-btn.html?user=discordplace&repo=discord.place&type=star&count=true"
-              width="90"
-              height="20"
-              title="GitHub"
+              src='https://ghbtns.com/github-btn.html?user=discordplace&repo=discord.place&type=star&count=true'
+              width='90'
+              height='20'
+              title='GitHub'
             />
 
             <Link

@@ -45,29 +45,29 @@ export default function Card({ data, className }) {
         during={1000}
       >
         <Link
-          className="flex h-max w-full cursor-pointer select-none items-center gap-x-4 rounded-3xl bg-secondary p-3 transition-all hover:opacity-70"
+          className='flex h-max w-full cursor-pointer select-none items-center gap-x-4 rounded-3xl bg-secondary p-3 transition-all hover:opacity-70'
           onClick={() => setIsClicked(true)}
           href={`/templates/${data.id}/preview`}
         >
-          <div className="flex size-[100px] min-h-[100px] min-w-[100px] items-center justify-center rounded-2xl bg-quaternary text-3xl font-bold mobile:size-[140px] mobile:min-h-[140px] mobile:min-w-[140px] sm:text-5xl">
+          <div className='flex size-[100px] min-h-[100px] min-w-[100px] items-center justify-center rounded-2xl bg-quaternary text-3xl font-bold mobile:size-[140px] mobile:min-h-[140px] mobile:min-w-[140px] sm:text-5xl'>
             {getCompressedName(data.name)}
           </div>
 
-          <div className="flex flex-col gap-y-2">
-            <h2 className="mt-2 max-w-[130px] truncate text-lg font-semibold text-primary mobile:max-w-[230px]">
+          <div className='flex flex-col gap-y-2'>
+            <h2 className='mt-2 max-w-[130px] truncate text-lg font-semibold text-primary mobile:max-w-[230px]'>
               {data.name}
             </h2>
 
-            <div className="flex gap-x-1 truncate">
+            <div className='flex gap-x-1 truncate'>
               {data.categories.map(category => (
-                <span className="flex items-center gap-x-1 rounded-md bg-quaternary px-2 py-1 text-xs font-medium text-secondary" key={category}>
+                <span className='flex items-center gap-x-1 rounded-md bg-quaternary px-2 py-1 text-xs font-medium text-secondary' key={category}>
                   {config.templateCategoriesIcons[category]}
                   {t(`categories.${category}`)}
                 </span>
               ))}
             </div>
 
-            <p className="line-clamp-2 whitespace-pre-wrap break-all text-xs text-tertiary mobile:text-sm">
+            <p className='line-clamp-2 whitespace-pre-wrap break-all text-xs text-tertiary mobile:text-sm'>
               {data.description}
             </p>
 

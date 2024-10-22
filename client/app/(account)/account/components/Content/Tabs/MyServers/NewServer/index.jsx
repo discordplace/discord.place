@@ -74,9 +74,9 @@ export default function NewServer() {
         <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%' />
       </div>
 
-      <div className="flex w-full max-w-[800px] flex-col justify-center gap-y-4">
+      <div className='flex w-full max-w-[800px] flex-col justify-center gap-y-4'>
         <div className='flex items-center gap-x-4'>
-          <button className="rounded-xl bg-secondary p-1.5 hover:bg-quaternary" onClick={() => {
+          <button className='rounded-xl bg-secondary p-1.5 hover:bg-quaternary' onClick={() => {
             setCurrentlyAddingServer(null);
             setServerDescription('');
             setServerInviteLink('');
@@ -86,7 +86,7 @@ export default function NewServer() {
             <MdChevronLeft size={24} />
           </button>
 
-          <h1 className="flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl">
+          <h1 className='flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl'>
             {t('accountPage.tabs.myServers.sections.newServer.title', {
               serverName: <span className='truncate'>{currentlyAddingServer.name}</span>,
               serverIcon: (

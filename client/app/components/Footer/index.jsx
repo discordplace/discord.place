@@ -154,7 +154,7 @@ export default function Footer() {
   ];
 
   return (
-    <section className="mt-auto flex w-full flex-1 flex-col flex-wrap gap-16 border-t border-primary bg-secondary px-6 py-16 sm:px-24 xl:px-32 2xl:max-h-[800px] 2xl:flex-row 2xl:gap-x-48">
+    <section className='mt-auto flex w-full flex-1 flex-col flex-wrap gap-16 border-t border-primary bg-secondary px-6 py-16 sm:px-24 xl:px-32 2xl:max-h-[800px] 2xl:flex-row 2xl:gap-x-48'>
       <div className='flex w-full max-w-[400px] flex-col gap-y-6'>
         <Image
           src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
@@ -174,8 +174,8 @@ export default function Footer() {
 
         <iframe
           src={`${config.statusBadgeUrl}?theme=${theme === 'dark' ? 'dark' : 'light'}`}
-          width="250"
-          height="30"
+          width='250'
+          height='30'
         />
       </div>
 

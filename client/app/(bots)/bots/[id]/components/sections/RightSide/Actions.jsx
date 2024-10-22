@@ -132,7 +132,7 @@ export default function Actions({ bot }) {
       >
         {loggedIn && (
           <Script
-            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+            src='https://challenges.cloudflare.com/turnstile/v0/api.js'
             async={true}
             defer={true}
           />
@@ -142,7 +142,7 @@ export default function Actions({ bot }) {
           {showCaptcha && (
             <motion.div
               /* eslint-disable-next-line tailwindcss/no-custom-classname */
-              className="cf-turnstile [&>iframe]:max-w-full"
+              className='cf-turnstile [&>iframe]:max-w-full'
               data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY}
               ref={captchaRef}
               initial={{ opacity: 0 }}

@@ -59,14 +59,14 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
         >
           <RadixSelect.Value placeholder={placeholder} />
 
-          <RadixSelect.Icon className="text-tertiary">
+          <RadixSelect.Icon className='text-tertiary'>
             <IoChevronDownSharp />
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
 
         <RadixSelect.Portal>
-          <RadixSelect.Content className="z-[9999] overflow-hidden rounded-lg border-2 border-primary bg-secondary">
-            <RadixSelect.ScrollUpButton className="absolute flex w-full items-center justify-center rounded-b bg-gradient-to-b from-quaternary via-quaternary/50 py-3" />
+          <RadixSelect.Content className='z-[9999] overflow-hidden rounded-lg border-2 border-primary bg-secondary'>
+            <RadixSelect.ScrollUpButton className='absolute flex w-full items-center justify-center rounded-b bg-gradient-to-b from-quaternary via-quaternary/50 py-3' />
 
             <RadixSelect.Viewport>
               {options.map(option => (
@@ -79,14 +79,14 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
                     {option.label}
                   </RadixSelect.ItemText>
 
-                  <RadixSelect.ItemIndicator className="ml-auto inline-flex">
+                  <RadixSelect.ItemIndicator className='ml-auto inline-flex'>
                     <IoCheckmarkCircleSharp />
                   </RadixSelect.ItemIndicator>
                 </RadixSelect.Item>
               ))}
             </RadixSelect.Viewport>
 
-            <RadixSelect.ScrollDownButton className="absolute bottom-0 left-[2.5px] flex w-full max-w-[97%] items-center justify-center rounded-b bg-gradient-to-t from-quaternary via-quaternary/50 py-3" />
+            <RadixSelect.ScrollDownButton className='absolute bottom-0 left-[2.5px] flex w-full max-w-[97%] items-center justify-center rounded-b bg-gradient-to-t from-quaternary via-quaternary/50 py-3' />
           </RadixSelect.Content>
         </RadixSelect.Portal>
       </RadixSelect.Root>

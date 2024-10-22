@@ -188,7 +188,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         currentlyPlaying === sound.id ? 'border-purple-500' : 'border-primary'
       )}
     >
-      <div className="pointer-events-none fixed left-0 top-0 z-10 h-svh w-full">
+      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
         {renderConfetti && (
           <Lottie
             options={{
@@ -196,20 +196,20 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
               autoplay: true,
               animationData: confetti
             }}
-            height="100%"
-            width="100%"
+            height='100%'
+            width='100%'
           />
         )}
       </div>
 
-      <div className="flex items-start justify-between">
-        <div className="flex max-w-[90%] flex-col">
-          <h2 className="truncate text-base font-semibold text-primary">
+      <div className='flex items-start justify-between'>
+        <div className='flex max-w-[90%] flex-col'>
+          <h2 className='truncate text-base font-semibold text-primary'>
             <PiWaveformBold className='mr-2 inline' />
             {sound.name}
           </h2>
 
-          <div className="flex items-center gap-2 text-base font-medium text-tertiary">
+          <div className='flex items-center gap-2 text-base font-medium text-tertiary'>
             <div className='flex items-center gap-x-2'>
               <MdAccountCircle />
 

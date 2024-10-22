@@ -172,7 +172,7 @@ export default function Endpoint({ id }) {
         </h2>
 
         <div className='flex items-center justify-between'>
-          <div className="flex items-center gap-x-2">
+          <div className='flex items-center gap-x-2'>
             <span
               className={cn(
                 'select-none px-2 py-0.5 text-xs font-bold rounded-full',

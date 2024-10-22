@@ -12,7 +12,7 @@ export default async function Page() {
   const { data, totalServers } = result || { data: [], totalServers: 0 };
 
   return (
-    <div className="relative z-10 mb-24 flex w-full flex-col items-center">
+    <div className='relative z-10 mb-24 flex w-full flex-col items-center'>
       <div className='relative flex min-h-[60svh] w-full flex-col items-center'>
         <Square
           column='5'

@@ -82,15 +82,15 @@ export default function Page() {
 
   return (
     <AuthProtected>
-      <div className="relative z-0 flex w-full justify-center px-6 lg:px-0">
+      <div className='relative z-0 flex w-full justify-center px-6 lg:px-0'>
         <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
-        <div className="mb-16 mt-48 flex w-full max-w-[600px] flex-col gap-y-2">
-          <h1 className="text-4xl font-bold text-primary">
+        <div className='mb-16 mt-48 flex w-full max-w-[600px] flex-col gap-y-2'>
+          <h1 className='text-4xl font-bold text-primary'>
             {t('createEmojiPage.title')}
           </h1>
 
-          <p className="text-sm text-tertiary">
+          <p className='text-sm text-tertiary'>
             {t('createEmojiPage.subtitle')}
           </p>
 

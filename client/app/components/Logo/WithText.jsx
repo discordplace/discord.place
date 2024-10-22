@@ -23,7 +23,7 @@ export default function WithText({ className }) {
         src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
         width={64}
         height={64}
-        alt="discord.place Logo"
+        alt='discord.place Logo'
         className='size-[32px]'
       />
 

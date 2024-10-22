@@ -146,8 +146,8 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
 
   return (
     <div className='flex flex-col gap-y-4'>
-      <div className="pointer-events-none fixed left-0 top-0 z-10 h-svh w-full">
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height="100%" width="100%"/>
+      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
       </div>
 
       {ableToChange && (

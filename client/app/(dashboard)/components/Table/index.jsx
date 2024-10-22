@@ -252,7 +252,7 @@ export default function Table({ tabs }) {
                       });
                     }}
                   >
-                    <div className="flex items-center gap-x-2 text-xs font-bold uppercase">
+                    <div className='flex items-center gap-x-2 text-xs font-bold uppercase'>
                       {row.icon && <row.icon size={18} />}
 
                       {row.name}

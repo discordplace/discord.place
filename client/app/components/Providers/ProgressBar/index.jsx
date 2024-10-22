@@ -9,8 +9,8 @@ export default function ProgressBarProvider({ children }) {
       {children}
       <Suspense fallback={null}>
         <ProgressBar
-          height="4px"
-          color="rgb(var(--bg-quaternary))"
+          height='4px'
+          color='rgb(var(--bg-quaternary))'
           options={{ showSpinner: true }}
           shallowRouting
         />

@@ -1885,11 +1885,11 @@ export default function Page() {
 
           {loading && (
             <AnimatePresence>
-              <div className="absolute left-0 top-0 z-10 flex size-full max-h-[919px] flex-col items-center justify-center bg-background">
+              <div className='absolute left-0 top-0 z-10 flex size-full max-h-[919px] flex-col items-center justify-center bg-background'>
                 <MotionImage
                   className='size-[64px]'
                   src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
-                  alt="discord.place Logo"
+                  alt='discord.place Logo'
                   width={256}
                   height={256}
                   initial={{ opacity: 0 }}

@@ -21,7 +21,7 @@ const markdownComponents = {
           alt={alt}
           width={width || '100%'}
           height={height || 'auto'}
-          className="my-4 rounded-xl"
+          className='my-4 rounded-xl'
         />
       </Zoom>
     );

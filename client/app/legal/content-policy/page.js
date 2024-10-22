@@ -220,7 +220,7 @@ export default function ContentPolicy() {
         You can reach us via the emails below or on our Discord server.
       </p>
 
-      <div className="mt-2 flex gap-x-2">
+      <div className='mt-2 flex gap-x-2'>
         <Link href={config.supportInviteUrl} className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'>
           Discord Server
         </Link>

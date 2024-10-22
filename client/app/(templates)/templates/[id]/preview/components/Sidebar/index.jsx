@@ -65,9 +65,9 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
   }, [templateIdCopied]);
 
   return (
-    <div className="flex min-h-full w-max flex-col items-center gap-y-2 bg-[#1e1f22] px-[14px] pt-4">
-      <div className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#5865F2]">
-        <FaDiscord className="text-[#dbdee1]" size={28} />
+    <div className='flex min-h-full w-max flex-col items-center gap-y-2 bg-[#1e1f22] px-[14px] pt-4'>
+      <div className='flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#5865F2]'>
+        <FaDiscord className='text-[#dbdee1]' size={28} />
       </div>
 
       <div className='h-[2px] w-[65%] rounded-[1px] bg-[#35363c]' />
@@ -87,8 +87,8 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           theme='discord'
         >
           <Image
-            src="/templates/square_logo.png"
-            alt="discord.place Square Logo"
+            src='/templates/square_logo.png'
+            alt='discord.place Square Logo'
             width={48}
             height={48}
             className='select-none rounded-2xl'
@@ -113,8 +113,8 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           theme='discord'
         >
           <Image
-            src="/templates/disbot_logo.png"
-            alt="Disbot Square Logo"
+            src='/templates/disbot_logo.png'
+            alt='Disbot Square Logo'
             width={48}
             height={48}
             className='select-none rounded-2xl'
@@ -126,7 +126,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
         content={t('templatePreviewPage.tooltip.addAServer')}
         side='right'
       >
-        <div className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white">
+        <div className='flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white'>
           <HiPlus size={24} />
         </div>
       </Tooltip>
@@ -135,7 +135,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
         content={t('templatePreviewPage.tooltip.exploreDiscoverableServers')}
         side='right'
       >
-        <div className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white">
+        <div className='flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white'>
           <FaCompass size={24} />
         </div>
       </Tooltip>
@@ -143,7 +143,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       {isMobile && (
         <>
           <div
-            className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white"
+            className='flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white'
             onClick={() => {
               if (currentlyOpenedSection === 'members') setCurrentlyOpenedSection('channels');
               else {
@@ -196,7 +196,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
         side='right'
       >
         <div
-          className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white"
+          className='flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white'
           onClick={() => router.back()}
         >
           <IoMdArrowRoundBack size={24} />
@@ -243,7 +243,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           side='right'
         >
           <div
-            className="flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#ff4d4d] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#ff4d4d] hover:text-white"
+            className='flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#ff4d4d] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#ff4d4d] hover:text-white'
             onClick={() =>
               openModal('delete-template', {
                 title: t('templatePreviewPage.deleteTemplateModal.title'),
