@@ -70,3 +70,5 @@ process.on('warning', warning => {
   ) return;
   logger.warn(warning);
 });
+
+const b = '';
