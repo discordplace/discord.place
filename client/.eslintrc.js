@@ -11,7 +11,8 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'next',
     'plugin:depend/recommended',
-    'plugin:tailwindcss/recommended'
+    'plugin:tailwindcss/recommended',
+    'plugin:security/recommended-legacy'
   ],
   plugins: ['react'],
   parserOptions: {
@@ -133,7 +134,10 @@ module.exports = {
           'lodash'
         ]
       }
-    ]
+    ],
+    'security/detect-object-injection': 'off',
+    'security/detect-non-literal-fs-filename': 'off',
+    'security/detect-unsafe-regex': 'off'
   },
   overrides: [
     {

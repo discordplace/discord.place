@@ -8,6 +8,7 @@ module.exports = async code => new Promise(async resolve => {
   let hasError = false;
 
   try {
+    // eslint-disable-next-line security/detect-eval-with-expression
     result = await eval(isAsync ? `(async () => { ${code} })()` : code);
     if (typeof result !== 'string') result = inspect(result, { depth: 4 });
   } catch (error) {

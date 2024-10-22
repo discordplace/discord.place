@@ -25,6 +25,7 @@ module.exports = {
     if (!collected?.first?.()?.content) return;
 
     const message = collected.first();
+    // eslint-disable-next-line security/detect-non-literal-regexp
     const code = message.mentions.has(interaction.client.user.id) ? message.content.replace(new RegExp(`<@!?${interaction.client.user.id}>`), '') : message.content;
     const { result, hasError, id } = await evaluate(code);
 

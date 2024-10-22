@@ -13,7 +13,8 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:depend/recommended'
+    'plugin:depend/recommended',
+    'plugin:security/recommended-legacy'
   ],
   parserOptions: {
     ecmaVersion: 'latest',
@@ -132,7 +133,11 @@ module.exports = {
           'lodash.shuffle'
         ]
       }
-    ]
+    ],
+    'security/detect-object-injection': 'off',
+    'security/detect-non-literal-fs-filename': 'off',
+    'security/detect-unsafe-regex': 'off',
+    'security/detect-non-literal-require': 'off'
   },
   overrides: [
     {
