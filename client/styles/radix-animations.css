@@ -1,0 +1,220 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-8px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+
+@keyframes dialogContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(100px) scale(0.80);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.radix-dialog-content[data-state='open'] {
+  animation: dialogContentIn 250ms cubic-bezier(0.165, 0.84, 0.44, 1)
+}
+
+[data-radix-menu-content] {
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+}
+
+@keyframes tooltip-top-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltip-left-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tooltip-right-enter {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tooltip-bottom-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltip-top-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes tooltip-left-exit {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+}
+
+@keyframes tooltip-right-exit {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+}
+
+@keyframes tooltip-bottom-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'][data-side='top'] {
+  animation: tooltip-top-enter 100ms ease-out;
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'][data-side='left'] {
+  animation: tooltip-left-enter 100ms ease-out;
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'][data-side='right'] {
+  animation: tooltip-right-enter 100ms ease-out;
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'][data-side='bottom'] {
+  animation: tooltip-bottom-enter 100ms ease-out;
+}
+
+[data-radix-popper-content-wrapper] [data-state='closed'][data-side='top'] {
+  animation: tooltip-top-exit 100ms ease-in;
+}
+
+[data-radix-popper-content-wrapper] [data-state='closed'][data-side='left'] {
+  animation: tooltip-left-exit 100ms ease-in;
+}
+
+[data-radix-popper-content-wrapper] [data-state='closed'][data-side='right'] {
+  animation: tooltip-right-exit 100ms ease-in;
+}
+
+[data-radix-popper-content-wrapper] [data-state='closed'][data-side='bottom'] {
+  animation: tooltip-bottom-exit 100ms ease-in;
+}
+
+@keyframes discord-tooltip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes discord-tooltip-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.discord-theme {
+  box-shadow: 0 8px 16px hsl(0, 0%, 0% / 0.24);
+  will-change: transform, opacity;
+}
+
+[data-radix-popper-content-wrapper] [data-state='delayed-open'].discord-theme {
+  animation: discord-tooltip-in 35ms ease-out;
+}
+
+[data-radix-popper-content-wrapper] [data-state='closed'].discord-theme {
+  animation: discord-tooltip-out 35ms ease-in;
+}

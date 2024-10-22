@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: 'pnpm'
+    directory: '/server'
+    schedule:
+      interval: 'weekly'
+  - package-ecosystem: 'pnpm'
+    directory: '/client'
+    schedule:
+      interval: 'weekly'

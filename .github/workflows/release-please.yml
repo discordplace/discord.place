@@ -1,0 +1,83 @@
+name: Release Please
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      server--tag_name: ${{ steps.release.outputs.server--tag_name}}
+      server--release_created: ${{ steps.release.outputs.server--release_created}}
+      client--tag_name: ${{ steps.release.outputs.client--tag_name}}
+      client--release_created: ${{ steps.release.outputs.client--release_created}}
+      docs--tag_name: ${{ steps.release.outputs.docs--tag_name}}
+      docs--release_created: ${{ steps.release.outputs.docs--release_created}}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  release-server:
+    if: ${{needs.release-please.outputs.server--release_created}}
+    runs-on: ubuntu-latest
+    needs: release-please
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-env
+        with:
+          node-version: 18
+          cache-path: server/node_modules
+          cache-key: "${{hashFiles('server/package-lock.json')}}"
+          project: server
+      - run: zip -r server.zip server
+      - name: Upload Release Artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ needs.release-please.outputs.server--tag_name }} server.zip
+
+  release-client:
+    if: ${{needs.release-please.outputs.client--release_created}}
+    runs-on: ubuntu-latest
+    needs: release-please
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-env
+        with:
+          node-version: 18
+          cache-path: client/node_modules
+          cache-key: "${{hashFiles('client/package-lock.json')}}"
+          project: client
+      - run: zip -r client.zip client
+      - name: Upload Release Artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ needs.release-please.outputs.client--tag_name }} client.zip
+    
+  release-docs:
+    if: ${{needs.release-please.outputs.docs--release_created}}
+    runs-on: ubuntu-latest
+    needs: release-please
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-env
+        with:
+          node-version: 18
+          cache-path: docs/node_modules
+          cache-key: "${{hashFiles('docs/package-lock.json')}}"
+          project: docs
+      - run: zip -r docs.zip docs
+      - name: Upload Release Artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ needs.release-please.outputs.docs--tag_name }} docs.zip

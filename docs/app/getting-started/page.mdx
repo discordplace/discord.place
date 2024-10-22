@@ -1,0 +1,87 @@
+export const metadata = {
+  title: 'Getting Started',
+}
+
+# Getting Started
+
+## Creating an API Key
+
+To get started with Discord Place API, you need to create an API key. This key is used to authenticate your requests to the API and access the data you need to manage your bot effectively.
+
+1. **Log in to Discord Place:** Head over to the [Discord Place website](https://discord.place) and sign in using your Discord credentials.
+2. **Find Your Bot:** Once logged in, locate your bot within the bot list and click on it to access its details.
+3. **Access Bot Manage Page:** Within the bot details page, hit the "Manage Bot" button to proceed to the bot manage page.
+4. **Generate Your API Key:** In the bot managed page, you'll discover an option to create a new API key. Simply click on the "Generate New API Key" button to initiate the process.
+
+#### Congratulations! 🎉
+
+You've successfully created an API key for your bot. You can now use this key to authenticate your requests to the Discord Place API and access the data you need to manage your bot effectively.
+
+## Authenticating with API Key
+
+You need to authenticate your requests using an API key. This key is used to verify your identity and access the data you need to manage your bot effectively.
+
+API keys should be kept secure and not shared with anyone. If you suspect that your API key has been compromised, you can regenerate it at any time.
+
+### Using API Key
+
+To authenticate your requests with an API key, you need to include the key in the `Authorization` header of your HTTP requests.
+
+Here's an example of how to include your API key in a certain languages:
+
+#### JavaScript
+
+```js
+const axios = require('axios');
+
+const apiKey = process.env.DISCORD_PLACE_API_KEY; // You should use environment variables to store your API key
+
+const mockData = { // This is just a mock data to demonstrate the usage
+  command_count: 0
+}
+
+axios.patch('https://api.discord.place/bots/YOUR_BOT_ID/stats', mockData, {
+  headers: {
+    'Authorization': apiKey
+  }
+})
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+```
+
+#### Python
+
+```python
+import requests
+
+api_key = os.getenv('DISCORD_PLACE_API_KEY') # You should use environment variables to store your API key
+
+mock_data = { # This is just a mock data to demonstrate the usage
+  'command_count': 0
+}
+
+response = requests.patch(
+  'https://api.discord.place/bots/YOUR_BOT_ID/stats',
+  json=mock_data, 
+  headers={'Authorization': api_key}
+)
+
+print(response.json())
+```
+
+#### cURL
+
+```bash
+curl -X PATCH https://api.discord.place/bots/YOUR_BOT_ID/stats \
+  -H "Authorization: YOUR_API_KEY_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{"command_count": 0}'
+```
+
+#### Congratulations! 🎉
+
+You've successfully authenticated your requests with an API key. You can now use this key to access the data you need to manage your bot effectively. If you have any questions or need further assistance, feel free to reach out to our support team.

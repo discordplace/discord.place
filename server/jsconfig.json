@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/schemas/*": ["./src/schemas/*"],
+      "@/validations/*": ["./src/utils/validations/*"]
+    }
+  }
+}

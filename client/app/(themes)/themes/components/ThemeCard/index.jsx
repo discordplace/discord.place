@@ -1,0 +1,132 @@
+'use client';
+
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import useAuthStore from '@/stores/auth';
+import { colord, extend } from 'colord';
+import mixPlugin from 'colord/plugins/mix';
+import a11yPlugin from 'colord/plugins/a11y';
+import cn from '@/lib/cn';
+import Link from 'next/link';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import Image from 'next/image';
+
+extend([
+  mixPlugin,
+  a11yPlugin
+]);
+
+export default function ThemeCard({ id, primaryColor, secondaryColor, className }) {
+  const loggedIn = useAuthStore(state => state.loggedIn);
+  const user = useAuthStore(state => state.user);
+
+  const badges = loggedIn ?
+    user.flags.map(flag => `/user-flags/${flag}.svg`) :
+    [
+      '/user-flags/HypeSquadOnlineHouse1.svg',
+      '/user-flags/BugHunterLevel1.svg',
+      '/user-flags/ActiveDeveloper.svg'
+    ];
+
+  const averageColor = colord(primaryColor).mix(colord(secondaryColor)).toHex();
+  const contrast = colord(averageColor).contrast();
+  const contrastColor = contrast > 1.5 ? 'dark' : 'light';
+
+  const Container = id ? Link : 'div';
+
+  return (
+    <Container
+      className={cn(
+        'hover:opacity-80 transition-all rounded-lg select-none w-full h-max p-0.5',
+        className
+      )}
+      style={{
+        background: `linear-gradient(${primaryColor}, ${secondaryColor})`
+      }}
+      href={`/themes/${id}`}
+    >
+      <div className='flex size-full flex-col rounded-lg bg-black/50'>
+        {loggedIn && user.banner ? (
+          <UserBanner
+            id={user.id}
+            hash={user.banner}
+            className='h-[60px] w-full rounded-t-lg object-cover'
+            width={200}
+            height={60}
+          />
+        ) : (
+          <Image
+            className='h-[60px] w-full rounded-t-lg object-cover'
+            src='/og-black.png'
+            alt='Placeholder Banner'
+            width={200}
+            height={60}
+          />
+        )}
+
+        {loggedIn ? (
+          <UserAvatar
+            id={user.id}
+            hash={user.avatar}
+            className='-mt-8 ml-3 size-[56px] rounded-full shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]'
+            width={64}
+            height={64}
+          />
+        ) : (
+          <Image
+            className='-mt-8 ml-3 size-[56px] rounded-full shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]'
+            src='https://cdn.discordapp.com/embed/avatars/1.png'
+            alt='Placeholder Avatar'
+            width={64}
+            height={64}
+          />
+        )}
+
+        <div className='flex size-full flex-col px-4'>
+          <span
+            className={cn(
+              'mt-2 text-sm font-bold',
+              contrastColor === 'dark' ? 'text-white' : 'text-black'
+            )}
+          >
+            {loggedIn ? user.global_name : 'Discord'}
+          </span>
+
+          <div className='flex items-center gap-x-2'>
+            <span
+              className={cn(
+                'text-xs',
+                contrastColor === 'dark' ? 'text-white/60' : 'text-black/60'
+              )}
+            >
+              {loggedIn ? user.username : 'discord'}
+            </span>
+
+            {badges.length > 0 && (
+              <div className='flex size-max gap-x-0.5 rounded-md border border-white/[0.085] bg-black/20 px-1 py-0.5'>
+                {badges.map((badge, index) => (
+                  <Image
+                    key={`theme-${primaryColor}-${secondaryColor}-badge-${index}`}
+                    className='size-[14px] rounded'
+                    src={badge}
+                    alt='Badge'
+                    width={20}
+                    height={20}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          <p
+            className={cn(
+              'my-3 text-xs line-clamp-2',
+              contrastColor === 'dark' ? 'text-white/60' : 'text-black/60'
+            )}
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+        </div>
+      </div>
+    </Container>
+  );
+}

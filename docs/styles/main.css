@@ -1,0 +1,84 @@
+@import 'tailwind.css';
+
+html, body {
+  width: 100%;
+  min-width: 320px !important;
+  background-color: rgba(var(--bg-background)) !important;
+  color: rgba(var(--text-primary));
+  --light-bg-background: 238, 238, 238;
+  --light-bg-secondary: 230, 230, 230;
+  --light-bg-tertiary: 220, 220, 220;
+  --light-bg-quaternary: 210, 210, 210;
+  --light-text-primary: 36, 42, 49;
+  --light-text-secondary: 73, 80, 87;
+  --light-text-tertiary: 108, 117, 125;
+  --light-text-placeholder: 133, 138, 141;
+  --light-border-primary: 204, 204, 204;
+  --dark-bg-background: 15, 15, 20;
+  --dark-bg-secondary: 22, 22, 30;
+  --dark-bg-tertiary: 30, 30, 40;
+  --dark-bg-quaternary: 40, 40, 50;
+  --dark-text-primary: 235, 235, 245;
+  --dark-text-secondary: 200, 200, 210;
+  --dark-text-tertiary: 160, 160, 170;
+  --dark-text-placeholder: 130, 130, 140;
+  --dark-border-primary: 34, 34, 47;
+}
+
+html {
+  --bg-background: var(--light-bg-background);
+  --bg-secondary: var(--light-bg-secondary);
+  --bg-tertiary: var(--light-bg-tertiary);
+  --bg-quaternary: var(--light-bg-quaternary);
+  --text-primary: var(--light-text-primary);
+  --text-secondary: var(--light-text-secondary);
+  --text-tertiary: var(--light-text-tertiary);
+  --text-placeholder: var(--light-text-placeholder);
+  --border-primary: var(--light-border-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    --bg-background: var(--dark-bg-background);
+    --bg-secondary: var(--dark-bg-secondary);
+    --bg-tertiary: var(--dark-bg-tertiary);
+    --bg-quaternary: var(--dark-bg-quaternary);
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    --text-tertiary: var(--dark-text-tertiary);
+    --text-placeholder: var(--dark-text-placeholder);
+    --border-primary: var(--dark-border-primary);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--bg-tertiary));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(var(--bg-background));
+  border-radius: 10px;
+}
+
+::selection {
+  background-color: #b569cc;
+  color: #e3eeff;
+}
+
+iframe {
+  overflow: hidden;
+  border: 0;
+}
+
+[class*='language-'] {
+  white-space: pre-wrap !important;
+}
+
+* {
+  scroll-behavior: smooth;
+}

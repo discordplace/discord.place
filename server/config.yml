@@ -1,0 +1,468 @@
+discordScopes:
+  - 'identify'
+  - 'email'
+  - 'guilds'
+botPresenceStatus: 'online'
+rateLimitWhitelist:
+  - '957840712404193290'
+trustProxy: true
+frontendUrl: 'https://discord.place'
+backendUrl: 'https://api.discord.place'
+cdnUrl: 'https://cdn.discord.place'
+supportInviteUrl: 'https://invite.discord.place'
+emojis:
+  loading: '<a:loading:1247786499076915252>'
+  checkmark: '<:yes:1226129515718381568>'
+  pink_heart: '<:heart:1211809043564339290>'
+  badges:
+    admin: '<:white_admin:1267620006183571530>'
+    moderator: '<:white_moderator:1251538987592712345>'
+    premium: '<:white_premium:1251538989312249947>'
+    verified: '<:white_verified:1251538990524403793>'
+  empty_badge_slot: '<:empty_badge_slot:1251541500282798090>'
+port:
+  frontend: 3000
+  backend: 3001
+guildId: '1200254872059121764'
+guildInviteUrl: 'discord.gg/dotplace'
+permissions:
+  canEditProfilesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteProfilesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteServersRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteEmojisRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteBotsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteReviewsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteTemplatesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteSoundsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteThemesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canApproveEmojisRoles:
+    - '1238588360193216695'
+  canApproveBotsRoles:
+    - '1238588360193216695'
+  canApproveReviewsRoles:
+    - '1238588360193216695'
+  canApproveTemplatesRoles:
+    - '1238588360193216695'
+  canApproveSoundsRoles:
+    - '1238588360193216695'
+  canApproveThemesRoles:
+    - '1238588360193216695'
+  canEditServersRoles:
+    - '1238588360193216695'
+  canEditBotsRoles:
+    - '1238588360193216695'
+  canViewQuarantinesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+    - '1206355082883371049'
+  canCreateQuarantinesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+  canDeleteQuarantinesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+  canViewDashboardRoles:
+    - '1267549977379471403'
+  canViewBlockedIpsRoles:
+    - '1206032198562742312'
+    - '1206354879321210900'
+    - '1267549562957205645'
+  canDeleteBlockedIps:
+    - '957840712404193290'
+  canDeleteBotDeniesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206355082883371049'
+    - '1238588360193216695'
+  canViewTimeoutsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206355082883371049'
+  canDeleteTimeoutsRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+  canSyncLemonSqueezyPlans:
+    - '957840712404193290'
+  canExecuteEval:
+    - '957840712404193290'
+    - '937316083533230110'
+  canExecuteBuild:
+    - '957840712404193290'
+  canExecuteFetchRoles:
+    - '1206032198562742312'
+    - '1206354879321210900'
+    - '1267549562957205645'
+  canExecuteRefreshCacheRoles:
+    - '1206032198562742312'
+    - '1206354879321210900'
+    - '1267549562957205645'
+  canExecuteAddPremium:
+    - '957840712404193290'
+    - '937316083533230110'
+  canVerifyProfilesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+  canDeleteLinksRoles: 
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206354879321210900'
+profilesMaxSocialsLength: 8
+packagesMaxEmojisLength: 9
+packagesMinEmojisLength: 4
+serverKeywordsMaxLength: 5
+serverKeywordsMaxCharacters: 32
+serverDescriptionMaxCharacters: 256
+reviewsMaxCharacters: 256
+reviewsMinCharacters: 64
+botShortDescriptionMinLength: 16
+botShortDescriptionMaxLength: 150
+botDescriptionMinLength: 32
+botDescriptionMaxLength: 2048
+botWebhookTokenMaxLength: 256
+serverWebhookTokenMaxLength: 256
+templateMaxNameLength: 32
+templateMinDescriptionLength: 32
+templateMaxDescriptionLength: 256
+templateMaxCategoriesLength: 3
+reportReasonMinLength: 32
+reportReasonMaxLength: 4096
+soundNameMaxLength: 64
+botMaxExtraOwners: 4
+maxServerCountDifference: 50
+roles:
+  jrModerator: '1206355082883371049'
+  moderator: '1267549562957205645'
+  headModerator: '1206354879321210900'
+  admin: '1206032198562742312'
+  premium: '1252335063123628084'
+  translator: '1275014710692941896'
+emojiCategories:
+  - 'Gaming'
+  - 'Anime'
+  - 'Memes'
+  - 'Pepe'
+  - 'Pixel Art'
+  - 'Cute'
+  - 'Logos'
+  - 'Utility'
+  - 'Other'
+  - 'Animated'
+serverCategories:
+  - 'Gaming'
+  - 'Anime'
+  - 'Public'
+  - 'Community'
+  - 'Music'
+  - 'Art'
+  - 'Programming'
+  - 'Science'
+  - 'Technology'
+  - 'Education'
+  - 'Language'
+  - 'Other'
+botCategories:
+  - 'Moderation'
+  - 'Utility'
+  - 'Fun & Games'
+  - 'Music'
+  - 'Economy'
+  - 'Roleplay'
+  - 'Technology'
+  - 'Art & Design'
+  - 'Virtual Assistants'
+  - 'Social Media Integration'
+  - 'Anime & Manga'
+  - 'Other'
+templateCategories: 
+  - 'Chat'
+  - 'Design'
+  - 'Music'
+  - 'Education'
+  - 'Gaming'
+  - 'Anime'
+  - 'Tech'
+  - 'Roleplay'
+  - 'Event'
+  - 'Other'
+soundCategories:
+  - 'Memes'
+  - 'Loud'
+  - 'NSFW'
+  - 'Other'
+themeCategories:
+  - 'Gradient'
+  - 'Light'
+  - 'Dark'
+  - 'Red'
+  - 'Orange'
+  - 'Yellow'
+  - 'Green'
+  - 'Blue'
+  - 'Purple'
+  - 'Pink'
+emojiMaxCategoriesLength: 4
+emojiQueueChannelId: '1267552786162389085'
+soundQueueChannelId: '1267552786162389085'
+reviewQueueChannelId: '1267552786162389085'
+themeQueueChannelId: '1267552786162389085'
+reportsQueueChannelId: '1267552786162389085'
+botQueueChannelId: '1267552786162389085'
+templateQueueChannelId: '1267552786162389085'
+voteLogsChannelId: '1267553398337572905'
+serverLogsChannelId: '1267553398337572905'
+templateApplyLogsChannelId: '1267553398337572905'
+linksLogsChannelId: '1267553398337572905'
+portalChannelId: '1238654829916585984'
+joinLeaveLogsChannelId: '1267553398337572905'
+quarantineLogsChannelId: '1267553398337572905'
+excludeCollectionsInBackup:
+  - 'botdenies'
+  - 'botvotetimeouts'
+  - 'servervoteremindermetadas'
+  - 'servervotereminders'
+  - 'servervotetimeouts'
+  - 'blockedips'
+  - 'evaluateresults'
+  - 'githubcaches'
+  - 'plans'
+quarantineTypes:
+  - 'USER_ID'
+  - 'GUILD_ID'
+quarantineRestrictions:
+  'PROFILES_CREATE':
+    available_to:
+      - 'USER_ID'
+  'PROFILES_LIKE':
+    available_to:
+      - 'USER_ID'
+  'EMOJIS_CREATE':
+    available_to:
+      - 'USER_ID'
+  'EMOJIS_QUICKLY_UPLOAD':
+    available_to:
+      - 'USER_ID'
+  'SERVERS_CREATE':
+    available_to:
+      - 'USER_ID'
+      - 'GUILD_ID'
+  'SERVERS_CREATE_REVIEW':
+    available_to:
+      - 'USER_ID'
+  'SERVERS_VOTE':
+    available_to:
+      - 'USER_ID'
+      - 'GUILD_ID'
+  'BOTS_CREATE':
+    available_to:
+      - 'USER_ID'
+  'BOTS_VOTE':
+    available_to:
+      - 'USER_ID'
+  'BOTS_CREATE_REVIEW':
+    available_to:
+      - 'USER_ID'
+  'BOTS_CREATE_API_KEY':
+    available_to:
+      - 'USER_ID'
+  'TEMPLATES_CREATE':
+    available_to:
+      - 'USER_ID'
+  'TEMPLATES_USE':
+    available_to:
+      - 'USER_ID'
+      - 'GUILD_ID'
+  'SOUNDS_CREATE':
+    available_to:
+      - 'USER_ID'
+  'SOUNDS_LIKE':
+    available_to:
+      - 'USER_ID'
+  'REPORTS_CREATE':
+    available_to:
+      - 'USER_ID'
+  'LOGIN':
+    available_to:
+      - 'USER_ID'
+  'THEMES_CREATE':
+    available_to:
+      - 'USER_ID'
+customHostnames:
+  - 'dsc.wtf'
+  - 'dsc.dog'
+  - 'dsc.mom'
+globalRateLimit:
+  enabled: true
+  maxRequests: 60
+  perMinutes: 1
+  cleanUpIntervalInMinutes: 2.5
+emojisDenyReasons:
+  reposted-emoji:
+    name: 'Reposted Emoji'
+    description: "If the emoji you're submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety."
+  background-transparency:
+    name: 'Background Transparency'
+    description: 'Emojis should feature a transparent background. Emojis with opaque backgrounds may not blend well with different message backgrounds and could disrupt visual coherence.'
+  whitespace:
+    name: 'Whitespace'
+    description: 'Emojis containing excess whitespace around the edges may appear disproportionately small when used in messages. To ensure optimal visibility and legibility, please crop your emojis appropriately before submission.'
+  incoherent-emoji-package-content:
+    name: 'Incoherent Emoji Package Content'
+    description: 'Emojis within a package must be compatible with each other to ensure coherence and meaningful usage.'
+  offensive-or-inappropriate-content:
+    name: 'Offensive or Inappropriate Content'
+    description: 'Emojis depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+  copyright-infringement:
+    name: 'Copyright Infringement'
+    description: 'Ensure that your emoji submissions do not violate any copyright or intellectual property rights. Avoid using copyrighted characters, logos, or designs without proper authorization.'
+  clear-representation:
+    name: 'Clear Representation'
+    description: 'Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users.'
+botsDenyReasons:
+  reposted-bot:
+    name: 'Reposted Bot'
+    description: "If the bot you're submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety."
+  offensive-or-inappropriate-content:
+    name: 'Offensive or Inappropriate Content'
+    description: 'Bots depicting offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Keep submissions suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+  against-discord-terms-of-service:
+    name: 'Against Discord Terms of Service'
+    description: "Bots that violate Discord's Terms of Service will not be accepted."
+  not-online-or-inviteable:
+    name: 'Not Online or Inviteable'
+    description: 'Bots must be online and inviteable for usage.'
+  base-functionality-is-broken:
+    name: 'Base Functionality is Broken'
+    description: 'Bots must have functional base features to be considered.'
+  copied-bot:
+    name: 'Copied Bot'
+    description: 'Bots that are direct copies of existing bots will not be accepted.'
+  has-vulnerability:
+    name: 'Has Vulnerability'
+    description: 'Bots with security vulnerabilities will not be accepted.'
+  support-for-slash-commands:
+    name: 'Support for Slash Commands'
+    description: 'Bots must support slash commands for improved user experience and functionality.'
+  misleading-or-inaccurate-information:
+    name: 'Misleading or Inaccurate Information'
+    description: "Bot with misleading descriptions or information may be removed. Provide clear and accurate details about your bot's purpose and content."
+templateDenyReasons:
+  duplicate-template:
+    name: 'Duplicate Template'
+    description: "If the template you're submitting is already available on the site, your submission may be declined to avoid duplicates and maintain variety."
+  offensive-or-inappropriate-content:
+    name: 'Offensive or Inappropriate Content'
+    description: 'Templates featuring offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Ensure your template is suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+  against-discord-terms-of-service:
+    name: 'Against Discord Terms of Service'
+    description: "Templates that violate Discord's Terms of Service will not be accepted."
+  poor-quality-or-incomplete-template:
+    name: 'Poor Quality or Incomplete Template'
+    description: 'Templates should be well-organized and complete. Submissions with poor structure, missing key elements, or that are not user-friendly may be rejected.'
+  misleading-or-inaccurate-information:
+    name: 'Misleading or Inaccurate Information'
+    description: "Templates with misleading titles, descriptions, or information may be rejected. Provide clear and accurate details about your template's purpose and features."
+  lacks-clear-focus-or-purpose:
+    name: 'Lacks Clear Focus or Purpose'
+    description: 'Templates should have a clear focus or purpose. Submissions that are overly broad or lack a specific theme may not be accepted.'
+  advertising-and-self-promotion:
+    name: 'Advertising and Self-Promotion'
+    description: 'Templates primarily focused on advertising or self-promotion without providing genuine value to users may not be accepted.'
+  quality-and-presentation:
+    name: 'Quality and Presentation'
+    description: 'Templates should be well-organized and present a professional appearance. Low-quality or poorly managed templates may not be accepted.'
+  proper-categorization:
+    name: 'Proper Categorization'
+    description: 'Ensure your template is categorized correctly. Misleading categorization can result in rejection.'
+soundDenyReasons:
+  offensive-or-inappropriate-content:
+    name: 'Offensive or Inappropriate Content'
+    description: 'Sounds featuring offensive, inappropriate, or sensitive content such as violence, hate speech, nudity, or discrimination will not be accepted. Ensure your sound is suitable for a wide audience and respectful of diverse backgrounds and cultures.'
+  poor-quality-or-incomplete-sound:
+    name: 'Poor Quality or Incomplete Sound'
+    description: 'Sounds should be clear, high-quality, and complete. Submissions with poor audio quality, missing key elements, or that are not user-friendly may be rejected.'
+  misleading-or-inaccurate-information:
+    name: 'Misleading or Inaccurate Information'
+    description: "Sounds with misleading titles may be rejected. Provide clear and accurate details about your sound's purpose and content."
+  lacks-clear-focus-or-purpose:
+    name: 'Lacks Clear Focus or Purpose'
+    description: 'Sounds should have a clear focus or purpose. Submissions that are overly broad or lack a specific theme may not be accepted.'
+  advertising-and-self-promotion:
+    name: 'Advertising and Self-Promotion'
+    description: 'Sounds primarily focused on advertising or self-promotion without providing genuine value to users may not be accepted.'
+  proper-categorization:
+    name: 'Proper Categorization'
+    description: 'Ensure your sound is categorized correctly. Misleading categorization can result in rejection.'
+  sound-length:
+    name: 'Sound Length'
+    description: 'Sounds should be of appropriate length. Extremely short or excessively long sounds may not be accepted.'
+  sound-volume:
+    name: 'Sound Volume'
+    description: 'Sounds should be of appropriate volume. Extremely loud or quiet sounds may not be accepted.'
+  sound-licensing:
+    name: 'Sound Licensing'
+    description: 'Ensure your sound does not violate any copyright or intellectual property rights. Avoid using copyrighted audio, music, or sound effects without proper authorization.'
+themeDenyReasons:
+  proper-categorization:
+    name: 'Proper Categorization'
+    description: 'Ensure your theme is categorized correctly. Misleading categorization can result in rejection.'
+lemonSqueezy:
+  variantIds:
+    tripledVotes:
+      servers: '421124'
+      bots: '421125'
+    standedOut:
+      servers: '425991'
+      bots: '425992'
+serverListingRequirements:
+  - id: 'enough_members'
+    name: 'Minimum Member Count'
+  - id: 'old_enough'
+    name: 'Minimum Server Age'
+  - id: 'has_icon'
+    name: 'Server Icon'
+  - id: '2fa_enabled'
+    name: 'Two-Factor Authentication'
+  - id: 'is_community'
+    name: 'Community Server'
+  - id: 'no_nsfw'
+    name: 'No NSFW Content'
+availableLocales:
+  - name: 'English'
+    code: 'en'
+    flag: '🇺🇸'
+    default: true
+  - name: 'Turkish'
+    code: 'tr'
+    flag: '🇹🇷'
+  - name: 'Azerbaijani'
+    code: 'az'
+    flag: '🇦🇿'
