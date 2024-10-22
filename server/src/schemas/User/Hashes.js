@@ -2,19 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserHashesSchema = new Schema({
+  id: {
+    type: String,
+    required: true
+  },
   avatar: {
-    required: false,
-    type: String
+    type: String,
+    required: false
   },
   banner: {
-    required: false,
-    type: String
-  },
-  id: {
-    required: true,
-    type: String
+    type: String,
+    required: false
   }
 }, {
+  timestamps: true,
   methods: {
     async getNewHashes() {
       logger.info(`Getting new hashes for user ${this.id}`);
@@ -32,8 +33,7 @@ const UserHashesSchema = new Schema({
         banner: user.banner
       };
     }
-  },
-  timestamps: true
+  }
 });
 
 module.exports = mongoose.model('UserHashes', UserHashesSchema);

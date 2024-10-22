@@ -1,46 +1,46 @@
 'use client';
 
-import FaQs from '@/app/(sounds)/sounds/[id]/components/FaQs';
 import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
 import AnimatedCount from '@/app/components/AnimatedCount';
 import config from '@/config';
-import deleteSound from '@/lib/request/sounds/deleteSound';
-import useLanguageStore, { t } from '@/stores/language';
-import useModalsStore from '@/stores/modals';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useRouter } from 'next-nprogress-bar';
 import { LuShieldQuestion } from 'react-icons/lu';
+import FaQs from '@/app/(sounds)/sounds/[id]/components/FaQs';
+import { motion } from 'framer-motion';
 import { RiErrorWarningFill } from 'react-icons/ri';
+import Link from 'next/link';
 import { toast } from 'sonner';
+import { useRouter } from 'next-nprogress-bar';
+import deleteSound from '@/lib/request/sounds/deleteSound';
+import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function Content({ sound }) {
   const language = useLanguageStore(state => state.language);
   const router = useRouter();
 
-  const { closeModal, disableButton, enableButton, openModal } = useModalsStore(useShallow(state => ({
-    closeModal: state.closeModal,
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    openModal: state.openModal
+    closeModal: state.closeModal
   })));
 
   function continueDeleteSound() {
     disableButton('delete-sound', 'confirm');
 
     toast.promise(deleteSound(sound.id), {
-      error: error => {
-        enableButton('delete-sound', 'confirm');
-
-        return error;
-      },
       loading: t('soundPage.toast.deletingSound', { soundName: sound.name }),
       success: () => {
         closeModal('delete-sound');
         setTimeout(() => router.push('/'), 3000);
 
         return t('soundPage.toast.soundDeleted', { soundName: sound.name });
+      },
+      error: error => {
+        enableButton('delete-sound', 'confirm');
+
+        return error;
       }
     });
   }
@@ -55,7 +55,7 @@ export default function Content({ sound }) {
               Beep beep!
             </h1>
             <p className='text-sm font-medium text-tertiary'>
-              {t('soundPage.notApprovedInfo.description', { link: <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>{t('soundPage.notApprovedInfo.linkText')}</Link> })}
+              {t('soundPage.notApprovedInfo.description', { link: <Link target='_blank' href={config.supportInviteUrl} className='text-secondary hover:text-primary'>{t('soundPage.notApprovedInfo.linkText')}</Link> })}
             </p>
           </div>
         )}
@@ -63,8 +63,8 @@ export default function Content({ sound }) {
         <div className='flex size-full flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
             <SoundPreview
-              showUploadToGuildButton={true}
               sound={sound}
+              showUploadToGuildButton={true}
             />
           </motion.div>
 
@@ -112,8 +112,8 @@ export default function Content({ sound }) {
                 <div className='flex items-center gap-2'>
                   {sound.categories.map(category => (
                     <span
-                      className='flex select-none items-center gap-x-1 rounded-lg text-sm font-semibold text-tertiary'
                       key={category}
+                      className='flex select-none items-center gap-x-1 rounded-lg text-sm font-semibold text-tertiary'
                     >
                       {config.soundCategoriesIcons[category]}
                       {t(`categories.${category}`)}
@@ -128,8 +128,8 @@ export default function Content({ sound }) {
                 </span>
 
                 <Link
-                  className='flex items-center gap-x-1 text-sm font-semibold text-primary transition-opacity hover:opacity-70'
                   href={`/profile/u/${sound.publisher.id}`}
+                  className='flex items-center gap-x-1 text-sm font-semibold text-primary transition-opacity hover:opacity-70'
                 >
                   @{sound.publisher.username}
                 </Link>
@@ -165,27 +165,27 @@ export default function Content({ sound }) {
                 className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 onClick={() =>
                   openModal('delete-sound', {
-                    buttons: [
-                      {
-                        actionType: 'close',
-                        id: 'cancel',
-                        label: t('buttons.cancel'),
-                        variant: 'ghost'
-                      },
-                      {
-                        action: continueDeleteSound,
-                        id: 'confirm',
-                        label: t('buttons.delete'),
-                        variant: 'solid'
-                      }
-                    ],
+                    title: t('soundPage.dangerZone.deleteSoundModal.title'),
+                    description: t('soundPage.dangerZone.deleteSoundModal.description', { soundName: sound.name }),
                     content: (
                       <p className='text-sm text-tertiary'>
                         {t('soundPage.dangerZone.deleteSoundModal.content', { br: <br /> })}
                       </p>
                     ),
-                    description: t('soundPage.dangerZone.deleteSoundModal.description', { soundName: sound.name }),
-                    title: t('soundPage.dangerZone.deleteSoundModal.title')
+                    buttons: [
+                      {
+                        id: 'cancel',
+                        label: t('buttons.cancel'),
+                        variant: 'ghost',
+                        actionType: 'close'
+                      },
+                      {
+                        id: 'confirm',
+                        label: t('buttons.delete'),
+                        variant: 'solid',
+                        action: continueDeleteSound
+                      }
+                    ]
                   })
                 }
               >

@@ -1,5 +1,5 @@
+const { listVariants, listProducts } = require('@lemonsqueezy/lemonsqueezy.js');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
-const { listProducts, listVariants } = require('@lemonsqueezy/lemonsqueezy.js');
 
 async function syncLemonSqueezyPlans() {
   if (!process.env.LEMON_SQUEEZY_API_KEY) throw new Error('LEMON_SQUEEZY_API_KEY environment variable is not defined.');
@@ -20,26 +20,26 @@ async function syncLemonSqueezyPlans() {
       if (isPlanChanged) {
         await currentPlan.updateOne({
           $set: {
+            storeId: plan.attributes.store_id,
+            variantId: variantsData.data.find(variant => variant.attributes.product_id == plan.id).id,
             name: plan.attributes.name,
-            price: plan.attributes.price,
-            price_formatted: plan.attributes.price_formatted,
             slug: plan.attributes.slug,
             status: plan.attributes.status,
-            storeId: plan.attributes.store_id,
-            variantId: variantsData.data.find(variant => variant.attributes.product_id == plan.id).id
+            price: plan.attributes.price,
+            price_formatted: plan.attributes.price_formatted
           }
         });
       }
     } else {
       await new Plan({
         id: plan.id,
+        storeId: plan.attributes.store_id,
+        variantId: variantsData.data.find(variant => variant.attributes.product_id == plan.id).id,
         name: plan.attributes.name,
-        price: plan.attributes.price,
-        price_formatted: plan.attributes.price_formatted,
         slug: plan.attributes.slug,
         status: plan.attributes.status,
-        storeId: plan.attributes.store_id,
-        variantId: variantsData.data.find(variant => variant.attributes.product_id == plan.id).id
+        price: plan.attributes.price,
+        price_formatted: plan.attributes.price_formatted
       }).save();
     }
   }

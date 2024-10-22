@@ -1,8 +1,8 @@
-const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { matchedData, param } = require('express-validator');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   delete: [

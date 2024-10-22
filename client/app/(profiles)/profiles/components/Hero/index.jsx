@@ -1,28 +1,28 @@
 'use client';
 
+import { useEffect } from 'react';
+import { Bricolage_Grotesque } from 'next/font/google';
+import cn from '@/lib/cn';
 import Square from '@/app/components/Background/Square';
 import SearchInput from '@/app/components/SearchInput';
-import Select from '@/app/components/Select';
-import config from '@/config';
-import cn from '@/lib/cn';
-import { t } from '@/stores/language';
 import useSearchStore from '@/stores/profiles/search';
 import { motion } from 'framer-motion';
-import { Bricolage_Grotesque } from 'next/font/google';
-import { useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
+import Select from '@/app/components/Select';
+import config from '@/config';
 
-const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function Hero() {
-  const { fetchProfiles, loading, search, setPage, setSort, sort, totalProfiles } = useSearchStore(useShallow(state => ({
+  const { fetchProfiles, totalProfiles, loading, search, setPage, sort, setSort } = useSearchStore(useShallow(state => ({
     fetchProfiles: state.fetchProfiles,
+    totalProfiles: state.totalProfiles,
     loading: state.loading,
     search: state.search,
     setPage: state.setPage,
-    setSort: state.setSort,
     sort: state.sort,
-    totalProfiles: state.totalProfiles
+    setSort: state.setSort
   })));
 
   useEffect(() => {
@@ -31,55 +31,54 @@ export default function Hero() {
   }, []);
 
   const sequenceTransition = {
-    damping: 20,
     duration: 0.25,
+    type: 'spring',
     stiffness: 260,
-    type: 'spring'
+    damping: 20
   };
 
   return (
     <>
       <div className='relative z-0 flex flex-col items-center px-4 pt-56 sm:px-0'>
-        <Square blockColor='rgba(var(--bg-secondary))' column='10' row='10' transparentEffectDirection='bottomToTop' />
+        <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
         <div className='absolute -top-1/2 h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
 
         <div className='flex w-full max-w-[700px] flex-col'>
           <motion.h1
-            animate={{ opacity: 1, y: 0 }}
             className={cn(
               'text-5xl font-medium max-w-[700px] text-center text-primary',
               BricolageGrotesque.className
             )}
             initial={{ opacity: 0, y: -25 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ ...sequenceTransition, delay: 0.1 }}
           >
             {t('profilesPage.title')}
           </motion.h1>
 
-          <motion.div animate={{ opacity: 1, y: 0 }} className='mt-8 max-w-[700px] text-center text-tertiary sm:text-lg' initial={{ opacity: 0, y: -25 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
+          <motion.div className='mt-8 max-w-[700px] text-center text-tertiary sm:text-lg' initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.2 }}>
             {t('profilesPage.subtitle', { br: <br />, count: totalProfiles })}
           </motion.div>
 
           <div className='mt-8 flex w-full flex-col items-center justify-center gap-2 sm:flex-row'>
             <SearchInput
-              animationDelay={0.3}
-              fetchData={fetchProfiles}
-              loading={loading}
               placeholder={t('profilesPage.searchInputPlaceholder')}
+              loading={loading}
               search={search}
+              fetchData={fetchProfiles}
               setPage={setPage}
+              animationDelay={0.3}
             />
 
             <motion.div
-              animate={{ opacity: 1, y: 0 }}
               className='flex w-full flex-col items-center gap-2 mobile:flex-row sm:w-max'
               initial={{ opacity: 0, y: -25 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ ...sequenceTransition, delay: 0.3 }}
             >
               <Select
-                disabled={loading}
-                onChange={setSort}
+                placeholder={t('profilesPage.sortSelect.placeholder')}
                 options={[
                   ...[
                     {
@@ -108,8 +107,9 @@ export default function Hero() {
                     value: option.value
                   }))
                 ]}
-                placeholder={t('profilesPage.sortSelect.placeholder')}
                 value={sort}
+                onChange={setSort}
+                disabled={loading}
               />
             </motion.div>
           </div>

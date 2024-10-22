@@ -1,39 +1,40 @@
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const bodyParser = require('body-parser');
+const { body, matchedData } = require('express-validator');
+const nameValidation = require('@/validations/emojis/name');
+const categoriesValidation = require('@/validations/emojis/categories');
+const getEmojiURL = require('@/utils/emojis/getEmojiURL');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
-const getEmojiURL = require('@/utils/emojis/getEmojiURL');
+const crypto = require('node:crypto');
+const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const categoriesValidation = require('@/validations/emojis/categories');
-const nameValidation = require('@/validations/emojis/name');
-const bodyParser = require('body-parser');
-const Discord = require('discord.js');
-const { body, matchedData } = require('express-validator');
+
 const multer = require('multer');
-const crypto = require('node:crypto');
 const upload = multer({
+  limits: {
+    fileSize: 264 * 1024,
+    files: 9
+  },
   fileFilter: (req, file, cb) => {
     if (!file || !file.mimetype) return cb(null, false);
     if (file.mimetype === 'image/png' || file.mimetype === 'image/gif') return cb(null, true);
 
     return cb(null, false);
-  },
-  limits: {
-    files: 9,
-    fileSize: 264 * 1024
   }
 }).array('file', 9);
 
-const { PutObjectCommand, S3Client } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
+  region: process.env.S3_REGION,
+  endpoint: process.env.S3_ENDPOINT,
   credentials: {
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
-  },
-  endpoint: process.env.S3_ENDPOINT,
-  region: process.env.S3_REGION
+  }
 });
 
 module.exports = {
@@ -57,12 +58,12 @@ module.exports = {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'EMOJIS_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create emojis.', 403);
 
-      const userEmojiInQueue = await Emoji.findOne({ approved: false, 'user.id': request.user.id });
+      const userEmojiInQueue = await Emoji.findOne({ 'user.id': request.user.id, approved: false });
       if (userEmojiInQueue) return response.sendError(`You are already waiting for approval for emoji ${userEmojiInQueue.name}! Please wait for it to be processed first.`);
 
       if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
 
-      const { categories, name } = matchedData(request);
+      const { name, categories } = matchedData(request);
       const id = crypto.randomBytes(6).toString('hex');
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
@@ -74,18 +75,18 @@ module.exports = {
         if (!packageHasAnimatedEmoji && categories.includes('Animated')) return response.sendError('Packages that doesn\'t have animated emojis should\'t have the Animated category.', 400);
 
         const emojiPack = new EmojiPack({
-          approved: false,
-          categories,
-          emoji_ids: request.files.map(file => ({
-            animated: file.mimetype === 'image/gif',
-            id: crypto.randomBytes(6).toString('hex')
-          })),
           id,
-          name,
           user: {
             id: request.user.id,
             username: requestUser.username
-          }
+          },
+          name,
+          categories,
+          approved: false,
+          emoji_ids: request.files.map(file => ({
+            id: crypto.randomBytes(6).toString('hex'),
+            animated: file.mimetype === 'image/gif'
+          }))
         });
 
         const validationError = getValidationError(emojiPack);
@@ -96,11 +97,11 @@ module.exports = {
         await new Promise((resolve, reject) => {
           for (let index = 0; index < request.files.length; index++) {
             const command = new PutObjectCommand({
-              Body: request.files[index].buffer,
               Bucket: process.env.S3_BUCKET_NAME,
-              ContentDisposition: 'inline',
+              Key: `emojis/packages/${id}/${emojiPack.emoji_ids[index].id}.${request.files[index].mimetype === 'image/png' ? 'png' : 'gif'}`,
+              Body: request.files[index].buffer,
               ContentType: request.files[index].mimetype,
-              Key: `emojis/packages/${id}/${emojiPack.emoji_ids[index].id}.${request.files[index].mimetype === 'image/png' ? 'png' : 'gif'}`
+              ContentDisposition: 'inline'
             });
 
             S3.send(command)
@@ -113,18 +114,18 @@ module.exports = {
           .then(async () => {
             const embeds = [
               new Discord.EmbedBuilder()
-                .setAuthor({ iconURL: requestUser.displayAvatarURL(), name: requestUser.username })
+                .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
                 .setTitle('New Emoji Package')
                 .setFields([
                   {
-                    inline: true,
                     name: 'Package Name',
-                    value: `${name}`
+                    value: `${name}`,
+                    inline: true
                   },
                   {
-                    inline: true,
                     name: 'Categories',
-                    value: categories.join(', ')
+                    value: categories.join(', '),
+                    inline: true
                   }
                 ])
                 .setTimestamp()
@@ -141,11 +142,11 @@ module.exports = {
                 )
             ];
 
-            client.channels.cache.get(config.emojiQueueChannelId).send({ components, embeds });
+            client.channels.cache.get(config.emojiQueueChannelId).send({ embeds, components });
 
             return response.json({
-              emoji: emojiPack.toPubliclySafe(),
-              success: true
+              success: true,
+              emoji: emojiPack.toPubliclySafe()
             });
           })
           .catch(error => {
@@ -160,15 +161,15 @@ module.exports = {
         if (!emojiIsAnimated && categories.includes('Animated')) return response.sendError('Non-animated emojis shouldn\'t have the Animated category.', 400);
 
         const emoji = new Emoji({
-          animated: emojiIsAnimated === true,
-          approved: false,
-          categories,
           id,
-          name,
           user: {
             id: request.user.id,
             username: requestUser.username
-          }
+          },
+          name,
+          categories,
+          animated: emojiIsAnimated === true,
+          approved: false
         });
 
         const validationError = getValidationError(emoji);
@@ -177,11 +178,11 @@ module.exports = {
         await emoji.save();
 
         const command = new PutObjectCommand({
-          Body: request.files[0].buffer,
           Bucket: process.env.S3_BUCKET_NAME,
-          ContentDisposition: 'inline',
+          Key: `emojis/${id}.${request.files[0].mimetype === 'image/png' ? 'png' : 'gif'}`,
+          Body: request.files[0].buffer,
           ContentType: request.files[0].mimetype,
-          Key: `emojis/${id}.${request.files[0].mimetype === 'image/png' ? 'png' : 'gif'}`
+          ContentDisposition: 'inline'
         });
 
         S3.send(command)
@@ -189,17 +190,17 @@ module.exports = {
             const embeds = [
               new Discord.EmbedBuilder()
                 .setTitle('New Emoji')
-                .setAuthor({ iconURL: requestUser.displayAvatarURL(), name: requestUser.username })
+                .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
                 .setFields([
                   {
-                    inline: true,
                     name: 'Name',
-                    value: `${name}.${emojiIsAnimated ? 'gif' : 'png'}`
+                    value: `${name}.${emojiIsAnimated ? 'gif' : 'png'}`,
+                    inline: true
                   },
                   {
-                    inline: true,
                     name: 'Categories',
-                    value: categories.join(', ')
+                    value: categories.join(', '),
+                    inline: true
                   }
                 ])
                 .setThumbnail(getEmojiURL(id, emojiIsAnimated))
@@ -217,11 +218,11 @@ module.exports = {
                 )
             ];
 
-            client.channels.cache.get(config.emojiQueueChannelId).send({ components, embeds });
+            client.channels.cache.get(config.emojiQueueChannelId).send({ embeds, components });
 
             return response.json({
-              emoji: emoji.toPubliclySafe(),
-              success: true
+              success: true,
+              emoji: emoji.toPubliclySafe()
             });
           })
           .catch(error => {

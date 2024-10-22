@@ -1,33 +1,33 @@
 'use client';
 
-import { useGeneralStore } from '@/stores/general';
 import cn from '@/utils/cn';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRef, useState } from 'react';
-import AnimateHeight from 'react-animate-height';
-import { FaDiscord } from 'react-icons/fa';
-import { FiX } from 'react-icons/fi';
-import { IoMenu } from 'react-icons/io5';
 import { useClickAway, useLockBodyScroll, useMedia } from 'react-use';
+import AnimateHeight from 'react-animate-height';
+import Image from 'next/image';
+import { FaDiscord } from 'react-icons/fa';
+import { IoMenu } from 'react-icons/io5';
+import { useRef, useState } from 'react';
+import { FiX } from 'react-icons/fi';
+import { useGeneralStore } from '@/stores/general';
 
 const HEADER_LINKS = [
   {
-    href: '/home',
-    name: 'Home'
+    name: 'Home',
+    href: '/home'
   },
   {
-    href: '/getting-started',
-    name: 'Getting Started'
+    name: 'Getting Started',
+    href: '/getting-started'
   },
   {
-    href: '/endpoints',
-    name: 'Endpoints'
+    name: 'Endpoints',
+    href: '/endpoints'
   },
   {
-    href: '/webhooks',
-    name: 'Webhooks'
+    name: 'Webhooks',
+    href: '/webhooks'
   }
 ];
 
@@ -54,14 +54,14 @@ function ExpandedHeader({ pathname }) {
   return (
     <header className='bg-purple-800 px-4 lg:px-0'>
       <div className='mx-auto flex lg:max-w-3xl'>
-        {HEADER_LINKS.map(({ href, name }) => (
+        {HEADER_LINKS.map(({ name, href }) => (
           <Link
             className={cn(
               'p-4 text-sm font-medium text-[rgba(var(--dark-text-primary))] first:pl-0 last:pr-0',
               pathname === href ? 'cursor-default' : 'text-[rgba(var(--dark-text-primary))]/60 hover:text-[rgba(var(--dark-text-primary))]/80'
             )}
-            href={href}
             key={name}
+            href={href}
           >
             {name}
           </Link>
@@ -125,14 +125,14 @@ function CollapsedHeader({ pathname }) {
             </button>
           </div>
 
-          {HEADER_LINKS.map(({ href, name }) => (
+          {HEADER_LINKS.map(({ name, href }) => (
             <Link
               className={cn(
                 'py-2 text-lg font-medium text-[rgba(var(--dark-text-primary))]',
                 pathname === href ? 'cursor-default' : 'text-[rgba(var(--dark-text-primary))]/60 hover:text-[rgba(var(--dark-text-primary))]/80'
               )}
-              href={href}
               key={name}
+              href={href}
               onClick={() => setIsOpen(false)}
             >
               {name}
@@ -143,7 +143,7 @@ function CollapsedHeader({ pathname }) {
             <h2 className='text-lg font-bold text-[rgba(var(--dark-text-primary))]'>Table of Contents</h2>
 
             <div className='flex flex-col space-y-1'>
-              {headings.map(({ id, level, name }) => {
+              {headings.map(({ id, name, level }) => {
                 const Tag = id.startsWith('endpoint-') ? 'div' : Link;
 
                 return (
@@ -194,10 +194,10 @@ function HomeHeader() {
 
           <div className='mt-4 flex items-center'>
             <iframe
-              height='20'
               src='https://ghbtns.com/github-btn.html?user=discordplace&repo=discord.place&type=star&count=true'
-              title='GitHub'
               width='90'
+              height='20'
+              title='GitHub'
             />
 
             <Link

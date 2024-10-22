@@ -1,10 +1,10 @@
 'use client';
 
-import MotionImage from '@/app/components/Motion/Image';
 import useThemeStore from '@/stores/theme';
-import { motion } from 'framer-motion';
-import { AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import MotionImage from '@/app/components/Motion/Image';
+import { AnimatePresence } from 'framer-motion';
 
 export default function FullPageLoading() {
   const theme = useThemeStore(state => state.theme);
@@ -17,33 +17,33 @@ export default function FullPageLoading() {
     };
   }, []);
 
-  const transition = { damping: 10, duration: 0.25, stiffness: 100, type: 'spring' };
+  const transition = { duration: 0.25, type: 'spring', damping: 10, stiffness: 100 };
 
   return (
     <AnimatePresence>
       <div className='fixed top-0 z-10 flex size-full flex-col items-center justify-center bg-background'>
         <MotionImage
-          alt='discord.place Logo'
-          animate={{ opacity: 1 }}
           className='size-[64px]'
-          exit={{ opacity: 0 }}
+          src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+          alt='discord.place Logo'
+          width={256}
           height={256}
           initial={{ opacity: 0 }}
-          src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={transition}
-          width={256}
         />
 
         <motion.div
-          animate={{ opacity: 1 }}
           className='relative mt-8 h-[6px] w-[150px] overflow-hidden rounded-full bg-tertiary'
-          exit={{ opacity: 0 }}
           initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={transition}
         >
           <div className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
-            transform: 'translateX(-100%)',
-            width: '50%'
+            width: '50%',
+            transform: 'translateX(-100%)'
           }} />
         </motion.div>
       </div>

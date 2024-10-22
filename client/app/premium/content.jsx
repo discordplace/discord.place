@@ -1,38 +1,38 @@
 'use client';
 
 import Square from '@/app/components/Background/Square';
-import Tooltip from '@/app/components/Tooltip';
-import FaQs from '@/app/premium/components/FaQs';
-import config from '@/config';
 import cn from '@/lib/cn';
-import createCheckout from '@/lib/request/auth/createCheckout';
-import useAuthStore from '@/stores/auth';
-import { t } from '@/stores/language';
-import { motion } from 'framer-motion';
 import { Bricolage_Grotesque } from 'next/font/google';
 import { Source_Serif_4 } from 'next/font/google';
-import { useRouter } from 'next-nprogress-bar';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { BiSolidInfoCircle } from 'react-icons/bi';
-import { FaDiscord } from 'react-icons/fa';
 import { FaCheck, FaXmark } from 'react-icons/fa6';
-import { IoCheckmarkCircle } from 'react-icons/io5';
-import { LuShieldQuestion } from 'react-icons/lu';
-import { TbLoader } from 'react-icons/tb';
+import { FaDiscord } from 'react-icons/fa';
+import useAuthStore from '@/stores/auth';
+import createCheckout from '@/lib/request/auth/createCheckout';
 import { toast } from 'sonner';
+import { useRouter } from 'next-nprogress-bar';
+import config from '@/config';
+import { TbLoader } from 'react-icons/tb';
+import { IoCheckmarkCircle } from 'react-icons/io5';
+import FaQs from '@/app/premium/components/FaQs';
+import { LuShieldQuestion } from 'react-icons/lu';
+import Tooltip from '@/app/components/Tooltip';
+import { BiSolidInfoCircle } from 'react-icons/bi';
+import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
-const SourceSerif4 = Source_Serif_4({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const SourceSerif4 = Source_Serif_4({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function Page({ plans }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
 
   const sequenceTransition = {
-    damping: 20,
     duration: 0.25,
+    type: 'spring',
     stiffness: 260,
-    type: 'spring'
+    damping: 20
   };
 
   const containerVariants = {
@@ -43,8 +43,8 @@ export default function Page({ plans }) {
       opacity: 1,
       transition: {
         delay: 0.15,
-        staggerChildren: 0.1,
-        when: 'beforeChildren'
+        when: 'beforeChildren',
+        staggerChildren: 0.1
       }
     }
   };
@@ -56,8 +56,8 @@ export default function Page({ plans }) {
     },
     visible: {
       opacity: 1,
-      transition: sequenceTransition,
-      y: 0
+      y: 0,
+      transition: sequenceTransition
     }
   };
 
@@ -66,20 +66,8 @@ export default function Page({ plans }) {
 
   const features = [
     {
-      available_to: [
-        {
-          id: 'free',
-          value: <FaXmark />
-        },
-        {
-          id: 'premium',
-          value: <FaCheck />
-        }
-      ],
+      label: t('premiumPage.features.0.label'),
       info: t('premiumPage.features.0.info'),
-      label: t('premiumPage.features.0.label')
-    },
-    {
       available_to: [
         {
           id: 'free',
@@ -89,11 +77,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ],
+      ]
+    },
+    {
+      label: t('premiumPage.features.1.label'),
       info: t('premiumPage.features.1.info'),
-      label: t('premiumPage.features.1.label')
-    },
-    {
       available_to: [
         {
           id: 'free',
@@ -103,11 +91,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ],
+      ]
+    },
+    {
+      label: t('premiumPage.features.2.label'),
       info: t('premiumPage.features.2.info'),
-      label: t('premiumPage.features.2.label')
-    },
-    {
       available_to: [
         {
           id: 'free',
@@ -117,11 +105,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ],
+      ]
+    },
+    {
+      label: t('premiumPage.features.3.label'),
       info: t('premiumPage.features.3.info'),
-      label: t('premiumPage.features.3.label')
-    },
-    {
       available_to: [
         {
           id: 'free',
@@ -131,11 +119,25 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ],
-      info: t('premiumPage.features.4.info'),
-      label: t('premiumPage.features.4.label')
+      ]
     },
     {
+      label: t('premiumPage.features.4.label'),
+      info: t('premiumPage.features.4.info'),
+      available_to: [
+        {
+          id: 'free',
+          value: <FaXmark />
+        },
+        {
+          id: 'premium',
+          value: <FaCheck />
+        }
+      ]
+    },
+    {
+      label: t('premiumPage.features.5.label'),
+      info: t('premiumPage.features.5.info'),
       available_to: [
         {
           id: 'free',
@@ -145,11 +147,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: '20'
         }
-      ],
-      info: t('premiumPage.features.5.info'),
-      label: t('premiumPage.features.5.label')
+      ]
     },
     {
+      label: t('premiumPage.features.6.label'),
+      info: t('premiumPage.features.6.info'),
       available_to: [
         {
           id: 'free',
@@ -159,11 +161,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: '5'
         }
-      ],
-      info: t('premiumPage.features.6.info'),
-      label: t('premiumPage.features.6.label')
+      ]
     },
     {
+      label: t('premiumPage.features.7.label'),
+      info: t('premiumPage.features.7.info'),
       available_to: [
         {
           id: 'free',
@@ -173,9 +175,7 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ],
-      info: t('premiumPage.features.7.info'),
-      label: t('premiumPage.features.7.label')
+      ]
     }
   ];
 
@@ -196,11 +196,6 @@ export default function Page({ plans }) {
     const planIdToPurchase = preferredBillingCycle === 'monthly' ? monthlyPlan.id : preferredBillingCycle === 'annual' ? annualPlan.id : lifetimePlan.id;
 
     toast.promise(createCheckout(planIdToPurchase), {
-      error: message => {
-        setLoading(false);
-
-        return message;
-      },
       loading: t('premiumPage.toast.creatingCheckout'),
       success: data => {
         setTimeout(() => {
@@ -208,13 +203,18 @@ export default function Page({ plans }) {
         }, 3000);
 
         return t('premiumPage.toast.checkoutCreated');
+      },
+      error: message => {
+        setLoading(false);
+
+        return message;
       }
     });
   }
 
   return (
     <div className='relative z-0 flex flex-col items-center px-4 pt-56 lg:px-0'>
-      <Square blockColor='rgba(var(--bg-secondary))' column='10' row='10' transparentEffectDirection='bottomToTop' />
+      <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
       <div className='absolute top-[-15%] h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
 
@@ -226,35 +226,35 @@ export default function Page({ plans }) {
 
       <div className='flex w-full max-w-[800px] flex-col'>
         <motion.h1
-          animate={{ opacity: 1, y: 0 }}
           className={cn(
             'text-5xl font-medium max-w-[800px] text-center text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ ...sequenceTransition }}
         >
           {t('premiumPage.title')}
         </motion.h1>
 
-        <motion.span animate={{ opacity: 1, y: 0 }} className='mt-8 max-w-[800px] text-center text-tertiary sm:text-lg' initial={{ opacity: 0, y: -25 }} transition={{ ...sequenceTransition, delay: 0.1 }}>
+        <motion.span className='mt-8 max-w-[800px] text-center text-tertiary sm:text-lg' initial={{ opacity: 0, y: -25 }} animate={{ opacity: 1, y: 0 }} transition={{ ...sequenceTransition, delay: 0.1 }}>
           {t('premiumPage.subtitle')}
         </motion.span>
       </div>
 
       <motion.div
-        animate='visible'
         className='mt-16 grid w-full max-w-[800px] grid-cols-1 gap-4 sm:grid-cols-3'
         initial='hidden'
+        animate='visible'
         variants={containerVariants}
       >
         {billingCycles.map(cycle => (
           <motion.div
+            key={cycle}
             className={cn(
               'select-none flex items-center w-full gap-x-2 p-4 rounded-lg',
               preferredBillingCycle === cycle ? 'bg-purple-500/5 border-2 border-purple-500/20' : 'border-2 border-primary bg-secondary hover:bg-tertiary cursor-pointer'
             )}
-            key={cycle}
             onClick={() => setPreferredBillingCycle(cycle)}
             variants={itemVariants}
           >
@@ -303,9 +303,9 @@ export default function Page({ plans }) {
       </motion.div>
 
       <motion.div
-        animate={{ opacity: 1 }}
         className='my-12 w-full max-w-[800px]'
         initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ ...sequenceTransition, delay: 0.8 }}
       >
         <div className='flex w-full flex-col gap-y-2'>
@@ -336,8 +336,8 @@ export default function Page({ plans }) {
 
                   {feature.info && (
                     <Tooltip
-                      content={feature.info}
                       side='left'
+                      content={feature.info}
                     >
                       <div>
                         <BiSolidInfoCircle
@@ -386,10 +386,10 @@ export default function Page({ plans }) {
       </motion.div>
 
       <motion.div
-        animate={{ opacity: 1 }}
         className='mb-12 flex w-full max-w-[800px] flex-col gap-y-2'
         initial={{ opacity: 0 }}
-        transition={{ ...sequenceTransition, delay: 1, duration: 0.5 }}
+        animate={{ opacity: 1 }}
+        transition={{ ...sequenceTransition, duration: 0.5, delay: 1 }}
       >
         <h2 className='mt-4 flex items-center gap-x-1 text-lg font-semibold sm:text-xl'>
           <LuShieldQuestion />

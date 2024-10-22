@@ -1,26 +1,26 @@
 'use client';
 
-import GenderDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/Gender';
-import PreferredHostDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/PreferredHost';
-import Socials from '@/app/(profiles)/profile/[slug]/edit/components/Socials';
-import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
-import Tooltip from '@/app/components/Tooltip';
-import config from '@/config';
+import { useEffect, useRef, useState } from 'react';
 import cn from '@/lib/cn';
 import editProfile from '@/lib/request/profiles/editProfile';
-import revalidateProfile from '@/lib/revalidate/profile';
-import { t } from '@/stores/language';
-import { colord, extend } from 'colord';
-import a11yPlugin from 'colord/plugins/a11y';
+import { toast } from 'sonner';
+import Socials from '@/app/(profiles)/profile/[slug]/edit/components/Socials';
+import { TbLoader } from 'react-icons/tb';
 import { AnimatePresence, motion } from 'framer-motion';
-import Link from 'next/link';
+import config from '@/config';
 import { useRouter } from 'next-nprogress-bar';
-import { useEffect, useRef, useState } from 'react';
+import GenderDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/Gender';
+import PreferredHostDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/PreferredHost';
+import Link from 'next/link';
+import { PiWarningCircleFill } from 'react-icons/pi';
+import revalidateProfile from '@/lib/revalidate/profile';
 import { HexAlphaColorPicker } from 'react-colorful';
 import { FaCrown } from 'react-icons/fa';
-import { PiWarningCircleFill } from 'react-icons/pi';
-import { TbLoader } from 'react-icons/tb';
-import { toast } from 'sonner';
+import Tooltip from '@/app/components/Tooltip';
+import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
+import { colord, extend } from 'colord';
+import a11yPlugin from 'colord/plugins/a11y';
+import { t } from '@/stores/language';
 
 extend([a11yPlugin]);
 
@@ -89,11 +89,6 @@ export default function Edit({ profileData }) {
     setLoading(true);
 
     toast.promise(editProfile(profileData.slug, changedKeys), {
-      error: error => {
-        setLoading(false);
-
-        return error;
-      },
       loading: 'Updating profile...',
       success: newProfile => {
         setChangedKeys({});
@@ -110,6 +105,11 @@ export default function Edit({ profileData }) {
 
           return 'Profile updated!';
         }
+      },
+      error: error => {
+        setLoading(false);
+
+        return error;
       }
     });
   }
@@ -124,7 +124,7 @@ export default function Edit({ profileData }) {
         </h2>
 
         <p className='text-sm font-medium text-tertiary'>
-          {t('editProfilePage.premiumRequiredInfo.description', { link: <Link className='text-secondary hover:text-primary' href='/premium'>{t('editProfilePage.premiumRequiredInfo.linkText')}</Link> })}
+          {t('editProfilePage.premiumRequiredInfo.description', { link: <Link href='/premium' className='text-secondary hover:text-primary'>{t('editProfilePage.premiumRequiredInfo.linkText')}</Link> })}
         </p>
       </div>
     );
@@ -135,15 +135,15 @@ export default function Edit({ profileData }) {
       <AnimatePresence>
         {Object.keys(changedKeys).length > 0 && (
           <motion.div
-            animate={{ opacity: 1, y: 0 }}
             className='fixed bottom-4 flex h-[60px] w-full max-w-[650px] items-center justify-between rounded-full border border-green-700 bg-green-800/20 px-8 backdrop-blur-sm'
-            exit={{ opacity: 0, y: 100 }}
             initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
             transition={{
-              damping: 20,
               duration: 0.25,
+              type: 'spring',
               stiffness: 260,
-              type: 'spring'
+              damping: 20
             }}
           >
             <h1 className='text-lg font-medium text-primary'>
@@ -152,19 +152,19 @@ export default function Edit({ profileData }) {
 
             <div className='flex gap-x-2'>
               <button
-                className='rounded-lg px-4 py-1.5 text-sm font-semibold text-black hover:bg-black hover:text-white disabled:pointer-events-none disabled:opacity-70 dark:text-white dark:hover:bg-white dark:hover:text-black' disabled={loading}
-                onClick={() => {
+                className='rounded-lg px-4 py-1.5 text-sm font-semibold text-black hover:bg-black hover:text-white disabled:pointer-events-none disabled:opacity-70 dark:text-white dark:hover:bg-white dark:hover:text-black' onClick={() => {
                   setChangedKeys({});
                   setProfile(unchangedProfile);
                 }}
+                disabled={loading}
               >
                 {t('buttons.cancel')}
               </button>
 
               <button
                 className='flex items-center gap-x-1.5 rounded-lg bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 hover:text-white disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
-                disabled={loading}
                 onClick={saveChangedKeys}
+                disabled={loading}
               >
                 {loading && <TbLoader className='animate-spin' />}
                 {t('buttons.save')}
@@ -196,37 +196,37 @@ export default function Edit({ profileData }) {
               {currentlyEditingIndex === index ? (
                 key === 'bio' ? (
                   <span
-                    autoComplete='off'
                     autoFocus
-                    className='max-h-[200px] w-full resize-none overflow-y-auto break-all rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
-                    contentEditable
+                    autoComplete='off'
+                    spellCheck='false'
                     disabled={loading}
+                    contentEditable
+                    suppressContentEditableWarning
                     onKeyUp={() => setCurrentlyEditingValue(bioValueSpanRef?.current?.innerText)}
                     ref={bioValueSpanRef}
-                    spellCheck='false'
-                    suppressContentEditableWarning
+                    className='max-h-[200px] w-full resize-none overflow-y-auto break-all rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
                   >
                     {profileData.bio}
                   </span>
                 ) : key === 'gender' ? (
-                  <GenderDropdown currentlyEditingValue={currentlyEditingValue} profile={profile} setCurrentlyEditingValue={setCurrentlyEditingValue} />
+                  <GenderDropdown profile={profile} currentlyEditingValue={currentlyEditingValue} setCurrentlyEditingValue={setCurrentlyEditingValue} />
                 ) : key === 'preferredHost' ? (
                   !profile.premium ? (
                     <PremiumRequiredBlock />
                   ) : (
-                    <PreferredHostDropdown currentlyEditingValue={currentlyEditingValue} profile={profile} setCurrentlyEditingValue={setCurrentlyEditingValue} />
+                    <PreferredHostDropdown profile={profile} currentlyEditingValue={currentlyEditingValue} setCurrentlyEditingValue={setCurrentlyEditingValue} />
                   )
                 ) : (
                   <input
-                    autoComplete='off'
-                    autoFocus
-                    className='w-full rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70 sm:max-w-[200px]'
-                    disabled={loading}
-                    onChange={event => setCurrentlyEditingValue(event.target.value)}
-                    onKeyUp={event => event.key === 'Enter' && editKey(canBeEditedKeys[currentlyEditingIndex])}
-                    spellCheck='false'
                     type='text'
                     value={currentlyEditingValue}
+                    onChange={event => setCurrentlyEditingValue(event.target.value)}
+                    onKeyUp={event => event.key === 'Enter' && editKey(canBeEditedKeys[currentlyEditingIndex])}
+                    autoFocus
+                    autoComplete='off'
+                    spellCheck='false'
+                    disabled={loading}
+                    className='w-full rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70 sm:max-w-[200px]'
                   />
                 )
               ) : (
@@ -238,11 +238,11 @@ export default function Edit({ profileData }) {
               {currentlyEditingIndex === index && (
                 <button
                   className='h-max rounded-lg px-4 py-1.5 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
-                  disabled={loading}
                   onClick={() => {
                     if (canBeEditedKeys[currentlyEditingIndex] === 'bio') setCurrentlyEditingValue(profile.bio);
                     setCurrentlyEditingIndex(-1);
                   }}
+                  disabled={loading}
                 >
                   {t('buttons.cancel')}
                 </button>
@@ -253,11 +253,11 @@ export default function Edit({ profileData }) {
                   'h-max px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none',
                   currentlyEditingIndex === index ? 'text-white dark:text-black dark:bg-white bg-black hover:bg-black/70 dark:hover:bg-white/70' : 'text-secondary bg-tertiary hover:text-primary hover:bg-quaternary'
                 )}
-                disabled={loading}
                 onClick={() => {
                   if (currentlyEditingIndex === index) return editKey(canBeEditedKeys[currentlyEditingIndex]);
                   setCurrentlyEditingIndex(index);
                 }}
+                disabled={loading}
               >
                 {currentlyEditingIndex === index ? t('buttons.save') : t('buttons.edit')}
               </button>
@@ -297,10 +297,10 @@ export default function Edit({ profileData }) {
                       />
 
                       <input
-                        className='mt-4 w-full max-w-[120px] rounded-md bg-tertiary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
-                        onChange={event => setColors(oldColors => ({ ...oldColors, primary: event.target.value }))}
                         type='text'
                         value={colors.primary || '#000000'}
+                        onChange={event => setColors(oldColors => ({ ...oldColors, primary: event.target.value }))}
+                        className='mt-4 w-full max-w-[120px] rounded-md bg-tertiary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                       />
                     </div>
                   </div>
@@ -319,10 +319,10 @@ export default function Edit({ profileData }) {
                       />
 
                       <input
-                        className='mt-4 w-full max-w-[120px] rounded-md bg-tertiary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
-                        onChange={event => setColors(oldColors => ({ ...oldColors, secondary: event.target.value }))}
                         type='text'
                         value={colors.secondary || '#000000'}
+                        onChange={event => setColors(oldColors => ({ ...oldColors, secondary: event.target.value }))}
+                        className='mt-4 w-full max-w-[120px] rounded-md bg-tertiary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                       />
                     </div>
                   </div>
@@ -338,14 +338,14 @@ export default function Edit({ profileData }) {
                   </h2>
 
                   <CopyButtonCustomTrigger
-                    copyText={profile.colors?.primary || '#000000'}
-                    successText={t('editProfilePage.toast.colorCopied', { hex: profile.colors?.primary || '#000000' })}
                     timeout={2000}
+                    successText={t('editProfilePage.toast.colorCopied', { hex: profile.colors?.primary || '#000000' })}
+                    copyText={profile.colors?.primary || '#000000'}
                   >
                     <div className='group relative flex h-12 w-20 cursor-pointer items-center justify-center'>
                       <div
-                        className='size-full rounded-lg'
                         style={{ backgroundColor: profile.colors?.primary || '#000000' }}
+                        className='size-full rounded-lg'
                       />
 
                       <div
@@ -366,14 +366,14 @@ export default function Edit({ profileData }) {
                   </h2>
 
                   <CopyButtonCustomTrigger
-                    copyText={profile.colors?.secondary || '#000000'}
-                    successText={t('editProfilePage.toast.colorCopied', { hex: profile.colors?.secondary || '#000000' })}
                     timeout={2000}
+                    successText={t('editProfilePage.toast.colorCopied', { hex: profile.colors?.secondary || '#000000' })}
+                    copyText={profile.colors?.secondary || '#000000'}
                   >
                     <div className='group relative flex h-12 w-20 cursor-pointer items-center justify-center'>
                       <div
-                        className='size-full rounded-lg'
                         style={{ backgroundColor: profile.colors?.secondary || '#000000' }}
+                        className='size-full rounded-lg'
                       />
 
                       <div
@@ -396,24 +396,18 @@ export default function Edit({ profileData }) {
               <>
                 <button
                   className='h-max rounded-lg px-4 py-1.5 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
-                  disabled={loading}
                   onClick={() => setCurrentlyEditingIndex(-1)}
+                  disabled={loading}
                 >
                   {t('buttons.cancel')}
                 </button>
 
                 <button
                   className='flex h-max items-center gap-x-1.5 rounded-lg px-4 py-1.5 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
-                  disabled={loading}
                   onClick={() => {
                     setLoading(true);
 
                     toast.promise(editProfile(profileData.slug, { colors: { primary: null, secondary: null } }), {
-                      error: error => {
-                        setLoading(false);
-
-                        return error;
-                      },
                       loading: t('editProfilePage.toast.resettingColors'),
                       success: newProfile => {
                         setLoading(false);
@@ -425,14 +419,20 @@ export default function Edit({ profileData }) {
 
                         setColors(oldColors => ({
                           ...oldColors,
-                          primary: newProfile.colors?.primary || '#000000',
-                          secondary: newProfile.colors?.secondary || '#000000'
+                          secondary: newProfile.colors?.secondary || '#000000',
+                          primary: newProfile.colors?.primary || '#000000'
                         }));
 
                         return t('editProfilePage.toast.colorsReset');
+                      },
+                      error: error => {
+                        setLoading(false);
+
+                        return error;
                       }
                     });
                   }}
+                  disabled={loading}
                 >
                   {loading && <TbLoader className='animate-spin' />}
                   {t('buttons.reset')}
@@ -445,11 +445,11 @@ export default function Edit({ profileData }) {
                 'h-max px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none',
                 currentlyEditingIndex === 'cardColors' ? 'text-white dark:text-black dark:bg-white bg-black hover:bg-black/70 dark:hover:bg-white/70' : 'text-secondary bg-tertiary hover:text-primary hover:bg-quaternary'
               )}
-              disabled={loading}
               onClick={() => {
                 if (currentlyEditingIndex === 'cardColors') return editKey('cardColors');
                 setCurrentlyEditingIndex('cardColors');
               }}
+              disabled={loading}
             >
               {currentlyEditingIndex === 'cardColors' ? t('buttons.save') : t('buttons.edit')}
             </button>

@@ -1,26 +1,26 @@
 'use client';
 
-import Reviews from '@/app/(bots)/bots/[id]/components/Tabs/Reviews';
-import TopVoters from '@/app/(bots)/bots/[id]/components/Tabs/TopVoters';
 import cn from '@/lib/cn';
-import { t } from '@/stores/language';
-import { motion } from 'framer-motion';
 import { useState } from 'react';
+import TopVoters from '@/app/(bots)/bots/[id]/components/Tabs/TopVoters';
+import Reviews from '@/app/(bots)/bots/[id]/components/Tabs/Reviews';
+import { motion } from 'framer-motion';
 import { useMedia } from 'react-use';
+import { t } from '@/stores/language';
 
 export default function Tabs({ bot }) {
   const [activeTab, setActiveTab] = useState('reviews');
   const tabs = [
     {
-      component: <Reviews bot={bot} />,
+      label: t('botPage.tabs.labels.reviews'),
       id: 'reviews',
-      label: t('botPage.tabs.labels.reviews')
+      component: <Reviews bot={bot} />
     },
     {
-      component: <TopVoters bot={bot} />,
-      disabled: bot.totalVoters <= 0,
+      label: t('botPage.tabs.labels.topVoters'),
       id: 'topVoters',
-      label: t('botPage.tabs.labels.topVoters')
+      component: <TopVoters bot={bot} />,
+      disabled: bot.totalVoters <= 0
     }
   ];
 
@@ -32,12 +32,12 @@ export default function Tabs({ bot }) {
         <div className='m-8 grid grid-cols-2 grid-rows-1 gap-2'>
           {tabs.map(tab => (
             <div
+              key={tab.id}
               className={cn(
                 'relative px-4 text-center py-2 text-sm font-semibold rounded-full select-none transition-all duration-500 bg-tertiary',
                 activeTab === tab.id && 'z-[10] text-white dark:text-black',
                 tab.disabled && 'opacity-50 cursor-not-allowed'
               )}
-              key={tab.id}
               onClick={() => !tab.disabled && setActiveTab(tab.id)}
             >
               <span className='truncate'>
@@ -46,8 +46,8 @@ export default function Tabs({ bot }) {
 
               {activeTab === tab.id && (
                 <motion.div
-                  className='pointer-events-none absolute bottom-0 left-0 z-[-1] size-full rounded-full bg-black dark:bg-white'
                   layoutId='tabIndicator'
+                  className='pointer-events-none absolute bottom-0 left-0 z-[-1] size-full rounded-full bg-black dark:bg-white'
                 />
               )}
             </div>
@@ -69,8 +69,8 @@ export default function Tabs({ bot }) {
 
               {activeTab === tab.id && (
                 <motion.div
-                  className='pointer-events-none absolute bottom-0 left-0 size-full rounded-full bg-black dark:bg-white'
                   layoutId='tabIndicator'
+                  className='pointer-events-none absolute bottom-0 left-0 size-full rounded-full bg-black dark:bg-white'
                 />
               )}
             </div>

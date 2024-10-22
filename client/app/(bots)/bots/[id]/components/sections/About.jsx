@@ -1,28 +1,28 @@
 'use client';
 
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import Markdown from '@/app/components/Markdown';
-import cn from '@/lib/cn';
-import useLanguageStore, { t } from '@/stores/language';
 import { motion } from 'framer-motion';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { FaCompass, FaGithub } from 'react-icons/fa';
+import { TiStarFullOutline } from 'react-icons/ti';
+import Markdown from '@/app/components/Markdown';
+import { RiSlashCommands2, RiUserAddLine } from 'react-icons/ri';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaCompass, FaGithub } from 'react-icons/fa';
+import cn from '@/lib/cn';
 import { PiGitForkBold } from 'react-icons/pi';
-import { RiSlashCommands2, RiUserAddLine } from 'react-icons/ri';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { TiStarFullOutline } from 'react-icons/ti';
 import { useMedia } from 'react-use';
+import useLanguageStore, { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 const formatter = new Intl.NumberFormat('en-US', {
-  compactDisplay: 'short',
-  notation: 'compact'
+  notation: 'compact',
+  compactDisplay: 'short'
 });
 
 const serversFormatter = new Intl.NumberFormat('en-US', {
-  maximumFractionDigits: 2,
+  style: 'decimal',
   notation: 'compact',
-  style: 'decimal'
+  maximumFractionDigits: 2
 });
 
 export default function About({ bot }) {
@@ -30,6 +30,9 @@ export default function About({ bot }) {
 
   const keys = [
     {
+      key: 'owner',
+      label: t('botPage.about.labels.owner'),
+      icon: <RiUserAddLine />,
       component: (
         <Link
           className='flex items-center gap-x-2 transition-opacity hover:opacity-50'
@@ -40,50 +43,50 @@ export default function About({ bot }) {
           </span>
 
           <UserAvatar
-            className='size-[16px] rounded-full'
-            hash={bot.owner.avatar}
-            height={16}
             id={bot.owner.id}
+            hash={bot.owner.avatar}
             size={16}
             width={16}
+            height={16}
+            className='size-[16px] rounded-full'
           />
         </Link>
-      ),
-      icon: <RiUserAddLine />,
-      key: 'owner',
-      label: t('botPage.about.labels.owner')
+      )
     },
     {
+      key: 'servers',
+      label: t('botPage.about.labels.servers'),
+      icon: <FaCompass />,
       component: (
         <>
-          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date(bot.servers_updated_at).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })})</span>
+          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date(bot.servers_updated_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
-      ),
-      icon: <FaCompass />,
-      key: 'servers',
-      label: t('botPage.about.labels.servers')
+      )
     },
     {
-      icon: <TbSquareRoundedChevronUp />,
       key: 'votes',
       label: t('botPage.about.labels.votes'),
+      icon: <TbSquareRoundedChevronUp />,
       value: formatter.format(bot.votes)
     },
     {
+      key: 'commands',
+      label: t('botPage.about.labels.commands'),
+      icon: <RiSlashCommands2 />,
       component: (
         <>
-          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })})</span>
+          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
-      ),
-      icon: <RiSlashCommands2 />,
-      key: 'commands',
-      label: t('botPage.about.labels.commands')
+      )
     }
   ];
 
   const isMobile = useMedia('(max-width: 640px)', false);
 
   if (bot.github_repository?.data) keys.push({
+    key: 'GitHub Repository',
+    label: t('botPage.about.labels.githubRepository.label'),
+    icon: <FaGithub />,
     component: <>
       {isMobile ? (
         <Link
@@ -101,8 +104,8 @@ export default function About({ bot }) {
       <Link
         className='mt-6 hidden h-max max-w-[90%] cursor-pointer flex-col gap-y-3 rounded-lg border-2 border-primary bg-tertiary p-4 hover:bg-quaternary sm:flex'
         href={bot.github_repository.data.html_url}
-        rel='noopener noreferrer'
         target='_blank'
+        rel='noopener noreferrer'
       >
         {bot.github_repository.data.language && (
           <span className='w-max select-none rounded-full border border-black/40 bg-black/20 px-2 py-0.5 text-xs font-medium text-primary dark:border-white/40 dark:bg-white/20'>
@@ -114,11 +117,11 @@ export default function About({ bot }) {
           {bot.github_repository.data.owner.avatar_url && (
             <>
               <Image
-                alt={`${bot.github_repository.data.owner.login}'s avatar`}
-                className='mr-2 rounded-full'
-                height={16}
                 src={bot.github_repository.data.owner.avatar_url}
+                alt={`${bot.github_repository.data.owner.login}'s avatar`}
                 width={16}
+                height={16}
+                className='mr-2 rounded-full'
               />
               {' '}
             </>
@@ -146,35 +149,32 @@ export default function About({ bot }) {
           </div>
         </div>
       </Link>
-    </>,
-    icon: <FaGithub />,
-    key: 'GitHub Repository',
-    label: t('botPage.about.labels.githubRepository.label')
+    </>
   });
 
   return (
     <div className='flex w-full flex-col lg:w-[70%]'>
       <motion.h2
-        animate={{ opacity: 1, y: 0 }}
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
-        transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
       >
         {t('botPage.about.title')}
       </motion.h2>
 
-      <motion.p animate={{ opacity: 1, y: 0 }}
-        className='mt-2 whitespace-pre-wrap text-tertiary'
+      <motion.p className='mt-2 whitespace-pre-wrap text-tertiary'
         initial={{ opacity: 0, y: -10 }}
-        transition={{ damping: 10, delay: 0.15, duration: 0.3, stiffness: 100, type: 'spring' }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.15 }}
       >
         {bot.short_description}
       </motion.p>
 
       <motion.div
-        animate={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -10 }}
-        transition={{ damping: 10, delay: 0.3, duration: 0.3, stiffness: 100, type: 'spring' }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.3 }}
       >
         <Markdown className='mt-8'>
           {bot.description}
@@ -182,21 +182,21 @@ export default function About({ bot }) {
       </motion.div>
 
       <motion.div
-        animate={{ opacity: 1 }}
         className='mt-8 grid h-max grid-cols-1 gap-8 rounded-xl bg-secondary p-4 py-8 sm:grid-cols-2'
         initial={{ opacity: 0 }}
-        transition={{ damping: 10, delay: 0.35, duration: 0.3, stiffness: 100, type: 'spring' }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.35 }}
       >
-        {keys.map(({ component, icon, key, label, value }, index) => (
+        {keys.map(({ key, label, icon, value, component }, index) => (
           <motion.div
-            animate={{ opacity: 1, y: 0 }}
+            key={key}
             className={cn(
               'flex w-full items-start h-max gap-x-4',
               index === keys.length - 1 && index % 2 === 0 && 'sm:col-span-2'
             )}
             initial={{ opacity: 0, y: -10 }}
-            key={key}
-            transition={{ damping: 10, delay: 0.20 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.20 + (.05 * index) }}
           >
             <div className='rounded-full bg-tertiary p-3 text-secondary'>
               {icon}

@@ -1,11 +1,11 @@
 'use client';
 
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import cn from '@/lib/cn';
-import useLanguageStore from '@/stores/language';
 import Image from 'next/image';
+import useLanguageStore from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
-export default function ChatMockup({ avatar, emoji_url, id, index, message, theme, username }) {
+export default function ChatMockup({ id, username, avatar, message, emoji_url, theme, index }) {
   const language = useLanguageStore(state => state.language);
 
   return (
@@ -17,12 +17,12 @@ export default function ChatMockup({ avatar, emoji_url, id, index, message, them
       )}
     >
       <UserAvatar
-        className='size-[46px] rounded-full'
-        hash={avatar}
-        height={128}
         id={id}
+        hash={avatar}
         size={128}
         width={128}
+        height={128}
+        className='size-[46px] rounded-full'
       />
 
       <div className='flex flex-col gap-y-1'>
@@ -40,7 +40,7 @@ export default function ChatMockup({ avatar, emoji_url, id, index, message, them
               theme === 'dark' ? 'text-[rgb(var(--dark-text-tertiary))]' : 'text-[rgb(var(--light-text-tertiary))]'
             )}
           >
-            {new Date().toLocaleDateString(language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(',','')}
+            {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',','')}
           </span>
         </div>
 
@@ -55,10 +55,10 @@ export default function ChatMockup({ avatar, emoji_url, id, index, message, them
           </span>
 
           <Image
-            alt='Emoji'
-            height={22}
             src={emoji_url}
             width={22}
+            height={22}
+            alt='Emoji'
           />
         </div>
       </div>

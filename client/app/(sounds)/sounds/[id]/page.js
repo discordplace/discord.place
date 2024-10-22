@@ -1,14 +1,15 @@
-import Content from '@/app/(sounds)/sounds/[id]/content';
-import config from '@/config';
 import getSound from '@/lib/request/sounds/getSound';
-import getSoundMetadata from '@/lib/request/sounds/getSoundMetadata';
 import { redirect } from 'next/navigation';
+import Content from '@/app/(sounds)/sounds/[id]/content';
+import getSoundMetadata from '@/lib/request/sounds/getSoundMetadata';
+import config from '@/config';
 
 export async function generateMetadata({ params }) {
   const metadata = await getSoundMetadata(params.id).catch(error => error);
   if (typeof metadata === 'string') return;
 
   return {
+    title: `Sound ${metadata.name}`,
     keywords: [
       metadata.name,
       `discord sound ${metadata.name}`,
@@ -18,17 +19,16 @@ export async function generateMetadata({ params }) {
       `${metadata.name} download`
     ],
     openGraph: {
+      title: `Discord Place - Sound ${metadata.name}`,
+      url: `/sounds/${params.id}`,
       images: [
         {
-          height: 630,
-          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'sound' }))}`,
-          width: 1200
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'sound', metadata }))}`,
+          width: 1200,
+          height: 630
         }
-      ],
-      title: `Discord Place - Sound ${metadata.name}`,
-      url: `/sounds/${params.id}`
-    },
-    title: `Sound ${metadata.name}`
+      ]
+    }
   };
 }
 

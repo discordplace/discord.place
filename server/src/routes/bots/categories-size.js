@@ -1,6 +1,6 @@
+const useRateLimiter = require('@/utils/useRateLimiter');
 const Bot = require('@/schemas/Bot');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
 
 module.exports = {
   get: [

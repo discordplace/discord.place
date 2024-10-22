@@ -1,37 +1,37 @@
 'use client';
 
-import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
-import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
-import Home from '@/app/(dashboard)/components/Home';
-import Queue from '@/app/(dashboard)/components/Queue';
-import Sidebar from '@/app/(dashboard)/components/Sidebar';
-import { approveBot, approveEmoji, approveReview, approveSound, approveTemplate, approveTheme, deleteBlockedIP, deleteBot, deleteBotDenyRecord, deleteBotTimeout, deleteEmoji, deleteLink, deleteQuarantineRecord, deleteReview, deleteServerTimeout, deleteSound, deleteTemplate, deleteTheme, denyBot, denyEmoji, denyReview, denySound, denyTemplate, denyTheme, showConfirmationModal } from '@/app/(dashboard)/dashboard/utils';
-import MotionImage from '@/app/components/Motion/Image';
-import config from '@/config';
-import getHashes from '@/lib/request/getHashes';
-import sleep from '@/lib/sleep';
-import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
 import useAuthStore from '@/stores/auth';
-import useDashboardStore from '@/stores/dashboard';
-import useModalsStore from '@/stores/modals';
-import useThemeStore from '@/stores/theme';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next-nprogress-bar';
 import { useEffect } from 'react';
-import { BiCloudDownload, BiSolidCategory } from 'react-icons/bi';
-import { BsStars } from 'react-icons/bs';
+import { useRouter } from 'next-nprogress-bar';
+import Sidebar from '@/app/(dashboard)/components/Sidebar';
+import Home from '@/app/(dashboard)/components/Home';
+import useDashboardStore from '@/stores/dashboard';
 import { CgBlock, CgFormatSlash } from 'react-icons/cg';
-import { FaCompass, FaCrown, FaEye, FaUserCircle } from 'react-icons/fa';
-import { FiArrowRightCircle, FiArrowUpRight, FiLink } from 'react-icons/fi';
-import { HiTemplate } from 'react-icons/hi';
-import { HiMiniIdentification } from 'react-icons/hi2';
-import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
+import useThemeStore from '@/stores/theme';
+import { motion, AnimatePresence } from 'framer-motion';
+import MotionImage from '@/app/components/Motion/Image';
+import Queue from '@/app/(dashboard)/components/Queue';
 import { MdAlternateEmail, MdEmojiEmotions, MdHttps, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility } from 'react-icons/md';
+import { FaCompass, FaCrown, FaEye, FaUserCircle } from 'react-icons/fa';
+import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
+import { BiCloudDownload, BiSolidCategory } from 'react-icons/bi';
+import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
+import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, deleteBlockedIP, deleteLink, deleteBotDenyRecord, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
+import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
+import config from '@/config';
+import sleep from '@/lib/sleep';
+import { useShallow } from 'zustand/react/shallow';
+import { HiTemplate } from 'react-icons/hi';
 import { PiWaveformBold } from 'react-icons/pi';
+import { FiArrowRightCircle, FiArrowUpRight, FiLink } from 'react-icons/fi';
 import { RiGroup2Fill, RiPencilFill } from 'react-icons/ri';
 import { TbLockPlus } from 'react-icons/tb';
+import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
+import useModalsStore from '@/stores/modals';
 import { toast } from 'sonner';
-import { useShallow } from 'zustand/react/shallow';
+import { HiMiniIdentification } from 'react-icons/hi2';
+import { BsStars } from 'react-icons/bs';
+import getHashes from '@/lib/request/getHashes';
 
 export default function Page() {
   const user = useAuthStore(state => state.user);
@@ -44,12 +44,12 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn, user]);
 
-  const { activeTab, data, loading, selectedItems, setLoading, setSelectedItems } = useDashboardStore(useShallow(state => ({
+  const { activeTab, loading, setLoading, data, selectedItems, setSelectedItems } = useDashboardStore(useShallow(state => ({
     activeTab: state.activeTab,
-    data: state.data,
     loading: state.loading,
-    selectedItems: state.selectedItems,
     setLoading: state.setLoading,
+    data: state.data,
+    selectedItems: state.selectedItems,
     setSelectedItems: state.setSelectedItems
   })));
 
@@ -94,61 +94,38 @@ export default function Page() {
 
   const tabs = [
     {
-      component: <Home />,
       id: 'home',
-      name: 'Home'
+      name: 'Home',
+      component: <Home />
     },
     {
+      id: 'users',
+      name: 'Users',
       data: {
+        title: 'Users',
         subtitle: 'Here you can see the all the users that have logged in to discord.place.',
+        totalCount: data?.users?.length || 0,
         tableData: {
           tabs: [
             {
-              actions: [
-                {
-                  action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-
-                    setSelectedItems([]);
-
-                    router.push(`/profile/u/${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View User'
-                },
-                {
-                  action: () => bulkAction({
-                    action: item => {
-                      toast.promise(getHashes(item.id), {
-                        error: error => error,
-                        loading: `Refreshing ${item.username}'s hashes...`,
-                        success: `Successfully refreshed ${item.username}'s hashes.`
-                      });
-                    },
-                    fetchKey: 'users'
-                  }),
-                  hide: !data.permissions?.canRefreshHashes,
-                  icon: MdRefresh,
-                  name: 'Refresh Hashes'
-                }
-              ],
+              label: 'Users',
               columns: data?.users?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map(user => [
                 {
-                  avatar: user.avatar,
-                  id: user.id,
-                  searchValues: [user.username, user.id],
-                  showId: true,
                   type: 'user',
-                  username: user.username
+                  id: user.id,
+                  username: user.username,
+                  avatar: user.avatar,
+                  showId: true,
+                  searchValues: [user.username, user.id]
                 },
                 {
                   type: 'userSubscription',
                   value: user.subscription || null
                 },
                 {
-                  searchValues: [user.email],
                   type: 'email',
-                  value: user.email || 'N/A'
+                  value: user.email || 'N/A',
+                  searchValues: [user.email]
                 },
                 {
                   type: 'date',
@@ -163,1427 +140,1421 @@ export default function Page() {
                   value: new Date(user.lastLogoutAt)
                 }
               ]),
-              label: 'Users',
               rows: [
                 {
-                  icon: HiMiniIdentification,
                   name: 'User',
+                  icon: HiMiniIdentification,
                   sortable: true
                 },
                 {
-                  icon: BsStars,
                   name: 'Subscription',
+                  icon: BsStars,
                   sortable: true
                 },
                 {
-                  icon: MdAlternateEmail,
                   name: 'Email',
+                  icon: MdAlternateEmail,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Last Login',
+                  icon: FiArrowRightCircle,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Last Logout',
+                  icon: FiArrowRightCircle,
                   sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'View User',
+                  icon: FaEye,
+                  action: () => {
+                    const column = useDashboardStore.getState().selectedItems[0];
+
+                    setSelectedItems([]);
+
+                    router.push(`/profile/u/${column[0].id}`);
+                  }
+                },
+                {
+                  name: 'Refresh Hashes',
+                  icon: MdRefresh,
+                  action: () => bulkAction({
+                    action: item => {
+                      toast.promise(getHashes(item.id), {
+                        loading: `Refreshing ${item.username}'s hashes...`,
+                        success: `Successfully refreshed ${item.username}'s hashes.`,
+                        error: error => error
+                      });
+                    },
+                    fetchKey: 'users'
+                  }),
+                  hide: !data.permissions?.canRefreshHashes
                 }
               ]
             }
           ]
-        },
-        title: 'Users',
-        totalCount: data?.users?.length || 0
-      },
-      id: 'users',
-      name: 'Users'
+        }
+      }
     },
     {
+      id: 'guilds',
+      name: 'Guilds',
       data: {
+        title: 'Guilds',
         subtitle: 'Here you can see the all the guilds that have been added discord.place bot to.',
+        totalCount: data?.guilds?.length || 0,
         tableData: {
           tabs: [
             {
+              label: 'Guilds',
               columns: data?.guilds?.sort((a, b) => new Date(b.joinedAt).getTime() - new Date(a.joinedAt).getTime()).map(guild => [
                 {
-                  icon: guild.icon,
+                  type: 'server',
                   id: guild.id,
                   name: guild.name,
-                  searchValues: [guild.name, guild.id],
+                  icon: guild.icon,
                   showId: true,
-                  type: 'server'
+                  searchValues: [guild.name, guild.id]
                 },
                 {
-                  searchValues: [guild.memberCount],
                   type: 'number',
-                  value: guild.memberCount
+                  value: guild.memberCount,
+                  searchValues: [guild.memberCount]
                 },
                 {
                   type: 'date',
                   value: new Date(guild.joinedAt)
                 }
               ]),
-              label: 'Guilds',
               rows: [
                 {
-                  icon: FaCompass,
                   name: 'Guild',
+                  icon: FaCompass,
                   sortable: true
                 },
                 {
-                  icon: RiGroup2Fill,
                   name: 'Members',
+                  icon: RiGroup2Fill,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Joined',
+                  icon: FiArrowRightCircle,
                   sortable: true
                 }
               ]
             }
           ]
-        },
-        title: 'Guilds',
-        totalCount: data?.guilds?.length || 0
-      },
-      id: 'guilds',
-      name: 'Guilds'
+        }
+      }
     },
     {
+      id: 'emojisQueue',
+      name: 'Emojis Queue',
       data: {
+        title: 'Emojis Queue',
         subtitle: 'Here you can see the all the emojis that published on discord.place.',
+        totalCount: data?.queue?.emojis?.length || 0,
         tableData: {
           tabs: [
             {
-              actions: [
-                {
-                  action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-
-                    router.push(`/emojis/${column[0].emoji_ids ? 'packages/' : ''}${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Emoji'
-                },
-                {
-                  action: () => bulkAction({
-                    action: item => approveEmoji(item.id),
-                    fetchKey: 'emojis'
-                  }),
-                  hide: !data.permissions?.canApproveEmojis,
-                  icon: IoMdCheckmarkCircle,
-                  name: 'Approve'
-                },
-                {
-                  hide: !data.permissions?.canApproveEmojis,
-                  icon: IoMdCloseCircle,
-                  name: 'Deny',
-                  trigger: DenyDropdown,
-                  triggerProps: {
-                    description: 'Please select a reason to deny.',
-                    onDeny: reason => bulkAction({
-                      action: item => denyEmoji(item.id, reason),
-                      fetchKey: 'emojis'
-                    }),
-                    reasons: config.emojisDenyReasons
-                  }
-                }
-              ],
+              label: 'Waiting Approval',
               columns: data?.queue?.emojis?.filter(emoji => !emoji.approved).map(emoji => [
                 {
-                  animated: emoji.animated,
-                  emoji_ids: emoji.emoji_ids,
+                  type: emoji.emoji_ids ? 'emojiPack' : 'emoji',
                   id: emoji.id,
                   name: emoji.name,
+                  animated: emoji.animated,
+                  emoji_ids: emoji.emoji_ids,
+                  showId: true,
                   searchValues: emoji.emoji_ids ?
                     [emoji.name, ...emoji.emoji_ids, emoji.emoji_ids.some(({ animated }) => animated) ? 'animated' : 'static'] :
-                    [emoji.name, emoji.id, emoji.animated ? 'animated' : 'static'],
-                  showId: true,
-                  type: emoji.emoji_ids ? 'emojiPack' : 'emoji'
+                    [emoji.name, emoji.id, emoji.animated ? 'animated' : 'static']
                 },
                 {
-                  avatar: emoji.user.avatar,
-                  id: emoji.user.id,
-                  searchValues: [emoji.user.username, emoji.user.id],
-                  showId: true,
                   type: 'user',
-                  username: emoji.user.username
+                  id: emoji.user.id,
+                  username: emoji.user.username,
+                  avatar: emoji.user.avatar,
+                  showId: true,
+                  searchValues: [emoji.user.username, emoji.user.id]
                 },
                 {
                   type: 'date',
                   value: new Date(emoji.created_at)
                 }
               ]),
-              label: 'Waiting Approval',
               rows: [
                 {
-                  icon: MdEmojiEmotions,
-                  name: 'Emoji'
+                  name: 'Emoji',
+                  icon: MdEmojiEmotions
                 },
                 {
-                  icon: FaUserCircle,
                   name: 'Publisher',
+                  icon: FaUserCircle,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'View Emoji',
+                  icon: FaEye,
+                  action: () => {
+                    const column = useDashboardStore.getState().selectedItems[0];
+
+                    router.push(`/emojis/${column[0].emoji_ids ? 'packages/' : ''}${column[0].id}`);
+                  }
+                },
+                {
+                  name: 'Approve',
+                  icon: IoMdCheckmarkCircle,
+                  action: () => bulkAction({
+                    action: item => approveEmoji(item.id),
+                    fetchKey: 'emojis'
+                  }),
+                  hide: !data.permissions?.canApproveEmojis
+                },
+                {
+                  name: 'Deny',
+                  icon: IoMdCloseCircle,
+                  trigger: DenyDropdown,
+                  triggerProps: {
+                    description: 'Please select a reason to deny.',
+                    reasons: config.emojisDenyReasons,
+                    onDeny: reason => bulkAction({
+                      action: item => denyEmoji(item.id, reason),
+                      fetchKey: 'emojis'
+                    })
+                  },
+                  hide: !data.permissions?.canApproveEmojis
                 }
               ]
             },
             {
+              label: 'Approved',
+              columns: data?.queue?.emojis?.filter(emoji => emoji.approved).map(emoji => [
+                {
+                  type: emoji.emoji_ids ? 'emojiPack' : 'emoji',
+                  id: emoji.id,
+                  name: emoji.name,
+                  animated: emoji.animated,
+                  emoji_ids: emoji.emoji_ids,
+                  searchValues: emoji.emoji_ids ?
+                    [emoji.name, ...emoji.emoji_ids, emoji.emoji_ids.some(({ animated }) => animated) ? 'animated' : 'static'] :
+                    [emoji.name, emoji.id, emoji.animated ? 'animated' : 'static']
+                },
+                {
+                  type: 'user',
+                  id: emoji.user.id,
+                  username: emoji.user.username,
+                  avatar: emoji.user.avatar,
+                  showId: true,
+                  searchValues: [emoji.user.username, emoji.user.id]
+                },
+                {
+                  type: 'date',
+                  value: new Date(emoji.created_at)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'Emoji',
+                  icon: MdEmojiEmotions
+                },
+                {
+                  name: 'Publisher',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Date Added',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                }
+              ],
               actions: [
                 {
+                  name: 'View Emoji',
+                  icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     router.push(`/emojis/${column[0].emoji_ids ? 'packages/' : ''}${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Emoji'
+                  }
                 },
                 {
+                  name: 'Download',
+                  icon: BiCloudDownload,
                   action: () => {
                     const columns = useDashboardStore.getState().selectedItems;
 
                     setSelectedItems([]);
 
                     columns.forEach(column => downloadEmoji(column[0]));
-                  },
-                  icon: BiCloudDownload,
-                  name: 'Download'
+                  }
                 },
                 {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteEmoji(item.id),
-                    fetchKey: 'emojis',
-                    name: 'emoji'
-                  }),
-                  hide: !data.permissions?.canDeleteEmojis,
+                  name: 'Delete',
                   icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
-              columns: data?.queue?.emojis?.filter(emoji => emoji.approved).map(emoji => [
-                {
-                  animated: emoji.animated,
-                  emoji_ids: emoji.emoji_ids,
-                  id: emoji.id,
-                  name: emoji.name,
-                  searchValues: emoji.emoji_ids ?
-                    [emoji.name, ...emoji.emoji_ids, emoji.emoji_ids.some(({ animated }) => animated) ? 'animated' : 'static'] :
-                    [emoji.name, emoji.id, emoji.animated ? 'animated' : 'static'],
-                  type: emoji.emoji_ids ? 'emojiPack' : 'emoji'
-                },
-                {
-                  avatar: emoji.user.avatar,
-                  id: emoji.user.id,
-                  searchValues: [emoji.user.username, emoji.user.id],
-                  showId: true,
-                  type: 'user',
-                  username: emoji.user.username
-                },
-                {
-                  type: 'date',
-                  value: new Date(emoji.created_at)
-                }
-              ]),
-              label: 'Approved',
-              rows: [
-                {
-                  icon: MdEmojiEmotions,
-                  name: 'Emoji'
-                },
-                {
-                  icon: FaUserCircle,
-                  name: 'Publisher',
-                  sortable: true
-                },
-                {
-                  icon: FiArrowRightCircle,
-                  name: 'Date Added',
-                  sortable: true
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'emoji',
+                    action: item => deleteEmoji(item.id),
+                    fetchKey: 'emojis'
+                  }),
+                  hide: !data.permissions?.canDeleteEmojis
                 }
               ]
             }
           ]
-        },
-        title: 'Emojis Queue',
-        totalCount: data?.queue?.emojis?.length || 0
-      },
-      id: 'emojisQueue',
-      name: 'Emojis Queue'
+        }
+      }
     },
     {
+      id: 'botsQueue',
+      name: 'Bots Queue',
       data: {
+        title: 'Bots Queue',
         subtitle: 'Here you can see the all the bots that listed on discord.place.',
+        totalCount: data?.queue?.bots?.length || 0,
         tableData: {
           tabs: [
             {
+              label: 'Waiting Approval',
+              columns: data?.queue?.bots?.filter(bot => !bot.verified).map(bot => [
+                {
+                  type: 'bot',
+                  id: bot.id,
+                  username: bot.username,
+                  discriminator: bot.discriminator,
+                  avatar: bot.avatar,
+                  showId: true,
+                  searchValues: [bot.username, bot.id]
+                },
+                {
+                  type: 'user',
+                  id: bot.owner.id,
+                  username: bot.owner.username,
+                  avatar: bot.owner.avatar,
+                  showId: true,
+                  searchValues: [bot.owner.username, bot.owner.id]
+                },
+                {
+                  type: 'category',
+                  value: bot.categories,
+                  iconsKey: 'botCategoriesIcons',
+                  searchValues: bot.categories
+                },
+                {
+                  type: 'date',
+                  value: new Date(bot.created_at)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'Bot',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Owner',
+                  icon: FaCrown,
+                  sortable: true
+                },
+                {
+                  name: 'Categories',
+                  icon: BiSolidCategory,
+                  sortable: true
+                },
+                {
+                  name: 'Date Added',
+                  icon: FiArrowRightCircle
+                }
+              ],
               actions: [
                 {
+                  name: 'Invite Bot',
+                  icon: FiArrowUpRight,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     window.open(`https://discord.com/oauth2/authorize?client_id=${column[0].id}&permissions=0&integration_type=0&scope=bot+applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`, '_blank');
-                  },
-                  icon: FiArrowUpRight,
-                  name: 'Invite Bot'
+                  }
                 },
                 {
+                  name: 'Approve',
+                  icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     action: item => approveBot(item.id),
                     fetchKey: 'bots'
                   }),
-                  hide: !data.permissions?.canApproveBots,
-                  icon: IoMdCheckmarkCircle,
-                  name: 'Approve'
+                  hide: !data.permissions?.canApproveBots
                 },
                 {
-                  hide: !data.permissions?.canApproveBots,
-                  icon: IoMdCloseCircle,
                   name: 'Deny',
+                  icon: IoMdCloseCircle,
                   trigger: DenyDropdown,
                   triggerProps: {
                     description: 'Please select a reason to deny.',
+                    reasons: config.botsDenyReasons,
                     onDeny: reason => bulkAction({
                       action: item => denyBot(item.id, reason),
                       fetchKey: 'bots'
-                    }),
-                    reasons: config.botsDenyReasons
-                  }
+                    })
+                  },
+                  hide: !data.permissions?.canApproveBots
                 }
-              ],
-              columns: data?.queue?.bots?.filter(bot => !bot.verified).map(bot => [
+              ]
+            },
+            {
+              label: 'Approved',
+              columns: data?.queue?.bots?.filter(bot => bot.verified).map(bot => [
                 {
-                  avatar: bot.avatar,
-                  discriminator: bot.discriminator,
-                  id: bot.id,
-                  searchValues: [bot.username, bot.id],
-                  showId: true,
                   type: 'bot',
-                  username: bot.username
-                },
-                {
-                  avatar: bot.owner.avatar,
-                  id: bot.owner.id,
-                  searchValues: [bot.owner.username, bot.owner.id],
+                  id: bot.id,
+                  username: bot.username,
+                  discriminator: bot.discriminator,
+                  avatar: bot.avatar,
                   showId: true,
-                  type: 'user',
-                  username: bot.owner.username
+                  searchValues: [bot.username, bot.id]
                 },
                 {
-                  iconsKey: 'botCategoriesIcons',
-                  searchValues: bot.categories,
+                  type: 'user',
+                  id: bot.owner.id,
+                  username: bot.owner.username,
+                  avatar: bot.owner.avatar,
+                  showId: true,
+                  searchValues: [bot.owner.username, bot.owner.id]
+                },
+                {
                   type: 'category',
-                  value: bot.categories
+                  value: bot.categories,
+                  iconsKey: 'botCategoriesIcons',
+                  searchValues: bot.categories
                 },
                 {
                   type: 'date',
                   value: new Date(bot.created_at)
                 }
               ]),
-              label: 'Waiting Approval',
               rows: [
                 {
-                  icon: FaUserCircle,
                   name: 'Bot',
+                  icon: FaUserCircle,
                   sortable: true
                 },
                 {
-                  icon: FaCrown,
                   name: 'Owner',
+                  icon: FaCrown,
                   sortable: true
                 },
                 {
-                  icon: BiSolidCategory,
                   name: 'Categories',
+                  icon: BiSolidCategory,
                   sortable: true
                 },
                 {
+                  name: 'Date Added',
                   icon: FiArrowRightCircle,
-                  name: 'Date Added'
+                  sortable: true
                 }
-              ]
-            },
-            {
+              ],
               actions: [
                 {
+                  name: 'View Bot',
+                  icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     router.push(`/bots/${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Bot'
+                  }
                 },
                 {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteBot(item.id),
-                    fetchKey: 'bots',
-                    name: 'bot'
-                  }),
-                  hide: !data.permissions?.canDeleteBots,
+                  name: 'Delete',
                   icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
-              columns: data?.queue?.bots?.filter(bot => bot.verified).map(bot => [
-                {
-                  avatar: bot.avatar,
-                  discriminator: bot.discriminator,
-                  id: bot.id,
-                  searchValues: [bot.username, bot.id],
-                  showId: true,
-                  type: 'bot',
-                  username: bot.username
-                },
-                {
-                  avatar: bot.owner.avatar,
-                  id: bot.owner.id,
-                  searchValues: [bot.owner.username, bot.owner.id],
-                  showId: true,
-                  type: 'user',
-                  username: bot.owner.username
-                },
-                {
-                  iconsKey: 'botCategoriesIcons',
-                  searchValues: bot.categories,
-                  type: 'category',
-                  value: bot.categories
-                },
-                {
-                  type: 'date',
-                  value: new Date(bot.created_at)
-                }
-              ]),
-              label: 'Approved',
-              rows: [
-                {
-                  icon: FaUserCircle,
-                  name: 'Bot',
-                  sortable: true
-                },
-                {
-                  icon: FaCrown,
-                  name: 'Owner',
-                  sortable: true
-                },
-                {
-                  icon: BiSolidCategory,
-                  name: 'Categories',
-                  sortable: true
-                },
-                {
-                  icon: FiArrowRightCircle,
-                  name: 'Date Added',
-                  sortable: true
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'bot',
+                    action: item => deleteBot(item.id),
+                    fetchKey: 'bots'
+                  }),
+                  hide: !data.permissions?.canDeleteBots
                 }
               ]
             }
           ]
-        },
-        title: 'Bots Queue',
-        totalCount: data?.queue?.bots?.length || 0
-      },
-      id: 'botsQueue',
-      name: 'Bots Queue'
+        }
+      }
     },
     {
+      id: 'templatesQueue',
+      name: 'Templates Queue',
       data: {
+        title: 'Templates Queue',
         subtitle: 'Here you can see the all the templates that published on discord.place.',
+        totalCount: data?.queue?.templates?.length || 0,
         tableData: {
           tabs: [
             {
+              label: 'Waiting Approval',
+              columns: data?.queue?.templates?.filter(template => !template.approved).map(template => [
+                {
+                  type: 'template',
+                  id: template.id,
+                  name: template.name,
+                  searchValues: [template.name, template.id]
+                },
+                {
+                  type: 'user',
+                  id: template.user.id,
+                  username: template.user.username,
+                  avatar: template.user.avatar,
+                  showId: true,
+                  searchValues: [template.user.username, template.user.id]
+                },
+                {
+                  type: 'category',
+                  value: template.categories,
+                  iconsKey: 'templateCategoriesIcons',
+                  searchValues: template.categories
+                },
+                {
+                  type: 'date',
+                  value: new Date(template.created_at)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'Template',
+                  icon: HiTemplate,
+                  sortable: true
+                },
+                {
+                  name: 'Publisher',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Categories',
+                  icon: BiSolidCategory,
+                  sortable: true
+                },
+                {
+                  name: 'Date Added',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                }
+              ],
               actions: [
                 {
+                  name: 'Template Preview',
+                  icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     router.push(`/templates/${column[0].id}/preview`);
-                  },
-                  icon: FaEye,
-                  name: 'Template Preview'
+                  }
                 },
                 {
+                  name: 'Approve',
+                  icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     action: item => approveTemplate(item.id),
                     fetchKey: 'templates'
                   }),
-                  hide: !data.permissions?.canApproveTemplates,
-                  icon: IoMdCheckmarkCircle,
-                  name: 'Approve'
+                  hide: !data.permissions?.canApproveTemplates
                 },
                 {
-                  hide: !data.permissions?.canApproveTemplates,
-                  icon: IoMdCloseCircle,
                   name: 'Deny',
+                  icon: IoMdCloseCircle,
                   trigger: DenyDropdown,
                   triggerProps: {
                     description: 'Please select a reason to deny.',
+                    reasons: config.templatesDenyReasons,
                     onDeny: reason => bulkAction({
                       action: item => denyTemplate(item.id, reason),
                       fetchKey: 'templates'
-                    }),
-                    reasons: config.templatesDenyReasons
-                  }
+                    })
+                  },
+                  hide: !data.permissions?.canApproveTemplates
                 }
-              ],
-              columns: data?.queue?.templates?.filter(template => !template.approved).map(template => [
+              ]
+            },
+            {
+              label: 'Approved',
+              columns: data?.queue?.templates?.filter(template => template.approved).map(template => [
                 {
+                  type: 'template',
                   id: template.id,
                   name: template.name,
-                  searchValues: [template.name, template.id],
-                  type: 'template'
+                  searchValues: [template.name, template.id]
                 },
                 {
-                  avatar: template.user.avatar,
-                  id: template.user.id,
-                  searchValues: [template.user.username, template.user.id],
-                  showId: true,
                   type: 'user',
-                  username: template.user.username
+                  id: template.user.id,
+                  username: template.user.username,
+                  avatar: template.user.avatar,
+                  showId: true,
+                  searchValues: [template.user.username, template.user.id]
                 },
                 {
-                  iconsKey: 'templateCategoriesIcons',
-                  searchValues: template.categories,
                   type: 'category',
-                  value: template.categories
+                  value: template.categories,
+                  iconsKey: 'templateCategoriesIcons',
+                  searchValues: template.categories
                 },
                 {
                   type: 'date',
                   value: new Date(template.created_at)
                 }
               ]),
-              label: 'Waiting Approval',
               rows: [
                 {
-                  icon: HiTemplate,
                   name: 'Template',
+                  icon: HiTemplate,
                   sortable: true
                 },
                 {
-                  icon: FaUserCircle,
                   name: 'Publisher',
+                  icon: FaUserCircle,
                   sortable: true
                 },
                 {
-                  icon: BiSolidCategory,
                   name: 'Categories',
+                  icon: BiSolidCategory,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
                 }
-              ]
-            },
-            {
+              ],
               actions: [
                 {
+                  name: 'Template Preview',
+                  icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     router.push(`/templates/${column[0].id}/preview`);
-                  },
-                  icon: FaEye,
-                  name: 'Template Preview'
+                  }
                 },
                 {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteTemplate(item.id),
-                    fetchKey: 'templates',
-                    name: 'template'
-                  }),
-                  hide: !data.permissions?.canDeleteTemplates,
+                  name: 'Delete',
                   icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
-              columns: data?.queue?.templates?.filter(template => template.approved).map(template => [
-                {
-                  id: template.id,
-                  name: template.name,
-                  searchValues: [template.name, template.id],
-                  type: 'template'
-                },
-                {
-                  avatar: template.user.avatar,
-                  id: template.user.id,
-                  searchValues: [template.user.username, template.user.id],
-                  showId: true,
-                  type: 'user',
-                  username: template.user.username
-                },
-                {
-                  iconsKey: 'templateCategoriesIcons',
-                  searchValues: template.categories,
-                  type: 'category',
-                  value: template.categories
-                },
-                {
-                  type: 'date',
-                  value: new Date(template.created_at)
-                }
-              ]),
-              label: 'Approved',
-              rows: [
-                {
-                  icon: HiTemplate,
-                  name: 'Template',
-                  sortable: true
-                },
-                {
-                  icon: FaUserCircle,
-                  name: 'Publisher',
-                  sortable: true
-                },
-                {
-                  icon: BiSolidCategory,
-                  name: 'Categories',
-                  sortable: true
-                },
-                {
-                  icon: FiArrowRightCircle,
-                  name: 'Date Added',
-                  sortable: true
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'template',
+                    action: item => deleteTemplate(item.id),
+                    fetchKey: 'templates'
+                  }),
+                  hide: !data.permissions?.canDeleteTemplates
                 }
               ]
             }
           ]
-        },
-        title: 'Templates Queue',
-        totalCount: data?.queue?.templates?.length || 0
-      },
-      id: 'templatesQueue',
-      name: 'Templates Queue'
+        }
+      }
     },
     {
+      id: 'soundsQueue',
+      name: 'Sounds Queue',
       data: {
+        title: 'Sounds Queue',
         subtitle: 'Here you can see the all the sounds that published on discord.place.',
+        totalCount: data?.queue?.sounds?.length || 0,
         tableData: {
           tabs: [
             {
-              actions: [
-                {
-                  action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-
-                    setSelectedItems([]);
-
-                    router.push(`/sounds/${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Sound'
-                },
-                {
-                  action: () => bulkAction({
-                    action: item => approveSound(item.id),
-                    data: data.queue.sounds,
-                    fetchKey: 'sounds'
-                  }),
-                  hide: !data.permissions?.canApproveSounds,
-                  icon: IoMdCheckmarkCircle,
-                  name: 'Approve'
-                },
-                {
-                  hide: !data.permissions?.canApproveSounds,
-                  icon: IoMdCloseCircle,
-                  name: 'Deny',
-                  trigger: DenyDropdown,
-                  triggerProps: {
-                    description: 'Please select a reason to deny.',
-                    onDeny: reason => bulkAction({
-                      action: item => denySound(item.id, reason),
-                      fetchKey: 'sounds'
-                    }),
-                    reasons: config.soundsDenyReasons
-                  }
-                }
-              ],
+              label: 'Waiting Approval',
               columns: data?.queue?.sounds?.filter(sound => !sound.approved).map(sound => [
                 {
+                  type: 'sound',
                   id: sound.id,
                   name: sound.name,
-                  searchValues: [sound.name, sound.id],
-                  type: 'sound'
+                  searchValues: [sound.name, sound.id]
                 },
                 {
-                  avatar: sound.publisher.avatar,
-                  id: sound.publisher.id,
-                  searchValues: [sound.publisher.username, sound.publisher.id],
-                  showId: true,
                   type: 'user',
-                  username: sound.publisher.username
+                  id: sound.publisher.id,
+                  username: sound.publisher.username,
+                  avatar: sound.publisher.avatar,
+                  showId: true,
+                  searchValues: [sound.publisher.username, sound.publisher.id]
                 },
                 {
-                  iconsKey: 'soundCategoriesIcons',
-                  searchValues: sound.categories,
                   type: 'category',
-                  value: sound.categories
+                  value: sound.categories,
+                  iconsKey: 'soundCategoriesIcons',
+                  searchValues: sound.categories
                 },
                 {
                   type: 'date',
                   value: new Date(sound.createdAt)
                 }
               ]),
-              label: 'Waiting Approval',
               rows: [
                 {
-                  icon: PiWaveformBold,
                   name: 'Sound',
+                  icon: PiWaveformBold,
                   sortable: true
                 },
                 {
-                  icon: FaUserCircle,
                   name: 'Publisher',
+                  icon: FaUserCircle,
                   sortable: true
                 },
                 {
-                  icon: BiSolidCategory,
                   name: 'Categories',
+                  icon: BiSolidCategory,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'View Sound',
+                  icon: FaEye,
+                  action: () => {
+                    const column = useDashboardStore.getState().selectedItems[0];
+
+                    setSelectedItems([]);
+
+                    router.push(`/sounds/${column[0].id}`);
+                  }
+                },
+                {
+                  name: 'Approve',
+                  icon: IoMdCheckmarkCircle,
+                  action: () => bulkAction({
+                    data: data.queue.sounds,
+                    action: item => approveSound(item.id),
+                    fetchKey: 'sounds'
+                  }),
+                  hide: !data.permissions?.canApproveSounds
+                },
+                {
+                  name: 'Deny',
+                  icon: IoMdCloseCircle,
+                  trigger: DenyDropdown,
+                  triggerProps: {
+                    description: 'Please select a reason to deny.',
+                    reasons: config.soundsDenyReasons,
+                    onDeny: reason => bulkAction({
+                      action: item => denySound(item.id, reason),
+                      fetchKey: 'sounds'
+                    })
+                  },
+                  hide: !data.permissions?.canApproveSounds
                 }
               ]
             },
             {
-              actions: [
-                {
-                  action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-
-                    setSelectedItems([]);
-
-                    router.push(`/sounds/${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Sound'
-                },
-                {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteSound(item.id),
-                    fetchKey: 'sounds',
-                    name: 'sound'
-                  }),
-                  hide: !data.permissions?.canDeleteSounds,
-                  icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
+              label: 'Approved',
               columns: data?.queue?.sounds?.filter(sound => sound.approved).map(sound => [
                 {
+                  type: 'sound',
                   id: sound.id,
                   name: sound.name,
-                  searchValues: [sound.name, sound.id],
-                  type: 'sound'
+                  searchValues: [sound.name, sound.id]
                 },
                 {
-                  avatar: sound.publisher.avatar,
-                  id: sound.publisher.id,
-                  searchValues: [sound.publisher.username, sound.publisher.id],
-                  showId: true,
                   type: 'user',
-                  username: sound.publisher.username
+                  id: sound.publisher.id,
+                  username: sound.publisher.username,
+                  avatar: sound.publisher.avatar,
+                  showId: true,
+                  searchValues: [sound.publisher.username, sound.publisher.id]
                 },
                 {
-                  iconsKey: 'soundCategoriesIcons',
-                  searchValues: sound.categories,
                   type: 'category',
-                  value: sound.categories
+                  value: sound.categories,
+                  iconsKey: 'soundCategoriesIcons',
+                  searchValues: sound.categories
                 },
                 {
                   type: 'date',
                   value: new Date(sound.createdAt)
                 }
               ]),
-              label: 'Approved',
               rows: [
                 {
-                  icon: PiWaveformBold,
                   name: 'Sound',
+                  icon: PiWaveformBold,
                   sortable: true
                 },
                 {
-                  icon: FaUserCircle,
                   name: 'Publisher',
+                  icon: FaUserCircle,
                   sortable: true
                 },
                 {
-                  icon: BiSolidCategory,
                   name: 'Categories',
+                  icon: BiSolidCategory,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'View Sound',
+                  icon: FaEye,
+                  action: () => {
+                    const column = useDashboardStore.getState().selectedItems[0];
+
+                    setSelectedItems([]);
+
+                    router.push(`/sounds/${column[0].id}`);
+                  }
+                },
+                {
+                  name: 'Delete',
+                  icon: IoMdCloseCircle,
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'sound',
+                    action: item => deleteSound(item.id),
+                    fetchKey: 'sounds'
+                  }),
+                  hide: !data.permissions?.canDeleteSounds
                 }
               ]
             }
           ]
-        },
-        title: 'Sounds Queue',
-        totalCount: data?.queue?.sounds?.length || 0
-      },
-      id: 'soundsQueue',
-      name: 'Sounds Queue'
+        }
+      }
     },
     {
+      id: 'reviewsQueue',
+      name: 'Reviews Queue',
       data: {
+        title: 'Reviews Queue',
         subtitle: 'Here you can see the all the reviews that published on discord.place.',
+        totalCount: data?.queue?.reviews?.length || 0,
         tableData: {
           tabs: [
             {
+              label: 'Waiting Approval',
+              columns: data?.queue?.reviews?.filter(review => !review.approved).map(review => [
+                {
+                  type: 'text',
+                  value: review.server ? review.server.id : review.bot.id,
+                  custom: {
+                    type: review.server ? 'server' : 'bot',
+                    id: review._id
+                  },
+                  searchValues: [review.server ? review.server.id : review.bot.id]
+                },
+                {
+                  type: 'user',
+                  id: review.user.id,
+                  username: review.user.username,
+                  avatar: review.user.avatar,
+                  showId: true,
+                  searchValues: [review.user.username, review.user.id]
+                },
+                {
+                  type: 'rating',
+                  value: review.rating,
+                  searchValues: [`${review.rating} star${review.rating > 1 ? 's' : ''}`]
+                },
+                {
+                  type: 'long-text',
+                  value: review.content,
+                  searchValues: [review.content]
+                },
+                {
+                  type: 'date',
+                  value: new Date(review.createdAt)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'Server/Bot ID',
+                  icon: FaCompass
+                },
+                {
+                  name: 'User',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Rating',
+                  icon: MdStarRate,
+                  sortable: true
+                },
+                {
+                  name: 'Content',
+                  icon: FaEye
+                },
+                {
+                  name: 'Date Added',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                }
+              ],
               actions: [
                 {
+                  name: 'View Server/Bot',
+                  icon: FaEye,
                   action: () => {
                     const [column] = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     router.push(`/${column.custom.type === 'server' ? 'servers' : 'bots'}/${column.value}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Server/Bot'
+                  }
                 },
                 {
+                  name: 'Approve',
+                  icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
-                    action: item => approveReview(item.custom.type, item.value, item.custom.id),
                     data: data.queue.reviews,
+                    action: item => approveReview(item.custom.type, item.value, item.custom.id),
                     fetchKey: 'reviews'
                   }),
-                  hide: !data.permissions?.canApproveReviews,
-                  icon: IoMdCheckmarkCircle,
-                  name: 'Approve'
+                  hide: !data.permissions?.canApproveReviews
                 },
                 {
-                  hide: !data.permissions?.canApproveReviews,
-                  icon: IoMdCloseCircle,
                   name: 'Deny',
+                  icon: IoMdCloseCircle,
                   trigger: DenyDropdown,
                   triggerProps: {
-                    customReason: true,
                     description: 'Add a custom reason to deny this review.',
+                    reasons: {},
                     onDeny: reason => bulkAction({
                       action: item => denyReview(item.custom.type, item.value, item.custom.id, reason),
                       fetchKey: 'reviews'
                     }),
-                    reasons: {}
-                  }
-                }
-              ],
-              columns: data?.queue?.reviews?.filter(review => !review.approved).map(review => [
-                {
-                  custom: {
-                    id: review._id,
-                    type: review.server ? 'server' : 'bot'
+                    customReason: true
                   },
-                  searchValues: [review.server ? review.server.id : review.bot.id],
+                  hide: !data.permissions?.canApproveReviews
+                }
+              ]
+            },
+            {
+              label: 'Approved',
+              columns: data?.queue?.reviews?.filter(review => review.approved).map(review => [
+                {
                   type: 'text',
-                  value: review.server ? review.server.id : review.bot.id
+                  value: review.server ? review.server.id : review.bot.id,
+                  custom: {
+                    type: review.server ? 'server' : 'bot',
+                    id: review._id
+                  },
+                  searchValues: [review.server ? review.server.id : review.bot.id]
                 },
                 {
-                  avatar: review.user.avatar,
-                  id: review.user.id,
-                  searchValues: [review.user.username, review.user.id],
-                  showId: true,
                   type: 'user',
-                  username: review.user.username
+                  id: review.user.id,
+                  username: review.user.username,
+                  avatar: review.user.avatar,
+                  showId: true,
+                  searchValues: [review.user.username, review.user.id]
                 },
                 {
-                  searchValues: [`${review.rating} star${review.rating > 1 ? 's' : ''}`],
                   type: 'rating',
-                  value: review.rating
+                  value: review.rating,
+                  searchValues: [`${review.rating} star${review.rating > 1 ? 's' : ''}`]
                 },
                 {
-                  searchValues: [review.content],
                   type: 'long-text',
-                  value: review.content
+                  value: review.content,
+                  searchValues: [review.content]
                 },
                 {
                   type: 'date',
                   value: new Date(review.createdAt)
                 }
               ]),
-              label: 'Waiting Approval',
               rows: [
                 {
-                  icon: FaCompass,
-                  name: 'Server/Bot ID'
+                  name: 'Server/Bot ID',
+                  icon: FaCompass
                 },
                 {
-                  icon: FaUserCircle,
                   name: 'User',
+                  icon: FaUserCircle,
                   sortable: true
                 },
                 {
-                  icon: MdStarRate,
                   name: 'Rating',
+                  icon: MdStarRate,
                   sortable: true
                 },
                 {
-                  icon: FaEye,
-                  name: 'Content'
+                  name: 'Content',
+                  icon: FaEye
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
                 }
-              ]
-            },
-            {
+              ],
               actions: [
                 {
+                  name: 'View Server/Bot',
+                  icon: FaEye,
                   action: () => {
                     const [column] = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     router.push(`/${column.custom.type === 'server' ? 'servers' : 'bots'}/${column.value}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Server/Bot'
+                  }
                 },
                 {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteReview(item.custom.type, item.value, item.custom.id),
-                    fetchKey: 'reviews',
-                    name: 'review'
-                  }),
-                  hide: !data.permissions?.canDeleteReviews,
+                  name: 'Delete',
                   icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
-              columns: data?.queue?.reviews?.filter(review => review.approved).map(review => [
-                {
-                  custom: {
-                    id: review._id,
-                    type: review.server ? 'server' : 'bot'
-                  },
-                  searchValues: [review.server ? review.server.id : review.bot.id],
-                  type: 'text',
-                  value: review.server ? review.server.id : review.bot.id
-                },
-                {
-                  avatar: review.user.avatar,
-                  id: review.user.id,
-                  searchValues: [review.user.username, review.user.id],
-                  showId: true,
-                  type: 'user',
-                  username: review.user.username
-                },
-                {
-                  searchValues: [`${review.rating} star${review.rating > 1 ? 's' : ''}`],
-                  type: 'rating',
-                  value: review.rating
-                },
-                {
-                  searchValues: [review.content],
-                  type: 'long-text',
-                  value: review.content
-                },
-                {
-                  type: 'date',
-                  value: new Date(review.createdAt)
-                }
-              ]),
-              label: 'Approved',
-              rows: [
-                {
-                  icon: FaCompass,
-                  name: 'Server/Bot ID'
-                },
-                {
-                  icon: FaUserCircle,
-                  name: 'User',
-                  sortable: true
-                },
-                {
-                  icon: MdStarRate,
-                  name: 'Rating',
-                  sortable: true
-                },
-                {
-                  icon: FaEye,
-                  name: 'Content'
-                },
-                {
-                  icon: FiArrowRightCircle,
-                  name: 'Date Added',
-                  sortable: true
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'review',
+                    action: item => deleteReview(item.custom.type, item.value, item.custom.id),
+                    fetchKey: 'reviews'
+                  }),
+                  hide: !data.permissions?.canDeleteReviews
                 }
               ]
             }
           ]
-        },
-        title: 'Reviews Queue',
-        totalCount: data?.queue?.reviews?.length || 0
-      },
-      id: 'reviewsQueue',
-      name: 'Reviews Queue'
+        }
+      }
     },
     {
+      id: 'themesQueue',
+      name: 'Themes Queue',
       data: {
+        title: 'Themes Queue',
         subtitle: 'Here you can see the all the themes that published on discord.place.',
+        totalCount: data?.queue?.themes?.length || 0,
         tableData: {
           tabs: [
             {
+              label: 'Waiting Approval',
+              columns: data?.queue?.themes?.filter(theme => !theme.approved).map(theme => [
+                {
+                  type: 'theme',
+                  id: theme.id,
+                  colors: theme.colors,
+                  searchValues: [theme.colors.primary, theme.colors.secondary]
+                },
+                {
+                  type: 'user',
+                  id: theme.publisher.id,
+                  username: theme.publisher.username,
+                  avatar: theme.publisher.avatar,
+                  showId: true,
+                  searchValues: [theme.publisher.username, theme.publisher.id]
+                },
+                {
+                  type: 'category',
+                  value: theme.categories,
+                  iconsKey: 'themeCategoriesIcons',
+                  searchValues: theme.categories
+                },
+                {
+                  type: 'date',
+                  value: new Date(theme.createdAt)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'Theme',
+                  icon: HiTemplate,
+                  sortable: true
+                },
+                {
+                  name: 'Publisher',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Categories',
+                  icon: BiSolidCategory,
+                  sortable: true
+                },
+                {
+                  name: 'Date Added',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                }
+              ],
               actions: [
                 {
+                  name: 'View Theme',
+                  icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     router.push(`/themes/${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Theme'
+                  }
                 },
                 {
+                  name: 'Approve',
+                  icon: IoMdCheckmarkCircle,
                   action: () => bulkAction({
                     action: item => approveTheme(item.id),
                     fetchKey: 'themes'
                   }),
-                  hide: !data.permissions?.canApproveThemes,
-                  icon: IoMdCheckmarkCircle,
-                  name: 'Approve'
+                  hide: !data.permissions?.canApproveThemes
                 },
                 {
-                  hide: !data.permissions?.canApproveThemes,
-                  icon: IoMdCloseCircle,
                   name: 'Deny',
+                  icon: IoMdCloseCircle,
                   trigger: DenyDropdown,
                   triggerProps: {
                     description: 'Please select a reason to deny.',
+                    reasons: config.themesDenyReasons,
                     onDeny: reason => bulkAction({
                       action: item => denyTheme(item.id, reason),
                       fetchKey: 'themes'
-                    }),
-                    reasons: config.themesDenyReasons
-                  }
+                    })
+                  },
+                  hide: !data.permissions?.canApproveThemes
                 }
-              ],
-              columns: data?.queue?.themes?.filter(theme => !theme.approved).map(theme => [
+              ]
+            },
+            {
+              label: 'Approved',
+              columns: data?.queue?.themes?.filter(theme => theme.approved).map(theme => [
                 {
-                  colors: theme.colors,
+                  type: 'theme',
                   id: theme.id,
-                  searchValues: [theme.colors.primary, theme.colors.secondary],
-                  type: 'theme'
+                  colors: theme.colors,
+                  searchValues: [theme.colors.primary, theme.colors.secondary]
                 },
                 {
-                  avatar: theme.publisher.avatar,
-                  id: theme.publisher.id,
-                  searchValues: [theme.publisher.username, theme.publisher.id],
-                  showId: true,
                   type: 'user',
-                  username: theme.publisher.username
+                  id: theme.publisher.id,
+                  username: theme.publisher.username,
+                  avatar: theme.publisher.avatar,
+                  showId: true,
+                  searchValues: [theme.publisher.username, theme.publisher.id]
                 },
                 {
-                  iconsKey: 'themeCategoriesIcons',
-                  searchValues: theme.categories,
                   type: 'category',
-                  value: theme.categories
+                  value: theme.categories,
+                  iconsKey: 'themeCategoriesIcons',
+                  searchValues: theme.categories
                 },
                 {
                   type: 'date',
                   value: new Date(theme.createdAt)
                 }
               ]),
-              label: 'Waiting Approval',
               rows: [
                 {
-                  icon: HiTemplate,
                   name: 'Theme',
+                  icon: HiTemplate,
                   sortable: true
                 },
                 {
-                  icon: FaUserCircle,
                   name: 'Publisher',
+                  icon: FaUserCircle,
                   sortable: true
                 },
                 {
-                  icon: BiSolidCategory,
                   name: 'Categories',
+                  icon: BiSolidCategory,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
                 }
-              ]
-            },
-            {
+              ],
               actions: [
                 {
+                  name: 'View Theme',
+                  icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     router.push(`/themes/${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Theme'
+                  }
                 },
                 {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteTheme(item.id),
-                    fetchKey: 'themes',
-                    name: 'theme'
-                  }),
-                  hide: !data.permissions?.canDeleteThemes,
+                  name: 'Delete',
                   icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
-              columns: data?.queue?.themes?.filter(theme => theme.approved).map(theme => [
-                {
-                  colors: theme.colors,
-                  id: theme.id,
-                  searchValues: [theme.colors.primary, theme.colors.secondary],
-                  type: 'theme'
-                },
-                {
-                  avatar: theme.publisher.avatar,
-                  id: theme.publisher.id,
-                  searchValues: [theme.publisher.username, theme.publisher.id],
-                  showId: true,
-                  type: 'user',
-                  username: theme.publisher.username
-                },
-                {
-                  iconsKey: 'themeCategoriesIcons',
-                  searchValues: theme.categories,
-                  type: 'category',
-                  value: theme.categories
-                },
-                {
-                  type: 'date',
-                  value: new Date(theme.createdAt)
-                }
-              ]),
-              label: 'Approved',
-              rows: [
-                {
-                  icon: HiTemplate,
-                  name: 'Theme',
-                  sortable: true
-                },
-                {
-                  icon: FaUserCircle,
-                  name: 'Publisher',
-                  sortable: true
-                },
-                {
-                  icon: BiSolidCategory,
-                  name: 'Categories',
-                  sortable: true
-                },
-                {
-                  icon: FiArrowRightCircle,
-                  name: 'Date Added',
-                  sortable: true
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'theme',
+                    action: item => deleteTheme(item.id),
+                    fetchKey: 'themes'
+                  }),
+                  hide: !data.permissions?.canDeleteThemes
                 }
               ]
             }
           ]
-        },
-        title: 'Themes Queue',
-        totalCount: data?.queue?.themes?.length || 0
-      },
-      id: 'themesQueue',
-      name: 'Themes Queue'
+        }
+      }
     },
     {
+      id: 'links',
+      name: 'Links',
       data: {
+        title: 'Links',
         subtitle: 'Here you can see the all the links that have been created.',
+        totalCount: data?.links?.length || 0,
         tableData: {
           tabs: [
             {
+              label: 'Links',
+              columns: data?.links?.map(item => [
+                {
+                  type: 'link',
+                  name: item.name,
+                  redirectTo: item.redirectTo,
+                  searchValues: [item.name, item.redirectTo]
+                },
+                {
+                  type: 'number',
+                  value: item.visits,
+                  searchValues: [item.visits]
+                },
+                {
+                  type: 'user',
+                  id: item.createdBy.id,
+                  username: item.createdBy.username,
+                  avatar: item.createdBy.avatar,
+                  showId: true,
+                  searchValues: [item.createdBy.username, item.createdBy.id]
+                },
+                {
+                  type: 'date',
+                  value: new Date(item.createdAt)
+                }
+              ]),
+              rows: [
+                {
+                  name: 'URL',
+                  icon: FiLink,
+                  sortable: true
+                },
+                {
+                  name: 'Visits',
+                  icon: MdVisibility,
+                  sortable: true
+                },
+                {
+                  name: 'Created By',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Date Added',
+                  icon: FiArrowRightCircle,
+                  sortable: true
+                }
+              ],
               actions: [
                 {
+                  name: 'Visit',
+                  icon: MdOpenInNew,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     window.open(column[0].redirectTo, '_blank');
-                  },
-                  icon: MdOpenInNew,
-                  name: 'Visit'
+                  }
                 },
                 {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteLink(item.id),
-                    fetchKey: 'links',
-                    name: 'link'
-                  }),
-                  hide: !data.permissions?.canDeleteLinks,
+                  name: 'Delete',
                   icon: IoMdCloseCircle,
-                  name: 'Delete'
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'link',
+                    action: item => deleteLink(item.id),
+                    fetchKey: 'links'
+                  }),
+                  hide: !data.permissions?.canDeleteLinks
                 }
-              ],
-              columns: data?.links?.map(item => [
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      id: 'botDenies',
+      name: 'Bot Denies',
+      data: {
+        title: 'Bot Denies',
+        subtitle: 'Here you can see the all the bot denies that have been recorded. (last 6 hours only)',
+        totalCount: data?.botDenies?.length || 0,
+        tableData: {
+          tabs: [
+            {
+              label: 'Denied Bots',
+              columns: data?.botDenies?.map(item => [
                 {
-                  name: item.name,
-                  redirectTo: item.redirectTo,
-                  searchValues: [item.name, item.redirectTo],
-                  type: 'link'
-                },
-                {
-                  searchValues: [item.visits],
-                  type: 'number',
-                  value: item.visits
-                },
-                {
-                  avatar: item.createdBy.avatar,
-                  id: item.createdBy.id,
-                  searchValues: [item.createdBy.username, item.createdBy.id],
+                  type: 'bot',
+                  id: item.bot.id,
+                  username: item.bot.username,
+                  discriminator: item.bot.discriminator,
+                  avatar: item.bot.avatar,
                   showId: true,
+                  searchValues: [item.bot.username, item.bot.id]
+                },
+                {
                   type: 'user',
-                  username: item.createdBy.username
+                  id: item.user.id,
+                  username: item.user.username,
+                  avatar: item.user.avatar,
+                  showId: true,
+                  searchValues: [item.user.username, item.user.id]
+                },
+                {
+                  type: 'user',
+                  id: item.reviewer.id,
+                  username: item.reviewer.username,
+                  avatar: item.reviewer.avatar,
+                  showId: true,
+                  searchValues: [item.reviewer.username, item.reviewer.id]
+                },
+                {
+                  type: 'reason',
+                  value: item.reason,
+                  searchValues: [item.reason]
                 },
                 {
                   type: 'date',
                   value: new Date(item.createdAt)
                 }
               ]),
-              label: 'Links',
               rows: [
                 {
-                  icon: FiLink,
-                  name: 'URL',
-                  sortable: true
-                },
-                {
-                  icon: MdVisibility,
-                  name: 'Visits',
-                  sortable: true
-                },
-                {
+                  name: 'Bot',
                   icon: FaUserCircle,
-                  name: 'Created By',
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
+                  name: 'User',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Reviewer',
+                  icon: FaUserCircle,
+                  sortable: true
+                },
+                {
+                  name: 'Reason',
+                  icon: RiPencilFill
+                },
+                {
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
                 }
-              ]
-            }
-          ]
-        },
-        title: 'Links',
-        totalCount: data?.links?.length || 0
-      },
-      id: 'links',
-      name: 'Links'
-    },
-    {
-      data: {
-        subtitle: 'Here you can see the all the bot denies that have been recorded. (last 6 hours only)',
-        tableData: {
-          tabs: [
-            {
+              ],
               actions: [
                 {
+                  name: 'View Bot',
+                  icon: FaEye,
                   action: () => {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
 
                     router.push(`/bots/${column[0].bot.id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Bot'
+                  }
                 },
                 {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteBotDenyRecord(item.id),
-                    fetchKey: 'botdenies',
-                    name: 'bot deny'
-                  }),
-                  hide: !data.permissions?.canDeleteBotDenies,
+                  name: 'Delete',
                   icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
-              columns: data?.botDenies?.map(item => [
-                {
-                  avatar: item.bot.avatar,
-                  discriminator: item.bot.discriminator,
-                  id: item.bot.id,
-                  searchValues: [item.bot.username, item.bot.id],
-                  showId: true,
-                  type: 'bot',
-                  username: item.bot.username
-                },
-                {
-                  avatar: item.user.avatar,
-                  id: item.user.id,
-                  searchValues: [item.user.username, item.user.id],
-                  showId: true,
-                  type: 'user',
-                  username: item.user.username
-                },
-                {
-                  avatar: item.reviewer.avatar,
-                  id: item.reviewer.id,
-                  searchValues: [item.reviewer.username, item.reviewer.id],
-                  showId: true,
-                  type: 'user',
-                  username: item.reviewer.username
-                },
-                {
-                  searchValues: [item.reason],
-                  type: 'reason',
-                  value: item.reason
-                },
-                {
-                  type: 'date',
-                  value: new Date(item.createdAt)
-                }
-              ]),
-              label: 'Denied Bots',
-              rows: [
-                {
-                  icon: FaUserCircle,
-                  name: 'Bot',
-                  sortable: true
-                },
-                {
-                  icon: FaUserCircle,
-                  name: 'User',
-                  sortable: true
-                },
-                {
-                  icon: FaUserCircle,
-                  name: 'Reviewer',
-                  sortable: true
-                },
-                {
-                  icon: RiPencilFill,
-                  name: 'Reason'
-                },
-                {
-                  icon: FiArrowRightCircle,
-                  name: 'Date Added',
-                  sortable: true
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'bot deny',
+                    action: item => deleteBotDenyRecord(item.id),
+                    fetchKey: 'botdenies'
+                  }),
+                  hide: !data.permissions?.canDeleteBotDenies
                 }
               ]
             }
           ]
-        },
-        title: 'Bot Denies',
-        totalCount: data?.botDenies?.length || 0
-      },
-      id: 'botDenies',
-      name: 'Bot Denies'
+        }
+      }
     },
     {
+      id: 'timeouts',
+      name: 'Timeouts',
       data: {
+        title: 'Timeouts',
         subtitle: 'Here you can see the all the vote timeouts that have been recorded.',
+        totalCount: data?.timeouts?.length || 0,
         tableData: {
           tabs: [
             {
-              actions: [
-                {
-                  action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-
-                    setSelectedItems([]);
-
-                    router.push(column[0].discriminator ? '/bots/' : `/servers/${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Server/Bot'
-                },
-                {
-                  action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-
-                    setSelectedItems([]);
-
-                    router.push(`/profile/u/${column[1].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View User'
-                },
-                {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => item.custom.type === 'bot' ? deleteBotTimeout(item.id, item.custom.userId) : deleteServerTimeout(item.id, item.custom.userId),
-                    fetchKey: 'timeouts',
-                    name: 'timeout'
-                  }),
-                  hide: !data.permissions?.canDeleteTimeouts,
-                  icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
+              label: 'Timeouts',
               columns: data?.timeouts?.map(item => [
                 typeof item.bot === 'object' ?
                   {
+                    type: 'bot',
+                    id: item.bot.id,
+                    username: item.bot.username,
+                    discriminator: item.bot.discriminator,
                     avatar: item.bot.avatar,
+                    showId: true,
+                    searchValues: [item.bot.username, item.bot.id],
                     custom: {
                       type: 'bot',
                       userId: item.user.id
-                    },
-                    discriminator: item.bot.discriminator,
-                    id: item.bot.id,
-                    searchValues: [item.bot.username, item.bot.id],
-                    showId: true,
-                    type: 'bot',
-                    username: item.bot.username
+                    }
                   } :
                   {
+                    type: 'server',
+                    id: item.guild.id,
+                    name: item.guild.name,
+                    icon: item.guild.icon,
+                    showId: true,
+                    searchValues: [item.guild.name, item.guild.id],
                     custom: {
                       type: 'server',
                       userId: item.user.id
-                    },
-                    icon: item.guild.icon,
-                    id: item.guild.id,
-                    name: item.guild.name,
-                    searchValues: [item.guild.name, item.guild.id],
-                    showId: true,
-                    type: 'server'
+                    }
                   },
                 {
-                  avatar: item.user.avatar,
-                  id: item.user.id,
-                  searchValues: [item.user.username, item.user.id],
-                  showId: true,
                   type: 'user',
-                  username: item.user.username
+                  id: item.user.id,
+                  username: item.user.username,
+                  avatar: item.user.avatar,
+                  showId: true,
+                  searchValues: [item.user.username, item.user.id]
                 },
                 {
                   type: 'date',
@@ -1594,105 +1565,127 @@ export default function Page() {
                   value: new Date(item.createdAt).getTime() + 86400000
                 }
               ]),
-              label: 'Timeouts',
               rows: [
                 {
-                  icon: FaUserCircle,
                   name: 'Bot/Server',
-                  sortable: true
-                },
-                {
                   icon: FaUserCircle,
+                  sortable: true
+                },
+                {
                   name: 'User',
+                  icon: FaUserCircle,
                   sortable: true
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
                 },
                 {
-                  icon: MdTimer,
                   name: 'Ends In',
+                  icon: MdTimer,
                   sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'View Server/Bot',
+                  icon: FaEye,
+                  action: () => {
+                    const column = useDashboardStore.getState().selectedItems[0];
+
+                    setSelectedItems([]);
+
+                    router.push(column[0].discriminator ? '/bots/' : `/servers/${column[0].id}`);
+                  }
+                },
+                {
+                  name: 'View User',
+                  icon: FaEye,
+                  action: () => {
+                    const column = useDashboardStore.getState().selectedItems[0];
+
+                    setSelectedItems([]);
+
+                    router.push(`/profile/u/${column[1].id}`);
+                  }
+                },
+                {
+                  name: 'Delete',
+                  icon: IoMdCloseCircle,
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'timeout',
+                    action: item => item.custom.type === 'bot' ? deleteBotTimeout(item.id, item.custom.userId) : deleteServerTimeout(item.id, item.custom.userId),
+                    fetchKey: 'timeouts'
+                  }),
+                  hide: !data.permissions?.canDeleteTimeouts
                 }
               ]
             }
           ]
-        },
-        title: 'Timeouts',
-        totalCount: data?.timeouts?.length || 0
-      },
-      id: 'timeouts',
-      name: 'Timeouts'
+        }
+      }
     },
     {
+      id: 'quarantines',
+      name: 'Quarantines',
       data: {
+        title: 'Quarantines',
+        subtitle: 'Here you can see the all the quarantines that have been created and not yet expired.',
+        totalCount: data?.quarantines?.length || 0,
         actionButton: {
+          name: 'Create Quarantine',
+          icon: TbLockPlus,
           action: () => {
             openModal('create-quarantine-record', {
-              content: <CreateQuarantineModal />,
+              title: 'Create Quarantine Record',
               description: 'You are going to create a new quarantine record.',
-              title: 'Create Quarantine Record'
+              content: <CreateQuarantineModal />
             });
           },
-          hide: !data.permissions?.canCreateQuarantines,
-          icon: TbLockPlus,
-          name: 'Create Quarantine'
+          hide: !data.permissions?.canCreateQuarantines
         },
-        subtitle: 'Here you can see the all the quarantines that have been created and not yet expired.',
         tableData: {
           tabs: [
             {
-              actions: [
-                {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteQuarantineRecord(item._id),
-                    fetchKey: 'quarantines',
-                    name: 'quarantine'
-                  }),
-                  hide: !data.permissions?.canDeleteQuarantines,
-                  icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
+              label: 'Quarantines',
               columns: data?.quarantines?.map(item => [
                 item.type === 'USER_ID' ?
                   {
-                    _id: item.id,
-                    avatar: item.user.avatar,
-                    id: item.user.id,
-                    searchValues: [item.user.username, item.user.id],
-                    showId: true,
                     type: 'user',
-                    username: item.user.username
+                    _id: item.id,
+                    id: item.user.id,
+                    username: item.user.username,
+                    avatar: item.user.avatar,
+                    showId: true,
+                    searchValues: [item.user.username, item.user.id]
                   } :
                   {
+                    type: 'server',
                     _id: item.id,
-                    icon: item.guild.icon,
                     id: item.guild.id,
                     name: item.guild.name,
-                    searchValues: [item.guild.name, item.guild.id],
+                    icon: item.guild.icon,
                     showId: true,
-                    type: 'server'
+                    searchValues: [item.guild.name, item.guild.id]
                   },
                 {
-                  avatar: item.created_by.avatar,
-                  id: item.created_by.id,
-                  searchValues: [item.created_by.username, item.created_by.id],
-                  showId: true,
                   type: 'user',
-                  username: item.created_by.username
+                  id: item.created_by.id,
+                  username: item.created_by.username,
+                  avatar: item.created_by.avatar,
+                  showId: true,
+                  searchValues: [item.created_by.username, item.created_by.id]
                 },
                 {
-                  searchValues: [item.restriction],
                   type: 'restriction',
-                  value: item.restriction
+                  value: item.restriction,
+                  searchValues: [item.restriction]
                 },
                 {
-                  searchValues: [item.reason],
                   type: 'long-text',
-                  value: item.reason
+                  value: item.reason,
+                  searchValues: [item.reason]
                 },
                 {
                   type: 'date',
@@ -1703,94 +1696,101 @@ export default function Page() {
                   value: item.expire_at ? new Date(item.expire_at).getTime() : null
                 }
               ]),
-              label: 'Quarantines',
               rows: [
                 {
-                  icon: FaUserCircle,
                   name: 'User/Server',
-                  sortable: true
-                },
-                {
                   icon: FaUserCircle,
+                  sortable: true
+                },
+                {
                   name: 'Created By',
+                  icon: FaUserCircle,
                   sortable: true
                 },
                 {
-                  icon: CgBlock,
-                  name: 'Restriction'
+                  name: 'Restriction',
+                  icon: CgBlock
                 },
                 {
-                  icon: RiPencilFill,
-                  name: 'Reason'
+                  name: 'Reason',
+                  icon: RiPencilFill
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Added',
+                  icon: FiArrowRightCircle,
                   sortable: true
                 },
                 {
-                  icon: MdTimer,
                   name: 'Ends In',
+                  icon: MdTimer,
                   sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'Delete',
+                  icon: IoMdCloseCircle,
+                  action: () => bulkActionWithConfirmationModal({
+                    name: 'quarantine',
+                    action: item => deleteQuarantineRecord(item._id),
+                    fetchKey: 'quarantines'
+                  }),
+                  hide: !data.permissions?.canDeleteQuarantines
                 }
               ]
             }
           ]
-        },
-        title: 'Quarantines',
-        totalCount: data?.quarantines?.length || 0
-      },
-      id: 'quarantines',
-      name: 'Quarantines'
+        }
+      }
     },
     {
+      id: 'blockedIPs',
+      name: 'Blocked IPs',
       data: {
+        title: 'Blocked IPs',
         subtitle: 'Here you can see the all the IPs that have been blocked by the system.',
+        totalCount: data?.blockedIps?.length || 0,
         tableData: {
           tabs: [
             {
-              actions: [
-                {
-                  action: () => bulkAction({
-                    action: item => deleteBlockedIP(item.value),
-                    fetchKey: 'blockedips'
-                  }),
-                  hide: !data.permissions?.canDeleteBlockedIps,
-                  icon: IoMdCheckmarkCircle,
-                  name: 'Delete'
-                }
-              ],
+              label: 'Blocked IPs',
               columns: data?.blockedIps?.map(item => [
                 {
-                  searchValues: [item.ip],
                   type: 'ipAddress',
-                  value: item.ip
+                  value: item.ip,
+                  searchValues: [item.ip]
                 },
                 {
                   type: 'date',
                   value: new Date(item.createdAt)
                 }
               ]),
-              label: 'Blocked IPs',
               rows: [
                 {
-                  icon: MdHttps,
-                  name: 'IP'
+                  name: 'IP',
+                  icon: MdHttps
                 },
                 {
-                  icon: FiArrowRightCircle,
                   name: 'Date Blocked',
+                  icon: FiArrowRightCircle,
                   sortable: true
+                }
+              ],
+              actions: [
+                {
+                  name: 'Delete',
+                  icon: IoMdCheckmarkCircle,
+                  action: () => bulkAction({
+                    action: item => deleteBlockedIP(item.value),
+                    fetchKey: 'blockedips'
+                  }),
+                  hide: !data.permissions?.canDeleteBlockedIps
                 }
               ]
             }
           ]
-        },
-        title: 'Blocked IPs',
-        totalCount: data?.blockedIps?.length || 0
-      },
-      id: 'blockedIPs',
-      name: 'Blocked IPs'
+        }
+      }
     }
   ];
 
@@ -1800,47 +1800,47 @@ export default function Page() {
     setSelectedItems([]);
 
     switch (activeTab) {
+      case 'home':
+        fetchData(['stats']);
+        break;
+      case 'users':
+        fetchData(['users']);
+        break;
+      case 'guilds':
+        fetchData(['guilds']);
+        break;
+      case 'emojisQueue':
+        fetchData(['emojis']);
+        break;
+      case 'botsQueue':
+        fetchData(['bots']);
+        break;
+      case 'templatesQueue':
+        fetchData(['templates']);
+        break;
+      case 'soundsQueue':
+        fetchData(['sounds']);
+        break;
+      case 'reviewsQueue':
+        fetchData(['reviews']);
+        break;
+      case 'themesQueue':
+        fetchData(['themes']);
+        break;
       case 'blockedIPs':
         fetchData(['blockedips']);
         break;
       case 'botDenies':
         fetchData(['botdenies']);
         break;
-      case 'botsQueue':
-        fetchData(['bots']);
-        break;
-      case 'emojisQueue':
-        fetchData(['emojis']);
-        break;
-      case 'guilds':
-        fetchData(['guilds']);
-        break;
-      case 'home':
-        fetchData(['stats']);
-        break;
-      case 'links':
-        fetchData(['links']);
+      case 'timeouts':
+        fetchData(['timeouts']);
         break;
       case 'quarantines':
         fetchData(['quarantines']);
         break;
-      case 'reviewsQueue':
-        fetchData(['reviews']);
-        break;
-      case 'soundsQueue':
-        fetchData(['sounds']);
-        break;
-      case 'templatesQueue':
-        fetchData(['templates']);
-        break;
-      case 'themesQueue':
-        fetchData(['themes']);
-        break;
-      case 'timeouts':
-        fetchData(['timeouts']);
-        break;
-      case 'users':
-        fetchData(['users']);
+      case 'links':
+        fetchData(['links']);
         break;
     }
 
@@ -1848,7 +1848,7 @@ export default function Page() {
   }, [activeTab]);
 
   const theme = useThemeStore(state => state.theme);
-  const transition = { damping: 10, duration: 0.25, stiffness: 100, type: 'spring' };
+  const transition = { duration: 0.25, type: 'spring', damping: 10, stiffness: 100 };
 
   useEffect(() => {
     if (loading) {
@@ -1887,28 +1887,28 @@ export default function Page() {
             <AnimatePresence>
               <div className='absolute left-0 top-0 z-10 flex size-full max-h-[919px] flex-col items-center justify-center bg-background'>
                 <MotionImage
-                  alt='discord.place Logo'
-                  animate={{ opacity: 1 }}
                   className='size-[64px]'
-                  exit={{ opacity: 0 }}
+                  src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+                  alt='discord.place Logo'
+                  width={256}
                   height={256}
                   initial={{ opacity: 0 }}
-                  src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   transition={transition}
-                  width={256}
                 />
 
                 <motion.div
-                  animate={{ opacity: 1 }}
                   className='relative mt-8 h-[6px] w-[150px] overflow-hidden rounded-full bg-tertiary'
-                  exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   transition={transition}
                 >
                   <div
                     className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
-                      transform: 'translateX(-100%)',
-                      width: '50%'
+                      width: '50%',
+                      transform: 'translateX(-100%)'
                     }}
                   />
                 </motion.div>

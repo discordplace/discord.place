@@ -3,7 +3,7 @@
 import MotionImage from '@/app/components/Motion/Image';
 import { useState } from 'react';
 
-export default function ServerIcon({ className, format, hash, id, motionOptions, size, ...props }) {
+export default function ServerIcon({ id, hash, format, size, className, motionOptions, ...props }) {
   const [error, setError] = useState(false);
 
   if (!id) return null;
@@ -20,9 +20,9 @@ export default function ServerIcon({ className, format, hash, id, motionOptions,
 
   if (!hash) return (
     <MotionImage
+      src={'https://cdn.discordapp.com/embed/avatars/0.png'}
       alt={`Image ${hash}`}
       className={className}
-      src={'https://cdn.discordapp.com/embed/avatars/0.png'}
       {...motionOptions}
       {...props}
     />
@@ -30,6 +30,7 @@ export default function ServerIcon({ className, format, hash, id, motionOptions,
 
   return (
     <MotionImage
+      src={`https://cdn.discordapp.com/icons/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`}
       alt={`Image ${hash}`}
       className={className}
       onError={async event => {
@@ -44,7 +45,6 @@ export default function ServerIcon({ className, format, hash, id, motionOptions,
 
         element.src = fallback;
       }}
-      src={`https://cdn.discordapp.com/icons/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`}
       {...motionOptions}
       {...props}
     />

@@ -2,10 +2,10 @@ import config from '@/config';
 import Link from 'next/link';
 
 export const metadata = {
+  title: 'Purchase Policy',
   openGraph: {
     title: 'Discord Place - Purchase Policy'
-  },
-  title: 'Purchase Policy'
+  }
 };
 
 export default function PurchasePolicy() {
@@ -82,10 +82,10 @@ export default function PurchasePolicy() {
       </p>
 
       <div className='mt-2 flex gap-x-2'>
-        <Link className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70' href={config.supportInviteUrl}>
+        <Link href={config.supportInviteUrl} className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'>
           Discord Server
         </Link>
-        <Link className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70' href='mailto:legal@discord.place'>
+        <Link href='mailto:legal@discord.place' className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'>
           Email
         </Link>
       </div>

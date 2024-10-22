@@ -2,35 +2,35 @@
 
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import MotionLink from '@/app/components/Motion/Link';
-import { t } from '@/stores/language';
 import { motion } from 'framer-motion';
 import { BiSolidCategory } from 'react-icons/bi';
+import { t } from '@/stores/language';
 
 export default function SupportServer({ bot }) {
   return (
     <>
       <motion.h2
-        animate={{ opacity: 1, y: 0 }}
         className='mt-4 text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
-        transition={{ damping: 10, delay: .7, duration: 0.3, stiffness: 100, type: 'spring' }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .7 }}
       >
         {t('botPage.supportServer.title')}
       </motion.h2>
 
       <MotionLink
-        animate={{ opacity: 1 }}
         className='mt-4 flex w-full gap-x-3 rounded-lg bg-secondary p-2 hover:bg-tertiary'
-        href={`/servers/${bot.support_server.id}`}
         initial={{ opacity: 0 }}
-        transition={{ damping: 10, delay: .9, duration: 0.3, stiffness: 100, type: 'spring' }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .9 }}
+        href={`/servers/${bot.support_server.id}`}
       >
         <ServerIcon
-          className='rounded-full'
+          width={50}
           height={50}
           icon_url={bot.support_server.icon_url}
           name={bot.support_server.name}
-          width={50}
+          className='rounded-full'
         />
 
         <div className='flex w-full max-w-[75%] flex-col justify-center'>

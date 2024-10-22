@@ -4,10 +4,10 @@ const Discord = require('discord.js');
 
 module.exports = {
   data: {
-    description: 'List currently active reminders for vote system',
-    description_localizations: getLocalizedCommand('reminders').descriptions,
     name: 'reminders',
-    name_localizations: getLocalizedCommand('reminders').names
+    description: 'List currently active reminders for vote system',
+    name_localizations: getLocalizedCommand('reminders').names,
+    description_localizations: getLocalizedCommand('reminders').descriptions
   },
   execute: async interaction => {
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
@@ -34,7 +34,7 @@ module.exports = {
       reminders.forEach(async reminder => {
         const guild = client.guilds.cache.get(reminder.guild.id) || await client.guilds.fetch(reminder.guild.id).catch(() => null);
         const newEmbed = new Discord.EmbedBuilder()
-          .setAuthor({ iconURL: guild?.iconURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png', name: guild?.name || reminder.guild.id })
+          .setAuthor({ name: guild?.name || reminder.guild.id, iconURL: guild?.iconURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png' })
           .setColor('Random')
           .setDescription(await interaction.translate('commands.reminders.embed.description.1', { time: `<t:${Math.floor((reminder.createdAt.getTime() + 86400000) / 1000)}:R>` }));
 

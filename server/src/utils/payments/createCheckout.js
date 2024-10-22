@@ -1,6 +1,6 @@
+const { createCheckout: createLemonSqueezyCheckout } = require('@lemonsqueezy/lemonsqueezy.js');
 const Plans = require('@/schemas/LemonSqueezy/Plan');
 const encrypt = require('@/utils/encryption/encrypt');
-const { createCheckout: createLemonSqueezyCheckout } = require('@lemonsqueezy/lemonsqueezy.js');
 
 async function createCheckout(user, planId) {
   if (!process.env.LEMON_SQUEEZY_API_KEY) throw new Error('LEMON_SQUEEZY_API_KEY environment variable is not defined.');

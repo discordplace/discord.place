@@ -1,9 +1,9 @@
 import cn from '@/lib/cn';
 import { t } from '@/stores/language';
-import { useRef, useState } from 'react';
+import { useState, useRef } from 'react';
 import { toast } from 'sonner';
 
-export default function CopyButton({ children, className = '', copyText, successText, timeout = 2000 }) {
+export default function CopyButton({ timeout = 2000, successText, copyText, className = '', children }) {
   const [copied, setCopied] = useState(false);
   const copyTimeoutRef = useRef(null);
 
@@ -22,12 +22,12 @@ export default function CopyButton({ children, className = '', copyText, success
 
   return (
     <div
+      onClick={handleCopy}
       className={cn(
         'transition-all',
         copied && 'pointer-events-none opacity-50',
         className
       )}
-      onClick={handleCopy}
     >
       {children}
     </div>

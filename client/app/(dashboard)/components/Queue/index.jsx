@@ -1,6 +1,6 @@
 import Table from '@/app/(dashboard)/components/Table';
 
-export default function Queue({ actionButton, subtitle, tableData, title, totalCount }) {
+export default function Queue({ title, subtitle, totalCount, actionButton, tableData }) {
   return (
     <div className='my-8 flex flex-col gap-y-8 sm:mr-6'>
       <div className='flex flex-col justify-between gap-y-4 sm:flex-row sm:items-center'>

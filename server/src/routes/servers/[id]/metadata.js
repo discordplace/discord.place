@@ -1,8 +1,8 @@
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { matchedData, param } = require('express-validator');
 
 module.exports = {
   get: [
@@ -21,13 +21,13 @@ module.exports = {
       const ownerHasPremium = await User.exists({ id: guild.ownerId, subscription: { $ne: null } });
 
       return response.json({
-        category: server.category,
-        description: guild.description,
-        icon_url: guild.iconURL({ extension: 'png', forceStatic: true, size: 64 }),
-        members: guild.memberCount,
         name: guild.name,
-        premium: !!ownerHasPremium,
-        votes: server.votes
+        description: guild.description,
+        icon_url: guild.iconURL({ extension: 'png', size: 64, forceStatic: true }),
+        members: guild.memberCount,
+        votes: server.votes,
+        category: server.category,
+        premium: !!ownerHasPremium
       });
     }
   ]

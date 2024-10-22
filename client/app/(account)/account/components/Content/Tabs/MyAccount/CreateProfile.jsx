@@ -6,7 +6,6 @@ import cn from '@/lib/cn';
 import checkSlugAvailability from '@/lib/request/profiles/checkSlugAvailability';
 import useAuthStore from '@/stores/auth';
 import useGeneralStore from '@/stores/general';
-import { t } from '@/stores/language';
 import { useEffect, useState } from 'react';
 import { FaCrown } from 'react-icons/fa';
 import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
@@ -14,13 +13,14 @@ import { TbLoader } from 'react-icons/tb';
 import { useDebounce } from 'react-use';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
 
 export default function CreateProfile() {
-  const { preferredHost, setPreferredHost, setSlug, slug } = useGeneralStore(useShallow(state => ({
+  const { preferredHost, setPreferredHost, slug, setSlug } = useGeneralStore(useShallow(state => ({
     preferredHost: state.createProfileModal.preferredHost,
     setPreferredHost: state.createProfileModal.setPreferredHost,
-    setSlug: state.createProfileModal.setSlug,
-    slug: state.createProfileModal.slug
+    slug: state.createProfileModal.slug,
+    setSlug: state.createProfileModal.setSlug
   })));
 
   const user = useAuthStore(state => state.user);
@@ -91,13 +91,13 @@ export default function CreateProfile() {
           {['discord.place/p', ...config.customHostnames]
             .map(hostname => (
               <div
+                onClick={() => setPreferredHost(hostname)}
+                key={hostname}
                 className={cn(
                   'w-full border select-none border-primary relative first:rounded-l-xl last:rounded-r-xl group px-3 py-2 font-medium text-center [&:not(:first)]:rounded-xl cursor-pointer hover:text-primary bg-quaternary hover:bg-secondary text-secondary',
                   preferredHost === hostname && 'pointer-events-none',
                   config.customHostnames.includes(hostname) && !user.premium?.createdAt && 'opacity-50 pointer-events-none'
                 )}
-                key={hostname}
-                onClick={() => setPreferredHost(hostname)}
               >
                 {hostname}
 
@@ -153,12 +153,12 @@ export default function CreateProfile() {
         </p>
 
         <input
+          type='text'
+          placeholder={t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.slug.placeholder')}
           className='mt-2 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+          value={slug}
           maxLength={32}
           onChange={event => setSlug(event.target.value)}
-          placeholder={t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.slug.placeholder')}
-          type='text'
-          value={slug}
         />
       </div>
     </div>

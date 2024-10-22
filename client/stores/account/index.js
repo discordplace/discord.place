@@ -1,14 +1,13 @@
-import fetchData from '@/lib/request/auth/getData';
 import { toast } from 'sonner';
 import { create } from 'zustand';
+import fetchData from '@/lib/request/auth/getData';
 
 export const useAccountStore = create(set => ({
   activeTab: 'my-account',
-  currentlyAddingBot: false,
-  currentlyAddingServer: null,
-  currentlyAddingSound: false,
-  currentlyAddingTheme: false,
+  setActiveTab: activeTab => set({ activeTab }),
   data: {},
+  setData: data => set({ data }),
+  loading: false,
   fetchData: async keys => {
     set({ loading: true });
 
@@ -19,14 +18,15 @@ export const useAccountStore = create(set => ({
         set({ loading: false });
       });
   },
-  isCollapsed: false,
-  loading: false,
-  setActiveTab: activeTab => set({ activeTab }),
-  setCurrentlyAddingBot: currentlyAddingBot => set({ currentlyAddingBot }),
+  currentlyAddingServer: null,
   setCurrentlyAddingServer: currentlyAddingServer => set({ currentlyAddingServer }),
+  currentlyAddingBot: false,
+  setCurrentlyAddingBot: currentlyAddingBot => set({ currentlyAddingBot }),
+  currentlyAddingSound: false,
   setCurrentlyAddingSound: currentlyAddingSound => set({ currentlyAddingSound }),
+  currentlyAddingTheme: false,
   setCurrentlyAddingTheme: currentlyAddingTheme => set({ currentlyAddingTheme }),
-  setData: data => set({ data }),
+  isCollapsed: false,
   setIsCollapsed: isCollapsed => set({ isCollapsed })
 }));
 

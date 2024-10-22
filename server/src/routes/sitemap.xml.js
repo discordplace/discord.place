@@ -1,15 +1,16 @@
 // sitemap.xml
 
+const xml = require('xml');
+const axios = require('axios');
+
+const Profile = require('@/schemas/Profile');
+const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
-const Profile = require('@/schemas/Profile');
-const Server = require('@/schemas/Server');
-const Sound = require('@/schemas/Sound');
 const Template = require('@/schemas/Template');
+const Sound = require('@/schemas/Sound');
 const Theme = require('@/schemas/Theme');
-const axios = require('axios');
-const xml = require('xml');
 
 async function getBlogs() {
   try {

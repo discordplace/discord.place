@@ -2,6 +2,34 @@ import { create } from 'zustand';
 
 const useModalsStore = create((set, get) => ({
   activeModalId: null,
+  openedModals: [],
+  openModal: (modalId, modalData) => {
+    const openedModals = get().openedModals;
+
+    set({
+      activeModalId: modalId,
+      openedModals: [...openedModals, { id: modalId, data: modalData }]
+    });
+  },
+  updateModal: (modalId, newModalData) => {
+    const openedModals = get().openedModals;
+
+    set({
+      openedModals: openedModals.map(modal => {
+        if (modal.id === modalId) {
+          return {
+            ...modal,
+            data: {
+              ...modal.data,
+              ...newModalData
+            }
+          };
+        }
+
+        return modal;
+      })
+    });
+  },
   closeModal: modalId => {
     const openedModals = get().openedModals;
     const activeModalId = get().activeModalId;
@@ -54,34 +82,6 @@ const useModalsStore = create((set, get) => ({
 
                 return button;
               })
-            }
-          };
-        }
-
-        return modal;
-      })
-    });
-  },
-  openedModals: [],
-  openModal: (modalId, modalData) => {
-    const openedModals = get().openedModals;
-
-    set({
-      activeModalId: modalId,
-      openedModals: [...openedModals, { data: modalData, id: modalId }]
-    });
-  },
-  updateModal: (modalId, newModalData) => {
-    const openedModals = get().openedModals;
-
-    set({
-      openedModals: openedModals.map(modal => {
-        if (modal.id === modalId) {
-          return {
-            ...modal,
-            data: {
-              ...modal.data,
-              ...newModalData
             }
           };
         }

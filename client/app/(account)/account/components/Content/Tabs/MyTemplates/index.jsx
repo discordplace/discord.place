@@ -1,14 +1,14 @@
 'use client';
 
-import TemplateCard from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
 import ErrorState from '@/app/components/ErrorState';
-import config from '@/config';
 import useAccountStore from '@/stores/account';
-import { t } from '@/stores/language';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
-import { BsQuestionCircleFill } from 'react-icons/bs';
 import { LuPlus } from 'react-icons/lu';
+import { BsQuestionCircleFill } from 'react-icons/bs';
+import config from '@/config';
+import TemplateCard from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
+import { t } from '@/stores/language';
 
 export default function MyTemplates() {
   const data = useAccountStore(state => state.data);
@@ -41,22 +41,22 @@ export default function MyTemplates() {
         {(data.templates || []).length === 0 ? (
           <div className='mt-20 max-w-[800px]'>
             <ErrorState
-              message={t('accountPage.tabs.myTemplates.sections.listedTemplates.emptyErrorState.message')}
               title={
                 <div className='flex items-center gap-x-2'>
                   <BsEmojiAngry />
                   {t('accountPage.tabs.myTemplates.sections.listedTemplates.emptyErrorState.title')}
                 </div>
               }
+              message={t('accountPage.tabs.myTemplates.sections.listedTemplates.emptyErrorState.message')}
             />
           </div>
         ) : (
           <div className='mt-2 grid max-w-[800px] grid-cols-1 gap-4 xl:grid-cols-2'>
             {data.templates.map(emoji => (
               <TemplateCard
-                className='[&>div>a>div:first-child]:size-[75px] [&>div>a>div:first-child]:min-h-[75px] [&>div>a>div:first-child]:min-w-[75px] [&>div>a>div:first-child]:text-lg sm:[&>div>a>div:first-child]:size-[100px] sm:[&>div>a>div:first-child]:min-h-[100px] sm:[&>div>a>div:first-child]:min-w-[100px] sm:[&>div>a>div:first-child]:text-3xl [&>div>a]:items-start sm:[&>div>a]:items-center'
-                data={emoji}
                 key={emoji.id}
+                data={emoji}
+                className='[&>div>a>div:first-child]:size-[75px] [&>div>a>div:first-child]:min-h-[75px] [&>div>a>div:first-child]:min-w-[75px] [&>div>a>div:first-child]:text-lg sm:[&>div>a>div:first-child]:size-[100px] sm:[&>div>a>div:first-child]:min-h-[100px] sm:[&>div>a>div:first-child]:min-w-[100px] sm:[&>div>a>div:first-child]:text-3xl [&>div>a]:items-start sm:[&>div>a]:items-center'
               />
             ))}
           </div>

@@ -1,29 +1,12 @@
+const Discord = require('discord.js');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 const sleep = require('@/utils/sleep');
-const Discord = require('discord.js');
+const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 
 module.exports = {
-  autocomplete: async interaction => {
-    if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions)) return;
-
-    const group = interaction.options.getSubcommandGroup(false);
-
-    switch (group) {
-      case null:
-        var emojis = await Emoji.find();
-
-        return interaction.customRespond(emojis.map(emoji => ({ name: `${emoji.name}${emoji.emoji_ids ? '' : `.${emoji.animated ? 'gif' : 'png'}`} | ID: ${emoji.id}`, value: emoji.id })));
-      case 'pack':
-        var packs = await EmojiPack.find();
-
-        return interaction.customRespond(packs.map(pack => ({ name: `${pack.name} | ID: ${pack.id} | ${pack.emoji_ids.length} Emojis`, value: pack.id })));
-    }
-  },
-
   data: new Discord.SlashCommandBuilder()
     .setName('emoji')
     .setDescription('emoji')
@@ -61,6 +44,8 @@ module.exports = {
                 .setAutocomplete(true)
                 .setNameLocalizations(getLocalizedCommand('emoji.groups.pack.subcommands.upload.options.pack').names)
                 .setDescriptionLocalizations(getLocalizedCommand('emoji.groups.pack.subcommands.upload.options.pack').descriptions)))),
+
+  isGuildOnly: true,
   execute: async interaction => {
     if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.translate('commands.shared.errors.missing_permissions'));
     if (!interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions) && !interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.translate('commands.emoji.errors.missing_bot_permissions'));
@@ -73,24 +58,6 @@ module.exports = {
     const group = interaction.options.getSubcommandGroup(false);
 
     switch (group) {
-      case null:
-        var id = interaction.options.getString('emoji');
-        var emoji = await Emoji.findOne({ id });
-        if (!emoji) return interaction.followUp(await interaction.translate('commands.emoji.errors.emoji_not_found'));
-
-        interaction.guild.emojis.create({ attachment: getEmojiURL(emoji.id, emoji.animated), name: emoji.name })
-          .then(async createdEmoji => {
-            emoji.updateOne({ $inc: { downloads: 1 } });
-
-            return interaction.followUp({ content: `${await interaction.translate('commands.emoji.subcommands.upload.uploaded')} ${createdEmoji}` });
-          })
-          .catch(async error => {
-            logger.error(`Failed to upload emoji ${emoji.id} to ${interaction.guild.id}: ${error.message}`);
-
-            return interaction.followUp(await interaction.translate('commands.emoji.errors.emoji_failed'));
-          });
-
-        break;
       case 'pack':
         var packId = interaction.options.getString('pack');
         var pack = await EmojiPack.findOne({ id: packId });
@@ -109,8 +76,8 @@ module.exports = {
           ];
 
           return interaction.followUp({
-            components,
-            content: await interaction.translate('commands.emoji.errors.currently_uploading.message', { packName: currentlyUploadingEmojiPack.name })
+            content: await interaction.translate('commands.emoji.errors.currently_uploading.message', { packName: currentlyUploadingEmojiPack.name }),
+            components
           });
         }
 
@@ -133,11 +100,11 @@ module.exports = {
             attachment: getEmojiURL(`packages/${packId}/${emoji.id}`, emoji.animated),
             name: `${pack.name}_${pack.emoji_ids.indexOf(emoji) + 1}`,
             reason: await interaction.translate('commands.emoji.groups.pack.subcommands.upload.reason', {
-              index: index + 1,
-              packId,
-              total: pack.emoji_ids.length,
+              username: interaction.user.username,
               userId: interaction.user.id,
-              username: interaction.user.username
+              packId,
+              index: index + 1,
+              total: pack.emoji_ids.length
             })
           }).catch(() => null);
 
@@ -162,8 +129,8 @@ module.exports = {
 
           await message.edit(await interaction.translate('commands.emoji.groups.pack.subcommands.upload.uploaded', {
             index,
-            remainingSeconds: pack.emoji_ids.length - index,
-            total: pack.emoji_ids.length
+            total: pack.emoji_ids.length,
+            remainingSeconds: pack.emoji_ids.length - index
           }));
 
           await sleep(1000);
@@ -176,7 +143,40 @@ module.exports = {
         await EmojiPack.updateOne({ id: packId }, { $inc: { downloads: 1 } });
 
         return message.edit({ content: `${await interaction.translate('commands.emoji.groups.pack.subcommands.upload.completed', { packName: pack.name })}\n\n${createdEmojis.map(({ emoji }, index) => `${index + 1}. ${emoji}`).join('\n')}` });
+      case null:
+        var id = interaction.options.getString('emoji');
+        var emoji = await Emoji.findOne({ id });
+        if (!emoji) return interaction.followUp(await interaction.translate('commands.emoji.errors.emoji_not_found'));
+
+        interaction.guild.emojis.create({ attachment: getEmojiURL(emoji.id, emoji.animated), name: emoji.name })
+          .then(async createdEmoji => {
+            emoji.updateOne({ $inc: { downloads: 1 } });
+
+            return interaction.followUp({ content: `${await interaction.translate('commands.emoji.subcommands.upload.uploaded')} ${createdEmoji}` });
+          })
+          .catch(async error => {
+            logger.error(`Failed to upload emoji ${emoji.id} to ${interaction.guild.id}: ${error.message}`);
+
+            return interaction.followUp(await interaction.translate('commands.emoji.errors.emoji_failed'));
+          });
+
+        break;
     }
   },
-  isGuildOnly: true
+  autocomplete: async interaction => {
+    if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions)) return;
+
+    const group = interaction.options.getSubcommandGroup(false);
+
+    switch (group) {
+      case 'pack':
+        var packs = await EmojiPack.find();
+
+        return interaction.customRespond(packs.map(pack => ({ name: `${pack.name} | ID: ${pack.id} | ${pack.emoji_ids.length} Emojis`, value: pack.id })));
+      case null:
+        var emojis = await Emoji.find();
+
+        return interaction.customRespond(emojis.map(emoji => ({ name: `${emoji.name}${emoji.emoji_ids ? '' : `.${emoji.animated ? 'gif' : 'png'}`} | ID: ${emoji.id}`, value: emoji.id })));
+    }
+  }
 };

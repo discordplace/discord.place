@@ -1,10 +1,10 @@
 const Profile = require('@/schemas/Profile');
-const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
-const { matchedData, param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   patch: [
@@ -12,7 +12,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('slug')
       .isString().withMessage('Slug must be a string.')
-      .isLength({ max: 32, min: 3 }).withMessage('Slug must be between 3 and 32 characters.')
+      .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     validateRequest,
     async (request, response) => {

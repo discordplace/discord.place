@@ -1,6 +1,6 @@
+const { createCheckout: createLemonSqueezyCheckout } = require('@lemonsqueezy/lemonsqueezy.js');
 const Plans = require('@/schemas/LemonSqueezy/Plan');
 const encrypt = require('@/utils/encryption/encrypt');
-const { createCheckout: createLemonSqueezyCheckout } = require('@lemonsqueezy/lemonsqueezy.js');
 
 async function createTripledVotesCheckout(id, type) {
   if (!process.env.LEMON_SQUEEZY_API_KEY) throw new Error('LEMON_SQUEEZY_API_KEY environment variable is not defined.');
@@ -26,8 +26,8 @@ async function createTripledVotesCheckout(id, type) {
       }
     },
     productOptions: {
-      enabledVariants: [config.lemonSqueezy.variantIds.tripledVotes[type === 'server' ? 'servers' : 'bots']],
-      name: `Tripled votes for 24 hours - ${type === 'server' ? 'Server' : 'Bot'} ${id}`
+      name: `Tripled votes for 24 hours - ${type === 'server' ? 'Server' : 'Bot'} ${id}`,
+      enabledVariants: [config.lemonSqueezy.variantIds.tripledVotes[type === 'server' ? 'servers' : 'bots']]
     }
   });
 

@@ -1,13 +1,13 @@
 'use client';
 
+import Link from 'next/link';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
-import Link from 'next/link';
 import { FiArrowUpRight } from 'react-icons/fi';
 
-const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
-export default function InfoCard({ button, content, description, index, title }) {
+export default function InfoCard({ index, title, description, button, content }) {
   return (
     <div
       className={cn(
@@ -36,9 +36,9 @@ export default function InfoCard({ button, content, description, index, title })
 
         {button && (
           <Link
-            className='-ml-4 mt-2 flex w-max items-center gap-x-1 rounded-full px-4 py-2 text-sm text-tertiary ring-purple-500 ring-offset-2 ring-offset-[rgba(var(--bg-background))] transition-all hover:ml-0 hover:bg-purple-500/20 hover:font-semibold hover:text-primary hover:ring-2'
             href={button.href}
             target={button.target || '_blank'}
+            className='-ml-4 mt-2 flex w-max items-center gap-x-1 rounded-full px-4 py-2 text-sm text-tertiary ring-purple-500 ring-offset-2 ring-offset-[rgba(var(--bg-background))] transition-all hover:ml-0 hover:bg-purple-500/20 hover:font-semibold hover:text-primary hover:ring-2'
           >
             {button.text}
 

@@ -1,24 +1,24 @@
 import Content from '@/app/(themes)/themes/content';
 
 export const metadata = {
+  title: 'Themes',
   description: 'Discover the best two-color combinations to make your Discord profile stand out.',
   openGraph: {
+    title: 'Discord Place - Themes',
     description: 'Discover the best two-color combinations to make your Discord profile stand out.',
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://discord.place/themes',
+    site_name: 'Discord Place',
     images: [
       {
-        alt: 'Discord Place',
-        height: 540,
         url: '/og.png',
-        width: 960
+        width: 960,
+        height: 540,
+        alt: 'Discord Place'
       }
-    ],
-    locale: 'en_US',
-    site_name: 'Discord Place',
-    title: 'Discord Place - Themes',
-    type: 'website',
-    url: 'https://discord.place/themes'
-  },
-  title: 'Themes'
+    ]
+  }
 };
 
 export default function Page() {

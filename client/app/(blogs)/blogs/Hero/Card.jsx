@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function BlogCard({ data, loading }) {
   if (loading) return (
@@ -13,11 +13,11 @@ export default function BlogCard({ data, loading }) {
     >
       <div className='relative'>
         <Image
-          alt={data.name}
-          className='h-[200px] w-full rounded-xl object-cover'
-          height={200}
           src={`/blogs/${data.id}.jpg`}
+          alt={data.name}
           width={400}
+          height={200}
+          className='h-[200px] w-full rounded-xl object-cover'
         />
 
         <div className='absolute left-0 top-0 size-full rounded-xl bg-black/50' />
@@ -25,8 +25,8 @@ export default function BlogCard({ data, loading }) {
         <div className='absolute left-4 top-4'>
           {data.tags.map(tag => (
             <span
-              className='rounded-full bg-black/70 px-3 py-1.5 text-xs font-semibold text-white'
               key={tag}
+              className='rounded-full bg-black/70 px-3 py-1.5 text-xs font-semibold text-white'
             >
               {tag}
             </span>

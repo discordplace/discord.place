@@ -1,24 +1,15 @@
-const DashboardData = require('@/schemas/Dashboard/Data');
+const Discord = require('discord.js');
 const Template = require('@/schemas/Template');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const sleep = require('@/utils/sleep');
+const DashboardData = require('@/schemas/Dashboard/Data');
 const humanizeMs = require('@/utils/humanizeMs');
 const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
-const sleep = require('@/utils/sleep');
-const Discord = require('discord.js');
 
 const currentlyApplyingTemplates = new Discord.Collection();
 const latestUses = new Discord.Collection();
 
 module.exports = {
-  autocomplete: async interaction => {
-    if (!interaction.guild) return;
-    if (interaction.guild.ownerId !== interaction.user.id) return;
-
-    const templates = await Template.find({ approved: true });
-
-    return interaction.customRespond(templates.map(template => ({ name: `${template.name} | ID: ${template.id}`, value: template.id })));
-  },
-
   data: new Discord.SlashCommandBuilder()
     .setName('templates')
     .setDescription('templates')
@@ -37,6 +28,8 @@ module.exports = {
             .setDescriptionLocalizations(getLocalizedCommand('templates.subcommands.use.options.template').descriptions)
             .setRequired(true)
             .setAutocomplete(true))),
+
+  isGuildOnly: true,
   execute: async interaction => {
     if (interaction.guild.ownerId !== interaction.user.id) return interaction.reply(await interaction.translate('commands.shared.errors.server_owner_only'));
 
@@ -52,13 +45,13 @@ module.exports = {
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
     const userOrGuildQuarantined = await findQuarantineEntry.multiple([
-      { restriction: 'TEMPLATES_USE', type: 'USER_ID', value: interaction.user.id },
-      { restriction: 'TEMPLATES_USE', type: 'GUILD_ID', value: interaction.guild.id }
+      { type: 'USER_ID', value: interaction.user.id, restriction: 'TEMPLATES_USE' },
+      { type: 'GUILD_ID', value: interaction.guild.id, restriction: 'TEMPLATES_USE' }
     ]).catch(() => false);
     if (userOrGuildQuarantined) return interaction.followUp(await interaction.translate('commands.shared.errors.user_or_guild_quarantined'));
 
     const templateId = interaction.options.getString('template');
-    const template = await Template.findOne({ approved: true, id: templateId });
+    const template = await Template.findOne({ id: templateId, approved: true });
 
     if (!template) return interaction.followUp(await interaction.translate('commands.templates.errors.template_not_found'));
 
@@ -67,8 +60,8 @@ module.exports = {
     const embeds = [
       new Discord.EmbedBuilder()
         .setColor('#5865F2')
-        .setTitle(await interaction.translate('commands.templates.subcommands.use.embeds.warning.title', { templateId: template.id, templateName: template.name }))
-        .setAuthor({ iconURL: interaction.guild.iconURL(), name: interaction.guild.name })
+        .setTitle(await interaction.translate('commands.templates.subcommands.use.embeds.warning.title', { templateName: template.name, templateId: template.id }))
+        .setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
         .setDescription(await interaction.translate('commands.templates.subcommands.use.embeds.warning.description', { templateName: template.name }))
     ];
 
@@ -82,18 +75,18 @@ module.exports = {
         )
     ];
 
-    const confirmMessage = await interaction.followUp({ components, embeds, fetchReply: true });
+    const confirmMessage = await interaction.followUp({ embeds, components, fetchReply: true });
 
     const filter = async message => message.author.id === interaction.user.id && message.channel.id === interaction.channel.id && message.content === await interaction.translate('commands.templates.subcommands.use.confirmation_text');
-    const collected = await interaction.channel.awaitMessages({ errors: ['time'], filter, max: 1, time: 30000 }).catch(() => false);
+    const collected = await interaction.channel.awaitMessages({ filter, time: 30000, max: 1, errors: ['time'] }).catch(() => false);
 
     if (!collected) {
       currentlyApplyingTemplates.delete(interaction.guild.id);
 
       return confirmMessage.edit({
-        components: [],
         content: await interaction.translate('commands.templates.errors.confirmation_timeout'),
-        embeds: []
+        embeds: [],
+        components: []
       });
     }
 
@@ -107,6 +100,7 @@ module.exports = {
     }
 
     const dmMessage = await dmChannel.send({
+      content: await interaction.translate('commands.templates.subcommands.use.last_chance.message', { loadingEmoji: config.emojis.loading, templateName: template.name, guildName: interaction.guild.name }),
       components: [
         new Discord.ActionRowBuilder()
           .addComponents(
@@ -115,8 +109,7 @@ module.exports = {
               .setLabel(await interaction.translate('commands.templates.subcommands.use.last_chance.button_label'))
               .setStyle(Discord.ButtonStyle.Danger)
           )
-      ],
-      content: await interaction.translate('commands.templates.subcommands.use.last_chance.message', { guildName: interaction.guild.name, loadingEmoji: config.emojis.loading, templateName: template.name })
+      ]
     }).catch(async () => {
       // Check here also if the user has DMs disabled
       currentlyApplyingTemplates.delete(interaction.guild.id);
@@ -129,12 +122,12 @@ module.exports = {
     async function sendError(message) {
       currentlyApplyingTemplates.delete(interaction.guild.id);
 
-      await collectedMessage.reply({ components: [], content: message });
+      await collectedMessage.reply({ content: message, components: [] });
 
-      return dmMessage.edit({ components: [], content: message });
+      return dmMessage.edit({ content: message, components: [] });
     }
 
-    const cancelled = await dmMessage.awaitMessageComponent({ errors: ['time'], time: 10000 }).catch(() => false);
+    const cancelled = await dmMessage.awaitMessageComponent({ time: 10000, errors: ['time'] }).catch(() => false);
     if (cancelled) return sendError(await interaction.translate('commands.templates.subcommands.use.cancelled', { checkEmoji: config.emojis.checkmark }));
 
     const botHighestRole = interaction.guild.members.me.roles.highest;
@@ -142,6 +135,18 @@ module.exports = {
     if (!botHighestRole.permissions.has(Discord.PermissionFlagsBits.Administrator)) return sendError(await interaction.translate('commands.templates.errors.missing_bot_permissions'));
 
     client.channels.cache.get(config.templateApplyLogsChannelId).send({
+      embeds: [
+        new Discord.EmbedBuilder()
+          .setColor(Discord.Colors.Purple)
+          .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
+          .setTitle('New Template Apply Request Received')
+          .setTimestamp()
+          .setFields([
+            { name: 'Requester', value: `${interaction.user} (${interaction.user.id})`, inline: true },
+            { name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true },
+            { name: 'Template', value: `${template.name} (${template.id})`, inline: true }
+          ])
+      ],
       components: [
         new Discord.ActionRowBuilder()
           .addComponents(
@@ -150,18 +155,6 @@ module.exports = {
               .setLabel('Preview Template on discord.place')
               .setURL(`${config.frontendUrl}/templates/${template.id}/preview`)
           )
-      ],
-      embeds: [
-        new Discord.EmbedBuilder()
-          .setColor(Discord.Colors.Purple)
-          .setAuthor({ iconURL: interaction.user.displayAvatarURL(), name: interaction.user.tag })
-          .setTitle('New Template Apply Request Received')
-          .setTimestamp()
-          .setFields([
-            { inline: true, name: 'Requester', value: `${interaction.user} (${interaction.user.id})` },
-            { inline: true, name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})` },
-            { inline: true, name: 'Template', value: `${template.name} (${template.id})` }
-          ])
       ]
     });
 
@@ -171,8 +164,8 @@ module.exports = {
     await template.updateOne({ $inc: { uses: 1 } });
 
     await dmMessage.edit({
-      components: [],
-      content: await interaction.translate('commands.templates.subcommands.steps.0', { guildName: interaction.guild.name, loadingEmoji: config.emojis.loading, templateName: template.name })
+      content: await interaction.translate('commands.templates.subcommands.steps.0', { loadingEmoji: config.emojis.loading, templateName: template.name, guildName: interaction.guild.name }),
+      components: []
     });
 
     await sleep(1000);
@@ -180,7 +173,7 @@ module.exports = {
     const guildChannels = await interaction.guild.channels.fetch();
     const guildRoles = await interaction.guild.roles.fetch();
 
-    await dmMessage.edit(await interaction.translate('commands.templates.subcommands.use.steps.1', { guildName: interaction.guild.name, loadingEmoji: config.emojis.loading, templateName: template.name }));
+    await dmMessage.edit(await interaction.translate('commands.templates.subcommands.use.steps.1', { loadingEmoji: config.emojis.loading, templateName: template.name, guildName: interaction.guild.name }));
 
     await Promise.all(guildChannels.filter(channel => channel.deletable).map(async channel => {
       await channel.delete().catch(() => null);
@@ -200,6 +193,7 @@ module.exports = {
     const rolesLength = template.data.roles.length;
 
     await dmMessage.edit(await interaction.translate('commands.templates.subcommands.use.steps.2', {
+      loadingEmoji: config.emojis.loading,
       estimatedTime: humanizeMs(
         (categoriesLength * 500) + (channelsLength * 1000) + (rolesLength * 500),
         {
@@ -208,8 +202,7 @@ module.exports = {
           minutes: await interaction.translate('time.minutes'),
           seconds: await interaction.translate('time.seconds')
         }
-      ),
-      loadingEmoji: config.emojis.loading
+      )
     }));
 
     const createdChannels = [];
@@ -220,10 +213,10 @@ module.exports = {
 
     for (const role of template.data.roles.reverse().filter(role => role.id !== 0)) {
       const createdRole = await interaction.guild.roles.create({
-        color: role.color,
-        mentionable: role.mentionable,
         name: role.name,
-        permissions: new Discord.PermissionsBitField(role.permissions_new).freeze()
+        color: role.color,
+        permissions: new Discord.PermissionsBitField(role.permissions_new).freeze(),
+        mentionable: role.mentionable
       });
 
       createdRoles.push({
@@ -237,6 +230,8 @@ module.exports = {
     for (const category of template.data.channels.sort((a, b) => a.position - b.position).filter(channel => channel.type === Discord.ChannelType.GuildCategory)) {
       const createdCategory = await interaction.guild.channels.create({
         name: category.name,
+        type: Discord.ChannelType.GuildCategory,
+        position: category.position,
         permissionOverwrites: category.permission_overwrites
           .filter(overwrite => overwrite.type === '0')
           .map(overwrite => {
@@ -244,19 +239,17 @@ module.exports = {
             if (!role) return;
 
             return {
-              allow: new Discord.PermissionsBitField(overwrite.allow_new).toArray(),
-              deny: new Discord.PermissionsBitField(overwrite.deny_new).toArray(),
               id: role.role.id,
-              type: 0
+              type: 0,
+              allow: new Discord.PermissionsBitField(overwrite.allow_new).toArray(),
+              deny: new Discord.PermissionsBitField(overwrite.deny_new).toArray()
             };
-          }),
-        position: category.position,
-        type: Discord.ChannelType.GuildCategory
+          })
       });
 
       createdChannels.push({
-        channel: createdCategory,
-        id: category.id
+        id: category.id,
+        channel: createdCategory
       });
 
       await sleep(500);
@@ -265,8 +258,9 @@ module.exports = {
     for (const channel of template.data.channels.sort((a, b) => a.position - b.position).filter(channel => channel.type !== Discord.ChannelType.GuildCategory)) {
       const createdChannel = await interaction.guild.channels.create({
         name: channel.name,
-        nsfw: channel.nsfw,
+        type: channel.type,
         parent: createdChannels.find(category => category.id === channel.parent_id)?.channel,
+        position: channel.position,
         permissionOverwrites: channel.permission_overwrites
           .filter(overwrite => overwrite.type === '0')
           .map(overwrite => {
@@ -274,22 +268,21 @@ module.exports = {
             if (!role) return;
 
             return {
-              allow: new Discord.PermissionsBitField(overwrite.allow_new).toArray(),
-              deny: new Discord.PermissionsBitField(overwrite.deny_new).toArray(),
               id: role.role.id,
-              type: 0
+              type: 0,
+              allow: new Discord.PermissionsBitField(overwrite.allow_new).toArray(),
+              deny: new Discord.PermissionsBitField(overwrite.deny_new).toArray()
             };
           }),
-        position: channel.position,
-        rateLimitPerUser: channel.rate_limit_per_user,
         topic: channel.topic,
-        type: channel.type,
+        nsfw: channel.nsfw,
+        rateLimitPerUser: channel.rate_limit_per_user,
         userLimit: channel.user_limit
       });
 
       createdChannels.push({
-        channel: createdChannel,
-        id: channel.id
+        id: channel.id,
+        channel: createdChannel
       });
 
       await sleep(1000);
@@ -298,10 +291,10 @@ module.exports = {
     await dmMessage.edit(await interaction.translate('commands.templates.subcommands.use.steps.3', { loadingEmoji: config.emojis.loading }));
 
     await interaction.guild.edit({
-      afkChannel: createdChannels.find(channel => channel.id === template.data.afk_channel_id)?.channel,
-      afkTimeout: template.data.afk_timeout,
       defaultMessageNotifications: template.data.default_message_notifications,
       preferredLocale: template.data.preferred_locale,
+      afkChannel: createdChannels.find(channel => channel.id === template.data.afk_channel_id)?.channel,
+      afkTimeout: template.data.afk_timeout,
       systemChannel: createdChannels.find(channel => channel.id === template.data.system_channel_id)?.channel,
       systemChannelFlags: template.data.system_channel_flags
     });
@@ -321,14 +314,21 @@ module.exports = {
         new Discord.EmbedBuilder()
           .setColor('#5865F2')
           .setTitle(await interaction.translate('commands.templates.subcommands.use.embeds.success.title', { templateId: template.id }))
-          .setAuthor({ iconURL: interaction.guild.iconURL(), name: interaction.guild.name })
+          .setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
           .setTimestamp()
-          .setFooter({ iconURL: interaction.user.displayAvatarURL(), text: interaction.user.username })
-          .setDescription(await interaction.translate('commands.templates.subcommands.use.embeds.success.description', { checkEmoji: config.emojis.checkmark, guildName: interaction.guild.name, templateName: template.name, user: interaction.user }))
+          .setFooter({ text: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
+          .setDescription(await interaction.translate('commands.templates.subcommands.use.embeds.success.description', { checkEmoji: config.emojis.checkmark, templateName: template.name, guildName: interaction.guild.name, user: interaction.user }))
       ]
     });
 
-    return dmMessage.edit(await interaction.translate('commands.templates.subcommands.use.steps.5', { checkEmoji: config.emojis.checkmark, guildName: interaction.guild.name, templateName: template.name }));
+    return dmMessage.edit(await interaction.translate('commands.templates.subcommands.use.steps.5', { checkEmoji: config.emojis.checkmark, templateName: template.name, guildName: interaction.guild.name }));
   },
-  isGuildOnly: true
+  autocomplete: async interaction => {
+    if (!interaction.guild) return;
+    if (interaction.guild.ownerId !== interaction.user.id) return;
+
+    const templates = await Template.find({ approved: true });
+
+    return interaction.customRespond(templates.map(template => ({ name: `${template.name} | ID: ${template.id}`, value: template.id })));
+  }
 };

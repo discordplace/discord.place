@@ -1,17 +1,17 @@
-const Bot = require('@/schemas/Bot');
-const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
-const Server = require('@/schemas/Server');
-const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
-const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
-const createCheckout = require('@/utils/payments/createCheckout');
-const createStandedOutCheckout = require('@/utils/payments/createStandedOutCheckout');
-const createTripledVotesCheckout = require('@/utils/payments/createTripledVotesCheckout');
 const useRateLimiter = require('@/utils/useRateLimiter');
+const { matchedData, body } = require('express-validator');
+const createCheckout = require('@/utils/payments/createCheckout');
+const createTripledVotesCheckout = require('@/utils/payments/createTripledVotesCheckout');
+const createStandedOutCheckout = require('@/utils/payments/createStandedOutCheckout');
 const bodyParser = require('body-parser');
-const { body, matchedData } = require('express-validator');
+const Server = require('@/schemas/Server');
+const Bot = require('@/schemas/Bot');
+const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
+const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
+const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -32,7 +32,7 @@ module.exports = {
       .isNumeric().withMessage('Bot ID must be a string.'),
     validateRequest,
     async (request, response) => {
-      const { botId, id, planId, serverId } = matchedData(request);
+      const { id, planId, serverId, botId } = matchedData(request);
 
       if (id === 'standed-out') {
         if (!serverId && !botId) return response.sendError('Server ID or Bot ID is required.', 400);

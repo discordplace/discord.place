@@ -27,7 +27,7 @@ module.exports = {
       const action = request.body.action;
       if (action === 'published') {
         try {
-          const { stderr, stdout } = await exec('git pull');
+          const { stdout, stderr } = await exec('git pull');
           logger.info(stdout);
           if (stderr) logger.info(stderr);
 

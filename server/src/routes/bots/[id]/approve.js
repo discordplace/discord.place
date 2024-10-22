@@ -1,11 +1,11 @@
-const Bot = require('@/schemas/Bot');
-const DashboardData = require('@/schemas/Dashboard/Data');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData } = require('express-validator');
+const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
-const { matchedData, param } = require('express-validator');
+const DashboardData = require('@/schemas/Dashboard/Data');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -43,7 +43,7 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setColor(Discord.Colors.Green)
-          .setAuthor({ iconURL: botUser.displayAvatarURL(), name: `Bot Approved | ${botUser.username}` })
+          .setAuthor({ name: `Bot Approved | ${botUser.username}`, iconURL: botUser.displayAvatarURL() })
           .setTimestamp()
           .setFields([
             {
@@ -63,7 +63,7 @@ module.exports = {
           )
       ];
 
-      client.channels.cache.get(config.portalChannelId).send({ components, embeds });
+      client.channels.cache.get(config.portalChannelId).send({ embeds, components });
 
       return response.status(204).end();
     }

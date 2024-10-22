@@ -1,12 +1,12 @@
-import cn from '@/lib/cn';
-import { t } from '@/stores/language';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import { FiX } from 'react-icons/fi';
-import { IoSearch } from 'react-icons/io5';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { IoSearch } from 'react-icons/io5';
+import cn from '@/lib/cn';
+import { motion } from 'framer-motion';
+import { t } from '@/stores/language';
 
-export default function SearchInput({ animationDelay, fetchData, loading, placeholder, search, setPage }) {
+export default function SearchInput({ placeholder, loading, search, fetchData, setPage, animationDelay }) {
   const [value, setValue] = useState('');
 
   function validateValue(throwError = true) {
@@ -31,17 +31,17 @@ export default function SearchInput({ animationDelay, fetchData, loading, placeh
   }, [search]);
 
   const sequenceTransition = {
-    damping: 20,
     duration: 0.25,
+    type: 'spring',
     stiffness: 260,
-    type: 'spring'
+    damping: 20
   };
 
   return (
     <motion.div
-      animate={{ opacity: 1, y: 0 }}
       className='relative flex w-full items-center overflow-hidden'
       initial={{ opacity: 0, y: -25 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ ...sequenceTransition, delay: animationDelay }}
     >
       <button
@@ -65,24 +65,27 @@ export default function SearchInput({ animationDelay, fetchData, loading, placeh
           'absolute right-2 transition-all peer [transition-duration:_250ms] p-1.5 rounded-md hover:bg-quaternary text-lg text-tertiary hover:text-primary',
           (value || (value !== undefined && value !== '')) ? 'right-2' : '-right-[30px] opacity-0'
         )}
-        disabled={loading}
         onClick={() => {
           setValue('');
           fetchData('');
         }}
+        disabled={loading}
       >
         <FiX className='text-xl' />
       </button>
 
       <input
-        autoComplete='off'
+        placeholder={placeholder}
         className={cn(
           'caret-[rgba(var(--text-secondary))] [transition-duration:_250ms] flex w-full py-3 pl-4 pr-12 transition-all border-2 rounded-lg outline-none disalbed:pointer-events-none bg-secondary peer-hover:bg-secondary border-primary hover:bg-tertiary placeholder-placeholder text-secondary focus-visible:bg-tertiary focus-visible:border-purple-500 active:bg-quaternary',
           (value || (value !== undefined && value !== '')) && 'pr-[4.7rem]'
         )}
+        onChange={event => setValue(event.target.value)}
+        value={value}
         disabled={loading}
         maxLength={100}
-        onChange={event => setValue(event.target.value)}
+        spellCheck={false}
+        autoComplete='off'
         onKeyUp={event => {
           if (event.key === 'Enter') {
             const validatedValue = validateValue();
@@ -92,9 +95,6 @@ export default function SearchInput({ animationDelay, fetchData, loading, placeh
             }
           }
         }}
-        placeholder={placeholder}
-        spellCheck={false}
-        value={value}
       />
     </motion.div>
   );

@@ -1,24 +1,24 @@
 'use client';
 
 import ColumnRenderer from '@/app/(dashboard)/components/Table/ColumnRenderer';
-import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
-import Drawer from '@/app/components/Drawer';
-import ErrorState from '@/app/components/ErrorState';
-import Pagination from '@/app/components/Pagination';
+import { FaCheck } from 'react-icons/fa';
 import cn from '@/lib/cn';
-import useDashboardStore from '@/stores/dashboard';
-import * as chrono from 'chrono-node';
 import { motion } from 'framer-motion';
 import { AnimatePresence } from 'framer-motion';
-import isEqual from 'lodash/isEqual';
+import useDashboardStore from '@/stores/dashboard';
 import { useEffect, useRef, useState } from 'react';
+import ErrorState from '@/app/components/ErrorState';
 import { BsEmojiAngry } from 'react-icons/bs';
-import { FaCheck } from 'react-icons/fa';
-import { FaBookBookmark, FaXmark } from 'react-icons/fa6';
-import { FiX } from 'react-icons/fi';
-import { IoSearch } from 'react-icons/io5';
+import Pagination from '@/app/components/Pagination';
 import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
+import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
+import { FiX } from 'react-icons/fi';
+import isEqual from 'lodash/isEqual';
+import { IoSearch } from 'react-icons/io5';
+import * as chrono from 'chrono-node';
 import { useMedia } from 'react-use';
+import { FaBookBookmark, FaXmark } from 'react-icons/fa6';
+import Drawer from '@/app/components/Drawer';
 
 export default function Table({ tabs }) {
   const selectedItems = useDashboardStore(state => state.selectedItems);
@@ -33,7 +33,7 @@ export default function Table({ tabs }) {
   const currentTabData = tabs.find(tab => tab.label === currentTab);
 
   const [page, setPage] = useState(1);
-  const [currentSort, setCurrentSort] = useState({ key: '', name: '', order: '' });
+  const [currentSort, setCurrentSort] = useState({ name: '', key: '', order: '' });
 
   useEffect(() => {
     setSelectedItems([]);
@@ -100,7 +100,7 @@ export default function Table({ tabs }) {
 
         <button
           className='flex items-center gap-x-1.5 rounded-full border border-primary bg-secondary py-0.5 pl-1.5 pr-2 text-xs text-secondary hover:bg-quaternary'
-          onClick={() => setCurrentSort({ key: '', name: '', order: '' })}
+          onClick={() => setCurrentSort({ name: '', key: '', order: '' })}
         >
           {CurrentSortIcon && <CurrentSortIcon size={14} />}
 
@@ -113,11 +113,11 @@ export default function Table({ tabs }) {
       <div className='flex flex-wrap gap-x-4 gap-y-2 border-b-primary pb-5 sm:flex-nowrap sm:overflow-hidden sm:border-b'>
         {tabs?.map(tab => (
           <div
+            key={tab.label}
             className={cn(
               'flex w-full justify-center sm:w-max bg-secondary sm:bg-[unset] items-center gap-x-2 sm:py-0 py-2 px-4 sm:px-2 relative text-sm hover:text-primary cursor-pointer text-tertiary transition-colors rounded-lg',
               currentTab === tab.label && 'text-primary pointer-events-none'
             )}
-            key={tab.label}
             onClick={() => setCurrentTab(tab.label)}
           >
             {tab.label}
@@ -128,8 +128,8 @@ export default function Table({ tabs }) {
 
             {currentTab === tab.label && (
               <motion.div
-                className='absolute bottom-[-52.5px] left-0 hidden h-[35px] w-full rounded-lg bg-black dark:bg-white sm:block'
                 layoutId='emojisQueueCurrentTabIndicator'
+                className='absolute bottom-[-52.5px] left-0 hidden h-[35px] w-full rounded-lg bg-black dark:bg-white sm:block'
               />
             )}
           </div>
@@ -152,13 +152,13 @@ export default function Table({ tabs }) {
               currentlySearching ? (
                 <div className='relative flex w-full items-center'>
                   <input
-                    autoFocus
-                    className='peer w-full bg-transparent pl-5 text-secondary outline-none placeholder:text-[rgba(var(--text-tertiary))] focus-visible:text-primary sm:w-36'
-                    onChange={event => setSearchQuery(event.target.value)}
-                    placeholder='Search anything...'
-                    ref={searchInputRef}
                     type='text'
+                    className='peer w-full bg-transparent pl-5 text-secondary outline-none placeholder:text-[rgba(var(--text-tertiary))] focus-visible:text-primary sm:w-36'
+                    placeholder='Search anything...'
                     value={searchQuery}
+                    onChange={event => setSearchQuery(event.target.value)}
+                    autoFocus
+                    ref={searchInputRef}
                   />
 
                   <IoSearch className='absolute left-0 text-tertiary' />
@@ -186,13 +186,13 @@ export default function Table({ tabs }) {
 
                 {currentlySearching ? (
                   <input
-                    autoFocus
-                    className='w-24 bg-transparent text-secondary outline-none sm:w-36'
-                    onChange={event => setSearchQuery(event.target.value)}
-                    placeholder='Search anything...'
-                    ref={searchInputRef}
                     type='text'
+                    className='w-24 bg-transparent text-secondary outline-none sm:w-36'
+                    placeholder='Search anything...'
                     value={searchQuery}
+                    onChange={event => setSearchQuery(event.target.value)}
+                    autoFocus
+                    ref={searchInputRef}
                   />
                 ) : (
                   'Search'
@@ -219,13 +219,13 @@ export default function Table({ tabs }) {
         {(currentTabData.columns.length === 0 || displayedColumns.length === 0) && (
           <div className='flex min-h-[calc(100svh_-_420px)] max-w-[calc(100vw_-_65px)] items-center justify-center sm:max-w-[unset]'>
             <ErrorState
-              message={`There are no ${currentTabData.label.toLowerCase()} data to display.`}
               title={
                 <div className='flex items-center gap-x-2'>
                   <BsEmojiAngry />
                   It{'\''}s quiet in here..
                 </div>
               }
+              message={`There are no ${currentTabData.label.toLowerCase()} data to display.`}
             />
           </div>
         )}
@@ -236,21 +236,21 @@ export default function Table({ tabs }) {
               <tr>
                 {currentTabData.rows?.map((row, index) => (
                   <th
+                    key={`row-${row.name}`}
+                    scope='col'
                     className={cn(
                       'px-2 py-6 text-sm font-medium text-tertiary min-w-[150px]',
                       row.sortable && 'cursor-pointer hover:text-primary transition-colors'
                     )}
-                    key={`row-${row.name}`}
                     onClick={() => {
                       if (!row.sortable) return;
 
                       setCurrentSort({
-                        key: index,
                         name: row.name,
+                        key: index,
                         order: currentSort.key === index ? (currentSort.order === 'asc' ? 'desc' : 'asc') : 'asc'
                       });
                     }}
-                    scope='col'
                   >
                     <div className='flex items-center gap-x-2 text-xs font-bold uppercase'>
                       {row.icon && <row.icon size={18} />}
@@ -279,11 +279,11 @@ export default function Table({ tabs }) {
               >
                 {currentTabData.rows?.map((_, rowIndex) => (
                   <td
+                    key={`row-${rowIndex}`}
                     className={cn(
                       'p-2 min-w-[300px] sm:min-w-[unset] h-[60px] border-y border-[rgba(var(--bg-tertiary))] transition-colors group-hover:cursor-pointer',
                       selectedItems.find(col => isEqual(col, column)) ? 'bg-tertiary border-[rgba(var(--bg-quaternary))] select-none' : 'group-hover:bg-secondary'
                     )}
-                    key={`row-${rowIndex}`}
                     onClick={() => handleSelect(column)}
                   >
                     <div
@@ -301,11 +301,11 @@ export default function Table({ tabs }) {
                             )}
                           >
                             <FaCheck
+                              size={10}
                               className={cn(
                                 'transition-opacity opacity-0',
                                 selectedItems.find(col => isEqual(col, column)) && 'opacity-100'
                               )}
-                              size={10}
                             />
                           </button>
                         </div>
@@ -324,13 +324,13 @@ export default function Table({ tabs }) {
       {showPagination && (
         <div className='flex w-full justify-center'>
           <Pagination
-            disableAnimation
-            limit={10}
-            loading={false}
             page={page}
-            setPage={setPage}
-            total={deepCopiedColumns?.length}
             totalPages={Math.ceil(deepCopiedColumns?.length / 10)}
+            setPage={setPage}
+            loading={false}
+            total={deepCopiedColumns?.length}
+            limit={10}
+            disableAnimation
           />
         </div>
       )}
@@ -340,32 +340,40 @@ export default function Table({ tabs }) {
           {(isMobile && selectedItems.length > 0) && (
             <>
               <motion.button
-                animate={{
-                  filter: 'blur(0px)',
-                  opacity: 1,
-                  scale: 1,
-                  y: 0
-                }}
                 className='fixed bottom-8 right-6 flex items-center gap-x-2 rounded-full bg-tertiary px-4 py-2 text-sm font-medium text-secondary transition-colors'
-                exit={{
-                  filter: 'blur(10px)',
-                  opacity: 0,
-                  scale: 0.85,
-                  y: 60
-                }}
-                initial={{
-                  filter: 'blur(10px)',
-                  opacity: 0,
-                  scale: 0.8,
-                  y: 60
-                }}
                 onClick={() => setDrawerOpen(true)}
+                initial={{
+                  opacity: 0,
+                  y: 60,
+                  scale: 0.8,
+                  filter: 'blur(10px)'
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: 'blur(0px)'
+                }}
+                exit={{
+                  opacity: 0,
+                  y: 60,
+                  scale: 0.85,
+                  filter: 'blur(10px)'
+                }}
               >
                 <FaBookBookmark size={14} />
                 Actions
               </motion.button>
 
               <Drawer
+                openState={drawerOpen}
+                setOpenState={setDrawerOpen}
+                state={mobileSelectedAction}
+                setState={value => {
+                  value.action(selectedItems);
+
+                  setDrawerOpen(false);
+                }}
                 items={currentTabData.actions.map(action => (
                   {
                     label: (
@@ -377,42 +385,34 @@ export default function Table({ tabs }) {
                     value: action
                   }
                 ))}
-                openState={drawerOpen}
-                setOpenState={setDrawerOpen}
-                setState={value => {
-                  value.action(selectedItems);
-
-                  setDrawerOpen(false);
-                }}
-                state={mobileSelectedAction}
               />
             </>
           )}
 
           {(!isMobile && selectedItems.length > 0) && (
             <motion.div
-              animate={{
-                filter: 'blur(0px)',
-                opacity: 1,
-                scale: 1,
-                y: 0
-              }}
               className='fixed bottom-8 z-10 flex h-[50px] w-max items-center gap-x-4 rounded-2xl border-2 border-primary bg-secondary p-3 text-sm font-medium shadow-[rgba(var(--bg-secondary))]'
-              exit={{
-                filter: 'blur(10px)',
-                opacity: 0,
-                scale: 0.85,
-                y: 60
-              }}
               initial={{
-                filter: 'blur(10px)',
                 opacity: 0,
+                y: 60,
                 scale: 0.8,
-                y: 60
+                filter: 'blur(10px)'
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: 'blur(0px)'
+              }}
+              exit={{
+                opacity: 0,
+                y: 60,
+                scale: 0.85,
+                filter: 'blur(10px)'
               }}
               transition={{
-                duration: 0.2,
-                type: 'easeInOut'
+                type: 'easeInOut',
+                duration: 0.2
               }}
             >
               <div className='rounded-lg border border-purple-500 p-1 text-purple-500 shadow-lg shadow-purple-500/30'>

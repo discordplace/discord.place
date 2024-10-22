@@ -1,11 +1,11 @@
-const ServerLanguage = require('@/schemas/Server/Language');
-const translate = require('@/utils/localization/translate');
 const Discord = require('discord.js');
 const i18next = require('i18next');
 const intervalPlural = require('i18next-intervalplural-postprocessor');
-const moment = require('moment');
 const fs = require('node:fs/promises');
 const path = require('node:path');
+const ServerLanguage = require('@/schemas/Server/Language');
+const moment = require('moment');
+const translate = require('@/utils/localization/translate');
 
 async function initialize() {
   try {

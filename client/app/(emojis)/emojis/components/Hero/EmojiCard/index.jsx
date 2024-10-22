@@ -1,17 +1,17 @@
 'use client';
 
 import MotionImage from '@/app/components/Motion/Image';
+import Link from 'next/link';
+import { HiDocumentDownload } from 'react-icons/hi';
 import config from '@/config';
 import cn from '@/lib/cn';
 import { t } from '@/stores/language';
-import Link from 'next/link';
-import { HiDocumentDownload } from 'react-icons/hi';
 
-export default function EmojiCard({ animated, categories, className, downloads, id, name, overridedImage }) {
+export default function EmojiCard({ overridedImage, id, name, animated, categories, downloads, className }) {
   const formatter = new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 2,
+    style: 'decimal',
     notation: 'compact',
-    style: 'decimal'
+    maximumFractionDigits: 2
   });
 
   return (
@@ -26,11 +26,11 @@ export default function EmojiCard({ animated, categories, className, downloads, 
         href={`/emojis/${id}`}
       >
         <MotionImage
+          src={overridedImage || config.getEmojiURL(id, animated)}
           alt={`${name} emoji`}
           className='size-[50px] transition-all ease-in-out group-hover:size-[86px]'
-          height={128}
-          src={overridedImage || config.getEmojiURL(id, animated)}
           width={128}
+          height={128}
         />
 
         {animated && (

@@ -1,7 +1,7 @@
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { matchedData, param } = require('express-validator');
 
 module.exports = {
   get: [
@@ -28,9 +28,9 @@ module.exports = {
       const voteData = bot.voters.find(voter => voter.user.id == user_id) || {};
 
       return response.json({
-        lastVote: voteData.lastVote ? new Date(voteData.lastVote).getTime() : null,
+        voted: isVotedInLast24Hours,
         vote: voteData.vote || 0,
-        voted: isVotedInLast24Hours
+        lastVote: voteData.lastVote ? new Date(voteData.lastVote).getTime() : null
       });
     }
   ]

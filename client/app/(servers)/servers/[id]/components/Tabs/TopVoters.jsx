@@ -1,14 +1,14 @@
 'use client';
 
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Pagination from '@/app/components/Pagination';
-import cn from '@/lib/cn';
-import fetchVoters from '@/lib/request/servers/fetchVoters';
-import { t } from '@/stores/language';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import cn from '@/lib/cn';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import fetchVoters from '@/lib/request/servers/fetchVoters';
 import { toast } from 'sonner';
+import Link from 'next/link';
+import { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function TopVoters({ server }) {
   const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ export default function TopVoters({ server }) {
       {loading ? (
         <div className='mt-4 grid w-full grid-cols-1' key='loading'>
           {new Array(limit).fill().map((_, index) => (
-            <div className='flex h-[72px] w-full items-center gap-4 px-4 first:rounded-t-xl last:rounded-b-xl odd:bg-secondary even:bg-tertiary' key={index}>
+            <div key={index} className='flex h-[72px] w-full items-center gap-4 px-4 first:rounded-t-xl last:rounded-b-xl odd:bg-secondary even:bg-tertiary'>
               <div className='size-10 animate-pulse rounded-full bg-quaternary' />
               <div className='h-4 w-1/3 animate-pulse rounded-lg bg-quaternary' />
               <div className='flex w-full flex-1 items-center justify-end gap-x-2'>
@@ -56,6 +56,8 @@ export default function TopVoters({ server }) {
         <div className='mt-4 grid w-full grid-cols-1' key='voters'>
           {voters.map((voter, index) => (
             <Link
+              href={`/profile/u/${voter.user.id}`}
+              key={voter.id}
               className={cn(
                 'flex items-center w-full gap-4 p-4 odd:bg-secondary even:bg-tertiary hover:opacity-70 transition-opacity',
                 index === 0 && 'rounded-t-xl',
@@ -64,17 +66,15 @@ export default function TopVoters({ server }) {
                 page === 1 && voters.length > 3 && voters.indexOf(voter) === 1 && 'border-x-2 border-gray-500 odd:bg-gray-500/10',
                 page === 1 && voters.length > 3 && voters.indexOf(voter) === 2 && 'border-x-2 border-b-2 border-yellow-900 odd:bg-yellow-900/10'
               )}
-              href={`/profile/u/${voter.user.id}`}
-              key={voter.id}
             >
               <div className='relative'>
                 <UserAvatar
-                  className='rounded-full'
-                  hash={voter.user.avatar}
-                  height={40}
                   id={voter.user.id}
+                  hash={voter.user.avatar}
                   size={64}
                   width={40}
+                  height={40}
+                  className='rounded-full'
                 />
 
                 {[0, 1, 2].includes(voters.indexOf(voter)) && (
@@ -106,12 +106,12 @@ export default function TopVoters({ server }) {
       {totalPages > 1 && (
         <div className='flex w-full items-center justify-center'>
           <Pagination
-            disableAnimation
-            limit={limit}
-            loading={false}
             page={page}
             setPage={setPage}
+            loading={false}
             total={totalVoters}
+            limit={limit}
+            disableAnimation
           />
         </div>
       )}

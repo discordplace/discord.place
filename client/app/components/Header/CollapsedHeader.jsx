@@ -1,18 +1,18 @@
-import Drawer from '@/app/components/Drawer';
-import UserSide from '@/app/components/Header/UserSide';
-import LogoWithText from '@/app/components/Logo/WithText';
 import config from '@/config';
-import cn from '@/lib/cn';
-import { t } from '@/stores/language';
-import useThemeStore from '@/stores/theme';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next-nprogress-bar';
+import { useLockBodyScroll } from 'react-use';
+import UserSide from '@/app/components/Header/UserSide';
+import { IoMdMenu } from 'react-icons/io';
 import { Suspense, useEffect, useState } from 'react';
 import { FiX } from 'react-icons/fi';
-import { IoMdMenu } from 'react-icons/io';
+import LogoWithText from '@/app/components/Logo/WithText';
+import useThemeStore from '@/stores/theme';
+import Image from 'next/image';
+import Drawer from '@/app/components/Drawer';
+import { useRouter } from 'next-nprogress-bar';
 import { MdOutlineOpenInNew } from 'react-icons/md';
-import { useLockBodyScroll } from 'react-use';
+import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 
 export default function CollapsedHeader({ pathname }) {
   const theme = useThemeStore(state => state.theme);
@@ -42,8 +42,8 @@ export default function CollapsedHeader({ pathname }) {
           <LogoWithText />
         </div>
 
-        <Link className='pointer-events-auto block mobile:hidden' href='/'>
-          <Image alt='discord.place Logo' className='size-[48px]' height={64} src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} />
+        <Link href='/' className='pointer-events-auto block mobile:hidden'>
+          <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='size-[48px]' alt='discord.place Logo' />
         </Link>
       </div>
 
@@ -71,6 +71,10 @@ export default function CollapsedHeader({ pathname }) {
         </button>
 
         <Drawer
+          openState={open}
+          setOpenState={setOpen}
+          state={statedPathname}
+          setState={setPathname}
           items={config.headerLinks.map(headerLink => ({
             label: <>
               <div className='flex items-center gap-x-1.5'>
@@ -84,10 +88,6 @@ export default function CollapsedHeader({ pathname }) {
             </>,
             value: headerLink.href
           }))}
-          openState={open}
-          setOpenState={setOpen}
-          setState={setPathname}
-          state={statedPathname}
         />
       </div>
     </header>

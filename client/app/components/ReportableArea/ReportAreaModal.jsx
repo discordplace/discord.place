@@ -1,17 +1,17 @@
+import useGeneralStore from '@/stores/general';
+import ProfilePreview from '@/app/components/ReportableArea/Previews/Profile';
+import ServerPreview from '@/app/components/ReportableArea/Previews/Server';
 import BotPreview from '@/app/components/ReportableArea/Previews/Bot';
 import EmojiPreview from '@/app/components/ReportableArea/Previews/Emoji';
-import ProfilePreview from '@/app/components/ReportableArea/Previews/Profile';
-import ReviewPreview from '@/app/components/ReportableArea/Previews/Review';
-import ServerPreview from '@/app/components/ReportableArea/Previews/Server';
-import SoundPreview from '@/app/components/ReportableArea/Previews/Sound';
 import TemplatePreview from '@/app/components/ReportableArea/Previews/Template';
+import SoundPreview from '@/app/components/ReportableArea/Previews/Sound';
+import ReviewPreview from '@/app/components/ReportableArea/Previews/Review';
 import ThemePreview from '@/app/components/ReportableArea/Previews/Theme';
 import config from '@/config';
 import cn from '@/lib/cn';
-import useGeneralStore from '@/stores/general';
 import { t } from '@/stores/language';
 
-export default function ReportAreaModal({ metadata, type }) {
+export default function ReportAreaModal({ type, metadata }) {
   const reason = useGeneralStore(state => state.reportAreaModal.reason);
   const setReason = useGeneralStore(state => state.reportAreaModal.setReason);
 
@@ -41,9 +41,9 @@ export default function ReportAreaModal({ metadata, type }) {
         <div className='relative'>
           <textarea
             className='scrollbar-hide peer mt-2 block h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-quaternary p-2 text-sm font-medium text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base [&:not(:disabled)]:cursor-text'
-            maxLength={config.reportReasonMaxCharacters}
-            onChange={event => setReason(event.target.value)}
             value={reason}
+            onChange={event => setReason(event.target.value)}
+            maxLength={config.reportReasonMaxCharacters}
           />
 
           <span

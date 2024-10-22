@@ -1,17 +1,17 @@
 'use client';
 
-import NewBot from '@/app/(account)/account/components/Content/Tabs/MyBots/NewBot';
-import Countdown from '@/app/components/Countdown';
-import ErrorState from '@/app/components/ErrorState';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import config from '@/config';
-import cn from '@/lib/cn';
+import ErrorState from '@/app/components/ErrorState';
 import useAccountStore from '@/stores/account';
-import { t } from '@/stores/language';
 import Link from 'next/link';
 import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
-import { FaCircleExclamation } from 'react-icons/fa6';
+import NewBot from '@/app/(account)/account/components/Content/Tabs/MyBots/NewBot';
 import { LuPlus } from 'react-icons/lu';
+import config from '@/config';
+import Countdown from '@/app/components/Countdown';
+import cn from '@/lib/cn';
+import { FaCircleExclamation } from 'react-icons/fa6';
+import { t } from '@/stores/language';
 
 export default function MyBots() {
   const data = useAccountStore(state => state.data);
@@ -50,31 +50,31 @@ export default function MyBots() {
           {(data.bots || []).length === 0 ? (
             <div className='mt-20 max-w-[800px]'>
               <ErrorState
-                message={t('accountPage.tabs.myBots.sections.listedBots.emptyErrorState.message')}
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
                     {t('accountPage.tabs.myBots.sections.listedBots.emptyErrorState.title')}
                   </div>
                 }
+                message={t('accountPage.tabs.myBots.sections.listedBots.emptyErrorState.message')}
               />
             </div>
           ) : (
             <div className='mt-2 flex max-w-[800px] flex-wrap gap-4'>
               {data.bots.map(bot => (
                 <Link
+                  key={bot.id}
                   className='flex items-center gap-4 rounded-xl bg-secondary p-4 transition-opacity hover:opacity-70'
                   href={`/bots/${bot.id}`}
-                  key={bot.id}
                 >
                   <div className='relative size-12'>
                     <UserAvatar
-                      className='rounded-lg'
-                      hash={bot.avatar}
-                      height={48}
                       id={bot.id}
+                      hash={bot.avatar}
                       size={64}
                       width={48}
+                      height={48}
+                      className='rounded-lg'
                     />
                   </div>
 
@@ -142,13 +142,13 @@ export default function MyBots() {
           >
             {(data.denies || []).length === 0 ? (
               <ErrorState
-                message={t('accountPage.tabs.myBots.sections.pastDenials.emptyErrorState.message')}
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
                     {t('accountPage.tabs.myBots.sections.pastDenials.emptyErrorState.title')}
                   </div>
                 }
+                message={t('accountPage.tabs.myBots.sections.pastDenials.emptyErrorState.message')}
               />
             ) : (
               data.denies.map(deny => (
@@ -160,12 +160,12 @@ export default function MyBots() {
                     <FaCircleExclamation />
 
                     <UserAvatar
-                      className='rounded-full'
-                      hash={deny.bot.avatar}
-                      height={24}
                       id={deny.bot.id}
+                      hash={deny.bot.avatar}
                       size={32}
                       width={24}
+                      height={24}
+                      className='rounded-full'
                     />
 
                     {deny.bot.username}#{deny.bot.discriminator}
@@ -198,7 +198,7 @@ export default function MyBots() {
                           countdown: (
                             <Countdown
                               date={new Date(deny.createdAt).getTime() + 21600000}
-                              renderer={({ completed, hours, minutes, seconds }) => {
+                              renderer={({ hours, minutes, seconds, completed }) => {
                                 if (completed) return t('accountPage.tabs.myBots.sections.pastDenials.countdown.completed');
 
                                 return t('accountPage.tabs.myBots.sections.pastDenials.countdown.renderer', { hours, minutes, seconds });

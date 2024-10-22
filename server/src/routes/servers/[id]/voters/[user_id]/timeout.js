@@ -1,9 +1,9 @@
-const ServerReminder = require('@/schemas/Server/Vote/Reminder');
-const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { matchedData, param } = require('express-validator');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
+const ServerReminder = require('@/schemas/Server/Vote/Reminder');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   delete: [

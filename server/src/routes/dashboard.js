@@ -1,27 +1,27 @@
-const BlockedIp = require('@/schemas/BlockedIp');
-const Bot = require('@/schemas/Bot');
-const BotDeny = require('@/schemas/Bot/Deny');
-const BotReview = require('@/schemas/Bot/Review');
-const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const DashboardData = require('@/schemas/Dashboard/Data');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const useRateLimiter = require('@/utils/useRateLimiter');
 const Emoji = require('@/schemas/Emoji');
 const EmojiPack = require('@/schemas/Emoji/Pack');
-const Plan = require('@/schemas/LemonSqueezy/Plan');
-const Link = require('@/schemas/Link');
-const Quarantine = require('@/schemas/Quarantine');
-const ServerReview = require('@/schemas/Server/Review');
-const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
-const Sound = require('@/schemas/Sound');
+const Bot = require('@/schemas/Bot');
+const BotReview = require('@/schemas/Bot/Review');
+const BotDeny = require('@/schemas/Bot/Deny');
 const Template = require('@/schemas/Template');
+const Sound = require('@/schemas/Sound');
 const Theme = require('@/schemas/Theme');
-const User = require('@/schemas/User');
-const UserHashes = require('@/schemas/User/Hashes');
-const getUserHashes = require('@/utils/getUserHashes');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
+const ServerReview = require('@/schemas/Server/Review');
+const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
+const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
+const BlockedIp = require('@/schemas/BlockedIp');
 const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
+const Quarantine = require('@/schemas/Quarantine');
+const Link = require('@/schemas/Link');
+const getUserHashes = require('@/utils/getUserHashes');
+const User = require('@/schemas/User');
+const Plan = require('@/schemas/LemonSqueezy/Plan');
+const UserHashes = require('@/schemas/User/Hashes');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const validKeys = [
   'stats',
@@ -53,86 +53,86 @@ module.exports = {
       const { keys } = matchedData(request);
 
       const permissions = {
-        canApproveBots: request.member && config.permissions.canApproveBotsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canViewDashboard: request.member && config.permissions.canViewDashboardRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canViewBlockedIps: request.member && config.permissions.canViewBlockedIpsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canViewTimeouts: request.member && config.permissions.canViewTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canViewQuarantines: request.member && config.permissions.canViewQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveEmojis: request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canApproveReviews: request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canApproveSounds: request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canApproveBots: request.member && config.permissions.canApproveBotsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveTemplates: request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canApproveSounds: request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canApproveReviews: request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveThemes: request.member && config.permissions.canApproveThemesRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canCreateQuarantines: request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteBlockedIps: config.permissions.canDeleteBlockedIps.includes(request.user.id),
         canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteBots: request.member && config.permissions.canDeleteBotsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteEmojis: request.member && config.permissions.canDeleteEmojisRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteLinks: request.member && config.permissions.canDeleteLinksRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteQuarantines: request.member && config.permissions.canDeleteQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteReviews: request.member && config.permissions.canDeleteReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteSounds: request.member && config.permissions.canDeleteSoundsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteTemplates: request.member && config.permissions.canDeleteTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteThemes: request.member && config.permissions.canDeleteThemesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canRefreshCache: request.member && config.permissions.canExecuteRefreshCacheRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteEmojis: request.member && config.permissions.canDeleteEmojisRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteBots: request.member && config.permissions.canDeleteBotsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteTemplates: request.member && config.permissions.canDeleteTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteSounds: request.member && config.permissions.canDeleteSoundsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteThemes: request.member && config.permissions.canDeleteThemesRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteReviews: request.member && config.permissions.canDeleteReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canDeleteQuarantines: request.member && config.permissions.canDeleteQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canCreateQuarantines: request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canSyncLemonSqueezyPlans: config.permissions.canSyncLemonSqueezyPlans.includes(request.user.id),
-        canViewBlockedIps: request.member && config.permissions.canViewBlockedIpsRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canViewDashboard: request.member && config.permissions.canViewDashboardRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canViewQuarantines: request.member && config.permissions.canViewQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canViewTimeouts: request.member && config.permissions.canViewTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId))
+        canRefreshCache: request.member && config.permissions.canExecuteRefreshCacheRoles.some(roleId => request.member.roles.cache.has(roleId))
       };
 
       if (!permissions.canViewDashboard) return response.sendError('You do not have permission to view the dashboard.', 403);
 
       const responseData = {
-        importantCounts: {
-          bots: await Bot.countDocuments({ approved: false }),
-          emojis: await Emoji.countDocuments({ approved: false }) + await EmojiPack.countDocuments({ approved: false }),
-          reviews: await BotReview.countDocuments({ approved: false }) + await ServerReview.countDocuments({ approved: false }),
-          sounds: await Sound.countDocuments({ approved: false }),
-          templates: await Template.countDocuments({ approved: false }),
-          themes: await Theme.countDocuments({ approved: false })
-        },
         permissions,
-        queue: {}
+        queue: {},
+        importantCounts: {
+          emojis: await Emoji.countDocuments({ approved: false }) + await EmojiPack.countDocuments({ approved: false }),
+          bots: await Bot.countDocuments({ approved: false }),
+          templates: await Template.countDocuments({ approved: false }),
+          sounds: await Sound.countDocuments({ approved: false }),
+          themes: await Theme.countDocuments({ approved: false }),
+          reviews: await BotReview.countDocuments({ approved: false }) + await ServerReview.countDocuments({ approved: false })
+        }
       };
 
       if (keys?.includes('stats')) {
         const data = await DashboardData.find().sort({ createdAt: -1 }).limit(7);
 
         Object.assign(responseData, {
-          bots: Object.values(data).map(dashboardData => ({
-            createdAt: dashboardData.createdAt,
-            value: dashboardData.bots
-          })),
-          emojis: Object.values(data).map(dashboardData => ({
-            createdAt: dashboardData.createdAt,
-            value: dashboardData.emojis
-          })),
-          guilds: Object.values(data).map(dashboardData => ({
-            createdAt: dashboardData.createdAt,
-            value: dashboardData.guilds
+          servers: Object.values(data).map(dashboardData => ({
+            value: dashboardData.servers,
+            createdAt: dashboardData.createdAt
           })),
           profiles: Object.values(data).map(dashboardData => ({
-            createdAt: dashboardData.createdAt,
-            value: dashboardData.profiles
+            value: dashboardData.profiles,
+            createdAt: dashboardData.createdAt
           })),
-          servers: Object.values(data).map(dashboardData => ({
-            createdAt: dashboardData.createdAt,
-            value: dashboardData.servers
+          bots: Object.values(data).map(dashboardData => ({
+            value: dashboardData.bots,
+            createdAt: dashboardData.createdAt
           })),
-          sounds: Object.values(data).map(dashboardData => ({
-            createdAt: dashboardData.createdAt,
-            value: dashboardData.sounds
+          emojis: Object.values(data).map(dashboardData => ({
+            value: dashboardData.emojis,
+            createdAt: dashboardData.createdAt
           })),
           templates: Object.values(data).map(dashboardData => ({
-            createdAt: dashboardData.createdAt,
-            value: dashboardData.templates
+            value: dashboardData.templates,
+            createdAt: dashboardData.createdAt
           })),
-          themes: Object.values(data).map(dashboardData => ({
-            createdAt: dashboardData.createdAt,
-            value: dashboardData.themes
+          guilds: Object.values(data).map(dashboardData => ({
+            value: dashboardData.guilds,
+            createdAt: dashboardData.createdAt
           })),
           users: Object.values(data).map(dashboardData => ({
-            createdAt: dashboardData.createdAt,
-            value: dashboardData.users
+            value: dashboardData.users,
+            createdAt: dashboardData.createdAt
+          })),
+          sounds: Object.values(data).map(dashboardData => ({
+            value: dashboardData.sounds,
+            createdAt: dashboardData.createdAt
+          })),
+          themes: Object.values(data).map(dashboardData => ({
+            value: dashboardData.themes,
+            createdAt: dashboardData.createdAt
           }))
         });
       }
@@ -143,14 +143,14 @@ module.exports = {
         const hashes = await UserHashes.find();
 
         responseData.users = users.map(user => ({
-          avatar: hashes.find(hash => hash.id === user.id)?.avatar || null,
-          createdAt: user.createdAt,
-          email: user.email,
           id: user.id,
+          username: user.data?.username,
+          avatar: hashes.find(hash => hash.id === user.id)?.avatar || null,
+          email: user.email,
+          createdAt: user.createdAt,
           lastLoginAt: user.lastLoginAt,
           lastLogoutAt: user.lastLogoutAt,
-          subscription: user.subscription?.createdAt ? user.subscription : null,
-          username: user.data?.username
+          subscription: user.subscription?.createdAt ? user.subscription : null
         }));
 
         responseData.plans = plans;
@@ -158,11 +158,11 @@ module.exports = {
 
       if (keys?.includes('guilds')) {
         responseData.guilds = client.guilds.cache.map(guild => ({
-          icon: guild.icon,
           id: guild.id,
+          name: guild.name,
+          icon: guild.icon,
           joinedAt: guild.joinedAt,
-          memberCount: guild.memberCount,
-          name: guild.name
+          memberCount: guild.memberCount
         }));
       }
 
@@ -180,9 +180,9 @@ module.exports = {
 
           Object.assign(publiclySafeEmoji, {
             user: {
-              avatar: userHashes.avatar,
               id: emoji.user.id,
-              username: emoji.user.username
+              username: emoji.user.username,
+              avatar: userHashes.avatar
             }
           });
 
@@ -208,9 +208,9 @@ module.exports = {
 
           Object.assign(publiclySafeTemplate, {
             user: {
-              avatar: userHashes.avatar,
               id: template.user.id,
-              username: template.user.username
+              username: template.user.username,
+              avatar: userHashes.avatar
             }
           });
 
@@ -230,9 +230,9 @@ module.exports = {
           return {
             ...publiclySafeSound,
             publisher: {
-              avatar: userHashes.avatar,
               id: sound.publisher.id,
-              username: sound.publisher.username
+              username: sound.publisher.username,
+              avatar: userHashes.avatar
             }
           };
         }));
@@ -250,9 +250,9 @@ module.exports = {
           return {
             ...publiclySafeTheme,
             publisher: {
-              avatar: userHashes.avatar,
               id: theme.publisher.id,
-              username: theme.publisher.username
+              username: theme.publisher.username,
+              avatar: userHashes.avatar
             }
           };
         }));
@@ -272,9 +272,9 @@ module.exports = {
           return {
             ...review._doc,
             user: {
-              avatar: userHashes.avatar,
               id: review.user.id,
-              username: review.user.username
+              username: review.user.username,
+              avatar: userHashes.avatar
             }
           };
         }));
@@ -300,20 +300,20 @@ module.exports = {
           return {
             ...botDeny._doc,
             bot: {
-              avatar: botHashes.avatar,
-              discriminator: botDeny.bot.discriminator,
               id: botDeny.bot.id,
-              username: botDeny.bot.username
-            },
-            reviewer: {
-              avatar: reviewerHashes.avatar,
-              id: botDeny.reviewer.id,
-              username: botDeny.reviewer.username
+              username: botDeny.bot.username,
+              discriminator: botDeny.bot.discriminator,
+              avatar: botHashes.avatar
             },
             user: {
-              avatar: userHashes.avatar,
               id: botDeny.user.id,
-              username: botDeny.user.username
+              username: botDeny.user.username,
+              avatar: userHashes.avatar
+            },
+            reviewer: {
+              id: botDeny.reviewer.id,
+              username: botDeny.reviewer.username,
+              avatar: reviewerHashes.avatar
             }
           };
         }));
@@ -333,9 +333,9 @@ module.exports = {
           const baseObject = {
             ...timeout._doc,
             user: {
-              avatar: userHashes.avatar,
               id: timeout.user.id,
-              username: timeout.user.username
+              username: timeout.user.username,
+              avatar: userHashes.avatar
             }
           };
 
@@ -345,10 +345,10 @@ module.exports = {
             return {
               ...baseObject,
               bot: {
-                avatar: botHashes.avatar,
-                discriminator: timeout.bot.discriminator,
                 id: timeout.bot.id,
-                username: timeout.bot.username
+                username: timeout.bot.username,
+                discriminator: timeout.bot.discriminator,
+                avatar: botHashes.avatar
               }
             };
           } else {
@@ -357,9 +357,9 @@ module.exports = {
             return {
               ...baseObject,
               guild: {
-                icon: guild?.icon || null,
                 id: timeout.guild.id,
-                name: timeout.guild.name
+                name: timeout.guild.name,
+                icon: guild?.icon || null
               }
             };
           }
@@ -380,9 +380,9 @@ module.exports = {
 
             Object.assign(publiclySafeQuarantine, {
               user: {
-                avatar: userHashes.avatar,
                 id: quarantine.user.id,
-                username: quarantine.user.username
+                username: quarantine.user.username,
+                avatar: userHashes.avatar
               }
             });
           }
@@ -392,18 +392,18 @@ module.exports = {
 
             Object.assign(publiclySafeQuarantine, {
               guild: {
-                icon: guild?.icon || null,
                 id: quarantine.guild.id,
-                name: quarantine.guild.name
+                name: quarantine.guild.name,
+                icon: guild?.icon || null
               }
             });
           }
 
           Object.assign(publiclySafeQuarantine, {
             created_by: {
-              avatar: createdByUserHashes.avatar,
               id: quarantine.created_by.id,
-              username: quarantine.created_by.username
+              username: quarantine.created_by.username,
+              avatar: createdByUserHashes.avatar
             }
           });
 
@@ -422,9 +422,9 @@ module.exports = {
           return {
             ...link._doc,
             createdBy: {
-              avatar: userHashes.avatar,
               id: link.createdBy.id,
-              username: link.createdBy.username
+              username: link.createdBy.username,
+              avatar: userHashes.avatar
             }
           };
         }));

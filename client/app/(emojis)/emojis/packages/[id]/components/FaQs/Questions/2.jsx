@@ -1,10 +1,10 @@
 'use client';
 
-import config from '@/config';
 import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
-import { t } from '@/stores/language';
+import config from '@/config';
 import Link from 'next/link';
 import { useState } from 'react';
+import { t } from '@/stores/language';
 
 export default function Question2({ emoji }) {
   const [activeMethod, setActiveMethod] = useState(0);
@@ -43,7 +43,7 @@ export default function Question2({ emoji }) {
                 <span className='select-none font-bold text-primary'>1.</span>
 
                 <span>
-                  {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0', { link: <Link className='underline hover:text-primary' href={config.botInviteURL} target='_blank'>{t('emojiPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0.linkText')}</Link> })}
+                  {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('emojiPage.frequentlyAskedQuestions.answers.1.methods.1.instructions.0.linkText')}</Link> })}
                 </span>
               </div>
 

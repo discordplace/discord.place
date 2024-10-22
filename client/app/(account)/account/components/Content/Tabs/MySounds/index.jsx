@@ -1,21 +1,21 @@
 'use client';
 
-import NewSound from '@/app/(account)/account/components/Content/Tabs/MySounds/NewSound';
-import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
 import ErrorState from '@/app/components/ErrorState';
-import config from '@/config';
 import useAccountStore from '@/stores/account';
-import { t } from '@/stores/language';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
-import { BsQuestionCircleFill } from 'react-icons/bs';
 import { LuPlus } from 'react-icons/lu';
+import { BsQuestionCircleFill } from 'react-icons/bs';
+import config from '@/config';
+import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
+import NewSound from '@/app/(account)/account/components/Content/Tabs/MySounds/NewSound';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
 
 export default function MySounds() {
-  const { currentlyAddingSound, data, setCurrentlyAddingSound } = useAccountStore(useShallow(state => ({
-    currentlyAddingSound: state.currentlyAddingSound,
+  const { data, currentlyAddingSound, setCurrentlyAddingSound } = useAccountStore(useShallow(state => ({
     data: state.data,
+    currentlyAddingSound: state.currentlyAddingSound,
     setCurrentlyAddingSound: state.setCurrentlyAddingSound
   })));
 
@@ -50,13 +50,13 @@ export default function MySounds() {
           {(data.sounds || []).length === 0 ? (
             <div className='mt-20 max-w-[800px]'>
               <ErrorState
-                message={t('accountPage.tabs.mySounds.sections.listedSounds.emptyErrorState.message')}
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
                     {t('accountPage.tabs.mySounds.sections.listedSounds.emptyErrorState.title')}
                   </div>
                 }
+                message={t('accountPage.tabs.mySounds.sections.listedSounds.emptyErrorState.message')}
               />
             </div>
           ) : (
@@ -64,8 +64,8 @@ export default function MySounds() {
               {data.sounds.map(sound => (
                 <SoundPreview
                   key={sound.id}
-                  overridedSort='Newest'
                   sound={sound}
+                  overridedSort='Newest'
                 />
               ))}
             </div>

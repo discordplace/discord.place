@@ -3,14 +3,15 @@ function getBadges(profile, premiumSince) {
 
   const badges = [
     {
+      id: 'admin',
       condition: () => {
         const member = guild.members.cache.get(profile.user.id);
 
         return member && member.roles.cache.has(config.roles.admin);
-      },
-      id: 'admin'
+      }
     },
     {
+      id: 'moderator',
       condition: () => {
         const member = guild.members.cache.get(profile.user.id);
 
@@ -19,16 +20,15 @@ function getBadges(profile, premiumSince) {
           member.roles.cache.has(config.roles.moderator) ||
           member.roles.cache.has(config.roles.jrModerator)
         );
-      },
-      id: 'moderator'
+      }
     },
     {
-      condition: () => profile.verified,
-      id: 'verified'
+      id: 'verified',
+      condition: () => profile.verified
     },
     {
-      condition: () => premiumSince,
-      id: 'premium'
+      id: 'premium',
+      condition: () => premiumSince
     }
   ];
 

@@ -1,9 +1,32 @@
-import fetchSounds from '@/lib/request/sounds/fetchSounds';
-import { toast } from 'sonner';
 import { create } from 'zustand';
+import { toast } from 'sonner';
+import fetchSounds from '@/lib/request/sounds/fetchSounds';
 
 const useSearchStore = create((set, get) => ({
+  loading: true,
+  setLoading: loading => set({ loading }),
+  search: '',
+  setSearch: search => set({ search }),
+  sort: 'Newest',
+  setSort: sort => {
+    set({ sort, page: 1 });
+
+    get().fetchSounds(get().search);
+  },
   category: 'All',
+  setCategory: category => {
+    set({ category, page: 1 });
+
+    get().fetchSounds(get().search);
+  },
+  page: 1,
+  setPage: page => set({ page }),
+  limit: 9,
+  setLimit: limit => set({ limit }),
+  sounds: [],
+  setSounds: sounds => set({ sounds }),
+  totalSounds: 0,
+  maxReached: false,
   fetchSounds: async (search, page, limit, category, sort) => {
     if (page) set({ page });
     if (limit) set({ limit });
@@ -13,35 +36,12 @@ const useSearchStore = create((set, get) => ({
     set({ loading: true, search });
 
     fetchSounds(search, get().page, get().limit, get().category, get().sort)
-      .then(data => set({ loading: false, maxReached: data.maxReached, sounds: data.sounds, totalSounds: data.total }))
+      .then(data => set({ sounds: data.sounds, loading: false, maxReached: data.maxReached, totalSounds: data.total }))
       .catch(error => {
         toast.error(error);
         set({ loading: false });
       });
-  },
-  limit: 9,
-  loading: true,
-  maxReached: false,
-  page: 1,
-  search: '',
-  setCategory: category => {
-    set({ category, page: 1 });
-
-    get().fetchSounds(get().search);
-  },
-  setLimit: limit => set({ limit }),
-  setLoading: loading => set({ loading }),
-  setPage: page => set({ page }),
-  setSearch: search => set({ search }),
-  setSort: sort => {
-    set({ page: 1, sort });
-
-    get().fetchSounds(get().search);
-  },
-  setSounds: sounds => set({ sounds }),
-  sort: 'Newest',
-  sounds: [],
-  totalSounds: 0
+  }
 }));
 
 export default useSearchStore;

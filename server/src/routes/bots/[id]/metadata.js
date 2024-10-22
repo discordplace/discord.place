@@ -1,9 +1,9 @@
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const User = require('@/schemas/User');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { matchedData, param } = require('express-validator');
 
 module.exports = {
   get: [
@@ -20,13 +20,13 @@ module.exports = {
       const hashes = await getUserHashes(bot.id);
 
       return response.json({
-        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${bot.id}/${hashes.avatar}.png?size=64` : null,
-        category: bot.categories[0],
-        discriminator: bot.data.discriminator,
-        premium: !!ownerHasPremium,
-        short_description: bot.short_description,
         username: bot.data.username,
-        votes: bot.votes
+        discriminator: bot.data.discriminator,
+        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${bot.id}/${hashes.avatar}.png?size=64` : null,
+        votes: bot.votes,
+        category: bot.categories[0],
+        short_description: bot.short_description,
+        premium: !!ownerHasPremium
       });
     }
   ]

@@ -1,37 +1,38 @@
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const bodyParser = require('body-parser');
+const { body, matchedData } = require('express-validator');
+const nameValidation = require('@/validations/sounds/name');
+const categoriesValidation = require('@/validations/sounds/categories');
 const Sound = require('@/schemas/Sound');
+const crypto = require('node:crypto');
+const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const categoriesValidation = require('@/validations/sounds/categories');
-const nameValidation = require('@/validations/sounds/name');
-const bodyParser = require('body-parser');
-const Discord = require('discord.js');
-const { body, matchedData } = require('express-validator');
+
 const multer = require('multer');
-const crypto = require('node:crypto');
 const upload = multer({
+  limits: {
+    fileSize: 264 * 1024,
+    files: 1
+  },
   fileFilter: (req, file, cb) => {
     if (!file || !file.mimetype) return cb(null, false);
     if (file.mimetype === 'audio/mpeg') return cb(null, true);
 
     return cb(null, false);
-  },
-  limits: {
-    files: 1,
-    fileSize: 264 * 1024
   }
 }).array('file', 1);
 
-const { PutObjectCommand, S3Client } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
+  region: process.env.S3_REGION,
+  endpoint: process.env.S3_ENDPOINT,
   credentials: {
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
-  },
-  endpoint: process.env.S3_ENDPOINT,
-  region: process.env.S3_REGION
+  }
 });
 
 module.exports = {
@@ -52,24 +53,24 @@ module.exports = {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SOUNDS_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create sounds.', 403);
 
-      const userSoundInQueue = await Sound.findOne({ approved: false, 'publisher.id': request.user.id });
+      const userSoundInQueue = await Sound.findOne({ 'publisher.id': request.user.id, approved: false });
       if (userSoundInQueue) return response.sendError(`You are already waiting for approval for sound ${userSoundInQueue.name}! Please wait for it to be processed first.`);
 
       if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
 
-      const { categories, name } = matchedData(request);
+      const { name, categories } = matchedData(request);
       const id = crypto.randomBytes(6).toString('hex');
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
       const sound = new Sound({
-        categories,
         id,
-        name,
         publisher: {
           id: requestUser.id,
           username: requestUser.username
-        }
+        },
+        name,
+        categories
       });
 
       const validationError = getValidationError(sound);
@@ -78,11 +79,11 @@ module.exports = {
       await sound.save();
 
       const command = new PutObjectCommand({
-        Body: request.files[0].buffer,
         Bucket: process.env.S3_BUCKET_NAME,
-        ContentDisposition: `attachment; filename="${name}.mp3"`,
+        Key: `sounds/${id}.mp3`,
+        Body: request.files[0].buffer,
         ContentType: 'audio/mpeg',
-        Key: `sounds/${id}.mp3`
+        ContentDisposition: `attachment; filename="${name}.mp3"`
       });
 
       S3.send(command)
@@ -90,17 +91,17 @@ module.exports = {
           const embeds = [
             new Discord.EmbedBuilder()
               .setTitle('New Sound')
-              .setAuthor({ iconURL: requestUser.displayAvatarURL(), name: requestUser.username })
+              .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
               .setFields([
                 {
-                  inline: true,
                   name: 'Name',
-                  value: name
+                  value: name,
+                  inline: true
                 },
                 {
-                  inline: true,
                   name: 'Categories',
-                  value: categories.join(', ')
+                  value: categories.join(', '),
+                  inline: true
                 }
               ])
               .setTimestamp()
@@ -117,7 +118,7 @@ module.exports = {
               )
           ];
 
-          client.channels.cache.get(config.soundQueueChannelId).send({ components, embeds });
+          client.channels.cache.get(config.soundQueueChannelId).send({ embeds, components });
 
           return response.json(sound.toPubliclySafe({ isLiked: false }));
         })

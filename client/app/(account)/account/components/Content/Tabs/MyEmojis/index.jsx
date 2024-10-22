@@ -1,16 +1,16 @@
 'use client';
 
-import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
-import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
 import ErrorState from '@/app/components/ErrorState';
-import config from '@/config';
 import useAccountStore from '@/stores/account';
-import { t } from '@/stores/language';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
-import { BsQuestionCircleFill } from 'react-icons/bs';
 import { LuPlus } from 'react-icons/lu';
+import { BsQuestionCircleFill } from 'react-icons/bs';
+import config from '@/config';
+import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
+import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
 import { VList } from 'virtua';
+import { t } from '@/stores/language';
 
 export default function MyEmojis() {
   const data = useAccountStore(state => state.data);
@@ -45,13 +45,13 @@ export default function MyEmojis() {
         {(concatenatedEmojis || []).length === 0 ? (
           <div className='mt-20 max-w-[800px]'>
             <ErrorState
-              message={t('accountPage.tabs.myEmojis.sections.listedEmojis.emptyErrorState.message')}
               title={
                 <div className='flex items-center gap-x-2'>
                   <BsEmojiAngry />
                   {t('accountPage.tabs.myEmojis.sections.listedEmojis.emptyErrorState.title')}
                 </div>
               }
+              message={t('accountPage.tabs.myEmojis.sections.listedEmojis.emptyErrorState.message')}
             />
           </div>
         ) : (
@@ -61,23 +61,23 @@ export default function MyEmojis() {
             {concatenatedEmojis.map(emoji => (
               emoji.emoji_ids ? (
                 <EmojiPackageCard
+                  key={emoji.id}
+                  id={emoji.id}
+                  name={emoji.name}
                   categories={emoji.categories}
-                  className='[&>div]:bg-quaternary'
                   downloads={emoji.downloads}
                   emoji_ids={emoji.emoji_ids}
-                  id={emoji.id}
-                  key={emoji.id}
-                  name={emoji.name}
+                  className='[&>div]:bg-quaternary'
                 />
               ) : (
                 <EmojiCard
+                  key={emoji.id}
+                  id={emoji.id}
+                  name={emoji.name}
                   animated={emoji.animated}
                   categories={emoji.categories}
-                  className='[&>div]:bg-quaternary'
                   downloads={emoji.downloads}
-                  id={emoji.id}
-                  key={emoji.id}
-                  name={emoji.name}
+                  className='[&>div]:bg-quaternary'
                 />
               )
             ))}

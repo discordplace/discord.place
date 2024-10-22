@@ -1,11 +1,11 @@
 'use client';
 
-import cn from '@/lib/cn';
-import { t } from '@/stores/language';
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import cn from '@/lib/cn';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { t } from '@/stores/language';
 
 function generateClickableNumbers(currentPage, totalPages, limit) {
   currentPage = Math.max(1, Math.min(currentPage, totalPages));
@@ -30,7 +30,7 @@ function generateClickableNumbers(currentPage, totalPages, limit) {
   return pages;
 }
 
-export default function Pagination({ disableAnimation, limit, loading, page, setPage, total }) {
+export default function Pagination({ page, setPage, loading, total, limit, disableAnimation }) {
   const totalPages = Math.ceil(total / limit);
   const pages = generateClickableNumbers(page, totalPages, 4);
 
@@ -63,15 +63,15 @@ export default function Pagination({ disableAnimation, limit, loading, page, set
 
   return (
     <motion.div
-      animate={animate}
       className='my-6 flex gap-x-2.5'
-      exit={exit}
       initial={initial}
+      animate={animate}
+      exit={exit}
     >
       <button
         className='select-none rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-1.5 py-1 text-sm font-bold outline-none hover:bg-quaternary disabled:pointer-events-none disabled:opacity-60'
-        disabled={loading || page === 1}
         onClick={() => setPage(page - 1)}
+        disabled={loading || page === 1}
       >
         <LuChevronLeft strokeWidth={3} />
       </button>
@@ -79,13 +79,13 @@ export default function Pagination({ disableAnimation, limit, loading, page, set
       {pages.map(pageNumber => (
         <>
           <button
+            key={pageNumber}
             className={cn(
               'outline-none px-2.5 py-1 relative overflow-hidden bg-secondary select-none hover:bg-quaternary duration-300 [&:not(:disabled)]:hover:border-purple-500 rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))] disabled:pointer-events-none disabled:opacity-60',
               pageNumber === page ? '!opacity-100 border-purple-500' : 'transition-[background-color,border-color]'
             )}
-            disabled={loading || pageNumber === page}
-            key={pageNumber}
             onClick={() => setPage(pageNumber)}
+            disabled={loading || pageNumber === page}
           >
             {pageNumber}
           </button>
@@ -93,8 +93,9 @@ export default function Pagination({ disableAnimation, limit, loading, page, set
           {(pages[pages.length - 1] === 4 && pageNumber === 2) && (
             inputOpened ? (
               <input
+                ref={inputRef}
                 className='relative max-w-[50px] select-none overflow-hidden rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-2.5 py-1 text-center text-sm font-bold text-secondary caret-[rgba(var(--text-secondary))] outline-none duration-300 placeholder:text-[rgba(var(--text-tertiary))] hover:bg-quaternary focus-visible:bg-quaternary'
-                maxLength={totalPages.toString().length}
+                value={inputValue}
                 onChange={event => {
                   // dont allow to type 0 as the first digit
                   if (event.target.value.length === 1 && event.target.value === '0') {
@@ -118,8 +119,7 @@ export default function Pagination({ disableAnimation, limit, loading, page, set
                     setInputOpened(false);
                   }
                 }}
-                ref={inputRef}
-                value={inputValue}
+                maxLength={totalPages.toString().length}
               />
             ) : (
               <button
@@ -137,8 +137,8 @@ export default function Pagination({ disableAnimation, limit, loading, page, set
 
       <button
         className='select-none rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-1.5 py-1 text-sm font-bold outline-none hover:bg-quaternary disabled:pointer-events-none disabled:opacity-60'
-        disabled={loading || page === totalPages}
         onClick={() => setPage(page + 1)}
+        disabled={loading || page === totalPages}
       >
         <LuChevronRight strokeWidth={3} />
       </button>

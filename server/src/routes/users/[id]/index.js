@@ -1,20 +1,20 @@
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData } = require('express-validator');
+const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const Profile = require('@/schemas/Profile');
-const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const getBadges = require('@/utils/profiles/getBadges');
 const randomizeArray = require('@/utils/randomizeArray');
-const useRateLimiter = require('@/utils/useRateLimiter');
 const Discord = require('discord.js');
-const { matchedData, param } = require('express-validator');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('id')
       .isNumeric().withMessage('User ID must be a number')
-      .isLength({ max: 24, min: 1 }).withMessage('Invalid user ID'),
+      .isLength({ min: 1, max: 24 }).withMessage('Invalid user ID'),
     validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
@@ -45,16 +45,16 @@ module.exports = {
       ];
 
       const responseData = {
-        avatarURL: user.avatarURL({ size: 128 }),
+        id: user.id,
+        username: user.username,
+        globalName: user.globalName,
         bannerURL: user.bannerURL({ size: 1024 }),
+        avatarURL: user.avatarURL({ size: 128 }),
+        createdAt: new Date(user.createdTimestamp).getTime(),
         bot: user.bot,
         bot_verified: false,
-        createdAt: new Date(user.createdTimestamp).getTime(),
         flags: userFlags.filter(flag => validUserFlags.includes(flag)),
-        globalName: user.globalName,
-        id: user.id,
-        subscriptionCreatedAt: userData?.subscription?.createdAt ? new Date(userData.subscription.createdAt).getTime() : null,
-        username: user.username
+        subscriptionCreatedAt: userData?.subscription?.createdAt ? new Date(userData.subscription.createdAt).getTime() : null
       };
 
       if (user.bot) {
@@ -81,11 +81,11 @@ module.exports = {
 
         Object.assign(responseData, {
           profile: {
-            badges: profileBadges,
             bio: profile.bio,
-            likesCount: profile.likes_count,
+            badges: profileBadges,
+            slug: profile.slug,
             preferredHost: profile.preferredHost,
-            slug: profile.slug
+            likesCount: profile.likes_count
           }
         });
       }
@@ -99,20 +99,20 @@ module.exports = {
             let guild = ownedServers.find(({ id }) => id === server.id);
 
             return {
-              banner: guild.banner,
-              category: server.category,
-              description: server.description,
-              icon: guild.icon,
               id: guild.id,
-              joined_at: guild.joinedTimestamp,
-              keywords: server.keywords,
               name: guild.name,
+              icon: guild.icon,
+              banner: guild.banner,
+              description: server.description,
+              total_members: guild.memberCount,
+              votes: server.votes,
+              category: server.category,
+              keywords: server.keywords,
+              joined_at: guild.joinedTimestamp,
+              premium: !!isPremium,
               owner: {
                 id: guild.ownerId
-              },
-              premium: !!isPremium,
-              total_members: guild.memberCount,
-              votes: server.votes
+              }
             };
           }))
         });

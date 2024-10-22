@@ -1,6 +1,6 @@
 const Plan = require('@/schemas/LemonSqueezy/Plan');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [

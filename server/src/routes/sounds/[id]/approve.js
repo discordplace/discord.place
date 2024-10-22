@@ -1,12 +1,12 @@
-const DashboardData = require('@/schemas/Dashboard/Data');
-const Sound = require('@/schemas/Sound');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const idValidation = require('@/validations/sounds/id');
+const { param, matchedData } = require('express-validator');
+const Sound = require('@/schemas/Sound');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
-const { matchedData, param } = require('express-validator');
+const DashboardData = require('@/schemas/Dashboard/Data');
+const idValidation = require('@/validations/sounds/id');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -45,7 +45,7 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setColor(Discord.Colors.Green)
-          .setAuthor({ iconURL: publisher?.displayAvatarURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png', name: `Sound Approved | ${sound.name}` })
+          .setAuthor({ name: `Sound Approved | ${sound.name}`, iconURL: publisher?.displayAvatarURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png' })
           .setTimestamp()
           .setFields([
             {
@@ -65,7 +65,7 @@ module.exports = {
           )
       ];
 
-      client.channels.cache.get(config.portalChannelId).send({ components, embeds });
+      client.channels.cache.get(config.portalChannelId).send({ embeds, components });
 
       return response.status(204).end();
     }

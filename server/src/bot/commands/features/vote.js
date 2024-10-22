@@ -1,55 +1,32 @@
-const Server = require('@/schemas/Server');
-const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
-const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
-const incrementVote = require('@/utils/servers/incrementVote');
-const sleep = require('@/utils/sleep');
 const Discord = require('discord.js');
+const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
+const Server = require('@/schemas/Server');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const sleep = require('@/utils/sleep');
+const incrementVote = require('@/utils/servers/incrementVote');
+const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
 
 module.exports = {
-  continueVote(interaction) {
-    incrementVote(interaction.guild.id, interaction.user.id)
-      .then(async () => {
-        const components = [
-          new Discord.ActionRowBuilder().addComponents(
-            new Discord.ButtonBuilder()
-              .setStyle(Discord.ButtonStyle.Primary)
-              .setLabel(await interaction.translate('commands.vote.create_reminder_button_label'))
-              .setCustomId(`create-reminder-${interaction.guild.id}`)
-          )
-        ];
-
-        return interaction.followUp({
-          components,
-          content: await interaction.translate('commands.vote.success'),
-          ephemeral: true
-        });
-      })
-      .catch(async error => {
-        logger.error('Error incrementing vote:', error);
-
-        return interaction.followUp(await interaction.translate('commands.shared.errors.unknown_error', { errorMessage: error.message }));
-      });
-  },
   data: {
-    description: 'Vote for the server you are on.',
-    description_localizations: getLocalizedCommand('vote').descriptions,
     name: 'vote',
-    name_localizations: getLocalizedCommand('vote').names
+    description: 'Vote for the server you are on.',
+    name_localizations: getLocalizedCommand('vote').names,
+    description_localizations: getLocalizedCommand('vote').descriptions
   },
+  isGuildOnly: true,
   async execute (interaction) {
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
 
     const userOrGuildQuarantined = await findQuarantineEntry.multiple([
-      { restriction: 'SERVERS_VOTE', type: 'USER_ID', value: interaction.user.id },
-      { restriction: 'SERVERS_VOTE', type: 'GUILD_ID', value: interaction.guild.id }
+      { type: 'USER_ID', value: interaction.user.id, restriction: 'SERVERS_VOTE' },
+      { type: 'GUILD_ID', value: interaction.guild.id, restriction: 'SERVERS_VOTE' }
     ]).catch(() => false);
     if (userOrGuildQuarantined) return interaction.followUp(await interaction.translate('commands.shared.errors.user_or_guild_quarantined'));
 
     const server = await Server.findOne({ id: interaction.guild.id });
     if (!server) return interaction.followUp(await interaction.translate('commands.vote.errors.server_not_listed'));
 
-    const timeout = await VoteTimeout.findOne({ 'guild.id': interaction.guild.id, 'user.id': interaction.user.id });
+    const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': interaction.guild.id });
     if (timeout) return interaction.followUp(await interaction.translate('commands.vote.errors.already_voted', { hours: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000), minutes: Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60 }));
 
     const givenVotes = server.voters.find(voter => voter.user.id === interaction.user.id)?.vote || 0;
@@ -109,8 +86,8 @@ module.exports = {
     await sleep(7500);
 
     await interaction.editReply({
-      components,
       content: await interaction.translate('commands.vote.gif_hidden_now'),
+      components,
       files: []
     });
 
@@ -121,10 +98,33 @@ module.exports = {
       client.humanVerificationData.delete(interaction.user.id);
 
       return interaction.editReply({
-        components: [],
-        content: await interaction.translate('interaction.buttons.human_verification.errors.failed')
+        content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
+        components: []
       });
     }
   },
-  isGuildOnly: true
+  continueVote(interaction) {
+    incrementVote(interaction.guild.id, interaction.user.id)
+      .then(async () => {
+        const components = [
+          new Discord.ActionRowBuilder().addComponents(
+            new Discord.ButtonBuilder()
+              .setStyle(Discord.ButtonStyle.Primary)
+              .setLabel(await interaction.translate('commands.vote.create_reminder_button_label'))
+              .setCustomId(`create-reminder-${interaction.guild.id}`)
+          )
+        ];
+
+        return interaction.followUp({
+          content: await interaction.translate('commands.vote.success'),
+          components,
+          ephemeral: true
+        });
+      })
+      .catch(async error => {
+        logger.error('Error incrementing vote:', error);
+
+        return interaction.followUp(await interaction.translate('commands.shared.errors.unknown_error', { errorMessage: error.message }));
+      });
+  }
 };

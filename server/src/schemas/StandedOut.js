@@ -13,6 +13,6 @@ const StandedOutServer = mongoose.model('StadedOutServers', StandedOutSchema);
 const StandedOutBot = mongoose.model('StandedOutBots', StandedOutSchema);
 
 module.exports = {
-  StandedOutBot,
-  StandedOutServer
+  StandedOutServer,
+  StandedOutBot
 };

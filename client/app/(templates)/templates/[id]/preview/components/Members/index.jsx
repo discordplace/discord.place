@@ -1,12 +1,12 @@
 'use client';
 
 import Tooltip from '@/app/components/Tooltip';
+import { toast } from 'sonner';
+import { FaDiscord } from 'react-icons/fa';
 import cn from '@/lib/cn';
 import { t } from '@/stores/language';
-import { FaDiscord } from 'react-icons/fa';
-import { toast } from 'sonner';
 
-export default function Members({ currentlyOpenedSection, isMobile, template }) {
+export default function Members({ template, isMobile, currentlyOpenedSection }) {
   function getRandomBrandColor() {
     const colors = ['#5865F2', '#757e8a', '#3ba55c', '#faa61a', '#ed4245', '#eb459f'];
 
@@ -33,8 +33,8 @@ export default function Members({ currentlyOpenedSection, isMobile, template }) 
           <div className='mt-2 flex flex-col gap-y-0.5'>
             <Tooltip
               content={t('templatePreviewPage.tooltip.clickToCopyColor')}
-              hide={isMobile}
               side={'left'}
+              hide={isMobile}
             >
               <div
                 className='group -ml-2 flex cursor-pointer select-none items-center gap-x-2 rounded-md px-1.5 py-1 hover:bg-[#35373c]'

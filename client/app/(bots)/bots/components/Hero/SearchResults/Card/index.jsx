@@ -1,20 +1,20 @@
 'use client';
 
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
-import config from '@/config';
-import getRelativeTime from '@/lib/getRelativeTime';
-import useSearchStore from '@/stores/bots/search';
-import useLanguageStore, { t } from '@/stores/language';
 import Link from 'next/link';
-import { BsFire } from 'react-icons/bs';
 import { FaCompass } from 'react-icons/fa';
-import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import { IoHeart } from 'react-icons/io5';
-import { MdUpdate } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import useSearchStore from '@/stores/bots/search';
 import { TiStar } from 'react-icons/ti';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { MdUpdate } from 'react-icons/md';
+import { IoHeart } from 'react-icons/io5';
 import { useMedia } from 'react-use';
+import getRelativeTime from '@/lib/getRelativeTime';
+import { BsFire } from 'react-icons/bs';
+import config from '@/config';
+import useLanguageStore, { t } from '@/stores/language';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -24,59 +24,59 @@ export default function Card({ data, overridedSort }) {
   const category = useSearchStore(state => state.category);
 
   const formatter = new Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    style: 'decimal'
+    style: 'decimal',
+    notation: 'compact'
   });
 
   const infos = [
     {
-      condition: data.owner.premium === true && !isMobile,
       icon: IoHeart,
-      transform: () => 'Premium',
-      value: null
+      value: null,
+      condition: data.owner.premium === true && !isMobile,
+      transform: () => 'Premium'
     },
     {
-      condition: sort === 'Votes',
       icon: TbSquareRoundedChevronUp,
-      value: data.votes
+      value: data.votes,
+      condition: sort === 'Votes'
     },
     {
-      condition: sort === 'LatestVoted',
       icon: MdUpdate,
-      transform: date => date ? getRelativeTime(date, language) : t('botCard.neverVoted'),
-      value: data.latest_voted_at
+      value: data.latest_voted_at,
+      condition: sort === 'LatestVoted',
+      transform: date => date ? getRelativeTime(date, language) : t('botCard.neverVoted')
     },
     {
-      condition: sort === 'Servers',
       icon: FaCompass,
+      value: data.servers,
+      condition: sort === 'Servers',
       transform: value => {
         const serversFormatter = new Intl.NumberFormat('en-US', {
-          maximumFractionDigits: 2,
+          style: 'decimal',
           notation: 'compact',
-          style: 'decimal'
+          maximumFractionDigits: 2
         });
 
         return serversFormatter.format(value);
-      },
-      value: data.servers
+      }
     },
     {
-      condition: sort === 'Most Reviewed',
       icon: TiStar,
-      transform: value => `${formatter.format(value)} Time Reviewed`,
-      value: data.reviews
+      value: data.reviews,
+      condition: sort === 'Most Reviewed',
+      transform: value => `${formatter.format(value)} Time Reviewed`
     },
     {
-      condition: sort === 'Newest',
       icon: HiSortAscending,
-      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
-      value: data.created_at
+      value: data.created_at,
+      condition: sort === 'Newest',
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
     },
     {
-      condition: sort === 'Oldest',
       icon: HiSortDescending,
-      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
-      value: data.created_at
+      value: data.created_at,
+      condition: sort === 'Oldest',
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
     }
   ];
 
@@ -96,24 +96,24 @@ export default function Card({ data, overridedSort }) {
       <div className='relative z-20 flex size-full rounded-3xl border-4 border-primary'>
         {data.banner ? (
           <UserBanner
-            className='absolute left-0 top-0 z-[1] h-[calc(100%_-_1px)] w-full rounded-[1.25rem] bg-quaternary'
-            hash={data.banner}
-            height={200}
             id={data.id}
+            hash={data.banner}
+            className='absolute left-0 top-0 z-[1] h-[calc(100%_-_1px)] w-full rounded-[1.25rem] bg-quaternary'
             size={512}
             width={350}
+            height={200}
           />
         ) : (
           <div className='absolute left-0 top-0 z-[1] h-[calc(100%_-_1px)] w-full rounded-[1.25rem] bg-quaternary' />
         )}
         <div className='relative top-[30px] z-[2] h-[calc(100%_-_30px)] w-full rounded-b-[1.25rem] rounded-t-3xl bg-secondary transition-colors group-hover:bg-tertiary'>
           <UserAvatar
-            className='absolute left-4 top-[-25px] rounded-3xl border-4 border-[rgba(var(--bg-secondary))] bg-secondary transition-colors group-hover:border-[rgba(var(--bg-tertiary))] group-hover:bg-tertiary'
-            hash={data.avatar}
-            height={64}
             id={data.id}
+            hash={data.avatar}
             size={64}
             width={64}
+            height={64}
+            className='absolute left-4 top-[-25px] rounded-3xl border-4 border-[rgba(var(--bg-secondary))] bg-secondary transition-colors group-hover:border-[rgba(var(--bg-tertiary))] group-hover:bg-tertiary'
           />
 
           <div className='flex flex-col px-4 pt-12'>
@@ -130,8 +130,8 @@ export default function Card({ data, overridedSort }) {
               className='mt-1 min-h-[40px] overflow-hidden text-sm text-tertiary'
               style={{
                 display: '-webkit-box',
-                WebkitBoxOrient: 'vertical',
-                WebkitLineClamp: '2'
+                WebkitLineClamp: '2',
+                WebkitBoxOrient: 'vertical'
               }}
             >
               {data.short_description || t('botCard.noDescription')}
@@ -139,7 +139,7 @@ export default function Card({ data, overridedSort }) {
 
             <div className='mt-3 flex items-center gap-x-3'>
               {infos.filter(info => info.condition === true).map(info => (
-                <div className='flex items-center gap-x-1.5 text-sm' key={info.icon}>
+                <div key={info.icon} className='flex items-center gap-x-1.5 text-sm'>
                   <info.icon className='text-tertiary' />
                   <span className='max-w-[115px] truncate text-secondary'>{info.transform ? info.transform(info.value) : formatter.format(info.value)}</span>
                 </div>

@@ -1,11 +1,11 @@
-export default function Square({ blockColor, column, row, transparentEffectDirection, zIndex }) {
+export default function Square({ column, row, transparentEffectDirection, blockColor, zIndex }) {
   return (
     <>
       <div
         className='absolute inset-0 -z-10 size-full'
         style={{
-          backgroundImage: `linear-gradient(to right, ${blockColor} 1px, transparent 1px), linear-gradient(to bottom, ${blockColor} 1px, transparent 1px)`,
           backgroundSize: `${column}rem ${row}rem`,
+          backgroundImage: `linear-gradient(to right, ${blockColor} 1px, transparent 1px), linear-gradient(to bottom, ${blockColor} 1px, transparent 1px)`,
           zIndex: zIndex || '-10'
         }}
       />

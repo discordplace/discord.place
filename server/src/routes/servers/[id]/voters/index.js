@@ -1,8 +1,8 @@
+const { query, param, matchedData } = require('express-validator');
+const useRateLimiter = require('@/utils/useRateLimiter');
 const Server = require('@/schemas/Server');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const { matchedData, param, query } = require('express-validator');
 
 module.exports = {
   get: [
@@ -14,11 +14,11 @@ module.exports = {
       .toInt(),
     query('limit')
       .optional()
-      .isInt({ max: 12, min: 1 }).withMessage('Limit must be an integer between 1 and 12.')
+      .isInt({ min: 1, max: 12 }).withMessage('Limit must be an integer between 1 and 12.')
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { id, limit = 12, page = 1 } = matchedData(request);
+      const { id, page = 1, limit = 12 } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);
@@ -38,20 +38,20 @@ module.exports = {
         return {
           id: voter.id,
           user: {
-            avatar: userHashes.avatar,
             id: voter.user.id,
-            username: voter.user.username
+            username: voter.user.username,
+            avatar: userHashes.avatar
           },
           votes: voter.vote
         };
       }));
 
       return response.json({
-        limit,
-        maxReached,
         page,
-        total: voters.length,
+        limit,
         totalPages,
+        total: voters.length,
+        maxReached,
         voters: fetchedVotes
       });
     }

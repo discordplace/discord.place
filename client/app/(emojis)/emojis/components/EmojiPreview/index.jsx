@@ -1,27 +1,27 @@
 'use client';
 
-import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
-import MotionImage from '@/app/components/Motion/Image';
-import Tooltip from '@/app/components/Tooltip';
-import cn from '@/lib/cn';
-import confetti from '@/lib/lotties/confetti.json';
-import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';
-import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
-import useAuthStore from '@/stores/auth';
-import useGeneralStore from '@/stores/general';
-import { t } from '@/stores/language';
-import useModalsStore from '@/stores/modals';
 import useThemeStore from '@/stores/theme';
-import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import MotionImage from '@/app/components/Motion/Image';
+import cn from '@/lib/cn';
 import { FaCloudUploadAlt } from 'react-icons/fa';
-import { TbLoader } from 'react-icons/tb';
-import Lottie from 'react-lottie';
+import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';
 import { toast } from 'sonner';
+import { TbLoader } from 'react-icons/tb';
+import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
+import Image from 'next/image';
+import useGeneralStore from '@/stores/general';
+import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
+import Lottie from 'react-lottie';
+import confetti from '@/lib/lotties/confetti.json';
+import useAuthStore from '@/stores/auth';
+import Tooltip from '@/app/components/Tooltip';
+import { t } from '@/stores/language';
 
-export default function EmojiPreview({ ableToChange, defaultSize, id, image_url, name }) {
+export default function EmojiPreview({ id, name, image_url, ableToChange, defaultSize }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const [previewSize, setPreviewSize] = useState(defaultSize === 'shrink' ? 32 : 96);
   const theme = useThemeStore(state => state.theme);
@@ -54,28 +54,28 @@ export default function EmojiPreview({ ableToChange, defaultSize, id, image_url,
     disableButton('upload-emoji-to-discord', 'upload');
 
     toast.promise(uploadEmojiToGuild(id, guildId, false), {
-      error: error => {
-        enableButton('upload-emoji-to-discord', 'upload');
-
-        return error;
-      },
       loading: t('createEmojiPage.emojisPreview.toast.uploadingEmojis'),
       success: () => {
         closeModal('upload-emoji-to-discord');
         setRenderConfetti(true);
 
         return t('createEmojiPage.emojisPreview.toast.emojisUploaded');
+      },
+      error: error => {
+        enableButton('upload-emoji-to-discord', 'upload');
+
+        return error;
       }
     });
   }
 
-  const { closeModal, disableButton, enableButton, openedModals, openModal, updateModal } = useModalsStore(useShallow(state => ({
+  const { openModal, openedModals, updateModal, closeModal, disableButton, enableButton } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
+    openedModals: state.openedModals,
+    updateModal: state.updateModal,
     closeModal: state.closeModal,
     disableButton: state.disableButton,
-    enableButton: state.enableButton,
-    openedModals: state.openedModals,
-    openModal: state.openModal,
-    updateModal: state.updateModal
+    enableButton: state.enableButton
   })));
 
   const selectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.selectedGuildId);
@@ -86,16 +86,16 @@ export default function EmojiPreview({ ableToChange, defaultSize, id, image_url,
       updateModal('upload-emoji-to-discord', {
         buttons: [
           {
-            actionType: 'close',
             id: 'cancel',
             label: t('buttons.cancel'),
-            variant: 'ghost'
+            variant: 'ghost',
+            actionType: 'close'
           },
           {
-            action: () => continueUploadEmojiToGuild(selectedGuildId),
             id: 'upload',
             label: t('buttons.upload'),
-            variant: 'solid'
+            variant: 'solid',
+            action: () => continueUploadEmojiToGuild(selectedGuildId)
           }
         ]
       });
@@ -104,28 +104,28 @@ export default function EmojiPreview({ ableToChange, defaultSize, id, image_url,
     }
 
     openModal('upload-emoji-to-discord', {
-      buttons: [
-        {
-          actionType: 'close',
-          id: 'cancel',
-          label: t('buttons.cancel'),
-          variant: 'ghost'
-        },
-        {
-          action: () => continueUploadEmojiToGuild(selectedGuildId),
-          id: 'uplaod',
-          label: t('buttons.upload'),
-          variant: 'solid'
-        }
-      ],
-      content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
-      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
       title: (
         t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.titleWithEmoji', {
-          emojiImage: <Image alt={name} className='inline h-[16px] w-auto' height={24} src={image_url} width={24} />,
+          emojiImage: <Image src={image_url} alt={name} width={24} height={24} className='inline h-[16px] w-auto' />,
           emojiName: name
         })
-      )
+      ),
+      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
+      content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
+      buttons: [
+        {
+          id: 'cancel',
+          label: t('buttons.cancel'),
+          variant: 'ghost',
+          actionType: 'close'
+        },
+        {
+          id: 'uplaod',
+          label: t('buttons.upload'),
+          variant: 'solid',
+          action: () => continueUploadEmojiToGuild(selectedGuildId)
+        }
+      ]
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,29 +137,29 @@ export default function EmojiPreview({ ableToChange, defaultSize, id, image_url,
     }}>
 
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie height='100%' isStopped={!renderConfetti} options={{ animationData: confetti, autoplay: false, loop: false }} width='100%'/>
+        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
       </div>
 
       <AnimatePresence>
         {image_url ? (
           <>
             <MotionImage
+              key={image_url}
+              width={previewSize}
+              height={previewSize}
+              src={image_url}
               alt='Emoji Preview'
+              layoutId='emoji'
+              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              height={previewSize}
-              initial={{ opacity: 0 }}
-              key={image_url}
-              layoutId='emoji'
-              src={image_url}
-              width={previewSize}
             />
 
             <motion.div
-              animate={{ opacity: 1 }}
               className='absolute bottom-2 left-2 flex w-full gap-x-2'
-              exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               layoutId='base'
             >
               {ableToChange ? (
@@ -180,12 +180,12 @@ export default function EmojiPreview({ ableToChange, defaultSize, id, image_url,
                       patternDarkMode ? 'bg-white text-black' : ' bg-black text-white',
                       loggedIn && (patternDarkMode ? 'hover:bg-white/70' : 'hover:bg-black/70')
                     )}
-                    disabled={!loggedIn || uploadToDiscordButtonLoading}
                     onClick={() => {
                       if (!loggedIn) return;
 
                       uploadToDiscord();
                     }}
+                    disabled={!loggedIn || uploadToDiscordButtonLoading}
                   >
                     {uploadToDiscordButtonLoading ? (
                       <TbLoader className='animate-spin' />
@@ -220,14 +220,14 @@ export default function EmojiPreview({ ableToChange, defaultSize, id, image_url,
         ) : (
           ableToChange && (
             <motion.label
-              animate={{ opacity: 1 }}
               className={cn(
                 'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
                 patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
               )}
-              exit={{ opacity: 0 }}
               htmlFor='emojiFiles'
               initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               layoutId='base'
             >
               {t('buttons.selectEmoji')}

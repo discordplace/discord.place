@@ -1,13 +1,14 @@
+import { create } from 'zustand';
+import i18n from 'i18next';
+import ReactPostprocessor from 'i18next-react-postprocessor';
+import intervalPlural from 'i18next-intervalplural-postprocessor';
+
 import config from '@/config';
+import useGeneralStore from '@/stores/general';
 import sleep from '@/lib/sleep';
-import az from '@/locales/az.json';
 import en from '@/locales/en.json';
 import tr from '@/locales/tr.json';
-import useGeneralStore from '@/stores/general';
-import i18n from 'i18next';
-import intervalPlural from 'i18next-intervalplural-postprocessor';
-import ReactPostprocessor from 'i18next-react-postprocessor';
-import { create } from 'zustand';
+import az from '@/locales/az.json';
 
 i18n
   .use(new ReactPostprocessor())
@@ -50,9 +51,9 @@ export function t(key, variables = {}) {
   if (language === 'loading') return '';
 
   const localeContents = {
-    az,
     en,
-    tr
+    tr,
+    az
   };
 
   i18n.addResourceBundle(language, 'translation', localeContents[language], true, true);
@@ -65,9 +66,9 @@ export function t(key, variables = {}) {
 
   return i18n.t(key, {
     ...variables,
-    defaultValue: key,
+    lng: language,
     fallbackLng: config.availableLocales.find(locale => locale.default).code,
-    lng: language
+    defaultValue: key
   });
 }
 

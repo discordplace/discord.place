@@ -2,7 +2,6 @@
 
 import config from '@/config';
 import cn from '@/lib/cn';
-import getCompressedName from '@/lib/getCompressedName';
 import useLanguageStore, { t } from '@/stores/language';
 import useSearchStore from '@/stores/templates/search';
 import useThemeStore from '@/stores/theme';
@@ -11,8 +10,9 @@ import { useEffect, useRef, useState } from 'react';
 import { HiSortAscending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import Ripples from 'react-ripples';
+import getCompressedName from '@/lib/getCompressedName';
 
-export default function Card({ className, data }) {
+export default function Card({ data, className }) {
   const theme = useThemeStore(state => state.theme);
   const sort = useSearchStore(state => state.sort);
   const language = useLanguageStore(state => state.language);
@@ -27,9 +27,9 @@ export default function Card({ className, data }) {
   }, [isClicked]);
 
   const formatter = new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 2,
+    style: 'decimal',
     notation: 'compact',
-    style: 'decimal'
+    maximumFractionDigits: 2
   });
 
   return (
@@ -46,8 +46,8 @@ export default function Card({ className, data }) {
       >
         <Link
           className='flex h-max w-full cursor-pointer select-none items-center gap-x-4 rounded-3xl bg-secondary p-3 transition-all hover:opacity-70'
-          href={`/templates/${data.id}/preview`}
           onClick={() => setIsClicked(true)}
+          href={`/templates/${data.id}/preview`}
         >
           <div className='flex size-[100px] min-h-[100px] min-w-[100px] items-center justify-center rounded-2xl bg-quaternary text-3xl font-bold mobile:size-[140px] mobile:min-h-[140px] mobile:min-w-[140px] sm:text-5xl'>
             {getCompressedName(data.name)}
@@ -86,7 +86,7 @@ export default function Card({ className, data }) {
                   <>
                     <HiSortAscending className='text-tertiary' />
                     <span className='text-xs font-medium text-secondary'>
-                      {new Date(data.created_at).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {new Date(data.created_at).toLocaleDateString(language, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   </>
                 )}
@@ -95,7 +95,7 @@ export default function Card({ className, data }) {
                   <>
                     <HiSortAscending className='text-tertiary' />
                     <span className='text-xs font-medium text-secondary'>
-                      {new Date(data.created_at).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {new Date(data.created_at).toLocaleDateString(language, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   </>
                 )}

@@ -1,18 +1,18 @@
 'use client';
 
-import config from '@/config';
-import cn from '@/lib/cn';
-import { t } from '@/stores/language';
-import Image from 'next/image';
 import Link from 'next/link';
 import { HiDocumentDownload } from 'react-icons/hi';
+import config from '@/config';
+import cn from '@/lib/cn';
 import { LuPackage } from 'react-icons/lu';
+import { t } from '@/stores/language';
+import Image from 'next/image';
 
-export default function EmojiPackageCard({ categories, className, downloads, emoji_ids, id, name, overridedImages }) {
+export default function EmojiPackageCard({ overridedImages, id, name, categories, downloads, emoji_ids, className }) {
   const formatter = new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 2,
+    style: 'decimal',
     notation: 'compact',
-    style: 'decimal'
+    maximumFractionDigits: 2
   });
 
   return (
@@ -30,19 +30,19 @@ export default function EmojiPackageCard({ categories, className, downloads, emo
           <div className='relative -top-6 grid rotate-[-25deg] grid-cols-3 place-items-center gap-1 transition-all'>
             {emoji_ids.map((packaged_emoji, index) => (
               <Image
-                alt={`Emoji package ${name} ${index + 1}. emoji`}
-                className='size-full max-h-[48px] max-w-[48px] rounded-xl bg-secondary object-contain transition-all ease-in-out group-hover:bg-tertiary'
-                height={64}
                 key={packaged_emoji.id}
                 src={overridedImages?.find(({ id }) => id === packaged_emoji.id)?.image || config.getEmojiURL(`packages/${id}/${packaged_emoji.id}`, packaged_emoji.animated)}
+                alt={`Emoji package ${name} ${index + 1}. emoji`}
+                className='size-full max-h-[48px] max-w-[48px] rounded-xl bg-secondary object-contain transition-all ease-in-out group-hover:bg-tertiary'
                 width={64}
+                height={64}
               />
             ))}
 
             {new Array(9 - emoji_ids.length).fill(0).map((_, index) => (
               <div
-                className='size-[48px] rounded-md bg-secondary'
                 key={index}
+                className='size-[48px] rounded-md bg-secondary'
               />
             ))}
           </div>

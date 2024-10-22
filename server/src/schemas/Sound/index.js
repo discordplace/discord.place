@@ -5,73 +5,73 @@ const categoriesValidation = require('@/validations/sounds/categories');
 const nameValidation = require('@/validations/sounds/name');
 
 const SoundSchema = new Schema({
-  approved: {
-    default: false,
-    type: Boolean
-  },
-  categories: {
-    required: true,
-    type: [
-      {
-        enum: config.soundCategories,
-        type: String
-      }
-    ],
-    validate: {
-      message: ({ reason }) => reason.message,
-      validator: categoriesValidation
-    }
-  },
-  downloads: {
-    default: 0,
-    type: Number
-  },
   id: {
-    required: true,
-    type: String
-  },
-  likers: {
-    default: [],
-    type: Array
-  },
-  name: {
-    required: true,
     type: String,
-    validate: {
-      message: ({ reason }) => reason.message,
-      validator: nameValidation
-    }
+    required: true
   },
   publisher: {
     id: {
-      required: true,
-      type: String
+      type: String,
+      required: true
     },
     username: {
-      required: true,
-      type: String
+      type: String,
+      required: true
     }
+  },
+  name: {
+    type: String,
+    required: true,
+    validate: {
+      validator: nameValidation,
+      message: ({ reason }) => reason.message
+    }
+  },
+  categories: {
+    type: [
+      {
+        type: String,
+        enum: config.soundCategories
+      }
+    ],
+    required: true,
+    validate: {
+      validator: categoriesValidation,
+      message: ({ reason }) => reason.message
+    }
+  },
+  likers: {
+    type: Array,
+    default: []
+  },
+  downloads: {
+    type: Number,
+    default: 0
+  },
+  approved: {
+    type: Boolean,
+    default: false
   }
 }, {
+  timestamps: true,
   methods: {
     toPubliclySafe({ isLiked = false }) {
       return {
-        approved: this.approved,
-        categories: this.categories,
-        createdAt: this.createdAt,
-        downloadsCount: this.downloads,
         id: this.id,
-        isLiked,
-        likesCount: this.likers.length,
-        name: this.name,
         publisher: {
           id: this.publisher.id,
           username: this.publisher.username
-        }
+        },
+        name: this.name,
+        categories: this.categories,
+        likesCount: this.likers.length,
+        downloadsCount: this.downloads,
+        isLiked,
+        approved: this.approved,
+        createdAt: this.createdAt
       };
     }
-  },
-  timestamps: true
+  }
 });
 
 module.exports = mongoose.model('Sound', SoundSchema);

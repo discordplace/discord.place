@@ -1,11 +1,11 @@
-const AsyncLock = require('async-lock');
 const crypto = require('crypto');
+const AsyncLock = require('async-lock');
 const { promisify } = require('util');
 
 const lock = new AsyncLock();
 
 const generateRequestKey = request => {
-  const { body, method, originalUrl } = request;
+  const { method, originalUrl, body } = request;
   const bodyString = JSON.stringify(body);
   const requestIp = request.clientIp;
 
@@ -15,7 +15,7 @@ const generateRequestKey = request => {
 const blockSimultaneousRequests = async (request, response, next) => {
   const { method } = request;
 
-  if (!['DELETE', 'PATCH', 'POST', 'PUT'].includes(method)) return next();
+  if (!['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) return next();
 
   const requestKey = generateRequestKey(request);
 

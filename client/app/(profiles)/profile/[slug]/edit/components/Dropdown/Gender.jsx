@@ -1,11 +1,11 @@
 'use client';
 
-import cn from '@/lib/cn';
-import { t } from '@/stores/language';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
+import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 
-export default function GenderDropdown({ currentlyEditingValue, profile, setCurrentlyEditingValue }) {
+export default function GenderDropdown({ profile, currentlyEditingValue, setCurrentlyEditingValue }) {
   return (
     <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild>

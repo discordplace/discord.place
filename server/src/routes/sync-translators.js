@@ -2,8 +2,8 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const syncMemberRoles = require('@/utils/syncMemberRoles');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [

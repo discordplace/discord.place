@@ -1,17 +1,17 @@
 'use server';
 
-import Content from '@/app/premium/content';
-import getPlans from '@/lib/request/payments/getPlans';
 import { redirect } from 'next/navigation';
+import getPlans from '@/lib/request/payments/getPlans';
+import Content from '@/app/premium/content';
 
 export async function generateMetadata() {
   return {
+    title: 'Premium',
     description: 'Get access to exclusive features by subscribing to Discord Place Premium.',
     openGraph: {
-      description: 'Get access to exclusive features by subscribing to Discord Place Premium.',
-      title: 'Discord Place - Premium'
-    },
-    title: 'Premium'
+      title: 'Discord Place - Premium',
+      description: 'Get access to exclusive features by subscribing to Discord Place Premium.'
+    }
   };
 }
 

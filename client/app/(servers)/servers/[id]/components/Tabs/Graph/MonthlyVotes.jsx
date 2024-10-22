@@ -1,11 +1,11 @@
 'use client';
 
 import Graph from '@/app/(dashboard)/components/Home/Graph/index';
-import Tooltip from '@/app/components/Tooltip';
 import cn from '@/lib/cn';
-import useLanguageStore, { t } from '@/stores/language';
 import { MdOutlineArrowOutward } from 'react-icons/md';
+import Tooltip from '@/app/components/Tooltip';
 import { useMedia } from 'react-use';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function MonthlyVotesGraph({ server }) {
   const language = useLanguageStore(state => state.language);
@@ -28,8 +28,8 @@ export default function MonthlyVotesGraph({ server }) {
         {t('serverPage.tabs.monthlyVotesGraph.title')}
 
         <Tooltip
-          content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChanges'}`, { count: 1, difference, postProcess: 'interval' })}
           side={isMobile ? 'bottom' : 'right'}
+          content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChanges'}`, { postProcess: 'interval', count: 1, difference })}
         >
           <div
             className={cn(
@@ -53,12 +53,12 @@ export default function MonthlyVotesGraph({ server }) {
 
       <div className='mt-8 w-full'>
         <Graph
-          color={(isIncreased || isDecreased) ? 'rgb(168, 85, 247)' : '#b4b4b4'}
-          data={server.monthly_votes.map(({ created_at, votes }) => ({ createdAt: created_at, value: votes })).reverse()}
           id='monthlyVotes'
+          data={server.monthly_votes.map(({ created_at, votes }) => ({ createdAt: created_at, value: votes })).reverse()}
           tooltipFormatter={value => value.toLocaleString('en-US')}
-          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { month: 'long', year: 'numeric' }))}
+          color={(isIncreased || isDecreased) ? 'rgb(168, 85, 247)' : '#b4b4b4'}
           xaxisRange={server.monthly_votes.length}
+          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { year: 'numeric', month: 'long' }))}
         />
       </div>
     </div>

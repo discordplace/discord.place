@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 
 export const useAuthStore = create(set => ({
-  loggedIn: false,
-  setLoggedIn: loggedIn => set({ loggedIn }),
+  user: 'loading',
   setUser: user => set({ user }),
-  user: 'loading'
+  loggedIn: false,
+  setLoggedIn: loggedIn => set({ loggedIn })
 }));
 
 export default useAuthStore;

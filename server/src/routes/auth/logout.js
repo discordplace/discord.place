@@ -1,8 +1,8 @@
-const User = require('@/schemas/User');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { cookie } = require('express-validator');
+const User = require('@/schemas/User');
 
 module.exports = {
   post: [

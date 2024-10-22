@@ -1,21 +1,21 @@
 'use client';
 
-import DangerZone from '@/app/(servers)/servers/[id]/manage/components/DangerZone';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import { TbLoader } from 'react-icons/tb';
+import { MdSave } from 'react-icons/md';
+import { useEffect, useState } from 'react';
 import EssentialInformation from '@/app/(servers)/servers/[id]/manage/components/EssentialInformation';
 import Other from '@/app/(servers)/servers/[id]/manage/components/Other';
 import Webhook from '@/app/(servers)/servers/[id]/manage/components/Webhook';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import DangerZone from '@/app/(servers)/servers/[id]/manage/components/DangerZone';
+import isEqual from 'lodash/isEqual';
+import { toast } from 'sonner';
 import editServer from '@/lib/request/servers/editServer';
 import revalidateServer from '@/lib/revalidate/server';
-import { t } from '@/stores/language';
-import useModalsStore from '@/stores/modals';
-import isEqual from 'lodash/isEqual';
 import { useRouter } from 'next-nprogress-bar';
-import { useEffect, useState } from 'react';
-import { MdSave } from 'react-icons/md';
-import { TbLoader } from 'react-icons/tb';
-import { toast } from 'sonner';
+import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+import { t } from '@/stores/language';
 
 export default function Content({ server }) {
   const [savingChanges, setSavingChanges] = useState(false);
@@ -74,9 +74,6 @@ export default function Content({ server }) {
   function resetChanges() {
     changedKeys.forEach(({ key }) => {
       switch (key) {
-        case 'category':
-          setCategory(server[key]);
-          break;
         case 'description':
           setDescription(server[key]);
           break;
@@ -87,6 +84,9 @@ export default function Content({ server }) {
           );
 
           setInviteURL(parsedInviteUrl);
+          break;
+        case 'category':
+          setCategory(server[key]);
           break;
         case 'keywords':
           setKeywords(server[key]);
@@ -101,11 +101,6 @@ export default function Content({ server }) {
     setSavingChanges(true);
 
     toast.promise(editServer(server.id, changedKeys), {
-      error: error => {
-        setSavingChanges(false);
-
-        return error;
-      },
       loading: t('serverManagePage.toast.savingChanges'),
       success: () => {
         setSavingChanges(false);
@@ -114,14 +109,19 @@ export default function Content({ server }) {
         revalidateServer(server.id);
 
         return t('serverManagePage.toast.changesSaved');
+      },
+      error: error => {
+        setSavingChanges(false);
+
+        return error;
       }
     });
   }
 
-  const { closeModal, openedModals, openModal } = useModalsStore(useShallow(state => ({
+  const { openModal, closeModal, openedModals } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
     closeModal: state.closeModal,
-    openedModals: state.openedModals,
-    openModal: state.openModal
+    openedModals: state.openedModals
   })));
 
   const router = useRouter();
@@ -133,27 +133,27 @@ export default function Content({ server }) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
 
           openModal('confirm-exit', {
+            title: t('serverManagePage.discardChangesModal.title'),
+            description: t('serverManagePage.discardChangesModal.description'),
+            content: <p className='text-sm text-tertiary'>{t('serverManagePage.discardChangesModal.note')}</p>,
             buttons: [
               {
-                actionType: 'close',
                 id: 'cancel',
                 label: t('buttons.cancel'),
-                variant: 'ghost'
+                variant: 'ghost',
+                actionType: 'close'
               },
               {
+                id: 'discard-changes',
+                label: t('buttons.discardChanges'),
+                variant: 'solid',
                 action: () => {
                   resetChanges();
                   closeModal('confirm-exit');
                   router.push(`/servers/${server.id}`, { shallow: true });
-                },
-                id: 'discard-changes',
-                label: t('buttons.discardChanges'),
-                variant: 'solid'
+                }
               }
-            ],
-            content: <p className='text-sm text-tertiary'>{t('serverManagePage.discardChangesModal.note')}</p>,
-            description: t('serverManagePage.discardChangesModal.description'),
-            title: t('serverManagePage.discardChangesModal.title')
+            ]
           });
         } else {
           window.location.href = `/servers/${server.id}`;
@@ -187,12 +187,12 @@ export default function Content({ server }) {
 
             <div className='mt-2 flex items-center gap-x-2 font-medium text-secondary'>
               <ServerIcon
-                className='rounded-full bg-quaternary'
-                hash={server.icon}
-                height={18}
                 id={server.id}
+                hash={server.icon}
                 size={32}
                 width={18}
+                height={18}
+                className='rounded-full bg-quaternary'
               />
 
               {server.name}
@@ -202,8 +202,8 @@ export default function Content({ server }) {
           <div className='mt-8 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
             <button
               className='flex w-full items-center justify-center gap-x-1.5 rounded-xl border border-primary px-2 py-1.5 text-xs font-semibold text-tertiary hover:border-[rgba(var(--bg-tertiary))] hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
-              disabled={!changesMade || savingChanges}
               onClick={resetChanges}
+              disabled={!changesMade || savingChanges}
             >
               {t('buttons.cancel')}
             </button>
@@ -213,7 +213,7 @@ export default function Content({ server }) {
               disabled={!changesMade || savingChanges}
               onClick={saveChanges}
             >
-              {savingChanges ? <TbLoader className='animate-spin' size={18} /> : <MdSave size={18} />}
+              {savingChanges ? <TbLoader size={18} className='animate-spin' /> : <MdSave size={18} />}
               {t('buttons.saveChanges')}
             </button>
           </div>
@@ -223,8 +223,8 @@ export default function Content({ server }) {
 
         <EssentialInformation
           description={description}
-          inviteURL={inviteURL}
           setDescription={setDescription}
+          inviteURL={inviteURL}
           setInviteURL={setInviteURL}
         />
 
@@ -232,18 +232,18 @@ export default function Content({ server }) {
 
         <Other
           category={category}
-          keywords={keywords}
           setCategory={setCategory}
+          keywords={keywords}
           setKeywords={setKeywords}
         />
 
         <div className='h-px w-full bg-tertiary' />
 
         <Webhook
-          records={server.webhook?.records || []}
           serverId={server.id}
-          webhookToken={server.webhook?.token || null}
           webhookURL={server.webhook?.url || null}
+          webhookToken={server.webhook?.token || null}
+          records={server.webhook?.records || []}
         />
 
         {server.permissions.canDelete && (

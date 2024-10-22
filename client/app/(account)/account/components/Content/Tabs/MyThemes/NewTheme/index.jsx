@@ -1,21 +1,21 @@
 'use client';
 
-import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import config from '@/config';
+import { MdChevronLeft } from 'react-icons/md';
+import { useState } from 'react';
+import { toast } from 'sonner';
 import cn from '@/lib/cn';
-import confetti from '@/lib/lotties/confetti.json';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
 import createTheme from '@/lib/request/themes/createTheme';
+import { useRouter } from 'next/navigation';
+import Lottie from 'react-lottie';
+import confetti from '@/lib/lotties/confetti.json';
+import { TbLoader } from 'react-icons/tb';
 import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
-import isEqual from 'lodash/isEqual';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import { MdChevronLeft } from 'react-icons/md';
-import { TbLoader } from 'react-icons/tb';
-import Lottie from 'react-lottie';
-import { toast } from 'sonner';
+import isEqual from 'lodash/isEqual';
+import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 
 export default function NewTheme() {
   const setCurrentlyAddingTheme = useAccountStore(state => state.setCurrentlyAddingTheme);
@@ -37,12 +37,7 @@ export default function NewTheme() {
 
     setLoading(true);
 
-    toast.promise(createTheme({ categories: themeCategories, colors }), {
-      error: error => {
-        setLoading(false);
-
-        return error;
-      },
+    toast.promise(createTheme({ colors, categories: themeCategories }), {
       loading: t('accountPage.tabs.myThemes.sections.addTheme.toast.addingTheme'),
       success: data => {
         setTimeout(() => {
@@ -57,6 +52,11 @@ export default function NewTheme() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.myThemes.sections.addTheme.toast.themeAdded');
+      },
+      error: error => {
+        setLoading(false);
+
+        return error;
       }
     });
   }
@@ -64,7 +64,7 @@ export default function NewTheme() {
   return (
     <>
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie height='100%' isStopped={!renderConfetti} options={{ animationData: confetti, autoplay: false, loop: false }} width='100%'/>
+        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
       </div>
 
       <div className='flex w-full max-w-[800px] flex-col justify-center gap-y-4'>
@@ -115,11 +115,11 @@ export default function NewTheme() {
                     />
 
                     <input
-                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
-                      maxLength={7}
-                      onChange={event => setColors(oldColors => ({ ...oldColors, primary: event.target.value }))}
                       type='text'
                       value={colors.primary || '#000000'}
+                      maxLength={7}
+                      onChange={event => setColors(oldColors => ({ ...oldColors, primary: event.target.value }))}
+                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                     />
                   </div>
                 </div>
@@ -138,21 +138,21 @@ export default function NewTheme() {
                     />
 
                     <input
-                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
-                      maxLength={7}
-                      onChange={event => setColors(oldColors => ({ ...oldColors, secondary: event.target.value }))}
                       type='text'
                       value={colors.secondary || '#000000'}
+                      maxLength={7}
+                      onChange={event => setColors(oldColors => ({ ...oldColors, secondary: event.target.value }))}
+                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                     />
                   </div>
                 </div>
               </div>
 
               <ThemeCard
-                className='w-[250px]'
                 id={null}
                 primaryColor={colors.primary || '#000000'}
                 secondaryColor={colors.secondary || '#000000'}
+                className='w-[250px]'
               />
             </div>
 
@@ -168,11 +168,11 @@ export default function NewTheme() {
               {config.themeCategories
                 .map(category => (
                   <button
+                    key={category}
                     className={cn(
                       'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-quaternary',
                       themeCategories.includes(category) && 'bg-quaternary'
                     )}
-                    key={category}
                     onClick={() => {
                       if (themeCategories.includes(category)) setThemeCategories(oldCategories => oldCategories.filter(oldCategory => oldCategory !== category));
                       else setThemeCategories(oldCategories => [...oldCategories, category]);
@@ -213,11 +213,11 @@ export default function NewTheme() {
 
               <button
                 className='flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
-                disabled={loading}
                 onClick={() => {
                   setThemeCategories([]);
                   setCurrentlyAddingTheme(false);
                 }}
+                disabled={loading}
               >
                 {t('buttons.cancel')}
               </button>

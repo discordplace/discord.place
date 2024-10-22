@@ -1,12 +1,12 @@
 'use client';
 
-import cn from '@/lib/cn';
-import { useThemeStore } from '@/stores/theme';
-import { Bricolage_Grotesque } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useThemeStore } from '@/stores/theme';
+import cn from '@/lib/cn';
+import { Bricolage_Grotesque } from 'next/font/google';
 
-const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function WithText({ className }) {
   const theme = useThemeStore(state => state.theme);
@@ -20,11 +20,11 @@ export default function WithText({ className }) {
       href='/'
     >
       <Image
-        alt='discord.place Logo'
-        className='size-[32px]'
-        height={64}
         src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
         width={64}
+        height={64}
+        alt='discord.place Logo'
+        className='size-[32px]'
       />
 
       <div

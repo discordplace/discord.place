@@ -1,23 +1,23 @@
 'use client';
 
-import CreateProfile from '@/app/(account)/account/components/Content/Tabs/MyAccount/CreateProfile';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
-import getPlans from '@/lib/request/payments/getPlans';
-import createProfile from '@/lib/request/profiles/createProfile';
 import useAuthStore from '@/stores/auth';
-import useGeneralStore from '@/stores/general';
-import useLanguageStore, { t } from '@/stores/language';
-import useModalsStore from '@/stores/modals';
 import Link from 'next/link';
-import { useRouter } from 'next-nprogress-bar';
-import { useEffect, useState } from 'react';
-import { GoHeartFill } from 'react-icons/go';
 import { MdOutlineOpenInNew } from 'react-icons/md';
-import { TbLoader } from 'react-icons/tb';
-import { useMedia } from 'react-use';
+import { GoHeartFill } from 'react-icons/go';
+import { useEffect, useState } from 'react';
+import getPlans from '@/lib/request/payments/getPlans';
 import { toast } from 'sonner';
+import { TbLoader } from 'react-icons/tb';
+import useModalsStore from '@/stores/modals';
+import CreateProfile from '@/app/(account)/account/components/Content/Tabs/MyAccount/CreateProfile';
+import createProfile from '@/lib/request/profiles/createProfile';
 import { useShallow } from 'zustand/react/shallow';
+import useGeneralStore from '@/stores/general';
+import { useRouter } from 'next-nprogress-bar';
+import useLanguageStore, { t } from '@/stores/language';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import { useMedia } from 'react-use';
 
 export default function MyAccount() {
   const user = useAuthStore(state => state.user);
@@ -27,11 +27,11 @@ export default function MyAccount() {
   const [plans, setPlans] = useState([]);
   const [plansLoading, setPlansLoading] = useState(true);
 
-  const { closeModal, disableButton, enableButton, openModal, updateModal } = useModalsStore(useShallow(state => ({
-    closeModal: state.closeModal,
+  const { openModal, disableButton, enableButton, closeModal, updateModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     updateModal: state.updateModal
   })));
 
@@ -44,26 +44,26 @@ export default function MyAccount() {
       .finally(() => setPlansLoading(false));
   }, []);
 
-  const { preferredHost, slug } = useGeneralStore(useShallow(state => ({
-    preferredHost: state.createProfileModal.preferredHost,
-    slug: state.createProfileModal.slug
+  const { slug, preferredHost } = useGeneralStore(useShallow(state => ({
+    slug: state.createProfileModal.slug,
+    preferredHost: state.createProfileModal.preferredHost
   })));
 
   function continueCreateProfile(slug, preferredHost) {
     disableButton('create-profile', 'create');
 
     toast.promise(createProfile(slug, preferredHost), {
-      error: error => {
-        enableButton('create-profile', 'create');
-
-        return error;
-      },
       loading: t('accountPage.tabs.myAccount.toast.creatingProfile'),
       success: () => {
         closeModal('create-profile');
         router.push(`/profile/${slug}`);
 
         return t('accountPage.tabs.myAccount.toast.profileCreated');
+      },
+      error: error => {
+        enableButton('create-profile', 'create');
+
+        return error;
       }
     });
   }
@@ -72,21 +72,21 @@ export default function MyAccount() {
     updateModal('create-profile', {
       buttons: [
         {
-          actionType: 'close',
           id: 'cancel',
           label: t('buttons.cancel'),
-          variant: 'ghost'
+          variant: 'ghost',
+          actionType: 'close'
         },
         {
+          id: 'create',
+          label: t('buttons.create'),
+          variant: 'solid',
           action: () => {
             const newSlug = useGeneralStore.getState().createProfileModal.slug;
             const newPreferredHost = useGeneralStore.getState().createProfileModal.preferredHost;
 
             continueCreateProfile(newSlug, newPreferredHost);
-          },
-          id: 'create',
-          label: t('buttons.create'),
-          variant: 'solid'
+          }
         }
       ]
     });
@@ -122,24 +122,24 @@ export default function MyAccount() {
         <div className='mt-2 flex h-max w-full max-w-[500px] flex-col rounded-3xl bg-secondary p-2'>
           {user?.banner ? (
             <UserBanner
-              className='h-[100px] w-full rounded-2xl object-cover mobile:h-[150px]'
-              hash={user.banner}
-              height={150}
               id={user.id}
+              hash={user.banner}
               size={512}
               width={500}
+              height={150}
+              className='h-[100px] w-full rounded-2xl object-cover mobile:h-[150px]'
             />
           ) : (
             <div className='h-[100px] w-full rounded-2xl bg-quaternary mobile:h-[150px]' />
           )}
 
           <UserAvatar
-            className='relative bottom-10 left-4 z-[1] -mb-20 rounded-full border-8 border-[rgba(var(--bg-secondary))]'
-            hash={user.avatar}
-            height={80}
             id={user.id}
+            hash={user.avatar}
             size={96}
             width={80}
+            height={80}
+            className='relative bottom-10 left-4 z-[1] -mb-20 rounded-full border-8 border-[rgba(var(--bg-secondary))]'
           />
 
           <div className='ml-28 mt-2'>
@@ -199,13 +199,13 @@ export default function MyAccount() {
                       currentPlan ? (
                         t(`accountPage.tabs.myAccount.sections.premium.plans.${currentPlan?.name}`)
                       ) : (
-                        t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }) })
+                        t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }) })
                       )
                     )}
                   </span>
 
                   <p className='text-xs text-tertiary'>
-                    {new Date(user.premium.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
+                    {new Date(user.premium.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
                   </p>
                 </div>
               </>
@@ -227,12 +227,12 @@ export default function MyAccount() {
                         currentPlan ? (
                           t(`accountPage.tabs.myAccount.sections.premium.plans.${currentPlan?.name}`)
                         ) : (
-                          t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }) })
+                          t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }) })
                         )
                       )}
 
                       <span className='text-xs text-tertiary'>
-                        {new Date(user.premium.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
+                        {new Date(user.premium.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
                       </span>
                     </h2>
 
@@ -273,23 +273,23 @@ export default function MyAccount() {
                   className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white outline-none hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                   onClick={() =>
                     openModal('create-profile', {
+                      title: 'Create Profile',
+                      description: 'Create your customizable profile to show off to your friends!',
+                      content: <CreateProfile />,
                       buttons: [
                         {
-                          actionType: 'close',
                           id: 'cancel',
                           label: t('buttons.cancel'),
-                          variant: 'ghost'
+                          variant: 'ghost',
+                          actionType: 'close'
                         },
                         {
-                          action: continueCreateProfile,
                           id: 'create',
                           label: t('buttons.create'),
-                          variant: 'solid'
+                          variant: 'solid',
+                          action: continueCreateProfile
                         }
-                      ],
-                      content: <CreateProfile />,
-                      description: 'Create your customizable profile to show off to your friends!',
-                      title: 'Create Profile'
+                      ]
                     })
                   }
                 >

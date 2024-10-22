@@ -1,6 +1,6 @@
-const ServerLanguage = require('@/schemas/Server/Language');
-const updateClientActivity = require('@/utils/updateClientActivity');
 const Discord = require('discord.js');
+const updateClientActivity = require('@/utils/updateClientActivity');
+const ServerLanguage = require('@/schemas/Server/Language');
 
 module.exports = async guild => {
   logger.info(`Joined guild ${guild.name} (${guild.id}).`);
@@ -11,7 +11,7 @@ module.exports = async guild => {
 
   const embeds = [
     new Discord.EmbedBuilder()
-      .setAuthor({ iconURL: guild.iconURL(), name: 'Joined Guild' })
+      .setAuthor({ name: 'Joined Guild', iconURL: guild.iconURL() })
       .setColor(Discord.Colors.Green)
       .setFields([
         {
@@ -23,7 +23,7 @@ module.exports = async guild => {
           value: guild.memberCount.toString()
         }
       ])
-      .setFooter({ iconURL: guild.iconURL(), text: guild.name })
+      .setFooter({ text: guild.name, iconURL: guild.iconURL() })
       .setTimestamp()
   ];
 

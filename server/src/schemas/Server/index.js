@@ -1,118 +1,119 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Bot = require('@/schemas/Bot');
 const keywordsValidation = require('@/validations/servers/keywords');
 const webhookUrlValidation = require('@/validations/servers/webhookUrl');
+const Bot = require('@/schemas/Bot');
 
 const ServerSchema = new Schema({
-  category: {
-    enum: config.serverCategories,
-    required: true,
-    type: String
+  id: {
+    type: String,
+    required: true
   },
   description: {
-    max: config.serverDescriptionMaxCharacters,
+    type: String,
     required: true,
-    type: String
+    max: config.serverDescriptionMaxCharacters
   },
-  id: {
-    required: true,
-    type: String
-  },
-  invite_code: {
-    code: {
-      required: false,
-      type: String
-    },
-    type: {
-      enum: ['Vanity', 'Invite', 'Deleted'],
-      required: true,
-      type: String
-    }
+  category: {
+    type: String,
+    enum: config.serverCategories,
+    required: true
   },
   keywords: {
-    required: true,
     type: [String],
+    required: true,
     validate: {
-      message: ({ reason }) => reason.message,
-      validator: keywordsValidation
+      validator: keywordsValidation,
+      message: ({ reason }) => reason.message
     }
   },
-  last_voter: {
-    date: {
-      type: Date
+  invite_code: {
+    type: {
+      type: String,
+      enum: ['Vanity', 'Invite', 'Deleted'],
+      required: true
     },
-    user: {
-      id: {
-        type: String
-      }
+    code: {
+      type: String,
+      required: false
     }
+  },
+  votes: {
+    type: Number,
+    default: 0
   },
   voters: {
     type: [
       {
         user: {
           id: {
-            required: true,
-            type: String
+            type: String,
+            required: true
           },
           username: {
-            required: true,
-            type: String
+            type: String,
+            required: true
           }
         },
         vote: {
-          required: true,
-          type: Number
+          type: Number,
+          required: true
         }
       }
     ]
   },
-  votes: {
-    default: 0,
-    type: Number
+  last_voter: {
+    user: {
+      id: {
+        type: String
+      }
+    },
+    date: {
+      type: Date
+    }
   },
   webhook: {
+    url: {
+      type: String,
+      required: false,
+      validate: {
+        validator: webhookUrlValidation,
+        message: ({ reason }) => reason.message
+      }
+    },
+    token: {
+      type: String,
+      max: config.serverWebhookTokenMaxLength,
+      required: false
+    },
     records: [
       {
-        created_at: {
-          required: true,
-          type: Date
-        },
-        request_body: {
-          required: false,
-          type: Object
-        },
-        response_body: {
-          required: false,
-          type: String
+        url: {
+          type: String,
+          required: true
         },
         response_status_code: {
-          required: true,
-          type: Number
+          type: Number,
+          required: true
         },
-        url: {
-          required: true,
-          type: String
+        request_body: {
+          type: Object,
+          required: false
+        },
+        response_body: {
+          type: String,
+          required: false
+        },
+        created_at: {
+          type: Date,
+          required: true
         }
       }
-    ],
-    token: {
-      max: config.serverWebhookTokenMaxLength,
-      required: false,
-      type: String
-    },
-    url: {
-      required: false,
-      type: String,
-      validate: {
-        message: ({ reason }) => reason.message,
-        validator: webhookUrlValidation
-      }
-    }
+    ]
   }
 }, {
+  timestamps: true,
   methods: {
     async toPubliclySafe() {
       const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
@@ -136,16 +137,15 @@ const ServerSchema = new Schema({
 
       return {
         ...newServer,
-        category: this.category,
-        description: this.description,
         id: this.id,
-        invite_code: this.invite_code,
+        description: this.description,
+        category: this.category,
         keywords: this.keywords,
+        invite_code: this.invite_code,
         votes: this.votes
       };
     }
-  },
-  timestamps: true
+  }
 });
 
 ServerSchema.post('remove', async doc => {

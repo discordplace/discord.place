@@ -5,27 +5,27 @@ import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { useState } from 'react';
 import { useMedia } from 'react-use';
 
-export default function Tooltip({ children, content, hide, side, sideOffset, size }) {
+export default function Tooltip({ children, content, side, sideOffset, size, hide }) {
   const [open, setOpen] = useState(false);
   const isMobile = useMedia('(max-width: 640px)', false);
 
   return (
     <RadixTooltip.Provider
       delayDuration='0'
-      disableHoverableContent={true}
       skipDelayDuration='0'
+      disableHoverableContent={true}
     >
       <RadixTooltip.Root
         onOpenChange={newOpenState => !hide && setOpen(newOpenState)}
         open={open}
       >
         <RadixTooltip.Trigger
-          asChild
           onClick={() => {
             if (hide) return;
 
             if (isMobile) setOpen(!open);
           }}
+          asChild
         >
           {children}
         </RadixTooltip.Trigger>
@@ -36,8 +36,8 @@ export default function Tooltip({ children, content, hide, side, sideOffset, siz
                 'max-w-[200px] font-semibold [transform-origin:var(--radix-tooltip-content-transform-origin)] discord-theme bg-[#111214] px-4 py-1.5 rounded-lg',
                 size === 'small' && 'text-xs px-2.5'
               )}
-              side={side || 'top'}
               sideOffset={sideOffset || 18}
+              side={side || 'top'}
             >
               {content}
               <RadixTooltip.Arrow className='fill-[#111214]' />

@@ -1,10 +1,10 @@
-const Link = require('@/schemas/Link');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const Discord = require('discord.js');
 const { matchedData, param } = require('express-validator');
+const Link = require('@/schemas/Link');
+const Discord = require('discord.js');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   delete: [
@@ -13,7 +13,7 @@ module.exports = {
     bodyParser.json(),
     param('id')
       .isString().withMessage('ID should be a string.')
-      .isLength({ max: 16, min: 16 }).withMessage('ID should be 16 characters long.'),
+      .isLength({ min: 16, max: 16 }).withMessage('ID should be 16 characters long.'),
     validateRequest,
     async (request, response) => {
       const { id } = matchedData(request);
@@ -31,12 +31,12 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setTitle('Link Deleted')
-          .setAuthor({ iconURL: requestUser.displayAvatarURL(), name: requestUser.username })
+          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
           .setFields([
             {
-              inline: true,
               name: 'Name',
-              value: `${foundLink.name} (${id})`
+              value: `${foundLink.name} (${id})`,
+              inline: true
             },
             {
               name: 'Destination URL',

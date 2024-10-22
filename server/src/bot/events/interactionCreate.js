@@ -1,10 +1,10 @@
-const EvaluateResult = require('@/schemas/EvaluateResult');
 const Server = require('@/schemas/Server');
-const VoteReminder = require('@/schemas/Server/Vote/Reminder');
-const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const User = require('@/schemas/User');
-const evaluate = require('@/utils/evaluate');
 const Discord = require('discord.js');
+const EvaluateResult = require('@/schemas/EvaluateResult');
+const evaluate = require('@/utils/evaluate');
+const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
+const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 
 module.exports = async interaction => {
   if (interaction.isCommand()) {
@@ -16,7 +16,7 @@ module.exports = async interaction => {
       ephemeral: true
     });
 
-    const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { new: true, upsert: true });
+    const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, new: true });
 
     if (!user.acceptedPolicies) {
       const embeds = [
@@ -24,7 +24,7 @@ module.exports = async interaction => {
           .setTitle(await interaction.translate('commands.accept_policies.embed.title'))
           .setDescription(await interaction.translate('commands.accept_policies.embed.description'))
           .setColor(Discord.Colors.Blurple)
-          .setFooter({ iconURL: client.user.displayAvatarURL(), text: 'discord.place' })
+          .setFooter({ text: 'discord.place', iconURL: client.user.displayAvatarURL() })
       ];
 
       const components = [
@@ -38,28 +38,28 @@ module.exports = async interaction => {
           )
       ];
 
-      const message = await interaction.reply({ components, embeds, fetchReply: true });
+      const message = await interaction.reply({ embeds, components, fetchReply: true });
       const collected = await message.awaitMessageComponent({ time: 60000 }).catch(() => null);
       if (!collected) return message.edit({
-        components: [],
         content: await interaction.translate('commands.accept_policies.timeout'),
-        embeds: []
+        embeds: [],
+        components: []
       });
 
       if (collected.customId === 'accept-policies') {
         user.acceptedPolicies = true;
         user.data = {
-          flags: interaction.user.flags,
+          username: interaction.user.username,
           global_name: interaction.user.globalName,
-          username: interaction.user.username
+          flags: interaction.user.flags
         };
 
         await user.save();
 
         await message.edit({
-          components: [],
           content: await interaction.translate('commands.accept_policies.success'),
-          embeds: []
+          embeds: [],
+          components: []
         });
 
         await collected.deferUpdate();
@@ -138,19 +138,19 @@ module.exports = async interaction => {
       const server = await Server.findOne({ id: guild.id });
       if (!server) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.server_not_listed'));
 
-      const timeout = await VoteTimeout.findOne({ 'guild.id': guildId, 'user.id': interaction.user.id });
+      const timeout = await VoteTimeout.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
       if (!timeout) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.user_not_voted'));
 
-      const reminder = await VoteReminder.findOne({ 'guild.id': guildId, 'user.id': interaction.user.id });
+      const reminder = await VoteReminder.findOne({ 'user.id': interaction.user.id, 'guild.id': guildId });
       if (reminder) return interaction.followUp(await interaction.translate('interaction.buttons.create_reminder.errors.reminder_already_created'));
 
       const newReminder = new VoteReminder({
+        user: {
+          id: interaction.user.id
+        },
         guild: {
           id: guildId,
           name: guild.name
-        },
-        user: {
-          id: interaction.user.id
         }
       });
 
@@ -192,14 +192,14 @@ module.exports = async interaction => {
 
         const isCorrect = data.every((number, index) => number === numbers[index]);
         if (!isCorrect) return interaction.update({
-          components: [],
           content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
+          components: [],
           files: []
         });
 
         await interaction.update({
-          components: [],
           content: await interaction.translate('interaction.buttons.human_verification.success'),
+          components: [],
           files: []
         });
 
@@ -221,8 +221,8 @@ module.exports = async interaction => {
         selectedButtonComponent.setStyle(Discord.ButtonStyle.Primary);
 
         return interaction.update({
-          components: currentComponents,
-          content: await interaction.translate('interaction.buttons.human_verification.numbers_selected', { numbers: data.join('') })
+          content: await interaction.translate('interaction.buttons.human_verification.numbers_selected', { numbers: data.join('') }),
+          components: currentComponents
         });
       }
     }
@@ -245,13 +245,13 @@ module.exports = async interaction => {
       const data = await EvaluateResult.findOne({ id });
       if (!data || !data.executedCode) return;
 
-      const { hasError, result } = await evaluate(data.executedCode);
+      const { result, hasError } = await evaluate(data.executedCode);
 
       const embed = new Discord.EmbedBuilder()
         .setColor(hasError ? '#f04e51' : '#adadad')
         .setFields([
           { name: 'Code', value: `\`\`\`js\n${data.executedCode.slice(0, 1000)}\n\`\`\`` },
-          { name: 'Repeated At', value: new Date().toLocaleDateString('tr-TR', { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', year: 'numeric' }) }
+          { name: 'Repeated At', value: new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) }
         ])
         .setDescription(`### ${hasError ? 'Error' : 'Success'}\n\`\`\`js\n${String(result).slice(0, 4000)}\n\`\`\``);
 

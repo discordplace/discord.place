@@ -1,19 +1,20 @@
 const mongoose = require('mongoose');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
-const sendHeartbeat = require('@/utils/sendHeartbeat');
-const { PutObjectCommand, S3Client } = require('@aws-sdk/client-s3');
-const archiver = require('archiver');
 const moment = require('moment');
 const fs = require('node:fs');
 const path = require('node:path');
+const archiver = require('archiver');
+const sendHeartbeat = require('@/utils/sendHeartbeat');
+
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
+  region: process.env.S3_DATABASE_BACKUP_REGION,
+  endpoint: process.env.S3_DATABASE_BACKUP_ENDPOINT,
   credentials: {
     accessKeyId: process.env.S3_DATABASE_BACKUP_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_DATABASE_BACKUP_SECRET_ACCESS_KEY
-  },
-  endpoint: process.env.S3_DATABASE_BACKUP_ENDPOINT,
-  region: process.env.S3_DATABASE_BACKUP_REGION
+  }
 });
 
 async function createMongoBackup() {
@@ -88,10 +89,10 @@ async function uploadBackupToS3(zipFilePath, zipFileName) {
   const file = fs.readFileSync(zipFilePath);
 
   const command = new PutObjectCommand({
-    Body: file,
     Bucket: process.env.S3_DATABASE_BACKUP_BUCKET_NAME,
-    ContentType: 'application/zip',
-    Key: zipFileName
+    Key: zipFileName,
+    Body: file,
+    ContentType: 'application/zip'
   });
 
   return S3.send(command)

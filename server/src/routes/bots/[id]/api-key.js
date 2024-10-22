@@ -1,13 +1,13 @@
-const Bot = require('@/schemas/Bot');
-const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { matchedData, param } = require('express-validator');
+const Bot = require('@/schemas/Bot');
 const crypto = require('node:crypto');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
-  delete: [
+  post: [
     useRateLimiter({ maxRequests: 2, perMinutes: 30 }),
     checkAuthentication,
     param('id'),
@@ -16,11 +16,10 @@ module.exports = {
       const { id } = matchedData(request);
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
-        { restriction: 'BOTS_CREATE_API_KEY', type: 'USER_ID', value: request.user.id },
-        { restriction: 'BOTS_CREATE_API_KEY', type: 'USER_ID', value: id }
+        { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE_API_KEY' },
+        { type: 'USER_ID', value: id, restriction: 'BOTS_CREATE_API_KEY' }
       ]).catch(() => false);
-
-      if (userOrBotQuarantined) return response.sendError('You are not allowed to delete API keys for bots or this bot is not allowed to delete API keys.', 403);
+      if (userOrBotQuarantined) return response.sendError('You are not allowed to create API keys for bots or this bot is not allowed to create API keys.', 403);
 
       const user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('User not found.', 404);
@@ -30,13 +29,16 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      if (bot.owner.id !== request.user.id) return response.sendError('You are not allowed to delete API keys for this bot.', 403);
+      if (bot.owner.id !== request.user.id) return response.sendError('You are not allowed to create API keys for this bot.', 403);
+      if (bot.api_key?.iv) return response.sendError('API key already exists.', 400);
 
-      bot.api_key = undefined;
+      const apiKey = crypto.randomBytes(32).toString('hex');
+
+      bot.api_key = bot.encryptApiKey(apiKey);
 
       await bot.save();
 
-      return response.status(204).end();
+      return response.json({ apiKey });
     }
   ],
   patch: [
@@ -48,8 +50,8 @@ module.exports = {
       const { id } = matchedData(request);
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
-        { restriction: 'BOTS_CREATE_API_KEY', type: 'USER_ID', value: request.user.id },
-        { restriction: 'BOTS_CREATE_API_KEY', type: 'USER_ID', value: id }
+        { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE_API_KEY' },
+        { type: 'USER_ID', value: id, restriction: 'BOTS_CREATE_API_KEY' }
       ]).catch(() => false);
       if (userOrBotQuarantined) return response.sendError('You are not allowed to create API keys for bots or this bot is not allowed to create API keys.', 403);
 
@@ -73,7 +75,7 @@ module.exports = {
       return response.json({ apiKey });
     }
   ],
-  post: [
+  delete: [
     useRateLimiter({ maxRequests: 2, perMinutes: 30 }),
     checkAuthentication,
     param('id'),
@@ -82,10 +84,11 @@ module.exports = {
       const { id } = matchedData(request);
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
-        { restriction: 'BOTS_CREATE_API_KEY', type: 'USER_ID', value: request.user.id },
-        { restriction: 'BOTS_CREATE_API_KEY', type: 'USER_ID', value: id }
+        { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE_API_KEY' },
+        { type: 'USER_ID', value: id, restriction: 'BOTS_CREATE_API_KEY' }
       ]).catch(() => false);
-      if (userOrBotQuarantined) return response.sendError('You are not allowed to create API keys for bots or this bot is not allowed to create API keys.', 403);
+
+      if (userOrBotQuarantined) return response.sendError('You are not allowed to delete API keys for bots or this bot is not allowed to delete API keys.', 403);
 
       const user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('User not found.', 404);
@@ -95,16 +98,13 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      if (bot.owner.id !== request.user.id) return response.sendError('You are not allowed to create API keys for this bot.', 403);
-      if (bot.api_key?.iv) return response.sendError('API key already exists.', 400);
+      if (bot.owner.id !== request.user.id) return response.sendError('You are not allowed to delete API keys for this bot.', 403);
 
-      const apiKey = crypto.randomBytes(32).toString('hex');
-
-      bot.api_key = bot.encryptApiKey(apiKey);
+      bot.api_key = undefined;
 
       await bot.save();
 
-      return response.json({ apiKey });
+      return response.status(204).end();
     }
   ]
 };

@@ -4,72 +4,72 @@ const Schema = mongoose.Schema;
 const nameValidation = require('@/validations/emojis/name');
 
 const EmojiSchema = new Schema({
-  animated: {
-    default: false,
-    type: Boolean
-  },
-  approved: {
-    default: false,
-    type: Boolean
-  },
-  categories: {
-    max: config.emojiMaxCategoriesLength,
-    required: true,
-    type: [
-      {
-        enum: config.emojiCategories,
-        type: String
-      }
-    ]
-  },
-  downloads: {
-    default: 0,
-    type: Number
-  },
   id: {
-    required: true,
-    type: String
-  },
-  name: {
-    required: true,
     type: String,
-    validate: {
-      message: ({ reason }) => reason.message,
-      validator: value => nameValidation(value)
-    }
+    required: true
   },
   user: {
     id: {
-      required: true,
-      type: String
+      type: String,
+      required: true
     },
     username: {
-      required: true,
-      type: String
+      type: String,
+      required: true
     }
+  },
+  name: {
+    type: String,
+    required: true,
+    validate: {
+      validator: value => nameValidation(value),
+      message: ({ reason }) => reason.message
+    }
+  },
+  categories: {
+    type: [
+      {
+        type: String,
+        enum: config.emojiCategories
+      }
+    ],
+    required: true,
+    max: config.emojiMaxCategoriesLength
+  },
+  downloads: {
+    type: Number,
+    default: 0
+  },
+  animated: {
+    type: Boolean,
+    default: false
+  },
+  approved: {
+    type: Boolean,
+    default: false
   }
 }, {
+  timestamps: true,
   methods: {
     toPubliclySafe() {
       const newEmoji = {};
 
       return {
         ...newEmoji,
-        animated: this.animated,
-        approved: this.approved,
-        categories: this.categories,
-        created_at: new Date(this.createdAt),
-        downloads: this.downloads,
         id: this.id,
-        name: this.name,
         user: {
           id: this.user.id,
           username: this.user.username
-        }
+        },
+        name: this.name,
+        categories: this.categories,
+        downloads: this.downloads,
+        animated: this.animated,
+        approved: this.approved,
+        created_at: new Date(this.createdAt)
       };
     }
-  },
-  timestamps: true
+  }
 });
 
 module.exports = mongoose.model('Emoji', EmojiSchema);

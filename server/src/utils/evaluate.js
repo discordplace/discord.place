@@ -1,5 +1,5 @@
-const crypto = require('node:crypto');
 const { inspect } = require('node:util');
+const crypto = require('node:crypto');
 
 // eslint-disable-next-line no-async-promise-executor
 module.exports = async code => new Promise(async resolve => {
@@ -16,5 +16,5 @@ module.exports = async code => new Promise(async resolve => {
     result = error.stack;
   }
 
-  return resolve({ hasError, id: crypto.randomBytes(16).toString('hex'), result });
+  return resolve({ result, hasError, id: crypto.randomBytes(16).toString('hex') });
 });

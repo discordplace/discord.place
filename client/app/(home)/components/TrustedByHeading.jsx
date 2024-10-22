@@ -1,10 +1,10 @@
 'use client';
 
 import cn from '@/lib/cn';
-import { t } from '@/stores/language';
 import { Bricolage_Grotesque } from 'next/font/google';
+import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function TrustedByHeading({ totalServers }) {
   return (

@@ -1,14 +1,14 @@
-const DashboardData = require('@/schemas/Dashboard/Data');
-const Profile = require('@/schemas/Profile');
-const User = require('@/schemas/User');
-const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const getValidationError = require('@/utils/getValidationError');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
+const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
+const Profile = require('@/schemas/Profile');
+const User = require('@/schemas/User');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const getValidationError = require('@/utils/getValidationError');
+const DashboardData = require('@/schemas/Dashboard/Data');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -17,7 +17,7 @@ module.exports = {
     bodyParser.json(),
     body('slug')
       .isString().withMessage('Slug must be a string.')
-      .isLength({ max: 32, min: 3 }).withMessage('Slug must be between 3 and 32 characters.')
+      .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     body('preferredHost')
       .isString().withMessage('Preferred host must be a string.')
@@ -27,7 +27,7 @@ module.exports = {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'PROFILES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create profiles.', 403);
 
-      const { preferredHost, slug } = matchedData(request);
+      const { slug, preferredHost } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (profile) return response.sendError('Slug is not available.', 400);
 
@@ -42,15 +42,15 @@ module.exports = {
       const requestUser = await User.findOne({ id: request.user.id });
 
       const newProfile = new Profile({
-        preferredHost,
-        slug,
         user: {
+          id: request.user.id,
           data: {
-            global_name: requestUser.data.global_name,
-            username: requestUser.data.username
-          },
-          id: request.user.id
-        }
+            username: requestUser.data.username,
+            global_name: requestUser.data.global_name
+          }
+        },
+        slug,
+        preferredHost
       });
 
       const validationError = getValidationError(newProfile);

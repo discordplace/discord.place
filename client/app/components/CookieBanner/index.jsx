@@ -1,9 +1,9 @@
 'use client';
 
-import { t } from '@/stores/language';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'react-use';
+import { t } from '@/stores/language';
 
 export default function CookieBanner() {
   const [cookieConsent, setCookieConsent] = useLocalStorage('cookieConsent', false);
@@ -24,7 +24,7 @@ export default function CookieBanner() {
         >
           {t('cookieBanner.buttons.ok')}
         </button>
-        <Link className='text-tertiary transition-colors hover:text-primary' href='/legal/cookie-policy'>
+        <Link href='/legal/cookie-policy' className='text-tertiary transition-colors hover:text-primary'>
           {t('cookieBanner.buttons.learnMore')}
         </Link>
       </div>

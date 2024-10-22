@@ -2,23 +2,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const MonthlyVotesSchema = new Schema({
+  identifier: String,
   data: [
     {
-      created_at: {
-        default: Date.now,
-        type: Date
-      },
       month: Number,
-      most_voted: {
-        default: null,
-        required: false,
-        type: String
-      },
+      year: Number,
       votes: Number,
-      year: Number
+      created_at: {
+        type: Date,
+        default: Date.now
+      },
+      most_voted: {
+        type: String,
+        default: null,
+        required: false
+      }
     }
-  ],
-  identifier: String
+  ]
 }, {
   timestamps: true
 });
@@ -29,15 +29,15 @@ MonthlyVotesSchema.statics.updateMonthlyVotes = async function (identifier, vote
 
   const mostVoted = await Model.findOne({ id: identifier }).sort({ votes: -1 }).limit(1);
   const query = { identifier };
-  const updateData = { created_at: new Date(), month, most_voted: mostVoted ? mostVoted.id : null, votes, year };
+  const updateData = { month, year, votes, created_at: new Date(), most_voted: mostVoted ? mostVoted.id : null };
 
   // Try to update the existing document
   const result = await this.updateOne(
-    { 'data.month': month, 'data.year': year, identifier },
+    { identifier, 'data.month': month, 'data.year': year },
     {
       $set: {
-        'data.$.most_voted': mostVoted ? mostVoted.id : null,
-        'data.$.votes': votes
+        'data.$.votes': votes,
+        'data.$.most_voted': mostVoted ? mostVoted.id : null
       }
     }
   );
@@ -58,6 +58,6 @@ const ServerMonthlyVotes = mongoose.model('ServerMonthlyVotes', MonthlyVotesSche
 const BotMonthlyVotes = mongoose.model('BotMonthlyVotes', MonthlyVotesSchema);
 
 module.exports = {
-  BotMonthlyVotes,
-  ServerMonthlyVotes
+  ServerMonthlyVotes,
+  BotMonthlyVotes
 };

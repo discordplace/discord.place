@@ -1,17 +1,17 @@
 'use client';
 
-import config from '@/config';
-import useLanguageStore, { t } from '@/stores/language';
 import { motion } from 'framer-motion';
 import { FaUsers } from 'react-icons/fa';
-import { FiArrowUpRight } from 'react-icons/fi';
-import { ImTrophy } from 'react-icons/im';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { ImTrophy } from 'react-icons/im';
+import config from '@/config';
+import useLanguageStore, { t } from '@/stores/language';
+import { FiArrowUpRight } from 'react-icons/fi';
 
 const formatter = new Intl.NumberFormat('en-US', {
-  compactDisplay: 'short',
-  notation: 'compact'
+  notation: 'compact',
+  compactDisplay: 'short'
 });
 
 export default function About({ server }) {
@@ -19,39 +19,39 @@ export default function About({ server }) {
 
   const keys = [
     {
-      icon: config.serverCategoriesIcons[server.category],
       key: 'category',
       label: t('serverPage.about.labels.category'),
+      icon: config.serverCategoriesIcons[server.category],
       value: t(`categories.${server.category}`)
     },
     {
-      icon: <FaUsers />,
       key: 'members',
       label: t('serverPage.about.labels.members'),
+      icon: <FaUsers />,
       value: formatter.format(server.total_members)
     },
     {
-      icon: <ImTrophy />,
       key: 'rewards',
       label: t('serverPage.about.labels.rewards'),
+      icon: <ImTrophy />,
       value: server.rewards.length > 0 ? t('serverPage.about.availableVoteRewards', { count: server.rewards.length }) : t('serverPage.about.noVoteRewards')
     },
     {
-      icon: <TiStar />,
       key: 'boosts',
       label: t('serverPage.about.labels.boosts'),
-      value: t('serverPage.about.boostsLabelValue', { count: server.total_boosts, level: server.boost_level })
+      icon: <TiStar />,
+      value: t('serverPage.about.boostsLabelValue', { level: server.boost_level, count: server.total_boosts })
     },
     {
-      icon: <FiArrowUpRight />,
       key: 'joined_at',
       label: t('serverPage.about.labels.joinedAt'),
-      value: new Date(server.joined_at).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })
+      icon: <FiArrowUpRight />,
+      value: new Date(server.joined_at).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
     },
     {
-      icon: <TbSquareRoundedChevronUp />,
       key: 'votes',
       label: t('serverPage.about.labels.votes'),
+      icon: <TbSquareRoundedChevronUp />,
       value: formatter.format(server.votes)
     }
   ];
@@ -59,35 +59,35 @@ export default function About({ server }) {
   return (
     <div className='flex w-full flex-col lg:w-[70%]'>
       <motion.h2
-        animate={{ opacity: 1, y: 0 }}
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
-        transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
       >
         {t('serverPage.about.title')}
       </motion.h2>
 
-      <motion.p animate={{ opacity: 1, y: 0 }}
-        className='mt-2 whitespace-pre-wrap text-tertiary'
+      <motion.p className='mt-2 whitespace-pre-wrap text-tertiary'
         initial={{ opacity: 0, y: -10 }}
-        transition={{ damping: 10, delay: 0.15, duration: 0.3, stiffness: 100, type: 'spring' }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.15 }}
       >
         {server.description}
       </motion.p>
 
       <motion.div
-        animate={{ opacity: 1 }}
         className='mt-8 grid h-max grid-cols-1 gap-8 rounded-xl bg-secondary p-4 py-8 sm:grid-cols-2'
         initial={{ opacity: 0 }}
-        transition={{ damping: 10, delay: 0.3, duration: 0.3, stiffness: 100, type: 'spring' }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.3 }}
       >
-        {keys.map(({ icon, key, label, value }, index) => (
+        {keys.map(({ key, label, icon, value }, index) => (
           <motion.div
-            animate={{ opacity: 1, y: 0 }}
+            key={key}
             className='flex h-max items-center gap-x-4'
             initial={{ opacity: 0, y: -10 }}
-            key={key}
-            transition={{ damping: 10, delay: 0.20 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.20 + (.05 * index) }}
           >
             <div className='rounded-full bg-tertiary p-3 text-secondary'>
               {icon}

@@ -1,10 +1,10 @@
 'use client';
 
 import CirclePlusIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CirclePlus';
-import EmojiIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Emoji';
 import GifIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Gif';
 import NitroIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Nitro';
 import StickersIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Stickers';
+import EmojiIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Emoji';
 
 export default function Chat({ focusedChannel }) {
   return (

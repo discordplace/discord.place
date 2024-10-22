@@ -2,21 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const MetadataSchema = new Schema({
-  about: {
-    required: true,
-    type: String
-  },
-  createdAt: {
-    default: Date.now,
-    type: Date
-  },
   documentId: {
-    required: true,
-    type: mongoose.Schema.Types.ObjectId
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   },
   userId: {
-    required: true,
-    type: String
+    type: String,
+    required: true
+  },
+  about: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 

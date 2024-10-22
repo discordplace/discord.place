@@ -10,7 +10,7 @@ async function sendLog(guildId, message) {
     throw new Error(`Log channel not found for guild ${guildId}`);
   }
 
-  return channel.send({ allowedMentions: { parse: [] }, content: `- \`[${new Date().toLocaleString(await channel.guild.getLanguage())}]\` ${message}` });
+  return channel.send({ content: `- \`[${new Date().toLocaleString(await channel.guild.getLanguage())}]\` ${message}`, allowedMentions: { parse: [] } });
 }
 
 module.exports = sendLog;

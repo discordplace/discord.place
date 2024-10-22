@@ -1,18 +1,18 @@
 'use client';
 
+import useThemeStore from '@/stores/theme';
+import Image from 'next/image';
+import { Bricolage_Grotesque } from 'next/font/google';
+import cn from '@/lib/cn';
 import BlockItem from '@/app/(account)/account/components/Content/Sidebar/BlockItem';
 import CollapseIcon from '@/app/(account)/account/components/Content/Sidebar/Icons/Collapse';
-import Tooltip from '@/app/components/Tooltip';
-import cn from '@/lib/cn';
-import useAccountStore from '@/stores/account';
-import useThemeStore from '@/stores/theme';
-import { Bricolage_Grotesque } from 'next/font/google';
-import Image from 'next/image';
-import Link from 'next/link';
 import { BiSolidChevronRight } from 'react-icons/bi';
+import Tooltip from '@/app/components/Tooltip';
+import Link from 'next/link';
 import { useMedia } from 'react-use';
+import useAccountStore from '@/stores/account';
 
-const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
+const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
 
 export default function Sidebar({ blocks }) {
   const theme = useThemeStore(state => state.theme);
@@ -40,11 +40,11 @@ export default function Sidebar({ blocks }) {
             href='/'
           >
             <Image
-              alt='discord.place Logo'
-              className='size-6'
-              height={64}
               src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
               width={64}
+              height={64}
+              alt='discord.place Logo'
+              className='size-6'
             />
 
             <h1
@@ -72,15 +72,15 @@ export default function Sidebar({ blocks }) {
                 {isCollapsed ? (
                   <BiSolidChevronRight
                     className='text-secondary hover:text-tertiary'
-                    onClick={() => setIsCollapsed(!isCollapsed)}
                     size={20}
+                    onClick={() => setIsCollapsed(!isCollapsed)}
                   />
                 ) : (
                   <CollapseIcon
                     className='text-secondary hover:text-tertiary'
                     height={20}
-                    onClick={() => setIsCollapsed(!isCollapsed)}
                     width={20}
+                    onClick={() => setIsCollapsed(!isCollapsed)}
                   />
                 )}
               </span>
@@ -98,11 +98,11 @@ export default function Sidebar({ blocks }) {
 
           {blocks.filter(({ tabs }) => tabs).map(block => (
             <div
+              key={block.id}
               className={cn(
                 'flex flex-col gap-y-1',
                 !isCollapsed && 'mt-3'
               )}
-              key={block.id}
             >
               <span
                 className={cn(

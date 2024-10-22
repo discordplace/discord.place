@@ -1,15 +1,15 @@
-const Theme = require('@/schemas/Theme');
-const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const getValidationError = require('@/utils/getValidationError');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
+const bodyParser = require('body-parser');
+const { body, matchedData } = require('express-validator');
 const categoriesValidation = require('@/validations/themes/categories');
 const colorValidation = require('@/validations/themes/color');
-const bodyParser = require('body-parser');
-const Discord = require('discord.js');
-const { body, matchedData } = require('express-validator');
+const Theme = require('@/schemas/Theme');
 const crypto = require('node:crypto');
+const Discord = require('discord.js');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const getValidationError = require('@/utils/getValidationError');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -37,12 +37,12 @@ module.exports = {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'THEMES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create themes.', 403);
 
-      const userThemeInQueue = await Theme.findOne({ approved: false, 'publisher.id': request.user.id });
+      const userThemeInQueue = await Theme.findOne({ 'publisher.id': request.user.id, approved: false });
       if (userThemeInQueue) return response.sendError(`You are already waiting for approval for theme ${userThemeInQueue.id}! Please wait for it to be processed first.`);
 
       if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
 
-      const { categories, colors } = matchedData(request);
+      const { colors, categories } = matchedData(request);
 
       if (colors.primary !== colors.secondary && !categories.includes('Gradient')) return response.sendError('If you are using different primary and secondary colors, you must include the Gradient category.', 400);
 
@@ -54,14 +54,14 @@ module.exports = {
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
       const theme = new Theme({
-        approved: false,
-        categories,
-        colors,
         id,
         publisher: {
           id: requestUser.id,
           username: requestUser.username
-        }
+        },
+        colors,
+        categories,
+        approved: false
       });
 
       const validationError = getValidationError(theme);
@@ -72,12 +72,12 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setTitle('New Theme')
-          .setAuthor({ iconURL: requestUser.displayAvatarURL(), name: requestUser.username })
+          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
           .setFields([
             {
-              inline: true,
               name: 'Categories',
-              value: categories.join(', ')
+              value: categories.join(', '),
+              inline: true
             }
           ])
           .setTimestamp()
@@ -100,7 +100,7 @@ module.exports = {
           )
       ];
 
-      client.channels.cache.get(config.themeQueueChannelId).send({ components, embeds });
+      client.channels.cache.get(config.themeQueueChannelId).send({ embeds, components });
 
       return response.json(theme.toPubliclySafe());
     }

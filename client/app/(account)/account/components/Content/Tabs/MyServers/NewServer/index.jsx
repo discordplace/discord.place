@@ -1,22 +1,22 @@
 'use client';
 
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import Select from '@/app/components/Select';
-import config from '@/config';
-import cn from '@/lib/cn';
-import confetti from '@/lib/lotties/confetti.json';
+import Image from 'next/image';
 import createServer from '@/lib/request/servers/createServer';
 import useAccountStore from '@/stores/account';
-import { t } from '@/stores/language';
-import Image from 'next/image';
 import { useRouter } from 'next-nprogress-bar';
 import { useState } from 'react';
+import { toast } from 'sonner';
+import Lottie from 'react-lottie';
+import confetti from '@/lib/lotties/confetti.json';
+import { TbLoader } from 'react-icons/tb';
+import { MdChevronLeft } from 'react-icons/md';
+import config from '@/config';
+import Select from '@/app/components/Select';
+import { t } from '@/stores/language';
 import { BsFire } from 'react-icons/bs';
 import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
-import { MdChevronLeft } from 'react-icons/md';
-import { TbLoader } from 'react-icons/tb';
-import Lottie from 'react-lottie';
-import { toast } from 'sonner';
+import cn from '@/lib/cn';
 
 export default function NewServer() {
   const currentlyAddingServer = useAccountStore(state => state.currentlyAddingServer);
@@ -40,12 +40,7 @@ export default function NewServer() {
 
     setLoading(true);
 
-    toast.promise(createServer(currentlyAddingServer.id, { category: serverCategory, description: serverDescription, invite_link: serverInviteLink, keywords: serverKeywords }), {
-      error: error => {
-        setLoading(false);
-
-        return error;
-      },
+    toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords }), {
       loading: t('accountPage.tabs.myServers.sections.newServer.toast.addingServer', { serverName: currentlyAddingServer.name }),
       success: () => {
         setTimeout(() => {
@@ -61,6 +56,11 @@ export default function NewServer() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.myServers.sections.newServer.toast.serverAdded', { serverName: currentlyAddingServer.name });
+      },
+      error: error => {
+        setLoading(false);
+
+        return error;
       }
     });
   }
@@ -71,7 +71,7 @@ export default function NewServer() {
   return (
     <>
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie height='100%' isStopped={!renderConfetti} options={{ animationData: confetti, autoplay: false, loop: false }} width='100%' />
+        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%' />
       </div>
 
       <div className='flex w-full max-w-[800px] flex-col justify-center gap-y-4'>
@@ -88,27 +88,27 @@ export default function NewServer() {
 
           <h1 className='flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl'>
             {t('accountPage.tabs.myServers.sections.newServer.title', {
+              serverName: <span className='truncate'>{currentlyAddingServer.name}</span>,
               serverIcon: (
                 currentlyAddingServer.icon ? (
                   <ServerIcon
-                    className='rounded-lg'
-                    hash={currentlyAddingServer.icon}
-                    height={24}
                     id={currentlyAddingServer.id}
+                    hash={currentlyAddingServer.icon}
                     size={32}
                     width={24}
+                    height={24}
+                    className='rounded-lg'
                   />
                 ) : (
                   <Image
-                    alt='Server Icon'
-                    className='rounded-lg'
-                    height={24}
                     src='https://cdn.discordapp.com/embed/avatars/0.png'
+                    alt='Server Icon'
                     width={24}
+                    height={24}
+                    className='rounded-lg'
                   />
                 )
-              ),
-              serverName: <span className='truncate'>{currentlyAddingServer.name}</span>
+              )
             })}
           </h1>
         </div>
@@ -222,8 +222,9 @@ export default function NewServer() {
             </p>
 
             <span
-              className='mt-4 block h-[150px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
               contentEditable
+              suppressContentEditableWarning
+              className='mt-4 block h-[150px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
               onKeyUp={event => {
                 if (event.target.innerText.length > config.serverDescriptionMaxCharacters) {
                   event.target.innerText = event.target.innerText.slice(0, config.serverDescriptionMaxCharacters);
@@ -235,7 +236,6 @@ export default function NewServer() {
 
                 setServerDescription(event.target.textContent);
               }}
-              suppressContentEditableWarning
             />
 
             <h2 className='mt-8 text-lg font-semibold'>
@@ -247,12 +247,12 @@ export default function NewServer() {
             </p>
 
             <input
-              autoComplete='off'
               className='mt-4 block w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary'
-              onChange={event => setServerInviteLink(event.target.value)}
               placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.placeholder')}
+              autoComplete='off'
               spellCheck='false'
               value={serverInviteLink}
+              onChange={event => setServerInviteLink(event.target.value)}
             />
 
             <div className='mt-8 flex flex-col gap-4 sm:flex-row'>
@@ -267,9 +267,9 @@ export default function NewServer() {
 
                 <div className='mt-4 w-full'>
                   <Select
-                    disabled={loading}
                     mobileOverride={true}
-                    onChange={setServerCategory}
+                    triggerClassName='w-full py-2.5'
+                    placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.category.placeholder')}
                     options={
                       config.serverCategories
                         .filter(category => category !== 'All')
@@ -284,9 +284,9 @@ export default function NewServer() {
                           value: category
                         }))
                     }
-                    placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.category.placeholder')}
-                    triggerClassName='w-full py-2.5'
                     value={serverCategory}
+                    onChange={setServerCategory}
+                    disabled={loading}
                   />
                 </div>
               </div>
@@ -302,9 +302,11 @@ export default function NewServer() {
 
                 <div className='relative'>
                   <input
-                    autoComplete='off'
                     className='mt-4 block h-[40px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary px-2 text-sm text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-70'
-                    disabled={serverKeywords.length >= config.serverKeywordsMaxLength}
+                    autoComplete='off'
+                    spellCheck='false'
+                    value={keywordsInputValue}
+                    placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.keywords.placeholder')}
                     onChange={event => {
                       const regexp = new RegExp(/[^a-zA-Z0-9-]/g);
                       if (regexp.test(event.target.value)) return;
@@ -321,9 +323,7 @@ export default function NewServer() {
                         setKeywordsInputValue('');
                       }
                     }}
-                    placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.keywords.placeholder')}
-                    spellCheck='false'
-                    value={keywordsInputValue}
+                    disabled={serverKeywords.length >= config.serverKeywordsMaxLength}
                   />
                 </div>
               </div>
@@ -339,7 +339,7 @@ export default function NewServer() {
                   {serverKeywords
                     .filter(keyword => keyword.length > 0)
                     .map((keyword, i) => (
-                      <button className='flex items-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70' key={i} onClick={() => setServerKeywords(serverKeywords.filter(k => k !== keyword))}>
+                      <button key={i} className='flex items-center gap-x-1.5 rounded-lg bg-black px-3 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70' onClick={() => setServerKeywords(serverKeywords.filter(k => k !== keyword))}>
                         {keyword}
                       </button>
                     ))}
@@ -376,32 +376,31 @@ export default function NewServer() {
                 {loading && <TbLoader className='animate-spin' />}
 
                 {t('accountPage.tabs.myServers.sections.newServer.fields.areYouReady.addButton', {
+                  serverName: currentlyAddingServer.name,
                   serverIcon: (
                     currentlyAddingServer.icon ? (
                       <ServerIcon
-                        className='rounded'
-                        hash={currentlyAddingServer.icon}
-                        height={16}
                         id={currentlyAddingServer.id}
+                        hash={currentlyAddingServer.icon}
                         size={32}
                         width={16}
+                        height={16}
+                        className='rounded'
                       />
                     ) : (
                       <Image
-                        alt='Server Icon'
-                        className='rounded'
-                        height={16}
                         src='https://cdn.discordapp.com/embed/avatars/0.png'
+                        alt='Server Icon'
                         width={16}
+                        height={16}
+                        className='rounded'
                       />
                     )
-                  ),
-                  serverName: currentlyAddingServer.name
+                  )
                 })}
               </button>
 
               <button className='flex w-full items-center justify-center rounded-lg py-2 text-sm font-medium hover:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
-                disabled={loading}
                 onClick={() => {
                   setCurrentlyAddingServer(null);
                   setServerDescription('');
@@ -409,6 +408,7 @@ export default function NewServer() {
                   setServerCategory('');
                   setServerKeywords([]);
                 }}
+                disabled={loading}
               >
                 {t('buttons.cancel')}
               </button>

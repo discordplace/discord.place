@@ -1,14 +1,14 @@
 'use client';
 
-import EmptyHeadings from '@/components/empty-headings';
-import Footer from '@/components/footer';
-import { useGeneralStore } from '@/stores/general';
 import cn from '@/utils/cn';
 import Link from 'next/link';
-import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FaGithub } from 'react-icons/fa6';
 import { useWindowScroll } from 'react-use';
+import { useParams, usePathname } from 'next/navigation';
+import { useGeneralStore } from '@/stores/general';
+import Footer from '@/components/footer';
+import EmptyHeadings from '@/components/empty-headings';
+import { FaGithub } from 'react-icons/fa6';
 
 export default function LayoutContent({ children }) {
   const params = useParams();
@@ -28,7 +28,7 @@ export default function LayoutContent({ children }) {
     }
 
     const headings = Array.from(document.querySelectorAll('h1, h2, h3')).filter(h => h.dataset.name);
-    setHeadings(headings.map(h => ({ id: h.id, level: h.tagName, name: h.dataset.name })));
+    setHeadings(headings.map(h => ({ id: h.id, name: h.dataset.name, level: h.tagName })));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
@@ -61,7 +61,7 @@ export default function LayoutContent({ children }) {
         <div className='sticky top-8 mt-2.5 hidden h-[85svh] w-full max-w-[150px] flex-col space-y-3 sm:flex'>
           {headings.length === 0 && <EmptyHeadings />}
 
-          {headings.map(({ id, level, name }) => {
+          {headings.map(({ id, name, level }) => {
             const Tag = id.startsWith('endpoint-') ? 'div' : Link;
 
             return (
@@ -107,8 +107,8 @@ export default function LayoutContent({ children }) {
           <div className='h-px w-full bg-quaternary' />
 
           <Link
-            className='flex items-center gap-x-2 text-xs font-semibold text-tertiary transition-colors hover:text-primary'
             href={`https://github.com/discordplace/discord.place/edit/main/docs/app${pathname}/page.mdx`}
+            className='flex items-center gap-x-2 text-xs font-semibold text-tertiary transition-colors hover:text-primary'
           >
             <FaGithub />
 

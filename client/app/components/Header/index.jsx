@@ -1,9 +1,9 @@
 'use client';
 
-import CollapsedHeader from '@/app/components/Header/CollapsedHeader';
 import NotCollapsedHeader from '@/app/components/Header/NotCollapsedHeader';
-import { usePathname } from 'next/navigation';
+import CollapsedHeader from '@/app/components/Header/CollapsedHeader';
 import { useMedia } from 'react-use';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const collapseHeader = useMedia('(max-width: 1205px)', false);

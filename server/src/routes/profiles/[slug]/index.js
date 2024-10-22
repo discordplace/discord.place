@@ -1,24 +1,24 @@
-const Profile = require('@/schemas/Profile');
-const Server = require('@/schemas/Server');
-const User = require('@/schemas/User');
-const getValidationError = require('@/utils/getValidationError');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
-const randomizeArray = require('@/utils/randomizeArray');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const birthdayValidation = require('@/validations/profiles/birthday');
-const colorsValidation = require('@/validations/profiles/colors');
 const slugValidation = require('@/validations/profiles/slug');
-const socialsValidation = require('@/validations/profiles/socials');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData, body } = require('express-validator');
+const Profile = require('@/schemas/Profile');
+const User = require('@/schemas/User');
 const bodyParser = require('body-parser');
-const { body, matchedData, param } = require('express-validator');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const birthdayValidation = require('@/validations/profiles/birthday');
+const socialsValidation = require('@/validations/profiles/socials');
+const colorsValidation = require('@/validations/profiles/colors');
+const Server = require('@/schemas/Server');
+const randomizeArray = require('@/utils/randomizeArray');
+const getValidationError = require('@/utils/getValidationError');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('slug')
       .isString().withMessage('Slug must be a string.')
-      .isLength({ max: 32, min: 3 }).withMessage('Slug must be between 3 and 32 characters.')
+      .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     validateRequest,
     async (request, response) => {
@@ -28,13 +28,13 @@ module.exports = {
       if (!profile) return response.sendError('Profile not found.', 404);
 
       const permissions = {
-        canDelete: request.user && (
-          request.user.id == profile.user.id ||
-          (request.member && config.permissions.canDeleteProfilesRoles.some(role => request.member.roles.cache.has(role)))
-        ) || false,
         canEdit: request.user && (
           request.user.id == profile.user.id ||
           (request.member && config.permissions.canEditProfilesRoles.some(role => request.member.roles.cache.has(role)))
+        ) || false,
+        canDelete: request.user && (
+          request.user.id == profile.user.id ||
+          (request.member && config.permissions.canDeleteProfilesRoles.some(role => request.member.roles.cache.has(role)))
         ) || false,
         canVerify: request.user && (
           (request.member && request.member && config.permissions.canVerifyProfilesRoles.some(role => request.member.roles.cache.has(role)))
@@ -45,7 +45,7 @@ module.exports = {
 
       const publiclySafe = await profile.toPubliclySafe();
 
-      Object.assign(publiclySafe, { isLiked, permissions });
+      Object.assign(publiclySafe, { permissions, isLiked });
 
       const ownedServers = client.guilds.cache.filter(({ ownerId }) => ownerId === profile.user.id);
       if (ownedServers.size > 0) {
@@ -56,19 +56,19 @@ module.exports = {
             let guild = ownedServers.find(({ id }) => id === server.id);
 
             return {
-              banner: guild.banner,
-              category: server.category,
-              description: server.description,
-              icon: guild.icon,
               id: guild.id,
-              joined_at: guild.joinedTimestamp,
-              keywords: server.keywords,
               name: guild.name,
+              icon: guild.icon,
+              banner: guild.banner,
+              description: server.description,
+              total_members: guild.memberCount,
+              votes: server.votes,
+              category: server.category,
+              keywords: server.keywords,
+              joined_at: guild.joinedTimestamp,
               owner: {
                 id: guild.ownerId
-              },
-              total_members: guild.memberCount,
-              votes: server.votes
+              }
             };
           })
         });
@@ -99,17 +99,17 @@ module.exports = {
     bodyParser.json(),
     param('slug')
       .isString().withMessage('Slug must be a string.')
-      .isLength({ max: 32, min: 3 }).withMessage('Slug must be between 3 and 32 characters.')
+      .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     body('newSlug')
       .optional()
       .isString().withMessage('Slug must be a string.')
-      .isLength({ max: 32, min: 3 }).withMessage('Slug must be between 3 and 32 characters.')
+      .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     body('occupation')
       .optional()
       .isString().withMessage('Occupation must be a string.')
-      .isLength({ max: 64, min: 4 }).withMessage('Occupation must be between 4 and 64 characters.')
+      .isLength({ min: 4, max: 64 }).withMessage('Occupation must be between 4 and 64 characters.')
       .trim(),
     body('gender')
       .optional()
@@ -118,17 +118,17 @@ module.exports = {
     body('location')
       .optional()
       .isString().withMessage('Location must be a string.')
-      .isLength({ max: 64, min: 4 }).withMessage('Location must be between 4 and 64 characters.')
+      .isLength({ min: 4, max: 64 }).withMessage('Location must be between 4 and 64 characters.')
       .trim(),
     body('birthday')
       .optional()
       .isString().withMessage('Birthday must be a string.')
-      .isLength({ max: 32, min: 3 }).withMessage('Birthday must be between 4 and 32 characters.')
+      .isLength({ min: 3, max: 32 }).withMessage('Birthday must be between 4 and 32 characters.')
       .custom(birthdayValidation).withMessage('Birthday should be a valid date in the format of MM/DD/YYYY.'),
     body('bio')
       .optional()
       .isString().withMessage('Bio must be a string.')
-      .isLength({ max: 512, min: 4 }).withMessage('Bio must be between 4 and 512 characters.')
+      .isLength({ min: 4, max: 512 }).withMessage('Bio must be between 4 and 512 characters.')
       .trim(),
     body('preferredHost')
       .optional()
@@ -147,7 +147,7 @@ module.exports = {
       .isBoolean().withMessage('Verified must be a boolean.'),
     validateRequest,
     async (request, response) => {
-      const { bio: newBio, birthday: newBirthday, colors: newColors, gender: newGender, location: newLocation, newSlug, occupation: newOccupation, preferredHost: newPreferredHost, slug, socials, verified } = matchedData(request);
+      const { slug, newSlug, occupation: newOccupation, gender: newGender, location: newLocation, birthday: newBirthday, bio: newBio, preferredHost: newPreferredHost, colors: newColors, socials, verified } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 
@@ -185,28 +185,28 @@ module.exports = {
               if (url.protocol !== 'http:' && url.protocol !== 'https:') throw new Error('Custom social link is not valid.');
               if (profile.socials.some(({ link }) => link === socials[key])) throw new Error('You have already added this social.');
 
-              profile.socials.push({ link: socials[key], type: 'custom' });
+              profile.socials.push({ type: 'custom', link: socials[key] });
             } catch (error) {
               return response.sendError(error, 400);
             }
           } else {
             const baseUrls = {
-              facebook: 'https://facebook.com/',
-              github: 'https://github.com/',
               instagram: 'https://instagram.com/',
-              steam: 'https://steamcommunity.com/id/',
-              telegram: 'https://t.me/',
               tiktok: 'https://tiktok.com/@',
+              facebook: 'https://facebook.com/',
+              steam: 'https://steamcommunity.com/id/',
+              github: 'https://github.com/',
               twitch: 'https://twitch.tv/',
-              twitter: 'https://twitter.com/',
+              youtube: 'https://youtube.com/@',
+              telegram: 'https://t.me/',
               x: 'https://x.com/',
-              youtube: 'https://youtube.com/@'
+              twitter: 'https://twitter.com/'
             };
 
             profile.socials.push({
+              type: key,
               handle: socials[key],
-              link: baseUrls[key] + socials[key],
-              type: key
+              link: baseUrls[key] + socials[key]
             });
           }
         });
@@ -236,8 +236,8 @@ module.exports = {
       await profile.save();
 
       return response.status(200).json({
-        profile: await profile.toPubliclySafe(),
-        success: true
+        success: true,
+        profile: await profile.toPubliclySafe()
       });
     }
   ]

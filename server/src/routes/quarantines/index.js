@@ -1,13 +1,13 @@
-const Quarantine = require('@/schemas/Quarantine');
-const User = require('@/schemas/User');
-const getValidationError = require('@/utils/getValidationError');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const Discord = require('discord.js');
 const { body, matchedData } = require('express-validator');
+const getValidationError = require('@/utils/getValidationError');
+const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
+const Discord = require('discord.js');
+const User = require('@/schemas/User');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -19,14 +19,14 @@ module.exports = {
       .isIn(config.quarantineTypes).withMessage(`Type must be one of: ${config.quarantineTypes.join(', ')}`),
     body('value')
       .isInt().withMessage('Value should be an integer.')
-      .isLength({ max: 19, min: 17 }).withMessage('Value should be between 17 and 19 characters.')
+      .isLength({ min: 17, max: 19 }).withMessage('Value should be between 17 and 19 characters.')
       .isString().withMessage('Value should be a string.'),
     body('restriction')
       .isString().withMessage('Restriction should be a string.')
       .isIn(Object.keys(config.quarantineRestrictions)).withMessage(`Restriction must be one of: ${Object.keys(config.quarantineRestrictions).join(', ')}`),
     body('reason')
       .isString().withMessage('Reason should be a string.')
-      .isLength({ max: 200, min: 1 }).withMessage('Reason should be between 1 and 200 characters.'),
+      .isLength({ min: 1, max: 200 }).withMessage('Reason should be between 1 and 200 characters.'),
     body('time')
       .isString().withMessage('Time should be a string.')
       .custom(value => {
@@ -43,12 +43,12 @@ module.exports = {
       const canCreateQuarantine = request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canCreateQuarantine) return response.sendError('You do not have permission to create quarantines.', 403);
 
-      const { reason, restriction, time, type, value } = matchedData(request);
+      const { type, value, restriction, reason, time } = matchedData(request);
 
       if (!config.quarantineRestrictions[restriction]) return response.sendError('Invalid restriction.', 400);
       if (!config.quarantineRestrictions[restriction].available_to.includes(type)) return response.sendError('Invalid type for this restriction.', 400);
 
-      const existingQuarantine = await Quarantine.findOne({ restriction, type, [type === 'USER_ID' ? 'user.id' : 'guild.id']: value });
+      const existingQuarantine = await Quarantine.findOne({ type, restriction, [type === 'USER_ID' ? 'user.id' : 'guild.id']: value });
       if (existingQuarantine) return response.sendError(`There is already a quarantine entry with the same values. ID: ${existingQuarantine._id}.`, 400);
 
       const quarantineTime = time ? ms(time) : null;
@@ -56,14 +56,14 @@ module.exports = {
       const requestUser = await User.findOne({ id: request.user.id });
 
       const quarantineData = {
+        type,
+        restriction,
+        reason,
         created_by: {
           id: request.user.id,
           username: requestUser.data.username
         },
-        expire_at: quarantineTime ? new Date(Date.now() + quarantineTime) : null,
-        reason,
-        restriction,
-        type
+        expire_at: quarantineTime ? new Date(Date.now() + quarantineTime) : null
       };
 
       if (type === 'USER_ID') {
@@ -130,24 +130,24 @@ Use the following ID to refer to your quarantine: \`${quarantineData._id}\`` });
           .setTitle('New Quarantine Entry')
           .setFields([
             {
-              inline: true,
               name: 'Entry Target',
-              value: `${value} (${type})`
+              value: `${value} (${type})`,
+              inline: true
             },
             {
-              inline: true,
               name: 'Reason',
-              value: reason
+              value: reason,
+              inline: true
             },
             {
-              inline: true,
               name: 'Created By',
-              value: `<@${request.user.id}>`
+              value: `<@${request.user.id}>`,
+              inline: true
             },
             {
-              inline: true,
               name: 'Restriction',
-              value: restriction
+              value: restriction,
+              inline: true
             }
           ])
           .setFooter({ text: `Expires at: ${quarantineTime ? new Date(Date.now() + quarantineTime).toLocaleString() : 'Never'}` })

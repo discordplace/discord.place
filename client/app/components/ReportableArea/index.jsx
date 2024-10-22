@@ -1,12 +1,12 @@
-import ReportAreaModal from '@/app/components/ReportableArea/ReportAreaModal';
 import Tooltip from '@/app/components/Tooltip';
-import config from '@/config';
 import cn from '@/lib/cn';
-import createReport from '@/lib/request/createReport';
 import useGeneralStore from '@/stores/general';
-import { t } from '@/stores/language';
 import useModalsStore from '@/stores/modals';
+import { t } from '@/stores/language';
+import ReportAreaModal from '@/app/components/ReportableArea/ReportAreaModal';
+import config from '@/config';
 import { toast } from 'sonner';
+import createReport from '@/lib/request/createReport';
 import { useShallow } from 'zustand/react/shallow';
 
 export default function ReportableArea(props) {
@@ -14,11 +14,11 @@ export default function ReportableArea(props) {
   const showReportableAreas = props.active !== false && state_showReportableAreas;
   const setShowReportableAreas = useGeneralStore(state => state.setShowReportableAreas);
 
-  const { closeModal, disableButton, enableButton, openModal } = useModalsStore(useShallow(state => ({
-    closeModal: state.closeModal,
+  const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     updateModal: state.updateModal
   })));
 
@@ -32,45 +32,45 @@ export default function ReportableArea(props) {
     disableButton('report-area', 'createReport');
 
     toast.promise(createReport(props.type, props.identifier, reason), {
-      error: message => {
-        enableButton('report-area', 'createReport');
-
-        return message;
-      },
       loading: t('inAppReporting.reportModal.toast.submittingReport'),
       success: () => {
         closeModal('report-area');
         setShowReportableAreas(false);
 
         return t('inAppReporting.reportModal.toast.reportSubmitted');
+      },
+      error: message => {
+        enableButton('report-area', 'createReport');
+
+        return message;
       }
     });
   }
 
   function handleReportClick() {
     openModal('report-area', {
-      buttons: [
-        {
-          actionType: 'close',
-          id: 'cancel',
-          label: t('buttons.cancel'),
-          variant: 'ghost'
-        },
-        {
-          action: submitReport,
-          id: 'createReport',
-          label: t('buttons.createReport'),
-          variant: 'solid'
-        }
-      ],
+      title: t('inAppReporting.reportModal.title'),
+      description: t('inAppReporting.reportModal.description'),
       content: (
         <ReportAreaModal
-          metadata={props.metadata}
           type={props.type}
+          metadata={props.metadata}
         />
       ),
-      description: t('inAppReporting.reportModal.description'),
-      title: t('inAppReporting.reportModal.title')
+      buttons: [
+        {
+          id: 'cancel',
+          label: t('buttons.cancel'),
+          variant: 'ghost',
+          actionType: 'close'
+        },
+        {
+          id: 'createReport',
+          label: t('buttons.createReport'),
+          variant: 'solid',
+          action: submitReport
+        }
+      ]
     });
   }
 

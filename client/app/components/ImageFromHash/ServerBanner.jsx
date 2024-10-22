@@ -3,7 +3,7 @@
 import MotionImage from '@/app/components/Motion/Image';
 import { useState } from 'react';
 
-export default function ServerBanner({ className, format, hash, id, motionOptions, size, ...props }) {
+export default function ServerBanner({ id, hash, format, size, className, motionOptions, ...props }) {
   const [error, setError] = useState(false);
 
   if (!id || !hash) return null;
@@ -21,6 +21,7 @@ export default function ServerBanner({ className, format, hash, id, motionOption
 
   return (
     <MotionImage
+      src={`https://cdn.discordapp.com/banners/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`}
       alt={`Image ${hash}`}
       className={className}
       onError={async event => {
@@ -35,7 +36,6 @@ export default function ServerBanner({ className, format, hash, id, motionOption
 
         element.src = fallback;
       }}
-      src={`https://cdn.discordapp.com/banners/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`}
       {...motionOptions}
       {...props}
     />

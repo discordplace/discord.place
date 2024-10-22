@@ -17,8 +17,8 @@ export default function Countdown({ date, renderer }) {
   return loaded ? (
     <ReactCountdown
       date={date}
-      daysInHours={true}
       renderer={renderer}
+      daysInHours={true}
     />
   ) : 'Loading..';
 }

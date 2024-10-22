@@ -1,10 +1,10 @@
-const Profile = require('@/schemas/Profile');
-const getValidationError = require('@/utils/getValidationError');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
-const { matchedData, param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
+const Profile = require('@/schemas/Profile');
+const getValidationError = require('@/utils/getValidationError');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -12,12 +12,12 @@ module.exports = {
     useRateLimiter({ maxRequests: 15, perMinutes: 1 }),
     param('slug')
       .isString().withMessage('Slug must be a string.')
-      .isLength({ max: 32, min: 3 }).withMessage('Slug must be between 3 and 32 characters.')
+      .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     param('id'),
     validateRequest,
     async (request, response) => {
-      const { id, slug } = matchedData(request);
+      const { slug, id } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 
@@ -35,8 +35,8 @@ module.exports = {
       await profile.save();
 
       return response.status(200).json({
-        profile: await profile.toPubliclySafe(),
-        success: true
+        success: true,
+        profile: await profile.toPubliclySafe()
       });
     }
   ]

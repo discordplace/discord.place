@@ -1,12 +1,12 @@
-const DashboardData = require('@/schemas/Dashboard/Data');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData } = require('express-validator');
 const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/emojis/id');
 const Discord = require('discord.js');
-const { matchedData, param } = require('express-validator');
+const DashboardData = require('@/schemas/Dashboard/Data');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -64,7 +64,7 @@ module.exports = {
           )
       ];
 
-      client.channels.cache.get(config.portalChannelId).send({ components, embeds });
+      client.channels.cache.get(config.portalChannelId).send({ embeds, components });
 
       return response.status(204).end();
     }

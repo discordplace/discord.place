@@ -1,12 +1,12 @@
+const Discord = require('discord.js');
+const updateClientActivity = require('@/utils/updateClientActivity');
 const Review = require('@/schemas/Server/Review');
 const Reward = require('@/schemas/Server/Vote/Reward');
-const updateClientActivity = require('@/utils/updateClientActivity');
-const Discord = require('discord.js');
 module.exports = async guild => {
   logger.info(`Kicked from guild ${guild.name} (${guild.id}).`);
 
   Promise.all(
-    Review.deleteMany({ approved: false, 'server.id': guild.id }),
+    Review.deleteMany({ 'server.id': guild.id, approved: false }),
     Reward.deleteMany({ 'guild.id': guild.id })
   );
 
@@ -16,7 +16,7 @@ module.exports = async guild => {
 
   const embeds = [
     new Discord.EmbedBuilder()
-      .setAuthor({ iconURL: guild.iconURL(), name: 'Kicked from Guild' })
+      .setAuthor({ name: 'Kicked from Guild', iconURL: guild.iconURL() })
       .setColor(Discord.Colors.Red)
       .setFields([
         {
@@ -28,7 +28,7 @@ module.exports = async guild => {
           value: guild.memberCount.toString()
         }
       ])
-      .setFooter({ iconUrl: guild.iconURL(), text: guild.name })
+      .setFooter({ text: guild.name, iconUrl: guild.iconURL() })
       .setTimestamp()
   ];
 

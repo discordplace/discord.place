@@ -10,25 +10,25 @@ new Logger();
 const Client = require('@/src/client.js');
 const client = new Client();
 client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
-  registerCommands: false,
   startup: {
-    checkBucketAvailability: false,
     checkDeletedInviteCodes: false,
+    updateClientActivity: false,
+    checkVoteReminderMetadatas: false,
+    checkReminerMetadatas: false,
     checkExpiredBlockedIPs: false,
     checkExpiredPremiums: false,
-    checkExpiredProducts: false,
-    checkReminerMetadatas: false,
-    checkVoteReminderMetadatas: false,
-    createNewDashboardData: false,
-    listenCrons: false,
-    listenEvents: false,
-    saveDailyProfileStats: false,
-    saveMonthlyVotes: false,
-    syncLemonSqueezyPlans: process.env.NODE_ENV === 'production',
-    syncMemberRoles: false,
     updateBotStats: false,
-    updateClientActivity: false
+    createNewDashboardData: false,
+    syncMemberRoles: false,
+    syncLemonSqueezyPlans: process.env.NODE_ENV === 'production',
+    saveMonthlyVotes: false,
+    saveDailyProfileStats: false,
+    checkExpiredProducts: false,
+    checkBucketAvailability: false,
+    listenEvents: false,
+    listenCrons: false
   },
+  registerCommands: false,
   unregisterCommands: true
 });
 

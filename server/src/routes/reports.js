@@ -1,10 +1,10 @@
-const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const Discord = require('discord.js');
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const { body, matchedData } = require('express-validator');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const Discord = require('discord.js');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   put: [
@@ -13,11 +13,11 @@ module.exports = {
     useRateLimiter({ maxRequests: 5, perMinutes: 10 }),
     body('identifier')
       .isString().withMessage('Identifier must be a string.')
-      .isLength({ max: 255, min: 1 }).withMessage('Identifier must be between 1 and 255 characters long.'),
+      .isLength({ min: 1, max: 255 }).withMessage('Identifier must be between 1 and 255 characters long.'),
     body('reason')
       .isString().withMessage('Reason must be a string.')
       .trim()
-      .isLength({ max: config.reportReasonMaxLength, min: 1 }).withMessage(`Reason must be between 1 and ${config.reportReasonMaxLength} characters long.`),
+      .isLength({ min: 1, max: config.reportReasonMaxLength }).withMessage(`Reason must be between 1 and ${config.reportReasonMaxLength} characters long.`),
     validateRequest,
     async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'REPORTS_CREATE').catch(() => false);
@@ -30,10 +30,10 @@ module.exports = {
 
       const embeds = [
         new Discord.EmbedBuilder()
-          .setAuthor({ iconURL: requestUser.displayAvatarURL(), name: `${requestUser.username} (${requestUser.id})` })
+          .setAuthor({ name: `${requestUser.username} (${requestUser.id})`, iconURL: requestUser.displayAvatarURL() })
           .setTitle('New Report Created')
           .setDescription(reason)
-          .setFooter({ iconURL: client.user.avatarURL(), text: identifier })
+          .setFooter({ text: identifier, iconURL: client.user.avatarURL() })
           .setTimestamp()
           .setColor(Discord.Colors.Purple)
       ];

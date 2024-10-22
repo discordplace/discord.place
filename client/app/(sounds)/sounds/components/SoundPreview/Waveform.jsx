@@ -1,26 +1,26 @@
 'use client';
 
+import useThemeStore from '@/stores/theme';
+import { useEffect, useState } from 'react';
+import WavesurferPlayer from '@wavesurfer/react';
+import { HiPlay } from 'react-icons/hi2';
+import { FaPause } from 'react-icons/fa6';
+import { MdOutlineArrowOutward } from 'react-icons/md';
+import Link from 'next/link';
+import useGeneralStore from '@/stores/general';
+import { useShallow } from 'zustand/react/shallow';
 import VolumePopover from '@/app/(sounds)/sounds/components/SoundPreview/VolumePopover';
 import config from '@/config';
-import useGeneralStore from '@/stores/general';
-import useThemeStore from '@/stores/theme';
-import WavesurferPlayer from '@wavesurfer/react';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { FaPause } from 'react-icons/fa6';
-import { HiPlay } from 'react-icons/hi2';
-import { MdOutlineArrowOutward } from 'react-icons/md';
 import { useLocalStorage } from 'react-use';
-import { useShallow } from 'zustand/react/shallow';
 
 export default function Waveform({ id }) {
   const theme = useThemeStore(state => state.theme);
 
-  const { currentlyPlaying, setCurrentlyPlaying, setVolume, volume } = useGeneralStore(useShallow(state => ({
+  const { currentlyPlaying, setCurrentlyPlaying, volume, setVolume } = useGeneralStore(useShallow(state => ({
     currentlyPlaying: state.sounds.currentlyPlaying,
     setCurrentlyPlaying: state.sounds.setCurrentlyPlaying,
-    setVolume: state.sounds.setVolume,
-    volume: state.sounds.volume
+    volume: state.sounds.volume,
+    setVolume: state.sounds.setVolume
   })));
 
   const [wavesurfer, setWavesurfer] = useState(null);
@@ -65,24 +65,24 @@ export default function Waveform({ id }) {
   return (
     <div className='flex flex-col'>
       <WavesurferPlayer
-        barGap={2}
+        key={id}
+        waveColor={theme === 'dark' ? '#3e3e54' : '#aaaaaa'}
+        progressColor={theme === 'dark' ? '#ffffff' : '#000000'}
+        barWidth={3}
         barHeight={1}
         barRadius={5}
-        barWidth={3}
-        cursorHeight={20}
-        cursorWidth={0}
-        dragToSeek={true}
+        barGap={2}
         height={50}
-        key={id}
+        responsive
+        cursorWidth={0}
+        cursorHeight={20}
+        dragToSeek={true}
+        url={config.getSoundURL(id)}
         onReady={wavesurfer => {
           setTotalTime(wavesurfer.getDuration());
           setWavesurfer(wavesurfer);
         }}
         onSeeking={wavesurfer => setCurrentTime(wavesurfer.getCurrentTime())}
-        progressColor={theme === 'dark' ? '#ffffff' : '#000000'}
-        responsive
-        url={config.getSoundURL(id)}
-        waveColor={theme === 'dark' ? '#3e3e54' : '#aaaaaa'}
       />
 
       <div className='mt-2 flex select-none items-center justify-between'>

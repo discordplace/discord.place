@@ -2,7 +2,7 @@
 
 import cn from '@/lib/cn';
 
-export default function Input({ className, CustomInput, customLabelPeer, description, label, type, ...props }) {
+export default function Input({ label, customLabelPeer, description, type, CustomInput, className, ...props }) {
   const ignoreProps = ['label', 'customLabelPeer', 'description', 'type', 'CustomInput', 'className'];
 
   return (
@@ -42,11 +42,11 @@ export default function Input({ className, CustomInput, customLabelPeer, descrip
 
           {type !== 'paragraph' && (
             <input
+              type='text'
               className={cn(
                 'disabled:opacity-70 disabled:pointer-events-none mt-2 caret-[rgba(var(--text-tertiary))] w-full px-4 py-2 border-none placeholder-placeholder text-tertiary focus-visible:text-primary bg-secondary rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none',
                 className
               )}
-              type='text'
               value={props.value || ''}
               {...Object.keys(props).reduce((acc, key) => {
                 if (!ignoreProps.includes(key)) acc[key] = props[key];

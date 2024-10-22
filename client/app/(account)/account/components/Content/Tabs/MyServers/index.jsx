@@ -1,15 +1,15 @@
 'use client';
 
-import NewServer from '@/app/(account)/account/components/Content/Tabs/MyServers/NewServer';
-import UnlistedCard from '@/app/(account)/account/components/Content/Tabs/MyServers/UnlistedCard';
-import ErrorState from '@/app/components/ErrorState';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import ErrorState from '@/app/components/ErrorState';
 import config from '@/config';
 import useAccountStore from '@/stores/account';
-import { t } from '@/stores/language';
-import Image from 'next/image';
 import Link from 'next/link';
 import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
+import UnlistedCard from '@/app/(account)/account/components/Content/Tabs/MyServers/UnlistedCard';
+import NewServer from '@/app/(account)/account/components/Content/Tabs/MyServers/NewServer';
+import { t } from '@/stores/language';
+import Image from 'next/image';
 
 export default function MyServers() {
   const data = useAccountStore(state => state.data);
@@ -46,13 +46,13 @@ export default function MyServers() {
           {(data.servers || []).length === 0 ? (
             <div className='mt-20 max-w-[800px]'>
               <ErrorState
-                message={t('accountPage.tabs.myServers.sections.listedServers.emptyErrorState.message')}
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
                     {t('accountPage.tabs.myServers.sections.listedServers.emptyErrorState.title')}
                   </div>
                 }
+                message={t('accountPage.tabs.myServers.sections.listedServers.emptyErrorState.message')}
               />
             </div>
           ) : (
@@ -61,27 +61,27 @@ export default function MyServers() {
                 .filter(server => server.is_created === true)
                 .map(server => (
                   <Link
+                    key={server.id}
                     className='flex items-center gap-4 rounded-xl bg-secondary p-4 transition-opacity hover:opacity-70'
                     href={`/servers/${server.id}`}
-                    key={server.id}
                   >
                     <div className='relative size-12'>
                       {server.icon ? (
                         <ServerIcon
-                          className='rounded-xl'
-                          hash={server.icon}
-                          height={48}
                           id={server.id}
+                          hash={server.icon}
                           size={64}
                           width={48}
+                          height={48}
+                          className='rounded-xl'
                         />
                       ) : (
                         <Image
-                          alt='Server Icon'
-                          className='rounded-xl'
-                          height={48}
                           src='https://cdn.discordapp.com/embed/avatars/0.png'
+                          alt='Server Icon'
                           width={48}
+                          height={48}
+                          className='rounded-xl'
                         />
                       )}
                     </div>
@@ -130,13 +130,13 @@ export default function MyServers() {
           {(data.servers || []).length === 0 ? (
             <div className='max-w-[800px]'>
               <ErrorState
-                message={t('accountPage.tabs.myServers.sections.unlistedServers.emptyErrorState.message')}
                 title={
                   <div className='flex items-center gap-x-2'>
                     <BsEmojiAngry />
                     {t('accountPage.tabs.myServers.sections.unlistedServers.emptyErrorState.title')}
                   </div>
                 }
+                message={t('accountPage.tabs.myServers.sections.unlistedServers.emptyErrorState.message')}
               />
             </div>
           ) : (

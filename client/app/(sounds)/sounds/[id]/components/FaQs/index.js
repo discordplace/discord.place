@@ -1,32 +1,32 @@
 'use client';
 
+import cn from '@/lib/cn';
+import { useState } from 'react';
+import { MdChevronLeft } from 'react-icons/md';
 import Question1 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/1';
 import Question2 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/2';
 import Question3 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/3';
-import cn from '@/lib/cn';
-import { t } from '@/stores/language';
-import { useState } from 'react';
 import AnimateHeight from 'react-animate-height';
-import { MdChevronLeft } from 'react-icons/md';
+import { t } from '@/stores/language';
 
 export default function FaQs({ sound }) {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      content: <Question1 sound={sound} />,
-      label: t('soundPage.frequentlyAskedQuestions.labels.0')
+      label: t('soundPage.frequentlyAskedQuestions.labels.0'),
+      content: <Question1 sound={sound} />
     },
     {
-      content: <Question2 sound={sound} />,
-      label: t('soundPage.frequentlyAskedQuestions.labels.1')
+      label: t('soundPage.frequentlyAskedQuestions.labels.1'),
+      content: <Question2 sound={sound} />
     },
     {
-      content: <Question3 />,
-      label: t('soundPage.frequentlyAskedQuestions.labels.2')
+      label: t('soundPage.frequentlyAskedQuestions.labels.2'),
+      content: <Question3 />
     }
   ];
 
-  return QA.map(({ content, label }, index) => (
+  return QA.map(({ label, content }, index) => (
     <div
       className={cn(
         'overflow-hidden flex flex-col w-full p-3 rounded-md group',
@@ -54,9 +54,9 @@ export default function FaQs({ sound }) {
       </div>
 
       <AnimateHeight
+        duration={500}
         animateOpacity={true}
         className='text-sm text-secondary'
-        duration={500}
         height={activeQA === index ? 'auto' : 0}
       >
         {content}

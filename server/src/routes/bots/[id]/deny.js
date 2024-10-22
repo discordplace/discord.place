@@ -1,12 +1,12 @@
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const BotDeny = require('@/schemas/Bot/Deny');
-const User = require('@/schemas/User');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
-const { body, matchedData, param } = require('express-validator');
+const User = require('@/schemas/User');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -40,21 +40,21 @@ module.exports = {
 
       await new BotDeny({
         bot: {
-          discriminator: botUser.discriminator,
           id: bot.id,
-          username: botUser.username
+          username: botUser.username,
+          discriminator: botUser.discriminator
         },
-        reason: {
-          description: config.botsDenyReasons[reason].description,
-          title: config.botsDenyReasons[reason].name
+        user: {
+          id: bot.owner.id,
+          username: botOwnerUser.username
         },
         reviewer: {
           id: request.user.id,
           username: requestUser.data.username
         },
-        user: {
-          id: bot.owner.id,
-          username: botOwnerUser.username
+        reason: {
+          title: config.botsDenyReasons[reason].name,
+          description: config.botsDenyReasons[reason].description
         }
       }).save();
 
@@ -69,7 +69,7 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setColor(Discord.Colors.Red)
-          .setAuthor({ iconURL: botUser.displayAvatarURL(), name: `Bot Denied | ${botUser.username}` })
+          .setAuthor({ name: `Bot Denied | ${botUser.username}`, iconURL: botUser.displayAvatarURL() })
           .setTimestamp()
           .setFields([
             {

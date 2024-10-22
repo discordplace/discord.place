@@ -1,8 +1,8 @@
-const Server = require('@/schemas/Server');
 const Reward = require('@/schemas/Server/Vote/Reward');
-const User = require('@/schemas/User');
+const Server = require('@/schemas/Server');
 const sendLog = require('@/utils/servers/sendLog');
 const Discord = require('discord.js');
+const User = require('@/schemas/User');
 
 module.exports = async member => {
   if (member.user.bot) return;
@@ -37,14 +37,14 @@ module.exports = async member => {
 
       member.roles.add(role, await member.guild.translate('vote_rewards.reward_role_added_audit_reason', { requiredVotes: voter.vote }))
         .then(async () => {
-          sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_added', { roleName: role.name, userId: member.user.id, username: member.user.username, vote: voter.vote }))
+          sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_added', { username: member.user.username, userId: member.user.id, roleName: role.name, vote: voter.vote }))
             .catch(() => null);
 
           const dmChannel = member.user.dmChannel || await member.user.createDM().catch(() => null);
-          if (dmChannel) dmChannel.send(await member.guild.translate('vote_rewards.reward_role_added_dm_message', { guildName: member.guild.name, roleName: role.name, vote: voter.vote })).catch(() => null);
+          if (dmChannel) dmChannel.send(await member.guild.translate('vote_rewards.reward_role_added_dm_message', { roleName: role.name, guildName: member.guild.name, vote: voter.vote })).catch(() => null);
         })
         .catch(async error => {
-          sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_add_error', { errorMessage: error.message, roleName: role.name, userId: member.user.id, username: Discord.escapeMarkdown(member.user.username) }))
+          sendLog(member.guild.id, await member.guild.translate('vote_rewards.reward_role_add_error', { roleName: role.name, username: Discord.escapeMarkdown(member.user.username), userId: member.user.id, errorMessage: error.message }))
             .catch(() => null);
         });
 

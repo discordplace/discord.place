@@ -1,10 +1,10 @@
 const Sound = require('@/schemas/Sound');
-const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/emojis/id');
-const { matchedData, param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   patch: [

@@ -1,131 +1,132 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const getUserHashes = require('@/utils/getUserHashes');
-const getBadges = require('@/utils/profiles/getBadges');
+const slugValidation = require('@/validations/profiles/slug');
 const birthdayValidation = require('@/validations/profiles/birthday');
 const colorsValidation = require('@/validations/profiles/colors');
-const slugValidation = require('@/validations/profiles/slug');
+const getBadges = require('@/utils/profiles/getBadges');
+const getUserHashes = require('@/utils/getUserHashes');
 
 const ProfileSchema = new Schema({
-  bio: {
-    default: 'No bio provided.',
-    max: 512,
-    required: true,
-    type: String
+  user: {
+    id: {
+      type: String,
+      required: true
+    },
+    data: {
+      type: Object,
+      required: false
+    }
+  },
+  occupation: {
+    type: String,
+    max: 64
+  },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female']
+  },
+  location: {
+    type: String,
+    max: 64
   },
   birthday: {
-    max: 32,
     type: String,
+    max: 32,
     validate: {
-      message: ({ reason }) => reason.message,
-      validator: value => birthdayValidation(value)
+      validator: value => birthdayValidation(value),
+      message: ({ reason }) => reason.message
     }
   },
-  colors: {
-    primary: {
-      default: null,
-      type: String,
-      validate: {
-        message: ({ reason }) => reason.message,
-        validator: value => colorsValidation({ primary: value, secondary: null }, true)
-      }
-    },
-    secondary: {
-      default: null,
-      type: String,
-      validate: {
-        message: ({ reason }) => reason.message,
-        validator: value => colorsValidation({ primary: null, secondary: value }, true)
+  bio: {
+    type: String,
+    required: true,
+    max: 512,
+    default: 'No bio provided.'
+  },
+  socials: [
+    {
+      type: {
+        type: String,
+        enum: ['instagram', 'x', 'twitter', 'tiktok', 'facebook', 'steam', 'github', 'twitch', 'youtube', 'telegram', 'custom'],
+        required: true
+      },
+      handle: {
+        type: String,
+        max: 256
+      },
+      link: {
+        type: String,
+        required: true,
+        max: 256
       }
     }
+  ],
+  views: {
+    type: Number,
+    default: 0
+  },
+  likes_count: {
+    type: Number,
+    default: 0
+  },
+  likes: {
+    type: Array,
+    default: []
   },
   dailyStats: [
     {
       createdAt: {
-        default: Date.now,
-        type: Date
-      },
-      likes: {
-        default: 0,
-        type: Number
+        type: Date,
+        default: Date.now
       },
       views: {
-        default: 0,
-        type: Number
+        type: Number,
+        default: 0
+      },
+      likes: {
+        type: Number,
+        default: 0
       }
     }
   ],
-  gender: {
-    enum: ['Male', 'Female'],
-    type: String
-  },
-  likes: {
-    default: [],
-    type: Array
-  },
-  likes_count: {
-    default: 0,
-    type: Number
-  },
-  location: {
-    max: 64,
-    type: String
-  },
-  occupation: {
-    max: 64,
-    type: String
-  },
-  preferredHost: {
-    default: 'discord.place/p',
-    enum: ['discord.place/p', ...config.customHostnames],
-    type: String
-  },
   slug: {
-    required: true,
     type: String,
+    required: true,
     validate: {
-      message: ({ reason }) => reason.message,
-      validator: slugValidation
-    }
-  },
-  socials: [
-    {
-      handle: {
-        max: 256,
-        type: String
-      },
-      link: {
-        max: 256,
-        required: true,
-        type: String
-      },
-      type: {
-        enum: ['instagram', 'x', 'twitter', 'tiktok', 'facebook', 'steam', 'github', 'twitch', 'youtube', 'telegram', 'custom'],
-        required: true,
-        type: String
-      }
-    }
-  ],
-  user: {
-    data: {
-      required: false,
-      type: Object
-    },
-    id: {
-      required: true,
-      type: String
+      validator: slugValidation,
+      message: ({ reason }) => reason.message
     }
   },
   verified: {
-    default: false,
-    type: Boolean
+    type: Boolean,
+    default: false
   },
-  views: {
-    default: 0,
-    type: Number
+  preferredHost: {
+    type: String,
+    enum: ['discord.place/p', ...config.customHostnames],
+    default: 'discord.place/p'
+  },
+  colors: {
+    primary: {
+      type: String,
+      default: null,
+      validate: {
+        validator: value => colorsValidation({ primary: value, secondary: null }, true),
+        message: ({ reason }) => reason.message
+      }
+    },
+    secondary: {
+      type: String,
+      default: null,
+      validate: {
+        validator: value => colorsValidation({ primary: null, secondary: value }, true),
+        message: ({ reason }) => reason.message
+      }
+    }
   }
 }, {
+  timestamps: true,
   methods: {
     async toPubliclySafe() {
       const User = require('@/schemas/User');
@@ -137,33 +138,32 @@ const ProfileSchema = new Schema({
 
       return {
         ...newProfile,
-        avatar: userHashes.avatar,
-        badges: getBadges(this, premiumUserData ? premiumUserData.subscription?.createdAt : null),
-        banner: userHashes.banner,
-        bio: this.bio,
-        birthday: this.birthday,
-        colors: this.colors,
-        createdAt: this.createdAt,
-        dailyStats: this.dailyStats,
-        gender: this.gender,
-        global_name: this.user.data.global_name,
         id: this.user.id,
-        likes: this.likes_count,
-        location: this.location,
-        occupation: this.occupation,
-        preferredHost: this.preferredHost,
-        premium: !!premiumUserData,
-        slug: this.slug,
-        socials: this.socials,
-        subscriptionCreatedAt: premiumUserData?.subscription?.createdAt ? new Date(premiumUserData.subscription.createdAt).getTime() : null,
-        updatedAt: this.updatedAt,
         username: this.user.data.username,
+        global_name: this.user.data.global_name,
+        avatar: userHashes.avatar,
+        banner: userHashes.banner,
+        occupation: this.occupation,
+        gender: this.gender,
+        location: this.location,
+        birthday: this.birthday,
+        bio: this.bio,
+        socials: this.socials,
+        views: this.views,
+        likes: this.likes_count,
+        dailyStats: this.dailyStats,
+        slug: this.slug,
         verified: this.verified,
-        views: this.views
+        preferredHost: this.preferredHost,
+        colors: this.colors,
+        premium: !!premiumUserData,
+        subscriptionCreatedAt: premiumUserData?.subscription?.createdAt ? new Date(premiumUserData.subscription.createdAt).getTime() : null,
+        badges: getBadges(this, premiumUserData ? premiumUserData.subscription?.createdAt : null),
+        createdAt: this.createdAt,
+        updatedAt: this.updatedAt
       };
     }
-  },
-  timestamps: true
+  }
 });
 
 const Model = mongoose.model('Profile', ProfileSchema);

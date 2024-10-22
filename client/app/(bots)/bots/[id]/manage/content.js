@@ -1,23 +1,23 @@
 'use client';
 
-import ApiKey from '@/app/(bots)/bots/[id]/manage/components/ApiKey';
-import DangerZone from '@/app/(bots)/bots/[id]/manage/components/DangerZone';
+import { useEffect, useState } from 'react';
+import { TbLoader } from 'react-icons/tb';
+import { MdSave } from 'react-icons/md';
+import isEqual from 'lodash/isEqual';
 import EssentialInformation from '@/app/(bots)/bots/[id]/manage/components/EssentialInformation';
-import ExtraOwners from '@/app/(bots)/bots/[id]/manage/components/ExtraOwners';
 import Other from '@/app/(bots)/bots/[id]/manage/components/Other';
 import Webhook from '@/app/(bots)/bots/[id]/manage/components/Webhook';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import ApiKey from '@/app/(bots)/bots/[id]/manage/components/ApiKey';
+import DangerZone from '@/app/(bots)/bots/[id]/manage/components/DangerZone';
+import ExtraOwners from '@/app/(bots)/bots/[id]/manage/components/ExtraOwners';
+import { toast } from 'sonner';
 import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
-import { t } from '@/stores/language';
 import useModalsStore from '@/stores/modals';
-import isEqual from 'lodash/isEqual';
-import { useRouter } from 'next-nprogress-bar';
-import { useEffect, useState } from 'react';
-import { MdSave } from 'react-icons/md';
-import { TbLoader } from 'react-icons/tb';
-import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
+import { useRouter } from 'next-nprogress-bar';
+import { t } from '@/stores/language';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ bot }) {
   const [savingChanges, setSavingChanges] = useState(false);
@@ -76,8 +76,8 @@ export default function Content({ bot }) {
   function resetChanges() {
     changedKeys.forEach(({ key }) => {
       switch (key) {
-        case 'categories':
-          setCategories(bot[key]);
+        case 'short_description':
+          setShortDescription(bot[key]);
           break;
         case 'description':
           setDescription(bot[key]);
@@ -85,8 +85,8 @@ export default function Content({ bot }) {
         case 'invite_url':
           setInviteURL(bot[key]);
           break;
-        case 'short_description':
-          setShortDescription(bot[key]);
+        case 'categories':
+          setCategories(bot[key]);
           break;
         case 'support_server_id':
           setSupportServerId(bot.support_server?.id || '0');
@@ -101,11 +101,6 @@ export default function Content({ bot }) {
     setSavingChanges(true);
 
     toast.promise(editBot(bot.id, changedKeys), {
-      error: error => {
-        setSavingChanges(false);
-
-        return error;
-      },
       loading: t('botManagePage.toast.savingChanges'),
       success: () => {
         setSavingChanges(false);
@@ -114,16 +109,21 @@ export default function Content({ bot }) {
         revalidateBot(bot.id);
 
         return t('botManagePage.toast.changesSaved');
+      },
+      error: error => {
+        setSavingChanges(false);
+
+        return error;
       }
     });
   }
 
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
 
-  const { closeModal, openedModals, openModal } = useModalsStore(useShallow(state => ({
+  const { openModal, closeModal, openedModals } = useModalsStore(useShallow(state => ({
+    openModal: state.openModal,
     closeModal: state.closeModal,
-    openedModals: state.openedModals,
-    openModal: state.openModal
+    openedModals: state.openedModals
   })));
 
   const router = useRouter();
@@ -136,27 +136,27 @@ export default function Content({ bot }) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
 
           openModal('confirm-exit', {
+            title: t('botManagePage.discardChangesModal.title'),
+            description: t('botManagePage.discardChangesModal.description'),
+            content: <p className='text-sm text-tertiary'>{t('botManagePage.discardChangesModal.note')}</p>,
             buttons: [
               {
-                actionType: 'close',
                 id: 'cancel',
                 label: t('buttons.cancel'),
-                variant: 'ghost'
+                variant: 'ghost',
+                actionType: 'close'
               },
               {
+                id: 'discard-changes',
+                label: t('buttons.discardChanges'),
+                variant: 'solid',
                 action: () => {
                   resetChanges();
                   closeModal('confirm-exit');
                   router.push(`/bots/${bot.id}`, { shallow: true });
-                },
-                id: 'discard-changes',
-                label: t('buttons.discardChanges'),
-                variant: 'solid'
+                }
               }
-            ],
-            content: <p className='text-sm text-tertiary'>{t('botManagePage.discardChangesModal.note')}</p>,
-            description: t('botManagePage.discardChangesModal.description'),
-            title: t('botManagePage.discardChangesModal.title')
+            ]
           });
         } else {
           window.location.href = `/bots/${bot.id}`;
@@ -190,12 +190,12 @@ export default function Content({ bot }) {
 
             <div className='mt-2 flex items-center gap-x-2 font-medium text-secondary'>
               <UserAvatar
-                className='rounded-full bg-secondary'
-                hash={bot.avatar}
-                height={18}
                 id={bot.id}
+                hash={bot.avatar}
                 size={32}
                 width={18}
+                height={18}
+                className='rounded-full bg-secondary'
               />
 
               {bot.username}
@@ -209,8 +209,8 @@ export default function Content({ bot }) {
           <div className='mt-8 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
             <button
               className='flex w-full items-center justify-center gap-x-1.5 rounded-xl border border-primary px-2 py-1.5 text-xs font-semibold text-tertiary hover:border-[rgba(var(--bg-tertiary))] hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
-              disabled={!changesMade || savingChanges}
               onClick={resetChanges}
+              disabled={!changesMade || savingChanges}
             >
               {t('buttons.cancel')}
             </button>
@@ -220,7 +220,7 @@ export default function Content({ bot }) {
               disabled={!changesMade || savingChanges}
               onClick={saveChanges}
             >
-              {savingChanges ? <TbLoader className='animate-spin' size={18} /> : <MdSave size={18} />}
+              {savingChanges ? <TbLoader size={18} className='animate-spin' /> : <MdSave size={18} />}
               {t('buttons.saveChanges')}
             </button>
           </div>
@@ -229,35 +229,35 @@ export default function Content({ bot }) {
         <div className='h-px w-full bg-tertiary' />
 
         <EssentialInformation
-          description={description}
-          inviteURL={inviteURL}
-          markdownPreviewing={markdownPreviewing}
-          setDescription={setDescription}
-          setInviteURL={setInviteURL}
-          setMarkdownPreviewing={setMarkdownPreviewing}
-          setShortDescription={setShortDescription}
           shortDescription={shortDescription}
+          setShortDescription={setShortDescription}
+          description={description}
+          setDescription={setDescription}
+          inviteURL={inviteURL}
+          setInviteURL={setInviteURL}
+          markdownPreviewing={markdownPreviewing}
+          setMarkdownPreviewing={setMarkdownPreviewing}
         />
 
         <div className='h-px w-full bg-tertiary' />
 
         <Other
           botId={bot.id}
-          canEditSupportServer={bot.permissions.canEditExtraOwners}
           categories={categories}
-          githubRepository={bot.github_repository?.value || null}
           setCategories={setCategories}
-          setSupportServerId={setSupportServerId}
+          canEditSupportServer={bot.permissions.canEditExtraOwners}
           supportServerId={supportServerId}
+          setSupportServerId={setSupportServerId}
+          githubRepository={bot.github_repository?.value || null}
         />
 
         <div className='h-px w-full bg-tertiary' />
 
         <Webhook
           botId={bot.id}
-          records={bot.webhook?.records || []}
-          webhookToken={bot.webhook?.token || null}
           webhookURL={bot.webhook?.url || null}
+          webhookToken={bot.webhook?.token || null}
+          records={bot.webhook?.records || []}
         />
 
         <div className='h-px w-full bg-tertiary' />
@@ -270,8 +270,8 @@ export default function Content({ bot }) {
         <div className='h-px w-full bg-tertiary' />
 
         <ApiKey
-          apiKey={bot.api_key}
           botId={bot.id}
+          apiKey={bot.api_key}
         />
 
         {bot.permissions.canDelete && (

@@ -5,20 +5,20 @@ const MetadataModel = require('@/schemas/Server/Vote/Metadata');
 const Discord = require('discord.js');
 
 const VoteReminderSchema = new Schema({
-  guild: {
-    id: {
-      required: true,
-      type: String
-    },
-    name: {
-      required: true,
-      type: String
-    }
-  },
   user: {
     id: {
-      required: true,
-      type: String
+      type: String,
+      required: true
+    }
+  },
+  guild: {
+    id: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
     }
   }
 }, {
@@ -30,7 +30,7 @@ VoteReminderSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 });
 const Model = mongoose.model('ServerVoteReminder', VoteReminderSchema);
 
 Model.watch().on('change', async data => {
-  const { documentKey, fullDocument, operationType } = data;
+  const { operationType, documentKey, fullDocument } = data;
   if (operationType === 'delete') {
     const metadata = await MetadataModel.findOne({ documentId: documentKey._id });
     if (!metadata) return;
@@ -57,16 +57,16 @@ Model.watch().on('change', async data => {
     ];
 
     channel.send({
-      components,
-      content: await guild.translate('interaction.buttons.quick_vote.reminder', { guildName: guild.name })
+      content: await guild.translate('interaction.buttons.quick_vote.reminder', { guildName: guild.name }),
+      components
     });
   }
 
   if (operationType === 'insert') {
     const metadata = new MetadataModel({
       documentId: documentKey._id,
-      guildId: fullDocument.guild.id,
-      userId: fullDocument.user.id
+      userId: fullDocument.user.id,
+      guildId: fullDocument.guild.id
     });
 
     await metadata.save();

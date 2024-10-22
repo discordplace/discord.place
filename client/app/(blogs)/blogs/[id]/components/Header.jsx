@@ -1,7 +1,7 @@
 'use client';
 
-import useLanguageStore from '@/stores/language';
 import Image from 'next/image';
+import useLanguageStore from '@/stores/language';
 
 export default function Header({ data }) {
   const language = useLanguageStore(state => state.language);
@@ -12,8 +12,8 @@ export default function Header({ data }) {
         <div className='flex gap-x-2'>
           {data.tags.map(tag => (
             <span
-              className='rounded-full bg-tertiary px-4 py-2 text-xs font-medium text-primary'
               key={tag}
+              className='rounded-full bg-tertiary px-4 py-2 text-xs font-medium text-primary'
             >
               {tag}
             </span>
@@ -25,7 +25,7 @@ export default function Header({ data }) {
         </h1>
 
         <span className='flex items-center gap-x-2 text-center text-sm text-tertiary'>
-          {new Date(data.date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
+          {new Date(data.date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
 
           <span className='size-1.5 rounded-full bg-quaternary' />
 
@@ -34,11 +34,11 @@ export default function Header({ data }) {
       </div>
 
       <Image
-        alt={data.name}
-        className='size-full max-h-[440px] rounded-lg bg-tertiary object-cover'
-        height={512}
         src={`/blogs/${data.id}.jpg`}
+        alt={data.name}
         width={512}
+        height={512}
+        className='size-full max-h-[440px] rounded-lg bg-tertiary object-cover'
       />
     </>
   );

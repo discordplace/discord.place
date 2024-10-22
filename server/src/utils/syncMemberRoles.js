@@ -1,8 +1,8 @@
 const User = require('@/schemas/User');
 const sleep = require('@/utils/sleep');
-const dedent = require('dedent');
 const fs = require('node:fs');
 const path = require('node:path');
+const dedent = require('dedent');
 
 async function syncMemberRoles() {
   const guild = client.guilds.cache.get(config.guildId);
@@ -16,17 +16,17 @@ async function syncMemberRoles() {
 
   const roles = [
     {
-      condition: member => premiumUsers.find(premium => premium.id === member.user.id),
-      roleId: config.roles.premium
+      roleId: config.roles.premium,
+      condition: member => premiumUsers.find(premium => premium.id === member.user.id)
     },
     {
-      condition: member => translators.some(userId => userId === member.user.id),
-      roleId: config.roles.translator
+      roleId: config.roles.translator,
+      condition: member => translators.some(userId => userId === member.user.id)
     }
   ];
 
   await Promise.all(
-    roles.map(async ({ condition, roleId }) => {
+    roles.map(async ({ roleId, condition }) => {
       const role = guild.roles.cache.get(roleId);
       if (!role) throw new Error(`Role with ID ${roleId} not found.`);
 

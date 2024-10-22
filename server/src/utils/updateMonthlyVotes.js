@@ -1,6 +1,6 @@
-const Bot = require('@/schemas/Bot');
-const { BotMonthlyVotes, ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
+const { ServerMonthlyVotes, BotMonthlyVotes } = require('@/schemas/MonthlyVotes');
 const Server = require('@/schemas/Server');
+const Bot = require('@/schemas/Bot');
 
 async function updateMonthlyVotes() {
   const servers = await Server.find();

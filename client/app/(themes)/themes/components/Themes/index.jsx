@@ -1,42 +1,42 @@
 'use client';
 
-import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
-import ErrorState from '@/app/components/ErrorState';
+import useSearchStore from '@/stores/themes/search';
+import { useShallow } from 'zustand/react/shallow';
 import Pagination from '@/app/components/Pagination';
+import { AnimatePresence, motion } from 'framer-motion';
+import ErrorState from '@/app/components/ErrorState';
+import { BsEmojiAngry } from 'react-icons/bs';
+import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
+import { t } from '@/stores/language';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
-import { t } from '@/stores/language';
-import useSearchStore from '@/stores/themes/search';
-import { AnimatePresence, motion } from 'framer-motion';
-import { BsEmojiAngry } from 'react-icons/bs';
-import { useShallow } from 'zustand/react/shallow';
 
 export default function Themes() {
   const user = useAuthStore(state => state.user);
 
-  const { category, fetchThemes, limit, loading, page, search, setPage, sort, themes, totalThemes } = useSearchStore(useShallow(state => ({
-    category: state.category,
-    fetchThemes: state.fetchThemes,
-    limit: state.limit,
-    loading: state.loading,
-    maxReached: state.maxReached,
+  const { page, setPage, search, loading, themes, fetchThemes, sort, category, totalThemes, limit } = useSearchStore(useShallow(state => ({
     page: state.page,
-    search: state.search,
     setPage: state.setPage,
-    sort: state.sort,
+    search: state.search,
+    loading: state.loading,
     themes: state.themes,
-    totalThemes: state.totalThemes
+    fetchThemes: state.fetchThemes,
+    maxReached: state.maxReached,
+    sort: state.sort,
+    category: state.category,
+    totalThemes: state.totalThemes,
+    limit: state.limit
   })));
 
   const stateVariants = {
-    exit: {
-      opacity: 0
-    },
     hidden: {
       opacity: 0
     },
     visible: {
       opacity: 1
+    },
+    exit: {
+      opacity: 0
     }
   };
 
@@ -46,20 +46,20 @@ export default function Themes() {
     !loading && themes.length <= 0 ? (
       <AnimatePresence>
         <motion.div
-          animate='visible'
           className='flex flex-col gap-y-2 px-4 sm:px-0'
-          exit='hidden'
-          initial='hidden'
           variants={stateVariants}
+          initial='hidden'
+          animate='visible'
+          exit='hidden'
         >
           <ErrorState
-            message={t('themesPage.emptyErrorState.message')}
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
                 {t('themesPage.emptyErrorState.title')}
               </div>
             }
+            message={t('themesPage.emptyErrorState.message')}
           />
 
           <button
@@ -76,26 +76,26 @@ export default function Themes() {
     ) : (
       <>
         <motion.div
-          animate={{ opacity: 1 }}
           className='grid w-full max-w-[1000px] grid-cols-1 gap-8 px-2 sm:grid-cols-2 sm:px-4 lg:grid-cols-4 lg:px-0'
           initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
         >
           {loading ? (
             new Array(limit).fill(0).map((_, index) => (
-              <div className='h-[200px] w-full animate-pulse rounded-2xl bg-secondary' key={index} />
+              <div key={index} className='h-[200px] w-full animate-pulse rounded-2xl bg-secondary' />
             ))
           ) : (
             themes.map(theme => (
               <ReportableArea
-                active={user?.id !== theme.publisher.id}
-                identifier={`theme-${theme.id}`}
                 key={theme.id}
+                active={user?.id !== theme.publisher.id}
+                type='theme'
                 metadata={{
-                  colors: theme.colors,
                   id: theme.id,
+                  colors: theme.colors,
                   publisher: theme.publisher
                 }}
-                type='theme'
+                identifier={`theme-${theme.id}`}
               >
                 <div className='flex'>
                   <ThemeCard
@@ -112,13 +112,13 @@ export default function Themes() {
         <div className='flex w-full items-center justify-center' key='pagination'>
           {showPagination && (
             <Pagination
-              limit={limit}
-              loading={loading}
               page={page}
               setPage={newPage => {
                 fetchThemes(search, newPage, limit, category, sort);
               }}
+              loading={loading}
               total={totalThemes}
+              limit={limit}
             />
           )}
         </div>

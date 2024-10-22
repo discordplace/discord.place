@@ -1,9 +1,9 @@
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData } = require('express-validator');
 const Sound = require('@/schemas/Sound');
+const idValidation = require('@/utils/validations/sounds/id');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
-const idValidation = require('@/utils/validations/sounds/id');
-const { matchedData, param } = require('express-validator');
 
 module.exports = {
   get: [
@@ -21,13 +21,13 @@ module.exports = {
       const hashes = await getUserHashes(sound.publisher.id);
 
       return response.json({
-        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${sound.publisher.id}/${hashes.avatar}.png?size=64` : null,
-        categories: sound.categories,
-        created_at: new Date(sound.createdAt).getTime(),
-        downloads: sound.downloads,
-        likes: sound.likers.length,
         name: sound.name,
-        username: sound.publisher.username
+        username: sound.publisher.username,
+        avatar_url: hashes.avatar ? `https://cdn.discordapp.com/avatars/${sound.publisher.id}/${hashes.avatar}.png?size=64` : null,
+        likes: sound.likers.length,
+        downloads: sound.downloads,
+        created_at: new Date(sound.createdAt).getTime(),
+        categories: sound.categories
       });
     }
   ]

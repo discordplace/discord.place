@@ -1,24 +1,24 @@
 import Hero from '@/app/(bots)/bots/components/Hero';
 
 export const metadata = {
+  title: 'Bots',
   description: 'Browse and find the perfect bot for your Discord server!',
   openGraph: {
+    title: 'Discord Place - Bots',
     description: 'Browse and find the perfect bot for your Discord server!',
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://discord.place/bots',
+    site_name: 'Discord Place',
     images: [
       {
-        alt: 'Discord Place',
-        height: 540,
         url: '/og.png',
-        width: 960
+        width: 960,
+        height: 540,
+        alt: 'Discord Place'
       }
-    ],
-    locale: 'en_US',
-    site_name: 'Discord Place',
-    title: 'Discord Place - Bots',
-    type: 'website',
-    url: 'https://discord.place/bots'
-  },
-  title: 'Bots'
+    ]
+  }
 };
 
 export default function Page() {

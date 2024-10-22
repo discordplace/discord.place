@@ -1,13 +1,13 @@
 'use client';
 
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
-import useLanguageStore, { t } from '@/stores/language';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function ActiveReminders() {
   const data = useAccountStore(state => state.data);
@@ -31,13 +31,13 @@ export default function ActiveReminders() {
       {(remindersCount === 0 && voteRemindersCount === 0) ? (
         <div className='mt-20 max-w-[800px]'>
           <ErrorState
-            message={t('accountPage.tabs.activeReminders.emptyErrorState.message')}
             title={
               <div className='flex items-center gap-x-2'>
                 <BsEmojiAngry />
                 {t('accountPage.tabs.activeReminders.emptyErrorState.title')}
               </div>
             }
+            message={t('accountPage.tabs.activeReminders.emptyErrorState.message')}
           />
         </div>
       ) : (
@@ -55,12 +55,12 @@ export default function ActiveReminders() {
               <div className='flex flex-col divide-y rounded-xl border-2 border-primary'>
                 {data.reminders.map((reminder, index) => (
                   <div
+                    key={reminder._id}
                     className={cn(
                       'flex items-center flex-wrap p-3 gap-4 justify-center sm:justify-between bg-secondary border-y-primary',
                       index === data.reminders.length - 1 ? 'rounded-b-xl' : '',
                       index === 0 ? 'rounded-t-xl' : ''
                     )}
-                    key={reminder._id}
                   >
                     <div className='flex w-full flex-wrap items-center gap-4 sm:items-start'>
                       <div className='flex flex-col items-start'>
@@ -77,7 +77,7 @@ export default function ActiveReminders() {
                         <div className='text-center text-base font-semibold text-primary'>
                           <Countdown
                             date={new Date(reminder.expire_at).getTime()}
-                            renderer={({ completed, days, hours, minutes, seconds }) => {
+                            renderer={({ days, hours, minutes, seconds, completed }) => {
                               if (completed) return t('accountPage.tabs.activeReminders.countdown.expired');
 
                               return t('accountPage.tabs.activeReminders.countdown.expiresIn', { days, hours, minutes, seconds });
@@ -86,7 +86,7 @@ export default function ActiveReminders() {
                         </div>
 
                         <div className='text-xs font-medium text-tertiary'>
-                          {new Date(reminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
+                          {new Date(reminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
                         </div>
                       </div>
                     </div>
@@ -110,24 +110,24 @@ export default function ActiveReminders() {
 
                 {data.voteReminders.map((voteReminder, index) => (
                   <div
+                    key={voteReminder._id}
                     className={cn(
                       'flex items-center p-3 gap-4 justify-center flex-wrap sm:justify-between bg-secondary border-y-primary',
                       index === data.voteReminders.length - 1 ? 'rounded-b-xl' : '',
                       index === 0 ? 'rounded-t-xl' : ''
                     )}
-                    key={voteReminder._id}
                   >
                     <Link
                       className='flex items-center gap-x-4 transition-opacity hover:opacity-70'
                       href={`/servers/${voteReminder.guild.id}`}
                     >
                       <ServerIcon
-                        className='rounded-lg'
-                        hash={voteReminder.guild.icon}
-                        height={32}
                         id={voteReminder.guild.id}
+                        hash={voteReminder.guild.icon}
                         size={32}
                         width={32}
+                        height={32}
+                        className='rounded-lg'
                       />
 
                       <div className='flex flex-col'>
@@ -145,7 +145,7 @@ export default function ActiveReminders() {
                       <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
                           date={new Date(voteReminder.createdAt).getTime() + 86400000}
-                          renderer={({ completed, hours, minutes, seconds }) => {
+                          renderer={({ hours, minutes, seconds, completed }) => {
                             if (completed) return t('accountPage.tabs.activeReminders.countdown.expired');
 
                             return t('accountPage.tabs.activeReminders.countdown.expiresInShort', { hours, minutes, seconds });
@@ -154,7 +154,7 @@ export default function ActiveReminders() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(voteReminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
+                        {new Date(voteReminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
                       </div>
                     </div>
                   </div>

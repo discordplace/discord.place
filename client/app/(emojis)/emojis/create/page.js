@@ -1,20 +1,20 @@
 'use client';
 
-import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';
-import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
 import Square from '@/app/components/Background/Square';
-import AuthProtected from '@/app/components/Providers/Auth/Protected';
-import config from '@/config';
-import cn from '@/lib/cn';
-import createEmoji from '@/lib/request/emojis/createEmoji';
-import { t } from '@/stores/language';
-import { nanoid } from 'nanoid';
-import Link from 'next/link';
-import { useRouter } from 'next-nprogress-bar';
 import { useEffect, useState } from 'react';
 import { MdCheckCircle } from 'react-icons/md';
-import { RiErrorWarningFill } from 'react-icons/ri';
 import { toast } from 'sonner';
+import { nanoid } from 'nanoid';
+import cn from '@/lib/cn';
+import config from '@/config';
+import Link from 'next/link';
+import createEmoji from '@/lib/request/emojis/createEmoji';
+import { useRouter } from 'next-nprogress-bar';
+import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';
+import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import AuthProtected from '@/app/components/Providers/Auth/Protected';
+import { t } from '@/stores/language';
 
 export default function Page() {
   const [isPackage, setIsPackage] = useState(false);
@@ -66,16 +66,16 @@ export default function Page() {
     emoji.files.map(file => formData.append('file', file));
 
     toast.promise(createEmoji(formData), {
+      loading: t('createEmojiPage.toast.publishingEmojis', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 }),
+      success: emojiId => {
+        router.push(`/emojis/${isPackage ? 'packages/' : ''}${emojiId}`);
+
+        return t('createEmojiPage.toast.emojisPublished', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 });
+      },
       error: error => {
         setLoading(false);
 
         return error;
-      },
-      loading: t('createEmojiPage.toast.publishingEmojis', { count: isPackage ? emoji.files.length : 1, postProcess: 'interval' }),
-      success: emojiId => {
-        router.push(`/emojis/${isPackage ? 'packages/' : ''}${emojiId}`);
-
-        return t('createEmojiPage.toast.emojisPublished', { count: isPackage ? emoji.files.length : 1, postProcess: 'interval' });
       }
     });
   }
@@ -83,7 +83,7 @@ export default function Page() {
   return (
     <AuthProtected>
       <div className='relative z-0 flex w-full justify-center px-6 lg:px-0'>
-        <Square blockColor='rgba(var(--bg-secondary))' column='10' row='10' transparentEffectDirection='bottomToTop' />
+        <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
         <div className='mb-16 mt-48 flex w-full max-w-[600px] flex-col gap-y-2'>
           <h1 className='text-4xl font-bold text-primary'>
@@ -128,13 +128,13 @@ export default function Page() {
                   .filter(category => category !== 'All')
                   .map(category => (
                     <button
+                      key={nanoid()}
                       className={cn(
                         'w-[100px] h-[100px] rounded-2xl font-semibold flex gap-x-1 items-center justify-center',
                         selectedCategories.includes(category) ? 'text-primary bg-tertiary hover:bg-quaternary' : 'bg-secondary hover:bg-tertiary',
                         selectedCategories.length >= config.emojiMaxCategoriesLength && !selectedCategories.includes(category) && 'pointer-events-none opacity-70',
                         emoji.file && emoji.file.type === 'image/gif' && category === 'Animated' && 'pointer-events-none opacity-70'
                       )}
-                      key={nanoid()}
                       onClick={() => {
                         if (selectedCategories.includes(category)) setSelectedCategories(selectedCategories.filter(selectedCategory => selectedCategory !== category));
                         else setSelectedCategories([...selectedCategories, category]);
@@ -157,13 +157,13 @@ export default function Page() {
               </label>
 
               <input
-                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 id='emojiName'
-                maxLength={20}
-                onChange={event => setEmoji({ ...emoji, name: event.target.value })}
-                placeholder={t('createEmojiPage.steps.0.inputs.emojiName.placeholder')}
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={emoji.name}
+                onChange={event => setEmoji({ ...emoji, name: event.target.value })}
+                placeholder={t('createEmojiPage.steps.0.inputs.emojiName.placeholder')}
+                maxLength={20}
               />
             </>
           )}
@@ -171,17 +171,18 @@ export default function Page() {
           {activeStep === 1 && (
             <>
               {isPackage ? (
-                <PackagePreview ableToChange={true} image_urls={emojiURLs} setEmojiURL={setEmojiURL} setImageURLs={setEmojiURLs} setIsPackage={setIsPackage} />
+                <PackagePreview ableToChange={true} image_urls={emojiURLs} setImageURLs={setEmojiURLs} setIsPackage={setIsPackage} setEmojiURL={setEmojiURL} />
               ) : (
-                <EmojiPreview ableToChange={true} defaultSize='enlarge' image_url={emojiURL} />
+                <EmojiPreview image_url={emojiURL} ableToChange={true} defaultSize='enlarge' />
               )}
 
               <input
-                accept='.png,.gif'
-                className='hidden'
                 id='emojiFiles'
-                max={9}
+                className='hidden'
+                type='file'
+                accept='.png,.gif'
                 multiple
+                max={9}
                 onChange={event => {
                   const files = event.target.files;
                   if (files.length <= 0) return;
@@ -192,7 +193,6 @@ export default function Page() {
 
                   setEmoji({ ...emoji, files: [...files] });
                 }}
-                type='file'
               />
             </>
           )}
@@ -243,25 +243,25 @@ export default function Page() {
 
               <p className='mt-2 text-xs text-tertiary mobile:text-sm'>
                 {t('createEmojiPage.steps.2.disclaimer.content', {
-                  contentPolicyLink: <Link className='hover:text-primary hover:underline' href='/legal/content-policy'>{t('createEmojiPage.steps.2.disclaimer.linkText')}</Link>
+                  contentPolicyLink: <Link href='/legal/content-policy' className='hover:text-primary hover:underline'>{t('createEmojiPage.steps.2.disclaimer.linkText')}</Link>
                 })}
               </p>
             </>
           )}
 
           <div className='mt-8 flex w-full justify-between'>
-            <button className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70' disabled={activeStep === 0 || loading} onClick={() => setActiveStep(activeStep - 1)}>
+            <button className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70' onClick={() => setActiveStep(activeStep - 1)} disabled={activeStep === 0 || loading}>
               {t('buttons.previous')}
             </button>
 
-            <button className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70' disabled={
+            <button className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70' onClick={() => {
+              if (activeStep === steps.length - 1) publishEmoji();
+              else setActiveStep(activeStep + 1);
+            }} disabled={
               activeStep === 0 ? (selectedCategories.length <= 0 || !emoji.name) :
                 activeStep === 1 ? emoji.files?.length <= 0 :
                   (loading === true || false)
-            } onClick={() => {
-              if (activeStep === steps.length - 1) publishEmoji();
-              else setActiveStep(activeStep + 1);
-            }}>
+            }>
               {activeStep === steps.length - 1 ? t('buttons.publish') : t('buttons.next')}
             </button>
           </div>

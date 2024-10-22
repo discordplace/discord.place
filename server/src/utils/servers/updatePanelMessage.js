@@ -1,10 +1,10 @@
-const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
-const Server = require('@/schemas/Server');
 const Panel = require('@/schemas/Server/Panel');
+const Discord = require('discord.js');
+const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 const Reward = require('@/schemas/Server/Vote/Reward');
+const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const ansiColors = require('ansi-colors');
-const Discord = require('discord.js');
 const { getAverageColor } = require('fast-average-color-node');
 
 async function updatePanelMessage(guildId) {
@@ -61,11 +61,11 @@ async function createPanelMessageOptions(guild, server) {
     topVotersTable.push([index + 1, formatter.format(voter.vote), usernameText]);
   }
 
-  const embedColor = await getAverageColor(guild.iconURL({ dynamic: false, format: 'webp', size: 64 }));
+  const embedColor = await getAverageColor(guild.iconURL({ format: 'webp', size: 64, dynamic: false }));
 
   const embeds = [
     new Discord.EmbedBuilder()
-      .setAuthor({ iconURL: guild.iconURL(), name: guild.name })
+      .setAuthor({ name: guild.name, iconURL: guild.iconURL() })
       .setColor(embedColor.hex)
       .setDescription(`${await guild.translate('server_panel_message.embeds.0.title')}\n${await guild.translate('server_panel_message.embeds.0.description', { serverVotes: formatter.format(server.voters.reduce((acc, voter) => acc + voter.vote, 0)), totalVoters: server.voters.length })}\n\`\`\`ansi\n${(await Promise.all(topVotersTable.map(async ([index, votes, username]) => `${ansiColors.reset.bold(`${index}${index == 10 ? '' : ' '} |`)} ${ansiColors.reset.bold.blue(`${votes}${' '.repeat(Math.max(...topVotersTable.map(([, votes]) => votes)).toString().length - votes.toString().length)} ${await guild.translate('server_panel_message.embeds.0.table.vote')}`)} ${ansiColors.reset.bold(`‒ ${username}`)}`))).join('\n')}\`\`\``)
   ];
@@ -75,7 +75,7 @@ async function createPanelMessageOptions(guild, server) {
     embeds.push(
       new Discord.EmbedBuilder()
         .setColor(embedColor.hex)
-        .setDescription(`${await guild.translate('server_panel_message.embeds.1.title')}\n${await guild.translate('server_panel_message.embeds.1.description', { count: formatter.format(server.votes) })}\n\`\`\`ansi\n${monthlyVotes.data.map(month => [formatter.format(month.votes), new Date(month.created_at).toLocaleString('en-US', { month: 'short', year: 'numeric' })]).map(([votes, date]) => `${ansiColors.reset.bold(`${date} ‒`)} ${ansiColors.reset.bold.blue(votes)}`).join('\n')}\`\`\``)
+        .setDescription(`${await guild.translate('server_panel_message.embeds.1.title')}\n${await guild.translate('server_panel_message.embeds.1.description', { count: formatter.format(server.votes) })}\n\`\`\`ansi\n${monthlyVotes.data.map(month => [formatter.format(month.votes), new Date(month.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short' })]).map(([votes, date]) => `${ansiColors.reset.bold(`${date} ‒`)} ${ansiColors.reset.bold.blue(votes)}`).join('\n')}\`\`\``)
     );
   }
 
@@ -83,7 +83,7 @@ async function createPanelMessageOptions(guild, server) {
     embeds.push(
       new Discord.EmbedBuilder()
         .setColor(embedColor.hex)
-        .setDescription(`${await guild.translate('server_panel_message.embeds.2.title')}\n${await guild.translate('server_panel_message.embeds.2.description', { count: rewards.length, postProcess: 'interval' })}\n\`\`\`ansi\n${(await Promise.all(rewards.map(async reward => `${ansiColors.reset.bold(`${reward.required_votes} ‒`)} ${ansiColors.reset.bold.blue(`@${guild.roles.cache.get(reward.role.id)?.name || await guild.translate('server_panel_message.embeds.2.table.unknown_role')}`)}`))).join('\n')}\`\`\``)
+        .setDescription(`${await guild.translate('server_panel_message.embeds.2.title')}\n${await guild.translate('server_panel_message.embeds.2.description', { postProcess: 'interval', count: rewards.length })}\n\`\`\`ansi\n${(await Promise.all(rewards.map(async reward => `${ansiColors.reset.bold(`${reward.required_votes} ‒`)} ${ansiColors.reset.bold.blue(`@${guild.roles.cache.get(reward.role.id)?.name || await guild.translate('server_panel_message.embeds.2.table.unknown_role')}`)}`))).join('\n')}\`\`\``)
     );
   }
 
@@ -91,7 +91,7 @@ async function createPanelMessageOptions(guild, server) {
   if (lastVoter) embeds.push(
     new Discord.EmbedBuilder()
       .setColor(embedColor.hex)
-      .setFooter({ iconURL: lastVoter.displayAvatarURL(), text: `@${lastVoter.username}` })
+      .setFooter({ text: `@${lastVoter.username}`, iconURL: lastVoter.displayAvatarURL() })
       .setTimestamp(server.last_voter.date)
   );
 
@@ -110,7 +110,7 @@ async function createPanelMessageOptions(guild, server) {
       )
   ];
 
-  return { components, embeds };
+  return { embeds, components };
 }
 
 module.exports = updatePanelMessage;

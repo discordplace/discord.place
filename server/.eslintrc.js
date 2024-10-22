@@ -2,20 +2,142 @@
 
 module.exports = {
   env: {
-    es2021: true,
-    node: true
+    node: true,
+    es2021: true
+  },
+  globals: {
+    client: 'readonly',
+    config: 'readonly',
+    logger: 'readonly',
+    i18n: 'readonly'
   },
   extends: [
     'eslint:recommended',
     'plugin:depend/recommended',
-    'plugin:security/recommended-legacy',
-    'plugin:perfectionist/recommended-natural-legacy'
+    'plugin:security/recommended-legacy'
   ],
-  globals: {
-    client: 'readonly',
-    config: 'readonly',
-    i18n: 'readonly',
-    logger: 'readonly'
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  plugins: ['ban'],
+  rules: {
+    indent: [
+      'error',
+      2,
+      { SwitchCase: 1 }
+    ],
+    'linebreak-style': [
+      'error',
+      process.platform === 'win32' ? 'windows' : 'unix'
+    ],
+    quotes: [
+      'error',
+      'single'
+    ],
+    semi: [
+      'error',
+      'always'
+    ],
+    'comma-dangle': [
+      'error',
+      'never'
+    ],
+    'no-trailing-spaces': 'error',
+    'no-multiple-empty-lines': [
+      'error',
+      { max: 1 }
+    ],
+    'arrow-spacing': [
+      'error',
+      {
+        before: true,
+        after: true
+      }
+    ],
+    'object-curly-spacing': [
+      'error',
+      'always'
+    ],
+    'key-spacing': [
+      'error',
+      {
+        beforeColon: false,
+        afterColon: true
+      }
+    ],
+    'space-in-parens': [
+      'error',
+      'never'
+    ],
+    'brace-style': [
+      'error',
+      '1tbs',
+      { allowSingleLine: true }
+    ],
+    'no-empty-function': 'error',
+    'no-lonely-if': 'error',
+    'no-useless-return': 'error',
+    'spaced-comment': [
+      'error',
+      'always',
+      { markers: ['/'] }
+    ],
+    'func-call-spacing': [
+      'error',
+      'never'
+    ],
+    'template-curly-spacing': [
+      'error',
+      'never'
+    ],
+    'default-param-last': 'error',
+    'newline-before-return': 'error',
+    'no-duplicate-imports': [
+      'error',
+      { includeExports: true }
+    ],
+    'prefer-template': 'error',
+    'prefer-arrow-callback': 'error',
+    'arrow-parens': [
+      'error',
+      'as-needed'
+    ],
+    'no-return-assign': 'error',
+    'object-shorthand': 'error',
+    'func-style': [
+      'error',
+      'declaration',
+      { allowArrowFunctions: true }
+    ],
+    'array-bracket-spacing': ['error', 'never'],
+    'space-infix-ops': 'error',
+    'keyword-spacing': [
+      'error',
+      { before: true, after: true }
+    ],
+    'no-unneeded-ternary': 'error',
+    'no-multi-spaces': 'error',
+    'ban/ban': [
+      2,
+      {
+        'name': ['console', '*'],
+        'message': 'Use a global logger methods instead. E.g. logger.info()'
+      }
+    ],
+    'depend/ban-dependencies': [
+      2,
+      {
+        allowed: [
+          'moment',
+          'lodash.shuffle'
+        ]
+      }
+    ],
+    'security/detect-object-injection': 'off',
+    'security/detect-non-literal-fs-filename': 'off',
+    'security/detect-unsafe-regex': 'off',
+    'security/detect-non-literal-require': 'off'
   },
   overrides: [
     {
@@ -29,128 +151,5 @@ module.exports = {
         sourceType: 'module'
       }
     }
-  ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
-  },
-  plugins: ['ban', 'perfectionist'],
-  rules: {
-    'array-bracket-spacing': ['error', 'never'],
-    'arrow-parens': [
-      'error',
-      'as-needed'
-    ],
-    'arrow-spacing': [
-      'error',
-      {
-        after: true,
-        before: true
-      }
-    ],
-    'ban/ban': [
-      2,
-      {
-        'message': 'Use a global logger methods instead. E.g. logger.info()',
-        'name': ['console', '*']
-      }
-    ],
-    'brace-style': [
-      'error',
-      '1tbs',
-      { allowSingleLine: true }
-    ],
-    'comma-dangle': [
-      'error',
-      'never'
-    ],
-    'default-param-last': 'error',
-    'depend/ban-dependencies': [
-      2,
-      {
-        allowed: [
-          'moment',
-          'lodash.shuffle'
-        ]
-      }
-    ],
-    'func-call-spacing': [
-      'error',
-      'never'
-    ],
-    'func-style': [
-      'error',
-      'declaration',
-      { allowArrowFunctions: true }
-    ],
-    indent: [
-      'error',
-      2,
-      { SwitchCase: 1 }
-    ],
-    'key-spacing': [
-      'error',
-      {
-        afterColon: true,
-        beforeColon: false
-      }
-    ],
-    'keyword-spacing': [
-      'error',
-      { after: true, before: true }
-    ],
-    'linebreak-style': [
-      'error',
-      process.platform === 'win32' ? 'windows' : 'unix'
-    ],
-    'newline-before-return': 'error',
-    'no-duplicate-imports': [
-      'error',
-      { includeExports: true }
-    ],
-    'no-empty-function': 'error',
-    'no-lonely-if': 'error',
-    'no-multi-spaces': 'error',
-    'no-multiple-empty-lines': [
-      'error',
-      { max: 1 }
-    ],
-    'no-return-assign': 'error',
-    'no-trailing-spaces': 'error',
-    'no-unneeded-ternary': 'error',
-    'no-useless-return': 'error',
-    'object-curly-spacing': [
-      'error',
-      'always'
-    ],
-    'object-shorthand': 'error',
-    'prefer-arrow-callback': 'error',
-    'prefer-template': 'error',
-    quotes: [
-      'error',
-      'single'
-    ],
-    'security/detect-non-literal-fs-filename': 'off',
-    'security/detect-non-literal-require': 'off',
-    'security/detect-object-injection': 'off',
-    'security/detect-unsafe-regex': 'off',
-    semi: [
-      'error',
-      'always'
-    ],
-    'space-in-parens': [
-      'error',
-      'never'
-    ],
-    'space-infix-ops': 'error',
-    'spaced-comment': [
-      'error',
-      'always',
-      { markers: ['/'] }
-    ],
-    'template-curly-spacing': [
-      'error',
-      'never'
-    ]
-  }
+  ]
 };

@@ -1,19 +1,19 @@
 'use client';
 
-import CopyButton from '@/app/components/CopyButton';
-import Tooltip from '@/app/components/Tooltip';
-import config from '@/config';
-import cn from '@/lib/cn';
-import likeProfile from '@/lib/request/profiles/likeProfile';
-import revalidateProfile from '@/lib/revalidate/profile';
-import useAuthStore from '@/stores/auth';
-import { t } from '@/stores/language';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useState } from 'react';
-import { BsPencil, BsPencilFill } from 'react-icons/bs';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { toast } from 'sonner';
+import likeProfile from '@/lib/request/profiles/likeProfile';
+import cn from '@/lib/cn';
+import { useState } from 'react';
+import { BsPencil, BsPencilFill } from 'react-icons/bs';
+import config from '@/config';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import Tooltip from '@/app/components/Tooltip';
+import useAuthStore from '@/stores/auth';
+import CopyButton from '@/app/components/CopyButton';
+import revalidateProfile from '@/lib/revalidate/profile';
+import { t } from '@/stores/language';
 
 export default function Actions({ profile }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -26,11 +26,6 @@ export default function Actions({ profile }) {
     setLoading(true);
 
     toast.promise(likeProfile(profile.slug), {
-      error: error => {
-        setLoading(false);
-
-        return `Error: ${error}`;
-      },
       loading: t(`profilePage.actions.toast.${liked ? 'unliking' : 'liking'}`, { profileSlug: profile.slug }),
       success: isLiked => {
         setLiked(isLiked);
@@ -38,22 +33,27 @@ export default function Actions({ profile }) {
         revalidateProfile(profile.slug);
 
         return t(`profilePage.actions.toast.${isLiked ? 'liked' : 'unliked'}`, { profileSlug: profile.slug });
+      },
+      error: error => {
+        setLoading(false);
+
+        return `Error: ${error}`;
       }
     });
   };
 
   return (
     <motion.div
-      animate={{ opacity: 1, y: 0 }}
       className='absolute bottom-4 right-4 z-[4] flex w-full justify-end'
       initial={{ opacity: 0, y: 20 }}
-      transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
     >
       <div className='flex flex-col gap-2 sm:flex-row'>
         <Tooltip
           content={loggedIn ? (liked ? t('profilePage.actions.tooltip.unlikeProfile') : t('profilePage.actions.tooltip.likeProfile')) : t('profilePage.actions.tooltip.loginRequiredForLike')}
         >
-          <button className='group rounded-lg bg-tertiary p-2.5 text-secondary hover:bg-quaternary hover:text-primary' disabled={loading} onClick={handleLike}>
+          <button className='group rounded-lg bg-tertiary p-2.5 text-secondary hover:bg-quaternary hover:text-primary' onClick={handleLike} disabled={loading}>
             <IoMdHeartEmpty
               className={cn(
                 'absolute transition-[transform,colors]',
@@ -74,8 +74,8 @@ export default function Actions({ profile }) {
           <div className='flex'>
             <CopyButton
               className='bg-tertiary'
-              copyText={config.getProfileURL(profile.slug, profile.preferredHost)}
               successText={t('profilePage.actions.toast.profileUrlCopied')}
+              copyText={config.getProfileURL(profile.slug, profile.preferredHost)}
             />
           </div>
         </Tooltip>

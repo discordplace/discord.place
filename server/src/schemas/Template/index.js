@@ -6,117 +6,117 @@ function convertToHex(color) {
 }
 
 const TemplateSchema = new Schema({
-  approved: {
-    default: false,
-    type: Boolean
-  },
-  categories: {
-    max: config.templateMaxCategoriesLength,
-    required: true,
-    type: [
-      {
-        enum: config.templateCategories,
-        type: String
-      }
-    ]
+  id: {
+    type: String,
+    required: true
   },
   data: {
-    required: true,
-    type: Object
-  },
-  description: {
-    max: config.templateMaxDescriptionLength,
-    min: config.templateMinDescriptionLength,
-    required: true,
-    type: String
-  },
-  id: {
-    required: true,
-    type: String
-  },
-  name: {
-    max: config.templateMaxNameLength,
-    required: true,
-    type: String
+    type: Object,
+    required: true
   },
   user: {
     id: {
-      required: true,
-      type: String
+      type: String,
+      required: true
     },
     username: {
-      required: true,
-      type: String
+      type: String,
+      required: true
     }
   },
+  name: {
+    type: String,
+    required: true,
+    max: config.templateMaxNameLength
+  },
+  description: {
+    type: String,
+    required: true,
+    min: config.templateMinDescriptionLength,
+    max: config.templateMaxDescriptionLength
+  },
+  categories: {
+    type: [
+      {
+        type: String,
+        enum: config.templateCategories
+      }
+    ],
+    required: true,
+    max: config.templateMaxCategoriesLength
+  },
   uses: {
-    default: 0,
-    type: Number
+    type: Number,
+    default: 0
+  },
+  approved: {
+    type: Boolean,
+    default: false
   }
 }, {
+  timestamps: true,
   methods: {
     toPubliclySafe() {
       const newTemplate = {};
 
       return {
         ...newTemplate,
-        approved: this.approved,
+        id: this.id,
+        user: {
+          id: this.user.id,
+          username: this.user.username
+        },
+        name: this.name,
+        description: this.description,
         categories: this.categories,
+        uses: this.uses,
+        approved: this.approved,
         created_at: new Date(this.createdAt),
         data: {
           channels: [
-            ...this.data.channels.filter(({ parent_id, type }) => type !== 4 && !parent_id)
+            ...this.data.channels.filter(({ type, parent_id }) => type !== 4 && !parent_id)
               .map(channel => ({
-                defaultFocused: this.data.channels.filter(({ type }) => type !== 4)[0].id === channel.id,
                 id: channel.id,
-                name: channel.name,
-                topic: channel.topic,
                 type: (
                   channel.type === 4 ? 'category' :
                     channel.type === 0 ? 'text' :
                       'voice'
-                )
+                ),
+                name: channel.name,
+                defaultFocused: this.data.channels.filter(({ type }) => type !== 4)[0].id === channel.id,
+                topic: channel.topic
               })),
             ...this.data.channels.filter(({ type }) => type === 4)
               .map(category => ({
+                id: category.id,
+                type: 'category',
+                name: category.name,
                 channels: this.data.channels
                   .filter(channel => channel.parent_id === category.id)
                   .map(channel => ({
-                    defaultFocused: this.data.channels.filter(({ type }) => type !== 4)[0].id === channel.id,
                     id: channel.id,
-                    name: channel.name,
-                    topic: channel.topic,
                     type: (
                       channel.type === 4 ? 'category' :
                         channel.type === 0 ? 'text' :
                           'voice'
-                    )
-                  })),
-                id: category.id,
-                name: category.name,
-                type: 'category'
+                    ),
+                    name: channel.name,
+                    defaultFocused: this.data.channels.filter(({ type }) => type !== 4)[0].id === channel.id,
+                    topic: channel.topic
+                  }))
               }))
           ],
           roles: this.data.roles
             .reverse()
             .map(role => ({
-              color: role.color ? convertToHex(role.color) : '#949ba4',
               id: role.id,
-              name: role.name
+              name: role.name,
+              color: role.color ? convertToHex(role.color) : '#949ba4'
             }))
-        },
-        description: this.description,
-        id: this.id,
-        name: this.name,
-        user: {
-          id: this.user.id,
-          username: this.user.username
-        },
-        uses: this.uses
+        }
       };
     }
-  },
-  timestamps: true
+  }
 });
 
 module.exports = mongoose.model('Template', TemplateSchema);

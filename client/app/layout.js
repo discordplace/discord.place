@@ -1,47 +1,47 @@
 import '@/styles/main.css';
 import 'react-medium-image-zoom/dist/styles.css';
-import AuthProvider from '@/app/components/Providers/Auth';
-import LayoutContent from '@/app/layout-content';
-import cn from '@/lib/cn';
 import { GeistSans } from 'geist/font/sans';
+import cn from '@/lib/cn';
+import LayoutContent from '@/app/layout-content';
+import AuthProvider from '@/app/components/Providers/Auth';
 
 export const metadata = {
-  description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
-  keywords: ['discord', 'discord place', 'discord emojis', 'discord servers', 'discord profiles', 'discord emojis', 'discord bots', 'discord developers'],
   metadataBase: new URL('https://discord.place'),
+  title: {
+    template: 'Discord Place - %s',
+    default: 'Discord Place'
+  },
+  keywords: ['discord', 'discord place', 'discord emojis', 'discord servers', 'discord profiles', 'discord emojis', 'discord bots', 'discord developers'],
+  description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
   openGraph: {
+    title: 'Discord Place',
     description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://discord.place',
+    site_name: 'Discord Place',
     images: [
       {
-        alt: 'Discord Place',
-        height: 540,
         url: '/og.png',
-        width: 960
+        width: 960,
+        height: 540,
+        alt: 'Discord Place'
       }
-    ],
-    locale: 'en_US',
-    site_name: 'Discord Place',
-    title: 'Discord Place',
-    type: 'website',
-    url: 'https://discord.place'
-  },
-  title: {
-    default: 'Discord Place',
-    template: 'Discord Place - %s'
+    ]
   }
 };
 
 export const viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  themeColor: '#000000',
-  userScalable: false,
-  width: 'device-width'
+  userScalable: false
 };
 
 export default function RootLayout(props) {
   return (
-    <html className='dark' lang='en' translate='no'>
+    <html lang='en' translate='no' className='dark'>
       <body className={cn(
         'flex flex-col',
         GeistSans.className,

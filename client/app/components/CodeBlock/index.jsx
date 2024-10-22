@@ -1,9 +1,9 @@
 'use client';
 
-import CopyButton from '@/app/components/CopyButton';
 import useThemeStore from '@/stores/theme';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import CopyButton from '@/app/components/CopyButton';
 
 export default function CodeBlock({ children, FileIcon, fileName, language }) {
   const theme = useThemeStore(state => state.theme);
@@ -20,21 +20,21 @@ export default function CodeBlock({ children, FileIcon, fileName, language }) {
 
         <div>
           <CopyButton
-            className='p-0'
             copyText={String(children).replace(/\n$/, '')}
             successText='Copied!'
+            className='p-0'
           />
         </div>
       </div>
 
       <SyntaxHighlighter
+        PreTag={'div'}
         // eslint-disable-next-line react/no-children-prop
         children={String(children).replace(/\n$/, '')}
-        className='!mb-0 max-w-[calc(100vw_-_4rem)] !bg-[unset] [&>code]:!bg-[unset]'
         language={language}
-        PreTag={'div'}
         style={theme === 'dark' ? oneDark : oneLight}
         wrapLongLines={false}
+        className='!mb-0 max-w-[calc(100vw_-_4rem)] !bg-[unset] [&>code]:!bg-[unset]'
       />
     </div>
   );

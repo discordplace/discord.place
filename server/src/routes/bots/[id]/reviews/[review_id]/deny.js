@@ -1,10 +1,10 @@
+const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
+const useRateLimiter = require('@/utils/useRateLimiter');
+const { param, matchedData, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
-const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
-const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body, matchedData, param } = require('express-validator');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -17,15 +17,15 @@ module.exports = {
     body('reason')
       .optional()
       .isString().withMessage('Reason must be a string.')
-      .isLength({ max: 200, min: 1 }).withMessage('Reason must be between 1 and 200 characters.'),
+      .isLength({ min: 1, max: 200 }).withMessage('Reason must be between 1 and 200 characters.'),
     validateRequest,
     async (request, response) => {
       const canDeny = request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDeny) return response.sendError('You are not allowed to deny reviews.', 403);
 
-      const { id, reason, review_id } = matchedData(request);
+      const { id, review_id, reason } = matchedData(request);
 
-      const review = await Review.findOne({ _id: review_id, 'bot.id': id });
+      const review = await Review.findOne({ 'bot.id': id, _id: review_id });
       if (!review) return response.sendError('Review not found.', 404);
 
       if (review.approved === true) return response.sendError('Review already approved.', 400);

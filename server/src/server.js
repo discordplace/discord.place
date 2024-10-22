@@ -1,22 +1,50 @@
-const User = require('@/schemas/User');
-const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
-const ip = require('@/utils/middlewares/ip');
-const languageDetection = require('@/utils/middlewares/languageDetection');
-const sleep = require('@/utils/sleep');
-const compression = require('compression');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
 const express = require('express');
 const { router } = require('express-file-routing');
-const helmet = require('helmet');
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const morgan = require('morgan');
 const path = require('node:path');
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const helmet = require('helmet');
+const ip = require('@/utils/middlewares/ip');
+const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
+const languageDetection = require('@/utils/middlewares/languageDetection');
+const compression = require('compression');
+const morgan = require('morgan');
+
+const sleep = require('@/utils/sleep');
+const User = require('@/schemas/User');
 
 module.exports = class Server {
   constructor() {
     return this;
+  }
+
+  create() {
+    this.server = express();
+
+    this.server.set('trust proxy', config.trustProxy);
+    this.server.disable('x-powered-by');
+    this.server.disable('etag');
+
+    return this;
+  }
+
+  async start(port = 8000) {
+    while (mongoose.connection.readyState !== mongoose.STATES.connected) await sleep(1000);
+
+    this.addMiddlewares();
+
+    this.server.use('/', await router({ directory: path.join(__dirname, 'routes') }));
+    this.server.use('/public', express.static(path.join(__dirname, '..', 'public')));
+    this.server.use('*', (request, response) => response.sendError('Not Found', 404));
+
+    this.listen(port);
+  }
+
+  listen(port) {
+    this.server.listen(port, () => logger.info(`Server listening on port ${port}.`));
   }
 
   addMiddlewares() {
@@ -31,13 +59,13 @@ module.exports = class Server {
     this.server.use(compression());
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
-      credentials: true,
-      origin: [config.frontendUrl]
+      origin: [config.frontendUrl],
+      credentials: true
     }));
     this.server.use(helmet({
-      xFrameOptions: { action: 'sameorigin' },
+      xXssProtection: false,
       xPoweredBy: false,
-      xXssProtection: false
+      xFrameOptions: { action: 'sameorigin' }
     }));
     this.server.use(ip);
     this.server.use(require('@/utils/middlewares/error'));
@@ -68,8 +96,8 @@ module.exports = class Server {
 
         try {
           const decoded = jwt.verify(token, process.env.JWT_SECRET, {
-            audience: 'discord.place',
             issuer: 'api.discord.place',
+            audience: 'discord.place',
             subject: 'user'
           });
 
@@ -104,31 +132,5 @@ module.exports = class Server {
     });
 
     logger.info('Middlewares added.');
-  }
-
-  create() {
-    this.server = express();
-
-    this.server.set('trust proxy', config.trustProxy);
-    this.server.disable('x-powered-by');
-    this.server.disable('etag');
-
-    return this;
-  }
-
-  listen(port) {
-    this.server.listen(port, () => logger.info(`Server listening on port ${port}.`));
-  }
-
-  async start(port = 8000) {
-    while (mongoose.connection.readyState !== mongoose.STATES.connected) await sleep(1000);
-
-    this.addMiddlewares();
-
-    this.server.use('/', await router({ directory: path.join(__dirname, 'routes') }));
-    this.server.use('/public', express.static(path.join(__dirname, '..', 'public')));
-    this.server.use('*', (request, response) => response.sendError('Not Found', 404));
-
-    this.listen(port);
   }
 };

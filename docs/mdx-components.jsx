@@ -1,26 +1,26 @@
-import CodeBlock from '@/components/code-block';
 import cn from '@/utils/cn';
 import Link from 'next/link';
+import { RiLinkM } from 'react-icons/ri';
+import { IoLogoJavascript, IoLogoPython } from 'react-icons/io5';
 import { BiCodeCurly } from 'react-icons/bi';
 import { FaFileCode } from 'react-icons/fa6';
-import { IoLogoJavascript, IoLogoPython } from 'react-icons/io5';
-import { RiLinkM } from 'react-icons/ri';
+import CodeBlock from '@/components/code-block';
 
 export function useMDXComponents(components) {
-  const H = ({ children, level }) => {
+  const H = ({ level, children }) => {
     const Tag = `h${level}`;
 
     return (
       <Tag
         className='group relative flex scroll-mt-8 items-center'
-        data-name={children}
         id={children.toLowerCase().replace(/\s/g, '-')}
+        data-name={children}
       >
         <Link
           className='absolute -left-8 pr-3 opacity-0 transition-opacity group-hover:opacity-100'
           href={`#${children.toLowerCase().replace(/\s/g, '-')}`}
         >
-          <RiLinkM className='text-purple-400' size={20} />
+          <RiLinkM size={20} className='text-purple-400' />
         </Link>
 
         {children}
@@ -30,8 +30,14 @@ export function useMDXComponents(components) {
 
   return {
     ...components,
+    h1: props => <H level={1} {...props} />,
+    h2: props => <H level={2} {...props} />,
+    h3: props => <H level={3} {...props} />,
+    h4: props => <H level={4} {...props} />,
+    h5: props => <H level={5} {...props} />,
+    h6: props => <H level={6} {...props} />,
     a: ({ children, href }) => (
-      <Link className='underline-offset-4 [text-decoration:unset] hover:underline' href={href}>
+      <Link href={href} className='underline-offset-4 [text-decoration:unset] hover:underline'>
         {children}
       </Link>
     ),
@@ -42,30 +48,30 @@ export function useMDXComponents(components) {
       let FileIcon = <FaFileCode />;
 
       switch (languageMatch?.[1]) {
-        case 'cURL':
-          fileName = 'request.sh';
-          FileIcon = <BiCodeCurly />;
-          break;
         case 'js':
           fileName = 'index.js';
           FileIcon = <IoLogoJavascript />;
-          break;
-        case 'json':
-          fileName = 'data.json';
-          FileIcon = <BiCodeCurly />;
           break;
         case 'python':
           fileName = 'script.py';
           FileIcon = <IoLogoPython />;
           break;
+        case 'json':
+          fileName = 'data.json';
+          FileIcon = <BiCodeCurly />;
+          break;
+        case 'cURL':
+          fileName = 'request.sh';
+          FileIcon = <BiCodeCurly />;
+          break;
       }
 
       return languageMatch ? (
         <CodeBlock
-          dimmed={false}
           FileIcon={FileIcon}
           fileName={fileName}
           language={languageMatch[1]}
+          dimmed={false}
         >
           {children}
         </CodeBlock>
@@ -79,12 +85,6 @@ export function useMDXComponents(components) {
           {children}
         </code>
       );
-    },
-    h1: props => <H level={1} {...props} />,
-    h2: props => <H level={2} {...props} />,
-    h3: props => <H level={3} {...props} />,
-    h4: props => <H level={4} {...props} />,
-    h5: props => <H level={5} {...props} />,
-    h6: props => <H level={6} {...props} />
+    }
   };
 }
