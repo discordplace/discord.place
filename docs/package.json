@@ -12,7 +12,7 @@
   "contributors": [
     "chimpdev <skyhancloud@gmail.com>"
   ],
-  "license": "GPL v3",
+  "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "https://github.com/discordplace/discord.place/tree/main/apps/docs"

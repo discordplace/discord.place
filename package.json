@@ -1,0 +1,16 @@
+{
+  "name": "discord.place-git",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "husky": "^9.1.6"
+  },
+  "scripts": {
+    "prepare": "husky"
+  }
+}
