@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 18
           cache-path: client/node_modules
-          cache-key: "${{hashFiles('client/pnpm-lock.json')}}"
+          cache-key: "${{hashFiles('client/pnpm-lock.yaml')}}"
           project: client
           
       - name: Run lint script on /client

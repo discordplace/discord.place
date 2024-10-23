@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 20
           cache-path: .github/scripts/node_modules
-          cache-key: "${{hashFiles('.github/scripts/pnpm-lock.json')}}"
+          cache-key: "${{hashFiles('.github/pnpm-lock.yaml')}}"
           project: .github/scripts
 
       - name: Run validation script

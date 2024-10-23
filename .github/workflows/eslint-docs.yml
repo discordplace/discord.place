@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 18
           cache-path: docs/node_modules
-          cache-key: "${{hashFiles('docs/pnpm-lock.json')}}"
+          cache-key: "${{hashFiles('docs/pnpm-lock.yaml')}}"
           project: docs
           
       - name: Run lint script on /docs
