@@ -93,10 +93,14 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
           {(pages[pages.length - 1] === 4 && pageNumber === 2) && (
             inputOpened ? (
               <input
+                pattern='[0-9]*'
                 ref={inputRef}
                 className='relative max-w-[50px] select-none overflow-hidden rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-2.5 py-1 text-center text-sm font-bold text-secondary caret-[rgba(var(--text-secondary))] outline-none duration-300 placeholder:text-[rgba(var(--text-tertiary))] hover:bg-quaternary focus-visible:bg-quaternary'
                 value={inputValue}
                 onChange={event => {
+                  // dont allow to type non-numeric characters
+                  if (event.target.validity.patternMismatch) return;
+
                   // dont allow to type 0 as the first digit
                   if (event.target.value.length === 1 && event.target.value === '0') {
                     setInputValue('');
