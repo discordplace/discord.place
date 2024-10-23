@@ -34,6 +34,10 @@ jobs:
     needs: release-please
     steps:
       - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - uses: ./.github/actions/setup-node-env
         with:
           node-version: 18
@@ -52,6 +56,10 @@ jobs:
     needs: release-please
     steps:
       - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - uses: ./.github/actions/setup-node-env
         with:
           node-version: 18
@@ -70,6 +78,10 @@ jobs:
     needs: release-please
     steps:
       - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - uses: ./.github/actions/setup-node-env
         with:
           node-version: 18
