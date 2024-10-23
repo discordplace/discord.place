@@ -44,7 +44,7 @@ jobs:
           cache-path: server/node_modules
           cache-key: "${{hashFiles('server/pnpm-lock.yaml')}}"
           project: server
-      - run: zip -r server.zip server
+      - run: zip -r server.zip server -x "**/node_modules/*"
       - name: Upload Release Artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -66,7 +66,7 @@ jobs:
           cache-path: client/node_modules
           cache-key: "${{hashFiles('client/pnpm-lock.yaml')}}"
           project: client
-      - run: zip -r client.zip client
+      - run: zip -r client.zip client -x "**/node_modules/*"
       - name: Upload Release Artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -88,7 +88,7 @@ jobs:
           cache-path: docs/node_modules
           cache-key: "${{hashFiles('docs/pnpm-lock.yaml')}}"
           project: docs
-      - run: zip -r docs.zip docs
+      - run: zip -r docs.zip docs -x "**/node_modules/*"
       - name: Upload Release Artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
