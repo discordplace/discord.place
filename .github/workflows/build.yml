@@ -1,0 +1,55 @@
+name: 'Build and Deploy'
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy-client:
+    name: Build and Deploy /client
+    if: "${{ github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/client): trigger build action') }}"
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Connect to SSH and run commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            ./build-client.sh
+
+  build-and-deploy-server:
+    name: Build and Deploy /server
+    if: "${{ github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/server): trigger build action') }}"
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Connect to SSH and run commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            ./build-server.sh
+
+  build-and-deploy-docs:
+    name: Build and Deploy /docs
+    if: "${{ github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/docs): trigger build action') }}"
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Connect to SSH and run commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            ./build-docs.sh
