@@ -25,5 +25,5 @@ runs:
       with:
         path: ${{inputs.cache-path}}
         key: ${{inputs.cache-key}}
-    - run: npm ci --prefix ${{inputs.project}}
+    - run: pnpm install --frozen-lockfile --prefix ${{inputs.project}}
       shell: bash
