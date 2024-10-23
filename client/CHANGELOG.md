@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2](https://github.com/discordplace/discord.place/compare/client@v1.1.1...client@v1.1.2) (2024-10-23)
+
+
+### Bug Fixes
+
+* **pagination:** restrict input to numeric characters in pagination input ([66160af](https://github.com/discordplace/discord.place/commit/66160af51f048f88e6d34e79a902ad40283d83ee))
+* **pagination:** set input type to text and input mode to numeric for pagination ([7294171](https://github.com/discordplace/discord.place/commit/72941717c2f924345de9e5e1314a700c3c20eaae))
+
 ## [1.1.1](https://github.com/discordplace/discord.place/compare/client@v1.1.0...client@v1.1.1) (2024-10-23)
 
 
