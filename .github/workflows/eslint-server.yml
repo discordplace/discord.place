@@ -13,15 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: ./.github/actions/setup-node-env
         with:
-          node-version: '18'
-          
-      - name: Install dependencies to /server
-        run: |
-          cd server
-          npm install
+          node-version: 18
+          cache-path: server/node_modules
+          cache-key: "${{hashFiles('server/pnpm-lock.json')}}"
+          project: server
           
       - name: Run lint script on /server
         run: |

@@ -18,10 +18,12 @@ jobs:
         with:
           node-version: '18'
           
-      - name: Install dependencies to /docs
-        run: |
-          cd docs
-          npm install
+      - uses: ./.github/actions/setup-node-env
+        with:
+          node-version: 18
+          cache-path: docs/node_modules
+          cache-key: "${{hashFiles('docs/pnpm-lock.json')}}"
+          project: docs
           
       - name: Run lint script on /docs
         run: |

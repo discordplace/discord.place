@@ -38,7 +38,7 @@ jobs:
         with:
           node-version: 18
           cache-path: server/node_modules
-          cache-key: "${{hashFiles('server/package-lock.json')}}"
+          cache-key: "${{hashFiles('server/pnpm-lock.json')}}"
           project: server
       - run: zip -r server.zip server
       - name: Upload Release Artifact
@@ -56,7 +56,7 @@ jobs:
         with:
           node-version: 18
           cache-path: client/node_modules
-          cache-key: "${{hashFiles('client/package-lock.json')}}"
+          cache-key: "${{hashFiles('client/pnpm-lock.json')}}"
           project: client
       - run: zip -r client.zip client
       - name: Upload Release Artifact
@@ -74,7 +74,7 @@ jobs:
         with:
           node-version: 18
           cache-path: docs/node_modules
-          cache-key: "${{hashFiles('docs/package-lock.json')}}"
+          cache-key: "${{hashFiles('docs/pnpm-lock.json')}}"
           project: docs
       - run: zip -r docs.zip docs
       - name: Upload Release Artifact
