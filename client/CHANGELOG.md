@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/discordplace/discord.place/compare/client@v1.1.3...client@v1.2.0) (2024-10-24)
+
+
+### Features
+
+* redesign Active Reminders page with expandable details ([#104](https://github.com/discordplace/discord.place/issues/104)) ([c226257](https://github.com/discordplace/discord.place/commit/c226257b13349e4437219774b74ce57788b36af9))
+* redesign Tooltip usage in premium page ([#102](https://github.com/discordplace/discord.place/issues/102)) ([f191366](https://github.com/discordplace/discord.place/commit/f1913661481fc5cd80b11e39a88d89b24b838460))
+
 ## [1.1.3](https://github.com/discordplace/discord.place/compare/client@v1.1.2...client@v1.1.3) (2024-10-24)
 
 
