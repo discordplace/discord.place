@@ -6,6 +6,7 @@ import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { t } from '@/stores/language';
+import { useMedia } from 'react-use';
 
 function generateClickableNumbers(currentPage, totalPages, limit) {
   currentPage = Math.max(1, Math.min(currentPage, totalPages));
@@ -31,6 +32,7 @@ function generateClickableNumbers(currentPage, totalPages, limit) {
 }
 
 export default function Pagination({ page, setPage, loading, total, limit, disableAnimation }) {
+  const isMobile = useMedia('(max-width: 640px)', false);
   const totalPages = Math.ceil(total / limit);
   const pages = generateClickableNumbers(page, totalPages, 4);
 
@@ -128,6 +130,9 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
                 onBlur={() => {
                   setInputOpened(false);
                   setPage(Math.max(1, Math.min(totalPages, parseInt(inputValue))));
+
+                  // Move user to the top of the page if they are on mobile
+                  if (isMobile) window.scrollTo(0, 0);
                 }}
                 maxLength={totalPages.toString().length}
               />
