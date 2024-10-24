@@ -106,7 +106,7 @@ module.exports = {
 
         return response.redirect(redirectCookie || config.frontendUrl);
       } catch (error) {
-        logger.error(`There was an error while getting access token: ${error}`);
+        logger.error('There was an error while getting access token:', error);
 
         return response.sendError('Failed to get access token.', 500);
       }
