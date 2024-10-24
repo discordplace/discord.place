@@ -1713,7 +1713,8 @@
         "fields": {
           "reminders": {
             "title": "Xatırlatmalar",
-            "about": "Haqqında"
+            "about": "Haqqında",
+            "itemTitle": "Xatırlatma #{{id}}"
           },
           "voteReminders": {
             "title": "Səs Xatırlatmaları"
