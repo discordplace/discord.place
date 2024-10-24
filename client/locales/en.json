@@ -1714,7 +1714,8 @@
         "fields": {
           "reminders": {
             "title": "Reminders",
-            "about": "About"
+            "about": "About",
+            "itemTitle": "Reminder #{{id}}"
           },
           "voteReminders": {
             "title": "Vote Reminders"
