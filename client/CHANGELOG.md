@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/discordplace/discord.place/compare/client@v1.1.2...client@v1.1.3) (2024-10-24)
+
+
+### Bug Fixes
+
+* **pagination:** close input on blur and update page number ([#98](https://github.com/discordplace/discord.place/issues/98)) ([901c182](https://github.com/discordplace/discord.place/commit/901c18217a24cc79483820d1ddf6ea434807f5f4))
+
 ## [1.1.2](https://github.com/discordplace/discord.place/compare/client@v1.1.1...client@v1.1.2) (2024-10-23)
 
 
