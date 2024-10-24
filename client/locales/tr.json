@@ -1714,7 +1714,8 @@
         "fields": {
           "reminders": {
             "title": "Hatırlatıcılar",
-            "about": "Şunun Hakkında:"
+            "about": "Şunun Hakkında:",
+            "itemTitle": "Hatırlatıcı #{{id}}"
           },
           "voteReminders": {
             "title": "Oy Hatırlatıcıları"

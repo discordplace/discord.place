@@ -8,6 +8,9 @@ import useAccountStore from '@/stores/account';
 import Link from 'next/link';
 import { BsEmojiAngry } from 'react-icons/bs';
 import useLanguageStore, { t } from '@/stores/language';
+import { IoChevronDown, IoPaperPlane } from 'react-icons/io5';
+import AnimateHeight from 'react-animate-height';
+import { useState } from 'react';
 
 export default function ActiveReminders() {
   const data = useAccountStore(state => state.data);
@@ -15,6 +18,8 @@ export default function ActiveReminders() {
 
   const remindersCount = data.reminders?.length || 0;
   const voteRemindersCount = data.voteReminders?.length || 0;
+
+  const [activeReminder, setActiveReminder] = useState(null);
 
   return (
     <>
@@ -52,29 +57,74 @@ export default function ActiveReminders() {
                 </span>
               </h2>
 
-              <div className='flex flex-col divide-y rounded-xl border-2 border-primary'>
-                {data.reminders.map((reminder, index) => (
-                  <div
-                    key={reminder._id}
-                    className={cn(
-                      'flex items-center flex-wrap p-3 gap-4 justify-center sm:justify-between bg-secondary border-y-primary',
-                      index === data.reminders.length - 1 ? 'rounded-b-xl' : '',
-                      index === 0 ? 'rounded-t-xl' : ''
-                    )}
-                  >
-                    <div className='flex w-full flex-wrap items-center gap-4 sm:items-start'>
-                      <div className='flex flex-col items-start'>
-                        <div className='hidden text-base font-semibold text-primary sm:block'>
-                          {t('accountPage.tabs.activeReminders.fields.reminders.about')}
+              <div className='flex flex-col gap-y-1'>
+                {data.reminders
+                  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                  .map(reminder => (
+                    <div
+                      className='flex w-full cursor-pointer select-none items-start justify-between rounded-xl border border-primary bg-secondary p-3 hover:bg-tertiary'
+                      key={reminder._id}
+                      onClick={() => setActiveReminder(activeReminder === reminder._id ? null : reminder._id)}
+                    >
+                      <div className='flex flex-col'>
+                        <div
+                          className={cn(
+                            'flex transition-all mt-[0.4rem] duration-300 items-center gap-x-2 text-sm font-semibold text-primary',
+                            activeReminder === reminder._id && 'mt-0'
+                          )}
+                        >
+                          <IoPaperPlane />
+
+                          <span className='max-w-[200px] truncate mobile:max-w-[unset]'>
+                            {t('accountPage.tabs.activeReminders.fields.reminders.itemTitle', { id: reminder._id })}
+                          </span>
+
+                          <span className='text-xs font-medium text-tertiary'>
+                            <IoChevronDown
+                              className={cn(
+                                'transition-transform',
+                                activeReminder === reminder._id && 'transform rotate-180'
+                              )}
+                            />
+                          </span>
                         </div>
 
-                        <div className='line-clamp-6 max-w-[300px] break-words text-xs font-medium text-tertiary'>
-                          {reminder.about}
-                        </div>
+                        <AnimateHeight
+                          duration={300}
+                          height={activeReminder === reminder._id ? 'auto' : 0}
+                          animateOpacity={true}
+                        >
+                          <div className='mt-2 flex flex-col gap-y-2'>
+                            <div className='text-sm font-semibold text-primary'>
+                              {t('accountPage.tabs.activeReminders.fields.reminders.about')}
+                            </div>
+
+                            <div className='max-w-[450px] break-words text-xs font-medium text-tertiary'>
+                              {reminder.about}
+                            </div>
+
+                            <div className='mt-1 flex flex-col items-start text-xs font-medium xl:hidden'>
+                              <span className='text-primary'>
+                                <Countdown
+                                  date={new Date(reminder.expire_at).getTime()}
+                                  renderer={({ days, hours, minutes, seconds, completed }) => {
+                                    if (completed) return t('accountPage.tabs.activeReminders.countdown.expired');
+
+                                    return t('accountPage.tabs.activeReminders.countdown.expiresIn', { days, hours, minutes, seconds });
+                                  }}
+                                />
+                              </span>
+
+                              <span className='text-tertiary'>
+                                {new Date(reminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                              </span>
+                            </div>
+                          </div>
+                        </AnimateHeight>
                       </div>
 
-                      <div className='flex w-full flex-1 flex-col items-center sm:items-end'>
-                        <div className='text-center text-base font-semibold text-primary'>
+                      <div className='hidden flex-col items-end text-xs font-medium xl:flex'>
+                        <span className='text-primary'>
                           <Countdown
                             date={new Date(reminder.expire_at).getTime()}
                             renderer={({ days, hours, minutes, seconds, completed }) => {
@@ -83,15 +133,14 @@ export default function ActiveReminders() {
                               return t('accountPage.tabs.activeReminders.countdown.expiresIn', { days, hours, minutes, seconds });
                             }}
                           />
-                        </div>
+                        </span>
 
-                        <div className='text-xs font-medium text-tertiary'>
+                        <span className='text-tertiary'>
                           {new Date(reminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
-                        </div>
+                        </span>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           )}
