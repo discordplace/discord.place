@@ -218,12 +218,6 @@ export default function Page({ plans }) {
 
       <div className='absolute top-[-15%] h-[300px] w-full max-w-[800px] rounded-[5rem] bg-[#ffffff10] blur-[15rem]' />
 
-      <div>
-        <div>
-          asd
-        </div>
-      </div>
-
       <div className='flex w-full max-w-[800px] flex-col'>
         <motion.h1
           className={cn(
