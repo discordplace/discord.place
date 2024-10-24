@@ -125,6 +125,10 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
                     setInputOpened(false);
                   }
                 }}
+                onBlur={() => {
+                  setInputOpened(false);
+                  setPage(Math.max(1, Math.min(totalPages, parseInt(inputValue))));
+                }}
                 maxLength={totalPages.toString().length}
               />
             ) : (
