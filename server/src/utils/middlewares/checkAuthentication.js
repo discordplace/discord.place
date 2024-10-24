@@ -34,7 +34,7 @@ module.exports = async function checkAuthentication(request, response, next) {
 
     if (error instanceof AuthError) return response.sendError(error.message, 401);
 
-    logger.error(`There was an error while checking authentication: ${error}`);
+    logger.error('There was an error while checking authentication:', error);
 
     return response.sendError('An error occurred while checking authentication.', 500);
   }
