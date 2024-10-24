@@ -18,7 +18,6 @@ import { IoCheckmarkCircle } from 'react-icons/io5';
 import FaQs from '@/app/premium/components/FaQs';
 import { LuShieldQuestion } from 'react-icons/lu';
 import Tooltip from '@/app/components/Tooltip';
-import { BiSolidInfoCircle } from 'react-icons/bi';
 import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
@@ -325,23 +324,13 @@ export default function Page({ plans }) {
                 className='flex items-center justify-between p-4 first:rounded-t-xl last:rounded-b-xl odd:bg-secondary even:bg-tertiary'
                 key={index}
               >
-                <h2 className='flex w-full items-center gap-x-2 text-sm font-semibold text-tertiary'>
-                  {feature.label}
-
-                  {feature.info && (
-                    <Tooltip
-                      side='left'
-                      content={feature.info}
-                    >
-                      <div>
-                        <BiSolidInfoCircle
-                          className='text-tertiary'
-                          size={18}
-                        />
-                      </div>
-                    </Tooltip>
-                  )}
-                </h2>
+                <div className='flex w-full'>
+                  <Tooltip content={feature.info}>
+                    <h2 className='cursor-help text-sm font-semibold text-tertiary underline decoration-dotted underline-offset-4'>
+                      {feature.label}
+                    </h2>
+                  </Tooltip>
+                </div>
 
                 <div className='flex w-full justify-center text-sm font-medium'>
                   {feature.available_to.find(item => item.id === 'free').value}
