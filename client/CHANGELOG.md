@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/discordplace/discord.place/compare/client@v1.3.0...client@v1.3.1) (2024-10-25)
+
+
+### Bug Fixes
+
+* adjust max-width for reminder text in ActiveReminders component ([#110](https://github.com/discordplace/discord.place/issues/110)) ([8fc0c6d](https://github.com/discordplace/discord.place/commit/8fc0c6da39eaf9030738c5883fe62c260a1378bd))
+
 ## [1.3.0](https://github.com/discordplace/discord.place/compare/client@v1.2.0...client@v1.3.0) (2024-10-25)
 
 
