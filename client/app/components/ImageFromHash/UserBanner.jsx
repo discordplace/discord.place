@@ -9,7 +9,7 @@ import { useLocalStorage } from 'react-use';
 export default function UserBanner({ id, hash, format, size, className, motionOptions, ...props }) {
   const defaultBannerURL = '/default-discord-banner.png';
 
-  const [currentSource, setCurrentSource] = useState(defaultBannerURL);
+  const [currentSource, setCurrentSource] = useState(null);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [hashesRefreshed, setHashesRefreshed] = useLocalStorage('hashesRefreshed', []);
 
@@ -81,7 +81,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, hash]);
 
-  if (!hash) return (
+  if (!hash || !currentSource) return (
     <MotionImage
       key={`user-banner-${id}-replaced-with-default-banner`}
       src={defaultBannerURL}

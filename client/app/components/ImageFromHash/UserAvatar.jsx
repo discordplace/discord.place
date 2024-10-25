@@ -9,7 +9,7 @@ import { useLocalStorage } from 'react-use';
 export default function UserAvatar({ id, hash, format, size, className, motionOptions, ...props }) {
   const defaultAvatarURL = '/default-discord-avatar.png';
 
-  const [currentSource, setCurrentSource] = useState(defaultAvatarURL);
+  const [currentSource, setCurrentSource] = useState(null);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [hashesRefreshed, setHashesRefreshed] = useLocalStorage('hashesRefreshed', []);
 
@@ -81,7 +81,7 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, hash]);
 
-  if (!hash) return (
+  if (!hash || !currentSource) return (
     <MotionImage
       key={`user-avatar-${id}-replaced-with-default-avatar`}
       src={defaultAvatarURL}
