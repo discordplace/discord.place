@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0](https://github.com/discordplace/discord.place/compare/client@v1.2.0...client@v1.3.0) (2024-10-25)
+
+
+### Features
+
+* add unique keys for avatars, icons and banners ([#109](https://github.com/discordplace/discord.place/issues/109)) ([9caca83](https://github.com/discordplace/discord.place/commit/9caca8354b0571d345753838ed21f6b1e24deb9e))
+* add unique keys for avatars, icons and banners in ImageFromHash components ([9caca83](https://github.com/discordplace/discord.place/commit/9caca8354b0571d345753838ed21f6b1e24deb9e))
+* redesign avatar/icon/banner components logic's ([#106](https://github.com/discordplace/discord.place/issues/106)) ([cfd5344](https://github.com/discordplace/discord.place/commit/cfd53441ee79e26ef4d0ff1f51ccd928630f9135))
+
+
+### Bug Fixes
+
+* correct hash extraction logic in getHashFromURL function ([#108](https://github.com/discordplace/discord.place/issues/108)) ([ed2c5bc](https://github.com/discordplace/discord.place/commit/ed2c5bc75ffbf484151b153990ece78c6e498b6e))
+
 ## [1.2.0](https://github.com/discordplace/discord.place/compare/client@v1.1.3...client@v1.2.0) (2024-10-24)
 
 
