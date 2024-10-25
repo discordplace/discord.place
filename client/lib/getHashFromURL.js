@@ -1,7 +1,7 @@
 function getHashFromURL(url, type) {
   const split = url.split(`/${type}/`);
 
-  return split[1].split('.')[0];
+  return split[1].split('/')[1].split('.')[0];
 }
 
 module.exports = getHashFromURL;
