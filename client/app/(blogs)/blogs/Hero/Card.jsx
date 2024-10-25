@@ -18,6 +18,7 @@ export default function BlogCard({ data, loading }) {
           width={400}
           height={200}
           className='h-[200px] w-full rounded-xl object-cover'
+          priority={true}
         />
 
         <div className='absolute left-0 top-0 size-full rounded-xl bg-black/50' />

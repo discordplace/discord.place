@@ -1,8 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import getCompressedName from '@/lib/getCompressedName';
 import { HiMiniUserGroup } from 'react-icons/hi2';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import getHashFromURL from '@/lib/getHashFromURL';
 
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'decimal',
@@ -14,12 +15,13 @@ export default function ServerCard({ data }) {
   return (
     <div className='pointer-events-none flex select-none items-center gap-x-1 rounded-full border border-primary bg-secondary py-1 pl-1 pr-3'>
       {data.icon_url ? (
-        <Image
-          src={data.icon_url}
-          alt={data.name}
+        <ServerIcon
+          id={data.id}
+          hash={getHashFromURL(data.icon_url, 'icons')}
+          size={32}
+          className='rounded-full'
           width={24}
           height={24}
-          className='rounded-full'
         />
       ) : (
         <div className='flex size-[24px] items-center justify-center rounded-full bg-quaternary text-xs font-semibold'>

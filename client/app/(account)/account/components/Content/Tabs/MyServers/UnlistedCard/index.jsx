@@ -25,7 +25,7 @@ export default function UnlistedCard({ server }) {
           />
         ) : (
           <Image
-            src='https://cdn.discordapp.com/embed/avatars/0.png'
+            src='/default-discord-avatar.png'
             alt='Server Icon'
             width={48}
             height={48}

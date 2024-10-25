@@ -148,14 +148,16 @@ export default function Reviews({ server }) {
                     width={48}
                     height={48}
                     className='size-[48px] rounded-2xl'
+                    loading='lazy'
                   />
                 ) : (
                   <Image
-                    src='https://cdn.discordapp.com/embed/avatars/0.png'
+                    src='/default-discord-avatar.png'
                     alt='Placeholder Avatar'
                     width={48}
                     height={48}
                     className='size-[48px] rounded-2xl'
+                    loading='lazy'
                   />
                 )}
 

@@ -45,6 +45,7 @@ export default function Sidebar({ blocks }) {
               height={64}
               alt='discord.place Logo'
               className='size-6'
+              priority={true}
             />
 
             <h1

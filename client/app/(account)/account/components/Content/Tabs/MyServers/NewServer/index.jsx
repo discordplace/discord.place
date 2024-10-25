@@ -101,7 +101,7 @@ export default function NewServer() {
                   />
                 ) : (
                   <Image
-                    src='https://cdn.discordapp.com/embed/avatars/0.png'
+                    src='/default-discord-avatar.png'
                     alt='Server Icon'
                     width={24}
                     height={24}
@@ -389,7 +389,7 @@ export default function NewServer() {
                       />
                     ) : (
                       <Image
-                        src='https://cdn.discordapp.com/embed/avatars/0.png'
+                        src='/default-discord-avatar.png'
                         alt='Server Icon'
                         width={16}
                         height={16}

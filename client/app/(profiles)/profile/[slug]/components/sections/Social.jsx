@@ -75,7 +75,14 @@ export default function Social({ data }) {
                 </>
               ) : (
                 <>
-                  <Image src={getIconPath(social.type, theme)} width={20} height={20} alt={`${social.type} Icon`} />
+                  <Image
+                    src={getIconPath(social.type, theme)}
+                    width={20}
+                    height={20}
+                    alt={`${social.type} Icon`}
+                    loading='lazy'
+                  />
+
                   <span className='w-full truncate'>
                     {social.handle}
                   </span>

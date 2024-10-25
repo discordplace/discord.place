@@ -17,6 +17,9 @@ import useThemeStore from '@/stores/theme';
 import useLanguageStore, { t } from '@/stores/language';
 import config from '@/config';
 import ReportableArea from '@/app/components/ReportableArea';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import getHashFromURL from '@/lib/getHashFromURL';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 function StatBlock({ fields, index }) {
   return (
@@ -102,12 +105,15 @@ export default function Content({ user }) {
       <div className='relative h-max w-full max-w-[600px] rounded-[2rem] bg-secondary p-3'>
         {user.bannerURL ? (
           <div className='relative'>
-            <Image
-              src={user.bannerURL}
+            <UserBanner
+              id={user.id}
+              hash={getHashFromURL(user.bannerURL)}
               alt={`${user.username}'s banner`}
+              size={1024}
               width={1024}
               height={256}
               className='h-[200px] rounded-[2.5rem] object-cover'
+              priority={true}
             />
 
             {user.bannerURL.includes('.gif') && (
@@ -121,14 +127,26 @@ export default function Content({ user }) {
         )}
 
         <div className='pointer-events-none relative bottom-16 left-8 -mb-12 flex w-full items-center sm:mb-[-7.5rem]'>
-          <Image
-            src={user.avatarURL || 'https://cdn.discordapp.com/embed/avatars/0.png'}
-            alt={`${user.username}'s avatar`}
-            width={128}
-            height={128}
-            objectFit='cover'
-            className='size-[100px] rounded-full border-8 border-[rgba(var(--bg-secondary))] sm:size-[128px]'
-          />
+          {user.avatar ? (
+            <UserAvatar
+              id={user.id}
+              hash={user.avatar}
+              size={128}
+              width={128}
+              height={128}
+              objectFit='cover'
+              className='size-[100px] rounded-full border-8 border-[rgba(var(--bg-secondary))] sm:size-[128px]'
+            />
+          ) : (
+            <Image
+              src='/default-discord-avatar.png'
+              alt='Default Avatar'
+              width={128}
+              height={128}
+              objectFit='cover'
+              className='size-[100px] rounded-full border-8 border-[rgba(var(--bg-secondary))] sm:size-[128px]'
+            />
+          )}
         </div>
 
         <div className='flex w-full justify-between'>
@@ -152,6 +170,7 @@ export default function Content({ user }) {
                           alt={`${flag} Badge`}
                           width={18}
                           height={18}
+                          priority={true}
                         />
                       </Tooltip>
                     ))}
@@ -191,6 +210,7 @@ export default function Content({ user }) {
                         alt={`${flag} Badge`}
                         width={18}
                         height={18}
+                        priority={true}
                       />
                     </Tooltip>
                   ))}
@@ -220,6 +240,7 @@ export default function Content({ user }) {
                     alt={`${badgeId} Badge`}
                     width={20}
                     height={20}
+                    priority={true}
                   />
                 </Tooltip>
               ))}
@@ -274,6 +295,7 @@ export default function Content({ user }) {
                     alt={`${badgeId} Badge`}
                     width={20}
                     height={20}
+                    priority={true}
                   />
                 </Tooltip>
               ))}

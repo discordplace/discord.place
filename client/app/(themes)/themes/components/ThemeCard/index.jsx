@@ -74,7 +74,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor, className 
         ) : (
           <Image
             className='-mt-8 ml-3 size-[56px] rounded-full shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]'
-            src='https://cdn.discordapp.com/embed/avatars/1.png'
+            src='/default-discord-avatar.png'
             alt='Placeholder Avatar'
             width={64}
             height={64}

@@ -161,7 +161,8 @@ export default function Footer() {
           width={200}
           height={200}
           className='size-[48px]'
-          alt='discord.placeLogo'
+          alt='discord.place Logo'
+          loading='lazy'
         />
 
         <h2 className='max-w-[350px] text-2xl font-bold text-primary'>
@@ -227,9 +228,11 @@ export default function Footer() {
           >
             <Image
               src={theme === 'dark' ? '/nodesty-logo-white.png' : '/nodesty-logo-blue.png'}
+              className='h-[25px] w-auto max-w-[100px]'
               width={100}
               height={25}
               alt='nodesty.com Logo'
+              loading='lazy'
             />
           </Link>
         </div>

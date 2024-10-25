@@ -140,7 +140,7 @@ export default function Card(props) {
                 />
               ) : (
                 <Image
-                  src='https://cdn.discordapp.com/embed/avatars/0.png'
+                  src='/default-discord-avatar.png'
                   alt='Default Avatar'
                   width={64}
                   height={64}
