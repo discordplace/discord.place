@@ -3,7 +3,7 @@
 import getCompressedName from '@/lib/getCompressedName';
 import { HiMiniUserGroup } from 'react-icons/hi2';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import getHashFromIconURL from '@/lib/getHashFromIconURL';
+import getHashFromURL from '@/lib/getHashFromURL';
 
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'decimal',
@@ -17,7 +17,7 @@ export default function ServerCard({ data }) {
       {data.icon_url ? (
         <ServerIcon
           id={data.id}
-          hash={getHashFromIconURL(data.icon_url)}
+          hash={getHashFromURL(data.icon_url, 'icons')}
           size={32}
           className='rounded-full'
           width={24}

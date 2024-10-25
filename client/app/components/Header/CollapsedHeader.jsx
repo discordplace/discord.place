@@ -43,7 +43,14 @@ export default function CollapsedHeader({ pathname }) {
         </div>
 
         <Link href='/' className='pointer-events-auto block mobile:hidden'>
-          <Image src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'} width={64} height={64} className='size-[48px]' alt='discord.place Logo' />
+          <Image
+            src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+            width={64}
+            height={64}
+            className='size-[48px]'
+            alt='discord.place Logo'
+            loading='lazy'
+          />
         </Link>
       </div>
 

@@ -184,7 +184,14 @@ export default function Socials({ profile }) {
                 </>
               ) : (
                 <>
-                  <Image src={getIconPath(social.type, theme)} width={20} height={20} alt={`${social.type} Icon`} />
+                  <Image
+                    src={getIconPath(social.type, theme)}
+                    width={20}
+                    height={20}
+                    alt={`${social.type} Icon`}
+                    loading='lazy'
+                  />
+
                   <span className='w-full truncate'>
                     {social.handle}
                   </span>
@@ -215,11 +222,23 @@ export default function Socials({ profile }) {
         >
           <div className='flex w-full items-center gap-x-2'>
             {newSocialType === 'unknown' ? (
-              <FaQuestion className='flex-auto' size={20} />
+              <FaQuestion
+                className='flex-auto'
+                size={20}
+              />
             ) : newSocialType === 'custom' ? (
-              <IoEarth className='flex-auto' size={20} />
+              <IoEarth
+                className='flex-auto'
+                size={20}
+              />
             ) : (
-              <Image src={getIconPath(newSocialType, theme)} width={20} height={20} alt={`${newSocialType} Icon`} />
+              <Image
+                src={getIconPath(newSocialType, theme)}
+                width={20}
+                height={20}
+                alt={`${newSocialType} Icon`}
+                loading='lazy'
+              />
             )}
 
             <input

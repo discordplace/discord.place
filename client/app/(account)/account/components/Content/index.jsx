@@ -291,6 +291,7 @@ export default function Content() {
                   alt='discord.place Logo'
                   width={256}
                   height={256}
+                  priority={true}
                 />
 
                 <div className='relative mt-8 h-[6px] w-[150px] overflow-hidden rounded-full bg-quaternary'>

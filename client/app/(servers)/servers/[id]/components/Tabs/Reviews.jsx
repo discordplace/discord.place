@@ -148,6 +148,7 @@ export default function Reviews({ server }) {
                     width={48}
                     height={48}
                     className='size-[48px] rounded-2xl'
+                    loading='lazy'
                   />
                 ) : (
                   <Image
@@ -156,6 +157,7 @@ export default function Reviews({ server }) {
                     width={48}
                     height={48}
                     className='size-[48px] rounded-2xl'
+                    loading='lazy'
                   />
                 )}
 

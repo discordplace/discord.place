@@ -59,6 +59,7 @@ export default function Hero() {
             width={32}
             height={5}
             className='absolute -right-8 -top-2 hidden -rotate-12 sm:block'
+            priority={true}
           />
         </motion.h1>
 

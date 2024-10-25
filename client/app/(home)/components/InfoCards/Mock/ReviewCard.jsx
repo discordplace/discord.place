@@ -12,6 +12,7 @@ export default function MockReviewCard({ username, content, rating }) {
           width={32}
           height={32}
           className='size-[24px] rounded-full mobile:size-[32px]'
+          loading='lazy'
         />
 
         <h3 className='truncate text-sm font-medium mobile:text-base'>

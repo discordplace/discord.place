@@ -141,7 +141,6 @@ export default function Reviews({ bot }) {
             <div className='flex w-[35%] flex-col gap-y-3'>
               <div className='flex gap-x-4'>
                 {loggedIn ? (
-
                   <UserAvatar
                     id={user?.id}
                     hash={user?.avatar}
@@ -149,6 +148,7 @@ export default function Reviews({ bot }) {
                     width={48}
                     height={48}
                     className='size-[48px] rounded-2xl'
+                    loading='lazy'
                   />
                 ) : (
                   <Image
@@ -157,6 +157,7 @@ export default function Reviews({ bot }) {
                     width={48}
                     height={48}
                     className='size-[48px] rounded-2xl'
+                    loading='lazy'
                   />
                 )}
 
