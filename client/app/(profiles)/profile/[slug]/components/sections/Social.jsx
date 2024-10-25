@@ -80,7 +80,6 @@ export default function Social({ data }) {
                     width={20}
                     height={20}
                     alt={`${social.type} Icon`}
-                    loading='lazy'
                   />
 
                   <span className='w-full truncate'>

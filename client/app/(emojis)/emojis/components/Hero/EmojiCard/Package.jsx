@@ -36,7 +36,6 @@ export default function EmojiPackageCard({ overridedImages, id, name, categories
                 className='size-full max-h-[48px] max-w-[48px] rounded-xl bg-secondary object-contain transition-all ease-in-out group-hover:bg-tertiary'
                 width={64}
                 height={64}
-                loading='lazy'
               />
             ))}
 

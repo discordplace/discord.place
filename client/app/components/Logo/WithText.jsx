@@ -25,7 +25,6 @@ export default function WithText({ className }) {
         height={64}
         alt='discord.place Logo'
         className='size-[32px]'
-        loading='lazy'
       />
 
       <div

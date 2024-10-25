@@ -72,7 +72,6 @@ export default function ColumnRenderer({ data }) {
             height={32}
             alt={`Emoji ${data.id}`}
             className='pointer-events-none size-[32px] object-contain'
-            loading='lazy'
           />
 
           <span className='font-medium'>
@@ -92,7 +91,6 @@ export default function ColumnRenderer({ data }) {
                 width={32}
                 height={32}
                 className='pointer-events-none size-[32px] object-contain'
-                loading='lazy'
               />
             ))}
           </div>
