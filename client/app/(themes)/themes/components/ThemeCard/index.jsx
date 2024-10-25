@@ -11,8 +11,8 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   return (
     <Container
       className={cn(
-        'relative pointer-events-none select-none h-[255px] w-[220px] overflow-y-hidden rounded-xl transition-all',
-        id && 'hover:border-purple-500 hover:opacity-80 border-2 border-primary'
+        'relative h-[255px] w-[220px] overflow-y-hidden rounded-xl transition-all',
+        id ? 'hover:border-purple-500 hover:opacity-80 border-2 border-primary' : 'pointer-events-none select-none'
       )}
       href={`/themes/${id}`}
     >
