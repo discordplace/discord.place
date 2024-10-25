@@ -4,9 +4,9 @@ import MotionImage from '@/app/components/Motion/Image';
 import { useState } from 'react';
 
 export default function ServerIcon({ id, hash, format, size, className, motionOptions, ...props }) {
-  const [error, setError] = useState(false);
+  const defaultAvatarURL = '/default-discord-avatar.png';
 
-  if (!id) return null;
+  const [isErrorOccurred, setIsErrorOccurred] = useState(false);
 
   const defaultOptions = {
     format: hash?.startsWith('a_') ? 'gif' : 'webp',
@@ -14,13 +14,14 @@ export default function ServerIcon({ id, hash, format, size, className, motionOp
   };
 
   const options = {
+    ...defaultOptions,
     format: format || defaultOptions.format,
     size: size || defaultOptions.size
   };
 
   if (!hash) return (
     <MotionImage
-      src={'https://cdn.discordapp.com/embed/avatars/0.png'}
+      src={defaultAvatarURL}
       alt={`Image ${hash}`}
       className={className}
       {...motionOptions}
@@ -33,17 +34,14 @@ export default function ServerIcon({ id, hash, format, size, className, motionOp
       src={`https://cdn.discordapp.com/icons/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`}
       alt={`Image ${hash}`}
       className={className}
-      onError={async event => {
-        if (error) return;
+      onError={event => {
+        if (isErrorOccurred) return;
 
-        setError(true);
+        setIsErrorOccurred(true);
 
-        const element = event.target;
+        const fallback = defaultAvatarURL;
 
-        // Show a fallback image while new hashes are being fetched
-        const fallback = 'https://cdn.discordapp.com/embed/avatars/0.png';
-
-        element.src = fallback;
+        event.target.src = fallback;
       }}
       {...motionOptions}
       {...props}

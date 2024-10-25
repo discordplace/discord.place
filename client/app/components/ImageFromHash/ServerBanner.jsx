@@ -4,12 +4,12 @@ import MotionImage from '@/app/components/Motion/Image';
 import { useState } from 'react';
 
 export default function ServerBanner({ id, hash, format, size, className, motionOptions, ...props }) {
-  const [error, setError] = useState(false);
+  const defaultAvatarURL = '/default-discord-banner.png';
 
-  if (!id || !hash) return null;
+  const [isErrorOccurred, setIsErrorOccurred] = useState(false);
 
   const defaultOptions = {
-    format: hash.startsWith('a_') ? 'gif' : 'webp',
+    format: hash?.startsWith('a_') ? 'gif' : 'webp',
     size: 512
   };
 
@@ -19,22 +19,29 @@ export default function ServerBanner({ id, hash, format, size, className, motion
     size: size || defaultOptions.size
   };
 
+  if (!hash) return (
+    <MotionImage
+      src={defaultAvatarURL}
+      alt={`Image ${hash}`}
+      className={className}
+      {...motionOptions}
+      {...props}
+    />
+  );
+
   return (
     <MotionImage
       src={`https://cdn.discordapp.com/banners/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`}
       alt={`Image ${hash}`}
       className={className}
-      onError={async event => {
-        if (error) return;
+      onError={event => {
+        if (isErrorOccurred) return;
 
-        setError(true);
+        setIsErrorOccurred(true);
 
-        const element = event.target;
+        const fallback = defaultAvatarURL;
 
-        // Show a fallback image while new hashes are being fetched
-        const fallback = '/discord-logo-banner.png';
-
-        element.src = fallback;
+        event.target.src = fallback;
       }}
       {...motionOptions}
       {...props}
