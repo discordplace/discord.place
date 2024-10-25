@@ -4,7 +4,6 @@ import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import config from '@/config';
 import { LuShieldQuestion } from 'react-icons/lu';
 import FaQs from '@/app/(themes)/themes/[id]/components/FaQs';
-import { motion } from 'framer-motion';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import Link from 'next/link';
 import { toast } from 'sonner';
@@ -64,13 +63,10 @@ export default function Content({ theme }) {
         )}
 
         <div className='flex size-full flex-col gap-4 lg:flex-row'>
-          <motion.div className='flex w-full lg:max-w-[400px]'>
-            <ThemeCard
-              id={theme.id}
-              primaryColor={theme.colors.primary}
-              secondaryColor={theme.colors.secondary}
-            />
-          </motion.div>
+          <ThemeCard
+            primaryColor={theme.colors.primary}
+            secondaryColor={theme.colors.secondary}
+          />
 
           <div className='flex w-full flex-1 flex-col gap-y-4'>
             <h2 className='text-xl font-semibold text-primary'>
