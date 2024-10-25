@@ -162,7 +162,6 @@ export default function Footer() {
           height={200}
           className='size-[48px]'
           alt='discord.place Logo'
-          loading='lazy'
         />
 
         <h2 className='max-w-[350px] text-2xl font-bold text-primary'>
@@ -232,7 +231,6 @@ export default function Footer() {
               width={100}
               height={25}
               alt='nodesty.com Logo'
-              loading='lazy'
             />
           </Link>
         </div>

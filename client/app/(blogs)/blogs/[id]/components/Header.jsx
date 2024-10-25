@@ -39,7 +39,6 @@ export default function Header({ data }) {
         width={512}
         height={512}
         className='size-full max-h-[440px] rounded-lg bg-tertiary object-cover'
-        loading='lazy'
       />
     </>
   );

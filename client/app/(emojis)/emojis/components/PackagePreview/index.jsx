@@ -215,7 +215,6 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
               height={64}
               alt={''}
               className='size-[46px] object-contain sm:size-[64px]'
-              loading='lazy'
             />
           </motion.div>
         ))}

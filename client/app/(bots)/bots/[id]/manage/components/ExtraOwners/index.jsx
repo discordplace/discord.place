@@ -176,7 +176,6 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
                   width={32}
                   height={32}
                   className='rounded-full'
-                  loading='lazy'
                 />
 
                 <span className='font-medium text-secondary'>
