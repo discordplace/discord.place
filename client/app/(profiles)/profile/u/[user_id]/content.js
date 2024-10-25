@@ -127,10 +127,10 @@ export default function Content({ user }) {
         )}
 
         <div className='pointer-events-none relative bottom-16 left-8 -mb-12 flex w-full items-center sm:mb-[-7.5rem]'>
-          {user.avatar ? (
+          {user.avatar_url ? (
             <UserAvatar
               id={user.id}
-              hash={user.avatar}
+              hash={getHashFromURL(user.avatar_url)}
               size={128}
               width={128}
               height={128}
