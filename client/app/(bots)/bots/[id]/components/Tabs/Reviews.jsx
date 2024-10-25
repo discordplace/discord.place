@@ -152,7 +152,7 @@ export default function Reviews({ bot }) {
                   />
                 ) : (
                   <Image
-                    src='https://cdn.discordapp.com/embed/avatars/0.png'
+                    src='/default-discord-avatar.png'
                     alt='Placeholder Avatar'
                     width={48}
                     height={48}

@@ -42,7 +42,7 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setColor(Discord.Colors.Green)
-          .setAuthor({ name: `Template Approved | ${template.name}`, iconURL: publisher?.displayAvatarURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png' })
+          .setAuthor({ name: `Template Approved | ${template.name}`, iconURL: publisher?.displayAvatarURL?.() || '/default-discord-avatar.png' })
           .setTimestamp()
           .setFields([
             {

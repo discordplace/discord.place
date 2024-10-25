@@ -122,7 +122,7 @@ export default function Content({ user }) {
 
         <div className='pointer-events-none relative bottom-16 left-8 -mb-12 flex w-full items-center sm:mb-[-7.5rem]'>
           <Image
-            src={user.avatarURL || 'https://cdn.discordapp.com/embed/avatars/0.png'}
+            src={user.avatarURL || '/default-discord-avatar.png'}
             alt={`${user.username}'s avatar`}
             width={128}
             height={128}
