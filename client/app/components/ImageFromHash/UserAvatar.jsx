@@ -83,6 +83,7 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
 
   if (!hash) return (
     <MotionImage
+      key={`user-avatar-${id}-replaced-with-default-avatar`}
       src={defaultAvatarURL}
       alt={`Image ${hash}`}
       className={className}
@@ -93,6 +94,7 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
 
   return (
     <MotionImage
+      key={`user-avatar-${id}-${hash}`}
       src={currentSource}
       alt={`Image ${hash}`}
       className={className}

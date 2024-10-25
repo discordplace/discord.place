@@ -21,6 +21,7 @@ export default function ServerIcon({ id, hash, format, size, className, motionOp
 
   if (!hash) return (
     <MotionImage
+      key={`server-icon-${id}-replaced-with-default-avatar`}
       src={defaultAvatarURL}
       alt={`Image ${hash}`}
       className={className}
@@ -31,6 +32,7 @@ export default function ServerIcon({ id, hash, format, size, className, motionOp
 
   return (
     <MotionImage
+      key={`server-icon-${id}-${hash}`}
       src={`https://cdn.discordapp.com/icons/${id}/${hash}.${hash.startsWith('a_') ? 'gif' : 'png'}?size=${options.size}&format=${options.format}`}
       alt={`Image ${hash}`}
       className={className}
