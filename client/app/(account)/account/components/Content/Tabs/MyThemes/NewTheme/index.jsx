@@ -152,7 +152,6 @@ export default function NewTheme() {
                 id={null}
                 primaryColor={colors.primary || '#000000'}
                 secondaryColor={colors.secondary || '#000000'}
-                className='w-[250px]'
               />
             </div>
 
