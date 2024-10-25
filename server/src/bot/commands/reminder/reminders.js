@@ -34,7 +34,7 @@ module.exports = {
       reminders.forEach(async reminder => {
         const guild = client.guilds.cache.get(reminder.guild.id) || await client.guilds.fetch(reminder.guild.id).catch(() => null);
         const newEmbed = new Discord.EmbedBuilder()
-          .setAuthor({ name: guild?.name || reminder.guild.id, iconURL: guild?.iconURL?.() || '/default-discord-avatar.png' })
+          .setAuthor({ name: guild?.name || reminder.guild.id, iconURL: guild?.iconURL?.() || 'https://cdn.discordapp.com/embed/avatars/0.png' })
           .setColor('Random')
           .setDescription(await interaction.translate('commands.reminders.embed.description.1', { time: `<t:${Math.floor((reminder.createdAt.getTime() + 86400000) / 1000)}:R>` }));
 
