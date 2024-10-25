@@ -99,7 +99,7 @@ export default function ActiveReminders() {
                               {t('accountPage.tabs.activeReminders.fields.reminders.about')}
                             </div>
 
-                            <div className='max-w-[450px] break-words text-xs font-medium text-tertiary'>
+                            <div className='max-w-[60w] break-words text-xs font-medium text-tertiary xl:max-w-[450px]'>
                               {reminder.about}
                             </div>
 
