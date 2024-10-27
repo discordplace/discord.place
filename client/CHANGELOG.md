@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.2](https://github.com/discordplace/discord.place/compare/client@v1.3.1...client@v1.3.2) (2024-10-27)
+
+
+### Bug Fixes
+
+* **ImageFromHash:** show default avatar while current source loading ([#115](https://github.com/discordplace/discord.place/issues/115)) ([84fc408](https://github.com/discordplace/discord.place/commit/84fc408e5717f3cbfed56af1343ee2b76610bb14))
+* **ImageFromHash:** show default avatar while current source loading to prevent framer motion bugs ([84fc408](https://github.com/discordplace/discord.place/commit/84fc408e5717f3cbfed56af1343ee2b76610bb14))
+* **ThemeCard:** update class names to fix pointer events handling ([#117](https://github.com/discordplace/discord.place/issues/117)) ([7762745](https://github.com/discordplace/discord.place/commit/77627450da06ef19354b1a5204716ad3aaa6bbf3))
+* use avatar_url instead of avatar in user profile page ([#112](https://github.com/discordplace/discord.place/issues/112)) ([2e056fa](https://github.com/discordplace/discord.place/commit/2e056fa0df34ba599f1f2a511243c565688267aa))
+* **UserPage:** update avatar URL property to use camelCase ([#118](https://github.com/discordplace/discord.place/issues/118)) ([5ee91b8](https://github.com/discordplace/discord.place/commit/5ee91b83142b1fa7a4ab19b1192f73f9bc41ef0a))
+
 ## [1.3.1](https://github.com/discordplace/discord.place/compare/client@v1.3.0...client@v1.3.1) (2024-10-25)
 
 
