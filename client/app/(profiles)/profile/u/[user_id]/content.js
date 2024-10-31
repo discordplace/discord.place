@@ -107,7 +107,7 @@ export default function Content({ user }) {
           <div className='relative'>
             <UserBanner
               id={user.id}
-              hash={getHashFromURL(user.bannerURL)}
+              hash={getHashFromURL(user.bannerURL, 'banners')}
               alt={`${user.username}'s banner`}
               size={1024}
               width={1024}
@@ -130,7 +130,7 @@ export default function Content({ user }) {
           {user.avatarURL ? (
             <UserAvatar
               id={user.id}
-              hash={getHashFromURL(user.avatarURL)}
+              hash={getHashFromURL(user.avatarURL, 'avatars')}
               size={128}
               width={128}
               height={128}
