@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.3](https://github.com/discordplace/discord.place/compare/client@v1.3.2...client@v1.3.3) (2024-11-01)
+
+
+### Bug Fixes
+
+* **Authentication:** delete token cookie on logout ([#123](https://github.com/discordplace/discord.place/issues/123)) ([9083f14](https://github.com/discordplace/discord.place/commit/9083f14e90a45b9d5240d92feb353c330dfad5ed))
+* **UserProfile:** add missing parameters to getHashFromURL function calls ([#120](https://github.com/discordplace/discord.place/issues/120)) ([3caed84](https://github.com/discordplace/discord.place/commit/3caed84e1a9050894febcc8fc8d62911a3e86278))
+
 ## [1.3.2](https://github.com/discordplace/discord.place/compare/client@v1.3.1...client@v1.3.2) (2024-10-27)
 
 
