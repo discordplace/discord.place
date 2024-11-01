@@ -123,6 +123,7 @@ module.exports = class Server {
           next();
         } catch (error) {
           logger.error('There was an error verifying the token:', error);
+
           response.clearCookie('token');
 
           return response.sendError('Unauthorized', 401);

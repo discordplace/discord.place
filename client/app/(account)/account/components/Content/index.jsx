@@ -23,7 +23,7 @@ import { FaCompass, FaBell, FaShieldAlt, FaDiscord } from 'react-icons/fa';
 import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import useAuthStore from '@/stores/auth';
 import { HiTemplate } from 'react-icons/hi';
-import { useLocalStorage, useMedia } from 'react-use';
+import { useCookie, useLocalStorage, useMedia } from 'react-use';
 import { PiWaveformBold } from 'react-icons/pi';
 import { FiLink } from 'react-icons/fi';
 import { useShallow } from 'zustand/react/shallow';
@@ -54,6 +54,7 @@ export default function Content() {
   const router = useRouter();
 
   const [themesPageVisited, setThemesPageVisited] = useLocalStorage('themes-page-visited', false);
+  const [,, deleteToken] = useCookie('token');
 
   function logOut() {
     toast.promise(logout(), {
@@ -61,6 +62,7 @@ export default function Content() {
       success: () => {
         setLoggedIn(false);
         setUser(null);
+        deleteToken(null);
 
         return 'Logged out successfully.';
       },
