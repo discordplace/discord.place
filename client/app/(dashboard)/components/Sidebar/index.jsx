@@ -29,7 +29,7 @@ import CollapseIcon from '@/app/(dashboard)/components/Sidebar/Icons/Collapse';
 import { BiSolidChevronRight } from 'react-icons/bi';
 import Tooltip from '@/app/components/Tooltip';
 import Link from 'next/link';
-import { useMedia } from 'react-use';
+import { useCookie, useMedia } from 'react-use';
 import { useEffect } from 'react';
 import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
 
@@ -162,6 +162,7 @@ export default function Sidebar() {
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
+  const [,, deleteToken] = useCookie('token');
 
   function logOut() {
     toast.promise(logout(), {
@@ -169,6 +170,7 @@ export default function Sidebar() {
       success: () => {
         setLoggedIn(false);
         setUser(null);
+        deleteToken();
 
         return 'Logged out successfully.';
       },

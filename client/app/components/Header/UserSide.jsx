@@ -1,10 +1,12 @@
+'use client';
+
 import useAuthStore from '@/stores/auth';
 import Link from 'next/link';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
 import cn from '@/lib/cn';
 import { useEffect, useState } from 'react';
-import { useWindowScroll } from 'react-use';
+import { useCookie, useWindowScroll } from 'react-use';
 import { BiLogOut } from 'react-icons/bi';
 import logout from '@/lib/request/auth/logout';
 import { toast } from 'sonner';
@@ -17,6 +19,8 @@ export default function UserSide({ className }) {
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
+  const [,, deleteToken] = useCookie('token');
+
   const pathname = usePathname();
 
   const [open, setOpen] = useState(false);
@@ -32,6 +36,7 @@ export default function UserSide({ className }) {
       success: () => {
         setUser(null);
         setLoggedIn(false);
+        deleteToken();
 
         return 'Logged out successfully';
       },
