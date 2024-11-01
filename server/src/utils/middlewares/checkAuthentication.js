@@ -30,7 +30,10 @@ module.exports = async function checkAuthentication(request, response, next) {
 
     next();
   } catch (error) {
-    response.clearCookie('token');
+    response.clearCookie('token', {
+      httpOnly: true,
+      domain: `.${new URL(config.frontendUrl).hostname}`
+    });
 
     if (error instanceof AuthError) return response.sendError(error.message, 401);
 

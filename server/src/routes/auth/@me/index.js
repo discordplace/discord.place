@@ -21,7 +21,10 @@ module.exports = {
       if (!user) return response.sendError('User not found.', 404);
 
       if (userQuarantined) {
-        response.clearCookie('token');
+        response.clearCookie('token', {
+          httpOnly: true,
+          domain: `.${new URL(config.frontendUrl).hostname}`
+        });
 
         return response.sendError('You are not allowed to login.', 403);
       }

@@ -124,7 +124,10 @@ module.exports = class Server {
         } catch (error) {
           logger.error('There was an error verifying the token:', error);
 
-          response.clearCookie('token');
+          response.clearCookie('token', {
+            httpOnly: true,
+            domain: `.${new URL(config.frontendUrl).hostname}`
+          });
 
           return response.sendError('Unauthorized', 401);
         }

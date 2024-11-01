@@ -15,7 +15,10 @@ module.exports = {
     async (request, response) => {
       await User.updateOne({ id: request.user.id }, { lastLogoutAt: new Date() }).catch(() => null);
 
-      response.clearCookie('token');
+      response.clearCookie('token', {
+        httpOnly: true,
+        domain: `.${new URL(config.frontendUrl).hostname}`
+      });
 
       return response.json({ success: true });
     }
