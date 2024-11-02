@@ -325,7 +325,7 @@ We welcome contributions from the community! If you'd like to contribute to the 
 1. Fork the repository and clone it locally.
 2. Create a new branch for your feature or bug fix.
 3. Make your changes and ensure the code passes any existing tests.
-4. Commit your changes with descriptive commit messages.
+4. Commit your changes with descriptive commit messages that follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
 5. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
 
 Please make sure to follow the [Code of Conduct](.github/CODE_OF_CONDUCT.md) and [Contributing Guidelines](.github/CONTRIBUTING.md) when contributing to this project.

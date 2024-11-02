@@ -12,7 +12,7 @@ We encourage you to submit pull requests for bug fixes, feature additions, or ot
 
 - Fork the repository and create a new branch for your changes.
 - Follow the coding style and conventions used in the project.
-- Write clear and concise commit messages.
+- Write clear and concise commit messages that follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 - Include tests for any new functionality and ensure all tests pass.
 - Update documentation as necessary.
 
