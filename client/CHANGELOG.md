@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.4](https://github.com/discordplace/discord.place/compare/client@v1.3.3...client@v1.3.4) (2024-11-03)
+
+
+### Bug Fixes
+
+* deny dropdown is not working on mobile devices ([42f4882](https://github.com/discordplace/discord.place/commit/42f4882c6d2f5e2e89aca012304d1187b38b67a7))
+* **DenyDropdown:** increase z-index ([7621289](https://github.com/discordplace/discord.place/commit/76212894f857db3f91cfef63a3487a8ddcfddb79))
+
 ## [1.3.3](https://github.com/discordplace/discord.place/compare/client@v1.3.2...client@v1.3.3) (2024-11-01)
 
 
