@@ -369,22 +369,31 @@ export default function Table({ tabs }) {
                 openState={drawerOpen}
                 setOpenState={setDrawerOpen}
                 state={mobileSelectedAction}
+                preventDefault={true}
                 setState={value => {
+                  if (value.trigger) return;
+
                   value.action(selectedItems);
 
                   setDrawerOpen(false);
                 }}
-                items={currentTabData.actions.map(action => (
-                  {
-                    label: (
-                      <div className='flex items-center gap-x-2'>
-                        {action.icon && <action.icon size={16} />}
-                        {action.name}
-                      </div>
-                    ),
-                    value: action
-                  }
-                ))}
+                items={currentTabData.actions.map(action => {
+                  const Trigger = action.trigger || 'div';
+
+                  return (
+                    {
+                      label: (
+                        <Trigger {...action.triggerProps}>
+                          <div className='flex w-full items-center gap-x-2'>
+                            {action.icon && <action.icon size={16} />}
+                            {action.name}
+                          </div>
+                        </Trigger>
+                      ),
+                      value: action
+                    }
+                  );
+                })}
               />
             </>
           )}

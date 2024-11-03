@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { Drawer } from 'vaul';
 
-export default function CustomDrawer({ openState, setOpenState, state, setState, items }) {
+export default function CustomDrawer({ openState, setOpenState, state, setState, items, preventDefault = false }) {
   return (
     <Drawer.Root
       shouldScaleBackground={true}
@@ -21,6 +21,8 @@ export default function CustomDrawer({ openState, setOpenState, state, setState,
               <button
                 key={nanoid()}
                 onClick={() => {
+                  if (preventDefault === true) return;
+
                   setState(item.value);
                   setOpenState(false);
                 }}
