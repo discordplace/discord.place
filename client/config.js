@@ -54,7 +54,7 @@ const config = {
   analytics: {
     url: 'https://analytics.discord.place',
     script: 'https://analytics.discord.place/script.js',
-    websiteId: 'b8fea5b8-7789-4381-97a0-0b474d9bb87a',
+    websiteId: 'dc95fc9d-8ca0-4f28-88f5-45466492b1d1',
     domains: ['discord.place', 'www.discord.place']
   },
   getProfileURL: (slug, preferredHost) => {
