@@ -47,7 +47,7 @@
     "express-rate-limit": "^7.4.1",
     "express-validator": "^7.0.1",
     "fast-average-color-node": "^3.1.0",
-    "helmet": "^7.1.0",
+    "helmet": "^8.0.0",
     "https-proxy-agent": "^7.0.5",
     "i18next": "^23.15.1",
     "i18next-intervalplural-postprocessor": "^3.0.0",
