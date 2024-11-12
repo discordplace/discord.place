@@ -144,8 +144,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0(@types/react@18.3.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       virtua:
-        specifier: ^0.31.0
-        version: 0.31.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^0.36.3
+        version: 0.36.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       zustand:
         specifier: ^4.5.2
         version: 4.5.2(@types/react@18.3.1)(immer@9.0.21)(react@18.2.0)
@@ -3227,13 +3227,13 @@ packages:
   vfile@6.0.1:
     resolution: {integrity: sha512-1bYqc7pt6NIADBJ98UiG0Bn/CHIVOoZ/IyEkqIruLg0mE1BKzkOXY2D6CSqQIcKqgadppE5lrxgWXJmXd7zZJw==}
 
-  virtua@0.31.0:
-    resolution: {integrity: sha512-E7xGz1OKz4E/YRjIYfCyEHgg1XrASvkYLn5hhpPV6WEbGnMMmG1MF5VyumKRKmpNke3Tu3b7wfUNM8K0HVPlgw==}
+  virtua@0.36.3:
+    resolution: {integrity: sha512-W5LovCjIJPT7plfka9r6XZIlsHxNbEyw9m9uTKdlB+R9+AoldsT+RFVW2/iVqHU8pmHv8csc3yw25A77OD5wwg==}
     peerDependencies:
       react: '>=16.14.0'
       react-dom: '>=16.14.0'
       solid-js: '>=1.0'
-      svelte: '>=4.0'
+      svelte: '>=5.0'
       vue: '>=3.2'
     peerDependenciesMeta:
       react:
@@ -6916,7 +6916,7 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  virtua@0.31.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  virtua@0.36.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     optionalDependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
