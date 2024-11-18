@@ -87,8 +87,8 @@ importers:
         specifier: ^0.18.0
         version: 0.18.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-apexcharts:
-        specifier: ^1.4.1
-        version: 1.4.1(apexcharts@3.48.0)(react@18.2.0)
+        specifier: ^1.5.0
+        version: 1.5.0(apexcharts@3.48.0)(react@18.2.0)
       react-colorful:
         specifier: ^5.6.1
         version: 5.6.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -2616,8 +2616,8 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  react-apexcharts@1.4.1:
-    resolution: {integrity: sha512-G14nVaD64Bnbgy8tYxkjuXEUp/7h30Q0U33xc3AwtGFijJB9nHqOt1a6eG0WBn055RgRg+NwqbKGtqPxy15d0Q==}
+  react-apexcharts@1.5.0:
+    resolution: {integrity: sha512-RwIqhYee8tT6WsDR9I15bhDuPitM+z/P092QPttFR5D57M21/WtYKHE9JQMbcz9bmF35rfDSym1SZuZ7AhidhQ==}
     peerDependencies:
       apexcharts: ^3.41.0
       react: '>=0.13'
@@ -6134,7 +6134,7 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  react-apexcharts@1.4.1(apexcharts@3.48.0)(react@18.2.0):
+  react-apexcharts@1.5.0(apexcharts@3.48.0)(react@18.2.0):
     dependencies:
       apexcharts: 3.48.0
       prop-types: 15.8.1
