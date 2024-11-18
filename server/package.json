@@ -34,7 +34,7 @@
     "cloudflare": "^3.2.0",
     "colord": "^2.9.3",
     "colorette": "^2.0.20",
-    "compression": "^1.7.4",
+    "compression": "^1.7.5",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "cron": "^3.1.6",
