@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.5](https://github.com/discordplace/discord.place/compare/client@v1.3.4...client@v1.3.5) (2024-11-20)
+
+
+### Bug Fixes
+
+* **config:** update websiteId for analytics ([656a271](https://github.com/discordplace/discord.place/commit/656a2710b29a34dacc0f0fa46c9a43476d043ccc))
+
 ## [1.3.4](https://github.com/discordplace/discord.place/compare/client@v1.3.3...client@v1.3.4) (2024-11-03)
 
 
