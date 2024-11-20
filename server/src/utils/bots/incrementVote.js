@@ -128,11 +128,7 @@ async function incrementVote(botId, userId, botWebhook) {
     }
 
     const response = await axios(requestConfig)
-      .catch(error => {
-        logger.error(`Error while sending webhook request for bot ${bot.id}:`, error);
-
-        return error.response;
-      });
+      .catch(error => error.response);
 
     const data = {
       url: botWebhook.url,

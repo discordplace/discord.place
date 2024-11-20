@@ -177,11 +177,7 @@ async function incrementVote(guildId, userId) {
     }
 
     const response = await axios(requestConfig)
-      .catch(error => {
-        logger.error(`Error while sending webhook request for guild ${guild.id}:`, error);
-
-        return error.response;
-      });
+      .catch(error => error.response);
 
     const data = {
       url: server.webhook.url,
