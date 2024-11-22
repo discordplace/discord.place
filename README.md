@@ -74,7 +74,7 @@ npm run dev
 ```
 
 8. Open your browser and navigate to `http://localhost:3000` to view the website locally.
-9. Open your browser and navigate to `http://localhost:3535` to view the documentation locally. (optional)
+9. Open your browser and navigate to `http://localhost:3003` to view the documentation locally. (optional)
 
 ---
 
