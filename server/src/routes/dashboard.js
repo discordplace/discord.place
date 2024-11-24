@@ -86,7 +86,7 @@ module.exports = {
         queue: {},
         importantCounts: {
           emojis: await Emoji.countDocuments({ approved: false }) + await EmojiPack.countDocuments({ approved: false }),
-          bots: await Bot.countDocuments({ approved: false }),
+          bots: await Bot.countDocuments({ verified: false }),
           templates: await Template.countDocuments({ approved: false }),
           sounds: await Sound.countDocuments({ approved: false }),
           themes: await Theme.countDocuments({ approved: false }),
