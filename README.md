@@ -342,7 +342,7 @@ Please make sure to follow the [Code of Conduct](.github/CODE_OF_CONDUCT.md) and
   2. Create a new branch for your translation.
   3. Find the language file you want to translate in the `client/locales` directory.
   4. Add the translations for the missing keys in the language file or update the existing translations.
-  5. Commit your changes with descriptive commit messages.
+  5. Commit your changes with descriptive commit messages that follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
   6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
 </details>
 
@@ -358,7 +358,7 @@ Please make sure to follow the [Code of Conduct](.github/CODE_OF_CONDUCT.md) and
   2. Create a new branch for your translation.
   3. Find the language file you want to translate in the `server/src/locales` directory.
   4. Add the translations for the missing keys in the language file or update the existing translations.
-  5. Commit your changes with descriptive commit messages.
+  5. Commit your changes with descriptive commit messages that follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
   6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
 </details>
 
