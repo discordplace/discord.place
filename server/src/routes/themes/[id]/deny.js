@@ -40,7 +40,7 @@ module.exports = {
 
       if (isPublisherFoundInGuild) {
         const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
-        if (dmChannel) dmChannel.send({ content: `### Your theme (Colors: ${theme.colors.primary} - ${theme.colors.secondary} | ID: ${theme.id}) has been denied by <@${request.user.id}>.\nReason: **${reason}**` }).catch(() => null);
+        if (dmChannel) dmChannel.send({ content: `### Your theme (Colors: ${theme.colors.primary} - ${theme.colors.secondary} | ID: ${theme.id}) has been denied by <@${request.user.id}>.\nReason: **${config.themeDenyReasons[reason].description}**` }).catch(() => null);
       }
 
       const embeds = [
