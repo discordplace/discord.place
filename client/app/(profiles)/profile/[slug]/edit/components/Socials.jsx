@@ -174,7 +174,7 @@ export default function Socials({ profile }) {
               '--brand-color': colors[social.type]
             }}
           >
-            <div className='flex max-w-[90%] flex-auto gap-x-2'>
+            <div className='flex max-w-[82%] flex-auto gap-x-2'>
               {social.type === 'custom' ? (
                 <>
                   <IoEarth className='flex-auto' size={20} />
