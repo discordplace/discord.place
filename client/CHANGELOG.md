@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.6](https://github.com/discordplace/discord.place/compare/client@v1.3.5...client@v1.3.6) (2024-12-01)
+
+
+### Bug Fixes
+
+* adjust max width of container for better layout ([8469430](https://github.com/discordplace/discord.place/commit/84694305eb2f413489b047be5787592b1f2987c9))
+* update stroke-width to strokeWidth in CollapseIcon components ([7e16434](https://github.com/discordplace/discord.place/commit/7e1643466f64b7761a31fcdd59044fb86c945485))
+
 ## [1.3.5](https://github.com/discordplace/discord.place/compare/client@v1.3.4...client@v1.3.5) (2024-11-20)
 
 
