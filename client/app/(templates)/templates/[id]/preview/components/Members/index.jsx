@@ -5,13 +5,15 @@ import { toast } from 'sonner';
 import { FaDiscord } from 'react-icons/fa';
 import cn from '@/lib/cn';
 import { t } from '@/stores/language';
+import { useMemo } from 'react';
 
 export default function Members({ template, isMobile, currentlyOpenedSection }) {
-  function getRandomBrandColor() {
-    const colors = ['#5865F2', '#757e8a', '#3ba55c', '#faa61a', '#ed4245', '#eb459f'];
+  const colors = ['#5865F2', '#757e8a', '#3ba55c', '#faa61a', '#ed4245', '#eb459f'];
 
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
+  const brandColors = useMemo(() => {
+    return template.data.roles.map(() => colors[Math.floor(Math.random() * colors.length)]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [template.data.roles]);
 
   return (
     <div
@@ -45,7 +47,7 @@ export default function Members({ template, isMobile, currentlyOpenedSection }) 
                   toast.success(t('templatePreviewPage.toast.roleColorCopied'));
                 }}
               >
-                <div className='relative flex size-[32px] items-center justify-center rounded-full' style={{ backgroundColor: getRandomBrandColor() }}>
+                <div className='relative flex size-[32px] items-center justify-center rounded-full' style={{ backgroundColor: brandColors[index] }}>
                   <FaDiscord className='text-white' size={20} />
 
                   <span className='absolute -bottom-0.5 -right-1 size-4 rounded-full border-4 border-[#2b2d31] bg-[#3ba55c]' />
