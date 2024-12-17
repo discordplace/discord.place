@@ -16,6 +16,7 @@ import useGeneralStore from '@/stores/general';
 import FullPageLoading from './components/FullPageLoading';
 import useLanguageStore from '@/stores/language';
 import ReportButtonProvider from '@/app/components/Providers/ReportButton';
+import Snowfall from 'react-snowfall';
 
 export default function RootLayoutContent({ children }) {
   const language = useLanguageStore(state => state.language);
@@ -30,6 +31,17 @@ export default function RootLayoutContent({ children }) {
 
   return (
     <section key={language}>
+      <Snowfall
+        snowflakeCount={100}
+        speed={[0.5, 1]}
+        wind={[1, 4.5]}
+        radius={[0.5, 3]}
+        style={{
+          zIndex: 9999999,
+          position: 'fixed'
+        }}
+      />
+
       <Script
         defer={true}
         src={config.analytics.script}
