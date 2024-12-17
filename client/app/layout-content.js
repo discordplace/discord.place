@@ -17,10 +17,12 @@ import FullPageLoading from './components/FullPageLoading';
 import useLanguageStore from '@/stores/language';
 import ReportButtonProvider from '@/app/components/Providers/ReportButton';
 import Snowfall from 'react-snowfall';
+import useThemeStore from '@/stores/theme';
 
 export default function RootLayoutContent({ children }) {
   const language = useLanguageStore(state => state.language);
   const showFullPageLoading = useGeneralStore(state => state.showFullPageLoading);
+  const theme = useThemeStore(state => state.theme);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -40,6 +42,7 @@ export default function RootLayoutContent({ children }) {
           zIndex: 9999999,
           position: 'fixed'
         }}
+        color={theme === 'dark' ? '#fff' : '#000'}
       />
 
       <Script
