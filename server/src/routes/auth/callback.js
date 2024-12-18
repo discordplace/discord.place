@@ -60,7 +60,6 @@ module.exports = {
 
         const token = jwt.sign(
           {
-            id: user.id,
             iat: currentDate.getTime()
           },
           process.env.JWT_SECRET,
@@ -68,7 +67,7 @@ module.exports = {
             expiresIn: '30d',
             issuer: 'api.discord.place',
             audience: 'discord.place',
-            subject: 'user'
+            subject: user.id
           }
         );
 

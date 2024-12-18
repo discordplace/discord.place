@@ -95,21 +95,23 @@ module.exports = class Server {
         const token = request.cookies.token;
 
         try {
-          const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+          const decoded = jwt.decode(token, { complete: true });
+          if (!decoded || !decoded.payload?.sub) throw new Error('Token invalid.');
+
+          const verified = jwt.verify(token, process.env.JWT_SECRET, {
             issuer: 'api.discord.place',
             audience: 'discord.place',
-            subject: 'user'
+            subject: decoded.payload.sub,
+            complete: true
           });
 
-          if (!decoded) throw new Error('Token invalid.');
-
-          const user = await User.findOne({ id: decoded.id }).select('lastLogoutAt').lean();
+          const user = await User.findOne({ id: verified.payload.sub }).select('lastLogoutAt').lean();
           if (!user) throw new Error('User not found.');
 
-          if (decoded.iat < new Date(user.lastLogoutAt).getTime()) throw new Error('Token expired.');
+          if (verified.iat < new Date(user.lastLogoutAt).getTime()) throw new Error('Token expired.');
 
           request.user = {
-            id: decoded.id
+            id: verified.payload.sub
           };
 
           const guild = client.guilds.cache.get(config.guildId);
