@@ -93,25 +93,24 @@ module.exports = class Server {
     this.server.use(async (request, response, next) => {
       if (request.cookies.token) {
         const token = request.cookies.token;
+        const tokenRegex = /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/;
 
         try {
-          const decoded = jwt.decode(token, { complete: true });
-          if (!decoded || !decoded.payload?.sub) throw new Error('Token invalid.');
+          if (!tokenRegex.test(token)) throw new Error('Invalid token format.');
 
-          const verified = jwt.verify(token, process.env.JWT_SECRET, {
+          const decoded = jwt.verify(token, process.env.JWT_SECRET, {
             issuer: 'api.discord.place',
             audience: 'discord.place',
-            subject: decoded.payload.sub,
             complete: true
           });
 
-          const user = await User.findOne({ id: verified.payload.sub }).select('lastLogoutAt').lean();
+          const user = await User.findOne({ id: decoded.payload.sub }).select('lastLogoutAt').lean();
           if (!user) throw new Error('User not found.');
 
-          if (verified.iat < new Date(user.lastLogoutAt).getTime()) throw new Error('Token expired.');
+          if (decoded.iat < new Date(user.lastLogoutAt).getTime()) throw new Error('Token expired.');
 
           request.user = {
-            id: verified.payload.sub
+            id: decoded.payload.sub
           };
 
           const guild = client.guilds.cache.get(config.guildId);
