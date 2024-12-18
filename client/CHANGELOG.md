@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.4.0](https://github.com/discordplace/discord.place/compare/client@v1.3.5...client@v1.4.0) (2024-12-17)
+
+
+### Features
+
+* add snowfall effect to LayoutContent ([53b450f](https://github.com/discordplace/discord.place/commit/53b450f7f1aea2e7dc653135f72bdc7d79b32a69))
+
+
+### Bug Fixes
+
+* adjust max width of container for better layout ([8469430](https://github.com/discordplace/discord.place/commit/84694305eb2f413489b047be5787592b1f2987c9))
+* **templates-previews:** use useMemo for performance optimization Members component ([8cc5f63](https://github.com/discordplace/discord.place/commit/8cc5f63ecd5902cc4a56bb2f5f0a40e4255521db))
+* update stroke-width to strokeWidth in CollapseIcon components ([7e16434](https://github.com/discordplace/discord.place/commit/7e1643466f64b7761a31fcdd59044fb86c945485))
+* use theme-based color for Snowfall component in LayoutContent ([3afe142](https://github.com/discordplace/discord.place/commit/3afe1421718392b7ceefab8d88589b1fb09c5605))
+
 ## [1.3.5](https://github.com/discordplace/discord.place/compare/client@v1.3.4...client@v1.3.5) (2024-11-20)
 
 
