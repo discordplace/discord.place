@@ -107,7 +107,7 @@ module.exports = class Server {
           const user = await User.findOne({ id: decoded.payload.sub }).select('lastLogoutAt').lean();
           if (!user) throw new Error('User not found.');
 
-          if (decoded.iat < new Date(user.lastLogoutAt).getTime()) throw new Error('Token expired.');
+          if (decoded.iat < Math.floor(new Date(user.lastLogoutAt).getTime() / 1000)) throw new Error('Token expired.');
 
           request.user = {
             id: decoded.payload.sub

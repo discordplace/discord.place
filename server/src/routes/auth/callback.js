@@ -60,7 +60,7 @@ module.exports = {
 
         const token = jwt.sign(
           {
-            iat: currentDate.getTime()
+            iat: Math.floor(currentDate.getTime() / 1000)
           },
           process.env.JWT_SECRET,
           {
