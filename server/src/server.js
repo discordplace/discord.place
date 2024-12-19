@@ -101,7 +101,8 @@ module.exports = class Server {
           const decoded = jwt.verify(token, process.env.JWT_SECRET, {
             issuer: 'api.discord.place',
             audience: 'discord.place',
-            complete: true
+            complete: true,
+            clockTolerance: 60
           });
 
           const user = await User.findOne({ id: decoded.payload.sub }).select('lastLogoutAt').lean();

@@ -6,6 +6,7 @@ const User = require('@/schemas/User');
 const encrypt = require('@/utils/encryption/encrypt');
 const UserHashes = require('@/schemas/User/Hashes');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const crypto = require('node:crypto');
 
 module.exports = {
   get: [
@@ -60,7 +61,9 @@ module.exports = {
 
         const token = jwt.sign(
           {
-            iat: Math.floor(currentDate.getTime() / 1000)
+            iat: Math.floor(currentDate.getTime() / 1000),
+            nbf: Math.floor(currentDate.getTime() / 1000),
+            jti: crypto.randomUUID()
           },
           process.env.JWT_SECRET,
           {
