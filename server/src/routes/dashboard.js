@@ -81,16 +81,40 @@ module.exports = {
 
       if (!permissions.canViewDashboard) return response.sendError('You do not have permission to view the dashboard.', 403);
 
+      const [emojisCount, emojiPacksCount, botsCount, templatesCount, soundsCount, themesCount, botReviewsCount, serverReviewsCount, linksCount, botDeniesCount, botTimeoutsCount, serverTimeoutsCount, quarantinesCount, blockedIpsCount] = await Promise.all([
+        Emoji.countDocuments({ approved: false }),
+        EmojiPack.countDocuments({ approved: false }),
+        Bot.countDocuments({ verified: false }),
+        Template.countDocuments({ approved: false }),
+        Sound.countDocuments({ approved: false }),
+        Theme.countDocuments({ approved: false }),
+        BotReview.countDocuments({ approved: false }),
+        ServerReview.countDocuments({ approved: false }),
+        Link.countDocuments(),
+        BotDeny.countDocuments(),
+        BotTimeout.countDocuments(),
+        ServerTimeout.countDocuments(),
+        Quarantine.countDocuments(),
+        BlockedIp.countDocuments()
+      ]);
+
       const responseData = {
         permissions,
         queue: {},
         importantCounts: {
-          emojis: await Emoji.countDocuments({ approved: false }) + await EmojiPack.countDocuments({ approved: false }),
-          bots: await Bot.countDocuments({ verified: false }),
-          templates: await Template.countDocuments({ approved: false }),
-          sounds: await Sound.countDocuments({ approved: false }),
-          themes: await Theme.countDocuments({ approved: false }),
-          reviews: await BotReview.countDocuments({ approved: false }) + await ServerReview.countDocuments({ approved: false })
+          emojis: emojisCount + emojiPacksCount,
+          bots: botsCount,
+          templates: templatesCount,
+          sounds: soundsCount,
+          themes: themesCount,
+          reviews: botReviewsCount + serverReviewsCount
+        },
+        counts: {
+          links: linksCount,
+          botDenies: botDeniesCount,
+          timeouts: botTimeoutsCount + serverTimeoutsCount,
+          quarantines: quarantinesCount,
+          blockedIps: blockedIpsCount
         }
       };
 
