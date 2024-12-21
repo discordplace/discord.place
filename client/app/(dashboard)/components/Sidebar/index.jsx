@@ -65,42 +65,60 @@ export default function Sidebar() {
           name: 'Emojis',
           icon: MdEmojiEmotions,
           disabled: data?.permissions?.canApproveEmojis === false,
-          badge: data?.importantCounts?.emojis
+          badge: {
+            data: data?.importantCounts?.emojis,
+            style: 'danger'
+          }
         },
         {
           id: 'botsQueue',
           name: 'Bots',
           icon: RiRobot2Fill,
           disabled: data?.permissions?.canApproveBots === false,
-          badge: data?.importantCounts?.bots
+          badge: {
+            data: data?.importantCounts?.bots,
+            style: 'danger'
+          }
         },
         {
           id: 'templatesQueue',
           name: 'Templates',
           icon: HiTemplate,
           disabled: data?.permissions?.canApproveTemplates === false,
-          badge: data?.importantCounts?.templates
+          badge: {
+            data: data?.importantCounts?.templates,
+            style: 'danger'
+          }
         },
         {
           id: 'soundsQueue',
           name: 'Sounds',
           icon: PiWaveformBold,
           disabled: data?.permissions?.canApproveSounds === false,
-          badge: data?.importantCounts?.sounds
+          badge: {
+            data: data?.importantCounts?.sounds,
+            style: 'danger'
+          }
         },
         {
           id: 'reviewsQueue',
           name: 'Reviews',
           icon: FaEye,
           disabled: data?.permissions?.canApproveReviews === false && data?.permissions?.canDeleteReviews === false,
-          badge: data?.importantCounts?.reviews
+          badge: {
+            data: data?.importantCounts?.reviews,
+            style: 'danger'
+          }
         },
         {
           id: 'themesQueue',
           name: 'Themes',
           icon: RiBrush2Fill,
           disabled: data?.permissions?.canApproveThemes === false,
-          badge: data?.importantCounts?.themes
+          badge: {
+            data: data?.importantCounts?.themes,
+            style: 'danger'
+          }
         }
       ]
     },
@@ -111,31 +129,51 @@ export default function Sidebar() {
           id: 'links',
           name: 'Links',
           icon: FiLink,
-          disabled: data?.permissions?.canDeleteLinks === false
+          disabled: data?.permissions?.canDeleteLinks === false,
+          badge: {
+            data: data?.counts?.links,
+            style: 'primary'
+          }
         },
         {
           id: 'botDenies',
           name: `Bot Denies${data?.botDenies?.length ? ` (${data.botDenies.length})` : ''}`,
           icon: FaUserTimes,
-          disabled: data?.permissions?.canDeleteBotDenies === false
+          disabled: data?.permissions?.canDeleteBotDenies === false,
+          badge: {
+            data: data?.counts?.botDenies,
+            style: 'primary'
+          }
         },
         {
           id: 'timeouts',
           name: 'Timeouts',
           icon: TbSquareRoundedChevronUp,
-          disabled: data?.permissions?.canViewTimeouts === false || data?.permissions?.canDeleteTimeouts === false
+          disabled: data?.permissions?.canViewTimeouts === false || data?.permissions?.canDeleteTimeouts === false,
+          badge: {
+            data: data?.counts?.timeouts,
+            style: 'primary'
+          }
         },
         {
           id: 'quarantines',
           name: 'Quarantines',
           icon: CgBlock,
-          disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false
+          disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false,
+          badge: {
+            data: data?.counts?.quarantines,
+            style: 'primary'
+          }
         },
         {
           id: 'blockedIPs',
           name: `Blocked IPs${data?.blockedIps?.length ? ` (${data.blockedIps.length})` : ''}`,
           icon: MdMyLocation,
-          disabled: data?.permissions?.canViewBlockedIps === false || data?.permissions?.canDeleteBlockedIps === false
+          disabled: data?.permissions?.canViewBlockedIps === false || data?.permissions?.canDeleteBlockedIps === false,
+          badge: {
+            data: data?.counts?.blockedIps,
+            style: 'primary'
+          }
         },
         {
           type: 'redirect',

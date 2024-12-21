@@ -15,18 +15,24 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
 
   return (
     <TooltipContainer
-      content={`${name}${badge ? ` (${badge})` : ''}`}
+      content={`${name}${badge ? ` (${badge.data})` : ''}`}
       side='right'
     >
       <ContainerComponent
         className={cn(
           'flex items-center w-full py-2 rounded-lg gap-x-3 select-none',
           activeTab === id ? 'bg-quaternary text-primary pointer-events-none' : 'cursor-pointer hover:bg-quaternary text-secondary hover:text-primary',
-          badge > 0 && 'hover:bg-tertiary hover:bg-gradient-to-l hover:from-red-600/20',
-          activeTab === id && badge > 0 && 'bg-tertiary bg-gradient-to-l from-red-600/20',
           isCollapsed ? 'justify-center' : 'pl-4',
           disabled && 'opacity-50 pointer-events-none',
-          loading && 'pointer-events-none'
+          loading && 'pointer-events-none',
+
+          // Danger style
+          badge?.data > 0 && badge.style === 'danger' && 'hover:bg-tertiary hover:bg-gradient-to-l hover:from-red-600/20',
+          activeTab === id && badge?.data > 0 && badge.style === 'danger' && 'bg-tertiary bg-gradient-to-l from-red-600/20',
+
+          // Primary style
+          badge?.data > 0 && badge.style === 'primary' && 'hover:bg-tertiary hover:bg-gradient-to-l hover:from-purple-500/20',
+          activeTab === id && badge?.data > 0 && badge.style === 'primary' && 'bg-tertiary bg-gradient-to-l from-purple-500/20'
         )}
         key={id}
         onClick={() => onClick ? onClick() : !href && setActiveTab(id)}
@@ -44,9 +50,14 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
           {name}
         </span>
 
-        {!isCollapsed && badge ? (
-          <span className='ml-auto mr-4 rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white'>
-            {badge}
+        {!isCollapsed && badge?.data > 0 ? (
+          <span
+            className={cn(
+              'ml-auto mr-4 rounded-full px-2 py-0.5 text-xs font-bold text-white',
+              badge.style === 'danger' ? 'bg-red-600' : 'bg-purple-500'
+            )}
+          >
+            {badge.data}
           </span>
         ) : ''}
       </ContainerComponent>
