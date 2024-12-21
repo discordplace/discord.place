@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/discordplace/discord.place/compare/client@v1.4.0...client@v1.5.0) (2024-12-21)
+
+
+### Features
+
+* **dashboard/sidebar:** add new color options to badges ([2ca0f56](https://github.com/discordplace/discord.place/commit/2ca0f56489f3fde5a789bddf7d8917bc20036b4d))
+
 ## [1.4.0](https://github.com/discordplace/discord.place/compare/client@v1.3.5...client@v1.4.0) (2024-12-17)
 
 
