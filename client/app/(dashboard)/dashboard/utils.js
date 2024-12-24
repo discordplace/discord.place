@@ -217,8 +217,8 @@ export const deleteBotDenyRecord = id => sendRequest({
   loadingMessage: `Deleting bot deny record ${id}..`
 });
 
-export const restoreBot = (id, reason) => sendRequest({
-  params: { id, reason },
+export const restoreBot = id => sendRequest({
+  params: { id },
   promise: INTERNAL_restoreBot,
   successMessage: `Bot ${id} restored successfully! Please review it again.`,
   loadingMessage: `Restoring bot ${id}..`
