@@ -31,8 +31,6 @@ module.exports = {
 
       await bot.save();
 
-      const botOwnerUser = client.users.cache.get(bot.owner.id) || await client.users.fetch(bot.owner.id).catch(() => null);
-
       const guild = client.guilds.cache.get(config.guildId);
 
       const publisher = guild.members.cache.get(bot.owner.id) || await guild.members.fetch(bot.owner.id).catch(() => null);
@@ -44,7 +42,7 @@ module.exports = {
       const embeds = [
         new Discord.EmbedBuilder()
           .setTitle('Bot Deny Restored')
-          .setAuthor({ name: botOwnerUser.username, iconURL: botOwnerUser.displayAvatarURL() })
+          .setAuthor({ name: publisher.username, iconURL: publisher.displayAvatarURL() })
           .setFields([
             {
               name: 'Bot Restored',
