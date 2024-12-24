@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/discordplace/discord.place/compare/client@v1.5.0...client@v1.5.1) (2024-12-21)
+
+
+### Bug Fixes
+
+* **dashboard/sidebar:** remove unnecessary badge count added to bot denies tab name ([37d14bf](https://github.com/discordplace/discord.place/commit/37d14bff1977c3c999a87e7f8437fa9ae487fbc5))
+
 ## [1.5.0](https://github.com/discordplace/discord.place/compare/client@v1.4.0...client@v1.5.0) (2024-12-21)
 
 
