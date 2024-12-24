@@ -76,7 +76,8 @@ module.exports = {
         canDeleteQuarantines: request.member && config.permissions.canDeleteQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canCreateQuarantines: request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canSyncLemonSqueezyPlans: config.permissions.canSyncLemonSqueezyPlans.includes(request.user.id),
-        canRefreshCache: request.member && config.permissions.canExecuteRefreshCacheRoles.some(roleId => request.member.roles.cache.has(roleId))
+        canRefreshCache: request.member && config.permissions.canExecuteRefreshCacheRoles.some(roleId => request.member.roles.cache.has(roleId)),
+        canRestoreBotDenies: request.member && config.permissions.canRestoreBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId))
       };
 
       if (!permissions.canViewDashboard) return response.sendError('You do not have permission to view the dashboard.', 403);
@@ -312,7 +313,7 @@ module.exports = {
       }
 
       if (keys?.includes('botdenies')) {
-        if (!permissions.canDeleteBotDenies) return response.sendError('You do not have permission to delete bot denies.', 403);
+        if (!permissions.canDeleteBotDenies && !permissions.canRestoreBotDenies) return response.sendError('You do not have permission to delete/restore bot denies.', 403);
 
         const botDenies = await BotDeny.find().sort({ createdAt: -1 });
 

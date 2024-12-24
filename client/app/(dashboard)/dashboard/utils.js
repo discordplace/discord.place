@@ -25,6 +25,7 @@ import INTERNAL_deleteBotDenyRecord from '@/lib/request/bots/deleteBotDenyRecord
 import INTERNAL_deleteBotTimeout from '@/lib/request/bots/deleteTimeout';
 import INTERNAL_deleteServerTimeout from '@/lib/request/servers/deleteTimeout';
 import INTERNAL_deleteQuarantineRecord from '@/lib/request/dashboard/deleteQuarantineRecord';
+import INTERNAL_restoreBot from '@/lib/request/bots/restoreBot';
 
 import { toast } from 'sonner';
 import useModalsStore from '@/stores/modals';
@@ -214,6 +215,13 @@ export const deleteBotDenyRecord = id => sendRequest({
   promise: INTERNAL_deleteBotDenyRecord,
   successMessage: `Bot deny record ${id} deleted successfully!`,
   loadingMessage: `Deleting bot deny record ${id}..`
+});
+
+export const restoreBot = (id, reason) => sendRequest({
+  params: { id, reason },
+  promise: INTERNAL_restoreBot,
+  successMessage: `Bot ${id} restored successfully! Please review it again.`,
+  loadingMessage: `Restoring bot ${id}..`
 });
 
 export const deleteBotTimeout = (timeoutId, botId) => sendRequest({

@@ -13,10 +13,10 @@ import MotionImage from '@/app/components/Motion/Image';
 import Queue from '@/app/(dashboard)/components/Queue';
 import { MdAlternateEmail, MdEmojiEmotions, MdHttps, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility } from 'react-icons/md';
 import { FaCompass, FaCrown, FaEye, FaUserCircle } from 'react-icons/fa';
-import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
+import { IoMdCheckmarkCircle, IoMdCloseCircle, IoMdUndo } from 'react-icons/io';
 import { BiCloudDownload, BiSolidCategory } from 'react-icons/bi';
 import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
-import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, deleteBlockedIP, deleteLink, deleteBotDenyRecord, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
+import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, deleteBlockedIP, deleteLink, deleteBotDenyRecord, restoreBot, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
 import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
 import config from '@/config';
 import sleep from '@/lib/sleep';
@@ -1414,7 +1414,7 @@ export default function Page() {
       name: 'Bot Denies',
       data: {
         title: 'Bot Denies',
-        subtitle: 'Here you can see the all the bot denies that have been recorded. (last 6 hours only)',
+        subtitle: 'Here you can see the all the bot denies that have been recorded. (last 7 days only)',
         totalCount: data?.botDenies?.length || 0,
         tableData: {
           tabs: [
@@ -1503,6 +1503,15 @@ export default function Page() {
                     fetchKey: 'botdenies'
                   }),
                   hide: !data.permissions?.canDeleteBotDenies
+                },
+                {
+                  name: 'Restore',
+                  icon: IoMdUndo,
+                  action: () => bulkAction({
+                    action: item => restoreBot(item.id),
+                    fetchKey: 'botdenies'
+                  }),
+                  hide: !data.permissions?.canRestoreBotDenies
                 }
               ]
             }

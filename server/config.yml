@@ -102,6 +102,11 @@ permissions:
     - '1267549562957205645'
     - '1206355082883371049'
     - '1238588360193216695'
+  canRestoreBotDeniesRoles:
+    - '1206032198562742312'
+    - '1267549562957205645'
+    - '1206355082883371049'
+    - '1238588360193216695'
   canViewTimeoutsRoles:
     - '1206032198562742312'
     - '1267549562957205645'
@@ -242,6 +247,7 @@ linksLogsChannelId: '1267553398337572905'
 portalChannelId: '1238654829916585984'
 joinLeaveLogsChannelId: '1267553398337572905'
 quarantineLogsChannelId: '1267553398337572905'
+botDenyRestoreLogsChannelId: '1267553398337572905'
 excludeCollectionsInBackup:
   - 'botdenies'
   - 'botvotetimeouts'

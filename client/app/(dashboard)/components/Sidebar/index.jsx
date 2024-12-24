@@ -139,7 +139,7 @@ export default function Sidebar() {
           id: 'botDenies',
           name: 'Bot Denies',
           icon: FaUserTimes,
-          disabled: data?.permissions?.canDeleteBotDenies === false,
+          disabled: data?.permissions?.canDeleteBotDenies === false || data?.permissions?.canRestoreBots === false,
           badge: {
             data: data?.counts?.botDenies,
             style: 'primary'

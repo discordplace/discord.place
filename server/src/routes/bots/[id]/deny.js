@@ -55,7 +55,8 @@ module.exports = {
         reason: {
           title: config.botsDenyReasons[reason].name,
           description: config.botsDenyReasons[reason].description
-        }
+        },
+        data: bot.toJSON()
       }).save();
 
       const guild = client.guilds.cache.get(config.guildId);

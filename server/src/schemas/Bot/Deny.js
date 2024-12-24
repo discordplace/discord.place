@@ -45,6 +45,10 @@ const BotDenySchema = new Schema({
       type: String,
       required: true
     }
+  },
+  data: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
   }
 }, {
   timestamps: true
