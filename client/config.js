@@ -215,7 +215,7 @@ const config = {
   botShortDescriptionMinLength: 16,
   botShortDescriptionMaxLength: 150,
   botDescriptionMinLength: 32,
-  botDescriptionMaxLength: 2048,
+  botDescriptionMaxLength: 4096,
   templateMaxCategoriesLength: 3,
   templateDescriptionMinLength: 32,
   templateDescriptionMaxLength: 256,

@@ -149,7 +149,7 @@ reviewsMinCharacters: 64
 botShortDescriptionMinLength: 16
 botShortDescriptionMaxLength: 150
 botDescriptionMinLength: 32
-botDescriptionMaxLength: 2048
+botDescriptionMaxLength: 4096
 botWebhookTokenMaxLength: 256
 serverWebhookTokenMaxLength: 256
 templateMaxNameLength: 32
