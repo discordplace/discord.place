@@ -1365,7 +1365,11 @@
   "botCard": {
     "noDescription": "Bu botun bir açıklaması yok. Sadece ne kadar güzel olduğunu hayal edebiliriz.",
     "tripledVoteBadge": "3X OY!",
-    "neverVoted": "Hiç oy verilmedi"
+    "neverVoted": "Hiç oy verilmedi",
+    "mostVotedBadge": {
+      "tooltip": "Bu bot geçen ay en çok oy alan botdu.",
+      "label": "En Çok Oy Alan"
+    }
   },
   "badges": {
     "admin": "Yönetici",

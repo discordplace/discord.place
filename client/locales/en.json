@@ -1365,7 +1365,11 @@
   "botCard": {
     "noDescription": "This bot does not have a description. We can only imagine how beautiful it is.",
     "tripledVoteBadge": "3X VOTE!",
-    "neverVoted": "Never Voted"
+    "neverVoted": "Never Voted",
+    "mostVotedBadge": {
+      "tooltip": "This bot was the most voted bot last month.",
+      "label": "Most Voted"
+    }
   },
   "badges": {
     "admin": "Admin",
