@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.6.0](https://github.com/discordplace/discord.place/compare/client@v1.5.1...client@v1.6.0) (2025-01-07)
+
+
+### Features
+
+* add most voted badge to bot/server cards based on monthly votes ([#155](https://github.com/discordplace/discord.place/issues/155)) ([8b7f12e](https://github.com/discordplace/discord.place/commit/8b7f12e31e68f3fd4e131d5f3e25bb5379f59abd))
+* **dashboard/bot-denies:** add restore functionality for bot denies ([137f2db](https://github.com/discordplace/discord.place/commit/137f2dba5faccedf23e3616b4d00963c9c8e26b0))
+* remove snowfall effect ([#153](https://github.com/discordplace/discord.place/issues/153)) ([e8e146d](https://github.com/discordplace/discord.place/commit/e8e146d59d967b507b8220a0be76a0384bffa613))
+
+
+### Bug Fixes
+
+* **config:** increase bot description max length to 4096 characters ([e35408e](https://github.com/discordplace/discord.place/commit/e35408e32da036026be868b17e9b469d2955f9f2)), closes [#152](https://github.com/discordplace/discord.place/issues/152)
+* **dashboard/utils:** remove unnecessary restoreBot function parameter ([1d0681a](https://github.com/discordplace/discord.place/commit/1d0681a01893eb78903c79043885c322998a5539))
+
 ## [1.5.1](https://github.com/discordplace/discord.place/compare/client@v1.5.0...client@v1.5.1) (2024-12-21)
 
 

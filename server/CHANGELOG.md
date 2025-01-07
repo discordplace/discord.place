@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.0](https://github.com/discordplace/discord.place/compare/server@v1.3.0...server@v1.4.0) (2025-01-07)
+
+
+### Features
+
+* add most voted badge to bot/server cards based on monthly votes ([#155](https://github.com/discordplace/discord.place/issues/155)) ([8b7f12e](https://github.com/discordplace/discord.place/commit/8b7f12e31e68f3fd4e131d5f3e25bb5379f59abd))
+* **dashboard/bot-denies:** add restore functionality for bot denies ([137f2db](https://github.com/discordplace/discord.place/commit/137f2dba5faccedf23e3616b4d00963c9c8e26b0))
+
+
+### Bug Fixes
+
+* **bot-denies/restore:** use publisher information instead of bot owner for embed author ([0dd41a7](https://github.com/discordplace/discord.place/commit/0dd41a75f407321aaab63986697012f4e5595c60))
+* **config:** increase bot description max length to 4096 characters ([e35408e](https://github.com/discordplace/discord.place/commit/e35408e32da036026be868b17e9b469d2955f9f2)), closes [#152](https://github.com/discordplace/discord.place/issues/152)
+* correct user ID for most voted user in database, add is_most_vot… ([#154](https://github.com/discordplace/discord.place/issues/154)) ([e2e7165](https://github.com/discordplace/discord.place/commit/e2e7165bf1ddad3d590e4163d3d148142a8858cf))
+* correct user ID for most voted user in database, add is_most_voted field ([e2e7165](https://github.com/discordplace/discord.place/commit/e2e7165bf1ddad3d590e4163d3d148142a8858cf))
+
 ## [1.3.0](https://github.com/discordplace/discord.place/compare/server@v1.2.4...server@v1.3.0) (2024-12-21)
 
 
