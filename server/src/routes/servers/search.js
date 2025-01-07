@@ -5,6 +5,7 @@ const User = require('@/schemas/User');
 const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const { StandedOutServer } = require('@/schemas/StandedOut');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 
 module.exports = {
   get: [
@@ -83,6 +84,13 @@ module.exports = {
       }).select('id');
 
       const voteTripleEnabledServerIds = await ServerVoteTripleEnabled.find({ id: { $in: sortedServers.map(server => server.id) } });
+      const monthlyVotes = await ServerMonthlyVotes.find({ identifier: { $in: sortedServers.map(server => server.id) } });
+
+      const mostVotedServer = monthlyVotes.find(({ data }) => {
+        const latestData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+
+        return latestData.is_most_voted === true;
+      });
 
       return response.json({
         maxReached,
@@ -120,6 +128,7 @@ module.exports = {
               standed_out: standedOutServerIds.find(({ identifier }) => identifier === guild.id) ? {
                 created_at: standedOutServerIds.find(({ identifier }) => identifier === guild.id).createdAt
               } : null,
+              is_most_voted: mostVotedServer?.identifier === guild.id,
               owner: {
                 id: guild.ownerId
               }
