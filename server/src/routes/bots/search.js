@@ -5,6 +5,7 @@ const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const { StandedOutBot } = require('@/schemas/StandedOut');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const { BotMonthlyVotes } = require('@/schemas/MonthlyVotes');
 
 module.exports = {
   get: [
@@ -72,6 +73,14 @@ module.exports = {
       const total = await Bot.countDocuments(findQuery);
       const maxReached = skip + foundBots.length >= total;
 
+      const monthlyVotes = await BotMonthlyVotes.find({ identifier: { $in: sortedBots.map(server => server.id) } });
+
+      const mostVotedBot = monthlyVotes.find(({ data }) => {
+        const latestData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+
+        return latestData.is_most_voted === true;
+      });
+
       return response.json({
         maxReached,
         total,
@@ -83,7 +92,8 @@ module.exports = {
           return {
             ...publiclySafeBot,
             reviews: reviews.filter(review => review.bot.id === bot.id).length,
-            latest_voted_at: bot.last_voter?.date || null
+            latest_voted_at: bot.last_voter?.date || null,
+            is_most_voted: mostVotedBot?.identifier === bot.id
           };
         }))
       });
