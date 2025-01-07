@@ -15,6 +15,8 @@ import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import Tooltip from '@/app/components/Tooltip';
+import { ImTrophy } from 'react-icons/im';
 
 export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -152,15 +154,28 @@ export default function Card({ data, overridedSort }) {
                 {t(`categories.${category === 'All' ? data.categories[0] : category}`)}
               </div>
 
-              {data.vote_triple_enabled?.created_at && (
-                <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
-                  <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)]'></div>
+              {data.is_most_voted ? (
+                <Tooltip
+                  content={t('botCard.mostVotedBadge.tooltip')}
+                >
+                  <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
+                    <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#3b82f6_10deg,transparent_90deg)]'></div>
 
-                  <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-orange-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md'>
-                    <BsFire /> {t('botCard.tripledVoteBadge')}
+                    <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md transition-all hover:bg-blue-500/50'>
+                      <ImTrophy /> {t('botCard.mostVotedBadge.label')}
+                    </div>
                   </div>
-                </div>
-              )}
+                </Tooltip>
+              ) : (
+                data.vote_triple_enabled?.created_at && (
+                  <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
+                    <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)]'></div>
+
+                    <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-orange-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md'>
+                      <BsFire /> {t('botCard.tripledVoteBadge')}
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>

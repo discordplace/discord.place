@@ -676,7 +676,11 @@
   },
   "serverCard": {
     "noDescription": "Bu serverin təsviri yoxdur. ",
-    "tripledVoteBadge": "3X SƏS!"
+    "tripledVoteBadge": "3X SƏS!",
+    "mostVotedBadge": {
+      "tooltip": "Bu server keçən ay ən çox səs alan server idi.",
+      "label": "Ən çox səs alan"
+    }
   },
   "serverPage": {
     "countdown": {
@@ -1361,7 +1365,11 @@
   "botCard": {
     "noDescription": "Bu botun təsviri yoxdur. ",
     "tripledVoteBadge": "3X SƏS!",
-    "neverVoted": "Heç bir səs yoxdur"
+    "neverVoted": "Heç bir səs yoxdur",
+    "mostVotedBadge": {
+      "tooltip": "Bu bot keçən ay ən çox səs alan bot idi.",
+      "label": "Ən çox səs alan"
+    }
   },
   "badges": {
     "admin": "Admin",

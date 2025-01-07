@@ -8,6 +8,7 @@ import { MdUpdate } from 'react-icons/md';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import { IoHeart } from 'react-icons/io5';
+import { ImTrophy } from 'react-icons/im';
 import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
 import getRelativeTime from '@/lib/getRelativeTime';
@@ -17,6 +18,7 @@ import { GiInfinity } from 'react-icons/gi';
 import useLanguageStore, { t } from '@/stores/language';
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import Tooltip from '@/app/components/Tooltip';
 
 export default function ServerCard(props) {
   const isMobile = useMedia('(max-width: 420px)', false);
@@ -165,8 +167,19 @@ export default function ServerCard(props) {
                 {config.serverCategoriesIcons[props.server.category]}
                 {t(`categories.${props.server.category}`)}
               </div>
+              {props.server.is_most_voted ? (
+                <Tooltip
+                  content={t('serverCard.mostVotedBadge.tooltip')}
+                >
+                  <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
+                    <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#3b82f6_10deg,transparent_90deg)]'></div>
 
-              {props.server.vote_triple_enabled?.created_at && (
+                    <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md transition-all hover:bg-blue-500/50'>
+                      <ImTrophy /> {t('serverCard.mostVotedBadge.label')}
+                    </div>
+                  </div>
+                </Tooltip>
+              ) : props.server.vote_triple_enabled?.created_at && (
                 <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
                   <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)]'></div>
 
