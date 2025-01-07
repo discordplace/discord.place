@@ -676,7 +676,11 @@
   },
   "serverCard": {
     "noDescription": "This server does not have a description. We can only imagine how beautiful it is inside.",
-    "tripledVoteBadge": "3X VOTE!"
+    "tripledVoteBadge": "3X VOTE!",
+    "mostVotedBadge": {
+      "tooltip": "This server was the most voted server last month.",
+      "label": "Most Voted"
+    }
   },
   "serverPage": {
     "countdown": {

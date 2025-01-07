@@ -676,7 +676,11 @@
   },
   "serverCard": {
     "noDescription": "Bu sunucunun açıklaması yok. İçeride ne kadar güzel olduğunu ancak hayal edebiliyoruz.",
-    "tripledVoteBadge": "3X OY!"
+    "tripledVoteBadge": "3X OY!",
+    "mostVotedBadge": {
+      "tooltip": "Bu sunucu geçen ay en çok oy alan sunucuydu.",
+      "label": "En Çok Oy Alan"
+    }
   },
   "serverPage": {
     "countdown": {

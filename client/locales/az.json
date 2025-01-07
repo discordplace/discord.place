@@ -676,7 +676,11 @@
   },
   "serverCard": {
     "noDescription": "Bu serverin təsviri yoxdur. ",
-    "tripledVoteBadge": "3X SƏS!"
+    "tripledVoteBadge": "3X SƏS!",
+    "mostVotedBadge": {
+      "tooltip": "Bu server keçən ay ən çox səs alan server idi.",
+      "label": "Ən çox səs alan"
+    }
   },
   "serverPage": {
     "countdown": {
