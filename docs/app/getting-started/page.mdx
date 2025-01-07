@@ -37,7 +37,8 @@ const axios = require('axios');
 const apiKey = process.env.DISCORD_PLACE_API_KEY; // You should use environment variables to store your API key
 
 const mockData = { // This is just a mock data to demonstrate the usage
-  command_count: 0
+  command_count: 0,
+  server_count: 0
 }
 
 axios.patch('https://api.discord.place/bots/YOUR_BOT_ID/stats', mockData, {
@@ -61,7 +62,8 @@ import requests
 api_key = os.getenv('DISCORD_PLACE_API_KEY') # You should use environment variables to store your API key
 
 mock_data = { # This is just a mock data to demonstrate the usage
-  'command_count': 0
+  'command_count': 0,
+  'server_count': 0
 }
 
 response = requests.patch(
@@ -79,7 +81,7 @@ print(response.json())
 curl -X PATCH https://api.discord.place/bots/YOUR_BOT_ID/stats \
   -H "Authorization: YOUR_API_KEY_HERE" \
   -H "Content-Type: application/json" \
-  -d '{"command_count": 0}'
+  -d '{"command_count": 0,"server_count": 0}'
 ```
 
 #### Congratulations! 🎉
