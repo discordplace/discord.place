@@ -57,7 +57,7 @@ export default function MonthlyVotesGraph({ server }) {
           data={server.monthly_votes.map(({ created_at, votes }) => ({ createdAt: created_at, value: votes })).reverse()}
           tooltipFormatter={value => value.toLocaleString('en-US')}
           color={(isIncreased || isDecreased) ? 'rgb(168, 85, 247)' : '#b4b4b4'}
-          xaxisRange={server.monthly_votes.length}
+          xaxisRange={server.monthly_votes.length - 1}
           xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { year: 'numeric', month: 'short' }))}
         />
       </div>
