@@ -4,6 +4,8 @@ import getCompressedName from '@/lib/getCompressedName';
 import { HiMiniUserGroup } from 'react-icons/hi2';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import getHashFromURL from '@/lib/getHashFromURL';
+import Link from 'next/link';
+import cn from '@/lib/cn';
 
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'decimal',
@@ -12,8 +14,16 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
 
 export default function ServerCard({ data }) {
+  const Container = data.is_listed ? Link : 'div';
+
   return (
-    <div className='pointer-events-none flex select-none items-center gap-x-1 rounded-full border border-primary bg-secondary py-1 pl-1 pr-3'>
+    <Container
+      className={cn(
+        'flex select-none items-center gap-x-1 rounded-full border border-primary bg-secondary py-1 pl-1 pr-3',
+        data.is_listed ? 'hover:bg-quaternary transition-colors' : 'pointer-events-none'
+      )}
+      href={data.is_listed ? `/servers/${data.id}` : ''}
+    >
       {data.icon_url ? (
         <ServerIcon
           id={data.id}
@@ -37,6 +47,6 @@ export default function ServerCard({ data }) {
         {formatter.format(data.member_count)}
         <HiMiniUserGroup />
       </span>
-    </div>
+    </Container>
   );
 }
