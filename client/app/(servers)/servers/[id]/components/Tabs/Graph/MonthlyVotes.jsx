@@ -58,7 +58,7 @@ export default function MonthlyVotesGraph({ server }) {
           tooltipFormatter={value => value.toLocaleString('en-US')}
           color={(isIncreased || isDecreased) ? 'rgb(168, 85, 247)' : '#b4b4b4'}
           xaxisRange={server.monthly_votes.length}
-          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { year: 'numeric', month: 'long' }))}
+          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { year: 'numeric', month: 'short' }))}
         />
       </div>
     </div>
