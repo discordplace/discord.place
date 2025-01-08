@@ -1,13 +1,8 @@
 'use client';
 
-import { IoEarth } from 'react-icons/io5';
-import { FaQuestion } from 'react-icons/fa6';
-import { nanoid } from 'nanoid';
-import Image from 'next/image';
 import Link from 'next/link';
 import { MdArrowOutward } from 'react-icons/md';
 import { useState, useEffect } from 'react';
-import useThemeStore from '@/stores/theme';
 import addSocial from '@/lib/request/profiles/addSocial';
 import deleteSocial from '@/lib/request/profiles/deleteSocial';
 import { toast } from 'sonner';
@@ -15,27 +10,14 @@ import { FiX } from 'react-icons/fi';
 import cn from '@/lib/cn';
 import config from '@/config';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
-import getIconPath from '@/lib/utils/profiles/getIconPath';
 import revalidateProfile from '@/lib/revalidate/profile';
 import { t } from '@/stores/language';
+import colors from '@/lib/utils/profiles/colors';
+import getIcon from '@/lib/utils/profiles/getIcon';
+import { TbLoader } from 'react-icons/tb';
 
 export default function Socials({ profile }) {
   const [socials, setSocials] = useState(profile.socials);
-
-  const colors = {
-    instagram: '225 48 108',
-    x: '0 0 0',
-    twitter: '29 161 242',
-    tiktok: '255 0 80',
-    facebook: '66 103 178',
-    steam: '0 0 0',
-    github: '110 84 148',
-    twitch: '145 70 255',
-    youtube: '255 0 0',
-    telegram: '36 161 222',
-    custom: '150 150 150',
-    unknown: '0 0 0'
-  };
 
   const typeRegexps = {
     instagram: /(?:http(?:s)?:\/\/)?(?:www\.)?instagram\.com\/([\w](?!.*?\.{2})[\w.]{1,28}[\w])/,
@@ -50,8 +32,6 @@ export default function Socials({ profile }) {
     telegram: /(?:http(?:s)?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]+)/,
     custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/
   };
-
-  const theme = useThemeStore(state => state.theme);
 
   const [currentlyAddingNewSocial, setCurrentlyAddingNewSocial] = useState(false);
   const [newSocialType, setNewSocialType] = useState('unknown');
@@ -130,8 +110,11 @@ export default function Socials({ profile }) {
     }
   }
 
+  const [deletingSocialId, setDeletingSocialId] = useState(null);
+
   function deleteSelectedSocial(id) {
     setLoading(true);
+    setDeletingSocialId(id);
 
     toast.promise(deleteSocial(profile.slug, id),
       {
@@ -141,6 +124,7 @@ export default function Socials({ profile }) {
           setNewSocialType('unknown');
           setNewSocialValue('');
           setLoading(false);
+          setDeletingSocialId(null);
           setSocials(newSocials);
           revalidateProfile(profile.slug);
 
@@ -148,6 +132,7 @@ export default function Socials({ profile }) {
         },
         error: message => {
           setLoading(false);
+          setDeletingSocialId(null);
 
           return message;
         }
@@ -166,78 +151,73 @@ export default function Socials({ profile }) {
       </p>
 
       <div className='mt-4 flex flex-wrap gap-4'>
-        {socials.map(social => (
-          <div
-            className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-between gap-x-2 rounded-lg border-2 border-[rgb(var(--brand-color)/0.5)] bg-gradient-to-r from-[rgb(var(--brand-color)/0.2)] px-2 text-sm font-semibold text-secondary'
-            key={nanoid()}
-            style={{
-              '--brand-color': colors[social.type]
-            }}
-          >
-            <div className='flex max-w-[82%] flex-auto gap-x-2'>
-              {social.type === 'custom' ? (
-                <>
-                  <IoEarth className='flex-auto' size={20} />
-                  <span className='w-full truncate'>
-                    {getDisplayableURL(social.link)}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <Image
-                    src={getIconPath(social.type, theme)}
-                    width={20}
-                    height={20}
-                    alt={`${social.type} Icon`}
-                  />
+        {socials.map(social => {
+          const SocialIcon = getIcon(social.type);
 
-                  <span className='w-full truncate'>
-                    {social.handle}
-                  </span>
-                </>
-              )}
+          return (
+            <div
+              className='group flex w-full max-w-[calc(50%_-_1rem)] items-center justify-between gap-x-1 rounded-2xl border border-primary bg-secondary px-2 py-3 transition-colors hover:bg-tertiary'
+              key={social.link}
+            >
+              <div className='flex items-center gap-x-2 text-sm text-tertiary transition-colors group-hover:text-primary'>
+                <SocialIcon
+                  className='text-tertiary group-hover:text-[rgb(var(--brand-color))]'
+                  size={20}
+                />
+
+                <span className='select-none font-semibold'>
+                  {social.type === 'custom' ? getDisplayableURL(social.link) : social.handle}
+                </span>
+              </div>
+
+              <div className='flex items-center gap-x-1'>
+                <Link
+                  className='text-tertiary opacity-0 transition-all hover:text-primary group-hover:opacity-100'
+                  href={social.link}
+                  target='_blank'
+                >
+                  <MdArrowOutward size={18} />
+                </Link>
+
+                <button
+                  className='text-tertiary transition-all hover:text-primary disabled:pointer-events-none disabled:opacity-70'
+                  onClick={() => deleteSelectedSocial(social._id)}
+                  disabled={loading}
+                >
+                  {(loading && deletingSocialId === social._id) ? (
+                    <TbLoader
+                      className='animate-spin'
+                      size={18}
+                    />
+                  ) : (
+                    <FiX size={18} />
+                  )}
+                </button>
+              </div>
             </div>
-
-            <div className='flex gap-x-1'>
-              <button className='text-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => deleteSelectedSocial(social._id)} disabled={loading}>
-                <FiX size={18} />
-              </button>
-
-              <Link className='text-tertiary hover:text-primary' href={social.link} target='_blank'>
-                <MdArrowOutward size={18} />
-              </Link>
-            </div>
-          </div>
-        ))}
+          );
+        })}
 
         <div
           className={cn(
-            'transition-all w-full max-w-[calc(50%_-_1rem)] h-10 rounded-lg px-2 text-sm font-semibold bg-[rgb(var(--brand-color))]/10 items-center justify-between gap-x-2 text-secondary',
+            'transition-all [&:has(input:focus)]:bg-tertiary border border-primary w-full max-w-[calc(50%_-_1rem)] rounded-2xl px-2 py-3 text-sm font-semibold bg-secondary items-center justify-between gap-x-2',
             currentlyAddingNewSocial ? 'flex' : 'hidden'
           )}
-          style={{
-            '--brand-color': colors[newSocialType]
-          }}
         >
           <div className='flex w-full items-center gap-x-2'>
-            {newSocialType === 'unknown' ? (
-              <FaQuestion
-                className='flex-auto'
-                size={20}
-              />
-            ) : newSocialType === 'custom' ? (
-              <IoEarth
-                className='flex-auto'
-                size={20}
-              />
-            ) : (
-              <Image
-                src={getIconPath(newSocialType, theme)}
-                width={20}
-                height={20}
-                alt={`${newSocialType} Icon`}
-              />
-            )}
+            {(() => {
+              const Icon = getIcon(newSocialType);
+
+              return (
+                <Icon
+                  style={{
+                    color: `rgba(${colors[newSocialType]})`
+                  }}
+                  className='text-tertiary transition-colors'
+                  size={20}
+                />
+              );
+            })()}
 
             <input
               type='text'
@@ -248,7 +228,7 @@ export default function Socials({ profile }) {
               autoComplete='off'
               spellCheck='false'
               disabled={loading}
-              className='w-full bg-transparent font-medium text-secondary outline-none placeholder:text-placeholder disabled:pointer-events-none disabled:opacity-70'
+              className='w-full bg-transparent font-medium text-secondary outline-none disabled:pointer-events-none disabled:opacity-70'
             />
           </div>
         </div>
@@ -260,7 +240,7 @@ export default function Socials({ profile }) {
           )}
         >
           <button
-            className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-lg bg-tertiary text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => {
+            className='flex w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => {
               setCurrentlyAddingNewSocial(false);
               setNewSocialType('unknown');
               setNewSocialValue('');
@@ -270,7 +250,7 @@ export default function Socials({ profile }) {
             {t('buttons.cancel')}
           </button>
 
-          <button className='flex h-10 w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-lg bg-tertiary text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={saveNewSocial} disabled={loading}>
+          <button className='flex w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={saveNewSocial} disabled={loading}>
             {t('buttons.add')}
           </button>
         </div>
@@ -278,7 +258,7 @@ export default function Socials({ profile }) {
         {socials.length < config.profilesMaxSocialsLength && (
           <button
             className={cn(
-              'flex w-full max-w-[calc(50%_-_1rem)] h-10 rounded-lg justify-center text-sm font-semibold border-primary border hover:bg-tertiary hover:border-[rgb(var(--bg-tertiary))] items-center gap-x-2 text-secondary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
+              'flex w-full py-3 max-w-[calc(50%_-_1rem)] rounded-2xl justify-center text-sm font-semibold border-primary border hover:bg-tertiary hover:border-[rgb(var(--bg-tertiary))] items-center gap-x-2 text-secondary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
               currentlyAddingNewSocial && 'hidden'
             )}
             onClick={() => setCurrentlyAddingNewSocial(true)}
