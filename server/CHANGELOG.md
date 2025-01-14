@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.5.0](https://github.com/discordplace/discord.place/compare/server@v1.4.0...server@v1.5.0) (2025-01-14)
+
+
+### Features
+
+* **routes/top-servers:** add is_listed field ([1b5127c](https://github.com/discordplace/discord.place/commit/1b5127c5e6c9169bbca76852104c7518bea1bba3))
+* **server:** add quarantine check for user login tokens ([a409afb](https://github.com/discordplace/discord.place/commit/a409afba5027b831b7c08d477476f4b9ae954dd0))
+
+
+### Bug Fixes
+
+* **reminders:** add is_manually_deleted boolean to prevent sending message when deleting reminders ([d9f4e1c](https://github.com/discordplace/discord.place/commit/d9f4e1c9161e72698ff7ec0726049cb4612d4fd1))
+* **server:** correct user ID reference in quarantine check for login tokens ([6d8803a](https://github.com/discordplace/discord.place/commit/6d8803a9198b2e879b6dbe22708f0969bd916163))
+
 ## [1.4.0](https://github.com/discordplace/discord.place/compare/server@v1.3.0...server@v1.4.0) (2025-01-07)
 
 
