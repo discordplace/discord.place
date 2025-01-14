@@ -94,11 +94,16 @@ module.exports = {
         break;
       case 'delete':
         var reminderId = interaction.options.getString('reminder');
+
         var foundReminder = await Reminder.findOne({ _id: reminderId, 'user.id': interaction.user.id });
         if (!foundReminder) return interaction.reply({
           content: await interaction.translate('commands.reminder.errors.reminder_not_found'),
           ephemeral: true
         });
+
+        foundReminder.is_manually_deleted = true;
+
+        await foundReminder.save();
 
         await foundReminder.deleteOne();
 

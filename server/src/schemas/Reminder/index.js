@@ -18,6 +18,10 @@ const ReminderSchema = new Schema({
   expire_at: {
     type: Date,
     default: null
+  },
+  is_manually_deleted: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
@@ -34,6 +38,8 @@ Model.watch().on('change', async data => {
     if (!metadata) return;
 
     await metadata.deleteOne();
+
+    if (metadata.is_manually_deleted) return;
 
     const user = await client.users.fetch(metadata.userId).catch(() => null);
     if (!user) return;
