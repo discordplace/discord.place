@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.7.0](https://github.com/discordplace/discord.place/compare/client@v1.6.0...client@v1.7.0) (2025-01-14)
+
+
+### Features
+
+* **home:** make server card clickable for listed servers ([9577b3e](https://github.com/discordplace/discord.place/commit/9577b3e7245a228c9c350bf3b6ac3576aed26ebf))
+* **profile/socials:** update styles ([#158](https://github.com/discordplace/discord.place/issues/158)) ([359831b](https://github.com/discordplace/discord.place/commit/359831bc818538ad650a988c39ae81dfe13e9a58))
+
+
+### Bug Fixes
+
+* **servers/monthly-votes-graph:** adjust x-axis range for monthly votes graph ([3954db4](https://github.com/discordplace/discord.place/commit/3954db4dda533d5441077b8bcd7ed93d5c536395))
+* **servers/monthly-votes-graph:** update x-axis date format to short month ([caf0e64](https://github.com/discordplace/discord.place/commit/caf0e643a64946c4093d69cb8169fa81792689a8))
+
 ## [1.6.0](https://github.com/discordplace/discord.place/compare/client@v1.5.1...client@v1.6.0) (2025-01-07)
 
 
