@@ -15,6 +15,7 @@ const morgan = require('morgan');
 
 const sleep = require('@/utils/sleep');
 const User = require('@/schemas/User');
+const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 
 module.exports = class Server {
   constructor() {
@@ -109,6 +110,9 @@ module.exports = class Server {
           if (!user) throw new Error('User not found.');
 
           if (decoded.iat < Math.floor(new Date(user.lastLogoutAt).getTime() / 1000)) throw new Error('Token expired.');
+
+          const userQuarantined = await findQuarantineEntry.single('USER_ID', user.id, 'LOGIN').catch(() => false);
+          if (userQuarantined) throw new Error('User that this token belongs to is not allowed to login, so the token is invalid.');
 
           request.user = {
             id: decoded.payload.sub
