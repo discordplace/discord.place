@@ -111,7 +111,7 @@ module.exports = class Server {
 
           if (decoded.iat < Math.floor(new Date(user.lastLogoutAt).getTime() / 1000)) throw new Error('Token expired.');
 
-          const userQuarantined = await findQuarantineEntry.single('USER_ID', user.id, 'LOGIN').catch(() => false);
+          const userQuarantined = await findQuarantineEntry.single('USER_ID', decoded.payload.sub, 'LOGIN').catch(() => false);
           if (userQuarantined) throw new Error('User that this token belongs to is not allowed to login, so the token is invalid.');
 
           request.user = {
