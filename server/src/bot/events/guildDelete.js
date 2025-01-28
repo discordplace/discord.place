@@ -5,10 +5,10 @@ const Reward = require('@/schemas/Server/Vote/Reward');
 module.exports = async guild => {
   logger.info(`Kicked from guild ${guild.name} (${guild.id}).`);
 
-  Promise.all(
+  Promise.all([
     Review.deleteMany({ 'server.id': guild.id, approved: false }),
     Reward.deleteMany({ 'guild.id': guild.id })
-  );
+  ]);
 
   updateClientActivity();
 
