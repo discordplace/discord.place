@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const MetadataModel = require('@/schemas/BlockedIp/Metadata');
+
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
 const CLOUDFLARE_EMAIL = process.env.CLOUDFLARE_EMAIL;
 const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
@@ -51,9 +53,14 @@ Model.watch().on('change', async data => {
       account_id: CLOUDFLARE_ACCOUNT_ID
     });
 
-    client.blockedIps.delete(documentKey._id);
+    const metadata = await MetadataModel.findOne({ documentId: documentKey._id });
+    if (!metadata) return;
 
-    const item = response.result.find(item => item?.ip === documentKey._id);
+    await metadata.deleteOne();
+
+    client.blockedIps.delete(metadata.ip);
+
+    const item = response.result.find(item => item?.ip === metadata.ip);
     if (!item) return;
 
     await cloudflare.rules.lists.items.delete(CLOUDFLARE_BLOCK_IP_LIST_ID, {
@@ -66,7 +73,7 @@ Model.watch().on('change', async data => {
       }
     });
 
-    logger.info(`IP address ${documentKey._id} has been unblocked.`);
+    logger.info(`IP address ${metadata.ip} has been unblocked.`);
   }
 });
 

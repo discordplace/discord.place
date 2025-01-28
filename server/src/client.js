@@ -14,7 +14,7 @@ const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
 const Reminder = require('@/schemas/Reminder');
-const BlockedIp = require('@/schemas/BlockedIp');
+const BlockedIp = require('@/src/schemas/BlockedIp/BlockedIp');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const Profile = require('@/schemas/Profile');
 const Bot = require('@/schemas/Bot');
@@ -294,19 +294,30 @@ module.exports = class Client {
         account_id: CLOUDFLARE_ACCOUNT_ID
       });
 
-      let deletedCount = 0;
-
       for (const { ip } of blockedIps) {
         const item = response.result.find(item => item?.ip === ip);
         if (!item) {
           await BlockedIp.deleteOne({ _id: ip });
-          deletedCount++;
+          logger.info(`Deleted expired blocked IP ${ip}.`);
         }
       }
 
-      if (deletedCount <= 0) return;
+      for (const item of response.result) {
+        const ip = blockedIps.find(ip => ip.ip === item.ip);
+        if (!ip) {
+          await cloudflare.rules.lists.items.delete(CLOUDFLARE_BLOCK_IP_LIST_ID, {
+            account_id: CLOUDFLARE_ACCOUNT_ID
+          }, {
+            body: {
+              items: [
+                { id: item.id }
+              ]
+            }
+          });
 
-      logger.info(`Deleted ${deletedCount} expired blocked IPs.`);
+          logger.info(`Deleted expired blocked IP ${item.ip}. (not found in the database)`);
+        }
+      }
     } catch (error) {
       logger.error('Failed to check expired blocked IPs collections:', error);
     }
