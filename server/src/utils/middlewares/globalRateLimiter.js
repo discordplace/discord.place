@@ -1,4 +1,4 @@
-const BlockedIp = require('@/src/schemas/BlockedIp/BlockedIp');
+const BlockedIp = require('@/src/schemas/BlockedIp');
 
 const RATE_LIMIT = config.globalRateLimit.maxRequests;
 const TIME_FRAME = config.globalRateLimit.perMinutes * 60 * 1000;

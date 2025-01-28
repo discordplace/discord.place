@@ -1,5 +1,5 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const BlockedIp = require('@/src/schemas/BlockedIp/BlockedIp');
+const BlockedIp = require('@/src/schemas/BlockedIp');
 const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const validateRequest = require('@/utils/middlewares/validateRequest');
