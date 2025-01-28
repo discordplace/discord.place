@@ -301,23 +301,6 @@ module.exports = class Client {
           logger.info(`Deleted expired blocked IP ${ip}.`);
         }
       }
-
-      for (const item of response.result) {
-        const ip = blockedIps.find(ip => ip.ip === item.ip);
-        if (!ip) {
-          await cloudflare.rules.lists.items.delete(CLOUDFLARE_BLOCK_IP_LIST_ID, {
-            account_id: CLOUDFLARE_ACCOUNT_ID
-          }, {
-            body: {
-              items: [
-                { id: item.id }
-              ]
-            }
-          });
-
-          logger.info(`Deleted expired blocked IP ${item.ip}. (not found in the database)`);
-        }
-      }
     } catch (error) {
       logger.error('Failed to check expired blocked IPs collections:', error);
     }
