@@ -71,12 +71,12 @@ module.exports = {
       const memberInGuild = request.user ? (guild.members.cache.get(request.user?.id) || await guild.members.fetch(request.user?.id).catch(() => false)) : false;
 
       const monthlyVotes = ((await ServerMonthlyVotes.findOne({ identifier: id }))?.data || [])
-        .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
-        .slice(0, 6);
+        .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      const slicedMonthlyVotes = monthlyVotes.slice(monthlyVotes.length - 6, monthlyVotes.length);
       const currentMonth = new Date().getMonth();
 
-      if (!monthlyVotes.find(data => new Date(data.created_at).getMonth() === currentMonth)) {
-        monthlyVotes.push({
+      if (!slicedMonthlyVotes.find(data => new Date(data.created_at).getMonth() === currentMonth)) {
+        slicedMonthlyVotes.push({
           created_at: new Date(),
           votes: server.votes
         });
@@ -115,7 +115,7 @@ module.exports = {
             unlocked: request.user && (server.voters.find(voter => voter.user.id === request.user.id)?.vote || 0) >= reward.required_votes
           };
         }).filter(Boolean),
-        monthly_votes: monthlyVotes,
+        monthly_votes: slicedMonthlyVotes,
         webhook: permissions.canEdit && server.webhook,
         joined_at: guild.joinedTimestamp,
         ownerSubscriptionCreatedAt: foundPremium ? new Date(foundPremium.subscription.createdAt).getTime() : null
