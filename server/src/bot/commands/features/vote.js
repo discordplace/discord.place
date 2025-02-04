@@ -75,16 +75,17 @@ module.exports = {
       if (emojis[emojiNumber].emoji === selectedEmoji.emoji) {
         interaction.deleteReply();
 
+        collector.stop('success');
+
         return this.continueVote(interaction);
       }
 
-      return interaction.editReply({
-        content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
-        components: []
-      });
+      collector.stop('failed');
     });
 
-    collector.on('end', async () => {
+    collector.on('end', async (_, reason) => {
+      if (reason === 'success') return;
+
       interaction.editReply({
         content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
         components: []
