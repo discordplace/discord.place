@@ -300,7 +300,7 @@
         "server_not_listed": "Web sitemizde listelenmeyen sunuculara oy veremezsiniz.",
         "already_voted": "{hours} saat {minutes} dakika içinde tekrar oy verebilirsiniz."
       },
-      "human_verification_text": "Şu an **{guildName}** sunucusuna oy vereceksiniz.\n**İnsan Doğrulaması Hakkında:**\n- Size birkaç saniye içinde bir gif gösterilecek.\n- Gif'te 3 tekrar eden sayı olacak.\n- Bu sayıları ezberlemeniz gerekiyor.\n- Son sayı kaybolduktan sonra, ezberlediğiniz sayıların sırasına göre butonlara tıklamanız gerekiyor.\n- Tüm butonlara tıklamak için 10 saniyeniz olacak.\n- Başarısız olursanız, 1 dakika sonra tekrar deneyebilirsiniz.\n\n**Not:** Bu doğrulama, spam'i önlemek için sadece her üçüncü oyda gösterilir.",
+      "human_verification_text": "Şu an **{guildName}** sunucusuna oy vereceksiniz.\n**İnsan Doğrulaması Hakkında:**\n- Bu emoji üstünde olan butona tıklamalısınız: {emoji}\n- Butona tıklamak için 60 saniyeniz var.\n- Başarısız olursanız, tekrar deneyebilirsiniz.\n\n**Not:** Bu doğrulama, spam'i önlemek için sadece her üçüncü oyda gösterilir.",
       "gif_hidden_now": "Gif şimdi gizlendi. Lütfen ezberlediğiniz sayıların sırasına göre butonlara tıklayın.",
       "create_reminder_button_label": "Hatırlatıcı Oluştur",
       "success": "Oy verdiğiniz için teşekkürler!",
@@ -579,12 +579,9 @@
           "guild_not_found": "Sunucuyu bulamadım.",
           "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
           "member_not_found": "Sunucuda değilsiniz.",
-          "timeout": "{seconds} saniye sonra tekrar deneyebilirsiniz.",
-          "failed": "Kendinizi doğrulamada başarısız oldunuz.",
-          "number_already_selected": "Bu numarayı zaten seçtiniz."
+          "failed": "Kendinizi doğrulamada başarısız oldunuz."
         },
-        "success": "Başarıyla kendinizi doğruladınız.",
-        "numbers_selected": "Seçilen numaralar: {numbers}"
+        "success": "Başarıyla kendinizi doğruladınız."
       }
     }
   },

@@ -206,7 +206,7 @@
         "server_not_listed": "You can't vote servers that are not listed on our website.",
         "already_voted": "You can vote again in {hours} hours {minutes} minutes."
       },
-      "human_verification_text": "You are going to vote for **{guildName}**.\n**About Human Verification:**\n- A gif will be shown to you in a few seconds.\n- The gif includes 3 repeated numbers in it.\n- You need to memorize these numbers.\n- After the last number is hidden, you need to click the buttons in the order of the numbers you memorized.\n- You have 10 seconds to click all the buttons.\n- If you fail, you can try again after 1 minute.\n\n**Note:** This verification is only shown every third vote to prevent spamming.",
+      "human_verification_text": "You are going to vote for **{guildName}**.\n**About Human Verification:**\n- You must click on whichever button has this emoji on it: {emoji}\n- You have 60 seconds to click the button.\n- If you fail, you can try again.\n\n**Note:** This verification is only shown every third vote to prevent spamming.",
       "gif_hidden_now": "The gif is hidden now. Please click the buttons in the order of the numbers you memorized.",
       "create_reminder_button_label": "Create Reminder",
       "success": "Thank you for voting!",
@@ -442,12 +442,9 @@
           "guild_not_found": "I couldn't find the server.",
           "server_not_listed": "This server is not listed on discord.place.",
           "member_not_found": "You are not in the server.",
-          "timeout": "You can try again after {seconds} seconds.",
-          "failed": "You failed to verify yourself.",
-          "number_already_selected": "You already selected this number."
+          "failed": "You failed to verify yourself."
         },
-        "success": "You successfully verified yourself.",
-        "numbers_selected": "You selected {numbers}."
+        "success": "You successfully verified yourself."
       }
     }
   },
