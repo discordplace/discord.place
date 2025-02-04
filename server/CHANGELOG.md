@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.7.0](https://github.com/discordplace/discord.place/compare/server@v1.6.0...server@v1.7.0) (2025-02-04)
+
+
+### Features
+
+* **reviews:** implement actual pagination functionality ([#161](https://github.com/discordplace/discord.place/issues/161)) ([877e16c](https://github.com/discordplace/discord.place/commit/877e16cec5ee64d33003a6920f1919c2db33fe45))
+
+
+### Bug Fixes
+
+* **vote:** make sure human verification collector logic to properly handle success and failure cases ([9bf7a54](https://github.com/discordplace/discord.place/commit/9bf7a542898444b5af4890a06d68c6a90ed6bb77))
+
 ## [1.6.0](https://github.com/discordplace/discord.place/compare/server-v1.5.0...server@v1.6.0) (2025-02-04)
 
 

@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/package.json",
   "name": "server",
   "private": true,
-  "version": "1.6.0",
+  "version": "1.7.0",
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development node -r dotenv/config index.js",
