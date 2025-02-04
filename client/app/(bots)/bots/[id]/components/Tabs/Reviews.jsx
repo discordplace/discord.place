@@ -7,6 +7,7 @@ import { TbLoader } from 'react-icons/tb';
 import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline } from 'react-icons/ti';
 import { toast } from 'sonner';
 import createReview from '@/lib/request/bots/createReview';
+import fetchReviews from '@/lib/request/bots/fetchReviews';
 import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import cn from '@/lib/cn';
@@ -20,8 +21,9 @@ import Image from 'next/image';
 export default function Reviews({ bot }) {
   const [page, setPage] = useState(1);
   const limit = 6;
-  const maxPages = bot.reviews.length / limit;
-  const [reviews, setReviews] = useState(bot.reviews.slice(0, limit));
+  const [reviews, setReviews] = useState([]);
+  const [totalReviews, setTotalReviews] = useState(0);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [selectedRating, setSelectedRating] = useState(0);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
@@ -32,12 +34,16 @@ export default function Reviews({ bot }) {
   const language = useLanguageStore(state => state.language);
 
   useEffect(() => {
-    const start = (page - 1) * limit;
-    const end = start + limit;
-    setReviews(bot.reviews.slice(start, end));
+    setReviewsLoading(true);
 
-    // eslint-disable-next-line
-  }, [page]);
+    fetchReviews(bot.id, page, limit)
+      .then(data => {
+        setReviews(data.reviews);
+        setTotalReviews(data.total);
+      })
+      .catch(error => toast.error(error))
+      .finally(() => setReviewsLoading(false));
+  }, [bot.id, page, limit]);
 
   const calcRating = rating => {
     const totalReviews = bot.reviews.length;
@@ -67,6 +73,8 @@ export default function Reviews({ bot }) {
       }
     });
   }
+
+  const showPagination = !reviewsLoading && totalReviews > limit;
 
   return (
     <div className='flex flex-col px-8 lg:w-[70%] lg:px-0'>
@@ -317,14 +325,15 @@ export default function Reviews({ bot }) {
         </div>
       ))}
 
-      {maxPages > 1 && (
+      {showPagination > 1 && (
         <div className='flex w-full items-center justify-center'>
           <Pagination
             page={page}
             setPage={setPage}
-            loading={loading}
-            total={bot.reviews.length}
+            loading={loading || reviewsLoading}
+            total={totalReviews}
             limit={limit}
+            disableAnimation={true}
           />
         </div>
       )}
