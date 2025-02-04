@@ -7,6 +7,7 @@ import { TbLoader } from 'react-icons/tb';
 import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline } from 'react-icons/ti';
 import { toast } from 'sonner';
 import createReview from '@/lib/request/servers/createReview';
+import fetchReviews from '@/lib/request/servers/fetchReviews';
 import LoginButton from '@/app/(servers)/servers/[id]/components/Tabs/LoginButton';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import cn from '@/lib/cn';
@@ -20,8 +21,9 @@ import Image from 'next/image';
 export default function Reviews({ server }) {
   const [page, setPage] = useState(1);
   const limit = 6;
-  const maxPages = server.reviews.length / limit;
-  const [reviews, setReviews] = useState(server.reviews.slice(0, limit));
+  const [reviews, setReviews] = useState([]);
+  const [totalReviews, setTotalReviews] = useState(0);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [selectedRating, setSelectedRating] = useState(0);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
@@ -32,12 +34,16 @@ export default function Reviews({ server }) {
   const language = useLanguageStore(state => state.language);
 
   useEffect(() => {
-    const start = (page - 1) * limit;
-    const end = start + limit;
-    setReviews(server.reviews.slice(start, end));
+    setReviewsLoading(true);
 
-    // eslint-disable-next-line
-  }, [page]);
+    fetchReviews(server.id, page, limit)
+      .then(data => {
+        setReviews(data.reviews);
+        setTotalReviews(data.total);
+      })
+      .catch(error => toast.error(error))
+      .finally(() => setReviewsLoading(false));
+  }, [server.id, page, limit]);
 
   const calcRating = rating => {
     const totalReviews = server.reviews.length;
@@ -67,6 +73,8 @@ export default function Reviews({ server }) {
       }
     });
   }
+
+  const showPagination = !reviewsLoading && totalReviews > limit;
 
   return (
     <div className='flex flex-col px-8 lg:w-[70%] lg:px-0'>
@@ -244,7 +252,7 @@ export default function Reviews({ server }) {
                 <button
                   onClick={submitReview}
                   className='mt-4 flex items-center justify-center gap-x-1.5 rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
-                  disabled={selectedRating === 0 || loading || reviewSubmitted || review.length < config.reviewsMinCharacters}
+                  disabled={selectedRating === 0 || loading || reviewSubmitted || review.length < config.reviewsMinCharacters || reviewsLoading}
                 >
                   {loading && <TbLoader className='animate-spin' />}
 
@@ -260,72 +268,114 @@ export default function Reviews({ server }) {
         )}
       </div>
 
-      {reviews.map(review => (
-        <div className='mt-8 flex w-full flex-col gap-y-4 sm:flex-row' key={review._id}>
-          <div className='flex w-full gap-x-4 sm:w-[35%]'>
-            <Link
-              href={`/profile/u/${review.user.id}`}
-              className='transition-opacity hover:opacity-70'
-            >
-              <UserAvatar
-                id={review.user.id}
-                hash={review.user.avatar}
-                size={64}
-                width={48}
-                height={48}
-                className='size-[48px] rounded-2xl'
-              />
-            </Link>
+      {reviewsLoading ? (
+        new Array(6).fill(null).map((_, index) => (
+          <div
+            className='mt-8 flex w-full flex-col gap-y-4 sm:flex-row'
+            key={`review-loading-${index}`}
+          >
+            <div className='flex w-full gap-x-4 sm:w-[35%]'>
+              <div className='size-[48px] min-h-[48px] min-w-[48px] animate-pulse rounded-2xl bg-quaternary'>
+                &thinsp;
+              </div>
 
-            <div className='flex flex-col gap-y-1'>
-              <Link
-                href={`/profile/u/${review.user.id}`}
-                className='flex items-center text-base font-semibold transition-opacity hover:opacity-70'
-              >
-                <span className='max-w-[100px] truncate mobile:max-w-[150px] sm:max-w-[100px] lg:max-w-[160px]'>
-                  {review.user.username}
+              <div className='flex w-full flex-col gap-y-1'>
+                <div className='flex w-full max-w-[100px] animate-pulse items-center rounded-xl bg-quaternary text-base mobile:max-w-[150px] sm:max-w-[100px] lg:max-w-[160px]'>
+                  &thinsp;
+                </div>
+
+                <div className='flex items-center text-sm font-semibold text-tertiary'>
+                  <span className='h-[15px] w-full max-w-[50px] animate-pulse rounded-xl bg-quaternary' />
+                  <TiStarFullOutline className='ml-2 animate-pulse text-[rgba(var(--bg-quaternary))]' />
+                </div>
+              </div>
+            </div>
+
+            <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0'>
+              <span className='h-[15px] w-full max-w-[150px] animate-pulse rounded-xl bg-quaternary text-xs font-medium text-tertiary'>
+                &thinsp;
+              </span>
+
+              <div className='mt-2 flex w-full flex-col gap-y-2'>
+                <span className='h-[20px] w-full max-w-full animate-pulse rounded-xl bg-quaternary text-xs font-medium text-tertiary'>
+                  &thinsp;
                 </span>
-              </Link>
-
-              <div className='flex items-center text-sm font-semibold text-tertiary'>
-                <span className='text-xl text-primary'>{review.rating}</span>/5 <TiStarFullOutline className='ml-2 text-yellow-500' />
+                <span className='h-[20px] w-full max-w-[65%] animate-pulse rounded-xl bg-quaternary text-xs font-medium text-tertiary'>
+                  &thinsp;
+                </span>
               </div>
             </div>
           </div>
+        ))
+      ) : (
+        reviews.map(review => (
+          <div className='mt-8 flex w-full flex-col gap-y-4 sm:flex-row' key={review._id}>
+            <div className='flex w-full gap-x-4 sm:w-[35%]'>
+              <Link
+                href={`/profile/u/${review.user.id}`}
+                className='transition-opacity hover:opacity-70'
+              >
+                <UserAvatar
+                  id={review.user.id}
+                  hash={review.user.avatar}
+                  size={64}
+                  width={48}
+                  height={48}
+                  className='size-[48px] rounded-2xl'
+                />
+              </Link>
 
-          <ReportableArea
-            type='review'
-            active={user?.id !== review.user.id}
-            metadata={{
-              reviewer: {
-                id: review.user.id,
-                username: review.user.username,
-                avatar: review.user.avatar
-              },
-              rating: review.rating,
-              content: review.content
-            }}
-            identifier={`server-${server.id}-review-${review._id}`}
-          >
-            <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0'>
-              <span className='text-xs font-medium text-tertiary'>
-                {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
-              </span>
+              <div className='flex flex-col gap-y-1'>
+                <Link
+                  href={`/profile/u/${review.user.id}`}
+                  className='flex items-center text-base font-semibold transition-opacity hover:opacity-70'
+                >
+                  <span className='max-w-[100px] truncate mobile:max-w-[150px] sm:max-w-[100px] lg:max-w-[160px]'>
+                    {review.user.username}
+                  </span>
+                </Link>
 
-              {review.content}
+                <div className='flex items-center text-sm font-semibold text-tertiary'>
+                  <span className='text-xl text-primary'>{review.rating}</span>/5 <TiStarFullOutline className='ml-2 text-yellow-500' />
+                </div>
+              </div>
             </div>
-          </ReportableArea>
-        </div>
-      ))}
 
-      {maxPages > 1 && (
+            <ReportableArea
+              type='review'
+              active={user?.id !== review.user.id}
+              metadata={{
+                reviewer: {
+                  id: review.user.id,
+                  username: review.user.username,
+                  avatar: review.user.avatar
+                },
+                rating: review.rating,
+                content: review.content
+              }}
+              identifier={`server-${server.id}-review-${review._id}`}
+            >
+              <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0'>
+                <span className='text-xs font-medium text-tertiary'>
+                  {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                </span>
+
+                {review.content}
+              </div>
+            </ReportableArea>
+          </div>
+        ))
+      )}
+
+      {showPagination && (
         <div className='flex w-full items-center justify-center'>
           <Pagination
             page={page}
             setPage={setPage}
-            loading={loading}
-            total={server.reviews.length}
+            loading={loading || reviewsLoading}
+            total={totalReviews}
             limit={limit}
+            disableAnimation={true}
           />
         </div>
       )}

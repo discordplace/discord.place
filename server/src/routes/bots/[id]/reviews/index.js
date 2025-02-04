@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body } = require('express-validator');
+const { param, matchedData, body, query } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const bodyParser = require('body-parser');
@@ -8,8 +8,62 @@ const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
+  get: [
+    useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
+    param('id'),
+    query('limit')
+      .optional()
+      .isInt({ min: 1, max: 6 }).withMessage('Limit must be an integer between 1 and 6.')
+      .toInt(),
+    query('page')
+      .optional()
+      .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
+      .toInt(),
+    validateRequest,
+    async (request, response) => {
+      const { id, limit = 6, page = 1 } = matchedData(request);
+      const skip = (page - 1) * limit;
+
+      const user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
+      if (!user) return response.sendError('User not found.', 404);
+
+      if (!user.bot) return response.sendError('User is not a bot.', 400);
+
+      const bot = await Bot.findOne({ id });
+      if (!bot) return response.sendError('Bot not found.', 404);
+
+      const foundReviews = await Review.find({ 'bot.id': id, approved: true })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+      const totalReviews = await Review.countDocuments({ 'bot.id': id });
+
+      const parsedReviews = await Promise.all(foundReviews
+        .map(async review => {
+          const userHashes = await getUserHashes(review.user.id);
+
+          return {
+            ...review.toJSON(),
+            user: {
+              id: review.user.id,
+              username: review.user.username,
+              avatar: userHashes.avatar
+            }
+          };
+        }));
+
+      return response.json({
+        maxReached: totalReviews <= skip + limit,
+        total: totalReviews,
+        page,
+        limit,
+        reviews: parsedReviews
+      });
+    }
+  ],
   post: [
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
     bodyParser.json(),
