@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/discordplace/discord.place/compare/client@v1.9.0...client@v1.9.1) (2025-02-13)
+
+
+### Bug Fixes
+
+* **dashboard:** update bot routing to use correct bot ID ([a2dcaf7](https://github.com/discordplace/discord.place/commit/a2dcaf793eb4632326d2bb98200d73e417ea5004))
+
 ## [1.9.0](https://github.com/discordplace/discord.place/compare/client@v1.8.0...client@v1.9.0) (2025-02-04)
 
 
