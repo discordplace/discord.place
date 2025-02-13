@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/discordplace/discord.place/compare/client@v1.8.0...client@v1.9.0) (2025-02-04)
+
+
+### Features
+
+* **reviews:** implement actual pagination functionality ([#161](https://github.com/discordplace/discord.place/issues/161)) ([877e16c](https://github.com/discordplace/discord.place/commit/877e16cec5ee64d33003a6920f1919c2db33fe45))
+
 ## [1.8.0](https://github.com/discordplace/discord.place/compare/client-v1.7.0...client@v1.8.0) (2025-02-04)
 
 
