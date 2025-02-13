@@ -1491,7 +1491,7 @@ export default function Page() {
 
                     setSelectedItems([]);
 
-                    router.push(`/bots/${column[0].bot.id}`);
+                    router.push(`/bots/${column[0].id}`);
                   }
                 },
                 {
