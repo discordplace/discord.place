@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.8.0](https://github.com/discordplace/discord.place/compare/server@v1.7.0...server@v1.8.0) (2025-02-17)
+
+
+### Features
+
+* **bots:** add owner check when adding new bots ([#164](https://github.com/discordplace/discord.place/issues/164)) ([5406138](https://github.com/discordplace/discord.place/commit/54061388a9c7ad5232bb6f8b8604c7c5482ebf13))
+
+
+### Bug Fixes
+
+* **auth:** destructure access_token from getAccessToken response ([9e3339d](https://github.com/discordplace/discord.place/commit/9e3339d349e4f4edeb1f31a9ac67b99b79b1006e))
+
 ## [1.7.0](https://github.com/discordplace/discord.place/compare/server@v1.6.0...server@v1.7.0) (2025-02-04)
 
 
