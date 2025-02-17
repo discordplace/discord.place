@@ -7,7 +7,7 @@ export default function createApiKey(id, isNew) {
     const url = `${config.api.url}/bots/${id}/api-key`;
 
     try {
-      const response = await axios[isNew ? 'post' : 'patch'](url, {}, { withCredentials: true });
+      const response = await axios[isNew ? 'post' : 'patch'](url, {});
       resolve(response.data.apiKey);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

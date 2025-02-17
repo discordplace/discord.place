@@ -7,7 +7,7 @@ export default function getPlans() {
     const url = `${config.api.url}/payments/plans`;
 
     try {
-      const response = await axios.get(url, { withCredentials: true });
+      const response = await axios.get(url);
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

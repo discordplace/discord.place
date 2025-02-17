@@ -7,7 +7,7 @@ export default function createEmoji(formData) {
     const url = `${config.api.url}/emojis`;
 
     try {
-      const response = await axios.post(url, formData, { withCredentials: true });
+      const response = await axios.post(url, formData);
       resolve(response.data.emoji.id);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

@@ -7,7 +7,7 @@ export default function deleteSound(id) {
     const url = `${config.api.url}/sounds/${id}`;
 
     try {
-      await axios.delete(url, { withCredentials: true });
+      await axios.delete(url);
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

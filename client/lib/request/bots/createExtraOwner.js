@@ -7,7 +7,7 @@ export default function createExtraOwner(botId, userId) {
     const url = `${config.api.url}/bots/${botId}/extra-owners`;
 
     try {
-      const response = await axios.post(url, { userId }, { withCredentials: true });
+      const response = await axios.post(url, { userId });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

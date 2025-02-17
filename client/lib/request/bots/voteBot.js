@@ -7,7 +7,7 @@ export default function voteBot(id, captchaResponse) {
     const url = `${config.api.url}/bots/${id}/vote`;
 
     try {
-      const response = await axios.post(url, { captchaResponse }, { withCredentials: true });
+      const response = await axios.post(url, { captchaResponse });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

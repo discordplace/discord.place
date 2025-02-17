@@ -7,7 +7,7 @@ export default function createServer(id, data) {
     const url = `${config.api.url}/servers/${id}`;
 
     try {
-      await axios.post(url, data, { withCredentials: true });
+      await axios.post(url, data);
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

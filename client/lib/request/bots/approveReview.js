@@ -7,7 +7,7 @@ export default function approveReview(botId, reviewId) {
     const url = `${config.api.url}/bots/${botId}/reviews/${reviewId}/approve`;
 
     try {
-      await axios.post(url, {}, { withCredentials: true });
+      await axios.post(url, {});
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

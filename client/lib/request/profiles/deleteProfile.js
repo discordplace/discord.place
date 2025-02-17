@@ -7,7 +7,7 @@ export default function deleteProfile(slug) {
     const url = `${config.api.url}/profiles/${slug}/delete`;
 
     try {
-      await axios.post(url, {}, { withCredentials: true });
+      await axios.post(url, {});
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

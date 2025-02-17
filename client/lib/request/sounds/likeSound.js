@@ -7,7 +7,7 @@ export default function likeSound(id) {
     const url = `${config.api.url}/sounds/${id}/like`;
 
     try {
-      const response = await axios.patch(url, {}, { withCredentials: true });
+      const response = await axios.patch(url, {});
       resolve(response.data.isLiked);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

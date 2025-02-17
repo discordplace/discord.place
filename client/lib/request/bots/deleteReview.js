@@ -7,7 +7,7 @@ export default function deleteReview(botId, reviewId) {
     const url = `${config.api.url}/bots/${botId}/reviews/${reviewId}`;
 
     try {
-      await axios.delete(url, { withCredentials: true });
+      await axios.delete(url);
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

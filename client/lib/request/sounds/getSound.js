@@ -11,8 +11,7 @@ export default function getSound(id) {
       const response = await axios.get(url, {
         headers: {
           cookie: cookies().toString()
-        },
-        withCredentials: true
+        }
       });
 
       resolve(response.data);

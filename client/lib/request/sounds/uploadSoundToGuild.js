@@ -7,7 +7,7 @@ export default function uploadSoundToGuild(id, guildId) {
     const url = `${config.api.url}/sounds/${id}/upload-to-guild`;
 
     try {
-      await axios.post(url, { guildId }, { withCredentials: true });
+      await axios.post(url, { guildId });
 
       resolve();
     } catch (error) {

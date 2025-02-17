@@ -7,7 +7,7 @@ export default function createLink(keys) {
     const url = `${config.api.url}/links`;
 
     try {
-      await axios.post(url, keys, { withCredentials: true });
+      await axios.post(url, keys);
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

@@ -11,7 +11,7 @@ export default function addSocial(slug, href, type) {
         socials: {
           [type]: href
         }
-      }, { withCredentials: true });
+      });
 
       resolve(response.data.profile.socials);
     } catch (error) {

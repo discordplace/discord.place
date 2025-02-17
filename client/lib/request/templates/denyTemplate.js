@@ -7,7 +7,7 @@ export default function denyTemplate(id, reason) {
     const url = `${config.api.url}/templates/${id}/deny`;
 
     try {
-      await axios.post(url, { reason }, { withCredentials: true });
+      await axios.post(url, { reason });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
