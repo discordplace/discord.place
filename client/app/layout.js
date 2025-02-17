@@ -4,10 +4,6 @@ import { GeistSans } from 'geist/font/sans';
 import cn from '@/lib/cn';
 import LayoutContent from '@/app/layout-content';
 import AuthProvider from '@/app/components/Providers/Auth';
-import axios from 'axios';
-
-// Set axios defaults
-axios.defaults.withCredentials = true;
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
