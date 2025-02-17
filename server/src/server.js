@@ -49,7 +49,21 @@ module.exports = class Server {
   }
 
   addMiddlewares() {
-    const morganMiddleware = morgan(':status :method :url from :remote-addr :res[content-length] bytes in :response-time ms', {
+    function customMorgan(tokens, request, response) {
+      return [
+        tokens.status(request, response),
+        tokens.method(request, response),
+        tokens.url(request, response),
+        'from',
+        request.user ? `user ${request.user.id}${request.member ? `(@${request.member.user.username})` : ''}` : 'guest',
+        'ip',
+        request.clientIp,
+        tokens['response-time'](request, response),
+        'ms'
+      ].join(' ');
+    }
+
+    const morganMiddleware = morgan(customMorgan, {
       stream: {
         write: message => logger.http(message.trim())
       }
