@@ -32,7 +32,7 @@ export default function Sound({ data, avatar_base64 }) {
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : '/default-discord-avatar.png'}
+          src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : `http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/default-discord-avatar.png`}
           alt={`${data.username}'s avatar`}
           style={{ width: '32px', height: '32px', borderRadius: '50%' }}
         />
