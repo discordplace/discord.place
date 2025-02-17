@@ -10,7 +10,7 @@ export default function fetchReviews(id, page, limit) {
     if (limit) url.searchParams.append('limit', limit);
 
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

@@ -7,7 +7,7 @@ export default function getData(keys) {
     const url = `${config.api.url}/auth/@me/data`;
 
     try {
-      const response = await axios.post(url, { keys });
+      const response = await axios.post(url, { keys }, { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

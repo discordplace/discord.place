@@ -7,7 +7,7 @@ export default function addSocial(slug, socialId) {
     const url = `${config.api.url}/profiles/${slug}/socials/delete/${socialId}`;
 
     try {
-      const response = await axios.post(url, {});
+      const response = await axios.post(url, {}, { withCredentials: true });
       resolve(response.data.profile.socials);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

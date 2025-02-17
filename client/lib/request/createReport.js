@@ -7,7 +7,7 @@ export default function createReport(type, identifier, reason) {
     const url = `${config.api.url}/reports`;
 
     try {
-      await axios.put(url, { type, identifier, reason });
+      await axios.put(url, { type, identifier, reason }, { withCredentials: true });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

@@ -7,7 +7,7 @@ export default function createTripledVotesCheckout(botId) {
     const url = `${config.api.url}/payments/checkout`;
 
     try {
-      const response = await axios.post(url, { id: 'tripled-votes', botId });
+      const response = await axios.post(url, { id: 'tripled-votes', botId }, { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

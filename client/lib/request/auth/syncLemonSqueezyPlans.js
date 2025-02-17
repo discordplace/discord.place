@@ -7,7 +7,7 @@ export default function syncLemonSqueezyPlans() {
     const url = `${config.api.url}/payments/plans/sync`;
 
     try {
-      const response = await axios.post(url, {});
+      const response = await axios.post(url, {}, { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

@@ -10,7 +10,7 @@ export default function uploadEmojiToGuild(id, guildId, packIndex) {
       await axios.post(url, {
         packIndex: packIndex !== false ? packIndex : null,
         guildId
-      });
+      }, { withCredentials: true });
 
       resolve();
     } catch (error) {

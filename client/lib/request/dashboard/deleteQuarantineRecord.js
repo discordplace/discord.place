@@ -7,7 +7,7 @@ export default function deleteQuarantineRecord(id) {
     const url = `${config.api.url}/quarantines/${id}`;
 
     try {
-      await axios.delete(url);
+      await axios.delete(url, { withCredentials: true });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

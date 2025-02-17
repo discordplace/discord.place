@@ -7,7 +7,7 @@ export default function voteServer(id, captchaResponse) {
     const url = `${config.api.url}/servers/${id}/vote`;
 
     try {
-      const response = await axios.post(url, { captchaResponse });
+      const response = await axios.post(url, { captchaResponse }, { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

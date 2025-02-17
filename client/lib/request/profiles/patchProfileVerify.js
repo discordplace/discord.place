@@ -7,7 +7,7 @@ export default function patchProfileVerify(slug, verified) {
     const url = `${config.api.url}/profiles/${slug}`;
 
     try {
-      await axios.patch(url, { verified });
+      await axios.patch(url, { verified }, { withCredentials: true });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

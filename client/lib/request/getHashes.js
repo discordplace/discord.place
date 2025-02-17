@@ -7,7 +7,7 @@ export default function getHashes(id) {
     let url = `${config.api.url}/users/${id}/hashes`;
 
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

@@ -13,7 +13,7 @@ export default function fetchThemes(search, page, limit, category, sort) {
     if (sort !== 'Newest') url.searchParams.append('sort', sort);
 
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

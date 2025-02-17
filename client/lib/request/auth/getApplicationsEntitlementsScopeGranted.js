@@ -8,7 +8,7 @@ export default cache(() => {
     const url = `${config.api.url}/auth/@me/applications-entitlements-scope-granted`;
 
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, { withCredentials: true });
       resolve(response.data.granted);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

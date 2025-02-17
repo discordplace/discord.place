@@ -7,7 +7,7 @@ export default function createSound(formData) {
     const url = `${config.api.url}/sounds`;
 
     try {
-      const response = await axios.post(url, formData);
+      const response = await axios.post(url, formData, { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

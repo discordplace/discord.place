@@ -7,7 +7,7 @@ export default function editBot(id, changedKeys) {
     const url = `${config.api.url}/bots/${id}`;
 
     try {
-      const response = await axios.patch(url, changedKeys.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), { }));
+      const response = await axios.patch(url, changedKeys.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), { }), { withCredentials: true });
       resolve(response.data);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

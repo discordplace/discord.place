@@ -11,7 +11,8 @@ export default function getTheme(id) {
       const response = await axios.get(url, {
         headers: {
           cookie: cookies().toString()
-        }
+        },
+        withCredentials: true
       });
 
       resolve(response.data);

@@ -7,7 +7,7 @@ export default function createProfile(slug, preferredHost) {
     const url = `${config.api.url}/profiles`;
 
     try {
-      await axios.post(url, { slug, preferredHost });
+      await axios.post(url, { slug, preferredHost }, { withCredentials: true });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

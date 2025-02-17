@@ -7,7 +7,7 @@ export default function approveTheme(id) {
     const url = `${config.api.url}/themes/${id}/approve`;
 
     try {
-      await axios.post(url, {});
+      await axios.post(url, {}, { withCredentials: true });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

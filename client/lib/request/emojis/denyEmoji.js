@@ -7,7 +7,7 @@ export default function denyEmoji(id, reason) {
     const url = `${config.api.url}/emojis/${id}/deny`;
 
     try {
-      await axios.post(url, { reason });
+      await axios.post(url, { reason }, { withCredentials: true });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

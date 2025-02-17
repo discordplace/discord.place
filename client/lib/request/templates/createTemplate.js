@@ -7,7 +7,7 @@ export default function createTemplate(data) {
     const url = `${config.api.url}/templates`;
 
     try {
-      await axios.post(url, data);
+      await axios.post(url, data, { withCredentials: true });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);

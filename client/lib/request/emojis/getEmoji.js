@@ -12,7 +12,8 @@ export default cache((id, isPack) => {
       const response = await axios.get(url, {
         headers: {
           cookie: cookies().toString()
-        }
+        },
+        withCredentials: true
       });
       resolve(response.data);
     } catch (error) {

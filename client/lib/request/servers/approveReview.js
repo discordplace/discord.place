@@ -7,7 +7,7 @@ export default function approveReview(serverId, reviewId) {
     const url = `${config.api.url}/servers/${serverId}/reviews/${reviewId}/approve`;
 
     try {
-      await axios.post(url, {});
+      await axios.post(url, {}, { withCredentials: true });
       resolve();
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
