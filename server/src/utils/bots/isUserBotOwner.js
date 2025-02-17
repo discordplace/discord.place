@@ -19,7 +19,7 @@ async function isUserBotOwner(userId, botId) {
     return true;
   } catch (error) {
     if (error instanceof axios.AxiosError) {
-      if (error.response?.status === 403 && error.response?.data?.message === 'You are not authorized to perform this action on this application') return false;
+      if (error.response?.status === 403 && error.response?.data?.code === 20012) return false;
     }
 
     logger.error(`There was an error while checking if user with ID ${user.id} is owner of bot with ID ${botId}:`, error);
