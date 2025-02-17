@@ -49,7 +49,7 @@ const config = {
   statusUrl: 'https://status.discord.place',
   statusBadgeUrl: 'https://status.discord.place/badge',
   api: {
-    url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : '/api'
+    url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://discord.place/api'
   },
   analytics: {
     url: 'https://analytics.discord.place',
