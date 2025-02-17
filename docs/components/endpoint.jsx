@@ -12,7 +12,7 @@ const endpoints = [
   {
     id: 'update-bot-stats',
     name: 'Update Bot Stats',
-    endpoint: 'api.discord.place/bots/{id}/stats',
+    endpoint: 'discord.place/api/bots/{id}/stats',
     params: [
       {
         key: 'id',
@@ -83,7 +83,7 @@ const endpoints = [
   {
     id: 'fetch-vote-status',
     name: 'Fetch Vote Status',
-    endpoint: 'api.discord.place/bots/{id}/voters/{user_id}',
+    endpoint: 'discord.place/api/bots/{id}/voters/{user_id}',
     params: [
       {
         key: 'id',

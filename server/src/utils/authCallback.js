@@ -29,7 +29,7 @@ async function authCallback(access_token, response, setApplicationsEntitlementsS
     process.env.JWT_SECRET,
     {
       expiresIn: '30d',
-      issuer: 'api.discord.place',
+      issuer: 'discord.place',
       audience: 'discord.place',
       subject: user.id
     }

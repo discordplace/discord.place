@@ -7,7 +7,7 @@ rateLimitWhitelist:
   - '957840712404193290'
 trustProxy: true
 frontendUrl: 'https://discord.place'
-backendUrl: 'https://api.discord.place'
+backendUrl: 'https://discord.place/api'
 cdnUrl: 'https://cdn.discord.place'
 supportInviteUrl: 'https://invite.discord.place'
 emojis:
