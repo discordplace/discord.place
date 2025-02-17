@@ -49,13 +49,15 @@ module.exports = class Server {
   }
 
   addMiddlewares() {
+    morgan.token('user', request => request.user ? `user ${request.user.id}${request.member ? ` (@${request.member.user.username})` : ''}` : 'guest');
+
     function customMorgan(tokens, request, response) {
       return [
         tokens.status(request, response),
         tokens.method(request, response),
         tokens.url(request, response),
         'from',
-        request.user ? `user ${request.user.id}${request.member ? ` (@${request.member.user.username})` : ''}` : 'guest',
+        tokens.user(request),
         'ip',
         request.clientIp,
         tokens['response-time'](request, response),
