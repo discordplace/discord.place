@@ -29,7 +29,8 @@ export default function MyBots() {
   const grantScopeIntervalRef = useRef(null);
 
   function grantScope() {
-    const authorizeUrl = new URL(config.applicationsEntitlementsScopeURL());
+    console.log('grantScope', user);
+    const authorizeUrl = new URL(config.applicationsEntitlementsScopeURL(user.id));
 
     window.open(authorizeUrl, '_blank');
 
@@ -50,6 +51,12 @@ export default function MyBots() {
           setIsApplicationsEntitlementsScopeGranted(true);
 
           toast.success(t('accountPage.tabs.myBots.sections.newBot.toast.permissionGranted'));
+        }
+
+        if (applicationsEntitlementsScopeGranted === 'error') {
+          clearInterval(grantScopeIntervalRef.current);
+
+          toast.error(t('accountPage.tabs.myBots.sections.newBot.toast.permissionGrantError'));
         }
       } catch (error) {
         clearInterval(grantScopeIntervalRef.current);

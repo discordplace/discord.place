@@ -127,8 +127,8 @@ const config = {
       (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place') + pathname
     )}`;
   },
-  applicationsEntitlementsScopeURL() {
-    return `${this.api.url}/auth/applicationsEntitlementsScope`;
+  applicationsEntitlementsScopeURL(userId) {
+    return `${this.api.url}/auth/applicationsEntitlementsScope?userId=${userId}`;
   },
   validateSlug: function slugValidation(value) {
     return /^(?!-)(?!.*--)(?!.*-$)[a-zA-Z0-9-]{3,32}$/.test(value);

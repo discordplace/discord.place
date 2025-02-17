@@ -9,7 +9,7 @@ export default cache(() => {
 
     try {
       const response = await axios.get(url, { withCredentials: true });
-      resolve(response.data.granted === true);
+      resolve(response.data.granted);
     } catch (error) {
       reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
     }

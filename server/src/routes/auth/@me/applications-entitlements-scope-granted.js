@@ -12,8 +12,12 @@ module.exports = {
       const user = await User.findOne({ id: request.user.id });
       if (!user) return response.sendError('User not found.', 404);
 
+      // Remove the error flag if it exists
+      const applicationsEntitlementsScopeCallbackError = client.applicationsEntitlementsScopeCallbackError.get(user.id);
+      if (applicationsEntitlementsScopeCallbackError) client.applicationsEntitlementsScopeCallbackError.delete(user.id);
+
       return response.json({
-        granted: user.applicationsEntitlementsScopeGranted === true
+        granted: applicationsEntitlementsScopeCallbackError ? 'error' : user.applicationsEntitlementsScopeGranted === true
       });
     }
   ]

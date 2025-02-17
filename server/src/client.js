@@ -75,6 +75,7 @@ module.exports = class Client {
     this.client.blockedIps = new Discord.Collection();
     this.client.currentlyUploadingEmojiPack = new Discord.Collection();
     this.client.languageCache = new Discord.Collection();
+    this.client.applicationsEntitlementsScopeCallbackError = new Discord.Collection();
 
     return this;
   }

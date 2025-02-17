@@ -1914,7 +1914,8 @@
             },
             "toast": {
               "grantingPermissionTimeout": "Granting permission timed out. Please try again.",
-              "permissionGranted": "Permission granted successfully!"
+              "permissionGranted": "Permission granted successfully!",
+              "permissionGrantError": "You did not agree to give permission or an error occurred. Try again."
             }
           },
           "addBot": {

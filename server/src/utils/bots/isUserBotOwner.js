@@ -20,6 +20,17 @@ async function isUserBotOwner(userId, botId) {
   } catch (error) {
     if (error instanceof axios.AxiosError) {
       if (error.response?.status === 403 && error.response?.data?.code === 20012) return false;
+      if (error.response?.status === 401) {
+        // User revoked the applications.entitlements scope from the bot
+        await User.updateOne(
+          { id: userId },
+          { applicationsEntitlementsScopeGranted: false }
+        );
+
+        logger.info(`User with ID ${userId} revoked the applications.entitlements scope.`);
+
+        return false;
+      }
     }
 
     logger.error(`There was an error while checking if user with ID ${user.id} is owner of bot with ID ${botId}:`, error);

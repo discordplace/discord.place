@@ -1913,7 +1913,8 @@
             },
             "toast": {
               "grantingPermissionTimeout": "İcazə verilməsi tələbi zaman aşımına uğradı. Zəhmət olmasa yenidən cəhd edin.",
-              "permissionGranted": "İcazə uğurla verildi!"
+              "permissionGranted": "İcazə uğurla verildi!",
+              "permissionGrantError": "Siz icazə verməyi razılaşmadınız və ya bir xəta baş verdi. Yenidən cəhd edin."
             }
           },
           "addBot": {
