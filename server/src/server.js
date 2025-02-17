@@ -55,7 +55,7 @@ module.exports = class Server {
         tokens.method(request, response),
         tokens.url(request, response),
         'from',
-        request.user ? `user ${request.user.id}${request.member ? `(@${request.member.user.username})` : ''}` : 'guest',
+        request.user ? `user ${request.user.id}${request.member ? ` (@${request.member.user.username})` : ''}` : 'guest',
         'ip',
         request.clientIp,
         tokens['response-time'](request, response),
