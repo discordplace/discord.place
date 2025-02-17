@@ -1,5 +1,6 @@
 module.exports = function (request, response, next) {
   const headersToCheck = [
+    'cf-connecting-ip',
     'x-forwarded-for'
   ];
 
