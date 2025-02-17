@@ -276,7 +276,8 @@
     "addTheme": "Tema Ekle",
     "createReport": "Bildirim Oluştur",
     "all": "Tümü",
-    "copy": "Kopyala"
+    "copy": "Kopyala",
+    "grantPermission": "İzin Ver"
   },
   "voteCountdown": {
     "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",
@@ -1906,6 +1907,14 @@
               "title": "Not",
               "description": "Eklediğiniz bot, discord.place tarafından incelenecek ve ardından listelenecektir. Lütfen botunuzun bot gönderme ilkelerimizi ihlal etmediğinden emin olun. Bot gönderme ilkelerimiz <link>'da bulunabilir.",
               "linkText": "Discord sunucumuz"
+            },
+            "permissionRequired": {
+              "title": "İzin Gerekli",
+              "description": "Bot eklemeden önce, sahip olduğunuz botları görmemize izin vermeniz gerekmektedir. Bu, eklediğiniz botun size ait olduğunu doğrulamak için gereklidir. Bunun için aşağıdaki butona tıklayabilirsiniz."
+            },
+            "toast": {
+              "grantingPermissionTimeout": "İzin verme isteği zaman aşımına uğradı. Lütfen tekrar deneyin.",
+              "permissionGranted": "İzin başarıyla verildi!"
             }
           },
           "addBot": {

@@ -276,7 +276,8 @@
     "addTheme": "Tema əlavə et",
     "createReport": "Hesabat yaradın",
     "all": "Hamısı",
-    "copy": "Kopyalayın"
+    "copy": "Kopyalayın",
+    "grantPermission": "İcazə verin"
   },
   "voteCountdown": {
     "desktop": "gözləyin {{hours}}h {{minutes}}m {{seconds}}səs vermək",
@@ -1905,6 +1906,14 @@
               "title": "Qeyd",
               "description": "Təqdim etdiyiniz bot discord.place saytında siyahıya salınmazdan əvvəl komandamız tərəfindən nəzərdən keçiriləcək.  <link>.",
               "linkText": "Discord serveri"
+            },
+            "permissionRequired": {
+              "title": "Icazə Tələb Olunur",
+              "description": "Bot əlavə etmədən əvvəl, sizin botlarınızı görməyimizə icazə verilməlidir. Bu, əlavə etdiyiniz botun sizə məxsus olduğunu təsdiq etmək üçün vacibdir. Bunun üçün aşağıdakı düyməni klikləyə bilərsiniz."
+            },
+            "toast": {
+              "grantingPermissionTimeout": "İcazə verilməsi tələbi zaman aşımına uğradı. Zəhmət olmasa yenidən cəhd edin.",
+              "permissionGranted": "İcazə uğurla verildi!"
             }
           },
           "addBot": {

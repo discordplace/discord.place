@@ -17,10 +17,11 @@ const githubRepositoryValidation = require('@/validations/bots/githubRepository'
 const findRepository = require('@/utils/bots/findRepository');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const isUserBotOwner = require('@/utils/bots/isUserBotOwner');
 
 module.exports = {
   get: [
-    useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
+    useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('id'),
     validateRequest,
     async (request, response) => {
@@ -154,6 +155,9 @@ module.exports = {
 
       const denyExists = await Deny.findOne({ 'bot.id': user.id, createdAt: { $gte: new Date(Date.now() - 6 * 60 * 60 * 1000) } });
       if (denyExists) return response.sendError(`This bot has been denied by ${denyExists.reviewer.id} in the past 6 hours. You can't submit this bot again until 6 hours pass.`, 400);
+
+      const ownershipResult = await isUserBotOwner(request.user.id, user.id).catch(() => false);
+      if (ownershipResult !== true) return response.sendError('You are not the owner of this bot.', 403);
 
       const approximate_guild_count_data = await getApproximateGuildCount(user.id).catch(() => null);
 
