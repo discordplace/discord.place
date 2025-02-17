@@ -25,7 +25,7 @@ module.exports = {
       if (state !== storedState) return response.sendError('Invalid state.', 400);
 
       try {
-        const access_token = await getAccessToken(code, config.discordScopes.concat('applications.entitlements'), `${config.backendUrl}/auth/applicationsEntitlementsScope/callback`);
+        const { access_token } = await getAccessToken(code, config.discordScopes.concat('applications.entitlements'), `${config.backendUrl}/auth/applicationsEntitlementsScope/callback`);
 
         const callbackResponse = await authCallback(access_token, response, true);
         if (callbackResponse !== null) return;
