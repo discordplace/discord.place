@@ -41,7 +41,7 @@ const mockData = { // This is just a mock data to demonstrate the usage
   server_count: 0
 }
 
-axios.patch('https://discord.place/api/bots/YOUR_BOT_ID/stats', mockData, {
+axios.patch('https://api.discord.place/bots/YOUR_BOT_ID/stats', mockData, {
   headers: {
     'Authorization': apiKey
   }
@@ -67,7 +67,7 @@ mock_data = { # This is just a mock data to demonstrate the usage
 }
 
 response = requests.patch(
-  'https://discord.place/api/bots/YOUR_BOT_ID/stats',
+  'https://api.discord.place/bots/YOUR_BOT_ID/stats',
   json=mock_data, 
   headers={'Authorization': api_key}
 )
@@ -78,7 +78,7 @@ print(response.json())
 #### cURL
 
 ```bash
-curl -X PATCH https://discord.place/api/bots/YOUR_BOT_ID/stats \
+curl -X PATCH https://api.discord.place/bots/YOUR_BOT_ID/stats \
   -H "Authorization: YOUR_API_KEY_HERE" \
   -H "Content-Type: application/json" \
   -d '{"command_count": 0,"server_count": 0}'

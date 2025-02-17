@@ -116,7 +116,7 @@ module.exports = class Server {
           if (!tokenRegex.test(token)) throw new Error('Invalid token format.');
 
           const decoded = jwt.verify(token, process.env.JWT_SECRET, {
-            issuer: 'discord.place',
+            issuer: 'api.discord.place',
             audience: 'discord.place',
             complete: true,
             clockTolerance: 60

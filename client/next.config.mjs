@@ -22,7 +22,7 @@ const nextConfig = {
     return [
       {
         source: '/sitemap.xml',
-        destination: 'https://discord.place/api/sitemap.xml'
+        destination: 'https://api.discord.place/sitemap.xml'
       }
     ];
   }
