@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.9.0](https://github.com/discordplace/discord.place/compare/server@v1.8.0...server@v1.9.0) (2025-02-17)
+
+
+### Features
+
+* **auth:** enhance applications entitlements scope handling and error messaging ([0e2d09e](https://github.com/discordplace/discord.place/commit/0e2d09e5f5f1f8a9609d20b8f47515325a37a81b))
+
+
+### Bug Fixes
+
+* **bots:** update error handling for unauthorized bot ownership check ([1ec2fa2](https://github.com/discordplace/discord.place/commit/1ec2fa23c5d1b57ed2bf04b881e2d830a0da7523))
+
 ## [1.8.0](https://github.com/discordplace/discord.place/compare/server@v1.7.0...server@v1.8.0) (2025-02-17)
 
 

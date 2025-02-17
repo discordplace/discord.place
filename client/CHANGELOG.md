@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/discordplace/discord.place/compare/client@v1.10.0...client@v1.11.0) (2025-02-17)
+
+
+### Features
+
+* **auth:** enhance applications entitlements scope handling and error messaging ([0e2d09e](https://github.com/discordplace/discord.place/commit/0e2d09e5f5f1f8a9609d20b8f47515325a37a81b))
+
 ## [1.10.0](https://github.com/discordplace/discord.place/compare/client-v1.9.1...client@v1.10.0) (2025-02-17)
 
 
