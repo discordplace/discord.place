@@ -276,7 +276,8 @@
     "addTheme": "Add Theme",
     "createReport": "Create Report",
     "all": "All",
-    "copy": "Copy"
+    "copy": "Copy",
+    "grantPermission": "Grant Permission"
   },
   "voteCountdown": {
     "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",
@@ -1906,6 +1907,14 @@
               "title": "Note",
               "description": "Your submitted bot will be reviewed by our team before it is listed on discord.place. Please make sure that your bot is not violating our bot submission guidelines. Our bot submission guidelines can be found in our <link>.",
               "linkText": "Discord server"
+            },
+            "permissionRequired": {
+              "title": "Permission Required",
+              "description": "Before adding bots, you must give us permission to see the bots you own. This is required to verify that you own the bot you are adding. You can do this by clicking the button below."
+            },
+            "toast": {
+              "grantingPermissionTimeout": "Granting permission timed out. Please try again.",
+              "permissionGranted": "Permission granted successfully!"
             }
           },
           "addBot": {

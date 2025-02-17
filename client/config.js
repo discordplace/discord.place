@@ -122,10 +122,13 @@ const config = {
     '90001': 'The blog you are looking for does not exist.'
   },
   profilesMaxSocialsLength: 8,
-  getLoginURL (pathname) {
+  getLoginURL(pathname) {
     return `${this.api.url}/auth/login?redirect=${encodeURIComponent(
       (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place') + pathname
     )}`;
+  },
+  applicationsEntitlementsScopeURL() {
+    return `${this.api.url}/auth/applicationsEntitlementsScope`;
   },
   validateSlug: function slugValidation(value) {
     return /^(?!-)(?!.*--)(?!.*-$)[a-zA-Z0-9-]{3,32}$/.test(value);

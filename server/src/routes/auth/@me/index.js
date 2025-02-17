@@ -62,7 +62,8 @@ module.exports = {
         banner: userHashes.banner,
         profile: profile?.slug ? { slug: profile.slug } : null,
         premium: user?.subscription?.createdAt ? user.subscription : null,
-        can_view_dashboard: canViewDashboard
+        can_view_dashboard: canViewDashboard,
+        applications_entitlements_scope_granted: user.applicationsEntitlementsScopeGranted === true
       });
     }
   ]

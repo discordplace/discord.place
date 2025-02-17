@@ -10,14 +10,61 @@ import { LuPlus } from 'react-icons/lu';
 import config from '@/config';
 import Countdown from '@/app/components/Countdown';
 import cn from '@/lib/cn';
-import { FaCircleExclamation } from 'react-icons/fa6';
+import { FaCircleCheck, FaCircleExclamation } from 'react-icons/fa6';
 import { t } from '@/stores/language';
+import useAuthStore from '@/stores/auth';
+import { useRef, useState } from 'react';
+import { toast } from 'sonner';
+import getApplicationsEntitlementsScopeGranted from '@/lib/request/auth/getApplicationsEntitlementsScopeGranted';
+import { PiWarningCircleFill } from 'react-icons/pi';
 
 export default function MyBots() {
   const data = useAccountStore(state => state.data);
+  const user = useAuthStore(state => state.user);
 
   const currentlyAddingBot = useAccountStore(state => state.currentlyAddingBot);
   const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
+
+  const [isApplicationsEntitlementsScopeGranted, setIsApplicationsEntitlementsScopeGranted] = useState(user.applications_entitlements_scope_granted);
+  const grantScopeIntervalRef = useRef(null);
+
+  function grantScope() {
+    const authorizeUrl = new URL(config.applicationsEntitlementsScopeURL());
+
+    window.open(authorizeUrl, '_blank');
+
+    let retryCount = 0;
+
+    grantScopeIntervalRef.current = setInterval(async () => {
+      if (retryCount > 30) {
+        clearInterval(grantScopeIntervalRef.current);
+        toast.error(t('accountPage.tabs.myBots.sections.newBot.toast.grantingPermissionTimeout'), { duration: 30000 });
+
+        return;
+      }
+
+      try {
+        const applicationsEntitlementsScopeGranted = await getApplicationsEntitlementsScopeGranted();
+        if (applicationsEntitlementsScopeGranted === true) {
+          clearInterval(grantScopeIntervalRef.current);
+          setIsApplicationsEntitlementsScopeGranted(true);
+
+          toast.success(t('accountPage.tabs.myBots.sections.newBot.toast.permissionGranted'));
+        }
+      } catch (error) {
+        clearInterval(grantScopeIntervalRef.current);
+        toast.error(error.message);
+
+        console.error(error);
+      }
+
+      retryCount++;
+    }, 1000);
+
+    return () => {
+      clearInterval(grantScopeIntervalRef?.current);
+    };
+  }
 
   return (
     currentlyAddingBot ? (
@@ -61,34 +108,36 @@ export default function MyBots() {
             </div>
           ) : (
             <div className='mt-2 flex max-w-[800px] flex-wrap gap-4'>
-              {data.bots.map(bot => (
-                <Link
-                  key={bot.id}
-                  className='flex items-center gap-4 rounded-xl bg-secondary p-4 transition-opacity hover:opacity-70'
-                  href={`/bots/${bot.id}`}
-                >
-                  <div className='relative size-12'>
-                    <UserAvatar
-                      id={bot.id}
-                      hash={bot.avatar}
-                      size={64}
-                      width={48}
-                      height={48}
-                      className='rounded-lg'
-                    />
-                  </div>
+              {data.bots
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .map(bot => (
+                  <Link
+                    key={bot.id}
+                    className='flex items-center gap-4 rounded-xl bg-secondary p-4 transition-opacity hover:opacity-70'
+                    href={`/bots/${bot.id}`}
+                  >
+                    <div className='relative size-12'>
+                      <UserAvatar
+                        id={bot.id}
+                        hash={bot.avatar}
+                        size={64}
+                        width={48}
+                        height={48}
+                        className='rounded-lg'
+                      />
+                    </div>
 
-                  <div className='flex flex-col'>
-                    <h3 className='text-sm font-bold text-primary'>
-                      {bot.username}
-                    </h3>
+                    <div className='flex flex-col'>
+                      <h3 className='text-sm font-bold text-primary'>
+                        {bot.username}
+                      </h3>
 
-                    <p className='text-xs text-tertiary'>
-                      {bot.id}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+                      <p className='text-xs text-tertiary'>
+                        {bot.id}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
             </div>
           )}
         </div>
@@ -102,27 +151,53 @@ export default function MyBots() {
             {t('accountPage.tabs.myBots.sections.newBot.subtitle')}
           </p>
 
-          <div className='relative mt-2 flex w-full max-w-[800px] flex-col gap-y-2 rounded-xl border border-blue-500 bg-blue-500/10 p-4 transition-[margin,opacity] duration-1000 ease-in-out'>
-            <h2 className='flex items-center gap-x-2 text-lg font-semibold'>
-              <BsQuestionCircleFill /> {t('accountPage.tabs.myBots.sections.newBot.note.title')}
-            </h2>
+          {isApplicationsEntitlementsScopeGranted ? (
+            <>
+              <div className='relative mt-2 flex w-full max-w-[800px] flex-col gap-y-2 rounded-xl border border-blue-500 bg-blue-500/10 p-4 transition-[margin,opacity] duration-1000 ease-in-out'>
+                <h2 className='flex items-center gap-x-2 text-lg font-semibold'>
+                  <BsQuestionCircleFill /> {t('accountPage.tabs.myBots.sections.newBot.note.title')}
+                </h2>
 
-            <p className='text-sm font-medium text-tertiary'>
-              {t('accountPage.tabs.myBots.sections.newBot.note.description', {
-                link: <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>{t('accountPage.tabs.myBots.sections.newBot.note.linkText')}</Link>
-              })}
-            </p>
-          </div>
+                <p className='text-sm font-medium text-tertiary'>
+                  {t('accountPage.tabs.myBots.sections.newBot.note.description', {
+                    link: <Link className='text-secondary hover:text-primary' href={config.supportInviteUrl} target='_blank'>{t('accountPage.tabs.myBots.sections.newBot.note.linkText')}</Link>
+                  })}
+                </p>
+              </div>
 
-          <div className='mt-4 flex flex-col gap-y-4 text-sm text-tertiary'>
-            <button
-              className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
-              onClick={() => setCurrentlyAddingBot(true)}
-            >
-              {t('buttons.letsGo')}
-              <LuPlus />
-            </button>
-          </div>
+              <div className='mt-4 flex flex-col gap-y-4 text-sm text-tertiary'>
+                <button
+                  className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
+                  onClick={() => setCurrentlyAddingBot(true)}
+                >
+                  {t('buttons.letsGo')}
+                  <LuPlus />
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className='relative mt-2 flex w-full max-w-[800px] flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4 transition-[margin,opacity] duration-1000 ease-in-out'>
+                <h2 className='flex items-center gap-x-2 text-lg font-semibold'>
+                  <PiWarningCircleFill /> {t('accountPage.tabs.myBots.sections.newBot.permissionRequired.title')}
+                </h2>
+
+                <p className='text-sm font-medium text-tertiary'>
+                  {t('accountPage.tabs.myBots.sections.newBot.permissionRequired.description')}
+                </p>
+              </div>
+
+              <div className='mt-4 flex flex-col gap-y-4 text-sm text-tertiary'>
+                <button
+                  className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
+                  onClick={grantScope}
+                >
+                  {t('buttons.grantPermission')}
+                  <FaCircleCheck />
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         <div className='mt-8 flex flex-col gap-y-2'>

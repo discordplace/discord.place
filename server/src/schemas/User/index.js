@@ -21,6 +21,11 @@ const UserSchema = new Schema({
     type: String,
     required: false
   },
+  applicationsEntitlementsScopeGranted: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
   accessToken: {
     iv: {
       type: String,
