@@ -467,6 +467,3 @@ availableLocales:
   - name: 'Turkish'
     code: 'tr'
     flag: '🇹🇷'
-  - name: 'Azerbaijani'
-    code: 'az'
-    flag: '🇦🇿'

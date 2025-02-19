@@ -316,7 +316,7 @@ To add a new language to the server, follow these steps:
 ```
 
 > [!NOTE]
-> - Some languages may not supported by Discord client. If you want to add a language that is not supported by Discord client, you can just copy & paste the `tr.json` file to the new language file and change the translations in the new language file. Otherwise, you can copy & paste the `az.json` file to the new language file which is not supported by Discord client.
+> - Some languages may not be supported by Discord client.
 
 ## Contributing
 
