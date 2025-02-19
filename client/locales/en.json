@@ -277,7 +277,10 @@
     "createReport": "Create Report",
     "all": "All",
     "copy": "Copy",
-    "grantPermission": "Grant Permission"
+    "grantPermission": "Grant Permission",
+    "trust": "Trust",
+    "trustAndLoad": "Trust and Load",
+    "dontTrust": "Don't Trust"
   },
   "voteCountdown": {
     "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",
@@ -2170,5 +2173,13 @@
   "blogsPage": {
     "title": "Writings from our team",
     "subtitle": "The latest news, updates and guides from the Discord Place team. Discover the latest trends in design, development and more."
+  },
+  "components": {
+    "markdown": {
+      "iframe": {
+        "blockedSource": "You have blocked the iframe from loading from <span> source.<br>Do you want to trust this source?",
+        "contentBeHere": "The iframe will be loaded here once you trust the source."
+      }
+    }
   }
 }

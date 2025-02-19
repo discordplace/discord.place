@@ -4,6 +4,7 @@ import { useLocalStorage } from 'react-use';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { LuShieldAlert } from 'react-icons/lu';
 import { PiFrameCornersBold } from 'react-icons/pi';
+import { t } from '@/stores/language';
 
 export default function CustomIFrame({ src, title }) {
   const url = new URL(src);
@@ -27,9 +28,10 @@ export default function CustomIFrame({ src, title }) {
               <LuShieldAlert size={64} />
 
               <p className='text-center text-sm font-medium'>
-                You have blocked the iframe from loading from <span className='text-primary'>{domain}</span> source.
-                <br />
-                Do you want to trust this source?
+                {t('components.markdown.iframe.blockedSource', {
+                  span: <span className='text-primary'>{domain}</span>,
+                  br: <br />
+                })}
               </p>
 
               <button
@@ -40,7 +42,7 @@ export default function CustomIFrame({ src, title }) {
                 }}
               >
                 <IoCheckmarkCircle />
-                Trust
+                {t('buttons.trust')}
               </button>
             </div>
           </>
@@ -48,7 +50,10 @@ export default function CustomIFrame({ src, title }) {
           <>
             <div className='absolute top-0 mt-4 hidden flex-wrap items-center justify-between gap-x-4 rounded-2xl bg-tertiary px-5 lg:flex'>
               <p className='text-sm font-medium text-tertiary'>
-                A iframe is trying to load from <span className='text-primary'>{domain}</span> source. Do you trust this source?
+                {t('components.markdown.iframe.blockedSource', {
+                  span: <span className='text-primary'>{domain}</span>,
+                  br: <br />
+                })}
               </p>
 
               <div className='flex items-center gap-x-2'>
@@ -57,14 +62,14 @@ export default function CustomIFrame({ src, title }) {
                   onClick={() => setTrustedFrames(oldTrustedFrames => oldTrustedFrames.concat(src))}
                 >
                   <IoCheckmarkCircle />
-                  Trust and Load
+                  {t('buttons.trustAndLoad')}
                 </button>
 
                 <button
                   className='flex items-center gap-x-1 rounded-full bg-red-600 px-3 py-1 text-sm font-medium text-white hover:opacity-80'
                   onClick={() => setUntrustedFrames(oldUntrustedFrames => oldUntrustedFrames.concat(src))}
                 >
-                  Don{'\''}t Trust
+                  {t('buttons.dontTrust')}
                 </button>
               </div>
             </div>
@@ -74,7 +79,10 @@ export default function CustomIFrame({ src, title }) {
 
               <div className='flex flex-col items-center gap-y-2 px-4 lg:hidden'>
                 <p className='text-center text-sm font-medium'>
-                  A iframe is trying to load from <span className='text-primary'>{domain}</span> source. Do you trust this source?
+                  {t('components.markdown.iframe.blockedSource', {
+                    span: <span className='text-primary'>{domain}</span>,
+                    br: <br />
+                  })}
                 </p>
 
                 <div className='flex items-center gap-x-2'>
@@ -83,20 +91,20 @@ export default function CustomIFrame({ src, title }) {
                     onClick={() => setTrustedFrames(oldTrustedFrames => oldTrustedFrames.concat(src))}
                   >
                     <IoCheckmarkCircle />
-                    Trust and Load
+                    {t('buttons.trust')}
                   </button>
 
                   <button
                     className='flex items-center gap-x-1 rounded-full bg-red-600 px-3 py-1 text-sm font-medium text-white hover:opacity-80'
                     onClick={() => setUntrustedFrames(oldUntrustedFrames => oldUntrustedFrames.concat(src))}
                   >
-                    Don{'\''}t Trust
+                    {t('buttons.dontTrust')}
                   </button>
                 </div>
               </div>
 
               <p className='hidden text-sm font-medium lg:block'>
-                The iframe will be loaded here once you trust the source.
+                {t('components.markdown.iframe.contentBeHere')}
               </p>
             </div>
           </>
