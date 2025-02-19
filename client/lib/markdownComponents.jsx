@@ -14,7 +14,13 @@ import CustomIFrame from '@/app/components/Markdown/iframe';
 
 const markdownComponents = {
   iframe: ({ src, title }) => {
-    return <CustomIFrame src={src} title={title} />;
+    try {
+      new URL(src);
+
+      return <CustomIFrame src={src} title={title} />;
+    } catch {
+      return null;
+    }
   },
   img: ({ src, alt, width, height }) => {
     return (
