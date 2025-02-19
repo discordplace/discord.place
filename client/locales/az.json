@@ -277,7 +277,10 @@
     "createReport": "Hesabat yaradın",
     "all": "Hamısı",
     "copy": "Kopyalayın",
-    "grantPermission": "İcazə verin"
+    "grantPermission": "İcazə verin",
+    "trust": "Etibar et",
+    "trustAndLoad": "Etibar et və yüklə",
+    "dontTrust": "Etibar etmə"
   },
   "voteCountdown": {
     "desktop": "gözləyin {{hours}}h {{minutes}}m {{seconds}}səs vermək",
@@ -2169,5 +2172,13 @@
   "blogsPage": {
     "title": "Komandamızdan yazılar",
     "subtitle": "Discord Place komandasından son xəbərlər, yeniliklər və təlimlər. Dizayn, inkişaf və daha çox sahələrdə son trendləri öyrənin."
+  },
+  "components": {
+    "markdown": {
+      "iframe": {
+        "blockedSource": "<span> mənbədən bir məzmunun yüklənməsi bloklandı. Bu mənbəyə etibar etmək istəyirsiniz?",
+        "contentBeHere": "Mənbəyə etibar edən kimi məzmun burada görünəcək."
+      }
+    }
   }
 }

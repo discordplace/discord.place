@@ -10,8 +10,12 @@ import CodeBlock from '@/app/components/CodeBlock';
 import { TbFileTypeXml } from 'react-icons/tb';
 import { MdHttps } from 'react-icons/md';
 import { SiPhp } from 'react-icons/si';
+import CustomIFrame from '@/app/components/Markdown/iframe';
 
 const markdownComponents = {
+  iframe: ({ src, title }) => {
+    return <CustomIFrame src={src} title={title} />;
+  },
   img: ({ src, alt, width, height }) => {
     return (
       <Zoom>

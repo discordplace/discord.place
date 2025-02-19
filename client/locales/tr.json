@@ -277,7 +277,10 @@
     "createReport": "Bildirim Oluştur",
     "all": "Tümü",
     "copy": "Kopyala",
-    "grantPermission": "İzin Ver"
+    "grantPermission": "İzin Ver",
+    "trust": "Güven",
+    "trustAndLoad": "Güven ve Yükle",
+    "dontTrust": "Güvenme"
   },
   "voteCountdown": {
     "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",
@@ -2170,5 +2173,13 @@
   "blogsPage": {
     "title": "Ekibimizden Yazılar",
     "subtitle": "Discord Place ekibinden en son haberler, güncellemeler ve rehberler. Tasarım, geliştirme ve daha fazlası hakkında en yeni trendleri keşfedin."
+  },
+  "components": {
+    "markdown": {
+      "iframe": {
+        "blockedSource": "<span> kaynağından bir içerik yüklenmesi engellendi. Bu kaynağa güvenmek ister misiniz?",
+        "contentBeHere": "Kaynağa güvenir güvenmez içerik burada belirecek."
+      }
+    }
   }
 }
