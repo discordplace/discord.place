@@ -190,7 +190,7 @@ export default function NewBot() {
             </button>
 
             {markdownPreviewing ? (
-              <Markdown className='mt-4 h-[250px] overflow-y-auto rounded-lg border-2 border-transparent'>
+              <Markdown className='mt-4 overflow-y-auto rounded-lg border-2 border-transparent'>
                 {botDescription}
               </Markdown>
             ) : (

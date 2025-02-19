@@ -63,7 +63,7 @@ export default function EssentialInformation({ shortDescription, setShortDescrip
           onChange={event => setDescription(event.target.value)}
           value={description}
           CustomInput={markdownPreviewing && (
-            <Markdown className='mt-2 h-[250px] w-full overflow-y-auto rounded-xl bg-secondary px-4 py-2 text-tertiary focus-visible:text-primary'>
+            <Markdown className='mt-2 w-full overflow-y-auto rounded-xl bg-secondary px-4 py-2 text-tertiary focus-visible:text-primary'>
               {description}
             </Markdown>
           )}
