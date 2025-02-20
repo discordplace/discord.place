@@ -35,7 +35,7 @@ export default function CustomIFrame({ src, title }) {
               </p>
 
               <button
-                className='flex items-center gap-x-1 rounded-full bg-purple-500 px-3 py-1 text-sm font-medium text-white hover:opacity-80'
+                className='flex items-center gap-x-1 rounded-full bg-purple-500 px-3 py-1 text-sm font-medium text-white hover:bg-purple-600'
                 onClick={() => {
                   setUntrustedFrames(oldUntrustedFrames => oldUntrustedFrames.filter(frame => frame !== src));
                   setTrustedFrames(oldTrustedFrames => oldTrustedFrames.concat(src));
@@ -48,54 +48,26 @@ export default function CustomIFrame({ src, title }) {
           </>
         ) : (
           <>
-            <div className='absolute top-0 mt-4 hidden flex-wrap items-center justify-between gap-x-4 rounded-2xl bg-tertiary px-5 lg:flex'>
-              <p className='text-sm font-medium text-tertiary'>
-                {t('components.markdown.iframe.blockedSource', {
-                  span: <span className='text-primary'>{domain}</span>,
-                  br: <br />
-                })}
-              </p>
-
-              <div className='flex items-center gap-x-2'>
-                <button
-                  className='flex items-center gap-x-1 rounded-full bg-purple-500 px-3 py-1 text-sm font-medium text-white hover:opacity-80'
-                  onClick={() => setTrustedFrames(oldTrustedFrames => oldTrustedFrames.concat(src))}
-                >
-                  <IoCheckmarkCircle />
-                  {t('buttons.trustAndLoad')}
-                </button>
-
-                <button
-                  className='flex items-center gap-x-1 rounded-full bg-red-600 px-3 py-1 text-sm font-medium text-white hover:opacity-80'
-                  onClick={() => setUntrustedFrames(oldUntrustedFrames => oldUntrustedFrames.concat(src))}
-                >
-                  {t('buttons.dontTrust')}
-                </button>
-              </div>
-            </div>
-
-            <div className='flex size-full flex-col items-center justify-center text-tertiary'>
-              <PiFrameCornersBold size={64} />
-
-              <div className='flex flex-col items-center gap-y-2 px-4 lg:hidden'>
-                <p className='text-center text-sm font-medium'>
-                  {t('components.markdown.iframe.blockedSource', {
+            <div className='size-full'>
+              <div className='absolute top-0 flex w-full flex-wrap items-center justify-between gap-4 rounded-t-xl bg-tertiary px-5 py-4' id='trustConsentContainer'>
+                <span className='text-sm font-medium text-tertiary'>
+                  {t('components.markdown.iframe.sourceConsent', {
                     span: <span className='text-primary'>{domain}</span>,
                     br: <br />
                   })}
-                </p>
+                </span>
 
-                <div className='flex items-center gap-x-2'>
+                <div className='flex flex-wrap items-center gap-2'>
                   <button
-                    className='flex items-center gap-x-1 rounded-full bg-purple-500 px-3 py-1 text-sm font-medium text-white hover:opacity-80'
+                    className='flex items-center gap-x-1 rounded-full bg-purple-500 px-3 py-1 text-sm font-medium text-white hover:bg-purple-600'
                     onClick={() => setTrustedFrames(oldTrustedFrames => oldTrustedFrames.concat(src))}
                   >
                     <IoCheckmarkCircle />
-                    {t('buttons.trust')}
+                    {t('buttons.trustAndLoad')}
                   </button>
 
                   <button
-                    className='flex items-center gap-x-1 rounded-full bg-red-600 px-3 py-1 text-sm font-medium text-white hover:opacity-80'
+                    className='flex items-center gap-x-1 rounded-full bg-red-600 px-3 py-1 text-sm font-medium text-white hover:bg-red-700'
                     onClick={() => setUntrustedFrames(oldUntrustedFrames => oldUntrustedFrames.concat(src))}
                   >
                     {t('buttons.dontTrust')}
@@ -103,9 +75,13 @@ export default function CustomIFrame({ src, title }) {
                 </div>
               </div>
 
-              <p className='hidden text-sm font-medium lg:block'>
-                {t('components.markdown.iframe.contentBeHere')}
-              </p>
+              <div className='flex size-full flex-col items-center justify-center gap-y-2 px-4 text-tertiary'>
+                <PiFrameCornersBold size={64} />
+
+                <span className='text-center text-sm font-medium'>
+                  {t('components.markdown.iframe.contentBeHere')}
+                </span>
+              </div>
             </div>
           </>
         )}

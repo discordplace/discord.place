@@ -2177,6 +2177,7 @@
   "components": {
     "markdown": {
       "iframe": {
+        "sourceConsent": "An iframe tried to load from the <span> source.<br>Do you want to trust this source?",
         "blockedSource": "You have blocked the iframe from loading from <span> source.<br>Do you want to trust this source?",
         "contentBeHere": "The iframe will be loaded here once you trust the source."
       }

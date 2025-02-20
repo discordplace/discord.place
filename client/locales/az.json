@@ -2176,6 +2176,7 @@
   "components": {
     "markdown": {
       "iframe": {
+        "sourceConsent": "Bir iframe <span> mənbəyindən yüklənməyə cəhd etdi.<br>Bu mənbəyə etibar etmək istəyirsiniz?",
         "blockedSource": "<span> mənbədən bir məzmunun yüklənməsi bloklandı. Bu mənbəyə etibar etmək istəyirsiniz?",
         "contentBeHere": "Mənbəyə etibar edən kimi məzmun burada görünəcək."
       }
