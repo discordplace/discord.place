@@ -52,7 +52,7 @@ const config = {
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place'
   },
   analytics: {
-    url: 'https://analytics.discord.place',
+    url: 'https://plausible.discord.place',
     script: 'https://plausible.discord.place/js/script.pageview-props.file-downloads.hash.outbound-links.js',
     domain: 'discord.place'
   },
