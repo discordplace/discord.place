@@ -50,19 +50,21 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     if (!user || user === 'loading') return;
 
-    const discord_metadata = {
-      user_id: user.id,
-      username: user.username
-    };
+    async function waitUntilPlausibleFound() {
+      while (!window.plausible) await new Promise(resolve => setTimeout(resolve, 100));
 
-    async function waitUntilUmamiFound() {
-      while (!window.umami) await new Promise(resolve => setTimeout(resolve, 100));
-
-      return window.umami;
+      return window.plausible;
     }
 
-    waitUntilUmamiFound()
-      .then(() => window.umami.identify({ discord_metadata }));
+    waitUntilPlausibleFound()
+      .then(() => {
+        const element = document.getElementById('plausible-analytics-script');
+
+        if (element) {
+          element.setAttribute('data-user-id', user.id);
+          element.setAttribute('data-user-username', user.username);
+        }
+      });
   }, [user]);
 
   return children;

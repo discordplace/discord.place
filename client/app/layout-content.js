@@ -33,9 +33,16 @@ export default function RootLayoutContent({ children }) {
       <Script
         defer={true}
         src={config.analytics.script}
-        data-website-id={config.analytics.websiteId}
-        data-domains={config.analytics.domains.join(',')}
+        data-domain={config.analytics.domain}
+        id='plausible-analytics-script'
       />
+
+      <Script id='plausible-analytics-setup'>
+        {`
+          window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };
+        `}
+      </Script>
+
       <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
       <Script id='google-analytics'>
         {`

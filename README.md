@@ -211,8 +211,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 | `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:3001`. |
 | `analytics.url` | String | Your analytics website URL. |
 | `analytics.script` | String | Your analytics script URL. |
-| `analytics.websiteId` | String | Your analytics website ID. |
-| `analytics.domains` | Array<String> | Your analytics allowed domains. |
+| `analytics.domain` | String | Your analytics domain. |
 | `botTestGuildId` | String | Your test guild ID for the bots testing. |
 | `getEmojiURL` | Function | Function for getting the emoji URL. You may need to change this to your own CDN URL. |
 | `getSoundURL` | Function | Function for getting the sound URL. You may need to change this to your own CDN URL. |
@@ -223,7 +222,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 > - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
 > - The `supportInviteUrl` and `docsUrl` values are used in the website for the support server and documentation links. You can change these values to your own support server and documentation links.
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL.
-> - The `analytics.url`, `analytics.script`, `analytics.websiteId`, and `analytics.domains` values are used for setting up analytics on the website. We use [Umami Analytics](https://umami.is) for analytics. Any other analytics service is not supported.
+> - The `analytics.url`, `analytics.script` and `analytics.domains` values are used for setting up analytics on the website. We use [Plausible Analytics](https://plausible.io) for analytics. Any other analytics service is not supported.
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `getEmojiURL` and `getSoundURL` functions are used for getting the emoji and sound URLs. You should change these functions to your own CDN URL.
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.

@@ -53,9 +53,8 @@ const config = {
   },
   analytics: {
     url: 'https://analytics.discord.place',
-    script: 'https://analytics.discord.place/script.js',
-    websiteId: 'dc95fc9d-8ca0-4f28-88f5-45466492b1d1',
-    domains: ['discord.place', 'www.discord.place']
+    script: 'https://plausible.discord.place/js/script.pageview-props.file-downloads.hash.outbound-links.js',
+    domain: 'discord.place'
   },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;
