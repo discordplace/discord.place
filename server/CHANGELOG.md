@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.10.0](https://github.com/discordplace/discord.place/compare/server@v1.9.0...server@v1.10.0) (2025-02-20)
+
+
+### Features
+
+* **middlewares:** add 'cf-connecting-ip' to headers check for IP retrieval ([2c694b3](https://github.com/discordplace/discord.place/commit/2c694b37ec506a8bc3b5936d45ddb1e90ed5491a))
+* **server:** add custom morgan token for user identification in logs ([3a4da2d](https://github.com/discordplace/discord.place/commit/3a4da2ddcb917f3d01e26fa54af24014bffc8e97))
+* **server:** customize morgan middleware for enhanced logging with user and IP details ([aa9f4b4](https://github.com/discordplace/discord.place/commit/aa9f4b4c2f5dd73adc8143714efa7a293014fab7))
+
+
+### Bug Fixes
+
+* **server/languages:** remove Azerbaijani language as it not supported by Discord ([7ef1a90](https://github.com/discordplace/discord.place/commit/7ef1a90c1b976808cd4545203d56c80d3d41504f))
+* **server:** correct formatting of user and member details in logging output ([52c3544](https://github.com/discordplace/discord.place/commit/52c3544d02200d14e9add7fa7267e7a58f9b7e2f))
+* update API URLs to use the new domain structure ([79f4898](https://github.com/discordplace/discord.place/commit/79f489826db8bd3b1bb5fb2dadba75fcd45a7877))
+
 ## [1.9.0](https://github.com/discordplace/discord.place/compare/server@v1.8.0...server@v1.9.0) (2025-02-17)
 
 
