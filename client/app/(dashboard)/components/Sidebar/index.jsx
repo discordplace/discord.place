@@ -12,7 +12,7 @@ import { MdMyLocation } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { FaUserTimes } from 'react-icons/fa';
 import config from '@/config';
-import { SiGoogleanalytics } from 'react-icons/si';
+import { SiPlausibleanalytics } from 'react-icons/si';
 import { HiTemplate } from 'react-icons/hi';
 import { CgBlock } from 'react-icons/cg';
 import { PiWaveformBold } from 'react-icons/pi';
@@ -177,10 +177,10 @@ export default function Sidebar() {
         },
         {
           type: 'redirect',
-          id: 'analytics',
-          href: `${config.analytics.url}/websites/${config.analytics.websiteId}`,
-          name: 'Analytics',
-          icon: SiGoogleanalytics
+          id: 'plausible-analytics',
+          href: config.analytics.url,
+          name: 'Plausible Analytics',
+          icon: SiPlausibleanalytics
         },
         {
           id: 'syncPlans',
