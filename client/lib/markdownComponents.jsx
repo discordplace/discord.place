@@ -14,6 +14,7 @@ import { MdHttps } from 'react-icons/md';
 import { SiPhp } from 'react-icons/si';
 import CustomIFrame from '@/app/components/Markdown/iframe';
 import Image from 'next/image';
+import Tooltip from '@/app/components/Tooltip';
 
 function DiscordEmoji({ children }) {
   // Regular expressions to match both static and animated emoji formats
@@ -29,13 +30,15 @@ function DiscordEmoji({ children }) {
     const [, name, id] = staticMatch;
 
     return (
-      <Image
-        src={`https://cdn.discordapp.com/emojis/${id}.png`}
-        alt={`Emoji ${name}`}
-        className='my-0 inline-block h-[20px] w-auto align-middle'
-        width={20}
-        height={20}
-      />
+      <Tooltip content={`:${name}:`}>
+        <Image
+          src={`https://cdn.discordapp.com/emojis/${id}.png`}
+          alt={`Emoji ${name}`}
+          className='my-0 inline-block h-[20px] w-auto align-middle'
+          width={20}
+          height={20}
+        />
+      </Tooltip>
     );
   }
 
@@ -43,13 +46,15 @@ function DiscordEmoji({ children }) {
     const [, name, id] = animatedMatch;
 
     return (
-      <Image
-        src={`https://cdn.discordapp.com/emojis/${id}.gif`}
-        alt={`Emoji ${name}`}
-        className='my-0 inline-block h-[20px] w-auto align-middle'
-        width={20}
-        height={20}
-      />
+      <Tooltip content={`:${name}:`}>
+        <Image
+          src={`https://cdn.discordapp.com/emojis/${id}.gif`}
+          alt={`Emoji ${name}`}
+          className='my-0 inline-block h-[20px] w-auto align-middle'
+          width={20}
+          height={20}
+        />
+      </Tooltip>
     );
   }
 
