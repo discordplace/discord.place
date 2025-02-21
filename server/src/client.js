@@ -279,6 +279,10 @@ module.exports = class Client {
         command_count: {
           value: client.commands.size,
           updatedAt: new Date()
+        },
+        server_count: {
+          value: client.guilds.cache.size,
+          updatedAt: new Date()
         }
       }
     });
