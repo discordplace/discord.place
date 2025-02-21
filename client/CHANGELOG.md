@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.12.0](https://github.com/discordplace/discord.place/compare/client@v1.11.0...client@v1.12.0) (2025-02-20)
+
+
+### Features
+
+* add custom iframe component to markdown rendering ([5e3dfd9](https://github.com/discordplace/discord.place/commit/5e3dfd95e4f40ccd21a401524185c855ca0b2c68))
+* add localization support for markdown iframe component ([98db092](https://github.com/discordplace/discord.place/commit/98db09255af12a415b9a7e00a338e7dfea6ef4dc))
+* add rehype-sanitize for allowing iframes ([90c730c](https://github.com/discordplace/discord.place/commit/90c730c5687d8d614753c8809130e103fb0f5115))
+* **analytics:** move to Plausible Analytics ([92f80a3](https://github.com/discordplace/discord.place/commit/92f80a39da79701ff3ed4fdb58ac466ac0f66b82))
+* **bots:** allowing iframe in markdowns ([#168](https://github.com/discordplace/discord.place/issues/168)) ([e9c9188](https://github.com/discordplace/discord.place/commit/e9c918831b5ba534d0e7270ea234b7d33bd67baf))
+* **client:** set axios defaults to include credentials in requests ([25a44fe](https://github.com/discordplace/discord.place/commit/25a44febcbbdf3a809f842ab9ecd48392a60ad70))
+* **dashboard/sidebar:** update analytics link to use Plausible Analytics ([ae45e07](https://github.com/discordplace/discord.place/commit/ae45e075dcd8af061663111aeb12a74ee6d7b570))
+* implement custom iframe component ([50ca944](https://github.com/discordplace/discord.place/commit/50ca9444753379f6b5008721033c518bd7b5a0e3))
+
+
+### Bug Fixes
+
+* **client:** update default avatar image source to use environment port ([7911616](https://github.com/discordplace/discord.place/commit/791161608543a8d6f40e2e1a161f1917dae1f196))
+* **client:** update default avatar image source to use environment port ([1427a38](https://github.com/discordplace/discord.place/commit/1427a38bbeca3a495f8fa942dfdebc7f968f597e))
+* **config:** update analytics URL to use Plausible Analytics ([70912b4](https://github.com/discordplace/discord.place/commit/70912b423ab24f39a21c6181ffdb5d08bdd99648))
+* **markdownComponents:** update iframe consent messages and improve responsiveness ([3328857](https://github.com/discordplace/discord.place/commit/33288574a4cf35cf61c3a8f1c00f053e2d871a22))
+* **markdownComponents:** validate iframe src URL before rendering ([9124730](https://github.com/discordplace/discord.place/commit/91247306f684a18496c0a7a80593b3f53d31be3a))
+* remove fixed height from Markdown components for better responsiveness ([20c0329](https://github.com/discordplace/discord.place/commit/20c032990cca3dc2cc8adfb55d24f27c86adff58))
+* update API URL to use relative path for production ([d5d3752](https://github.com/discordplace/discord.place/commit/d5d37529a21ed9f1d901683680e7092bf729a231))
+* update API URLs to use the new domain structure ([79f4898](https://github.com/discordplace/discord.place/commit/79f489826db8bd3b1bb5fb2dadba75fcd45a7877))
+
 ## [1.11.0](https://github.com/discordplace/discord.place/compare/client@v1.10.0...client@v1.11.0) (2025-02-17)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/discordplace/discord.place/compare/docs@v1.2.0...docs@v1.2.1) (2025-02-20)
+
+
+### Bug Fixes
+
+* update API URLs to use the new domain structure ([79f4898](https://github.com/discordplace/discord.place/commit/79f489826db8bd3b1bb5fb2dadba75fcd45a7877))
+
 ## [1.2.0](https://github.com/discordplace/discord.place/compare/docs-v1.1.1...docs@v1.2.0) (2025-02-04)
 
 
