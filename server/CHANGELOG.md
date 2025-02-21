@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.1](https://github.com/discordplace/discord.place/compare/server@v1.10.0...server@v1.10.1) (2025-02-21)
+
+
+### Bug Fixes
+
+* **client:** add server_count to updateBotStats function ([79bf4d1](https://github.com/discordplace/discord.place/commit/79bf4d1bc08f28a30a2d5f9eff173cca6a66bcc0))
+
 ## [1.10.0](https://github.com/discordplace/discord.place/compare/server@v1.9.0...server@v1.10.0) (2025-02-20)
 
 
