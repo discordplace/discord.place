@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.10.1](https://github.com/discordplace/discord.place/compare/server@v1.10.0...server@v1.10.1) (2025-02-24)
+
+
+### Bug Fixes
+
+* change request logic for client's server-side requests ([#172](https://github.com/discordplace/discord.place/issues/172)) ([0b447eb](https://github.com/discordplace/discord.place/commit/0b447eb67ed97c55e79d0e298cc5e51eddf2d1f0))
+* **client:** add server_count to updateBotStats function ([79bf4d1](https://github.com/discordplace/discord.place/commit/79bf4d1bc08f28a30a2d5f9eff173cca6a66bcc0))
+* **client:** ensure client is ready before updating activity ([#171](https://github.com/discordplace/discord.place/issues/171)) ([da2144f](https://github.com/discordplace/discord.place/commit/da2144f3cb24cd54667c39701788dea331048208))
+
 ## [1.10.0](https://github.com/discordplace/discord.place/compare/server@v1.9.0...server@v1.10.0) (2025-02-20)
 
 
