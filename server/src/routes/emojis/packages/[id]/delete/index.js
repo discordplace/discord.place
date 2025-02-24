@@ -1,8 +1,9 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const { S3Client, DeleteObjectsCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -21,8 +22,9 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
+    validateRequest,
     async (request, response) => {
-      const { id } = request.matchedData;
+      const { id } = matchedData(request);;
       const emojiPack = await EmojiPack.findOne({ id });
       if (!emojiPack) return response.sendError('Emoji pack not found.', 404);
 

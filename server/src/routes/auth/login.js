@@ -1,4 +1,4 @@
-const { query } = require('express-validator');
+const { query, matchedData } = require('express-validator');
 const crypto = require('node:crypto');
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
         }
       }),
     async (request, response) => {
-      const { redirect } = request.matchedData;
+      const { redirect } = matchedData(request);;
       if (redirect) {
         const redirectUrl = new URL(redirect);
         if (process.env.NODE_ENV === 'production' && redirectUrl.origin !== config.frontendUrl) return response.sendError('Invalid redirect URL.', 400);

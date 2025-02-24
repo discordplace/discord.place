@@ -2,8 +2,9 @@ const Profile = require('@/schemas/Profile');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   patch: [
@@ -13,11 +14,12 @@ module.exports = {
       .isString().withMessage('Slug must be a string.')
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
+    validateRequest,
     async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'PROFILES_LIKE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to like profiles.', 403);
 
-      const { slug } = request.matchedData;
+      const { slug } = matchedData(request);;
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 

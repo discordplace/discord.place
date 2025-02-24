@@ -1,8 +1,9 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BotDeny = require('@/schemas/Bot/Deny');
 const Bot = require('@/schemas/Bot');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 const Discord = require('discord.js');
 
 module.exports = {
@@ -10,11 +11,12 @@ module.exports = {
     checkAuthentication,
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('id'),
+    validateRequest,
     async (request, response) => {
       const canRestore = request.member && config.permissions.canRestoreBotDeniesRoles.some(role => request.member.roles.cache.has(role));
       if (!canRestore) return response.sendError('You do not have permission to restore bot denies.', 403);
 
-      const { id } = request.matchedData;
+      const { id } = matchedData(request);;
 
       const botDenyData = await BotDeny.findOne({ 'bot.id': id });
       if (!botDenyData) return response.sendError('Bot deny record not found.', 404);

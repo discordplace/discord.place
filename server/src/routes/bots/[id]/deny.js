@@ -1,11 +1,12 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, body } = require('express-validator');
+const { param, matchedData, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const BotDeny = require('@/schemas/Bot/Deny');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const User = require('@/schemas/User');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -16,8 +17,9 @@ module.exports = {
     body('reason')
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.botsDenyReasons)).withMessage('Invalid reason.'),
+    validateRequest,
     async (request, response) => {
-      const { id, reason } = request.matchedData;
+      const { id, reason } = matchedData(request);
       if (!config.botsDenyReasons[reason]) return response.sendError('Invalid reason.', 400);
 
       const canDeny = request.member && config.permissions.canApproveBotsRoles.some(roleId => request.member.roles.cache.has(roleId));

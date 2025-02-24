@@ -1,14 +1,16 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('id'),
+    validateRequest,
     async (request, response) => {
-      const { id } = request.matchedData;
+      const { id } = matchedData(request);;
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

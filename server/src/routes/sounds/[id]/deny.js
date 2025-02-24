@@ -1,10 +1,11 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, body } = require('express-validator');
+const { param, matchedData, body } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const idValidation = require('@/validations/sounds/id');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -27,8 +28,9 @@ module.exports = {
     body('reason')
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.soundDenyReasons)).withMessage('Invalid reason.'),
+    validateRequest,
     async (request, response) => {
-      const { id, reason } = request.matchedData;
+      const { id, reason } = matchedData(request);;
       if (!config.soundDenyReasons[reason]) return response.sendError('Invalid reason.', 400);
 
       const canDeny = request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId));

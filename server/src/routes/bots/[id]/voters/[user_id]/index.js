@@ -1,14 +1,16 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 100, perMinutes: 5 }),
     param('id'),
     param('user_id'),
+    validateRequest,
     async (request, response) => {
-      const { id, user_id } = request.matchedData;
+      const { id, user_id } = matchedData(request);;
 
       const apiKey = request.headers['authorization'];
       if (!apiKey) return response.sendError('Authorization header is required.', 401);

@@ -1,8 +1,9 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const EmojiPack = require('@/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const getUserHashes = require('@/utils/getUserHashes');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -10,8 +11,9 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
+    validateRequest,
     async (request, response) => {
-      const { id } = request.matchedData;
+      const { id } = matchedData(request);;
 
       const emoji = await EmojiPack.findOne({ id });
       if (!emoji) return response.sendError('Emoji pack not found.', 404);

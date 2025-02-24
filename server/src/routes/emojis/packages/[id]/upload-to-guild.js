@@ -2,10 +2,11 @@ const EmojiPack = require('@/schemas/Emoji/Pack');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/emojis/id');
-const { param, body } = require('express-validator');
+const { param, matchedData, body } = require('express-validator');
 const Discord = require('discord.js');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
 const bodyParser = require('body-parser');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -20,8 +21,9 @@ module.exports = {
     body('guildId')
       .isString().withMessage('Guild ID must be an string.')
       .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
+    validateRequest,
     async (request, response) => {
-      const { id, packIndex, guildId } = request.matchedData;
+      const { id, packIndex, guildId } = matchedData(request);;
 
       if (!parseInt(packIndex)) return response.sendError('Pack index must be an integer.', 400);
       if (packIndex < 0 || packIndex > config.packagesMaxEmojisLength) return response.sendError(`Pack index must be between 0 and ${config.packagesMaxEmojisLength}.`, 400);

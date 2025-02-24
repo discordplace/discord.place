@@ -1,7 +1,8 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   delete: [
@@ -10,11 +11,12 @@ module.exports = {
     param('id'),
     param('review_id')
       .isString().withMessage('Invalid review ID.'),
+    validateRequest,
     async (request, response) => {
       const canDelete = config.permissions.canDeleteReviewsRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete reviews.', 403);
 
-      const { id, review_id } = request.matchedData;
+      const { id, review_id } = matchedData(request);;
 
       const review = await Review.findOne({ 'server.id': id, _id: review_id });
       if (!review) return response.sendError('Review not found.', 404);

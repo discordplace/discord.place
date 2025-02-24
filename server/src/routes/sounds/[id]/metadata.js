@@ -1,8 +1,9 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const idValidation = require('@/utils/validations/sounds/id');
 const getUserHashes = require('@/utils/getUserHashes');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -10,8 +11,9 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
+    validateRequest,
     async (request, response) => {
-      const { id } = request.matchedData;
+      const { id } = matchedData(request);;
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);

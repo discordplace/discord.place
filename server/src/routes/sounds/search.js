@@ -1,6 +1,7 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { query } = require('express-validator');
 const Sound = require('@/schemas/Sound');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -28,6 +29,7 @@ module.exports = {
       .optional()
       .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
       .toInt(),
+    validateRequest,
     async (request, response) => {
       const { query, category = 'All', sort = 'Newest', limit = 9, page = 1 } = request.query;
       const skip = (page - 1) * limit;

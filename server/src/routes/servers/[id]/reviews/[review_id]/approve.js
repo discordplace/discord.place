@@ -1,8 +1,9 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
 const Discord = require('discord.js');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -11,11 +12,12 @@ module.exports = {
     param('id'),
     param('review_id')
       .isMongoId().withMessage('Invalid review ID'),
+    validateRequest,
     async (request, response) => {
       const canApprove = request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve reviews.', 403);
 
-      const { id, review_id } = request.matchedData;
+      const { id, review_id } = matchedData(request);;
 
       const review = await Review.findOne({ 'server.id': id, _id: review_id });
       if (!review) return response.sendError('Review not found.', 404);

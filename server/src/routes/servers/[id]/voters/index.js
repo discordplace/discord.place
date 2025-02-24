@@ -1,7 +1,8 @@
-const { query, param } = require('express-validator');
+const { query, param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const Server = require('@/schemas/Server');
 const getUserHashes = require('@/utils/getUserHashes');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -15,8 +16,9 @@ module.exports = {
       .optional()
       .isInt({ min: 1, max: 12 }).withMessage('Limit must be an integer between 1 and 12.')
       .toInt(),
+    validateRequest,
     async (request, response) => {
-      const { id, page = 1, limit = 12 } = request.matchedData;
+      const { id, page = 1, limit = 12 } = matchedData(request);;
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

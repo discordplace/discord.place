@@ -1,11 +1,12 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Theme = require('@/schemas/Theme');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const idValidation = require('@/validations/themes/id');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -15,8 +16,9 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
+    validateRequest,
     async (request, response) => {
-      const { id } = request.matchedData;
+      const { id } = matchedData(request);;
 
       const canApprove = request.member && config.permissions.canApproveThemesRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve this theme.', 403);

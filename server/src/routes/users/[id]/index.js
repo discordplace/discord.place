@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const Profile = require('@/schemas/Profile');
@@ -7,6 +7,7 @@ const User = require('@/schemas/User');
 const getBadges = require('@/utils/profiles/getBadges');
 const randomizeArray = require('@/utils/randomizeArray');
 const Discord = require('discord.js');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -14,8 +15,9 @@ module.exports = {
     param('id')
       .isNumeric().withMessage('User ID must be a number')
       .isLength({ min: 1, max: 24 }).withMessage('Invalid user ID'),
+    validateRequest,
     async (request, response) => {
-      const { id } = request.matchedData;
+      const { id } = matchedData(request);
 
       let user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('User not found.', 404);

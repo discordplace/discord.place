@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const nameValidation = require('@/validations/sounds/name');
 const categoriesValidation = require('@/validations/sounds/categories');
 const Sound = require('@/schemas/Sound');
@@ -9,6 +9,7 @@ const crypto = require('node:crypto');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const multer = require('multer');
 const upload = multer({
@@ -47,6 +48,7 @@ module.exports = {
       .customSanitizer(value => value.split(','))
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
+    validateRequest,
     async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SOUNDS_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create sounds.', 403);
@@ -56,7 +58,7 @@ module.exports = {
 
       if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
 
-      const { name, categories } = request.matchedData;
+      const { name, categories } = matchedData(request);;
       const id = crypto.randomBytes(6).toString('hex');
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);

@@ -1,11 +1,12 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -14,11 +15,12 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
+    validateRequest,
     async (request, response) => {
       const canApprove = request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve this emoji.', 403);
 
-      const { id } = request.matchedData;
+      const { id } = matchedData(request);;
       const emoji = await Emoji.findOne({ id }) || await EmojiPack.findOne({ id });
       if (!emoji) return response.sendError('Emoji not found.', 404);
 

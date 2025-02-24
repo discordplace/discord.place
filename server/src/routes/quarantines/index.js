@@ -1,12 +1,13 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const getValidationError = require('@/utils/getValidationError');
 const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
 const Discord = require('discord.js');
 const User = require('@/schemas/User');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -37,11 +38,12 @@ module.exports = {
 
         return true;
       }),
+    validateRequest,
     async (request, response) => {
       const canCreateQuarantine = request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canCreateQuarantine) return response.sendError('You do not have permission to create quarantines.', 403);
 
-      const { type, value, restriction, reason, time } = request.matchedData;
+      const { type, value, restriction, reason, time } = matchedData(request);;
 
       if (!config.quarantineRestrictions[restriction]) return response.sendError('Invalid restriction.', 400);
       if (!config.quarantineRestrictions[restriction].available_to.includes(type)) return response.sendError('Invalid type for this restriction.', 400);

@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const nameValidation = require('@/validations/links/name');
 const destinationURLValidation = require('@/validations/links/destinationURL');
 const Link = require('@/schemas/Link');
@@ -9,6 +9,7 @@ const crypto = require('node:crypto');
 const getValidationError = require('@/utils/getValidationError');
 const User = require('@/schemas/User');
 const Discord = require('discord.js');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -21,8 +22,9 @@ module.exports = {
     body('destinationURL')
       .isString().withMessage('Destination URL should be a string.')
       .custom(destinationURLValidation),
+    validateRequest,
     async (request, response) => {
-      const { name, destinationURL } = request.matchedData;
+      const { name, destinationURL } = matchedData(request);;
 
       const foundLink = await Link.findOne({ name: name.toLocaleLowerCase('en-US') });
       if (foundLink) return response.sendError('Link name is already in use.', 400);

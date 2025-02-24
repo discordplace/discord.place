@@ -1,12 +1,13 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param } = require('express-validator');
+const { param, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const checkCaptcha = require('@/utils/middlewares/checkCaptcha');
 const bodyParser = require('body-parser');
 const incrementVote = require('@/utils/bots/incrementVote');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -15,8 +16,9 @@ module.exports = {
     checkAuthentication,
     checkCaptcha,
     param('id'),
+    validateRequest,
     async (request, response) => {
-      const { id } = request.matchedData;
+      const { id } = matchedData(request);;
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_VOTE' },

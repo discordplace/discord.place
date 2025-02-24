@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const categoriesValidation = require('@/validations/themes/categories');
 const colorValidation = require('@/validations/themes/color');
 const Theme = require('@/schemas/Theme');
@@ -9,6 +9,7 @@ const crypto = require('node:crypto');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -31,6 +32,7 @@ module.exports = {
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
+    validateRequest,
     async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'THEMES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create themes.', 403);
@@ -40,7 +42,7 @@ module.exports = {
 
       if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
 
-      const { colors, categories } = request.matchedData;
+      const { colors, categories } = matchedData(request);;
 
       if (colors.primary !== colors.secondary && !categories.includes('Gradient')) return response.sendError('If you are using different primary and secondary colors, you must include the Gradient category.', 400);
 
