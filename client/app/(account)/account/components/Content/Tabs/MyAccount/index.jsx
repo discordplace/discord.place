@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { MdOutlineOpenInNew } from 'react-icons/md';
 import { GoHeartFill } from 'react-icons/go';
 import { useEffect, useState } from 'react';
-import getPlans from '@/lib/request/payments/getPlans';
+import getPlans from '@/lib/request/payments/getPlansFromClient';
 import { toast } from 'sonner';
 import { TbLoader } from 'react-icons/tb';
 import useModalsStore from '@/stores/modals';
@@ -38,7 +38,7 @@ export default function MyAccount() {
   useEffect(() => {
     setPlansLoading(true);
 
-    getPlans(false)
+    getPlans()
       .then(data => setPlans(data))
       .catch(toast.error)
       .finally(() => setPlansLoading(false));
