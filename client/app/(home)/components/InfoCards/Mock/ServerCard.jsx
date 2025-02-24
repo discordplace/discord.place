@@ -15,7 +15,7 @@ export default function MockServerCard() {
           id: '1200254872059121764',
           name: 'discord.place',
           description: t('home.infoCards.1.serverCardDescription'),
-          icon: 'a20e76287cb0a3316d55995f0126e3e7',
+          icon: 'e0d586009f0533809078b40357d74597',
           category: 'Community'
         }}
       />

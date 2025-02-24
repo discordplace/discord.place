@@ -12,7 +12,7 @@ export default function MockProfileCard() {
     <div className='pointer-events-none relative bottom-24 right-2 rotate-[15deg] select-none'>
       <ProfileCard
         id={loggedIn ? user.id : '1207874300070199356'}
-        avatar={loggedIn ? user.avatar : '68a13ad820feae82feaa86e5a5930570'}
+        avatar={loggedIn ? user.avatar : 'a_a20e76287cb0a3316d55995f0126e3e7'}
         colors={{
           primary: null,
           secondary: null
