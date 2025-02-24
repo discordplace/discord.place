@@ -8,7 +8,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('id'),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

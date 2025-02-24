@@ -29,7 +29,7 @@ module.exports = {
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
     async (request, response) => {
-      const { id, name, description, categories } = request.matchedData
+      const { id, name, description, categories } = request.matchedData;
 
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'TEMPLATES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create templates.', 403);

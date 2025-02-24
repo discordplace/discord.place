@@ -13,7 +13,7 @@ module.exports = {
       const canDelete = config.permissions.canDeleteBlockedIps.includes(request.user.id);
       if (!canDelete) return response.sendError('You do not have permission to delete blocked IPs.', 403);
 
-      const { ip } = request.matchedData
+      const { ip } = request.matchedData;
 
       await BlockedIp.findOneAndDelete({ ip })
         .then(() => response.status(204).end())

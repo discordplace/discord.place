@@ -16,7 +16,7 @@ module.exports = {
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const canApprove = request.member && config.permissions.canApproveThemesRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve this theme.', 403);

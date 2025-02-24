@@ -16,7 +16,7 @@ module.exports = {
       .isInt({ min: 0, max: 10000000 }).withMessage('Server count must be between 0 and 10 Million.')
       .optional(),
     async (request, response) => {
-      const { id, command_count, server_count } = request.matchedData
+      const { id, command_count, server_count } = request.matchedData;
 
       if (!command_count && !server_count) return response.sendError('One of the following fields is required: command_count, server_count.', 400);
 

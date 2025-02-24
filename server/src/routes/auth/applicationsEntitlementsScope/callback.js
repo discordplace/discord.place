@@ -1,4 +1,3 @@
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const { query, cookie } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const getAccessToken = require('@/utils/getAccessToken');
@@ -21,7 +20,7 @@ module.exports = {
       .matches(/^\d{17,19}$/).withMessage('Invalid user ID.'),
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
     async (request, response) => {
-      const { code, error, state, applicationsEntitlementsScope_userId: userId } = request.matchedData
+      const { code, error, state, applicationsEntitlementsScope_userId: userId } = request.matchedData;
 
       if (!code || error) {
         client.applicationsEntitlementsScopeCallbackError.set(userId, true);

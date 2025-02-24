@@ -23,7 +23,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('id'),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
@@ -132,7 +132,7 @@ module.exports = {
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
     async (request, response) => {
-      const { id, short_description, description, invite_url, categories } = request.matchedData
+      const { id, short_description, description, invite_url, categories } = request.matchedData;
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE' },
@@ -236,7 +236,7 @@ module.exports = {
     checkAuthentication,
     param('id'),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
@@ -293,7 +293,7 @@ module.exports = {
       .isString().withMessage('GitHub Repository should be a string.')
       .custom(githubRepositoryValidation),
     async (request, response) => {
-      const { id, short_description, description, invite_url, categories, support_server_id, github_repository } = request.matchedData
+      const { id, short_description, description, invite_url, categories, support_server_id, github_repository } = request.matchedData;
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);

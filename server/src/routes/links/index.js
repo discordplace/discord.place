@@ -22,7 +22,7 @@ module.exports = {
       .isString().withMessage('Destination URL should be a string.')
       .custom(destinationURLValidation),
     async (request, response) => {
-      const { name, destinationURL } = request.matchedData
+      const { name, destinationURL } = request.matchedData;
 
       const foundLink = await Link.findOne({ name: name.toLocaleLowerCase('en-US') });
       if (foundLink) return response.sendError('Link name is already in use.', 400);

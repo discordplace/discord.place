@@ -14,7 +14,7 @@ module.exports = {
       .isString().withMessage('ID should be a string.')
       .isLength({ min: 16, max: 16 }).withMessage('ID should be 16 characters long.'),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const foundLink = await Link.findOne({ id });
       if (!foundLink) return response.sendError('Link not found.', 404);

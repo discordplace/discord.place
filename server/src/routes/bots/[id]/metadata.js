@@ -9,7 +9,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('id'),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);

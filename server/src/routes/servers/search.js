@@ -33,7 +33,7 @@ module.exports = {
       .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
       .toInt(),
     async (request, response) => {
-      const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = request.matchedData
+      const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = request.matchedData;
       const skip = (page - 1) * limit;
       const baseFilter = {
         id: { $in: Array.from(client.guilds.cache.filter(guild => guild.available).keys()) },

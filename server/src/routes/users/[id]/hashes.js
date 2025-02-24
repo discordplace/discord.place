@@ -11,7 +11,7 @@ module.exports = {
       .isLength({ min: 17, max: 19 }).withMessage('Invalid user ID length')
       .custom(snowflakeValidation),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const userHashes = (await UserHashes.findOne({ id })) || new UserHashes({ id });
       const newHashes = await userHashes.getNewHashes();

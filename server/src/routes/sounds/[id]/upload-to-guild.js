@@ -20,7 +20,7 @@ module.exports = {
       .isString().withMessage('Guild ID must be an string.')
       .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
     async (request, response) => {
-      const { id, guildId } = request.matchedData
+      const { id, guildId } = request.matchedData;
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);

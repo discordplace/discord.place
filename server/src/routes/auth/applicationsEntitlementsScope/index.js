@@ -7,7 +7,7 @@ module.exports = {
       .isString().withMessage('User ID must be a string.')
       .matches(/^\d{17,19}$/).withMessage('Invalid user ID.'),
     async (request, response) => {
-      const { userId } = request.matchedData
+      const { userId } = request.matchedData;
 
       const state = crypto.randomBytes(16).toString('hex');
 

@@ -24,7 +24,7 @@ module.exports = {
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('id'),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);
@@ -140,7 +140,7 @@ module.exports = {
       .trim()
       .custom(inviteLinkValidation),
     async (request, response) => {
-      const { id, description, category, keywords, invite_link } = request.matchedData
+      const { id, description, category, keywords, invite_link } = request.matchedData;
 
       const userOrGuildQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'SERVERS_CREATE' },
@@ -235,7 +235,7 @@ module.exports = {
     checkAuthentication,
     param('id'),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);
@@ -281,7 +281,7 @@ module.exports = {
       .isArray().withMessage('Keywords should be an array.')
       .custom(keywordsValidation),
     async (request, response) => {
-      const { id, description, invite_url, category, keywords } = request.matchedData
+      const { id, description, invite_url, category, keywords } = request.matchedData;
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Server not found.', 404);

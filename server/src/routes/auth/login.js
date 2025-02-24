@@ -15,7 +15,7 @@ module.exports = {
         }
       }),
     async (request, response) => {
-      const { redirect } = request.matchedData
+      const { redirect } = request.matchedData;
       if (redirect) {
         const redirectUrl = new URL(redirect);
         if (process.env.NODE_ENV === 'production' && redirectUrl.origin !== config.frontendUrl) return response.sendError('Invalid redirect URL.', 400);

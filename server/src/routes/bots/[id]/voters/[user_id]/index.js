@@ -8,7 +8,7 @@ module.exports = {
     param('id'),
     param('user_id'),
     async (request, response) => {
-      const { id, user_id } = request.matchedData
+      const { id, user_id } = request.matchedData;
 
       const apiKey = request.headers['authorization'];
       if (!apiKey) return response.sendError('Authorization header is required.', 401);

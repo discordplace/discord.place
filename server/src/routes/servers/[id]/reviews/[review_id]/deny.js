@@ -20,7 +20,7 @@ module.exports = {
       const canDeny = request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDeny) return response.sendError('You are not allowed to deny reviews.', 403);
 
-      const { id, review_id, reason } = request.matchedData
+      const { id, review_id, reason } = request.matchedData;
 
       const review = await Review.findOne({ 'server.id': id, _id: review_id });
       if (!review) return response.sendError('Review not found.', 404);

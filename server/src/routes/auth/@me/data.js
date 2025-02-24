@@ -39,7 +39,7 @@ module.exports = {
       .optional()
       .custom(keys => keys.every(key => validKeys.includes(key))).withMessage('Invalid key provided.'),
     async (request, response) => {
-      const { keys } = request.matchedData
+      const { keys } = request.matchedData;
       const responseData = {};
 
       const ownedGuilds = client.guilds.cache

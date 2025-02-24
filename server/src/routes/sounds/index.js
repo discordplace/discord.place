@@ -56,7 +56,7 @@ module.exports = {
 
       if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
 
-      const { name, categories } = request.matchedData
+      const { name, categories } = request.matchedData;
       const id = crypto.randomBytes(6).toString('hex');
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);

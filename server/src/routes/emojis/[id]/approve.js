@@ -18,7 +18,7 @@ module.exports = {
       const canApprove = request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve this emoji.', 403);
 
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
       const emoji = await Emoji.findOne({ id }) || await EmojiPack.findOne({ id });
       if (!emoji) return response.sendError('Emoji not found.', 404);
 

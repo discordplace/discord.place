@@ -22,7 +22,7 @@ module.exports = {
       .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
       .toInt(),
     async (request, response) => {
-      const { id, limit = 6, page = 1 } = request.matchedData
+      const { id, limit = 6, page = 1 } = request.matchedData;
       const skip = (page - 1) * limit;
 
       const guild = client.guilds.cache.get(id);
@@ -74,7 +74,7 @@ module.exports = {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SERVERS_CREATE_REVIEW').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to review servers.', 403);
 
-      const { id, rating, content } = request.matchedData
+      const { id, rating, content } = request.matchedData;
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

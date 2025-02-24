@@ -30,7 +30,7 @@ module.exports = {
       .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
       .toInt(),
     async (request, response) => {
-      const { query, limit = 9, page = 1, category = 'All', sort = 'Newest' } = request.matchedData
+      const { query, limit = 9, page = 1, category = 'All', sort = 'Newest' } = request.matchedData;
       const skip = (page - 1) * limit;
       const findQuery = {
         approved: true

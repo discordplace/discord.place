@@ -15,7 +15,7 @@ module.exports = {
       .isNumeric().withMessage('User ID must be a number')
       .isLength({ min: 1, max: 24 }).withMessage('Invalid user ID'),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       let user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('User not found.', 404);

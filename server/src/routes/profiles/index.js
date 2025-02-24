@@ -25,7 +25,7 @@ module.exports = {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'PROFILES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create profiles.', 403);
 
-      const { slug, preferredHost } = request.matchedData
+      const { slug, preferredHost } = request.matchedData;
       const profile = await Profile.findOne({ slug });
       if (profile) return response.sendError('Slug is not available.', 400);
 

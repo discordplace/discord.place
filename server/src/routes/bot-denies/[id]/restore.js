@@ -14,7 +14,7 @@ module.exports = {
       const canRestore = request.member && config.permissions.canRestoreBotDeniesRoles.some(role => request.member.roles.cache.has(role));
       if (!canRestore) return response.sendError('You do not have permission to restore bot denies.', 403);
 
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const botDenyData = await BotDeny.findOne({ 'bot.id': id });
       if (!botDenyData) return response.sendError('Bot deny record not found.', 404);

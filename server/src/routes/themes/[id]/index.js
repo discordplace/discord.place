@@ -12,7 +12,7 @@ module.exports = {
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const theme = await Theme.findOne({ id });
       if (!theme) return response.sendError('Theme not found.', 404);
@@ -43,7 +43,7 @@ module.exports = {
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const theme = await Theme.findOne({ id });
       if (!theme) return response.sendError('Theme not found.', 404);

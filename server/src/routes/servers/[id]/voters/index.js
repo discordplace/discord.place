@@ -16,7 +16,7 @@ module.exports = {
       .isInt({ min: 1, max: 12 }).withMessage('Limit must be an integer between 1 and 12.')
       .toInt(),
     async (request, response) => {
-      const { id, page = 1, limit = 12 } = request.matchedData
+      const { id, page = 1, limit = 12 } = request.matchedData;
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

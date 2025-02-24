@@ -11,7 +11,7 @@ module.exports = {
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const emoji = await EmojiPack.findOne({ id });
       if (!emoji) return response.sendError('Emoji pack not found.', 404);

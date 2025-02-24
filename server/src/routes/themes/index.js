@@ -40,7 +40,7 @@ module.exports = {
 
       if (!request.member) return response.sendError(`You must join our Discord server. (${config.guildInviteUrl})`, 403);
 
-      const { colors, categories } = request.matchedData
+      const { colors, categories } = request.matchedData;
 
       if (colors.primary !== colors.secondary && !categories.includes('Gradient')) return response.sendError('If you are using different primary and secondary colors, you must include the Gradient category.', 400);
 

@@ -21,7 +21,7 @@ module.exports = {
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);
@@ -49,7 +49,7 @@ module.exports = {
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);

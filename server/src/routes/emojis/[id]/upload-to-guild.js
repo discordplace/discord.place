@@ -19,7 +19,7 @@ module.exports = {
       .isString().withMessage('Guild ID must be an string.')
       .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
     async (request, response) => {
-      const { id, guildId } = request.matchedData
+      const { id, guildId } = request.matchedData;
 
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return response.sendError('Guild not found.', 404);

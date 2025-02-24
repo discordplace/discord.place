@@ -11,7 +11,7 @@ module.exports = {
     checkAuthentication,
     param('id'),
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = request.matchedData;
 
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
@@ -52,7 +52,7 @@ module.exports = {
       .isLength({ min: 1, max: config.botWebhookTokenMaxLength }).withMessage(`Token must be between 1 and ${config.botWebhookTokenMaxLength} characters.`)
       .trim(),
     async (request, response) => {
-      const { id, url, token } = request.matchedData
+      const { id, url, token } = request.matchedData;
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);

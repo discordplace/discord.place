@@ -33,7 +33,7 @@ module.exports = {
       const canDeny = request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDeny) return response.sendError('You are not allowed to deny this emoji.', 403);
 
-      const { id, reason } = request.matchedData
+      const { id, reason } = request.matchedData;
       const emoji = await Emoji.findOne({ id }) || await EmojiPack.findOne({ id });
       if (!emoji) return response.sendError('Emoji not found.', 404);
 

@@ -15,7 +15,7 @@ module.exports = {
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.templateDenyReasons)).withMessage('Invalid reason.'),
     async (request, response) => {
-      const { id, reason } = request.matchedData
+      const { id, reason } = request.matchedData;
       if (!config.templateDenyReasons[reason]) return response.sendError('Invalid reason.', 400);
 
       const canDeny = request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId));
