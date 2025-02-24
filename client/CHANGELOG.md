@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.13.1](https://github.com/discordplace/discord.place/compare/client@v1.13.0...client@v1.13.1) (2025-02-24)
+
+
+### Bug Fixes
+
+* update getPlans function to support server-side requests ([33b8bff](https://github.com/discordplace/discord.place/commit/33b8bff4d9a3def87aeb9bcd0e684b2d5c0d1ca9))
+* update import path for ServerRequestClient in getThemeMetadata ([38274f7](https://github.com/discordplace/discord.place/commit/38274f7d3399ec34a369224404e3e133efad6b26))
+
 ## [1.13.0](https://github.com/discordplace/discord.place/compare/client@v1.12.0...client@v1.13.0) (2025-02-24)
 
 
