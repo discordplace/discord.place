@@ -1,16 +1,8 @@
-import config from '@/config';
-import axios from 'axios';
+import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function deleteTimeout(serverId, userId) {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/servers/${serverId}/voters/${userId}/timeout`;
+  const endpoint = Endpoints.DeleteServerTimeout(serverId, userId);
 
-    try {
-      await axios.delete(url, { withCredentials: true });
-      resolve();
-    } catch (error) {
-      reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
-    }
-  });
+  return ClientRequestClient.delete(endpoint);
 }

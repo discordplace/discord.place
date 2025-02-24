@@ -1,8 +1,8 @@
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const { query, cookie, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const getAccessToken = require('@/utils/getAccessToken');
 const authCallback = require('@/utils/authCallback');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [

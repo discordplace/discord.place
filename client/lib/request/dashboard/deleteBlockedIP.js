@@ -1,16 +1,8 @@
-import config from '@/config';
-import axios from 'axios';
+import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function deleteBlockedIP(ip) {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/blocked-ips/${ip}`;
+  const endpoint = Endpoints.DeleteBlockedIP(ip);
 
-    try {
-      await axios.delete(url, { withCredentials: true });
-      resolve();
-    } catch (error) {
-      reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
-    }
-  });
+  return ClientRequestClient.delete(endpoint);
 }

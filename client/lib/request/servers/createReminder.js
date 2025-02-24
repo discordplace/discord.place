@@ -1,16 +1,8 @@
-import config from '@/config';
-import axios from 'axios';
+import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function createReminder(id) {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/servers/${id}/reminder`;
+  const endpoint = Endpoints.CreateReminder(id);
 
-    try {
-      await axios.post(url, {}, { withCredentials: true });
-      resolve();
-    } catch (error) {
-      reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
-    }
-  });
+  return ClientRequestClient.post(endpoint, {});
 }

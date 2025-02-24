@@ -1,7 +1,7 @@
 'use client';
 
 import MotionImage from '@/app/components/Motion/Image';
-import getHashes from '@/lib/request/getHashes';
+import getHashes from '@/lib/request/general/getHashes';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'react-use';

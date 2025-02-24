@@ -1,16 +1,9 @@
-import config from '@/config';
-import axios from 'axios';
+import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function editBot(id, changedKeys) {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/bots/${id}`;
+  const endpoint = Endpoints.EditBot(id);
+  const data = changedKeys.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {});
 
-    try {
-      const response = await axios.patch(url, changedKeys.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), { }), { withCredentials: true });
-      resolve(response.data);
-    } catch (error) {
-      reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
-    }
-  });
+  return ClientRequestClient.patch(endpoint, data);
 }

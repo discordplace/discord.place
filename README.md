@@ -86,6 +86,7 @@ Create a `.env` file in the `client` directory with the following environment va
 ANALYZE=false
 NEXT_PUBLIC_PORT=3000
 NEXT_PUBLIC_CF_SITE_KEY=0x0000000000000000000000
+CLIENT_SECRET=
 ```
 
 ##### Parameters
@@ -94,10 +95,12 @@ NEXT_PUBLIC_CF_SITE_KEY=0x0000000000000000000000
 | `ANALYZE` | Set to `true` to enable bundle analysis. |
 | `NEXT_PUBLIC_PORT` | Port for the client. |
 | `NEXT_PUBLIC_CF_SITE_KEY` | Cloudflare site key for Turnstile. |
+| `CLIENT_SECRET` | Secret key for client. |
 
 > [!NOTE]  
 > - When `ANALYZE` is set to `true`, the client will generate a bundle analysis report. This is useful for debugging and optimizing the client bundle.
 > - Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile site key.
+> - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the server's `CLIENT_SECRET` value.
 
 ### Environment Variables Configuration (Server)
 
@@ -111,6 +114,7 @@ BOT_API_KEY_ENCRYPT_SECRET=
 USER_TOKEN_ENCRYPT_SECRET=
 PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY=
 JWT_SECRET=
+CLIENT_SECRET=
 DISCORD_CLIENT_TOKEN=
 DISCORD_CLIENT_SECRET=
 DISCORD_CLIENT_ID=
@@ -151,6 +155,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `USER_TOKEN_ENCRYPT_SECRET` | Used for encrypting user access tokens. |
 | `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` | Secret key for encrypting custom data in the payments. |
 | `JWT_SECRET` | Secret key for JWT token encryption. |
+| `CLIENT_SECRET` | Secret key for client. |
 | `DISCORD_CLIENT_TOKEN` | Discord bot token. |
 | `DISCORD_CLIENT_SECRET` | Discord OAuth client secret. |
 | `DISCORD_CLIENT_ID` | Discord OAuth client ID. |
@@ -185,6 +190,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 > - The `GITHUB_AUTO_DEPLOY_SECRET` is used for auto-deploying the server when a new release created in the GitHub repository. When this secret is set and you have set up the GitHub webhook, the server will automatically deploy the new release when a new release is created in the repository.
 > - The `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` is used for syncing the translators roles when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically sync the translators roles in the base guild with the ids in the `client/locales/translators.json` file.
 > - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET`, `USER_TOKEN_ENCRYPT_SECRET` and `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
+> - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the client's `CLIENT_SECRET` value.
 > - For the `MONGO_URL` value, you can use a local MongoDB instance or a cloud-based MongoDB service like MongoDB Atlas. Refer to the [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string) for more information on constructing the connection URL.
 > - Values starting with `S3_` are required. This is used for storing emojis & sounds files in S3 (and also database backups). We personally use Cloudflare R2 Storage for this. You can use any S3-compatible storage service with the same configuration.
 > - The `CLOUDFLARE_TURNSTILE_SECRET_KEY` is used for verifying the Turnstile token. We use Cloudflare Turnstile for ensuring that the user is a human and not a bot on the website. Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile secret key.
@@ -221,7 +227,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 > [!NOTE]
 > - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
 > - The `supportInviteUrl` and `docsUrl` values are used in the website for the support server and documentation links. You can change these values to your own support server and documentation links.
-> - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL.
+> - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
 > - The `analytics.url`, `analytics.script` and `analytics.domains` values are used for setting up analytics on the website. We use [Plausible Analytics](https://plausible.io) for analytics. Any other analytics service is not supported.
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `getEmojiURL` and `getSoundURL` functions are used for getting the emoji and sound URLs. You should change these functions to your own CDN URL.

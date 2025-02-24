@@ -1,16 +1,8 @@
-import config from '@/config';
-import axios from 'axios';
+import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function createSound(formData) {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/sounds`;
+  const endpoint = Endpoints.CreateSound;
 
-    try {
-      const response = await axios.post(url, formData, { withCredentials: true });
-      resolve(response.data);
-    } catch (error) {
-      reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
-    }
-  });
+  return ClientRequestClient.post(endpoint, formData);
 }

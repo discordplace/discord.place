@@ -6,7 +6,7 @@ import { t } from '@/stores/language';
 import ReportAreaModal from '@/app/components/ReportableArea/ReportAreaModal';
 import config from '@/config';
 import { toast } from 'sonner';
-import createReport from '@/lib/request/createReport';
+import createReport from '@/lib/request/general/createReport';
 import { useShallow } from 'zustand/react/shallow';
 
 export default function ReportableArea(props) {

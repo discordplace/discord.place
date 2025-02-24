@@ -31,7 +31,7 @@ import useModalsStore from '@/stores/modals';
 import { toast } from 'sonner';
 import { HiMiniIdentification } from 'react-icons/hi2';
 import { BsStars } from 'react-icons/bs';
-import getHashes from '@/lib/request/getHashes';
+import getHashes from '@/lib/request/general/getHashes';
 
 export default function Page() {
   const user = useAuthStore(state => state.user);

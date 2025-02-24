@@ -1,16 +1,8 @@
-import config from '@/config';
-import axios from 'axios';
+import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function incrementDownloads(id, isPack) {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/emojis/${isPack ? 'packages/' : ''}${id}/downloads`;
+  const endpoint = Endpoints.IncrementEmojiDownloads(id, isPack);
 
-    try {
-      await axios.post(url);
-      resolve();
-    } catch (error) {
-      reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
-    }
-  });
+  return ClientRequestClient.post(endpoint);
 }
