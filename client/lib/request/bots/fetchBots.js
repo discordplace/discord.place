@@ -2,7 +2,7 @@ import ClientRequestClient from '@/lib/request/clientRequest';
 import Endpoints from '@/lib/request/endpoints';
 
 export default function fetchBots(search, page, limit, category, sort) {
-  const endpoint = Endpoints.FetchBots();
+  const endpoint = Endpoints.FetchBots;
   const params = {};
 
   if (search) params.query = search;

@@ -2,7 +2,7 @@ import ClientRequestClient from '@/lib/request/clientRequest';
 import Endpoints from '@/lib/request/endpoints';
 
 export default function fetchThemes(search, page, limit, category, sort) {
-  const endpoint = Endpoints.FetchThemes();
+  const endpoint = Endpoints.FetchThemes;
   const params = {};
 
   if (search) params.query = search;
