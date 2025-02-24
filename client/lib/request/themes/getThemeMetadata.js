@@ -1,4 +1,4 @@
-import ServerRequestClient from '@/lib/request/ServerRequestClient';
+import ServerRequestClient from '@/lib/request/serverRequest';
 import Endpoints from '@/lib/request/endpoints';
 
 export default function getThemeMetadata(themeId) {
