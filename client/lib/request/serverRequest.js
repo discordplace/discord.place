@@ -6,7 +6,10 @@ class ServerRequestClient {
   constructor() {
     this.instance = axios.create({
       baseURL: config.api.url,
-      withCredentials: true
+      withCredentials: true,
+      headers: {
+        'x-discord-place-client-secret': process.env.CLIENT_SECRET
+      }
     });
 
     this.instance.interceptors.response.use(response => response, error => {

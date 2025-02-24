@@ -1,15 +1,20 @@
 module.exports = function (request, response, next) {
-  const headersToCheck = [
-    'cf-connecting-ip'
-  ];
-
-  const ip = headersToCheck.reduce((acc, header) => acc || request.headers[header], null);
-
-  request.clientIp = cleanIp(ip);
 
   // If the request is coming from the client's server, use the IP in the headers
-  if (request.headers['x-discord-place-server-ip'] && request.clientIp === process.env.CLIENT_SERVER_IP_ADDRESS) {
-    request.clientIp = cleanIp(request.headers['x-discord-place-server-ip']);
+  // Otherwise, use the IP that Cloudflare provides
+  const clientSecret = request.headers['x-discord-place-client-secret'];
+  if (clientSecret) {
+    if (clientSecret !== process.env.CLIENT_SECRET) return response.sendError('Invalid client secret.', 401);
+
+    request.clientIp = cleanIp(request.headers['x-discord-place-client-ip']);
+  } else {
+    const headersToCheck = [
+      'cf-connecting-ip'
+    ];
+
+    const ip = headersToCheck.reduce((acc, header) => acc || request.headers[header], null);
+
+    request.clientIp = cleanIp(ip);
   }
 
   next();

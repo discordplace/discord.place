@@ -86,6 +86,7 @@ Create a `.env` file in the `client` directory with the following environment va
 ANALYZE=false
 NEXT_PUBLIC_PORT=3000
 NEXT_PUBLIC_CF_SITE_KEY=0x0000000000000000000000
+CLIENT_SECRET=
 ```
 
 ##### Parameters
@@ -94,10 +95,12 @@ NEXT_PUBLIC_CF_SITE_KEY=0x0000000000000000000000
 | `ANALYZE` | Set to `true` to enable bundle analysis. |
 | `NEXT_PUBLIC_PORT` | Port for the client. |
 | `NEXT_PUBLIC_CF_SITE_KEY` | Cloudflare site key for Turnstile. |
+| `CLIENT_SECRET` | Secret key for client. |
 
 > [!NOTE]  
 > - When `ANALYZE` is set to `true`, the client will generate a bundle analysis report. This is useful for debugging and optimizing the client bundle.
 > - Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile site key.
+> - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the server's `CLIENT_SECRET` value.
 
 ### Environment Variables Configuration (Server)
 
@@ -111,6 +114,7 @@ BOT_API_KEY_ENCRYPT_SECRET=
 USER_TOKEN_ENCRYPT_SECRET=
 PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY=
 JWT_SECRET=
+CLIENT_SECRET=
 DISCORD_CLIENT_TOKEN=
 DISCORD_CLIENT_SECRET=
 DISCORD_CLIENT_ID=
@@ -132,7 +136,6 @@ CLOUDFLARE_ACCOUNT_ID=
 CLOUDFLARE_BLOCK_IP_LIST_ID=
 LEMON_SQUEEZY_WEBHOOK_SECRET=
 LEMON_SQUEEZY_API_KEY=
-CLIENT_SERVER_IP_ADDRESS=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 WEBHOOKS_PROXY_SERVER_PROTOCOL=
@@ -152,6 +155,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `USER_TOKEN_ENCRYPT_SECRET` | Used for encrypting user access tokens. |
 | `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` | Secret key for encrypting custom data in the payments. |
 | `JWT_SECRET` | Secret key for JWT token encryption. |
+| `CLIENT_SECRET` | Secret key for client. |
 | `DISCORD_CLIENT_TOKEN` | Discord bot token. |
 | `DISCORD_CLIENT_SECRET` | Discord OAuth client secret. |
 | `DISCORD_CLIENT_ID` | Discord OAuth client ID. |
@@ -174,7 +178,6 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `LEMON_SQUEEZY_WEBHOOK_SECRET` | Lemon Squeezy webhook secret. (not required) |
 | `LEMON_SQUEEZY_API_KEY` | Lemon Squeezy API key. (not required) |
 | `HEARTBEAT_ID_DAILY_DATABASE_BACKUP` | Heartbeat ID for daily database backup. (not required) |
-| `CLIENT_SERVER_IP_ADDRESS` | IP address of the server hosting the client. |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` | Secret key for getting approximate guild count of a bot. (not required) |
 | `WEBHOOKS_PROXY_SERVER_PROTOCOL` | Protocol for the proxy server. |
@@ -187,6 +190,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 > - The `GITHUB_AUTO_DEPLOY_SECRET` is used for auto-deploying the server when a new release created in the GitHub repository. When this secret is set and you have set up the GitHub webhook, the server will automatically deploy the new release when a new release is created in the repository.
 > - The `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` is used for syncing the translators roles when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically sync the translators roles in the base guild with the ids in the `client/locales/translators.json` file.
 > - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET`, `USER_TOKEN_ENCRYPT_SECRET` and `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
+> - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the client's `CLIENT_SECRET` value.
 > - For the `MONGO_URL` value, you can use a local MongoDB instance or a cloud-based MongoDB service like MongoDB Atlas. Refer to the [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string) for more information on constructing the connection URL.
 > - Values starting with `S3_` are required. This is used for storing emojis & sounds files in S3 (and also database backups). We personally use Cloudflare R2 Storage for this. You can use any S3-compatible storage service with the same configuration.
 > - The `CLOUDFLARE_TURNSTILE_SECRET_KEY` is used for verifying the Turnstile token. We use Cloudflare Turnstile for ensuring that the user is a human and not a bot on the website. Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile secret key.
