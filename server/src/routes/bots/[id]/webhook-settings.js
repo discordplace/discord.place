@@ -1,19 +1,17 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { param, body, matchedData } = require('express-validator');
+const { param, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const getValidationError = require('@/utils/getValidationError');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   delete: [
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
@@ -53,9 +51,8 @@ module.exports = {
       .isString().withMessage('Token should be a string.')
       .isLength({ min: 1, max: config.botWebhookTokenMaxLength }).withMessage(`Token must be between 1 and ${config.botWebhookTokenMaxLength} characters.`)
       .trim(),
-    validateRequest,
     async (request, response) => {
-      const { id, url, token } = matchedData(request);
+      const { id, url, token } = request.matchedData
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);

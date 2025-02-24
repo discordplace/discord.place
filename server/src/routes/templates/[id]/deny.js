@@ -1,10 +1,9 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body } = require('express-validator');
+const { param, body } = require('express-validator');
 const Template = require('@/schemas/Template');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -15,9 +14,8 @@ module.exports = {
     body('reason')
       .isString().withMessage('Reason must be a string.')
       .isIn(Object.keys(config.templateDenyReasons)).withMessage('Invalid reason.'),
-    validateRequest,
     async (request, response) => {
-      const { id, reason } = matchedData(request);
+      const { id, reason } = request.matchedData
       if (!config.templateDenyReasons[reason]) return response.sendError('Invalid reason.', 400);
 
       const canDeny = request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId));

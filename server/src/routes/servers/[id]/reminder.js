@@ -1,11 +1,10 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
+const { param } = require('express-validator');
 const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const bodyParser = require('body-parser');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -13,9 +12,8 @@ module.exports = {
     bodyParser.json(),
     checkAuthentication,
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

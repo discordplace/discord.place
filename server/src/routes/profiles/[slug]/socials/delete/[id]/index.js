@@ -1,10 +1,9 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
-const { param, matchedData } = require('express-validator');
+const { param } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const getValidationError = require('@/utils/getValidationError');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -15,9 +14,8 @@ module.exports = {
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { slug, id } = matchedData(request);
+      const { slug, id } = request.matchedData
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 

@@ -2,12 +2,10 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
     bodyParser.json(),
-    validateRequest,
     async (request, response) => {
       const signature = request.headers['x-hub-signature-256'];
       if (!signature) return response.sendError('No signature provided', 400);

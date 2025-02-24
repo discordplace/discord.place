@@ -2,7 +2,7 @@ const categoriesValidation = require('@/utils/validations/bots/categories');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { param, body, matchedData } = require('express-validator');
+const { param, body } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Bot = require('@/schemas/Bot');
 const Server = require('@/schemas/Server');
@@ -16,16 +16,14 @@ const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount'
 const githubRepositoryValidation = require('@/validations/bots/githubRepository');
 const findRepository = require('@/utils/bots/findRepository');
 const getUserHashes = require('@/utils/getUserHashes');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const isUserBotOwner = require('@/utils/bots/isUserBotOwner');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
@@ -133,9 +131,8 @@ module.exports = {
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
-    validateRequest,
     async (request, response) => {
-      const { id, short_description, description, invite_url, categories } = matchedData(request);
+      const { id, short_description, description, invite_url, categories } = request.matchedData
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE' },
@@ -238,9 +235,8 @@ module.exports = {
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
@@ -296,9 +292,8 @@ module.exports = {
       .optional()
       .isString().withMessage('GitHub Repository should be a string.')
       .custom(githubRepositoryValidation),
-    validateRequest,
     async (request, response) => {
-      const { id, short_description, description, invite_url, categories, support_server_id, github_repository } = matchedData(request);
+      const { id, short_description, description, invite_url, categories, support_server_id, github_repository } = request.matchedData
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);

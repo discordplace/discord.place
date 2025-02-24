@@ -9,13 +9,14 @@ const cors = require('cors');
 const helmet = require('helmet');
 const ip = require('@/utils/middlewares/ip');
 const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
-const languageDetection = require('@/utils/middlewares/languageDetection');
 const compression = require('compression');
 const morgan = require('morgan');
 
 const sleep = require('@/utils/sleep');
 const User = require('@/schemas/User');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const { matchedData } = require('express-validator');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = class Server {
   constructor() {
@@ -92,8 +93,6 @@ module.exports = class Server {
       next();
     });
 
-    this.server.use(languageDetection);
-
     if (process.env.NODE_ENV === 'production' && config.globalRateLimit.enabled === true) this.server.use(require('@/utils/middlewares/globalRateLimiter'));
 
     this.server.use((request, response, next) => {
@@ -156,6 +155,16 @@ module.exports = class Server {
       } else {
         next();
       }
+    });
+
+    // Auto validate all requests
+    this.server.use(validateRequest);
+
+    // Add validated fields to request object
+    this.server.use((request, response, next) => {
+      request.matchedData = matchedData(request);
+
+      next();
     });
 
     logger.info('Middlewares added.');

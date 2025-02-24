@@ -1,9 +1,8 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const Quarantine = require('@/schemas/Quarantine');
-const { param, matchedData } = require('express-validator');
+const { param } = require('express-validator');
 const Discord = require('discord.js');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   delete: [
@@ -11,12 +10,11 @@ module.exports = {
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     param('id')
       .isMongoId().withMessage('Invalid ID.'),
-    validateRequest,
     async (request, response) => {
       const canDelete = config.permissions.canDeleteQuarantinesRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You do not have permission to delete quarantines.', 403);
 
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 

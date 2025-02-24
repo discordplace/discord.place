@@ -1,11 +1,10 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
+const { param } = require('express-validator');
 const Template = require('@/schemas/Template');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -13,9 +12,8 @@ module.exports = {
     bodyParser.json(),
     checkAuthentication,
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const canApprove = request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve this template.', 403);

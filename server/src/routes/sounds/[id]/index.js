@@ -1,9 +1,8 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
+const { param } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const idValidation = require('@/utils/validations/sounds/id');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -21,9 +20,8 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);
@@ -50,9 +48,8 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);

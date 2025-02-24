@@ -11,7 +11,6 @@ module.exports = {
     cookie('token')
       .isString().withMessage('Token must be a string.')
       .matches(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/).withMessage('Invalid token.'),
-    validateRequest,
     async (request, response) => {
       await User.updateOne({ id: request.user.id }, { lastLogoutAt: new Date() }).catch(() => null);
 

@@ -1,13 +1,12 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body, query } = require('express-validator');
+const { param, body, query } = require('express-validator');
 const Server = require('@/schemas/Server');
 const Review = require('@/schemas/Server/Review');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const getUserHashes = require('@/utils/getUserHashes');
 
 module.exports = {
@@ -22,9 +21,8 @@ module.exports = {
       .optional()
       .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
       .toInt(),
-    validateRequest,
     async (request, response) => {
-      const { id, limit = 6, page = 1 } = matchedData(request);
+      const { id, limit = 6, page = 1 } = request.matchedData
       const skip = (page - 1) * limit;
 
       const guild = client.guilds.cache.get(id);
@@ -72,12 +70,11 @@ module.exports = {
     body('content')
       .trim()
       .isLength({ min: config.reviewsMinCharacters, max: config.reviewsMaxCharacters }).withMessage(`Content must be between ${config.reviewsMinCharacters} and ${config.reviewsMaxCharacters} characters.`),
-    validateRequest,
     async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SERVERS_CREATE_REVIEW').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to review servers.', 403);
 
-      const { id, rating, content } = matchedData(request);
+      const { id, rating, content } = request.matchedData
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

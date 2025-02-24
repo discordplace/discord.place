@@ -1,15 +1,13 @@
 const crypto = require('node:crypto');
-const { query, matchedData } = require('express-validator');
-const validateRequest = require('@/utils/middlewares/validateRequest');
+const { query } = require('express-validator');
 
 module.exports = {
   get: [
     query('userId')
       .isString().withMessage('User ID must be a string.')
       .matches(/^\d{17,19}$/).withMessage('Invalid user ID.'),
-    validateRequest,
     async (request, response) => {
-      const { userId } = matchedData(request);
+      const { userId } = request.matchedData
 
       const state = crypto.randomBytes(16).toString('hex');
 

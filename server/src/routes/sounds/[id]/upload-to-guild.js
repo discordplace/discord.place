@@ -2,12 +2,11 @@ const Sound = require('@/schemas/Sound');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/sounds/id');
-const { param, matchedData, body } = require('express-validator');
+const { param, body } = require('express-validator');
 const Discord = require('discord.js');
 const getSoundURL = require('@/utils/sounds/getSoundURL');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -20,9 +19,8 @@ module.exports = {
     body('guildId')
       .isString().withMessage('Guild ID must be an string.')
       .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
-    validateRequest,
     async (request, response) => {
-      const { id, guildId } = matchedData(request);
+      const { id, guildId } = request.matchedData
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);

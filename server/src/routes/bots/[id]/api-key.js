@@ -1,19 +1,17 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const { param, matchedData } = require('express-validator');
+const { param } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const Bot = require('@/schemas/Bot');
 const crypto = require('node:crypto');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 2, perMinutes: 30 }),
     checkAuthentication,
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE_API_KEY' },
@@ -45,9 +43,8 @@ module.exports = {
     useRateLimiter({ maxRequests: 2, perMinutes: 30 }),
     checkAuthentication,
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE_API_KEY' },
@@ -79,9 +76,8 @@ module.exports = {
     useRateLimiter({ maxRequests: 2, perMinutes: 30 }),
     checkAuthentication,
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE_API_KEY' },

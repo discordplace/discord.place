@@ -11,13 +11,12 @@ const Template = require('@/schemas/Template');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const Reminder = require('@/schemas/Reminder');
 const bodyParser = require('body-parser');
-const { body, matchedData } = require('express-validator');
+const { body } = require('express-validator');
 const Deny = require('@/src/schemas/Bot/Deny');
 const Sound = require('@/schemas/Sound');
 const Link = require('@/schemas/Link');
 const getUserHashes = require('@/utils/getUserHashes');
 const requirementChecks = require('@/utils/servers/requirementChecks');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const validKeys = [
   'timeouts',
@@ -39,9 +38,8 @@ module.exports = {
     body('keys')
       .optional()
       .custom(keys => keys.every(key => validKeys.includes(key))).withMessage('Invalid key provided.'),
-    validateRequest,
     async (request, response) => {
-      const { keys } = matchedData(request);
+      const { keys } = request.matchedData
       const responseData = {};
 
       const ownedGuilds = client.guilds.cache

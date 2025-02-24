@@ -1,17 +1,15 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
+const { param } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const User = require('@/schemas/User');
 const getUserHashes = require('@/utils/getUserHashes');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);

@@ -1,18 +1,16 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body } = require('express-validator');
+const { param, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
     checkAuthentication,
     param('id'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData;
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
@@ -48,9 +46,8 @@ module.exports = {
       .isString().withMessage('User ID must be a string.')
       .isLength({ min: 17, max: 19 }).withMessage('User ID must be between 17 and 19 characters long.')
       .matches(/^\d+$/).withMessage('User ID must be a number.'),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData;
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
@@ -62,7 +59,7 @@ module.exports = {
 
       if (!canEdit) return response.sendError('You do not have permission to add extra owners to this bot.', 403);
 
-      const { userId } = matchedData(request);
+      const { userId } = request.matchedData;
 
       if (bot.extra_owners.includes(userId)) return response.sendError('User is already an extra owner of this bot.', 400);
       if (bot.extra_owners.length >= config.botMaxExtraOwners) return response.sendError('You cannot add more extra owners to this bot.', 400);

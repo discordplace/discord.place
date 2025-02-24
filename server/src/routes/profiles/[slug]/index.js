@@ -1,6 +1,6 @@
 const slugValidation = require('@/validations/profiles/slug');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body } = require('express-validator');
+const { param, body } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const User = require('@/schemas/User');
 const bodyParser = require('body-parser');
@@ -11,7 +11,6 @@ const colorsValidation = require('@/validations/profiles/colors');
 const Server = require('@/schemas/Server');
 const randomizeArray = require('@/utils/randomizeArray');
 const getValidationError = require('@/utils/getValidationError');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -20,9 +19,8 @@ module.exports = {
       .isString().withMessage('Slug must be a string.')
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')
       .custom(slugValidation).withMessage('Slug is not valid.'),
-    validateRequest,
     async (request, response) => {
-      const { slug } = matchedData(request);
+      const { slug } = request.matchedData
 
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
@@ -145,9 +143,8 @@ module.exports = {
     body('verified')
       .optional()
       .isBoolean().withMessage('Verified must be a boolean.'),
-    validateRequest,
     async (request, response) => {
-      const { slug, newSlug, occupation: newOccupation, gender: newGender, location: newLocation, birthday: newBirthday, bio: newBio, preferredHost: newPreferredHost, colors: newColors, socials, verified } = matchedData(request);
+      const { slug, newSlug, occupation: newOccupation, gender: newGender, location: newLocation, birthday: newBirthday, bio: newBio, preferredHost: newPreferredHost, colors: newColors, socials, verified } = request.matchedData
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 

@@ -14,14 +14,13 @@ const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
 const BlockedIp = require('@/src/schemas/BlockedIp');
 const bodyParser = require('body-parser');
-const { body, matchedData } = require('express-validator');
+const { body } = require('express-validator');
 const Quarantine = require('@/schemas/Quarantine');
 const Link = require('@/schemas/Link');
 const getUserHashes = require('@/utils/getUserHashes');
 const User = require('@/schemas/User');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
 const UserHashes = require('@/schemas/User/Hashes');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 const validKeys = [
   'stats',
@@ -48,9 +47,8 @@ module.exports = {
     body('keys')
       .optional()
       .custom(keys => keys.every(key => validKeys.includes(key))).withMessage('Invalid key provided.'),
-    validateRequest,
     async (request, response) => {
-      const { keys } = matchedData(request);
+      const { keys } = request.matchedData;
 
       const permissions = {
         canViewDashboard: request.member && config.permissions.canViewDashboardRoles.some(roleId => request.member.roles.cache.has(roleId)),

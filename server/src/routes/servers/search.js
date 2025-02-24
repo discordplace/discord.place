@@ -1,10 +1,9 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { query, matchedData } = require('express-validator');
+const { query } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const { StandedOutServer } = require('@/schemas/StandedOut');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 const { ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 
 module.exports = {
@@ -33,9 +32,8 @@ module.exports = {
       .optional()
       .isInt({ min: 1 }).withMessage('Page must be an integer greater than 0.')
       .toInt(),
-    validateRequest,
     async (request, response) => {
-      const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = matchedData(request);
+      const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = request.matchedData
       const skip = (page - 1) * limit;
       const baseFilter = {
         id: { $in: Array.from(client.guilds.cache.filter(guild => guild.available).keys()) },

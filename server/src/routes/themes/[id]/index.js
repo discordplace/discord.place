@@ -1,10 +1,9 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
+const { param } = require('express-validator');
 const Theme = require('@/schemas/Theme');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const idValidation = require('@/utils/validations/themes/id');
 const getUserHashes = require('@/utils/getUserHashes');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -12,9 +11,8 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const theme = await Theme.findOne({ id });
       if (!theme) return response.sendError('Theme not found.', 404);
@@ -44,9 +42,8 @@ module.exports = {
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
-    validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);
+      const { id } = request.matchedData
 
       const theme = await Theme.findOne({ id });
       if (!theme) return response.sendError('Theme not found.', 404);

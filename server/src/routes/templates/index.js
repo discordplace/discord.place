@@ -2,13 +2,12 @@ const categoriesValidation = require('@/utils/validations/templates/categories')
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
-const { body, matchedData } = require('express-validator');
+const { body } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Template = require('@/schemas/Template');
 const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const fetchTemplateDetails = require('@/utils/templates/fetchTemplateDetails');
-const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   post: [
@@ -29,9 +28,8 @@ module.exports = {
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),
-    validateRequest,
     async (request, response) => {
-      const { id, name, description, categories } = matchedData(request);
+      const { id, name, description, categories } = request.matchedData
 
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'TEMPLATES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create templates.', 403);
