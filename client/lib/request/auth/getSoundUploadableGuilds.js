@@ -1,7 +1,8 @@
 import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function getSoundUploadableGuilds() {
-  const endpoint = '/auth/@me/sound-uploadable-guilds';
+  const endpoint = Endpoints.GetSoundUploadableGuilds();
 
   return ClientRequestClient.get(endpoint);
 }

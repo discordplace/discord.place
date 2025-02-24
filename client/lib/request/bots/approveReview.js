@@ -1,8 +1,8 @@
 import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
-export default function createApiKey(id, isNew) {
-  const endpoint = `/bots/${id}/api-key`;
-  const method = isNew ? 'post' : 'patch';
+export default function approveReview(botId, reviewId) {
+  const endpoint = Endpoints.ApproveBotReview(botId, reviewId);
 
-  return ClientRequestClient[method](endpoint).then(data => data.apiKey);
+  return ClientRequestClient.post(endpoint);
 }

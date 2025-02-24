@@ -1,7 +1,8 @@
 import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function fetchTemplates(search, page, limit, category, sort) {
-  const endpoint = '/templates/search';
+  const endpoint = Endpoints.FetchTemplates();
   const params = {};
 
   if (search) params.query = search;

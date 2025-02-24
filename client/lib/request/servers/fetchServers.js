@@ -1,7 +1,8 @@
 import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function fetchServers(search, page, limit, category, sort) {
-  const endpoint = '/servers/search';
+  const endpoint = Endpoints.FetchServers();
   const params = {};
 
   if (search) params.query = search;

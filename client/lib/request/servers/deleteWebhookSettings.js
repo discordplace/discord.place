@@ -1,7 +1,8 @@
 import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function deleteWebhookSettings(id) {
-  const endpoint = `/servers/${id}/webhook-settings`;
+  const endpoint = Endpoints.DeleteServerWebhookSettings(id);
 
   return ClientRequestClient.delete(endpoint);
 }

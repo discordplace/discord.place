@@ -1,7 +1,8 @@
 import ClientRequestClient from '@/lib/request/clientRequest';
+import Endpoints from '@/lib/request/endpoints';
 
 export default function fetchEmojis(search, category, sort, page, limit) {
-  const endpoint = '/emojis/search';
+  const endpoint = Endpoints.FetchEmojis();
   const params = {};
 
   if (search) params.query = search;
