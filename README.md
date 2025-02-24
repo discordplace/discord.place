@@ -132,6 +132,7 @@ CLOUDFLARE_ACCOUNT_ID=
 CLOUDFLARE_BLOCK_IP_LIST_ID=
 LEMON_SQUEEZY_WEBHOOK_SECRET=
 LEMON_SQUEEZY_API_KEY=
+CLIENT_SERVER_IP_ADDRESS=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 WEBHOOKS_PROXY_SERVER_PROTOCOL=
@@ -173,6 +174,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `LEMON_SQUEEZY_WEBHOOK_SECRET` | Lemon Squeezy webhook secret. (not required) |
 | `LEMON_SQUEEZY_API_KEY` | Lemon Squeezy API key. (not required) |
 | `HEARTBEAT_ID_DAILY_DATABASE_BACKUP` | Heartbeat ID for daily database backup. (not required) |
+| `CLIENT_SERVER_IP_ADDRESS` | IP address of the server hosting the client. |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` | Secret key for getting approximate guild count of a bot. (not required) |
 | `WEBHOOKS_PROXY_SERVER_PROTOCOL` | Protocol for the proxy server. |
@@ -193,6 +195,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 > - The `LEMON_SQUEEZY_WEBHOOK_SECRET` is used for verifying the Lemon Squeezy webhook. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy documentation](https://docs.lemonsqueezy.com/help/webhooks) for more information.
 > - The `LEMON_SQUEEZY_API_KEY` is used for authenticating requests to the Lemon Squeezy API. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy Developer Guide](https://docs.lemonsqueezy.com/guides/developer-guide/getting-started#create-an-api-key) to get your API key.
 > - Values starting with `HEARTBEAT_ID_` are used for the heartbeat IDs for the heartbeats. We use [Better Stack Uptime](https://betterstack.com/uptime) for monitoring the uptime of the website.
+> - The `CLIENT_SERVER_IP_ADDRESS` should be the IP address of the server hosting the client. It is used to parse requests coming from the server. If you use an empty value, the IP addresses of the requests sent to the API service by the server will be the same as the IP address of the server hosting the client. As a result, no visitor's IP address will appear in the requests sent by pages using server-side rendering.
 > - The `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` and `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` values are used for getting the approximate guild count of a bot. This is half required for self-hosting. If you don't want to use this feature, you can leave these values empty, but this will result in bots not being able to update server_count using the API. For now, we use private API for this because Discord doesn't provide an official API for getting the approximate guild count of a bot. We don't want to share this API source code with everyone.
 > - The `WEBHOOKS_PROXY_SERVER_PROTOCOL`, `WEBHOOKS_PROXY_SERVER_HOST`, `WEBHOOKS_PROXY_SERVER_PORT`, `WEBHOOKS_PROXY_SERVER_USERNAME`, and `WEBHOOKS_PROXY_SERVER_PASSWORD` values are used for the proxy server settings. We use a proxy server for sending webhooks requests. If you don't want to use a proxy server, you can leave these values empty. Username and password are not required for the proxy server.
 
@@ -221,7 +224,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 > [!NOTE]
 > - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
 > - The `supportInviteUrl` and `docsUrl` values are used in the website for the support server and documentation links. You can change these values to your own support server and documentation links.
-> - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL.
+> - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
 > - The `analytics.url`, `analytics.script` and `analytics.domains` values are used for setting up analytics on the website. We use [Plausible Analytics](https://plausible.io) for analytics. Any other analytics service is not supported.
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `getEmojiURL` and `getSoundURL` functions are used for getting the emoji and sound URLs. You should change these functions to your own CDN URL.
