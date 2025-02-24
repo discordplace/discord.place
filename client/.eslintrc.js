@@ -67,6 +67,10 @@ module.exports = {
       'error',
       'always'
     ],
+    'eol-last': [
+      'error',
+      'never'
+    ],
     'key-spacing': [
       'error',
       {
