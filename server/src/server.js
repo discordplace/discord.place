@@ -84,8 +84,8 @@ module.exports = class Server {
       xPoweredBy: false,
       xFrameOptions: { action: 'sameorigin' }
     }));
-    this.server.use(ip);
     this.server.use(require('@/utils/middlewares/error'));
+    this.server.use(ip);
 
     this.server.use((request, response, next) => {
       if (client.blockedIps.has(request.clientIp)) return response.sendError('Forbidden', 403);
