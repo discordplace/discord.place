@@ -1,8 +1,9 @@
 import ClientRequestClient from '@/lib/request/clientRequest';
+import ServerRequestClient from '@/lib/request/serverRequest';
 import Endpoints from '@/lib/request/endpoints';
 
-export default function getPlans() {
+export default function getPlans(serverSideRequest) {
   const endpoint = Endpoints.GetPlans;
 
-  return ClientRequestClient.get(endpoint);
+  return serverSideRequest ? ServerRequestClient.get(endpoint) : ClientRequestClient.get(endpoint);
 }

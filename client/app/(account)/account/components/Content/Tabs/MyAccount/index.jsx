@@ -38,7 +38,7 @@ export default function MyAccount() {
   useEffect(() => {
     setPlansLoading(true);
 
-    getPlans()
+    getPlans(false)
       .then(data => setPlans(data))
       .catch(toast.error)
       .finally(() => setPlansLoading(false));
