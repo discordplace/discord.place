@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 
 function updateClientActivity() {
+  if (!client.isReady()) return;
+
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
     notation: 'compact'
