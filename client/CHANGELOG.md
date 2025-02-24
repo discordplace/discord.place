@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.13.0](https://github.com/discordplace/discord.place/compare/client@v1.12.0...client@v1.13.0) (2025-02-24)
+
+
+### Features
+
+* **markdown:** add tooltip support for Discord emojis ([d075969](https://github.com/discordplace/discord.place/commit/d075969e3420c0b5c79a09fca48c343e28d94130))
+* **markdown:** support for Discord emojis and render emojis using twemoji ([7960c73](https://github.com/discordplace/discord.place/commit/7960c7365375415e55210aad50be8f8c87cac353))
+* **markdown:** support for Discord emojis and render emojis using twemojis ([#169](https://github.com/discordplace/discord.place/issues/169)) ([7960c73](https://github.com/discordplace/discord.place/commit/7960c7365375415e55210aad50be8f8c87cac353))
+
+
+### Bug Fixes
+
+* change request logic for client's server-side requests ([#172](https://github.com/discordplace/discord.place/issues/172)) ([0b447eb](https://github.com/discordplace/discord.place/commit/0b447eb67ed97c55e79d0e298cc5e51eddf2d1f0))
+
 ## [1.12.0](https://github.com/discordplace/discord.place/compare/client@v1.11.0...client@v1.12.0) (2025-02-20)
 
 
