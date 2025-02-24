@@ -14,7 +14,7 @@ module.exports = {
       .custom(idValidation),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const theme = await Theme.findOne({ id });
       if (!theme) return response.sendError('Theme not found.', 404);
@@ -46,7 +46,7 @@ module.exports = {
       .custom(idValidation),
     validateRequest,
     async (request, response) => {
-      const { id } = request.matchedData
+      const { id } = matchedData(request);
 
       const theme = await Theme.findOne({ id });
       if (!theme) return response.sendError('Theme not found.', 404);
