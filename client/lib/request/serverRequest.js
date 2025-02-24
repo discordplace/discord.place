@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '@/config';
 import { cookies, headers } from 'next/headers';
 
-class ServerRequestClient {
+class RequestClient {
   constructor() {
     this.instance = axios.create({
       baseURL: config.api.url,
@@ -51,20 +51,8 @@ class ServerRequestClient {
   patch(...args) {
     return this.call('patch', ...args);
   }
-
-  head(...args) {
-    return this.call('head', ...args);
-  }
-
-  options(...args) {
-    return this.call('options', ...args);
-  }
-
-  request(...args) {
-    return this.instance.request(...args);
-  }
 }
 
-const serverRequestClient = new ServerRequestClient();
+const serverRequestClient = new RequestClient();
 
 export default serverRequestClient;

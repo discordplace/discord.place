@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Card from '@/app/(blogs)/blogs/Hero/Card';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import fetchBlogs from '@/lib/request/fetchBlogs';
+import fetchBlogs from '@/lib/request/general/fetchBlogs';
 import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });

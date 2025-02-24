@@ -1,4 +1,4 @@
-import getUser from '@/lib/request/getUser';
+import getUser from '@/lib/request/general/getUser';
 import Content from '@/app/(profiles)/profile/u/[user_id]/content';
 import { redirect } from 'next/navigation';
 

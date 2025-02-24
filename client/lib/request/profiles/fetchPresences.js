@@ -12,6 +12,7 @@ export default function fetchPresences(userIds) {
 
     try {
       const response = await axios.get(url);
+
       resolve(userIds.length > 1 ? response.data : [response.data]);
     } catch (error) {
       if (!(error instanceof axios.AxiosError)) reject(error.message);

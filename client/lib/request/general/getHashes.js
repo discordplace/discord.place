@@ -1,7 +1,7 @@
 import ClientRequestClient from '@/lib/request/clientRequest';
 
-export default function getSoundUploadableGuilds() {
-  const endpoint = '/auth/@me/sound-uploadable-guilds';
+export default function getHashes(id) {
+  const endpoint = `/users/${id}/hashes`;
 
   return ClientRequestClient.get(endpoint);
 }

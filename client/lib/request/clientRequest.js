@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '@/config';
 import { toast } from 'sonner';
 
-class ClientRequestClient {
+class RequestClient {
   constructor() {
     this.instance = axios.create({
       baseURL: config.api.url,
@@ -18,8 +18,10 @@ class ClientRequestClient {
     });
   }
 
-  call(method, ...args) {
-    return this.instance[method](...args);
+  async call(method, ...args) {
+    const response = await this.instance[method](...args);
+
+    return response.data;
   }
 
   get(...args) {
@@ -41,20 +43,8 @@ class ClientRequestClient {
   patch(...args) {
     return this.call('patch', ...args);
   }
-
-  head(...args) {
-    return this.call('head', ...args);
-  }
-
-  options(...args) {
-    return this.call('options', ...args);
-  }
-
-  request(...args) {
-    return this.instance.request(...args);
-  }
 }
 
-const clientRequestClient = new ClientRequestClient();
+const ClientRequestClient = new RequestClient();
 
-export default clientRequestClient;
+export default ClientRequestClient;

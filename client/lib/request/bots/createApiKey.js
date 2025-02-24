@@ -1,16 +1,8 @@
-import config from '@/config';
-import axios from 'axios';
+import ClientRequestClient from '@/lib/request/clientRequest';
 
 export default function createApiKey(id, isNew) {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/bots/${id}/api-key`;
+  const endpoint = `/bots/${id}/api-key`;
+  const method = isNew ? 'post' : 'patch';
 
-    try {
-      const response = await axios[isNew ? 'post' : 'patch'](url, {}, { withCredentials: true });
-      resolve(response.data.apiKey);
-    } catch (error) {
-      reject(error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message);
-    }
-  });
+  return ClientRequestClient[method](endpoint).then(data => data.apiKey);
 }

@@ -1,5 +1,5 @@
 import Square from '@/app/components/Background/Square';
-import getTopServers from '@/lib/request/getTopServers';
+import getTopServers from '@/lib/request/general/getTopServers';
 import ServerCard from '@/app/(home)/components/ServerCard';
 import InfoCards from '@/app/(home)/components/InfoCards';
 import { Suspense } from 'react';
