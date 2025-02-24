@@ -20,6 +20,7 @@ module.exports = function (request, response, next) {
   next();
 
   function cleanIp(ip) {
+    if (!ip) return 'unknown';
     if (ip.includes(',')) return ip.split(',')[0].trim();
 
     return ip;
