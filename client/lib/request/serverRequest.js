@@ -53,6 +53,6 @@ class RequestClient {
   }
 }
 
-const serverRequestClient = new RequestClient();
+const ServerRequestClient = new RequestClient();
 
-export default serverRequestClient;
+export default ServerRequestClient;
