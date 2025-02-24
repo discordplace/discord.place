@@ -1,8 +1,8 @@
-import ServerRequestClient from '@/lib/request/serverRequest';
+import ClientRequestClient from '@/lib/request/clientRequest';
 import Endpoints from '@/lib/request/endpoints';
 
 export default function getAuthenticatedUser() {
   const endpoint = Endpoints.GetAuthenticatedUser;
 
-  return ServerRequestClient.get(endpoint);
+  return ClientRequestClient.get(endpoint);
 }
