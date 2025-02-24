@@ -10,7 +10,7 @@ module.exports = {
     param('id'),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

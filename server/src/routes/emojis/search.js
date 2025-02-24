@@ -32,7 +32,7 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { query, limit = 9, page = 1, category = 'All', sort = 'Newest' } = matchedData(request);;
+      const { query, limit = 9, page = 1, category = 'All', sort = 'Newest' } = matchedData(request);
       const skip = (page - 1) * limit;
       const findQuery = {
         approved: true

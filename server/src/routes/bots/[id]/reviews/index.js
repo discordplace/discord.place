@@ -24,7 +24,7 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { id, limit = 6, page = 1 } = matchedData(request);;
+      const { id, limit = 6, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
 
       const user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
@@ -79,7 +79,7 @@ module.exports = {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'BOTS_CREATE_REVIEW').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to review bots.', 403);
 
-      const { id, rating, content } = matchedData(request);;
+      const { id, rating, content } = matchedData(request);
 
       const user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('User not found.', 404);

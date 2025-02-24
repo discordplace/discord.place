@@ -13,7 +13,7 @@ module.exports = {
     param('id'),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
@@ -55,7 +55,7 @@ module.exports = {
       .trim(),
     validateRequest,
     async (request, response) => {
-      const { id, url, token } = matchedData(request);;
+      const { id, url, token } = matchedData(request);
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);

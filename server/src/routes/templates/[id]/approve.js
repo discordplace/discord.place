@@ -15,7 +15,7 @@ module.exports = {
     param('id'),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const canApprove = request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canApprove) return response.sendError('You are not allowed to approve this template.', 403);

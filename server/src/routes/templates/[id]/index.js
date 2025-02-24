@@ -12,7 +12,7 @@ module.exports = {
       .isLength({ min: 12, max: 12 }).withMessage('ID must be 12 characters.'),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const template = await Template.findOne({ id });
       if (!template) return response.sendError('Template not found.', 404);

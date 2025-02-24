@@ -18,7 +18,7 @@ module.exports = {
       .optional(),
     validateRequest,
     async (request, response) => {
-      const { id, command_count, server_count } = matchedData(request);;
+      const { id, command_count, server_count } = matchedData(request);
 
       if (!command_count && !server_count) return response.sendError('One of the following fields is required: command_count, server_count.', 400);
 

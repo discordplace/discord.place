@@ -32,7 +32,7 @@ module.exports = {
       .isNumeric().withMessage('Bot ID must be a string.'),
     validateRequest,
     async (request, response) => {
-      const { id, planId, serverId, botId } = matchedData(request);;
+      const { id, planId, serverId, botId } = matchedData(request);
 
       if (id === 'standed-out') {
         if (!serverId && !botId) return response.sendError('Server ID or Bot ID is required.', 400);

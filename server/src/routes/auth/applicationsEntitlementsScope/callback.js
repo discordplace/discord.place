@@ -2,6 +2,7 @@ const { query, cookie, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const getAccessToken = require('@/utils/getAccessToken');
 const authCallback = require('@/utils/authCallback');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -21,7 +22,7 @@ module.exports = {
     validateRequest,
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
     async (request, response) => {
-      const { code, error, state, applicationsEntitlementsScope_userId: userId } = matchedData(request);;
+      const { code, error, state, applicationsEntitlementsScope_userId: userId } = matchedData(request);
 
       if (!code || error) {
         client.applicationsEntitlementsScopeCallbackError.set(userId, true);

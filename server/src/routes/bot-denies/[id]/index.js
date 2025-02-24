@@ -14,7 +14,7 @@ module.exports = {
       const canDelete = request.member && config.permissions.canDeleteBotDeniesRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You do not have permission to delete bot denies.', 403);
 
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       BotDeny.findOneAndDelete({ 'bot.id': id })
         .then(() => response.status(204).end())

@@ -15,7 +15,7 @@ module.exports = {
       .matches(/^\d+$/).withMessage('User ID must be a number.'),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
@@ -27,7 +27,7 @@ module.exports = {
 
       if (!canEdit) return response.sendError('You do not have permission to delete this bot\'s extra owners.', 403);
 
-      const { userId } = matchedData(request);;
+      const { userId } = matchedData(request);
 
       if (!bot.extra_owners.includes(userId)) return response.sendError('User is not an extra owner of this bot.', 400);
 

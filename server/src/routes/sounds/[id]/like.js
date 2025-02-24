@@ -18,7 +18,7 @@ module.exports = {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SOUNDS_LIKE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to like sounds.', 403);
 
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sounds not found.', 404);

@@ -23,7 +23,7 @@ module.exports = {
       .custom(idValidation),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const sound = await Sound.findOne({ id });
       if (!sound) return response.sendError('Sound not found.', 404);

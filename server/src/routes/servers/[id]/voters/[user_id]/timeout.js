@@ -16,7 +16,7 @@ module.exports = {
       const canDelete = request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canDelete) return response.sendError('You do not have permission to delete timeouts.', 403);
 
-      const { id, user_id } = matchedData(request);;
+      const { id, user_id } = matchedData(request);
 
       ServerTimeout.findOneAndDelete({ 'guild.id': id, 'user.id': user_id })
         .then(async () => {

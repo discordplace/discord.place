@@ -31,7 +31,7 @@ module.exports = {
       .custom(categoriesValidation),
     validateRequest,
     async (request, response) => {
-      const { id, name, description, categories } = matchedData(request);;
+      const { id, name, description, categories } = matchedData(request);
 
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'TEMPLATES_CREATE').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to create templates.', 403);

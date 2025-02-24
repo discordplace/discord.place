@@ -24,7 +24,7 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { id, limit = 6, page = 1 } = matchedData(request);;
+      const { id, limit = 6, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
 
       const guild = client.guilds.cache.get(id);
@@ -77,7 +77,7 @@ module.exports = {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'SERVERS_CREATE_REVIEW').catch(() => false);
       if (userQuarantined) return response.sendError('You are not allowed to review servers.', 403);
 
-      const { id, rating, content } = matchedData(request);;
+      const { id, rating, content } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Guild not found.', 404);

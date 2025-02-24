@@ -16,7 +16,7 @@ module.exports = {
       const canDelete = config.permissions.canDeleteReviewsRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete reviews.', 403);
 
-      const { id, review_id } = matchedData(request);;
+      const { id, review_id } = matchedData(request);
 
       const review = await Review.findOne({ 'server.id': id, _id: review_id });
       if (!review) return response.sendError('Review not found.', 404);

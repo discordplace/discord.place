@@ -30,7 +30,7 @@ module.exports = {
       .isIn(Object.keys(config.soundDenyReasons)).withMessage('Invalid reason.'),
     validateRequest,
     async (request, response) => {
-      const { id, reason } = matchedData(request);;
+      const { id, reason } = matchedData(request);
       if (!config.soundDenyReasons[reason]) return response.sendError('Invalid reason.', 400);
 
       const canDeny = request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId));

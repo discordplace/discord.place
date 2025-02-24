@@ -17,7 +17,7 @@ module.exports = {
     param('id'),
     validateRequest,
     async (request, response) => {
-      const { slug, id } = matchedData(request);;
+      const { slug, id } = matchedData(request);
       const profile = await Profile.findOne({ slug });
       if (!profile) return response.sendError('Profile not found.', 404);
 

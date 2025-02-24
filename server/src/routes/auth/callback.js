@@ -2,6 +2,7 @@ const { query, matchedData, cookie } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const getAccessToken = require('@/utils/getAccessToken');
 const authCallback = require('@/utils/authCallback');
+const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
@@ -25,7 +26,7 @@ module.exports = {
     validateRequest,
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
     async (request, response) => {
-      const { code, state, redirect: redirectCookie } = matchedData(request);;
+      const { code, state, redirect: redirectCookie } = matchedData(request);
 
       if (redirectCookie) {
         const redirectUrl = new URL(redirectCookie);

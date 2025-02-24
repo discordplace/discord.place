@@ -24,7 +24,7 @@ module.exports = {
       .custom(destinationURLValidation),
     validateRequest,
     async (request, response) => {
-      const { name, destinationURL } = matchedData(request);;
+      const { name, destinationURL } = matchedData(request);
 
       const foundLink = await Link.findOne({ name: name.toLocaleLowerCase('en-US') });
       if (foundLink) return response.sendError('Link name is already in use.', 400);

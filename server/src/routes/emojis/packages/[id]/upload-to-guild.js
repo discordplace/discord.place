@@ -23,7 +23,7 @@ module.exports = {
       .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
     validateRequest,
     async (request, response) => {
-      const { id, packIndex, guildId } = matchedData(request);;
+      const { id, packIndex, guildId } = matchedData(request);
 
       if (!parseInt(packIndex)) return response.sendError('Pack index must be an integer.', 400);
       if (packIndex < 0 || packIndex > config.packagesMaxEmojisLength) return response.sendError(`Pack index must be between 0 and ${config.packagesMaxEmojisLength}.`, 400);

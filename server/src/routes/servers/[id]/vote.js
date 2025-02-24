@@ -18,7 +18,7 @@ module.exports = {
     param('id'),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const userOrGuildQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'SERVERS_VOTE' },

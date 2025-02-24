@@ -35,7 +35,7 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = matchedData(request);;
+      const { query, category = 'All', sort = 'Votes', limit = 12, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
       const baseFilter = {
         id: { $in: Array.from(client.guilds.cache.filter(guild => guild.available).keys()) },

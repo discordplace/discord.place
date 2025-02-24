@@ -18,7 +18,7 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { id, page = 1, limit = 12 } = matchedData(request);;
+      const { id, page = 1, limit = 12 } = matchedData(request);
 
       const user = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('User not found.', 404);

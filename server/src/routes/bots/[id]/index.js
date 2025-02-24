@@ -25,7 +25,7 @@ module.exports = {
     param('id'),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
@@ -135,7 +135,7 @@ module.exports = {
       .custom(categoriesValidation),
     validateRequest,
     async (request, response) => {
-      const { id, short_description, description, invite_url, categories } = matchedData(request);;
+      const { id, short_description, description, invite_url, categories } = matchedData(request);
 
       const userOrBotQuarantined = await findQuarantineEntry.multiple([
         { type: 'USER_ID', value: request.user.id, restriction: 'BOTS_CREATE' },
@@ -240,7 +240,7 @@ module.exports = {
     param('id'),
     validateRequest,
     async (request, response) => {
-      const { id } = matchedData(request);;
+      const { id } = matchedData(request);
 
       const user = await client.users.fetch(id).catch(() => null);
       if (!user) return response.sendError('Bot not found.', 404);
@@ -298,7 +298,7 @@ module.exports = {
       .custom(githubRepositoryValidation),
     validateRequest,
     async (request, response) => {
-      const { id, short_description, description, invite_url, categories, support_server_id, github_repository } = matchedData(request);;
+      const { id, short_description, description, invite_url, categories, support_server_id, github_repository } = matchedData(request);
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);

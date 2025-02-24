@@ -26,7 +26,7 @@ module.exports = {
       .toInt(),
     validateRequest,
     async (request, response) => {
-      const { query, sort = 'Likes', limit = 9, page = 1 } = matchedData(request);;
+      const { query, sort = 'Likes', limit = 9, page = 1 } = matchedData(request);
       const skip = (page - 1) * limit;
       const findQuery = query ? {
         $or: [

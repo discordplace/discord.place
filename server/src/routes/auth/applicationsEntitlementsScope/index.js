@@ -9,7 +9,7 @@ module.exports = {
       .matches(/^\d{17,19}$/).withMessage('Invalid user ID.'),
     validateRequest,
     async (request, response) => {
-      const { userId } = matchedData(request);;
+      const { userId } = matchedData(request);
 
       const state = crypto.randomBytes(16).toString('hex');
 

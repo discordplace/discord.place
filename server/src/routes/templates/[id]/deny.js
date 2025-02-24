@@ -17,7 +17,7 @@ module.exports = {
       .isIn(Object.keys(config.templateDenyReasons)).withMessage('Invalid reason.'),
     validateRequest,
     async (request, response) => {
-      const { id, reason } = matchedData(request);;
+      const { id, reason } = matchedData(request);
       if (!config.templateDenyReasons[reason]) return response.sendError('Invalid reason.', 400);
 
       const canDeny = request.member && config.permissions.canApproveTemplatesRoles.some(roleId => request.member.roles.cache.has(roleId));

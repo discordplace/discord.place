@@ -43,7 +43,7 @@ module.exports = {
       const canCreateQuarantine = request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId));
       if (!canCreateQuarantine) return response.sendError('You do not have permission to create quarantines.', 403);
 
-      const { type, value, restriction, reason, time } = matchedData(request);;
+      const { type, value, restriction, reason, time } = matchedData(request);
 
       if (!config.quarantineRestrictions[restriction]) return response.sendError('Invalid restriction.', 400);
       if (!config.quarantineRestrictions[restriction].available_to.includes(type)) return response.sendError('Invalid type for this restriction.', 400);
