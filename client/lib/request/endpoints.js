@@ -118,7 +118,7 @@ const Endpoints = {
   DeleteApiKey: id => `/bots/${id}/api-key`,
   CreateBotReview: id => `/bots/${id}/reviews`,
   CreateExtraOwner: botId => `/bots/${botId}/extra-owners`,
-  CreateBot: '/bots',
+  CreateBot: id => `/bots/${id}`,
   CreateApiKey: id => `/bots/${id}/api-key`,
   ApproveBotReview: (botId, reviewId) => `/bots/${botId}/reviews/${reviewId}/approve`,
   ApproveBot: id => `/bots/${id}/approve`,
