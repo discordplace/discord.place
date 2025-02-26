@@ -325,7 +325,7 @@ const config = {
     'Likes': <IoHeart />,
     'MostViewed': <FaEye />
   },
-  customHostnames: ['dsc.wtf', 'dsc.dog', 'dsc.mom'],
+  customHostnames: ['dsc.dog', 'dsc.mom'],
   emojisDenyReasons: {
     'reposted-emoji': {
       name: 'Reposted Emoji',

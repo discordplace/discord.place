@@ -320,7 +320,6 @@ quarantineRestrictions:
     available_to:
       - 'USER_ID'
 customHostnames:
-  - 'dsc.wtf'
   - 'dsc.dog'
   - 'dsc.mom'
 globalRateLimit:
