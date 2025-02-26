@@ -2152,8 +2152,7 @@
         "shortDescription": "Kısa Açıklama",
         "biography": "Biyografi",
         "review": "Yorum",
-        "description": "Açıklama",
-        "something": "Bir hata veya yeni özellik isteği gibi başka bir şey."
+        "description": "Açıklama"
       },
       "inputs": {
         "reason": {

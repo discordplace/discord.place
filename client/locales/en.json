@@ -2152,8 +2152,7 @@
         "shortDescription": "Short Description",
         "biography": "Biography",
         "review": "Review",
-        "description": "Description",
-        "something": "Something else like a bug or a feature request."
+        "description": "Description"
       },
       "inputs": {
         "reason": {

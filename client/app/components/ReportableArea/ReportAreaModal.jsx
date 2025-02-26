@@ -26,7 +26,6 @@ export default function ReportAreaModal({ type, metadata }) {
         {type === 'sound' && <SoundPreview metadata={metadata} />}
         {type === 'review' && <ReviewPreview metadata={metadata} />}
         {type === 'theme' && <ThemePreview metadata={metadata} />}
-        {type === 'something' && <p className='text-sm text-tertiary'>{t('inAppReporting.reportModal.labels.something')}</p>}
       </div>
 
       <div className='flex flex-col gap-y-1'>

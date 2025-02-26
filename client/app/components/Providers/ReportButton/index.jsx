@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import Tooltip from '@/app/components/Tooltip';
 import { HiFlag } from 'react-icons/hi';
 import useGeneralStore from '@/stores/general';
@@ -9,9 +9,10 @@ import { IoClose } from 'react-icons/io5';
 import cn from '@/lib/cn';
 import { motion, useAnimationControls } from 'framer-motion';
 import { MdBugReport } from 'react-icons/md';
-import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 import { t } from '@/stores/language';
+import config from '@/config';
+import Link from 'next/link';
 
 export default function ReportButtonProvider() {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -44,8 +45,6 @@ export default function ReportButtonProvider() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const reportSomethingTriggerButtonRef = useRef(null);
-
   const disabledPaths = ['/dashboard'];
 
   if (disabledPaths.includes(pathname)) return null;
@@ -68,25 +67,17 @@ export default function ReportButtonProvider() {
       </Tooltip>
 
       <Tooltip content={t('inAppReporting.tooltip.reportSomething')}>
-        <button
+        <Link
           className={cn(
             'absolute p-2 text-xl rounded-full transition-[opacity,transform] duration-300 ease-in-out bg-quaternary dark:hover:bg-white dark:hover:text-black hover:text-white hover:bg-black',
             !showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[-45px]' : 'delay-150 scale-100 translate-y-[0px] translate-x-[-45px]'
           )}
-          onClick={() => reportSomethingTriggerButtonRef.current?.click?.()}
+          href={config.githubIssuesUrl}
+          target='_blank'
         >
           <MdBugReport />
-        </button>
+        </Link>
       </Tooltip>
-
-      {showReportableAreas && (
-        <ReportableArea
-          triggerButtonRef={reportSomethingTriggerButtonRef}
-          active={false}
-          type='something'
-          identifier={`report-something-${pathname}`}
-        />
-      )}
 
       <Tooltip
         content={loggedIn ? t('inAppReporting.tooltip.reportSomethingOnThisPage') : t('inAppReporting.tooltip.loginRequiredForReport')}

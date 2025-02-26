@@ -2151,8 +2151,7 @@
         "shortDescription": "Qısa Təsvir",
         "biography": "Bioqrafiya",
         "review": "Rəy",
-        "description": "Təsvir",
-        "something": "Başqa bir şey, məsələn, səhv və ya funksionallıq istəyi."
+        "description": "Təsvir"
       },
       "inputs": {
         "reason": {
