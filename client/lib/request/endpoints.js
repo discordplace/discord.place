@@ -132,7 +132,10 @@ const Endpoints = {
   GetApplicationsEntitlementsScopeGranted: '/auth/@me/applications-entitlements-scope-granted',
 
   // Checkout
-  CreateCheckout: '/payments/checkout'
+  CreateCheckout: '/payments/checkout',
+
+  // Other
+  FetchPresences: 'http://lantern.rest/api/v1/users'
 };
 
 export default Endpoints;
