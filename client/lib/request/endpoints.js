@@ -135,7 +135,7 @@ const Endpoints = {
   CreateCheckout: '/payments/checkout',
 
   // Other
-  FetchPresences: 'http://lantern.rest/api/v1/users'
+  FetchPresences: 'https://lantern.rest/api/v1/users'
 };
 
 export default Endpoints;
