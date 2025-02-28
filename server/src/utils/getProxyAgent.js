@@ -14,10 +14,12 @@ function getProxyAgent() {
 
   if (WEBHOOKS_PROXY_SERVERS) {
     const servers = WEBHOOKS_PROXY_SERVERS.split('|').map(server => {
-      const [username, password, host, port] = server.split(':');
+      const regex = /(?<username>.*):(?<password>.*)@(?<host>.*):(?<port>.*)/;
+      const match = server.match(regex);
 
-      const regex = /{protocol}:\/\/{username}:{password}@{host}:{port}/g;
-      if (!regex.test(format)) throw new Error(`Proxy server format is invalid: ${server}`);
+      if (!match) throw new Error('Invalid proxy server format. Please use the format username:password@host:port|username:password@host:port|username:password@host:port');
+
+      const { username, password, host, port } = match.groups;
 
       return format
         .replace('{protocol}', process.env.WEBHOOKS_PROXY_SERVER_PROTOCOL)
