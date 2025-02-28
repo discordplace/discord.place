@@ -138,6 +138,7 @@ LEMON_SQUEEZY_WEBHOOK_SECRET=
 LEMON_SQUEEZY_API_KEY=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
+WEBHOOKS_PROXY_SERVERS=
 WEBHOOKS_PROXY_SERVER_PROTOCOL=
 WEBHOOKS_PROXY_SERVER_HOST=
 WEBHOOKS_PROXY_SERVER_PORT=
@@ -180,6 +181,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `HEARTBEAT_ID_DAILY_DATABASE_BACKUP` | Heartbeat ID for daily database backup. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` | Secret key for getting approximate guild count of a bot. (not required) |
+| `WEBHOOKS_PROXY_SERVERS` | List of proxies for the webhook requests. Format explained below. |
 | `WEBHOOKS_PROXY_SERVER_PROTOCOL` | Protocol for the proxy server. |
 | `WEBHOOKS_PROXY_SERVER_HOST` | Host for the proxy server. |
 | `WEBHOOKS_PROXY_SERVER_PORT` | Port for the proxy server. |
@@ -201,6 +203,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 > - Values starting with `HEARTBEAT_ID_` are used for the heartbeat IDs for the heartbeats. We use [Better Stack Uptime](https://betterstack.com/uptime) for monitoring the uptime of the website.
 > - The `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` and `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` values are used for getting the approximate guild count of a bot. This is half required for self-hosting. If you don't want to use this feature, you can leave these values empty, but this will result in bots not being able to update server_count using the API. For now, we use private API for this because Discord doesn't provide an official API for getting the approximate guild count of a bot. We don't want to share this API source code with everyone.
 > - The `WEBHOOKS_PROXY_SERVER_PROTOCOL`, `WEBHOOKS_PROXY_SERVER_HOST`, `WEBHOOKS_PROXY_SERVER_PORT`, `WEBHOOKS_PROXY_SERVER_USERNAME`, and `WEBHOOKS_PROXY_SERVER_PASSWORD` values are used for the proxy server settings. We use a proxy server for sending webhooks requests. If you don't want to use a proxy server, you can leave these values empty. Username and password are not required for the proxy server.
+> - You can use the `WEBHOOKS_PROXY_SERVERS` value for setting up multiple proxy servers. The format for this value is as follows: `user:pass@host:port`. You can add multiple proxy servers separated by a vertical bar. The server will select a random proxy server from the list for each request. You can also change these servers protocol by changing the `WEBHOOKS_PROXY_SERVER_PROTOCOL` value. If you use this value, you should leave the `WEBHOOKS_PROXY_SERVER_HOST`, `WEBHOOKS_PROXY_SERVER_PORT`, `WEBHOOKS_PROXY_SERVER_USERNAME`, and `WEBHOOKS_PROXY_SERVER_PASSWORD` values empty. If you don't want to use this feature, you can leave these values empty. Username and password are __required__ for the multiple proxy servers.
 
 ### About Configuration File (Client)
 
