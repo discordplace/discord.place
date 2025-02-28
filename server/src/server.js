@@ -68,6 +68,9 @@ module.exports = class Server {
     const morganMiddleware = morgan(customMorgan, {
       stream: {
         write: message => logger.http(message.trim())
+      },
+      skip: request => {
+        if (request.method === 'OPTIONS') return true;
       }
     });
 
