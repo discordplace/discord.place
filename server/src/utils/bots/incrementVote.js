@@ -119,7 +119,7 @@ async function incrementVote(botId, userId, botWebhook) {
       }
     };
 
-    if (process.env.WEBHOOKS_PROXY_SERVER_HOST) {
+    if (process.env.WEBHOOKS_PROXY_SERVER_HOST || process.env.WEBHOOKS_PROXY_SERVERS) {
       try {
         requestConfig.httpsAgent = getProxyAgent();
       } catch (error) {
