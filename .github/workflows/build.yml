@@ -15,7 +15,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
+      - uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
+          embed-title: 'Deployment Notification'
+          embed-description: 'Deployment triggered. Proceeding with build and restart.'
+          embed-footer-text: 'discord.place'
+          embed-color: 14194756
+        if: always() # Run this step regardless of the outcome of previous steps
+
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
@@ -53,15 +62,6 @@ jobs:
             icon: 'https://i.ibb.co/7d8rL1c3/Git-Hub-Mark-ea2971cee799.jpg'
         if: always() # Run this step regardless of the outcome of previous steps
 
-      - uses: tsickert/discord-webhook@v7.0.0
-        with:
-          webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
-          embed-title: 'Deployment Notification'
-          embed-description: 'Deployment triggered. Proceeding with build and restart.'
-          embed-footer-text: 'discord.place'
-          embed-color: 14194756
-        if: always() # Run this step regardless of the outcome of previous steps
-
   build-and-deploy-server:
     name: Build and Deploy /server
     if: "${{ github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/server): trigger build action') }}"
@@ -70,6 +70,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
+          embed-title: 'Deployment Notification'
+          embed-description: 'Deployment triggered. Proceeding with restart.'
+          embed-footer-text: 'server.discord.place'
+          embed-color: 14194756
+        if: always() # Run this step regardless of the outcome of previous steps
       
       - name: Set up SSH
         run: |
@@ -123,6 +132,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
+          embed-title: 'Deployment Notification'
+          embed-description: 'Deployment triggered. Proceeding with build and restart.'
+          embed-footer-text: 'docs.discord.place'
+          embed-color: 14194756
+        if: always() # Run this step regardless of the outcome of previous steps
       
       - name: Set up SSH
         run: |
@@ -159,13 +177,4 @@ jobs:
             body: 'Docs Build and Deploy triggered and completed. Job is ${{ job.status }}.'
             url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             icon: 'https://i.ibb.co/7d8rL1c3/Git-Hub-Mark-ea2971cee799.jpg'
-        if: always() # Run this step regardless of the outcome of previous steps
-
-      - uses: tsickert/discord-webhook@v7.0.0
-        with:
-          webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
-          embed-title: 'Deployment Notification'
-          embed-description: 'Deployment triggered. Proceeding with build and restart.'
-          embed-footer-text: 'docs.discord.place'
-          embed-color: 14194756
         if: always() # Run this step regardless of the outcome of previous steps
