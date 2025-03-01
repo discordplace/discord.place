@@ -58,7 +58,7 @@ jobs:
           webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
           embed-title: 'Deployment Notification'
           embed-description: 'Deployment triggered. Proceeding with build and restart.'
-          embed-footer-icon-url: 'discord.place'
+          embed-footer-text: 'discord.place'
           embed-color: 14194756
         if: always() # Run this step regardless of the outcome of previous steps
 
@@ -111,7 +111,7 @@ jobs:
           webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
           embed-title: 'Deployment Notification'
           embed-description: 'Deployment triggered. Proceeding with restart.'
-          embed-footer-icon-url: 'server.discord.place'
+          embed-footer-text: 'server.discord.place'
           embed-color: 14194756
         if: always() # Run this step regardless of the outcome of previous steps
 
@@ -166,6 +166,6 @@ jobs:
           webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
           embed-title: 'Deployment Notification'
           embed-description: 'Deployment triggered. Proceeding with build and restart.'
-          embed-footer-icon-url: 'docs.discord.place'
+          embed-footer-text: 'docs.discord.place'
           embed-color: 14194756
         if: always() # Run this step regardless of the outcome of previous steps
