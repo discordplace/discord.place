@@ -22,7 +22,7 @@ export default function Tabs({ server }) {
       label: t('serverPage.tabs.labels.topVoters'),
       id: 'topVoters',
       component: <TopVoters server={server} />,
-      disabled: server.votes <= 0
+      disabled: server.totalVoters <= 0
     },
     {
       label: t('serverPage.tabs.labels.rewards'),
