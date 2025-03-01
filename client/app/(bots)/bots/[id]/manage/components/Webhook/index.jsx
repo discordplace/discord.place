@@ -206,11 +206,11 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
                       <span
                         className={cn(
                           'flex font-semibold text-xs',
-                          record.response_status_code === 200 ? 'text-green-600' : 'text-red-500'
+                          (isDiscordWebhook || record.response_status_code === 200) ? 'text-green-600' : 'text-red-500'
                         )}
                         onClick={() => setSelectedRecord(record)}
                       >
-                        {record.response_status_code === 200 ? 'Success' : 'Failed'}
+                        {(isDiscordWebhook || record.response_status_code === 200) === 200 ? 'Success' : 'Failed'}
                       </span>
 
                       <span className='max-w-[200px] truncate text-xs text-tertiary'>
