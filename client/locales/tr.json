@@ -280,7 +280,8 @@
     "grantPermission": "İzin Ver",
     "trust": "Güven",
     "trustAndLoad": "Güven ve Yükle",
-    "dontTrust": "Güvenme"
+    "dontTrust": "Güvenme",
+    "testWebhook": "Webhook'u Test Et"
   },
   "voteCountdown": {
     "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",
@@ -813,7 +814,7 @@
         "category": {
           "label": "Kategori",
           "description": "Sunucunuzun ait olduğu kategoriyi seçin. Bu, kullanıcıların sunucunuzu bulmasına yardımcı olacaktır."
-      },
+        },
         "keywords": {
           "label": "Anahtar Kelimeler",
           "description": "Sunucunuza anahtar kelimeler ekleyin. Bu, insanların sunucunuzu discord.place'de bulmasına yardımcı olacaktır. Her anahtar kelimeyi virgülle ayırın.",
@@ -841,7 +842,9 @@
         "urlNotValid": "Webhook URL'si geçerli bir URL değil.",
         "urlNotHTTPS": "Webhook URL'si HTTPS (güvenli) olmalıdır.",
         "saving": "Webhook ayarları kaydediliyor..",
-        "saved": "Webhook ayarları başarıyla kaydedildi."
+        "saved": "Webhook ayarları başarıyla kaydedildi.",
+        "testingWebhook": "Webhook test ediliyor..",
+        "webhookTested": "Webhook başarıyla test edildi!"
       },
       "inputs": {
         "url": {
@@ -854,7 +857,12 @@
           "description": "Webhook'unuzun gizli anahtarını girin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
-    }
+      },
+      "recentDeliveries": {
+        "title": "Son Kayıtlar",
+        "subtitle": "Belirttiğiniz URL'ye istek gönderiyoruz. İşte en son gönderilen istekler.",
+        "noRecords": "Görüntülenecek kayıt yok."
+      }
     },
     "dangerZone": {
       "title": "Tehlikeli Bölge",
@@ -1544,7 +1552,9 @@
         "urlNotValid": "Webhook URL'si geçerli bir URL değil.",
         "urlNotHTTPS": "Webhook URL'si HTTPS (güvenli) olmalıdır.",
         "saving": "Webhook ayarları kaydediliyor..",
-        "saved": "Webhook ayarları başarıyla kaydedildi."
+        "saved": "Webhook ayarları başarıyla kaydedildi.",
+        "testingWebhook": "Webhook test ediliyor..",
+        "webhookTested": "Webhook başarıyla test edildi!"
       },
       "inputs": {
         "url": {
@@ -1557,6 +1567,11 @@
           "description": "Webhook'unuzun gizli anahtarını girin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
+      },
+      "recentDeliveries": {
+        "title": "Son Kayıtlar",
+        "subtitle": "Belirttiğiniz URL'ye istek gönderiyoruz. İşte en son gönderilen istekler.",
+        "noRecords": "Görüntülenecek kayıt yok."
       }
     },
     "extraOwners": {

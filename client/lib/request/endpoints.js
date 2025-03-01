@@ -44,6 +44,7 @@ const Endpoints = {
   DeleteServerTimeout: (serverId, userId) => `/servers/${serverId}/voters/${userId}/timeout`,
   DeleteServer: id => `/servers/${id}`,
   DeleteServerReview: (serverId, reviewId) => `/servers/${serverId}/reviews/${reviewId}`,
+  TestServerWebhook: id => `/servers/${id}/test-webhook`,
 
   // Payments
   CreateTripledVotesCheckout: '/payments/checkout',
@@ -122,6 +123,7 @@ const Endpoints = {
   CreateApiKey: id => `/bots/${id}/api-key`,
   ApproveBotReview: (botId, reviewId) => `/bots/${botId}/reviews/${reviewId}/approve`,
   ApproveBot: id => `/bots/${id}/approve`,
+  TestBotWebhook: id => `/bots/${id}/test-webhook`,
 
   // Authentication
   Logout: '/auth/logout',

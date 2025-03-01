@@ -130,6 +130,22 @@ export default function Edit({ profileData }) {
     );
   }
 
+  useEffect(() => {
+    function handlePaste(event) {
+      event.preventDefault();
+
+      const text = event.clipboardData.getData('text/plain');
+
+      // I know execCommand is deprecated but they not gonna remove it anytime soon
+      // because all websites will break without it xd
+      document.execCommand('insertText', false, text);
+    }
+
+    document.addEventListener('paste', handlePaste);
+
+    return () => document.removeEventListener('paste', handlePaste);
+  }, []);
+
   return (
     <div className='my-8 flex flex-col gap-y-4'>
       <AnimatePresence>

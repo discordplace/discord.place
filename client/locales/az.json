@@ -280,7 +280,8 @@
     "grantPermission": "İcazə verin",
     "trust": "Etibar et",
     "trustAndLoad": "Etibar et və yüklə",
-    "dontTrust": "Etibar etmə"
+    "dontTrust": "Etibar etmə",
+    "testWebhook": "Sınaq Vebhooku"
   },
   "voteCountdown": {
     "desktop": "gözləyin {{hours}}h {{minutes}}m {{seconds}}səs vermək",
@@ -841,7 +842,9 @@
         "urlNotValid": "Webhook URL etibarlı URL deyil.",
         "urlNotHTTPS": "Webhook URL-i HTTPS URL-i olmalıdır.",
         "saving": "Webhook parametrləri yadda saxlanılır..",
-        "saved": "Webhook parametrləri uğurla yadda saxlanıldı."
+        "saved": "Webhook parametrləri uğurla yadda saxlanıldı.",
+        "testingWebhook": "Webhook test edilir..",
+        "webhookTested": "Webhook uğurla test edildi!"
       },
       "inputs": {
         "url": {
@@ -854,18 +857,23 @@
           "description": "Veb kancanızın sirrini daxil edin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
+      },
+      "recentDeliveries": {
+        "title": "Son Qeydlər",
+        "subtitle": "Göstərdiyiniz URL-ə sorğu göndəririk. Budur, ən son göndərilən sorğular.",
+        "noRecords": "Göstəriləcək qeyd yoxdur."
       }
     },
     "dangerZone": {
       "title": "Təhlükəli zona",
-      "subtitle": "Server kartınızı buradan çıxara bilərsiniz. ",
+      "subtitle": "Serverinizi buradan çıxara bilərsiniz.",
       "toast": {
         "deletingServer": "Server silinir..",
-        "serverDeleted": "Server kartını uğurla çıxarın. "
+        "serverDeleted": "Server uğurla silindi. Ana səhifəyə yönləndirilirsiniz."
       },
       "deleteServerModal": {
         "title": "Serveri silin",
-        "description": "Server kartınızı silmək istədiyinizə əminsiniz?",
+        "description": "Serverinizi silmək istədiyinizə əminsiniz?",
         "note": "Nəzərə alın ki, serverinizin silinməsi serverinizin aldığı bütün səsləri və rəyləri siləcək.<br><br>Bu əməliyyat geri qaytarıla bilməz."
       }
     }
@@ -1544,7 +1552,9 @@
         "urlNotValid": "Webhook URL etibarlı URL deyil.",
         "urlNotHTTPS": "Webhook URL-i HTTPS URL-i olmalıdır.",
         "saving": "Webhook parametrləri yadda saxlanılır..",
-        "saved": "Webhook parametrləri uğurla yadda saxlanıldı."
+        "saved": "Webhook parametrləri uğurla yadda saxlanıldı.",
+        "testingWebhook": "Webhook test edilir..",
+        "webhookTested": "Webhook uğurla test edildi!"
       },
       "inputs": {
         "url": {
@@ -1557,6 +1567,11 @@
           "description": "Veb kancanızın sirrini daxil edin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
+      },
+      "recentDeliveries": {
+        "title": "Son Qeydlər",
+        "subtitle": "Göstərdiyiniz URL-ə sorğu göndəririk. Budur, ən son göndərilən sorğular.",
+        "noRecords": "Göstəriləcək qeyd yoxdur."
       }
     },
     "extraOwners": {

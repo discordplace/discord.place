@@ -5,7 +5,7 @@ import Image from 'next/image';
 import createServer from '@/lib/request/servers/createServer';
 import useAccountStore from '@/stores/account';
 import { useRouter } from 'next-nprogress-bar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Lottie from 'react-lottie';
 import confetti from '@/lib/lotties/confetti.json';
@@ -67,6 +67,22 @@ export default function NewServer() {
 
   const allRequirementsIsMet = currentlyAddingServer.requirements.every(requirement => requirement.met);
   const completedPercent = currentlyAddingServer.requirements.filter(requirement => requirement.met).length / currentlyAddingServer.requirements.length * 100;
+
+  useEffect(() => {
+    function handlePaste(event) {
+      event.preventDefault();
+
+      const text = event.clipboardData.getData('text/plain');
+
+      // I know execCommand is deprecated but they not gonna remove it anytime soon
+      // because all websites will break without it xd
+      document.execCommand('insertText', false, text);
+    }
+
+    document.addEventListener('paste', handlePaste);
+
+    return () => document.removeEventListener('paste', handlePaste);
+  }, []);
 
   return (
     <>

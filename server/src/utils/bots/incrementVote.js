@@ -3,8 +3,7 @@ const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const User = require('@/schemas/User');
 const Discord = require('discord.js');
-const axios = require('axios');
-const getProxyAgent = require('@/utils/getProxyAgent');
+const sendVoteWebhook = require('@/utils/bots/sendVoteWebhook');
 
 async function incrementVote(botId, userId, botWebhook) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -100,54 +99,7 @@ async function incrementVote(botId, userId, botWebhook) {
 
   client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
 
-  if (botWebhook?.url) {
-    const headers = {
-      'User-Agent': 'discord.place (https://discord.place)'
-    };
-
-    if (botWebhook.token) headers['Authorization'] = botWebhook.token;
-
-    const requestConfig = {
-      url: botWebhook.url,
-      method: 'POST',
-      headers,
-      timeout: 2000,
-      responseType: 'text',
-      data: {
-        bot: bot.id,
-        user: user.id
-      }
-    };
-
-    if (process.env.WEBHOOKS_PROXY_SERVER_HOST || process.env.WEBHOOKS_PROXY_SERVERS) {
-      try {
-        requestConfig.httpsAgent = getProxyAgent();
-      } catch (error) {
-        logger.error('Error while creating proxy agent for webhook request:', error);
-      }
-    }
-
-    const response = await axios(requestConfig)
-      .catch(error => error.response);
-
-    const data = {
-      url: botWebhook.url,
-      response_status_code: response?.status || 0,
-      request_body: {
-        bot: bot.id,
-        user: user.id
-      },
-      created_at: new Date()
-    };
-
-    if (!bot.webhook.records) bot.webhook.records = [];
-
-    bot.webhook.records.push(data);
-
-    if (bot.webhook.records.length > 10) bot.webhook.records.shift();
-
-    await bot.save();
-  }
+  if (botWebhook?.url) await sendVoteWebhook(bot, { bot: bot.id, user: user.id }).catch(() => null);
 
   return true;
 }

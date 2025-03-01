@@ -6,8 +6,7 @@ const Discord = require('discord.js');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
 const Reward = require('@/schemas/Server/Vote/Reward');
-const axios = require('axios');
-const getProxyAgent = require('@/utils/getProxyAgent');
+const sendVoteWebhook = require('@/utils/servers/sendVoteWebhook');
 
 async function incrementVote(guildId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -149,54 +148,7 @@ async function incrementVote(guildId, userId) {
     }
   }
 
-  if (server.webhook.url) {
-    const headers = {
-      'User-Agent': 'discord.place (https://discord.place)'
-    };
-
-    if (server.webhook.token) headers['Authorization'] = server.webhook.token;
-
-    const requestConfig = {
-      url: server.webhook.url,
-      method: 'POST',
-      headers,
-      timeout: 2000,
-      responseType: 'text',
-      data: {
-        server: guild.id,
-        user: user.id
-      }
-    };
-
-    if (process.env.WEBHOOKS_PROXY_SERVER_HOST || process.env.WEBHOOKS_PROXY_SERVERS) {
-      try {
-        requestConfig.httpsAgent = getProxyAgent();
-      } catch (error) {
-        logger.error('Error while creating proxy agent for webhook request:', error);
-      }
-    }
-
-    const response = await axios(requestConfig)
-      .catch(error => error.response);
-
-    const data = {
-      url: server.webhook.url,
-      response_status_code: response?.status || 0,
-      request_body: {
-        server: guild.id,
-        user: user.id
-      },
-      created_at: Date.now()
-    };
-
-    if (!server.webhook.records) server.webhook.records = [];
-
-    server.webhook.records.push(data);
-
-    if (server.webhook.records.length > 10) server.webhook.records.shift();
-
-    await server.save();
-  }
+  if (server?.url) await sendVoteWebhook(server, { server: guild.id, user: user.id }).catch(() => null);
 
   return true;
 }

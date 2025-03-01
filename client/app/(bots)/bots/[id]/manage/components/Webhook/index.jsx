@@ -8,11 +8,13 @@ import { IoCheckmarkCircle } from 'react-icons/io5';
 import { toast } from 'sonner';
 import deleteWebhookSettings from '@/lib/request/bots/deleteWebhookSettings';
 import setWebhookSettings from '@/lib/request/bots/setWebhookSettings';
+import testBotWebhook from '@/lib/request/bots/testWebhook';
 import useLanguageStore, { t } from '@/stores/language';
 import cn from '@/lib/cn';
 import CodeBlock from '@/app/components/CodeBlock';
 import { BiCodeCurly } from 'react-icons/bi';
 import revalidateBot from '@/lib/revalidate/bot';
+import { RiSendPlaneFill } from 'react-icons/ri';
 
 export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, records }) {
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
@@ -75,6 +77,23 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
   const [selectedRecord, setSelectedRecord] = useState(records?.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())?.[0] || null);
   const language = useLanguageStore(state => state.language);
 
+  const [webhookTestLoading, setWebhookTestLoading] = useState(false);
+
+  async function testWebhook() {
+    setWebhookTestLoading(true);
+
+    toast.promise(testBotWebhook(botId), {
+      loading: t('botManagePage.webhook.toast.testingWebhook'),
+      success: () => {
+        setSelectedRecord(null);
+        revalidateBot(botId);
+
+        return t('botManagePage.webhook.toast.webhookTested');
+      },
+      finally: () => setWebhookTestLoading(false)
+    });
+  }
+
   return (
     <div className='flex w-full flex-col gap-y-4'>
       <div className='flex w-full flex-col items-center justify-between sm:flex-row'>
@@ -125,17 +144,30 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
 
       {defaultWebhookURL && (
         <div className='mt-4 flex flex-col gap-4'>
-          <h3 className='text-lg font-semibold'>
-            Recent Delivery Records
-          </h3>
+          <div className='flex items-center justify-between'>
+            <div className='flex flex-col gap-4'>
+              <h3 className='text-lg font-semibold'>
+                {t('botManagePage.webhook.recentDeliveries.title')}
+              </h3>
 
-          <p className='text-tertiary'>
-            We deliver webhook payloads to the URL you specify. Here are the most recent deliveries.
-          </p>
+              <p className='text-tertiary'>
+                {t('botManagePage.webhook.recentDeliveries.subtitle')}
+              </p>
+            </div>
+
+            <button
+              className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-green-600 px-4 py-1.5 font-semibold text-white hover:bg-green-700 disabled:pointer-events-none disabled:opacity-70 sm:w-max'
+              disabled={savingChanges || webhookTestLoading}
+              onClick={testWebhook}
+            >
+              {webhookTestLoading ? <TbLoader size={18} className='animate-spin' /> : <RiSendPlaneFill size={18} />}
+              {t('buttons.testWebhook')}
+            </button>
+          </div>
 
           {records.length === 0 ? (
             <p className='text-tertiary'>
-              No delivery records found.
+              {t('botManagePage.webhook.recentDeliveries.noRecords')}
             </p>
           ) : (
             <div className='mt-2 flex w-full flex-col-reverse gap-8 lg:flex-row'>

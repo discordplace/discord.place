@@ -280,7 +280,8 @@
     "grantPermission": "Grant Permission",
     "trust": "Trust",
     "trustAndLoad": "Trust and Load",
-    "dontTrust": "Don't Trust"
+    "dontTrust": "Don't Trust",
+    "testWebhook": "Test Webhook"
   },
   "voteCountdown": {
     "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",
@@ -841,7 +842,9 @@
         "urlNotValid": "Webhook URL is not a valid URL.",
         "urlNotHTTPS": "Webhook URL should be a HTTPS URL.",
         "saving": "Saving webhook settings..",
-        "saved": "Webhook settings saved successfully."
+        "saved": "Webhook settings saved successfully.",
+        "testingWebhook": "Testing webhook..",
+        "webhookTested": "Webhook tested successfully!"
       },
       "inputs": {
         "url": {
@@ -854,18 +857,23 @@
           "description": "Enter the secret of your webhook.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
+      },
+      "recentDeliveries": {
+        "title": "Recent Delivery Records",
+        "subtitle": "We deliver webhook payloads to the URL you specify. Here are the most recent deliveries.",
+        "noRecords": "No records to display."
       }
     },
     "dangerZone": {
       "title": "Danger Zone",
-      "subtitle": "You can remove your server card here. Please be careful with this action. This action cannot be undone.",
+      "subtitle": "You can remove your server here. Please be careful with this action. This action cannot be undone.",
       "toast": {
         "deletingServer": "Removing server..",
-        "serverDeleted": "Successfully remove the server card. You will be redirected to the home page in a few seconds."
+        "serverDeleted": "Successfully remove the serve. You will be redirected to the home page in a few seconds."
       },
       "deleteServerModal": {
         "title": "Delete Server",
-        "description": "Are you sure you want to remove your server card?",
+        "description": "Are you sure you want to remove your server?",
         "note": "Please note that removing your server will remove all votes and reviews that your server has received.<br><br>This action cannot be undone."
       }
     }
@@ -1544,7 +1552,9 @@
         "urlNotValid": "Webhook URL is not a valid URL.",
         "urlNotHTTPS": "Webhook URL should be a HTTPS URL.",
         "saving": "Saving webhook settings..",
-        "saved": "Webhook settings saved successfully."
+        "saved": "Webhook settings saved successfully.",
+        "testingWebhook": "Testing webhook..",
+        "webhookTested": "Webhook tested successfully!"
       },
       "inputs": {
         "url": {
@@ -1557,6 +1567,11 @@
           "description": "Enter the secret of your webhook.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
+      },
+      "recentDeliveries": {
+        "title": "Recent Delivery Records",
+        "subtitle": "We deliver webhook payloads to the URL you specify. Here are the most recent deliveries.",
+        "noRecords": "No records to display."
       }
     },
     "extraOwners": {

@@ -248,6 +248,7 @@ portalChannelId: '1238654829916585984'
 joinLeaveLogsChannelId: '1267553398337572905'
 quarantineLogsChannelId: '1267553398337572905'
 botDenyRestoreLogsChannelId: '1267553398337572905'
+testWebhookLogsChannelId: '1267553398337572905'
 excludeCollectionsInBackup:
   - 'botdenies'
   - 'botvotetimeouts'
