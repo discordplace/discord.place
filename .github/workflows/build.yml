@@ -3,7 +3,8 @@ name: 'Build and Deploy'
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build-and-deploy-client:
@@ -12,15 +13,45 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Connect to SSH and run commands
-        uses: appleboy/ssh-action@master
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_KNOWN_HOST }}" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Deploy to Server
+        env:
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          ssh -T -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+            cd discord.place/client
+            git pull origin main > /dev/null 2>&1
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use $(nvm current)
+            pnpm install > /dev/null 2>&1
+            pm2 stop discord.place > /dev/null 2>&1
+            rm -rf .next > /dev/null 2>&1
+            pnpm build > /dev/null 2>&1
+            pm2 restart discord.place > /dev/null 2>&1
+          EOF
+
+      - uses: chimpdev/bark-github-action@v1.0.1
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            ./build-client.sh
+            device_key: ${{ secrets.BARK_KEY }}
+            server_url: ${{ secrets.BARK_SERVER_URL }}
+            title: '${{ github.repository }}'
+            body: 'Client Build and Deploy triggered and completed. Job is ${{ job.status }}.'
+            url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            icon: 'https://i.ibb.co/7d8rL1c3/Git-Hub-Mark-ea2971cee799.jpg'
+        if: always() # Run this step regardless of the outcome of previous steps
 
   build-and-deploy-server:
     name: Build and Deploy /server
@@ -28,15 +59,43 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Connect to SSH and run commands
-        uses: appleboy/ssh-action@master
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_KNOWN_HOST }}" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Deploy to Server
+        env:
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          ssh -T -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+            cd discord.place/server
+            git pull origin main > /dev/null 2>&1
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use $(nvm current)
+            pnpm install > /dev/null 2>&1
+            pm2 restart api.discord.place > /dev/null 2>&1
+          EOF
+
+
+      - uses: chimpdev/bark-github-action@v1.0.1
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            ./build-server.sh
+            device_key: ${{ secrets.BARK_KEY }}
+            server_url: ${{ secrets.BARK_SERVER_URL }}
+            title: '${{ github.repository }}'
+            body: 'Server Build and Deploy triggered and completed. Job is ${{ job.status }}.'
+            url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            icon: 'https://i.ibb.co/7d8rL1c3/Git-Hub-Mark-ea2971cee799.jpg'
+        if: always() # Run this step regardless of the outcome of previous steps
 
   build-and-deploy-docs:
     name: Build and Deploy /docs
@@ -44,12 +103,42 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Connect to SSH and run commands
-        uses: appleboy/ssh-action@master
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_KNOWN_HOST }}" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Deploy to Server
+        env:
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          ssh -T -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+            cd discord.place/docs
+            git pull origin main > /dev/null 2>&1
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use $(nvm current)
+            pnpm install > /dev/null 2>&1
+            pm2 stop docs.discord.place > /dev/null 2>&1
+            rm -rf .next > /dev/null 2>&1
+            pnpm build > /dev/null 2>&1
+            pm2 restart docs.discord.place > /dev/null 2>&1
+          EOF
+
+      - uses: chimpdev/bark-github-action@v1.0.1
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            ./build-docs.sh
+            device_key: ${{ secrets.BARK_KEY }}
+            server_url: ${{ secrets.BARK_SERVER_URL }}
+            title: '${{ github.repository }}'
+            body: 'Docs Build and Deploy triggered and completed. Job is ${{ job.status }}.'
+            url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            icon: 'https://i.ibb.co/7d8rL1c3/Git-Hub-Mark-ea2971cee799.jpg'
+        if: always() # Run this step regardless of the outcome of previous steps
