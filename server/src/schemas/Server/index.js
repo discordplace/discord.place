@@ -138,7 +138,8 @@ const ServerSchema = new Schema({
         category: this.category,
         keywords: this.keywords,
         invite_code: this.invite_code,
-        votes: this.votes
+        votes: this.votes,
+        totalVoters: this.voters.length
       };
     }
   }
