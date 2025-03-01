@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.14.0](https://github.com/discordplace/discord.place/compare/client@v1.13.0...client@v1.14.0) (2025-03-01)
+
+
+### Features
+
+* **client/locales:** update webhook subtitles to include IPv6 support notice ([6916a51](https://github.com/discordplace/discord.place/commit/6916a510999efd7de7855dd431b4e7f7475f9b3e))
+* update report something button to use Link for redirecting github issues ([b0267bb](https://github.com/discordplace/discord.place/commit/b0267bb6ce93a22a3535e774cfa3c77aeb5d0fef))
+* **Webhooks:** implement testing webhook button for bots and servers ([de28b64](https://github.com/discordplace/discord.place/commit/de28b64eff178dd699acfc7d058cc2c060425d38))
+* **Webhooks:** support for Discord webhooks ([54a46a2](https://github.com/discordplace/discord.place/commit/54a46a227bdaea6cde82f1f57f50fd70f7e96dbd))
+
+
+### Bug Fixes
+
+* add FetchPresences endpoint and update fetchPresences function to use it ([b47fbcc](https://github.com/discordplace/discord.place/commit/b47fbcc5f8fab07ecb0b288bc50de2a472bc8839))
+* add styles for recent deliveries section to improve responsiveness ([6269e2d](https://github.com/discordplace/discord.place/commit/6269e2dddb7b9056607fecfb478fa963dfc39b6d))
+* remove dsc.wtf from custom hostnames in client and server configurations ([9036170](https://github.com/discordplace/discord.place/commit/90361700c8ce0d8d25f7952e0c53575ffd9105ae))
+* **Tabs:** update disabled condition to use totalVoters field instead of votes field ([4b6cb40](https://github.com/discordplace/discord.place/commit/4b6cb40db01905af8687226e2e0a502dc474b7e6))
+* update createBot function to accept botId parameter for endpoint construction ([72ed08b](https://github.com/discordplace/discord.place/commit/72ed08bc231a20b660ed4be460a6d063c2967d72))
+* update FetchPresences endpoint to use HTTPS ([0520dd5](https://github.com/discordplace/discord.place/commit/0520dd5ad5cf176f4f39d9fc4abcc2b62809b2f3))
+* update getPlans function to support server-side requests ([33b8bff](https://github.com/discordplace/discord.place/commit/33b8bff4d9a3def87aeb9bcd0e684b2d5c0d1ca9))
+* update GitHub regex to allow hyphens in usernames ([f560ecd](https://github.com/discordplace/discord.place/commit/f560ecdab543dcad652a2740c99a4e8b62bef009))
+* update import path for ServerRequestClient in getThemeMetadata ([38274f7](https://github.com/discordplace/discord.place/commit/38274f7d3399ec34a369224404e3e133efad6b26))
+
 ## [1.13.0](https://github.com/discordplace/discord.place/compare/client@v1.12.0...client@v1.13.0) (2025-02-24)
 
 

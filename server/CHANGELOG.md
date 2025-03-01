@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.11.0](https://github.com/discordplace/discord.place/compare/server@v1.10.1...server@v1.11.0) (2025-03-01)
+
+
+### Features
+
+* **server:** multiple proxy support ([#174](https://github.com/discordplace/discord.place/issues/174)) ([33d3eef](https://github.com/discordplace/discord.place/commit/33d3eef945c2e395a8049893ec7e3f54e98ff35b))
+* **ServerSchema:** add totalVoters field to toPubliclySafe function ([65db2db](https://github.com/discordplace/discord.place/commit/65db2db03f5ee924f06a13c0b8c18f1098b95463))
+* **server:** skip logging for OPTIONS requests in morgan middleware ([676a313](https://github.com/discordplace/discord.place/commit/676a313cfa8e9f43e6017348568462e88dffcadb))
+* **Webhooks:** implement testing webhook button for bots and servers ([de28b64](https://github.com/discordplace/discord.place/commit/de28b64eff178dd699acfc7d058cc2c060425d38))
+* **Webhooks:** support for Discord webhooks ([54a46a2](https://github.com/discordplace/discord.place/commit/54a46a227bdaea6cde82f1f57f50fd70f7e96dbd))
+
+
+### Bug Fixes
+
+* add WEBHOOKS_PROXY_SERVERS env check to whetever to use proxy agent or not ([c6b6bd3](https://github.com/discordplace/discord.place/commit/c6b6bd3e5e23bb1f8ed3217b09cad40e4b105c87))
+* improve proxy server format validation in getProxyAgent function ([41d9745](https://github.com/discordplace/discord.place/commit/41d9745868a6f61a6fad4caee3f75a868ad05f33))
+* remove dsc.wtf from custom hostnames in client and server configurations ([9036170](https://github.com/discordplace/discord.place/commit/90361700c8ce0d8d25f7952e0c53575ffd9105ae))
+
 ## [1.10.1](https://github.com/discordplace/discord.place/compare/server@v1.10.0...server@v1.10.1) (2025-02-24)
 
 
