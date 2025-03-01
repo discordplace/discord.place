@@ -15,6 +15,8 @@ import CodeBlock from '@/app/components/CodeBlock';
 import { BiCodeCurly } from 'react-icons/bi';
 import revalidateBot from '@/lib/revalidate/bot';
 import { RiSendPlaneFill } from 'react-icons/ri';
+import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
 
 export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, records }) {
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
@@ -23,6 +25,8 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
   const [webhookToken, setWebhookToken] = useState(currentWebhookToken);
   const [savingChanges, setSavingChanges] = useState(false);
   const [changesMade, setChangesMade] = useState(false);
+
+  const isDiscordWebhook = config.discordWebhookRegex.test(webhookURL || '');
 
   useEffect(() => {
     const isWebhookURLChanged = (webhookURL || null) !== defaultWebhookURL;
@@ -126,20 +130,36 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
 
       <div className='mt-4 flex flex-col gap-8 sm:flex-row'>
         <Input
-          label={t('botManagePage.webhook.inputs.url.label')}
+          label={
+            <div className='flex items-center gap-x-2'>
+              {t('botManagePage.webhook.inputs.url.label')}
+
+              {isDiscordWebhook && (
+                <Tooltip content={t('botManagePage.webhook.inputs.url.discordBadge.tooltip')}>
+                  <span className='flex items-center gap-x-1 rounded-lg bg-blue-600 px-2 py-0.5 text-xs text-white'>
+                    <IoCheckmarkCircle size={16} />
+
+                    {t('botManagePage.webhook.inputs.url.discordBadge.label')}
+                  </span>
+                </Tooltip>
+              )}
+            </div>
+          }
           description={t('botManagePage.webhook.inputs.url.description')}
           placeholder={t('botManagePage.webhook.inputs.url.placeholder')}
           value={webhookURL}
           onChange={event => setWebhookURL(event.target.value)}
         />
 
-        <Input
-          label={t('botManagePage.webhook.inputs.secret.label')}
-          description={t('botManagePage.webhook.inputs.secret.description')}
-          placeholder={t('botManagePage.webhook.inputs.secret.placeholder')}
-          value={webhookToken}
-          onChange={event => setWebhookToken(event.target.value)}
-        />
+        {!isDiscordWebhook && (
+          <Input
+            label={t('botManagePage.webhook.inputs.secret.label')}
+            description={t('botManagePage.webhook.inputs.secret.description')}
+            placeholder={t('botManagePage.webhook.inputs.secret.placeholder')}
+            value={webhookToken}
+            onChange={event => setWebhookToken(event.target.value)}
+          />
+        )}
       </div>
 
       {defaultWebhookURL && (

@@ -15,6 +15,8 @@ import CodeBlock from '@/app/components/CodeBlock';
 import { BiCodeCurly } from 'react-icons/bi';
 import revalidateServer from '@/lib/revalidate/server';
 import { RiSendPlaneFill } from 'react-icons/ri';
+import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
 
 export default function Webhook({ serverId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, records }) {
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
@@ -23,6 +25,8 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
   const [webhookToken, setWebhookToken] = useState(currentWebhookToken);
   const [savingChanges, setSavingChanges] = useState(false);
   const [changesMade, setChangesMade] = useState(false);
+
+  const isDiscordWebhook = config.discordWebhookRegex.test(webhookURL || '');
 
   useEffect(() => {
     const isWebhookURLChanged = (webhookURL || null) !== defaultWebhookURL;
@@ -126,7 +130,21 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
 
       <div className='mt-4 flex flex-col gap-8 sm:flex-row'>
         <Input
-          label={t('serverManagePage.webhook.inputs.url.label')}
+          label={
+            <div className='flex items-center gap-x-2'>
+              {t('serverManagePage.webhook.inputs.url.label')}
+
+              {isDiscordWebhook && (
+                <Tooltip content={t('serverManagePage.webhook.inputs.url.discordBadge.tooltip')}>
+                  <span className='flex items-center gap-x-1 rounded-lg bg-blue-600 px-2 py-0.5 text-xs text-white'>
+                    <IoCheckmarkCircle size={16} />
+
+                    {t('serverManagePage.webhook.inputs.url.discordBadge.label')}
+                  </span>
+                </Tooltip>
+              )}
+            </div>
+          }
           description={t('serverManagePage.webhook.inputs.url.description')}
           placeholder={t('serverManagePage.webhook.inputs.url.placeholder')}
           value={webhookURL}

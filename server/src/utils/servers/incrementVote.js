@@ -148,7 +148,7 @@ async function incrementVote(guildId, userId) {
     }
   }
 
-  if (server?.url) await sendVoteWebhook(server, { server: guild.id, user: user.id }).catch(() => null);
+  if (server?.url) await sendVoteWebhook(server, { id: userId, username: user.username }, { server: guild.id, user: user.id }).catch(() => null);
 
   return true;
 }

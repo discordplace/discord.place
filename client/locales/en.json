@@ -850,7 +850,11 @@
         "url": {
           "label": "URL",
           "description": "Enter the URL of your webhook.",
-          "placeholder": "https://example.com/webhook"
+          "placeholder": "https://example.com/webhook",
+          "discordBadge": {
+            "label": "Discord Support",
+            "tooltip": "This is a Discord webhook. I will send an embed message using your webhook when someone votes for your server."
+          }
         },
         "secret": {
           "label": "Secret",
@@ -1560,7 +1564,11 @@
         "url": {
           "label": "URL",
           "description": "Enter the URL of your webhook.",
-          "placeholder": "https://example.com/webhook"
+          "placeholder": "https://example.com/webhook",
+          "discordBadge": {
+            "label": "Discord Support",
+            "tooltip": "This is a Discord webhook. I will send an embed message using your webhook when someone votes for your bot."
+          }
         },
         "secret": {
           "label": "Secret",

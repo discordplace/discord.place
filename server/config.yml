@@ -20,6 +20,7 @@ emojis:
     premium: '<:white_premium:1251538989312249947>'
     verified: '<:white_verified:1251538990524403793>'
   empty_badge_slot: '<:empty_badge_slot:1251541500282798090>'
+discordWebhookRegex: ^https:\/\/discord(app)?\.com\/api\/webhooks\/\d+\/[\w-]+$
 port:
   frontend: 3000
   backend: 3001

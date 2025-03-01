@@ -49,7 +49,16 @@ module.exports = {
       .optional({ values: 'null' })
       .isString().withMessage('Token should be a string.')
       .isLength({ min: 1, max: config.serverWebhookTokenMaxLength }).withMessage(`Token must be between 1 and ${config.serverWebhookTokenMaxLength} characters.`)
-      .trim(),
+      .trim()
+      .custom((value, { req }) => {
+        const url = req.body.url;
+        // eslint-disable-next-line security/detect-non-literal-regexp
+        const isDiscordWebhook = new RegExp(config.discordWebhookRegex).test(url);
+
+        if (value && !isDiscordWebhook) throw new Error('If you provide a Webhook Token, you should also provide a Webhook URL.');
+
+        return true;
+      }),
     validateRequest,
     async (request, response) => {
       const { id, url, token } = matchedData(request);

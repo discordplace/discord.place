@@ -30,11 +30,11 @@ module.exports = {
 
       if (!server.webhook?.url) return response.sendError('This server does not have a webhook URL set.', 400);
 
-      sendVoteWebhook(server, { server: server.id, user: request.user.id })
+      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
+
+      sendVoteWebhook(server, { id: requestUser.id, username: requestUser.username }, { server: server.id, user: request.user.id })
         .then(() => response.status(204).end())
         .catch(() => response.sendError('Failed to send a test webhook to the server.', 500));
-
-      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
       const embeds = [
         new Discord.EmbedBuilder()
@@ -44,10 +44,6 @@ module.exports = {
             {
               name: 'Server',
               value: `${guild.name} (${guild.id})`
-            },
-            {
-              name: 'Webhook URL',
-              value: server.webhook.url
             }
           ])
           .setTimestamp()

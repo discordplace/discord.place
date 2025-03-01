@@ -834,7 +834,7 @@
       }
     },
     "webhook": {
-      "title": "Veb kanca",
+      "title": "Webhook",
       "subtitle": "Kimsə serverinizə səs verdikdə xəbərdar olun. Webhook serverinizin IPv6 bağlantılarını dəstəklədiyindən əmin olun.",
       "optionalBadge": "Könüllü",
       "toast": {
@@ -849,12 +849,16 @@
       "inputs": {
         "url": {
           "label": "URL",
-          "description": "Veb kancanızın URL-ni daxil edin.",
-          "placeholder": "https://example.com/webhook"
+          "description": "Webhook URL-ni daxil edin.",
+          "placeholder": "https://example.com/webhook",
+          "discordBadge": {
+            "label": "Discord Dəstəyi Var",
+            "tooltip": "Bu bir Discord webhook'udur. Kimsə sunucunuza səs verdikdə, webhook-unuzu istifadə edərək bir embed mesaj göndərəcəyəm."
+          }
         },
         "secret": {
           "label": "Gizli",
-          "description": "Veb kancanızın sirrini daxil edin.",
+          "description": "Webhook'unuzun sirrini daxil edin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
       },
@@ -1544,7 +1548,7 @@
       }
     },
     "webhook": {
-      "title": "Veb kanca",
+      "title": "Webhook",
       "subtitle": "Kimsə botunuza səs verəndə bildiriş alın. Webhook serverinizin IPv6 bağlantılarını dəstəklədiyindən əmin olun.",
       "optionalBadge": "Könüllü",
       "toast": {
@@ -1559,12 +1563,16 @@
       "inputs": {
         "url": {
           "label": "URL",
-          "description": "Veb kancanızın URL-ni daxil edin.",
-          "placeholder": "https://example.com/webhook"
+          "description": "Webhook'unuzun URL-ni daxil edin.",
+          "placeholder": "https://example.com/webhook",
+          "discordBadge": {
+            "label": "Discord Dəstəyi Var",
+            "tooltip": "Bu bir Discord webhook'udur. Kimsə botunuza səs verdikdə, webhook-unuzu istifadə edərək bir embed mesaj göndərəcəyəm."
+          }
         },
         "secret": {
           "label": "Gizli",
-          "description": "Veb kancanızın sirrini daxil edin.",
+          "description": "Webhook'unuzun sirrini daxil edin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         }
       },

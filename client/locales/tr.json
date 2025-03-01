@@ -850,7 +850,11 @@
         "url": {
           "label": "URL",
           "description": "Webhook URL'nizi girin.",
-          "placeholder": "https://example.com/webhook"
+          "placeholder": "https://example.com/webhook",
+          "discordBadge": {
+            "label": "Discord Desteği Var",
+            "tooltip": "Bu bir Discord webhook'u. Birisi sunucunuza oy verdiğinde, webhook'unuzu kullanarak bir embed içeren mesaj göndereceğim."
+          }
         },
         "secret": {
           "label": "Gizli Anahtar",
@@ -1560,7 +1564,11 @@
         "url": {
           "label": "URL",
           "description": "Webhook URL'nizi girin.",
-          "placeholder": "https://example.com/webhook"
+          "placeholder": "https://example.com/webhook",
+          "discordBadge": {
+            "label": "Discord Desteği Var",
+            "tooltip": "Bu bir Discord webhook'u. Birisi botunuza oy verdiğinde, webhook'unuzu kullanarak bir embed içeren mesaj göndereceğim."
+          }
         },
         "secret": {
           "label": "Gizli Anahtar",
