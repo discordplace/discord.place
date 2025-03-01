@@ -144,7 +144,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
 
       {defaultWebhookURL && (
         <div className='mt-4 flex flex-col gap-4'>
-          <div className='flex items-center justify-between'>
+          <div className='flex flex-wrap items-center justify-between gap-4'>
             <div className='flex flex-col gap-4'>
               <h3 className='text-lg font-semibold'>
                 {t('serverManagePage.webhook.recentDeliveries.title')}
