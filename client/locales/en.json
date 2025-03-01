@@ -834,7 +834,7 @@
     },
     "webhook": {
       "title": "Webhook",
-      "subtitle": "Get notified when someone votes for your server.",
+      "subtitle": "Get notified when someone votes for your server. Make sure your Webhook server supports IPv6 connections.",
       "optionalBadge": "Optional",
       "toast": {
         "secretRequired": "You should fill the Webhook URL if you want to use a secret.",
@@ -1537,7 +1537,7 @@
     },
     "webhook": {
       "title": "Webhook",
-      "subtitle": "Get notified when someone votes for your bot.",
+      "subtitle": "Get notified when someone votes for your bot. Make sure your Webhook server supports IPv6 connections.",
       "optionalBadge": "Optional",
       "toast": {
         "secretRequired": "You should fill Webhook URL if you want to use a secret.",

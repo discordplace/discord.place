@@ -834,7 +834,7 @@
     },
     "webhook": {
       "title": "Veb kanca",
-      "subtitle": "Kimsə serverinizə səs verdikdə xəbərdar olun.",
+      "subtitle": "Kimsə serverinizə səs verdikdə xəbərdar olun. Webhook serverinizin IPv6 bağlantılarını dəstəklədiyindən əmin olun.",
       "optionalBadge": "Könüllü",
       "toast": {
         "secretRequired": "Əgər sirrdən istifadə etmək istəyirsinizsə, Webhook URL-ni doldurmalısınız.",
@@ -1537,7 +1537,7 @@
     },
     "webhook": {
       "title": "Veb kanca",
-      "subtitle": "Kimsə botunuza səs verəndə bildiriş alın.",
+      "subtitle": "Kimsə botunuza səs verəndə bildiriş alın. Webhook serverinizin IPv6 bağlantılarını dəstəklədiyindən əmin olun.",
       "optionalBadge": "Könüllü",
       "toast": {
         "secretRequired": "Əgər sirrdən istifadə etmək istəyirsinizsə, Webhook URL-ni doldurmalısınız.",

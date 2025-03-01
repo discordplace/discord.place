@@ -834,7 +834,7 @@
     },
     "webhook": {
       "title": "Webhook",
-      "subtitle": "Birisi sunucunuza oy verdiğinde bildirim alın.",
+      "subtitle": "Birisi sunucunuza oy verdiğinde bildirim alın. Webhook sunucunuzun IPv6 bağlantılarını desteklediğinden emin olun.",
       "optionalBadge": "İsteğe Bağlı",
       "toast": {
         "secretRequired": "Bir gizli anahtar kullanmak istiyorsanız Webhook URL'sini doldurmalısınız.",
@@ -1537,7 +1537,7 @@
     },
     "webhook": {
       "title": "Webhook",
-      "subtitle": "Birisi botunuza oy verdiğinde bildirim alın.",
+      "subtitle": "Birisi botunuza oy verdiğinde bildirim alın. Webhook sunucunuzun IPv6 bağlantılarını desteklediğinden emin olun.",
       "optionalBadge": "İsteğe Bağlı",
       "toast": {
         "secretRequired": "Bir gizli anahtar kullanmak istiyorsanız Webhook URL'sini doldurmalısınız.",
