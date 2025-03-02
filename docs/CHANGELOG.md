@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/discordplace/discord.place/compare/docs@v1.2.1...docs@v1.3.0) (2025-03-02)
+
+
+### Features
+
+* **Webhooks:** add retry logic ([#177](https://github.com/discordplace/discord.place/issues/177)) ([66873ee](https://github.com/discordplace/discord.place/commit/66873ee83aaa7b4123e9a722fc6c3d498dbe8ff7))
+
 ## [1.2.1](https://github.com/discordplace/discord.place/compare/docs@v1.2.0...docs@v1.2.1) (2025-02-20)
 
 
