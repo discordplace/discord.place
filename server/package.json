@@ -29,6 +29,7 @@
     "archiver": "^7.0.1",
     "async-lock": "^1.4.1",
     "axios": "^1.6.1",
+    "axios-retry": "^4.5.0",
     "body-parser": "^1.20.2",
     "chrono-node": "^2.7.7",
     "cloudflare": "^3.2.0",
