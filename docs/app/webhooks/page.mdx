@@ -31,4 +31,4 @@ We will send a `POST` request to your webhook URL. The request will contain the 
 - `Content-Type`: `application/json`
 - `Authorization`: `YOUR_WEBHOOK_TOKEN`
 
-*PS: Our server will not try to send a request again even if you send a status code other than 2xx.*
+*PS: If response status code is not `>=200 && <300`, we will retry the request 3 times with a delay of 5 seconds. If the request still fails, we will stop retrying.*

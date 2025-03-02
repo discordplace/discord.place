@@ -30,9 +30,13 @@ module.exports = {
 
       if (!server.webhook?.url) return response.sendError('This server does not have a webhook URL set.', 400);
 
+      if (client.testVoteWebhooksDelivering.has(server.id)) return response.sendError('This server\'s webhook url is currently being tested.', 400);
+
+      await client.testVoteWebhooksDelivering.set(server.id, true);
+
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
-      sendVoteWebhook(server, { id: requestUser.id, username: requestUser.username }, { server: server.id, user: request.user.id })
+      sendVoteWebhook(server, { id: requestUser.id, username: requestUser.username }, { guild: server.id, user: request.user.id })
         .then(() => response.status(204).end())
         .catch(() => response.sendError('Failed to send a test webhook to the server.', 500));
 

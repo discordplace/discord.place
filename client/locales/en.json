@@ -844,7 +844,9 @@
         "saving": "Saving webhook settings..",
         "saved": "Webhook settings saved successfully.",
         "testingWebhook": "Testing webhook..",
-        "webhookTested": "Webhook tested successfully!"
+        "webhookTested": "Webhook tested successfully!",
+        "testFailed": "First webhook request failed. We will send 3 more requests with 5 seconds interval. In <remainingTime> seconds you will see the new delivery records.",
+        "webhookTestedAndFailed": "All webhook requests failed. See the delivery records."
       },
       "inputs": {
         "url": {
@@ -1564,7 +1566,9 @@
         "saving": "Saving webhook settings..",
         "saved": "Webhook settings saved successfully.",
         "testingWebhook": "Testing webhook..",
-        "webhookTested": "Webhook tested successfully!"
+        "webhookTested": "Webhook tested successfully!",
+        "testFailed": "First webhook request failed. We will send 3 more requests with 5 seconds interval. In <remainingTime> seconds you will see the new delivery records.",
+        "webhookTestedAndFailed": "All webhook requests failed. See the delivery records."
       },
       "inputs": {
         "url": {
