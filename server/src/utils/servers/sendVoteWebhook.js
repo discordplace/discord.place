@@ -107,6 +107,22 @@ async function sendVoteWebhook(server, voter, data) {
 
     if (isRetried) return;
 
+    const record = {
+      url: server.webhook.url,
+      response_status_code: response.status,
+      request_body: data,
+      created_at: new Date()
+    };
+
+    await Server.updateOne({ id: server.id }, {
+      $push: {
+        'webhook.records': {
+          $each: [record],
+          $slice: -10
+        }
+      }
+    });
+
     await client.testVoteWebhooksDelivering.delete(server.id);
 
     return resolve(response);
