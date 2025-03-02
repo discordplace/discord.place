@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.15.1](https://github.com/discordplace/discord.place/compare/client@v1.15.0...client@v1.15.1) (2025-03-02)
+
+
+### Bug Fixes
+
+* improve error handling for webhook test failures ([48f5971](https://github.com/discordplace/discord.place/commit/48f5971a651291459395a8a7e4970f375b8a7939))
+* revalidate after successfully webhook test ([d92e8a0](https://github.com/discordplace/discord.place/commit/d92e8a0569f4459c8568b258dbfe76444ae30a7e))
+
 ## [1.15.0](https://github.com/discordplace/discord.place/compare/client@v1.14.0...client@v1.15.0) (2025-03-02)
 
 
