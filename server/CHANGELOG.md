@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.12.1](https://github.com/discordplace/discord.place/compare/server@v1.12.0...server@v1.12.1) (2025-03-02)
+
+
+### Bug Fixes
+
+* **dependencies:** move axios-retry from root to server folder ([68e8590](https://github.com/discordplace/discord.place/commit/68e859031721fcefa780bd2903d6c77f4f2d87e8))
+* **sendVoteWebhook:** also add record for 2xx records ([123442b](https://github.com/discordplace/discord.place/commit/123442bb3f5a5ab1f30bf963a064c36fb4ca50c6))
+
 ## [1.12.0](https://github.com/discordplace/discord.place/compare/server@v1.11.0...server@v1.12.0) (2025-03-02)
 
 
