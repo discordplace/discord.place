@@ -104,7 +104,6 @@ jobs:
             pm2 restart api.discord.place > /dev/null 2>&1
           EOF
 
-
       - uses: chimpdev/bark-github-action@v1.0.1
         with:
             device_key: ${{ secrets.BARK_KEY }}
@@ -113,15 +112,6 @@ jobs:
             body: 'Server Build and Deploy triggered and completed. Job is ${{ job.status }}.'
             url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             icon: 'https://i.ibb.co/7d8rL1c3/Git-Hub-Mark-ea2971cee799.jpg'
-        if: always() # Run this step regardless of the outcome of previous steps
-
-      - uses: tsickert/discord-webhook@v7.0.0
-        with:
-          webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
-          embed-title: 'Deployment Notification'
-          embed-description: 'Deployment triggered. Proceeding with restart.'
-          embed-footer-text: 'server.discord.place'
-          embed-color: 14194756
         if: always() # Run this step regardless of the outcome of previous steps
 
   build-and-deploy-docs:
