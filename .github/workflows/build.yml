@@ -46,8 +46,6 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use $(nvm current)
             pnpm install > /dev/null 2>&1
-            pm2 stop discord.place > /dev/null 2>&1
-            rm -rf .next > /dev/null 2>&1
             pnpm build > /dev/null 2>&1
             pm2 restart discord.place > /dev/null 2>&1
           EOF
@@ -153,8 +151,6 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use $(nvm current)
             pnpm install > /dev/null 2>&1
-            pm2 stop docs.discord.place > /dev/null 2>&1
-            rm -rf .next > /dev/null 2>&1
             pnpm build > /dev/null 2>&1
             pm2 restart docs.discord.place > /dev/null 2>&1
           EOF
