@@ -132,20 +132,28 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
 
       revalidateBot(botId);
     } catch (error) {
-      toast.error(<TestWebhookFailedToastContent />, {
-        id: testWebhookToastId.current,
-        duration: 25000
-      });
-
-      revalidateTimeoutRef.current = setTimeout(() => {
-        setWebhookTestLoading(false);
-        revalidateBot(botId);
-
-        toast.success(t('botManagePage.webhook.toast.webhookTestedAndFailed'), {
+      if (error === 'Failed to send a test webhook to the bot.') {
+        toast.error(<TestWebhookFailedToastContent />, {
           id: testWebhookToastId.current,
-          duration: 5000
+          duration: 25000
         });
-      }, 20000);
+
+        revalidateTimeoutRef.current = setTimeout(() => {
+          setWebhookTestLoading(false);
+          revalidateBot(botId);
+
+          toast.success(t('botManagePage.webhook.toast.webhookTestedAndFailed'), {
+            id: testWebhookToastId.current,
+            duration: 5000
+          });
+        }, 20000);
+      } else {
+        toast.error(error, {
+          id: testWebhookToastId.current
+        });
+
+        setWebhookTestLoading(false);
+      }
     }
   }
 
