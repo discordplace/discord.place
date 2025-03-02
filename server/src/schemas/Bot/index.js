@@ -94,6 +94,11 @@ const BotSchema = new Schema({
       max: config.botWebhookTokenMaxLength,
       required: false
     },
+    language: {
+      type: String,
+      enum: config.availableLocales.map(locale => locale.code),
+      required: false
+    },
     records: [
       {
         url: {

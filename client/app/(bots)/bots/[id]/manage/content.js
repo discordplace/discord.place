@@ -257,6 +257,8 @@ export default function Content({ bot }) {
           botId={bot.id}
           webhookURL={bot.webhook?.url || null}
           webhookToken={bot.webhook?.token || null}
+          webhookLanguage={bot.webhook?.language || null}
+          webhookLanguages={bot.webhookLanguages || []}
           records={bot.webhook?.records || []}
         />
 

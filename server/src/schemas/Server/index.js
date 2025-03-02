@@ -87,6 +87,11 @@ const ServerSchema = new Schema({
       max: config.serverWebhookTokenMaxLength,
       required: false
     },
+    language: {
+      type: String,
+      enum: config.availableLocales.map(locale => locale.code),
+      required: false
+    },
     records: [
       {
         url: {

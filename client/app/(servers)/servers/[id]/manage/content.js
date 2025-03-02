@@ -243,6 +243,8 @@ export default function Content({ server }) {
           serverId={server.id}
           webhookURL={server.webhook?.url || null}
           webhookToken={server.webhook?.token || null}
+          webhookLanguage={server.webhook?.language || null}
+          webhookLanguages={server.webhookLanguages || []}
           records={server.webhook?.records || []}
         />
 

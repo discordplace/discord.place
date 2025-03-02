@@ -17,12 +17,15 @@ import revalidateBot from '@/lib/revalidate/bot';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
+import Twemoji from 'react-twemoji';
 
-export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, records }) {
+export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, webhookLanguage: currentWebhookLanguage, webhookLanguages, records }) {
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
   const [defaultWebhookToken, setDefaultWebhookToken] = useState(currentWebhookToken);
+  const [defaultWebhookLanguage, setDefaultWebhookLanguage] = useState(currentWebhookLanguage);
   const [webhookURL, setWebhookURL] = useState(currentWebhookURL);
   const [webhookToken, setWebhookToken] = useState(currentWebhookToken);
+  const [webhookLanguage, setWebhookLanguage] = useState(currentWebhookLanguage);
   const [savingChanges, setSavingChanges] = useState(false);
   const [changesMade, setChangesMade] = useState(false);
 
@@ -31,11 +34,12 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
   useEffect(() => {
     const isWebhookURLChanged = (webhookURL || null) !== defaultWebhookURL;
     const isWebhookTokenChanged = (webhookToken || null) !== defaultWebhookToken;
+    const isWebhookLanguageChanged = (webhookLanguage || null) !== defaultWebhookLanguage;
 
-    setChangesMade(isWebhookURLChanged || isWebhookTokenChanged);
+    setChangesMade(isWebhookURLChanged || isWebhookTokenChanged || isWebhookLanguageChanged);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [webhookURL, webhookToken]);
+  }, [webhookURL, webhookToken, webhookLanguage]);
 
   function saveChanges() {
     if ((webhookURL || '') === '' && (webhookToken || '') !== '') return toast.error(t('botManagePage.webhook.toast.secretRequired'));
@@ -54,7 +58,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
           : setWebhookSettings
       );
 
-      toast.promise(functionToCall(botId, webhookURL || null, webhookToken || null), {
+      toast.promise(functionToCall(botId, webhookURL || null, webhookToken || null, webhookLanguage || null), {
         loading: t('botManagePage.webhook.toast.saving'),
         success: () => {
           revalidateBot(botId);
@@ -64,6 +68,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
 
           setDefaultWebhookURL(webhookURL || null);
           setDefaultWebhookToken(webhookToken || null);
+          setDefaultWebhookLanguage(webhookLanguage || null);
 
           return t('botManagePage.webhook.toast.saved');
         },
@@ -97,6 +102,10 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
       finally: () => setWebhookTestLoading(false)
     });
   }
+
+  useEffect(() => {
+    if (isDiscordWebhook) setWebhookToken('');
+  }, [isDiscordWebhook]);
 
   return (
     <div className='flex w-full flex-col gap-y-4'>
@@ -151,7 +160,36 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
           onChange={event => setWebhookURL(event.target.value)}
         />
 
-        {!isDiscordWebhook && (
+        {isDiscordWebhook ? (
+          <Input
+            label={t('botManagePage.webhook.inputs.language.label')}
+            description={t('botManagePage.webhook.inputs.language.description')}
+            CustomInput={
+              <div className='mt-2 grid grid-cols-2 items-center gap-3'>
+                {webhookLanguages.map(locale => (
+                  <button
+                    key={locale.code}
+                    className={cn(
+                      'flex flex-1 min-w-max w-full justify-center items-center gap-x-2 rounded-xl bg-secondary border-2 px-4 border-[rgba(var(--bg-background))] py-1.5 text-secondary font-medium',
+                      webhookLanguage === locale.code ? 'bg-quaternary cursor-default text-primary border-purple-500' : 'hover:bg-tertiary hover:text-primary'
+                    )}
+                    onClick={() => setWebhookLanguage(locale.code)}
+                  >
+                    {webhookLanguage === locale.code ? (
+                      <IoCheckmarkCircle size={18} />
+                    ) : (
+                      <Twemoji options={{ className: 'w-[18px] h-[18px]' }}>
+                        {locale.flag}
+                      </Twemoji>
+                    )}
+
+                    {t(`footer.language.${locale.code}`)}
+                  </button>
+                ))}
+              </div>
+            }
+          />
+        ) : (
           <Input
             label={t('botManagePage.webhook.inputs.secret.label')}
             description={t('botManagePage.webhook.inputs.secret.description')}
@@ -194,38 +232,42 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
               <div className='flex w-full flex-col gap-y-1'>
                 {records
                   .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-                  .map(record => (
-                    <button
-                      key={`record-${record.created_at}`}
-                      className={cn(
-                        'flex gap-x-2 select-none items-center bg-secondary py-2 px-4 rounded-lg',
-                        selectedRecord === record ? 'bg-quaternary cursor-default' : 'hover:bg-tertiary'
-                      )}
-                      onClick={() => setSelectedRecord(record)}
-                    >
-                      <span
+                  .map(record => {
+                    const isRecordSuccess = record.response_status_code >= 200 && record.response_status_code < 300;
+
+                    return (
+                      <button
+                        key={`record-${record.created_at}`}
                         className={cn(
-                          'flex font-semibold text-xs',
-                          (isDiscordWebhook || record.response_status_code === 200) ? 'text-green-600' : 'text-red-500'
+                          'flex gap-x-2 select-none items-center bg-secondary py-2 px-4 rounded-lg',
+                          selectedRecord === record ? 'bg-quaternary cursor-default' : 'hover:bg-tertiary'
                         )}
                         onClick={() => setSelectedRecord(record)}
                       >
-                        {(isDiscordWebhook || record.response_status_code === 200) === 200 ? 'Success' : 'Failed'}
-                      </span>
+                        <span
+                          className={cn(
+                            'flex font-semibold text-xs',
+                            isRecordSuccess ? 'text-green-600' : 'text-red-500'
+                          )}
+                          onClick={() => setSelectedRecord(record)}
+                        >
+                          {isRecordSuccess ? t('botManagePage.webhook.recentDeliveries.successLabel') : t('botManagePage.webhook.recentDeliveries.errorLabel')}
+                        </span>
 
-                      <span className='max-w-[200px] truncate text-xs text-tertiary'>
-                        {new URL(record.url).pathname}
-                      </span>
+                        <span className='max-w-[200px] truncate text-xs text-tertiary'>
+                          {new URL(record.url).pathname}
+                        </span>
 
-                      <span className='flex text-xs text-tertiary'>
-                        {record.response_status_code}
-                      </span>
+                        <span className='flex text-xs text-tertiary'>
+                          {record.response_status_code}
+                        </span>
 
-                      <span className='ml-auto flex text-xs text-tertiary'>
-                        {new Date(record.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
-                      </span>
-                    </button>
-                  ))}
+                        <span className='ml-auto flex text-xs text-tertiary'>
+                          {new Date(record.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                        </span>
+                      </button>
+                    );
+                  })}
               </div>
 
               <div className='flex w-full lg:max-w-[50%]'>

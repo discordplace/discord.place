@@ -50,18 +50,31 @@ module.exports = {
       .isString().withMessage('Token should be a string.')
       .isLength({ min: 1, max: config.serverWebhookTokenMaxLength }).withMessage(`Token must be between 1 and ${config.serverWebhookTokenMaxLength} characters.`)
       .trim()
-      .custom((value, { req }) => {
-        const url = req.body.url;
+      .custom((value, { req: request }) => {
+        const url = request.body.url;
+
         // eslint-disable-next-line security/detect-non-literal-regexp
         const isDiscordWebhook = new RegExp(config.discordWebhookRegex).test(url);
+        if (isDiscordWebhook && value) throw new Error('You can\'t provide a secret for a Discord Webhook URL.');
 
-        if (value && !isDiscordWebhook) throw new Error('If you provide a Webhook Token, you should also provide a Webhook URL.');
+        return true;
+      }),
+    body('language')
+      .optional({ nullable: true })
+      .isString().withMessage('Language should be a string.')
+      .isIn(config.availableLocales.map(locale => locale.code)).withMessage(`Language should be one of: ${config.availableLocales.map(locale => locale.code).join(', ')}.`)
+      .custom((value, { req: request }) => {
+        const url = request.body.url;
+
+        // eslint-disable-next-line security/detect-non-literal-regexp
+        const isDiscordWebhook = new RegExp(config.discordWebhookRegex).test(url);
+        if (!isDiscordWebhook && value) throw new Error('You can\'t provide a language for a non-Discord Webhook URL.');
 
         return true;
       }),
     validateRequest,
     async (request, response) => {
-      const { id, url, token } = matchedData(request);
+      const { id, url, token, language } = matchedData(request);
 
       const guild = client.guilds.cache.get(id);
       if (!guild) return response.sendError('Server not found.', 404);
@@ -76,14 +89,19 @@ module.exports = {
 
       if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
 
-      if ((!url || url === '') && (!token || token === '')) {
+      const isWebhookEmpty = (!url || url === '') && (!token || token === '');
+      // eslint-disable-next-line security/detect-non-literal-regexp
+      const isDiscordWebhook = new RegExp(config.discordWebhookRegex).test(url);
+
+      if (isWebhookEmpty) {
         server.webhook = { url: null, token: null };
 
         await server.save();
       } else {
         if (!url && token) return response.sendError('If you provide a Webhook Token, you should also provide a Webhook URL.', 400);
+        if (!isDiscordWebhook && language) return response.sendError('You can\'t provide a language for a non-Discord Webhook URL.', 400);
 
-        server.webhook = { url, token: token || null };
+        server.webhook = { url, token: token || null, language: language || null };
       }
 
       const validationError = getValidationError(server);

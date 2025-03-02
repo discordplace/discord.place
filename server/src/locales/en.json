@@ -473,5 +473,35 @@
       "vote": "Vote",
       "view_on_discord_place": "View on discord.place"
     }
+  },
+  "webhook_message": {
+    "bots": {
+      "embed": {
+        "description": "Someone voted for bot **{username}**!",
+        "fields": [
+          {
+            "name": "Details",
+            "fields": [
+              "User",
+              "Date"
+            ]
+          }
+        ]
+      }
+    },
+    "servers": {
+      "embed": {
+        "description": "Someone voted for server **{guildName}**!",
+        "fields": [
+          {
+            "name": "Details",
+            "fields": [
+              "User",
+              "Date"
+            ]
+          }
+        ]
+      }
+    }
   }
 }

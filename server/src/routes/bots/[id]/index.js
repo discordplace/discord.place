@@ -107,7 +107,10 @@ module.exports = {
         }
       }
 
-      if (permissions.canEdit) responseData.webhook = bot.webhook;
+      if (permissions.canEdit) {
+        responseData.webhook = bot.webhook;
+        responseData.webhookLanguages = config.availableLocales;
+      }
 
       return response.json(responseData);
     }
@@ -178,7 +181,8 @@ module.exports = {
         categories,
         webhook: {
           url: null,
-          token: null
+          token: null,
+          language: null
         },
         server_count: {
           value: approximate_guild_count_data?.approximate_guild_count || 0,
