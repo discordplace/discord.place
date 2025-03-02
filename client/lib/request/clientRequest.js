@@ -10,6 +10,8 @@ class RequestClient {
     });
 
     this.instance.interceptors.response.use(response => response, error => {
+      if (error.config.headers['x-axios-interceptor-no-auto-error']) return Promise.reject(error);
+
       const errorMessage = error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message;
 
       toast.error(errorMessage);

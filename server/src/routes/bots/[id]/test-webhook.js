@@ -28,6 +28,10 @@ module.exports = {
 
       if (!bot.webhook?.url) return response.sendError('This bot does not have a webhook URL set.', 400);
 
+      if (client.testVoteWebhooksDelivering.has(bot.id)) return response.sendError('This bot\'s webhook url is currently being tested.', 400);
+
+      await client.testVoteWebhooksDelivering.set(bot.id, true);
+
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
       sendVoteWebhook(bot, { id: requestUser.id, username: requestUser.username }, { bot: bot.id, user: request.user.id })

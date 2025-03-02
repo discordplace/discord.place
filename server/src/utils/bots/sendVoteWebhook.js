@@ -4,9 +4,13 @@ const Discord = require('discord.js');
 const getUserHashes = require('@/utils/getUserHashes');
 const dedent = require('dedent');
 const translate = require('@/utils/localization/translate');
+const axiosRetry = require('axios-retry').default;
+const Bot = require('@/schemas/Bot');
 
 async function sendVoteWebhook(bot, voter, data) {
   if (!bot.webhook?.url) throw new Error('This bot does not have a webhook URL set.');
+
+  const axiosInstance = axios.create();
 
   const headers = {
     'User-Agent': 'discord.place (https://discord.place)',
@@ -32,56 +36,81 @@ async function sendVoteWebhook(bot, voter, data) {
     }
   }
 
-  // eslint-disable-next-line security/detect-non-literal-regexp
-  const isDiscordWebhook = new RegExp(config.discordWebhookRegex).test(bot.webhook.url);
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve, reject) => {
+    let isRetried = false;
 
-  if (isDiscordWebhook) {
-    const botHashes = await getUserHashes(bot.id);
+    axiosRetry(axiosInstance, {
+      retries: 3,
+      retryDelay: retryCount => retryCount * 5000,
+      shouldResetTimeout: true,
+      retryCondition: error => error.response && (error.response.status > 299 || error.response.status < 200),
+      onRetry: async (retryCount, error) => {
+        if (!isRetried) {
+          reject(error);
+          isRetried = true;
+        } else if (retryCount >= 3) client.testVoteWebhooksDelivering.delete(bot.id, true);
 
-    const webhookLanguageCode = config.availableLocales.find(locale => locale.code == (bot.webhook.language || 'en')).code;
+        logger.info(`Webhook request to ${bot.webhook.url} failed with status code ${error.response.status}. (attempt ${retryCount}/3)`);
 
-    const embed = new Discord.EmbedBuilder()
-      .setAuthor({ name: `${bot.data.username}#${bot.data.discriminator}`, iconURL: `https://cdn.discordapp.com/avatars/${bot.id}/${botHashes.avatar}.png` })
-      .setDescription(translate('webhook_message.bots.embed.description', { username: Discord.escapeMarkdown(bot.data.username) }, webhookLanguageCode))
-      .setFields([
-        {
-          name: translate('webhook_message.bots.embed.fields.0.name', {}, webhookLanguageCode),
-          value: dedent`
-            - ${translate('webhook_message.bots.embed.fields.0.fields.0', {}, webhookLanguageCode)} ⇾ **@${Discord.escapeMarkdown(voter.username)}** (${voter.id})
-            - ${translate('webhook_message.bots.embed.fields.0.fields.1', {}, webhookLanguageCode)} ⇾ ${new Date().toLocaleDateString(webhookLanguageCode, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}
-          `
-        }
-      ])
-      .setColor('#5865f2')
-      .setFooter({ text: 'discord.place', iconURL: 'https://discord.place/templates/square_logo.png' });
+        const record = {
+          url: bot.webhook.url,
+          response_status_code: error.response.status,
+          request_body: data,
+          created_at: new Date()
+        };
 
-    requestConfig.data = {
-      embeds: [embed.toJSON()]
-    };
+        await Bot.updateOne({ id: bot.id }, {
+          $push: {
+            'webhook.records': {
+              $each: [record],
+              $slice: -10
+            }
+          }
+        });
+      }
+    });
 
-    delete requestConfig.headers.Authorization;
-    delete requestConfig.httpsAgent;
-  }
+    // eslint-disable-next-line security/detect-non-literal-regexp
+    const isDiscordWebhook = new RegExp(config.discordWebhookRegex).test(bot.webhook.url);
 
-  const response = await axios(requestConfig)
-    .catch(error => error.response);
+    if (isDiscordWebhook) {
+      const botHashes = await getUserHashes(bot.id);
 
-  const record = {
-    url: bot.webhook.url,
-    response_status_code: response?.status || 0,
-    request_body: data,
-    created_at: new Date()
-  };
+      const webhookLanguageCode = config.availableLocales.find(locale => locale.code == (bot.webhook.language || 'en')).code;
 
-  if (!bot.webhook.records) bot.webhook.records = [];
+      const embed = new Discord.EmbedBuilder()
+        .setAuthor({ name: `${bot.data.username}#${bot.data.discriminator}`, iconURL: `https://cdn.discordapp.com/avatars/${bot.id}/${botHashes.avatar}.png` })
+        .setDescription(translate('webhook_message.bots.embed.description', { username: Discord.escapeMarkdown(bot.data.username) }, webhookLanguageCode))
+        .setFields([
+          {
+            name: translate('webhook_message.bots.embed.fields.0.name', {}, webhookLanguageCode),
+            value: dedent`
+                - ${translate('webhook_message.bots.embed.fields.0.fields.0', {}, webhookLanguageCode)} ⇾ **@${Discord.escapeMarkdown(voter.username)}** (${voter.id})
+                - ${translate('webhook_message.bots.embed.fields.0.fields.1', {}, webhookLanguageCode)} ⇾ ${new Date().toLocaleDateString(webhookLanguageCode, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}
+              `
+          }
+        ])
+        .setColor('#5865f2')
+        .setFooter({ text: 'discord.place', iconURL: 'https://discord.place/templates/square_logo.png' });
 
-  bot.webhook.records.push(record);
+      requestConfig.data = {
+        embeds: [embed.toJSON()]
+      };
 
-  if (bot.webhook.records.length > 10) bot.webhook.records.shift();
+      delete requestConfig.headers.Authorization;
+      delete requestConfig.httpsAgent;
+    }
 
-  await bot.save();
+    const response = await axiosInstance(requestConfig)
+      .catch(error => error.response);
 
-  return response;
+    if (isRetried) return;
+
+    await client.testVoteWebhooksDelivering.delete(bot.id);
+
+    return resolve(response);
+  });
 }
 
 module.exports = sendVoteWebhook;

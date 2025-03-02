@@ -844,7 +844,9 @@
         "saving": "Webhook parametrləri yadda saxlanılır..",
         "saved": "Webhook parametrləri uğurla yadda saxlanıldı.",
         "testingWebhook": "Webhook test edilir..",
-        "webhookTested": "Webhook uğurla test edildi!"
+        "webhookTested": "Webhook uğurla test edildi!",
+        "testFailed": "İlk webhook sorğusu uğursuz oldu. 5 saniyə interval ilə daha 3 sorğu göndərəcəyik. <remainingTime> saniyə sonra yeni çatdırılma qeydlərini görəcəksiniz.",
+        "webhookTestedAndFailed": "Bütün webhook sorğuları uğursuz oldu. Çatdırılma qeydlərinə baxın."
       },
       "inputs": {
         "url": {
@@ -1564,7 +1566,9 @@
         "saving": "Webhook parametrləri yadda saxlanılır..",
         "saved": "Webhook parametrləri uğurla yadda saxlanıldı.",
         "testingWebhook": "Webhook test edilir..",
-        "webhookTested": "Webhook uğurla test edildi!"
+        "webhookTested": "Webhook uğurla test edildi!",
+        "testFailed": "İlk webhook sorğusu uğursuz oldu. 5 saniyə interval ilə daha 3 sorğu göndərəcəyik. <remainingTime> saniyə sonra yeni çatdırılma qeydlərini görəcəksiniz.",
+        "webhookTestedAndFailed": "Bütün webhook sorğuları uğursuz oldu. Çatdırılma qeydlərinə baxın."
       },
       "inputs": {
         "url": {

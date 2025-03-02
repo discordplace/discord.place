@@ -99,7 +99,7 @@ async function incrementVote(botId, userId, botWebhook) {
 
   client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
 
-  if (botWebhook?.url) await sendVoteWebhook(bot, { id: userId, username: user.username }, { bot: bot.id, user: user.id }).catch(() => null);
+  if (botWebhook?.url) sendVoteWebhook(bot, { id: userId, username: user.username }, { bot: bot.id, user: user.id }).catch(() => null);
 
   return true;
 }

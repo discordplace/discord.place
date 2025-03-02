@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HiBell } from 'react-icons/hi';
 import Input from '@/app/(bots)/bots/[id]/manage/components/Input';
 import { TbLoader } from 'react-icons/tb';
@@ -87,25 +87,69 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
   const language = useLanguageStore(state => state.language);
 
   const [webhookTestLoading, setWebhookTestLoading] = useState(false);
+  const revalidateTimeoutRef = useRef(null);
+  const testWebhookToastId = useRef(null);
+
+  function TestWebhookFailedToastContent() {
+    const [secondsRemaining, setSecondsRemaining] = useState(20);
+    const intervalRef = useRef(null);
+
+    useEffect(() => {
+      intervalRef.current = setInterval(() => {
+        if (secondsRemaining <= 0) return clearInterval(intervalRef.current);
+
+        setSecondsRemaining(seconds => seconds - 1);
+      }, 1000);
+
+      return () => clearInterval(intervalRef.current);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+      <>
+        {t('serverManagePage.webhook.toast.testFailed', {
+          remainingTime: secondsRemaining
+        })}
+      </>
+    );
+  }
 
   async function testWebhook() {
     setWebhookTestLoading(true);
 
-    toast.promise(testBotWebhook(botId), {
-      loading: t('botManagePage.webhook.toast.testingWebhook'),
-      success: () => {
-        setSelectedRecord(null);
+    testWebhookToastId.current = toast.loading(t('botManagePage.webhook.toast.testingWebhook'), {
+      duration: Infinity
+    });
+
+    try {
+      await testBotWebhook(botId);
+
+      toast.success(t('botManagePage.webhook.toast.webhookTested'), {
+        id: testWebhookToastId.current
+      });
+
+      setWebhookTestLoading(false);
+    } catch (error) {
+      toast.error(<TestWebhookFailedToastContent />, {
+        id: testWebhookToastId.current,
+        duration: 25000
+      });
+
+      revalidateTimeoutRef.current = setTimeout(() => {
+        setWebhookTestLoading(false);
         revalidateBot(botId);
 
-        return t('botManagePage.webhook.toast.webhookTested');
-      },
-      finally: () => setWebhookTestLoading(false)
-    });
+        toast.success(t('botManagePage.webhook.toast.webhookTestedAndFailed'), {
+          id: testWebhookToastId.current,
+          duration: 5000
+        });
+      }, 20000);
+    }
   }
 
   useEffect(() => {
-    if (isDiscordWebhook) setWebhookToken('');
-  }, [isDiscordWebhook]);
+    return () => clearTimeout(revalidateTimeoutRef.current);
+  }, []);
 
   return (
     <div className='flex w-full flex-col gap-y-4'>
