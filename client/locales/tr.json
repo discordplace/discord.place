@@ -860,12 +860,18 @@
           "label": "Gizli Anahtar",
           "description": "Webhook'unuzun gizli anahtarını girin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
+        },
+        "language": {
+          "label": "Language",
+          "description": "Select the language you want to webhook to be sent in."
         }
       },
       "recentDeliveries": {
         "title": "Son Kayıtlar",
         "subtitle": "Belirttiğiniz URL'ye istek gönderiyoruz. İşte en son gönderilen istekler.",
-        "noRecords": "Görüntülenecek kayıt yok."
+        "noRecords": "Görüntülenecek kayıt yok.",
+        "successLabel": "Başarılı",
+        "errorLabel": "Başarısız"
       }
     },
     "dangerZone": {
@@ -1574,12 +1580,18 @@
           "label": "Gizli Anahtar",
           "description": "Webhook'unuzun gizli anahtarını girin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
+        },
+        "language": {
+          "label": "Language",
+          "description": "Select the language you want to webhook to be sent in."
         }
       },
       "recentDeliveries": {
         "title": "Son Kayıtlar",
         "subtitle": "Belirttiğiniz URL'ye istek gönderiyoruz. İşte en son gönderilen istekler.",
-        "noRecords": "Görüntülenecek kayıt yok."
+        "noRecords": "Görüntülenecek kayıt yok.",
+        "successLabel": "Başarılı",
+        "errorLabel": "Başarısız"
       }
     },
     "extraOwners": {

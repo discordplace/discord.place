@@ -117,6 +117,7 @@ module.exports = {
         }).filter(Boolean),
         monthly_votes: slicedMonthlyVotes,
         webhook: permissions.canEdit && server.webhook,
+        webhookLanguages: permissions.canEdit && config.availableLocales,
         joined_at: guild.joinedTimestamp,
         ownerSubscriptionCreatedAt: foundPremium ? new Date(foundPremium.subscription.createdAt).getTime() : null
       });

@@ -860,12 +860,18 @@
           "label": "Secret",
           "description": "Enter the secret of your webhook.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
+        },
+        "language": {
+          "label": "Language",
+          "description": "Select the language you want to webhook to be sent in."
         }
       },
       "recentDeliveries": {
         "title": "Recent Delivery Records",
         "subtitle": "We deliver webhook payloads to the URL you specify. Here are the most recent deliveries.",
-        "noRecords": "No records to display."
+        "noRecords": "No records to display.",
+        "successLabel": "Success",
+        "errorLabel": "Error"
       }
     },
     "dangerZone": {
@@ -1574,12 +1580,18 @@
           "label": "Secret",
           "description": "Enter the secret of your webhook.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
+        },
+        "language": {
+          "label": "Language",
+          "description": "Select the language you want to webhook to be sent in."
         }
       },
       "recentDeliveries": {
         "title": "Recent Delivery Records",
         "subtitle": "We deliver webhook payloads to the URL you specify. Here are the most recent deliveries.",
-        "noRecords": "No records to display."
+        "noRecords": "No records to display.",
+        "successLabel": "Success",
+        "errorLabel": "Error"
       }
     },
     "extraOwners": {

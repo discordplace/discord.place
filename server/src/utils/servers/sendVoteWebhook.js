@@ -2,6 +2,7 @@ const axios = require('axios');
 const getProxyAgent = require('@/utils/getProxyAgent');
 const Discord = require('discord.js');
 const dedent = require('dedent');
+const translate = require('@/utils/localization/translate');
 
 async function sendVoteWebhook(server, voter, data) {
   if (!server.webhook?.url) throw new Error('This server does not have a webhook URL set.');
@@ -37,19 +38,21 @@ async function sendVoteWebhook(server, voter, data) {
   const isDiscordWebhook = new RegExp(config.discordWebhookRegex).test(server.webhook.url);
 
   if (isDiscordWebhook) {
+    const webhookLanguageCode = config.availableLocales.find(locale => locale.code == (server.webhook.language || 'en')).code;
+
     const embed = new Discord.EmbedBuilder()
       .setAuthor({ name: `${guild.name}`, iconURL: guild.iconURL() })
-      .setDescription(`Someone voted for server **${Discord.escapeMarkdown(guild.name)}**!`)
-      .setColor('#5865f2')
+      .setDescription(translate('webhook_message.servers.embed.description', { username: Discord.escapeMarkdown(guild.name) }, webhookLanguageCode))
       .setFields([
         {
-          name: 'Details',
+          name: translate('webhook_message.servers.embed.fields.0.name', {}, webhookLanguageCode),
           value: dedent`
-          - User ⇾ **@${Discord.escapeMarkdown(voter.username)}** (${voter.id})
-          - Date ⇾ ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })}
-        `
+            - ${translate('webhook_message.servers.embed.fields.0.fields.0', {}, webhookLanguageCode)} ⇾ **@${Discord.escapeMarkdown(voter.username)}** (${voter.id})
+            - ${translate('webhook_message.servers.embed.fields.0.fields.1', {}, webhookLanguageCode)} ⇾ ${new Date().toLocaleDateString(webhookLanguageCode, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}
+          `
         }
       ])
+      .setColor('#5865f2')
       .setFooter({ text: 'discord.place', iconURL: 'https://discord.place/templates/square_logo.png' });
 
     requestConfig.data = {

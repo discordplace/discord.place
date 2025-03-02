@@ -860,12 +860,18 @@
           "label": "Gizli",
           "description": "Webhook'unuzun sirrini daxil edin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
+        },
+        "language": {
+          "label": "Language",
+          "description": "Select the language you want to webhook to be sent in."
         }
       },
       "recentDeliveries": {
         "title": "Son Qeydlər",
         "subtitle": "Göstərdiyiniz URL-ə sorğu göndəririk. Budur, ən son göndərilən sorğular.",
-        "noRecords": "Göstəriləcək qeyd yoxdur."
+        "noRecords": "Göstəriləcək qeyd yoxdur.",
+        "successLabel": "Uğurlu",
+        "errorLabel": "Xəta"
       }
     },
     "dangerZone": {
@@ -1574,12 +1580,18 @@
           "label": "Gizli",
           "description": "Webhook'unuzun sirrini daxil edin.",
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
+        },
+        "language": {
+          "label": "Language",
+          "description": "Select the language you want to webhook to be sent in."
         }
       },
       "recentDeliveries": {
         "title": "Son Qeydlər",
         "subtitle": "Göstərdiyiniz URL-ə sorğu göndəririk. Budur, ən son göndərilən sorğular.",
-        "noRecords": "Göstəriləcək qeyd yoxdur."
+        "noRecords": "Göstəriləcək qeyd yoxdur.",
+        "successLabel": "Uğurlu",
+        "errorLabel": "Xəta"
       }
     },
     "extraOwners": {

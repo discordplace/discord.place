@@ -610,5 +610,35 @@
       "vote": "Oy Ver",
       "view_on_discord_place": "discord.place'de Görüntüle"
     }
+  },
+  "webhook_message": {
+    "bots": {
+      "embed": {
+        "description": "Birisi **{username}** botuna oy verdi!",
+        "fields": [
+          {
+            "name": "Detaylar",
+            "fields": [
+              "Kullanıcı",
+              "Tarih"
+            ]
+          }
+        ]
+      }
+    },
+    "servers": {
+      "embed": {
+        "description": "Birisi **{guildName}** sunucusuna oy verdi!",
+        "fields": [
+          {
+            "name": "Detaylar",
+            "fields": [
+              "Kullanıcı",
+              "Tarih"
+            ]
+          }
+        ]
+      }
+    }
   }
 }
