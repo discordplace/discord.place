@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.12.0](https://github.com/discordplace/discord.place/compare/server@v1.11.0...server@v1.12.0) (2025-03-02)
+
+
+### Features
+
+* **Webhooks:** add language support for Discord webhooks ([#176](https://github.com/discordplace/discord.place/issues/176)) ([ba2a208](https://github.com/discordplace/discord.place/commit/ba2a20846c2c1bda39bb8f70de0687ae3e498cf1))
+* **Webhooks:** add retry logic ([#177](https://github.com/discordplace/discord.place/issues/177)) ([66873ee](https://github.com/discordplace/discord.place/commit/66873ee83aaa7b4123e9a722fc6c3d498dbe8ff7))
+
 ## [1.11.0](https://github.com/discordplace/discord.place/compare/server@v1.10.1...server@v1.11.0) (2025-03-01)
 
 
