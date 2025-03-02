@@ -129,6 +129,8 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
       });
 
       setWebhookTestLoading(false);
+
+      revalidateServer(serverId);
     } catch (error) {
       toast.error(<TestWebhookFailedToastContent />, {
         id: testWebhookToastId.current,

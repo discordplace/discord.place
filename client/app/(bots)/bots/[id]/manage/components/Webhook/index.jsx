@@ -129,6 +129,8 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
       });
 
       setWebhookTestLoading(false);
+
+      revalidateBot(botId);
     } catch (error) {
       toast.error(<TestWebhookFailedToastContent />, {
         id: testWebhookToastId.current,
