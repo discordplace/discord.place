@@ -29,8 +29,8 @@ module.exports = {
       content: `\`\`\`ansi
 ${ansiColors.bold(`${ansiColors.blue(await interaction.translate('commands.ping.fields.0.name'))} ${websocketHeartbeat}ms
 ${ansiColors.reset(await interaction.translate('commands.ping.fields.0.value'))}
-
-${ansiColors.blue(await interaction.translate('commands.ping.fields.1.name'))} ${serverResponseTime}
+z
+${ansiColors.blue(await interaction.translate('commands.ping.fields.1.name'))} ${serverResponseTime}ms
 ${ansiColors.reset(await interaction.translate('commands.ping.fields.1.value'))}
 
 ${ansiColors.blue(await interaction.translate('commands.ping.fields.2.name'))} ${mongoosePing}
