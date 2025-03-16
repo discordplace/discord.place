@@ -1,7 +1,7 @@
-const axios = require('axios');
 const mongoose = require('mongoose');
 const ansiColors = require('ansi-colors');
 const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
+const getServerResponseTime = require('@/utils/getServerResponseTime');
 
 module.exports = {
   data: {
@@ -14,10 +14,7 @@ module.exports = {
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
 
     const websocketHeartbeat = interaction.client.ws.ping;
-    let serverResponseTime = 'N/A';
-
-    const response = await axios.get(`${config.backendUrl}/response-time`, { timeout: 1000 }).catch(() => null);
-    if (response?.data?.responseTime) serverResponseTime = `${response.data.responseTime}ms`;
+    const serverResponseTime = await getServerResponseTime();
 
     let mongoosePing = 'N/A';
 
