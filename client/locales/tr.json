@@ -281,7 +281,9 @@
     "trust": "Güven",
     "trustAndLoad": "Güven ve Yükle",
     "dontTrust": "Güvenme",
-    "testWebhook": "Webhook'u Test Et"
+    "testWebhook": "Webhook'u Test Et",
+    "continue": "Devam Et",
+    "dontShowAgain": "Tekrar Gösterme"
   },
   "voteCountdown": {
     "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",
@@ -2219,6 +2221,13 @@
         "blockedSource": "<span> kaynağından bir içerik yüklenmesi engellendi. Bu kaynağa güvenmek ister misiniz?",
         "contentBeHere": "Kaynağa güvenir güvenmez içerik burada belirecek."
       }
+    }
+  },
+  "soundPlayer": {
+    "loudWarningModal": {
+      "title": "\"{{soundName}}\" çok yüksek sesli",
+      "description": "Bu sesi çalmaya devam etmek ister misiniz?",
+      "content": "Bu ses çok yüksek ve kulaklarınıza zarar verebilir."
     }
   }
 }

@@ -281,7 +281,9 @@
     "trust": "Etibar et",
     "trustAndLoad": "Etibar et və yüklə",
     "dontTrust": "Etibar etmə",
-    "testWebhook": "Sınaq Vebhooku"
+    "testWebhook": "Sınaq Vebhooku",
+    "continue": "Davam edin",
+    "dontShowAgain": "Bir daha göstərmə"
   },
   "voteCountdown": {
     "desktop": "gözləyin {{hours}}h {{minutes}}m {{seconds}}səs vermək",
@@ -2218,6 +2220,13 @@
         "blockedSource": "<span> mənbədən bir məzmunun yüklənməsi bloklandı. Bu mənbəyə etibar etmək istəyirsiniz?",
         "contentBeHere": "Mənbəyə etibar edən kimi məzmun burada görünəcək."
       }
+    }
+  },
+  "soundPlayer": {
+    "loudWarningModal": {
+      "title": "Səs \"${soundName}\" yüksəkdir",
+      "description": "Bu səsi davam etdirmək istəyirsiniz?",
+      "content": "Bu səs yüksəkdir və qulağınıza zərər verə bilər."
     }
   }
 }

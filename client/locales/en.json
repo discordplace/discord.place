@@ -281,7 +281,9 @@
     "trust": "Trust",
     "trustAndLoad": "Trust and Load",
     "dontTrust": "Don't Trust",
-    "testWebhook": "Test Webhook"
+    "testWebhook": "Test Webhook",
+    "continue": "Continue",
+    "dontShowAgain": "Don't Show Again"
   },
   "voteCountdown": {
     "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",
@@ -2219,6 +2221,13 @@
         "blockedSource": "You have blocked the iframe from loading from <span> source.<br>Do you want to trust this source?",
         "contentBeHere": "The iframe will be loaded here once you trust the source."
       }
+    }
+  },
+  "soundPlayer": {
+    "loudWarningModal": {
+      "title": "Sound \"{{soundName}}\" is loud",
+      "description": "Do you want to continue playing this sound?",
+      "content": "This sound is loud and may be harmful to your ears."
     }
   }
 }
