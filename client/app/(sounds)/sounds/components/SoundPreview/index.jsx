@@ -23,6 +23,7 @@ import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import Lottie from 'react-lottie';
 import useLanguageStore, { t } from '@/stores/language';
+import Link from 'next/link';
 
 export default function SoundPreview({ sound, overridedSort, showUploadToGuildButton }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -210,13 +211,16 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
           </h2>
 
           <div className='flex items-center gap-2 text-base font-medium text-tertiary'>
-            <div className='flex items-center gap-x-2'>
+            <Link
+              className='flex items-center gap-x-2 transition-colors hover:text-primary'
+              href={`/profile/u/${sound.publisher.id}`}
+            >
               <MdAccountCircle />
 
               <span className='text-xs'>
                 @{sound.publisher.username}
               </span>
-            </div>
+            </Link>
 
             {info.filter(({ condition }) => condition === true).map(({ icon: Icon, value }) => (
               <div
@@ -274,7 +278,10 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         </div>
       </div>
 
-      <Waveform id={sound.id} />
+      <Waveform
+        id={sound.id}
+        name={sound.name}
+      />
     </div>
   );
 }
