@@ -273,8 +273,8 @@ export default function MyAccount() {
                   className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white outline-none hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                   onClick={() =>
                     openModal('create-profile', {
-                      title: 'Create Profile',
-                      description: 'Create your customizable profile to show off to your friends!',
+                      title: t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.title'),
+                      description: t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.description'),
                       content: <CreateProfile />,
                       buttons: [
                         {
