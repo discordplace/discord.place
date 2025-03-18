@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.16.0](https://github.com/discordplace/discord.place/compare/client@v1.15.0...client@v1.16.0) (2025-03-18)
+
+
+### Features
+
+* **sounds:** add loud sound warning modal ([#180](https://github.com/discordplace/discord.place/issues/180)) ([d1cc003](https://github.com/discordplace/discord.place/commit/d1cc003b4878682077655fd9f40aa93cd4f0dab4))
+
+
+### Bug Fixes
+
+* **account:** localize create profile modal title and description ([3df5440](https://github.com/discordplace/discord.place/commit/3df5440961510b5c158b169f6e50a5688034cce7))
+* improve error handling for webhook test failures ([48f5971](https://github.com/discordplace/discord.place/commit/48f5971a651291459395a8a7e4970f375b8a7939))
+* revalidate after successfully webhook test ([d92e8a0](https://github.com/discordplace/discord.place/commit/d92e8a0569f4459c8568b258dbfe76444ae30a7e))
+
 ## [1.15.0](https://github.com/discordplace/discord.place/compare/client@v1.14.0...client@v1.15.0) (2025-03-02)
 
 
