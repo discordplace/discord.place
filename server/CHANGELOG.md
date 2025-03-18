@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.12.1](https://github.com/discordplace/discord.place/compare/server@v1.12.0...server@v1.12.1) (2025-03-18)
+
+
+### Bug Fixes
+
+* **commands/ping:** correct formatting of server response time ([762ef91](https://github.com/discordplace/discord.place/commit/762ef915755558d9e35517cd925ad9620c69d331))
+* **commands/ping:** refactor to use getServerResponseTime utility ([#179](https://github.com/discordplace/discord.place/issues/179)) ([ce7878a](https://github.com/discordplace/discord.place/commit/ce7878aec873104d03355a43ed296b66a2693b46))
+* **dependencies:** move axios-retry from root to server folder ([68e8590](https://github.com/discordplace/discord.place/commit/68e859031721fcefa780bd2903d6c77f4f2d87e8))
+* **sendVoteWebhook:** also add record for 2xx records ([123442b](https://github.com/discordplace/discord.place/commit/123442bb3f5a5ab1f30bf963a064c36fb4ca50c6))
+
 ## [1.12.0](https://github.com/discordplace/discord.place/compare/server@v1.11.0...server@v1.12.0) (2025-03-02)
 
 
