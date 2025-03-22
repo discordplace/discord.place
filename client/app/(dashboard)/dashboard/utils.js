@@ -157,22 +157,22 @@ export const deleteSound = id => sendRequest({
 export const approveReview = (type, serverOrBotId, reviewId) => sendRequest({
   params: { serverOrBotId, reviewId },
   promise: type === 'server' ? INTERNAL_approveServerReview : INTERNAL_approveBotReview,
-  successMessage: `Server review ${reviewId} approved successfully!`,
-  loadingMessage: `Approving server review ${reviewId}..`
+  successMessage: `${type === 'server' ? 'Server' : 'Bot'} review ${reviewId} approved successfully!`,
+  loadingMessage: `Approving ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`
 });
 
 export const denyReview = (type, serverOrBotId, reviewId, reason) => sendRequest({
   params: { serverOrBotId, reviewId, reason },
   promise: type === 'server' ? INTERNAL_denyServerReview : INTERNAL_denyBotReview,
-  successMessage: `Server review ${reviewId} denied successfully!`,
-  loadingMessage: `Denying server review ${reviewId}..`
+  successMessage: `${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId} denied successfully!`,
+  loadingMessage: `Denying ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`
 });
 
 export const deleteReview = (type, serverOrBotId, reviewId) => sendRequest({
   params: { serverOrBotId, reviewId },
   promise: type === 'server' ? INTERNAL_deleteServerReview : INTERNAL_deleteBotReview,
-  successMessage: `Server review ${reviewId} deleted successfully!`,
-  loadingMessage: `Deleting server review ${reviewId}..`
+  successMessage: `${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId} deleted successfully!`,
+  loadingMessage: `Deleting ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`
 });
 
 export const approveTheme = id => sendRequest({
