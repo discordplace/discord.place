@@ -11,7 +11,7 @@ module.exports = {
     .setName('info')
     .setDescription('info')
     .setNameLocalizations(getLocalizedCommand('info').names)
-    .setDMPermission(false)
+    .setContexts([Discord.InteractionContextType.Guild])
 
     .addSubcommand(subcommand =>
       subcommand
