@@ -63,7 +63,7 @@ module.exports = {
       fetchReply: true
     });
 
-    const collector = await reply.createMessageComponentCollector({ type: Discord.ComponentType.Button, time: 5000, max: 1 });
+    const collector = await reply.createMessageComponentCollector({ type: Discord.ComponentType.Button, time: 60000, max: 1 });
 
     collector.on('collect', async buttonInteraction => {
       if (buttonInteraction.user.id !== interaction.user.id) return;
