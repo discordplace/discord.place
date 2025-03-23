@@ -301,7 +301,7 @@ module.exports = class Client {
       for (const { ip } of blockedIps) {
         const item = response.result.find(item => item?.ip === ip);
         if (!item) {
-          await BlockedIp.deleteOne({ _id: ip });
+          await BlockedIp.deleteOne({ ip });
           logger.info(`Deleted expired blocked IP ${ip}.`);
         }
       }
