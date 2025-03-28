@@ -1,5 +1,4 @@
 module.exports = function (request, response, next) {
-
   // If the request is coming from the client's server, use the IP in the headers
   // Otherwise, use the IP that Cloudflare provides
   const clientSecret = request.headers['x-discord-place-client-secret'];

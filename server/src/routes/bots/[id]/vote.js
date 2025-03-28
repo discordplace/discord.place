@@ -33,7 +33,7 @@ module.exports = {
       if (timeout) return response.sendError(`You can vote again in ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 3600000)} hours, ${Math.floor((timeout.createdAt.getTime() + 86400000 - Date.now()) / 60000) % 60} minutes.`, 400);
 
       try {
-        await incrementVote(id, request.user.id, bot.webhook);
+        await incrementVote(id, request.user.id);
 
         return response.status(204).end();
       } catch (error) {

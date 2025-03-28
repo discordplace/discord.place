@@ -5,7 +5,7 @@ const User = require('@/schemas/User');
 const Discord = require('discord.js');
 const sendVoteWebhook = require('@/utils/bots/sendVoteWebhook');
 
-async function incrementVote(botId, userId, botWebhook) {
+async function incrementVote(botId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
   if (!user) throw new Error(`User ${userId} not found.`);
 
@@ -99,7 +99,7 @@ async function incrementVote(botId, userId, botWebhook) {
 
   client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
 
-  if (botWebhook?.url) sendVoteWebhook(bot, { id: userId, username: user.username }, { bot: bot.id, user: user.id }).catch(() => null);
+  if (bot.webhook?.url) sendVoteWebhook(bot, { id: userId, username: user.username }, { bot: bot.id, user: user.id }).catch(() => null);
 
   return true;
 }
