@@ -1,22 +1,26 @@
 'use client';
 
-import { TbLockPlus, RiGroup2Fill, RiPencilFill, PiWaveformBold, MdAlternateEmail, MdEmojiEmotions, MdHttps, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility, IoMdCheckmarkCircle, IoMdCloseCircle, IoMdUndo, HiMiniIdentification, HiTemplate, FiArrowRightCircle, FiArrowUpRight, FiLink, FaCompass, FaCrown, FaEye, FaUserCircle, CgBlock, CgFormatSlash, BsStars, BiCloudDownload, BiSolidCategory } from '@/icons';
+import { TbLockPlus, RiGroup2Fill, RiPencilFill, PiWaveformBold, MdAlternateEmail, MdEmojiEmotions, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility, IoMdCheckmarkCircle, IoMdCloseCircle, IoMdUndo, HiMiniIdentification, HiTemplate, FiArrowRightCircle, FiArrowUpRight, FiLink, FaCompass, FaCrown, FaEye, FaUserCircle, CgBlock, CgFormatSlash, BsStars, BiCloudDownload, BiSolidCategory } from '@/icons';
 import useAuthStore from '@/stores/auth';
 import { useEffect } from 'react';
 import { useRouter } from 'next-nprogress-bar';
 import Sidebar from '@/app/(dashboard)/components/Sidebar';
 import Home from '@/app/(dashboard)/components/Home';
-import useDashboardStore from '@/stores/dashboard';import useThemeStore from '@/stores/theme';
+import useDashboardStore from '@/stores/dashboard';
+import useThemeStore from '@/stores/theme';
 import { motion, AnimatePresence } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
-import Queue from '@/app/(dashboard)/components/Queue';import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
-import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, deleteBlockedIP, deleteLink, deleteBotDenyRecord, restoreBot, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
+import Queue from '@/app/(dashboard)/components/Queue';
+import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
+import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, deleteLink, deleteBotDenyRecord, restoreBot, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
 import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
 import config from '@/config';
 import sleep from '@/lib/sleep';
-import { useShallow } from 'zustand/react/shallow';import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
+import { useShallow } from 'zustand/react/shallow';
+import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
 import useModalsStore from '@/stores/modals';
-import { toast } from 'sonner';import getHashes from '@/lib/request/general/getHashes';
+import { toast } from 'sonner';
+import getHashes from '@/lib/request/general/getHashes';
 
 export default function Page() {
   const user = useAuthStore(state => state.user);
@@ -1736,55 +1740,6 @@ export default function Page() {
           ]
         }
       }
-    },
-    {
-      id: 'blockedIPs',
-      name: 'Blocked IPs',
-      data: {
-        title: 'Blocked IPs',
-        subtitle: 'Here you can see the all the IPs that have been blocked by the system.',
-        totalCount: data?.blockedIps?.length || 0,
-        tableData: {
-          tabs: [
-            {
-              label: 'Blocked IPs',
-              columns: data?.blockedIps?.map(item => [
-                {
-                  type: 'ipAddress',
-                  value: item.ip,
-                  searchValues: [item.ip]
-                },
-                {
-                  type: 'date',
-                  value: new Date(item.createdAt)
-                }
-              ]),
-              rows: [
-                {
-                  name: 'IP',
-                  icon: MdHttps
-                },
-                {
-                  name: 'Date Blocked',
-                  icon: FiArrowRightCircle,
-                  sortable: true
-                }
-              ],
-              actions: [
-                {
-                  name: 'Delete',
-                  icon: IoMdCheckmarkCircle,
-                  action: () => bulkAction({
-                    action: item => deleteBlockedIP(item.value),
-                    fetchKey: 'blockedips'
-                  }),
-                  hide: !data.permissions?.canDeleteBlockedIps
-                }
-              ]
-            }
-          ]
-        }
-      }
     }
   ];
 
@@ -1820,9 +1775,6 @@ export default function Page() {
         break;
       case 'themesQueue':
         fetchData(['themes']);
-        break;
-      case 'blockedIPs':
-        fetchData(['blockedips']);
         break;
       case 'botDenies':
         fetchData(['botdenies']);

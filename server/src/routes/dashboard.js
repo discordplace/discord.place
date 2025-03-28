@@ -12,7 +12,6 @@ const Theme = require('@/schemas/Theme');
 const ServerReview = require('@/schemas/Server/Review');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
-const BlockedIp = require('@/src/schemas/BlockedIp');
 const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const Quarantine = require('@/schemas/Quarantine');
@@ -34,7 +33,6 @@ const validKeys = [
   'sounds',
   'themes',
   'reviews',
-  'blockedips',
   'botdenies',
   'timeouts',
   'quarantines'
@@ -54,7 +52,6 @@ module.exports = {
 
       const permissions = {
         canViewDashboard: request.member && config.permissions.canViewDashboardRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canViewBlockedIps: request.member && config.permissions.canViewBlockedIpsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canViewTimeouts: request.member && config.permissions.canViewTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canViewQuarantines: request.member && config.permissions.canViewQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveEmojis: request.member && config.permissions.canApproveEmojisRoles.some(roleId => request.member.roles.cache.has(roleId)),
@@ -63,7 +60,6 @@ module.exports = {
         canApproveSounds: request.member && config.permissions.canApproveSoundsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveReviews: request.member && config.permissions.canApproveReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canApproveThemes: request.member && config.permissions.canApproveThemesRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canDeleteBlockedIps: config.permissions.canDeleteBlockedIps.includes(request.user.id),
         canDeleteBotDenies: request.member && config.permissions.canDeleteBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteLinks: request.member && config.permissions.canDeleteLinksRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteTimeouts: request.member && config.permissions.canDeleteTimeoutsRoles.some(roleId => request.member.roles.cache.has(roleId)),
@@ -82,7 +78,7 @@ module.exports = {
 
       if (!permissions.canViewDashboard) return response.sendError('You do not have permission to view the dashboard.', 403);
 
-      const [emojisCount, emojiPacksCount, botsCount, templatesCount, soundsCount, themesCount, botReviewsCount, serverReviewsCount, linksCount, botDeniesCount, botTimeoutsCount, serverTimeoutsCount, quarantinesCount, blockedIpsCount] = await Promise.all([
+      const [emojisCount, emojiPacksCount, botsCount, templatesCount, soundsCount, themesCount, botReviewsCount, serverReviewsCount, linksCount, botDeniesCount, botTimeoutsCount, serverTimeoutsCount, quarantinesCount] = await Promise.all([
         Emoji.countDocuments({ approved: false }),
         EmojiPack.countDocuments({ approved: false }),
         Bot.countDocuments({ verified: false }),
@@ -95,8 +91,7 @@ module.exports = {
         BotDeny.countDocuments(),
         BotTimeout.countDocuments(),
         ServerTimeout.countDocuments(),
-        Quarantine.countDocuments(),
-        BlockedIp.countDocuments()
+        Quarantine.countDocuments()
       ]);
 
       const responseData = {
@@ -114,8 +109,7 @@ module.exports = {
           links: linksCount,
           botDenies: botDeniesCount,
           timeouts: botTimeoutsCount + serverTimeoutsCount,
-          quarantines: quarantinesCount,
-          blockedIps: blockedIpsCount
+          quarantines: quarantinesCount
         }
       };
 
@@ -303,13 +297,6 @@ module.exports = {
             }
           };
         }));
-      }
-
-      if (keys?.includes('blockedips')) {
-        if (!permissions.canViewBlockedIps) return response.sendError('You do not have permission to view blocked IPs.', 403);
-
-        const blockedIps = await BlockedIp.find().sort({ createdAt: -1 });
-        responseData.blockedIps = blockedIps;
       }
 
       if (keys?.includes('botdenies')) {

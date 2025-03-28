@@ -15,7 +15,6 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     updateClientActivity: false,
     checkVoteReminderMetadatas: false,
     checkReminerMetadatas: false,
-    checkExpiredBlockedIPs: false,
     checkExpiredPremiums: false,
     updateBotStats: false,
     createNewDashboardData: false,

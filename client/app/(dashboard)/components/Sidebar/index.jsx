@@ -1,16 +1,21 @@
 'use client';
 
-import { TbSquareRoundedChevronUp, SiPlausibleanalytics, RiBrush2Fill, RiRobot2Fill, PiWaveformBold, MdAccountCircle, MdEmojiEmotions, MdHome, MdMyLocation, MdSync, IoMdLogOut, HiTemplate, FiLink, FaCompass, FaEye, FaUsers, FaUserTimes, CgBlock, BiSolidChevronRight } from '@/icons';
+import { TbSquareRoundedChevronUp, SiPlausibleanalytics, RiBrush2Fill, RiRobot2Fill, PiWaveformBold, MdAccountCircle, MdEmojiEmotions, MdHome, MdSync, IoMdLogOut, HiTemplate, FiLink, FaCompass, FaEye, FaUsers, FaUserTimes, CgBlock, BiSolidChevronRight } from '@/icons';
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import { Bricolage_Grotesque } from 'next/font/google';
-import cn from '@/lib/cn';import useDashboardStore from '@/stores/dashboard';import config from '@/config';import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import cn from '@/lib/cn';
+import useDashboardStore from '@/stores/dashboard';
+import config from '@/config';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import useAuthStore from '@/stores/auth';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { useRouter } from 'next-nprogress-bar';import logout from '@/lib/request/auth/logout';
+import { useRouter } from 'next-nprogress-bar';
+import logout from '@/lib/request/auth/logout';
 import { toast } from 'sonner';
 import BlockItem from '@/app/(dashboard)/components/Sidebar/BlockItem';
-import CollapseIcon from '@/app/(dashboard)/components/Sidebar/Icons/Collapse';import Tooltip from '@/app/components/Tooltip';
+import CollapseIcon from '@/app/(dashboard)/components/Sidebar/Icons/Collapse';
+import Tooltip from '@/app/components/Tooltip';
 import Link from 'next/link';
 import { useCookie, useMedia } from 'react-use';
 import { useEffect } from 'react';
@@ -145,16 +150,6 @@ export default function Sidebar() {
           disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false,
           badge: {
             data: data?.counts?.quarantines,
-            style: 'primary'
-          }
-        },
-        {
-          id: 'blockedIPs',
-          name: `Blocked IPs${data?.blockedIps?.length ? ` (${data.blockedIps.length})` : ''}`,
-          icon: MdMyLocation,
-          disabled: data?.permissions?.canViewBlockedIps === false || data?.permissions?.canDeleteBlockedIps === false,
-          badge: {
-            data: data?.counts?.blockedIps,
             style: 'primary'
           }
         },

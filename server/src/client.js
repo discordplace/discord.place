@@ -1,7 +1,6 @@
 // Modules
 const Discord = require('discord.js');
 const { CronJob } = require('cron');
-const CloudflareAPI = require('cloudflare');
 const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
 const updateClientActivity = require('@/utils/updateClientActivity');
@@ -14,7 +13,6 @@ const VoteReminderMetadata = require('@/schemas/Server/Vote/Metadata');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const ReminderMetadata = require('@/schemas/Reminder/Metadata');
 const Reminder = require('@/schemas/Reminder');
-const BlockedIp = require('@/src/schemas/BlockedIp');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const Profile = require('@/schemas/Profile');
 const Bot = require('@/schemas/Bot');
@@ -31,17 +29,6 @@ const Reward = require('@/schemas/Server/Vote/Reward');
 const localizationInitialize = require('@/utils/localization/initialize');
 const mongoose = require('mongoose');
 const sendHeartbeat = require('@/utils/sendHeartbeat');
-
-// Cloudflare Setup
-const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
-const CLOUDFLARE_EMAIL = process.env.CLOUDFLARE_EMAIL;
-const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
-const CLOUDFLARE_BLOCK_IP_LIST_ID = process.env.CLOUDFLARE_BLOCK_IP_LIST_ID;
-
-const cloudflare = new CloudflareAPI({
-  email: CLOUDFLARE_EMAIL,
-  key: CLOUDFLARE_API_KEY
-});
 
 // S3 Setup
 const { S3Client, HeadBucketCommand } = require('@aws-sdk/client-s3');
@@ -72,7 +59,6 @@ module.exports = class Client {
       }
     });
 
-    this.client.blockedIps = new Discord.Collection();
     this.client.currentlyUploadingEmojiPack = new Discord.Collection();
     this.client.languageCache = new Discord.Collection();
     this.client.applicationsEntitlementsScopeCallbackError = new Discord.Collection();
@@ -139,7 +125,6 @@ module.exports = class Client {
       if (options.startup.updateClientActivity) updateClientActivity();
       if (options.startup.checkVoteReminderMetadatas) this.checkVoteReminderMetadatas();
       if (options.startup.checkReminerMetadatas) this.checkReminerMetadatas();
-      if (options.startup.checkExpiredBlockedIPs) this.checkExpiredBlockedIPs();
       if (options.startup.checkExpiredPremiums) this.checkExpiredPremiums();
       if (options.startup.updateBotStats) this.updateBotStats();
       if (options.startup.createNewDashboardData) this.createNewDashboardData();
@@ -154,7 +139,6 @@ module.exports = class Client {
         new CronJob('0 * * * *', () => {
           this.checkVoteReminderMetadatas();
           this.checkReminerMetadatas();
-          this.checkExpiredBlockedIPs();
           this.checkExpiredPremiums();
           this.checkDeletedInviteCodes();
           this.checkDeletedRewardsRoles();
@@ -289,25 +273,6 @@ module.exports = class Client {
     });
 
     logger.info('Updated bot stats.');
-  }
-
-  async checkExpiredBlockedIPs() {
-    try {
-      const blockedIps = await BlockedIp.find();
-      const response = await cloudflare.rules.lists.items.list(CLOUDFLARE_BLOCK_IP_LIST_ID, {
-        account_id: CLOUDFLARE_ACCOUNT_ID
-      });
-
-      for (const { ip } of blockedIps) {
-        const item = response.result.find(item => item?.ip === ip);
-        if (!item) {
-          await BlockedIp.deleteOne({ ip });
-          logger.info(`Deleted expired blocked IP ${ip}.`);
-        }
-      }
-    } catch (error) {
-      logger.error('Failed to check expired blocked IPs collections:', error);
-    }
   }
 
   async checkExpiredPremiums() {

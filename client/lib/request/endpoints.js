@@ -94,9 +94,6 @@ const Endpoints = {
   DeleteQuarantineRecord: id => `/quarantines/${id}`,
   CreateQuarantine: '/quarantines',
 
-  // Blocked IPs
-  DeleteBlockedIP: ip => `/blocked-ips/${ip}`,
-
   // Bots
   VoteBot: id => `/bots/${id}/vote`,
   SetBotWebhookSettings: id => `/bots/${id}/webhook-settings`,

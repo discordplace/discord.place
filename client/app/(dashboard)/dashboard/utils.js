@@ -19,7 +19,6 @@ import INTERNAL_deleteBotReview from '@/lib/request/bots/deleteReview';
 import INTERNAL_approveTheme from '@/lib/request/themes/approveTheme';
 import INTERNAL_denyTheme from '@/lib/request/themes/denyTheme';
 import INTERNAL_deleteTheme from '@/lib/request/themes/deleteTheme';
-import INTERNAL_deleteBlockedIP from '@/lib/request/dashboard/deleteBlockedIP';
 import INTERNAL_deleteLink from '@/lib/request/links/deleteLink';
 import INTERNAL_deleteBotDenyRecord from '@/lib/request/bots/deleteBotDenyRecord';
 import INTERNAL_deleteBotTimeout from '@/lib/request/bots/deleteTimeout';
@@ -194,13 +193,6 @@ export const deleteTheme = id => sendRequest({
   promise: INTERNAL_deleteTheme,
   successMessage: `Theme ${id} deleted successfully!`,
   loadingMessage: `Deleting theme ${id}..`
-});
-
-export const deleteBlockedIP = ip => sendRequest({
-  params: ip,
-  promise: INTERNAL_deleteBlockedIP,
-  successMessage: `Blocked IP ${ip} deleted successfully!`,
-  loadingMessage: `Deleting blocked IP ${ip}..`
 });
 
 export const deleteLink = id => sendRequest({

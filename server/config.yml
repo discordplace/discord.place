@@ -92,12 +92,6 @@ permissions:
     - '1267549562957205645'
   canViewDashboardRoles:
     - '1267549977379471403'
-  canViewBlockedIpsRoles:
-    - '1206032198562742312'
-    - '1206354879321210900'
-    - '1267549562957205645'
-  canDeleteBlockedIps:
-    - '957840712404193290'
   canDeleteBotDeniesRoles:
     - '1206032198562742312'
     - '1267549562957205645'
@@ -256,7 +250,6 @@ excludeCollectionsInBackup:
   - 'servervoteremindermetadas'
   - 'servervotereminders'
   - 'servervotetimeouts'
-  - 'blockedips'
   - 'evaluateresults'
   - 'githubcaches'
   - 'plans'
@@ -324,11 +317,6 @@ quarantineRestrictions:
 customHostnames:
   - 'dsc.dog'
   - 'dsc.mom'
-globalRateLimit:
-  enabled: true
-  maxRequests: 60
-  perMinutes: 1
-  cleanUpIntervalInMinutes: 2.5
 emojisDenyReasons:
   reposted-emoji:
     name: 'Reposted Emoji'
