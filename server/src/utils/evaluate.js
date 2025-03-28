@@ -11,7 +11,7 @@ module.exports = async code => new Promise(async resolve => {
     const result = await eval(isAsync ? `(async () => { ${code} })()` : code);
     const inspectedResult = inspect(result, { depth: Infinity });
 
-    const truncatedResult = inspectedResult.length > 1925 ? `${inspectedResult.slice(0, 1925)}\`\`\`\`\`\`Output is too long. Truncated to 1925 characters.\`` : inspectedResult;
+    const truncatedResult = inspectedResult.length > 1925 ? `${inspectedResult.slice(0, 1925)}\`\`\`\`\`\`Output is too long. Truncated to 1925 characters.` : inspectedResult;
 
     resolve({ id, result: `\`\`\`js\n${truncatedResult}\`\`\`` });
   } catch (error) {
