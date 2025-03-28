@@ -3,12 +3,9 @@
 module.exports = {
   darkMode: ['class'],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
     './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
     './public/profile-badges/*.svg',
-    './lib/**/*.{js,jsx}',
+    './lib/markdownComponents.jsx',
     './config.js'
   ],
   theme: {
