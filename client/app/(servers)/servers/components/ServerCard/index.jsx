@@ -175,7 +175,11 @@ export default function ServerCard(props) {
                     <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#3b82f6_10deg,transparent_90deg)]'></div>
 
                     <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md transition-all hover:bg-blue-500/50'>
-                      <ImTrophy /> {t('serverCard.mostVotedBadge.label')}
+                      <ImTrophy />
+
+                      <span className='truncate'>
+                        {t('serverCard.mostVotedBadge.label')}
+                      </span>
                     </div>
                   </div>
                 </Tooltip>
