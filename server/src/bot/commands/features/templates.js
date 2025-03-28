@@ -14,6 +14,9 @@ module.exports = {
     .setName('templates')
     .setDescription('templates')
     .setNameLocalizations(getLocalizedCommand('templates').names)
+    .setDefaultMemberPermissions(Discord.PermissionFlagsBits.Administrator)
+    .setContexts([Discord.InteractionContextType.Guild])
+    .setIntegrationTypes([Discord.ApplicationIntegrationType.GuildInstall])
 
     .addSubcommand(subcommand =>
       subcommand

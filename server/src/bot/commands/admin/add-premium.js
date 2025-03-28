@@ -7,6 +7,12 @@ module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('add')
     .setDescription('add')
+    .setContexts([
+      Discord.InteractionContextType.BotDM,
+      Discord.InteractionContextType.Guild,
+      Discord.InteractionContextType.PrivateChannel
+    ])
+    .setIntegrationTypes([Discord.ApplicationIntegrationType.GuildInstall])
 
     .addSubcommand(subcommand =>
       subcommand

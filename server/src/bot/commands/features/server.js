@@ -14,6 +14,9 @@ module.exports = {
     .setName('server')
     .setDescription('server')
     .setNameLocalizations(getLocalizedCommand('server').names)
+    .setDefaultMemberPermissions(Discord.PermissionFlagsBits.ManageGuild)
+    .setContexts([Discord.InteractionContextType.Guild])
+    .setIntegrationTypes([Discord.ApplicationIntegrationType.GuildInstall])
 
     .addSubcommandGroup(group =>
       group

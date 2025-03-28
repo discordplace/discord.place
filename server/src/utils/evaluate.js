@@ -4,17 +4,20 @@ const crypto = require('node:crypto');
 // eslint-disable-next-line no-async-promise-executor
 module.exports = async code => new Promise(async resolve => {
   const isAsync = code.includes('return') || code.includes('await');
-  let result;
-  let hasError = false;
+  const id = crypto.randomBytes(16).toString('hex');
 
   try {
     // eslint-disable-next-line security/detect-eval-with-expression
-    result = await eval(isAsync ? `(async () => { ${code} })()` : code);
-    if (typeof result !== 'string') result = inspect(result, { depth: 4 });
-  } catch (error) {
-    hasError = true;
-    result = error.stack;
-  }
+    const result = await eval(isAsync ? `(async () => { ${code} })()` : code);
+    const inspectedResult = inspect(result, { depth: Infinity });
 
-  return resolve({ result, hasError, id: crypto.randomBytes(16).toString('hex') });
+    const truncatedResult = inspectedResult.length > 1925 ? `${inspectedResult.slice(0, 1925)}\`\`\`\`\`\`Output is too long. Truncated to 1925 characters.\`` : inspectedResult;
+
+    resolve({ id, result: `\`\`\`js\n${truncatedResult}\`\`\`` });
+  } catch (error) {
+    const errorMessage = inspect(error, { depth: Infinity });
+    logger.error('Error while evaluating code:', error);
+
+    resolve({ id, error: errorMessage });
+  }
 });

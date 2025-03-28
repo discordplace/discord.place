@@ -10,6 +10,9 @@ module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('emoji')
     .setDescription('emoji')
+    .setDefaultMemberPermissions(Discord.PermissionFlagsBits.CreateGuildExpressions)
+    .setContexts([Discord.InteractionContextType.Guild])
+    .setIntegrationTypes([Discord.ApplicationIntegrationType.GuildInstall])
 
     .addSubcommand(subcommand =>
       subcommand

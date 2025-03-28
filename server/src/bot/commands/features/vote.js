@@ -11,7 +11,9 @@ module.exports = {
     name: 'vote',
     description: 'Vote for the server you are on.',
     name_localizations: getLocalizedCommand('vote').names,
-    description_localizations: getLocalizedCommand('vote').descriptions
+    description_localizations: getLocalizedCommand('vote').descriptions,
+    contexts: [Discord.InteractionContextType.Guild],
+    integration_types: [Discord.ApplicationIntegrationType.GuildInstall]
   },
   isGuildOnly: true,
   async execute (interaction) {

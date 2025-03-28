@@ -162,34 +162,54 @@ module.exports = async interaction => {
     }
 
     if (interaction.customId.startsWith('deleteEvalResultMessage-')) {
-      const [id, userId] = interaction.customId.split('-').slice(1);
+      if (!config.permissions.canExecuteEval.includes(interaction.user.id)) return;
+
+      const [userId] = interaction.customId.split('-').slice(1);
 
       if (interaction.user.id !== userId) return;
 
-      await EvaluateResult.deleteOne({ id });
+      logger.info(`User @${interaction.user.username} (${interaction.user.id}) is deleting the eval command result message. (Message ID: ${interaction.message.id})`);
+
+      await EvaluateResult.deleteOne({ messageId: interaction.message.id });
 
       return interaction.message.delete();
     }
 
     if (interaction.customId.startsWith('repeatEval-')) {
-      const [id, userId] = interaction.customId.split('-').slice(1);
+      if (!config.permissions.canExecuteEval.includes(interaction.user.id)) return;
 
+      const [userId] = interaction.customId.split('-').slice(1);
       if (interaction.user.id !== userId) return;
 
-      const data = await EvaluateResult.findOne({ id });
-      if (!data || !data.executedCode) return;
+      const data = await EvaluateResult.findOne({ messageId: interaction.message.id });
+      if (!data) return;
 
-      const { result, hasError } = await evaluate(data.executedCode);
+      logger.info(`User @${interaction.user.username} (${interaction.user.id}) is repeating the eval command. (Message ID: ${interaction.message.id})`);
 
-      const embed = new Discord.EmbedBuilder()
-        .setColor(hasError ? '#f04e51' : '#adadad')
-        .setFields([
-          { name: 'Code', value: `\`\`\`js\n${data.executedCode.slice(0, 1000)}\n\`\`\`` },
-          { name: 'Repeated At', value: new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) }
-        ])
-        .setDescription(`### ${hasError ? 'Error' : 'Success'}\n\`\`\`js\n${String(result).slice(0, 4000)}\n\`\`\``);
+      const evaluateResult = await evaluate(data.code).catch(error => error);
 
-      return interaction.update({ embeds: [embed] });
+      const currentComponents = Discord.ActionRowBuilder.from(interaction.message.components[0]);
+      const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+      const repeatedButton = currentComponents.components.find(component => component.data.custom_id.startsWith('evalRepeatedAt-'));
+      if (!repeatedButton) {
+        currentComponents.addComponents(
+          new Discord.ButtonBuilder()
+            .setCustomId(`evalRepeatedAt-${Date.now()}`)
+            .setLabel(`Repeated at ${currentDate} by @${interaction.user.username}`)
+            .setStyle(Discord.ButtonStyle.Secondary)
+            .setDisabled(true)
+        );
+      } else {
+        repeatedButton
+          .setLabel(`Repeated at ${currentDate} by @${interaction.user.username}`)
+          .setCustomId(`evalRepeatedAt-${Date.now()}`);
+      }
+
+      return interaction.update({
+        content: evaluateResult.error ? `An error occurred while evaluating the code: \`\`\`js\n${evaluateResult.error.slice(0, 1950)}\n\`\`\`` : evaluateResult.result,
+        components: [currentComponents]
+      });
     }
   }
 };

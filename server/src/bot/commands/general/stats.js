@@ -20,7 +20,13 @@ module.exports = {
     .setName('stats')
     .setDescription('View the stats of the bot.')
     .setNameLocalizations(getLocalizedCommand('stats').names)
-    .setDescriptionLocalizations(getLocalizedCommand('stats').descriptions),
+    .setDescriptionLocalizations(getLocalizedCommand('stats').descriptions)
+    .setContexts([
+      Discord.InteractionContextType.Guild,
+      Discord.InteractionContextType.BotDM,
+      Discord.InteractionContextType.PrivateChannel
+    ])
+    .setIntegrationTypes([Discord.ApplicationIntegrationType.GuildInstall]),
   execute: async interaction => {
     if (cooldowns.has(interaction.user.id)) {
       const expirationTime = cooldowns.get(interaction.user.id) + 60000;

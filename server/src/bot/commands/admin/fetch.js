@@ -4,11 +4,15 @@ module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('fetch')
     .setDescription('Fetches a user/guild.')
+    .setContexts([
+      Discord.InteractionContextType.BotDM,
+      Discord.InteractionContextType.Guild,
+      Discord.InteractionContextType.PrivateChannel
+    ])
+    .setIntegrationTypes([Discord.ApplicationIntegrationType.GuildInstall])
 
     .addStringOption(option => option.setName('type').setDescription('The type of the fetch.').setRequired(true).addChoices({ name: 'User', value: 'user' }, { name: 'Guild', value: 'guild' }))
-    .addStringOption(option => option.setName('id').setDescription('The ID of the user/guild.').setRequired(true))
-
-    .toJSON(),
+    .addStringOption(option => option.setName('id').setDescription('The ID of the user/guild.').setRequired(true)),
   execute: async interaction => {
     if (!config.permissions.canExecuteFetchRoles.some(role => interaction.member.roles.cache.has(role))) return interaction.reply({ content: 'You are not allowed to use this command.' });
 

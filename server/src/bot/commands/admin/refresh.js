@@ -5,11 +5,15 @@ module.exports = {
   data: new Discord.SlashCommandBuilder()
     .setName('refresh')
     .setDescription('Refreshes the cached hashes of a user.')
+    .setContexts([
+      Discord.InteractionContextType.BotDM,
+      Discord.InteractionContextType.Guild,
+      Discord.InteractionContextType.PrivateChannel
+    ])
+    .setIntegrationTypes([Discord.ApplicationIntegrationType.GuildInstall])
 
     .addSubcommand(subcommand => subcommand.setName('hashes').setDescription('Refreshes the cached hashes of a user.')
-      .addStringOption(option => option.setName('id').setDescription('The ID of the user.').setRequired(true)))
-
-    .toJSON(),
+      .addStringOption(option => option.setName('id').setDescription('The ID of the user.').setRequired(true))),
   execute: async interaction => {
     if (!config.permissions.canExecuteRefreshCacheRoles.some(role => interaction.member.roles.cache.has(role))) return interaction.reply({ content: 'You are not allowed to use this command.' });
 
