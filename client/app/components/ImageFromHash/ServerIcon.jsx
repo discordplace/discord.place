@@ -46,6 +46,7 @@ export default function ServerIcon({ id, hash, format, size, className, motionOp
 
         event.target.src = fallback;
       }}
+      unoptimized={options.format === 'gif'}
       {...motionOptions}
       {...props}
     />
