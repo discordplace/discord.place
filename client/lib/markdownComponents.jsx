@@ -1,18 +1,10 @@
 /* eslint react/display-name: 0 */
 /* eslint no-unused-vars: 0 */
 
+import { TbFileTypeXml, SiPhp, MdHttps, IoLogoJavascript, IoLogoPython, FiArrowUpRight, FaFileCode, BiCodeCurly } from '@/icons';
 import Link from 'next/link';
 import cn from './cn';
-import Zoom from 'react-medium-image-zoom';
-import { FiArrowUpRight } from 'react-icons/fi';
-import { IoLogoJavascript, IoLogoPython } from 'react-icons/io5';
-import { BiCodeCurly } from 'react-icons/bi';
-import { FaFileCode } from 'react-icons/fa6';
-import CodeBlock from '@/app/components/CodeBlock';
-import { TbFileTypeXml } from 'react-icons/tb';
-import { MdHttps } from 'react-icons/md';
-import { SiPhp } from 'react-icons/si';
-import CustomIFrame from '@/app/components/Markdown/iframe';
+import Zoom from 'react-medium-image-zoom';import CodeBlock from '@/app/components/CodeBlock';import CustomIFrame from '@/app/components/Markdown/iframe';
 import Image from 'next/image';
 import Tooltip from '@/app/components/Tooltip';
 

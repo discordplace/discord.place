@@ -1,9 +1,8 @@
 'use client';
 
+import { FaGithub } from '@/icons';
 import Square from '@/app/components/Background/Square';
-import InfoCard from '@/app/(home)/components/InfoCards/Card';
-import { FaGithub } from 'react-icons/fa';
-import useAuthStore from '@/stores/auth';
+import InfoCard from '@/app/(home)/components/InfoCards/Card';import useAuthStore from '@/stores/auth';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
 import MockServerCard from '@/app/(home)/components/InfoCards/Mock/ServerCard';

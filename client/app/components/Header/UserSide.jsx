@@ -1,14 +1,13 @@
 'use client';
 
+import { BiLogOut } from '@/icons';
 import useAuthStore from '@/stores/auth';
 import Link from 'next/link';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
 import cn from '@/lib/cn';
 import { useEffect, useState } from 'react';
-import { useCookie, useWindowScroll } from 'react-use';
-import { BiLogOut } from 'react-icons/bi';
-import logout from '@/lib/request/auth/logout';
+import { useCookie, useWindowScroll } from 'react-use';import logout from '@/lib/request/auth/logout';
 import { toast } from 'sonner';
 import { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';

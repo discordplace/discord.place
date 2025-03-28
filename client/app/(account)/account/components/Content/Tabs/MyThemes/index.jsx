@@ -1,12 +1,9 @@
 'use client';
 
+import { LuPlus, BsEmojiAngry, BsQuestionCircleFill } from '@/icons';
 import ErrorState from '@/app/components/ErrorState';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import { BsEmojiAngry } from 'react-icons/bs';
-import { LuPlus } from 'react-icons/lu';
-import { BsQuestionCircleFill } from 'react-icons/bs';
-import config from '@/config';
+import Link from 'next/link';import config from '@/config';
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import NewTheme from '@/app/(account)/account/components/Content/Tabs/MyThemes/NewTheme';
 import { useShallow } from 'zustand/react/shallow';

@@ -1,9 +1,8 @@
 'use client';
 
+import { RiErrorWarningFill } from '@/icons';
 import { toast } from 'sonner';
-import deleteProfile from '@/lib/request/profiles/deleteProfile';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import useModalsStore from '@/stores/modals';
+import deleteProfile from '@/lib/request/profiles/deleteProfile';import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import { t } from '@/stores/language';
 

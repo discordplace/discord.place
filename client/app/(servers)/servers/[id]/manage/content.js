@@ -1,9 +1,7 @@
 'use client';
 
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import { TbLoader } from 'react-icons/tb';
-import { MdSave } from 'react-icons/md';
-import { useEffect, useState } from 'react';
+import { TbLoader, MdSave } from '@/icons';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';import { useEffect, useState } from 'react';
 import EssentialInformation from '@/app/(servers)/servers/[id]/manage/components/EssentialInformation';
 import Other from '@/app/(servers)/servers/[id]/manage/components/Other';
 import Webhook from '@/app/(servers)/servers/[id]/manage/components/Webhook';

@@ -1,6 +1,4 @@
-'use client';
-
-import { MdArrowOutward } from 'react-icons/md';
+'use client';import { MdArrowOutward } from '@/icons';
 import { motion } from 'framer-motion';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import { t } from '@/stores/language';

@@ -1,13 +1,10 @@
 'use client';
 
+import { LuHash, IoMdCheckmarkCircle, FaCirclePlus } from '@/icons';
 import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 import config from '@/config';
 import cn from '@/lib/cn';
-import { useState } from 'react';
-import { FaCirclePlus } from 'react-icons/fa6';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import { LuHash } from 'react-icons/lu';
-import { toast } from 'sonner';
+import { useState } from 'react';import { toast } from 'sonner';
 import { t } from '@/stores/language';
 
 export default function Other({ category, setCategory, keywords, setKeywords }) {

@@ -1,9 +1,8 @@
 'use client';
 
+import { LuChevronLeft, LuChevronRight } from '@/icons';
 import { motion } from 'framer-motion';
-import cn from '@/lib/cn';
-import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
-import { useEffect, useRef, useState } from 'react';
+import cn from '@/lib/cn';import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { t } from '@/stores/language';
 import { useMedia } from 'react-use';

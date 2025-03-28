@@ -1,13 +1,12 @@
 'use client';
 
+import { RiErrorWarningFill } from '@/icons';
 import MotionImage from '@/app/components/Motion/Image';
 import { motion } from 'framer-motion';
 import About from '@/app/(bots)/bots/[id]/components/sections/About';
 import RightSide from '@/app/(bots)/bots/[id]/components/sections/RightSide';
 import Tooltip from '@/app/components/Tooltip';
-import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import Link from 'next/link';
+import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';import Link from 'next/link';
 import config from '@/config';
 import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';

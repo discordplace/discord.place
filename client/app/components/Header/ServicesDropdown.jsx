@@ -1,17 +1,11 @@
 'use client';
 
+import { RiBrush2Fill, RiRobot2Fill, PiWaveformBold, MdEmojiEmotions, HiUserGroup, HiTemplate, FaCompass } from '@/icons';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
 import { t } from '@/stores/language';
 import Link from 'next/link';
-import { FaCompass } from 'react-icons/fa';
-import { HiTemplate } from 'react-icons/hi';
-import { HiUserGroup } from 'react-icons/hi2';
-import { MdEmojiEmotions } from 'react-icons/md';
-import { PiWaveformBold } from 'react-icons/pi';
-import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
-
-export default function ServicesDropdown() {
+export default function ServicesDropdown() {
   const setHoveringHeaderTab = useGeneralStore(state => state.header.setHoveringHeaderTab);
   const setLastMouseOut = useGeneralStore(state => state.header.setLastMouseOut);
 

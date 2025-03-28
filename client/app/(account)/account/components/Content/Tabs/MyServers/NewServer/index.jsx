@@ -1,5 +1,6 @@
 'use client';
 
+import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle, IoMdCloseCircle, BsFire } from '@/icons';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Image from 'next/image';
 import createServer from '@/lib/request/servers/createServer';
@@ -8,15 +9,9 @@ import { useRouter } from 'next-nprogress-bar';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';
-import { TbLoader } from 'react-icons/tb';
-import { MdChevronLeft } from 'react-icons/md';
-import config from '@/config';
+import confetti from '@/lib/lotties/confetti.json';import config from '@/config';
 import Select from '@/app/components/Select';
-import { t } from '@/stores/language';
-import { BsFire } from 'react-icons/bs';
-import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
-import cn from '@/lib/cn';
+import { t } from '@/stores/language';import cn from '@/lib/cn';
 
 export default function NewServer() {
   const currentlyAddingServer = useAccountStore(state => state.currentlyAddingServer);

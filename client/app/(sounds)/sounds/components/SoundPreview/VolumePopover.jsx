@@ -1,9 +1,8 @@
 'use client';
 
+import { HiVolumeOff, HiVolumeUp } from '@/icons';
 import useGeneralStore from '@/stores/general';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
-import { t } from '@/stores/language';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';import { t } from '@/stores/language';
 
 export default function VolumePopover() {
   const volume = useGeneralStore(state => state.sounds.volume);

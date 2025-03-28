@@ -1,11 +1,10 @@
+import { BsEmojiAngry } from '@/icons';
 import useSearchStore from '@/stores/templates/search';
 import { useShallow } from 'zustand/react/shallow';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import Card from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
-import ErrorState from '@/app/components/ErrorState';
-import { BsEmojiAngry } from 'react-icons/bs';
-import { toast } from 'sonner';
+import ErrorState from '@/app/components/ErrorState';import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence } from 'framer-motion';
 import { t } from '@/stores/language';

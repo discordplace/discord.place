@@ -1,9 +1,8 @@
 'use client';
 
+import { MdOutlineArrowOutward } from '@/icons';
 import Graph from '@/app/(dashboard)/components/Home/Graph/index';
-import cn from '@/lib/cn';
-import { MdOutlineArrowOutward } from 'react-icons/md';
-import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';import Tooltip from '@/app/components/Tooltip';
 import { useMedia } from 'react-use';
 import { t } from '@/stores/language';
 

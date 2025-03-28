@@ -1,9 +1,5 @@
-'use client';
-
-import { FaDisplay } from 'react-icons/fa6';
-import Markdown from '@/app/components/Markdown';
-import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
-import Input from '@/app/(bots)/bots/[id]/manage/components/Input';
+'use client';import { RiEyeFill, RiEyeOffFill, FaDisplay } from '@/icons';
+import Markdown from '@/app/components/Markdown';import Input from '@/app/(bots)/bots/[id]/manage/components/Input';
 import { t } from '@/stores/language';
 
 export default function EssentialInformation({ shortDescription, setShortDescription, description, setDescription, inviteURL, setInviteURL, markdownPreviewing, setMarkdownPreviewing }) {

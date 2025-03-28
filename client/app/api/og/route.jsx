@@ -1,24 +1,17 @@
 /* eslint no-unreachable: 0 */
 
+import { RiRobot2Fill, PiWaveformBold, MdEmojiEmotions, HiNewspaper, HiTemplate, FaCompass, FaUserCircle } from '@/icons';
 import { ImageResponse } from '@vercel/og';
 import fs from 'node:fs';
 import { NextResponse } from 'next/server';
-import fuc from '@/lib/fuc';
-import { FaCompass, FaUserCircle } from 'react-icons/fa';
-import getImageBuffer from '@/lib/getImageBuffer';
+import fuc from '@/lib/fuc';import getImageBuffer from '@/lib/getImageBuffer';
 import Profile from '@/app/api/og/content/Profile';
 import Server from '@/app/api/og/content/Server';
 import Bot from '@/app/api/og/content/Bot';
 import Emoji from '@/app/api/og/content/Emoji';
 import Template from '@/app/api/og/content/Template';
 import Sound from '@/app/api/og/content/Sound';
-import Blog from '@/app/api/og/content/Blog';
-import { RiRobot2Fill } from 'react-icons/ri';
-import { MdEmojiEmotions } from 'react-icons/md';
-import { HiNewspaper, HiTemplate } from 'react-icons/hi';
-import { PiWaveformBold } from 'react-icons/pi';
-
-function getFontData(fontName) {
+import Blog from '@/app/api/og/content/Blog';function getFontData(fontName) {
   const file = fs.readFileSync(`${process.cwd()}/public/fonts/${fontName}.ttf`);
 
   return file.buffer;

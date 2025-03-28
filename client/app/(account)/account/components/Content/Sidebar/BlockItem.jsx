@@ -1,11 +1,10 @@
+import { MdOpenInNew } from '@/icons';
 import Tooltip from '@/app/components/Tooltip';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
 import Link from 'next/link';
-import { MdOpenInNew } from 'react-icons/md';
-
-export default function BlockItem({ id, name, icon, href, onClick, badge, disabled, condition, visited = true }) {
+export default function BlockItem({ id, name, icon, href, onClick, badge, disabled, condition, visited = true }) {
   const isCollapsed = useAccountStore(state => state.isCollapsed);
   const activeTab = useAccountStore(state => state.activeTab);
   const setActiveTab = useAccountStore(state => state.setActiveTab);

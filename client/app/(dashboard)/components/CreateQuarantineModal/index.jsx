@@ -1,12 +1,9 @@
 'use client';
 
+import { RiCommunityFill, RiUser3Fill, IoMdCheckmarkCircle } from '@/icons';
 import config from '@/config';
 import cn from '@/lib/cn';
-import { useEffect } from 'react';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import { RiUser3Fill } from 'react-icons/ri';
-import { RiCommunityFill } from 'react-icons/ri';
-import useModalsStore from '@/stores/modals';
+import { useEffect } from 'react';import useModalsStore from '@/stores/modals';
 import useGeneralStore from '@/stores/general';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';

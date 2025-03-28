@@ -1,14 +1,10 @@
 'use client';
 
+import { TbLoader, MdOutlineOpenInNew, GoHeartFill } from '@/icons';
 import useAuthStore from '@/stores/auth';
-import Link from 'next/link';
-import { MdOutlineOpenInNew } from 'react-icons/md';
-import { GoHeartFill } from 'react-icons/go';
-import { useEffect, useState } from 'react';
+import Link from 'next/link';import { useEffect, useState } from 'react';
 import getPlans from '@/lib/request/payments/getPlansFromClient';
-import { toast } from 'sonner';
-import { TbLoader } from 'react-icons/tb';
-import useModalsStore from '@/stores/modals';
+import { toast } from 'sonner';import useModalsStore from '@/stores/modals';
 import CreateProfile from '@/app/(account)/account/components/Content/Tabs/MyAccount/CreateProfile';
 import createProfile from '@/lib/request/profiles/createProfile';
 import { useShallow } from 'zustand/react/shallow';

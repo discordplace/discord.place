@@ -1,10 +1,9 @@
 'use client';
 
+import { RiErrorWarningFill } from '@/icons';
 import { toast } from 'sonner';
 import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import deleteServer from '@/lib/request/servers/deleteServer';
+import { useShallow } from 'zustand/react/shallow';import deleteServer from '@/lib/request/servers/deleteServer';
 import { useRouter } from 'next-nprogress-bar';
 import { t } from '@/stores/language';
 

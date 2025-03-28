@@ -1,21 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { HiBell } from 'react-icons/hi';
-import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
-import { TbLoader } from 'react-icons/tb';
-import { IoCheckmarkCircle } from 'react-icons/io5';
-import { toast } from 'sonner';
+import { TbLoader, RiSendPlaneFill, IoCheckmarkCircle, HiBell, BiCodeCurly } from '@/icons';
+import { useEffect, useRef, useState } from 'react';import Input from '@/app/(servers)/servers/[id]/manage/components/Input';import { toast } from 'sonner';
 import deleteWebhookSettings from '@/lib/request/servers/deleteWebhookSettings';
 import setWebhookSettings from '@/lib/request/servers/setWebhookSettings';
 import testServerWebhook from '@/lib/request/servers/testWebhook';
 import useLanguageStore, { t } from '@/stores/language';
 import cn from '@/lib/cn';
-import CodeBlock from '@/app/components/CodeBlock';
-import { BiCodeCurly } from 'react-icons/bi';
-import revalidateServer from '@/lib/revalidate/server';
-import { RiSendPlaneFill } from 'react-icons/ri';
-import Tooltip from '@/app/components/Tooltip';
+import CodeBlock from '@/app/components/CodeBlock';import revalidateServer from '@/lib/revalidate/server';import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import Twemoji from 'react-twemoji';
 

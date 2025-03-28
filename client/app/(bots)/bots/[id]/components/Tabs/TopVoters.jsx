@@ -1,8 +1,7 @@
+import { TbSquareRoundedChevronUp } from '@/icons';
 import Pagination from '@/app/components/Pagination';
 import { useEffect, useState } from 'react';
-import cn from '@/lib/cn';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import fetchVoters from '@/lib/request/bots/fetchVoters';
+import cn from '@/lib/cn';import fetchVoters from '@/lib/request/bots/fetchVoters';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { t } from '@/stores/language';

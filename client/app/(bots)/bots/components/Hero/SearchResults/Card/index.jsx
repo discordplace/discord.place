@@ -1,24 +1,13 @@
 'use client';
 
-import Link from 'next/link';
-import { FaCompass } from 'react-icons/fa';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import useSearchStore from '@/stores/bots/search';
-import { TiStar } from 'react-icons/ti';
-import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import { MdUpdate } from 'react-icons/md';
-import { IoHeart } from 'react-icons/io5';
-import { useMedia } from 'react-use';
-import getRelativeTime from '@/lib/getRelativeTime';
-import { BsFire } from 'react-icons/bs';
-import config from '@/config';
+import { TiStar, TbSquareRoundedChevronUp, MdUpdate, IoHeart, ImTrophy, HiSortAscending, HiSortDescending, FaCompass, BsFire } from '@/icons';
+import Link from 'next/link';import useSearchStore from '@/stores/bots/search';import { useMedia } from 'react-use';
+import getRelativeTime from '@/lib/getRelativeTime';import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Tooltip from '@/app/components/Tooltip';
-import { ImTrophy } from 'react-icons/im';
-
-export default function Card({ data, overridedSort }) {
+export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
   const language = useLanguageStore(state => state.language);
   const storedSort = useSearchStore(state => state.sort);

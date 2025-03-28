@@ -1,9 +1,8 @@
 'use client';
 
+import { FaDiscord } from '@/icons';
 import Tooltip from '@/app/components/Tooltip';
-import { toast } from 'sonner';
-import { FaDiscord } from 'react-icons/fa';
-import cn from '@/lib/cn';
+import { toast } from 'sonner';import cn from '@/lib/cn';
 import { t } from '@/stores/language';
 import { useMemo } from 'react';
 

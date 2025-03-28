@@ -1,14 +1,13 @@
 'use client';
 
+import { BsEmojiAngry } from '@/icons';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import { BsEmojiAngry } from 'react-icons/bs';
-import useLanguageStore, { t } from '@/stores/language';
+import Link from 'next/link';import useLanguageStore, { t } from '@/stores/language';
 
 export default function ActiveTimeouts() {
   const data = useAccountStore(state => state.data);

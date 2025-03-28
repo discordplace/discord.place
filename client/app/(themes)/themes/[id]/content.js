@@ -1,11 +1,8 @@
 'use client';
 
+import { RiErrorWarningFill, LuShieldQuestion } from '@/icons';
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
-import config from '@/config';
-import { LuShieldQuestion } from 'react-icons/lu';
-import FaQs from '@/app/(themes)/themes/[id]/components/FaQs';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import Link from 'next/link';
+import config from '@/config';import FaQs from '@/app/(themes)/themes/[id]/components/FaQs';import Link from 'next/link';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
 import deleteTheme from '@/lib/request/themes/deleteTheme';

@@ -1,15 +1,10 @@
 'use client';
 
+import { MdBugReport, IoClose, HiFlag } from '@/icons';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
-import Tooltip from '@/app/components/Tooltip';
-import { HiFlag } from 'react-icons/hi';
-import useGeneralStore from '@/stores/general';
-import { IoClose } from 'react-icons/io5';
-import cn from '@/lib/cn';
-import { motion, useAnimationControls } from 'framer-motion';
-import { MdBugReport } from 'react-icons/md';
-import useAuthStore from '@/stores/auth';
+import Tooltip from '@/app/components/Tooltip';import useGeneralStore from '@/stores/general';import cn from '@/lib/cn';
+import { motion, useAnimationControls } from 'framer-motion';import useAuthStore from '@/stores/auth';
 import { t } from '@/stores/language';
 import config from '@/config';
 import Link from 'next/link';

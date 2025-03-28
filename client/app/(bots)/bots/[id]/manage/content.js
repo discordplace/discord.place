@@ -1,9 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { TbLoader } from 'react-icons/tb';
-import { MdSave } from 'react-icons/md';
-import isEqual from 'lodash/isEqual';
+import { TbLoader, MdSave } from '@/icons';
+import { useEffect, useState } from 'react';import isEqual from 'lodash/isEqual';
 import EssentialInformation from '@/app/(bots)/bots/[id]/manage/components/EssentialInformation';
 import Other from '@/app/(bots)/bots/[id]/manage/components/Other';
 import Webhook from '@/app/(bots)/bots/[id]/manage/components/Webhook';

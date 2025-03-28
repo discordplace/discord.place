@@ -1,15 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { FaUsers } from 'react-icons/fa';
-import { TiStar } from 'react-icons/ti';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { ImTrophy } from 'react-icons/im';
-import config from '@/config';
-import useLanguageStore, { t } from '@/stores/language';
-import { FiArrowUpRight } from 'react-icons/fi';
-
-const formatter = new Intl.NumberFormat('en-US', {
+import { TiStar, TbSquareRoundedChevronUp, ImTrophy, FiArrowUpRight, FaUsers } from '@/icons';
+import { motion } from 'framer-motion';import config from '@/config';
+import useLanguageStore, { t } from '@/stores/language';const formatter = new Intl.NumberFormat('en-US', {
   notation: 'compact',
   compactDisplay: 'short'
 });

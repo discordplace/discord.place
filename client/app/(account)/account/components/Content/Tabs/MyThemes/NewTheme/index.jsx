@@ -1,17 +1,12 @@
 'use client';
 
-import config from '@/config';
-import { MdChevronLeft } from 'react-icons/md';
-import { useState } from 'react';
+import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle } from '@/icons';
+import config from '@/config';import { useState } from 'react';
 import { toast } from 'sonner';
-import cn from '@/lib/cn';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import createTheme from '@/lib/request/themes/createTheme';
+import cn from '@/lib/cn';import createTheme from '@/lib/request/themes/createTheme';
 import { useRouter } from 'next/navigation';
 import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';
-import { TbLoader } from 'react-icons/tb';
-import useAccountStore from '@/stores/account';
+import confetti from '@/lib/lotties/confetti.json';import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
 import { HexColorPicker } from 'react-colorful';
 import isEqual from 'lodash/isEqual';

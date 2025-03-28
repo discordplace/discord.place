@@ -1,9 +1,7 @@
 
+import { TbSquareRoundedChevronUp, FaUsers } from '@/icons';
 import config from '@/config';
-import { FaUsers } from 'react-icons/fa';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-
-export default function Server({ data, icon_base64 }) {
+export default function Server({ data, icon_base64 }) {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
     notation: 'compact',

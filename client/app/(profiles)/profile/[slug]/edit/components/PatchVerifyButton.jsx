@@ -1,10 +1,9 @@
 'use client';
 
+import { TbLoader } from '@/icons';
 import patchProfileVerify from '@/lib/request/profiles/patchProfileVerify';
 import revalidateProfile from '@/lib/revalidate/profile';
-import { useState } from 'react';
-import { TbLoader } from 'react-icons/tb';
-import { toast } from 'sonner';
+import { useState } from 'react';import { toast } from 'sonner';
 import { t } from '@/stores/language';
 
 export default function PatchVerifyButton({ profile }) {

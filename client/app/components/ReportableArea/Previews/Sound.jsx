@@ -1,4 +1,4 @@
-import { PiWaveformBold } from 'react-icons/pi';
+import { PiWaveformBold } from '@/icons';
 
 export default function SoundPreview({ metadata }) {
   return (

@@ -1,15 +1,12 @@
 'use client';
 
+import { TbLoader, FaCloudUploadAlt } from '@/icons';
 import useThemeStore from '@/stores/theme';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
-import cn from '@/lib/cn';
-import { FaCloudUploadAlt } from 'react-icons/fa';
-import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';
-import { toast } from 'sonner';
-import { TbLoader } from 'react-icons/tb';
-import useModalsStore from '@/stores/modals';
+import cn from '@/lib/cn';import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';
+import { toast } from 'sonner';import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
 import Image from 'next/image';

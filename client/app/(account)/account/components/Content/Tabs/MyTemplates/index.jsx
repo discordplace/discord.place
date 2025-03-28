@@ -1,12 +1,9 @@
 'use client';
 
+import { LuPlus, BsEmojiAngry, BsQuestionCircleFill } from '@/icons';
 import ErrorState from '@/app/components/ErrorState';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import { BsEmojiAngry } from 'react-icons/bs';
-import { LuPlus } from 'react-icons/lu';
-import { BsQuestionCircleFill } from 'react-icons/bs';
-import config from '@/config';
+import Link from 'next/link';import config from '@/config';
 import TemplateCard from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
 import { t } from '@/stores/language';
 

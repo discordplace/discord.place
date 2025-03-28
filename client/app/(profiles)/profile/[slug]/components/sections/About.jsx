@@ -1,10 +1,5 @@
-import { MdOutlineMale, MdOutlineFemale } from 'react-icons/md';
-import { LiaBirthdayCakeSolid } from 'react-icons/lia';
-import { FaGenderless } from 'react-icons/fa';
-import { BsEye, BsGeoAlt, BsSuitcaseLg } from 'react-icons/bs';
-import { motion } from 'framer-motion';
-import { IoMdHeartEmpty } from 'react-icons/io';
-import { t } from '@/stores/language';
+import { MdOutlineFemale, MdOutlineMale, LiaBirthdayCakeSolid, IoMdHeartEmpty, FaGenderless, BsEye, BsGeoAlt, BsSuitcaseLg } from '@/icons';
+import { motion } from 'framer-motion';import { t } from '@/stores/language';
 
 export default function About({ profile }) {
   const keys = [

@@ -1,10 +1,9 @@
 'use client';
 
+import { BsEmojiAngry } from '@/icons';
 import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
 import useSearchStore from '@/stores/profiles/search';
-import ErrorState from '@/app/components/ErrorState';
-import { BsEmojiAngry } from 'react-icons/bs';
-import { useShallow } from 'zustand/react/shallow';
+import ErrorState from '@/app/components/ErrorState';import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence, motion } from 'framer-motion';
 import Pagination from '@/app/components/Pagination';
 

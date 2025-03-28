@@ -1,5 +1,4 @@
-import { FaHeart, FaRegEye } from 'react-icons/fa';
-import { FiArrowRightCircle } from 'react-icons/fi';
+import { FiArrowRightCircle, FaHeart, FaRegEye } from '@/icons';
 
 export default function Profile({ data, avatar_base64 }) {
   const formatter = new Intl.NumberFormat('en-US', {

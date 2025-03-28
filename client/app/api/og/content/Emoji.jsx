@@ -1,7 +1,6 @@
+import { HiDocumentDownload } from '@/icons';
 import config from '@/config';
-import { HiDocumentDownload } from 'react-icons/hi';
-
-export default function Emoji({ data, avatar_base64 }) {
+export default function Emoji({ data, avatar_base64 }) {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
     notation: 'compact',
