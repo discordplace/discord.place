@@ -1,24 +1,17 @@
 'use client';
 
+import { PiWarningCircleFill, LuPlus, FaCircleCheck, FaCircleExclamation, BsEmojiAngry, BsQuestionCircleFill } from '@/icons';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ErrorState from '@/app/components/ErrorState';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
-import NewBot from '@/app/(account)/account/components/Content/Tabs/MyBots/NewBot';
-import { LuPlus } from 'react-icons/lu';
-import config from '@/config';
+import Link from 'next/link';import NewBot from '@/app/(account)/account/components/Content/Tabs/MyBots/NewBot';import config from '@/config';
 import Countdown from '@/app/components/Countdown';
-import cn from '@/lib/cn';
-import { FaCircleCheck, FaCircleExclamation } from 'react-icons/fa6';
-import { t } from '@/stores/language';
+import cn from '@/lib/cn';import { t } from '@/stores/language';
 import useAuthStore from '@/stores/auth';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import getApplicationsEntitlementsScopeGranted from '@/lib/request/auth/getApplicationsEntitlementsScopeGranted';
-import { PiWarningCircleFill } from 'react-icons/pi';
-
-export default function MyBots() {
+export default function MyBots() {
   const data = useAccountStore(state => state.data);
   const user = useAuthStore(state => state.user);
 

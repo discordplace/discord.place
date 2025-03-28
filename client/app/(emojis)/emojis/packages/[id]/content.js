@@ -1,15 +1,10 @@
 'use client';
 
+import { RiErrorWarningFill, MdEmojiEmotions, LuShieldQuestion } from '@/icons';
 import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
 import AnimatedCount from '@/app/components/AnimatedCount';
-import config from '@/config';
-import { LuShieldQuestion } from 'react-icons/lu';
-import FaQs from '@/app/(emojis)/emojis/packages/[id]/components/FaQs';
-import { MdEmojiEmotions } from 'react-icons/md';
-import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
-import { motion } from 'framer-motion';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import Link from 'next/link';
+import config from '@/config';import FaQs from '@/app/(emojis)/emojis/packages/[id]/components/FaQs';import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
+import { motion } from 'framer-motion';import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';

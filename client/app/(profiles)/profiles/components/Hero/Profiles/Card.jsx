@@ -1,9 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-import { FiArrowUpRight } from 'react-icons/fi';
-import { TbWorldShare } from 'react-icons/tb';
-import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
+import { TbWorldShare, FiArrowUpRight } from '@/icons';
+import Image from 'next/image';import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
 import config from '@/config';
 import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';

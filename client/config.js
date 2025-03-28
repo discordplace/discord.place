@@ -1,25 +1,6 @@
 /* eslint no-duplicate-imports: 0 */ // Disable eslint no-duplicate-imports
 
-import { CgProfile } from 'react-icons/cg';
-import { MdDownload, MdEmojiEmotions, MdEvent, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
-import { RiBrush2Fill, RiCommunityFill, RiRobot2Fill } from 'react-icons/ri';
-import { FaCat, FaCompass, FaEye, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers } from 'react-icons/fa';
-import { AiFillSound, AiFillTool } from 'react-icons/ai';
-import { BiSolidCategory, BiSolidHappy, BiSolidMusic } from 'react-icons/bi';
-import { IoMusicalNotesSharp, IoGameController, IoLanguage, IoHeart } from 'react-icons/io5';
-import { GiTwoCoins } from 'react-icons/gi';
-import { ImUser } from 'react-icons/im';
-import { HiDesktopComputer, HiNewspaper, HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import { HiMiniExclamationCircle, HiMiniPaintBrush } from 'react-icons/hi2';
-import { RiInstagramFill } from 'react-icons/ri';
-import { MdMenuBook } from 'react-icons/md';
-import { TiPlus, TiStar } from 'react-icons/ti';
-import { HiTemplate } from 'react-icons/hi';
-import { TbBrush, TbCategoryFilled, TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { BsStars, BsThreeDots } from 'react-icons/bs';
-import { FaRegImage } from 'react-icons/fa6';
-import { IoIosChatboxes } from 'react-icons/io';
-import { PiWaveformBold } from 'react-icons/pi';
+import { TiPlus, TiStar, TbBrush, TbCategoryFilled, TbSquareRoundedChevronUp, RiBrush2Fill, RiCommunityFill, RiInstagramFill, RiRobot2Fill, PiWaveformBold, MdDownload, MdEmojiEmotions, MdEvent, MdMenuBook, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate, IoGameController, IoHeart, IoLanguage, IoMusicalNotesSharp, IoIosChatboxes, ImUser, HiMiniExclamationCircle, HiMiniPaintBrush, HiDesktopComputer, HiNewspaper, HiSortAscending, HiSortDescending, HiTemplate, GiTwoCoins, FaRegImage, FaCat, FaCompass, FaEye, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers, CgProfile, BsStars, BsThreeDots, BiSolidCategory, BiSolidHappy, BiSolidMusic, AiFillSound, AiFillTool } from '@/icons';
 
 const config = {
   availableLocales: [

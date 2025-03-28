@@ -1,12 +1,9 @@
 'use client';
 
+import { MdOutlineArrowOutward, HiPlay, FaPause } from '@/icons';
 import useThemeStore from '@/stores/theme';
 import { useEffect, useState } from 'react';
-import WavesurferPlayer from '@wavesurfer/react';
-import { HiPlay } from 'react-icons/hi2';
-import { FaPause } from 'react-icons/fa6';
-import { MdOutlineArrowOutward } from 'react-icons/md';
-import Link from 'next/link';
+import WavesurferPlayer from '@wavesurfer/react';import Link from 'next/link';
 import useGeneralStore from '@/stores/general';
 import { useShallow } from 'zustand/react/shallow';
 import VolumePopover from '@/app/(sounds)/sounds/components/SoundPreview/VolumePopover';

@@ -1,9 +1,8 @@
 'use client';
 
+import { MdChevronLeft } from '@/icons';
 import cn from '@/lib/cn';
-import { useState } from 'react';
-import { MdChevronLeft } from 'react-icons/md';
-import Question1 from '@/app/(themes)/themes/[id]/components/FaQs/Questions/1';
+import { useState } from 'react';import Question1 from '@/app/(themes)/themes/[id]/components/FaQs/Questions/1';
 import Question2 from '@/app/(themes)/themes/[id]/components/FaQs/Questions/2';
 import Question3 from '@/app/(themes)/themes/[id]/components/FaQs/Questions/3';
 import AnimateHeight from 'react-animate-height';

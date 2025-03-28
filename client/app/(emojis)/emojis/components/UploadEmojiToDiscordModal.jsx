@@ -1,15 +1,13 @@
 'use client';
 
+import { HiPlus, BsEmojiAngry } from '@/icons';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import ErrorState from '@/app/components/ErrorState';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
-import Link from 'next/link';
-import { BsEmojiAngry } from 'react-icons/bs';
-import { HiPlus } from 'react-icons/hi';
-import { t } from '@/stores/language';
+import Link from 'next/link';import { t } from '@/stores/language';
 
 export default function UploadEmojiToDiscordModal({ guilds }) {
   const selectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.selectedGuildId);

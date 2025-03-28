@@ -1,37 +1,22 @@
 'use client';
 
+import { TbLockPlus, RiGroup2Fill, RiPencilFill, PiWaveformBold, MdAlternateEmail, MdEmojiEmotions, MdHttps, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility, IoMdCheckmarkCircle, IoMdCloseCircle, IoMdUndo, HiMiniIdentification, HiTemplate, FiArrowRightCircle, FiArrowUpRight, FiLink, FaCompass, FaCrown, FaEye, FaUserCircle, CgBlock, CgFormatSlash, BsStars, BiCloudDownload, BiSolidCategory } from '@/icons';
 import useAuthStore from '@/stores/auth';
 import { useEffect } from 'react';
 import { useRouter } from 'next-nprogress-bar';
 import Sidebar from '@/app/(dashboard)/components/Sidebar';
 import Home from '@/app/(dashboard)/components/Home';
-import useDashboardStore from '@/stores/dashboard';
-import { CgBlock, CgFormatSlash } from 'react-icons/cg';
-import useThemeStore from '@/stores/theme';
+import useDashboardStore from '@/stores/dashboard';import useThemeStore from '@/stores/theme';
 import { motion, AnimatePresence } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
-import Queue from '@/app/(dashboard)/components/Queue';
-import { MdAlternateEmail, MdEmojiEmotions, MdHttps, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility } from 'react-icons/md';
-import { FaCompass, FaCrown, FaEye, FaUserCircle } from 'react-icons/fa';
-import { IoMdCheckmarkCircle, IoMdCloseCircle, IoMdUndo } from 'react-icons/io';
-import { BiCloudDownload, BiSolidCategory } from 'react-icons/bi';
-import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
+import Queue from '@/app/(dashboard)/components/Queue';import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
 import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, deleteBlockedIP, deleteLink, deleteBotDenyRecord, restoreBot, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
 import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
 import config from '@/config';
 import sleep from '@/lib/sleep';
-import { useShallow } from 'zustand/react/shallow';
-import { HiTemplate } from 'react-icons/hi';
-import { PiWaveformBold } from 'react-icons/pi';
-import { FiArrowRightCircle, FiArrowUpRight, FiLink } from 'react-icons/fi';
-import { RiGroup2Fill, RiPencilFill } from 'react-icons/ri';
-import { TbLockPlus } from 'react-icons/tb';
-import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
+import { useShallow } from 'zustand/react/shallow';import CreateQuarantineModal from '@/app/(dashboard)//components/CreateQuarantineModal';
 import useModalsStore from '@/stores/modals';
-import { toast } from 'sonner';
-import { HiMiniIdentification } from 'react-icons/hi2';
-import { BsStars } from 'react-icons/bs';
-import getHashes from '@/lib/request/general/getHashes';
+import { toast } from 'sonner';import getHashes from '@/lib/request/general/getHashes';
 
 export default function Page() {
   const user = useAuthStore(state => state.user);

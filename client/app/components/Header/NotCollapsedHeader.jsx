@@ -1,19 +1,14 @@
 'use client';
 
+import { MdMiscellaneousServices, HiNewspaper, FiChevronDown, BsStars } from '@/icons';
 import cn from '@/lib/cn';
-import { Suspense, useEffect } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
-import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
+import { Suspense, useEffect } from 'react';import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
 import UserSide from './UserSide';
 import Link from 'next/link';
 import useGeneralStore from '@/stores/general';
 import LogoWithText from '@/app/components/Logo/WithText';
 import { t } from '@/stores/language';
-import { MdMiscellaneousServices } from 'react-icons/md';
-import { BsStars } from 'react-icons/bs';
-import { HiNewspaper } from 'react-icons/hi';
-
-export default function NotCollapsedHeader() {
+export default function NotCollapsedHeader() {
   const hoveringHeaderTab = useGeneralStore(state => state.header.hoveringHeaderTab);
   const setHoveringHeaderTab = useGeneralStore(state => state.header.setHoveringHeaderTab);
   const lastMouseOut = useGeneralStore(state => state.header.lastMouseOut);

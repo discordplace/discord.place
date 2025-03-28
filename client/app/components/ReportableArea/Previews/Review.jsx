@@ -1,6 +1,6 @@
+import { TiStarFullOutline } from '@/icons';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import { t } from '@/stores/language';
-import { TiStarFullOutline } from 'react-icons/ti';
 
 export default function ReviewPreview({ metadata }) {
   return (

@@ -1,9 +1,6 @@
+import { HiDocumentDownload, FiArrowRightCircle, FaHeart } from '@/icons';
 import config from '@/config';
-import { FaHeart } from 'react-icons/fa';
-import { FiArrowRightCircle } from 'react-icons/fi';
-import { HiDocumentDownload } from 'react-icons/hi';
-
-export default function Sound({ data, avatar_base64 }) {
+export default function Sound({ data, avatar_base64 }) {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
     notation: 'compact',

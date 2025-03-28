@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { MdChevronLeft } from 'react-icons/md';
-import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
+import { MdChevronLeft } from '@/icons';
+import Link from 'next/link';import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
 import DangerZone from '@/app/(profiles)/profile/[slug]/edit/components/DangerZone';
 import VerifiedBadge from '@/app/(profiles)/profile/[slug]/edit/components/VerifiedBadge';
 import PatchVerifyButton from '@/app/(profiles)/profile/[slug]/edit/components/PatchVerifyButton';

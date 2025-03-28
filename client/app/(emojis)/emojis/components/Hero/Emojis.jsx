@@ -1,12 +1,11 @@
 'use client';
 
+import { BsEmojiAngry } from '@/icons';
 import useSearchStore from '@/stores/emojis/search';
 import { useShallow } from 'zustand/react/shallow';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
-import ErrorState from '@/app/components/ErrorState';
-import { BsEmojiAngry } from 'react-icons/bs';
-import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
+import ErrorState from '@/app/components/ErrorState';import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
 import { t } from '@/stores/language';
 import ReportableArea from '@/app/components/ReportableArea';

@@ -1,7 +1,6 @@
+import { TbSquareRoundedChevronUp } from '@/icons';
 import config from '@/config';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-
-export default function Bot({ data, avatar_base64 }) {
+export default function Bot({ data, avatar_base64 }) {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
     notation: 'compact',

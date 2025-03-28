@@ -1,10 +1,9 @@
 'use client';
 
+import { FaDiscord } from '@/icons';
 import { usePathname } from 'next/navigation';
 import config from '@/config';
-import Link from 'next/link';
-import { FaDiscord } from 'react-icons/fa';
-import { t } from '@/stores/language';
+import Link from 'next/link';import { t } from '@/stores/language';
 
 export default function LoginButton() {
   const pathname = usePathname();

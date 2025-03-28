@@ -1,10 +1,7 @@
 'use client';
 
-import { useLocalStorage } from 'react-use';
-import { IoCheckmarkCircle } from 'react-icons/io5';
-import { LuShieldAlert } from 'react-icons/lu';
-import { PiFrameCornersBold } from 'react-icons/pi';
-import { t } from '@/stores/language';
+import { PiFrameCornersBold, LuShieldAlert, IoCheckmarkCircle } from '@/icons';
+import { useLocalStorage } from 'react-use';import { t } from '@/stores/language';
 
 export default function CustomIFrame({ src, title }) {
   const url = new URL(src);

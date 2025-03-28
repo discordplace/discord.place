@@ -1,19 +1,12 @@
 'use client';
 
+import { TbLoader, IoCheckmarkCircle, IoMdCheckmarkCircle, FaCirclePlus, BsGithub } from '@/icons';
 import config from '@/config';
-import cn from '@/lib/cn';
-import { FaCirclePlus } from 'react-icons/fa6';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import getData from '@/lib/request/auth/getData';
+import cn from '@/lib/cn';import getData from '@/lib/request/auth/getData';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import HashServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import { BsGithub } from 'react-icons/bs';
-import Input from '../Input';
-import { TbLoader } from 'react-icons/tb';
-import { IoCheckmarkCircle } from 'react-icons/io5';
-import editBot from '@/lib/request/bots/editBot';
+import HashServerIcon from '@/app/components/ImageFromHash/ServerIcon';import Input from '../Input';import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
 import { t } from '@/stores/language';
 

@@ -1,9 +1,6 @@
+import { IoCheckmarkCircle, BiCopy, BiSolidCopy } from '@/icons';
 import cn from '@/lib/cn';
-import { useState, useRef } from 'react';
-import { IoCheckmarkCircle } from 'react-icons/io5';
-import { toast } from 'sonner';
-import { BiCopy, BiSolidCopy } from 'react-icons/bi';
-import { t } from '@/stores/language';
+import { useState, useRef } from 'react';import { toast } from 'sonner';import { t } from '@/stores/language';
 
 export default function CopyButton({ timeout = 2000, successText, copyText, className, DefaultIcon = BiCopy, HoverIcon = BiSolidCopy, children }) {
   const [copied, setCopied] = useState(false);

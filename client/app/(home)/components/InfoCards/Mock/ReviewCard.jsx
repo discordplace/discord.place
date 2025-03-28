@@ -1,6 +1,5 @@
-import Image from 'next/image';
-import { TiStarFullOutline } from 'react-icons/ti';
-import cn from '@/lib/cn';
+import { TiStarFullOutline } from '@/icons';
+import Image from 'next/image';import cn from '@/lib/cn';
 
 export default function MockReviewCard({ username, content, rating }) {
   return (

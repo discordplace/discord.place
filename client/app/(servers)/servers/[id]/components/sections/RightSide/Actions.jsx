@@ -1,12 +1,9 @@
 'use client';
 
+import { TbLoader, TbSquareRoundedChevronUp, TbSquareRoundedChevronUpFilled, PiShareFat, PiShareFatFill, FaBell, FaRegBell, BsFire, BiPencil, BiSolidEnvelope, AiOutlineRise } from '@/icons';
 import CopyButton from '@/app/components/CopyButton';
 import MotionLink from '@/app/components/Motion/Link';
-import { AnimatePresence, motion } from 'framer-motion';
-import { BiPencil, BiSolidEnvelope } from 'react-icons/bi';
-import { PiShareFat, PiShareFatFill } from 'react-icons/pi';
-import { TbLoader, TbSquareRoundedChevronUpFilled, TbSquareRoundedChevronUp } from 'react-icons/tb';
-import useAuthStore from '@/stores/auth';
+import { AnimatePresence, motion } from 'framer-motion';import useAuthStore from '@/stores/auth';
 import cn from '@/lib/cn';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
@@ -14,15 +11,9 @@ import { toast } from 'sonner';
 import voteServer from '@/lib/request/servers/voteServer';
 import createReminder from '@/lib/request/servers/createReminder';
 import VoteCountdown from '@/app/components/Countdown/Vote';
-import Tooltip from '@/app/components/Tooltip';
-import { FaRegBell, FaBell } from 'react-icons/fa';
-import revalidateServer from '@/lib/revalidate/server';
-import { BsFire } from 'react-icons/bs';
-import createTripledVotesCheckout from '@/lib/request/servers/createTripledVotesCheckout';
+import Tooltip from '@/app/components/Tooltip';import revalidateServer from '@/lib/revalidate/server';import createTripledVotesCheckout from '@/lib/request/servers/createTripledVotesCheckout';
 import createStandedOutCheckout from '@/lib/request/servers/createStandedOutCheckout';
-import { useRouter } from 'next-nprogress-bar';
-import { AiOutlineRise } from 'react-icons/ai';
-import { t } from '@/stores/language';
+import { useRouter } from 'next-nprogress-bar';import { t } from '@/stores/language';
 
 export default function Actions({ server }) {
   const [serverVotes, setServerVotes] = useState(server.votes);

@@ -1,16 +1,8 @@
 'use client';
 
+import { TbSquareRoundedChevronUp, MdOutlineArrowOutward, IoMdHeart, HiCheck, FaLink, FaDiscord, BiSolidInfoCircle } from '@/icons';
 import Tooltip from '@/app/components/Tooltip';
-import Image from 'next/image';
-import { FaDiscord } from 'react-icons/fa';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { BiSolidInfoCircle } from 'react-icons/bi';
-import { FaLink } from 'react-icons/fa6';
-import { MdOutlineArrowOutward } from 'react-icons/md';
-import Link from 'next/link';
-import { IoMdHeart } from 'react-icons/io';
-import { HiCheck } from 'react-icons/hi';
-import cn from '@/lib/cn';
+import Image from 'next/image';import Link from 'next/link';import cn from '@/lib/cn';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
 import useThemeStore from '@/stores/theme';

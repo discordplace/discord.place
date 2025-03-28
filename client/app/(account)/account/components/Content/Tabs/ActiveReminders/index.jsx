@@ -1,15 +1,12 @@
 'use client';
 
+import { IoChevronDown, IoPaperPlane, BsEmojiAngry } from '@/icons';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import { BsEmojiAngry } from 'react-icons/bs';
-import useLanguageStore, { t } from '@/stores/language';
-import { IoChevronDown, IoPaperPlane } from 'react-icons/io5';
-import AnimateHeight from 'react-animate-height';
+import Link from 'next/link';import useLanguageStore, { t } from '@/stores/language';import AnimateHeight from 'react-animate-height';
 import { useState } from 'react';
 
 export default function ActiveReminders() {

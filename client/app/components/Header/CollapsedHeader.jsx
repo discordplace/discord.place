@@ -1,17 +1,12 @@
+import { MdOutlineOpenInNew, IoMdMenu, FiX } from '@/icons';
 import config from '@/config';
 import Link from 'next/link';
 import { useLockBodyScroll } from 'react-use';
-import UserSide from '@/app/components/Header/UserSide';
-import { IoMdMenu } from 'react-icons/io';
-import { Suspense, useEffect, useState } from 'react';
-import { FiX } from 'react-icons/fi';
-import LogoWithText from '@/app/components/Logo/WithText';
+import UserSide from '@/app/components/Header/UserSide';import { Suspense, useEffect, useState } from 'react';import LogoWithText from '@/app/components/Logo/WithText';
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import Drawer from '@/app/components/Drawer';
-import { useRouter } from 'next-nprogress-bar';
-import { MdOutlineOpenInNew } from 'react-icons/md';
-import cn from '@/lib/cn';
+import { useRouter } from 'next-nprogress-bar';import cn from '@/lib/cn';
 import { t } from '@/stores/language';
 
 export default function CollapsedHeader({ pathname }) {

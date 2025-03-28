@@ -1,18 +1,11 @@
 'use client';
 
-import config from '@/config';
-import { MdChevronLeft } from 'react-icons/md';
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { toast } from 'sonner';
-import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
-import cn from '@/lib/cn';
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import createBot from '@/lib/request/bots/createBot';
+import { TbLoader, RiEyeFill, RiEyeOffFill, MdChevronLeft, IoMdCheckmarkCircle } from '@/icons';
+import config from '@/config';import { useEffect, useLayoutEffect, useState } from 'react';
+import { toast } from 'sonner';import cn from '@/lib/cn';import createBot from '@/lib/request/bots/createBot';
 import { useRouter } from 'next/navigation';
 import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';
-import { TbLoader } from 'react-icons/tb';
-import Markdown from '@/app/components/Markdown';
+import confetti from '@/lib/lotties/confetti.json';import Markdown from '@/app/components/Markdown';
 import useAccountStore from '@/stores/account';
 import { useLocalStorage } from 'react-use';
 import { t } from '@/stores/language';

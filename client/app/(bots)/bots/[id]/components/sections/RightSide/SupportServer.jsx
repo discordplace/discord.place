@@ -1,10 +1,9 @@
 'use client';
 
+import { BiSolidCategory } from '@/icons';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import MotionLink from '@/app/components/Motion/Link';
-import { motion } from 'framer-motion';
-import { BiSolidCategory } from 'react-icons/bi';
-import { t } from '@/stores/language';
+import { motion } from 'framer-motion';import { t } from '@/stores/language';
 
 export default function SupportServer({ bot }) {
   return (

@@ -1,11 +1,9 @@
 'use client';
 
+import { TbLoader, IoMdCloseCircle } from '@/icons';
 import cn from '@/lib/cn';
 import useModalsStore from '@/stores/modals';
-import * as Dialog from '@radix-ui/react-dialog';
-import { IoMdCloseCircle } from 'react-icons/io';
-import { TbLoader } from 'react-icons/tb';
-import { useShallow } from 'zustand/react/shallow';
+import * as Dialog from '@radix-ui/react-dialog';import { useShallow } from 'zustand/react/shallow';
 import { Drawer } from 'vaul';
 import { useMedia } from 'react-use';
 

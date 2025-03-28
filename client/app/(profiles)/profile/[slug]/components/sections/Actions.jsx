@@ -1,12 +1,8 @@
-'use client';
-
-import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
+'use client';import { IoMdHeart, IoMdHeartEmpty, BsPencil, BsPencilFill } from '@/icons';
 import { toast } from 'sonner';
 import likeProfile from '@/lib/request/profiles/likeProfile';
 import cn from '@/lib/cn';
-import { useState } from 'react';
-import { BsPencil, BsPencilFill } from 'react-icons/bs';
-import config from '@/config';
+import { useState } from 'react';import config from '@/config';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Tooltip from '@/app/components/Tooltip';

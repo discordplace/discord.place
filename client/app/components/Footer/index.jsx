@@ -1,18 +1,11 @@
 'use client';
 
+import { MdSunny, IoIosMoon, FaXTwitter, FaDiscord, FaGithub, FaLinkedin } from '@/icons';
 import useThemeStore from '@/stores/theme';
 import { nanoid } from 'nanoid';
-import Link from 'next/link';
-import { FaDiscord, FaLinkedin, FaGithub } from 'react-icons/fa';
-import cn from '@/lib/cn';
+import Link from 'next/link';import cn from '@/lib/cn';
 import Image from 'next/image';
-import config from '@/config';
-import { FaXTwitter } from 'react-icons/fa6';
-import { usePathname } from 'next/navigation';
-import { MdSunny } from 'react-icons/md';
-import { motion } from 'framer-motion';
-import { IoIosMoon } from 'react-icons/io';
-import useLanguageStore, { t } from '@/stores/language';
+import config from '@/config';import { usePathname } from 'next/navigation';import { motion } from 'framer-motion';import useLanguageStore, { t } from '@/stores/language';
 import Twemoji from 'react-twemoji';
 
 export default function Footer() {

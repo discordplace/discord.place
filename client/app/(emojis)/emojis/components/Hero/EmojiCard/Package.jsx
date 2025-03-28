@@ -1,11 +1,8 @@
 'use client';
 
-import Link from 'next/link';
-import { HiDocumentDownload } from 'react-icons/hi';
-import config from '@/config';
-import cn from '@/lib/cn';
-import { LuPackage } from 'react-icons/lu';
-import { t } from '@/stores/language';
+import { LuPackage, HiDocumentDownload } from '@/icons';
+import Link from 'next/link';import config from '@/config';
+import cn from '@/lib/cn';import { t } from '@/stores/language';
 import Image from 'next/image';
 
 export default function EmojiPackageCard({ overridedImages, id, name, categories, downloads, emoji_ids, className }) {

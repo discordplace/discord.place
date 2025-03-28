@@ -1,16 +1,13 @@
 'use client';
 
+import { TbLoader, IoMdCheckmarkCircle, IoMdCloseCircle, FaCrown } from '@/icons';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';
 import checkSlugAvailability from '@/lib/request/profiles/checkSlugAvailability';
 import useAuthStore from '@/stores/auth';
 import useGeneralStore from '@/stores/general';
-import { useEffect, useState } from 'react';
-import { FaCrown } from 'react-icons/fa';
-import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
-import { TbLoader } from 'react-icons/tb';
-import { useDebounce } from 'react-use';
+import { useEffect, useState } from 'react';import { useDebounce } from 'react-use';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
 import { t } from '@/stores/language';

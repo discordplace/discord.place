@@ -1,8 +1,7 @@
 'use client';
 
-import getCompressedName from '@/lib/getCompressedName';
-import { HiMiniUserGroup } from 'react-icons/hi2';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import { HiMiniUserGroup } from '@/icons';
+import getCompressedName from '@/lib/getCompressedName';import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import getHashFromURL from '@/lib/getHashFromURL';
 import Link from 'next/link';
 import cn from '@/lib/cn';

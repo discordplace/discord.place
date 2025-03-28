@@ -1,15 +1,13 @@
 'use client';
 
+import { TiStar, HiSortAscending } from '@/icons';
 import config from '@/config';
 import cn from '@/lib/cn';
 import useLanguageStore, { t } from '@/stores/language';
 import useSearchStore from '@/stores/templates/search';
 import useThemeStore from '@/stores/theme';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { HiSortAscending } from 'react-icons/hi';
-import { TiStar } from 'react-icons/ti';
-import Ripples from 'react-ripples';
+import { useEffect, useRef, useState } from 'react';import Ripples from 'react-ripples';
 import getCompressedName from '@/lib/getCompressedName';
 
 export default function Card({ data, className }) {

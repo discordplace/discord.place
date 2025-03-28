@@ -141,7 +141,15 @@ module.exports = {
     ],
     'security/detect-object-injection': 'off',
     'security/detect-non-literal-fs-filename': 'off',
-    'security/detect-unsafe-regex': 'off'
+    'security/detect-unsafe-regex': 'off',
+    'padding-line-between-statements': [
+      'error',
+      {
+        'blankLine': 'always',
+        'prev': 'import',
+        'next': 'export'
+      }
+    ]
   },
   overrides: [
     {

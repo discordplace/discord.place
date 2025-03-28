@@ -1,21 +1,9 @@
 'use client';
 
-import Link from 'next/link';
-import { FaUsers } from 'react-icons/fa';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import useSearchStore from '@/stores/servers/search';
-import { MdUpdate } from 'react-icons/md';
-import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
-import { TiStar } from 'react-icons/ti';
-import { IoHeart } from 'react-icons/io5';
-import { ImTrophy } from 'react-icons/im';
-import { useMedia } from 'react-use';
+import { TiStar, TbSquareRoundedChevronUp, MdUpdate, IoHeart, ImTrophy, HiSortAscending, HiSortDescending, GiInfinity, FaUsers, BsFire } from '@/icons';
+import Link from 'next/link';import useSearchStore from '@/stores/servers/search';import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
-import getRelativeTime from '@/lib/getRelativeTime';
-import { BsFire } from 'react-icons/bs';
-import config from '@/config';
-import { GiInfinity } from 'react-icons/gi';
-import useLanguageStore, { t } from '@/stores/language';
+import getRelativeTime from '@/lib/getRelativeTime';import config from '@/config';import useLanguageStore, { t } from '@/stores/language';
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Tooltip from '@/app/components/Tooltip';

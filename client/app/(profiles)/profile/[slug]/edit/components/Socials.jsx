@@ -1,22 +1,17 @@
 'use client';
 
-import Link from 'next/link';
-import { MdArrowOutward } from 'react-icons/md';
-import { useState, useEffect } from 'react';
+import { TbLoader, MdArrowOutward, FiX } from '@/icons';
+import Link from 'next/link';import { useState, useEffect } from 'react';
 import addSocial from '@/lib/request/profiles/addSocial';
 import deleteSocial from '@/lib/request/profiles/deleteSocial';
-import { toast } from 'sonner';
-import { FiX } from 'react-icons/fi';
-import cn from '@/lib/cn';
+import { toast } from 'sonner';import cn from '@/lib/cn';
 import config from '@/config';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import revalidateProfile from '@/lib/revalidate/profile';
 import { t } from '@/stores/language';
 import colors from '@/lib/utils/profiles/colors';
 import getIcon from '@/lib/utils/profiles/getIcon';
-import { TbLoader } from 'react-icons/tb';
-
-export default function Socials({ profile }) {
+export default function Socials({ profile }) {
   const [socials, setSocials] = useState(profile.socials);
 
   const typeRegexps = {

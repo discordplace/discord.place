@@ -1,12 +1,11 @@
 'use client';
 
+import { BsEmojiAngry, BsQuestionCircleFill } from '@/icons';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import ErrorState from '@/app/components/ErrorState';
 import config from '@/config';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
-import UnlistedCard from '@/app/(account)/account/components/Content/Tabs/MyServers/UnlistedCard';
+import Link from 'next/link';import UnlistedCard from '@/app/(account)/account/components/Content/Tabs/MyServers/UnlistedCard';
 import NewServer from '@/app/(account)/account/components/Content/Tabs/MyServers/NewServer';
 import { t } from '@/stores/language';
 import Image from 'next/image';

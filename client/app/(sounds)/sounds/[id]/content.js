@@ -1,13 +1,10 @@
 'use client';
 
+import { RiErrorWarningFill, LuShieldQuestion } from '@/icons';
 import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
 import AnimatedCount from '@/app/components/AnimatedCount';
-import config from '@/config';
-import { LuShieldQuestion } from 'react-icons/lu';
-import FaQs from '@/app/(sounds)/sounds/[id]/components/FaQs';
-import { motion } from 'framer-motion';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import Link from 'next/link';
+import config from '@/config';import FaQs from '@/app/(sounds)/sounds/[id]/components/FaQs';
+import { motion } from 'framer-motion';import Link from 'next/link';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
 import deleteSound from '@/lib/request/sounds/deleteSound';

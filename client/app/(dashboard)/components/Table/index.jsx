@@ -1,24 +1,13 @@
 'use client';
 
-import ColumnRenderer from '@/app/(dashboard)/components/Table/ColumnRenderer';
-import { FaCheck } from 'react-icons/fa';
-import cn from '@/lib/cn';
+import { PiSortAscendingBold, PiSortDescendingBold, IoSearch, FiX, FaBookBookmark, FaXmark, FaCheck, BsEmojiAngry } from '@/icons';
+import ColumnRenderer from '@/app/(dashboard)/components/Table/ColumnRenderer';import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
 import { AnimatePresence } from 'framer-motion';
 import useDashboardStore from '@/stores/dashboard';
 import { useEffect, useRef, useState } from 'react';
-import ErrorState from '@/app/components/ErrorState';
-import { BsEmojiAngry } from 'react-icons/bs';
-import Pagination from '@/app/components/Pagination';
-import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
-import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
-import { FiX } from 'react-icons/fi';
-import isEqual from 'lodash/isEqual';
-import { IoSearch } from 'react-icons/io5';
-import * as chrono from 'chrono-node';
-import { useMedia } from 'react-use';
-import { FaBookBookmark, FaXmark } from 'react-icons/fa6';
-import Drawer from '@/app/components/Drawer';
+import ErrorState from '@/app/components/ErrorState';import Pagination from '@/app/components/Pagination';import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';import isEqual from 'lodash/isEqual';import * as chrono from 'chrono-node';
+import { useMedia } from 'react-use';import Drawer from '@/app/components/Drawer';
 
 export default function Table({ tabs }) {
   const selectedItems = useDashboardStore(state => state.selectedItems);

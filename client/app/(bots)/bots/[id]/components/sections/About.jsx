@@ -1,16 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import { FaCompass, FaGithub } from 'react-icons/fa';
-import { TiStarFullOutline } from 'react-icons/ti';
-import Markdown from '@/app/components/Markdown';
-import { RiSlashCommands2, RiUserAddLine } from 'react-icons/ri';
-import Image from 'next/image';
+import { TiStarFullOutline, TbSquareRoundedChevronUp, RiSlashCommands2, RiUserAddLine, PiGitForkBold, FaCompass, FaGithub } from '@/icons';
+import { motion } from 'framer-motion';import Markdown from '@/app/components/Markdown';import Image from 'next/image';
 import Link from 'next/link';
-import cn from '@/lib/cn';
-import { PiGitForkBold } from 'react-icons/pi';
-import { useMedia } from 'react-use';
+import cn from '@/lib/cn';import { useMedia } from 'react-use';
 import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 

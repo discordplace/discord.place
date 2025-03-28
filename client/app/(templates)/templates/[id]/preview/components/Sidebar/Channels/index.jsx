@@ -1,8 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-import { FaChevronDown } from 'react-icons/fa';
-import HomeIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Home';
+import { IoChevronDown, FaChevronDown } from '@/icons';
+import Image from 'next/image';import HomeIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Home';
 import EventsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Events';
 import BrowseChannelsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/BrowseChannels';
 import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';
@@ -10,9 +9,7 @@ import TextChannelIcon from '@/app/(templates)/templates/[id]/preview/components
 import TextChannelNSFWIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/TextChannelNSFW';
 import VoiceChannelIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/VoiceChannel';
 import VoiceChannelNSFWIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/VoiceChannelNSFW';
-import cn from '@/lib/cn';
-import { IoChevronDown } from 'react-icons/io5';
-import { useState } from 'react';
+import cn from '@/lib/cn';import { useState } from 'react';
 import { t } from '@/stores/language';
 
 export default function Channels({ data, focusedChannel, setFocusedChannel, currentlyOpenedSection, isMobile }) {
