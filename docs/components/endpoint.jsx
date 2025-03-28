@@ -314,16 +314,6 @@ export default function Endpoint({ id }) {
                 >
                   {JSON.stringify(data.responses.find(response => response.code === activeResponseTab).body, null, 2)}
                 </CodeBlock>
-
-              // <SyntaxHighlighter
-              //   className='max-w-[calc(100vw_-_4rem)] w-full !p-3 mt-2 !bg-[rgba(var(--dark-bg-quaternary))] !rounded-2xl [&>code]:!bg-[unset]'
-              //   PreTag={'div'}
-              //   // eslint-disable-next-line react/no-children-prop
-              //   children={JSON.stringify(data.responses.find(response => response.code === activeResponseTab).body, null, 2)}
-              //   language={'json'}
-              //   style={oneDark}
-              //   wrapLongLines={false}
-              // />
               )}
             </div>
           </div>
