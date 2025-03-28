@@ -6,7 +6,6 @@ const withBundleAnalyzer = pgk({ enabled: process.env.ANALYZE === 'true' });
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',

@@ -25,6 +25,7 @@ export default function ServerBanner({ id, hash, format, size, className, motion
       src={defaultAvatarURL}
       alt={`Image ${hash}`}
       className={className}
+      unoptimized={options.format === 'gif'}
       {...motionOptions}
       {...props}
     />
@@ -45,6 +46,7 @@ export default function ServerBanner({ id, hash, format, size, className, motion
 
         event.target.src = fallback;
       }}
+      unoptimized={options.format === 'gif'}
       {...motionOptions}
       {...props}
     />

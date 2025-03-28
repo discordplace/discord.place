@@ -25,6 +25,7 @@ export default function ServerIcon({ id, hash, format, size, className, motionOp
       src={defaultAvatarURL}
       alt={`Image ${hash}`}
       className={className}
+      unoptimized={options.format === 'gif'}
       {...motionOptions}
       {...props}
     />

@@ -87,6 +87,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
       src={defaultBannerURL}
       alt={`Image ${hash}`}
       className={className}
+      unoptimized={options.format === 'gif'}
       {...motionOptions}
       {...props}
     />
@@ -98,6 +99,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
       src={currentSource}
       alt={`Image ${hash}`}
       className={className}
+      unoptimized={options.format === 'gif'}
       {...motionOptions}
       {...props}
     />
