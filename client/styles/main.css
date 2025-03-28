@@ -130,3 +130,17 @@ iframe {
   overflow: hidden;
   border: 0;
 }
+
+/*
+  Fix layout being shifted when using radix-ui.
+  Stolen from https://www.reddit.com/r/reactjs/comments/1fjcwkh/comment/mdw3ohu 😜
+*/
+:root {
+  body[data-scroll-locked][data-scroll-locked] {
+    overflow: auto !important;
+  }
+  
+  body[data-scroll-locked] {
+    margin-right: 0 !important;
+  }
+}
