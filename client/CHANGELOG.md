@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.18.0](https://github.com/discordplace/discord.place/compare/client@v1.17.0...client@v1.18.0) (2025-03-29)
+
+
+### Features
+
+* reduce react-icons bundle size ([#184](https://github.com/discordplace/discord.place/issues/184)) ([f2ec941](https://github.com/discordplace/discord.place/commit/f2ec941dcb914d9b664868459e22191c7ec2887e))
+* remove Cloudflare integration and related IP blocking functionality ([31af96f](https://github.com/discordplace/discord.place/commit/31af96fb79ae48ce0de86565b146813af41579e1))
+
+
+### Bug Fixes
+
+* **dashboard:** update success and loading messages for review actions ([7986618](https://github.com/discordplace/discord.place/commit/7986618e615e6b8946c1aae8723319b2e59d04a4))
+* disable unoptimized loading images (GIF's excluded) ([850c0ea](https://github.com/discordplace/discord.place/commit/850c0ea619c2892c2a5c6c9e2f3b5a471ca3ac2d))
+* enable unoptimized image loading for ServerIcon component ([6eda2e7](https://github.com/discordplace/discord.place/commit/6eda2e7231c68c01abf8c470a1c12afaaf575689))
+* remove nested css usage ([786323c](https://github.com/discordplace/discord.place/commit/786323cc82c12683610d02c8f383e0ee3311ab2d))
+* resolve layout shift issue with radix-ui ([32a3b25](https://github.com/discordplace/discord.place/commit/32a3b25bd1fbb3fd1f8c0641c4029c914c1a73de))
+* wrap most voted badge label in a truncate span ([6dfbb40](https://github.com/discordplace/discord.place/commit/6dfbb40c78ec2fd8a803d29993edd5878161dc58))
+
 ## [1.17.0](https://github.com/discordplace/discord.place/compare/client@v1.16.0...client@v1.17.0) (2025-03-18)
 
 
