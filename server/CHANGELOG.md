@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.14.0](https://github.com/discordplace/discord.place/compare/server@v1.13.0...server@v1.14.0) (2025-03-29)
+
+
+### Features
+
+* **eval:** update the eval command to get the message content in a smarter way ([7497a82](https://github.com/discordplace/discord.place/commit/7497a821db7e02bb11b3e04a6079924ef67a86dd))
+* remove Cloudflare integration and related IP blocking functionality ([31af96f](https://github.com/discordplace/discord.place/commit/31af96fb79ae48ce0de86565b146813af41579e1))
+
+
+### Bug Fixes
+
+* correct deletion of expired blocked IPs ([0f8576a](https://github.com/discordplace/discord.place/commit/0f8576af42e7dcf6ddafdb92372a66c6448bc155))
+* **eval:** correct formatting of truncated output message in evaluate function ([7cc0634](https://github.com/discordplace/discord.place/commit/7cc0634bd5b7f3e1c120c5263eb0fc6f3bb4efed))
+* update deprecated setDMPermission usage ([0aea64c](https://github.com/discordplace/discord.place/commit/0aea64c7063ee78092713dd21ee9e4863d453916))
+* update webhook URL check in incrementVote function ([61b5999](https://github.com/discordplace/discord.place/commit/61b599988b23bf1cc3e86ac31a124fe342078192))
+* **vote:** increase button interaction collector timeout to 60 seconds ([a3b03b0](https://github.com/discordplace/discord.place/commit/a3b03b015ccb65850a6e60e054d550a9b470632e))
+
 ## [1.13.0](https://github.com/discordplace/discord.place/compare/server@v1.12.1...server@v1.13.0) (2025-03-18)
 
 
