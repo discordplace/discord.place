@@ -74,7 +74,7 @@ jobs:
           webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
           embed-title: 'Deployment Notification'
           embed-description: 'Deployment triggered. Proceeding with restart.'
-          embed-footer-text: 'server.discord.place'
+          embed-footer-text: 'api.discord.place'
           embed-color: 14194756
         if: always() # Run this step regardless of the outcome of previous steps
       
