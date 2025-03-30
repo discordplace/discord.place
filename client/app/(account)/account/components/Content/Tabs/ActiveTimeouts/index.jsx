@@ -7,7 +7,8 @@ import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';import useLanguageStore, { t } from '@/stores/language';
+import Link from 'next/link';
+import useLanguageStore, { t } from '@/stores/language';
 
 export default function ActiveTimeouts() {
   const data = useAccountStore(state => state.data);
@@ -29,7 +30,7 @@ export default function ActiveTimeouts() {
       </div>
 
       {(timeoutedBotsCount === 0 && timeoutedServersCount === 0) ? (
-        <div className='mt-20'>
+        <div className='mt-20 max-w-[800px]'>
           <ErrorState
             title={
               <div className='flex items-center gap-x-2'>
