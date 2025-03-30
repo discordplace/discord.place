@@ -1,12 +1,13 @@
 'use client';
 
 import { IoCheckmarkCircleSharp, IoChevronDownSharp } from '@/icons';
-import * as RadixSelect from '@radix-ui/react-select';import { useMedia } from 'react-use';
+import * as RadixSelect from '@radix-ui/react-select';
+import { useMedia } from 'react-use';
 import Drawer from '@/app/components/Drawer';
 import { useState } from 'react';
 import cn from '@/lib/cn';
 
-export default function Select({ mobileOverride, triggerClassName, placeholder, options, value, onChange, disabled }) {
+export default function Select({ mobileOverride, triggerClassName, placeholder, options, value, onChange, disabled, itemContainerClassName, position = 'item-aligned', sideOffset = 0 }) {
   const isMobile = useMedia('(max-width: 640px)', false);
   const [openState, setOpenState] = useState(false);
 
@@ -64,14 +65,22 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
         </RadixSelect.Trigger>
 
         <RadixSelect.Portal>
-          <RadixSelect.Content className='z-[9999] overflow-hidden rounded-lg border-2 border-primary bg-secondary'>
+          <RadixSelect.Content
+            className='z-[9999] overflow-hidden rounded-lg border-2 border-primary bg-secondary'
+            position={position}
+            sideOffset={sideOffset}
+            align='center'
+          >
             <RadixSelect.ScrollUpButton className='absolute flex w-full items-center justify-center rounded-b bg-gradient-to-b from-quaternary via-quaternary/50 py-3' />
 
             <RadixSelect.Viewport>
               {options.map(option => (
                 <RadixSelect.Item
                   key={option.value}
-                  className='relative flex cursor-pointer select-none items-center gap-x-2 p-4 font-medium leading-none text-tertiary transition-colors data-[disabled]:pointer-events-none data-[state=checked]:pointer-events-none data-[highlighted]:bg-tertiary data-[state=checked]:bg-quaternary data-[highlighted]:text-primary data-[state=checked]:text-primary data-[disabled]:opacity-50 data-[highlighted]:outline-none'
+                  className={cn(
+                    'relative flex cursor-pointer select-none items-center gap-x-2 p-4 font-medium leading-none text-tertiary transition-colors data-[disabled]:pointer-events-none data-[state=checked]:pointer-events-none data-[highlighted]:bg-tertiary data-[state=checked]:bg-quaternary data-[highlighted]:text-primary data-[state=checked]:text-primary data-[disabled]:opacity-50 data-[highlighted]:outline-none',
+                    itemContainerClassName
+                  )}
                   value={option.value}
                 >
                   <RadixSelect.ItemText>

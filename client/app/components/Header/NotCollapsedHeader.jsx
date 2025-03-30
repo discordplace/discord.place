@@ -2,13 +2,15 @@
 
 import { MdMiscellaneousServices, HiNewspaper, FiChevronDown, BsStars } from '@/icons';
 import cn from '@/lib/cn';
-import { Suspense, useEffect } from 'react';import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
+import { Suspense, useEffect } from 'react';
+import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
 import UserSide from './UserSide';
 import Link from 'next/link';
 import useGeneralStore from '@/stores/general';
 import LogoWithText from '@/app/components/Logo/WithText';
 import { t } from '@/stores/language';
-export default function NotCollapsedHeader() {
+
+export default function NotCollapsedHeader() {
   const hoveringHeaderTab = useGeneralStore(state => state.header.hoveringHeaderTab);
   const setHoveringHeaderTab = useGeneralStore(state => state.header.setHoveringHeaderTab);
   const lastMouseOut = useGeneralStore(state => state.header.lastMouseOut);
@@ -65,9 +67,7 @@ import { t } from '@/stores/language';
     <div className='absolute left-0 top-0 z-[9998] flex w-full items-center justify-center'>
       <div className='mt-8 flex w-full max-w-5xl items-center justify-between'>
         <div className='flex items-center gap-x-12'>
-          <Link href='/'>
-            <LogoWithText />
-          </Link>
+          <LogoWithText />
 
           <div className='relative flex gap-x-2' id='headerTabs'>
             {links.map(link => (

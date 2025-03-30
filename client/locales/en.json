@@ -867,7 +867,8 @@
         },
         "language": {
           "label": "Language",
-          "description": "Select the language you want to webhook to be sent in."
+          "description": "Select the language you want to webhook to be sent in.",
+          "placeholder": "Choose a language"
         }
       },
       "recentDeliveries": {
@@ -1589,7 +1590,8 @@
         },
         "language": {
           "label": "Language",
-          "description": "Select the language you want to webhook to be sent in."
+          "description": "Select the language you want to webhook to be sent in.",
+          "placeholder": "Choose a language"
         }
       },
       "recentDeliveries": {

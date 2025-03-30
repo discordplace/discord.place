@@ -866,8 +866,9 @@
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         },
         "language": {
-          "label": "Language",
-          "description": "Select the language you want to webhook to be sent in."
+          "label": "Dil",
+          "description": "Webhook'un gönderileceği dili seçin.",
+          "placeholder": "Bir dil seçin"
         }
       },
       "recentDeliveries": {
@@ -1588,8 +1589,9 @@
           "placeholder": "ed5d38a4-a3b3-4cf0-adc6-da128973b865"
         },
         "language": {
-          "label": "Language",
-          "description": "Select the language you want to webhook to be sent in."
+          "label": "Dil",
+          "description": "Webhook'un gönderileceği dili seçin.",
+          "placeholder": "Bir dil seçin"
         }
       },
       "recentDeliveries": {

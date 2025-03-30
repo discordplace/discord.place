@@ -9,19 +9,22 @@ const config = {
       code: 'en',
       dateFnsKey: 'enUS',
       flag: '🇺🇸',
-      default: true
+      default: true,
+      countryCode: 'us'
     },
     {
       name: 'Turkish',
       code: 'tr',
       dateFnsKey: 'tr',
-      flag: '🇹🇷'
+      flag: '🇹🇷',
+      countryCode: 'tr'
     },
     {
       name: 'Azerbaijani',
       code: 'az',
       dateFnsKey: 'az',
-      flag: '🇦🇿'
+      flag: '🇦🇿',
+      countryCode: 'az'
     }
   ],
   baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place',

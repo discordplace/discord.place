@@ -1,15 +1,20 @@
 'use client';
 
 import { TbLoader, RiSendPlaneFill, IoCheckmarkCircle, HiBell, BiCodeCurly } from '@/icons';
-import { useEffect, useRef, useState } from 'react';import Input from '@/app/(bots)/bots/[id]/manage/components/Input';import { toast } from 'sonner';
+import { useEffect, useRef, useState } from 'react';
+import Input from '@/app/(bots)/bots/[id]/manage/components/Input';
+import { toast } from 'sonner';
 import deleteWebhookSettings from '@/lib/request/bots/deleteWebhookSettings';
 import setWebhookSettings from '@/lib/request/bots/setWebhookSettings';
 import testBotWebhook from '@/lib/request/bots/testWebhook';
 import useLanguageStore, { t } from '@/stores/language';
 import cn from '@/lib/cn';
-import CodeBlock from '@/app/components/CodeBlock';import revalidateBot from '@/lib/revalidate/bot';import Tooltip from '@/app/components/Tooltip';
+import CodeBlock from '@/app/components/CodeBlock';
+import revalidateBot from '@/lib/revalidate/bot';
+import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
-import Twemoji from 'react-twemoji';
+import Image from 'next/image';
+import Select from '@/app/components/Select';
 
 export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, webhookLanguage: currentWebhookLanguage, webhookLanguages, records }) {
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
@@ -211,28 +216,34 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
             label={t('botManagePage.webhook.inputs.language.label')}
             description={t('botManagePage.webhook.inputs.language.description')}
             CustomInput={
-              <div className='mt-2 grid grid-cols-2 items-center gap-3'>
-                {webhookLanguages.map(locale => (
-                  <button
-                    key={locale.code}
-                    className={cn(
-                      'flex flex-1 min-w-max w-full justify-center items-center gap-x-2 rounded-xl bg-secondary border-2 px-4 border-[rgba(var(--bg-background))] py-1.5 text-secondary font-medium',
-                      webhookLanguage === locale.code ? 'bg-quaternary cursor-default text-primary border-purple-500' : 'hover:bg-tertiary hover:text-primary'
-                    )}
-                    onClick={() => setWebhookLanguage(locale.code)}
-                  >
-                    {webhookLanguage === locale.code ? (
-                      <IoCheckmarkCircle size={18} />
-                    ) : (
-                      <Twemoji options={{ className: 'w-[18px] h-[18px]' }}>
-                        {locale.flag}
-                      </Twemoji>
-                    )}
+              <Select
+                triggerClassName='w-max text-sm py-2 px-3 hover:bg-quaternary'
+                itemContainerClassName='py-2'
+                position='popper'
+                sideOffset={10}
+                options={webhookLanguages.map(locale => ({
+                  label: (
+                    <div
+                      key={locale.code}
+                      className='flex items-center gap-x-2 text-sm'
+                    >
+                      <Image
+                        src={`https://hatscripts.github.io/circle-flags/flags/${locale.countryCode}.svg`}
+                        width={20}
+                        height={20}
+                        className='size-4'
+                        alt={`Flag of ${locale.countryCode}`}
+                      />
 
-                    {t(`footer.language.${locale.code}`)}
-                  </button>
-                ))}
-              </div>
+                      {t(`footer.language.${locale.code}`)}
+                    </div>
+                  ),
+                  value: locale.code
+                }))}
+                value={webhookLanguage || undefined}
+                onChange={value => setWebhookLanguage(value)}
+                placeholder={t('botManagePage.webhook.inputs.language.placeholder')}
+              />
             }
           />
         ) : (

@@ -28,7 +28,7 @@ export default function Input({ label, customLabelPeer, description, type, Custo
           {type === 'paragraph' && (
             <textarea
               className={cn(
-                'disabled:opacity-70 disabled:pointer-events-none scrollbar-hide mt-2 caret-[rgba(var(--text-tertiary))] w-full h-[250px] p-4 border-none resize-none placeholder-placeholder text-tertiary focus-visible:text-primary bg-secondary rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none',
+                'disabled:opacity-70 disabled:pointer-events-none scrollbar-hide mt-2 caret-[rgba(var(--text-tertiary))] w-full h-[250px] p-4 resize-none placeholder-placeholder text-tertiary focus-visible:text-primary bg-secondary rounded-xl border-2 border-[rgba(var(--bg-background))] focus:border-purple-500 outline-none',
                 className
               )}
               value={props.value || ''}
@@ -44,7 +44,7 @@ export default function Input({ label, customLabelPeer, description, type, Custo
             <input
               type='text'
               className={cn(
-                'disabled:opacity-70 disabled:pointer-events-none mt-2 caret-[rgba(var(--text-tertiary))] w-full px-4 py-2 border-none placeholder-placeholder text-tertiary focus-visible:text-primary bg-secondary rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none',
+                'disabled:opacity-70 disabled:pointer-events-none mt-2 caret-[rgba(var(--text-tertiary))] w-full px-4 py-2 placeholder-placeholder text-tertiary focus-visible:text-primary bg-secondary rounded-xl border-2 border-[rgba(var(--bg-background))] focus:border-purple-500 outline-none',
                 className
               )}
               value={props.value || ''}

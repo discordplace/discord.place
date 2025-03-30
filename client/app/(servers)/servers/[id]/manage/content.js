@@ -1,7 +1,8 @@
 'use client';
 
 import { TbLoader, MdSave } from '@/icons';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';import { useEffect, useState } from 'react';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import { useEffect, useState } from 'react';
 import EssentialInformation from '@/app/(servers)/servers/[id]/manage/components/EssentialInformation';
 import Other from '@/app/(servers)/servers/[id]/manage/components/Other';
 import Webhook from '@/app/(servers)/servers/[id]/manage/components/Webhook';
@@ -168,56 +169,67 @@ export default function Content({ server }) {
 
   return (
     <div className='mb-24 flex size-full items-center justify-center px-4 sm:px-12'>
-      <div className='mt-48 flex size-full max-w-[1000px] flex-col items-start gap-y-8'>
-        <div className='flex w-full flex-col sm:flex-row sm:items-center sm:justify-between'>
-          <div className='flex flex-col gap-y-1'>
-            <h2 className='flex items-center gap-x-2 text-3xl font-bold'>
-              {t('serverManagePage.title')}
+      <div className='mt-36 flex size-full max-w-[1000px] flex-col items-start gap-y-8'>
+        <div className='sticky top-0 z-10 flex w-full'>
+          <div
+            className='pointer-events-none absolute inset-0 z-[-1] flex bg-transparent backdrop-blur-[3px]'
+            style={{
+              backgroundImage: 'radial-gradient(transparent 0.1px, rgba(var(--bg-background)) 1px)',
+              backgroundSize: '4px 4px',
+              mask: 'linear-gradient(rgb(0, 0, 0) 60%, rgba(0, 0, 0, 0) 100%)'
+            } }
+          />
 
-              <div className='select-none rounded-lg bg-quaternary p-2 text-xs font-bold uppercase'>
-                {t('serverManagePage.escToCloseBadge')}
+          <div className='relative flex w-full flex-col py-12 sm:flex-row sm:items-center sm:justify-between'>
+            <div className='flex flex-col gap-y-1'>
+              <h2 className='flex items-center gap-x-2 text-3xl font-bold'>
+                {t('serverManagePage.title')}
+
+                <div className='select-none rounded-lg bg-quaternary p-2 text-xs font-bold uppercase'>
+                  {t('serverManagePage.escToCloseBadge')}
+                </div>
+              </h2>
+
+              <p className='text-tertiary'>
+                {t('serverManagePage.subtitle')}
+              </p>
+
+              <div className='mt-2 flex items-center gap-x-2 font-medium text-secondary'>
+                <ServerIcon
+                  id={server.id}
+                  hash={server.icon}
+                  size={32}
+                  width={18}
+                  height={18}
+                  className='rounded-full bg-quaternary'
+                />
+
+                {server.name}
               </div>
-            </h2>
-
-            <p className='text-tertiary'>
-              {t('serverManagePage.subtitle')}
-            </p>
-
-            <div className='mt-2 flex items-center gap-x-2 font-medium text-secondary'>
-              <ServerIcon
-                id={server.id}
-                hash={server.icon}
-                size={32}
-                width={18}
-                height={18}
-                className='rounded-full bg-quaternary'
-              />
-
-              {server.name}
             </div>
-          </div>
 
-          <div className='mt-8 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
-            <button
-              className='flex w-full items-center justify-center gap-x-1.5 rounded-xl border border-primary px-2 py-1.5 text-xs font-semibold text-tertiary hover:border-[rgba(var(--bg-tertiary))] hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
-              onClick={resetChanges}
-              disabled={!changesMade || savingChanges}
-            >
-              {t('buttons.cancel')}
-            </button>
+            <div className='mt-8 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
+              <button
+                className='flex w-full items-center justify-center gap-x-1.5 rounded-xl border border-primary px-2 py-1.5 text-xs font-semibold text-tertiary hover:border-[rgba(var(--bg-tertiary))] hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
+                onClick={resetChanges}
+                disabled={!changesMade || savingChanges}
+              >
+                {t('buttons.cancel')}
+              </button>
 
-            <button
-              className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-purple-500 px-2 py-1.5 text-xs font-semibold text-white hover:bg-purple-600 disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
-              disabled={!changesMade || savingChanges}
-              onClick={saveChanges}
-            >
-              {savingChanges ? <TbLoader size={18} className='animate-spin' /> : <MdSave size={18} />}
-              {t('buttons.saveChanges')}
-            </button>
+              <button
+                className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-purple-500 px-2 py-1.5 text-xs font-semibold text-white hover:bg-purple-600 disabled:pointer-events-none disabled:opacity-70 sm:w-max sm:px-4 sm:text-sm'
+                disabled={!changesMade || savingChanges}
+                onClick={saveChanges}
+              >
+                {savingChanges ? <TbLoader size={18} className='animate-spin' /> : <MdSave size={18} />}
+                {t('buttons.saveChanges')}
+              </button>
+            </div>
           </div>
         </div>
 
-        <div className='h-px w-full bg-tertiary' />
+        <div className='-mt-6 h-px w-full bg-tertiary' />
 
         <EssentialInformation
           description={description}

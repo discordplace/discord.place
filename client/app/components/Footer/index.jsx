@@ -3,10 +3,14 @@
 import { MdSunny, IoIosMoon, FaXTwitter, FaDiscord, FaGithub, FaLinkedin } from '@/icons';
 import useThemeStore from '@/stores/theme';
 import { nanoid } from 'nanoid';
-import Link from 'next/link';import cn from '@/lib/cn';
+import Link from 'next/link';
+import cn from '@/lib/cn';
 import Image from 'next/image';
-import config from '@/config';import { usePathname } from 'next/navigation';import { motion } from 'framer-motion';import useLanguageStore, { t } from '@/stores/language';
-import Twemoji from 'react-twemoji';
+import config from '@/config';
+import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
+import useLanguageStore, { t } from '@/stores/language';
+import Select from '@/app/components/Select';
 
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
@@ -147,7 +151,10 @@ export default function Footer() {
   ];
 
   return (
-    <section className='mt-auto flex w-full flex-1 flex-col flex-wrap gap-16 border-t border-primary bg-secondary px-6 py-16 sm:px-24 xl:px-32 2xl:max-h-[800px] 2xl:flex-row 2xl:gap-x-48'>
+    <section
+      className='mt-auto flex w-full flex-1 flex-col flex-wrap gap-16 border-t border-primary bg-secondary px-6 py-16 sm:px-24 xl:px-32 2xl:max-h-[800px] 2xl:flex-row 2xl:gap-x-48'
+      id='footer'
+    >
       <div className='flex w-full max-w-[400px] flex-col gap-y-6'>
         <Image
           src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
@@ -277,43 +284,33 @@ export default function Footer() {
             </button>
           </div>
 
-          <div className='flex flex-wrap justify-center gap-1 rounded-xl p-[3px] lg:justify-end lg:bg-quaternary lg:dark:bg-background'>
-            {config.availableLocales.map(locale => (
-              <button
-                key={locale.code}
-                className={cn(
-                  'select-none justify-center relative gap-x-1.5 flex items-center text-sm font-semibold px-3 py-1',
-                  locale.code !== language ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
-                )}
-                onClick={() => setLanguage(locale.code)}
-              >
-                <span className='relative z-10 flex items-center gap-x-1.5'>
-                  <Twemoji
-                    options={{
-                      className: 'w-4 h-4'
-                    }}
-                  >
-                    {locale.flag}
-                  </Twemoji>
+          <Select
+            triggerClassName='w-max bg-background py-1.5 hover:bg-quaternary'
+            itemContainerClassName='py-2'
+            position='popper'
+            sideOffset={10}
+            options={config.availableLocales.map(locale => ({
+              label: (
+                <div
+                  key={locale.code}
+                  className='flex items-center gap-x-2 text-sm'
+                >
+                  <Image
+                    src={`https://hatscripts.github.io/circle-flags/flags/${locale.countryCode}.svg`}
+                    width={20}
+                    height={20}
+                    className='size-4'
+                    alt={`Flag of ${locale.countryCode}`}
+                  />
 
                   {t(`footer.language.${locale.code}`)}
-                </span>
-
-                {locale.code === language && (
-                  <motion.div
-                    className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary'
-                    layoutId='language-switcher-button-background'
-                    transition={{
-                      duration: 0.5,
-                      type: 'spring',
-                      stiffness: 300,
-                      damping: 25
-                    }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
+                </div>
+              ),
+              value: locale.code
+            }))}
+            value={language}
+            onChange={setLanguage}
+          />
         </div>
       </div>
     </section>
