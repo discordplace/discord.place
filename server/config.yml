@@ -453,6 +453,8 @@ availableLocales:
     code: 'en'
     flag: '🇺🇸'
     default: true
+    countryCode: 'us'
   - name: 'Turkish'
     code: 'tr'
     flag: '🇹🇷'
+    countryCode: 'tr'
