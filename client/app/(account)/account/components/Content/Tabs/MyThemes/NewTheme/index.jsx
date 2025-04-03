@@ -1,12 +1,15 @@
 'use client';
 
 import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle } from '@/icons';
-import config from '@/config';import { useState } from 'react';
+import config from '@/config';
+import { useState } from 'react';
 import { toast } from 'sonner';
-import cn from '@/lib/cn';import createTheme from '@/lib/request/themes/createTheme';
+import cn from '@/lib/cn';
+import createTheme from '@/lib/request/themes/createTheme';
 import { useRouter } from 'next/navigation';
 import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';import useAccountStore from '@/stores/account';
+import confetti from '@/lib/lotties/confetti.json';
+import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
 import { HexColorPicker } from 'react-colorful';
 import isEqual from 'lodash/isEqual';
@@ -85,7 +88,6 @@ export default function NewTheme() {
 
         <div className='mt-12 flex w-full items-center justify-center'>
           <div className='flex w-full max-w-[800px] flex-col gap-y-1'>
-
             <h2 className='text-lg font-semibold'>
               {t('accountPage.tabs.myThemes.sections.addTheme.fields.colors.label')}
             </h2>
@@ -94,9 +96,9 @@ export default function NewTheme() {
               {t('accountPage.tabs.myThemes.sections.addTheme.fields.colors.description')}
             </p>
 
-            <div className='flex items-center gap-x-16 gap-y-4'>
-              <div className='flex items-center gap-x-4'>
-                <div className='mt-4 flex flex-col gap-y-2'>
+            <div className='mt-8 flex flex-wrap gap-x-16 gap-y-4'>
+              <div className='flex flex-col justify-center gap-4 mobile:flex-row'>
+                <div className='flex flex-col gap-y-2'>
                   <h2 className='flex items-center gap-x-2 text-sm font-medium text-secondary'>
                     {t('accountPage.tabs.myThemes.sections.addTheme.fields.colors.primaryLabel')}
 
@@ -119,7 +121,7 @@ export default function NewTheme() {
                   </div>
                 </div>
 
-                <div className='mt-4 flex flex-col gap-y-2'>
+                <div className='flex flex-col gap-y-2'>
                   <h2 className='flex items-center gap-x-2 text-sm font-medium text-secondary'>
                     {t('accountPage.tabs.myThemes.sections.addTheme.fields.colors.secondaryLabel')}
 

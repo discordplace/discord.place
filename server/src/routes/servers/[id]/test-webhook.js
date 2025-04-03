@@ -4,7 +4,7 @@ const Server = require('@/schemas/Server');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendVoteWebhook = require('@/utils/servers/sendVoteWebhook');
-const Discord = require('discord.js');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   get: [
@@ -40,21 +40,17 @@ module.exports = {
         .then(() => response.status(204).end())
         .catch(() => response.sendError('Failed to send a test webhook to the server.', 500));
 
-      const embeds = [
-        new Discord.EmbedBuilder()
-          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
-          .setTitle('User Tested Webhook')
-          .setFields([
-            {
-              name: 'Server',
-              value: `${guild.name} (${guild.id})`
-            }
-          ])
-          .setTimestamp()
-          .setColor(Discord.Colors.Green)
-      ];
-
-      client.channels.cache.get(config.testWebhookLogsChannelId).send({ embeds });
+      sendWebhookLog(
+        'webhookTested',
+        [
+          { type: 'guild', name: 'Guild', value: id },
+          { type: 'user', name: 'Tested By', value: request.user.id }
+        ],
+        [
+          { label: 'View Guild', url: `${config.frontendUrl}/servers/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
     }
   ]
 };

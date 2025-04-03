@@ -6,6 +6,7 @@ html, body {
   min-width: 320px !important;
   background-color: rgba(var(--bg-background)) !important;
   color: rgba(var(--text-primary));
+  -webkit-font-smoothing: antialiased;
   --light-bg-background: 238, 238, 238;
   --light-bg-secondary: 230, 230, 230;
   --light-bg-tertiary: 220, 220, 220;

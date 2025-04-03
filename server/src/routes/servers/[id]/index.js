@@ -17,8 +17,8 @@ const Reward = require('@/schemas/Server/Vote/Reward');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const getUserHashes = require('@/utils/getUserHashes');
 const requirementChecks = require('@/utils/servers/requirementChecks');
-const Discord = require('discord.js');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   get: [
@@ -205,27 +205,17 @@ module.exports = {
       const validationError = getValidationError(newServer);
       if (validationError) return response.sendError(validationError, 400);
 
-      const channel = client.guilds.cache.get(config.guildId).channels.cache.get(config.serverLogsChannelId);
-
-      const embeds = [
-        new Discord.EmbedBuilder()
-          .setAuthor({ name: 'Guild Listed', iconURL: guild.iconURL() })
-          .setColor(Discord.Colors.Green)
-          .setFields([
-            {
-              name: 'Guild',
-              value: `${guild.name} (${guild.id})`
-            },
-            {
-              name: 'Members',
-              value: guild.memberCount.toString()
-            }
-          ])
-          .setFooter({ text: guild.name, iconURL: guild.iconURL() })
-          .setTimestamp()
-      ];
-
-      channel.send({ embeds });
+      await sendWebhookLog(
+        'guildListed',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'guild', name: 'Target', value: id }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Guild', url: `${config.frontendUrl}/servers/${id}` }
+        ]
+      );
 
       await newServer.save();
 

@@ -5,6 +5,7 @@ const sleep = require('@/utils/sleep');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const humanizeMs = require('@/utils/humanizeMs');
 const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 const currentlyApplyingTemplates = new Discord.Collection();
 const latestUses = new Discord.Collection();
@@ -137,29 +138,19 @@ module.exports = {
     if (botHighestRole.position !== interaction.guild.roles.cache.map(role => role.position).sort((a, b) => b - a)[0]) return sendError(await interaction.translate('commands.templates.errors.missing_highest_role'));
     if (!botHighestRole.permissions.has(Discord.PermissionFlagsBits.Administrator)) return sendError(await interaction.translate('commands.templates.errors.missing_bot_permissions'));
 
-    client.channels.cache.get(config.templateApplyLogsChannelId).send({
-      embeds: [
-        new Discord.EmbedBuilder()
-          .setColor(Discord.Colors.Purple)
-          .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
-          .setTitle('New Template Apply Request Received')
-          .setTimestamp()
-          .setFields([
-            { name: 'Requester', value: `${interaction.user} (${interaction.user.id})`, inline: true },
-            { name: 'Guild', value: `${interaction.guild.name} (${interaction.guild.id})`, inline: true },
-            { name: 'Template', value: `${template.name} (${template.id})`, inline: true }
-          ])
+    await sendWebhookLog(
+      'templateApplyRequest',
+      [
+        { type: 'user', name: 'Requester', value: interaction.user.id },
+        { type: 'guild', name: 'Guild', value: interaction.guild.id },
+        { type: 'text', name: 'Template', value: `${template.name} (${template.id})` }
       ],
-      components: [
-        new Discord.ActionRowBuilder()
-          .addComponents(
-            new Discord.ButtonBuilder()
-              .setStyle(Discord.ButtonStyle.Link)
-              .setLabel('Preview Template on discord.place')
-              .setURL(`${config.frontendUrl}/templates/${template.id}/preview`)
-          )
+      [
+        { label: 'View Requester', url: `${config.frontendUrl}/profile/u/${interaction.user.id}` },
+        { label: 'View Guild', url: `${config.frontendUrl}/guilds/${interaction.guild.id}` },
+        { label: 'Preview Template', url: `${config.frontendUrl}/templates/${template.id}/preview` }
       ]
-    });
+    );
 
     latestUses.set(interaction.guild.id, Date.now() + 1800000);
     latestUses.set(interaction.user.id, Date.now() + 1800000);

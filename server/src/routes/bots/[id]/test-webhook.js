@@ -4,7 +4,7 @@ const Bot = require('@/schemas/Bot');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendVoteWebhook = require('@/utils/bots/sendVoteWebhook');
-const Discord = require('discord.js');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   get: [
@@ -38,21 +38,17 @@ module.exports = {
         .then(() => response.status(204).end())
         .catch(() => response.sendError('Failed to send a test webhook to the bot.', 500));
 
-      const embeds = [
-        new Discord.EmbedBuilder()
-          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
-          .setTitle('User Tested Webhook')
-          .setFields([
-            {
-              name: 'Bot',
-              value: `${bot.data.username}#${bot.data.discriminator} (${bot.id})`
-            }
-          ])
-          .setTimestamp()
-          .setColor(Discord.Colors.Green)
-      ];
-
-      client.channels.cache.get(config.testWebhookLogsChannelId).send({ embeds });
+      sendWebhookLog(
+        'webhookTested',
+        [
+          { type: 'user', name: 'Bot', value: bot.id },
+          { type: 'user', name: 'Tested By', value: request.user.id }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${bot.id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
     }
   ]
 };

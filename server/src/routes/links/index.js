@@ -8,8 +8,8 @@ const Link = require('@/schemas/Link');
 const crypto = require('node:crypto');
 const getValidationError = require('@/utils/getValidationError');
 const User = require('@/schemas/User');
-const Discord = require('discord.js');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   post: [
@@ -54,36 +54,18 @@ module.exports = {
 
       await link.save();
 
-      const embeds = [
-        new Discord.EmbedBuilder()
-          .setTitle('New Link')
-          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
-          .setFields([
-            {
-              name: 'Name',
-              value: `${name.toLocaleLowerCase('en-US')} (${id})`,
-              inline: true
-            },
-            {
-              name: 'Destination URL',
-              value: destinationURL
-            }
-          ])
-          .setTimestamp()
-          .setColor(Discord.Colors.Green)
-      ];
-
-      const components = [
-        new Discord.ActionRowBuilder()
-          .addComponents(
-            new Discord.ButtonBuilder()
-              .setStyle(Discord.ButtonStyle.Link)
-              .setURL(destinationURL)
-              .setLabel('Visit Destination URL')
-          )
-      ];
-
-      client.channels.cache.get(config.linksLogsChannelId).send({ embeds, components });
+      sendWebhookLog(
+        'newLink',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Created Link', value: `${name.toLocaleLowerCase('en-US')} (${id})` },
+          { type: 'text', name: 'Destination URL', value: destinationURL }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'Go to Destination URL', url: destinationURL }
+        ]
+      );
 
       return response.status(204).end();
     }

@@ -2,7 +2,9 @@
 
 import { TbSquareRoundedChevronUp, MdOutlineArrowOutward, IoMdHeart, HiCheck, FaLink, FaDiscord, BiSolidInfoCircle } from '@/icons';
 import Tooltip from '@/app/components/Tooltip';
-import Image from 'next/image';import Link from 'next/link';import cn from '@/lib/cn';
+import Image from 'next/image';
+import Link from 'next/link';
+import cn from '@/lib/cn';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
 import useThemeStore from '@/stores/theme';
@@ -12,6 +14,7 @@ import ReportableArea from '@/app/components/ReportableArea';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import getHashFromURL from '@/lib/getHashFromURL';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import { useFlagTranslations, useSortFlags } from '@/lib/hooks/flags';
 
 function StatBlock({ fields, index }) {
   return (
@@ -60,37 +63,8 @@ export default function Content({ user }) {
   const theme = useThemeStore(state => state.theme);
   const language = useLanguageStore(state => state.language);
 
-  const userFlags = {
-    'Staff': t('userProfile.flags.Staff'),
-    'Partner': t('userProfile.flags.Partner'),
-    'Hypesquad': t('userProfile.flags.Hypesquad'),
-    'BugHunterLevel1': t('userProfile.flags.BugHunterLevel1'),
-    'BugHunterLevel2': t('userProfile.flags.BugHunterLevel2'),
-    'HypeSquadOnlineHouse1': t('userProfile.flags.HypeSquadOnlineHouse1'),
-    'HypeSquadOnlineHouse2': t('userProfile.flags.HypeSquadOnlineHouse2'),
-    'HypeSquadOnlineHouse3': t('userProfile.flags.HypeSquadOnlineHouse3'),
-    'PremiumEarlySupporter': t('userProfile.flags.PremiumEarlySupporter'),
-    'VerifiedDeveloper': t('userProfile.flags.VerifiedDeveloper'),
-    'CertifiedModerator': t('userProfile.flags.CertifiedModerator'),
-    'ActiveDeveloper': t('userProfile.flags.ActiveDeveloper'),
-    'Nitro': t('userProfile.flags.Nitro')
-  };
-
-  const flagsPositions = [
-    'Staff',
-    'Partner',
-    'CertifiedModerator',
-    'Hypesquad',
-    'HypeSquadOnlineHouse1',
-    'HypeSquadOnlineHouse2',
-    'HypeSquadOnlineHouse3',
-    'BugHunterLevel1',
-    'BugHunterLevel2',
-    'ActiveDeveloper',
-    'PremiumEarlySupporter',
-    'VerifiedDeveloper',
-    'Nitro'
-  ];
+  const flagTranslations = useFlagTranslations();
+  const sortedFlags = useSortFlags(user.flags);
 
   return (
     <div className='mb-8 mt-32 flex w-full flex-col items-center gap-y-8 px-8 lg:px-0'>
@@ -150,12 +124,11 @@ export default function Content({ user }) {
 
               {user.flags.length > 0 && (
                 <div className='hidden items-center gap-x-1.5 sm:flex'>
-                  {user.flags
-                    .sort((a, b) => flagsPositions.indexOf(a) - flagsPositions.indexOf(b))
+                  {sortedFlags
                     .map(flag => (
                       <Tooltip
                         key={flag}
-                        content={userFlags[flag]}
+                        content={flagTranslations[flag]}
                       >
                         <Image
                           src={`/user-flags/${flag}.svg`}
@@ -190,12 +163,11 @@ export default function Content({ user }) {
 
             {user.flags.length > 0 && (
               <div className='ml-2 grid grid-cols-4 items-center gap-1.5 sm:hidden'>
-                {user.flags
-                  .sort((a, b) => flagsPositions.indexOf(a) - flagsPositions.indexOf(b))
+                {sortedFlags
                   .map(flag => (
                     <Tooltip
                       key={flag}
-                      content={userFlags[flag]}
+                      content={flagTranslations[flag]}
                     >
                       <Image
                         src={`/user-flags/${flag}.svg`}

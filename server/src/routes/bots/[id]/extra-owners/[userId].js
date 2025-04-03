@@ -3,6 +3,7 @@ const { param, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   delete: [
@@ -32,6 +33,20 @@ module.exports = {
       if (!bot.extra_owners.includes(userId)) return response.sendError('User is not an extra owner of this bot.', 400);
 
       bot.extra_owners = bot.extra_owners.filter(id => id !== userId);
+
+      sendWebhookLog(
+        'botExtraOwnerRemoved',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'User Removed', value: userId }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View Removed User', url: `${config.frontendUrl}/profile/u/${userId}` }
+        ]
+      );
 
       await bot.save();
 

@@ -3,7 +3,8 @@
 import { LuPlus, BsEmojiAngry, BsQuestionCircleFill } from '@/icons';
 import ErrorState from '@/app/components/ErrorState';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';import config from '@/config';
+import Link from 'next/link';
+import config from '@/config';
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import NewTheme from '@/app/(account)/account/components/Content/Tabs/MyThemes/NewTheme';
 import { useShallow } from 'zustand/react/shallow';
@@ -57,7 +58,7 @@ export default function MyThemes() {
               />
             </div>
           ) : (
-            <div className='mt-2 grid max-w-[800px] grid-cols-1 gap-4 mobile:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3'>
+            <div className='mt-2 grid max-w-[800px] grid-cols-1 gap-4 lg:grid-cols-2'>
               {data.themes.map(theme => (
                 <ThemeCard
                   key={theme.id}

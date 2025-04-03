@@ -9,6 +9,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   post: [
@@ -57,6 +58,18 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await newProfile.save();
+
+      sendWebhookLog(
+        'profileCreated',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Slug', value: slug }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u//${request.user.id}` },
+          { label: 'View Profile', url: `${config.frontendUrl}/profile/${slug}` }
+        ]
+      );
 
       await DashboardData.findOneAndUpdate({}, { $inc: { profiles: 1 } }, { sort: { createdAt: -1 } });
 

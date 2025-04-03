@@ -108,9 +108,9 @@ async function sendVoteWebhook(server, voter, data) {
     if (isRetried) return;
 
     const record = {
-      url: server.webhook.url,
+      url: requestConfig.url,
       response_status_code: response.status,
-      request_body: data,
+      request_body: requestConfig.data,
       created_at: new Date()
     };
 

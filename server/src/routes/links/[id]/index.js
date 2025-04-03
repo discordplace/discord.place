@@ -3,8 +3,8 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const bodyParser = require('body-parser');
 const { matchedData, param } = require('express-validator');
 const Link = require('@/schemas/Link');
-const Discord = require('discord.js');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   delete: [
@@ -26,28 +26,18 @@ module.exports = {
 
       await foundLink.deleteOne();
 
-      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
-
-      const embeds = [
-        new Discord.EmbedBuilder()
-          .setTitle('Link Deleted')
-          .setAuthor({ name: requestUser.username, iconURL: requestUser.displayAvatarURL() })
-          .setFields([
-            {
-              name: 'Name',
-              value: `${foundLink.name} (${id})`,
-              inline: true
-            },
-            {
-              name: 'Destination URL',
-              value: foundLink.redirectTo
-            }
-          ])
-          .setTimestamp()
-          .setColor(Discord.Colors.Red)
-      ];
-
-      client.channels.cache.get(config.linksLogsChannelId).send({ embeds });
+      sendWebhookLog(
+        'linkDeleted',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Deleted Link', value: `${foundLink.name} (${id})` },
+          { type: 'text', name: 'Destination URL', value: foundLink.redirectTo }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'Go to Destination URL', url: foundLink.redirectTo }
+        ]
+      );
 
       return response.status(204).end();
     }

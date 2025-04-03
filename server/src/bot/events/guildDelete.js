@@ -1,7 +1,8 @@
-const Discord = require('discord.js');
 const updateClientActivity = require('@/utils/updateClientActivity');
 const Review = require('@/schemas/Server/Review');
 const Reward = require('@/schemas/Server/Vote/Reward');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
+
 module.exports = async guild => {
   logger.info(`Kicked from guild ${guild.name} (${guild.id}).`);
 
@@ -12,25 +13,15 @@ module.exports = async guild => {
 
   updateClientActivity();
 
-  const channel = client.guilds.cache.get(config.guildId).channels.cache.get(config.joinLeaveLogsChannelId);
-
-  const embeds = [
-    new Discord.EmbedBuilder()
-      .setAuthor({ name: 'Kicked from Guild', iconURL: guild.iconURL() })
-      .setColor(Discord.Colors.Red)
-      .setFields([
-        {
-          name: 'Guild',
-          value: `${guild.name} (${guild.id})`
-        },
-        {
-          name: 'Members',
-          value: guild.memberCount.toString()
-        }
-      ])
-      .setFooter({ text: guild.name, iconUrl: guild.iconURL() })
-      .setTimestamp()
-  ];
-
-  channel.send({ embeds });
+  sendWebhookLog(
+    'leavedGuild',
+    [
+      { type: 'guild', name: 'Guild', value: guild.id },
+      { type: 'number', name: 'Members', value: guild.memberCount },
+      { type: 'owner', name: 'Owner', value: guild.ownerId }
+    ],
+    [
+      { label: 'View Owner', url: `${config.frontendUrl}/profile/u/${guild.ownerId}` }
+    ]
+  );
 };

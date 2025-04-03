@@ -11,11 +11,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-geist-sans)']
+        sans: ['var(--font-geist-sans)'],
+        ggSans: ['var(--font-gg-sans)']
       },
       screens: {
         mobile: '420px',
-        'emojis-cols-3': '838px'
+        'emojis-cols-3': '838px',
+        'themes-cols-2': '770px'
       },
       colors: {
         placeholder: 'rgba(var(--text-placeholder))'

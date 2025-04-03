@@ -2,8 +2,8 @@ const Bot = require('@/schemas/Bot');
 const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const User = require('@/schemas/User');
-const Discord = require('discord.js');
 const sendVoteWebhook = require('@/utils/bots/sendVoteWebhook');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 async function incrementVote(botId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -82,22 +82,18 @@ async function incrementVote(botId, userId) {
     }
   }).save();
 
-  const embed = new Discord.EmbedBuilder()
-    .setColor(Discord.Colors.Purple)
-    .setAuthor({ name: `${botUser.tag} has received a vote!`, iconURL: botUser.displayAvatarURL() })
-    .setFields([
-      {
-        name: 'Given by',
-        value: `@${user.tag} (${user.id})`
-      },
-      {
-        name: 'Total votes',
-        value: (bot.votes + incrementCount).toString()
-      }
-    ])
-    .setFooter({ text: `Voted at ${new Date().toLocaleString()}` });
-
-  client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
+  await sendWebhookLog(
+    'voteReceived',
+    [
+      { type: 'user', name: 'User', value: userId },
+      { type: 'user', name: 'Target', value: botId },
+      { type: 'number', name: 'Total Votes', value: bot.votes + incrementCount }
+    ],
+    [
+      { label: 'View User', url: `${config.frontendUrl}/profile/u/${userId}` },
+      { label: 'View Bot', url: `${config.frontendUrl}/bots/${botId}` }
+    ]
+  );
 
   if (bot.webhook?.url) sendVoteWebhook(bot, { id: userId, username: user.username }, { bot: bot.id, user: user.id }).catch(() => null);
 
