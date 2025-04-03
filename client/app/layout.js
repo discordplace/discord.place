@@ -4,6 +4,7 @@ import { GeistSans } from 'geist/font/sans';
 import cn from '@/lib/cn';
 import LayoutContent from '@/app/layout-content';
 import AuthProvider from '@/app/components/Providers/Auth';
+import localFont from 'next/font/local';
 
 export const metadata = {
   metadataBase: new URL('https://discord.place'),
@@ -39,6 +40,28 @@ export const viewport = {
   userScalable: false
 };
 
+const GGSans = localFont({
+  src: [
+    {
+      path: '../public/fonts/GG-Sans-Medium.ttf',
+      weight: '500',
+      style: 'normal'
+    },
+    {
+      path: '../public/fonts/GG-Sans-Bold.ttf',
+      weight: '700',
+      style: 'normal'
+    },
+    {
+      path: '../public/fonts/GG-Sans-Normal.ttf',
+      weight: '400',
+      style: 'normal'
+    }
+  ],
+  variable: '--font-gg-sans',
+  display: 'swap'
+});
+
 export default function RootLayout(props) {
   return (
     <html lang='en' translate='no' className='dark'>
@@ -46,7 +69,8 @@ export default function RootLayout(props) {
         className={cn(
           'flex flex-col',
           GeistSans.className,
-          GeistSans.variable
+          GeistSans.variable,
+          GGSans.variable
         )}
       >
         <AuthProvider>

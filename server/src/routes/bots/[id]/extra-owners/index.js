@@ -4,6 +4,7 @@ const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   get: [
@@ -77,6 +78,20 @@ module.exports = {
       bot.extra_owners.push(userId);
 
       await bot.save();
+
+      sendWebhookLog(
+        'botExtraOwnerAdded',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'User Added', value: userId }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View Added User', url: `${config.frontendUrl}/profile/u/${userId}` }
+        ]
+      );
 
       return response.json({
         id: user.id,

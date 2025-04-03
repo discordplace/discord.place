@@ -7,6 +7,7 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const sendVoteWebhook = require('@/utils/servers/sendVoteWebhook');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 async function incrementVote(guildId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -87,22 +88,18 @@ async function incrementVote(guildId, userId) {
 
   updatePanelMessage(guild.id);
 
-  const embed = new Discord.EmbedBuilder()
-    .setColor(Discord.Colors.Purple)
-    .setAuthor({ name: `${guild.name} has received a vote!`, iconURL: guild.iconURL() })
-    .setFields([
-      {
-        name: 'Given by',
-        value: `@${user.tag} (${user.id})`
-      },
-      {
-        name: 'Total votes',
-        value: (server.votes + incrementCount).toString()
-      }
-    ])
-    .setFooter({ text: `Voted at ${new Date().toLocaleString()}` });
-
-  client.channels.cache.get(config.voteLogsChannelId).send({ embeds: [embed] });
+  await sendWebhookLog(
+    'voteReceived',
+    [
+      { type: 'user', name: 'User', value: userId },
+      { type: 'guild', name: 'Target', value: guildId },
+      { type: 'number', name: 'Total Votes', value: server.votes + incrementCount }
+    ],
+    [
+      { label: 'View User', url: `${config.frontendUrl}/profile/u/${userId}` },
+      { label: 'View Guild', url: `${config.frontendUrl}/guilds/${guildId}` }
+    ]
+  );
 
   sendLog(guild.id, await guild.translate('commands.vote.logging_messages.user_voted', { username: Discord.escapeMarkdown(user.username), userId: user.id }))
     .catch(() => null);

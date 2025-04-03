@@ -4,7 +4,7 @@ const Bot = require('@/schemas/Bot');
 const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const Discord = require('discord.js');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   post: [
@@ -39,35 +39,17 @@ module.exports = {
         if (dmChannel) dmChannel.send({ content: `### We denied your bot **${botUser.username}** but the decision has been reverted by <@${request.user.id}>.\nYour bot is now back in the review queue.` }).catch(() => null);
       }
 
-      const embeds = [
-        new Discord.EmbedBuilder()
-          .setTitle('Bot Deny Restored')
-          .setAuthor({ name: publisher.username, iconURL: publisher.displayAvatarURL() })
-          .setFields([
-            {
-              name: 'Bot Restored',
-              value: `@${botUser.username} (${botUser.id})`
-            },
-            {
-              name: 'Restored By',
-              value: `@${request.member.user.username} (${request.user.id})`
-            }
-          ])
-          .setTimestamp()
-          .setColor(Discord.Colors.Purple)
-      ];
-
-      const components = [
-        new Discord.ActionRowBuilder()
-          .addComponents(
-            new Discord.ButtonBuilder()
-              .setStyle(Discord.ButtonStyle.Link)
-              .setURL(`${config.frontendUrl}/bots/${id}`)
-              .setLabel('View Bot on discord.place')
-          )
-      ];
-
-      client.channels.cache.get(config.botDenyRestoreLogsChannelId).send({ embeds, components });
+      sendWebhookLog(
+        'botRestored',
+        [
+          { type: 'user', name: 'Bot', value: botUser.id },
+          { type: 'user', name: 'Restored By', value: request.user.id }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${botUser.id}` },
+          { label: 'View Owner', url: `${config.frontendUrl}/profile/u/${bot.owner.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

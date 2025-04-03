@@ -1,9 +1,9 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const Quarantine = require('@/schemas/Quarantine');
 const { param, matchedData } = require('express-validator');
-const Discord = require('discord.js');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   delete: [
@@ -18,41 +18,28 @@ module.exports = {
 
       const { id } = matchedData(request);
 
-      const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
-
       Quarantine.findOneAndDelete({ _id: id })
         .then(quarantine => {
-          const embeds = [
-            new Discord.EmbedBuilder()
-              .setAuthor({ name: `Quarantine #${id} Removed` })
-              .setColor(Discord.Colors.Purple)
-              .setTitle('Quarantine Entry Removed')
-              .setFields([
-                {
-                  name: 'Entry Target',
-                  value: `${quarantine.type === 'USER_ID' ? quarantine.user.id : quarantine.guild.id} (${quarantine.type})`,
-                  inline: true
-                },
-                {
-                  name: 'Reason',
-                  value: quarantine.reason,
-                  inline: true
-                },
-                {
-                  name: 'Created By',
-                  value: `<@${quarantine.created_by.id}>`,
-                  inline: true
-                },
-                {
-                  name: 'Restriction',
-                  value: quarantine.restriction,
-                  inline: true
-                }
-              ])
-              .setFooter({ text: `${requestUser.username} | Would expire at: ${quarantine.expire_at ? new Date(quarantine.expire_at).toLocaleString() : 'Never'}`, iconURL: requestUser.displayAvatarURL() })
-          ];
-
-          client.channels.cache.get(config.quarantineLogsChannelId).send({ embeds });
+          sendWebhookLog(
+            'quarantineDeleted',
+            [
+              {
+                type: quarantine.type === 'USER_ID' ? 'user' : 'guild',
+                name: 'Target',
+                value: quarantine.type === 'USER_ID' ? quarantine.user.id : quarantine.guild.id
+              },
+              { type: 'text', name: 'Reason', value: quarantine.reason },
+              { type: 'user', name: 'Created By', value: quarantine.created_by.id },
+              { type: 'text', name: 'Restriction', value: quarantine.restriction },
+              { type: 'date', name: 'Would Expire At', value: quarantine.expire_at ? new Date(quarantine.expire_at).toLocaleString() : 'Never' }
+            ],
+            [
+              {
+                label: 'View Target',
+                url: `${config.frontendUrl}/${quarantine.type === 'USER_ID' ? 'profile/u/' : 'servers/'}${quarantine.type === 'USER_ID' ? quarantine.user.id : quarantine.guild.id}`
+              }
+            ]
+          );
 
           return response.status(204).end();
         })

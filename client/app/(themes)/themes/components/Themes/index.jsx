@@ -5,7 +5,8 @@ import useSearchStore from '@/stores/themes/search';
 import { useShallow } from 'zustand/react/shallow';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
-import ErrorState from '@/app/components/ErrorState';import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
+import ErrorState from '@/app/components/ErrorState';
+import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import { t } from '@/stores/language';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
@@ -75,7 +76,7 @@ export default function Themes() {
     ) : (
       <>
         <motion.div
-          className='grid w-full max-w-[1000px] grid-cols-1 gap-8 px-2 sm:grid-cols-2 sm:px-4 lg:grid-cols-4 lg:px-0'
+          className='grid w-full max-w-[1000px] grid-cols-1 gap-8 px-2 sm:px-4 themes-cols-2:grid-cols-2 lg:grid-cols-3 lg:px-0'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
@@ -85,25 +86,48 @@ export default function Themes() {
             ))
           ) : (
             themes.map(theme => (
-              <ReportableArea
-                key={theme.id}
-                active={user?.id !== theme.publisher.id}
-                type='theme'
-                metadata={{
-                  id: theme.id,
-                  colors: theme.colors,
-                  publisher: theme.publisher
-                }}
-                identifier={`theme-${theme.id}`}
-              >
-                <div className='flex'>
-                  <ThemeCard
-                    id={theme.id}
-                    primaryColor={theme.colors.primary}
-                    secondaryColor={theme.colors.secondary}
-                  />
-                </div>
-              </ReportableArea>
+              <>
+                <ReportableArea
+                  key={theme.id}
+                  active={user?.id !== theme.publisher.id}
+                  type='theme'
+                  metadata={{
+                    id: theme.id,
+                    colors: theme.colors,
+                    publisher: theme.publisher
+                  }}
+                  identifier={`theme-${theme.id}`}
+                >
+                  <div className='flex'>
+                    <ThemeCard
+                      id={theme.id}
+                      primaryColor={theme.colors.primary}
+                      secondaryColor={theme.colors.secondary}
+                    />
+                  </div>
+                </ReportableArea>
+
+                <ReportableArea
+                  key={theme.id}
+                  active={user?.id !== theme.publisher.id}
+                  type='theme'
+                  metadata={{
+                    id: theme.id,
+                    colors: theme.colors,
+                    publisher: theme.publisher
+                  }}
+                  identifier={`theme-${theme.id}`}
+                >
+                  <div className='flex'>
+                    <ThemeCard
+                      id={theme.id}
+                      primaryColor={theme.colors.primary}
+                      secondaryColor={theme.colors.secondary}
+                    />
+                  </div>
+                </ReportableArea>
+
+              </>
             ))
           )}
         </motion.div>
