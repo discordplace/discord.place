@@ -7,6 +7,7 @@ import Image from 'next/image';
 import useAuthStore from '@/stores/auth';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import { t } from '@/stores/language';
 
 export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   const isLight = colord(primaryColor).isLight();
@@ -14,8 +15,6 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
 
   const Container = id ? Link : 'div';
-
-  const quote = 'Be who you are and say what you feel, because those who mind don\'t matter, and those who matter don\'t mind.';
 
   const profileGradientOverlayColor = isLight ? '#ffffff99' : '#00000099';
   const borderColor = `${colord(primaryColor).invert().alpha(0.12).toHex()}`;
@@ -129,7 +128,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
           </div>
 
           <p className='mt-2 text-sm'>
-            {quote}
+            {t('themeCard.quote')}
           </p>
         </div>
       </div>

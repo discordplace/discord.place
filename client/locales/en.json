@@ -598,6 +598,9 @@
       "message": "There are no themes to display. Maybe that's a sign to create one?"
     }
   },
+  "themeCard": {
+    "quote": "Be who you are and say what you feel, because those who mind don't matter, and those who matter don't mind."
+  },
   "themePage": {
     "toast": {
       "deletingTheme": "Theme {{id}} is deleting..",

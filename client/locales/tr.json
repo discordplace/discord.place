@@ -598,6 +598,9 @@
       "message": "Gösterilecek tema yok. Belki de bu, bir tema oluşturmanın zamanının geldiğinin bir işaretidir?"
     }
   },
+  "themeCard": {
+    "quote": "Kim olduğunuzu bilin ve hislerinizi ifade edin, çünkü önemsemeyenler önemli değildir ve önemli olanlar önemsemez."
+  },
   "themePage": {
     "toast": {
       "deletingTheme": "Tema {{id}} siliniyor..",

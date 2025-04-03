@@ -598,6 +598,9 @@
       "message": "Göstəriləcək tema yoxdur. Bəlkə bu, yaratmaq üçün bir işarədir?"
     }
   },
+  "themeCard": {
+    "quote": "Kim olduğunuzu bilin və nə hiss etdiyinizi deyin, çünki əhəmiyyət verməyənlər əhəmiyyət vermir, əhəmiyyət verənlər isə əhəmiyyət vermir."
+  },
   "themePage": {
     "toast": {
       "deletingTheme": "{{id}} tema silinir..",
