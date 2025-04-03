@@ -86,48 +86,25 @@ export default function Themes() {
             ))
           ) : (
             themes.map(theme => (
-              <>
-                <ReportableArea
-                  key={theme.id}
-                  active={user?.id !== theme.publisher.id}
-                  type='theme'
-                  metadata={{
-                    id: theme.id,
-                    colors: theme.colors,
-                    publisher: theme.publisher
-                  }}
-                  identifier={`theme-${theme.id}`}
-                >
-                  <div className='flex'>
-                    <ThemeCard
-                      id={theme.id}
-                      primaryColor={theme.colors.primary}
-                      secondaryColor={theme.colors.secondary}
-                    />
-                  </div>
-                </ReportableArea>
-
-                <ReportableArea
-                  key={theme.id}
-                  active={user?.id !== theme.publisher.id}
-                  type='theme'
-                  metadata={{
-                    id: theme.id,
-                    colors: theme.colors,
-                    publisher: theme.publisher
-                  }}
-                  identifier={`theme-${theme.id}`}
-                >
-                  <div className='flex'>
-                    <ThemeCard
-                      id={theme.id}
-                      primaryColor={theme.colors.primary}
-                      secondaryColor={theme.colors.secondary}
-                    />
-                  </div>
-                </ReportableArea>
-
-              </>
+              <ReportableArea
+                key={theme.id}
+                active={user?.id !== theme.publisher.id}
+                type='theme'
+                metadata={{
+                  id: theme.id,
+                  colors: theme.colors,
+                  publisher: theme.publisher
+                }}
+                identifier={`theme-${theme.id}`}
+              >
+                <div className='flex'>
+                  <ThemeCard
+                    id={theme.id}
+                    primaryColor={theme.colors.primary}
+                    secondaryColor={theme.colors.secondary}
+                  />
+                </div>
+              </ReportableArea>
             ))
           )}
         </motion.div>
