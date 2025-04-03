@@ -108,7 +108,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
             {user?.flags.length > 0 && (
               <div
-                className='grid grid-cols-3 items-center gap-1 rounded border bg-[rgba(var(--bg-background),_0.1)] px-1 py-0.5'
+                className='flex items-center gap-1 rounded border bg-[rgba(var(--bg-background),_0.1)] px-1 py-0.5'
                 style={{
                   borderColor
                 }}
