@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.18.0](https://github.com/discordplace/discord.place/compare/client@v1.17.0...client@v1.18.0) (2025-04-04)
+
+
+### Features
+
+* redesign theme cards ([8c90807](https://github.com/discordplace/discord.place/commit/8c908070d7751e6bdeb83a75454cbf4f21b3c94e))
+* redesign theme cards and update server side logging ([#185](https://github.com/discordplace/discord.place/issues/185)) ([8c90807](https://github.com/discordplace/discord.place/commit/8c908070d7751e6bdeb83a75454cbf4f21b3c94e))
+* reduce react-icons bundle size ([#184](https://github.com/discordplace/discord.place/issues/184)) ([f2ec941](https://github.com/discordplace/discord.place/commit/f2ec941dcb914d9b664868459e22191c7ec2887e))
+* remove Cloudflare integration and related IP blocking functionality ([31af96f](https://github.com/discordplace/discord.place/commit/31af96fb79ae48ce0de86565b146813af41579e1))
+* some visual updates ([7f2fd8f](https://github.com/discordplace/discord.place/commit/7f2fd8f00f4649993677ccc64433a706baca62ac))
+
+
+### Bug Fixes
+
+* add max width to error state in active timeouts section ([1eef7dd](https://github.com/discordplace/discord.place/commit/1eef7dd67b7cf83b6a2b3984ec0bbf98fbc90c5d))
+* **dashboard:** update success and loading messages for review actions ([7986618](https://github.com/discordplace/discord.place/commit/7986618e615e6b8946c1aae8723319b2e59d04a4))
+* disable unoptimized loading images (GIF's excluded) ([850c0ea](https://github.com/discordplace/discord.place/commit/850c0ea619c2892c2a5c6c9e2f3b5a471ca3ac2d))
+* enable unoptimized image loading for ServerIcon component ([6eda2e7](https://github.com/discordplace/discord.place/commit/6eda2e7231c68c01abf8c470a1c12afaaf575689))
+* **Pagination:** don't change page if input is invalid ([cfa6bbb](https://github.com/discordplace/discord.place/commit/cfa6bbbec490a68c70369e808ad6b98f825b4e7a))
+* remove nested css usage ([786323c](https://github.com/discordplace/discord.place/commit/786323cc82c12683610d02c8f383e0ee3311ab2d))
+* resolve layout shift issue with radix-ui ([32a3b25](https://github.com/discordplace/discord.place/commit/32a3b25bd1fbb3fd1f8c0641c4029c914c1a73de))
+* **ThemeCard:** change layout from grid to flex for user flags display ([ffa5950](https://github.com/discordplace/discord.place/commit/ffa5950301fcad93f66921478c049d21b6bc2557))
+* **ThemeCard:** replace hardcoded quote with correct translations ([3aecf89](https://github.com/discordplace/discord.place/commit/3aecf89a32bca5f8bfa06dd4051d4e42fc11a381))
+* **Themes:** remove duplicates ([2f1b035](https://github.com/discordplace/discord.place/commit/2f1b035c55a62780ce6a523cdd581a3ebd3c7594))
+* wrap most voted badge label in a truncate span ([6dfbb40](https://github.com/discordplace/discord.place/commit/6dfbb40c78ec2fd8a803d29993edd5878161dc58))
+
 ## [1.17.0](https://github.com/discordplace/discord.place/compare/client@v1.16.0...client@v1.17.0) (2025-03-18)
 
 
