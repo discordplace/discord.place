@@ -2,7 +2,8 @@
 
 import { LuChevronLeft, LuChevronRight } from '@/icons';
 import { motion } from 'framer-motion';
-import cn from '@/lib/cn';import { useEffect, useRef, useState } from 'react';
+import cn from '@/lib/cn';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { t } from '@/stores/language';
 import { useMedia } from 'react-use';
@@ -122,12 +123,18 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
                 }}
                 onKeyUp={event => {
                   if (event.key === 'Enter') {
-                    setPage(Math.max(1, Math.min(totalPages, parseInt(inputValue))));
                     setInputOpened(false);
+
+                    if (isNaN(inputValue) || inputValue === '') return;
+
+                    setPage(Math.max(1, Math.min(totalPages, parseInt(inputValue))));
                   }
                 }}
                 onBlur={() => {
                   setInputOpened(false);
+
+                  if (isNaN(inputValue) || inputValue === '') return;
+
                   setPage(Math.max(1, Math.min(totalPages, parseInt(inputValue))));
 
                   // Move user to the top of the page if they are on mobile
