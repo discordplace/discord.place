@@ -234,7 +234,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             {roles.map((role, index) => (
               <div
                 key={`theme-card-${id}-role-${index}`}
-                className='flex items-center gap-x-1.5 rounded-sm border px-1.5 py-1 text-xs font-medium'
+                className='flex items-center gap-x-1.5 rounded-md border px-1.5 py-1 text-xs font-medium'
                 style={{
                   background: backgroundColor,
                   borderColor
