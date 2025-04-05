@@ -41,8 +41,10 @@
       "Emojiler",
       "Şablonlar",
       "Sesler",
-      "Temalar"
+      "Temalar",
+      "Çok Yakında"
     ],
+    "upcomingServiceDescription": "Sizin için özel bir şey hazırlıyoruz. Bizi bekleyin.",
     "profiles": "Profiller",
     "servers": "Sunucular",
     "bots": "Botlar",

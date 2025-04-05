@@ -41,8 +41,10 @@
       "Emojis",
       "Templates",
       "Sounds",
-      "Themes"
+      "Themes",
+      "Coming Soon"
     ],
+    "upcomingServiceDescription": "We are cooking up something special for you. Stay tuned!",
     "profiles": "Profiles",
     "servers": "Servers",
     "bots": "Bots",

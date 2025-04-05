@@ -70,59 +70,66 @@ export default function NotCollapsedHeader() {
           <LogoWithText />
 
           <div className='relative flex gap-x-2' id='headerTabs'>
-            {links.map(link => (
-              <Link
-                key={link.name}
-                href={link.href || '#'}
-                className='relative flex items-start justify-center'
-                onMouseEnter={() => setHoveringHeaderTab(link.name)}
-                onMouseLeave={() => {
-                  setLastMouseOut(Date.now());
-                  setHoveringHeaderTab('');
-                }}
-              >
-                <div
-                  className='group relative z-[2] flex cursor-pointer items-center gap-x-2 px-3 py-1 text-sm font-semibold text-tertiary transition-all hover:text-primary'
-                  id={`headerTab-${link.name}`}
-                >
-                  <link.icon />
+            {links.map(link => {
+              const Container = link.href ? Link : 'div';
 
-                  {link.name}
+              return (
+                <Container
+                  key={link.name}
+                  href={link.href}
+                  className={cn(
+                    'relative flex items-start justify-center',
+                    link.href ? 'cursor-pointer' : 'select-none'
+                  )}
+                  onMouseEnter={() => setHoveringHeaderTab(link.name)}
+                  onMouseLeave={() => {
+                    setLastMouseOut(Date.now());
+                    setHoveringHeaderTab('');
+                  }}
+                >
+                  <div
+                    className='group relative z-[2] flex items-center gap-x-2 px-3 py-1 text-sm font-semibold text-tertiary transition-all hover:text-primary'
+                    id={`headerTab-${link.name}`}
+                  >
+                    <link.icon />
+
+                    {link.name}
+
+                    {link.id === 'services' && (
+                      <FiChevronDown
+                        size={14}
+                        className={cn(
+                          'transition-transform transform',
+                          hoveringHeaderTab === link.name && '-rotate-180'
+                        )}
+                      />
+                    )}
+                  </div>
 
                   {link.id === 'services' && (
-                    <FiChevronDown
-                      size={14}
-                      className={cn(
-                        'transition-transform transform',
-                        hoveringHeaderTab === link.name && '-rotate-180'
-                      )}
-                    />
-                  )}
-                </div>
-
-                {link.id === 'services' && (
-                  <div
-                    className={cn(
-                      'absolute pt-12 pb-4 pl-4 pr-4 z-[1]',
-                      hoveringHeaderTab !== link.name && 'pointer-events-none'
-                    )}
-                  >
                     <div
                       className={cn(
-                        'transition-all drop-shadow-lg w-max h-max bg-secondary border-2 relative border-primary p-2 rounded-xl',
-                        hoveringHeaderTab === link.name ? 'opacity-100' : 'opacity-0 scale-90 -translate-y-2'
+                        'absolute pt-12 pb-4 pl-4 pr-4 z-[1]',
+                        hoveringHeaderTab !== link.name && 'pointer-events-none'
                       )}
                     >
-                      <div className='absolute left-0 top-0 flex size-full justify-center'>
-                        <div className='size-3 -translate-y-2 rotate-45 rounded-t-[2px] border-l-2 border-t-2 border-primary bg-secondary' />
-                      </div>
+                      <div
+                        className={cn(
+                          'transition-all drop-shadow-lg w-max h-max bg-secondary border-2 relative border-primary p-2 rounded-xl',
+                          hoveringHeaderTab === link.name ? 'opacity-100' : 'opacity-0 scale-90 -translate-y-2'
+                        )}
+                      >
+                        <div className='absolute left-0 top-0 flex size-full justify-center'>
+                          <div className='size-3 -translate-y-2 rotate-45 rounded-t-[2px] border-l-2 border-t-2 border-primary bg-secondary' />
+                        </div>
 
-                      <ServicesDropdown />
+                        <ServicesDropdown />
+                      </div>
                     </div>
-                  </div>
-                )}
-              </Link>
-            ))}
+                  )}
+                </Container>
+              );
+            })}
 
             <div
               className={cn(
