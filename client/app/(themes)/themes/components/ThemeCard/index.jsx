@@ -8,6 +8,10 @@ import useAuthStore from '@/stores/auth';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import { t } from '@/stores/language';
+import Twemoji from 'react-twemoji';
+import { useMemo } from 'react';
+import AddFriendIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/AddFriend';
+import MoreIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/More';
 
 export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   const isLight = colord(primaryColor).isLight();
@@ -16,13 +20,37 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
   const Container = id ? Link : 'div';
 
+  const backgroundColor = isLight ? '#ffffff26' : '#00000026';
   const profileGradientOverlayColor = isLight ? '#ffffff99' : '#00000099';
   const borderColor = `${colord(primaryColor).invert().alpha(0.12).toHex()}`;
+
+  const mutualFriendsCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
+  const mutualServersCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
+
+  const randomStatus = useMemo(() => {
+    const statuses = ['online', 'idle', 'dnd', 'offline'];
+
+    return statuses[Math.floor(Math.random() * statuses.length)];
+  }, []);
+
+  const randomEmoji = useMemo(() => {
+    const emojis = ['👋', '👀', '😎', '🤔', '😏', '😜', '😇', '😈', '🤖', '👻'];
+
+    return emojis[Math.floor(Math.random() * emojis.length)];
+  }, []);
+
+  const roles = [
+    { name: 'Moderator', color: '#faa61a' },
+    { name: 'Member', color: '#3ba55c' },
+    { name: 'Level 5' },
+    { name: 'He/Him' },
+    { name: 'Giveaway Ping', color: '#eb459f' }
+  ];
 
   return (
     <Container
       className={cn(
-        'rounded-xl p-1 font-ggSans mobile:min-w-[calc(325px_+_0.5rem)] lg:max-w-[calc(325px_+_0.5rem)] transition-all',
+        'rounded-xl p-1 font-ggSans transition-all w-full',
         id ? 'hover:opacity-80' : 'pointer-events-none select-none'
       )}
       href={`/themes/${id}`}
@@ -32,13 +60,25 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
       }}
     >
       <div
-        className='relative flex flex-col rounded-lg bg-secondary pb-4 mobile:min-w-[325px] lg:max-w-[calc(325px_+_0.5rem)]'
+        className='relative flex w-full flex-col rounded-lg bg-secondary pb-4'
         style={{
           '--profile-gradient-start': `color-mix(in oklab, ${profileGradientOverlayColor} 100%, ${primaryColor})`,
           '--profile-gradient-end': `color-mix(in oklab, ${profileGradientOverlayColor} 100%, ${secondaryColor})`,
           background: 'linear-gradient(var(--profile-gradient-start), var(--profile-gradient-start) 100%, var(--profile-gradient-end))'
         }}
       >
+        <div className='absolute right-4 top-4'>
+          <div className='flex items-center gap-x-2'>
+            <div className='flex items-center justify-center rounded-full bg-black/50 p-2 text-white'>
+              <AddFriendIcon className='size-4' />
+            </div>
+
+            <div className='flex items-center justify-center rounded-full bg-black/50 p-2 text-white'>
+              <MoreIcon className='size-4' />
+            </div>
+          </div>
+        </div>
+
         {(loggedIn && user?.banner) ? (
           <UserBanner
             id={user.id}
@@ -69,8 +109,8 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
           )}
         >
           <Image
-            src={'/status/online.svg'}
-            alt={'Online Status Badge'}
+            src={`/status/${randomStatus}.svg`}
+            alt={`${randomStatus} Status Badge`}
             width={18}
             height={18}
             className='absolute bottom-[2px] right-[2px] rounded-full'
@@ -103,13 +143,14 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
           <div className='flex items-center gap-x-2'>
             <h2 className='font-normal opacity-80'>
-              {user?.username || 'Discord'}
+              {user?.username || 'discord'}
             </h2>
 
             {user?.flags.length > 0 && (
               <div
-                className='flex items-center gap-1 rounded border bg-[rgba(var(--bg-background),_0.1)] px-1 py-0.5'
+                className='flex items-center gap-1 rounded border px-1 py-0.5'
                 style={{
+                  background: backgroundColor,
                   borderColor
                 }}
               >
@@ -127,9 +168,107 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             )}
           </div>
 
+          <div className='mt-2 flex items-center'>
+            <div className='flex items-center gap-x-1 text-xs'>
+              <div className='flex -space-x-1'>
+                <Image
+                  className='relative z-[1] size-4 rounded-full'
+                  src='https://cdn.discordapp.com/embed/avatars/1.png'
+                  width={16}
+                  height={16}
+                  alt='Avatar'
+                  style={{
+                    background: borderColor,
+                    maskImage: 'radial-gradient(circle at 124% 50%, transparent 10px, black 10.2px)'
+                  }}
+                />
+
+                <Image
+                  className='relative z-[1] size-4 rounded-full'
+                  src='https://cdn.discordapp.com/embed/avatars/2.png'
+                  width={16}
+                  height={16}
+                  alt='Avatar'
+                  style={{
+                    background: borderColor,
+                    maskImage: 'radial-gradient(circle at 124% 50%, transparent 10px, black 10.2px)'
+                  }}
+                />
+
+                <Image
+                  className='relative z-[1] size-4 rounded-full'
+                  src='https://cdn.discordapp.com/embed/avatars/3.png'
+                  width={16}
+                  height={16}
+                  alt='Avatar'
+                  style={{
+                    background: borderColor
+                  }}
+                />
+              </div>
+
+              <span className='opacity-80'>
+                {mutualFriendsCount} Mutual Friends
+              </span>
+            </div>
+
+            <div className='mx-1.5 text-lg opacity-80'>
+              •
+            </div>
+
+            <span className='text-xs opacity-80'>
+              {mutualServersCount} Mutual Servers
+            </span>
+          </div>
+
           <p className='mt-2 text-sm'>
             {t('themeCard.quote')}
           </p>
+
+          <div className='mt-3 flex flex-wrap gap-1.5'>
+            {roles.map((role, index) => (
+              <div
+                key={`theme-card-${id}-role-${index}`}
+                className='flex items-center gap-x-1.5 rounded-sm border px-1.5 py-1 text-xs font-medium'
+                style={{
+                  background: backgroundColor,
+                  borderColor
+                }}
+              >
+                <div
+                  className='size-[12px] rounded-full'
+                  style={{
+                    background: role.color || '#adadad'
+                  }}
+                />
+                {role.name}
+              </div>
+            ))}
+          </div>
+
+          <div
+            className='mt-4 flex items-center justify-between rounded-md border px-4 py-3 text-sm'
+            style={{
+              background: backgroundColor,
+              borderColor
+            }}
+          >
+            <span className='opacity-70'>
+              Message @{user?.username || 'discord'}
+            </span>
+
+            <span>
+              <Twemoji
+                options={{ className: 'size-4' }}
+                className={cn(
+                  'opacity-70 grayscale',
+                  isLight ? 'invert' : 'invert-0'
+                )}
+              >
+                {randomEmoji}
+              </Twemoji>
+            </span>
+          </div>
         </div>
       </div>
     </Container>

@@ -2,7 +2,9 @@
 
 import { RiErrorWarningFill, LuShieldQuestion } from '@/icons';
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
-import config from '@/config';import FaQs from '@/app/(themes)/themes/[id]/components/FaQs';import Link from 'next/link';
+import config from '@/config';
+import FaQs from '@/app/(themes)/themes/[id]/components/FaQs';
+import Link from 'next/link';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
 import deleteTheme from '@/lib/request/themes/deleteTheme';
@@ -60,10 +62,12 @@ export default function Content({ theme }) {
         )}
 
         <div className='flex size-full flex-col gap-4 lg:flex-row'>
-          <ThemeCard
-            primaryColor={theme.colors.primary}
-            secondaryColor={theme.colors.secondary}
-          />
+          <div className='flex max-w-[325px]'>
+            <ThemeCard
+              primaryColor={theme.colors.primary}
+              secondaryColor={theme.colors.secondary}
+            />
+          </div>
 
           <div className='flex w-full flex-1 flex-col gap-y-4'>
             <h2 className='text-xl font-semibold text-primary'>
@@ -121,7 +125,7 @@ export default function Content({ theme }) {
               </div>
             </div>
 
-            <div className='mt-auto flex w-full flex-col gap-2 mobile:flex-row'>
+            <div className='flex w-full flex-col gap-2 mobile:flex-row'>
               <CopyButton
                 className='w-full'
                 successText={t('themePage.themeDetails.colors.copied', { color: theme.colors.primary })}

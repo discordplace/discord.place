@@ -145,11 +145,14 @@ export default function NewTheme() {
                 </div>
               </div>
 
-              <ThemeCard
-                id={null}
-                primaryColor={colors.primary || '#000000'}
-                secondaryColor={colors.secondary || '#000000'}
-              />
+              <div className='flex max-w-[325px]'>
+                <ThemeCard
+                  id={null}
+                  primaryColor={colors.primary || '#000000'}
+                  secondaryColor={colors.secondary || '#000000'}
+                />
+              </div>
+
             </div>
 
             <h2 className='mt-8 text-lg font-semibold'>
