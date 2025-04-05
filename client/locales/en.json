@@ -608,7 +608,8 @@
       { "name": "Giveaway Ping" }
     ],
     "mutualFriendsCount": "{{count}} Mutual Friends",
-    "mutualServersCount": "{{count}} Mutual Servers"
+    "mutualServersCount": "{{count}} Mutual Servers",
+    "messageInputPlaceholder": "Message @{{username}}"
   },
   "themePage": {
     "toast": {

@@ -608,7 +608,8 @@
       { "name": "Çekiliş Bildirimleri" }
     ],
     "mutualFriendsCount": "{{count}} Ortak Arkadaş",
-    "mutualServersCount": "{{count}} Ortak Sunucu"
+    "mutualServersCount": "{{count}} Ortak Sunucu",
+    "messageInputPlaceholder": "@{{username}}'a mesaj gönder"
   },
   "themePage": {
     "toast": {

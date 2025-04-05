@@ -608,7 +608,8 @@
       { "name": "Təqdimat Ping" }
     ],
     "mutualFriendsCount": "{{count}} Qarşılıqlı Dostlar",
-    "mutualServersCount": "{{count}} Qarşılıqlı Serverlər"
+    "mutualServersCount": "{{count}} Qarşılıqlı Serverlər",
+    "messageInputPlaceholder": "@{{username}}'a mesaj göndər"
   },
   "themePage": {
     "toast": {

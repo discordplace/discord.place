@@ -259,7 +259,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             }}
           >
             <span className='opacity-70'>
-              Message @{user?.username || 'discord'}
+              {t('themeCard.messageInputPlaceholder', { username: user?.username || 'discord' })}
             </span>
 
             <span>
