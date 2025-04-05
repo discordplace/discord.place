@@ -164,8 +164,8 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
                     key={`theme-card-${id}-badge-${index}`}
                     src={`/user-flags/${flag}.svg`}
                     alt={`${flag} Flag`}
-                    width={16}
-                    height={16}
+                    width={128}
+                    height={128}
                     className='size-[16px]'
                   />
                 ))}
@@ -179,8 +179,8 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
                 <Image
                   className='relative z-[1] size-4 rounded-full'
                   src={avatars[0]}
-                  width={16}
-                  height={16}
+                  width={128}
+                  height={128}
                   alt='Avatar'
                   style={{
                     background: borderColor,
@@ -191,8 +191,8 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
                 <Image
                   className='relative z-[1] size-4 rounded-full'
                   src={avatars[1]}
-                  width={16}
-                  height={16}
+                  width={128}
+                  height={128}
                   alt='Avatar'
                   style={{
                     background: borderColor,
@@ -203,8 +203,8 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
                 <Image
                   className='relative z-[1] size-4 rounded-full'
                   src={avatars[2]}
-                  width={16}
-                  height={16}
+                  width={128}
+                  height={128}
                   alt='Avatar'
                   style={{
                     background: borderColor
