@@ -599,7 +599,16 @@
     }
   },
   "themeCard": {
-    "quote": "Kim olduğunuzu bilin ve hislerinizi ifade edin, çünkü önemsemeyenler önemli değildir ve önemli olanlar önemsemez."
+    "quote": "Kim olduğunuzu bilin ve hislerinizi ifade edin, çünkü önemsemeyenler önemli değildir ve önemli olanlar önemsemez.",
+    "roles": [
+      { "name": "Moderatör" },
+      { "name": "Üye" },
+      { "name": "5 Seviye" },
+      { "name": "He/Him" },
+      { "name": "Çekiliş Bildirimleri" }
+    ],
+    "mutualFriendsCount": "{{count}} Ortak Arkadaş",
+    "mutualServersCount": "{{count}} Ortak Sunucu"
   },
   "themePage": {
     "toast": {

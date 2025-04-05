@@ -599,7 +599,16 @@
     }
   },
   "themeCard": {
-    "quote": "Kim olduğunuzu bilin və nə hiss etdiyinizi deyin, çünki əhəmiyyət verməyənlər əhəmiyyət vermir, əhəmiyyət verənlər isə əhəmiyyət vermir."
+    "quote": "Kim olduğunuzu bilin və nə hiss etdiyinizi deyin, çünki əhəmiyyət verməyənlər əhəmiyyət vermir, əhəmiyyət verənlər isə əhəmiyyət vermir.",
+    "roles": [
+      { "name": "Moderator" },
+      { "name": "Üzv" },
+      { "name": "Səviyyə 5" },
+      { "name": "He/Him" },
+      { "name": "Təqdimat Ping" }
+    ],
+    "mutualFriendsCount": "{{count}} Qarşılıqlı Dostlar",
+    "mutualServersCount": "{{count}} Qarşılıqlı Serverlər"
   },
   "themePage": {
     "toast": {

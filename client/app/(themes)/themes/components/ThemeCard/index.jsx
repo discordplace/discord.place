@@ -26,6 +26,11 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
   const mutualFriendsCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
   const mutualServersCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
+  const avatars = useMemo(() => {
+    const avatars = new Array(3).fill(null).map(() => `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 5)}.png`);
+
+    return avatars;
+  }, []);
 
   const randomStatus = useMemo(() => {
     const statuses = ['online', 'idle', 'dnd', 'offline'];
@@ -40,11 +45,11 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   }, []);
 
   const roles = [
-    { name: 'Moderator', color: '#faa61a' },
-    { name: 'Member', color: '#3ba55c' },
-    { name: 'Level 5' },
-    { name: 'He/Him' },
-    { name: 'Giveaway Ping', color: '#eb459f' }
+    { name: t('themeCard.roles.0.name'), color: '#faa61a' },
+    { name: t('themeCard.roles.1.name'), color: '#3ba55c' },
+    { name: t('themeCard.roles.2.name') },
+    { name: t('themeCard.roles.3.name') },
+    { name: t('themeCard.roles.4.name'), color: '#eb459f' }
   ];
 
   return (
@@ -173,7 +178,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
               <div className='flex -space-x-1'>
                 <Image
                   className='relative z-[1] size-4 rounded-full'
-                  src='https://cdn.discordapp.com/embed/avatars/1.png'
+                  src={avatars[0]}
                   width={16}
                   height={16}
                   alt='Avatar'
@@ -185,7 +190,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
                 <Image
                   className='relative z-[1] size-4 rounded-full'
-                  src='https://cdn.discordapp.com/embed/avatars/2.png'
+                  src={avatars[1]}
                   width={16}
                   height={16}
                   alt='Avatar'
@@ -197,7 +202,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
                 <Image
                   className='relative z-[1] size-4 rounded-full'
-                  src='https://cdn.discordapp.com/embed/avatars/3.png'
+                  src={avatars[2]}
                   width={16}
                   height={16}
                   alt='Avatar'
@@ -208,7 +213,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
               </div>
 
               <span className='opacity-80'>
-                {mutualFriendsCount} Mutual Friends
+                {t('themeCard.mutualFriendsCount', { count: mutualFriendsCount })}
               </span>
             </div>
 
@@ -217,7 +222,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             </div>
 
             <span className='text-xs opacity-80'>
-              {mutualServersCount} Mutual Servers
+              {t('themeCard.mutualServersCount', { count: mutualServersCount })}
             </span>
           </div>
 

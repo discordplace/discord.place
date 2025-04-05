@@ -599,7 +599,16 @@
     }
   },
   "themeCard": {
-    "quote": "Be who you are and say what you feel, because those who mind don't matter, and those who matter don't mind."
+    "quote": "Be who you are and say what you feel, because those who mind don't matter, and those who matter don't mind.",
+    "roles": [
+      { "name": "Moderator" },
+      { "name": "Member" },
+      { "name": "Level 5" },
+      { "name": "He/Him" },
+      { "name": "Giveaway Ping" }
+    ],
+    "mutualFriendsCount": "{{count}} Mutual Friends",
+    "mutualServersCount": "{{count}} Mutual Servers"
   },
   "themePage": {
     "toast": {
