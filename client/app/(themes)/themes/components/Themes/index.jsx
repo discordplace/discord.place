@@ -88,7 +88,7 @@ export default function Themes() {
             themes.map(theme => (
               <ReportableArea
                 key={theme.id}
-                active={user?.id == theme.publisher.id}
+                active={user?.id !== theme.publisher.id}
                 type='theme'
                 metadata={{
                   id: theme.id,
