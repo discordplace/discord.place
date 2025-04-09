@@ -33,13 +33,14 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn, user]);
 
-  const { activeTab, loading, setLoading, data, selectedItems, setSelectedItems } = useDashboardStore(useShallow(state => ({
+  const { activeTab, loading, setLoading, data, selectedItems, setSelectedItems, setPage } = useDashboardStore(useShallow(state => ({
     activeTab: state.activeTab,
     loading: state.loading,
     setLoading: state.setLoading,
     data: state.data,
     selectedItems: state.selectedItems,
-    setSelectedItems: state.setSelectedItems
+    setSelectedItems: state.setSelectedItems,
+    setPage: state.setPage
   })));
 
   const openModal = useModalsStore(state => state.openModal);
@@ -49,6 +50,7 @@ export default function Page() {
     const data = selectedItems;
 
     setSelectedItems([]);
+    setPage(1);
     setLoading(true);
 
     if (data.length === 1) {
@@ -169,6 +171,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/profile/u/${column[0].id}`);
                   }
@@ -383,6 +386,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/emojis/${column[0].emoji_ids ? 'packages/' : ''}${column[0].id}`);
                   }
@@ -394,6 +398,7 @@ export default function Page() {
                     const columns = useDashboardStore.getState().selectedItems;
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     columns.forEach(column => downloadEmoji(column[0]));
                   }
@@ -483,6 +488,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     window.open(`https://discord.com/oauth2/authorize?client_id=${column[0].id}&permissions=0&integration_type=0&scope=bot+applications.commands&guild_id=${config.botTestGuildId}&disable_guild_select=true`, '_blank');
                   }
@@ -573,6 +579,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/bots/${column[0].id}`);
                   }
@@ -660,6 +667,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/templates/${column[0].id}/preview`);
                   }
@@ -747,6 +755,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/templates/${column[0].id}/preview`);
                   }
@@ -834,6 +843,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/sounds/${column[0].id}`);
                   }
@@ -922,6 +932,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/sounds/${column[0].id}`);
                   }
@@ -1019,6 +1030,7 @@ export default function Page() {
                     const [column] = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/${column.custom.type === 'server' ? 'servers' : 'bots'}/${column.value}`);
                   }
@@ -1118,6 +1130,7 @@ export default function Page() {
                     const [column] = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/${column.custom.type === 'server' ? 'servers' : 'bots'}/${column.value}`);
                   }
@@ -1205,6 +1218,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/themes/${column[0].id}`);
                   }
@@ -1292,6 +1306,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/themes/${column[0].id}`);
                   }
@@ -1378,6 +1393,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     window.open(column[0].redirectTo, '_blank');
                   }
@@ -1479,6 +1495,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/bots/${column[0].id}`);
                   }
@@ -1593,6 +1610,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(column[0].discriminator ? '/bots/' : `/servers/${column[0].id}`);
                   }
@@ -1604,6 +1622,7 @@ export default function Page() {
                     const column = useDashboardStore.getState().selectedItems[0];
 
                     setSelectedItems([]);
+                    setPage(1);
 
                     router.push(`/profile/u/${column[1].id}`);
                   }

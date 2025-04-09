@@ -24,7 +24,11 @@ export const useDashboardStore = create(set => ({
   selectedItems: [],
   setSelectedItems: selectedItems => set({ selectedItems }),
   searchQuery: null,
-  setSearchQuery: searchQuery => set({ searchQuery })
+  setSearchQuery: searchQuery => set({ searchQuery }),
+  page: 1,
+  setPage: page => set({ page }),
+  currentSort: { name: '', key: '', order: '' },
+  setCurrentSort: currentSort => set({ currentSort })
 }));
 
 export default useDashboardStore;

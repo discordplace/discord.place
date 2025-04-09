@@ -1,17 +1,30 @@
 'use client';
 
 import { PiSortAscendingBold, PiSortDescendingBold, IoSearch, FiX, FaBookBookmark, FaXmark, FaCheck, BsEmojiAngry } from '@/icons';
-import ColumnRenderer from '@/app/(dashboard)/components/Table/ColumnRenderer';import cn from '@/lib/cn';
+import ColumnRenderer from '@/app/(dashboard)/components/Table/ColumnRenderer';
+import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
 import { AnimatePresence } from 'framer-motion';
 import useDashboardStore from '@/stores/dashboard';
 import { useEffect, useRef, useState } from 'react';
-import ErrorState from '@/app/components/ErrorState';import Pagination from '@/app/components/Pagination';import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';import isEqual from 'lodash/isEqual';import * as chrono from 'chrono-node';
-import { useMedia } from 'react-use';import Drawer from '@/app/components/Drawer';
+import ErrorState from '@/app/components/ErrorState';
+import Pagination from '@/app/components/Pagination';
+import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
+import isEqual from 'lodash/isEqual';
+import * as chrono from 'chrono-node';
+import { useMedia } from 'react-use';
+import Drawer from '@/app/components/Drawer';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Table({ tabs }) {
-  const selectedItems = useDashboardStore(state => state.selectedItems);
-  const setSelectedItems = useDashboardStore(state => state.setSelectedItems);
+  const { selectedItems, setSelectedItems, page, setPage, currentSort, setCurrentSort } = useDashboardStore(useShallow(state => ({
+    selectedItems: state.selectedItems,
+    setSelectedItems: state.setSelectedItems,
+    page: state.page,
+    setPage: state.setPage,
+    currentSort: state.currentSort,
+    setCurrentSort: state.setCurrentSort
+  })));
 
   function handleSelect(item) {
     if (selectedItems.find(column => isEqual(column, item))) setSelectedItems(selectedItems.filter(selectedRow => !isEqual(selectedRow, item)));
@@ -20,9 +33,6 @@ export default function Table({ tabs }) {
 
   const [currentTab, setCurrentTab] = useState(tabs[0].label);
   const currentTabData = tabs.find(tab => tab.label === currentTab);
-
-  const [page, setPage] = useState(1);
-  const [currentSort, setCurrentSort] = useState({ name: '', key: '', order: '' });
 
   useEffect(() => {
     setSelectedItems([]);
@@ -37,6 +47,7 @@ export default function Table({ tabs }) {
 
   useEffect(() => {
     if (searchQuery) setPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   const isMobile = useMedia('(max-width: 640px)');

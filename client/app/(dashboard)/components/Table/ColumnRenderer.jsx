@@ -6,11 +6,14 @@ import config from '@/config';
 import Image from 'next/image';
 import getRelativeTime from '@/lib/getRelativeTime';
 import getCompressedName from '@/lib/getCompressedName';
-import useGeneralStore from '@/stores/general';import { useEffect, useRef } from 'react';
+import useGeneralStore from '@/stores/general';
+import { useEffect, useRef } from 'react';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import cn from '@/lib/cn';
 import Countdown from '@/app/components/Countdown';
-import useDashboardStore from '@/stores/dashboard';function CategoryBadge({ children, iconsKey }) {
+import useDashboardStore from '@/stores/dashboard';
+
+function CategoryBadge({ children, iconsKey }) {
   return (
     <div className='flex items-center gap-x-2 rounded-lg border border-primary bg-secondary px-1.5 py-0.5 text-xs font-medium text-primary'>
       <span className='text-tertiary'>
