@@ -16,7 +16,7 @@ module.exports = async guild => {
   sendWebhookLog(
     'leavedGuild',
     [
-      { type: 'guild', name: 'Guild', value: guild.id },
+      { type: 'guild', name: 'Guild', value: guild },
       { type: 'number', name: 'Members', value: guild.memberCount },
       { type: 'owner', name: 'Owner', value: guild.ownerId }
     ],

@@ -20,7 +20,17 @@ async function sendWebhookLog(action, fields, links) {
     'webhookTested': 'Webhook Tested',
     'botDenyRecordDeleted': 'Deny Record Deleted',
     'botExtraOwnerRemoved': 'Extra Owner Removed',
-    'botExtraOwnerAdded': 'Extra Owner Added'
+    'botExtraOwnerAdded': 'Extra Owner Added',
+    'reviewApproved': 'Review Approved',
+    'reviewDenied': 'Review Denied',
+    'reviewDeleted': 'Review Deleted',
+    'reviewCreated': 'Review Created',
+    'voteTimeoutDeleted': 'Vote Timeout Deleted',
+    'botApproved': 'Bot Approved',
+    'botDenied': 'Bot Denied',
+    'botCreated': 'Bot Created',
+    'botDeleted': 'Bot Deleted',
+    'botUpdated': 'Bot Updated'
   };
 
   const embed = new Discord.EmbedBuilder()
@@ -46,7 +56,7 @@ async function sendWebhookLog(action, fields, links) {
 
         return `- ${field.name} ⇾ **${user ? `@${Discord.escapeMarkdown(user.username)}` : 'Unknown User'}** \`${field.value}\``;
       case 'guild':
-        var guild = client.guilds.cache.get(field.value);
+        var guild = typeof field.value === 'object' ? field.value : client.guilds.cache.get(field.value);
 
         return `- ${field.name} ⇾ **${guild ? Discord.escapeMarkdown(guild.name) : 'Unknown Guild'}** \`${field.value}\``;
       case 'date':
@@ -57,6 +67,7 @@ async function sendWebhookLog(action, fields, links) {
       case 'number':
         return `- ${field.name} ⇾ **${formatter.format(field.value)}**`;
       case 'text':
+      default:
         return `- ${field.name} ⇾ **${field.value}**`;
     }
   }
