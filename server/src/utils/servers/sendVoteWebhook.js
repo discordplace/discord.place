@@ -30,7 +30,7 @@ async function sendVoteWebhook(server, voter, data) {
     data
   };
 
-  if (process.env.WEBHOOKS_PROXY_SERVER_HOST || process.env.WEBHOOKS_PROXY_SERVERS) {
+  if (process.env.WEBHOOKS_PROXY_SERVER_HOST) {
     try {
       requestConfig.httpsAgent = getProxyAgent();
     } catch (error) {
@@ -104,6 +104,8 @@ async function sendVoteWebhook(server, voter, data) {
 
     const response = await axiosInstance(requestConfig)
       .catch(error => error.response);
+
+    if (!response || !response.status) return;
 
     if (isRetried) return;
 

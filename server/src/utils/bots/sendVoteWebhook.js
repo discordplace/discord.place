@@ -28,7 +28,7 @@ async function sendVoteWebhook(bot, voter, data) {
     data
   };
 
-  if (process.env.WEBHOOKS_PROXY_SERVER_HOST || process.env.WEBHOOKS_PROXY_SERVERS) {
+  if (process.env.WEBHOOKS_PROXY_SERVER_HOST) {
     try {
       requestConfig.httpsAgent = getProxyAgent();
     } catch (error) {
