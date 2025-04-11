@@ -105,7 +105,7 @@ async function sendVoteWebhook(server, voter, data) {
     const response = await axiosInstance(requestConfig)
       .catch(error => error.response);
 
-    if (!response || !response.status) return;
+    if (!response || !response.status) return reject('Response is empty, failed to send webhook request.');
 
     if (isRetried) return;
 
