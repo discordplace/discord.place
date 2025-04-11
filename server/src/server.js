@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const ip = require('@/utils/middlewares/ip');
-const blockSimultaneousRequests = require('@/utils/middlewares/blockSimultaneousRequests');
 const languageDetection = require('@/utils/middlewares/languageDetection');
 const compression = require('compression');
 const morgan = require('morgan');
@@ -100,8 +99,6 @@ module.exports = class Server {
 
       next();
     });
-
-    if (process.env.NODE_ENV === 'production') this.server.use(blockSimultaneousRequests);
 
     this.server.use(async (request, response, next) => {
       if (request.cookies.token) {
