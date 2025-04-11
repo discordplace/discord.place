@@ -15,6 +15,7 @@ import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import Select from '@/app/components/Select';
 import Image from 'next/image';
+import { isAxiosError } from 'axios';
 
 export default function Webhook({ serverId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, webhookLanguage: currentWebhookLanguage, webhookLanguages, records }) {
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
@@ -129,7 +130,9 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
 
       revalidateServer(serverId);
     } catch (error) {
-      if (error === 'Failed to send a test webhook to the server.') {
+      const errorMessage = isAxiosError(error) ? error.response?.data?.error || error.message : error.message;
+
+      if (errorMessage === 'Failed to send a test webhook to the server.') {
         toast.error(<TestWebhookFailedToastContent />, {
           id: testWebhookToastId.current,
           duration: 25000
@@ -145,7 +148,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
           });
         }, 20000);
       } else {
-        toast.error(error, {
+        toast.error(errorMessage, {
           id: testWebhookToastId.current
         });
 
