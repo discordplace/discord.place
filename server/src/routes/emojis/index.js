@@ -16,7 +16,7 @@ const validateRequest = require('@/utils/middlewares/validateRequest');
 const multer = require('multer');
 const upload = multer({
   limits: {
-    fileSize: 264 * 1024,
+    fileSize: 256 * 1024,
     files: 9
   },
   fileFilter: (req, file, cb) => {
