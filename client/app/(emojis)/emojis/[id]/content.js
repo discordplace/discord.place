@@ -5,8 +5,11 @@ import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';
 import ChatMockup from '@/app/(emojis)/emojis/[id]/components/ChatMockup';
 import AnimatedCount from '@/app/components/AnimatedCount';
 import useAuthStore from '@/stores/auth';
-import config from '@/config';import FaQs from '@/app/(emojis)/emojis/[id]/components/FaQs';import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
-import { motion } from 'framer-motion';import Link from 'next/link';
+import config from '@/config';
+import FaQs from '@/app/(emojis)/emojis/[id]/components/FaQs';
+import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
 import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
@@ -14,6 +17,7 @@ import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import ReportableArea from '@/app/components/ReportableArea';
 
 export default function Content({ emoji }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
@@ -68,13 +72,26 @@ export default function Content({ emoji }) {
 
         <div className='flex flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
-            <EmojiPreview
-              id={emoji.id}
-              name={emoji.name}
-              image_url={config.getEmojiURL(emoji.id, emoji.animated)}
-              ableToChange={false}
-              defaultSize='enlarge'
-            />
+            <ReportableArea
+              key={emoji.id}
+              active={user?.id !== emoji.user.id}
+              type='emoji'
+              metadata={{
+                id: emoji.id,
+                name: emoji.name,
+                animated: emoji.animated,
+                emoji_ids: []
+              }}
+              identifier={`emoji-${emoji.id}`}
+            >
+              <EmojiPreview
+                id={emoji.id}
+                name={emoji.name}
+                image_url={config.getEmojiURL(emoji.id, emoji.animated)}
+                ableToChange={false}
+                defaultSize='enlarge'
+              />
+            </ReportableArea>
           </motion.div>
 
           <div className='grid w-full grid-cols-2 grid-rows-2 gap-4 sm:grid-cols-3'>

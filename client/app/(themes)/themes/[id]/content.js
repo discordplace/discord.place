@@ -14,9 +14,12 @@ import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import CopyButton from '@/app/components/CopyButton/CustomTrigger';
 import { colord } from 'colord';
+import ReportableArea from '@/app/components/ReportableArea';
+import useAuthStore from '@/stores/auth';
 
 export default function Content({ theme }) {
   const language = useLanguageStore(state => state.language);
+  const user = useAuthStore(state => state.user);
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -63,10 +66,22 @@ export default function Content({ theme }) {
 
         <div className='flex size-full flex-col gap-4 lg:flex-row'>
           <div className='flex max-w-[325px]'>
-            <ThemeCard
-              primaryColor={theme.colors.primary}
-              secondaryColor={theme.colors.secondary}
-            />
+            <ReportableArea
+              key={theme.id}
+              active={user?.id !== theme.publisher.id}
+              type='theme'
+              metadata={{
+                id: theme.id,
+                colors: theme.colors,
+                publisher: theme.publisher
+              }}
+              identifier={`theme-${theme.id}`}
+            >
+              <ThemeCard
+                primaryColor={theme.colors.primary}
+                secondaryColor={theme.colors.secondary}
+              />
+            </ReportableArea>
           </div>
 
           <div className='flex w-full flex-1 flex-col gap-y-4'>

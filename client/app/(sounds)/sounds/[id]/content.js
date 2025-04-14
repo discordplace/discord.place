@@ -3,17 +3,22 @@
 import { RiErrorWarningFill, LuShieldQuestion } from '@/icons';
 import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
 import AnimatedCount from '@/app/components/AnimatedCount';
-import config from '@/config';import FaQs from '@/app/(sounds)/sounds/[id]/components/FaQs';
-import { motion } from 'framer-motion';import Link from 'next/link';
+import config from '@/config';
+import FaQs from '@/app/(sounds)/sounds/[id]/components/FaQs';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
 import deleteSound from '@/lib/request/sounds/deleteSound';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import useLanguageStore, { t } from '@/stores/language';
+import ReportableArea from '@/app/components/ReportableArea';
+import useAuthStore from '@/stores/auth';
 
 export default function Content({ sound }) {
   const language = useLanguageStore(state => state.language);
+  const user = useAuthStore(state => state.user);
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
@@ -59,10 +64,22 @@ export default function Content({ sound }) {
 
         <div className='flex size-full flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
-            <SoundPreview
-              sound={sound}
-              showUploadToGuildButton={true}
-            />
+            <ReportableArea
+              key={sound.id}
+              active={user?.id !== sound.publisher.id}
+              type='sound'
+              metadata={{
+                id: sound.id,
+                name: sound.name,
+                publisher: sound.publisher
+              }}
+              identifier={`sound-${sound.id}`}
+            >
+              <SoundPreview
+                sound={sound}
+                showUploadToGuildButton={true}
+              />
+            </ReportableArea>
           </motion.div>
 
           <div className='flex w-full flex-1 flex-col gap-y-4'>

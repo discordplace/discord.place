@@ -3,8 +3,11 @@
 import { RiErrorWarningFill, MdEmojiEmotions, LuShieldQuestion } from '@/icons';
 import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
 import AnimatedCount from '@/app/components/AnimatedCount';
-import config from '@/config';import FaQs from '@/app/(emojis)/emojis/packages/[id]/components/FaQs';import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
-import { motion } from 'framer-motion';import Link from 'next/link';
+import config from '@/config';
+import FaQs from '@/app/(emojis)/emojis/packages/[id]/components/FaQs';
+import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
@@ -13,9 +16,11 @@ import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import ReportableArea from '@/app/components/ReportableArea';
 
 export default function Content({ emoji }) {
   const language = useLanguageStore(state => state.language);
+  const user = useLanguageStore(state => state.user);
   const [imageURLs, setImageURLs] = useState(emoji.emoji_ids.map(({ id, animated }) => config.getEmojiURL(`packages/${emoji.id}/${id}`, animated)));
   const router = useRouter();
 
@@ -65,11 +70,24 @@ export default function Content({ emoji }) {
 
         <div className='flex flex-col gap-4 lg:flex-row'>
           <motion.div className='w-full lg:max-w-[400px]'>
-            <PackagePreview
-              image_urls={imageURLs}
-              set_image_urls={setImageURLs}
-              ableToChange={false}
-            />
+            <ReportableArea
+              key={emoji.id}
+              active={user?.id !== emoji.user.id}
+              type='emoji'
+              metadata={{
+                id: emoji.id,
+                name: emoji.name,
+                animated: emoji.animated,
+                emoji_ids: emoji.emoji_ids
+              }}
+              identifier={`emoji-package-${emoji.id}`}
+            >
+              <PackagePreview
+                image_urls={imageURLs}
+                set_image_urls={setImageURLs}
+                ableToChange={false}
+              />
+            </ReportableArea>
           </motion.div>
 
           <div className='grid w-full gap-4 sm:grid-cols-3'>
