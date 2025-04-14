@@ -205,7 +205,7 @@ module.exports = {
       const validationError = getValidationError(newServer);
       if (validationError) return response.sendError(validationError, 400);
 
-      await sendWebhookLog(
+      sendWebhookLog(
         'guildListed',
         [
           { type: 'user', name: 'User', value: request.user.id },

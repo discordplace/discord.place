@@ -88,7 +88,7 @@ async function incrementVote(guildId, userId) {
 
   updatePanelMessage(guild.id);
 
-  await sendWebhookLog(
+  sendWebhookLog(
     'voteReceived',
     [
       { type: 'user', name: 'User', value: userId },

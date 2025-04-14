@@ -5,6 +5,7 @@ const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const bodyParser = require('body-parser');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   post: [
@@ -47,6 +48,21 @@ module.exports = {
         const dmChannel = publisher.dmChannel || await publisher.createDM().catch(() => null);
         if (dmChannel) dmChannel.send({ content: `### Your review to **${user.username}** has been denied.\n**Reason**: ${reason || 'No reason provided.'}` });
       }
+
+      sendWebhookLog(
+        'reviewDenied',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'Reviewer', value: review.user.id },
+          { type: 'user', name: 'Moderator', value: request.user.id },
+          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}\n${review.content}` }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View Reviewer', url: `${config.frontendUrl}/profile/u/${review.user.id}` },
+          { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
     }
   ]
 };

@@ -3,6 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData } = require('express-validator');
 const Review = require('@/schemas/Bot/Review');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   delete: [
@@ -22,6 +23,21 @@ module.exports = {
       if (!review) return response.sendError('Review not found.', 404);
 
       await review.deleteOne();
+
+      sendWebhookLog(
+        'reviewDeleted',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'Reviewer', value: review.user.id },
+          { type: 'user', name: 'Moderator', value: request.user.id },
+          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}\n${review.content}` }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View Reviewer', url: `${config.frontendUrl}/profile/u/${review.user.id}` },
+          { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

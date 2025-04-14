@@ -5,6 +5,7 @@ const { param, body, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   delete: [
@@ -32,6 +33,21 @@ module.exports = {
       if (!permissions.canEdit) return response.sendError('You are not allowed to edit this bot.', 403);
 
       bot.webhook = { url: null, token: null };
+
+      const changedFields = bot.modifiedPaths();
+
+      sendWebhookLog(
+        'botUpdated',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Changed Fields', value: changedFields.join(', ') }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       await bot.save();
 
@@ -99,8 +115,6 @@ module.exports = {
 
       if (isWebhookEmpty) {
         bot.webhook = { url: null, token: null };
-
-        await bot.save();
       } else {
         if (!url && token) return response.sendError('If you provide a Webhook Token, you should also provide a Webhook URL.', 400);
         if (!isDiscordWebhook && language) return response.sendError('You can\'t provide a language for a non-Discord Webhook URL.', 400);
@@ -110,6 +124,21 @@ module.exports = {
 
       const validationError = getValidationError(bot);
       if (validationError) return response.sendError(validationError, 400);
+
+      const changedFields = bot.modifiedPaths();
+
+      sendWebhookLog(
+        'botUpdated',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Changed Fields', value: changedFields.join(', ') }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       await bot.save();
 

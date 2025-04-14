@@ -18,6 +18,7 @@ const findRepository = require('@/utils/bots/findRepository');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const isUserBotOwner = require('@/utils/bots/isUserBotOwner');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   get: [
@@ -235,6 +236,19 @@ module.exports = {
 
       client.channels.cache.get(config.botQueueChannelId).send({ embeds, components });
 
+      sendWebhookLog(
+        'botCreated',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'text', name: 'Short Description', value: short_description },
+          { type: 'user', name: 'User', value: request.user.id }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
+
       return response.json(bot);
     }
   ],
@@ -263,6 +277,18 @@ module.exports = {
       ];
 
       await Promise.all(bulkOperations);
+
+      sendWebhookLog(
+        'botDeleted',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'User', value: request.user.id }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }
@@ -347,6 +373,21 @@ module.exports = {
 
       const validationError = getValidationError(bot);
       if (validationError) return response.sendError(validationError, 400);
+
+      const changedFields = bot.modifiedPaths();
+
+      sendWebhookLog(
+        'botUpdated',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Changed Fields', value: changedFields.join(', ') }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       await bot.save();
 

@@ -82,7 +82,7 @@ async function incrementVote(botId, userId) {
     }
   }).save();
 
-  await sendWebhookLog(
+  sendWebhookLog(
     'voteReceived',
     [
       { type: 'user', name: 'User', value: userId },

@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   post: [
@@ -64,6 +65,18 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.portalChannelId).send({ embeds, components });
+
+      sendWebhookLog(
+        'botApproved',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'Moderator', value: request.user.id }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

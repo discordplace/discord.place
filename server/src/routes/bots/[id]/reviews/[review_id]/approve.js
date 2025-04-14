@@ -5,6 +5,7 @@ const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const Discord = require('discord.js');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendWebhookLog = require('@/utils/sendWebhookLog');
 
 module.exports = {
   post: [
@@ -80,6 +81,21 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.portalChannelId).send({ embeds, components });
+
+      sendWebhookLog(
+        'reviewApproved',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'Reviewer', value: review.user.id },
+          { type: 'user', name: 'Moderator', value: request.user.id },
+          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}\n${review.content}` }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View Reviewer', url: `${config.frontendUrl}/profile/u/${review.user.id}` },
+          { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
     }
   ]
 };
