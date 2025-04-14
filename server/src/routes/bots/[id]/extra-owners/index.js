@@ -4,7 +4,7 @@ const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -79,7 +79,7 @@ module.exports = {
 
       await bot.save();
 
-      sendWebhookLog(
+      sendLog(
         'botExtraOwnerAdded',
         [
           { type: 'user', name: 'User', value: request.user.id },

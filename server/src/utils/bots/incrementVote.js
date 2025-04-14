@@ -3,7 +3,7 @@ const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const User = require('@/schemas/User');
 const sendVoteWebhook = require('@/utils/bots/sendVoteWebhook');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 async function incrementVote(botId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -82,7 +82,7 @@ async function incrementVote(botId, userId) {
     }
   }).save();
 
-  sendWebhookLog(
+  sendLog(
     'voteReceived',
     [
       { type: 'user', name: 'User', value: userId },

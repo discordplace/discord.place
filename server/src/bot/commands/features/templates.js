@@ -5,7 +5,7 @@ const sleep = require('@/utils/sleep');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const humanizeMs = require('@/utils/humanizeMs');
 const getLocalizedCommand = require('@/utils/localization/getLocalizedCommand');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 const currentlyApplyingTemplates = new Discord.Collection();
 const latestUses = new Discord.Collection();
@@ -138,7 +138,7 @@ module.exports = {
     if (botHighestRole.position !== interaction.guild.roles.cache.map(role => role.position).sort((a, b) => b - a)[0]) return sendError(await interaction.translate('commands.templates.errors.missing_highest_role'));
     if (!botHighestRole.permissions.has(Discord.PermissionFlagsBits.Administrator)) return sendError(await interaction.translate('commands.templates.errors.missing_bot_permissions'));
 
-    sendWebhookLog(
+    sendLog(
       'templateApplyRequest',
       [
         { type: 'user', name: 'Requester', value: interaction.user.id },

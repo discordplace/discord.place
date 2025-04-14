@@ -4,7 +4,7 @@ const Bot = require('@/schemas/Bot');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendVoteWebhook = require('@/utils/bots/sendVoteWebhook');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -38,7 +38,7 @@ module.exports = {
         .then(() => response.status(204).end())
         .catch(() => response.sendError('Failed to send a test webhook to the bot.', 500));
 
-      sendWebhookLog(
+      sendLog(
         'webhookTested',
         [
           { type: 'user', name: 'Bot', value: bot.id },

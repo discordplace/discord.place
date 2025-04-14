@@ -18,7 +18,7 @@ const DashboardData = require('@/schemas/Dashboard/Data');
 const getUserHashes = require('@/utils/getUserHashes');
 const requirementChecks = require('@/utils/servers/requirementChecks');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -205,7 +205,7 @@ module.exports = {
       const validationError = getValidationError(newServer);
       if (validationError) return response.sendError(validationError, 400);
 
-      sendWebhookLog(
+      sendLog(
         'guildListed',
         [
           { type: 'user', name: 'User', value: request.user.id },

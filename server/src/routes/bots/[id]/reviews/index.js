@@ -9,7 +9,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const getUserHashes = require('@/utils/getUserHashes');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -140,7 +140,7 @@ module.exports = {
 
       client.channels.cache.get(config.reviewQueueChannelId).send({ embeds });
 
-      sendWebhookLog(
+      sendLog(
         'reviewCreated',
         [
           { type: 'user', name: 'Bot', value: id },

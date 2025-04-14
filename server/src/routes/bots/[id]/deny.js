@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const User = require('@/schemas/User');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -87,7 +87,7 @@ module.exports = {
 
       client.channels.cache.get(config.portalChannelId).send({ embeds });
 
-      sendWebhookLog(
+      sendLog(
         'botApproved',
         [
           { type: 'user', name: 'Bot', value: id },

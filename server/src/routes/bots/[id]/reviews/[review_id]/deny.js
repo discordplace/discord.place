@@ -5,7 +5,7 @@ const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
 const bodyParser = require('body-parser');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -49,7 +49,7 @@ module.exports = {
         if (dmChannel) dmChannel.send({ content: `### Your review to **${user.username}** has been denied.\n**Reason**: ${reason || 'No reason provided.'}` });
       }
 
-      sendWebhookLog(
+      sendLog(
         'reviewDenied',
         [
           { type: 'user', name: 'Bot', value: id },

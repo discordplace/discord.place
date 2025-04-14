@@ -9,7 +9,7 @@ const crypto = require('node:crypto');
 const getValidationError = require('@/utils/getValidationError');
 const User = require('@/schemas/User');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -54,7 +54,7 @@ module.exports = {
 
       await link.save();
 
-      sendWebhookLog(
+      sendLog(
         'newLink',
         [
           { type: 'user', name: 'User', value: request.user.id },

@@ -1,13 +1,13 @@
 const updateClientActivity = require('@/utils/updateClientActivity');
 const ServerLanguage = require('@/schemas/Server/Language');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = async guild => {
   logger.info(`Joined guild ${guild.name} (${guild.id}).`);
 
   updateClientActivity();
 
-  sendWebhookLog(
+  sendLog(
     'joinedGuild',
     [
       { type: 'guild', name: 'Guild', value: guild.id },

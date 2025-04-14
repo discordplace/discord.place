@@ -4,7 +4,7 @@ const Bot = require('@/schemas/Bot');
 const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -39,7 +39,7 @@ module.exports = {
         if (dmChannel) dmChannel.send({ content: `### We denied your bot **${botUser.username}** but the decision has been reverted by <@${request.user.id}>.\nYour bot is now back in the review queue.` }).catch(() => null);
       }
 
-      sendWebhookLog(
+      sendLog(
         'botRestored',
         [
           { type: 'user', name: 'Bot', value: botUser.id },

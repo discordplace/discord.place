@@ -3,7 +3,7 @@ const BotDeny = require('@/schemas/Bot/Deny');
 const { param, matchedData } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   delete: [
@@ -20,7 +20,7 @@ module.exports = {
       BotDeny.findOneAndDelete({ 'bot.id': id })
         .then(() => response.status(204).end())
         .catch(error => {
-          sendWebhookLog(
+          sendLog(
             'botDenyRecordDeleted',
             [
               { type: 'user', name: 'User', value: request.user.id },

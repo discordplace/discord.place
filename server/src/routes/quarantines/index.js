@@ -7,7 +7,7 @@ const Quarantine = require('@/schemas/Quarantine');
 const ms = require('ms');
 const User = require('@/schemas/User');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -123,7 +123,7 @@ Use the following ID to refer to your quarantine: \`${quarantineData._id}\`` });
 
       await quarantine.save();
 
-      sendWebhookLog(
+      sendLog(
         'quarantineCreated',
         [
           {

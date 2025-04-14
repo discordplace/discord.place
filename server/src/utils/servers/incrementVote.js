@@ -7,7 +7,7 @@ const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
 const sendLog = require('@/utils/servers/sendLog');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const sendVoteWebhook = require('@/utils/servers/sendVoteWebhook');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 async function incrementVote(guildId, userId) {
   const user = client.users.cache.get(userId) || await client.users.fetch(userId).catch(() => null);
@@ -88,7 +88,7 @@ async function incrementVote(guildId, userId) {
 
   updatePanelMessage(guild.id);
 
-  sendWebhookLog(
+  sendLog(
     'voteReceived',
     [
       { type: 'user', name: 'User', value: userId },

@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-async function sendWebhookLog(action, fields, links) {
+async function sendLog(action, fields, links) {
   const guild = client.guilds.cache.get(config.guildId);
 
   const logChannel = guild.channels.cache.get(config.webLogsChannelId);
@@ -104,4 +104,4 @@ async function sendWebhookLog(action, fields, links) {
   });
 }
 
-module.exports = sendWebhookLog;
+module.exports = sendLog;

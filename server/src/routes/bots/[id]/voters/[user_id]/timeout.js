@@ -3,7 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   delete: [
@@ -20,7 +20,7 @@ module.exports = {
 
       BotTimeout.findOneAndDelete({ 'bot.id': id, 'user.id': user_id })
         .then(() => {
-          sendWebhookLog(
+          sendLog(
             'voteTimeoutDeleted',
             [
               { type: 'user', name: 'Bot', value: id },

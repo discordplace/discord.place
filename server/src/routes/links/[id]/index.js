@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { matchedData, param } = require('express-validator');
 const Link = require('@/schemas/Link');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   delete: [
@@ -26,7 +26,7 @@ module.exports = {
 
       await foundLink.deleteOne();
 
-      sendWebhookLog(
+      sendLog(
         'linkDeleted',
         [
           { type: 'user', name: 'User', value: request.user.id },

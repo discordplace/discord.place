@@ -3,7 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData } = require('express-validator');
 const Review = require('@/schemas/Bot/Review');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   delete: [
@@ -24,7 +24,7 @@ module.exports = {
 
       await review.deleteOne();
 
-      sendWebhookLog(
+      sendLog(
         'reviewDeleted',
         [
           { type: 'user', name: 'Bot', value: id },

@@ -9,7 +9,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -59,7 +59,7 @@ module.exports = {
 
       await newProfile.save();
 
-      sendWebhookLog(
+      sendLog(
         'profileCreated',
         [
           { type: 'user', name: 'User', value: request.user.id },

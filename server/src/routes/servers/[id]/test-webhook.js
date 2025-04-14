@@ -4,7 +4,7 @@ const Server = require('@/schemas/Server');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendVoteWebhook = require('@/utils/servers/sendVoteWebhook');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -40,7 +40,7 @@ module.exports = {
         .then(() => response.status(204).end())
         .catch(() => response.sendError('Failed to send a test webhook to the server.', 500));
 
-      sendWebhookLog(
+      sendLog(
         'webhookTested',
         [
           { type: 'guild', name: 'Guild', value: id },

@@ -18,7 +18,7 @@ const findRepository = require('@/utils/bots/findRepository');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const isUserBotOwner = require('@/utils/bots/isUserBotOwner');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -236,7 +236,7 @@ module.exports = {
 
       client.channels.cache.get(config.botQueueChannelId).send({ embeds, components });
 
-      sendWebhookLog(
+      sendLog(
         'botCreated',
         [
           { type: 'user', name: 'Bot', value: id },
@@ -278,7 +278,7 @@ module.exports = {
 
       await Promise.all(bulkOperations);
 
-      sendWebhookLog(
+      sendLog(
         'botDeleted',
         [
           { type: 'user', name: 'Bot', value: id },
@@ -376,7 +376,7 @@ module.exports = {
 
       const changedFields = bot.modifiedPaths();
 
-      sendWebhookLog(
+      sendLog(
         'botUpdated',
         [
           { type: 'user', name: 'Bot', value: id },

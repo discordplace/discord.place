@@ -1,7 +1,7 @@
 const updateClientActivity = require('@/utils/updateClientActivity');
 const Review = require('@/schemas/Server/Review');
 const Reward = require('@/schemas/Server/Vote/Reward');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = async guild => {
   logger.info(`Kicked from guild ${guild.name} (${guild.id}).`);
@@ -13,7 +13,7 @@ module.exports = async guild => {
 
   updateClientActivity();
 
-  sendWebhookLog(
+  sendLog(
     'leavedGuild',
     [
       { type: 'guild', name: 'Guild', value: guild },

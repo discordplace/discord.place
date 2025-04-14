@@ -5,7 +5,7 @@ const { param, body, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendWebhookLog = require('@/utils/sendWebhookLog');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   delete: [
@@ -36,7 +36,7 @@ module.exports = {
 
       const changedFields = bot.modifiedPaths();
 
-      sendWebhookLog(
+      sendLog(
         'botUpdated',
         [
           { type: 'user', name: 'Bot', value: id },
@@ -127,7 +127,7 @@ module.exports = {
 
       const changedFields = bot.modifiedPaths();
 
-      sendWebhookLog(
+      sendLog(
         'botUpdated',
         [
           { type: 'user', name: 'Bot', value: id },
