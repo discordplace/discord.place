@@ -4,7 +4,7 @@ const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const User = require('@/schemas/User');
 const Discord = require('discord.js');
 const updatePanelMessage = require('@/utils/servers/updatePanelMessage');
-const sendLog = require('@/utils/servers/sendLog');
+const serverSendLog = require('@/utils/servers/sendLog');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const sendVoteWebhook = require('@/utils/servers/sendVoteWebhook');
 const sendLog = require('@/utils/sendLog');
@@ -101,7 +101,7 @@ async function incrementVote(guildId, userId) {
     ]
   );
 
-  sendLog(guild.id, await guild.translate('commands.vote.logging_messages.user_voted', { username: Discord.escapeMarkdown(user.username), userId: user.id }))
+  serverSendLog(guild.id, await guild.translate('commands.vote.logging_messages.user_voted', { username: Discord.escapeMarkdown(user.username), userId: user.id }))
     .catch(() => null);
 
   const rewards = await Reward.find({ 'guild.id': guild.id });
