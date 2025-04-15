@@ -97,7 +97,7 @@ async function incrementVote(guildId, userId) {
     ],
     [
       { label: 'View User', url: `${config.frontendUrl}/profile/u/${userId}` },
-      { label: 'View Guild', url: `${config.frontendUrl}/guilds/${guildId}` }
+      { label: 'View Guild', url: `${config.frontendUrl}/servers/${guildId}` }
     ]
   );
 
