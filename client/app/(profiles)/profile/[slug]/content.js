@@ -9,7 +9,6 @@ import incrementViews from '@/lib/request/profiles/incrementViews';
 import Tooltip from '@/app/components/Tooltip';
 import { useEffect } from 'react';
 import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers';
-import Script from 'next/script';
 import Graph from '@/app/(profiles)/profile/[slug]/components/sections/Graph';
 import useThemeStore from '@/stores/theme';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
@@ -28,12 +27,6 @@ export default function Content({ profile }) {
 
   return (
     <div className='mt-32 flex w-full justify-center'>
-      <Script
-        src='https://challenges.cloudflare.com/turnstile/v0/api.js'
-        async={true}
-        defer={true}
-      />
-
       <div className='mb-8 flex w-full max-w-[1000px] flex-col px-2 lg:px-0'>
         <div className='relative h-[300px] w-full rounded-xl bg-secondary'>
           {profile.banner && (
