@@ -5,6 +5,7 @@ const { param, body, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   delete: [
@@ -29,6 +30,21 @@ module.exports = {
       if (!permissions.canEdit) return response.sendError('You are not allowed to edit this server.', 403);
 
       server.webhook = { url: null, token: null };
+
+      const changedFields = server.modifiedPaths();
+
+      sendLog(
+        'serverUpdated',
+        [
+          { type: 'guild', name: 'Server', value: id },
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Changed Fields', value: changedFields.join(', ') }
+        ],
+        [
+          { label: 'View Server', url: `${config.frontendUrl}/servers/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       await server.save();
 
@@ -106,6 +122,21 @@ module.exports = {
 
       const validationError = getValidationError(server);
       if (validationError) return response.sendError(validationError, 400);
+
+      const changedFields = server.modifiedPaths();
+
+      sendLog(
+        'serverUpdated',
+        [
+          { type: 'guild', name: 'Server', value: id },
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Changed Fields', value: changedFields.join(', ') }
+        ],
+        [
+          { label: 'View Server', url: `${config.frontendUrl}/servers/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       await server.save();
 

@@ -12,6 +12,7 @@ const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 const multer = require('multer');
 const upload = multer({
@@ -144,6 +145,18 @@ module.exports = {
 
             client.channels.cache.get(config.emojiQueueChannelId).send({ embeds, components });
 
+            sendLog(
+              'emojiPackCreated',
+              [
+                { type: 'user', name: 'User', value: request.user.id },
+                { type: 'text', name: 'Emoji Pack', value: `${emojiPack.name} (${emojiPack.id})` }
+              ],
+              [
+                { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+                { label: 'View Emoji Pack', url: `${config.frontendUrl}/emojis/packages/${id}` }
+              ]
+            );
+
             return response.json({
               success: true,
               emoji: emojiPack.toPubliclySafe()
@@ -219,6 +232,18 @@ module.exports = {
             ];
 
             client.channels.cache.get(config.emojiQueueChannelId).send({ embeds, components });
+
+            sendLog(
+              'emojiCreated',
+              [
+                { type: 'user', name: 'User', value: request.user.id },
+                { type: 'text', name: 'Emoji', value: `${emoji.name} (${emoji.id})` }
+              ],
+              [
+                { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+                { label: 'View Emoji', url: `${config.frontendUrl}/emojis/${id}` }
+              ]
+            );
 
             return response.json({
               success: true,

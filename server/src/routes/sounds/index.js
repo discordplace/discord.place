@@ -10,6 +10,7 @@ const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 const multer = require('multer');
 const upload = multer({
@@ -119,6 +120,18 @@ module.exports = {
           ];
 
           client.channels.cache.get(config.soundQueueChannelId).send({ embeds, components });
+
+          sendLog(
+            'soundCreated',
+            [
+              { type: 'user', name: 'Publisher', value: requestUser.id },
+              { type: 'text', name: 'Sound', value: `${name} (${id})` }
+            ],
+            [
+              { label: 'View Publisher', url: `${config.frontendUrl}/profile/u/${requestUser.id}` },
+              { label: 'View Sound', url: `${config.frontendUrl}/sounds/${id}` }
+            ]
+          );
 
           return response.json(sound.toPubliclySafe({ isLiked: false }));
         })

@@ -30,7 +30,36 @@ async function sendLog(action, fields, links) {
     'botDenied': 'Bot Denied',
     'botCreated': 'Bot Created',
     'botDeleted': 'Bot Deleted',
-    'botUpdated': 'Bot Updated'
+    'botUpdated': 'Bot Updated',
+    'botStatsUpdated': 'Bot Stats Updated',
+    'emojiApproved': 'Emoji Approved',
+    'emojiPackApproved': 'Emoji Pack Approved',
+    'emojiDeleted': 'Emoji Deleted',
+    'emojiPackDeleted': 'Emoji Pack Deleted',
+    'emojiDenied': 'Emoji Denied',
+    'emojiPackDenied': 'Emoji Pack Denied',
+    'emojiUploadedToGuild': 'Emoji Uploaded to Guild',
+    'emojiPackUploadedToGuild': 'Emoji Pack Uploaded to Guild',
+    'emojiCreated': 'Emoji Created',
+    'emojiPackCreated': 'Emoji Pack Created',
+    'checkoutCreated': 'Checkout Created',
+    'orderRefunded': 'Order Refunded',
+    'subscriptionExpired': 'Subscription Expired',
+    'profileSocialLinkDeleted': 'Profile Social Link Deleted',
+    'profileDeleted': 'Profile Deleted',
+    'profileUpdated': 'Profile Updated',
+    'profileLiked': 'Profile Liked',
+    'profileUnliked': 'Profile Unliked',
+    'profileCreated': 'Profile Created',
+    'serverUpdated': 'Server Updated',
+    'voteReminderCreated': 'Vote Reminder Created',
+    'soundApproved': 'Sound Approved',
+    'soundDenied': 'Sound Denied',
+    'soundDeleted': 'Sound Deleted',
+    'soundLiked': 'Sound Liked',
+    'soundUnliked': 'Sound Unliked',
+    'soundUploadedToGuild': 'Sound Uploaded to Guild',
+    'soundCreated': 'Sound Created'
   };
 
   const embed = new Discord.EmbedBuilder()
@@ -63,7 +92,7 @@ async function sendLog(action, fields, links) {
         var date = new Date(field.value);
         var unixDate = Math.floor(date.getTime() / 1000);
 
-        return `- ${field.name} ⇾ ${Discord.time(unixDate, 'F')}`;
+        return `- ${field.name} ⇾ ${Discord.time(unixDate, 'D')} \`${new Date(field.value).toLocaleTimeString()}\``;
       case 'number':
         return `- ${field.name} ⇾ **${formatter.format(field.value)}**`;
       case 'text':

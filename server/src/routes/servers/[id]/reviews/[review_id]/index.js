@@ -3,6 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   delete: [
@@ -22,6 +23,21 @@ module.exports = {
       if (!review) return response.sendError('Review not found.', 404);
 
       await review.deleteOne();
+
+      sendLog(
+        'reviewDeleted',
+        [
+          { type: 'guild', name: 'Server', value: id },
+          { type: 'user', name: 'Reviewer', value: review.user.id },
+          { type: 'user', name: 'Moderator', value: request.user.id },
+          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}\n${review.content}` }
+        ],
+        [
+          { label: 'View Server', url: `${config.frontendUrl}/servers/${id}` },
+          { label: 'View Reviewer', url: `${config.frontendUrl}/profile/u/${review.user.id}` },
+          { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

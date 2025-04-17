@@ -4,6 +4,7 @@ const Bot = require('@/schemas/Bot');
 const bodyParser = require('body-parser');
 const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/src/utils/sendLog');
 
 module.exports = {
   patch: [
@@ -45,6 +46,20 @@ module.exports = {
       }
 
       await bot.save();
+
+      sendLog(
+        'botStatsUpdated',
+        [
+          { type: 'user', name: 'Bot', value: id },
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Command Count', value: command_count || 'Not Provided' },
+          { type: 'text', name: 'Server Count', value: server_count || 'Not Provided' }
+        ],
+        [
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.json({ success: true });
     }

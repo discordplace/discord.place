@@ -7,6 +7,7 @@ const Discord = require('discord.js');
 const getEmojiURL = require('@/utils/emojis/getEmojiURL');
 const bodyParser = require('body-parser');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -41,6 +42,18 @@ module.exports = {
           name: emoji.name,
           reason: `Uploaded by @${request.user.username} (${request.user.id}) via discord.place`
         });
+
+        sendLog(
+          'emojiUploadedToGuild',
+          [
+            { type: 'user', name: 'User', value: request.user.id },
+            { type: 'guild', name: 'Guild', value: guild.id },
+            { type: 'text', name: 'Emoji', value: `${emoji.name} (${emoji.id})` }
+          ],
+          [
+            { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+          ]
+        );
 
         return response.status(204).end();
       } catch (error) {

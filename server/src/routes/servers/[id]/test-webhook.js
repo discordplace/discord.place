@@ -44,7 +44,7 @@ module.exports = {
         'webhookTested',
         [
           { type: 'guild', name: 'Guild', value: id },
-          { type: 'user', name: 'Tested By', value: request.user.id }
+          { type: 'user', name: 'User', value: request.user.id }
         ],
         [
           { label: 'View Guild', url: `${config.frontendUrl}/servers/${id}` },

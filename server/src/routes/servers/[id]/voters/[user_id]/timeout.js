@@ -4,6 +4,7 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
 const ServerReminder = require('@/schemas/Server/Vote/Reminder');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   delete: [
@@ -22,6 +23,20 @@ module.exports = {
         .then(async () => {
           await ServerReminder.findOneAndDelete({ 'guild.id': id, 'user.id': user_id })
             .catch(() => null);
+
+          sendLog(
+            'voteTimeoutDeleted',
+            [
+              { type: 'guild', name: 'Server', value: id },
+              { type: 'user', name: 'User', value: user_id },
+              { type: 'user', name: 'Moderator', value: request.user.id }
+            ],
+            [
+              { label: 'View Server', url: `${config.frontendUrl}/servers/${id}` },
+              { label: 'View User', url: `${config.frontendUrl}/profile/u/${user_id}` },
+              { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+            ]
+          );
 
           return response.status(204).end();
         })

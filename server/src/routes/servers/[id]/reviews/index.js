@@ -9,6 +9,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const getUserHashes = require('@/utils/getUserHashes');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -134,6 +135,19 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.reviewQueueChannelId).send({ embeds });
+
+      sendLog(
+        'reviewCreated',
+        [
+          { type: 'guild', name: 'Server', value: id },
+          { type: 'user', name: 'Reviewer', value: request.user.id },
+          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}\n${review.content}` }
+        ],
+        [
+          { label: 'View Server', url: `${config.frontendUrl}/bots/${id}` },
+          { label: 'View Reviewer', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

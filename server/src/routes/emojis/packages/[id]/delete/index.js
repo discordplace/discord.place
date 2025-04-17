@@ -4,6 +4,7 @@ const { param, matchedData } = require('express-validator');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 const { S3Client, DeleteObjectsCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -43,6 +44,17 @@ module.exports = {
       S3.send(command).catch(() => null);
 
       await emojiPack.deleteOne();
+
+      sendLog(
+        'emojiPackDeleted',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Emoji Pack', value: `${emojiPack.name} (${emojiPack.id})` }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

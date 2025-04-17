@@ -12,6 +12,7 @@ const Server = require('@/schemas/Server');
 const randomizeArray = require('@/utils/randomizeArray');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -232,6 +233,21 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       if (!profile.isModified()) return response.sendError('No changes were made.', 400);
+
+      const changedFields = profile.modifiedPaths();
+
+      sendLog(
+        'profileUpdated',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Profile', value: profile.slug },
+          { type: 'text', name: 'Changed Fields', value: changedFields.join(', ') }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Profile', url: `${config.frontendUrl}/profile/${profile.slug}` }
+        ]
+      );
 
       await profile.save();
 

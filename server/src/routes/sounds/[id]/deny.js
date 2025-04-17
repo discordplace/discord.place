@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const idValidation = require('@/validations/sounds/id');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -78,6 +79,18 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.portalChannelId).send({ embeds });
+
+      sendLog(
+        'soundDenied',
+        [
+          { type: 'user', name: 'Reviewer', value: request.user.id },
+          { type: 'text', name: 'Sound', value: `${sound.name} (${sound.id})` }
+        ],
+        [
+          { label: 'View Reviewer', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Sound', url: `${config.frontendUrl}/sounds/${sound.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

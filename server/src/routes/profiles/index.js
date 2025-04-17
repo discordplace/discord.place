@@ -63,10 +63,10 @@ module.exports = {
         'profileCreated',
         [
           { type: 'user', name: 'User', value: request.user.id },
-          { type: 'text', name: 'Slug', value: slug }
+          { type: 'text', name: 'Profile', value: slug }
         ],
         [
-          { label: 'View User', url: `${config.frontendUrl}/profile/u//${request.user.id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
           { label: 'View Profile', url: `${config.frontendUrl}/profile/${slug}` }
         ]
       );

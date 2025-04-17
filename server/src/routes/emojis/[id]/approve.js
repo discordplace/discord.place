@@ -7,6 +7,7 @@ const idValidation = require('@/validations/emojis/id');
 const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -65,6 +66,20 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.portalChannelId).send({ embeds, components });
+
+      sendLog(
+        isPack ? 'emojiPackApproved' : 'emojiApproved',
+        [
+          { type: 'user', name: 'User', value: emoji.user.id },
+          { type: 'user', name: 'Reviewer', value: request.user.id },
+          { type: 'text', name: isPack ? 'Emoji Pack' : 'Emoji', value: `${emoji.name} (${emoji.id})` }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${emoji.user.id}` },
+          { label: 'View Reviewer', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Emoji', url: `${config.frontendUrl}/emojis/${isPack ? 'packages/' : ''}${emoji.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

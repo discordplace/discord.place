@@ -4,6 +4,7 @@ const { param, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const slugValidation = require('@/validations/profiles/slug');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -23,6 +24,17 @@ module.exports = {
       if (!canDelete) return response.sendError('You are not allowed to delete this profile.', 403);
 
       await profile.deleteOne();
+
+      sendLog(
+        'profileDeleted',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'profile', name: 'Profile', value: profile.slug }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

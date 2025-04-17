@@ -12,6 +12,7 @@ const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
 const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -54,6 +55,19 @@ module.exports = {
           try {
             const data = await createStandedOutCheckout(serverId, 'server');
 
+            sendLog(
+              'checkoutCreated',
+              [
+                { type: 'user', name: 'User', value: request.user.id },
+                { type: 'guild', name: 'Server', value: serverId },
+                { type: 'product', name: 'Product', value: 'Standed Out' }
+              ],
+              [
+                { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+                { label: 'View Server', url: `${config.frontendUrl}/servers/${serverId}` }
+              ]
+            );
+
             return response.json({
               url: data.data.attributes.url
             });
@@ -76,6 +90,19 @@ module.exports = {
 
           try {
             const data = await createStandedOutCheckout(botId, 'bot');
+
+            sendLog(
+              'checkoutCreated',
+              [
+                { type: 'user', name: 'User', value: request.user.id },
+                { type: 'user', name: 'Bot', value: botId },
+                { type: 'product', name: 'Product', value: 'Standed Out' }
+              ],
+              [
+                { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+                { label: 'View Bot', url: `${config.frontendUrl}/bots/${botId}` }
+              ]
+            );
 
             return response.json({
               url: data.data.attributes.url
@@ -108,6 +135,19 @@ module.exports = {
           try {
             const data = await createTripledVotesCheckout(serverId, 'server');
 
+            sendLog(
+              'checkoutCreated',
+              [
+                { type: 'user', name: 'User', value: request.user.id },
+                { type: 'guild', name: 'Server', value: serverId },
+                { type: 'product', name: 'Product', value: 'Tripled Votes' }
+              ],
+              [
+                { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+                { label: 'View Server', url: `${config.frontendUrl}/servers/${serverId}` }
+              ]
+            );
+
             return response.json({
               url: data.data.attributes.url
             });
@@ -131,6 +171,19 @@ module.exports = {
           try {
             const data = await createTripledVotesCheckout(botId, 'bot');
 
+            sendLog(
+              'checkoutCreated',
+              [
+                { type: 'user', name: 'User', value: request.user.id },
+                { type: 'user', name: 'Bot', value: botId },
+                { type: 'product', name: 'Product', value: 'Tripled Votes' }
+              ],
+              [
+                { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+                { label: 'View Bot', url: `${config.frontendUrl}/bots/${botId}` }
+              ]
+            );
+
             return response.json({
               url: data.data.attributes.url
             });
@@ -147,6 +200,17 @@ module.exports = {
 
       await createCheckout(request.user, planId)
         .then(data => {
+          sendLog(
+            'checkoutCreated',
+            [
+              { type: 'user', name: 'User', value: request.user.id },
+              { type: 'product', name: 'Product', value: `${plan.name} (${plan.price_formatted})` }
+            ],
+            [
+              { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+            ]
+          );
+
           return response.json({
             url: data.data.attributes.url
           });

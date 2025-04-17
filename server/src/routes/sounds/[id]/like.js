@@ -5,6 +5,7 @@ const idValidation = require('@/validations/emojis/id');
 const { param, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   patch: [
@@ -27,6 +28,18 @@ module.exports = {
       const updateAction = isLiked ? { $pull: { likers: request.user.id } } : { $push: { likers: request.user.id } };
 
       await Sound.updateOne({ id }, updateAction);
+
+      sendLog(
+        isLiked ? 'soundLiked' : 'soundUnliked',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Sound', value: `${sound.name} (${sound.id})` }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Sound', url: `${config.frontendUrl}/sounds/${sound.id}` }
+        ]
+      );
 
       return response.json({ isLiked: !isLiked });
     }

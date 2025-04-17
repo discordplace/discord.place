@@ -4,6 +4,7 @@ const { param, matchedData } = require('express-validator');
 const Emoji = require('@/src/schemas/Emoji');
 const idValidation = require('@/validations/emojis/id');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -31,14 +32,27 @@ module.exports = {
       const canDelete = request.user.id == emoji.user.id || config.permissions.canDeleteEmojisRoles.some(role => request.member.roles.cache.has(role));
       if (!canDelete) return response.sendError('You are not allowed to delete this emoji.', 403);
 
+      const isPack = emoji.emoji_ids && emoji.emoji_ids.length > 0;
+
       const command = new DeleteObjectCommand({
         Bucket: process.env.S3_BUCKET_NAME,
-        Key: `emojis/${emoji.emoji_ids ? `packages/${emoji.id}/` : `.${emoji.animated ? 'gif' : 'png'}`}`
+        Key: `emojis/${isPack ? `packages/${emoji.id}/` : `.${emoji.animated ? 'gif' : 'png'}`}`
       });
 
       S3.send(command).catch(() => null);
 
       await emoji.deleteOne();
+
+      sendLog(
+        'emojiDeleted',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Emoji', value: `${emoji.name} (${emoji.id})` }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

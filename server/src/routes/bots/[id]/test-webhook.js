@@ -42,7 +42,7 @@ module.exports = {
         'webhookTested',
         [
           { type: 'user', name: 'Bot', value: bot.id },
-          { type: 'user', name: 'Tested By', value: request.user.id }
+          { type: 'user', name: 'User', value: request.user.id }
         ],
         [
           { label: 'View Bot', url: `${config.frontendUrl}/bots/${bot.id}` },

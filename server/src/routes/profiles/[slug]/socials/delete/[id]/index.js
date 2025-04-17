@@ -5,6 +5,7 @@ const { param, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -33,6 +34,20 @@ module.exports = {
       if (validationError) return response.sendError(validationError, 400);
 
       await profile.save();
+
+      sendLog(
+        'profileSocialLinkDeleted',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'profile', name: 'Profile', value: profile.slug },
+          { type: 'text', name: 'Social Link', value: social.link }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Profile', url: `${config.frontendUrl}/profile/${profile.slug}` },
+          { label: 'View Social Link', url: social.link }
+        ]
+      );
 
       return response.status(200).json({
         success: true,

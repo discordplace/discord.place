@@ -6,6 +6,7 @@ const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const bodyParser = require('body-parser');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -40,6 +41,19 @@ module.exports = {
       });
 
       await newReminder.save();
+
+      sendLog(
+        'voteReminderCreated',
+        [
+          { type: 'guild', name: 'Server', value: id },
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'date', name: 'Will be reminded at', value: new Date() }
+        ],
+        [
+          { label: 'View Server', url: `${config.frontendUrl}/servers/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

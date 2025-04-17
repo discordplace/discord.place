@@ -6,6 +6,7 @@ const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
 const Discord = require('discord.js');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const bodyParser = require('body-parser');
@@ -78,6 +79,18 @@ module.exports = {
           ];
 
           client.channels.cache.get(config.portalChannelId).send({ embeds });
+
+          sendLog(
+            isPack ? 'emojiPackDenied' : 'emojiDenied',
+            [
+              { type: 'user', name: 'User', value: request.user.id },
+              { type: 'text', name: 'Emoji', value: `${emoji.name} (${emoji.id})` },
+              { type: 'text', name: 'Reason', value: reason ? `${config.emojisDenyReasons[reason].name}\n-# - ${config.emojisDenyReasons[reason].description}` : 'No reason provided.' }
+            ],
+            [
+              { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+            ]
+          );
 
           return response.status(204).end();
         })

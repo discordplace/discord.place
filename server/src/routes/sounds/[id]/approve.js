@@ -7,6 +7,7 @@ const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const idValidation = require('@/validations/sounds/id');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -66,6 +67,18 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.portalChannelId).send({ embeds, components });
+
+      sendLog(
+        'soundApproved',
+        [
+          { type: 'user', name: 'Moderator', value: request.user.id },
+          { type: 'text', name: 'Sound', value: `${sound.name} (${sound.id})` }
+        ],
+        [
+          { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Sound', url: `${config.frontendUrl}/sounds/${sound.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

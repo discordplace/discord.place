@@ -5,6 +5,7 @@ const slugValidation = require('@/validations/profiles/slug');
 const { param, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   patch: [
@@ -26,6 +27,18 @@ module.exports = {
       const isLiked = profile.likes.includes(request.user.id);
       if (isLiked) await Profile.updateOne({ slug }, { $pull: { likes: request.user.id } });
       else await Profile.updateOne({ slug }, { $push: { likes: request.user.id } });
+
+      sendLog(
+        isLiked ? 'profileUnliked' : 'profileLiked',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Profile', value: profile.slug }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Profile', url: `${config.frontendUrl}/profile/${profile.slug}` }
+        ]
+      );
 
       return response.json({ isLiked: !isLiked });
     }

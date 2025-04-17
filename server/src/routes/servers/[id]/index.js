@@ -317,6 +317,21 @@ module.exports = {
 
       if (!server.isModified()) return response.sendError('No changes were made.', 400);
 
+      const changedFields = server.modifiedPaths();
+
+      sendLog(
+        'serverUpdated',
+        [
+          { type: 'guild', name: 'Server', value: id },
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Changed Fields', value: changedFields.join(', ') }
+        ],
+        [
+          { label: 'View Server', url: `${config.frontendUrl}/servers/${id}` },
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
+
       await server.save();
 
       await updatePanelMessage(id);

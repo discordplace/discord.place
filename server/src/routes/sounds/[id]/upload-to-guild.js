@@ -8,6 +8,7 @@ const getSoundURL = require('@/utils/sounds/getSoundURL');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -50,6 +51,19 @@ module.exports = {
         })
           .then(async () => {
             await Sound.updateOne({ id }, { $inc: { downloads: 1 } });
+
+            sendLog(
+              'soundUploadedToGuild',
+              [
+                { type: 'user', name: 'User', value: request.user.id },
+                { type: 'guild', name: 'Guild', value: guild.id },
+                { type: 'text', name: 'Sound', value: `${sound.name} (${sound.id})` }
+              ],
+              [
+                { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+                { label: 'View Sound', url: `${config.frontendUrl}/sounds/${sound.id}` }
+              ]
+            );
 
             return response.status(204).end();
           })

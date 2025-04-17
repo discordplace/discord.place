@@ -15,6 +15,7 @@ const decrypt = require('@/utils/encryption/decrypt');
 const getImageFromHash = require('@/utils/getImageFromHash');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -185,6 +186,17 @@ module.exports = {
 
           if (member && member.roles.cache.has(config.roles.premium)) await member.roles.remove(config.roles.premium);
 
+          sendLog(
+            'orderRefunded',
+            [
+              { type: 'user', name: 'User', value: user.id },
+              { type: 'text', name: 'Order ID', value: body.data.attributes.order_number }
+            ],
+            [
+              { label: 'View User', url: `${config.frontendUrl}/profile/u/${user.id}` }
+            ]
+          );
+
           break;
         case 'subscription_expired':
           var user = await User.findOne({ 'subscription.id': body.data.attributes.order_id });
@@ -214,6 +226,16 @@ module.exports = {
           var member = guild.members.cache.get(user.id) || await guild.members.fetch(user.id).catch(() => null);
 
           if (member && member.roles.cache.has(config.roles.premium)) await member.roles.remove(config.roles.premium);
+
+          sendLog(
+            'subscriptionExpired',
+            [
+              { type: 'user', name: 'User', value: user.id }
+            ],
+            [
+              { label: 'View User', url: `${config.frontendUrl}/profile/u/${user.id}` }
+            ]
+          );
 
           break;
       }
