@@ -41,9 +41,7 @@ async function initialize() {
 
       i18next.addResourceBundle(locale.code, 'translation', JSON.parse(localeContent), true, true);
 
-      if (!Object.values(Discord.Locale).includes(locale.code)) {
-        logger.warn(`Locale ${locale.code} is not supported by Discord.`);
-      }
+      if (!Object.values(Discord.Locale).includes(locale.code) && locale.code !== 'en') logger.warn(`Locale ${locale.code} is not supported by Discord.`);
     }));
 
     // Add methods to Discord.js prototypes
