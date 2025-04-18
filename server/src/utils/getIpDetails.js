@@ -5,7 +5,7 @@ const IpDetails = require('@/schemas/IpDetails');
 async function getIpDetails(ip) {
   if (!ip) return null;
 
-  const cachedIpDetails = await IpDetails.findOne({ ip }).lean();
+  const cachedIpDetails = await IpDetails.findOne({ ip }).select('-_id -__v -createdAt -updatedAt').lean();
   if (cachedIpDetails) return cachedIpDetails;
 
   const axiosInstance = axios.create();
