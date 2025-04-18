@@ -145,7 +145,6 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | Name | Description |
 | ---- | ----------- |
 | `COOKIE_SECRET` | Secret key for cookie encryption. |
-| `GITHUB_AUTO_DEPLOY_SECRET` | Secret key for GitHub auto-deploy webhook. (not required) |
 | `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` | Secret key for GitHub trigger to sync translators roles. (not required) |
 | `BOT_API_KEY_ENCRYPT_SECRET` | Secret key for bot API key encryption. |
 | `USER_TOKEN_ENCRYPT_SECRET` | Used for encrypting user access tokens. |
@@ -179,7 +178,6 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `WEBHOOKS_PROXY_SERVER_PASSWORD` | Password for the proxy server. (not required) |
 
 > [!NOTE]
-> - The `GITHUB_AUTO_DEPLOY_SECRET` is used for auto-deploying the server when a new release created in the GitHub repository. When this secret is set and you have set up the GitHub webhook, the server will automatically deploy the new release when a new release is created in the repository.
 > - The `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` is used for syncing the translators roles when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically sync the translators roles in the base guild with the ids in the `client/locales/translators.json` file.
 > - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET`, `USER_TOKEN_ENCRYPT_SECRET` and `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the client's `CLIENT_SECRET` value.
