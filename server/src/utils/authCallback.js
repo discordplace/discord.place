@@ -68,7 +68,7 @@ async function authCallback(access_token, response, setApplicationsEntitlementsS
     { upsert: true }
   );
 
-  return null;
+  return user.id;
 }
 
 module.exports = authCallback;
