@@ -114,7 +114,7 @@ async function sendLog(action, fields, links) {
           userAgent: field.value.headers['user-agent']
         };
 
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'production') {
           const ipDetails = await getIpDetails(field.value.clientIp).catch(() => null);
           if (ipDetails) requestBump.ip = ipDetails;
         }
