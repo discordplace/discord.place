@@ -3,6 +3,7 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const getAccessToken = require('@/utils/getAccessToken');
 const authCallback = require('@/utils/authCallback');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -45,6 +46,17 @@ module.exports = {
 
         const callbackResponse = await authCallback(access_token, response, scopes.includes('applications.entitlements'));
         if (callbackResponse !== null) return;
+
+        sendLog(
+          'userLogin',
+          [
+            { type: 'user', name: 'User', value: callbackResponse },
+            { type: 'request', name: 'Request Details', value: request }
+          ],
+          [
+            { label: 'View User', url: `${config.frontendUrl}/profile/u/${callbackResponse}` }
+          ]
+        );
 
         return response.redirect(redirectCookie || config.frontendUrl);
       } catch (error) {
