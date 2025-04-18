@@ -73,11 +73,11 @@ module.exports = {
       sendLog(
         'soundDeleted',
         [
-          { type: 'user', name: 'Reviewer', value: request.user.id },
+          { type: 'user', name: 'User', value: request.user.id },
           { type: 'text', name: 'Sound', value: `${sound.name} (${sound.id})` }
         ],
         [
-          { label: 'View Reviewer', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
         ]
       );
 

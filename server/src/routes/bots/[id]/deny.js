@@ -85,7 +85,8 @@ module.exports = {
           ])
       ];
 
-      client.channels.cache.get(config.portalChannelId).send({ embeds });
+      client.channels.cache.get(config.portalChannelId).send({ embeds })
+        .then(message => logger.info(`[DEBUG] Message sent to portal channel: ${message.url}`));
 
       sendLog(
         'botApproved',

@@ -5,6 +5,7 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const idValidation = require('@/utils/validations/themes/id');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -55,6 +56,17 @@ module.exports = {
       if (!canDelete) return response.sendError('You are not allowed to delete this theme.', 403);
 
       await theme.deleteOne();
+
+      sendLog(
+        'themeDeleted',
+        [
+          { type: 'user', name: 'Moderator', value: request.user.id },
+          { type: 'text', name: 'Theme', value: theme.id }
+        ],
+        [
+          { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

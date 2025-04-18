@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const getIpDetails = require('@/utils/getIpDetails');
 
 async function sendLog(action, fields, links) {
   const guild = client.guilds.cache.get(config.guildId);
@@ -9,6 +10,7 @@ async function sendLog(action, fields, links) {
   const actionNames = {
     'voteReceived': 'Vote Received',
     'guildListed': 'Guild Listed',
+    'guildDeleted': 'Guild Deleted',
     'templateApplyRequest': 'Template Apply Request',
     'newLink': 'New Link',
     'linkDeleted': 'Link Deleted',
@@ -59,7 +61,18 @@ async function sendLog(action, fields, links) {
     'soundLiked': 'Sound Liked',
     'soundUnliked': 'Sound Unliked',
     'soundUploadedToGuild': 'Sound Uploaded to Guild',
-    'soundCreated': 'Sound Created'
+    'soundCreated': 'Sound Created',
+    'templateApproved': 'Template Approved',
+    'templateDenied': 'Template Denied',
+    'templateDeleted': 'Template Deleted',
+    'templateCreated': 'Template Created',
+    'themeApproved': 'Theme Approved',
+    'themeDenied': 'Theme Denied',
+    'themeDeleted': 'Theme Deleted',
+    'themeCreated': 'Theme Created',
+    'newReportCreated': 'New Report Created',
+    'userLogin': 'User Login',
+    'userLogout': 'User Logout'
   };
 
   const embed = new Discord.EmbedBuilder()
@@ -95,6 +108,18 @@ async function sendLog(action, fields, links) {
         return `- ${field.name} ⇾ ${Discord.time(unixDate, 'D')} \`${new Date(field.value).toLocaleTimeString()}\``;
       case 'number':
         return `- ${field.name} ⇾ **${formatter.format(field.value)}**`;
+      case 'request':
+        var requestBump = {
+          ip: field.value.clientIp,
+          userAgent: field.value.headers['user-agent']
+        };
+
+        if (process.env.NODE_ENV === 'development') {
+          const ipDetails = await getIpDetails(field.value.clientIp).catch(() => null);
+          if (ipDetails) requestBump.ip = ipDetails;
+        }
+
+        return `- ${field.name}\n\`\`\`json\n${JSON.stringify(requestBump, null, 2)}\n\`\`\``;
       case 'text':
       default:
         return `- ${field.name} ⇾ **${field.value}**`;

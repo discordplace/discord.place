@@ -3,6 +3,7 @@ const { param, matchedData } = require('express-validator');
 const Template = require('@/schemas/Template');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   get: [
@@ -49,6 +50,17 @@ module.exports = {
       if (!canDelete) return response.sendError('You are not allowed to delete this template.', 403);
 
       await template.deleteOne();
+
+      sendLog(
+        'templateDeleted',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Template', value: `${template.name} (${template.id})` }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

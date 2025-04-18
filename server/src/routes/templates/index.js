@@ -9,6 +9,7 @@ const getValidationError = require('@/utils/getValidationError');
 const Discord = require('discord.js');
 const fetchTemplateDetails = require('@/utils/templates/fetchTemplateDetails');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -96,6 +97,18 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.templateQueueChannelId).send({ embeds, components });
+
+      sendLog(
+        'templateCreated',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Template', value: `${template.name} (${template.id})` }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'Preview Template', url: `${config.frontendUrl}/templates/${id}/preview` }
+        ]
+      );
 
       return response.json(template);
     }

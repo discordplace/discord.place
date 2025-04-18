@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const idValidation = require('@/validations/themes/id');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -67,6 +68,17 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.portalChannelId).send({ embeds });
+
+      sendLog(
+        'themeDenied',
+        [
+          { type: 'user', name: 'Moderator', value: request.user.id },
+          { type: 'text', name: 'Theme', value: theme.id }
+        ],
+        [
+          { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

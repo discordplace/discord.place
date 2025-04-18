@@ -209,11 +209,11 @@ module.exports = {
         'guildListed',
         [
           { type: 'user', name: 'User', value: request.user.id },
-          { type: 'guild', name: 'Target', value: id }
+          { type: 'guild', name: 'Server', value: id }
         ],
         [
           { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
-          { label: 'View Guild', url: `${config.frontendUrl}/servers/${id}` }
+          { label: 'View Server', url: `${config.frontendUrl}/servers/${id}` }
         ]
       );
 
@@ -247,6 +247,17 @@ module.exports = {
       ];
 
       await Promise.all(bulkOperations);
+
+      sendLog(
+        'guildDeleted',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'guild', name: 'Server', value: id }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

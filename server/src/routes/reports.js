@@ -5,6 +5,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Discord = require('discord.js');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   put: [
@@ -39,6 +40,18 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.reportsQueueChannelId).send({ embeds });
+
+      sendLog(
+        'newReportCreated',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Identifier', value: identifier },
+          { type: 'text', name: 'Reason', value: reason }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+        ]
+      );
 
       return response.status(204).end();
     }

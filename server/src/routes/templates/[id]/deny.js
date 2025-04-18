@@ -5,6 +5,7 @@ const Template = require('@/schemas/Template');
 const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -58,6 +59,18 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.portalChannelId).send({ embeds });
+
+      sendLog(
+        'templateDenied',
+        [
+          { type: 'user', name: 'Moderator', value: request.user.id },
+          { type: 'text', name: 'Template', value: `${template.name} (${template.id})` }
+        ],
+        [
+          { label: 'View Moderator', url: `${config.frontendUrl}/users/${request.user.id}` },
+          { label: 'Preview Template', url: `${config.frontendUrl}/templates/${id}/preview` }
+        ]
+      );
 
       return response.status(204).end();
     }

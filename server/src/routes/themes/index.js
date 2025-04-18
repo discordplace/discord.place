@@ -10,6 +10,7 @@ const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
+const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -101,6 +102,18 @@ module.exports = {
       ];
 
       client.channels.cache.get(config.themeQueueChannelId).send({ embeds, components });
+
+      sendLog(
+        'themeCreated',
+        [
+          { type: 'user', name: 'User', value: request.user.id },
+          { type: 'text', name: 'Theme', value: id }
+        ],
+        [
+          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` },
+          { label: 'View Theme', url: `${config.frontendUrl}/themes/${id}` }
+        ]
+      );
 
       return response.json(theme.toPubliclySafe());
     }
