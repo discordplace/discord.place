@@ -48,7 +48,10 @@ async function getIpDetails(ip) {
       hosting: response.data.hosting
     }).save();
 
-    return response.data;
+    return {
+      ip,
+      ...response.data
+    };
   } catch (error) {
     logger.error(`Error while getting ip ${ip}'s details:`, error.response);
 
