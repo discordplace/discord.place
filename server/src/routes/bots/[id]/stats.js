@@ -51,13 +51,11 @@ module.exports = {
         'botStatsUpdated',
         [
           { type: 'user', name: 'Bot', value: id },
-          { type: 'user', name: 'User', value: request.user.id },
           { type: 'text', name: 'Command Count', value: command_count || 'Not Provided' },
           { type: 'text', name: 'Server Count', value: server_count || 'Not Provided' }
         ],
         [
-          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
-          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
+          { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` }
         ]
       );
 
