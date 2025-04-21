@@ -141,7 +141,7 @@ module.exports = {
         [
           { type: 'guild', name: 'Server', value: id },
           { type: 'user', name: 'Reviewer', value: request.user.id },
-          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}\n${review.content}` }
+          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}**\n**${review.content}` }
         ],
         [
           { label: 'View Server', url: `${config.frontendUrl}/bots/${id}` },

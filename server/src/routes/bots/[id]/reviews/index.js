@@ -145,7 +145,7 @@ module.exports = {
         [
           { type: 'user', name: 'Bot', value: id },
           { type: 'user', name: 'Reviewer', value: request.user.id },
-          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}\n${review.content}` }
+          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}**\n**${review.content}` }
         ],
         [
           { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` },
