@@ -158,7 +158,7 @@ module.exports = class Server {
     };
 
     this.server.use((request, response, next) => {
-      if (request.method.includes(['POST', 'PUT', 'PATCH', 'DELETE'])) return bodyParser.json(bodyParserOptions)(request, response, next);
+      if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method)) return bodyParser.json(bodyParserOptions)(request, response, next);
 
       next();
     });
