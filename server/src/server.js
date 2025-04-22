@@ -3,6 +3,7 @@ const { router } = require('express-file-routing');
 const path = require('node:path');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
 
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -149,6 +150,17 @@ module.exports = class Server {
       } else {
         next();
       }
+    });
+
+    const bodyParserOptions = {
+      limit: '10mb',
+      strict: true
+    };
+
+    this.server.use((request, response, next) => {
+      if (request.method.includes(['POST', 'PUT', 'PATCH', 'DELETE'])) return bodyParser.json(bodyParserOptions)(request, response, next);
+
+      next();
     });
 
     logger.info('Middlewares added.');

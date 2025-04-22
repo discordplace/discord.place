@@ -1,4 +1,3 @@
-const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const { body, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
@@ -9,7 +8,6 @@ const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   put: [
-    bodyParser.json(),
     checkAuthentication,
     useRateLimiter({ maxRequests: 5, perMinutes: 10 }),
     body('identifier')

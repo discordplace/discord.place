@@ -1,7 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const keywordsValidation = require('@/validations/servers/keywords');
-const bodyParser = require('body-parser');
 const { param, body, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
@@ -126,7 +125,6 @@ module.exports = {
   post: [
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,
-    bodyParser.json(),
     param('id'),
     body('description')
       .isString().withMessage('Description must be a string.')
@@ -265,7 +263,6 @@ module.exports = {
   patch: [
     checkAuthentication,
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
-    bodyParser.json(),
     param('id'),
     body('description')
       .optional()

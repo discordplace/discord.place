@@ -1,7 +1,6 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, body, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
-const bodyParser = require('body-parser');
 const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/src/utils/sendLog');
@@ -9,7 +8,6 @@ const sendLog = require('@/src/utils/sendLog');
 module.exports = {
   patch: [
     useRateLimiter({ maxRequests: 2, perMinutes: 120 }),
-    bodyParser.json(),
     param('id'),
     body('command_count')
       .isInt({ min: 0, max: 1000 }).withMessage('Commands count must be between 0 and 1,000.')

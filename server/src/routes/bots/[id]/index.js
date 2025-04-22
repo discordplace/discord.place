@@ -1,7 +1,6 @@
 const categoriesValidation = require('@/utils/validations/bots/categories');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
 const { param, body, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Bot = require('@/schemas/Bot');
@@ -119,7 +118,6 @@ module.exports = {
   post: [
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,
-    bodyParser.json(),
     param('id'),
     body('short_description')
       .isString().withMessage('Short description should be a string.')
@@ -296,7 +294,6 @@ module.exports = {
   patch: [
     checkAuthentication,
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
-    bodyParser.json(),
     param('id'),
     body('short_description')
       .optional()

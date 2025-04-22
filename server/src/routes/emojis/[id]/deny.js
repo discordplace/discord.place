@@ -9,7 +9,6 @@ const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
-const bodyParser = require('body-parser');
 const S3 = new S3Client({
   region: process.env.S3_REGION,
   endpoint: process.env.S3_ENDPOINT,
@@ -22,7 +21,6 @@ const S3 = new S3Client({
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
-    bodyParser.json(),
     checkAuthentication,
     param('id')
       .isString().withMessage('ID must be a string.')

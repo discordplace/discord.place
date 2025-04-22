@@ -1,7 +1,6 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, body } = require('express-validator');
 const Bot = require('@/schemas/Bot');
-const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
@@ -43,7 +42,6 @@ module.exports = {
   post: [
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     checkAuthentication,
-    bodyParser.json(),
     param('id'),
     body('userId')
       .isString().withMessage('User ID must be a string.')

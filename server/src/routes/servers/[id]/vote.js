@@ -4,7 +4,6 @@ const { param, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const checkCaptcha = require('@/utils/middlewares/checkCaptcha');
-const bodyParser = require('body-parser');
 const incrementVote = require('@/utils/servers/incrementVote');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const validateRequest = require('@/utils/middlewares/validateRequest');
@@ -12,7 +11,6 @@ const validateRequest = require('@/utils/middlewares/validateRequest');
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
-    bodyParser.json(),
     checkAuthentication,
     checkCaptcha,
     param('id'),

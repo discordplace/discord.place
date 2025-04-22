@@ -3,7 +3,6 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, body } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const User = require('@/schemas/User');
-const bodyParser = require('body-parser');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const birthdayValidation = require('@/validations/profiles/birthday');
 const socialsValidation = require('@/validations/profiles/socials');
@@ -97,7 +96,6 @@ module.exports = {
   patch: [
     checkAuthentication,
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
-    bodyParser.json(),
     param('slug')
       .isString().withMessage('Slug must be a string.')
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')

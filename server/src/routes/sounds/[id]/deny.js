@@ -2,7 +2,6 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, body } = require('express-validator');
 const Sound = require('@/schemas/Sound');
-const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const idValidation = require('@/validations/sounds/id');
 const validateRequest = require('@/utils/middlewares/validateRequest');
@@ -21,7 +20,6 @@ const S3 = new S3Client({
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
-    bodyParser.json(),
     checkAuthentication,
     param('id')
       .isString().withMessage('ID must be a string.')

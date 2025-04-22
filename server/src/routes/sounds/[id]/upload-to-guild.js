@@ -5,7 +5,6 @@ const idValidation = require('@/validations/sounds/id');
 const { param, matchedData, body } = require('express-validator');
 const Discord = require('discord.js');
 const getSoundURL = require('@/utils/sounds/getSoundURL');
-const bodyParser = require('body-parser');
 const axios = require('axios');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
@@ -14,7 +13,6 @@ module.exports = {
   post: [
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
     checkAuthentication,
-    bodyParser.json(),
     param('id')
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),

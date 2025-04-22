@@ -1,6 +1,5 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const categoriesValidation = require('@/validations/themes/categories');
 const colorValidation = require('@/validations/themes/color');
@@ -16,7 +15,6 @@ module.exports = {
   post: [
     checkAuthentication,
     useRateLimiter({ maxRequests: 1, perMinutes: 1 }),
-    bodyParser.json(),
     body('colors')
       .isObject().withMessage('Colors should be an object.')
       .custom(colors => {

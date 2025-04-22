@@ -1,6 +1,5 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const nameValidation = require('@/validations/links/name');
 const destinationURLValidation = require('@/validations/links/destinationURL');
@@ -15,7 +14,6 @@ module.exports = {
   post: [
     checkAuthentication,
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
-    bodyParser.json(),
     body('name')
       .isString().withMessage('Name should be a string.')
       .custom(nameValidation),

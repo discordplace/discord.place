@@ -3,7 +3,6 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, body, query } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const Review = require('@/schemas/Bot/Review');
-const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
@@ -67,7 +66,6 @@ module.exports = {
   ],
   post: [
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
-    bodyParser.json(),
     checkAuthentication,
     param('id'),
     body('rating')

@@ -1,6 +1,5 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const getValidationError = require('@/utils/getValidationError');
 const Quarantine = require('@/schemas/Quarantine');
@@ -13,7 +12,6 @@ module.exports = {
   post: [
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     checkAuthentication,
-    bodyParser.json(),
     body('type')
       .isString().withMessage('Type should be a string.')
       .isIn(config.quarantineTypes).withMessage(`Type must be one of: ${config.quarantineTypes.join(', ')}`),

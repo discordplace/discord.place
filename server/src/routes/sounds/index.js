@@ -1,6 +1,5 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const nameValidation = require('@/validations/sounds/name');
 const categoriesValidation = require('@/validations/sounds/categories');
@@ -41,7 +40,6 @@ module.exports = {
     checkAuthentication,
     useRateLimiter({ maxRequests: 1, perMinutes: 1 }),
     upload,
-    bodyParser.json(),
     body('name')
       .isString().withMessage('Name should be a string.')
       .custom(nameValidation),

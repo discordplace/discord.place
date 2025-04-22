@@ -1,6 +1,5 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
 const { matchedData, param } = require('express-validator');
 const Link = require('@/schemas/Link');
 const validateRequest = require('@/utils/middlewares/validateRequest');
@@ -10,7 +9,6 @@ module.exports = {
   delete: [
     checkAuthentication,
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
-    bodyParser.json(),
     param('id')
       .isString().withMessage('ID should be a string.')
       .isLength({ min: 16, max: 16 }).withMessage('ID should be 16 characters long.'),

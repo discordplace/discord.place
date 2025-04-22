@@ -12,7 +12,6 @@ const Theme = require('@/schemas/Theme');
 const ServerReview = require('@/schemas/Server/Review');
 const BotTimeout = require('@/schemas/Bot/Vote/Timeout');
 const ServerTimeout = require('@/schemas/Server/Vote/Timeout');
-const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const Quarantine = require('@/schemas/Quarantine');
 const Link = require('@/schemas/Link');
@@ -41,7 +40,6 @@ const validKeys = [
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
-    bodyParser.json(),
     checkAuthentication,
     body('keys')
       .optional()

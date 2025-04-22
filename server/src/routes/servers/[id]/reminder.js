@@ -4,14 +4,12 @@ const { param, matchedData } = require('express-validator');
 const Server = require('@/schemas/Server');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
-const bodyParser = require('body-parser');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
-    bodyParser.json(),
     checkAuthentication,
     param('id'),
     validateRequest,

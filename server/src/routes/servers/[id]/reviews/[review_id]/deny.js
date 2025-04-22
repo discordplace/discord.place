@@ -2,7 +2,6 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData, body } = require('express-validator');
 const Review = require('@/schemas/Server/Review');
-const bodyParser = require('body-parser');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
 
@@ -10,7 +9,6 @@ module.exports = {
   post: [
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
     checkAuthentication,
-    bodyParser.json(),
     param('id'),
     param('review_id')
       .isMongoId().withMessage('Invalid review ID.'),

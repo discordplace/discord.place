@@ -10,7 +10,6 @@ const Theme = require('@/schemas/Theme');
 const Template = require('@/schemas/Template');
 const VoteReminder = require('@/schemas/Server/Vote/Reminder');
 const Reminder = require('@/schemas/Reminder');
-const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const Deny = require('@/src/schemas/Bot/Deny');
 const Sound = require('@/schemas/Sound');
@@ -34,7 +33,6 @@ const validKeys = [
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 20, perMinutes: 1 }),
-    bodyParser.json(),
     checkAuthentication,
     body('keys')
       .optional()

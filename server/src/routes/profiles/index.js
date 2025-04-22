@@ -1,6 +1,5 @@
 const slugValidation = require('@/validations/profiles/slug');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const User = require('@/schemas/User');
@@ -15,7 +14,6 @@ module.exports = {
   post: [
     checkAuthentication,
     useRateLimiter({ maxRequests: 5, perMinutes: 1 }),
-    bodyParser.json(),
     body('slug')
       .isString().withMessage('Slug must be a string.')
       .isLength({ min: 3, max: 32 }).withMessage('Slug must be between 3 and 32 characters.')

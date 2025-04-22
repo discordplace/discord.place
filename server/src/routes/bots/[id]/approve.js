@@ -2,7 +2,6 @@ const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
-const bodyParser = require('body-parser');
 const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const validateRequest = require('@/utils/middlewares/validateRequest');
@@ -11,7 +10,6 @@ const sendLog = require('@/utils/sendLog');
 module.exports = {
   post: [
     useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
-    bodyParser.json(),
     checkAuthentication,
     param('id'),
     validateRequest,

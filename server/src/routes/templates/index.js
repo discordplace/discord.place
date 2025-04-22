@@ -1,7 +1,6 @@
 const categoriesValidation = require('@/utils/validations/templates/categories');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const bodyParser = require('body-parser');
 const { body, matchedData } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Template = require('@/schemas/Template');
@@ -15,7 +14,6 @@ module.exports = {
   post: [
     useRateLimiter({ maxRequests: 2, perMinutes: 1 }),
     checkAuthentication,
-    bodyParser.json(),
     body('id')
       .isString().withMessage('ID should be a string.')
       .isLength({ min: 12, max: 12 }).withMessage('ID must be 12 characters.'),
