@@ -1084,7 +1084,10 @@
       "deletingSocial": "Bağlantı siliniyor..",
       "socialDeleted": "Bağlantı başarıyla silindi.",
       "deletingProfile": "Profil siliniyor..",
-      "profileDeleted": "Profil başarıyla silindi."
+      "profileDeleted": "Profil başarıyla silindi.",
+      "updatingProfile": "Profil güncelleniyor..",
+      "profileUpdated": "Profil güncellendi!",
+      "profileUpdatedAndWillBeRedirected": "Profil güncellendi! 3 saniye sonra yeni profilinize yönlendirileceksiniz."
     },
     "premiumRequiredInfo": {
       "title": "Bunu yapamazsınız!",

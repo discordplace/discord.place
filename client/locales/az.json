@@ -1084,7 +1084,10 @@
       "deletingSocial": "Sosial silmə..",
       "socialDeleted": "Sosial şəbəkə uğurla silindi.",
       "deletingProfile": "Profil silinir..",
-      "profileDeleted": "Profil uğurla silindi."
+      "profileDeleted": "Profil uğurla silindi.",
+      "updatingProfile": "Profil yenilənir..",
+      "profileUpdated": "Profil yeniləndi!",
+      "profileUpdatedAndWillBeRedirected": "Profil yeniləndi! 3 saniyə ərzində yeni profilə yönləndiriləcəksiniz."
     },
     "premiumRequiredInfo": {
       "title": "Sən bunu edə bilməzsən!",

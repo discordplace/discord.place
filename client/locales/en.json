@@ -1084,7 +1084,10 @@
       "deletingSocial": "Social deleting..",
       "socialDeleted": "Social deleted successfully.",
       "deletingProfile": "Deleting profile..",
-      "profileDeleted": "Profile deleted successfully."
+      "profileDeleted": "Profile deleted successfully.",
+      "updatingProfile": "Updating profile..",
+      "profileUpdated": "Profile updated!",
+      "profileUpdatedAndWillBeRedirected": "Profile updated! You will be redirected to new profile in 3 seconds."
     },
     "premiumRequiredInfo": {
       "title": "You can't do that!",

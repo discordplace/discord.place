@@ -5,13 +5,16 @@ import { useEffect, useRef, useState } from 'react';
 import cn from '@/lib/cn';
 import editProfile from '@/lib/request/profiles/editProfile';
 import { toast } from 'sonner';
-import Socials from '@/app/(profiles)/profile/[slug]/edit/components/Socials';import { AnimatePresence, motion } from 'framer-motion';
+import Socials from '@/app/(profiles)/profile/[slug]/edit/components/Socials';
+import { AnimatePresence, motion } from 'framer-motion';
 import config from '@/config';
 import { useRouter } from 'next-nprogress-bar';
 import GenderDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/Gender';
 import PreferredHostDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/PreferredHost';
-import Link from 'next/link';import revalidateProfile from '@/lib/revalidate/profile';
-import { HexAlphaColorPicker } from 'react-colorful';import Tooltip from '@/app/components/Tooltip';
+import Link from 'next/link';
+import revalidateProfile from '@/lib/revalidate/profile';
+import { HexAlphaColorPicker } from 'react-colorful';
+import Tooltip from '@/app/components/Tooltip';
 import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
 import { colord, extend } from 'colord';
 import a11yPlugin from 'colord/plugins/a11y';
@@ -84,7 +87,7 @@ export default function Edit({ profileData }) {
     setLoading(true);
 
     toast.promise(editProfile(profileData.slug, changedKeys), {
-      loading: 'Updating profile...',
+      loading: t('editProfilePage.toast.updatingProfile'),
       success: newProfile => {
         setChangedKeys({});
         setProfile(newProfile);
@@ -93,19 +96,15 @@ export default function Edit({ profileData }) {
         if (Object.keys(changedKeys).includes('newSlug')) {
           setTimeout(() => router.push(config.getProfileURL(changedKeys['newSlug'], newProfile.preferredHost)), 3000);
 
-          return 'Profile updated! You will be redirected to new profile in 3 seconds.';
+          return t('editProfilePage.toast.profileUpdatedAndWillBeRedirected');
         } else {
           revalidateProfile(newProfile.slug);
           setLoading(false);
 
-          return 'Profile updated!';
+          return t('editProfilePage.toast.profileUpdated');
         }
       },
-      error: error => {
-        setLoading(false);
-
-        return error;
-      }
+      error: () => setLoading(false)
     });
   }
 
@@ -436,11 +435,7 @@ export default function Edit({ profileData }) {
 
                         return t('editProfilePage.toast.colorsReset');
                       },
-                      error: error => {
-                        setLoading(false);
-
-                        return error;
-                      }
+                      error: () => setLoading(false)
                     });
                   }}
                   disabled={loading}
