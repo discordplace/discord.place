@@ -30,7 +30,7 @@ module.exports = {
       await Sound.updateOne({ id }, updateAction);
 
       sendLog(
-        isLiked ? 'soundLiked' : 'soundUnliked',
+        isLiked ? 'soundUnliked' : 'soundLiked',
         [
           { type: 'user', name: 'User', value: request.user.id },
           { type: 'text', name: 'Sound', value: `${sound.name} (${sound.id})` }
