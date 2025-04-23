@@ -2,7 +2,8 @@
 
 import { RiErrorWarningFill } from '@/icons';
 import { toast } from 'sonner';
-import deleteProfile from '@/lib/request/profiles/deleteProfile';import useModalsStore from '@/stores/modals';
+import deleteProfile from '@/lib/request/profiles/deleteProfile';
+import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import { t } from '@/stores/language';
 
@@ -27,10 +28,10 @@ export default function DangerZone({ profile }) {
 
         return t('editProfilePage.toast.profileDeleted');
       },
-      error: message => {
+      error: error => {
         enableButton('delete-profile', 'confirm');
 
-        return message;
+        return error;
       }
     });
   }

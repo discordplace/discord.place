@@ -1,17 +1,20 @@
 'use client';
 
 import { TbLoader, MdArrowOutward, FiX } from '@/icons';
-import Link from 'next/link';import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import addSocial from '@/lib/request/profiles/addSocial';
 import deleteSocial from '@/lib/request/profiles/deleteSocial';
-import { toast } from 'sonner';import cn from '@/lib/cn';
+import { toast } from 'sonner';
+import cn from '@/lib/cn';
 import config from '@/config';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import revalidateProfile from '@/lib/revalidate/profile';
 import { t } from '@/stores/language';
 import colors from '@/lib/utils/profiles/colors';
 import getIcon from '@/lib/utils/profiles/getIcon';
-export default function Socials({ profile }) {
+
+export default function Socials({ profile }) {
   const [socials, setSocials] = useState(profile.socials);
 
   const typeRegexps = {
@@ -68,10 +71,10 @@ import getIcon from '@/lib/utils/profiles/getIcon';
 
               return t('editProfilePage.toast.socialAdded');
             },
-            error: message => {
+            error: error => {
               setLoading(false);
 
-              return message;
+              return error;
             }
           }
         );
@@ -94,10 +97,10 @@ import getIcon from '@/lib/utils/profiles/getIcon';
 
               return t('editProfilePage.toast.socialMediaAdded');
             },
-            error: message => {
+            error: error => {
               setLoading(false);
 
-              return message;
+              return error;
             }
           }
         );
@@ -125,11 +128,11 @@ import getIcon from '@/lib/utils/profiles/getIcon';
 
           return t('editProfilePage.toast.socialDeleted');
         },
-        error: message => {
+        error: error => {
           setLoading(false);
           setDeletingSocialId(null);
 
-          return message;
+          return error;
         }
       }
     );

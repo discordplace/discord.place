@@ -2,7 +2,8 @@
 
 import { RiBrush2Fill, RiRobot2Fill, PiWaveformBold, MdAccessTimeFilled, MdAccountCircle, MdDarkMode, MdEmojiEmotions, MdSunny, IoMdArrowBack, IoMdLogOut, HiTemplate, FiLink, FaBell, FaCompass, FaDiscord, FaShieldAlt } from '@/icons';
 import MyAccount from '@/app/(account)/account/components/Content/Tabs/MyAccount';
-import { useEffect } from 'react';import ActiveTimeouts from '@/app/(account)/account/components/Content/Tabs/ActiveTimeouts';
+import { useEffect } from 'react';
+import ActiveTimeouts from '@/app/(account)/account/components/Content/Tabs/ActiveTimeouts';
 import ActiveReminders from '@/app/(account)/account/components/Content/Tabs/ActiveReminders';
 import MyLinks from '@/app/(account)/account/components/Content/Tabs/MyLinks';
 import MyServers from '@/app/(account)/account/components/Content/Tabs/MyServers';
@@ -14,7 +15,11 @@ import MyThemes from '@/app/(account)/account/components/Content/Tabs/MyThemes';
 import useAccountStore from '@/stores/account';
 import useThemeStore from '@/stores/theme';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';import { useRouter } from 'next-nprogress-bar';import useAuthStore from '@/stores/auth';import { useCookie, useLocalStorage, useMedia } from 'react-use';import { useShallow } from 'zustand/react/shallow';
+import Image from 'next/image';
+import { useRouter } from 'next-nprogress-bar';
+import useAuthStore from '@/stores/auth';
+import { useCookie, useLocalStorage, useMedia } from 'react-use';
+import { useShallow } from 'zustand/react/shallow';
 import { t } from '@/stores/language';
 import Sidebar from '@/app/(account)/account/components/Content/Sidebar';
 import logout from '@/lib/request/auth/logout';
@@ -54,7 +59,7 @@ export default function Content() {
 
         return 'Logged out successfully.';
       },
-      error: message => message
+      error: error => error
     });
   }
 

@@ -39,10 +39,10 @@ export default function ReportableArea(props) {
 
         return t('inAppReporting.reportModal.toast.reportSubmitted');
       },
-      error: message => {
+      error: error => {
         enableButton('report-area', 'createReport');
 
-        return message;
+        return error;
       }
     });
   }

@@ -167,7 +167,7 @@ export default function Sidebar() {
           onClick: () => toast.promise(syncLemonSqueezyPlans(), {
             loading: 'Syncing Lemon Squeezy plans..',
             success: () => 'Successfully synced Lemon Squeezy plans.',
-            error: message => message
+            error: error => error
           }),
           disabled: data?.permissions?.canSyncLemonSqueezyPlans === false
         }
@@ -190,7 +190,7 @@ export default function Sidebar() {
 
         return 'Logged out successfully.';
       },
-      error: message => message
+      error: error => error
     });
   }
 

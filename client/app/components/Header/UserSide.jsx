@@ -40,7 +40,7 @@ export default function UserSide({ className }) {
 
         return 'Logged out successfully';
       },
-      error: error => `Failed to log out: ${error}`
+      error: error => error
     });
   }
 

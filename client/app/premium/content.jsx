@@ -6,11 +6,14 @@ import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
 import { Source_Serif_4 } from 'next/font/google';
 import { motion } from 'framer-motion';
-import { useState } from 'react';import useAuthStore from '@/stores/auth';
+import { useState } from 'react';
+import useAuthStore from '@/stores/auth';
 import createCheckout from '@/lib/request/auth/createCheckout';
 import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
-import config from '@/config';import FaQs from '@/app/premium/components/FaQs';import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
+import FaQs from '@/app/premium/components/FaQs';
+import Tooltip from '@/app/components/Tooltip';
 import { t } from '@/stores/language';
 
 const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
@@ -196,10 +199,10 @@ export default function Page({ plans }) {
 
         return t('premiumPage.toast.checkoutCreated');
       },
-      error: message => {
+      error: error => {
         setLoading(false);
 
-        return message;
+        return error;
       }
     });
   }

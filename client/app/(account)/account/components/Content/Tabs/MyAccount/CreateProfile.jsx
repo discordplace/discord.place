@@ -7,7 +7,8 @@ import cn from '@/lib/cn';
 import checkSlugAvailability from '@/lib/request/profiles/checkSlugAvailability';
 import useAuthStore from '@/stores/auth';
 import useGeneralStore from '@/stores/general';
-import { useEffect, useState } from 'react';import { useDebounce } from 'react-use';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'react-use';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
 import { t } from '@/stores/language';
@@ -53,11 +54,10 @@ export default function CreateProfile() {
     setSlugStatus('loading');
 
     checkSlugAvailability(debouncedSlug)
-      .then(available => {
-        setSlugStatus(available ? 'available' : 'unavailable');
-      })
+      .then(available => setSlugStatus(available ? 'available' : 'unavailable'))
       .catch(error => {
         toast.error(error);
+
         setSlugStatus('idle');
       });
 

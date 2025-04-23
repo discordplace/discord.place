@@ -104,7 +104,11 @@ export default function Edit({ profileData }) {
           return t('editProfilePage.toast.profileUpdated');
         }
       },
-      error: () => setLoading(false)
+      error: error => {
+        setLoading(false);
+
+        return error;
+      }
     });
   }
 
@@ -435,7 +439,11 @@ export default function Edit({ profileData }) {
 
                         return t('editProfilePage.toast.colorsReset');
                       },
-                      error: () => setLoading(false)
+                      error: error => {
+                        setLoading(false);
+
+                        return error;
+                      }
                     });
                   }}
                   disabled={loading}
