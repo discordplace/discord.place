@@ -309,8 +309,8 @@ quarantineRestrictions:
     available_to:
       - 'USER_ID'
 customHostnames:
-  - 'dsc.dog'
-  - 'dsc.mom'
+  - 'dsc.lat'
+  - 'dsc.gay'
 emojisDenyReasons:
   reposted-emoji:
     name: 'Reposted Emoji'

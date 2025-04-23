@@ -311,7 +311,7 @@ const config = {
   },
   discordWebhookRegex: /^https:\/\/discord(app)?\.com\/api\/webhooks\/\d+\/[\w-]+$/,
   githubIssuesUrl: 'https://github.com/discordplace/discord.place/issues/new?template=bug-report---feature-request.md',
-  customHostnames: ['dsc.dog', 'dsc.mom'],
+  customHostnames: ['dsc.lat', 'dsc.gay'],
   emojisDenyReasons: {
     'reposted-emoji': {
       name: 'Reposted Emoji',
