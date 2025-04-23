@@ -2,9 +2,11 @@
 
 import { TbLoader, MdOutlineOpenInNew, GoHeartFill } from '@/icons';
 import useAuthStore from '@/stores/auth';
-import Link from 'next/link';import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import getPlans from '@/lib/request/payments/getPlansFromClient';
-import { toast } from 'sonner';import useModalsStore from '@/stores/modals';
+import { toast } from 'sonner';
+import useModalsStore from '@/stores/modals';
 import CreateProfile from '@/app/(account)/account/components/Content/Tabs/MyAccount/CreateProfile';
 import createProfile from '@/lib/request/profiles/createProfile';
 import { useShallow } from 'zustand/react/shallow';
@@ -56,11 +58,7 @@ export default function MyAccount() {
 
         return t('accountPage.tabs.myAccount.toast.profileCreated');
       },
-      error: error => {
-        enableButton('create-profile', 'create');
-
-        return error;
-      }
+      error: () => enableButton('create-profile', 'create')
     });
   }
 

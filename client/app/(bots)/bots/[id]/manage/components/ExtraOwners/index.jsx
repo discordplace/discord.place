@@ -1,7 +1,8 @@
 'use client';
 
 import { ImHammer2 } from '@/icons';
-import { useEffect, useRef, useState } from 'react';import getExtraOwners from '@/lib/request/bots/getExtraOwners';
+import { useEffect, useRef, useState } from 'react';
+import getExtraOwners from '@/lib/request/bots/getExtraOwners';
 import { toast } from 'sonner';
 import Image from 'next/image';
 import Tooltip from '@/app/components/Tooltip';
@@ -39,11 +40,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
 
         return t('botManagePage.extraOwners.toast.ownerRemoved');
       },
-      error: error => {
-        setExtraOwnerRemoving('');
-
-        return error;
-      }
+      error: () => setExtraOwnerRemoving('')
     });
   }
 
@@ -71,11 +68,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
 
         return t('botManagePage.extraOwners.toast.ownerAdded', { username: userData.username });
       },
-      error: error => {
-        enableButton('add-extra-owner', 'confirm');
-
-        return error;
-      }
+      error: () => enableButton('add-extra-owner', 'confirm')
     });
   }
 

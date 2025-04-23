@@ -42,11 +42,7 @@ export default function Content({ emoji }) {
 
         return t('emojiPackagePage.toast.emojiPackageDeleted');
       },
-      error: error => {
-        enableButton('delete-emoji-package', 'confirm');
-
-        return error;
-      }
+      error: () => enableButton('delete-emoji-package', 'confirm')
     });
   }
 

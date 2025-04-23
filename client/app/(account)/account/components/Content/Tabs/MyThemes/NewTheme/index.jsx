@@ -51,11 +51,7 @@ export default function NewTheme() {
 
         return t('accountPage.tabs.myThemes.sections.addTheme.toast.themeAdded');
       },
-      error: error => {
-        setLoading(false);
-
-        return error;
-      }
+      error: () => setLoading(false)
     });
   }
 

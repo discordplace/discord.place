@@ -70,11 +70,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
 
           return t('serverManagePage.webhook.toast.saved');
         },
-        error: error => {
-          setSavingChanges(false);
-
-          return error;
-        }
+        error: () => setSavingChanges(false)
       });
     } catch {
       return toast.error(t('serverManagePage.webhook.toast.urlNotValid'));

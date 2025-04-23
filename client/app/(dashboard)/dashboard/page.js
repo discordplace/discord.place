@@ -183,8 +183,7 @@ export default function Page() {
                     action: item => {
                       toast.promise(getHashes(item.id), {
                         loading: `Refreshing ${item.username}'s hashes...`,
-                        success: `Successfully refreshed ${item.username}'s hashes.`,
-                        error: error => error
+                        success: `Successfully refreshed ${item.username}'s hashes.`
                       });
                     },
                     fetchKey: 'users'

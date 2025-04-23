@@ -4,13 +4,16 @@ import { PiWarningCircleFill, MdOutlineCopyAll, LuPlus, FiExternalLink, FiLink, 
 import ErrorState from '@/app/components/ErrorState';
 import useAuthStore from '@/stores/auth';
 import useModalsStore from '@/stores/modals';
-import Link from 'next/link';import { useShallow } from 'zustand/react/shallow';
+import Link from 'next/link';
+import { useShallow } from 'zustand/react/shallow';
 import deleteLink from '@/lib/request/links/deleteLink';
 import { toast } from 'sonner';
 import CreateLinkModal from '@/app/(account)/account/components/Content/Tabs/MyLinks/CreateLinkModal';
 import useGeneralStore from '@/stores/general';
 import createLink from '@/lib/request/links/createLink';
-import useAccountStore from '@/stores/account';import CopyButton from '@/app/components/CopyButton/CustomTrigger';import { t } from '@/stores/language';
+import useAccountStore from '@/stores/account';
+import CopyButton from '@/app/components/CopyButton/CustomTrigger';
+import { t } from '@/stores/language';
 
 export default function MyLinks() {
   const user = useAuthStore(state => state.user);
@@ -38,11 +41,7 @@ export default function MyLinks() {
 
         return t('accountPage.tabs.myLinks.toast.linkDeleted');
       },
-      error: error => {
-        enableButton('delete-link', 'confirm');
-
-        return error;
-      }
+      error: () => enableButton('delete-link', 'confirm')
     });
   }
 
@@ -93,11 +92,7 @@ export default function MyLinks() {
 
                   return t('accountPage.tabs.myLinks.createLinkModal.toast.linkCreated');
                 },
-                error: error => {
-                  enableButton('create-link', 'create');
-
-                  return error;
-                }
+                error: () => enableButton('create-link', 'create')
               });
             } catch {
               return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.invalidDestinationUrl'));

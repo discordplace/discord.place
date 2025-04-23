@@ -39,11 +39,7 @@ export default function Content({ sound }) {
 
         return t('soundPage.toast.soundDeleted', { soundName: sound.name });
       },
-      error: error => {
-        enableButton('delete-sound', 'confirm');
-
-        return error;
-      }
+      error: () => enableButton('delete-sound', 'confirm')
     });
   }
 

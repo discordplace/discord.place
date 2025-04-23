@@ -3,7 +3,8 @@
 import { TbLoader, TbSquareRoundedChevronUp, TbSquareRoundedChevronUpFilled, PiShareFat, PiShareFatFill, FaBell, FaRegBell, BsFire, BiPencil, BiSolidEnvelope, AiOutlineRise } from '@/icons';
 import CopyButton from '@/app/components/CopyButton';
 import MotionLink from '@/app/components/Motion/Link';
-import { AnimatePresence, motion } from 'framer-motion';import useAuthStore from '@/stores/auth';
+import { AnimatePresence, motion } from 'framer-motion';
+import useAuthStore from '@/stores/auth';
 import cn from '@/lib/cn';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
@@ -11,9 +12,12 @@ import { toast } from 'sonner';
 import voteServer from '@/lib/request/servers/voteServer';
 import createReminder from '@/lib/request/servers/createReminder';
 import VoteCountdown from '@/app/components/Countdown/Vote';
-import Tooltip from '@/app/components/Tooltip';import revalidateServer from '@/lib/revalidate/server';import createTripledVotesCheckout from '@/lib/request/servers/createTripledVotesCheckout';
+import Tooltip from '@/app/components/Tooltip';
+import revalidateServer from '@/lib/revalidate/server';
+import createTripledVotesCheckout from '@/lib/request/servers/createTripledVotesCheckout';
 import createStandedOutCheckout from '@/lib/request/servers/createStandedOutCheckout';
-import { useRouter } from 'next-nprogress-bar';import { t } from '@/stores/language';
+import { useRouter } from 'next-nprogress-bar';
+import { t } from '@/stores/language';
 
 export default function Actions({ server }) {
   const [serverVotes, setServerVotes] = useState(server.votes);
@@ -60,11 +64,7 @@ export default function Actions({ server }) {
 
               return t('serverPage.actions.toast.voted', { serverName: server.name });
             },
-            error: error => {
-              setLoading(false);
-
-              return error;
-            }
+            error: () => setLoading(false)
           });
         }
       }, 100);
@@ -85,11 +85,7 @@ export default function Actions({ server }) {
 
         return t('serverPage.actions.toast.reminderCreated', { serverName: server.name });
       },
-      error: error => {
-        setCreateReminderLoading(false);
-
-        return error;
-      }
+      error: () => setCreateReminderLoading(false)
     });
   }
 
@@ -103,11 +99,7 @@ export default function Actions({ server }) {
 
         return t('serverPage.actions.toast.checkoutCreated');
       },
-      error: error => {
-        setBuyTripledVotesLoading(false);
-
-        return error;
-      }
+      error: () => setBuyTripledVotesLoading(false)
     });
   }
 
@@ -121,11 +113,7 @@ export default function Actions({ server }) {
 
         return t('serverPage.actions.toast.checkoutCreated');
       },
-      error: error => {
-        setBuyStandedOutLoading(false);
-
-        return error;
-      }
+      error: () => setBuyStandedOutLoading(false)
     });
   }
 

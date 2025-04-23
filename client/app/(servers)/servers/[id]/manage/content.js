@@ -109,11 +109,7 @@ export default function Content({ server }) {
 
         return t('serverManagePage.toast.changesSaved');
       },
-      error: error => {
-        setSavingChanges(false);
-
-        return error;
-      }
+      error: () => setSavingChanges(false)
     });
   }
 

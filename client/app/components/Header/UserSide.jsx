@@ -39,8 +39,7 @@ export default function UserSide({ className }) {
         deleteToken();
 
         return 'Logged out successfully';
-      },
-      error: error => `Failed to log out: ${error}`
+      }
     });
   }
 

@@ -3,7 +3,8 @@
 import { TbLoader } from '@/icons';
 import patchProfileVerify from '@/lib/request/profiles/patchProfileVerify';
 import revalidateProfile from '@/lib/revalidate/profile';
-import { useState } from 'react';import { toast } from 'sonner';
+import { useState } from 'react';
+import { toast } from 'sonner';
 import { t } from '@/stores/language';
 
 export default function PatchVerifyButton({ profile }) {
@@ -22,11 +23,7 @@ export default function PatchVerifyButton({ profile }) {
 
         return t(`editProfilePage.toast.${profile.verified ? 'profileUnverified' : 'profileVerified'}`);
       },
-      error: error => {
-        setLoading(false);
-
-        return error;
-      }
+      error: () => setLoading(false)
     });
   }
 

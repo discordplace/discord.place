@@ -2,10 +2,16 @@
 
 import { IoCheckmarkCircle, IoMdArrowRoundBack, HiAtSymbol, HiHashtag, HiPlus, FaCompass, FaDiscord, FaPenFancy, FaTrashAlt, BiSolidCopy } from '@/icons';
 import Tooltip from '@/app/components/Tooltip/Discord';
-import Image from 'next/image';import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';import { useRouter } from 'next-nprogress-bar';import useModalsStore from '@/stores/modals';
+import Image from 'next/image';
+import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';
+import { useRouter } from 'next-nprogress-bar';
+import useModalsStore from '@/stores/modals';
 import cn from '@/lib/cn';
-import { toast } from 'sonner';import { useShallow } from 'zustand/react/shallow';
-import deleteTemplate from '@/lib/request/templates/deleteTemplate';import { useEffect, useRef, useState } from 'react';import Link from 'next/link';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+import deleteTemplate from '@/lib/request/templates/deleteTemplate';
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { t } from '@/stores/language';
 
 export default function Sidebar({ template, focusedChannel, currentlyOpenedSection, setCurrentlyOpenedSection, isMobile, setMemberListCollapsed }) {
@@ -29,11 +35,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
 
         return t('templatePreviewPage.toast.templateDeleted', { templateName: template.name });
       },
-      error: error => {
-        enableButton('delete-template', 'confirm');
-
-        return error;
-      }
+      error: () => enableButton('delete-template', 'confirm')
     });
   }
 

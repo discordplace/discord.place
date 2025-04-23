@@ -1,10 +1,13 @@
 'use client';
 
 import { TbLoader, MdEmojiEmotions, FaCloudUploadAlt } from '@/icons';
-import Image from 'next/image';import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import useThemeStore from '@/stores/theme';
-import { motion } from 'framer-motion';import { toast } from 'sonner';
-import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';import useModalsStore from '@/stores/modals';
+import { motion } from 'framer-motion';
+import { toast } from 'sonner';
+import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';
+import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
 import useGeneralStore from '@/stores/general';
@@ -62,11 +65,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
 
         return t('createEmojiPage.emojisPreview.toast.emojisUploaded');
       },
-      error: error => {
-        enableButton('upload-emoji-to-discord', 'upload');
-
-        return error;
-      }
+      error: () => enableButton('upload-emoji-to-discord', 'upload')
     });
   }
 
