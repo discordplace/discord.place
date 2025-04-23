@@ -70,7 +70,11 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
 
           return t('botManagePage.webhook.toast.saved');
         },
-        error: () => setSavingChanges(false)
+        error: error => {
+          setSavingChanges(false);
+
+          return error;
+        }
       });
     } catch {
       return toast.error(t('botManagePage.webhook.toast.urlNotValid'));

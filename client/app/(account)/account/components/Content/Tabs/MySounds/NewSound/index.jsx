@@ -1,15 +1,12 @@
 'use client';
 
 import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle } from '@/icons';
-import config from '@/config';
-import { useEffect, useState } from 'react';
+import config from '@/config';import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import cn from '@/lib/cn';
-import createSound from '@/lib/request/sounds/createSound';
+import cn from '@/lib/cn';import createSound from '@/lib/request/sounds/createSound';
 import { useRouter } from 'next/navigation';
 import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';
-import useAccountStore from '@/stores/account';
+import confetti from '@/lib/lotties/confetti.json';import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
 
 export default function NewSound() {
@@ -49,7 +46,11 @@ export default function NewSound() {
 
         return t('accountPage.tabs.mySounds.sections.addSound.toast.soundAdded', { soundName });
       },
-      error: () => setLoading(false)
+      error: error => {
+        setLoading(false);
+
+        return error;
+      }
     });
   }
 

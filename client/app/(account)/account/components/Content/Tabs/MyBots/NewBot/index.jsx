@@ -1,15 +1,11 @@
 'use client';
 
 import { TbLoader, RiEyeFill, RiEyeOffFill, MdChevronLeft, IoMdCheckmarkCircle } from '@/icons';
-import config from '@/config';
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { toast } from 'sonner';
-import cn from '@/lib/cn';
-import createBot from '@/lib/request/bots/createBot';
+import config from '@/config';import { useEffect, useLayoutEffect, useState } from 'react';
+import { toast } from 'sonner';import cn from '@/lib/cn';import createBot from '@/lib/request/bots/createBot';
 import { useRouter } from 'next/navigation';
 import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';
-import Markdown from '@/app/components/Markdown';
+import confetti from '@/lib/lotties/confetti.json';import Markdown from '@/app/components/Markdown';
 import useAccountStore from '@/stores/account';
 import { useLocalStorage } from 'react-use';
 import { t } from '@/stores/language';
@@ -95,7 +91,11 @@ export default function NewBot() {
 
         return t('accountPage.tabs.myBots.sections.addBot.toast.botAdded', { botId });
       },
-      error: () => setLoading(false)
+      error: error => {
+        setLoading(false);
+
+        return error;
+      }
     });
   }
 

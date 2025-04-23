@@ -9,11 +9,9 @@ import { useRouter } from 'next-nprogress-bar';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';
-import config from '@/config';
+import confetti from '@/lib/lotties/confetti.json';import config from '@/config';
 import Select from '@/app/components/Select';
-import { t } from '@/stores/language';
-import cn from '@/lib/cn';
+import { t } from '@/stores/language';import cn from '@/lib/cn';
 
 export default function NewServer() {
   const currentlyAddingServer = useAccountStore(state => state.currentlyAddingServer);
@@ -54,7 +52,11 @@ export default function NewServer() {
 
         return t('accountPage.tabs.myServers.sections.newServer.toast.serverAdded', { serverName: currentlyAddingServer.name });
       },
-      error: () => setLoading(false)
+      error: error => {
+        setLoading(false);
+
+        return error;
+      }
     });
   }
 

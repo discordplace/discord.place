@@ -3,12 +3,10 @@
 import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline, TbLoader, RiErrorWarningFill } from '@/icons';
 import Pagination from '@/app/components/Pagination';
 import useAuthStore from '@/stores/auth';
-import { Suspense, useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { Suspense, useEffect, useState } from 'react';import { toast } from 'sonner';
 import createReview from '@/lib/request/bots/createReview';
 import fetchReviews from '@/lib/request/bots/fetchReviews';
-import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';
-import cn from '@/lib/cn';
+import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';import cn from '@/lib/cn';
 import Link from 'next/link';
 import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';
@@ -64,7 +62,11 @@ export default function Reviews({ bot }) {
 
         return t('botPage.tabs.reviews.toast.reviewSubmitted');
       },
-      error: () => setLoading(false)
+      error: error => {
+        setLoading(false);
+
+        return error;
+      }
     });
   }
 

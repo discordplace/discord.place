@@ -44,7 +44,11 @@ export default function Content({ emoji }) {
 
         return t('emojiPage.toast.emojiDeleted', { emojiName: emoji.name });
       },
-      error: () => enableButton('delete-emoji', 'confirm')
+      error: error => {
+        enableButton('delete-emoji', 'confirm');
+
+        return error;
+      }
     });
   }
 

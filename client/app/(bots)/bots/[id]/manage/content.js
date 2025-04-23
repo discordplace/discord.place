@@ -109,7 +109,11 @@ export default function Content({ bot }) {
 
         return t('botManagePage.toast.changesSaved');
       },
-      error: () => setSavingChanges(false)
+      error: error => {
+        setSavingChanges(false);
+
+        return error;
+      }
     });
   }
 

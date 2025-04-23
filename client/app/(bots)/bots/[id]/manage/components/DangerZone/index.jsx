@@ -3,8 +3,7 @@
 import { RiErrorWarningFill } from '@/icons';
 import { toast } from 'sonner';
 import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
-import deleteBot from '@/lib/request/bots/deleteBot';
+import { useShallow } from 'zustand/react/shallow';import deleteBot from '@/lib/request/bots/deleteBot';
 import { useRouter } from 'next-nprogress-bar';
 import { t } from '@/stores/language';
 
@@ -29,7 +28,11 @@ export default function DangerZone({ botId }) {
 
         return t('botManagePage.dangerZone.toast.botDeleted');
       },
-      error: () => enableButton('delete-bot', 'confirm')
+      error: error => {
+        enableButton('delete-bot', 'confirm');
+
+        return error;
+      }
     });
   }
 

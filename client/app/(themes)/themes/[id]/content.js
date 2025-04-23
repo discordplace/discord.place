@@ -40,7 +40,11 @@ export default function Content({ theme }) {
 
         return t('themePage.toast.themeDeleted', { id: theme.id });
       },
-      error: () => enableButton('delete-theme', 'confirm')
+      error: error => {
+        enableButton('delete-theme', 'confirm');
+
+        return error;
+      }
     });
   }
 

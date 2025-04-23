@@ -1,16 +1,12 @@
 import { TbLoader, PiHeart, PiHeartFill, PiWaveformBold, MdAccountCircle, MdDownload, IoMdCalendar, FaCloudUploadAlt } from '@/icons';
-import { useEffect, useState } from 'react';
-import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
+import { useEffect, useState } from 'react';import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
 import cn from '@/lib/cn';
-import useGeneralStore from '@/stores/general';
-import { toast } from 'sonner';
+import useGeneralStore from '@/stores/general';import { toast } from 'sonner';
 import useAuthStore from '@/stores/auth';
 import likeSound from '@/lib/request/sounds/likeSound';
-import revalidateSound from '@/lib/revalidate/sound';
-import useSearchStore from '@/stores/sounds/search';
+import revalidateSound from '@/lib/revalidate/sound';import useSearchStore from '@/stores/sounds/search';
 import Tooltip from '@/app/components/Tooltip';
-import useThemeStore from '@/stores/theme';
-import UploadSoundToDiscordModal from '@/app/(sounds)/sounds/components/SoundPreview/UploadSoundToDiscordModal';
+import useThemeStore from '@/stores/theme';import UploadSoundToDiscordModal from '@/app/(sounds)/sounds/components/SoundPreview/UploadSoundToDiscordModal';
 import getSoundUploadableGuilds from '@/lib/request/auth/getSoundUploadableGuilds';
 import uploadSoundToGuild from '@/lib/request/sounds/uploadSoundToGuild';
 import confetti from '@/lib/lotties/confetti.json';
@@ -40,7 +36,11 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
 
         return t(`soundCard.toast.${isLiked ? 'liked' : 'unliked'}`, { soundName: sound.name });
       },
-      error: () => setLoading(false)
+      error: error => {
+        setLoading(false);
+
+        return error;
+      }
     });
   };
 
@@ -105,7 +105,11 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
 
         return t('soundCard.uploadSoundToDiscordModal.toast.soundUploaded', { soundName: sound.name });
       },
-      error: () => enableButton('upload-sound-to-discord', 'upload')
+      error: error => {
+        enableButton('upload-sound-to-discord', 'upload');
+
+        return error;
+      }
     });
   }
 

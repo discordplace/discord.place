@@ -2,15 +2,13 @@
 
 import { IoKey, HiExternalLink } from '@/icons';
 import { toast } from 'sonner';
-import { useState } from 'react';
-import createApiKey from '@/lib/request/bots/createApiKey';
+import { useState } from 'react';import createApiKey from '@/lib/request/bots/createApiKey';
 import deleteApiKey from '@/lib/request/bots/deleteApiKey';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import CopyButton from '@/app/components/CopyButton';
 import Link from 'next/link';
-import config from '@/config';
-import { t } from '@/stores/language';
+import config from '@/config';import { t } from '@/stores/language';
 
 export default function ApiKey({ botId, apiKey }) {
   const [currentApiKey, setCurrentApiKey] = useState(apiKey);
@@ -41,7 +39,11 @@ export default function ApiKey({ botId, apiKey }) {
 
         return t('botManagePage.apiKey.toast.createdApiKey');
       },
-      error: () => setApiKeyCreating(false)
+      error: error => {
+        setApiKeyCreating(false);
+
+        return error;
+      }
     });
   }
 
@@ -58,9 +60,11 @@ export default function ApiKey({ botId, apiKey }) {
 
         return t('botManagePage.apiKey.toast.apiKeyDeleted');
       },
-      error: () => {
+      error: error => {
         setApiKeyDeleting(false);
         enableButton('delete-api-key', 'confirm');
+
+        return error;
       }
     });
   }

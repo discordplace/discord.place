@@ -1,10 +1,8 @@
-'use client';
-import { IoMdHeart, IoMdHeartEmpty, BsPencil, BsPencilFill } from '@/icons';
+'use client';import { IoMdHeart, IoMdHeartEmpty, BsPencil, BsPencilFill } from '@/icons';
 import { toast } from 'sonner';
 import likeProfile from '@/lib/request/profiles/likeProfile';
 import cn from '@/lib/cn';
-import { useState } from 'react';
-import config from '@/config';
+import { useState } from 'react';import config from '@/config';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Tooltip from '@/app/components/Tooltip';
@@ -32,7 +30,11 @@ export default function Actions({ profile }) {
 
         return t(`profilePage.actions.toast.${isLiked ? 'liked' : 'unliked'}`, { profileSlug: profile.slug });
       },
-      error: () => setLoading(false)
+      error: error => {
+        setLoading(false);
+
+        return `Error: ${error}`;
+      }
     });
   };
 

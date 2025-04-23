@@ -3,8 +3,7 @@
 import { RiCommunityFill, RiUser3Fill, IoMdCheckmarkCircle } from '@/icons';
 import config from '@/config';
 import cn from '@/lib/cn';
-import { useEffect } from 'react';
-import useModalsStore from '@/stores/modals';
+import { useEffect } from 'react';import useModalsStore from '@/stores/modals';
 import useGeneralStore from '@/stores/general';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
@@ -61,7 +60,11 @@ export default function CreateQuarantineModal() {
 
           return 'Created quarantine successfully.';
         },
-        error: () => enableButton('create-quarantine-record', 'confirm')
+        error: error => {
+          enableButton('create-quarantine-record', 'confirm');
+
+          return error;
+        }
       });
     } catch (error) {
       return toast.error(error.message);
