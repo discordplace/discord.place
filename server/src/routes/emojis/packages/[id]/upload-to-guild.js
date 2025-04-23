@@ -16,16 +16,15 @@ module.exports = {
       .isString().withMessage('ID must be a string.')
       .custom(idValidation),
     body('packIndex')
-      .isString().withMessage('Pack index must be an string.'),
+      .isInt().withMessage('Pack index must be an integer.')
+      .isLength({ min: 1, max: config.packagesMaxEmojisLength })
+      .toInt(),
     body('guildId')
       .isString().withMessage('Guild ID must be an string.')
       .isLength({ min: 17, max: 19 }).withMessage('Guild ID must be 17-19 characters long.'),
     validateRequest,
     async (request, response) => {
       const { id, packIndex, guildId } = matchedData(request);
-
-      if (!parseInt(packIndex)) return response.sendError('Pack index must be an integer.', 400);
-      if (packIndex < 0 || packIndex > config.packagesMaxEmojisLength) return response.sendError(`Pack index must be between 0 and ${config.packagesMaxEmojisLength}.`, 400);
 
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return response.sendError('Guild not found.', 404);
