@@ -1219,7 +1219,7 @@
       "invalidEmojiName": "Emoji adı yalnız kiçik hərflərdən, rəqəmlərdən və alt xəttdən ibarət olmalıdır. ",
       "publishingEmojis": "(1)[Emoji dərc olunur...];(2-inf)[Emojilər dərc olunur...]",
       "emojisPublished": "(1)[Emoji uğurla yayımlandı.];(2-inf)[Emojilər uğurla yayımlandı.]",
-      "fileSizeExceeded": "Fayl ölçüsü artıq olmamalıdır {{maxSize}}kb.",
+      "fileSizeExceeded": "Fayl ölçüsü artıq olmamalıdır {{size}}kb.",
       "animatedCategoryNotSelected": "Əgər cizgi emoji paylaşmaq istəyirsinizsə, geri qayıdın və Animasiya kateqoriyasını seçin."
     }
   },

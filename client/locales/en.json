@@ -1219,7 +1219,7 @@
       "invalidEmojiName": "Emoji name must only consist of lowercase letters, numbers, and underscores. Max 20 characters.",
       "publishingEmojis": "(1)[Publishing emoji...];(2-inf)[Publishing emojis...]",
       "emojisPublished": "(1)[Emoji published successfully.];(2-inf)[Emojis published successfully.]",
-      "fileSizeExceeded": "File size should not exceed {{maxSize}}kb.",
+      "fileSizeExceeded": "File size should not exceed {{size}}kb.",
       "animatedCategoryNotSelected": "If you want to share an animated emoji, please go back and select the Animated category."
     }
   },

@@ -1219,7 +1219,7 @@
       "invalidEmojiName": "Emoji ismi yalnızca küçük harfler, rakamlar ve alt çizgiler içerebilir. Maksimum 20 karakter.",
       "publishingEmojis": "(1)[Emoji yayınlanıyor...];(2-inf)[Emoji paketi yayınlanıyor...]",
       "emojisPublished": "(1)[Emoji başarıyla yayınlandı.];(2-inf)[Emoji paketi başarıyla yayınlandı.]",
-      "fileSizeExceeded": "Emoji dosya boyutu {{maxSize}}kb'yi geçmemelidir.",
+      "fileSizeExceeded": "Emoji dosya boyutu {{size}}kb'yi geçmemelidir.",
       "animatedCategoryNotSelected": "Animasyonlu bir emoji paylaşmak istiyorsanız, lütfen geri gidin ve Hareketli kategorisini seçin."
     }
   },
