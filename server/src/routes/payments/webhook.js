@@ -22,8 +22,9 @@ module.exports = {
     bodyParser.raw({ type: 'application/json' }),
     validateRequest,
     async (request, response) => {
+      const bodyBuffer = Buffer.isBuffer(request.body) ? request.body : Buffer.from(JSON.stringify(request.body), 'utf-8');
       const hmac = crypto.createHmac('sha256', process.env.LEMON_SQUEEZY_WEBHOOK_SECRET);
-      const digest = Buffer.from(hmac.update(request.body).digest('hex'), 'utf-8');
+      const digest = Buffer.from(hmac.update(bodyBuffer).digest('hex'), 'utf-8');
       const signature = Buffer.from(request.headers['x-signature'], 'utf-8');
 
       try {
