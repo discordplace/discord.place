@@ -158,7 +158,19 @@ module.exports = class Server {
     };
 
     this.server.use((request, response, next) => {
-      if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method)) return bodyParser.json(bodyParserOptions)(request, response, next);
+      const routesNeedRawBody = ['/payments/webhook', '/sync-translators'];
+      const isRouteNeedRawBody = routesNeedRawBody.some(route => request.originalUrl.startsWith(route));
+
+      if (isRouteNeedRawBody) {
+        return bodyParser.raw({
+          ...bodyParserOptions,
+          type: request => {
+            if (request.headers['content-type'] === 'application/json') return true;
+
+            return false;
+          }
+        })(request, response, next);
+      } else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method)) return bodyParser.json(bodyParserOptions)(request, response, next);
 
       next();
     });
