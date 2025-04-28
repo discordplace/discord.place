@@ -1,9 +1,12 @@
 'use client';
 
 import { TiStarFullOutline, TbSquareRoundedChevronUp, RiSlashCommands2, RiUserAddLine, PiGitForkBold, FaCompass, FaGithub } from '@/icons';
-import { motion } from 'framer-motion';import Markdown from '@/app/components/Markdown';import Image from 'next/image';
+import { motion } from 'framer-motion';
+import Markdown from '@/app/components/Markdown';
+import Image from 'next/image';
 import Link from 'next/link';
-import cn from '@/lib/cn';import { useMedia } from 'react-use';
+import cn from '@/lib/cn';
+import { useMedia } from 'react-use';
 import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
@@ -115,6 +118,9 @@ export default function About({ bot }) {
                 width={16}
                 height={16}
                 className='mr-2 rounded-full'
+                // Unoptimized because owner avatar urls is not ends with extensions like .png or .jpg
+                // and Next.js /_next/image route will not be able to optimize it
+                unoptimized={true}
               />
               {' '}
             </>
