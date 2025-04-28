@@ -1,6 +1,5 @@
 /* eslint no-redeclare: 0 */
 
-const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
 const User = require('@/schemas/User');
@@ -19,7 +18,6 @@ const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
-    bodyParser.raw({ type: 'application/json' }),
     validateRequest,
     async (request, response) => {
       const secret = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET;

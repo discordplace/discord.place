@@ -3,11 +3,9 @@ const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const syncMemberRoles = require('@/utils/syncMemberRoles');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const bodyParser = require('body-parser');
 
 module.exports = {
   post: [
-    bodyParser.raw({ type: 'application/json' }),
     validateRequest,
     async (request, response) => {
       const secret = process.env.GITHUB_AUTO_SYNC_TRANSLATORS_SECRET;
