@@ -10,24 +10,24 @@ module.exports = {
     bodyParser.raw({ type: 'application/json' }),
     validateRequest,
     async (request, response) => {
+      const secret = process.env.GITHUB_AUTO_SYNC_TRANSLATORS_SECRET;
+
       const signature = request.headers['x-hub-signature-256'];
-      if (!signature) return response.sendError('No signature provided', 400);
+      if (!signature) return response.sendError('Signature not found.', 400);
 
-      const hmac = crypto.createHmac('sha256', process.env.GITHUB_AUTO_SYNC_TRANSLATORS_SECRET);
-      hmac.update(JSON.stringify(request.body));
+      const hmac = crypto.createHmac('sha256', secret);
+      hmac.update(request.body);
+      const calculatedSignature = hmac.digest('hex');
 
-      const digest = Buffer.from(`sha256=${hmac.digest('hex')}`, 'utf8');
-      const hash = Buffer.from(signature, 'utf8');
+      if (calculatedSignature !== signature) return response.sendError('Invalid signature.', 401);
 
-      try {
-        if (hash.length !== digest.length || !crypto.timingSafeEqual(digest, hash)) return response.sendError('Invalid signature', 403);
-      } catch (error) {
-        return response.sendError('Invalid signature', 403);
-      }
+      await response.send('OK');
 
-      if (request.body.ref !== 'refs/heads/main') return response.sendError('Not the main branch', 400);
+      const body = JSON.parse(request.body.toString('utf-8'));
 
-      if (!request.body.commits.some(commit => commit.modified.includes('translators.json'))) return response.sendError('No changes to translators.json', 400);
+      if (body.ref !== 'refs/heads/main') return response.sendError('Not the main branch', 400);
+
+      if (!body.commits.some(commit => commit.modified.includes('translators.json'))) return response.sendError('No changes to translators.json', 400);
 
       try {
         await exec('git pull');

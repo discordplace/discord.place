@@ -22,20 +22,20 @@ module.exports = {
     bodyParser.raw({ type: 'application/json' }),
     validateRequest,
     async (request, response) => {
-      const bodyBuffer = Buffer.isBuffer(request.body) ? request.body : Buffer.from(JSON.stringify(request.body), 'utf-8');
-      const hmac = crypto.createHmac('sha256', process.env.LEMON_SQUEEZY_WEBHOOK_SECRET);
-      const digest = Buffer.from(hmac.update(bodyBuffer).digest('hex'), 'utf-8');
-      const signature = Buffer.from(request.headers['x-signature'], 'utf-8');
+      const secret = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET;
 
-      try {
-        if (!crypto.timingSafeEqual(digest, signature)) return response.sendError('Invalid signature', 403);
-      } catch (error) {
-        return response.sendError('Invalid signature', 403);
-      }
+      const signature = request.headers['x-signature'];
+      if (!signature) return response.sendError('Signature not found.', 400);
+
+      const hmac = crypto.createHmac('sha256', secret);
+      hmac.update(request.body);
+      const calculatedSignature = hmac.digest('hex');
+
+      if (calculatedSignature !== signature) return response.sendError('Invalid signature.', 401);
 
       await response.send('OK');
 
-      const body = JSON.parse(request.body.toString());
+      const body = JSON.parse(request.body.toString('utf-8'));
 
       const colors = {
         tripledVote: '#f97316',
@@ -127,6 +127,8 @@ module.exports = {
               if (isStandedOut) return logger.warn('[Lemon Squeezy] This bot is already standed out:', `\n${JSON.stringify(body, null, 2)}`);
 
               await new StandedOutBot({ identifier: decryptedData }).save();
+
+              var userHashes = await getUserHashes(bot.id);
 
               sendPurchaseMessage(colors.standedOut, bot.data.tag || decryptedData, getImageFromHash(bot.id, userHashes.avatar), 'Purchased standed out.');
             }
