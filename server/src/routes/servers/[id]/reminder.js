@@ -45,7 +45,7 @@ module.exports = {
         [
           { type: 'guild', name: 'Server', value: id },
           { type: 'user', name: 'User', value: request.user.id },
-          { type: 'date', name: 'Will be reminded at', value: new Date() }
+          { type: 'date', name: 'Will be reminded at', value: new Date(Date.now() + 86400000) }
         ],
         [
           { label: 'View Server', url: `${config.frontendUrl}/servers/${id}` },
