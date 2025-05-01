@@ -69,3 +69,6 @@ process.on('warning', warning => {
   ) return;
   logger.warn(warning);
 });
+
+const Sentry = require('@sentry/node');
+Sentry.init({ dsn: 'https://a3c592bcbaeb407f8a1960a024aaf1a1@gt.discord.place/2' });
