@@ -45,6 +45,7 @@ const Endpoints = {
   DeleteServer: id => `/servers/${id}`,
   DeleteServerReview: (serverId, reviewId) => `/servers/${serverId}/reviews/${reviewId}`,
   TestServerWebhook: id => `/servers/${id}/test-webhook`,
+  CreateReminder: id => `/servers/${id}/reminder`,
 
   // Payments
   CreateTripledVotesCheckout: '/payments/checkout',
