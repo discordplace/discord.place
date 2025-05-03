@@ -8,27 +8,33 @@ const IpDetailsSchema = new Schema({
   },
   country: {
     type: String,
-    required: true
+    required: false,
+    default: 'Unknown'
   },
   regionName: {
     type: String,
-    required: true
+    required: false,
+    default: 'Unknown'
   },
   city: {
     type: String,
-    required: true
+    required: false,
+    default: 'Unknown'
   },
   isp: {
     type: String,
-    required: true
+    required: false,
+    default: 'Unknown'
   },
   org: {
     type: String,
-    required: true
+    required: false,
+    default: 'Unknown'
   },
   as: {
     type: String,
-    required: true
+    required: false,
+    default: 'Unknown'
   },
   mobile: {
     type: Boolean,
