@@ -1,5 +1,53 @@
 # Changelog
 
+## [1.18.0](https://github.com/discordplace/discord.place/compare/client@v1.17.0...client@v1.18.0) (2025-05-01)
+
+
+### Features
+
+* add new custom hostnames and remove old ones ([afea73a](https://github.com/discordplace/discord.place/commit/afea73a2d59d85deb1344942b600770311656e61))
+* **client:** add Sentry configuration ([7d14b2c](https://github.com/discordplace/discord.place/commit/7d14b2c387c670ea6f4e1d1936433af214f1848f))
+* **Header/ServicesDropdown:** add upcoming service ([7dacc08](https://github.com/discordplace/discord.place/commit/7dacc08929a0738a68ce18f98fbde8c6d7085ae5))
+* integrate ReportableArea component into emoji, sound, and theme content pages ([aa5309d](https://github.com/discordplace/discord.place/commit/aa5309df420221c9c7cc86506642894f9e4e4b4b))
+* redesign theme cards ([8c90807](https://github.com/discordplace/discord.place/commit/8c908070d7751e6bdeb83a75454cbf4f21b3c94e))
+* redesign theme cards and update server side logging ([#185](https://github.com/discordplace/discord.place/issues/185)) ([8c90807](https://github.com/discordplace/discord.place/commit/8c908070d7751e6bdeb83a75454cbf4f21b3c94e))
+* reduce react-icons bundle size ([#184](https://github.com/discordplace/discord.place/issues/184)) ([f2ec941](https://github.com/discordplace/discord.place/commit/f2ec941dcb914d9b664868459e22191c7ec2887e))
+* remove Cloudflare integration and related IP blocking functionality ([31af96f](https://github.com/discordplace/discord.place/commit/31af96fb79ae48ce0de86565b146813af41579e1))
+* some visual updates ([7f2fd8f](https://github.com/discordplace/discord.place/commit/7f2fd8f00f4649993677ccc64433a706baca62ac))
+
+
+### Bug Fixes
+
+* add forgotten CreateReminder endpoint ([6046884](https://github.com/discordplace/discord.place/commit/60468845fe934a93d6059d11330296b3de90a9de))
+* add max width to error state in active timeouts section ([1eef7dd](https://github.com/discordplace/discord.place/commit/1eef7dd67b7cf83b6a2b3984ec0bbf98fbc90c5d))
+* always return errors in toast promises ([6d070e4](https://github.com/discordplace/discord.place/commit/6d070e465f37fb1145334f72b19d3e08d681e9eb))
+* **Dashboard:** reset page after actions ([5660cd6](https://github.com/discordplace/discord.place/commit/5660cd65c422fcc6af020cb29074a2ece3935f4e))
+* **dashboard:** update success and loading messages for review actions ([7986618](https://github.com/discordplace/discord.place/commit/7986618e615e6b8946c1aae8723319b2e59d04a4))
+* disable unoptimized loading images (GIF's excluded) ([850c0ea](https://github.com/discordplace/discord.place/commit/850c0ea619c2892c2a5c6c9e2f3b5a471ca3ac2d))
+* do not return errors in promise toasts ([26969e8](https://github.com/discordplace/discord.place/commit/26969e86fb7966757dfcabc2210157b2ac8d1fb9))
+* enable unoptimized image loading for ServerIcon component ([6eda2e7](https://github.com/discordplace/discord.place/commit/6eda2e7231c68c01abf8c470a1c12afaaf575689))
+* **getUser:** update import to use ServerRequestClient for user requests ([fd506c7](https://github.com/discordplace/discord.place/commit/fd506c79ed6477667f465891e7139cbbbe091aba))
+* **locales:** add missing toast messages for profile editing actions ([5cd23cc](https://github.com/discordplace/discord.place/commit/5cd23cc0f58851b7dedc2752be20c043ddf8b8f5))
+* **locales:** update fileSizeExceeded message to use {{size}} instead of {{maxSize}} ([e3f3bc9](https://github.com/discordplace/discord.place/commit/e3f3bc92536433979a53a677652f606f9232ae25))
+* make unoptimized github repository owner avatar urls ([26d3b3c](https://github.com/discordplace/discord.place/commit/26d3b3c513ab44970f0e1e1f9fc1d673f82f480e))
+* **Pagination:** don't change page if input is invalid ([cfa6bbb](https://github.com/discordplace/discord.place/commit/cfa6bbbec490a68c70369e808ad6b98f825b4e7a))
+* remove nested css usage ([786323c](https://github.com/discordplace/discord.place/commit/786323cc82c12683610d02c8f383e0ee3311ab2d))
+* remove toast error handling from response interceptor ([b809815](https://github.com/discordplace/discord.place/commit/b809815be2e54d7a1274bef7754225ed17fabce5))
+* resolve layout shift issue with radix-ui ([32a3b25](https://github.com/discordplace/discord.place/commit/32a3b25bd1fbb3fd1f8c0641c4029c914c1a73de))
+* **ThemeCard:** add localization ([fe89d54](https://github.com/discordplace/discord.place/commit/fe89d54bea0cd2f5dfaa2bdea59b948858a48c13))
+* **ThemeCard:** add missing message input placeholder localization ([2c79ddf](https://github.com/discordplace/discord.place/commit/2c79ddf2824f64c9f16da6b37fb97451fe2d71a0))
+* **ThemeCard:** change layout from grid to flex for user flags display ([ffa5950](https://github.com/discordplace/discord.place/commit/ffa5950301fcad93f66921478c049d21b6bc2557))
+* **ThemeCard:** replace hardcoded quote with correct translations ([3aecf89](https://github.com/discordplace/discord.place/commit/3aecf89a32bca5f8bfa06dd4051d4e42fc11a381))
+* **Themes:** remove duplicates ([2f1b035](https://github.com/discordplace/discord.place/commit/2f1b035c55a62780ce6a523cdd581a3ebd3c7594))
+* **Themes:** use not equal operator for active reportable area condition ([4aa5e3d](https://github.com/discordplace/discord.place/commit/4aa5e3d0cdd808ed9f20c11027e72e50ea494f11))
+* **webhook:** improve error handling for test webhook failures ([543c5cc](https://github.com/discordplace/discord.place/commit/543c5cc2a7a9f182b3924f9232e7100d3e484ac0))
+* wrap most voted badge label in a truncate span ([6dfbb40](https://github.com/discordplace/discord.place/commit/6dfbb40c78ec2fd8a803d29993edd5878161dc58))
+
+
+### Reverts
+
+* "fix: do not return errors in promise toasts" ([0d4ea96](https://github.com/discordplace/discord.place/commit/0d4ea9616ff97d0dd0b8da22e6b3dd008abf6307))
+
 ## [1.17.0](https://github.com/discordplace/discord.place/compare/client@v1.16.0...client@v1.17.0) (2025-03-18)
 
 
