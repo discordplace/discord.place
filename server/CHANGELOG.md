@@ -1,5 +1,58 @@
 # Changelog
 
+## [1.14.0](https://github.com/discordplace/discord.place/compare/server@v1.13.0...server@v1.14.0) (2025-05-01)
+
+
+### Features
+
+* add country codes to locale configuration ([0e2bf19](https://github.com/discordplace/discord.place/commit/0e2bf19cd254305cf002bbcc0c7df71de8724041))
+* add more logs ([7b4199b](https://github.com/discordplace/discord.place/commit/7b4199b9f7497150309675bcae3bd0c7b2a2de5f))
+* add new custom hostnames and remove old ones ([afea73a](https://github.com/discordplace/discord.place/commit/afea73a2d59d85deb1344942b600770311656e61))
+* add new logs ([60c0094](https://github.com/discordplace/discord.place/commit/60c00944f0dabb270b3d9d42342cb41e6139920c))
+* add new logs ([3651db2](https://github.com/discordplace/discord.place/commit/3651db295890f61a14d2407c9f9ebff95d788c2b))
+* **authCallback:** return user ID instead of null after successful authentication ([0a6a05a](https://github.com/discordplace/discord.place/commit/0a6a05a3666e1324272416e874e22b91ba52bb4f))
+* **eval:** update the eval command to get the message content in a smarter way ([7497a82](https://github.com/discordplace/discord.place/commit/7497a821db7e02bb11b3e04a6079924ef67a86dd))
+* **ip-details:** implement function to fetch and cache IP details ([9cacc92](https://github.com/discordplace/discord.place/commit/9cacc9216b6bd97314691bdf741e386eb65dd949))
+* **profiles:** add ip based view count increment ([d7a3134](https://github.com/discordplace/discord.place/commit/d7a3134eca1476794192823095d52d4bcae955e7))
+* redesign theme cards ([8c90807](https://github.com/discordplace/discord.place/commit/8c908070d7751e6bdeb83a75454cbf4f21b3c94e))
+* redesign theme cards and update server side logging ([#185](https://github.com/discordplace/discord.place/issues/185)) ([8c90807](https://github.com/discordplace/discord.place/commit/8c908070d7751e6bdeb83a75454cbf4f21b3c94e))
+* remove Cloudflare integration and related IP blocking functionality ([31af96f](https://github.com/discordplace/discord.place/commit/31af96fb79ae48ce0de86565b146813af41579e1))
+* **server:** add Sentry configuration ([9dd2512](https://github.com/discordplace/discord.place/commit/9dd25121212ef93b95fc55d4c4e7a00cc3bda3c1))
+
+
+### Bug Fixes
+
+* add bodyParser middleware for raw JSON handling to sync-translators route ([b467d45](https://github.com/discordplace/discord.place/commit/b467d4593bd4347ab8d3c292a25d0cb9963b5456))
+* **authCallback:** use isNaN function to check if callback is failed ([ea81302](https://github.com/discordplace/discord.place/commit/ea81302695c169c06e8b3ca1f6cd96553493751e))
+* correct deletion of expired blocked IPs ([0f8576a](https://github.com/discordplace/discord.place/commit/0f8576af42e7dcf6ddafdb92372a66c6448bc155))
+* correct URL for viewing guild in incrementVote function ([58d539b](https://github.com/discordplace/discord.place/commit/58d539ba362a885a48746a5268ab80f8da2c6b9d))
+* **emojis:** reduce file size limit for uploads to 256KB ([8564889](https://github.com/discordplace/discord.place/commit/85648890643aeb0e2f32643bda90ac6418a9d6f8))
+* enhance body parsing for specific webhook routes ([a3467cc](https://github.com/discordplace/discord.place/commit/a3467ccd4632b44529998f0bc8fb2bbdb43e9e34))
+* **eval:** correct formatting of truncated output message in evaluate function ([7cc0634](https://github.com/discordplace/discord.place/commit/7cc0634bd5b7f3e1c120c5263eb0fc6f3bb4efed))
+* exclude 'en' from unsupported Discord locales warning ([93555b9](https://github.com/discordplace/discord.place/commit/93555b9852e9a39344dc1241249026a51cc2326f))
+* **getIpDetails:** refine cached IP details query to exclude unnecessary fields ([c617c61](https://github.com/discordplace/discord.place/commit/c617c611b4df652c51a7c99a3f2b2319827b9ccf))
+* **getIpDetails:** return IP details along with the IP address in the response ([275e9e3](https://github.com/discordplace/discord.place/commit/275e9e30e4b3cb5d79e31416ab88893914e3fb40))
+* improve handling of guild data in sendWebhookLog function ([419867f](https://github.com/discordplace/discord.place/commit/419867f540e722946486efcbdb2708affa034da0))
+* improve signature validation and error handling ([052114b](https://github.com/discordplace/discord.place/commit/052114bed3e2791de3dcd656293d5306e4f56f04))
+* **logging:** log user login details in the auth callback instead of initial login route ([ca0173c](https://github.com/discordplace/discord.place/commit/ca0173ced03ee4b2337420036825de4810cfc0d2))
+* **middleware:** remove blockSimultaneousRequests middleware ([e87418c](https://github.com/discordplace/discord.place/commit/e87418c8893790eef1ff8dc02fc23c4e9f320323))
+* **ping:** remove extraneous character in response content ([cba25e8](https://github.com/discordplace/discord.place/commit/cba25e8fa36a0b77aa784d1482ad08bf9c163356))
+* remove unused body-parser middleware from webhook and sync-translators routes ([42a493a](https://github.com/discordplace/discord.place/commit/42a493a2606c06d94f12dc12828b1250e93a795b))
+* **sendLog:** change environment check from development to production for IP details fetching ([a17ce24](https://github.com/discordplace/discord.place/commit/a17ce24cc39dc824c519a6a6a65b4db4f446b7a7))
+* **sendLog:** reverse log IDs for sound liked & unliked log message ([6d8a176](https://github.com/discordplace/discord.place/commit/6d8a17600df6a29e30a74db0fcfe5d5573aa0e70))
+* **sendLog:** update reminder date calculation ([f137bfe](https://github.com/discordplace/discord.place/commit/f137bfe7007f4613c9f5f6ad3064cc160f3ccb4b))
+* **server:** correct method check for body-parser middleware ([7905954](https://github.com/discordplace/discord.place/commit/7905954f7973b1fa39575109d5b2eb29262a3153))
+* **stats:** remove user information from bot stats logging ([0ab0b4e](https://github.com/discordplace/discord.place/commit/0ab0b4ec7e163259d8214dc5069a30ed4b1cb7ac))
+* update deprecated setDMPermission usage ([0aea64c](https://github.com/discordplace/discord.place/commit/0aea64c7063ee78092713dd21ee9e4863d453916))
+* update webhook URL check in incrementVote function ([61b5999](https://github.com/discordplace/discord.place/commit/61b599988b23bf1cc3e86ac31a124fe342078192))
+* use correct formatting to include line break ([7133735](https://github.com/discordplace/discord.place/commit/7133735ca94cab5e6f1a56a7a5afb2aac249de2f))
+* use integer validation for packIndex and remove redundant checks in upload-to-guild route ([60c9f4b](https://github.com/discordplace/discord.place/commit/60c9f4b134b31be2352dc02d36193c6a960ada5f))
+* **vote:** increase button interaction collector timeout to 60 seconds ([a3b03b0](https://github.com/discordplace/discord.place/commit/a3b03b015ccb65850a6e60e054d550a9b470632e))
+* **webhook:** enhance error handling for webhook response status ([9296841](https://github.com/discordplace/discord.place/commit/929684121fe02e119655dc8ffb7b9b4b0e93ab00))
+* **webhook:** improve error handling for empty responses in sendVoteWebhook ([6b191c5](https://github.com/discordplace/discord.place/commit/6b191c53d5d964aedb5252d16e37c0bcd95f7e43))
+* **webhook:** simplify signature validation logic ([9fc7378](https://github.com/discordplace/discord.place/commit/9fc73780a815545938e8e142bab84847cb669e42))
+* **webhook:** use bodyBuffer for HMAC digest calculation ([209bfbe](https://github.com/discordplace/discord.place/commit/209bfbe7fb4b548ec5fed8b300b8678ad09c4426))
+
 ## [1.13.0](https://github.com/discordplace/discord.place/compare/server@v1.12.1...server@v1.13.0) (2025-03-18)
 
 
