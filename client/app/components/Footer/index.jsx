@@ -8,13 +8,12 @@ import cn from '@/lib/cn';
 import Image from 'next/image';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
 import useLanguageStore, { t } from '@/stores/language';
 import Select from '@/app/components/Select';
 
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
-  const toggleTheme = useThemeStore(state => state.toggleTheme);
+  const setTheme = useThemeStore(state => state.setTheme);
   const language = useLanguageStore(state => state.language);
   const setLanguage = useLanguageStore(state => state.setLanguage);
 
@@ -242,7 +241,11 @@ export default function Footer() {
                 'z-10 select-none justify-center relative flex items-center text-sm font-medium px-3 py-1',
                 theme !== 'light' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
               )}
-              onClick={() => toggleTheme('light')}
+              onClick={() => {
+                if (!document.startViewTransition) return setTheme('light');
+
+                document.startViewTransition(() => setTheme('light'));
+              }}
             >
               <span className='relative z-10 flex items-center gap-x-1.5'>
                 <MdSunny size={16} />
@@ -250,10 +253,7 @@ export default function Footer() {
               </span>
 
               {theme === 'light' && (
-                <motion.div
-                  className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary'
-                  layoutId='theme-switcher-button-background'
-                />
+                <div className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary' />
               )}
             </button>
 
@@ -262,7 +262,11 @@ export default function Footer() {
                 'z-10 select-none justify-center relative flex items-center text-sm font-semibold px-3 py-1',
                 theme !== 'dark' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
               )}
-              onClick={() => toggleTheme('dark')}
+              onClick={() => {
+                if (!document.startViewTransition) return setTheme('dark');
+
+                document.startViewTransition(() => setTheme('dark'));
+              }}
             >
               <span className='relative z-10 flex items-center gap-x-1.5'>
                 <IoIosMoon size={16} />
@@ -270,16 +274,7 @@ export default function Footer() {
               </span>
 
               {theme === 'dark' && (
-                <motion.div
-                  className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary'
-                  layoutId='theme-switcher-button-background'
-                  transition={{
-                    duration: 0.5,
-                    type: 'spring',
-                    stiffness: 300,
-                    damping: 25
-                  }}
-                />
+                <div className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary' />
               )}
             </button>
           </div>
