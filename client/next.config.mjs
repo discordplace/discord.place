@@ -1,4 +1,3 @@
-import { withSentryConfig } from '@sentry/nextjs';
 import pgk from '@next/bundle-analyzer';
 const withBundleAnalyzer = pgk({ enabled: process.env.ANALYZE === 'true' });
 
@@ -28,12 +27,4 @@ const nextConfig = {
   }
 };
 
-export default withSentryConfig(withBundleAnalyzer(nextConfig), {
-  org: 'discordplace',
-  project: 'client',
-  sentryUrl: 'https://gt.discord.place/',
-  silent: !process.env.CI,
-  widenClientFileUpload: true,
-  disableLogger: true,
-  automaticVercelMonitors: true
-});
+export default withBundleAnalyzer(nextConfig);
