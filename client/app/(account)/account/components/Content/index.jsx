@@ -161,7 +161,11 @@ export default function Content() {
           id: 'toggle-theme',
           icon: theme === 'dark' ? MdSunny : MdDarkMode,
           name: t('accountPage.sidebar.labels.switchTheme'),
-          onClick: toggleTheme
+          onClick: () => {
+            if (!document.startViewTransition) return toggleTheme();
+
+            document.startViewTransition(() => toggleTheme());
+          }
         },
         {
           id: 'logout',
