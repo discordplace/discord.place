@@ -10,7 +10,7 @@ module.exports = {
     description_localizations: getLocalizedCommand('reminders').descriptions
   },
   execute: async interaction => {
-    if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
+    if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ flags: Discord.MessageFlags.Ephemeral });
 
     const reminders = await VoteReminder.find({ 'user.id': interaction.user.id });
     if (!reminders.length) return interaction.followUp(await interaction.translate('commands.reminders.errors.no_reminders_found'));

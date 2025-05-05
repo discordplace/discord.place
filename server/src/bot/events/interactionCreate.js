@@ -13,7 +13,7 @@ module.exports = async interaction => {
 
     if (foundCommand.isGuildOnly && !interaction.guild) return interaction.reply({
       content: await interaction.translate('commands.shared.errors.guild_only'),
-      ephemeral: true
+      flags: Discord.MessageFlags.Ephemeral
     });
 
     const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, new: true });
@@ -74,7 +74,7 @@ module.exports = async interaction => {
       if (interaction.deferred || interaction.replied) interaction.followUp(await interaction.translate('commands.shared.errors.command_error'));
       else interaction.reply({
         content: await interaction.translate('commands.shared.errors.command_error'),
-        ephemeral: true
+        flags: Discord.MessageFlags.Ephemeral
       });
     }
   }
@@ -128,7 +128,7 @@ module.exports = async interaction => {
     }
 
     if (interaction.customId.startsWith('create-reminder-')) {
-      await interaction.deferReply({ ephemeral: true });
+      await interaction.deferReply({ flags: Discord.MessageFlags.Ephemeral });
 
       const guildId = interaction.customId.split('-')[2];
 

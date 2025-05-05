@@ -36,13 +36,13 @@ module.exports = {
     const followUpMessage = await interaction.followUp({
       content: evaluateResult.error ? `An error occurred while evaluating the code: \`\`\`js\n${evaluateResult.error.slice(0, 1950)}\n\`\`\`` : evaluateResult.result,
       components,
-      withMessage: true
+      withResponse: true
     });
 
     if (followUpMessage) {
       const resultDocument = new EvaluateResult({
         code: interaction.targetMessage.content,
-        messageId: followUpMessage.id
+        messageId: followUpMessage.resource.message.id
       });
 
       await resultDocument.save();

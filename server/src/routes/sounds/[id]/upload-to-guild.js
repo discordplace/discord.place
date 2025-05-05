@@ -39,14 +39,14 @@ module.exports = {
         const fileResponse = await axios.get(getSoundURL(sound.id), { responseType: 'arraybuffer' }).catch(() => null);
         if (!fileResponse) return response.sendError('Failed to get sound file.', 500);
 
-        client.rest.post(`/guilds/${guildId}/soundboard-sounds`, {
-          body: {
-            sound: `data:audio/ogg;base64,${Buffer.from(fileResponse.data).toString('base64')}`,
-            name: sound.name,
-            emoji_name: '🎵',
-            volume: 1
-          }
-        })
+        const data = {
+          file: `data:audio/ogg;base64,${Buffer.from(fileResponse.data).toString('base64')}`,
+          name: sound.name,
+          emojiName: '🎵',
+          volume: 1
+        };
+
+        guild.soundboardSounds.create(data)
           .then(async () => {
             await Sound.updateOne({ id }, { $inc: { downloads: 1 } });
 

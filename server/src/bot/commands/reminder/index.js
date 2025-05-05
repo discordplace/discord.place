@@ -56,21 +56,21 @@ module.exports = {
 
         if (about.length > 512) return interaction.reply({
           content: await interaction.translate('commands.reminder.errors.reminder_too_long'),
-          ephemeral: true
+          flags: Discord.MessageFlags.Ephemeral
         });
 
         var reminderTime = parseTimeDuration(when);
         if (!reminderTime) return interaction.reply({
           content: await interaction.translate('commands.reminder.errors.invalid_time'),
-          ephemeral: true
+          flags: Discord.MessageFlags.Ephemeral
         });
 
         if (reminderTime < (60000 * 5)) return interaction.reply({
           content: await interaction.translate('commands.reminder.errors.time_too_short'),
-          ephemeral: true
+          flags: Discord.MessageFlags.Ephemeral
         });
 
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
+        if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ flags: Discord.MessageFlags.Ephemeral });
 
         var totalReminders = await Reminder.countDocuments({ 'user.id': interaction.user.id });
         if (totalReminders >= 5) return interaction.followUp(await interaction.translate('commands.reminder.errors.too_many_reminders'));
@@ -98,7 +98,7 @@ module.exports = {
         var foundReminder = await Reminder.findOne({ _id: reminderId, 'user.id': interaction.user.id });
         if (!foundReminder) return interaction.reply({
           content: await interaction.translate('commands.reminder.errors.reminder_not_found'),
-          ephemeral: true
+          flags: Discord.MessageFlags.Ephemeral
         });
 
         foundReminder.is_manually_deleted = true;
@@ -109,7 +109,7 @@ module.exports = {
 
         interaction.reply({
           content: await interaction.translate('commands.reminder.subcommands.delete.success'),
-          ephemeral: true
+          flags: Discord.MessageFlags.Ephemeral
         });
     }
   },

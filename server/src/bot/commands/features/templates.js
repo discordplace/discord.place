@@ -79,7 +79,11 @@ module.exports = {
         )
     ];
 
-    const confirmMessage = await interaction.followUp({ embeds, components, fetchReply: true });
+    const confirmMessage = await interaction.followUp({
+      embeds,
+      components,
+      withResponse: true
+    });
 
     const filter = async message => message.author.id === interaction.user.id && message.channel.id === interaction.channel.id && message.content === await interaction.translate('commands.templates.subcommands.use.confirmation_text');
     const collected = await interaction.channel.awaitMessages({ filter, time: 30000, max: 1, errors: ['time'] }).catch(() => false);
@@ -87,7 +91,7 @@ module.exports = {
     if (!collected) {
       currentlyApplyingTemplates.delete(interaction.guild.id);
 
-      return confirmMessage.edit({
+      return confirmMessage.resource.message.edit({
         content: await interaction.translate('commands.templates.errors.confirmation_timeout'),
         embeds: [],
         components: []

@@ -17,7 +17,7 @@ module.exports = {
   },
   isGuildOnly: true,
   async execute (interaction) {
-    if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral: true });
+    if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ flags: Discord.MessageFlags.Ephemeral });
 
     const userOrGuildQuarantined = await findQuarantineEntry.multiple([
       { type: 'USER_ID', value: interaction.user.id, restriction: 'SERVERS_VOTE' },
@@ -62,10 +62,10 @@ module.exports = {
     const reply = await interaction.followUp({
       content: await interaction.translate('commands.vote.human_verification_text', { guildName: interaction.guild.name, emoji: selectedEmoji.emoji }),
       components: rows,
-      fetchReply: true
+      withResponse: true
     });
 
-    const collector = await reply.createMessageComponentCollector({ type: Discord.ComponentType.Button, time: 60000, max: 1 });
+    const collector = await reply.resource.message.createMessageComponentCollector({ type: Discord.ComponentType.Button, time: 60000, max: 1 });
 
     collector.on('collect', async buttonInteraction => {
       if (buttonInteraction.user.id !== interaction.user.id) return;
@@ -109,7 +109,7 @@ module.exports = {
         return interaction.followUp({
           content: await interaction.translate('commands.vote.success'),
           components,
-          ephemeral: true
+          flags: Discord.MessageFlags.Ephemeral
         });
       })
       .catch(async error => {
