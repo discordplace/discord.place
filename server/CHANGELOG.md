@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/discordplace/discord.place/compare/server@v1.14.0...server@v1.15.0) (2025-05-05)
+
+
+### Features
+
+* update IpDetails schema to make some fields optional with default values ([5e87719](https://github.com/discordplace/discord.place/commit/5e877195732fc4924e7ef3e0c09f970ef2444bad))
+
 ## [1.14.0](https://github.com/discordplace/discord.place/compare/server@v1.13.0...server@v1.14.0) (2025-05-01)
 
 

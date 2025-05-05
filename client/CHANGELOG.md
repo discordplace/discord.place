@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.19.0](https://github.com/discordplace/discord.place/compare/client@v1.18.0...client@v1.19.0) (2025-05-05)
+
+
+### Features
+
+* **client:** remove sentry ([1f8f2c9](https://github.com/discordplace/discord.place/commit/1f8f2c9cc67552eb6c197c6c185b750b13bd68c3))
+* enhance theme toggle with view transitions ([ed1050e](https://github.com/discordplace/discord.place/commit/ed1050ee6b4380283f24bc7c438a909d2de71d4d))
+* remove new badges from theme service ([b7abc24](https://github.com/discordplace/discord.place/commit/b7abc2416fb95bcf728600c55f5131422bc1d64b))
+
+
+### Bug Fixes
+
+* view transitions for theme toggle in account page aswell ([9c7458d](https://github.com/discordplace/discord.place/commit/9c7458d26866c4b8faa971df379f6b4fd8772768))
+
 ## [1.18.0](https://github.com/discordplace/discord.place/compare/client@v1.17.0...client@v1.18.0) (2025-05-01)
 
 
