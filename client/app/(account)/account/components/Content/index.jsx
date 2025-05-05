@@ -18,7 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next-nprogress-bar';
 import useAuthStore from '@/stores/auth';
-import { useCookie, useLocalStorage, useMedia } from 'react-use';
+import { useCookie, useMedia } from 'react-use';
 import { useShallow } from 'zustand/react/shallow';
 import { t } from '@/stores/language';
 import Sidebar from '@/app/(account)/account/components/Content/Sidebar';
@@ -46,7 +46,6 @@ export default function Content() {
 
   const router = useRouter();
 
-  const [themesPageVisited, setThemesPageVisited] = useLocalStorage('themes-page-visited', false);
   const [,, deleteToken] = useCookie('token');
 
   function logOut() {
@@ -141,11 +140,7 @@ export default function Content() {
           name: t('accountPage.sidebar.labels.myThemes'),
           component: <MyThemes />,
           badge: data.counts?.themes || 0,
-          visited: themesPageVisited,
-          onClick: () => {
-            setThemesPageVisited(true);
-            setActiveTab('my-themes');
-          }
+          onClick: () => setActiveTab('my-themes')
         },
         {
           id: 'divider-1'
@@ -211,7 +206,6 @@ export default function Content() {
         break;
       case 'my-themes':
         fetchData(['themes']);
-        setThemesPageVisited(true);
         break;
       case 'active-reminders':
         fetchData(['reminders']);

@@ -82,8 +82,7 @@ export default function Footer() {
         },
         {
           label: t('footer.blocks.1.links.6'),
-          href: '/themes',
-          new: true
+          href: '/themes'
         },
         {
           label: 'Lantern',
