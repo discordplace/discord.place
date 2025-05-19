@@ -371,6 +371,8 @@ module.exports = class Client {
   }
 
   async checkBucketAvailability() {
+    if (!process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY) return logger.warn('HEARTBEAT_ID_S3_BUCKET_AVAILABILITY is not defined. Please define it in your environment variables.');
+
     try {
       const command = new HeadBucketCommand({ Bucket: process.env.S3_BUCKET_NAME });
 
