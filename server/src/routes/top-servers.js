@@ -10,7 +10,7 @@ module.exports = {
         id: guild.id,
         name: guild.name,
         member_count: guild.memberCount,
-        icon_url: guild.iconURL({ format: 'png', size: 32 }),
+        icon_url: guild.iconURL({ size: 32 }),
         is_listed: servers.some(server => server.id === guild.id)
       }));
 
