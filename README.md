@@ -169,6 +169,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `LEMON_SQUEEZY_WEBHOOK_SECRET` | Lemon Squeezy webhook secret. (not required) |
 | `LEMON_SQUEEZY_API_KEY` | Lemon Squeezy API key. (not required) |
 | `HEARTBEAT_ID_DAILY_DATABASE_BACKUP` | Heartbeat ID for daily database backup. (not required) |
+| `HEARTBEAT_ID_S3_BUCKET_AVAILABILITY` | Heartbeat ID for S3 bucket availability. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` | Secret key for getting approximate guild count of a bot. (not required) |
 | `WEBHOOKS_PROXY_SERVER_PROTOCOL` | Protocol for the proxy server. |
