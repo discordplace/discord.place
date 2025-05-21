@@ -177,6 +177,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `WEBHOOKS_PROXY_SERVER_PORT` | Port for the proxy server. |
 | `WEBHOOKS_PROXY_SERVER_USERNAME` | Username for the proxy server. (not required) |
 | `WEBHOOKS_PROXY_SERVER_PASSWORD` | Password for the proxy server. (not required) |
+| `SENTRY_DSN` | Sentry DSN for error tracking. (not required) |
 
 > [!NOTE]
 > - The `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` is used for syncing the translators roles when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically sync the translators roles in the base guild with the ids in the `client/locales/translators.json` file.
@@ -190,6 +191,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 > - Values starting with `HEARTBEAT_ID_` are used for the heartbeat IDs for the heartbeats. We use [Better Stack Uptime](https://betterstack.com/uptime) for monitoring the uptime of the website.
 > - The `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` and `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` values are used for getting the approximate guild count of a bot. This is half required for self-hosting. If you don't want to use this feature, you can leave these values empty, but this will result in bots not being able to update server_count using the API. For now, we use private API for this because Discord doesn't provide an official API for getting the approximate guild count of a bot. We don't want to share this API source code with everyone.
 > - The `WEBHOOKS_PROXY_SERVER_PROTOCOL`, `WEBHOOKS_PROXY_SERVER_HOST`, `WEBHOOKS_PROXY_SERVER_PORT`, `WEBHOOKS_PROXY_SERVER_USERNAME`, and `WEBHOOKS_PROXY_SERVER_PASSWORD` values are used for the proxy server settings. We use a proxy server for sending webhooks requests. If you don't want to use a proxy server, you can leave these values empty. Username and password are not required for the proxy server.
+> - The `SENTRY_DSN` value is used for Sentry error tracking. This is not required for self-hosting. We use Sentry for error tracking. Refer to the [Sentry documentation](https://docs.sentry.io) for more information.
 
 ### About Configuration File (Client)
 
