@@ -36,7 +36,7 @@ module.exports = {
 
     const showVerification = (
       (givenVotes % 3 === 0 && givenVotes !== 0) ||
-      accountAge - (1000 * 60 * 60 * 24 * 30) < 0
+    accountAge - (1000 * 60 * 60 * 24 * 30) < 0
     );
 
     if (!showVerification) return this.continueVote(interaction);
@@ -61,11 +61,10 @@ module.exports = {
 
     const reply = await interaction.followUp({
       content: await interaction.translate('commands.vote.human_verification_text', { guildName: interaction.guild.name, emoji: selectedEmoji.emoji }),
-      components: rows,
-      withResponse: true
+      components: rows
     });
 
-    const collector = await reply.resource.message.createMessageComponentCollector({ type: Discord.ComponentType.Button, time: 60000, max: 1 });
+    const collector = await reply.createMessageComponentCollector({ type: Discord.ComponentType.Button, time: 60000, max: 1 });
 
     collector.on('collect', async buttonInteraction => {
       if (buttonInteraction.user.id !== interaction.user.id) return;

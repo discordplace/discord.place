@@ -81,8 +81,7 @@ module.exports = {
 
     const confirmMessage = await interaction.followUp({
       embeds,
-      components,
-      withResponse: true
+      components
     });
 
     const filter = async message => message.author.id === interaction.user.id && message.channel.id === interaction.channel.id && message.content === await interaction.translate('commands.templates.subcommands.use.confirmation_text');
@@ -91,7 +90,7 @@ module.exports = {
     if (!collected) {
       currentlyApplyingTemplates.delete(interaction.guild.id);
 
-      return confirmMessage.resource.message.edit({
+      return confirmMessage.edit({
         content: await interaction.translate('commands.templates.errors.confirmation_timeout'),
         embeds: [],
         components: []
