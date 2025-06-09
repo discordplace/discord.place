@@ -3,7 +3,6 @@ const useRateLimiter = require('@/utils/useRateLimiter');
 const { cookie } = require('express-validator');
 const User = require('@/schemas/User');
 const validateRequest = require('@/utils/middlewares/validateRequest');
-const sendLog = require('@/utils/sendLog');
 
 module.exports = {
   post: [
@@ -20,17 +19,6 @@ module.exports = {
         httpOnly: true,
         domain: `.${new URL(config.frontendUrl).hostname}`
       });
-
-      sendLog(
-        'userLogout',
-        [
-          { type: 'user', name: 'User', value: request.user.id },
-          { type: 'request', name: 'Request Details', value: request }
-        ],
-        [
-          { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
-        ]
-      );
 
       return response.json({ success: true });
     }

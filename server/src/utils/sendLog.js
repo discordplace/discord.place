@@ -70,9 +70,7 @@ async function sendLog(action, fields, links) {
     'themeDenied': 'Theme Denied',
     'themeDeleted': 'Theme Deleted',
     'themeCreated': 'Theme Created',
-    'newReportCreated': 'New Report Created',
-    'userLogin': 'User Login',
-    'userLogout': 'User Logout'
+    'newReportCreated': 'New Report Created'
   };
 
   const embed = new Discord.EmbedBuilder()
