@@ -108,7 +108,6 @@ Create a `.env` file in the `server` directory with the following environment va
 
 ```env
 COOKIE_SECRET=
-GITHUB_AUTO_DEPLOY_SECRET=
 GITHUB_AUTO_SYNC_TRANSLATORS_SECRET=
 BOT_API_KEY_ENCRYPT_SECRET=
 USER_TOKEN_ENCRYPT_SECRET=
