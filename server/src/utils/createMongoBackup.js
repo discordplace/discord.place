@@ -8,14 +8,6 @@ const archiver = require('archiver');
 const sendHeartbeat = require('@/utils/sendHeartbeat');
 
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
-const S3 = new S3Client({
-  region: process.env.S3_DATABASE_BACKUP_REGION,
-  endpoint: process.env.S3_DATABASE_BACKUP_ENDPOINT,
-  credentials: {
-    accessKeyId: process.env.S3_DATABASE_BACKUP_ACCESS_KEY_ID,
-    secretAccessKey: process.env.S3_DATABASE_BACKUP_SECRET_ACCESS_KEY
-  }
-});
 
 async function createMongoBackup() {
   try {
@@ -86,6 +78,15 @@ async function zipBackupFolder(backupPath) {
 }
 
 async function uploadBackupToS3(zipFilePath, zipFileName) {
+  const S3 = new S3Client({
+    region: process.env.S3_DATABASE_BACKUP_REGION,
+    endpoint: process.env.S3_DATABASE_BACKUP_ENDPOINT,
+    credentials: {
+      accessKeyId: process.env.S3_DATABASE_BACKUP_ACCESS_KEY_ID,
+      secretAccessKey: process.env.S3_DATABASE_BACKUP_SECRET_ACCESS_KEY
+    }
+  });
+
   const file = fs.readFileSync(zipFilePath);
 
   const command = new PutObjectCommand({
