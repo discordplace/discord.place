@@ -9,9 +9,6 @@
     "start": "next start -p 3000",
     "lint": "next lint"
   },
-  "contributors": [
-    "chimpdev <skyhancloud@gmail.com>"
-  ],
   "license": "GPL-3.0-only",
   "repository": {
     "type": "git",

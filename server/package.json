@@ -11,9 +11,6 @@
     "unregister:commands": "node -r dotenv/config startup/unregisterCommands.js",
     "lint": "eslint ."
   },
-  "contributors": [
-    "chimpdev <skyhancloud@gmail.com>"
-  ],
   "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
