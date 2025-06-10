@@ -13,7 +13,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: new URL(process.env.CDN_URL).hostname
+        hostname: new URL(process.env.NEXT_PUBLIC_CDN_URL).hostname
       }
     ]
   },
