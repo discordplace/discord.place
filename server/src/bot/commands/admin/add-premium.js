@@ -19,7 +19,7 @@ module.exports = {
         .setName('premium')
         .setDescription('Add premium to a user.')
         .addUserOption(option => option.setName('user').setDescription('The user to add premium to.').setRequired(true))
-        .addStringOption(option => option.setName('when').setDescription('When the premium should expire? (Example: in 7 days)'))),
+        .addStringOption(option => option.setName('when').setDescription('When the premium should expire? (Example: in 7 days)').setRequired(true))),
 
   execute: async interaction => {
     if (!config.permissions.canExecuteEval.includes(interaction.user.id)) return interaction.reply({ content: 'You are not allowed to use this command.' });
