@@ -52,7 +52,7 @@ module.exports = {
               value: `<@${request.user.id}>`
             }
           ])
-          .setThumbnail(isPack ? null : `${config.cdnUrl}/emojis/${emoji.id}.${emoji.animated ? 'gif' : 'png'}`)
+          .setThumbnail(isPack ? null : `${process.env.CDN_URL}/emojis/${emoji.id}.${emoji.animated ? 'gif' : 'png'}`)
       ];
 
       const components = [

@@ -13,7 +13,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cdn.discord.place'
+        hostname: new URL(process.env.CDN_URL).hostname
       }
     ]
   },
