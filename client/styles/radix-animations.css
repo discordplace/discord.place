@@ -38,6 +38,25 @@
   }
 }
 
+@keyframes sideLeft {
+  from {
+    transform: translateX(8px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes sideRight {
+  from {
+    transform: translateX(-8px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
 
 @keyframes dialogContentIn {
   from {
@@ -55,11 +74,35 @@
   animation: dialogContentIn 250ms cubic-bezier(0.165, 0.84, 0.44, 1)
 }
 
-[data-radix-menu-content][data-state='open'] {
+[data-radix-menu-content][data-state='open'][data-side='top'] {
+  animation: fadeIn 150ms ease-in, slideUp 150ms ease-in !important;
+}
+
+[data-radix-menu-content][data-state='open'][data-side='left'] {
+  animation: fadeIn 150ms ease-in, sideLeft 150ms ease-in !important;
+}
+
+[data-radix-menu-content][data-state='open'][data-side='right'] {
+  animation: fadeIn 150ms ease-in, sideRight 150ms ease-in !important;
+}
+
+[data-radix-menu-content][data-state='open'][data-side='bottom'] {
   animation: fadeIn 150ms ease-in, slideDown 150ms ease-in !important;
 }
 
-[data-radix-menu-content][data-state='closed'] {
+[data-radix-menu-content][data-state='closed'][data-side='top'] {
+  animation: fadeOut 100ms ease-in, slideDown 100ms ease-in !important;
+}
+
+[data-radix-menu-content][data-state='closed'][data-side='left'] {
+  animation: fadeOut 100ms ease-in, sideRight 100ms ease-in !important;
+}
+
+[data-radix-menu-content][data-state='closed'][data-side='right'] {
+  animation: fadeOut 100ms ease-in, sideLeft 100ms ease-in !important;
+}
+
+[data-radix-menu-content][data-state='closed'][data-side='bottom'] {
   animation: fadeOut 100ms ease-in, slideUp 100ms ease-in !important;
 }
 
