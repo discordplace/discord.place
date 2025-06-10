@@ -75,7 +75,7 @@
 }
 
 [data-radix-menu-content][data-state='open'][data-side='top'] {
-  animation: fadeIn 150ms ease-in, slideUp 150ms ease-in !important;
+  animation: fadeIn 150ms ease-in, slideDown 150ms ease-in !important;
 }
 
 [data-radix-menu-content][data-state='open'][data-side='left'] {
@@ -87,11 +87,11 @@
 }
 
 [data-radix-menu-content][data-state='open'][data-side='bottom'] {
-  animation: fadeIn 150ms ease-in, slideDown 150ms ease-in !important;
+  animation: fadeIn 150ms ease-in, slideUp 150ms ease-in !important;
 }
 
 [data-radix-menu-content][data-state='closed'][data-side='top'] {
-  animation: fadeOut 100ms ease-in, slideDown 100ms ease-in !important;
+  animation: fadeOut 100ms ease-in, slideUp 100ms ease-in !important;
 }
 
 [data-radix-menu-content][data-state='closed'][data-side='left'] {
@@ -103,7 +103,7 @@
 }
 
 [data-radix-menu-content][data-state='closed'][data-side='bottom'] {
-  animation: fadeOut 100ms ease-in, slideUp 100ms ease-in !important;
+  animation: fadeOut 100ms ease-in, slideDown 100ms ease-in !important;
 }
 
 [data-radix-menu-content] {
