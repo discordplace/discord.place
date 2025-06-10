@@ -18,7 +18,7 @@ on:
 jobs:
   build-and-deploy-client:
     name: Build and Deploy /client
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'client' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/client): trigger build action'))
+    if: "(github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'client') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/client): trigger build action'))"
     runs-on: ubuntu-latest
     
     steps:
@@ -71,7 +71,7 @@ jobs:
 
   build-and-deploy-server:
     name: Build and Deploy /server
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'server' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/server): trigger build action'))
+    if: "(github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'server') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/server): trigger build action'))"
     runs-on: ubuntu-latest
     
     steps:
@@ -123,7 +123,7 @@ jobs:
 
   build-and-deploy-docs:
     name: Build and Deploy /docs
-  if: github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'docs' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/docs): trigger build action'))
+    if: "(github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'docs') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/docs): trigger build action'))"
     runs-on: ubuntu-latest
     
     steps:
