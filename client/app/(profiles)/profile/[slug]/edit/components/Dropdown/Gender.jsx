@@ -1,7 +1,8 @@
 'use client';
 
 import { IoMdCheckmarkCircle } from '@/icons';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';import cn from '@/lib/cn';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import cn from '@/lib/cn';
 import { t } from '@/stores/language';
 
 export default function GenderDropdown({ profile, currentlyEditingValue, setCurrentlyEditingValue }) {
@@ -15,6 +16,8 @@ export default function GenderDropdown({ profile, currentlyEditingValue, setCurr
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content className='z-10 mt-2 flex min-w-[200px] flex-col gap-y-1 rounded-xl border border-primary bg-secondary p-2 outline-none'>
+          <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
+
           <DropdownMenu.Item
             className={cn(
               'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',

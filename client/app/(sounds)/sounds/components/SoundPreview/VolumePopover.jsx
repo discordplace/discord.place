@@ -2,7 +2,8 @@
 
 import { HiVolumeOff, HiVolumeUp } from '@/icons';
 import useGeneralStore from '@/stores/general';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';import { t } from '@/stores/language';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { t } from '@/stores/language';
 
 export default function VolumePopover() {
   const volume = useGeneralStore(state => state.sounds.volume);
@@ -20,6 +21,8 @@ export default function VolumePopover() {
           side='bottom'
           sideOffset={20}
         >
+          <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
+
           <h2 className='text-sm font-bold text-primary'>
             {t('soundCard.volumePopover.title')}
           </h2>

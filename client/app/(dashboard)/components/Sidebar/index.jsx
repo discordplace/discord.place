@@ -366,6 +366,8 @@ export default function Sidebar() {
               sideOffset={5}
               side={isCollapsed ? 'right' : 'bottom'}
             >
+              <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
+
               <DropdownMenu.Item
                 className='flex cursor-pointer items-center gap-x-2 rounded-xl px-2.5 py-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'
                 onSelect={() => router.push('/account')}
