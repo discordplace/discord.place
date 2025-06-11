@@ -31,7 +31,7 @@ export default function Socials({ profile }) {
     gitlab: /(?:http(?:s)?:\/\/)?(?:www\.)?gitlab\.com\/([a-zA-Z0-9_-]+)/,
     reddit: /(?:http(?:s)?:\/\/)?(?:www\.)?reddit\.com\/u\/([a-zA-Z0-9_-]+)/,
     mastodon: /(?:http(?:s)?:\/\/)?(?:www\.)?mastodon\.social\/@([a-zA-Z0-9_]+)/,
-    bluesky: /(?:http(?:s)?:\/\/)?(?:www\.)?bsky\.social\/profile\/([a-zA-Z0-9_]+)/,
+    bluesky: /(?:http(?:s)?:\/\/)?(?:www\.)?bsky\.app\/profile\/([a-zA-Z0-9_]+)/,
     custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/
   };
 
