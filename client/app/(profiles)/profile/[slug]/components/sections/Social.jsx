@@ -10,7 +10,7 @@ import MotionLink from '@/app/components/Motion/Link';
 export default function Social({ data }) {
   const noSocialsFound = data.length === 0;
 
-  const socialsThatHavePrefix = ['github', 'twitter', 'x', 'instagram', 'tiktok', 'telegram'];
+  const socialsThatHavePrefix = ['github', 'twitter', 'x', 'instagram', 'tiktok', 'telegram', 'bluesky', 'youtube', 'mastodon'];
 
   return (
     <div className='flex w-full flex-col'>
