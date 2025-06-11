@@ -23,7 +23,7 @@
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v5.0.1/react-icons-all-files-5.0.1.tgz",
+    "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v5.5.0/react-icons-all-files-5.5.0.tgz",
     "@wavesurfer/react": "^1.0.7",
     "apexcharts": "^3.48.0",
     "axios": "^1.6.8",
