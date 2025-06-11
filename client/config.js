@@ -531,6 +531,22 @@ const config = {
       available_to: ['USER_ID'],
       description: 'Listing themes.'
     }
+  },
+  socialNames: {
+    instagram: 'Instagram',
+    x: 'X',
+    twitter: 'Twitter',
+    tiktok: 'TikTok',
+    facebook: 'Facebook',
+    steam: 'Steam',
+    github: 'GitHub',
+    twitch: 'Twitch',
+    youtube: 'YouTube',
+    linkedin: 'LinkedIn',
+    gitlab: 'GitLab',
+    reddit: 'Reddit',
+    mastodon: 'Mastodon',
+    bluesky: 'Bluesky'
   }
 };
 
