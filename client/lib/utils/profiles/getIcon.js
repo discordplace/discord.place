@@ -1,4 +1,4 @@
-import { SiFacebook, SiGithub, SiInstagram, SiSteam, SiTelegram, SiTiktok, SiTwitch, SiTwitter, SiX, SiYoutube, SiLinkedin, SiGitlab, SiReddit, SiMastodon, SiBluesky, RiLink } from '@/icons';
+import { SiFacebook, SiGithub, SiInstagram, SiSteam, SiTelegram, SiTiktok, SiTwitch, FaTwitter, SiX, SiYoutube, SiLinkedin, SiGitlab, SiReddit, SiMastodon, SiBluesky, RiLink } from '@/icons';
 
 export default function getIcon(type) {
   switch (type) {
@@ -7,7 +7,7 @@ export default function getIcon(type) {
     case 'x':
       return SiX;
     case 'twitter':
-      return SiTwitter;
+      return FaTwitter;
     case 'tiktok':
       return SiTiktok;
     case 'facebook':
