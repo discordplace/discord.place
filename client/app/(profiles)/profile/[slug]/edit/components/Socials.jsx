@@ -11,7 +11,6 @@ import config from '@/config';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import revalidateProfile from '@/lib/revalidate/profile';
 import { t } from '@/stores/language';
-import colors from '@/lib/utils/profiles/colors';
 import getIcon from '@/lib/utils/profiles/getIcon';
 
 export default function Socials({ profile }) {
@@ -28,6 +27,11 @@ export default function Socials({ profile }) {
     twitch: /(?:http(?:s)?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/,
     youtube: /(?:http(?:s)?:\/\/)?(?:www\.)?youtube\.com\/@([a-zA-Z0-9_]+)/,
     telegram: /(?:http(?:s)?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]+)/,
+    linkedin: /(?:http(?:s)?:\/\/)?(?:www\.)?linkedin\.com\/in\/([a-zA-Z0-9_-]+)/,
+    gitlab: /(?:http(?:s)?:\/\/)?(?:www\.)?gitlab\.com\/([a-zA-Z0-9_-]+)/,
+    reddit: /(?:http(?:s)?:\/\/)?(?:www\.)?reddit\.com\/u\/([a-zA-Z0-9_-]+)/,
+    mastodon: /(?:http(?:s)?:\/\/)?(?:www\.)?mastodon\.social\/@([a-zA-Z0-9_]+)/,
+    bluesky: /(?:http(?:s)?:\/\/)?(?:www\.)?bsky\.social\/profile\/([a-zA-Z0-9_]+)/,
     custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/
   };
 
@@ -159,7 +163,7 @@ export default function Socials({ profile }) {
             >
               <div className='flex items-center gap-x-2 text-sm text-tertiary transition-colors group-hover:text-primary'>
                 <SocialIcon
-                  className='text-tertiary group-hover:text-[rgb(var(--brand-color))]'
+                  className='text-tertiary'
                   size={20}
                 />
 
@@ -205,13 +209,13 @@ export default function Socials({ profile }) {
           <div className='flex w-full items-center gap-x-2'>
             {(() => {
               const Icon = getIcon(newSocialType);
+              if (!Icon) return (
+                <div className='h-[18px] w-[20px] rounded-lg bg-quaternary' />
+              );
 
               return (
                 <Icon
-                  style={{
-                    color: `rgba(${colors[newSocialType]})`
-                  }}
-                  className='text-tertiary transition-colors'
+                  className='text-tertiary'
                   size={20}
                 />
               );
