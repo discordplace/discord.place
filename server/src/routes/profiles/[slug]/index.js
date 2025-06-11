@@ -199,7 +199,12 @@ module.exports = {
               youtube: 'https://youtube.com/@',
               telegram: 'https://t.me/',
               x: 'https://x.com/',
-              twitter: 'https://twitter.com/'
+              twitter: 'https://twitter.com/',
+              linkedin: 'https://linkedin.com/in/',
+              gitlab: 'https://gitlab.com/',
+              reddit: 'https://reddit.com/user/',
+              mastodon: 'https://mastodon.social/@',
+              bluesky: 'https://bsky.app/profile/'
             };
 
             profile.socials.push({
