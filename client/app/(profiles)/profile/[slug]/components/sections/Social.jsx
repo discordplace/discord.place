@@ -48,13 +48,13 @@ export default function Social({ data }) {
               .map((social, index) => (
                 <MotionLink
                   key={social._id}
-                  className='group relative flex w-full select-none items-center gap-x-5 rounded-2xl bg-secondary py-4 pl-6 ring-purple-500 transition-all hover:bg-tertiary hover:ring-2'
+                  className='group flex w-full select-none items-center gap-x-5 rounded-2xl bg-secondary py-4 pl-6 ring-purple-500 transition-[background-color] hover:bg-tertiary hover:ring-2'
                   href={social.link}
                   target='_blank'
                   rel='noopener noreferrer'
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 25, delay: 0.715 + (.15 * index) }}
+                  transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.715 + (.15 * index) }}
                 >
                   {(() => {
                     const SocialIcon = getIcon(social.type);
