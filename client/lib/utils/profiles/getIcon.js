@@ -1,4 +1,4 @@
-import { SiFacebook, SiGithub, SiInstagram, SiSteam, SiTelegram, SiTiktok, SiTwitch, SiTwitter, SiX, SiYoutube, RiLink, MdQuestionMark } from '@/icons';
+import { SiFacebook, SiGithub, SiInstagram, SiSteam, SiTelegram, SiTiktok, SiTwitch, SiTwitter, SiX, SiYoutube, SiLinkedin, SiGitlab, SiReddit, SiMastodon, SiBluesky, RiLink } from '@/icons';
 
 export default function getIcon(type) {
   switch (type) {
@@ -22,9 +22,19 @@ export default function getIcon(type) {
       return SiYoutube;
     case 'telegram':
       return SiTelegram;
+    case 'linkedin':
+      return SiLinkedin;
+    case 'gitlab':
+      return SiGitlab;
+    case 'reddit':
+      return SiReddit;
+    case 'mastodon':
+      return SiMastodon;
+    case 'bluesky':
+      return SiBluesky;
     case 'custom':
       return RiLink;
     default:
-      return MdQuestionMark;
+      return null;
   }
 }
