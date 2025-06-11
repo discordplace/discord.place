@@ -24,8 +24,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(@types/react@18.3.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@react-icons/all-files':
-        specifier: https://github.com/react-icons/react-icons/releases/download/v5.0.1/react-icons-all-files-5.0.1.tgz
-        version: https://github.com/react-icons/react-icons/releases/download/v5.0.1/react-icons-all-files-5.0.1.tgz(react@18.2.0)
+        specifier: https://github.com/react-icons/react-icons/releases/download/v5.5.0/react-icons-all-files-5.5.0.tgz
+        version: https://objects.githubusercontent.com/github-production-release-asset-2e65be/44812159/cdf999b4-ad4a-4ff3-a8c0-2cc0b39381ff?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250611%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250611T033954Z&X-Amz-Expires=300&X-Amz-Signature=a71cd8a1e8c8ac1871ee46d9b1419b527bf7cc5dac3d16027b3df25bd36f35c9&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dreact-icons-all-files-5.5.0.tgz&response-content-type=application%2Foctet-stream(react@18.2.0)
       '@wavesurfer/react':
         specifier: ^1.0.7
         version: 1.0.7(react@18.2.0)(wavesurfer.js@7.8.1)
@@ -1012,9 +1012,9 @@ packages:
   '@radix-ui/rect@1.1.0':
     resolution: {integrity: sha512-A9+lCBZoaMJlVKcRBz2YByCG+Cp2t6nAnMnNba+XiWxnj6r4JUFqfsgwocMBZU9LPtdxC6wB56ySYpc7LQIoJg==}
 
-  '@react-icons/all-files@https://github.com/react-icons/react-icons/releases/download/v5.0.1/react-icons-all-files-5.0.1.tgz':
-    resolution: {tarball: https://github.com/react-icons/react-icons/releases/download/v5.0.1/react-icons-all-files-5.0.1.tgz}
-    version: 5.0.1
+  '@react-icons/all-files@https://objects.githubusercontent.com/github-production-release-asset-2e65be/44812159/cdf999b4-ad4a-4ff3-a8c0-2cc0b39381ff?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250611%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250611T033954Z&X-Amz-Expires=300&X-Amz-Signature=a71cd8a1e8c8ac1871ee46d9b1419b527bf7cc5dac3d16027b3df25bd36f35c9&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dreact-icons-all-files-5.5.0.tgz&response-content-type=application%2Foctet-stream':
+    resolution: {tarball: https://objects.githubusercontent.com/github-production-release-asset-2e65be/44812159/cdf999b4-ad4a-4ff3-a8c0-2cc0b39381ff?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250611%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250611T033954Z&X-Amz-Expires=300&X-Amz-Signature=a71cd8a1e8c8ac1871ee46d9b1419b527bf7cc5dac3d16027b3df25bd36f35c9&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dreact-icons-all-files-5.5.0.tgz&response-content-type=application%2Foctet-stream}
+    version: 5.5.0
     peerDependencies:
       react: '*'
 
@@ -4216,7 +4216,7 @@ snapshots:
 
   '@radix-ui/rect@1.1.0': {}
 
-  '@react-icons/all-files@https://github.com/react-icons/react-icons/releases/download/v5.0.1/react-icons-all-files-5.0.1.tgz(react@18.2.0)':
+  '@react-icons/all-files@https://objects.githubusercontent.com/github-production-release-asset-2e65be/44812159/cdf999b4-ad4a-4ff3-a8c0-2cc0b39381ff?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250611%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250611T033954Z&X-Amz-Expires=300&X-Amz-Signature=a71cd8a1e8c8ac1871ee46d9b1419b527bf7cc5dac3d16027b3df25bd36f35c9&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dreact-icons-all-files-5.5.0.tgz&response-content-type=application%2Foctet-stream(react@18.2.0)':
     dependencies:
       react: 18.2.0
 
