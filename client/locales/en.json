@@ -1030,7 +1030,9 @@
     },
     "social": {
       "title": "Social",
-      "noSocials": "No social found."
+      "description": "Found {{count}} social links for this profile.",
+      "noSocials": "No social found.",
+      "customSocialName": "Website"
     },
     "graph": {
       "likes": {

@@ -1,6 +1,6 @@
 function socialsValidation(value) {
   const socials = Object.keys(value);
-  const allowedKeys = ['instagram', 'x', 'twitter', 'tiktok', 'facebook', 'steam', 'github', 'twitch', 'youtube', 'telegram', 'custom'];
+  const allowedKeys = ['instagram', 'x', 'twitter', 'tiktok', 'facebook', 'steam', 'github', 'twitch', 'youtube', 'telegram', 'linkedin', 'gitlab', 'reddit', 'mastodon', 'bluesky', 'custom'];
 
   if (socials.some(social => !allowedKeys.includes(social))) throw new Error(`Socials contains invalid key: ${socials.find(social => !allowedKeys.includes(social))}`);
   if (socials.some(social => typeof social !== 'string')) throw new Error('Socials values must be strings.');

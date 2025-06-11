@@ -1,6 +1,8 @@
-import { IoCheckmarkCircle, BiCopy, BiSolidCopy } from '@/icons';
+import { MdCheckCircle, BiCopy, BiSolidCopy } from '@/icons';
 import cn from '@/lib/cn';
-import { useState, useRef } from 'react';import { toast } from 'sonner';import { t } from '@/stores/language';
+import { useState, useRef } from 'react';
+import { toast } from 'sonner';
+import { t } from '@/stores/language';
 
 export default function CopyButton({ timeout = 2000, successText, copyText, className, DefaultIcon = BiCopy, HoverIcon = BiSolidCopy, children }) {
   const [copied, setCopied] = useState(false);
@@ -38,7 +40,7 @@ export default function CopyButton({ timeout = 2000, successText, copyText, clas
           'absolute transition-[transform] duration-300 group-hover:scale-[1.2]',
           copied ? 'scale-0 opacity-0' : 'opacity-0 group-hover:opacity-100'
         )} />
-        <IoCheckmarkCircle className={cn(
+        <MdCheckCircle className={cn(
           'text-green-800 dark:text-green-400 transition-[transform] duration-300',
           copied ? 'opacity-100' : 'scale-0 opacity-0'
         )} />

@@ -1030,7 +1030,9 @@
     },
     "social": {
       "title": "Sosyal Medya",
-      "noSocials": "Sosyal medya bağlantısı bulunamadı."
+      "description": "Bu profil için {{count}} bağlantı bulundu.",
+      "noSocials": "Sosyal medya bağlantısı bulunamadı.",
+      "customSocialName": "Website"
     },
     "graph": {
       "likes": {
