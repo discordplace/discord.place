@@ -298,7 +298,7 @@ export default function Actions({ server }) {
 
                 <div className='flex items-center gap-x-2 font-bold'>
                   {server.tripledVotesPriceFormatted && (
-                    <span className='text-sm text-secondary'>
+                    <span className='text-xs'>
                       {server.tripledVotesPriceFormatted}
                     </span>
                   )}

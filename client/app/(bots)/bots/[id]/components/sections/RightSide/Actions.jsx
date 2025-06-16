@@ -236,7 +236,7 @@ export default function Actions({ bot }) {
 
                 <div className='flex items-center gap-x-2 font-bold'>
                   {bot.tripledVotesPriceFormatted && (
-                    <span className='text-sm text-secondary'>
+                    <span className='text-xs'>
                       {bot.tripledVotesPriceFormatted}
                     </span>
                   )}
