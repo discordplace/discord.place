@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.16.0](https://github.com/discordplace/discord.place/compare/server@v1.15.0...server@v1.16.0) (2025-06-16)
+
+
+### Features
+
+* display formatted prices for Tripled Votes and Standed Out buttons ([#190](https://github.com/discordplace/discord.place/issues/190)) ([3cb20ca](https://github.com/discordplace/discord.place/commit/3cb20cada052754bb7652b6fb2ab43bf940b5974))
+
+
+### Bug Fixes
+
+* update Plan import path to correct schema location ([70c7c81](https://github.com/discordplace/discord.place/commit/70c7c81d3aae62f3862a2e3b9646c0a32b43547e))
+
 ## [1.15.0](https://github.com/discordplace/discord.place/compare/server@v1.14.0...server@v1.15.0) (2025-06-16)
 
 
