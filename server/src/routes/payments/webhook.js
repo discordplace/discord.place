@@ -15,6 +15,7 @@ const getImageFromHash = require('@/utils/getImageFromHash');
 const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
+const sendPortalMessage = require('@/utils/sendPortalMessage');
 
 module.exports = {
   post: [
@@ -49,7 +50,7 @@ module.exports = {
             .setFooter({ text: message })
         ];
 
-        client.channels.cache.get(config.portalChannelId).send({ embeds });
+        sendPortalMessage({ embeds });
       }
 
       switch (body.meta.event_name) {
