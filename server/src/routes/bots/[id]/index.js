@@ -18,6 +18,7 @@ const getUserHashes = require('@/utils/getUserHashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const isUserBotOwner = require('@/utils/bots/isUserBotOwner');
 const sendLog = require('@/utils/sendLog');
+const Plan = require('@/schemas/LemonSqueezy/Plan');
 
 module.exports = {
   get: [
@@ -110,6 +111,18 @@ module.exports = {
       if (permissions.canEdit) {
         responseData.webhook = bot.webhook;
         responseData.webhookLanguages = config.availableLocales;
+
+        if (!responseData.vote_triple_enabled?.created_at) {
+          const tripledVotesPriceFormatted = (await Plan.findOne({ name: 'Tripled votes for 24 hours' }).select('price_formatted').lean())?.price_formatted;
+
+          responseData.tripledVotesPriceFormatted = tripledVotesPriceFormatted || null;
+        }
+
+        if (!responseData.standed_out?.created_at) {
+          const standedOutPriceFormatted = (await Plan.findOne({ name: 'Standed out for 12 hours' }).select('price_formatted').lean())?.price_formatted;
+
+          responseData.standedOutPriceFormatted = standedOutPriceFormatted || null;
+        }
       }
 
       return response.json(responseData);
