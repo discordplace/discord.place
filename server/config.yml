@@ -234,7 +234,6 @@ themeQueueChannelId: '1267552786162389085'
 reportsQueueChannelId: '1267552786162389085'
 botQueueChannelId: '1267552786162389085'
 templateQueueChannelId: '1267552786162389085'
-portalChannelId: '1238654829916585984'
 webLogsChannelId: '1267553398337572905'
 testWebhookLogsChannelId: '1267553398337572905'
 excludeCollectionsInBackup:
