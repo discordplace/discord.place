@@ -18,6 +18,7 @@ const getUserHashes = require('@/utils/getUserHashes');
 const requirementChecks = require('@/utils/servers/requirementChecks');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
+const Plan = require('@/schemas/Plan');
 
 module.exports = {
   get: [
@@ -81,7 +82,7 @@ module.exports = {
         });
       }
 
-      return response.json({
+      const responseData = {
         ...await server.toPubliclySafe(),
         name: guild.name,
         icon: guild.icon,
@@ -119,7 +120,23 @@ module.exports = {
         webhookLanguages: permissions.canEdit && config.availableLocales,
         joined_at: guild.joinedTimestamp,
         ownerSubscriptionCreatedAt: foundPremium ? new Date(foundPremium.subscription.createdAt).getTime() : null
-      });
+      };
+
+      if (permissions.canEdit) {
+        if (!responseData.vote_triple_enabled?.created_at) {
+          const tripledVotesPriceFormatted = (await Plan.findOne({ name: 'Tripled votes for 24 hours' }).select('price_formatted').lean())?.price_formatted;
+
+          responseData.tripledVotesPriceFormatted = tripledVotesPriceFormatted || null;
+        }
+
+        if (!responseData.standed_out?.created_at) {
+          const standedOutPriceFormatted = (await Plan.findOne({ name: 'Standed out for 12 hours' }).select('price_formatted').lean())?.price_formatted;
+
+          responseData.standedOutPriceFormatted = standedOutPriceFormatted || null;
+        }
+      }
+
+      return response.json(responseData);
     }
   ],
   post: [
