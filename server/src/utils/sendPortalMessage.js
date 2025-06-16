@@ -1,12 +1,11 @@
 const Discord = require('discord.js');
 
+const webhook = process.env.DISCORD_PORTAL_CHANNEL_WEBHOOK_URL
+  ? new Discord.WebhookClient({ url: process.env.DISCORD_PORTAL_CHANNEL_WEBHOOK_URL })
+  : null;
+
 module.exports = async function sendPortalMessage(payload) {
-  if (!process.env.DISCORD_PORTAL_CHANNEL_WEBHOOK_URL) return;
-
-  const webhook = new Discord.WebhookClient({
-    url: process.env.DISCORD_PORTAL_CHANNEL_WEBHOOK_URL
-  });
-
+  if (!webhook) return;
   try {
     await webhook.send(payload);
   } catch (error) {
