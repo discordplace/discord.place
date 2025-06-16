@@ -263,9 +263,11 @@ export default function Actions({ bot }) {
                 </div>
 
                 <div className='flex items-center gap-x-2 font-bold'>
-                  <span className='text-xs'>
-                    {bot.standedOutPriceFormatted}
-                  </span>
+                  {bot.standedOutPriceFormatted && (
+                    <span className='text-xs'>
+                      {bot.standedOutPriceFormatted}
+                    </span>
+                  )}
 
                   <AiOutlineRise />
                 </div>
