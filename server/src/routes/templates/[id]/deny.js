@@ -5,6 +5,7 @@ const Template = require('@/schemas/Template');
 const Discord = require('discord.js');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
+const sendPortalMessage = require('@/utils/sendPortalMessage');
 
 module.exports = {
   post: [
@@ -56,7 +57,7 @@ module.exports = {
           ])
       ];
 
-      client.channels.cache.get(config.portalChannelId).send({ embeds });
+      sendPortalMessage({ embeds });
 
       sendLog(
         'templateDenied',

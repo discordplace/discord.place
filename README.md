@@ -157,6 +157,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `DISCORD_CLIENT_TOKEN` | Discord bot token. |
 | `DISCORD_CLIENT_SECRET` | Discord OAuth client secret. |
 | `DISCORD_CLIENT_ID` | Discord OAuth client ID. |
+| `DISCORD_PORTAL_CHANNEL_WEBHOOK_URL` | Webhook URL for the portal channel. (not required) |
 | `MONGO_URL` | MongoDB connection URL. |
 | `S3_BUCKET_NAME` | S3 bucket name. |
 | `S3_ACCESS_KEY_ID` | S3 access key ID. |
@@ -187,6 +188,7 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 > - The `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` is used for syncing the translators roles when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically sync the translators roles in the base guild with the ids in the `client/locales/translators.json` file.
 > - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET`, `USER_TOKEN_ENCRYPT_SECRET` and `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the client's `CLIENT_SECRET` value.
+> - The `DISCORD_PORTAL_CHANNEL_WEBHOOK_URL` is used for sending messages to the portal channel. This is not required for self-hosting. We use this webhook for sending messages to the portal channel for certain events like new bot approved, new emoji published, etc. __This webhook should be created by bot.__ Otherwise, no components (link buttons) will be sent with the messages. You can leave this value empty. Make sure to use a valid Discord webhook URL format (e.g., `https://discord.com/api/webhooks/XXX/XXX`).
 > - For the `MONGO_URL` value, you can use a local MongoDB instance or a cloud-based MongoDB service like MongoDB Atlas. Refer to the [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string) for more information on constructing the connection URL.
 > - Values starting with `S3_` are required. This is used for storing emojis & sounds files in S3 (and also database backups). We personally use Cloudflare R2 Storage for this. You can use any S3-compatible storage service with the same configuration. Note: You can leave the `S3_DATABASE_BACKUP_*` values empty if you don't want to use S3 for database backups. We use S3 for storing the database backups, but this is not required for self-hosting. If you leave these values empty, the server will not take any database backups and throws warnings in the console when you start the server.
 > - The `CDN_URL` is used for serving emojis and sounds files. You should set this to your own CDN URL. Make sure to use valid URL format (e.g., `https://cdn.yourdomain.com`).

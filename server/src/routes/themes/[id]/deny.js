@@ -6,6 +6,7 @@ const Discord = require('discord.js');
 const idValidation = require('@/validations/themes/id');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
+const sendPortalMessage = require('@/utils/sendPortalMessage');
 
 module.exports = {
   post: [
@@ -65,7 +66,7 @@ module.exports = {
           .setFooter({ text: 'Secondary Color' })
       ];
 
-      client.channels.cache.get(config.portalChannelId).send({ embeds });
+      sendPortalMessage({ embeds });
 
       sendLog(
         'themeDenied',

@@ -7,6 +7,7 @@ const DashboardData = require('@/schemas/Dashboard/Data');
 const idValidation = require('@/validations/sounds/id');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
+const sendPortalMessage = require('@/utils/sendPortalMessage');
 
 module.exports = {
   post: [
@@ -64,7 +65,7 @@ module.exports = {
           )
       ];
 
-      client.channels.cache.get(config.portalChannelId).send({ embeds, components });
+      sendPortalMessage({ embeds, components });
 
       sendLog(
         'soundApproved',

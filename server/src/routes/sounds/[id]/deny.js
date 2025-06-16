@@ -6,6 +6,7 @@ const Discord = require('discord.js');
 const idValidation = require('@/validations/sounds/id');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
+const sendPortalMessage = require('@/utils/sendPortalMessage');
 
 const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
@@ -76,7 +77,7 @@ module.exports = {
           ])
       ];
 
-      client.channels.cache.get(config.portalChannelId).send({ embeds });
+      sendPortalMessage({ embeds });
 
       sendLog(
         'soundDenied',
