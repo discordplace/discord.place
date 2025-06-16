@@ -113,12 +113,14 @@ module.exports = {
         responseData.webhookLanguages = config.availableLocales;
 
         if (!responseData.vote_triple_enabled?.created_at) {
-          const tripledVotesPriceFormatted = (await Plan.findOne({ variantId: Number(config.lemonSqueezy.variantIds.tripledVotes.bots) }).select('price_formatted').lean())?.price_formatted;
+          const tripledVotesPriceFormatted = (await Plan.findOne({ name: 'Tripled votes for 24 hours' }).select('price_formatted').lean())?.price_formatted;
+
           responseData.tripledVotesPriceFormatted = tripledVotesPriceFormatted || null;
         }
 
         if (!responseData.standed_out?.created_at) {
-          const standedOutPriceFormatted = (await Plan.findOne({ variantId: Number(config.lemonSqueezy.variantIds.standedOut.bots) }).select('price_formatted').lean())?.price_formatted;
+          const standedOutPriceFormatted = (await Plan.findOne({ variantId: 'Standed out for 12 hours' }).select('price_formatted').lean())?.price_formatted;
+
           responseData.standedOutPriceFormatted = standedOutPriceFormatted || null;
         }
       }
