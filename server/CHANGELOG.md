@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.15.0](https://github.com/discordplace/discord.place/compare/server@v1.14.0...server@v1.15.0) (2025-06-16)
+
+
+### Features
+
+* **client:** profiles social media links part redesign & new socials ([#188](https://github.com/discordplace/discord.place/issues/188)) ([555a160](https://github.com/discordplace/discord.place/commit/555a160856f7978cef166ef63a0766285bd7c4a1))
+* conditionally initialize Sentry with new environment variable ([cfc9dfa](https://github.com/discordplace/discord.place/commit/cfc9dfa1a7c635eecfba3ce6c3064fa75f6d521b))
+* **server/logging:** remove logging from auth callback and logout routes ([f5dfacf](https://github.com/discordplace/discord.place/commit/f5dfacff86f6dde3f0aad0809253349534c784c0))
+* **server:** convert database backup related S3 environment variables optional ([0db3b3a](https://github.com/discordplace/discord.place/commit/0db3b3a0e3a766d6ef457b44da0527cffcd354d3))
+* **server:** replace bot with webhook for portal channel messages ([#189](https://github.com/discordplace/discord.place/issues/189)) ([95c8782](https://github.com/discordplace/discord.place/commit/95c8782aef5e2a4e2426f3cbdb52ad7bd86d5245))
+* update IpDetails schema to make some fields optional with default values ([5e87719](https://github.com/discordplace/discord.place/commit/5e877195732fc4924e7ef3e0c09f970ef2444bad))
+
+
+### Bug Fixes
+
+* add checks for undefined environment variables before sending heartbeats ([5346d1f](https://github.com/discordplace/discord.place/commit/5346d1f59e2b69a6e78a2c18136fa55cdb08c442))
+* remove 'withResponse' parameter from followUp calls ([f25050b](https://github.com/discordplace/discord.place/commit/f25050b70be39f978a67342c54fe0b80513d8d86))
+* remove format argument in iconURL parameters as format is not exists anymore ([887a235](https://github.com/discordplace/discord.place/commit/887a2351e3c2a09796209ce85c427fb8b4629ed7))
+* **server:** make "when" option required for add premium command ([0024356](https://github.com/discordplace/discord.place/commit/002435683e8fb7aa0dde79071ec519cf3243f3d8))
+* **server:** move S3 client initialization to upload function ([5c62bcc](https://github.com/discordplace/discord.place/commit/5c62bcc7dee3363ec198d0ee6ce80a6e2dd94a81))
+* **server:** remove GITHUB_AUTO_DEPLOY_SECRET from example environment file ([80bcb71](https://github.com/discordplace/discord.place/commit/80bcb718f16a58273d6baebd79913f37280c4a45))
+* update discord.js related parts to latest version ([52aae43](https://github.com/discordplace/discord.place/commit/52aae4373f605ab1bf90b38dcbdf8387c52d8dba))
+* use CDN_URL environment variable instead of plain texts & config files ([52836bc](https://github.com/discordplace/discord.place/commit/52836bc0a56f7ebe6616972a1148702df024602e))
+
 ## [1.14.0](https://github.com/discordplace/discord.place/compare/server@v1.13.0...server@v1.14.0) (2025-05-01)
 
 

@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.19.0](https://github.com/discordplace/discord.place/compare/client@v1.18.0...client@v1.19.0) (2025-06-16)
+
+
+### Features
+
+* **client:** profiles social media links part redesign & new socials ([#188](https://github.com/discordplace/discord.place/issues/188)) ([555a160](https://github.com/discordplace/discord.place/commit/555a160856f7978cef166ef63a0766285bd7c4a1))
+* **client:** remove sentry ([1f8f2c9](https://github.com/discordplace/discord.place/commit/1f8f2c9cc67552eb6c197c6c185b750b13bd68c3))
+* enhance theme toggle with view transitions ([ed1050e](https://github.com/discordplace/discord.place/commit/ed1050ee6b4380283f24bc7c438a909d2de71d4d))
+* remove new badges from theme service ([b7abc24](https://github.com/discordplace/discord.place/commit/b7abc2416fb95bcf728600c55f5131422bc1d64b))
+
+
+### Bug Fixes
+
+* **client/styles:** add missing animation properties for radix dropdown menus ([fe3e627](https://github.com/discordplace/discord.place/commit/fe3e62737985f919d5c51e64bf569b110db7a792))
+* **client:** add arrow component to various dropdowns ([9a0bfda](https://github.com/discordplace/discord.place/commit/9a0bfda5d2af6ba0879c6f70212915c229d77252))
+* **client:** add CLIENT_SECRET to example environment file ([088c828](https://github.com/discordplace/discord.place/commit/088c828fbe71208aee1352a4ebee237201cb2a2e))
+* **client:** add new socials to socialsThatHavePrefix array ([a4cc73b](https://github.com/discordplace/discord.place/commit/a4cc73b9a02cd8b9e5dd83265752e72462a32bb0))
+* **client:** adjust animation properties and hover effects in Social component ([2899c3b](https://github.com/discordplace/discord.place/commit/2899c3bbbf4328d3dd8c54f6685958a8462f62aa))
+* **client:** correct dropdown menu animations for open and closed states ([55c054f](https://github.com/discordplace/discord.place/commit/55c054fe5ca7ff45654e9b7a1ee5700eb1b793c2))
+* **client:** correct dropdown menu animations for open and closed states ([7fda0db](https://github.com/discordplace/discord.place/commit/7fda0db4f3332e31216989f3599a2e65687996f6))
+* **client:** handle correctly remotePatterns URL errors in next.config file ([1ad83fd](https://github.com/discordplace/discord.place/commit/1ad83fdf50d25755e975938fbe94fa99fcced012))
+* **client:** make dropdown menu animations side aware ([9ca58b5](https://github.com/discordplace/discord.place/commit/9ca58b52a3f8617cbc00deaac44bc6b564de26de))
+* **client:** update bluesky regex to use correct domain ([da1da77](https://github.com/discordplace/discord.place/commit/da1da77efe823eed56c2fa858bb9cad89224d8b3))
+* **client:** update environment variable for CDN URL to NEXT_PUBLIC_CDN_URL ([5c31c8a](https://github.com/discordplace/discord.place/commit/5c31c8ac597a64faffd240fb56be7a34ab7f1b0b))
+* **client:** update Twitter icon import in getIcon function ([9ba43a1](https://github.com/discordplace/discord.place/commit/9ba43a105605b64716f835ff919fe159b5bd236f))
+* use CDN_URL environment variable instead of plain texts & config files ([52836bc](https://github.com/discordplace/discord.place/commit/52836bc0a56f7ebe6616972a1148702df024602e))
+* view transitions for theme toggle in account page aswell ([9c7458d](https://github.com/discordplace/discord.place/commit/9c7458d26866c4b8faa971df379f6b4fd8772768))
+
 ## [1.18.0](https://github.com/discordplace/discord.place/compare/client@v1.17.0...client@v1.18.0) (2025-05-01)
 
 
