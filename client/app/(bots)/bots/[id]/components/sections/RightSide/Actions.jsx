@@ -3,7 +3,8 @@
 import { TbLoader, TbSquareRoundedChevronUp, TbSquareRoundedChevronUpFilled, PiShareFat, PiShareFatFill, BsFire, BiPencil, BiSolidEnvelope, AiOutlineRise } from '@/icons';
 import CopyButton from '@/app/components/CopyButton';
 import MotionLink from '@/app/components/Motion/Link';
-import { AnimatePresence, motion } from 'framer-motion';import useAuthStore from '@/stores/auth';
+import { AnimatePresence, motion } from 'framer-motion';
+import useAuthStore from '@/stores/auth';
 import cn from '@/lib/cn';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
@@ -11,9 +12,11 @@ import { toast } from 'sonner';
 import voteBot from '@/lib/request/bots/voteBot';
 import VoteCountdown from '@/app/components/Countdown/Vote';
 import revalidateBot from '@/lib/revalidate/bot';
-import useThemeStore from '@/stores/theme';import createTripledVotesCheckout from '@/lib/request/bots/createTripledVotesCheckout';
+import useThemeStore from '@/stores/theme';
+import createTripledVotesCheckout from '@/lib/request/bots/createTripledVotesCheckout';
 import createStandedOutCheckout from '@/lib/request/bots/createStandedOutCheckout';
-import { useRouter } from 'next-nprogress-bar';import { t } from '@/stores/language';
+import { useRouter } from 'next-nprogress-bar';
+import { t } from '@/stores/language';
 
 export default function Actions({ bot }) {
   const theme = useThemeStore(state => state.theme);
@@ -231,7 +234,11 @@ export default function Actions({ bot }) {
                   {t('buttons.buyTripleVotes')}
                 </div>
 
-                <div className='flex items-center gap-x-1 font-bold'>
+                <div className='flex items-center gap-x-2 font-bold'>
+                  <span className='text-sm text-secondary'>
+                    {bot.tripledVotesPriceFormatted}
+                  </span>
+
                   <BsFire />
                 </div>
               </motion.button>
@@ -253,7 +260,11 @@ export default function Actions({ bot }) {
                   {t('buttons.standOut')}
                 </div>
 
-                <div className='flex items-center gap-x-1 font-bold'>
+                <div className='flex items-center gap-x-2 font-bold'>
+                  <span className='text-sm text-secondary'>
+                    {bot.standedOutPriceFormatted}
+                  </span>
+
                   <AiOutlineRise />
                 </div>
               </motion.button>
