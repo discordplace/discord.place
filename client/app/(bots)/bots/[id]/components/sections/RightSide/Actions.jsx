@@ -235,9 +235,11 @@ export default function Actions({ bot }) {
                 </div>
 
                 <div className='flex items-center gap-x-2 font-bold'>
-                  <span className='text-sm text-secondary'>
-                    {bot.tripledVotesPriceFormatted}
-                  </span>
+                  {bot.tripledVotesPriceFormatted && (
+                    <span className='text-sm text-secondary'>
+                      {bot.tripledVotesPriceFormatted}
+                    </span>
+                  )}
 
                   <BsFire />
                 </div>
