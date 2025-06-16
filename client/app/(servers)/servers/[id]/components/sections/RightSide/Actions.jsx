@@ -325,9 +325,11 @@ export default function Actions({ server }) {
                 </div>
 
                 <div className='flex items-center gap-x-2 font-bold'>
-                  <span className='text-xs'>
-                    {server.standedOutPriceFormatted}
-                  </span>
+                  {server.standedOutPriceFormatted && (
+                    <span className='text-xs'>
+                      {server.standedOutPriceFormatted}
+                    </span>
+                  )}
 
                   <AiOutlineRise />
                 </div>
