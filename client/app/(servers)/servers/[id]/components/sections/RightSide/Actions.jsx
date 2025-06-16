@@ -297,9 +297,11 @@ export default function Actions({ server }) {
                 </div>
 
                 <div className='flex items-center gap-x-2 font-bold'>
-                  <span className='text-sm text-secondary'>
-                    {server.tripledVotesPriceFormatted}
-                  </span>
+                  {server.tripledVotesPriceFormatted && (
+                    <span className='text-sm text-secondary'>
+                      {server.tripledVotesPriceFormatted}
+                    </span>
+                  )}
 
                   <BsFire />
                 </div>
