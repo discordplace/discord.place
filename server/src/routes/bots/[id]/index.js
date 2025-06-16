@@ -119,7 +119,7 @@ module.exports = {
         }
 
         if (!responseData.standed_out?.created_at) {
-          const standedOutPriceFormatted = (await Plan.findOne({ variantId: 'Standed out for 12 hours' }).select('price_formatted').lean())?.price_formatted;
+          const standedOutPriceFormatted = (await Plan.findOne({ name: 'Standed out for 12 hours' }).select('price_formatted').lean())?.price_formatted;
 
           responseData.standedOutPriceFormatted = standedOutPriceFormatted || null;
         }
