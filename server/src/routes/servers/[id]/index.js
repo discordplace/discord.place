@@ -18,7 +18,7 @@ const getUserHashes = require('@/utils/getUserHashes');
 const requirementChecks = require('@/utils/servers/requirementChecks');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
-const Plan = require('@/schemas/Plan');
+const Plan = require('@/schemas/LemonSqueezy/Plan');
 
 module.exports = {
   get: [
