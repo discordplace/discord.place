@@ -95,7 +95,7 @@ async function incrementVote(botId, userId) {
     ]
   );
 
-  if (bot.webhook?.url) sendVoteWebhook(bot, { id: userId, username: user.username }, { bot: bot.id, user: user.id }).catch(() => null);
+  if (bot.webhook?.url) sendVoteWebhook(bot, { id: userId, username: user.username }, { bot: bot.id, user: user.id, test: false }).catch(() => null);
 
   return true;
 }
