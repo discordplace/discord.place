@@ -15,16 +15,22 @@ We will send a `POST` request to your webhook URL. The request will contain the 
 ```json
 {
   "bot": "string",
-  "user": "string"
+  "user": "string",
+  "test": "boolean"
 }
 ```
 
 ```json
 {
   "guild": "string",
-  "user": "string"
+  "user": "string",
+  "test": "boolean"
 }
 ```
+##### Notes
+The `bot` and `guild` fields are optional. If the webhook is for a bot, the `bot` field will be present. If the webhook is for a server, the `guild` field will be present.
+
+The `test` field is used to indicate if the webhook is a test webhook. If it is a test webhook, the `test` field will be `true`, otherwise it will be `false`.
 
 #### Headers
 
