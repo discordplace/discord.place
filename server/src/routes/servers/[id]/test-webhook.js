@@ -36,7 +36,7 @@ module.exports = {
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
-      sendVoteWebhook(server, { id: requestUser.id, username: requestUser.username }, { guild: server.id, user: request.user.id })
+      sendVoteWebhook(server, { id: requestUser.id, username: requestUser.username }, { guild: server.id, user: request.user.id, test: true })
         .then(() => response.status(204).end())
         .catch(() => response.sendError('Failed to send a test webhook to the server.', 500));
 

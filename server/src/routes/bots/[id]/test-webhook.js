@@ -34,7 +34,7 @@ module.exports = {
 
       const requestUser = client.users.cache.get(request.user.id) || await client.users.fetch(request.user.id).catch(() => null);
 
-      sendVoteWebhook(bot, { id: requestUser.id, username: requestUser.username }, { bot: bot.id, user: request.user.id })
+      sendVoteWebhook(bot, { id: requestUser.id, username: requestUser.username }, { bot: bot.id, user: request.user.id, test: false })
         .then(() => response.status(204).end())
         .catch(() => response.sendError('Failed to send a test webhook to the bot.', 500));
 
