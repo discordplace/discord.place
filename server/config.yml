@@ -309,6 +309,8 @@ quarantineRestrictions:
 customHostnames:
   - 'dsc.lat'
   - 'dsc.gay'
+  - 'dsc.wtf'
+  - 'dsc.baby'
 emojisDenyReasons:
   reposted-emoji:
     name: 'Reposted Emoji'
