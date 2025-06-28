@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.20.0](https://github.com/discordplace/discord.place/compare/client@v1.19.0...client@v1.20.0) (2025-06-28)
+
+
+### Features
+
+* add new custom hostnames ([6dd1b73](https://github.com/discordplace/discord.place/commit/6dd1b736d0021157eddc43e07cda3e27929af3e9))
+* display formatted prices for Tripled Votes and Standed Out buttons ([#190](https://github.com/discordplace/discord.place/issues/190)) ([3cb20ca](https://github.com/discordplace/discord.place/commit/3cb20cada052754bb7652b6fb2ab43bf940b5974))
+
+
+### Bug Fixes
+
+* update react-icons package URL to use CDN ([30226b2](https://github.com/discordplace/discord.place/commit/30226b217f91dbee60f224f76faffcdaaf397e67))
+* update react-icons package URLs to use CDN ([7213949](https://github.com/discordplace/discord.place/commit/7213949cecfdafc1c2f527ff8a44e6a547e339e8))
+
 ## [1.19.0](https://github.com/discordplace/discord.place/compare/client@v1.18.0...client@v1.19.0) (2025-06-16)
 
 
