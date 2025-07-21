@@ -283,8 +283,6 @@ We use YML files for the configuration of the server. You can find the configura
 
 The `@react-icons/all-files` package is used for the icons in the client. We use our version of the `@react-icons/all-files` package that hosted on our CDN (https://cdn.discord.place/react-icons-all-files-5.5.0.tgz). You can just simply replace the package with the original one (https://github.com/react-icons/react-icons/releases/download/v5.5.0/react-icons-all-files-5.5.0.tgz) if you want to use the original package. We highly recommend you to use original package.
 
-```bash
-
 ### New Languages
 
 #### Client
