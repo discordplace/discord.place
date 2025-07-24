@@ -87,11 +87,11 @@ module.exports = {
       sendPortalMessage({ embeds });
 
       sendLog(
-        'botApproved',
+        'botDenied',
         [
           { type: 'user', name: 'Bot', value: id },
           { type: 'user', name: 'Moderator', value: request.user.id },
-          { type: 'text', name: 'Reason', value: `${config.botsDenyReasons[reason].name}\n-# - ${config.botsDenyReasons[reason].description}` }
+          { type: 'text', name: 'Reason', value: config.botsDenyReasons[reason].description }
         ],
         [
           { label: 'View Moderator', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
