@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.16.0](https://github.com/discordplace/discord.place/compare/server@v1.15.0...server@v1.16.0) (2025-07-24)
+
+
+### Features
+
+* add new custom hostnames ([6dd1b73](https://github.com/discordplace/discord.place/commit/6dd1b736d0021157eddc43e07cda3e27929af3e9))
+* add test flag to sendVoteWebhook function calls ([#193](https://github.com/discordplace/discord.place/issues/193)) ([82d94d9](https://github.com/discordplace/discord.place/commit/82d94d959c9af1923beadf5cb5a14ceb3a538578)), closes [#192](https://github.com/discordplace/discord.place/issues/192)
+* display formatted prices for Tripled Votes and Standed Out buttons ([#190](https://github.com/discordplace/discord.place/issues/190)) ([3cb20ca](https://github.com/discordplace/discord.place/commit/3cb20cada052754bb7652b6fb2ab43bf940b5974))
+
+
+### Bug Fixes
+
+* **server:** change test flag to true in sendVoteWebhook function call ([186a402](https://github.com/discordplace/discord.place/commit/186a402f25ed0afd12f1a2b77be340ffaa87b3c3))
+* update log message and format for bot denial process ([eb72c37](https://github.com/discordplace/discord.place/commit/eb72c37c007028cdd2aa19f34104f33a8717df8e))
+* update Plan import path to correct schema location ([70c7c81](https://github.com/discordplace/discord.place/commit/70c7c81d3aae62f3862a2e3b9646c0a32b43547e))
+
 ## [1.15.0](https://github.com/discordplace/discord.place/compare/server@v1.14.0...server@v1.15.0) (2025-06-16)
 
 
