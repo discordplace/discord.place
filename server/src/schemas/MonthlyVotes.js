@@ -33,7 +33,6 @@ MonthlyVotesSchema.statics.updateMonthlyVotes = async function (identifier, data
 
   const mostVotedUser = data.voters.sort((a, b) => b.vote - a.vote)[0];
 
-  const query = { identifier };
   const updateData = {
     month,
     year,
@@ -44,25 +43,32 @@ MonthlyVotesSchema.statics.updateMonthlyVotes = async function (identifier, data
   };
 
   // Try to update the existing document
-  const result = await this.updateOne(
-    { identifier, 'data.month': month, 'data.year': year },
-    {
-      $set: {
-        'data.$.votes': data.votes,
-        'data.$.most_voted_user': mostVotedUser ? mostVotedUser.user.id : null
-      }
-    }
-  );
+  const foundDocument = await this.findOne({ identifier });
+  if (!foundDocument) {
+    // If no document exists, create a new one
+    await this.create({
+      identifier,
+      data: [updateData]
+    });
+  } else {
+    // If a document exists, check if the month/year data already exists
+    const existingData = foundDocument.data.find(data => data.month === month && data.year === year);
+    if (existingData) {
+      // If it exists, update the existing data
+      existingData.votes = data.votes;
+      existingData.most_voted_user = mostVotedUser ? mostVotedUser.user.id : null;
+      existingData.is_most_voted = data.isMostVoted;
 
-  // If no document was modified, it means we need to add new data for the current month/year
-  if (result.modifiedCount === 0) {
-    await this.updateOne(
-      query,
-      { $push: { data: updateData } },
-      { upsert: true }
-    );
+      await foundDocument.save();
+    } else {
+      // If it doesn't exist, push the new data
+      foundDocument.data.push(updateData);
+
+      await foundDocument.save();
+    }
   }
 
+  // Reset votes for the next month
   await Model.updateOne({ id: identifier }, { $set: { votes: 0 } });
 };
 
