@@ -147,10 +147,16 @@ module.exports = class Client {
           this.syncLemonSqueezyPlans();
         }, null, true);
 
-        new CronJob('00 00 1 * *', () => {
-          logger.info('Reached the end of the month. Saving monthly votes.');
+        new CronJob('59 23 * * *', () => {
+          const today = new Date();
+          const nextDay = new Date(today);
+          nextDay.setDate(today.getDate() + 1);
 
-          this.saveMonthlyVotes();
+          if (nextDay.getDate() === 1) {
+            logger.info('Reached the end of the month. Saving monthly votes.');
+
+            this.saveMonthlyVotes();
+          }
         }, null, true);
 
         new CronJob('0 0 * * *', () => {
