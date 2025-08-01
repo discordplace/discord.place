@@ -44,7 +44,7 @@ module.exports = {
         const { access_token, scopes } = await getAccessToken(code, config.discordScopes, `${config.backendUrl}/auth/callback`);
 
         const callbackResponse = await authCallback(access_token, response, scopes.includes('applications.entitlements'));
-        if (isNaN(callbackResponse)) return response.sendError('Failed to login.', 500);
+        if (isNaN(callbackResponse)) return;
 
         return response.redirect(redirectCookie || config.frontendUrl);
       } catch (error) {
