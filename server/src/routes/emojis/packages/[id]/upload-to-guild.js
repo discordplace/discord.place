@@ -54,7 +54,7 @@ module.exports = {
             { type: 'user', name: 'User', value: request.user.id },
             { type: 'guild', name: 'Guild', value: guild.id },
             { type: 'text', name: 'Emoji Pack', value: `${pack.name} (${pack.id})` },
-            { type: 'text', name: 'Emoji', value: `${emoji.name} (${emoji.id})` }
+            { type: 'text', name: 'Emoji', value: `${emoji.id}` }
           ],
           [
             { label: 'View User', url: `${config.frontendUrl}/profile/u/${request.user.id}` }
