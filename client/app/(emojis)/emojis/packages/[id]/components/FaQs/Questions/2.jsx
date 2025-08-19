@@ -43,7 +43,7 @@ export default function Question2({ emoji }) {
                 <span className='select-none font-bold text-primary'>1.</span>
 
                 <span>
-                  {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.linkText')}</Link> })}
+                  {t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.text', { link: <Link href={config.botInviteURL} target='_blank' className='underline hover:text-primary'>{t('emojiPackagePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0.linkText')}</Link> })}
                 </span>
               </div>
 
