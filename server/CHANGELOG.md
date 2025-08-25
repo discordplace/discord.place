@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.16.1](https://github.com/discordplace/discord.place/compare/server@v1.16.0...server@v1.16.1) (2025-08-25)
+
+
+### Bug Fixes
+
+* **config:** update guildInviteUrl ([4982fa0](https://github.com/discordplace/discord.place/commit/4982fa0b395a0a8d312d73415da18b5b43b1b078))
+* update FetchTemplateDetails endpoint and add missing template details route ([7a1f8f9](https://github.com/discordplace/discord.place/commit/7a1f8f997da74a9cc02ff7f5fa27767c1ea65cbf))
+
 ## [1.16.0](https://github.com/discordplace/discord.place/compare/server@v1.15.0...server@v1.16.0) (2025-08-25)
 
 

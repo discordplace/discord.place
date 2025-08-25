@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.1](https://github.com/discordplace/discord.place/compare/client@v1.20.0...client@v1.20.1) (2025-08-25)
+
+
+### Bug Fixes
+
+* update FetchTemplateDetails endpoint and add missing template details route ([7a1f8f9](https://github.com/discordplace/discord.place/commit/7a1f8f997da74a9cc02ff7f5fa27767c1ea65cbf))
+
 ## [1.20.0](https://github.com/discordplace/discord.place/compare/client@v1.19.0...client@v1.20.0) (2025-08-25)
 
 
