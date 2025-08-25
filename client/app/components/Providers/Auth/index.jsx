@@ -50,21 +50,14 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     if (!user || user === 'loading') return;
 
-    async function waitUntilPlausibleFound() {
-      while (!window.plausible) await new Promise(resolve => setTimeout(resolve, 100));
+    async function waitUntilRybbitFound() {
+      while (!window.rybbit) await new Promise(resolve => setTimeout(resolve, 100));
 
-      return window.plausible;
+      return window.rybbit;
     }
 
-    waitUntilPlausibleFound()
-      .then(() => {
-        const element = document.getElementById('plausible-analytics-script');
-
-        if (element) {
-          element.setAttribute('data-user-id', user.id);
-          element.setAttribute('data-user-username', user.username);
-        }
-      });
+    waitUntilRybbitFound()
+      .then(() => window.rybbit.identify(user.id));
   }, [user]);
 
   return children;

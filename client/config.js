@@ -36,9 +36,8 @@ const config = {
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place'
   },
   analytics: {
-    url: 'https://plausible.discord.place',
-    script: 'https://plausible.discord.place/js/script.pageview-props.file-downloads.hash.outbound-links.js',
-    domain: 'discord.place'
+    script: 'https://analytics.skyhan.cloud/api/script.js',
+    siteId: '1'
   },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;

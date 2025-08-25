@@ -213,9 +213,8 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 | `statusUrl` | String | URL for the your website status page. |
 | `statusBadgeUrl` | String | URL for the embeddable status badge for the website. |
 | `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:3001`. |
-| `analytics.url` | String | Your analytics website URL. |
 | `analytics.script` | String | Your analytics script URL. |
-| `analytics.domain` | String | Your analytics domain. |
+| `analytics.siteId` | String | Your site ID assigned by Rybbit. |
 | `botTestGuildId` | String | Your test guild ID for the bots testing. |
 | `botInviteURL` | String | URL for the your bot invite. Used in the many places in the website. |
 | `customHostnames` | Array<String> | Custom hostnames for the profiles. You may need to change this to your own custom hostnames. |
@@ -224,7 +223,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 > - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
 > - The `supportInviteUrl` and `docsUrl` values are used in the website for the support server and documentation links. You can change these values to your own support server and documentation links.
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
-> - The `analytics.url`, `analytics.script` and `analytics.domains` values are used for setting up analytics on the website. We use [Plausible Analytics](https://plausible.io) for analytics. Any other analytics service is not supported.
+> - The `analytics.script` and `analytics.siteId` values are used for setting up analytics on the website. We use [Rybbit Analytics](https://rybbit.io) for analytics. Any other analytics service is not supported.
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the website with different ports and use a reverse proxy to redirect the requests to the correct port.
