@@ -36,7 +36,7 @@ module.exports = {
 
     cooldowns.set(interaction.user.id, Date.now());
 
-    if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+    await interaction.deferReply();
 
     const [botsCount, emojisCount, emojiPacksCount, profilesCount, serversCount, templatesCount, soundsCount, themesCount] = await Promise.all([
       Bot.countDocuments({ verified: true }),

@@ -46,7 +46,7 @@ module.exports = {
     const userLatestUse = latestUses.get(interaction.user.id);
     if (userLatestUse && userLatestUse > Date.now()) return interaction.reply(await interaction.translate('commands.templates.errors.user_wait_for_applying', { remainingMinutes: Math.ceil((userLatestUse - Date.now()) / 60000) }));
 
-    if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+    await interaction.deferReply();
 
     const userOrGuildQuarantined = await findQuarantineEntry.multiple([
       { type: 'USER_ID', value: interaction.user.id, restriction: 'TEMPLATES_USE' },

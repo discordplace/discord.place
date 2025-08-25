@@ -18,7 +18,7 @@ module.exports = {
     integration_types: [Discord.ApplicationIntegrationType.GuildInstall]
   },
   execute: async interaction => {
-    if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+    await interaction.deferReply();
 
     const websocketHeartbeat = interaction.client.ws.ping;
     const serverResponseTime = await getServerResponseTime();

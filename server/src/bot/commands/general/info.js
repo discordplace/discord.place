@@ -45,7 +45,7 @@ module.exports = {
 
     switch (subcommand) {
       case 'server':
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         var serverId = interaction.options.getString('server_id') || interaction.guild.id;
 
@@ -121,7 +121,7 @@ module.exports = {
 
         break;
       case 'user':
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         var user = interaction.options.getUser('user') || interaction.user;
         if (!user) return interaction.followUp(await interaction.translate('commands.info.errors.user_not_found'));

@@ -53,7 +53,7 @@ module.exports = {
     if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.translate('commands.shared.errors.missing_permissions'));
     if (!interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions) && !interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.translate('commands.emoji.errors.missing_bot_permissions'));
 
-    if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+    await interaction.deferReply();
 
     const userQuarantined = await findQuarantineEntry.single('USER_ID', interaction.user.id, 'EMOJIS_QUICKLY_UPLOAD').catch(() => false);
     if (userQuarantined) return interaction.followUp(await interaction.translate('commands.emoji.errors.user_quarantined'));

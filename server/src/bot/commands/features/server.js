@@ -175,7 +175,7 @@ module.exports = {
       if (subcommand === 'invite') {
         if (interaction.user.id !== interaction.guild.ownerId) return interaction.reply(await interaction.translate('commands.shared.errors.server_owner_only'));
 
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         const server = await Server.findOne({ id: interaction.guild.id });
         const newInviteCode = interaction.options.getString('code');
@@ -201,7 +201,7 @@ module.exports = {
         const channel = interaction.options.getChannel('channel');
         if (!channel.permissionsFor(interaction.guild.members.me).has(Discord.PermissionFlagsBits.SendMessages)) return interaction.reply(await interaction.translate('commands.server.errors.missing_bot_permissions'));
 
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         const logChannel = await LogChannel.findOne({ guildId: interaction.guild.id });
         if (logChannel) {
@@ -219,7 +219,7 @@ module.exports = {
       }
 
       if (subcommand === 'panel') {
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.followUp(await interaction.translate('commands.shared.errors.missing_permissions'));
 
@@ -260,7 +260,7 @@ module.exports = {
         const language = interaction.options.getString('language');
         if (!config.availableLocales.some(locale => locale.code === language)) return interaction.reply(await interaction.translate('commands.server.errors.invalid_language'));
 
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         await Language.findOneAndUpdate(
           { id: interaction.guild.id },
@@ -281,7 +281,7 @@ module.exports = {
       if (subcommand === 'panel') {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply(await interaction.translate('commands.shared.errors.missing_permissions'));
 
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         const panel = await Panel.findOne({ guildId: interaction.guild.id });
         if (!panel) return interaction.followUp(await interaction.translate('commands.server.errors.panel_not_set'));
@@ -297,7 +297,7 @@ module.exports = {
       if (subcommand === 'log') {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply(await interaction.translate('commands.shared.errors.missing_permissions'));
 
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         const logChannel = await LogChannel.findOne({ guildId: interaction.guild.id });
         if (!logChannel) return interaction.followUp({ content: 'Log channel is not set.' });
@@ -312,7 +312,7 @@ module.exports = {
       if (subcommand === 'panel') {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply(await interaction.translate('commands.shared.errors.missing_permissions'));
 
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         const panel = await Panel.findOne({ guildId: interaction.guild.id });
         if (!panel) return interaction.followUp(await interaction.translate('commands.server.errors.panel_not_set'));
@@ -338,7 +338,7 @@ module.exports = {
         const requiredVotes = interaction.options.getInteger('required-votes');
         if (requiredVotes < 1) return interaction.reply(await interaction.translate('commands.server.groups.add.subcommands.reward.errors.invalid_votes'));
 
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         const foundServer = await Server.findOne({ id: interaction.guild.id });
         if (!foundServer) return interaction.followUp(await interaction.translate('commands.server.errors.server_not_listed', { link: `${config.frontendUrl}/account` }));
@@ -379,7 +379,7 @@ module.exports = {
         const reward = await Reward.findOne({ guild: { id: interaction.guild.id }, role: { id: roleId } });
         if (!reward) return interaction.reply(await interaction.translate('commands.server.groups.remove.subcommands.reward.errors.reward_not_found'));
 
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         await reward.deleteOne();
 
@@ -392,7 +392,7 @@ module.exports = {
 
     if (group === 'list') {
       if (subcommand === 'rewards') {
-        if (!interaction.deferred && !interaction.replied) await interaction.deferReply();
+        await interaction.deferReply();
 
         const rewards = await Reward.find({ guild: { id: interaction.guild.id } });
         if (!rewards.length) return interaction.followUp(await interaction.translate('commands.server.groups.list.subcommands.rewards.no_rewards'));
