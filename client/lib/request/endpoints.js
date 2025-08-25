@@ -16,7 +16,7 @@ const Endpoints = {
   DeleteTemplate: id => `/templates/${id}`,
   CreateTemplate: '/templates',
   ApproveTemplate: id => `/templates/${id}/approve`,
-  FetchTemplateDetails: id => `/guilds/templates/${id}`,
+  FetchTemplateDetails: id => `/templates/details/${id}`,
 
   // Sounds
   SoundMetadata: id => `/sounds/${id}/metadata`,
