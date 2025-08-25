@@ -24,7 +24,7 @@ port:
   frontend: 3000
   backend: 3001
 guildId: '1200254872059121764'
-guildInviteUrl: 'discord.gg/dotplace'
+guildInviteUrl: 'https://invite.discord.place'
 permissions:
   canEditProfilesRoles:
     - '1206032198562742312'
