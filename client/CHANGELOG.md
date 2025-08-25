@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.20.0](https://github.com/discordplace/discord.place/compare/client@v1.19.0...client@v1.20.0) (2025-08-25)
+
+
+### Features
+
+* add new custom hostnames ([6dd1b73](https://github.com/discordplace/discord.place/commit/6dd1b736d0021157eddc43e07cda3e27929af3e9))
+* display formatted prices for Tripled Votes and Standed Out buttons ([#190](https://github.com/discordplace/discord.place/issues/190)) ([3cb20ca](https://github.com/discordplace/discord.place/commit/3cb20cada052754bb7652b6fb2ab43bf940b5974))
+
+
+### Bug Fixes
+
+* update emoji page FAQ localization to correct keys ([0e541e1](https://github.com/discordplace/discord.place/commit/0e541e1f7fd1d70d131d264662913a37ba4c8e9d))
+* update FAQ localization key ([7b5565d](https://github.com/discordplace/discord.place/commit/7b5565d10f708558348da0ef8d81f33b57122385))
+* update react-icons package URL to use CDN ([30226b2](https://github.com/discordplace/discord.place/commit/30226b217f91dbee60f224f76faffcdaaf397e67))
+* update react-icons package URLs to use CDN ([7213949](https://github.com/discordplace/discord.place/commit/7213949cecfdafc1c2f527ff8a44e6a547e339e8))
+* update translation key for FAQ instructions in Question2 component ([3732989](https://github.com/discordplace/discord.place/commit/3732989e0bb70e03e42a7437743572a41a351f03))
+
 ## [1.19.0](https://github.com/discordplace/discord.place/compare/client@v1.18.0...client@v1.19.0) (2025-06-16)
 
 
