@@ -38,9 +38,10 @@ module.exports = async interaction => {
           )
       ];
 
-      const message = await interaction.reply({ embeds, components, fetchReply: true });
-      const collected = await message.awaitMessageComponent({ time: 60000 }).catch(() => null);
-      if (!collected) return message.edit({
+      const interactionCallback = await interaction.reply({ embeds, components, withResponse: true });
+      const collected = await interactionCallback.resource.message.awaitMessageComponent({ time: 60000 }).catch(() => null);
+
+      if (!collected) return interaction.editReply({
         content: await interaction.translate('commands.accept_policies.timeout'),
         embeds: [],
         components: []
@@ -56,7 +57,7 @@ module.exports = async interaction => {
 
         await user.save();
 
-        await message.edit({
+        await interaction.editReply({
           content: await interaction.translate('commands.accept_policies.success'),
           embeds: [],
           components: []
@@ -64,18 +65,18 @@ module.exports = async interaction => {
 
         await collected.deferUpdate();
       }
-    }
+    } else {
+      try {
+        await foundCommand.execute(interaction);
+      } catch (error) {
+        logger.error(`Error executing command ${interaction.commandName}:`, error);
 
-    try {
-      await foundCommand.execute(interaction);
-    } catch (error) {
-      logger.error(`Error executing command ${interaction.commandName}:`, error);
-
-      if (interaction.deferred || interaction.replied) interaction.followUp(await interaction.translate('commands.shared.errors.command_error'));
-      else interaction.reply({
-        content: await interaction.translate('commands.shared.errors.command_error'),
-        flags: Discord.MessageFlags.Ephemeral
-      });
+        if (interaction.deferred || interaction.replied) interaction.followUp(await interaction.translate('commands.shared.errors.command_error'));
+        else interaction.reply({
+          content: await interaction.translate('commands.shared.errors.command_error'),
+          flags: Discord.MessageFlags.Ephemeral
+        });
+      }
     }
   }
 
