@@ -1,12 +1,11 @@
 'use client';
 
-import { TbSquareRoundedChevronUp, SiPlausibleanalytics, RiBrush2Fill, RiRobot2Fill, PiWaveformBold, MdAccountCircle, MdEmojiEmotions, MdHome, MdSync, IoMdLogOut, HiTemplate, FiLink, FaCompass, FaEye, FaUsers, FaUserTimes, CgBlock, BiSolidChevronRight } from '@/icons';
+import { TbSquareRoundedChevronUp, RiBrush2Fill, RiRobot2Fill, PiWaveformBold, MdAccountCircle, MdEmojiEmotions, MdHome, MdSync, IoMdLogOut, HiTemplate, FiLink, FaCompass, FaEye, FaUsers, FaUserTimes, CgBlock, BiSolidChevronRight } from '@/icons';
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import { Bricolage_Grotesque } from 'next/font/google';
 import cn from '@/lib/cn';
 import useDashboardStore from '@/stores/dashboard';
-import config from '@/config';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import useAuthStore from '@/stores/auth';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
@@ -152,13 +151,6 @@ export default function Sidebar() {
             data: data?.counts?.quarantines,
             style: 'primary'
           }
-        },
-        {
-          type: 'redirect',
-          id: 'plausible-analytics',
-          href: config.analytics.url,
-          name: 'Plausible Analytics',
-          icon: SiPlausibleanalytics
         },
         {
           id: 'syncPlans',
