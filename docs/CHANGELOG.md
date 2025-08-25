@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/discordplace/discord.place/compare/docs@v1.3.0...docs@v1.4.0) (2025-08-25)
+
+
+### Features
+
+* add test flag to sendVoteWebhook function calls ([#193](https://github.com/discordplace/discord.place/issues/193)) ([82d94d9](https://github.com/discordplace/discord.place/commit/82d94d959c9af1923beadf5cb5a14ceb3a538578)), closes [#192](https://github.com/discordplace/discord.place/issues/192)
+
 ## [1.3.0](https://github.com/discordplace/discord.place/compare/docs@v1.2.1...docs@v1.3.0) (2025-03-02)
 
 

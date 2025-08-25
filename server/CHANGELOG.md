@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.16.0](https://github.com/discordplace/discord.place/compare/server@v1.15.0...server@v1.16.0) (2025-08-25)
+
+
+### Features
+
+* add new custom hostnames ([6dd1b73](https://github.com/discordplace/discord.place/commit/6dd1b736d0021157eddc43e07cda3e27929af3e9))
+* add test flag to sendVoteWebhook function calls ([#193](https://github.com/discordplace/discord.place/issues/193)) ([82d94d9](https://github.com/discordplace/discord.place/commit/82d94d959c9af1923beadf5cb5a14ceb3a538578)), closes [#192](https://github.com/discordplace/discord.place/issues/192)
+* display formatted prices for Tripled Votes and Standed Out buttons ([#190](https://github.com/discordplace/discord.place/issues/190)) ([3cb20ca](https://github.com/discordplace/discord.place/commit/3cb20cada052754bb7652b6fb2ab43bf940b5974))
+
+
+### Bug Fixes
+
+* **auth:** handle invalid callback response without sending error ([1bc98b5](https://github.com/discordplace/discord.place/commit/1bc98b5ec53db7c085720216e818985ced728e8a))
+* refactor updateMonthlyVotes to improve document handling and data updates ([c5e509a](https://github.com/discordplace/discord.place/commit/c5e509a48302d5db371b712d88399f46a8ab4e64))
+* remove logging from guildDelete event ([97eda53](https://github.com/discordplace/discord.place/commit/97eda534a1e892afc86fe4aef82caa50ecfb8413))
+* **server:** change test flag to true in sendVoteWebhook function call ([186a402](https://github.com/discordplace/discord.place/commit/186a402f25ed0afd12f1a2b77be340ffaa87b3c3))
+* update emoji log message to display only emoji ID instead of name ([6c21eaf](https://github.com/discordplace/discord.place/commit/6c21eaf62b918a9febbe67c8e951ce0a9b099532))
+* update interaction reply handling for policy acceptance ([8d375fb](https://github.com/discordplace/discord.place/commit/8d375fbe88da5f31a8a025a09e2201388940b1a5))
+* update log message and format for bot denial process ([eb72c37](https://github.com/discordplace/discord.place/commit/eb72c37c007028cdd2aa19f34104f33a8717df8e))
+* update monthly votes saving schedule to run at the start of each month ([dd69600](https://github.com/discordplace/discord.place/commit/dd69600805678b3f12d8ee6812374ba16fd33ae8))
+* update monthly votes saving schedule to trigger at 11:59 PM on the last day of the month ([7805cff](https://github.com/discordplace/discord.place/commit/7805cffaf565d03ef9eb71f180c9409bda7db85e))
+* update Plan import path to correct schema location ([70c7c81](https://github.com/discordplace/discord.place/commit/70c7c81d3aae62f3862a2e3b9646c0a32b43547e))
+
 ## [1.15.0](https://github.com/discordplace/discord.place/compare/server@v1.14.0...server@v1.15.0) (2025-06-16)
 
 
