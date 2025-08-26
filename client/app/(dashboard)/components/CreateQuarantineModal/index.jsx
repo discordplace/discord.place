@@ -3,7 +3,8 @@
 import { RiCommunityFill, RiUser3Fill, IoMdCheckmarkCircle } from '@/icons';
 import config from '@/config';
 import cn from '@/lib/cn';
-import { useEffect } from 'react';import useModalsStore from '@/stores/modals';
+import { useEffect } from 'react';
+import useModalsStore from '@/stores/modals';
 import useGeneralStore from '@/stores/general';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
@@ -37,8 +38,6 @@ export default function CreateQuarantineModal() {
 
   useEffect(() => {
     setRestriction(null);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
 
   function continueCreateQuarantine(type, value, restriction, reason, time) {
@@ -115,8 +114,6 @@ export default function CreateQuarantineModal() {
         ]
       });
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, type, value, restriction, reason, time]);
 
   return (

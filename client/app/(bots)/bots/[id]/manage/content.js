@@ -68,8 +68,6 @@ export default function Content({ bot }) {
     if (isInviteURLChanged) pushToChangedKeys('invite_url', inviteURL);
     if (isCategoriesChanged) pushToChangedKeys('categories', categories);
     if (isSupportServerIdChanged) pushToChangedKeys('support_server_id', supportServerId);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shortDescription, description, inviteURL, categories, supportServerId]);
 
   function resetChanges() {
@@ -166,8 +164,6 @@ export default function Content({ bot }) {
     document.addEventListener('keydown', handleEscape);
 
     return () => document.removeEventListener('keydown', handleEscape);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [changesMade, openedModals]);
 
   return (

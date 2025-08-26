@@ -215,8 +215,6 @@ export default function Content() {
     setCurrentlyAddingServer(null);
     setCurrentlyAddingBot(false);
     setCurrentlyAddingSound(false);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   const loading = useAccountStore(state => state.loading);
@@ -226,8 +224,6 @@ export default function Content() {
 
   useEffect(() => {
     setIsCollapsed(isMobile);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
   return (

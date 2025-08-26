@@ -3,7 +3,8 @@
 import { MdOutlineArrowOutward, HiPlay, FaPause } from '@/icons';
 import useThemeStore from '@/stores/theme';
 import { useEffect, useState } from 'react';
-import WavesurferPlayer from '@wavesurfer/react';import Link from 'next/link';
+import WavesurferPlayer from '@wavesurfer/react';
+import Link from 'next/link';
 import useGeneralStore from '@/stores/general';
 import { useShallow } from 'zustand/react/shallow';
 import VolumePopover from '@/app/(sounds)/sounds/components/SoundPreview/VolumePopover';
@@ -91,19 +92,15 @@ export default function Waveform({ id, name: soundName }) {
     setLocalVolume(volume);
 
     return () => wavesurfer.un('audioprocess', handleAudioProcess);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volume, wavesurfer]);
 
   useEffect(() => {
     setVolume(localVolume);
     setLoudSoundsIgnored(localLoudSoundsIgnored);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setLoudSoundsIgnored(localLoudSoundsIgnored);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localLoudSoundsIgnored]);
 
   useEffect(() => {
@@ -113,8 +110,6 @@ export default function Waveform({ id, name: soundName }) {
       wavesurfer.play();
       wavesurfer.on('finish', () => setCurrentlyPlaying(''));
     } else wavesurfer.pause();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentlyPlaying]);
 
   return (

@@ -1,7 +1,8 @@
 'use client';
 
 import { ImHammer2 } from '@/icons';
-import { useEffect, useRef, useState } from 'react';import getExtraOwners from '@/lib/request/bots/getExtraOwners';
+import { useEffect, useRef, useState } from 'react';
+import getExtraOwners from '@/lib/request/bots/getExtraOwners';
 import { toast } from 'sonner';
 import Image from 'next/image';
 import Tooltip from '@/app/components/Tooltip';
@@ -24,8 +25,6 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
       .then(data => setExtraOwners(data))
       .catch(toast.error)
       .finally(() => setExtraOwnersLoading(false));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function continueRemoveExtraOwner(userId) {

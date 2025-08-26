@@ -30,7 +30,6 @@ export default function Hero() {
 
   useEffect(() => {
     fetchEmojis('');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sequenceTransition = {

@@ -21,8 +21,6 @@ export default function Content({ profile }) {
 
   useEffect(() => {
     incrementViews(profile.slug);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

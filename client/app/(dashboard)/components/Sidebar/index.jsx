@@ -191,8 +191,6 @@ export default function Sidebar() {
 
   useEffect(() => {
     setIsCollapsed(isMobile);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
   return (

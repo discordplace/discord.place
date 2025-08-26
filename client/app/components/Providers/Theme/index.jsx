@@ -17,15 +17,11 @@ export default function ThemeProvider({ children }) {
       document.documentElement.classList.remove('dark');
       setLocalTheme('light');
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTheme]);
 
   useEffect(() => {
     if (localTheme === 'dark') setStoredTheme('dark');
     else setStoredTheme('light');
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return children;

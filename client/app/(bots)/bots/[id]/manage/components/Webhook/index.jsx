@@ -35,8 +35,6 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
     const isWebhookLanguageChanged = (webhookLanguage || null) !== defaultWebhookLanguage;
 
     setChangesMade(isWebhookURLChanged || isWebhookTokenChanged || isWebhookLanguageChanged);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [webhookURL, webhookToken, webhookLanguage]);
 
   function saveChanges() {
@@ -100,7 +98,6 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
       }, 1000);
 
       return () => clearInterval(intervalRef.current);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

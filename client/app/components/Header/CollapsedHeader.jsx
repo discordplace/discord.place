@@ -2,11 +2,14 @@ import { MdOutlineOpenInNew, IoMdMenu, FiX } from '@/icons';
 import config from '@/config';
 import Link from 'next/link';
 import { useLockBodyScroll } from 'react-use';
-import UserSide from '@/app/components/Header/UserSide';import { Suspense, useEffect, useState } from 'react';import LogoWithText from '@/app/components/Logo/WithText';
+import UserSide from '@/app/components/Header/UserSide';
+import { Suspense, useEffect, useState } from 'react';
+import LogoWithText from '@/app/components/Logo/WithText';
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import Drawer from '@/app/components/Drawer';
-import { useRouter } from 'next-nprogress-bar';import cn from '@/lib/cn';
+import { useRouter } from 'next-nprogress-bar';
+import cn from '@/lib/cn';
 import { t } from '@/stores/language';
 
 export default function CollapsedHeader({ pathname }) {
@@ -26,8 +29,6 @@ export default function CollapsedHeader({ pathname }) {
     if (statedPathname === null) return;
 
     if (statedPathname !== pathname) router.push(statedPathname);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statedPathname]);
 
   return (

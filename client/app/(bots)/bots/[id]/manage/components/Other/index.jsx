@@ -2,11 +2,14 @@
 
 import { TbLoader, IoCheckmarkCircle, IoMdCheckmarkCircle, FaCirclePlus, BsGithub } from '@/icons';
 import config from '@/config';
-import cn from '@/lib/cn';import getData from '@/lib/request/auth/getData';
+import cn from '@/lib/cn';
+import getData from '@/lib/request/auth/getData';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import HashServerIcon from '@/app/components/ImageFromHash/ServerIcon';import Input from '../Input';import editBot from '@/lib/request/bots/editBot';
+import HashServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import Input from '../Input';
+import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
 import { t } from '@/stores/language';
 
@@ -23,8 +26,6 @@ export default function Other({ botId, categories, setCategories, canEditSupport
       .then(data => setOwnedServers(data.servers))
       .catch(toast.error)
       .finally(() => setOwnedServersLoading(false));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [defaultGithubRepository, setDefaultGithubRepository] = useState(currentGithubRepository);

@@ -45,8 +45,6 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
       if (inputOpened) toast.info(t('pagination.inputOpened', { totalPages }));
       inputRef.current.focus();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputOpened]);
 
   let initial;
