@@ -219,7 +219,7 @@ export default function Waveform({ id, name: soundName }) {
                   onSelect={() => {
                     if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
 
-                    navigator.clipboard.writeText(`https://discord.place/sounds/${id}`);
+                    navigator.clipboard.writeText(`${config.baseUrl}/sounds/${id}`);
 
                     toast.success(t('soundPlayer.linkCopiedToClipboardToast'));
                   }}
