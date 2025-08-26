@@ -18,7 +18,9 @@ on:
 jobs:
   build-and-deploy-client:
     name: Build and Deploy /client
-    if: "(github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'client') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/client): trigger build action'))"
+    if: >
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'client') ||
+      (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/client): trigger build action'))
     runs-on: ubuntu-latest
     
     steps:
@@ -39,8 +41,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_KNOWN_HOST }}" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
+        if: always() # Run this step regardless of the outcome of previous steps
 
       - name: Deploy to Server
         env:
@@ -48,16 +49,62 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -T -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+          ssh -T -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+            # Exit on any error
+            set -e
+            
+            # Setup logging
+            LOG_FILE="/tmp/discord-place-client-deploy-$(date +%Y%m%d_%H%M%S).log"
+            exec > >(tee -a "$LOG_FILE") 2>&1
+            
+            echo "=== discord.place Client Deployment Started at $(date) ==="
+            echo "Log file: $LOG_FILE"
+            
+            echo "Updating source code..."
             cd discord.place/client
-            git pull origin main > /dev/null 2>&1
+            git pull origin main
+            
+            echo "Setting up Node environment..."
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use $(nvm current)
-            pnpm install > /dev/null 2>&1
-            pnpm build > /dev/null 2>&1
-            pm2 restart discord.place > /dev/null 2>&1
+            
+            TEMP_DIR="/tmp/discord-place-client-build-$(date +%s)"
+            echo "Creating temporary build directory: $TEMP_DIR"
+            mkdir -p "$TEMP_DIR"
+            
+            echo "Copying client files to temporary directory..."
+            rsync -av --exclude='.next' --exclude='.git' --exclude='node_modules' . "$TEMP_DIR/"
+
+            echo "Installing dependencies in temporary directory..."
+            cd "$TEMP_DIR"
+            pnpm install --frozen-lockfile
+            
+            echo "Building application in temporary directory..."
+            cd "$TEMP_DIR"
+            pnpm build
+
+            echo "Stopping application..."
+            pm2 stop discord.place
+            
+            echo "Replacing .next folder in production directory..."
+            cd /root/discord.place/client
+            rm -rf .next
+            mv "$TEMP_DIR/.next" ./
+            
+            echo "Updating production dependencies..."
+            pnpm install --frozen-lockfile
+            
+            echo "Starting application..."
+            pm2 restart discord.place
+            
+            echo "Cleaning up temporary directory..."
+            rm -rf "$TEMP_DIR"
+            
+            echo "=== Discord.place Client Deployment Completed Successfully at $(date) ==="
+            echo "Log file saved to: $LOG_FILE"
           EOF
+        if: always() # Run this step regardless of the outcome of previous steps
 
       - uses: chimpdev/bark-github-action@v1.0.1
         with:
@@ -71,7 +118,9 @@ jobs:
 
   build-and-deploy-server:
     name: Build and Deploy /server
-    if: "(github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'server') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/server): trigger build action'))"
+    if: >
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'server') ||
+      (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/server): trigger build action'))
     runs-on: ubuntu-latest
     
     steps:
@@ -92,8 +141,6 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_KNOWN_HOST }}" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
 
       - name: Deploy to Server
         env:
@@ -101,7 +148,7 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -T -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+          ssh -T -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
             cd discord.place/server
             git pull origin main > /dev/null 2>&1
             export NVM_DIR="$HOME/.nvm"
@@ -123,9 +170,11 @@ jobs:
 
   build-and-deploy-docs:
     name: Build and Deploy /docs
-    if: "(github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'docs') || (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/docs): trigger build action'))"
+    if: >
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'docs') ||
+      (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/docs): trigger build action'))
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -137,15 +186,14 @@ jobs:
           embed-description: 'Deployment triggered. Proceeding with build and restart.'
           embed-footer-text: 'docs.discord.place'
           embed-color: 14194756
-        if: always() # Run this step regardless of the outcome of previous steps
-      
+        if: always()
+
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_KNOWN_HOST }}" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
+        if: always()
 
       - name: Deploy to Server
         env:
@@ -153,16 +201,59 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -T -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+          ssh -T -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+            set -e
+
+            LOG_FILE="/tmp/discord-place-docs-deploy-$(date +%Y%m%d_%H%M%S).log"
+            exec > >(tee -a "$LOG_FILE") 2>&1
+
+            echo "=== discord.place Docs Deployment Started at $(date) ==="
+            echo "Log file: $LOG_FILE"
+
+            echo "Updating source code..."
             cd discord.place/docs
-            git pull origin main > /dev/null 2>&1
+            git pull origin main
+
+            echo "Setting up Node environment..."
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use $(nvm current)
-            pnpm install > /dev/null 2>&1
-            pnpm build > /dev/null 2>&1
-            pm2 restart docs.discord.place > /dev/null 2>&1
+
+            TEMP_DIR="/tmp/discord-place-docs-build-$(date +%s)"
+            echo "Creating temporary build directory: $TEMP_DIR"
+            mkdir -p "$TEMP_DIR"
+
+            echo "Copying docs files to temporary directory..."
+            rsync -av --exclude='.git' --exclude='node_modules' . "$TEMP_DIR/"
+
+            echo "Installing dependencies in temporary directory..."
+            cd "$TEMP_DIR"
+            pnpm install --frozen-lockfile
+
+            echo "Building docs in temporary directory..."
+            pnpm build
+
+            echo "Stopping docs application..."
+            pm2 stop docs.discord.place
+
+            echo "Replacing build folder in production directory..."
+            cd /root/discord.place/docs
+            rm -rf .next  # or the equivalent build folder if different
+            mv "$TEMP_DIR/.next" ./
+
+            echo "Updating production dependencies..."
+            pnpm install --frozen-lockfile
+
+            echo "Starting docs application..."
+            pm2 restart docs.discord.place
+
+            echo "Cleaning up temporary directory..."
+            rm -rf "$TEMP_DIR"
+
+            echo "=== discord.place Docs Deployment Completed Successfully at $(date) ==="
+            echo "Log file saved to: $LOG_FILE"
           EOF
+        if: always()
 
       - uses: chimpdev/bark-github-action@v1.0.1
         with:
@@ -172,4 +263,4 @@ jobs:
             body: 'Docs Build and Deploy triggered and completed. Job is ${{ job.status }}.'
             url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             icon: 'https://i.ibb.co/7d8rL1c3/Git-Hub-Mark-ea2971cee799.jpg'
-        if: always() # Run this step regardless of the outcome of previous steps
+        if: always()
