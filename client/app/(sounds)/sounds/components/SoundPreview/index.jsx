@@ -271,7 +271,6 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         </div>
       </div>
 
-
       <Suspense fallback={<></>}>
         <Waveform
           id={sound.id}
