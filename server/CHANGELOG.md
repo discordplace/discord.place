@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.3](https://github.com/discordplace/discord.place/compare/server@v1.16.2...server@v1.16.3) (2025-08-26)
+
+
+### Bug Fixes
+
+* correct sound file handling in upload-to-guild route ([#203](https://github.com/discordplace/discord.place/issues/203)) ([2d52ab5](https://github.com/discordplace/discord.place/commit/2d52ab52d60145d63ba1f0adc9b65bfd48215ee0))
+
 ## [1.16.2](https://github.com/discordplace/discord.place/compare/server@v1.16.1...server@v1.16.2) (2025-08-26)
 
 
