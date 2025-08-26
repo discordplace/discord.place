@@ -2249,6 +2249,7 @@
       "title": "Səs \"${soundName}\" yüksəkdir",
       "description": "Bu səsi davam etdirmək istəyirsiniz?",
       "content": "Bu səs yüksəkdir və qulağınıza zərər verə bilər."
-    }
+    },
+    "linkCopiedToClipboardToast": "Səs linki mübadilə buferinə kopyalandı!"
   }
 }
