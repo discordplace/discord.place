@@ -1,9 +1,9 @@
 'use client';
 
-import { MdOutlineArrowOutward, HiPlay, FaPause } from '@/icons';
+import { HiPlay, FaPause, BsThreeDots, LuCloudDownload, TiArrowUpOutline, PiShareFat } from '@/icons';
 import useThemeStore from '@/stores/theme';
 import { useEffect, useState } from 'react';
-import WavesurferPlayer from '@wavesurfer/react';import Link from 'next/link';
+import WavesurferPlayer from '@wavesurfer/react';
 import useGeneralStore from '@/stores/general';
 import { useShallow } from 'zustand/react/shallow';
 import VolumePopover from '@/app/(sounds)/sounds/components/SoundPreview/VolumePopover';
@@ -11,6 +11,11 @@ import config from '@/config';
 import { useLocalStorage } from 'react-use';
 import useModalsStore from '@/stores/modals';
 import { t } from '@/stores/language';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { toast } from 'sonner';
+import downloadSound from '@/lib/utils/sounds/downloadSound';
 
 export default function Waveform({ id, name: soundName }) {
   const theme = useThemeStore(state => state.theme);
@@ -117,6 +122,8 @@ export default function Waveform({ id, name: soundName }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentlyPlaying]);
 
+  const pathname = usePathname();
+
   return (
     <div className='flex flex-col'>
       <WavesurferPlayer
@@ -174,12 +181,55 @@ export default function Waveform({ id, name: soundName }) {
             )}
           </button>
 
-          <Link
-            className='text-tertiary hover:text-secondary'
-            href={`/sounds/${id}`}
-          >
-            <MdOutlineArrowOutward />
-          </Link>
+          <DropdownMenu.Root modal={false}>
+            <DropdownMenu.Trigger asChild>
+              <button className='flex max-w-[200px] text-tertiary outline-none hover:text-primary'>
+                <BsThreeDots className='flex max-w-[200px] text-tertiary outline-none hover:text-primary' />
+              </button>
+            </DropdownMenu.Trigger>
+
+            <DropdownMenu.Portal>
+              <DropdownMenu.Content className='relative top-2 z-10 flex min-w-[200px] flex-col gap-y-0.5 rounded-2xl border border-primary bg-secondary p-1.5 outline-none'>
+                <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
+
+                {!pathname.startsWith('/sounds/') && (
+                  <DropdownMenu.Item asChild>
+                    <Link
+                      className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-none transition-colors data-[highlighted]:bg-tertiary data-[highlighted]:text-primary'
+                      href={`/sounds/${id}`}
+                    >
+                      <TiArrowUpOutline className='rotate-45' size={20} />
+                      <span className='relative right-0.5'>
+                        View Sound
+                      </span>
+                    </Link>
+                  </DropdownMenu.Item>
+                )}
+
+                <DropdownMenu.Item
+                  className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-none transition-colors data-[highlighted]:bg-tertiary data-[highlighted]:text-primary'
+                  onSelect={() => downloadSound({ id, name: soundName })}
+                >
+                  <LuCloudDownload size={18} />
+                  Download
+                </DropdownMenu.Item>
+
+                <DropdownMenu.Item
+                  className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-none transition-colors data-[highlighted]:bg-tertiary data-[highlighted]:text-primary'
+                  onSelect={() => {
+                    if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
+
+                    navigator.clipboard.writeText(`https://discord.place/sounds/${id}`);
+
+                    toast.success(t('soundPlayer.linkCopiedToClipboardToast'));
+                  }}
+                >
+                  <PiShareFat size={18} />
+                  Share
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Root>
         </div>
 
         <span className='min-w-[40px] text-xs font-medium text-tertiary'>

@@ -2250,6 +2250,7 @@
       "title": "Sound \"{{soundName}}\" is loud",
       "description": "Do you want to continue playing this sound?",
       "content": "This sound is loud and may be harmful to your ears."
-    }
+    },
+    "linkCopiedToClipboardToast": "Sound link copied to clipboard!"
   }
 }
