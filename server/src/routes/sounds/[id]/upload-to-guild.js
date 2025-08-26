@@ -40,7 +40,7 @@ module.exports = {
         if (!fileResponse) return response.sendError('Failed to get sound file.', 500);
 
         const data = {
-          file: `data:audio/ogg;base64,${Buffer.from(fileResponse.data).toString('base64')}`,
+          file: Buffer.from(fileResponse.data),
           name: sound.name,
           emojiName: '🎵',
           volume: 1
@@ -68,12 +68,12 @@ module.exports = {
           .catch(error => {
             logger.warn(`Sound ${sound.name} (${sound.id}) could not be uploaded to guild ${guild.name} (${guild.id}):`, error);
 
-            return response.sendError(`An error occurred: ${error.message}`, 500);
+            return response.sendError('Failed to upload sound to guild.', 500);
           });
       } catch (error) {
         logger.warn(`Sound ${sound.name} (${sound.id}) could not be uploaded to guild ${guild.name} (${guild.id}):`, error);
 
-        return response.sendError(`An error occurred: ${error.message}`, 500);
+        return response.sendError('Failed to upload sound to guild.', 500);
       }
     }
   ]
