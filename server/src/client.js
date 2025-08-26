@@ -83,7 +83,7 @@ module.exports = class Client {
       logger.warn(`Rate limited: ${rateLimitInfo.route} ${rateLimitInfo.method} ${rateLimitInfo.retryAfter}ms ${rateLimitInfo.global ? '(global)' : ''} ${rateLimitInfo.hash} ${rateLimitInfo.url}`);
     });
 
-    this.client.once('clientReady', async () => {
+    this.client.once('ready', async () => {
       if (!client.guilds.cache.get(config.guildId)) {
         logger.error(`Guild with ID ${config.guildId} not found. You can change this guild ID in the config file.`);
         process.exit(1);
