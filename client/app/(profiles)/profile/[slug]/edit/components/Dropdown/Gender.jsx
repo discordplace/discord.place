@@ -15,12 +15,12 @@ export default function GenderDropdown({ profile, currentlyEditingValue, setCurr
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className='z-10 mt-2 flex min-w-[200px] flex-col gap-y-1 rounded-xl border border-primary bg-secondary p-2 outline-none'>
+        <DropdownMenu.Content className='relative top-2 z-10 flex min-w-[200px] flex-col gap-y-0.5 rounded-2xl border border-primary bg-secondary p-1.5 outline-none'>
           <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
 
           <DropdownMenu.Item
             className={cn(
-              'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
+              'flex items-center justify-between p-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2',
               (currentlyEditingValue === 'Male' || profile.gender === 'Male') ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
             )}
             onSelect={() => setCurrentlyEditingValue('Male')}
@@ -31,7 +31,7 @@ export default function GenderDropdown({ profile, currentlyEditingValue, setCurr
 
           <DropdownMenu.Item
             className={cn(
-              'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
+              'flex items-center justify-between p-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2',
               (currentlyEditingValue === 'Female' || profile.gender === 'Female') ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
             )}
             onSelect={() => setCurrentlyEditingValue('Female')}
@@ -42,7 +42,7 @@ export default function GenderDropdown({ profile, currentlyEditingValue, setCurr
 
           <DropdownMenu.Item
             className={cn(
-              'flex items-center justify-between px-2 py-1 font-medium rounded-lg outline-none cursor-pointer gap-x-2',
+              'flex items-center justify-between p-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2',
               (currentlyEditingValue === 'Unknown' || !profile.gender) ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
             )}
             onSelect={() => setCurrentlyEditingValue('Unknown')}
