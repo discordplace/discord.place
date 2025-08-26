@@ -40,7 +40,7 @@ module.exports = {
         if (!fileResponse) return response.sendError('Failed to get sound file.', 500);
 
         const data = {
-          file: `data:audio/ogg;base64,${Buffer.from(fileResponse.data).toString('base64')}`,
+          file: Buffer.from(fileResponse.data),
           name: sound.name,
           emojiName: '🎵',
           volume: 1
