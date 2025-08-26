@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.21.0](https://github.com/discordplace/discord.place/compare/client@v1.20.1...client@v1.21.0) (2025-08-26)
+
+
+### Features
+
+* **sounds:** add download and share options to waveform component ([#200](https://github.com/discordplace/discord.place/issues/200)) ([f10d0c7](https://github.com/discordplace/discord.place/commit/f10d0c7b1403c23b326d2f3888a204c28582b769))
+
+
+### Bug Fixes
+
+* conditionally render analytics script in production environment ([#199](https://github.com/discordplace/discord.place/issues/199)) ([09e3f2d](https://github.com/discordplace/discord.place/commit/09e3f2dcb97b1d0efc8b44e2967ea74ccf0d1add))
+
 ## [1.20.1](https://github.com/discordplace/discord.place/compare/client@v1.20.0...client@v1.20.1) (2025-08-25)
 
 
