@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.2](https://github.com/discordplace/discord.place/compare/server@v1.16.1...server@v1.16.2) (2025-08-26)
+
+
+### Bug Fixes
+
+* replace 'clientReady' event with 'ready' ([2449d2d](https://github.com/discordplace/discord.place/commit/2449d2df1c34749cfdf6477df47d913193db7342))
+
 ## [1.16.1](https://github.com/discordplace/discord.place/compare/server@v1.16.0...server@v1.16.1) (2025-08-25)
 
 
