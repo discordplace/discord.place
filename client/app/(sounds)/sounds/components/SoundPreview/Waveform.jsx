@@ -184,7 +184,7 @@ export default function Waveform({ id, name: soundName }) {
           <DropdownMenu.Root modal={false}>
             <DropdownMenu.Trigger asChild>
               <button className='flex max-w-[200px] text-tertiary outline-none hover:text-primary'>
-                <BsThreeDots className='flex max-w-[200px] text-tertiary outline-none hover:text-primary' />
+                <BsThreeDots />
               </button>
             </DropdownMenu.Trigger>
 
