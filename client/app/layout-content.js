@@ -30,14 +30,16 @@ export default function RootLayoutContent({ children }) {
 
   return (
     <section key={language}>
-      <Script
-        src={config.analytics.script}
-        data-site-id={config.analytics.siteId}
-        data-track-errors={true}
-        data-session-replay={true}
-        strategy='afterInteractive'
-        id='analytics-script'
-      />
+      {process.env.NODE_ENV === 'production' && (
+        <Script
+          src={config.analytics.script}
+          data-site-id={config.analytics.siteId}
+          data-track-errors={true}
+          data-session-replay={true}
+          strategy='afterInteractive'
+          id='analytics-script'
+        />
+      )}
 
       <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
       <Script id='google-analytics'>
