@@ -11,7 +11,7 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className='z-[10002] mb-4 flex min-w-[200px] flex-col gap-y-1 rounded-xl border border-primary bg-secondary p-2 outline-none'>
+        <DropdownMenu.Content className='z-[10002] mb-4 flex min-w-[200px] flex-col gap-y-1 rounded-2xl border border-primary bg-secondary p-2 outline-none'>
           <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
 
           <div className='m-2 flex flex-col gap-y-1'>
