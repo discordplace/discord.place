@@ -1,5 +1,5 @@
 import { TbLoader, PiHeart, PiHeartFill, PiWaveformBold, MdAccountCircle, MdDownload, IoMdCalendar, FaCloudUploadAlt } from '@/icons';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
@@ -271,10 +271,13 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         </div>
       </div>
 
-      <Waveform
-        id={sound.id}
-        name={sound.name}
-      />
+
+      <Suspense fallback={<></>}>
+        <Waveform
+          id={sound.id}
+          name={sound.name}
+        />
+      </Suspense>
     </div>
   );
 }

@@ -350,7 +350,7 @@ export default function Sidebar() {
           <DropdownMenu.Portal>
             <DropdownMenu.Content
               className={cn(
-                'z-10 flex flex-col p-1.5 mb-4 border outline-none min-w-[235px] bg-secondary rounded-xl border-primary',
+                'z-10 flex flex-col p-2 mb-4 border outline-none min-w-[235px] bg-secondary rounded-2xl border-primary',
                 isCollapsed ? 'shadow-[0px_-15px_20px_0px_rgba(var(--bg-background))]' : 'shadow-[0px_-15px_20px_0px_rgba(var(--bg-secondary))]'
               )}
               sideOffset={5}
@@ -359,7 +359,7 @@ export default function Sidebar() {
               <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
 
               <DropdownMenu.Item
-                className='flex cursor-pointer items-center gap-x-2 rounded-xl px-2.5 py-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'
+                className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'
                 onSelect={() => router.push('/account')}
               >
                 <MdAccountCircle />
@@ -367,7 +367,7 @@ export default function Sidebar() {
               </DropdownMenu.Item>
 
               <DropdownMenu.Item
-                className='flex cursor-pointer items-center gap-x-2 rounded-xl px-2.5 py-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'
+                className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'
                 onSelect={logOut}
               >
                 <IoMdLogOut />

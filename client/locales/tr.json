@@ -2250,6 +2250,7 @@
       "title": "\"{{soundName}}\" çok yüksek sesli",
       "description": "Bu sesi çalmaya devam etmek ister misiniz?",
       "content": "Bu ses çok yüksek ve kulaklarınıza zarar verebilir."
-    }
+    },
+    "linkCopiedToClipboardToast": "Ses bağlantısı panoya kopyalandı!"
   }
 }
