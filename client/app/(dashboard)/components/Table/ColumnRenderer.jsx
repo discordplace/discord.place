@@ -54,8 +54,6 @@ export default function ColumnRenderer({ data }) {
       audioRef.current.play();
       audioRef.current.addEventListener('ended', handleEnded);
     } else audioRef.current.pause();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentlyPlaying]);
 
   const dashboardData = useDashboardStore(state => state.data);

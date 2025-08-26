@@ -27,7 +27,6 @@ export default function Hero() {
 
   useEffect(() => {
     fetchProfiles('');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sequenceTransition = {

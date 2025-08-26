@@ -29,8 +29,6 @@ export default function LayoutContent({ children }) {
 
     const headings = Array.from(document.querySelectorAll('h1, h2, h3')).filter(h => h.dataset.name);
     setHeadings(headings.map(h => ({ id: h.id, name: h.dataset.name, level: h.tagName })));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
   const { y } = useWindowScroll();

@@ -2,7 +2,8 @@
 
 import { FaDiscord } from '@/icons';
 import Tooltip from '@/app/components/Tooltip';
-import { toast } from 'sonner';import cn from '@/lib/cn';
+import { toast } from 'sonner';
+import cn from '@/lib/cn';
 import { t } from '@/stores/language';
 import { useMemo } from 'react';
 
@@ -11,7 +12,6 @@ export default function Members({ template, isMobile, currentlyOpenedSection }) 
 
   const brandColors = useMemo(() => {
     return template.data.roles.map(() => colors[Math.floor(Math.random() * colors.length)]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [template.data.roles]);
 
   return (

@@ -3,8 +3,11 @@
 import { MdBugReport, IoClose, HiFlag } from '@/icons';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
-import Tooltip from '@/app/components/Tooltip';import useGeneralStore from '@/stores/general';import cn from '@/lib/cn';
-import { motion, useAnimationControls } from 'framer-motion';import useAuthStore from '@/stores/auth';
+import Tooltip from '@/app/components/Tooltip';
+import useGeneralStore from '@/stores/general';
+import cn from '@/lib/cn';
+import { motion, useAnimationControls } from 'framer-motion';
+import useAuthStore from '@/stores/auth';
 import { t } from '@/stores/language';
 import config from '@/config';
 import Link from 'next/link';
@@ -18,8 +21,6 @@ export default function ReportButtonProvider() {
 
   useEffect(() => {
     if (showReportableAreas) setShowReportableAreas(false);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const animate = useAnimationControls();
@@ -36,8 +37,6 @@ export default function ReportButtonProvider() {
       transform: ['rotate(0deg)', 'rotate(20deg)', 'rotate(-20deg)', 'rotate(20deg)', 'rotate(-20deg)', 'rotate(20deg)', 'rotate(-20deg)', 'rotate(0deg)'],
       transition: { duration: 1, ease: 'linear' }
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const disabledPaths = ['/dashboard'];

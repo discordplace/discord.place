@@ -23,8 +23,6 @@ export default function Content({ template }) {
   useEffect(() => {
     if (isMobile && currentlyOpenedSection === 'channels') setMemberListCollapsed(true);
     else if (!isMobile && memberListCollapsed) setMemberListCollapsed(false);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, currentlyOpenedSection]);
 
   if (!focusedChannel) return <FullPageLoading />;

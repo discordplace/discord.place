@@ -44,7 +44,6 @@ export default function Socials({ profile }) {
     if (type) return setNewSocialType(type);
 
     setNewSocialType('unknown');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newSocialValue]);
 
   const [loading, setLoading] = useState(false);

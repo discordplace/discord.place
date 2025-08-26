@@ -70,7 +70,6 @@ export default function Actions({ bot }) {
     } else clearInterval(captchaIntervalRef.current);
 
     return () => clearInterval(captchaIntervalRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showCaptcha]);
 
   function buyTripledVotes() {

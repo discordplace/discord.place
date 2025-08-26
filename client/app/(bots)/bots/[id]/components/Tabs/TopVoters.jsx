@@ -1,7 +1,8 @@
 import { TbSquareRoundedChevronUp } from '@/icons';
 import Pagination from '@/app/components/Pagination';
 import { useEffect, useState } from 'react';
-import cn from '@/lib/cn';import fetchVoters from '@/lib/request/bots/fetchVoters';
+import cn from '@/lib/cn';
+import fetchVoters from '@/lib/request/bots/fetchVoters';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { t } from '@/stores/language';
@@ -26,8 +27,6 @@ export default function TopVoters({ bot }) {
       })
       .catch(error => toast.error(error))
       .finally(() => setLoading(false));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (

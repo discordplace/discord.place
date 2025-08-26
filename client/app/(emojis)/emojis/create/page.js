@@ -2,7 +2,8 @@
 
 import { RiErrorWarningFill, MdCheckCircle } from '@/icons';
 import Square from '@/app/components/Background/Square';
-import { useEffect, useState } from 'react';import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { nanoid } from 'nanoid';
 import cn from '@/lib/cn';
 import config from '@/config';
@@ -10,7 +11,8 @@ import Link from 'next/link';
 import createEmoji from '@/lib/request/emojis/createEmoji';
 import { useRouter } from 'next-nprogress-bar';
 import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';
-import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';import AuthProtected from '@/app/components/Providers/Auth/Protected';
+import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
+import AuthProtected from '@/app/components/Providers/Auth/Protected';
 import { t } from '@/stores/language';
 
 export default function Page() {
@@ -34,7 +36,6 @@ export default function Page() {
         return () => emojiURLs.map(URL.revokeObjectURL);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [emoji.files]);
 
   const [selectedCategories, setSelectedCategories] = useState([]);

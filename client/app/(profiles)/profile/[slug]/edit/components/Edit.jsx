@@ -45,8 +45,6 @@ export default function Edit({ profileData }) {
   useEffect(() => {
     if (currentlyEditingIndex === -1) return;
     setCurrentlyEditingValue(profile[canBeEditedKeys[currentlyEditingIndex]] || 'Unknown');
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentlyEditingIndex]);
 
   function editKey(key) {

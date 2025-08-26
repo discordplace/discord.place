@@ -70,8 +70,6 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
     }
 
     fetchImage();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, hash]);
 
   if (!hash || !currentSource) return (

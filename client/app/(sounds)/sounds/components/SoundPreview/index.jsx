@@ -173,8 +173,6 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         }
       ]
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadableGuilds, selectedGuildId]);
 
   return (
@@ -272,6 +270,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
           )}
         </div>
       </div>
+
 
       <Suspense fallback={<></>}>
         <Waveform

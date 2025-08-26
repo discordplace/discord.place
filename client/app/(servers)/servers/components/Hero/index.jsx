@@ -12,7 +12,8 @@ import { useEffect } from 'react';
 import useSearchStore from '@/stores/servers/search';
 import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence } from 'framer-motion';
-import ErrorState from '@/app/components/ErrorState';import Pagination from '@/app/components/Pagination';
+import ErrorState from '@/app/components/ErrorState';
+import Pagination from '@/app/components/Pagination';
 import config from '@/config';
 import { t } from '@/stores/language';
 import ReportableArea from '@/app/components/ReportableArea';
@@ -40,7 +41,6 @@ export default function Hero() {
 
   useEffect(() => {
     fetchServers('');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sequenceTransition = {

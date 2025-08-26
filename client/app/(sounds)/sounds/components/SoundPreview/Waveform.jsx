@@ -96,19 +96,15 @@ export default function Waveform({ id, name: soundName }) {
     setLocalVolume(volume);
 
     return () => wavesurfer.un('audioprocess', handleAudioProcess);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volume, wavesurfer]);
 
   useEffect(() => {
     setVolume(localVolume);
     setLoudSoundsIgnored(localLoudSoundsIgnored);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setLoudSoundsIgnored(localLoudSoundsIgnored);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localLoudSoundsIgnored]);
 
   useEffect(() => {
@@ -118,8 +114,6 @@ export default function Waveform({ id, name: soundName }) {
       wavesurfer.play();
       wavesurfer.on('finish', () => setCurrentlyPlaying(''));
     } else wavesurfer.pause();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentlyPlaying]);
 
   const pathname = usePathname();

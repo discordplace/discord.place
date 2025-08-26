@@ -43,8 +43,6 @@ export default function AuthProvider({ children }) {
         setLanguage(language);
         setShowFullPageLoading(false);
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

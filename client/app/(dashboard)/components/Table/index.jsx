@@ -36,8 +36,6 @@ export default function Table({ tabs }) {
 
   useEffect(() => {
     setSelectedItems([]);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTab, currentSort]);
 
   const [currentlySearching, setCurrentlySearching] = useState(false);
@@ -47,7 +45,6 @@ export default function Table({ tabs }) {
 
   useEffect(() => {
     if (searchQuery) setPage(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   const isMobile = useMedia('(max-width: 640px)');

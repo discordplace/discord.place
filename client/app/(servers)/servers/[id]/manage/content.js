@@ -66,8 +66,6 @@ export default function Content({ server }) {
     if (isInviteURLChanged) pushToChangedKeys('invite_url', inviteURL);
     if (isCategoryChanged) pushToChangedKeys('category', category);
     if (isKeywordsChanged) pushToChangedKeys('keywords', keywords);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description, inviteURL, category, keywords]);
 
   function resetChanges() {
@@ -163,8 +161,6 @@ export default function Content({ server }) {
     document.addEventListener('keydown', handleEscape);
 
     return () => document.removeEventListener('keydown', handleEscape);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [changesMade, openedModals]);
 
   return (

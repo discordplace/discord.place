@@ -149,7 +149,8 @@ module.exports = {
         'prev': 'import',
         'next': 'export'
       }
-    ]
+    ],
+    'react-hooks/exhaustive-deps': 'off'
   },
   overrides: [
     {

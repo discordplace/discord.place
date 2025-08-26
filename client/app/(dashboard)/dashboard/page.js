@@ -29,8 +29,6 @@ export default function Page() {
 
   useEffect(() => {
     if (loggedIn && !user.can_view_dashboard) return router.push('/error?code=401');
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn, user]);
 
   const { activeTab, loading, setLoading, data, selectedItems, setSelectedItems, setPage } = useDashboardStore(useShallow(state => ({
@@ -1808,8 +1806,6 @@ export default function Page() {
         fetchData(['links']);
         break;
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   const theme = useThemeStore(state => state.theme);

@@ -1,10 +1,13 @@
 'use client';
 
 import { TbLoader, MdEmojiEmotions, FaCloudUploadAlt } from '@/icons';
-import Image from 'next/image';import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import useThemeStore from '@/stores/theme';
-import { motion } from 'framer-motion';import { toast } from 'sonner';
-import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';import useModalsStore from '@/stores/modals';
+import { motion } from 'framer-motion';
+import { toast } from 'sonner';
+import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';
+import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
 import useGeneralStore from '@/stores/general';
@@ -29,8 +32,6 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
 
   useEffect(() => {
     if (image_urls.length <= 0) setIsPackage(false);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image_urls]);
 
   const [uploadToDiscordButtonLoading, setUploadToDiscordButtonLoading] = useState(false);
@@ -135,8 +136,6 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
         }
       ]
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadableGuilds, selectedGuildId, selectedEmojiURL]);
 
   return (

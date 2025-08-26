@@ -26,8 +26,6 @@ export default function FlipWords({ words, duration = 3000, className, onStartAn
         startAnimation();
         onStartAnimation && onStartAnimation();
       }, duration);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAnimating, duration, startAnimation]);
 
   return (
