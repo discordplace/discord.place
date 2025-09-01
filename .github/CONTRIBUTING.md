@@ -24,7 +24,7 @@ Please adhere to the coding style and conventions used throughout the project. C
 
 ## Licensing
 
-By contributing to this project, you agree to license your contributions under the [GPL v3 License](LICENSE). This ensures that your contributions can be freely used, modified, and distributed by others.
+By contributing to this project, you agree to license your contributions under the [AGPL v3 License](LICENSE). This ensures that your contributions can be freely used, modified, and distributed by others.
 
 ## Code of Conduct
 

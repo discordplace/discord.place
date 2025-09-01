@@ -4,7 +4,7 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "GPL-3.0-only",
+  "license": "AGPL-3.0-only",
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
