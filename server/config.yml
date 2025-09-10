@@ -8,6 +8,7 @@ rateLimitWhitelist:
 trustProxy: true
 frontendUrl: 'https://discord.place'
 backendUrl: 'https://api.discord.place'
+docsUrl: 'https://docs.discord.place'
 supportInviteUrl: 'https://invite.discord.place'
 emojis:
   loading: '<a:loading:1247786499076915252>'

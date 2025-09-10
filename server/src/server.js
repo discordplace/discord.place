@@ -79,7 +79,10 @@ module.exports = class Server {
     this.server.use(compression());
     this.server.use(cookieParser(process.env.COOKIE_SECRET));
     this.server.use(cors({
-      origin: [config.frontendUrl],
+      origin: [
+        config.frontendUrl,
+        config.docsUrl
+      ],
       credentials: true
     }));
     this.server.use(helmet({
