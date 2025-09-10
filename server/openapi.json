@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "discord.place API Documentation",
-    "version": "1.0.0",
-    "description": "This is the official API documentation for discord.place",
+    "version": "1.1.0",
+    "description": "This is the official API documentation for discord.place.\nA place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.\n\n## Authentication\n\nSome endpoints require an API key for authentication. You can create API keys from your bot's manage page on discord.place to access protected endpoints.\n\n## Rate Limiting\n\nTo ensure fair usage, the API enforces rate limits. If you exceed the rate limit, you will receive a `429 Too Many Requests` response. The response headers will include information about your current rate limit status.\n\n## Contact\n\nIf you have any questions or need support, feel free to reach out to us at [support@discord.place](mailto:support@discord.place) or visit our [Discord server](https://invite.discord.place).",
     "contact": {
       "name": "discord.place",
       "url": "https://discord.place",
