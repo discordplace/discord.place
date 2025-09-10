@@ -1,0 +1,474 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "discord.place API Documentation",
+    "version": "1.0.0",
+    "description": "This is the official API documentation for discord.place",
+    "contact": {
+      "name": "discord.place",
+      "url": "https://discord.place",
+      "email": "support@discord.place"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.discord.place",
+      "description": "Production API server for discord.place"
+    }
+  ],
+  "paths": {
+    "/bots/{id}/stats": {
+      "patch": {
+        "summary": "Update bot statistics",
+        "description": "Update a bot's command count and/or server count.",
+        "operationId": "updateBotStats",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DiscordSnowflake"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "command_count": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "description": "Number of commands the bot has.",
+                    "examples": {
+                      "valid": {
+                        "value": 25,
+                        "summary": "A valid command count"
+                      },
+                      "zero": {
+                        "value": 0,
+                        "summary": "Zero commands"
+                      },
+                      "max": {
+                        "value": 1000,
+                        "summary": "Maximum allowed commands"
+                      }
+                    }
+                  },
+                  "server_count": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000000,
+                    "description": "Number of servers the bot is in. Note: This value can only differ by at most 50 from your bot's actual server count.",
+                    "example": 1500
+                  }
+                },
+                "minProperties": 1,
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success"
+          },
+          "400": {
+            "description": "Bad Request. The request was invalid or cannot be otherwise served.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "missingFields": {
+                    "summary": "Missing required fields",
+                    "value": {
+                      "success": false,
+                      "error": "One of the following fields is required: command_count, server_count.",
+                      "status": 400
+                    }
+                  },
+                  "invalidServerCount": {
+                    "summary": "Invalid server count",
+                    "value": {
+                      "success": false,
+                      "error": "Server count must be between 0 and 10 Million.",
+                      "status": 400
+                    }
+                  },
+                  "invalidCommandCount": {
+                    "summary": "Invalid command count",
+                    "value": {
+                      "success": false,
+                      "error": "Commands count must be between 0 and 1,000.",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. API key is missing or invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "missingApiKey": {
+                    "summary": "Missing API key",
+                    "value": {
+                      "success": false,
+                      "error": "Authorization header is required.",
+                      "status": 401
+                    }
+                  },
+                  "invalidApiKey": {
+                    "summary": "Invalid API key",
+                    "value": {
+                      "success": false,
+                      "error": "Invalid API key.",
+                      "status": 401
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. The specified bot ID does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "botNotFound": {
+                    "summary": "Bot not found",
+                    "value": {
+                      "success": false,
+                      "error": "Bot not found.",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "description": "Internal Server Error. An unexpected error occurred on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "serverCountFetchError": {
+                    "summary": "Server count fetch error",
+                    "value": {
+                      "success": false,
+                      "error": "Could not fetch server count.",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bots/{id}/voters/{user_id}": {
+      "get": {
+        "summary": "Check user vote status",
+        "description": "Retrieves whether a user has voted for the specified bot in the last 24 hours along with vote details.",
+        "operationId": "getUserVoteStatus",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DiscordSnowflake"
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to check.",
+            "schema": {
+              "$ref": "#/components/schemas/DiscordSnowflake"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Acknowledgment of successful request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "voted": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "vote": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "lastVote": {
+                      "type": "integer",
+                      "format": "int64",
+                      "example": 1694345400000
+                    }
+                  },
+                  "required": ["voted", "vote", "lastVote"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. API key is missing or invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "missingApiKey": {
+                    "summary": "Missing API key",
+                    "value": {
+                      "success": false,
+                      "error": "Authorization header is required.",
+                      "status": 401
+                    }
+                  },
+                  "invalidApiKey": {
+                    "summary": "Invalid API key",
+                    "value": {
+                      "success": false,
+                      "error": "Invalid API key.",
+                      "status": 401
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. The specified bot ID does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "botNotFound": {
+                    "summary": "Bot not found",
+                    "value": {
+                      "success": false,
+                      "error": "Bot not found.",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    }
+  },
+  "webhooks": {
+    "vote": {
+      "post": {
+        "summary": "Vote Webhook",
+        "description": "Webhook sent when a user votes for a bot or server.\n\n**Retry Policy:** If the response status code is not between 200-299 (inclusive), we will retry the request 3 times with a 5-second delay between attempts. If all retries fail, we will stop attempting to deliver the webhook.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bot": {
+                    "type": "string",
+                    "description": "Bot ID (present for bot webhooks)"
+                  },
+                  "guild": {
+                    "type": "string",
+                    "description": "Guild ID (present for server webhooks)"
+                  },
+                  "user": {
+                    "type": "string",
+                    "description": "User ID of the voter"
+                  },
+                  "test": {
+                    "type": "boolean",
+                    "description": "True if this is a test webhook"
+                  }
+                },
+                "required": ["user", "test"],
+                "additionalProperties": false
+              },
+              "examples": {
+                "botVote": {
+                  "summary": "Bot vote webhook",
+                  "value": {
+                    "bot": "123456789012345678",
+                    "user": "987654321098765432",
+                    "test": false
+                  }
+                },
+                "guildVote": {
+                  "summary": "Server vote webhook",
+                  "value": {
+                    "guild": "123456789012345678",
+                    "user": "987654321098765432",
+                    "test": false
+                  }
+                },
+                "testWebhook": {
+                  "summary": "Test webhook",
+                  "value": {
+                    "user": "987654321098765432",
+                    "test": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": {
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          },
+          "Authorization": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "YOUR_WEBHOOK_TOKEN"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "API key for authentication. You can create API keys from your bot's manage page on discord.place to access protected endpoints."
+      }
+    },
+    "schemas": {
+      "DiscordSnowflake": {
+        "type": "string",
+        "pattern": "^[0-9]{17,20}$",
+        "description": "A valid Discord Snowflake ID (17–20 digit numeric string).",
+        "example": "123456789012345678"
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "error": {
+            "type": "string",
+            "example": "Invalid request."
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          }
+        },
+        "required": ["success", "error", "status"]
+      }
+    },
+    "responses": {
+      "Success": {
+        "description": "Successful operation.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "TooManyRequests": {
+        "description": "Too Many Requests. Rate limit exceeded.",
+        "headers": {
+          "ratelimit-limit": {
+            "description": "Maximum number of requests in the current window",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            },
+            "required": true
+          },
+          "ratelimit-remaining": {
+            "description": "Remaining requests in the current window",
+            "schema": {
+              "type": "integer",
+              "example": 9
+            },
+            "required": true
+          },
+          "ratelimit-reset": {
+            "description": "Time in seconds until rate limit resets",
+            "schema": {
+              "type": "integer",
+              "example": 60
+            },
+            "required": true
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "DiscordSnowflake": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Snowflake ID of the Discord entity. (e.g., bot ID, user ID, guild ID)",
+        "schema": {
+          "$ref": "#/components/schemas/DiscordSnowflake"
+        }
+      }
+    }
+  }
+}
