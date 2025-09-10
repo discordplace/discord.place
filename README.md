@@ -6,7 +6,7 @@ discord.place is your comprehensive hub for everything related to Discord. Wheth
 
 From finding perfect emojis for your Discord servers to discovering the latest bots and servers, discord.place caters to all your Discord needs. Enjoy easy navigation and up-to-date content designed to help you make the most out of your Discord interactions.
 
-This repository contains the client, server and docs files for the discord.place website. 
+This repository contains the client, server and docs (no more used) files for the discord.place website. 
 
 ---
 
@@ -65,7 +65,7 @@ cd client
 npm run dev
 ```
 
-8. Start the docs (optional):
+8. Start the docs (optional, no more used):
 
 ```bash
 cd docs
@@ -74,7 +74,7 @@ npm run dev
 ```
 
 8. Open your browser and navigate to `http://localhost:3000` to view the website locally.
-9. Open your browser and navigate to `http://localhost:3003` to view the documentation locally. (optional)
+9. Open your browser and navigate to `http://localhost:3003` to view the documentation locally. (optional, no more used)
 
 ---
 
