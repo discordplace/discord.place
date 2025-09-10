@@ -44,20 +44,7 @@
                     "minimum": 0,
                     "maximum": 1000,
                     "description": "Number of commands the bot has.",
-                    "examples": {
-                      "valid": {
-                        "value": 25,
-                        "summary": "A valid command count"
-                      },
-                      "zero": {
-                        "value": 0,
-                        "summary": "Zero commands"
-                      },
-                      "max": {
-                        "value": 1000,
-                        "summary": "Maximum allowed commands"
-                      }
-                    }
+                    "example": 100
                   },
                   "server_count": {
                     "type": "integer",
