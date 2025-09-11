@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.1](https://github.com/discordplace/discord.place/compare/client@v1.21.0...client@v1.21.1) (2025-09-11)
+
+
+### Bug Fixes
+
+* disable session replay for analytics script ([484882e](https://github.com/discordplace/discord.place/commit/484882e4abafe4f4d2faf74f356a65f8a8cadc2e))
+
 ## [1.21.0](https://github.com/discordplace/discord.place/compare/client@v1.20.1...client@v1.21.0) (2025-08-26)
 
 
