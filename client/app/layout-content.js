@@ -35,7 +35,7 @@ export default function RootLayoutContent({ children }) {
           src={config.analytics.script}
           data-site-id={config.analytics.siteId}
           data-track-errors={true}
-          data-session-replay={true}
+          data-session-replay={false}
           strategy='afterInteractive'
           id='analytics-script'
         />
