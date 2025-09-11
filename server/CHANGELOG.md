@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.17.0](https://github.com/discordplace/discord.place/compare/server@v1.16.3...server@v1.17.0) (2025-09-11)
+
+
+### Features
+
+* add docsUrl to configuration and update CORS to allow docsUrl origin ([4748c3a](https://github.com/discordplace/discord.place/commit/4748c3a8be018948340cd0273b2e7b2191435a40))
+* add OpenAPI documentation ([#205](https://github.com/discordplace/discord.place/issues/205)) ([bf8e107](https://github.com/discordplace/discord.place/commit/bf8e10708f0a4a2d84ffdcf2c73c654f1865e7ae))
+
 ## [1.16.3](https://github.com/discordplace/discord.place/compare/server@v1.16.2...server@v1.16.3) (2025-08-26)
 
 
