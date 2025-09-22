@@ -81,7 +81,7 @@ module.exports = {
           { type: 'guild', name: 'Server', value: id },
           { type: 'user', name: 'Reviewer', value: review.user.id },
           { type: 'user', name: 'Moderator', value: request.user.id },
-          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}\n${review.content}` }
+          { type: 'text', name: 'Review', value: `${'⭐'.repeat(review.rating)}**\n**${review.content}` }
         ],
         [
           { label: 'View Server', url: `${config.frontendUrl}/servers/${id}` },
