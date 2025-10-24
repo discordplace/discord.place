@@ -3,16 +3,19 @@
 import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline, TbLoader, RiErrorWarningFill } from '@/icons';
 import Pagination from '@/app/components/Pagination';
 import useAuthStore from '@/stores/auth';
-import { Suspense, useEffect, useState } from 'react';import { toast } from 'sonner';
+import { Suspense, useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import createReview from '@/lib/request/bots/createReview';
 import fetchReviews from '@/lib/request/bots/fetchReviews';
-import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';import cn from '@/lib/cn';
+import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';
+import cn from '@/lib/cn';
 import Link from 'next/link';
 import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ReportableArea from '@/app/components/ReportableArea';
 import Image from 'next/image';
+import { useMedia } from 'react-use';
 
 export default function Reviews({ bot }) {
   const [page, setPage] = useState(1);
@@ -28,6 +31,8 @@ export default function Reviews({ bot }) {
   const user = useAuthStore(state => state.user);
   const loggedIn = useAuthStore(state => state.loggedIn);
   const language = useLanguageStore(state => state.language);
+
+  const isMobile = useMedia('(max-width: 640px)', false);
 
   useEffect(() => {
     setReviewsLoading(true);
@@ -183,16 +188,16 @@ export default function Reviews({ bot }) {
                             if (selectedRating === index + 1) setSelectedRating(0);
                             else setSelectedRating(index + 1);
                           }}
-                          onMouseEnter={() => setHoveredRating(index + 1)}
-                          onMouseLeave={() => setHoveredRating(0)}
+                          onMouseEnter={() => (isMobile ? setSelectedRating : setHoveredRating)(index + 1)}
+                          onMouseLeave={() => isMobile ? setSelectedRating(0) : setHoveredRating(0)}
                         />
                       ) : (
                         <TiStarOutline
                           key={index}
                           className='cursor-pointer text-tertiary'
                           onClick={() => setSelectedRating(index + 1)}
-                          onMouseEnter={() => setHoveredRating(index + 1)}
-                          onMouseLeave={() => setHoveredRating(0)}
+                          onMouseEnter={() => (isMobile ? setSelectedRating : setHoveredRating)(index + 1)}
+                          onMouseLeave={() => isMobile ? setSelectedRating(0) : setHoveredRating(0)}
                         />
                       )
                     ))}
