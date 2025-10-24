@@ -1,7 +1,6 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { param, body, matchedData } = require('express-validator');
 const Bot = require('@/schemas/Bot');
-const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/src/utils/sendLog');
 
@@ -34,14 +33,7 @@ module.exports = {
       if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
 
       if (command_count) bot.command_count = { value: command_count, updatedAt: new Date() };
-      if (server_count) {
-        const approximate_guild_count_data = await getApproximateGuildCount(id).catch(() => null);
-        if (!approximate_guild_count_data) return response.sendError('Could not fetch server count.', 500);
-
-        if (Math.abs(server_count - approximate_guild_count_data.approximate_guild_count) > config.maxServerCountDifference) return response.sendError(`The server count provided (${server_count}) is too far off from the actual server count. It cannot differ by more than ${config.maxServerCountDifference} from the actual server count, which is ${approximate_guild_count_data.approximate_guild_count}.`, 400);
-
-        bot.server_count = { value: server_count, updatedAt: new Date() };
-      }
+      if (server_count) bot.server_count = { value: server_count, updatedAt: new Date() };
 
       await bot.save();
 

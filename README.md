@@ -135,8 +135,6 @@ CDN_URL=
 CLOUDFLARE_TURNSTILE_SECRET_KEY=
 LEMON_SQUEEZY_WEBHOOK_SECRET=
 LEMON_SQUEEZY_API_KEY=
-DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL=
-DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 WEBHOOKS_PROXY_SERVER_PROTOCOL=
 WEBHOOKS_PROXY_SERVER_HOST=
 WEBHOOKS_PROXY_SERVER_PORT=
@@ -175,8 +173,6 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 | `LEMON_SQUEEZY_API_KEY` | Lemon Squeezy API key. (not required) |
 | `HEARTBEAT_ID_DAILY_DATABASE_BACKUP` | Heartbeat ID for daily database backup. (not required) |
 | `HEARTBEAT_ID_S3_BUCKET_AVAILABILITY` | Heartbeat ID for S3 bucket availability. (not required) |
-| `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
-| `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` | Secret key for getting approximate guild count of a bot. (not required) |
 | `WEBHOOKS_PROXY_SERVER_PROTOCOL` | Protocol for the proxy server. |
 | `WEBHOOKS_PROXY_SERVER_HOST` | Host for the proxy server. |
 | `WEBHOOKS_PROXY_SERVER_PORT` | Port for the proxy server. |
@@ -196,7 +192,6 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 > - The `LEMON_SQUEEZY_WEBHOOK_SECRET` is used for verifying the Lemon Squeezy webhook. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy documentation](https://docs.lemonsqueezy.com/help/webhooks) for more information.
 > - The `LEMON_SQUEEZY_API_KEY` is used for authenticating requests to the Lemon Squeezy API. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy Developer Guide](https://docs.lemonsqueezy.com/guides/developer-guide/getting-started#create-an-api-key) to get your API key.
 > - Values starting with `HEARTBEAT_ID_` are used for the heartbeat IDs for the heartbeats. We use [Better Stack Uptime](https://betterstack.com/uptime) for monitoring the uptime of the website.
-> - The `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` and `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` values are used for getting the approximate guild count of a bot. This is half required for self-hosting. If you don't want to use this feature, you can leave these values empty, but this will result in bots not being able to update server_count using the API. For now, we use private API for this because Discord doesn't provide an official API for getting the approximate guild count of a bot. We don't want to share this API source code with everyone.
 > - The `WEBHOOKS_PROXY_SERVER_PROTOCOL`, `WEBHOOKS_PROXY_SERVER_HOST`, `WEBHOOKS_PROXY_SERVER_PORT`, `WEBHOOKS_PROXY_SERVER_USERNAME`, and `WEBHOOKS_PROXY_SERVER_PASSWORD` values are used for the proxy server settings. We use a proxy server for sending webhooks requests. If you don't want to use a proxy server, you can leave these values empty. Username and password are not required for the proxy server.
 > - The `SENTRY_DSN` value is used for Sentry error tracking. This is not required for self-hosting. We use Sentry for error tracking. Refer to the [Sentry documentation](https://docs.sentry.io) for more information.
 
