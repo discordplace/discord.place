@@ -440,7 +440,33 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/ErrorResponse"
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "error": {
+                  "type": "string",
+                  "description": "A message indicating the rate limit has been exceeded.",
+                  "example": "Too many requests, please try again later."
+                },
+                "status": {
+                  "type": "integer",
+                  "example": 429
+                }
+              },
+              "required": ["success", "error", "status"]
+            },
+            "examples": {
+              "rateLimitExceeded": {
+                "summary": "Rate limit exceeded",
+                "value": {
+                  "success": false,
+                  "error": "Too many requests, please try again later.",
+                  "status": 429
+                }
+              }
             }
           }
         }
