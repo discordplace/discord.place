@@ -4,7 +4,7 @@ import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { useState } from 'react';
 import { useMedia } from 'react-use';
 
-export default function Tooltip({ children, content, side, sideOffset, hide }) {
+export default function Tooltip({ children, content, side, sideOffset, hide, disableHoverableContent = false }) {
   const [open, setOpen] = useState(false);
   const isMobile = useMedia('(max-width: 640px)', false);
 
@@ -12,6 +12,7 @@ export default function Tooltip({ children, content, side, sideOffset, hide }) {
     <RadixTooltip.Provider
       delayDuration='0'
       skipDelayDuration='0'
+      disableHoverableContent={disableHoverableContent === true}
     >
       <RadixTooltip.Root
         onOpenChange={newOpenState => !hide && setOpen(newOpenState)}
@@ -27,6 +28,7 @@ export default function Tooltip({ children, content, side, sideOffset, hide }) {
         >
           {children}
         </RadixTooltip.Trigger>
+
         {content && (
           <RadixTooltip.Portal>
             <RadixTooltip.Content
