@@ -10,8 +10,8 @@ const requirementChecks = {
   '2fa_enabled': guild => ({ success: guild.mfaLevel === 1 }),
   is_community: guild => ({ success: guild.features.includes(Discord.GuildFeature.Community) }),
   no_nsfw: guild => ({
-    success: !guild.channels.cache.some(channel => channel.nsfw === false),
-    channels: guild.channels.cache.filter(channel => channel.nsfw === false).map(channel => ({ id: channel.id, name: channel.name }))
+    success: !guild.channels.cache.every(channel => channel.nsfw === false),
+    channels: guild.channels.cache.filter(channel => channel.nsfw === true).map(channel => ({ id: channel.id, name: channel.name }))
   })
 };
 
