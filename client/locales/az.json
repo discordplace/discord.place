@@ -1914,7 +1914,8 @@
                 },
                 "no_nsfw": {
                   "name": "NSFW məzmunu yoxdur",
-                  "description": "Serverinizdə NSFW məzmunu olmamalıdır."
+                  "description": "Serverinizdə NSFW məzmunu olmamalıdır.",
+                  "channelsLabel": "Serverinizdə {{count}} NSFW kanalları var."
                 }
               }
             },

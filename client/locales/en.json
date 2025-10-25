@@ -1915,7 +1915,8 @@
                 },
                 "no_nsfw": {
                   "name": "No NSFW Content",
-                  "description": "Your server must not contain NSFW content."
+                  "description": "Your server must not contain NSFW content.",
+                  "channelsLabel": "Your server has {{count}} NSFW channels."
                 }
               }
             },

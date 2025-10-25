@@ -129,13 +129,12 @@ module.exports = {
             members: memberCount,
             requirements: config.serverListingRequirements.map(({ id: reqId, name: reqName, description }) => {
               const checkFunction = requirementChecks[reqId];
-              const isMet = checkFunction ? checkFunction(guild) : false;
 
               return {
                 id: reqId,
                 name: reqName,
                 description,
-                met: isMet
+                check: checkFunction ? checkFunction(guild) : { success: false }
               };
             })
           };

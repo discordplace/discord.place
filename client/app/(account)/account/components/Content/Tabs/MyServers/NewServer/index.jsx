@@ -1,17 +1,20 @@
 'use client';
 
-import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle, IoMdCloseCircle, BsFire } from '@/icons';
+import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle, IoMdCloseCircle, BsFire, BiSolidInfoCircle } from '@/icons';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Image from 'next/image';
 import createServer from '@/lib/request/servers/createServer';
 import useAccountStore from '@/stores/account';
 import { useRouter } from 'next-nprogress-bar';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';import config from '@/config';
+import confetti from '@/lib/lotties/confetti.json';
+import config from '@/config';
 import Select from '@/app/components/Select';
-import { t } from '@/stores/language';import cn from '@/lib/cn';
+import { t } from '@/stores/language';
+import cn from '@/lib/cn';
+import Tooltip from '@/app/components/Tooltip';
 
 export default function NewServer() {
   const currentlyAddingServer = useAccountStore(state => state.currentlyAddingServer);
@@ -60,8 +63,8 @@ export default function NewServer() {
     });
   }
 
-  const allRequirementsIsMet = currentlyAddingServer.requirements.every(requirement => requirement.met);
-  const completedPercent = currentlyAddingServer.requirements.filter(requirement => requirement.met).length / currentlyAddingServer.requirements.length * 100;
+  const allRequirementsIsMet = currentlyAddingServer.requirements.every(requirement => requirement.check.success === true);
+  const completedPercent = currentlyAddingServer.requirements.filter(requirement => requirement.check.success === true).length / currentlyAddingServer.requirements.length * 100;
 
   useEffect(() => {
     function handlePaste(event) {
@@ -151,7 +154,7 @@ export default function NewServer() {
               <div className='flex flex-col items-center gap-y-2'>
                 <div className='hidden items-center gap-x-1 sm:flex'>
                   <span className='text-base font-semibold'>
-                    {completedPercent}%
+                    {completedPercent.toFixed(0)}%
                   </span>
 
                   <span className='text-sm font-medium text-tertiary'>
@@ -170,7 +173,7 @@ export default function NewServer() {
                       'h-full rounded-lg',
                       allRequirementsIsMet ? 'bg-green-500' : 'bg-neutral-500'
                     )}
-                    style={{ width: `${currentlyAddingServer.requirements.filter(requirement => requirement.met).length / currentlyAddingServer.requirements.length * 100}%` }}
+                    style={{ width: `${currentlyAddingServer.requirements.filter(requirement => requirement.check.success === true).length / currentlyAddingServer.requirements.length * 100}%` }}
                   />
                 </div>
               </div>
@@ -183,7 +186,7 @@ export default function NewServer() {
             <div className='mt-6 flex flex-col gap-y-4 sm:hidden'>
               <div className='flex items-center justify-center gap-x-1'>
                 <span className='text-base font-semibold'>
-                  {completedPercent}%
+                  {completedPercent.toFixed(1)}%
                 </span>
 
                 <span className='text-sm font-medium text-tertiary'>
@@ -194,26 +197,40 @@ export default function NewServer() {
 
             <div className='mt-8 flex flex-col gap-y-4 overflow-hidden'>
               {currentlyAddingServer.requirements.map(requirement => (
-                <div
-                  className='flex items-center gap-x-4'
-                  key={requirement.id}
-                >
-                  {requirement.met ? (
-                    <IoMdCheckmarkCircle className='min-w-[24px] text-green-500' size={24} />
-                  ) : (
-                    <IoMdCloseCircle className='min-w-[24px] text-tertiary' size={24} />
-                  )}
+                <Fragment key={requirement.id}>
+                  <div className='flex items-center gap-x-4'>
+                    {requirement.check.success ? (
+                      <IoMdCheckmarkCircle className='min-w-[24px] text-green-500' size={20} />
+                    ) : (
+                      <IoMdCloseCircle className='min-w-[24px] text-tertiary' size={20} />
+                    )}
 
-                  <div className='flex flex-col gap-y-1'>
                     <span className='max-w-[200px] truncate text-lg font-semibold sm:max-w-[700px]'>
                       {t(`accountPage.tabs.myServers.sections.newServer.requirements.items.${requirement.id}.name`)}
                     </span>
 
-                    <span className='max-w-[200px] text-sm font-medium text-tertiary sm:max-w-[700px]'>
-                      {t(`accountPage.tabs.myServers.sections.newServer.requirements.items.${requirement.id}.description`)}
-                    </span>
+                    <Tooltip
+                      content={t(`accountPage.tabs.myServers.sections.newServer.requirements.items.${requirement.id}.description`)}
+                      disableHoverableContent={true}
+                    >
+                      <div>
+                        <BiSolidInfoCircle />
+                      </div>
+                    </Tooltip>
                   </div>
-                </div>
+
+                  {requirement.check.success === false && requirement.id === 'no_nsfw' && requirement.check.channels && requirement.check.channels.length > 0 && (
+                    <div className='flex flex-col gap-y-2'>
+                      <span className='text-sm font-medium text-secondary'>
+                        {t('accountPage.tabs.myServers.sections.newServer.requirements.items.no_nsfw.channelsLabel', { count: requirement.check.channels.length })}
+                      </span>
+
+                      <div className='text-sm text-tertiary'>
+                        {requirement.check.channels.map(channel => `#${channel.name}`).join(', ')}
+                      </div>
+                    </div>
+                  )}
+                </Fragment>
               ))}
             </div>
           </div>

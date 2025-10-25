@@ -1915,7 +1915,8 @@
                 },
                 "no_nsfw": {
                   "name": "NSFW İçerik Yok",
-                  "description": "Sunucunuzda NSFW içeriği bulunmamalıdır."
+                  "description": "Sunucunuzda NSFW içeriği bulunmamalıdır.",
+                  "channelsLabel": "Sunucunuzda {{count}} NSFW kanalı var."
                 }
               }
             },
