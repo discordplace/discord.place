@@ -29,7 +29,7 @@
     },
     "emoji": {
       "errors": {
-        "missing_bot_permissions": "Emoji yüklemek için yetkim yok. Lütfen \"İfadeleri Yönet\" ve \"İfadeler Oluştur\" izinlerine sahip olduğumdan emin olun.",
+        "missing_bot_permissions": "Emoji yüklemek için yetkim yok. Lütfen \"İfadeler Oluştur\" iznine sahip olduğumdan emin olun.",
         "pack_not_found": "Emoji paketi bulunamadı.",
         "currently_uploading": {
           "message": "Şu anda **{packName}** paketini yüklüyorum. Lütfen bitene kadar bekleyin.",

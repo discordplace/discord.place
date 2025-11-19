@@ -51,7 +51,7 @@ module.exports = {
   isGuildOnly: true,
   execute: async interaction => {
     if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.translate('commands.shared.errors.missing_permissions'));
-    if (!interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions) && !interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.translate('commands.emoji.errors.missing_bot_permissions'));
+    if (!interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions) && !interaction.guild.members.me.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return interaction.reply(await interaction.translate('commands.emoji.errors.missing_bot_permissions'));
 
     await interaction.deferReply();
 
@@ -167,7 +167,7 @@ module.exports = {
     }
   },
   autocomplete: async interaction => {
-    if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions)) return;
+    if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions)) return;
 
     const group = interaction.options.getSubcommandGroup(false);
 

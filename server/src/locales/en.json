@@ -29,7 +29,7 @@
     },
     "emoji": {
       "errors": {
-        "missing_bot_permissions": "I don't have permission to upload emojis. Please make sure I have the \"Manage Guild Expressions\" and \"Create Guild Expressions\" permissions.",
+        "missing_bot_permissions": "I don't have permission to upload emojis. Please make sure I have the \"Create Guild Expressions\" permission.",
         "pack_not_found": "Pack not found.",
         "currently_uploading": {
           "message": "I'm currently uploading the pack **{packName}**. Please wait until it's finished.",

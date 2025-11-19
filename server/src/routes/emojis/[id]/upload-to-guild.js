@@ -28,8 +28,8 @@ module.exports = {
       const member = guild.members.cache.get(request.user.id) || await guild.members.fetch(request.user.id).catch(() => null);
       if (!member) return response.sendError('You are not a member of this guild.', 403);
 
-      const hasPermission = member.permissions.has(Discord.PermissionFlagsBits.ManageGuildExpressions);
-      if (!hasPermission) return response.sendError('You do not have permission to manage emojis in this guild.', 403);
+      const hasPermission = member.permissions.has(Discord.PermissionFlagsBits.CreateGuildExpressions);
+      if (!hasPermission) return response.sendError('You do not have permission to create emojis in this guild.', 403);
 
       const emoji = await Emoji.findOne({ id });
       if (!emoji) return response.sendError('Emoji not found.', 404);
