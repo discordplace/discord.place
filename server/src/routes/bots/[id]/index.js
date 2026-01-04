@@ -11,6 +11,7 @@ const VoteTimeout = require('@/schemas/Bot/Vote/Timeout');
 const inviteUrlValidation = require('@/validations/bots/inviteUrl');
 const Review = require('@/schemas/Bot/Review');
 const Deny = require('@/schemas/Bot/Deny');
+const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
 const githubRepositoryValidation = require('@/validations/bots/githubRepository');
 const findRepository = require('@/utils/bots/findRepository');
 const getUserHashes = require('@/utils/getUserHashes');
@@ -173,6 +174,8 @@ module.exports = {
       const ownershipResult = await isUserBotOwner(request.user.id, user.id).catch(() => false);
       if (ownershipResult !== true) return response.sendError('You are not the owner of this bot.', 403);
 
+      const approximate_guild_count_data = await getApproximateGuildCount(user.id).catch(() => null);
+
       const bot = new Bot({
         id: user.id,
         data: {
@@ -194,7 +197,7 @@ module.exports = {
           language: null
         },
         server_count: {
-          value: 0,
+          value: approximate_guild_count_data?.approximate_guild_count || 0,
           updatedAt: new Date()
         },
         votes: 0,
