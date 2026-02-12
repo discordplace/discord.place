@@ -1987,8 +1987,8 @@
           "addBot": {
             "title": "Yeni bot əlavə edilir",
             "subtitle": "Siz discord.place saytına yeni bot təqdim etmək üzrəsiniz. ",
+            "averageApprovalTime": "Bot üçün orta təsdiq müddəti: ~{{time}}",
             "toast": {
-              "storedDataLoaded": "Əvvəllər təqdim edilmiş ərizə bərpa edildi.",
               "addingBot": "Bot əlavə olunur {{botId}}..",
               "botAdded": "Bot {{botId}} əlavə edildi! "
             },

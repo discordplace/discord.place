@@ -203,7 +203,8 @@ module.exports = {
         votes: 0,
         voters: [],
         last_voter: null,
-        verified: false
+        verified: false,
+        verified_at: null
       });
 
       const validationError = getValidationError(bot);

@@ -113,6 +113,7 @@ const Endpoints = {
   DeleteBotWebhookSettings: id => `/bots/${id}/webhook-settings`,
   DenyReview: (botId, reviewId) => `/bots/${botId}/reviews/${reviewId}/deny`,
   FetchBots: '/bots/search',
+  GetBotStats: '/bots/stats',
   EditBot: id => `/bots/${id}`,
   DeleteApiKey: id => `/bots/${id}/api-key`,
   CreateBotReview: id => `/bots/${id}/reviews`,

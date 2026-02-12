@@ -28,7 +28,7 @@ module.exports = {
 
       if (bot.verified === true) return response.sendError('Bot is already verified.', 400);
 
-      await bot.updateOne({ verified: true });
+      await bot.updateOne({ verified: true, verified_at: new Date() });
 
       await DashboardData.findOneAndUpdate({}, { $inc: { bots: 1 } }, { sort: { createdAt: -1 } });
 

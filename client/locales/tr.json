@@ -1988,8 +1988,8 @@
           "addBot": {
             "title": "Yeni bot ekleniyor",
             "subtitle": "discord.place'e yeni bir bot eklemek üzeresiniz. Bu, botunuzun discord.place'de listeleneceği ve herkesin onu görebileceği anlamına gelir. Botunuzu istediğiniz zaman discord.place'den kaldırabilirsiniz...",
+            "averageApprovalTime": "Ortalama bot onay süresi: ~{{time}}",
             "toast": {
-              "storedDataLoaded": "Önceden kaydedilen veriler geri yüklendi.",
               "addingBot": "{{botId}} ID'li bot ekleniyor..",
               "botAdded": "{{botId}} ID'li bot eklendi! Birkaç saniye içinde botun sayfasına yönlendirileceksiniz."
             },
