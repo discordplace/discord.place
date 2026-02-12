@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.22.0](https://github.com/discordplace/discord.place/compare/client@v1.21.0...client@v1.22.0) (2026-02-12)
+
+
+### Features
+
+* **bots:** add average approval-time stats to new bot submission flow ([#207](https://github.com/discordplace/discord.place/issues/207)) ([16cddb1](https://github.com/discordplace/discord.place/commit/16cddb12a7b35c235793435c7f69c58814e78918))
+* **client/tooltip:** add disableHoverableContent prop ([312a147](https://github.com/discordplace/discord.place/commit/312a14796ef2720d901dd87108665c46190eee96))
+* **servers:** add NSFW channels reporting to requirement check card ([8307de2](https://github.com/discordplace/discord.place/commit/8307de22d78574d031c62fdaa1120fe9c99e891b))
+
+
+### Bug Fixes
+
+* **client/reviews:** remove hover effects to improve mobile responsiveness ([5f7de46](https://github.com/discordplace/discord.place/commit/5f7de46500322dd9d1143e724a0ab4ff6935f834))
+* disable session replay for analytics script ([484882e](https://github.com/discordplace/discord.place/commit/484882e4abafe4f4d2faf74f356a65f8a8cadc2e))
+
 ## [1.21.0](https://github.com/discordplace/discord.place/compare/client@v1.20.1...client@v1.21.0) (2025-08-26)
 
 

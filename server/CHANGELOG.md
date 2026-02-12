@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.17.0](https://github.com/discordplace/discord.place/compare/server@v1.16.3...server@v1.17.0) (2026-02-12)
+
+
+### Features
+
+* add docsUrl to configuration and update CORS to allow docsUrl origin ([4748c3a](https://github.com/discordplace/discord.place/commit/4748c3a8be018948340cd0273b2e7b2191435a40))
+* add OpenAPI documentation ([#205](https://github.com/discordplace/discord.place/issues/205)) ([bf8e107](https://github.com/discordplace/discord.place/commit/bf8e10708f0a4a2d84ffdcf2c73c654f1865e7ae))
+* **bots:** add average approval-time stats to new bot submission flow ([#207](https://github.com/discordplace/discord.place/issues/207)) ([16cddb1](https://github.com/discordplace/discord.place/commit/16cddb12a7b35c235793435c7f69c58814e78918))
+* **bots:** remove approximate guild count functionality ([9a94d0c](https://github.com/discordplace/discord.place/commit/9a94d0c3b411e66af0710a24c3d45624f23fed66))
+* **servers:** add NSFW channels reporting to requirement check card ([8307de2](https://github.com/discordplace/discord.place/commit/8307de22d78574d031c62fdaa1120fe9c99e891b))
+
+
+### Bug Fixes
+
+* format review content with line break ([604a990](https://github.com/discordplace/discord.place/commit/604a990a412de87a6da4c1193596b930c6c6d9fe))
+* **server/permissions:** update bot permissions checks to only require "Create Guild Expressions" ([5108c2c](https://github.com/discordplace/discord.place/commit/5108c2c9bd55765b859c2e780e6cca383a148e2f))
+* **server/requirementChecks:** correct NSFW channel check logic ([30ddd45](https://github.com/discordplace/discord.place/commit/30ddd456dcab214bb4cad011e1107ae017aaadff))
+
 ## [1.16.3](https://github.com/discordplace/discord.place/compare/server@v1.16.2...server@v1.16.3) (2025-08-26)
 
 
