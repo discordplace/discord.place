@@ -1988,8 +1988,8 @@
           "addBot": {
             "title": "Adding a new bot",
             "subtitle": "You're about to submit a new bot to discord.place. This means your bot will be listed on discord.place and everyone will be able to see it. You can remove your bot from discord.place at any time.",
+            "averageApprovalTime": "Average bot approval time: ~{{time}}",
             "toast": {
-              "storedDataLoaded": "Previously submitted application restored.",
               "addingBot": "Adding bot {{botId}}..",
               "botAdded": "Bot {{botId}} added! You will be redirected to the bot page in a few seconds."
             },

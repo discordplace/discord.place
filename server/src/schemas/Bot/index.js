@@ -148,6 +148,10 @@ const BotSchema = new Schema({
     type: Boolean,
     default: false
   },
+  verified_at: {
+    type: Date,
+    default: null
+  },
   voters: {
     type: [
       {

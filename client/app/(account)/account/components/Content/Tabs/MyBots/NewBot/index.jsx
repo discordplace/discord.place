@@ -1,6 +1,6 @@
 'use client';
 
-import { TbLoader, RiEyeFill, RiEyeOffFill, MdChevronLeft, IoMdCheckmarkCircle } from '@/icons';
+import { TbLoader, RiEyeFill, RiEyeOffFill, MdChevronLeft, MdAccessTimeFilled, IoMdCheckmarkCircle } from '@/icons';
 import config from '@/config';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -12,14 +12,20 @@ import confetti from '@/lib/lotties/confetti.json';
 import Markdown from '@/app/components/Markdown';
 import useAccountStore from '@/stores/account';
 import { useLocalStorage } from 'react-use';
-import { t } from '@/stores/language';
+import useLanguageStore, { t } from '@/stores/language';
+import getBotStats from '@/lib/request/bots/getBotStats';
+import { formatDuration, intervalToDuration } from 'date-fns';
+import * as locales from 'date-fns/locale';
 
 export default function NewBot() {
   const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
+  const language = useLanguageStore(state => state.language);
 
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [renderConfetti, setRenderConfetti] = useState(false);
+  const [averageApprovalTimeMinutes, setAverageApprovalTimeMinutes] = useState(null);
+  const [averageApprovalTimeLoading, setAverageApprovalTimeLoading] = useState(true);
 
   const [botId, setBotId] = useState('');
   const [botShortDescription, setBotShortDescription] = useState('');
@@ -44,8 +50,6 @@ export default function NewBot() {
       setBotDescription(localData.botDescription);
       setBotInviteUrl(localData.botInviteUrl);
       setBotCategories(localData.botCategories);
-
-      toast.info(t('accountPage.tabs.myBots.sections.addBot.toast.storedDataLoaded'));
     }
   }, []);
 
@@ -61,7 +65,53 @@ export default function NewBot() {
     });
   }, [botId, botShortDescription, botDescription, botInviteUrl, botCategories]);
 
+  useEffect(() => {
+    getBotStats()
+      .then(response => {
+        if (typeof response.average_bot_approval_time_minutes === 'number') {
+          setAverageApprovalTimeMinutes(response.average_bot_approval_time_minutes);
+
+          return;
+        }
+
+        if (typeof response.average_bot_approval_time_hours === 'number') {
+          setAverageApprovalTimeMinutes(Math.round(response.average_bot_approval_time_hours * 60));
+        }
+      })
+      .finally(() => setAverageApprovalTimeLoading(false));
+  }, []);
+
   const router = useRouter();
+
+  function formatAverageApprovalTime(totalMinutes) {
+    if (typeof totalMinutes !== 'number' || Number.isNaN(totalMinutes)) return null;
+
+    const selectedLanguage = language === 'loading' ? 'en' : language;
+    const dateFnsKey = config.availableLocales.find(locale => locale.code === selectedLanguage)?.dateFnsKey || 'enUS';
+    const locale = locales[dateFnsKey];
+
+    const duration = intervalToDuration({
+      start: 0,
+      end: totalMinutes * 60 * 1000
+    });
+
+    const formattedDuration = formatDuration(duration, {
+      locale,
+      format: ['hours', 'minutes'],
+      delimiter: ' ',
+      zero: false
+    });
+
+    if (formattedDuration) return formattedDuration;
+
+    return formatDuration({ minutes: 0 }, {
+      locale,
+      format: ['minutes'],
+      zero: true
+    });
+  }
+
+  const formattedAverageApprovalTime = formatAverageApprovalTime(averageApprovalTimeMinutes) || t('accountPage.tabs.myBots.sections.addBot.averageApprovalTimeUnavailable');
 
   function addBot() {
     setLoading(true);
@@ -85,6 +135,15 @@ export default function NewBot() {
           setBotShortDescription('');
           setBotDescription('');
           setBotCategories([]);
+
+          // Clear local storage
+          setLocalData({
+            botId: '',
+            botShortDescription: '',
+            botDescription: '',
+            botInviteUrl: '',
+            botCategories: []
+          });
         }, 3000);
 
         setRenderConfetti(true);
@@ -125,6 +184,15 @@ export default function NewBot() {
         <p className='max-w-[800px] text-sm text-tertiary sm:text-base'>
           {t('accountPage.tabs.myBots.sections.addBot.subtitle')}
         </p>
+
+        {averageApprovalTimeLoading ? (
+          <div className='h-[20px] w-[300px] animate-pulse rounded-lg bg-tertiary' />
+        ) : (
+          <div className='flex items-center gap-x-2 text-sm text-tertiary'>
+            <MdAccessTimeFilled size={16}/>
+            {t('accountPage.tabs.myBots.sections.addBot.averageApprovalTime', { time: formattedAverageApprovalTime })}
+          </div>
+        )}
 
         <div className='mt-12 flex w-full items-center justify-center'>
           <div className='flex w-full max-w-[800px] flex-col gap-y-1'>
