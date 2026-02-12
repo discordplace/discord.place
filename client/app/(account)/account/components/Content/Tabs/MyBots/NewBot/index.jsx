@@ -111,7 +111,7 @@ export default function NewBot() {
     });
   }
 
-  const formattedAverageApprovalTime = formatAverageApprovalTime(averageApprovalTimeMinutes) || t('accountPage.tabs.myBots.sections.addBot.averageApprovalTimeUnavailable');
+  const formattedAverageApprovalTime = formatAverageApprovalTime(averageApprovalTimeMinutes) || 'N/A';
 
   function addBot() {
     setLoading(true);
