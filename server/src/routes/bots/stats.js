@@ -8,15 +8,14 @@ module.exports = {
       const [stats] = await Bot.aggregate([
         {
           $match: {
-            verified: true
+            verified: true,
+            verified_at: { $ne: null }
           }
         },
         {
           $project: {
             createdAt: 1,
-            approvedAt: {
-              $ifNull: ['$verified_at', '$updatedAt']
-            }
+            approvedAt: '$verified_at'
           }
         },
         {
