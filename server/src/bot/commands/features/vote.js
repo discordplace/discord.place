@@ -61,6 +61,8 @@ module.exports = {
       }
     }
 
+    client.currentlyInHumanVerification.set(interaction.user.id, true);
+
     const reply = await interaction.followUp({
       content: await interaction.translate('commands.vote.human_verification_text', { guildName: interaction.guild.name, emoji: selectedEmoji.emoji }),
       components: rows
@@ -89,6 +91,8 @@ module.exports = {
     collector.on('end', async (_, reason) => {
       if (reason === 'success') return;
 
+      client.currentlyInHumanVerification.delete(interaction.user.id);
+
       interaction.editReply({
         content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
         components: []
@@ -96,6 +100,8 @@ module.exports = {
     });
   },
   continueVote(interaction) {
+    client.currentlyInHumanVerification.delete(interaction.user.id);
+
     incrementVote(interaction.guild.id, interaction.user.id)
       .then(async () => {
         const components = [
