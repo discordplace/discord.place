@@ -19,6 +19,8 @@ module.exports = {
   async execute (interaction) {
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ flags: Discord.MessageFlags.Ephemeral });
 
+    if (interaction.client.currentlyInHumanVerification.has(interaction.user.id)) return interaction.followUp(await interaction.translate('interaction.buttons.human_verification.errors.already_in_verification'));
+
     const userOrGuildQuarantined = await findQuarantineEntry.multiple([
       { type: 'USER_ID', value: interaction.user.id, restriction: 'SERVERS_VOTE' },
       { type: 'GUILD_ID', value: interaction.guild.id, restriction: 'SERVERS_VOTE' }
@@ -59,6 +61,8 @@ module.exports = {
       }
     }
 
+    client.currentlyInHumanVerification.set(interaction.user.id, true);
+
     const reply = await interaction.followUp({
       content: await interaction.translate('commands.vote.human_verification_text', { guildName: interaction.guild.name, emoji: selectedEmoji.emoji }),
       components: rows
@@ -87,6 +91,8 @@ module.exports = {
     collector.on('end', async (_, reason) => {
       if (reason === 'success') return;
 
+      client.currentlyInHumanVerification.delete(interaction.user.id);
+
       interaction.editReply({
         content: await interaction.translate('interaction.buttons.human_verification.errors.failed'),
         components: []
@@ -94,6 +100,8 @@ module.exports = {
     });
   },
   continueVote(interaction) {
+    client.currentlyInHumanVerification.delete(interaction.user.id);
+
     incrementVote(interaction.guild.id, interaction.user.id)
       .then(async () => {
         const components = [
