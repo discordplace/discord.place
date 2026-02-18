@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/discordplace/discord.place/compare/server@v1.17.0...server@v1.18.0) (2026-02-18)
+
+
+### Features
+
+* **server/commands:** add ongoing verification check ([#208](https://github.com/discordplace/discord.place/issues/208)) ([245bb29](https://github.com/discordplace/discord.place/commit/245bb297bcbdfe21c4e2f3265d067ba935f3b993))
+
 ## [1.17.0](https://github.com/discordplace/discord.place/compare/server@v1.16.3...server@v1.17.0) (2026-02-12)
 
 
