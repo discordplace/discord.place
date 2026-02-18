@@ -579,7 +579,8 @@
           "guild_not_found": "Sunucuyu bulamadım.",
           "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
           "member_not_found": "Sunucuda değilsiniz.",
-          "failed": "Kendinizi doğrulamada başarısız oldunuz."
+          "failed": "Kendinizi doğrulamada başarısız oldunuz.",
+          "already_in_verification": "Zaten bir doğrulama sürecindesiniz. Lütfen yeni bir doğrulama süreci başlatmadan önce mevcut doğrulama sürecini tamamlayın."
         },
         "success": "Başarıyla kendinizi doğruladınız."
       }

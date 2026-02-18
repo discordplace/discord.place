@@ -19,6 +19,8 @@ module.exports = {
   async execute (interaction) {
     if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ flags: Discord.MessageFlags.Ephemeral });
 
+    if (interaction.client.currentlyInHumanVerification.has(interaction.user.id)) return interaction.followUp(await interaction.translate('interaction.buttons.human_verification.errors.already_in_verification'));
+
     const userOrGuildQuarantined = await findQuarantineEntry.multiple([
       { type: 'USER_ID', value: interaction.user.id, restriction: 'SERVERS_VOTE' },
       { type: 'GUILD_ID', value: interaction.guild.id, restriction: 'SERVERS_VOTE' }

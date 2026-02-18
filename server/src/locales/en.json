@@ -442,7 +442,8 @@
           "guild_not_found": "I couldn't find the server.",
           "server_not_listed": "This server is not listed on discord.place.",
           "member_not_found": "You are not in the server.",
-          "failed": "You failed to verify yourself."
+          "failed": "You failed to verify yourself.",
+          "already_in_verification": "You are already in the process of verifying yourself. Please complete the current verification before starting a new one."
         },
         "success": "You successfully verified yourself."
       }
