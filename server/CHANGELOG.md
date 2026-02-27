@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.18.0](https://github.com/discordplace/discord.place/compare/server@v1.17.0...server@v1.18.0) (2026-02-27)
+
+
+### Features
+
+* **server/bots:** enhance server count validation by allowing a difference based on actual count ([3b8d511](https://github.com/discordplace/discord.place/commit/3b8d511da1f592e7efdbdfd1d191518d29a50597))
+* **server/commands:** add ongoing verification check ([#208](https://github.com/discordplace/discord.place/issues/208)) ([245bb29](https://github.com/discordplace/discord.place/commit/245bb297bcbdfe21c4e2f3265d067ba935f3b993))
+
 ## [1.18.0](https://github.com/discordplace/discord.place/compare/server@v1.17.0...server@v1.18.0) (2026-02-18)
 
 
