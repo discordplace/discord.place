@@ -5,6 +5,7 @@ async function getApproximateGuildCount(botId) {
   if (!process.env.DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET) throw new Error('DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET environment variable is missing');
 
   try {
+
     const response = await axios.get(`${process.env.DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL}/bots/${botId}`, {
       headers: {
         'authorization': process.env.DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET
