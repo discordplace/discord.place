@@ -38,7 +38,8 @@ async function authCallback(access_token, response, setApplicationsEntitlementsS
   response.cookie('token', token, {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
-    domain: `.${new URL(config.frontendUrl).hostname}`
+    domain: `.${new URL(config.frontendUrl).hostname}`,
+    sameSite: 'lax'
   });
 
   await User.findOneAndUpdate({ id: user.id },
