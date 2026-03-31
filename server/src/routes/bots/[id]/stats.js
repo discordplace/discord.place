@@ -24,14 +24,14 @@ module.exports = {
       const apiKey = request.headers['authorization'];
       if (!apiKey) return response.sendError('Authorization header is required.', 401);
 
-      const decryptedApiKey = bot.getDecryptedApiKey(apiKey);
-      if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
-
       const botUser = client.users.cache.get(id) || await client.users.fetch(id).catch(() => null);
       if (!botUser) return response.sendError('Bot not found.', 404);
 
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
+
+      const decryptedApiKey = bot.getDecryptedApiKey(apiKey);
+      if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
 
       if (command_count !== undefined) bot.command_count = { value: command_count, updatedAt: new Date() };
       if (server_count !== undefined) {
