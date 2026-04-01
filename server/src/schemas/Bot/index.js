@@ -186,6 +186,10 @@ const BotSchema = new Schema({
       type: Date
     }
   },
+  stats_spam_strikes: {
+    type: [Date],
+    default: []
+  },
   api_key: {
     iv: {
       type: String,

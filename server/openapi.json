@@ -101,7 +101,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized. API key is missing or invalid.",
+            "description": "Unauthorized. API key is missing, invalid, or revoked due to spam.",
             "content": {
               "application/json": {
                 "schema": {
@@ -121,6 +121,14 @@
                     "value": {
                       "success": false,
                       "error": "Invalid API key.",
+                      "status": 401
+                    }
+                  },
+                  "apiKeyRevoked": {
+                    "summary": "API Key Revoked",
+                    "value": {
+                      "success": false,
+                      "error": "Your API key has been revoked due to spamming the stats API. Please generate a new key from your dashboard.",
                       "status": 401
                     }
                   }
@@ -149,7 +157,24 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "description": "Too Many Requests. Attempting to update stats before the 6-hour cooldown.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "rateLimited": {
+                    "summary": "Rate limited",
+                    "value": {
+                      "success": false,
+                      "error": "You can only update stats once every 6 hours.",
+                      "status": 429
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error. An unexpected error occurred on the server.",

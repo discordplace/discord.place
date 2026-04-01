@@ -7,7 +7,7 @@ const sendLog = require('@/src/utils/sendLog');
 
 module.exports = {
   patch: [
-    useRateLimiter({ maxRequests: 2, perMinutes: 120 }),
+    useRateLimiter({ maxRequests: 2, perMinutes: 30, keyGenerator: request => `bot-stats:${request.params.id}` }),
     param('id'),
     body('command_count')
       .isInt({ min: 0, max: 1000 }).withMessage('Commands count must be between 0 and 1,000.')
@@ -32,6 +32,45 @@ module.exports = {
 
       const decryptedApiKey = bot.getDecryptedApiKey(apiKey);
       if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
+
+      const now = new Date();
+      const sixHoursAgo = new Date(now.getTime() - 6 * 60 * 60 * 1000);
+      const isCooldownActive = (bot.command_count?.updatedAt > sixHoursAgo) || (bot.server_count?.updatedAt > sixHoursAgo);
+
+      if (isCooldownActive) {
+        bot.stats_spam_strikes.push(now);
+        bot.stats_spam_strikes = bot.stats_spam_strikes.filter(date => date > sixHoursAgo);
+
+        if (bot.stats_spam_strikes.length >= 5) {
+          bot.api_key = undefined;
+          bot.stats_spam_strikes = [];
+
+          sendLog(
+            'botApiKeyRevoked',
+            [
+              { type: 'user', name: 'Bot', value: id },
+              { type: 'text', name: 'Reason', value: 'Spamming stats route' }
+            ],
+            [
+              { label: 'View Bot', url: `${config.frontendUrl}/bots/${id}` }
+            ]
+          );
+
+          const ownerUser = client.users.cache.get(bot.owner.id) || await client.users.fetch(bot.owner.id).catch(() => null);
+          if (ownerUser) {
+            const dmChannel = ownerUser.dmChannel || await ownerUser.createDM().catch(() => null);
+            if (dmChannel) dmChannel.send({ content: `### Alert\nYour bot **${botUser.username}**'s API key has been revoked due to spamming the stats API.\nYou can only update bot stats once every 6 hours. Please update your cron jobs to 6 hours and generate a new key from your dashboard.` }).catch(() => null);
+          }
+
+          await bot.save();
+
+          return response.sendError('Your API key has been revoked due to spamming the stats API. Please generate a new key from your dashboard.', 401);
+        }
+
+        await bot.save();
+
+        return response.sendError('You can only update stats once every 6 hours.', 429);
+      }
 
       if (command_count !== undefined) bot.command_count = { value: command_count, updatedAt: new Date() };
       if (server_count !== undefined) {
