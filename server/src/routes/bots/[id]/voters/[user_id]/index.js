@@ -5,7 +5,7 @@ const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
-    useRateLimiter({ maxRequests: 100, perMinutes: 5 }),
+    useRateLimiter({ maxRequests: 100, perMinutes: 5, keyGenerator: request => `bot-voters:${request.params.id}` }),
     param('id'),
     param('user_id'),
     validateRequest,
