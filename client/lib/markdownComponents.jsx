@@ -3,8 +3,11 @@
 
 import { TbFileTypeXml, SiPhp, MdHttps, IoLogoJavascript, IoLogoPython, FiArrowUpRight, FaFileCode, BiCodeCurly } from '@/icons';
 import Link from 'next/link';
+import { Children, isValidElement } from 'react';
 import cn from './cn';
-import Zoom from 'react-medium-image-zoom';import CodeBlock from '@/app/components/CodeBlock';import CustomIFrame from '@/app/components/Markdown/iframe';
+import Zoom from 'react-medium-image-zoom';
+import CodeBlock from '@/app/components/CodeBlock';
+import CustomIFrame from '@/app/components/Markdown/iframe';
 import Image from 'next/image';
 import Tooltip from '@/app/components/Tooltip';
 
@@ -100,6 +103,37 @@ function withEmojiSupport(Component) {
   };
 }
 
+function isImageOnlyLinkNode(node) {
+  if (!node?.children?.length) return false;
+
+  let hasImage = false;
+
+  for (const child of node.children) {
+    if (child.type === 'element' && child.tagName === 'img') {
+      hasImage = true;
+      continue;
+    }
+
+    if (child.type === 'text' && !child.value.trim()) continue;
+
+    return false;
+  }
+
+  return hasImage;
+}
+
+function isImageOnlyLinkChildren(children) {
+  const renderedChildren = Children.toArray(children).filter(
+    child => !(typeof child === 'string' && !child.trim())
+  );
+
+  if (!renderedChildren.length) return false;
+
+  return renderedChildren.every(
+    child => isValidElement(child) && (child.type === 'img' || child.type === Zoom)
+  );
+}
+
 function toCodePoint(emoji) {
   if (emoji.length === 1) return emoji.charCodeAt(0).toString(16);
 
@@ -155,18 +189,23 @@ const markdownComponents = {
   h5: withEmojiSupport('h5'),
   h6: withEmojiSupport('h6'),
   li: withEmojiSupport('li'),
-  a: withEmojiSupport(({ children, href }) => {
+  a: ({ children, href, node }) => {
+    if (isImageOnlyLinkNode(node) || isImageOnlyLinkChildren(children)) {
+      return <>{children}</>;
+    }
+
+    const content = Array.isArray(children) ? children.map((child, index) => processContent(child, index)) : processContent(children, 0);
+
     return (
       <Link
         href={href}
         className='inline-flex items-center gap-x-2 underline-offset-4 [text-decoration:unset] hover:underline'
       >
-        {children}
-
-        {!children.key?.startsWith('img-') && <FiArrowUpRight />}
+        {content}
+        <FiArrowUpRight />
       </Link>
     );
-  }),
+  },
   strong: withEmojiSupport('strong'),
   em: withEmojiSupport('em'),
   blockquote: withEmojiSupport('blockquote'),
