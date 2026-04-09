@@ -60,7 +60,7 @@ function DiscordEmoji({ children }) {
 
   return parts.map((part, index) => {
     if (!part) return null;
-    if (!emojiRegex.test(part)) return part;
+    if (!singleEmojiRegex.test(part)) return part;
 
     const codePoint = toCodePoint(part);
 
@@ -156,6 +156,7 @@ function toCodePoint(emoji) {
 
 // Regular expression for matching emoji characters
 const emojiRegex = /(\p{Emoji_Presentation}|\p{Extended_Pictographic})/gu;
+const singleEmojiRegex = /^(\p{Emoji_Presentation}|\p{Extended_Pictographic})$/u;
 
 const markdownComponents = {
   iframe: ({ src, title }) => {
@@ -213,11 +214,12 @@ const markdownComponents = {
   th: withEmojiSupport('th'),
   code: ({ children, className }) => {
     const languageMatch = /language-(\w+)/.exec(className || '');
+    const language = languageMatch?.[1]?.toLowerCase();
 
-    let fileName = languageMatch?.[1];
+    let fileName = language;
     let FileIcon = <FaFileCode />;
 
-    switch (languageMatch?.[1]) {
+    switch (language) {
       case 'js':
         fileName = 'index.js';
         FileIcon = <IoLogoJavascript />;
@@ -230,7 +232,7 @@ const markdownComponents = {
         fileName = 'data.json';
         FileIcon = <BiCodeCurly />;
         break;
-      case 'cURL':
+      case 'curl':
         fileName = 'request.sh';
         FileIcon = <BiCodeCurly />;
         break;
@@ -256,7 +258,7 @@ const markdownComponents = {
       <CodeBlock
         FileIcon={FileIcon}
         fileName={fileName}
-        language={languageMatch[1]}
+        language={language}
       >
         {children}
       </CodeBlock>
