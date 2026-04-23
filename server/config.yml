@@ -308,8 +308,7 @@ quarantineRestrictions:
     available_to:
       - 'USER_ID'
 customHostnames:
-  - 'dsc.lat'
-  - 'dsc.gay'
+  - 'dsc.mom'
   - 'dsc.wtf'
   - 'dsc.baby'
 emojisDenyReasons:
