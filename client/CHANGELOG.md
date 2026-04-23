@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.23.0](https://github.com/discordplace/discord.place/compare/client@v1.22.0...client@v1.23.0) (2026-04-23)
+
+
+### Features
+
+* **client/markdown:** disable link rendering for img tags ([26913e1](https://github.com/discordplace/discord.place/commit/26913e1dbd6319a993670ca4b2c602b316b51a0e))
+* update custom hostnames ([d05b767](https://github.com/discordplace/discord.place/commit/d05b7673ed9ee1e7fd4c9d9c721b664f095fd3d1))
+
+
+### Bug Fixes
+
+* **client/markdown:** stabilize emoji parsing and normalize curl language detection ([1e918b8](https://github.com/discordplace/discord.place/commit/1e918b889ac6e3152567b6133198f54f65208e84))
+
 ## [1.22.0](https://github.com/discordplace/discord.place/compare/client@v1.21.0...client@v1.22.0) (2026-02-12)
 
 
