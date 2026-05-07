@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.23.0](https://github.com/discordplace/discord.place/compare/client@v1.22.0...client@v1.23.0) (2026-05-07)
+
+
+### Features
+
+* **client/markdown:** disable link rendering for img tags ([26913e1](https://github.com/discordplace/discord.place/commit/26913e1dbd6319a993670ca4b2c602b316b51a0e))
+* **server/bots:** add Force Refresh functionality for data synchronization ([d4ec1bc](https://github.com/discordplace/discord.place/commit/d4ec1bc0e0702521dbcc3ba05a3c1065b1c08549))
+* update custom hostnames ([d05b767](https://github.com/discordplace/discord.place/commit/d05b7673ed9ee1e7fd4c9d9c721b664f095fd3d1))
+
+
+### Bug Fixes
+
+* **client/bots:** remove MdSync icon for force refresh button ([a9346a8](https://github.com/discordplace/discord.place/commit/a9346a82448403ada9cecdcccbe5696c9d36392d))
+* **client/bots:** remove MdSync icon for force refresh button ([bd21f16](https://github.com/discordplace/discord.place/commit/bd21f165259950e566a0ef857d5183b1193569c8))
+* **client/markdown:** stabilize emoji parsing and normalize curl language detection ([1e918b8](https://github.com/discordplace/discord.place/commit/1e918b889ac6e3152567b6133198f54f65208e84))
+
 ## [1.22.0](https://github.com/discordplace/discord.place/compare/client@v1.21.0...client@v1.22.0) (2026-02-12)
 
 

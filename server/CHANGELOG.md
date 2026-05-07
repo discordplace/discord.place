@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.19.0](https://github.com/discordplace/discord.place/compare/server@v1.18.0...server@v1.19.0) (2026-05-07)
+
+
+### Features
+
+* **auth:** add sameSite attribute to cookie for improved security ([16b1257](https://github.com/discordplace/discord.place/commit/16b125736d89b687e4bcad1f3b0c235cdc93f20d))
+* **server/bots:** add Force Refresh functionality for data synchronization ([d4ec1bc](https://github.com/discordplace/discord.place/commit/d4ec1bc0e0702521dbcc3ba05a3c1065b1c08549))
+* **server/bots:** add key generator to rate limiter in bot get voters route ([30083e4](https://github.com/discordplace/discord.place/commit/30083e44571bad2f859699ab0b26c11c7c1c7d16))
+* **server/bots:** enhance server count validation by allowing a difference based on actual count ([3b8d511](https://github.com/discordplace/discord.place/commit/3b8d511da1f592e7efdbdfd1d191518d29a50597))
+* **server/bots:** implement API key revocation for spamming and enhance rate limiting ([384aab6](https://github.com/discordplace/discord.place/commit/384aab6db2255241ec23fc883439c79db2e57362))
+* update custom hostnames ([d05b767](https://github.com/discordplace/discord.place/commit/d05b7673ed9ee1e7fd4c9d9c721b664f095fd3d1))
+
+
+### Bug Fixes
+
+* **server/bots:** ensure API key validation occurs after authorization check ([ff6ad2e](https://github.com/discordplace/discord.place/commit/ff6ad2efd307c2425cc9abf5ee571fbd16caf835))
+* **server/bots:** update bot data using updateOne instead of findOneAndUpdate ([8e44293](https://github.com/discordplace/discord.place/commit/8e442933997c2368aafb9fe3676f51a9cef72783))
+* **server/reviews:** fix broken markdown in log messages ([baf18e4](https://github.com/discordplace/discord.place/commit/baf18e402e83f74de7b040cb6d9afaeea4654b08))
+
 ## [1.18.0](https://github.com/discordplace/discord.place/compare/server@v1.17.0...server@v1.18.0) (2026-04-01)
 
 
