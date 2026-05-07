@@ -248,6 +248,7 @@
     "save": "Saxla",
     "edit": "Redaktə et",
     "reset": "Sıfırlayın",
+    "forceRefresh": "Məcburi Yenilə",
     "add": "əlavə et",
     "addNew": "Yeni əlavə et",
     "darkMode": "Qaranlı rejim",
@@ -1512,6 +1513,14 @@
       "title": "Dəyişiklikləri ləğv edin",
       "description": "Dəyişikliklərinizi ləğv etmək istədiyinizə əminsiniz?",
       "note": "Dəyişiklikləriniz yadda saxlanmayacaq."
+    },
+    "forceRefresh": {
+      "title": "Məlumat Sinxronizasiyası",
+      "subtitle": "Botunuzun istifadəçi adını, avatarını və digər Discord məlumatlarını məlumat bazamızda saxlayırıq. Əgər onları yaxınlarda dəyişdirmisinizsə, məlumatları dərhal sinxronlaşdırmaq üçün məcburi yeniləyə bilərsiniz.",
+      "toast": {
+        "refreshingData": "Bot məlumatları yenilənir..",
+        "dataRefreshed": "Bot məlumatları uğurla yeniləndi. Lütfən bir neçə saniyə gözləyin."
+      }
     },
     "essentialInformation": {
       "title": "Əsas Məlumat",

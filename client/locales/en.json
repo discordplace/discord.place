@@ -248,6 +248,7 @@
     "save": "Save",
     "edit": "Edit",
     "reset": "Reset",
+    "forceRefresh": "Force Refresh",
     "add": "Add",
     "addNew": "Add New",
     "darkMode": "Dark Mode",
@@ -1512,6 +1513,14 @@
       "title": "Discard Changes",
       "description": "Are you sure you want to discard your changes?",
       "note": "Your changes will not be saved."
+    },
+    "forceRefresh": {
+      "title": "Data Synchronization",
+      "subtitle": "We store your bot's username, avatar, and other Discord data in our database. If you recently changed them, you can force a refresh to synchronize the data instantly.",
+      "toast": {
+        "refreshingData": "Refreshing bot data..",
+        "dataRefreshed": "Bot data refreshed successfully. Please wait a few seconds."
+      }
     },
     "essentialInformation": {
       "title": "Essential Information",

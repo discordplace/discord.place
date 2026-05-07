@@ -9,6 +9,7 @@ import Webhook from '@/app/(bots)/bots/[id]/manage/components/Webhook';
 import ApiKey from '@/app/(bots)/bots/[id]/manage/components/ApiKey';
 import DangerZone from '@/app/(bots)/bots/[id]/manage/components/DangerZone';
 import ExtraOwners from '@/app/(bots)/bots/[id]/manage/components/ExtraOwners';
+import ForceRefresh from '@/app/(bots)/bots/[id]/manage/components/ForceRefresh';
 import { toast } from 'sonner';
 import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
@@ -281,6 +282,10 @@ export default function Content({ bot }) {
           botId={bot.id}
           apiKey={bot.api_key}
         />
+
+        <div className='h-px w-full bg-tertiary' />
+
+        <ForceRefresh botId={bot.id} />
 
         {bot.permissions.canDelete && (
           <>

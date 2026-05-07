@@ -248,6 +248,7 @@
     "save": "Kaydet",
     "edit": "Düzenle",
     "reset": "Sıfırla",
+    "forceRefresh": "Zorla Yenile",
     "add": "Ekle",
     "addNew": "Yeni Ekle",
     "darkMode": "Karanlık Mod",
@@ -1512,6 +1513,14 @@
       "title": "Değişiklikleri İptal Et",
       "description": "Değişikliklerinizi iptal etmek istediğinizden emin misiniz?",
       "note": "Değişikliklerinizi iptal etmek, yapılan tüm değişiklikleri geri alacaktır."
+    },
+    "forceRefresh": {
+      "title": "Veri Senkronizasyonu",
+      "subtitle": "Botunuzun kullanıcı adını, profil fotoğrafını ve diğer Discord verilerini veritabanımızda saklıyoruz. Eğer bunları yakın zamanda değiştirdiyseniz, verileri anında senkronize etmek için zorla yenileme yapabilirsiniz.",
+      "toast": {
+        "refreshingData": "Bot verileri yenileniyor..",
+        "dataRefreshed": "Bot verileri başarıyla yenilendi. Lütfen birkaç saniye bekleyin."
+      }
     },
     "essentialInformation": {
       "title": "Önemli Ayarlar",
