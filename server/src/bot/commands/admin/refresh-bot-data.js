@@ -26,14 +26,13 @@ module.exports = {
       const botUser = await client.users.fetch(id).catch(() => null);
       if (!botUser) return interaction.editReply({ content: `Bot with ID **${id}** not found.` });
 
-      await bot.findOneAndUpdate(
-        { id },
+      await bot.updateOne(
         {
-          $set: {
-            'data.username': botUser.username,
-            'data.discriminator': botUser.discriminator,
-            'data.tag': botUser.tag,
-            'data.flags': botUser.flags
+          data: {
+            username: botUser.username,
+            discriminator: botUser.discriminator,
+            tag: botUser.tag,
+            flags: botUser.flags
           }
         }
       );
