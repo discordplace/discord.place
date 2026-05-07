@@ -46,7 +46,7 @@ export default function ForceRefresh({ botId }) {
         disabled={refreshingData}
         onClick={refreshData}
       >
-        {refreshingData ? <TbLoader size={18} className='animate-spin' /> : <MdSync size={18} />}
+        {refreshingData && <MdSync size={18} />}
         {t('buttons.forceRefresh')}
       </button>
     </div>
