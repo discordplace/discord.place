@@ -5,7 +5,6 @@ import { toast } from 'sonner';
 import { useState } from 'react';
 import refreshBot from '@/lib/request/bots/refreshBot';
 import revalidateBot from '@/lib/revalidate/bot';
-import { TbLoader } from '@/icons';
 import { t } from '@/stores/language';
 
 export default function ForceRefresh({ botId }) {
