@@ -30,8 +30,11 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      const decryptedApiKey = bot.getDecryptedApiKey(apiKey);
+      const decryptedApiKey = bot.getDecryptedApiKey();
       if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
+
+      // eslint-disable-next-line security/detect-possible-timing-attacks
+      if (decryptedApiKey !== apiKey) return response.sendError('Invalid API key.', 401);
 
       const now = new Date();
       const sixHoursAgo = new Date(now.getTime() - 6 * 60 * 60 * 1000);

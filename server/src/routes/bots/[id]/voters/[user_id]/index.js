@@ -21,8 +21,11 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
-      const decryptedApiKey = bot.getDecryptedApiKey(apiKey);
+      const decryptedApiKey = bot.getDecryptedApiKey();
       if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
+
+      // eslint-disable-next-line security/detect-possible-timing-attacks
+      if (decryptedApiKey !== apiKey) return response.sendError('Invalid API key.', 401);
 
       const isVotedInLast24Hours = bot.voters.some(voter => voter.user.id == user_id && new Date() - voter.lastVote < 86400000);
       const voteData = bot.voters.find(voter => voter.user.id == user_id) || {};
