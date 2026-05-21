@@ -1,12 +1,15 @@
 'use client';
 
 import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle } from '@/icons';
-import config from '@/config';import { useEffect, useState } from 'react';
+import config from '@/config';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import cn from '@/lib/cn';import createSound from '@/lib/request/sounds/createSound';
+import cn from '@/lib/cn';
+import createSound from '@/lib/request/sounds/createSound';
 import { useRouter } from 'next/navigation';
-import Lottie from 'react-lottie';
-import confetti from '@/lib/lotties/confetti.json';import useAccountStore from '@/stores/account';
+import Lottie from 'lottie-react';
+import confetti from '@/lib/lotties/confetti.json';
+import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
 
 export default function NewSound() {
@@ -14,6 +17,19 @@ export default function NewSound() {
 
   const [loading, setLoading] = useState(false);
   const [renderConfetti, setRenderConfetti] = useState(false);
+  const lottieRef = useRef(null);
+
+  useEffect(() => {
+    if (renderConfetti) {
+      lottieRef.current?.play();
+
+      const timer = setTimeout(() => {
+        setRenderConfetti(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [renderConfetti]);
 
   const [soundName, setSoundName] = useState('');
   const [soundCategories, setSoundCategories] = useState([]);
@@ -67,7 +83,7 @@ export default function NewSound() {
   return (
     <>
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
+        <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%'/>
       </div>
 
       <div className='flex w-full max-w-[800px] flex-col justify-center gap-y-4'>

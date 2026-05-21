@@ -2,7 +2,7 @@
 
 import { TbLoader, FaCloudUploadAlt } from '@/icons';
 import useThemeStore from '@/stores/theme';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
 import cn from '@/lib/cn';
@@ -14,7 +14,7 @@ import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEm
 import Image from 'next/image';
 import useGeneralStore from '@/stores/general';
 import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import useAuthStore from '@/stores/auth';
 import Tooltip from '@/app/components/Tooltip';
@@ -26,6 +26,19 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
   const theme = useThemeStore(state => state.theme);
   const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark');
   const [renderConfetti, setRenderConfetti] = useState(false);
+  const lottieRef = useRef(null);
+
+  useEffect(() => {
+    if (renderConfetti) {
+      lottieRef.current?.play();
+
+      const timer = setTimeout(() => {
+        setRenderConfetti(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [renderConfetti]);
 
   useEffect(() => {
     setPatternDarkMode(theme === 'dark');
@@ -132,9 +145,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     <div className='relative flex h-[250px] w-full flex-col items-center justify-center gap-y-2 overflow-hidden rounded-md bg-secondary' style={{
       backgroundImage: `url(/${patternDarkMode ? 'transparent-pattern-dark' : 'transparent-pattern-light'}.png)`
     }}>
-
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
+        <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%'/>
       </div>
 
       <AnimatePresence>

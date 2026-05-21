@@ -2,12 +2,12 @@
 
 import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle } from '@/icons';
 import config from '@/config';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import cn from '@/lib/cn';
 import createTheme from '@/lib/request/themes/createTheme';
 import { useRouter } from 'next/navigation';
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
@@ -20,6 +20,19 @@ export default function NewTheme() {
 
   const [loading, setLoading] = useState(false);
   const [renderConfetti, setRenderConfetti] = useState(false);
+  const lottieRef = useRef(null);
+
+  useEffect(() => {
+    if (renderConfetti) {
+      lottieRef.current?.play();
+
+      const timer = setTimeout(() => {
+        setRenderConfetti(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [renderConfetti]);
 
   const [colors, setColors] = useState({
     primary: null,
@@ -62,7 +75,7 @@ export default function NewTheme() {
   return (
     <>
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
+        <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%' />
       </div>
 
       <div className='flex w-full max-w-[800px] flex-col justify-center gap-y-4'>

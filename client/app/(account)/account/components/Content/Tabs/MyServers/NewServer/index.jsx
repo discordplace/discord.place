@@ -6,9 +6,9 @@ import Image from 'next/image';
 import createServer from '@/lib/request/servers/createServer';
 import useAccountStore from '@/stores/account';
 import { useRouter } from 'next-nprogress-bar';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import config from '@/config';
 import Select from '@/app/components/Select';
@@ -21,6 +21,19 @@ export default function NewServer() {
   const setCurrentlyAddingServer = useAccountStore(state => state.setCurrentlyAddingServer);
 
   const [renderConfetti, setRenderConfetti] = useState(false);
+  const lottieRef = useRef(null);
+
+  useEffect(() => {
+    if (renderConfetti) {
+      lottieRef.current?.play();
+
+      const timer = setTimeout(() => {
+        setRenderConfetti(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [renderConfetti]);
 
   const [serverDescription, setServerDescription] = useState('');
   const [serverInviteLink, setServerInviteLink] = useState('');
@@ -85,7 +98,7 @@ export default function NewServer() {
   return (
     <>
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%' />
+        <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%' />
       </div>
 
       <div className='flex w-full max-w-[800px] flex-col justify-center gap-y-4'>

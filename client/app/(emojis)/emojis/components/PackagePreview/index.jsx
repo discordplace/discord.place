@@ -2,7 +2,7 @@
 
 import { TbLoader, MdEmojiEmotions, FaCloudUploadAlt } from '@/icons';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useThemeStore from '@/stores/theme';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -12,7 +12,7 @@ import { useShallow } from 'zustand/react/shallow';
 import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
 import useGeneralStore from '@/stores/general';
 import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import config from '@/config';
 import Tooltip from '@/app/components/Tooltip';
@@ -25,6 +25,19 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
   const theme = useThemeStore(state => state.theme);
   const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark');
   const [renderConfetti, setRenderConfetti] = useState(false);
+  const lottieRef = useRef(null);
+
+  useEffect(() => {
+    if (renderConfetti) {
+      lottieRef.current?.play();
+
+      const timer = setTimeout(() => {
+        setRenderConfetti(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [renderConfetti]);
 
   useEffect(() => {
     setPatternDarkMode(theme === 'dark');
@@ -141,7 +154,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
   return (
     <div className='flex flex-col gap-y-4'>
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        <Lottie options={{ loop: false, autoplay: false, animationData: confetti }} isStopped={!renderConfetti} height='100%' width='100%'/>
+        <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%'/>
       </div>
 
       {ableToChange && (

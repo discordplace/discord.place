@@ -1,5 +1,5 @@
 import { TbLoader, PiHeart, PiHeartFill, PiWaveformBold, MdAccountCircle, MdDownload, IoMdCalendar, FaCloudUploadAlt } from '@/icons';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
@@ -16,7 +16,7 @@ import uploadSoundToGuild from '@/lib/request/sounds/uploadSoundToGuild';
 import confetti from '@/lib/lotties/confetti.json';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-react';
 import useLanguageStore, { t } from '@/stores/language';
 import Link from 'next/link';
 
@@ -25,6 +25,19 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
   const language = useLanguageStore(state => state.language);
   const [liked, setLiked] = useState(sound.isLiked);
   const [loading, setLoading] = useState(false);
+  const lottieRef = useRef(null);
+
+  useEffect(() => {
+    if (renderConfetti) {
+      lottieRef.current?.play();
+
+      const timer = setTimeout(() => {
+        setRenderConfetti(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [renderConfetti]);
 
   const handleLike = () => {
     if (!loggedIn) return toast.error(t('soundCard.toast.notLoggedIn'));
@@ -183,17 +196,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
       )}
     >
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
-        {renderConfetti && (
-          <Lottie
-            options={{
-              loop: false,
-              autoplay: true,
-              animationData: confetti
-            }}
-            height='100%'
-            width='100%'
-          />
-        )}
+        <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%' />
       </div>
 
       <div className='flex items-start justify-between'>
