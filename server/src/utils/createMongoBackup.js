@@ -27,13 +27,11 @@ async function createMongoBackup() {
     await zipBackupFolder(backupPath);
     await uploadBackupToS3(`${backupPath}/backup.zip`, `${formattedDate}/backup.zip`);
 
-    if (process.env.HEARTBEAT_ID_DAILY_DATABASE_BACKUP) sendHeartbeat(process.env.HEARTBEAT_ID_DAILY_DATABASE_BACKUP, 0);
+    if (process.env.DAILY_DATABASE_BACKUP_HEARTBEAT_URL) sendHeartbeat(process.env.DAILY_DATABASE_BACKUP_HEARTBEAT_URL);
 
     logger.info('Database backup uploaded to S3 successfully.');
   } catch (error) {
     logger.error('Failed to take backup:', error);
-
-    if (process.env.HEARTBEAT_ID_DAILY_DATABASE_BACKUP) sendHeartbeat(process.env.HEARTBEAT_ID_DAILY_DATABASE_BACKUP, 1);
   }
 }
 

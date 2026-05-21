@@ -28,18 +28,6 @@ const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const localizationInitialize = require('@/utils/localization/initialize');
 const mongoose = require('mongoose');
-const sendHeartbeat = require('@/utils/sendHeartbeat');
-
-// S3 Setup
-const { S3Client, HeadBucketCommand } = require('@aws-sdk/client-s3');
-const S3 = new S3Client({
-  region: process.env.S3_REGION,
-  endpoint: process.env.S3_ENDPOINT,
-  credentials: {
-    accessKeyId: process.env.S3_ACCESS_KEY_ID,
-    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
-  }
-});
 
 module.exports = class Client {
   constructor() {
@@ -369,21 +357,5 @@ module.exports = class Client {
     if (expiredServerTripledVotes.deletedCount > 0) logger.info(`Deleted ${expiredServerTripledVotes.deletedCount} expired server tripled votes.`);
     if (expiredStandedOutBots.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutBots.deletedCount} expired standed out bots.`);
     if (expiredStandedOutServers.deletedCount > 0) logger.info(`Deleted ${expiredStandedOutServers.deletedCount} expired standed out servers.`);
-  }
-
-  async checkBucketAvailability() {
-    if (!process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY) return logger.warn('HEARTBEAT_ID_S3_BUCKET_AVAILABILITY is not defined. Please define it in your environment variables.');
-
-    try {
-      const command = new HeadBucketCommand({ Bucket: process.env.S3_BUCKET_NAME });
-
-      await S3.send(command);
-
-      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 0);
-    } catch (error) {
-      logger.error('Failed to check S3 bucket availability:', error);
-
-      await sendHeartbeat(process.env.HEARTBEAT_ID_S3_BUCKET_AVAILABILITY, 1);
-    }
   }
 };

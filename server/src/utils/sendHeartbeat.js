@@ -1,10 +1,8 @@
 const axios = require('axios');
 
-async function sendHeartbeat(id, exitCode = 0) {
-  const baseUrl = 'https://uptime.betterstack.com/api/v1/heartbeat';
-
+async function sendHeartbeat(url) {
   try {
-    await axios.post(`${baseUrl}/${id}/${exitCode}`);
+    await axios.post(url);
   } catch (error) {
     logger.error('Failed to send heartbeat:', error);
   }
