@@ -169,12 +169,6 @@ export default function Footer() {
         <span className='text-sm text-secondary'>
           {t('footer.subtitle')}
         </span>
-
-        <iframe
-          src={`${config.statusBadgeUrl}?theme=${theme === 'dark' ? 'dark' : 'light'}`}
-          width='250'
-          height='30'
-        />
       </div>
 
       <div className='grid grid-cols-1 justify-between gap-8 mobile:grid-cols-2 sm:gap-16 lg:flex 2xl:w-[calc(100%_-_400px_-_12rem)]'>
