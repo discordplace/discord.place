@@ -122,7 +122,6 @@ module.exports = class Client {
       if (options.startup.saveMonthlyVotes) this.saveMonthlyVotes();
       if (options.startup.saveDailyProfileStats) this.saveDailyProfileStats();
       if (options.startup.checkExpiredProducts) this.checkExpiredProducts();
-      if (options.startup.checkBucketAvailability) this.checkBucketAvailability();
 
       if (options.startup.listenCrons) {
         new CronJob('0 * * * *', () => {
@@ -154,8 +153,6 @@ module.exports = class Client {
           this.createNewDashboardData();
           this.saveDailyProfileStats();
         }, null, true);
-
-        new CronJob('*/10 * * * *', this.checkBucketAvailability, null, true);
       }
     });
   }
