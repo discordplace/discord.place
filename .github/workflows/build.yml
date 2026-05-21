@@ -60,7 +60,7 @@ jobs:
             echo "Log file: $LOG_FILE"
             
             echo "Updating source code..."
-            cd discord.place/client
+            cd apps/discord.place/client
             git pull origin main
             
             echo "Setting up Node environment..."
@@ -148,7 +148,7 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
           ssh -T -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
-            cd discord.place/server
+            cd apps/discord.place/server
             git pull origin main > /dev/null 2>&1
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
