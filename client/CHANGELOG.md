@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.24.0](https://github.com/discordplace/discord.place/compare/client@v1.23.0...client@v1.24.0) (2026-05-21)
+
+
+### Features
+
+* add health check endpoints ([1c9c8c0](https://github.com/discordplace/discord.place/commit/1c9c8c09ca89ee37e5b2babeb3555c7558476600))
+* **client:** move analytics from Rybbit to Umami ([81913c4](https://github.com/discordplace/discord.place/commit/81913c45809c9231d16119372a7c45be9df15f50))
+* migrate from react-lottie to lottie-react ([2870435](https://github.com/discordplace/discord.place/commit/2870435b124f123636ab020cce4b8383a1fb564b))
+
+
+### Bug Fixes
+
+* **client:** remove unused iframe for status badge ([55d6221](https://github.com/discordplace/discord.place/commit/55d6221f3bdb4df3dcf880b607db5c1bc6bab237))
+
 ## [1.23.0](https://github.com/discordplace/discord.place/compare/client@v1.22.0...client@v1.23.0) (2026-05-15)
 
 

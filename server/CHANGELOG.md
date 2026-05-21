@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.1.0](https://github.com/discordplace/discord.place/compare/server@v2.0.0...server@v2.1.0) (2026-05-21)
+
+
+### Features
+
+* add health check endpoints ([1c9c8c0](https://github.com/discordplace/discord.place/commit/1c9c8c09ca89ee37e5b2babeb3555c7558476600))
+* **server/heartbeat:** move to Kener.ing and remove unused S3 bucket checks ([beef6c4](https://github.com/discordplace/discord.place/commit/beef6c498778410c6542d8d15bcd4ea6a6ba4eeb))
+
+
+### Bug Fixes
+
+* **server/bots:** add additional validation for decrypted API key ([78daefc](https://github.com/discordplace/discord.place/commit/78daefcc09cf0a1ba52851d5ce9045f11979ac9d))
+* **server/routes:** remove unused response time tracking functionality ([f697d82](https://github.com/discordplace/discord.place/commit/f697d82766bd601e59a71f79044a5b51e9c33c38))
+* **server:** remove check for bucket availability from startup options ([5bc07e8](https://github.com/discordplace/discord.place/commit/5bc07e8928acef385ec900fec99757993f11cde9))
+
 ## [2.0.0](https://github.com/discordplace/discord.place/compare/server@v1.18.0...server@v2.0.0) (2026-05-15)
 
 
