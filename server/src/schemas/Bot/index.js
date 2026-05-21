@@ -279,6 +279,7 @@ const BotSchema = new Schema({
     },
     getDecryptedApiKey() {
       if (!this.api_key) return null;
+      if (!this.api_key.iv || !this.api_key.encryptedText || !this.api_key.tag) return null;
 
       return decrypt(this.api_key, process.env.BOT_API_KEY_ENCRYPT_SECRET);
     }
