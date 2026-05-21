@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import useAuthStore from '@/stores/auth';
 import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
 import useLanguageStore from '@/stores/language';
@@ -13,6 +13,7 @@ export default function AuthProvider({ children }) {
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
   const setLanguage = useLanguageStore(state => state.setLanguage);
   const setShowFullPageLoading = useGeneralStore(state => state.setShowFullPageLoading);
+  const hasIdentified = useRef(false);
 
   useEffect(() => {
     getAuthenticatedUser()
@@ -46,16 +47,31 @@ export default function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (!user || user === 'loading') return;
+    if (!user || user === 'loading' || hasIdentified.current) return;
 
-    async function waitUntilRybbitFound() {
-      while (!window.rybbit) await new Promise(resolve => setTimeout(resolve, 100));
+    const identify = () => {
+      if (typeof window === 'undefined' || !window.umami?.identify) return false;
 
-      return window.rybbit;
-    }
+      window.umami.identify(user.username, {
+        id: user.id
+      });
 
-    waitUntilRybbitFound()
-      .then(() => window.rybbit.identify(user.id));
+      hasIdentified.current = true;
+
+      return true;
+    };
+
+    if (identify()) return;
+
+    let attempts = 0;
+    const maxAttempts = 10;
+    const interval = setInterval(() => {
+      attempts++;
+
+      if (identify() || attempts >= maxAttempts) clearInterval(interval);
+    }, 500);
+
+    return () => clearInterval(interval);
   }, [user]);
 
   return children;

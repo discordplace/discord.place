@@ -36,8 +36,9 @@ const config = {
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place'
   },
   analytics: {
-    script: 'https://analytics.skyhan.cloud/api/script.js',
-    siteId: '1'
+    script: 'https://analytics.skyhan.cloud/script.js',
+    recorderScript: 'https://analytics.skyhan.cloud/recorder.js',
+    websiteId: 'ab6a730b-372e-4821-a4da-a8fcc32a76e9'
   },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;

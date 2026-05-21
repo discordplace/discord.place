@@ -31,14 +31,28 @@ export default function RootLayoutContent({ children }) {
   return (
     <section key={language}>
       {process.env.NODE_ENV === 'production' && (
-        <Script
-          src={config.analytics.script}
-          data-site-id={config.analytics.siteId}
-          data-track-errors={true}
-          data-session-replay={false}
-          strategy='afterInteractive'
-          id='analytics-script'
-        />
+        <>
+          <Script
+            id='analytics'
+            strategy='afterInteractive'
+            src={config.analytics.script}
+            data-website-id={config.analytics.websiteId}
+            data-performance='true'
+            data-sample-rate='0.15'
+            data-mask-level='moderate'
+            data-max-duration='300000'
+          />
+
+          <Script
+            id='analytics-session-recorder'
+            strategy='afterInteractive'
+            src={config.analytics.recorderScript}
+            data-website-id={config.analytics.websiteId}
+            data-sample-rate='0.15'
+            data-mask-level='moderate'
+            data-max-duration='300000'
+          />
+        </>
       )}
 
       <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
