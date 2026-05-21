@@ -87,7 +87,7 @@ jobs:
             pm2 stop discord.place
             
             echo "Replacing .next folder in production directory..."
-            cd /root/discord.place/client
+            cd /root/apps/discord.place/client
             rm -rf .next
             mv "$TEMP_DIR/.next" ./
             
