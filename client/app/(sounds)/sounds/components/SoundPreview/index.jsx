@@ -25,6 +25,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
   const language = useLanguageStore(state => state.language);
   const [liked, setLiked] = useState(sound.isLiked);
   const [loading, setLoading] = useState(false);
+  const [renderConfetti, setRenderConfetti] = useState(false);
   const lottieRef = useRef(null);
 
   useEffect(() => {
@@ -93,7 +94,6 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
 
   const [uploadToDiscordButtonLoading, setUploadToDiscordButtonLoading] = useState(false);
   const [uploadableGuilds, setUploadableGuilds] = useState(null);
-  const [renderConfetti, setRenderConfetti] = useState(false);
 
   function uploadToDiscord() {
     setUploadToDiscordButtonLoading(true);
