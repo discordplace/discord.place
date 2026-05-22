@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/discordplace/discord.place/compare/client@v1.24.0...client@v2.0.0) (2026-05-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* **client/sounds:** move renderConfetti state declaration to top
+
+### Features
+
+* **client/api:** enable dynamic rendering for health check endpoint ([c722070](https://github.com/discordplace/discord.place/commit/c722070d2b1e336772ab0acdf92b4b6614a4cf72))
+
+
+### Bug Fixes
+
+* **client/sounds:** move renderConfetti state declaration to top ([39f337c](https://github.com/discordplace/discord.place/commit/39f337c11654f12c5878829cd8d3b6f5ea978aec))
+* **client/sounds:** refactor audio file handling and add missing translations ([5a77d1f](https://github.com/discordplace/discord.place/commit/5a77d1f671311a8d8246416870c118bf5c6c6916))
+
 ## [1.24.0](https://github.com/discordplace/discord.place/compare/client@v1.23.0...client@v1.24.0) (2026-05-21)
 
 
