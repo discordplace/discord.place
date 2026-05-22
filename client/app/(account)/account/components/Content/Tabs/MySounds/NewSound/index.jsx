@@ -80,6 +80,45 @@ export default function NewSound() {
     }
   }, [file, soundName]);
 
+  function validateAudioFile(file) {
+    const allowedFileTypes = ['audio/mpeg', 'audio/mp3', 'audio/x-mpeg', 'audio/x-mp3', 'audio/mpeg3', 'audio/x-mpeg3'];
+    console.log(file.type, allowedFileTypes.includes(file.type));
+    if (!allowedFileTypes.includes(file.type)) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.invalidFile'));
+
+    if (file.size >= 1024 * 1024) return toast.error(
+      t('accountPage.tabs.mySounds.sections.addSound.toast.fileSizeExceeded', {
+        size: 1
+      })
+    );
+
+    const audioUrl = URL.createObjectURL(file);
+    const audio = new Audio(audioUrl);
+
+    audio.onloadedmetadata = () => {
+      URL.revokeObjectURL(audioUrl);
+
+      if (audio.duration >= 5) {
+        return toast.error(
+          t('accountPage.tabs.mySounds.sections.addSound.toast.audioDurationExceeded', {
+            duration: 5
+          })
+        );
+      }
+
+      setFile(file);
+    };
+
+    audio.onerror = () => {
+      console.error('Audio element error:', audio.error);
+
+      URL.revokeObjectURL(audioUrl);
+
+      toast.error(
+        t('accountPage.tabs.mySounds.sections.addSound.toast.invalidFile')
+      );
+    };
+  }
+
   return (
     <>
       <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
@@ -109,11 +148,11 @@ export default function NewSound() {
         <div className='mt-12 flex w-full items-center justify-center'>
           <div className='flex w-full max-w-[800px] flex-col gap-y-1'>
             <h2 className='text-lg font-semibold'>
-              File
+              {t('accountPage.tabs.mySounds.sections.addSound.fields.file.label')}
             </h2>
 
             <p className='text-sm text-tertiary sm:text-base'>
-              Upload your sound file here. Only mp3 files are allowed.
+              {t('accountPage.tabs.mySounds.sections.addSound.fields.file.description')}
             </p>
 
             <label
@@ -131,24 +170,7 @@ export default function NewSound() {
                 setDragging(false);
 
                 const file = event.dataTransfer.files[0];
-                if (file) {
-                  if (file.type !== 'audio/mpeg') return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.invalidFile'));
-
-                  const reader = new FileReader();
-                  reader.onload = () => {
-                    const audio = new Audio(reader.result);
-                    audio.onloadedmetadata = () => {
-                      if (audio.duration >= 5) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.audioDurationExceeded', { duration: 5 }));
-                      if (file.size >= 1024 * 1024) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.fileSizeExceeded', { size: 1 }));
-
-                      setFile(file);
-                    };
-
-                    audio.src = reader.result;
-                  };
-
-                  reader.readAsDataURL(file);
-                }
+                if (file) validateAudioFile(file);
               }}
             >
               <input
@@ -158,24 +180,7 @@ export default function NewSound() {
                 accept='.mp3'
                 onChange={event => {
                   const file = event.target.files[0];
-                  if (file) {
-                    if (file.type !== 'audio/mpeg') return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.invalidFile'));
-
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                      const audio = new Audio(reader.result);
-                      audio.onloadedmetadata = () => {
-                        if (audio.duration >= 5) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.audioDurationExceeded', { duration: 5 }));
-                        if (file.size >= 1024 * 1024) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.fileSizeExceeded', { size: 1 }));
-
-                        setFile(file);
-                      };
-
-                      audio.src = reader.result;
-                    };
-
-                    reader.readAsDataURL(file);
-                  }
+                  if (file) validateAudioFile(file);
                 }}
               />
 
