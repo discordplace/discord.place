@@ -14,7 +14,7 @@ const Theme = require('@/schemas/Theme');
 
 async function getBlogs() {
   try {
-    const response = await axios.get('https://discord.place/api/blogs');
+    const response = await axios.get(config.sitemapConfig.useInternalNetworking ? `http://localhost:${config.port.frontend}/api/blogs` : 'https://discord.place/api/blogs');
 
     return response.data;
   } catch (error) {
@@ -59,11 +59,11 @@ module.exports = {
       Profile.find({}).select('slug').lean(),
       Server.find({}).select('id').lean(),
       Bot.find({ verified: true }).select('id').lean(),
-      Emoji.find({ verified: true }).select('id').lean(),
-      EmojiPack.find({ verified: true }).select('id').lean(),
-      Template.find({ verified: true }).select('id').lean(),
-      Sound.find({ verified: true }).select('id').lean(),
-      Theme.find({ verified: true }).select('id').lean()
+      Emoji.find({ approved: true }).select('id').lean(),
+      EmojiPack.find({ approved: true }).select('id').lean(),
+      Template.find({ approved: true }).select('id').lean(),
+      Sound.find({ approved: true }).select('id').lean(),
+      Theme.find({ approved: true }).select('id').lean()
     ]);
 
     const xmlObject = {
@@ -165,7 +165,7 @@ module.exports = {
           url: [
             { loc: `https://discord.place/blogs/${blog.id}` },
             { lastmod: new Date(blog.date).toISOString() },
-            { changefreq: 'monthly' },
+            { changefreq: config.sitemapConfig.blogsChangeFrequency },
             { priority: 0.5 }
           ]
         }))

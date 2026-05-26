@@ -238,6 +238,7 @@ We use YML files for the configuration of the server. You can find the configura
 | `cdnUrl` | String | CDN URL for the website. |
 | `supportInviteUrl` | String | URL for the your Discord support server invite. |
 | `emojis` | Object | Emojis used in the bot. |
+| `sitemapConfig` | Object | Configuration for generating the website sitemap |
 | `port.frontend` | Number | Port for the client. |
 | `port.backend` | Number | Port for the server. |
 | `guildId` | String | Base guild ID for the Discord bot. |
@@ -258,6 +259,7 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `frontendUrl`, `backendUrl`, and `cdnUrl` values are used for the client website URL, server API URL, and CDN URL for the website. You can change these values to your own URLs.
 > - The `supportInviteUrl` value is used for the support server invite URL. You can change this value to your own support server invite URL.
 > - The `emojis` value is used for the emojis used in the bot. You should change these values to your own emojis.
+> - The `sitemapConfig` value is used to configure sitemap generation settings, such as `blogsChangeFrequency` for how often blog items are expected to change, and `useInternalNetworking` for toggling whether to fetch blogs internally on localhost or via public domains.
 > - The `port.frontend` and `port.backend` values are used for the client and server ports. You can change these values to your own ports.
 > - The `guildId` and `guildInviteUrl` values are used for the base guild ID and invite URL for the base guild. You can change these values to your own guild ID and invite URL.
 > - The `permissions` value is used for the permissions for the server. If permission name has `Roles` in the end, that means that permission is role-based. Otherwise, that permission is user ID-based. You can change these values to your own permissions.
