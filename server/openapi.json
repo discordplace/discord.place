@@ -50,7 +50,7 @@
                     "type": "integer",
                     "minimum": 0,
                     "maximum": 10000000,
-                    "description": "Number of servers the bot is in. Note: This value can only differ by at most 50 from your bot's actual server count.",
+                    "description": "Number of servers the bot is in. Note: If the provided server count is significantly different from the actual server count, it may be rejected.",
                     "example": 1500
                   }
                 },
@@ -124,11 +124,11 @@
                       "status": 401
                     }
                   },
-                  "apiKeyRevoked": {
-                    "summary": "API Key Revoked",
+                  "revokedApiKeyUsed": {
+                    "summary": "Revoked API key used",
                     "value": {
                       "success": false,
-                      "error": "Your API key has been revoked due to spamming the stats API. Please generate a new key from your dashboard.",
+                      "error": "This API key has been revoked.",
                       "status": 401
                     }
                   }
@@ -150,6 +150,26 @@
                       "success": false,
                       "error": "Bot not found.",
                       "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Gone. The API key has been revoked due to spamming the stats API.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "apiKeyRevoked": {
+                    "summary": "API key revoked",
+                    "value": {
+                      "success": false,
+                      "error": "Your API key has been revoked due to spamming the stats API. Please generate a new key from your dashboard.",
+                      "status": 410
                     }
                   }
                 }
@@ -240,7 +260,7 @@
                       "example": 1
                     },
                     "lastVote": {
-                      "type": "integer",
+                      "type": ["integer", "null"],
                       "format": "int64",
                       "example": 1694345400000
                     }
@@ -365,20 +385,26 @@
             }
           }
         },
-        "headers": {
-          "Content-Type": {
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
             "schema": {
               "type": "string",
               "enum": ["application/json"]
             }
           },
-          "Authorization": {
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "YOUR_WEBHOOK_TOKEN",
             "schema": {
               "type": "string"
-            },
-            "description": "YOUR_WEBHOOK_TOKEN"
+            }
           }
-        }
+        ]
       }
     }
   },
@@ -429,7 +455,8 @@
                   "type": "boolean",
                   "example": true
                 }
-              }
+              },
+              "required": ["success"]
             }
           }
         }
@@ -437,7 +464,7 @@
       "TooManyRequests": {
         "description": "Too Many Requests. Rate limit exceeded.",
         "headers": {
-          "ratelimit-limit": {
+          "RateLimit-Limit": {
             "description": "Maximum number of requests in the current window",
             "schema": {
               "type": "integer",
@@ -445,15 +472,15 @@
             },
             "required": true
           },
-          "ratelimit-remaining": {
+          "RateLimit-Remaining": {
             "description": "Remaining requests in the current window",
             "schema": {
               "type": "integer",
-              "example": 9
+              "example": 0
             },
             "required": true
           },
-          "ratelimit-reset": {
+          "RateLimit-Reset": {
             "description": "Time in seconds until rate limit resets",
             "schema": {
               "type": "integer",
@@ -479,9 +506,14 @@
                 "status": {
                   "type": "integer",
                   "example": 429
+                },
+                "retry_after": {
+                  "type": "integer",
+                  "description": "Time in seconds until you can retry the request.",
+                  "example": 60
                 }
               },
-              "required": ["success", "error", "status"]
+              "required": ["success", "error", "status", "retry_after"]
             },
             "examples": {
               "rateLimitExceeded": {
@@ -489,7 +521,8 @@
                 "value": {
                   "success": false,
                   "error": "Too many requests, please try again later.",
-                  "status": 429
+                  "status": 429,
+                  "retry_after": 60
                 }
               }
             }

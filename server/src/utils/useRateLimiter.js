@@ -11,10 +11,15 @@ module.exports = function ({ maxRequests, perMinutes, keyGenerator }) {
 
       return request.clientIp?.replace(/:\d+[^:]*$/, '');
     }),
-    message: {
-      success: false,
-      error: 'Too many requests, please try again later.',
-      status: 429
+    message: (request, response) => {
+      const reset = request.rateLimit?.resetTime;
+
+      return response.status(429).json({
+        success: false,
+        error: 'Too many requests, please try again later.',
+        status: 429,
+        retry_after: reset ? Math.max(0, Math.ceil((reset.getTime() - Date.now()) / 1000)) : null
+      });
     },
     skipFailedRequests: true,
     skip: request => {

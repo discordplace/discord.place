@@ -203,6 +203,29 @@ const BotSchema = new Schema({
       type: String,
       required: false
     }
+  },
+  revoked_api_keys: {
+    type: [
+      {
+        iv: {
+          type: String,
+          required: true
+        },
+        encryptedText: {
+          type: String,
+          required: true
+        },
+        tag: {
+          type: String,
+          required: true
+        },
+        revokedAt: {
+          type: Date,
+          default: Date.now
+        }
+      }
+    ],
+    default: []
   }
 }, {
   timestamps: true,
@@ -282,6 +305,20 @@ const BotSchema = new Schema({
       if (!this.api_key.iv || !this.api_key.encryptedText || !this.api_key.tag) return null;
 
       return decrypt(this.api_key, process.env.BOT_API_KEY_ENCRYPT_SECRET);
+    },
+    isApiKeyRevoked(apiKey) {
+      return this.revoked_api_keys.some(revokedKey => {
+        const decryptedRevokedKey = decrypt(revokedKey, process.env.BOT_API_KEY_ENCRYPT_SECRET);
+
+        return decryptedRevokedKey === apiKey;
+      });
+    },
+    revokeApiKey() {
+      if (!this.api_key) return;
+      if (!this.api_key.iv || !this.api_key.encryptedText || !this.api_key.tag) return;
+
+      this.revoked_api_keys.push({ ...this.api_key, revokedAt: new Date() });
+      this.api_key = undefined;
     }
   }
 });

@@ -30,6 +30,8 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
+      if (bot.isApiKeyRevoked(apiKey)) return response.sendError('This API key has been revoked.', 410);
+
       const decryptedApiKey = bot.getDecryptedApiKey();
       if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
 
@@ -45,8 +47,7 @@ module.exports = {
         bot.stats_spam_strikes = bot.stats_spam_strikes.filter(date => date > sixHoursAgo);
 
         if (bot.stats_spam_strikes.length >= 5) {
-          bot.api_key = undefined;
-          bot.stats_spam_strikes = [];
+          bot.revokeApiKey();
 
           sendLog(
             'botApiKeyRevoked',
@@ -67,7 +68,7 @@ module.exports = {
 
           await bot.save();
 
-          return response.sendError('Your API key has been revoked due to spamming the stats API. Please generate a new key from your dashboard.', 401);
+          return response.sendError('Your API key has been revoked due to spamming the stats API. Please generate a new key from your dashboard.', 410);
         }
 
         await bot.save();

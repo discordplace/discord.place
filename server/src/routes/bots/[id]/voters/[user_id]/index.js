@@ -21,6 +21,9 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
+      // Check if the API key has been revoked
+      if (bot.isApiKeyRevoked(apiKey)) return response.sendError('This API key has been revoked.', 410);
+
       const decryptedApiKey = bot.getDecryptedApiKey();
       if (!decryptedApiKey) return response.sendError('Invalid API key.', 401);
 
