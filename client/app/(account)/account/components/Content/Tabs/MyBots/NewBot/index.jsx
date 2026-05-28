@@ -1,6 +1,9 @@
 'use client';
 
-import { TbLoader, RiEyeFill, RiEyeOffFill, MdChevronLeft, MdAccessTimeFilled, IoMdCheckmarkCircle } from '@/icons';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
+import { MdAccessTimeFilled, MdChevronLeft } from 'react-icons/md';
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+import { TbLoader } from 'react-icons/tb';
 import config from '@/config';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';

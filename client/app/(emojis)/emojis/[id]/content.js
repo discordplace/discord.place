@@ -1,6 +1,8 @@
 'use client';
 
-import { RiErrorWarningFill, MdEmojiEmotions, LuShieldQuestion } from '@/icons';
+import { LuShieldQuestion } from 'react-icons/lu';
+import { MdEmojiEmotions } from 'react-icons/md';
+import { RiErrorWarningFill } from 'react-icons/ri';
 import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';
 import ChatMockup from '@/app/(emojis)/emojis/[id]/components/ChatMockup';
 import AnimatedCount from '@/app/components/AnimatedCount';

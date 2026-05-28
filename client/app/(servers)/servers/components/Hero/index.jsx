@@ -1,6 +1,6 @@
 'use client';
 
-import { BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
 import { motion } from 'framer-motion';

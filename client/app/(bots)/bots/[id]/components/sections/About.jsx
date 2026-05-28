@@ -1,6 +1,10 @@
 'use client';
 
-import { TiStarFullOutline, TbSquareRoundedChevronUp, RiSlashCommands2, RiUserAddLine, PiGitForkBold, FaCompass, FaGithub } from '@/icons';
+import { FaCompass, FaGithub } from 'react-icons/fa';
+import { PiGitForkBold } from 'react-icons/pi';
+import { RiSlashCommands2, RiUserAddLine } from 'react-icons/ri';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { TiStarFullOutline } from 'react-icons/ti';
 import { motion } from 'framer-motion';
 import Markdown from '@/app/components/Markdown';
 import Image from 'next/image';

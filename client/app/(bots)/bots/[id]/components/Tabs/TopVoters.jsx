@@ -1,4 +1,4 @@
-import { TbSquareRoundedChevronUp } from '@/icons';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import Pagination from '@/app/components/Pagination';
 import { useEffect, useState } from 'react';
 import cn from '@/lib/cn';

@@ -1,4 +1,6 @@
-import { SiFacebook, SiGithub, SiInstagram, SiSteam, SiTelegram, SiTiktok, SiTwitch, FaTwitter, SiX, SiYoutube, SiLinkedin, SiGitlab, SiReddit, SiMastodon, SiBluesky, RiLink } from '@/icons';
+import { FaTwitter } from 'react-icons/fa';
+import { RiLink } from 'react-icons/ri';
+import { SiBluesky, SiFacebook, SiGithub, SiGitlab, SiInstagram, SiLinkedin, SiMastodon, SiReddit, SiSteam, SiTelegram, SiTiktok, SiTwitch, SiX, SiYoutube } from 'react-icons/si';
 
 export default function getIcon(type) {
   switch (type) {

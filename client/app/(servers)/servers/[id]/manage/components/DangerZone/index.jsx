@@ -1,6 +1,6 @@
 'use client';
 
-import { RiErrorWarningFill } from '@/icons';
+import { RiErrorWarningFill } from 'react-icons/ri';
 import { toast } from 'sonner';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';import deleteServer from '@/lib/request/servers/deleteServer';

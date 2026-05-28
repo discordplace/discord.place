@@ -1,6 +1,6 @@
 'use client';
 
-import { BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
 import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
 import useSearchStore from '@/stores/profiles/search';
 import ErrorState from '@/app/components/ErrorState';import { useShallow } from 'zustand/react/shallow';

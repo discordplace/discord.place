@@ -1,6 +1,7 @@
 'use client';
 
-import { RiErrorWarningFill, LuShieldQuestion } from '@/icons';
+import { LuShieldQuestion } from 'react-icons/lu';
+import { RiErrorWarningFill } from 'react-icons/ri';
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import config from '@/config';
 import FaQs from '@/app/(themes)/themes/[id]/components/FaQs';

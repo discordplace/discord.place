@@ -1,6 +1,11 @@
 'use client';
 
-import { TbSquareRoundedChevronUp, MdOutlineArrowOutward, IoMdHeart, HiCheck, FaLink, FaDiscord, BiSolidInfoCircle } from '@/icons';
+import { BiSolidInfoCircle } from 'react-icons/bi';
+import { FaDiscord, FaLink } from 'react-icons/fa';
+import { HiCheck } from 'react-icons/hi';
+import { IoMdHeart } from 'react-icons/io';
+import { MdOutlineArrowOutward } from 'react-icons/md';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import Tooltip from '@/app/components/Tooltip';
 import Image from 'next/image';
 import Link from 'next/link';

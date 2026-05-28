@@ -1,6 +1,6 @@
 'use client';
 
-import { MdSync } from '@/icons';
+import { MdSync } from 'react-icons/md';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import refreshBot from '@/lib/request/bots/refreshBot';

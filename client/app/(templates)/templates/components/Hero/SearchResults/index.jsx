@@ -1,4 +1,4 @@
-import { BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
 import useSearchStore from '@/stores/templates/search';
 import { useShallow } from 'zustand/react/shallow';
 import { motion } from 'framer-motion';

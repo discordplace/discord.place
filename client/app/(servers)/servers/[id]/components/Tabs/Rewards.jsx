@@ -1,6 +1,7 @@
 'use client';
 
-import { TbSquareRoundedChevronUp, IoMdLock, IoMdUnlock } from '@/icons';
+import { IoMdLock, IoMdUnlock } from 'react-icons/io';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import cn from '@/lib/cn';
 import Image from 'next/image';import useAuthStore from '@/stores/auth';
 import Tooltip from '@/app/components/Tooltip';

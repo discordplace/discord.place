@@ -1,4 +1,8 @@
-import { TbLoader, PiHeart, PiHeartFill, PiWaveformBold, MdAccountCircle, MdDownload, IoMdCalendar, FaCloudUploadAlt } from '@/icons';
+import { FaCloudUploadAlt } from 'react-icons/fa';
+import { IoMdCalendar } from 'react-icons/io';
+import { MdAccountCircle, MdDownload } from 'react-icons/md';
+import { PiHeart, PiHeartFill, PiWaveformBold } from 'react-icons/pi';
+import { TbLoader } from 'react-icons/tb';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
 import cn from '@/lib/cn';

@@ -1,6 +1,6 @@
 'use client';
 
-import { FaGithub } from '@/icons';
+import { FaGithub } from 'react-icons/fa';
 import Square from '@/app/components/Background/Square';
 import InfoCard from '@/app/(home)/components/InfoCards/Card';import useAuthStore from '@/stores/auth';
 import config from '@/config';

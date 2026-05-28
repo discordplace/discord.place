@@ -1,6 +1,6 @@
 'use client';
 
-import { FaDiscord } from '@/icons';
+import { FaDiscord } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import config from '@/config';
 import Link from 'next/link';import { t } from '@/stores/language';

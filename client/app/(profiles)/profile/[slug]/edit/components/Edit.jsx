@@ -1,6 +1,8 @@
 'use client';
 
-import { TbLoader, PiWarningCircleFill, FaCrown } from '@/icons';
+import { FaCrown } from 'react-icons/fa';
+import { PiWarningCircleFill } from 'react-icons/pi';
+import { TbLoader } from 'react-icons/tb';
 import { useEffect, useRef, useState } from 'react';
 import cn from '@/lib/cn';
 import editProfile from '@/lib/request/profiles/editProfile';

@@ -1,6 +1,6 @@
 'use client';
 
-import { FaSlackHash } from '@/icons';
+import { FaSlackHash } from 'react-icons/fa';
 import { motion } from 'framer-motion';import { t } from '@/stores/language';
 
 export default function Keywords({ server }) {

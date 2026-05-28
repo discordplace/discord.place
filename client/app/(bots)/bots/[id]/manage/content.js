@@ -1,6 +1,7 @@
 'use client';
 
-import { TbLoader, MdSave } from '@/icons';
+import { MdSave } from 'react-icons/md';
+import { TbLoader } from 'react-icons/tb';
 import { useEffect, useState } from 'react';
 import isEqual from 'lodash/isEqual';
 import EssentialInformation from '@/app/(bots)/bots/[id]/manage/components/EssentialInformation';

@@ -1,6 +1,7 @@
 'use client';
 
-import { HiPlus, BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { HiPlus } from 'react-icons/hi';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import ErrorState from '@/app/components/ErrorState';
 import Tooltip from '@/app/components/Tooltip';

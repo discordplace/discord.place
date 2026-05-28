@@ -1,6 +1,8 @@
 'use client';
 
-import { TbLoader, MdEmojiEmotions, FaCloudUploadAlt } from '@/icons';
+import { FaCloudUploadAlt } from 'react-icons/fa';
+import { MdEmojiEmotions } from 'react-icons/md';
+import { TbLoader } from 'react-icons/tb';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import useThemeStore from '@/stores/theme';

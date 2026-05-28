@@ -1,6 +1,6 @@
 'use client';
 
-import { BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
 import useSearchStore from '@/stores/themes/search';
 import { useShallow } from 'zustand/react/shallow';
 import Pagination from '@/app/components/Pagination';

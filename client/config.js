@@ -1,6 +1,21 @@
 /* eslint no-duplicate-imports: 0 */ // Disable eslint no-duplicate-imports
 
-import { TiPlus, TiStar, TbBrush, TbCategoryFilled, TbSquareRoundedChevronUp, RiBrush2Fill, RiCommunityFill, RiInstagramFill, RiRobot2Fill, PiWaveformBold, MdDownload, MdEmojiEmotions, MdEvent, MdMenuBook, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate, IoGameController, IoHeart, IoLanguage, IoMusicalNotesSharp, IoIosChatboxes, ImUser, HiMiniExclamationCircle, HiMiniPaintBrush, HiDesktopComputer, HiNewspaper, HiSortAscending, HiSortDescending, HiTemplate, GiTwoCoins, FaRegImage, FaCat, FaCompass, FaEye, FaGraduationCap, FaLaptopCode, FaShieldAlt, FaUsers, CgProfile, BsStars, BsThreeDots, BiSolidCategory, BiSolidHappy, BiSolidMusic, AiFillSound, AiFillTool } from '@/icons';
+import { AiFillSound, AiFillTool } from 'react-icons/ai';
+import { BiSolidCategory, BiSolidHappy, BiSolidMusic } from 'react-icons/bi';
+import { BsStars, BsThreeDots } from 'react-icons/bs';
+import { CgProfile } from 'react-icons/cg';
+import { FaCat, FaCompass, FaEye, FaGraduationCap, FaLaptopCode, FaRegImage, FaShieldAlt, FaUsers } from 'react-icons/fa';
+import { GiTwoCoins } from 'react-icons/gi';
+import { HiDesktopComputer, HiNewspaper, HiSortAscending, HiSortDescending, HiTemplate } from 'react-icons/hi';
+import { HiMiniExclamationCircle, HiMiniPaintBrush } from 'react-icons/hi2';
+import { ImUser } from 'react-icons/im';
+import { IoIosChatboxes } from 'react-icons/io';
+import { IoGameController, IoHeart, IoLanguage, IoMusicalNotesSharp } from 'react-icons/io5';
+import { MdDownload, MdEmojiEmotions, MdEvent, MdMenuBook, MdMovieFilter, MdOutlinePhone, MdScience, MdUpdate } from 'react-icons/md';
+import { PiWaveformBold } from 'react-icons/pi';
+import { RiBrush2Fill, RiCommunityFill, RiInstagramFill, RiRobot2Fill } from 'react-icons/ri';
+import { TbBrush, TbCategoryFilled, TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { TiPlus, TiStar } from 'react-icons/ti';
 
 const config = {
   availableLocales: [

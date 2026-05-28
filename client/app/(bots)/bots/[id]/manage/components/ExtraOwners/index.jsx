@@ -1,6 +1,6 @@
 'use client';
 
-import { ImHammer2 } from '@/icons';
+import { ImHammer2 } from 'react-icons/im';
 import { useEffect, useRef, useState } from 'react';
 import getExtraOwners from '@/lib/request/bots/getExtraOwners';
 import { toast } from 'sonner';

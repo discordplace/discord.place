@@ -1,6 +1,6 @@
 'use client';
 
-import { BiLogOut } from '@/icons';
+import { BiLogOut } from 'react-icons/bi';
 import useAuthStore from '@/stores/auth';
 import Link from 'next/link';
 import config from '@/config';

@@ -1,6 +1,8 @@
 'use client';
 
-import { HiPlay, FiArrowRightCircle, FaPause, FaStar } from '@/icons';
+import { FaPause, FaStar } from 'react-icons/fa';
+import { FiArrowRightCircle } from 'react-icons/fi';
+import { HiPlay } from 'react-icons/hi';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import config from '@/config';
 import Image from 'next/image';

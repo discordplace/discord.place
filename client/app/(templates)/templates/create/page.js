@@ -1,6 +1,7 @@
 'use client';
 
-import { TbLoader, MdCheckCircle } from '@/icons';
+import { MdCheckCircle } from 'react-icons/md';
+import { TbLoader } from 'react-icons/tb';
 import Square from '@/app/components/Background/Square';
 import { useEffect, useState } from 'react';import { toast } from 'sonner';
 import { nanoid } from 'nanoid';

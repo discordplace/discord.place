@@ -1,6 +1,7 @@
 'use client';
 
-import { RiErrorWarningFill, MdCheckCircle } from '@/icons';
+import { MdCheckCircle } from 'react-icons/md';
+import { RiErrorWarningFill } from 'react-icons/ri';
 import Square from '@/app/components/Background/Square';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';

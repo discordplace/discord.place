@@ -1,6 +1,6 @@
 'use client';
 
-import { BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Countdown from '@/app/components/Countdown';

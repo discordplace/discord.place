@@ -1,8 +1,6 @@
 import pgk from '@next/bundle-analyzer';
 const withBundleAnalyzer = pgk({ enabled: process.env.ANALYZE === 'true' });
 
-/** @type {import('next').NextConfig} */
-
 const remotePatterns = [
   {
     protocol: 'https',
@@ -22,10 +20,14 @@ if (process.env.NEXT_PUBLIC_CDN_URL) {
   }
 }
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
   images: {
     remotePatterns
+  },
+  experimental: {
+    optimizePackageImports: ['react-icons']
   },
   async rewrites() {
     return [

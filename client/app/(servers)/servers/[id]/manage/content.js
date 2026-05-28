@@ -1,6 +1,7 @@
 'use client';
 
-import { TbLoader, MdSave } from '@/icons';
+import { MdSave } from 'react-icons/md';
+import { TbLoader } from 'react-icons/tb';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import { useEffect, useState } from 'react';
 import EssentialInformation from '@/app/(servers)/servers/[id]/manage/components/EssentialInformation';

@@ -1,4 +1,4 @@
-import { TiStarFullOutline } from '@/icons';
+import { TiStarFullOutline } from 'react-icons/ti';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import { t } from '@/stores/language';
 

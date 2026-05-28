@@ -1,6 +1,6 @@
 'use client';
 
-import { MdChevronLeft } from '@/icons';
+import { MdChevronLeft } from 'react-icons/md';
 import cn from '@/lib/cn';
 import { useState } from 'react';import Question1 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/1';
 import Question2 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/2';

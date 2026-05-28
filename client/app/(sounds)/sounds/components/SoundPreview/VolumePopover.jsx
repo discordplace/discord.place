@@ -1,6 +1,6 @@
 'use client';
 
-import { HiVolumeOff, HiVolumeUp } from '@/icons';
+import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
 import useGeneralStore from '@/stores/general';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { t } from '@/stores/language';

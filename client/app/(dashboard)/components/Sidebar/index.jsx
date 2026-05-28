@@ -1,6 +1,15 @@
 'use client';
 
-import { TbSquareRoundedChevronUp, RiBrush2Fill, RiRobot2Fill, PiWaveformBold, MdAccountCircle, MdEmojiEmotions, MdHome, MdSync, IoMdLogOut, HiTemplate, FiLink, FaCompass, FaEye, FaUsers, FaUserTimes, CgBlock, BiSolidChevronRight } from '@/icons';
+import { BiSolidChevronRight } from 'react-icons/bi';
+import { CgBlock } from 'react-icons/cg';
+import { FaCompass, FaEye, FaUserTimes, FaUsers } from 'react-icons/fa';
+import { FiLink } from 'react-icons/fi';
+import { HiTemplate } from 'react-icons/hi';
+import { IoMdLogOut } from 'react-icons/io';
+import { MdAccountCircle, MdEmojiEmotions, MdHome, MdSync } from 'react-icons/md';
+import { PiWaveformBold } from 'react-icons/pi';
+import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import { Bricolage_Grotesque } from 'next/font/google';

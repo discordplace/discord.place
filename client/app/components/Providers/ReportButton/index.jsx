@@ -1,6 +1,8 @@
 'use client';
 
-import { MdBugReport, IoClose, HiFlag } from '@/icons';
+import { HiFlag } from 'react-icons/hi';
+import { IoClose } from 'react-icons/io5';
+import { MdBugReport } from 'react-icons/md';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import Tooltip from '@/app/components/Tooltip';

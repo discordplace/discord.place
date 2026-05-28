@@ -1,6 +1,6 @@
 'use client';
 
-import { BsEmojiAngry, BsQuestionCircleFill } from '@/icons';
+import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import ErrorState from '@/app/components/ErrorState';
 import config from '@/config';

@@ -1,6 +1,10 @@
 'use client';
 
-import { PiSortAscendingBold, PiSortDescendingBold, IoSearch, FiX, FaBookBookmark, FaXmark, FaCheck, BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { FaBookBookmark, FaCheck, FaXmark } from 'react-icons/fa6';
+import { FiX } from 'react-icons/fi';
+import { IoSearch } from 'react-icons/io5';
+import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
 import ColumnRenderer from '@/app/(dashboard)/components/Table/ColumnRenderer';
 import cn from '@/lib/cn';
 import { motion } from 'framer-motion';

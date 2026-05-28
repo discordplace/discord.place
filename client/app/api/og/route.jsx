@@ -1,6 +1,10 @@
 /* eslint no-unreachable: 0 */
 
-import { RiRobot2Fill, PiWaveformBold, MdEmojiEmotions, HiNewspaper, HiTemplate, FaCompass, FaUserCircle } from '@/icons';
+import { FaCompass, FaUserCircle } from 'react-icons/fa';
+import { HiNewspaper, HiTemplate } from 'react-icons/hi';
+import { MdEmojiEmotions } from 'react-icons/md';
+import { PiWaveformBold } from 'react-icons/pi';
+import { RiRobot2Fill } from 'react-icons/ri';
 import { ImageResponse } from '@vercel/og';
 import fs from 'node:fs';
 import { NextResponse } from 'next/server';

@@ -1,4 +1,5 @@
-'use client';import { FaDisplay } from '@/icons';
+'use client';
+import { FaDisplay } from 'react-icons/fa6';
 import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 import { t } from '@/stores/language';
 

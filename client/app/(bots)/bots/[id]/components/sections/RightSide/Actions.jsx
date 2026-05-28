@@ -1,6 +1,10 @@
 'use client';
 
-import { TbLoader, TbSquareRoundedChevronUp, TbSquareRoundedChevronUpFilled, PiShareFat, PiShareFatFill, BsFire, BiPencil, BiSolidEnvelope, AiOutlineRise } from '@/icons';
+import { AiOutlineRise } from 'react-icons/ai';
+import { BiPencil, BiSolidEnvelope } from 'react-icons/bi';
+import { BsFire } from 'react-icons/bs';
+import { PiShareFat, PiShareFatFill } from 'react-icons/pi';
+import { TbLoader, TbSquareRoundedChevronUp, TbSquareRoundedChevronUpFilled } from 'react-icons/tb';
 import CopyButton from '@/app/components/CopyButton';
 import MotionLink from '@/app/components/Motion/Link';
 import { AnimatePresence, motion } from 'framer-motion';

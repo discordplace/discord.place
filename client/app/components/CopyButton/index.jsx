@@ -1,4 +1,5 @@
-import { MdCheckCircle, BiCopy, BiSolidCopy } from '@/icons';
+import { BiCopy, BiSolidCopy } from 'react-icons/bi';
+import { MdCheckCircle } from 'react-icons/md';
 import cn from '@/lib/cn';
 import { useState, useRef } from 'react';
 import { toast } from 'sonner';

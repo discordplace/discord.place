@@ -1,6 +1,17 @@
 'use client';
 
-import { TbLockPlus, RiGroup2Fill, RiPencilFill, PiWaveformBold, MdAlternateEmail, MdEmojiEmotions, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility, IoMdCheckmarkCircle, IoMdCloseCircle, IoMdUndo, HiMiniIdentification, HiTemplate, FiArrowRightCircle, FiArrowUpRight, FiLink, FaCompass, FaCrown, FaEye, FaUserCircle, CgBlock, CgFormatSlash, BsStars, BiCloudDownload, BiSolidCategory } from '@/icons';
+import { BiCloudDownload, BiSolidCategory } from 'react-icons/bi';
+import { BsStars } from 'react-icons/bs';
+import { CgBlock, CgFormatSlash } from 'react-icons/cg';
+import { FaCompass, FaCrown, FaEye, FaUserCircle } from 'react-icons/fa';
+import { FiArrowRightCircle, FiArrowUpRight, FiLink } from 'react-icons/fi';
+import { HiTemplate } from 'react-icons/hi';
+import { HiMiniIdentification } from 'react-icons/hi2';
+import { IoMdCheckmarkCircle, IoMdCloseCircle, IoMdUndo } from 'react-icons/io';
+import { MdAlternateEmail, MdEmojiEmotions, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility } from 'react-icons/md';
+import { PiWaveformBold } from 'react-icons/pi';
+import { RiGroup2Fill, RiPencilFill } from 'react-icons/ri';
+import { TbLockPlus } from 'react-icons/tb';
 import useAuthStore from '@/stores/auth';
 import { useEffect } from 'react';
 import { useRouter } from 'next-nprogress-bar';

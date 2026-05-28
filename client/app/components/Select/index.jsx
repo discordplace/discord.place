@@ -1,6 +1,6 @@
 'use client';
 
-import { IoCheckmarkCircleSharp, IoChevronDownSharp } from '@/icons';
+import { IoCheckmarkCircleSharp, IoChevronDownSharp } from 'react-icons/io5';
 import * as RadixSelect from '@radix-ui/react-select';
 import { useMedia } from 'react-use';
 import Drawer from '@/app/components/Drawer';

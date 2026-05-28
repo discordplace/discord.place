@@ -1,6 +1,8 @@
 'use client';
 
-import { TbLoader, IoMdCheckmarkCircle, IoMdCloseCircle, FaCrown } from '@/icons';
+import { FaCrown } from 'react-icons/fa';
+import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
+import { TbLoader } from 'react-icons/tb';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';

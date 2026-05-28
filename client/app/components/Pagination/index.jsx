@@ -1,6 +1,6 @@
 'use client';
 
-import { LuChevronLeft, LuChevronRight } from '@/icons';
+import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 import { motion } from 'framer-motion';
 import cn from '@/lib/cn';
 import { useEffect, useRef, useState } from 'react';

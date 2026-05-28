@@ -1,6 +1,6 @@
 'use client';
 
-import { BiSolidCategory } from '@/icons';
+import { BiSolidCategory } from 'react-icons/bi';
 import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
 import MotionLink from '@/app/components/Motion/Link';
 import { motion } from 'framer-motion';import { t } from '@/stores/language';

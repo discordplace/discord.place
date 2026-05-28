@@ -1,4 +1,5 @@
-import { IoSearch, FiX } from '@/icons';
+import { FiX } from 'react-icons/fi';
+import { IoSearch } from 'react-icons/io5';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';import cn from '@/lib/cn';
 import { motion } from 'framer-motion';

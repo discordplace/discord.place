@@ -1,6 +1,7 @@
 'use client';
 
-import { IoKey, HiExternalLink } from '@/icons';
+import { HiExternalLink } from 'react-icons/hi';
+import { IoKey } from 'react-icons/io5';
 import { toast } from 'sonner';
 import { useState } from 'react';import createApiKey from '@/lib/request/bots/createApiKey';
 import deleteApiKey from '@/lib/request/bots/deleteApiKey';

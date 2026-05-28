@@ -1,6 +1,10 @@
 'use client';
 
-import { IoCheckmarkCircle, IoMdArrowRoundBack, HiAtSymbol, HiHashtag, HiPlus, FaCompass, FaDiscord, FaPenFancy, FaTrashAlt, BiSolidCopy } from '@/icons';
+import { BiSolidCopy } from 'react-icons/bi';
+import { FaCompass, FaDiscord, FaPenFancy, FaTrashAlt } from 'react-icons/fa';
+import { HiAtSymbol, HiHashtag, HiPlus } from 'react-icons/hi';
+import { IoMdArrowRoundBack } from 'react-icons/io';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 import Tooltip from '@/app/components/Tooltip/Discord';
 import Image from 'next/image';import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';import { useRouter } from 'next-nprogress-bar';import useModalsStore from '@/stores/modals';
 import cn from '@/lib/cn';

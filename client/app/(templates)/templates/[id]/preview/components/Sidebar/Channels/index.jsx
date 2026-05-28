@@ -1,6 +1,7 @@
 'use client';
 
-import { IoChevronDown, FaChevronDown } from '@/icons';
+import { FaChevronDown } from 'react-icons/fa';
+import { IoChevronDown } from 'react-icons/io5';
 import Image from 'next/image';import HomeIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Home';
 import EventsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Events';
 import BrowseChannelsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/BrowseChannels';

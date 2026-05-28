@@ -1,6 +1,10 @@
 'use client';
 
-import { PiWarningCircleFill, MdOutlineCopyAll, LuPlus, FiExternalLink, FiLink, FiTrash2, BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { FiExternalLink, FiLink, FiTrash2 } from 'react-icons/fi';
+import { LuPlus } from 'react-icons/lu';
+import { MdOutlineCopyAll } from 'react-icons/md';
+import { PiWarningCircleFill } from 'react-icons/pi';
 import ErrorState from '@/app/components/ErrorState';
 import useAuthStore from '@/stores/auth';
 import useModalsStore from '@/stores/modals';

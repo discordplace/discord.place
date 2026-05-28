@@ -1,6 +1,7 @@
 'use client';
 
-import { LuPlus, BsEmojiAngry, BsQuestionCircleFill } from '@/icons';
+import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
+import { LuPlus } from 'react-icons/lu';
 import ErrorState from '@/app/components/ErrorState';
 import useAccountStore from '@/stores/account';
 import Link from 'next/link';

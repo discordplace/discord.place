@@ -1,6 +1,6 @@
 'use client';
 
-import { RiErrorWarningFill } from '@/icons';
+import { RiErrorWarningFill } from 'react-icons/ri';
 import MotionImage from '@/app/components/Motion/Image';
 import { motion } from 'framer-motion';
 import About from '@/app/(bots)/bots/[id]/components/sections/About';

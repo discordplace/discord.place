@@ -1,6 +1,6 @@
 'use client';
 
-import { FiArrowUpRight } from '@/icons';
+import { FiArrowUpRight } from 'react-icons/fi';
 import Link from 'next/link';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });

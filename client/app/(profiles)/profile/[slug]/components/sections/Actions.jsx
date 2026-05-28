@@ -1,5 +1,6 @@
 'use client';
-import { IoMdHeart, IoMdHeartEmpty, BsPencil, BsPencilFill } from '@/icons';
+import { BsPencil, BsPencilFill } from 'react-icons/bs';
+import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { toast } from 'sonner';
 import likeProfile from '@/lib/request/profiles/likeProfile';
 import cn from '@/lib/cn';

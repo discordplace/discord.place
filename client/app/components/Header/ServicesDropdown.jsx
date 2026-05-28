@@ -1,6 +1,10 @@
 'use client';
 
-import { RiBrush2Fill, RiRobot2Fill, PiWaveformBold, MdEmojiEmotions, HiUserGroup, HiTemplate, FaCompass, FaQuestion } from '@/icons';
+import { FaCompass, FaQuestion } from 'react-icons/fa';
+import { HiTemplate, HiUserGroup } from 'react-icons/hi';
+import { MdEmojiEmotions } from 'react-icons/md';
+import { PiWaveformBold } from 'react-icons/pi';
+import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
 import { t } from '@/stores/language';

@@ -1,6 +1,6 @@
 'use client';
 
-import { HiDocumentDownload } from '@/icons';
+import { HiDocumentDownload } from 'react-icons/hi';
 import MotionImage from '@/app/components/Motion/Image';
 import Link from 'next/link';import config from '@/config';
 import cn from '@/lib/cn';

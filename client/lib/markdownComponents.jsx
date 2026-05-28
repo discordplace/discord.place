@@ -1,7 +1,13 @@
 /* eslint react/display-name: 0 */
 /* eslint no-unused-vars: 0 */
 
-import { TbFileTypeXml, SiPhp, MdHttps, IoLogoJavascript, IoLogoPython, FiArrowUpRight, FaFileCode, BiCodeCurly } from '@/icons';
+import { BiCodeCurly } from 'react-icons/bi';
+import { FaFileCode } from 'react-icons/fa';
+import { FiArrowUpRight } from 'react-icons/fi';
+import { IoLogoJavascript, IoLogoPython } from 'react-icons/io5';
+import { MdHttps } from 'react-icons/md';
+import { SiPhp } from 'react-icons/si';
+import { TbFileTypeXml } from 'react-icons/tb';
 import Link from 'next/link';
 import { Children, isValidElement } from 'react';
 import cn from './cn';

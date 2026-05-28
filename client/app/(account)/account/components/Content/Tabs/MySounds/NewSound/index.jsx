@@ -1,6 +1,8 @@
 'use client';
 
-import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle } from '@/icons';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
+import { MdChevronLeft } from 'react-icons/md';
+import { TbLoader } from 'react-icons/tb';
 import config from '@/config';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';

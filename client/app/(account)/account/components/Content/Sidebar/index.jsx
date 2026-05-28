@@ -1,6 +1,6 @@
 'use client';
 
-import { BiSolidChevronRight } from '@/icons';
+import { BiSolidChevronRight } from 'react-icons/bi';
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import { Bricolage_Grotesque } from 'next/font/google';

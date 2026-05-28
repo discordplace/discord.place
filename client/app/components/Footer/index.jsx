@@ -1,6 +1,9 @@
 'use client';
 
-import { MdSunny, IoIosMoon, FaXTwitter, FaDiscord, FaGithub, FaLinkedin } from '@/icons';
+import { FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { IoIosMoon } from 'react-icons/io';
+import { MdSunny } from 'react-icons/md';
 import useThemeStore from '@/stores/theme';
 import { nanoid } from 'nanoid';
 import Link from 'next/link';

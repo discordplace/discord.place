@@ -1,6 +1,6 @@
 'use client';
 
-import { IoMdCheckmarkCircle } from '@/icons';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
 import cn from '@/lib/cn';
 import { nanoid } from 'nanoid';import { Drawer } from 'vaul';
 

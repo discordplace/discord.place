@@ -1,6 +1,6 @@
 'use client';
 
-import { IoMdCheckmarkCircle } from '@/icons';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import cn from '@/lib/cn';
 import { t } from '@/stores/language';

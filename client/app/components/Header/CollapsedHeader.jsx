@@ -1,4 +1,6 @@
-import { MdOutlineOpenInNew, IoMdMenu, FiX } from '@/icons';
+import { FiX } from 'react-icons/fi';
+import { IoMdMenu } from 'react-icons/io';
+import { MdOutlineOpenInNew } from 'react-icons/md';
 import config from '@/config';
 import Link from 'next/link';
 import { useLockBodyScroll } from 'react-use';

@@ -1,6 +1,8 @@
 'use client';
 
-import { TbLoader, MdArrowOutward, FiX } from '@/icons';
+import { FiX } from 'react-icons/fi';
+import { MdArrowOutward } from 'react-icons/md';
+import { TbLoader } from 'react-icons/tb';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import addSocial from '@/lib/request/profiles/addSocial';

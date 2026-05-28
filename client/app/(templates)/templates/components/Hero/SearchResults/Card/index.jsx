@@ -1,6 +1,7 @@
 'use client';
 
-import { TiStar, HiSortAscending } from '@/icons';
+import { HiSortAscending } from 'react-icons/hi';
+import { TiStar } from 'react-icons/ti';
 import config from '@/config';
 import cn from '@/lib/cn';
 import useLanguageStore, { t } from '@/stores/language';

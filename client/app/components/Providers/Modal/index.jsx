@@ -1,6 +1,7 @@
 'use client';
 
-import { TbLoader, IoMdCloseCircle } from '@/icons';
+import { IoMdCloseCircle } from 'react-icons/io';
+import { TbLoader } from 'react-icons/tb';
 import cn from '@/lib/cn';
 import useModalsStore from '@/stores/modals';
 import * as Dialog from '@radix-ui/react-dialog';import { useShallow } from 'zustand/react/shallow';

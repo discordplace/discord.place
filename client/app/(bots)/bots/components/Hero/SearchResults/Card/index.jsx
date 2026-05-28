@@ -1,6 +1,13 @@
 'use client';
 
-import { TiStar, TbSquareRoundedChevronUp, MdUpdate, IoHeart, ImTrophy, HiSortAscending, HiSortDescending, FaCompass, BsFire } from '@/icons';
+import { BsFire } from 'react-icons/bs';
+import { FaCompass } from 'react-icons/fa';
+import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { ImTrophy } from 'react-icons/im';
+import { IoHeart } from 'react-icons/io5';
+import { MdUpdate } from 'react-icons/md';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { TiStar } from 'react-icons/ti';
 import Link from 'next/link';import useSearchStore from '@/stores/bots/search';import { useMedia } from 'react-use';
 import getRelativeTime from '@/lib/getRelativeTime';import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';

@@ -1,6 +1,10 @@
 'use client';
 
-import { TbLoader, LuShieldQuestion, IoCheckmarkCircle, FaCheck, FaXmark, FaDiscord } from '@/icons';
+import { FaCheck, FaDiscord } from 'react-icons/fa';
+import { FaXmark } from 'react-icons/fa6';
+import { IoCheckmarkCircle } from 'react-icons/io5';
+import { LuShieldQuestion } from 'react-icons/lu';
+import { TbLoader } from 'react-icons/tb';
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';

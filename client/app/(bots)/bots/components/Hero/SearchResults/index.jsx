@@ -1,6 +1,6 @@
 'use client';
 
-import { BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
 import useSearchStore from '@/stores/bots/search';
 import { useShallow } from 'zustand/react/shallow';
 import { motion } from 'framer-motion';

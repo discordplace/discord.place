@@ -1,4 +1,4 @@
-import { MdOpenInNew } from '@/icons';
+import { MdOpenInNew } from 'react-icons/md';
 import Tooltip from '@/app/components/Tooltip';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';

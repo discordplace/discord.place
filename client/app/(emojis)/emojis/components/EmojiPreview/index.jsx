@@ -1,6 +1,7 @@
 'use client';
 
-import { TbLoader, FaCloudUploadAlt } from '@/icons';
+import { FaCloudUploadAlt } from 'react-icons/fa';
+import { TbLoader } from 'react-icons/tb';
 import useThemeStore from '@/stores/theme';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';

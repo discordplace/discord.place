@@ -1,6 +1,9 @@
 'use client';
 
-import { MdMiscellaneousServices, HiNewspaper, FiChevronDown, BsStars } from '@/icons';
+import { BsStars } from 'react-icons/bs';
+import { FiChevronDown } from 'react-icons/fi';
+import { HiNewspaper } from 'react-icons/hi';
+import { MdMiscellaneousServices } from 'react-icons/md';
 import cn from '@/lib/cn';
 import { Suspense, useEffect } from 'react';
 import ServicesDropdown from '@/app/components/Header/ServicesDropdown';

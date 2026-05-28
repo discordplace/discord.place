@@ -1,6 +1,7 @@
 'use client';
 
-import { IoChevronDown, IoPaperPlane, BsEmojiAngry } from '@/icons';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { IoChevronDown, IoPaperPlane } from 'react-icons/io5';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';

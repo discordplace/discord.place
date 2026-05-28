@@ -1,6 +1,8 @@
 'use client';
 
-import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline, TbLoader, RiErrorWarningFill } from '@/icons';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import { TbLoader } from 'react-icons/tb';
+import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline } from 'react-icons/ti';
 import Pagination from '@/app/components/Pagination';
 import useAuthStore from '@/stores/auth';
 import { Suspense, useEffect, useState } from 'react';

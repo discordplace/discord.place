@@ -1,6 +1,10 @@
 'use client';
 
-import { TbLoader, MdChevronLeft, IoMdCheckmarkCircle, IoMdCloseCircle, BsFire, BiSolidInfoCircle } from '@/icons';
+import { BiSolidInfoCircle } from 'react-icons/bi';
+import { BsFire } from 'react-icons/bs';
+import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
+import { MdChevronLeft } from 'react-icons/md';
+import { TbLoader } from 'react-icons/tb';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Image from 'next/image';
 import createServer from '@/lib/request/servers/createServer';

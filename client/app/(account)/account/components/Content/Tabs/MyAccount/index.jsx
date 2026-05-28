@@ -1,6 +1,8 @@
 'use client';
 
-import { TbLoader, MdOutlineOpenInNew, GoHeartFill } from '@/icons';
+import { GoHeartFill } from 'react-icons/go';
+import { MdOutlineOpenInNew } from 'react-icons/md';
+import { TbLoader } from 'react-icons/tb';
 import useAuthStore from '@/stores/auth';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

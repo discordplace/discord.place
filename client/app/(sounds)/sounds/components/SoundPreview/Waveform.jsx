@@ -1,6 +1,11 @@
 'use client';
 
-import { HiPlay, FaPause, BsThreeDots, LuCloudDownload, TiArrowUpOutline, PiShareFat } from '@/icons';
+import { BsThreeDots } from 'react-icons/bs';
+import { FaPause } from 'react-icons/fa';
+import { HiPlay } from 'react-icons/hi';
+import { LuCloudDownload } from 'react-icons/lu';
+import { PiShareFat } from 'react-icons/pi';
+import { TiArrowUpOutline } from 'react-icons/ti';
 import useThemeStore from '@/stores/theme';
 import { useEffect, useState } from 'react';
 import WavesurferPlayer from '@wavesurfer/react';

@@ -1,6 +1,7 @@
 'use client';
 
-import { RiErrorWarningFill, LuShieldQuestion } from '@/icons';
+import { LuShieldQuestion } from 'react-icons/lu';
+import { RiErrorWarningFill } from 'react-icons/ri';
 import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
 import AnimatedCount from '@/app/components/AnimatedCount';
 import config from '@/config';

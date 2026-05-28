@@ -1,6 +1,6 @@
 'use client';
 
-import { FaDiscord } from '@/icons';
+import { FaDiscord } from 'react-icons/fa';
 import Tooltip from '@/app/components/Tooltip';
 import { toast } from 'sonner';
 import cn from '@/lib/cn';

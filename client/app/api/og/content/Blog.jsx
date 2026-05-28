@@ -1,4 +1,4 @@
-import { FiArrowRightCircle } from '@/icons';
+import { FiArrowRightCircle } from 'react-icons/fi';
 
 export default function Blog({ data }) {
   return (

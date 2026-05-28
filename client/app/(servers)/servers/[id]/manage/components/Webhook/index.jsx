@@ -1,6 +1,10 @@
 'use client';
 
-import { TbLoader, RiSendPlaneFill, IoCheckmarkCircle, HiBell, BiCodeCurly } from '@/icons';
+import { BiCodeCurly } from 'react-icons/bi';
+import { HiBell } from 'react-icons/hi';
+import { IoCheckmarkCircle } from 'react-icons/io5';
+import { RiSendPlaneFill } from 'react-icons/ri';
+import { TbLoader } from 'react-icons/tb';
 import { useEffect, useRef, useState } from 'react';
 import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 import { toast } from 'sonner';

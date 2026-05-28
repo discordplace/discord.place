@@ -1,6 +1,6 @@
 'use client';
 
-import { MdChevronLeft } from '@/icons';
+import { MdChevronLeft } from 'react-icons/md';
 import cn from '@/lib/cn';
 import { useState } from 'react';import AnimateHeight from 'react-animate-height';
 import { motion } from 'framer-motion';

@@ -1,6 +1,7 @@
 'use client';
 
-import { LuPackage, HiDocumentDownload } from '@/icons';
+import { HiDocumentDownload } from 'react-icons/hi';
+import { LuPackage } from 'react-icons/lu';
 import Link from 'next/link';import config from '@/config';
 import cn from '@/lib/cn';import { t } from '@/stores/language';
 import Image from 'next/image';

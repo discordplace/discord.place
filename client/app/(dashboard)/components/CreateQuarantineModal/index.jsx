@@ -1,6 +1,7 @@
 'use client';
 
-import { RiCommunityFill, RiUser3Fill, IoMdCheckmarkCircle } from '@/icons';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
+import { RiCommunityFill, RiUser3Fill } from 'react-icons/ri';
 import config from '@/config';
 import cn from '@/lib/cn';
 import { useEffect } from 'react';

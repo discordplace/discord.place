@@ -1,6 +1,12 @@
 'use client';
 
-import { RiBrush2Fill, RiRobot2Fill, PiWaveformBold, MdAccessTimeFilled, MdAccountCircle, MdDarkMode, MdEmojiEmotions, MdSunny, IoMdArrowBack, IoMdLogOut, HiTemplate, FiLink, FaBell, FaCompass, FaDiscord, FaShieldAlt } from '@/icons';
+import { FaBell, FaCompass, FaDiscord, FaShieldAlt } from 'react-icons/fa';
+import { FiLink } from 'react-icons/fi';
+import { HiTemplate } from 'react-icons/hi';
+import { IoMdArrowBack, IoMdLogOut } from 'react-icons/io';
+import { MdAccessTimeFilled, MdAccountCircle, MdDarkMode, MdEmojiEmotions, MdSunny } from 'react-icons/md';
+import { PiWaveformBold } from 'react-icons/pi';
+import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import MyAccount from '@/app/(account)/account/components/Content/Tabs/MyAccount';
 import { useEffect } from 'react';
 import ActiveTimeouts from '@/app/(account)/account/components/Content/Tabs/ActiveTimeouts';

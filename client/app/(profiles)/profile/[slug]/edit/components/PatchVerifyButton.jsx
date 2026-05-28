@@ -1,6 +1,6 @@
 'use client';
 
-import { TbLoader } from '@/icons';
+import { TbLoader } from 'react-icons/tb';
 import patchProfileVerify from '@/lib/request/profiles/patchProfileVerify';
 import revalidateProfile from '@/lib/revalidate/profile';
 import { useState } from 'react';import { toast } from 'sonner';
