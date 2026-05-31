@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/discordplace/discord.place/compare/client@v2.0.0...client@v2.0.1) (2026-05-31)
+
+
+### Bug Fixes
+
+* update local development ports in README, config files, and package.json ([34073da](https://github.com/discordplace/discord.place/commit/34073da7e385ae2ef5e56806239b4b853860233c))
+
 ## [2.0.0](https://github.com/discordplace/discord.place/compare/client@v1.24.0...client@v2.0.0) (2026-05-22)
 
 
