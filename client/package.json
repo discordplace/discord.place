@@ -4,9 +4,9 @@
   "private": true,
   "version": "2.0.0",
   "scripts": {
-    "dev": "next dev --turbo -p 3000",
+    "dev": "next dev --turbo -p 36706",
     "build": "next build",
-    "start": "next start -p 3000",
+    "start": "next start -p 36706",
     "lint": "next lint"
   },
   "license": "AGPL-3.0-only",

@@ -42,13 +42,13 @@ const config = {
       countryCode: 'az'
     }
   ],
-  baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place',
+  baseUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:36706' : 'https://discord.place',
   supportInviteUrl: 'https://invite.discord.place',
   docsUrl: 'https://docs.discord.place',
   statusUrl: 'https://status.discord.place',
   statusBadgeUrl: 'https://status.discord.place/badge',
   api: {
-    url: process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://api.discord.place'
+    url: process.env.NODE_ENV === 'development' ? 'http://localhost:16540' : 'https://api.discord.place'
   },
   analytics: {
     script: 'https://analytics.skyhan.cloud/script.js',
@@ -122,7 +122,7 @@ const config = {
   profilesMaxSocialsLength: 8,
   getLoginURL(pathname) {
     return `${this.api.url}/auth/login?redirect=${encodeURIComponent(
-      (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://discord.place') + pathname
+      (process.env.NODE_ENV === 'development' ? 'http://localhost:36706' : 'https://discord.place') + pathname
     )}`;
   },
   applicationsEntitlementsScopeURL(userId) {

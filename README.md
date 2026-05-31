@@ -65,7 +65,7 @@ cd client
 npm run dev
 ```
 
-8. Open your browser and navigate to `http://localhost:3000` to view the website locally.
+8. Open your browser and navigate to `http://localhost:36706` to view the website locally.
 
 ---
 
@@ -75,7 +75,7 @@ Create a `.env` file in the `client` directory with the following environment va
 
 ```env
 ANALYZE=false
-NEXT_PUBLIC_PORT=3000
+NEXT_PUBLIC_PORT=36706
 NEXT_PUBLIC_CF_SITE_KEY=
 CLIENT_SECRET=
 NEXT_PUBLIC_CDN_URL=
@@ -202,7 +202,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 | `docsUrl` | String | URL for the your website documentation website. |
 | `statusUrl` | String | URL for the your website status page. |
 | `statusBadgeUrl` | String | URL for the embeddable status badge for the website. |
-| `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:3001`. |
+| `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:16540`. |
 | `analytics.script` | String | Your analytics script URL. |
 | `analytics.recorderScript` | String | Your analytics recorder script URL. |
 | `analytics.websiteId` | String | Your website ID assigned by Umami. |

@@ -25,8 +25,8 @@ sitemapConfig:
   blogsChangeFrequency: 'monthly'
   useInternalNetworking: true
 port:
-  frontend: 3000
-  backend: 3001
+  frontend: 36706
+  backend: 16540
 guildId: '1200254872059121764'
 guildInviteUrl: 'https://invite.discord.place'
 permissions:
