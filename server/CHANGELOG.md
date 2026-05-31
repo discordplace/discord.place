@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.1.1](https://github.com/discordplace/discord.place/compare/server@v2.1.0...server@v2.1.1) (2026-05-31)
+
+
+### Bug Fixes
+
+* **server/sitemap:** add sitemap configuration and update blog fetching logic ([08e9f27](https://github.com/discordplace/discord.place/commit/08e9f277edf2952c52e0546a2212afb8b13b4d35))
+* **server:** enhance API key revocation handling and update OpenAPI document ([8250780](https://github.com/discordplace/discord.place/commit/82507809b6615df4dc12158ec427950398b835ad))
+* update local development ports in README, config files, and package.json ([34073da](https://github.com/discordplace/discord.place/commit/34073da7e385ae2ef5e56806239b4b853860233c))
+
 ## [2.1.0](https://github.com/discordplace/discord.place/compare/server@v2.0.0...server@v2.1.0) (2026-05-21)
 
 
