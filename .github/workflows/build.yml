@@ -105,6 +105,11 @@ jobs:
             REMOTE_PATH="/root/builds/$DEPLOY_ID"
             WRAPPER_PATH="/root/client"
 
+            echo "Installing dependencies..."
+            cd "$REMOTE_PATH"
+            pnpm add sharp --allow-build=sharp
+            pnpm install --frozen-lockfile
+
             OLD_NEXT_TARGET=$(readlink "$WRAPPER_PATH/.next" || echo "")
             if [ -n "$OLD_NEXT_TARGET" ]; then
               OLD_BUILD_DIR=$(dirname "$OLD_NEXT_TARGET")
@@ -114,11 +119,6 @@ jobs:
 
             echo "Updating symlinks for .next, package.json, pnpm-lock.yaml and node_modules to point to: $REMOTE_PATH"
             rm -rf "$WRAPPER_PATH/.next" "$WRAPPER_PATH/package.json" "$WRAPPER_PATH/pnpm-lock.yaml" "$WRAPPER_PATH/node_modules"
-
-            echo "Installing dependencies..."
-            cd "$WRAPPER_PATH"
-            pnpm add sharp --allow-build=sharp
-            pnpm install --frozen-lockfile
 
             ln -s "$REMOTE_PATH/.next" "$WRAPPER_PATH/.next"
             ln -s "$REMOTE_PATH/package.json" "$WRAPPER_PATH/package.json"
