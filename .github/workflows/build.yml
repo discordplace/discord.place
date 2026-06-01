@@ -121,6 +121,7 @@ jobs:
 
             echo "Installing dependencies..."
             cd "$WRAPPER_PATH"
+            pnpm add sharp --allow-build=sharp
             pnpm install --frozen-lockfile
 
             echo "Restarting application..."
@@ -233,6 +234,7 @@ jobs:
             git pull origin main
 
             echo "Installing dependencies..."
+            pnpm add sharp --allow-build=sharp
             pnpm install --frozen-lockfile
 
             echo "Restarting application..."
