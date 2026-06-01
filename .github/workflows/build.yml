@@ -112,17 +112,18 @@ jobs:
               OLD_BUILD_DIR=""
             fi
 
-            echo "Updating symlinks for .next, package.json, and pnpm-lock.yaml to point to: $REMOTE_PATH"
-            rm -rf "$WRAPPER_PATH/.next" "$WRAPPER_PATH/package.json" "$WRAPPER_PATH/pnpm-lock.yaml"
-            
-            ln -s "$REMOTE_PATH/.next" "$WRAPPER_PATH/.next"
-            ln -s "$REMOTE_PATH/package.json" "$WRAPPER_PATH/package.json"
-            ln -s "$REMOTE_PATH/pnpm-lock.yaml" "$WRAPPER_PATH/pnpm-lock.yaml"
+            echo "Updating symlinks for .next, package.json, pnpm-lock.yaml and node_modules to point to: $REMOTE_PATH"
+            rm -rf "$WRAPPER_PATH/.next" "$WRAPPER_PATH/package.json" "$WRAPPER_PATH/pnpm-lock.yaml" "$WRAPPER_PATH/node_modules"
 
             echo "Installing dependencies..."
             cd "$WRAPPER_PATH"
             pnpm add sharp --allow-build=sharp
             pnpm install --frozen-lockfile
+
+            ln -s "$REMOTE_PATH/.next" "$WRAPPER_PATH/.next"
+            ln -s "$REMOTE_PATH/package.json" "$WRAPPER_PATH/package.json"
+            ln -s "$REMOTE_PATH/pnpm-lock.yaml" "$WRAPPER_PATH/pnpm-lock.yaml"
+            ln -s "$REMOTE_PATH/node_modules" "$WRAPPER_PATH/node_modules"
 
             echo "Restarting application..."
             pm2 restart discord.place
@@ -150,14 +151,12 @@ jobs:
               
               if [ -n "$OLD_BUILD_DIR" ] && [ -d "$OLD_BUILD_DIR" ]; then
                 echo "Reverting symlinks back to: $OLD_BUILD_DIR"
-                rm -rf "$WRAPPER_PATH/.next" "$WRAPPER_PATH/package.json" "$WRAPPER_PATH/pnpm-lock.yaml"
-                
+                rm -rf "$WRAPPER_PATH/.next" "$WRAPPER_PATH/package.json" "$WRAPPER_PATH/pnpm-lock.yaml" "$WRAPPER_PATH/node_modules"
+
                 ln -s "$OLD_BUILD_DIR/.next" "$WRAPPER_PATH/.next"
                 ln -s "$OLD_BUILD_DIR/package.json" "$WRAPPER_PATH/package.json"
                 ln -s "$OLD_BUILD_DIR/pnpm-lock.yaml" "$WRAPPER_PATH/pnpm-lock.yaml"
-                
-                echo "Reverting node_modules state..."
-                pnpm install --frozen-lockfile
+                ln -s "$OLD_BUILD_DIR/node_modules" "$WRAPPER_PATH/node_modules"
                 
                 pm2 restart discord.place
                 echo "Rollback completed. Failing workflow step."
