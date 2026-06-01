@@ -74,7 +74,7 @@ jobs:
         uses: burnett01/rsync-deployments@v8
         with:
           switches: -avz
-          path: client/.next client/package.json client/pnpm-lock.yaml
+          path: client/.next client/package.json client/pnpm-lock.yaml client/pnpm-workspace.yaml
           remote_path: ${{ steps.set_path.outputs.remote_target }}
           remote_host: ${{ secrets.SSH_HOST }}
           remote_port: ${{ secrets.SSH_PORT }}
@@ -103,7 +103,7 @@ jobs:
             nvm use $(nvm current)
 
             REMOTE_PATH="/root/builds/$DEPLOY_ID"
-            WRAPPER_PATH="/root/apps/discord.place/client"
+            WRAPPER_PATH="/root/client"
 
             OLD_NEXT_TARGET=$(readlink "$WRAPPER_PATH/.next" || echo "")
             if [ -n "$OLD_NEXT_TARGET" ]; then
@@ -112,12 +112,13 @@ jobs:
               OLD_BUILD_DIR=""
             fi
 
-            echo "Updating symlinks for .next, package.json, and pnpm-lock.yaml..."
-            rm -rf "$WRAPPER_PATH/.next" "$WRAPPER_PATH/package.json" "$WRAPPER_PATH/pnpm-lock.yaml"
+            echo "Updating symlinks for .next, package.json, pnpm-lock.yaml, and pnpm-workspace.yaml to point to: $REMOTE_PATH"
+            rm -rf "$WRAPPER_PATH/.next" "$WRAPPER_PATH/package.json" "$WRAPPER_PATH/pnpm-lock.yaml" "$WRAPPER_PATH/pnpm-workspace.yaml"
             
             ln -s "$REMOTE_PATH/.next" "$WRAPPER_PATH/.next"
             ln -s "$REMOTE_PATH/package.json" "$WRAPPER_PATH/package.json"
             ln -s "$REMOTE_PATH/pnpm-lock.yaml" "$WRAPPER_PATH/pnpm-lock.yaml"
+            ln -s "$REMOTE_PATH/pnpm-workspace.yaml" "$WRAPPER_PATH/pnpm-workspace.yaml"
 
             echo "Installing dependencies..."
             cd "$WRAPPER_PATH"
@@ -149,11 +150,12 @@ jobs:
               
               if [ -n "$OLD_BUILD_DIR" ] && [ -d "$OLD_BUILD_DIR" ]; then
                 echo "Reverting symlinks back to: $OLD_BUILD_DIR"
-                rm -rf "$WRAPPER_PATH/.next" "$WRAPPER_PATH/package.json" "$WRAPPER_PATH/pnpm-lock.yaml"
+                rm -rf "$WRAPPER_PATH/.next" "$WRAPPER_PATH/package.json" "$WRAPPER_PATH/pnpm-lock.yaml" "$WRAPPER_PATH/pnpm-workspace.yaml"
                 
                 ln -s "$OLD_BUILD_DIR/.next" "$WRAPPER_PATH/.next"
                 ln -s "$OLD_BUILD_DIR/package.json" "$WRAPPER_PATH/package.json"
                 ln -s "$OLD_BUILD_DIR/pnpm-lock.yaml" "$WRAPPER_PATH/pnpm-lock.yaml"
+                ln -s "$OLD_BUILD_DIR/pnpm-workspace.yaml" "$WRAPPER_PATH/pnpm-workspace.yaml"
                 
                 echo "Reverting node_modules state..."
                 pnpm install --frozen-lockfile
@@ -225,7 +227,7 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use $(nvm current)
 
-            cd apps/discord.place/server
+            cd /root/server
 
             PREV_COMMIT=$(git rev-parse HEAD)
 
