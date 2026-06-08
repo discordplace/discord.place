@@ -206,6 +206,8 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 | `analytics.script` | String | Your analytics script URL. |
 | `analytics.recorderScript` | String | Your analytics recorder script URL. |
 | `analytics.websiteId` | String | Your website ID assigned by Umami. |
+| `openreplay.projectKey` | String | Your OpenReplay project key. Leave empty to disable OpenReplay. |
+| `openreplay.ingestPoint` | String | Your OpenReplay ingest point URL (e.g. `https://openreplay.yourdomain.com/ingest`). Leave empty to disable OpenReplay. |
 | `botTestGuildId` | String | Your test guild ID for the bots testing. |
 | `botInviteURL` | String | URL for the your bot invite. Used in the many places in the website. |
 | `customHostnames` | Array<String> | Custom hostnames for the profiles. You may need to change this to your own custom hostnames. |
@@ -215,6 +217,7 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 > - The `supportInviteUrl` and `docsUrl` values are used in the website for the support server and documentation links. You can change these values to your own support server and documentation links.
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
 > - The `analytics.script`, `analytics.recorderScript`, and `analytics.websiteId` values are used for setting up analytics on the website. We use [Umami](https://umami.is) for analytics. Any other analytics service is not supported.
+> - The `openreplay.projectKey` and `openreplay.ingestPoint` values are used for setting up [OpenReplay](https://openreplay.com) session replay on the website. 
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the website with different ports and use a reverse proxy to redirect the requests to the correct port.

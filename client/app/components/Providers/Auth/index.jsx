@@ -6,6 +6,7 @@ import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
 import useLanguageStore from '@/stores/language';
 import useGeneralStore from '@/stores/general';
 import config from '@/config';
+import { tracker } from '@/lib/openreplay';
 
 export default function AuthProvider({ children }) {
   const user = useAuthStore(state => state.user);
@@ -25,7 +26,7 @@ export default function AuthProvider({ children }) {
       .finally(() => {
         const availableLanguages = config.availableLocales.map(locale => locale.code);
         const defaultLanguage = config.availableLocales.find(locale => locale.default).code;
-        const localStorageFound = 'localStorage' in window;
+        const localStorageFound = typeof window !== 'undefined' && 'localStorage' in window;
 
         let language = localStorageFound ? window.localStorage.getItem('language') : null;
 
@@ -34,7 +35,6 @@ export default function AuthProvider({ children }) {
           const preferredLanguage = availableLanguages.find(lang => localeHeader.startsWith(lang));
 
           language = preferredLanguage || defaultLanguage;
-
           if (localStorageFound) window.localStorage.setItem('language', language);
         } else if (!availableLanguages.includes(language)) {
           language = defaultLanguage;
@@ -49,29 +49,16 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     if (!user || user === 'loading' || hasIdentified.current) return;
 
-    const identify = () => {
-      if (typeof window === 'undefined' || !window.umami?.identify) return false;
+    if (window.umami?.identify) {
+      window.umami.identify(user.username, { id: user.id });
+    }
 
-      window.umami.identify(user.username, {
-        id: user.id
-      });
+    if (tracker) {
+      tracker.setUserID(user.id);
+      tracker.setMetadata('username', user.username);
+    }
 
-      hasIdentified.current = true;
-
-      return true;
-    };
-
-    if (identify()) return;
-
-    let attempts = 0;
-    const maxAttempts = 10;
-    const interval = setInterval(() => {
-      attempts++;
-
-      if (identify() || attempts >= maxAttempts) clearInterval(interval);
-    }, 500);
-
-    return () => clearInterval(interval);
+    hasIdentified.current = true;
   }, [user]);
 
   return children;

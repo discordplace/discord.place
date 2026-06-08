@@ -11,6 +11,9 @@ importers:
       '@next/bundle-analyzer':
         specifier: ^14.1.4
         version: 14.1.4
+      '@openreplay/tracker':
+        specifier: ^18.0.13
+        version: 18.0.13
       '@radix-ui/react-dialog':
         specifier: ^1.0.5
         version: 1.0.5(@types/react@18.3.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -461,6 +464,13 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@openreplay/network-proxy@1.2.5':
+    resolution: {integrity: sha512-POexzfkWLH+kCk0+R05sg5+fyZYD2xgs7hkUWJxXcsfJ9B4Bn2unDJO03AyzfkH884cCLMuZk4jBDqZgCA5S1w==}
+
+  '@openreplay/tracker@18.0.13':
+    resolution: {integrity: sha512-cMuP3rfm5Irnv6hjzP4F5NIluYLNkSEZT7GDtF3H++gl+nOyAHMFxuB0D1KhWW8ffjCSmZxWV/TXOdB3XQv2XQ==}
+    engines: {node: '>=14.0'}
 
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
@@ -1529,6 +1539,9 @@ packages:
   entities@4.5.0:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
+
+  error-stack-parser-es@0.1.5:
+    resolution: {integrity: sha512-xHku1X40RO+fO8yJ8Wh2f2rZWVjqyhb1zgq1yZ8aZRQkv6OOKhKWRUaht3eSCUbAOBaKIgM+ykwFLE+QUxgGeg==}
 
   error-stack-parser@2.1.4:
     resolution: {integrity: sha512-Sk5V6wVazPhq5MhpO+AUxJn5x7XSXGl1R93Vn7i+zS15KDVxQijejNCrz8340/2bgLBjR9GtEG8ZVKONDjcqGQ==}
@@ -3392,6 +3405,9 @@ packages:
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
 
+  web-vitals@5.3.0:
+    resolution: {integrity: sha512-q6LWsLatGYZp5VGBIOvbTj6JBV2nOmC8KvWztXBmwJcfFAzhwKwbOxhUH306XY3CcaZDUlSmSuNPBsCn0bFu+g==}
+
   webpack-bundle-analyzer@4.10.1:
     resolution: {integrity: sha512-s3P7pgexgT/HTUSYgxJyn28A+99mmLq4HsJepMPzu0R8ImJc52QNqaFYW1Z2z2uIb1/J3eYgaAWVpaC+v/1aAQ==}
     engines: {node: '>= 10.13.0'}
@@ -3700,6 +3716,15 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
+
+  '@openreplay/network-proxy@1.2.5': {}
+
+  '@openreplay/tracker@18.0.13':
+    dependencies:
+      '@openreplay/network-proxy': 1.2.5
+      error-stack-parser: 2.1.4
+      error-stack-parser-es: 0.1.5
+      web-vitals: 5.3.0
 
   '@opentelemetry/api@1.9.0':
     optional: true
@@ -4750,6 +4775,8 @@ snapshots:
       tapable: 2.2.1
 
   entities@4.5.0: {}
+
+  error-stack-parser-es@0.1.5: {}
 
   error-stack-parser@2.1.4:
     dependencies:
@@ -7146,6 +7173,8 @@ snapshots:
   wavesurfer.js@7.8.1: {}
 
   web-namespaces@2.0.1: {}
+
+  web-vitals@5.3.0: {}
 
   webpack-bundle-analyzer@4.10.1:
     dependencies:

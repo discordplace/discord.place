@@ -55,6 +55,10 @@ const config = {
     recorderScript: 'https://analytics.skyhan.cloud/recorder.js',
     websiteId: 'ab6a730b-372e-4821-a4da-a8fcc32a76e9'
   },
+  openreplay: {
+    projectKey: 'uNGLYSNRpxpW5S50hKYP',
+    ingestPoint: 'https://openreplay.discord.place/ingest'
+  },
   getProfileURL: (slug, preferredHost) => {
     const url = `https://${preferredHost}/${slug}`;
 
@@ -108,17 +112,17 @@ const config = {
       href: '/premium'
     }
   ],
-  errorMessages: {
-    '0': 'An unknown error occurred.',
-    '401': 'You are not authorized to view this page.',
-    '404': 'The page you are looking for does not exist.',
-    '50001': 'You are not authorized to edit this profile.',
-    '50002': 'The user who created the profile does not currently have a premium.',
-    '60001': 'You are not authorized to edit this server.',
-    '70001': 'You are not authorized to edit this bot.',
-    '80001': 'The link you are looking for does not exist.',
-    '90001': 'The blog you are looking for does not exist.'
-  },
+  // errorMessages: {
+  //   '0': 'An unknown error occurred.',
+  //   '401': 'You are not authorized to view this page.',
+  //   '404': 'The page you are looking for does not exist.',
+  //   '50001': 'You are not authorized to edit this profile.',
+  //   '50002': 'The user who created the profile does not currently have a premium.',
+  //   '60001': 'You are not authorized to edit this server.',
+  //   '70001': 'You are not authorized to edit this bot.',
+  //   '80001': 'The link you are looking for does not exist.',
+  //   '90001': 'The blog you are looking for does not exist.'
+  // },
   profilesMaxSocialsLength: 8,
   getLoginURL(pathname) {
     return `${this.api.url}/auth/login?redirect=${encodeURIComponent(

@@ -5,8 +5,8 @@ import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import ThemeProvider from '@/app/components/Providers/Theme';
 import ProgressBarProvider from '@/app/components/Providers/ProgressBar';
-import ErrorBoundary from '@/app/components/Providers/Boundary/Error';
 import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
+import OpenReplayProvider from '@/app/components/Providers/OpenReplay';
 import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
 import { Suspense, useEffect } from 'react';
@@ -73,6 +73,8 @@ export default function RootLayoutContent({ children }) {
           }}
         />
 
+        <OpenReplayProvider />
+
         <ThemeProvider>
           <VaulWrapperProvider>
             <ModalProvider>
@@ -84,9 +86,7 @@ export default function RootLayoutContent({ children }) {
                 <Header />
               </Suspense>
 
-              <ErrorBoundary>
-                {children}
-              </ErrorBoundary>
+              {children}
 
               <Suspense fallback={<></>}>
                 <Footer />
