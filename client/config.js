@@ -1,5 +1,3 @@
-/* eslint no-duplicate-imports: 0 */ // Disable eslint no-duplicate-imports
-
 import { AiFillSound, AiFillTool } from 'react-icons/ai';
 import { BiSolidCategory, BiSolidHappy, BiSolidMusic } from 'react-icons/bi';
 import { BsStars, BsThreeDots } from 'react-icons/bs';

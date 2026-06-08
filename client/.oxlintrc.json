@@ -1,0 +1,42 @@
+{  
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "unicorn",
+    "oxc",
+    "import",
+    "eslint",
+    "react"
+  ],
+  "categories": {
+    "correctness": "error",
+    "style": "warn"
+  },
+"rules": {
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": false
+      }
+    ],
+    "no-empty-function": "error",
+    "no-lonely-if": "error",
+    "no-useless-return": "error",
+    "default-param-last": "error",
+    "no-duplicate-imports": [
+      "error",
+      {
+        "includeExports": true
+      }
+    ],
+    "prefer-template": "error",
+    "prefer-arrow-callback": "error",
+    "no-return-assign": "error",
+    "object-shorthand": "error",
+    "no-unneeded-ternary": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}

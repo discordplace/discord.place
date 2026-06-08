@@ -1,6 +1,3 @@
-import pgk from '@next/bundle-analyzer';
-const withBundleAnalyzer = pgk({ enabled: process.env.ANALYZE === 'true' });
-
 const remotePatterns = [
   {
     protocol: 'https',
@@ -39,4 +36,4 @@ const nextConfig = {
   }
 };
 
-export default withBundleAnalyzer(nextConfig);
+export default nextConfig;

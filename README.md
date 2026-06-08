@@ -74,7 +74,6 @@ npm run dev
 Create a `.env` file in the `client` directory with the following environment variables:
 
 ```env
-ANALYZE=false
 NEXT_PUBLIC_PORT=36706
 NEXT_PUBLIC_CF_SITE_KEY=
 CLIENT_SECRET=
@@ -84,14 +83,12 @@ NEXT_PUBLIC_CDN_URL=
 ##### Parameters
 | Name | Description |
 | ---- | ----------- |
-| `ANALYZE` | Set to `true` to enable bundle analysis. |
 | `NEXT_PUBLIC_PORT` | Port for the client. |
 | `NEXT_PUBLIC_CF_SITE_KEY` | Cloudflare site key for Turnstile. |
 | `CLIENT_SECRET` | Secret key for client. |
 | `NEXT_PUBLIC_CDN_URL` | CDN URL for the website. Used for serving emojis and sounds files. Must be a valid URL. |
 
 > [!NOTE]  
-> - When `ANALYZE` is set to `true`, the client will generate a bundle analysis report. This is useful for debugging and optimizing the client bundle.
 > - Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile site key.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the server's `CLIENT_SECRET` value.
 > - The `NEXT_PUBLIC_CDN_URL` is used for serving emojis and sounds files. You should set this to your own CDN URL. Make sure to use valid URL format (e.g., `https://cdn.yourdomain.com`).

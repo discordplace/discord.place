@@ -9,7 +9,7 @@ import config from '@/config';
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0px' }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      { }
       <h1
         style={{
           fontSize: '64px',
