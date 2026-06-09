@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.2.0](https://github.com/discordplace/discord.place/compare/client@v3.1.0...client@v3.2.0) (2026-06-09)
+
+
+### Features
+
+* **client:** add no-undef rule to enforce variable declaration checks ([098edc4](https://github.com/discordplace/discord.place/commit/098edc401c06d7052c562305638df18c8a4cbbb2))
+
+
+### Bug Fixes
+
+* **client:** import missing useRouter from next/navigation in header ([9f81b21](https://github.com/discordplace/discord.place/commit/9f81b2167fa3e48efdefa475f9ca410a7bb7005f))
+
 ## [3.1.0](https://github.com/discordplace/discord.place/compare/client@v3.0.1...client@v3.1.0) (2026-06-09)
 
 
