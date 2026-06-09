@@ -15,6 +15,7 @@ export default function EmojiPreview({ metadata }) {
                 width={24}
                 height={24}
                 className='rounded-md bg-quaternary'
+                unoptimized={packagedEmoji.animated}
               />
             ))}
 
@@ -29,6 +30,7 @@ export default function EmojiPreview({ metadata }) {
             width={64}
             height={64}
             className='object-contain'
+            unoptimized={metadata.animated}
           />
         )}
 

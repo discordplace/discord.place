@@ -2,8 +2,10 @@
 
 import { HiDocumentDownload } from 'react-icons/hi';
 import { LuPackage } from 'react-icons/lu';
-import Link from 'next/link';import config from '@/config';
-import cn from '@/lib/cn';import { t } from '@/stores/language';
+import Link from 'next/link';
+import config from '@/config';
+import cn from '@/lib/cn';
+import { t } from '@/stores/language';
 import Image from 'next/image';
 
 export default function EmojiPackageCard({ overridedImages, id, name, categories, downloads, emoji_ids, className }) {
@@ -34,6 +36,7 @@ export default function EmojiPackageCard({ overridedImages, id, name, categories
                 className='size-full max-h-[48px] max-w-[48px] rounded-xl bg-secondary object-contain transition-all ease-in-out group-hover:bg-tertiary'
                 width={64}
                 height={64}
+                unoptimized={packaged_emoji.animated}
               />
             ))}
 

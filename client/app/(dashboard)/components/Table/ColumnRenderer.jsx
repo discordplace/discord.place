@@ -70,6 +70,7 @@ export default function ColumnRenderer({ data }) {
             height={32}
             alt={`Emoji ${data.id}`}
             className='pointer-events-none size-[32px] object-contain'
+            unoptimized={data.animated}
           />
 
           <span className='font-medium'>
@@ -90,6 +91,7 @@ export default function ColumnRenderer({ data }) {
                 width={32}
                 height={32}
                 className='pointer-events-none size-[32px] object-contain'
+                unoptimized={packedEmoji.animated}
               />
             ))}
           </div>

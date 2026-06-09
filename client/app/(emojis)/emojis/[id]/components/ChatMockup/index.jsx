@@ -59,6 +59,7 @@ export default function ChatMockup({ id, username, avatar, message, emoji_url, t
             width={22}
             height={22}
             alt='Emoji'
+            unoptimized={emoji_url.endsWith('.gif')}
           />
         </div>
       </div>

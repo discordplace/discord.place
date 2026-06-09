@@ -2,7 +2,8 @@
 
 import { HiDocumentDownload } from 'react-icons/hi';
 import MotionImage from '@/app/components/Motion/Image';
-import Link from 'next/link';import config from '@/config';
+import Link from 'next/link';
+import config from '@/config';
 import cn from '@/lib/cn';
 import { t } from '@/stores/language';
 
@@ -30,6 +31,7 @@ export default function EmojiCard({ overridedImage, id, name, animated, categori
           className='size-[50px] transition-all ease-in-out group-hover:size-[86px]'
           width={128}
           height={128}
+          unoptimized={animated}
         />
 
         {animated && (

@@ -135,7 +135,7 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
       description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
       title: (
         t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.titleWithEmoji', {
-          emojiImage: <Image src={image_url} alt={name} width={24} height={24} className='inline h-[16px] w-auto' />,
+          emojiImage: <Image src={image_url} alt={name} width={24} height={24} className='inline h-[16px] w-auto' unoptimized={image_url.endsWith('.gif')} />,
           emojiName: name
         })
       )

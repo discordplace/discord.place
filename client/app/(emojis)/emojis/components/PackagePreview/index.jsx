@@ -146,6 +146,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
           width={48}
           height={48}
           className='inline h-[20px] w-auto'
+          unoptimized={selectedEmojiURL.endsWith('.gif')}
         />
 
         {t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.title')}
@@ -224,6 +225,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
               height={64}
               alt=""
               className='size-[46px] object-contain sm:size-[64px]'
+              unoptimized={url.endsWith('.gif')}
             />
           </motion.div>
         ))}
