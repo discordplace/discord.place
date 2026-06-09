@@ -65,15 +65,15 @@ export default function StatusBadge() {
 
   function getStatusMessage(status) {
     switch (status) {
-      case 'UP': { return 'All systems operational';
+      case 'UP': { return t('footer.statusBadge.up');
       }
-      case 'DEGRADED': { return 'Degraded performance';
+      case 'DEGRADED': { return t('footer.statusBadge.degraded');
       }
-      case 'DOWN': { return 'System outage';
+      case 'DOWN': { return t('footer.statusBadge.down');
       }
-      case 'MAINTENANCE': { return 'Under maintenance';
+      case 'MAINTENANCE': { return t('footer.statusBadge.maintenance');
       }
-      default: { return 'Unknown';
+      default: { return t('footer.statusBadge.unknown');
       }
     }
   }

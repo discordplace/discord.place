@@ -85,6 +85,13 @@
       "en": "English",
       "tr": "Turkish",
       "az": "Azerbaijani"
+    },
+    "statusBadge": {
+      "up": "All systems operational",
+      "degraded": "Degraded performance",
+      "down": "Major outage",
+      "maintenance": "Under maintenance",
+      "unknown": "Unknown"
     }
   },
   "premiumPage": {

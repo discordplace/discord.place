@@ -85,6 +85,13 @@
       "en": "İngiliscə",
       "tr": "Türkcə",
       "az": "Azərbaycanca"
+    },
+    "statusBadge": {
+      "up": "Bütün sistemlər işlək vəziyyətdədir",
+      "degraded": "Performansın zəifləməsi",
+      "down": "Böyük nasazlıq",
+      "maintenance": "Texniki xidmət davam edir",
+      "unknown": "Naməlum"
     }
   },
   "premiumPage": {

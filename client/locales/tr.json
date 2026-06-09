@@ -85,6 +85,13 @@
       "en": "İngilizce",
       "tr": "Türkçe",
       "az": "Azerbaycanca"
+    },
+    "statusBadge": {
+      "up": "Tüm sistemler çalışıyor",
+      "degraded": "Dalgalı performans",
+      "down": "Büyük kesinti",
+      "maintenance": "Bakımda",
+      "unknown": "Bilinmiyor"
     }
   },
   "premiumPage": {
