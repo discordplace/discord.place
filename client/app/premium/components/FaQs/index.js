@@ -10,38 +10,38 @@ export default function FaQs() {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.0.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.0.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.0.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.0.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.1.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.1.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.1.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.1.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.2.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.2.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.2.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.2.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.3.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.3.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.3.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.3.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.4.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.4.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.4.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.4.label')
     }
   ];
 
   return QA.map(({ label, content }, index) => (
     <motion.div
       className={cn(
-        'overflow-hidden flex flex-col w-full p-3 rounded-md group',
+        'group flex w-full flex-col overflow-hidden rounded-md p-3',
         activeQA === index ? 'bg-quaternary' : 'cursor-pointer bg-secondary hover:bg-tertiary'
       )}
       key={label}
       onClick={() => setActiveQA(index)}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 1.1 + (index * 0.2) }}
+      transition={{ delay: 1.1 + (index * 0.2), duration: 0.5 }}
     >
       <div className='flex items-center justify-between text-clip'>
         <div className='flex items-center gap-x-4'>
@@ -49,7 +49,7 @@ export default function FaQs() {
             {index + 1}.
           </span>
           <h3 className={cn(
-            'text-sm lg:text-base font-medium group-hover:text-primary',
+            'text-sm font-medium group-hover:text-primary lg:text-base',
             activeQA === index ? 'text-primary' : 'text-secondary group-hover:text-primary'
           )}>
             {label}
@@ -57,7 +57,7 @@ export default function FaQs() {
         </div>
 
         <MdChevronLeft className={cn(
-          activeQA === index ? 'rotate-[90deg]' : 'rotate-[-90deg]'
+          activeQA === index ? 'rotate-90' : '-rotate-90'
         )} size={20} />
       </div>
 

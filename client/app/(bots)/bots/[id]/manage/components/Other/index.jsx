@@ -47,6 +47,11 @@ export default function Other({ botId, categories, setCategories, canEditSupport
     setSavingGithubRepository(true);
 
     toast.promise(editBot(botId, [{ key: 'github_repository', value: githubRepository }]), {
+      error: error => {
+        setSavingGithubRepository(false);
+
+        return error;
+      },
       loading: t('botManagePage.other.githubRepository.toast.savingRepository'),
       success: () => {
         setSavingGithubRepository(false);
@@ -54,11 +59,6 @@ export default function Other({ botId, categories, setCategories, canEditSupport
         revalidateBot(botId);
 
         return t('botManagePage.other.githubRepository.toast.repositorySaved');
-      },
-      error: error => {
-        setSavingGithubRepository(false);
-
-        return error;
       }
     });
   }
@@ -91,7 +91,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
               <button
                 key={category}
                 className={cn(
-                  'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-tertiary',
+                  'flex size-max items-center gap-x-1 rounded-lg bg-secondary px-3 py-1.5 text-sm font-semibold hover:bg-tertiary',
                   categories.includes(category) && 'bg-quaternary'
                 )}
                 onClick={() => {
@@ -125,7 +125,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
 
             <div className='mt-4 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
               <button
-                className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-black/30 px-4 py-1.5 font-semibold text-white hover:bg-black/40 disabled:pointer-events-none disabled:opacity-70 dark:bg-white/30 dark:hover:bg-white/40 sm:w-max'
+                className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-black/30 px-4 py-1.5 font-semibold text-white hover:bg-black/40 disabled:pointer-events-none disabled:opacity-70 sm:w-max dark:bg-white/30 dark:hover:bg-white/40'
                 disabled={githubRepository === defaultGithubRepository || savingGithubRepository}
                 onClick={saveGithubRepository}
               >
@@ -144,7 +144,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
               className='-mt-2 pl-[6.525rem] focus-visible:text-secondary'
               type='text'
               value={githubRepository}
-              onChange={event => event.target.value === '' ? setGithubRepository(undefined) : setGithubRepository(event.target.value)}
+              onChange={event => (event.target.value === '' ? setGithubRepository(undefined) : setGithubRepository(event.target.value))}
               placeholder={t('botManagePage.other.githubRepository.usernameRepositoryInputPlaceholder')}
               onKeyUp={event => event.key === 'Enter' && saveGithubRepository()}
             />
@@ -169,7 +169,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
 
             <div className='mt-2 flex w-full flex-wrap gap-4'>
               {ownedServersLoading ? (
-                new Array(9).fill().map((_, index) => (
+                Array.from({ length: 9 }).fill().map((_, index) => (
                   <div key={index} className='size-24 animate-pulse rounded-xl bg-secondary' />
                 ))
               ) : (
@@ -182,7 +182,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                     <div
                       className='relative'
                       key={server.id}
-                      onClick={() => supportServerId === server.id ? setSupportServerId('0') : setSupportServerId(server.id)}
+                      onClick={() => (supportServerId === server.id ? setSupportServerId('0') : setSupportServerId(server.id))}
                     >
                       {server.icon ? (
                         <HashServerIcon
@@ -205,7 +205,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                       )}
 
                       {supportServerId === server.id && (
-                        <div className='pointer-events-none absolute -bottom-1 -right-1 rounded-full bg-background p-1 text-2xl'>
+                        <div className='pointer-events-none absolute -right-1 -bottom-1 rounded-full bg-background p-1 text-2xl'>
                           <IoMdCheckmarkCircle />
                         </div>
                       )}

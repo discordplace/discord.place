@@ -6,10 +6,10 @@ class RequestClient {
   constructor() {
     this.instance = axios.create({
       baseURL: config.api.url,
-      withCredentials: true,
       headers: {
         'x-discord-place-client-secret': process.env.CLIENT_SECRET
-      }
+      },
+      withCredentials: true
     });
 
     this.instance.interceptors.response.use(response => response, error => {
@@ -18,9 +18,12 @@ class RequestClient {
       return Promise.reject(errorMessage);
     });
 
-    this.instance.interceptors.request.use(config => {
-      config.headers.cookie = cookies().toString();
-      config.headers['x-discord-place-client-ip'] = headers().get('cf-connecting-ip');
+    this.instance.interceptors.request.use(async config => {
+      const userCookies = await cookies();
+      const userHeaders = await headers();
+
+      config.headers.cookie = userCookies.toString();
+      config.headers['x-discord-place-client-ip'] = userHeaders.get('cf-connecting-ip');
 
       return config;
     });

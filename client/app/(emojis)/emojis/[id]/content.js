@@ -29,34 +29,34 @@ export default function Content({ emoji }) {
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   function continueDeleteEmoji() {
     disableButton('delete-emoji', 'confirm');
 
     toast.promise(deleteEmoji(emoji.id), {
+      error: error => {
+        enableButton('delete-emoji', 'confirm');
+
+        return error;
+      },
       loading: t('emojiPage.toast.deletingEmoji'),
       success: () => {
         closeModal('delete-emoji');
         setTimeout(() => router.push('/'), 3000);
 
         return t('emojiPage.toast.emojiDeleted', { emojiName: emoji.name });
-      },
-      error: error => {
-        enableButton('delete-emoji', 'confirm');
-
-        return error;
       }
     });
   }
 
   return (
     <div className='flex w-full items-center justify-center'>
-      <div className='mb-16 mt-48 flex w-full max-w-[1000px] flex-col gap-y-4 px-4 lg:px-0'>
+      <div className='mt-48 mb-16 flex w-full max-w-[1000px] flex-col gap-y-4 px-4 lg:px-0'>
         {!emoji.approved && (
           <div className='flex flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4'>
             <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>
@@ -79,10 +79,10 @@ export default function Content({ emoji }) {
               active={user?.id !== emoji.user.id}
               type='emoji'
               metadata={{
-                id: emoji.id,
-                name: emoji.name,
                 animated: emoji.animated,
-                emoji_ids: []
+                emoji_ids: [],
+                id: emoji.id,
+                name: emoji.name
               }}
               identifier={`emoji-${emoji.id}`}
             >
@@ -113,7 +113,7 @@ export default function Content({ emoji }) {
               </h1>
 
               <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
-                {new Date(emoji.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/,/g,'')}
+                {new Date(emoji.created_at).toLocaleDateString(language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(/,/g,'')}
               </span>
             </div>
 
@@ -243,27 +243,27 @@ export default function Content({ emoji }) {
                 className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 onClick={() =>
                   openModal('delete-emoji', {
-                    title: t('emojiPage.dangerZone.deleteEmojiModal.title'),
-                    description: t('emojiPage.dangerZone.deleteEmojiModal.description', { emojiName: emoji.name }),
+                    buttons: [
+                      {
+                        actionType: 'close',
+                        id: 'cancel',
+                        label: t('buttons.cancel'),
+                        variant: 'ghost'
+                      },
+                      {
+                        action: continueDeleteEmoji,
+                        id: 'confirm',
+                        label: t('buttons.confirm'),
+                        variant: 'solid'
+                      }
+                    ],
                     content: (
                       <p className='text-sm text-tertiary'>
                         {t('emojiPage.dangerZone.deleteEmojiModal.content', { br: <br /> })}
                       </p>
                     ),
-                    buttons: [
-                      {
-                        id: 'cancel',
-                        label: t('buttons.cancel'),
-                        variant: 'ghost',
-                        actionType: 'close'
-                      },
-                      {
-                        id: 'confirm',
-                        label: t('buttons.confirm'),
-                        variant: 'solid',
-                        action: continueDeleteEmoji
-                      }
-                    ]
+                    description: t('emojiPage.dangerZone.deleteEmojiModal.description', { emojiName: emoji.name }),
+                    title: t('emojiPage.dangerZone.deleteEmojiModal.title')
                   })
                 }
               >

@@ -55,12 +55,28 @@
     "services": "Services",
     "blog": "Blog",
     "premium": "Premium",
-    "logout": "Logout"
+    "continueWithDiscord": "Continue with",
+    "myAccount": "My Account"
   },
   "footer": {
-    "title": "All things related to Discord all in one place.",
-    "subtitle": "This site is not affiliated with Discord Inc. All trademarks are property of their respective owners.",
-    "copyRight": "{{year}} discord.place. All rights reserved.",
+    "description": "A place for all things that related to Discord.",
+    "disclaimer": "This site is not affiliated with Discord Inc.",
+    "pages": {
+      "title": "Pages",
+      "home": "Home",
+      "apiDocumentation": "API Documentation",
+      "premium": "Premium",
+      "blogs": "Blogs"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookie": "Cookie Policy",
+      "content": "Content Policy",
+      "purchase": "Purchase Policy"
+    },
+    "copyRight": "© {{year}} discord.place. All rights reserved.",
     "theme": {
       "light": "Light",
       "dark": "Dark"
@@ -70,44 +86,13 @@
       "tr": "Turkish",
       "az": "Azerbaijani"
     },
-    "blocks": [
-      {
-        "title": "Pages",
-        "links": [
-          "Home",
-          "API Documentation",
-          "Service Status",
-          "Premium",
-          "Blog"
-        ]
-      },
-      {
-        "title": "Our Services",
-        "links": [
-          "Profiles",
-          "Servers",
-          "Bots",
-          "Emojis",
-          "Templates",
-          "Sounds",
-          "Themes"
-        ]
-      },
-      {
-        "title": "Legal",
-        "links": [
-          "Privacy Policy",
-          "Terms of Service",
-          "Cookie Policy",
-          "Content Policy",
-          "Purchase Policy"
-        ]
-      },
-      {
-        "title": "Socials"
-      }
-    ],
-    "newBadge": "New"
+    "statusBadge": {
+      "up": "All systems operational",
+      "degraded": "Degraded performance",
+      "down": "Major outage",
+      "maintenance": "Under maintenance",
+      "unknown": "Unknown"
+    }
   },
   "premiumPage": {
     "title": "Premium Membership",
@@ -190,6 +175,12 @@
         }
       ]
     }
+  },
+  "notFoundPage": {
+    "title": "You lost in the void, didn't you?",
+    "description": "The place you are looking for doesn't exist. Or maybe it does, but it's hidden somewhere in the void. Either way, it's not here.",
+    "redirectText": "You will be redirected to the homepage in {{count}} second.",
+    "redirectTextPlural": "You will be redirected to the homepage in {{count}} seconds."
   },
   "errorPage": {
     "badge": "Error",
@@ -286,7 +277,8 @@
     "dontTrust": "Don't Trust",
     "testWebhook": "Test Webhook",
     "continue": "Continue",
-    "dontShowAgain": "Don't Show Again"
+    "dontShowAgain": "Don't Show Again",
+    "goHome": "Go Home"
   },
   "voteCountdown": {
     "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",

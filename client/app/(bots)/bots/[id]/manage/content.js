@@ -31,8 +31,6 @@ export default function Content({ bot }) {
   const [categories, setCategories] = useState(bot.categories);
   const [supportServerId, setSupportServerId] = useState(bot.support_server?.id || '0');
 
-  // calculate if any changes made, if so, enable the save button
-
   useEffect(() => {
     const isShortDescriptionChanged = !isEqual(shortDescription, bot.short_description);
     const isDescriptionChanged = !isEqual(description, bot.description);
@@ -49,11 +47,7 @@ export default function Content({ bot }) {
     );
 
     function pushToChangedKeys(key, value) {
-      // if the current value is the same as the original value, remove the key from the array
       if (isEqual(value, bot[key])) return setChangedKeys(oldKeys => oldKeys.filter(({ key: oldKey }) => oldKey !== key));
-
-      // if the key already exists, update the value
-      // otherwise, add the key and value to the array
 
       setChangedKeys(oldKeys =>
         oldKeys
@@ -75,21 +69,26 @@ export default function Content({ bot }) {
   function resetChanges() {
     changedKeys.forEach(({ key }) => {
       switch (key) {
-        case 'short_description':
+        case 'short_description': {
           setShortDescription(bot[key]);
           break;
-        case 'description':
+        }
+        case 'description': {
           setDescription(bot[key]);
           break;
-        case 'invite_url':
+        }
+        case 'invite_url': {
           setInviteURL(bot[key]);
           break;
-        case 'categories':
+        }
+        case 'categories': {
           setCategories(bot[key]);
           break;
-        case 'support_server_id':
+        }
+        case 'support_server_id': {
           setSupportServerId(bot.support_server?.id || '0');
           break;
+        }
       }
     });
 
@@ -100,6 +99,11 @@ export default function Content({ bot }) {
     setSavingChanges(true);
 
     toast.promise(editBot(bot.id, changedKeys), {
+      error: error => {
+        setSavingChanges(false);
+
+        return error;
+      },
       loading: t('botManagePage.toast.savingChanges'),
       success: () => {
         setSavingChanges(false);
@@ -108,11 +112,6 @@ export default function Content({ bot }) {
         revalidateBot(bot.id);
 
         return t('botManagePage.toast.changesSaved');
-      },
-      error: error => {
-        setSavingChanges(false);
-
-        return error;
       }
     });
   }
@@ -120,9 +119,9 @@ export default function Content({ bot }) {
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
 
   const { openModal, closeModal, openedModals } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
     closeModal: state.closeModal,
-    openedModals: state.openedModals
+    openedModals: state.openedModals,
+    openModal: state.openModal
   })));
 
   const router = useRouter();
@@ -130,35 +129,34 @@ export default function Content({ bot }) {
   useEffect(() => {
     function handleEscape(event) {
       if (event.key === 'Escape') {
-
         if (changesMade) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
 
           openModal('confirm-exit', {
-            title: t('botManagePage.discardChangesModal.title'),
-            description: t('botManagePage.discardChangesModal.description'),
-            content: <p className='text-sm text-tertiary'>{t('botManagePage.discardChangesModal.note')}</p>,
             buttons: [
               {
+                actionType: 'close',
                 id: 'cancel',
                 label: t('buttons.cancel'),
-                variant: 'ghost',
-                actionType: 'close'
+                variant: 'ghost'
               },
               {
-                id: 'discard-changes',
-                label: t('buttons.discardChanges'),
-                variant: 'solid',
                 action: () => {
                   resetChanges();
                   closeModal('confirm-exit');
                   router.push(`/bots/${bot.id}`, { shallow: true });
-                }
+                },
+                id: 'discard-changes',
+                label: t('buttons.discardChanges'),
+                variant: 'solid'
               }
-            ]
+            ],
+            content: <p className='text-sm text-tertiary'>{t('botManagePage.discardChangesModal.note')}</p>,
+            description: t('botManagePage.discardChangesModal.description'),
+            title: t('botManagePage.discardChangesModal.title')
           });
         } else {
-          window.location.href = `/bots/${bot.id}`;
+          globalThis.location.href = `/bots/${bot.id}`;
         }
       }
     }
@@ -186,7 +184,7 @@ export default function Content({ bot }) {
               <h2 className='flex items-center gap-x-2 text-3xl font-bold'>
                 {t('botManagePage.title')}
 
-                <div className='select-none rounded-lg bg-quaternary p-2 text-xs font-bold uppercase'>
+                <div className='rounded-lg bg-quaternary p-2 text-xs font-bold uppercase select-none'>
                   {t('botManagePage.escToCloseBadge')}
                 </div>
               </h2>

@@ -41,7 +41,7 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
               <button
                 key={serverCategory}
                 className={cn(
-                  'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-tertiary',
+                  'flex size-max items-center gap-x-1 rounded-lg bg-secondary px-3 py-1.5 text-sm font-semibold hover:bg-tertiary',
                   category === serverCategory && 'bg-quaternary'
                 )}
                 disabled={category === serverCategory}
@@ -106,7 +106,7 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
             }
             description={t('serverManagePage.other.addedKeywords.description')}
             value={keywords.join(', ')}
-            disabled
+            disabled={true}
             CustomInput={
               <div className='mt-2 flex flex-wrap gap-2'>
                 {keywords.map(keyword => (

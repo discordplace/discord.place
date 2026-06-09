@@ -16,27 +16,27 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   async function continueDeleteTemplate() {
     disableButton('delete-template', 'confirm');
 
     toast.promise(deleteTemplate(template.id), {
+      error: error => {
+        enableButton('delete-template', 'confirm');
+
+        return error;
+      },
       loading: t('templatePreviewPage.toast.deletingTempalte'),
       success: () => {
         closeModal('delete-template');
         setTimeout(() => router.push('/'), 3000);
 
         return t('templatePreviewPage.toast.templateDeleted', { templateName: template.name });
-      },
-      error: error => {
-        enableButton('delete-template', 'confirm');
-
-        return error;
       }
     });
   }
@@ -80,7 +80,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
             alt='discord.place Square Logo'
             width={48}
             height={48}
-            className='select-none rounded-2xl'
+            className='rounded-2xl select-none'
           />
         </Tooltip>
       </div>
@@ -106,7 +106,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
             alt='Disbot Square Logo'
             width={48}
             height={48}
-            className='select-none rounded-2xl'
+            className='rounded-2xl select-none'
           />
         </Tooltip>
       </Link>
@@ -151,27 +151,27 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           {currentlyOpenedSection === 'channels' && (
             <div
               className={cn(
-                'bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl',
+                'flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white',
                 !focusedChannel.topic && 'opacity-50'
               )}
               onClick={() =>
-                !focusedChannel.topic ?
+                (!focusedChannel.topic ?
                   toast.error(t('templatePreviewPage.noTopic', { focusedChannelName: focusedChannel.name })) :
                   openModal('view-topic', {
-                    title: t('templatePreviewPage.topicModal.title'),
-                    description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
-                    content: <>
-                      <p className='break-words text-sm font-medium text-[#dbdee1]'>{focusedChannel.topic}</p>
-                    </>,
                     buttons: [
                       {
+                        actionType: 'close',
                         id: 'cancel',
                         label: t('buttons.close'),
-                        variant: 'ghost',
-                        actionType: 'close'
+                        variant: 'ghost'
                       }
-                    ]
-                  })
+                    ],
+                    content: <>
+                      <p className='text-sm font-medium wrap-break-word text-[#dbdee1]'>{focusedChannel.topic}</p>
+                    </>,
+                    description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
+                    title: t('templatePreviewPage.topicModal.title')
+                  }))
               }
             >
               <FaPenFancy size={24} />
@@ -198,8 +198,8 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       >
         <div
           className={cn(
-            'bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl',
-            templateIdCopied && 'opacity-70 pointer-events-none'
+            'flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white',
+            templateIdCopied && 'pointer-events-none opacity-70'
           )}
           onClick={() => {
             if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
@@ -212,14 +212,14 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           <IoCheckmarkCircle
             size={20}
             className={cn(
-              'transition-[opacity] ease-in-out absolute',
+              'absolute transition-opacity ease-in-out',
               !templateIdCopied && 'opacity-0'
             )}
           />
           <BiSolidCopy
             size={20}
             className={cn(
-              'transition-[opacity] ease-in-out',
+              'transition-opacity ease-in-out',
               templateIdCopied && 'opacity-0'
             )}
           />
@@ -235,27 +235,27 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
             className='flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#ff4d4d] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#ff4d4d] hover:text-white'
             onClick={() =>
               openModal('delete-template', {
-                title: t('templatePreviewPage.deleteTemplateModal.title'),
-                description: t('templatePreviewPage.deleteTemplateModal.description', { templateName: template.name }),
+                buttons: [
+                  {
+                    actionType: 'close',
+                    id: 'cancel',
+                    label: t('buttons.cancel'),
+                    variant: 'ghost'
+                  },
+                  {
+                    action: continueDeleteTemplate,
+                    id: 'confirm',
+                    label: t('buttons.confirm'),
+                    variant: 'solid'
+                  }
+                ],
                 content: (
                   <p className='text-sm text-tertiary'>
                     {t('templatePreviewPage.deleteTemplateModal.note')}
                   </p>
                 ),
-                buttons: [
-                  {
-                    id: 'cancel',
-                    label: t('buttons.cancel'),
-                    variant: 'ghost',
-                    actionType: 'close'
-                  },
-                  {
-                    id: 'confirm',
-                    label: t('buttons.confirm'),
-                    variant: 'solid',
-                    action: continueDeleteTemplate
-                  }
-                ]
+                description: t('templatePreviewPage.deleteTemplateModal.description', { templateName: template.name }),
+                title: t('templatePreviewPage.deleteTemplateModal.title')
               })
             }
           >

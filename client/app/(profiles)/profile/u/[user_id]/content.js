@@ -26,7 +26,7 @@ function StatBlock({ fields, index }) {
     <div className='flex w-full flex-col gap-y-4' style={{
       alignItems: index % 2 === 0 ? 'flex-start' : 'flex-end'
     }}>
-      <div className='flex w-full flex-col gap-y-2 rounded-[2rem] bg-background px-4 py-2'>
+      <div className='flex w-full flex-col gap-y-2 rounded-4xl bg-background px-4 py-2'>
         {fields.map(({ Icon, label, value, tooltip, disabled }, index) => (
           <>
             <div
@@ -72,8 +72,8 @@ export default function Content({ user }) {
   const sortedFlags = useSortFlags(user.flags);
 
   return (
-    <div className='mb-8 mt-32 flex w-full flex-col items-center gap-y-8 px-8 lg:px-0'>
-      <div className='relative h-max w-full max-w-[600px] rounded-[2rem] bg-secondary p-3'>
+    <div className='mt-32 mb-8 flex w-full flex-col items-center gap-y-8 px-8 lg:px-0'>
+      <div className='relative h-max w-full max-w-[600px] rounded-4xl bg-secondary p-3'>
         {user.bannerURL ? (
           <div className='relative'>
             <UserBanner
@@ -88,7 +88,7 @@ export default function Content({ user }) {
             />
 
             {user.bannerURL.includes('.gif') && (
-              <div className='pointer-events-none absolute right-4 top-4 rounded-full px-2 py-0.5 text-xs font-bold text-white shadow-xl shadow-black backdrop-blur-2xl'>
+              <div className='pointer-events-none absolute top-4 right-4 rounded-full px-2 py-0.5 text-xs font-bold text-white shadow-xl shadow-black backdrop-blur-2xl'>
                 GIF
               </div>
             )}
@@ -97,7 +97,7 @@ export default function Content({ user }) {
           <div className='h-[200px] rounded-[2.5rem] bg-tertiary' />
         )}
 
-        <div className='pointer-events-none relative bottom-16 left-8 -mb-12 flex w-full items-center sm:mb-[-7.5rem]'>
+        <div className='pointer-events-none relative bottom-16 left-8 -mb-12 flex w-full items-center sm:-mb-30'>
           {user.avatarURL ? (
             <UserAvatar
               id={user.id}
@@ -152,7 +152,7 @@ export default function Content({ user }) {
               {user.globalName || user.username}
 
               {user.bot && (
-                <span className='flex select-none items-center gap-x-1 rounded-full bg-[#5865F2] px-1.5 py-0.5 text-xs font-semibold uppercase text-white'>
+                <span className='flex items-center gap-x-1 rounded-full bg-[#5865F2] px-1.5 py-0.5 text-xs font-semibold text-white uppercase select-none'>
                   {user.bot_verified && (
                     <Tooltip content={t('userProfile.tooltip.verifiedApp')}>
                       <div>
@@ -196,11 +196,11 @@ export default function Content({ user }) {
               {(user.profile?.badges || []).map(badgeId => (
                 <Tooltip
                   content={t(`badges.${badgeId}`, {
-                    premiumSince: user.subscriptionCreatedAt,
-                    lng: language,
                     formatParams: {
-                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                    }
+                      premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                    },
+                    lng: language,
+                    premiumSince: user.subscriptionCreatedAt
                   })}
                   key={badgeId}
                 >
@@ -214,7 +214,7 @@ export default function Content({ user }) {
                 </Tooltip>
               ))}
 
-              {new Array(6 - (user.profile?.badges || []).length).fill(null).map((_, index) => (
+              {Array.from({ length: 6 - (user.profile?.badges || []).length }).fill(null).map((_, index) => (
                 <div className='size-[20px] rounded-full bg-tertiary' key={index} />
               ))}
             </div>
@@ -232,14 +232,14 @@ export default function Content({ user }) {
               {t('userProfile.about.title')}
             </h3>
 
-            <p className='line-clamp-3 whitespace-pre-wrap text-sm font-normal text-tertiary'>
+            <p className='line-clamp-3 text-sm font-normal whitespace-pre-wrap text-tertiary'>
               {user.profile?.bio || t('userProfile.about.noBio')}
             </p>
           </div>
 
           <div
             className={cn(
-              'hidden sm:flex flex-col w-full items-end gap-y-2',
+              'hidden w-full flex-col items-end gap-y-2 sm:flex',
               user.bot && 'opacity-20 select-none'
             )}
           >
@@ -251,11 +251,11 @@ export default function Content({ user }) {
               {(user.profile?.badges || []).map(badgeId => (
                 <Tooltip
                   content={t(`badges.${badgeId}`, {
-                    premiumSince: user.subscriptionCreatedAt,
-                    lng: language,
                     formatParams: {
-                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                    }
+                      premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                    },
+                    lng: language,
+                    premiumSince: user.subscriptionCreatedAt
                   })}
                   key={badgeId}
                 >
@@ -269,7 +269,7 @@ export default function Content({ user }) {
                 </Tooltip>
               ))}
 
-              {new Array(6 - (user.profile?.badges || []).length).fill(null).map((_, index) => (
+              {Array.from({ length: 6 - (user.profile?.badges || []).length }).fill(null).map((_, index) => (
                 <div className='size-[20px] rounded-full bg-tertiary' key={index} />
               ))}
             </div>
@@ -282,14 +282,14 @@ export default function Content({ user }) {
               {
                 Icon: FaDiscord,
                 label: t('userProfile.fields.memberSince'),
-                value: new Date(user.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })
+                value: new Date(user.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })
               },
               {
+                disabled: user.bot,
                 Icon: TbSquareRoundedChevronUp,
                 label: t('userProfile.fields.votesGiven.label'),
-                value: user.votesGiven || 0,
                 tooltip: t('userProfile.fields.votesGiven.tooltip'),
-                disabled: user.bot
+                value: user.votesGiven || 0
               }
             ]}
             index='0'
@@ -298,6 +298,7 @@ export default function Content({ user }) {
           <StatBlock
             fields={[
               {
+                disabled: user.bot,
                 Icon: FaLink,
                 label: t('userProfile.fields.profile.label'),
                 value: user.profile ? (
@@ -313,15 +314,14 @@ export default function Content({ user }) {
                       <MdOutlineArrowOutward />
                     </Link>
                   </div>
-                ) : t('userProfile.fields.profile.noProfile'),
-                disabled: user.bot
+                ) : t('userProfile.fields.profile.noProfile')
               },
               {
+                disabled: user.bot,
                 Icon: IoMdHeart,
                 label: t('userProfile.fields.likesReceived.label'),
-                value: user.profile?.likesCount || 0,
                 tooltip: t('userProfile.fields.likesReceived.tooltip'),
-                disabled: user.bot
+                value: user.profile?.likesCount || 0
               }
             ]}
             index='1'
@@ -348,28 +348,28 @@ export default function Content({ user }) {
                     active={user?.id !== server.owner.id}
                     type='server'
                     metadata={{
-                      id: server.id,
-                      name: server.name,
+                      description: server.description,
                       icon: server.icon,
-                      description: server.description
+                      id: server.id,
+                      name: server.name
                     }}
                     identifier={`server-${server.id}`}
                   >
                     <div className='flex'>
                       <ServerCard
                         server={{
-                          premium: server.premium,
+                          banner: server.banner,
+                          category: server.category,
                           data: {
                             members: server.total_members,
                             votes: server.votes
                           },
-                          joined_at: server.joined_at,
-                          id: server.id,
-                          banner: server.banner,
-                          icon: server.icon,
-                          name: server.name,
                           description: server.description,
-                          category: server.category
+                          icon: server.icon,
+                          id: server.id,
+                          joined_at: server.joined_at,
+                          name: server.name,
+                          premium: server.premium
                         }}
                         overridedSort='Votes'
                       />
@@ -397,11 +397,11 @@ export default function Content({ user }) {
                     active={user?.id !== bot.owner.id}
                     type='bot'
                     metadata={{
-                      id: bot.id,
-                      username: bot.username,
-                      discriminator: bot.discriminator,
                       avatar: bot.avatar,
-                      short_description: bot.short_description
+                      discriminator: bot.discriminator,
+                      id: bot.id,
+                      short_description: bot.short_description,
+                      username: bot.username
                     }}
                     identifier={`bot-${bot.id}`}
                   >

@@ -48,7 +48,7 @@ export default function Reviews({ bot }) {
       .finally(() => setReviewsLoading(false));
   }, [bot.id, page, limit]);
 
-  const calcRating = rating => {
+  function calcRating(rating) {
     const totalReviews = bot.reviews.length;
     const ratingCount = bot.reviews.filter(review => review.rating === rating).length;
     const percentage = (ratingCount / totalReviews) * 100;
@@ -59,7 +59,12 @@ export default function Reviews({ bot }) {
   function submitReview() {
     setLoading(true);
 
-    toast.promise(createReview(bot.id, { rating: selectedRating, content: review }), {
+    toast.promise(createReview(bot.id, { content: review, rating: selectedRating }), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('botPage.tabs.reviews.toast.submittingReview'),
       success: () => {
         setLoading(false);
@@ -68,11 +73,6 @@ export default function Reviews({ bot }) {
         setReviewSubmitted(true);
 
         return t('botPage.tabs.reviews.toast.reviewSubmitted');
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -102,13 +102,13 @@ export default function Reviews({ bot }) {
           </div>
 
           <span className='text-sm text-tertiary'>
-            {t('botPage.tabs.reviews.totalReviews', { postProcess: 'interval', count: bot.reviews.length })}
+            {t('botPage.tabs.reviews.totalReviews', { count: bot.reviews.length, postProcess: 'interval' })}
           </span>
         </div>
 
         <div className='flex w-full flex-1'>
           <div className='flex w-full flex-col gap-y-2'>
-            {new Array(5).fill(null).map((_, index) => (
+            {Array.from({ length: 5 }).fill(null).map((_, index) => (
               <div key={index} className='flex w-full items-center gap-x-4'>
                 <span className='font-semibold'>{5 - index}</span>
 
@@ -143,7 +143,7 @@ export default function Reviews({ bot }) {
           <span className='text-sm font-medium text-tertiary'>
             {t('botPage.tabs.reviews.reviewSubmitted.alreadyReviewed')}
           </span>
-        ) : bot.owner.id === user?.id ? (
+        ) : (bot.owner.id === user?.id ? (
           <span className='text-sm font-medium text-tertiary'>
             {t('botPage.tabs.reviews.ownerCannotReview')}
           </span>
@@ -191,7 +191,7 @@ export default function Reviews({ bot }) {
                             else setSelectedRating(index + 1);
                           }}
                           onMouseEnter={() => (isMobile ? setSelectedRating : setHoveredRating)(index + 1)}
-                          onMouseLeave={() => isMobile ? setSelectedRating(0) : setHoveredRating(0)}
+                          onMouseLeave={() => (isMobile ? setSelectedRating(0) : setHoveredRating(0))}
                         />
                       ) : (
                         <TiStarOutline
@@ -199,7 +199,7 @@ export default function Reviews({ bot }) {
                           className='cursor-pointer text-tertiary'
                           onClick={() => setSelectedRating(index + 1)}
                           onMouseEnter={() => (isMobile ? setSelectedRating : setHoveredRating)(index + 1)}
-                          onMouseLeave={() => isMobile ? setSelectedRating(0) : setHoveredRating(0)}
+                          onMouseLeave={() => (isMobile ? setSelectedRating(0) : setHoveredRating(0))}
                         />
                       )
                     ))}
@@ -223,7 +223,7 @@ export default function Reviews({ bot }) {
               )}
             </div>
 
-            <div className='flex w-full flex-1 flex-col gap-y-1 whitespace-pre-wrap font-medium text-secondary'>
+            <div className='flex w-full flex-1 flex-col gap-y-1 font-medium whitespace-pre-wrap text-secondary'>
               <h3 className='font-medium text-primary'>
                 {t('botPage.tabs.reviews.input.label')}
               </h3>
@@ -235,7 +235,7 @@ export default function Reviews({ bot }) {
               <div className='relative'>
                 <textarea
                   disabled={loading || reviewSubmitted || !loggedIn}
-                  className='scrollbar-hide peer mt-4 block max-h-[200px] min-h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base lg:max-w-[450px] [&:not(:disabled)]:cursor-text'
+                  className='peer mt-4 block max-h-[200px] min-h-[100px] w-full resize-none scrollbar-none rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden not-disabled:cursor-text focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base lg:max-w-[450px]'
                   value={review}
                   onChange={event => setReview(event.target.value)}
                   maxLength={config.reviewsMaxCharacters}
@@ -243,7 +243,7 @@ export default function Reviews({ bot }) {
 
                 <span
                   className={cn(
-                    'absolute text-xs transition-opacity opacity-0 peer-focus-visible:opacity-100 -top-2 right-2 text-tertiary',
+                    'absolute -top-2 right-2 text-xs text-tertiary opacity-0 transition-opacity peer-focus-visible:opacity-100',
                     review.length > 0 && review.length < config.reviewsMinCharacters && 'text-red-400'
                   )}
                 >
@@ -267,7 +267,7 @@ export default function Reviews({ bot }) {
               )}
             </div>
           </>
-        )}
+        ))}
       </div>
 
       {reviews.map(review => (
@@ -307,19 +307,19 @@ export default function Reviews({ bot }) {
             type='review'
             active={user?.id !== review.user.id}
             metadata={{
-              reviewer: {
-                id: review.user.id,
-                username: review.user.username,
-                avatar: review.user.avatar
-              },
+              content: review.content,
               rating: review.rating,
-              content: review.content
+              reviewer: {
+                avatar: review.user.avatar,
+                id: review.user.id,
+                username: review.user.username
+              }
             }}
             identifier={`bot-${bot.id}-review-${review._id}`}
           >
-            <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0'>
+            <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 font-medium wrap-break-word whitespace-pre-wrap text-secondary sm:gap-y-0'>
               <span className='text-xs font-medium text-tertiary'>
-                {new Date(review.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                {new Date(review.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', year: 'numeric' })}
               </span>
 
               {review.content}

@@ -11,8 +11,7 @@ export default function CodeBlock({ children, FileIcon, fileName, language, clas
 
   return (
     <div className='rounded-xl border border-primary'>
-      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
-      <div className='font-geist -mb-2 flex w-full justify-between rounded-t-xl border-b border-b-primary bg-secondary px-4 py-2'>
+      <div className='-mb-2 flex w-full justify-between rounded-t-xl border-b border-b-primary bg-secondary px-4 py-2 font-sans'>
         <div className='flex items-center gap-x-1.5 text-xs text-tertiary'>
           {FileIcon}
 
@@ -29,14 +28,13 @@ export default function CodeBlock({ children, FileIcon, fileName, language, clas
       </div>
 
       <SyntaxHighlighter
-        PreTag={'div'}
-        // eslint-disable-next-line react/no-children-prop
+        PreTag="div"
         children={String(children).replace(/\n$/, '')}
         language={language}
         style={theme === 'dark' ? oneDark : oneLight}
         wrapLongLines={false}
         className={cn(
-          '!mb-0 max-w-[calc(100vw_-_4rem)] !bg-[unset] [&>code]:!bg-[unset]',
+          'mb-0! max-w-[calc(100vw-4rem)] bg-[unset]! [&>code]:bg-[unset]!',
           className
         )}
       />

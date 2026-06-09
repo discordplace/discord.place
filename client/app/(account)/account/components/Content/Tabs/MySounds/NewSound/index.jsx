@@ -48,12 +48,16 @@ export default function NewSound() {
     formData.append('file', file);
 
     toast.promise(createSound(formData), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.mySounds.sections.addSound.toast.addingSound', { soundName }),
       success: data => {
         setTimeout(() => {
           router.push(`/sounds/${data.id}`);
 
-          // Reset states
           setSoundName('');
           setSoundCategories([]);
           setFile(null);
@@ -63,11 +67,6 @@ export default function NewSound() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.mySounds.sections.addSound.toast.soundAdded', { soundName });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -87,11 +86,11 @@ export default function NewSound() {
     console.log(file.type, allowedFileTypes.includes(file.type));
     if (!allowedFileTypes.includes(file.type)) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.invalidFile'));
 
-    if (file.size >= 1024 * 1024) return toast.error(
+    if (file.size >= 1024 * 1024) {return toast.error(
       t('accountPage.tabs.mySounds.sections.addSound.toast.fileSizeExceeded', {
         size: 1
       })
-    );
+    );}
 
     const audioUrl = URL.createObjectURL(file);
     const audio = new Audio(audioUrl);
@@ -123,7 +122,7 @@ export default function NewSound() {
 
   return (
     <>
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%'/>
       </div>
 
@@ -159,7 +158,7 @@ export default function NewSound() {
 
             <label
               className={cn(
-                'w-full bg-quaternary cursor-pointer group hover:bg-purple-500/10 hover:border-purple-500 transition-all gap-y-2 flex-col border-2 border-primary h-[150px] mt-4 rounded-xl flex items-center justify-center',
+                'group mt-4 flex h-[150px] w-full cursor-pointer flex-col items-center justify-center gap-y-2 rounded-xl border-2 border-primary bg-quaternary transition-all hover:border-purple-500 hover:bg-purple-500/10',
                 (file || dragging) && 'border-purple-500 bg-purple-500/10'
               )}
               htmlFor='file'
@@ -207,7 +206,7 @@ export default function NewSound() {
             </p>
 
             <input
-              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
               onChange={event => setSoundName(event.target.value)}
               value={soundName}
               maxLength={config.soundNameMaxLength}
@@ -228,7 +227,7 @@ export default function NewSound() {
                   <button
                     key={category}
                     className={cn(
-                      'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-quaternary',
+                      'flex size-max items-center gap-x-1 rounded-lg bg-secondary px-3 py-1.5 text-sm font-semibold hover:bg-quaternary',
                       soundCategories.includes(category) && 'bg-quaternary'
                     )}
                     onClick={() => {

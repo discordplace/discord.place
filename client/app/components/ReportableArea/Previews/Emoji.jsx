@@ -18,7 +18,7 @@ export default function EmojiPreview({ metadata }) {
               />
             ))}
 
-            {new Array(9 - metadata.emoji_ids.length).fill(0).map((_, index) => (
+            {Array.from({ length: 9 - metadata.emoji_ids.length }).fill(0).map((_, index) => (
               <div key={index} className='size-6 rounded-md bg-quaternary' />
             ))}
           </div>

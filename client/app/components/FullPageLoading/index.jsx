@@ -2,9 +2,8 @@
 
 import useThemeStore from '@/stores/theme';
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function FullPageLoading() {
   const theme = useThemeStore(state => state.theme);
@@ -17,7 +16,7 @@ export default function FullPageLoading() {
     };
   }, []);
 
-  const transition = { duration: 0.25, type: 'spring', damping: 10, stiffness: 100 };
+  const transition = { damping: 10, duration: 0.25, stiffness: 100, type: 'spring' };
 
   return (
     <AnimatePresence>
@@ -32,6 +31,7 @@ export default function FullPageLoading() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={transition}
+          priority={true}
         />
 
         <motion.div
@@ -42,8 +42,8 @@ export default function FullPageLoading() {
           transition={transition}
         >
           <div className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
-            width: '50%',
-            transform: 'translateX(-100%)'
+            transform: 'translateX(-100%)',
+            width: '50%'
           }} />
         </motion.div>
       </div>

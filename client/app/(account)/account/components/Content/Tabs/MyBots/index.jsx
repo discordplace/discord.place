@@ -39,7 +39,7 @@ export default function MyBots() {
     grantScopeIntervalRef.current = setInterval(async () => {
       if (retryCount > 30) {
         clearInterval(grantScopeIntervalRef.current);
-        toast.error(t('accountPage.tabs.myBots.sections.newBot.toast.grantingPermissionTimeout'), { duration: 30000 });
+        toast.error(t('accountPage.tabs.myBots.sections.newBot.toast.grantingPermissionTimeout'), { duration: 30_000 });
 
         return;
       }
@@ -218,7 +218,7 @@ export default function MyBots() {
 
           <div
             className={cn(
-              'flex flex-col items-center w-full max-w-[800px] gap-y-4',
+              'flex w-full max-w-[800px] flex-col items-center gap-y-4',
               (data.denies || []).length === 0 && 'my-20'
             )}
           >
@@ -274,12 +274,12 @@ export default function MyBots() {
                   </div>
 
                   <div className='mt-2 text-xs text-tertiary'>
-                    {new Date(deny.createdAt).getTime() + 21600000 > Date.now() ? (
+                    {new Date(deny.createdAt).getTime() + 21_600_000 > Date.now() ? (
                       <span>
                         {t('accountPage.tabs.myBots.sections.pastDenials.countdown.expiresIn', {
                           countdown: (
                             <Countdown
-                              date={new Date(deny.createdAt).getTime() + 21600000}
+                              date={new Date(deny.createdAt).getTime() + 21_600_000}
                               renderer={({ hours, minutes, seconds, completed }) => {
                                 if (completed) return t('accountPage.tabs.myBots.sections.pastDenials.countdown.completed');
 

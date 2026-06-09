@@ -1,0 +1,136 @@
+@import 'tailwindcss' source('./client/');
+@custom-variant dark (&:where(.dark, .dark *));
+
+@plugin 'tailwindcss-animate';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --animate-loading: loading 3s infinite cubic-bezier(0.48, -0.03, 0.12, 0.97);
+  --animate-logo-spin: logo-spin 1.5s forwards
+    cubic-bezier(0.83, -0.16, 0.04, 1.36);
+  --animate-reportable-area: reportable-area 3s infinite ease-in-out;
+  --animate-rotate: rotate 10s linear infinite;
+  --animate-scroll-based-appear: scroll-based-appear linear both;
+  --animate-shine: shine 1s infinite ease-in-out;
+  --animate-shimmer: shimmer 1s infinite linear;
+
+  --background-color-background: rgba(var(--bg-background));
+  --background-color-quaternary: rgba(var(--bg-quaternary));
+  --background-color-secondary: rgba(var(--bg-secondary));
+  --background-color-tertiary: rgba(var(--bg-tertiary));
+
+  --border-color-primary: rgba(var(--border-primary));
+
+  --color-placeholder: rgba(var(--text-placeholder));
+
+  --fill-primary: rgba(var(--bg-background));
+  --fill-quaternary: rgba(var(--bg-quaternary));
+  --fill-secondary: rgba(var(--bg-secondary));
+  --fill-tertiary: rgba(var(--bg-tertiary));
+
+  --font-ggSans: var(--font-gg-sans);
+  --font-oranienbaum: var(--font-oranienbaum);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --gradient-color-stops-primary: rgba(var(--bg-background));
+  --gradient-color-stops-quaternary: rgba(var(--bg-quaternary));
+  --gradient-color-stops-secondary: rgba(var(--bg-secondary));
+  --gradient-color-stops-tertiary: rgba(var(--bg-tertiary));
+
+  --breakpoint-emojis-cols-3: 838px;
+  --breakpoint-mobile: 420px;
+  --breakpoint-themes-cols-2: 770px;
+
+  --text-color-primary: rgba(var(--text-primary));
+  --text-color-secondary: rgba(var(--text-secondary));
+  --text-color-tertiary: rgba(var(--text-tertiary));
+
+  @keyframes loading {
+    0% {
+      transform: translateX(-100%);
+      width: 50%;
+    }
+    49.9% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+      transform: translateX(205%);
+    }
+    99.9% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes logo-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes reportable-area {
+    0% {
+      background-color: rgb(168 85 247 / 0.1);
+    }
+    50% {
+      background-color: rgb(168 85 247 / 0.3);
+    }
+    100% {
+      background-color: rgb(168 85 247 / 0.1);
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg) scale(10);
+    }
+    100% {
+      transform: rotate(-360deg) scale(10);
+    }
+  }
+
+  @keyframes scroll-based-appear {
+    from {
+      filter: blur(2px);
+      transform: scale(0.85);
+    }
+    to {
+      filter: blur(0);
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes shine {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(200%);
+    }
+  }
+}
+
+.animate-scroll-based-appear {
+  animation-timeline: view();
+  animation-range: entry cover 25%;
+}

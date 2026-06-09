@@ -44,12 +44,17 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     }
   }, [renderConfetti]);
 
-  const handleLike = () => {
+  function handleLike() {
     if (!loggedIn) return toast.error(t('soundCard.toast.notLoggedIn'));
 
     setLoading(true);
 
     toast.promise(likeSound(sound.id), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t(`soundCard.toast.${liked ? 'unliking' : 'liking'}`, { soundName: sound.name }),
       success: isLiked => {
         setLiked(isLiked);
@@ -57,11 +62,6 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         revalidateSound(sound.id);
 
         return t(`soundCard.toast.${isLiked ? 'liked' : 'unliked'}`, { soundName: sound.name });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   };
@@ -72,25 +72,25 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
   const sort = overridedSort || storedSort;
 
   const formatter = new Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    compactDisplay: 'short'
+    compactDisplay: 'short',
+    notation: 'compact'
   });
 
   const info = [
     {
+      condition: sort === 'Downloads',
       icon: MdDownload,
-      value: formatter.format(sound.downloadsCount),
-      condition: sort === 'Downloads'
+      value: formatter.format(sound.downloadsCount)
     },
     {
+      condition: sort === 'Likes',
       icon: PiHeartFill,
-      value: formatter.format(sound.likesCount),
-      condition: sort === 'Likes'
+      value: formatter.format(sound.likesCount)
     },
     {
+      condition: sort === 'Newest' || sort === 'Oldest',
       icon: IoMdCalendar,
-      value: new Date(sound.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' }),
-      condition: sort === 'Newest' || sort === 'Oldest'
+      value: new Date(sound.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })
     }
   ];
 
@@ -118,6 +118,11 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     disableButton('upload-sound-to-discord', 'upload');
 
     toast.promise(uploadSoundToGuild(sound.id, guildId), {
+      error: error => {
+        enableButton('upload-sound-to-discord', 'upload');
+
+        return error;
+      },
       loading: t('soundCard.uploadSoundToDiscordModal.toast.uploadingSound', { soundName: sound.name }),
       success: () => {
         closeModal('upload-sound-to-discord');
@@ -125,22 +130,17 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
         revalidateSound(sound.id);
 
         return t('soundCard.uploadSoundToDiscordModal.toast.soundUploaded', { soundName: sound.name });
-      },
-      error: error => {
-        enableButton('upload-sound-to-discord', 'upload');
-
-        return error;
       }
     });
   }
 
   const { openModal, openedModals, updateModal, closeModal, disableButton, enableButton } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
-    openedModals: state.openedModals,
-    updateModal: state.updateModal,
     closeModal: state.closeModal,
     disableButton: state.disableButton,
-    enableButton: state.enableButton
+    enableButton: state.enableButton,
+    openedModals: state.openedModals,
+    openModal: state.openModal,
+    updateModal: state.updateModal
   })));
 
   const selectedGuildId = useGeneralStore(state => state.uploadSoundToDiscordModal.selectedGuildId);
@@ -151,16 +151,16 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
       updateModal('upload-sound-to-discord', {
         buttons: [
           {
+            actionType: 'close',
             id: 'cancel',
             label: t('buttons.cancel'),
-            variant: 'ghost',
-            actionType: 'close'
+            variant: 'ghost'
           },
           {
+            action: () => continueUploadSoundToGuild(selectedGuildId),
             id: 'upload',
             label: t('buttons.upload'),
-            variant: 'solid',
-            action: () => continueUploadSoundToGuild(selectedGuildId)
+            variant: 'solid'
           }
         ]
       });
@@ -169,37 +169,37 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     }
 
     openModal('upload-sound-to-discord', {
+      buttons: [
+        {
+          actionType: 'close',
+          id: 'cancel',
+          label: 'Cancel',
+          variant: 'ghost'
+        },
+        {
+          action: () => continueUploadSoundToGuild(selectedGuildId),
+          id: 'uplaod',
+          label: 'Upload',
+          variant: 'solid'
+        }
+      ],
+      content: <UploadSoundToDiscordModal guilds={uploadableGuilds} />,
+      description: t('soundCard.uploadSoundToDiscordModal.description'),
       title: <>
         <PiWaveformBold className='mr-1 inline' />
         {sound.name}
-      </>,
-      description: t('soundCard.uploadSoundToDiscordModal.description'),
-      content: <UploadSoundToDiscordModal guilds={uploadableGuilds} />,
-      buttons: [
-        {
-          id: 'cancel',
-          label: 'Cancel',
-          variant: 'ghost',
-          actionType: 'close'
-        },
-        {
-          id: 'uplaod',
-          label: 'Upload',
-          variant: 'solid',
-          action: () => continueUploadSoundToGuild(selectedGuildId)
-        }
-      ]
+      </>
     });
   }, [uploadableGuilds, selectedGuildId]);
 
   return (
     <div
       className={cn(
-        'flex flex-col gap-y-4 rounded-3xl overflow-hidden w-full h-max bg-secondary border-2 transition-all p-6',
+        'flex h-max w-full flex-col gap-y-4 overflow-hidden rounded-3xl border-2 bg-secondary p-6 transition-all',
         currentlyPlaying === sound.id ? 'border-purple-500' : 'border-primary'
       )}
     >
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%' />
       </div>
 
@@ -245,19 +245,19 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
           >
             {loading ? (
               <TbLoader className='animate-spin' />
-            ) : liked ? (
+            ) : (liked ? (
               <PiHeartFill />
             ) : (
               <PiHeart />
-            )}
+            ))}
           </button>
 
           {showUploadToGuildButton && (
             <Tooltip content={t(`soundCard.buttons.${loggedIn ? 'upload' : 'login'}`)}>
               <button
                 className={cn(
-                  'px-1.5 py-1 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 rounded-lg cursor-pointer',
-                  theme === 'dark' ? 'bg-white text-black' : ' bg-black text-white',
+                  'flex cursor-pointer items-center gap-x-1 rounded-lg px-1.5 py-1 text-sm font-medium disabled:opacity-70',
+                  theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white',
                   loggedIn && (theme === 'dark' ? 'hover:bg-white/70' : 'hover:bg-black/70')
                 )}
                 onClick={() => {

@@ -25,7 +25,7 @@ export default function Tooltip({ children, content, side, sideOffset, size, hid
 
             if (isMobile) setOpen(!open);
           }}
-          asChild
+          asChild={true}
         >
           {children}
         </RadixTooltip.Trigger>
@@ -33,8 +33,9 @@ export default function Tooltip({ children, content, side, sideOffset, size, hid
           <RadixTooltip.Portal>
             <RadixTooltip.Content
               className={cn(
-                'max-w-[200px] font-semibold [transform-origin:var(--radix-tooltip-content-transform-origin)] discord-theme bg-[#111214] px-4 py-1.5 rounded-lg',
-                size === 'small' && 'text-xs px-2.5'
+                // oxlint-disable-next-line tailwindcss/no-unknown-classes
+                'discord-theme max-w-[200px] origin-(--radix-tooltip-content-transform-origin) rounded-lg bg-[#111214] px-4 py-1.5 font-semibold',
+                size === 'small' && 'px-2.5 text-xs'
               )}
               sideOffset={sideOffset || 18}
               side={side || 'top'}

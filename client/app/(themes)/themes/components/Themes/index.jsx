@@ -15,28 +15,28 @@ export default function Themes() {
   const user = useAuthStore(state => state.user);
 
   const { page, setPage, search, loading, themes, fetchThemes, sort, category, totalThemes, limit } = useSearchStore(useShallow(state => ({
-    page: state.page,
-    setPage: state.setPage,
-    search: state.search,
-    loading: state.loading,
-    themes: state.themes,
-    fetchThemes: state.fetchThemes,
-    maxReached: state.maxReached,
-    sort: state.sort,
     category: state.category,
-    totalThemes: state.totalThemes,
-    limit: state.limit
+    fetchThemes: state.fetchThemes,
+    limit: state.limit,
+    loading: state.loading,
+    maxReached: state.maxReached,
+    page: state.page,
+    search: state.search,
+    setPage: state.setPage,
+    sort: state.sort,
+    themes: state.themes,
+    totalThemes: state.totalThemes
   })));
 
   const stateVariants = {
+    exit: {
+      opacity: 0
+    },
     hidden: {
       opacity: 0
     },
     visible: {
       opacity: 1
-    },
-    exit: {
-      opacity: 0
     }
   };
 
@@ -76,12 +76,12 @@ export default function Themes() {
     ) : (
       <>
         <motion.div
-          className='grid w-full max-w-[1000px] grid-cols-1 gap-8 px-2 sm:px-4 themes-cols-2:grid-cols-2 lg:grid-cols-3 lg:px-0'
+          className='grid w-full max-w-[1000px] grid-cols-1 gap-8 px-2 themes-cols-2:grid-cols-2 sm:px-4 lg:grid-cols-3 lg:px-0'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           {loading ? (
-            new Array(limit).fill(0).map((_, index) => (
+            Array.from({ length: limit }).fill(0).map((_, index) => (
               <div key={index} className='h-[200px] w-full animate-pulse rounded-2xl bg-secondary' />
             ))
           ) : (
@@ -91,8 +91,8 @@ export default function Themes() {
                 active={user?.id !== theme.publisher.id}
                 type='theme'
                 metadata={{
-                  id: theme.id,
                   colors: theme.colors,
+                  id: theme.id,
                   publisher: theme.publisher
                 }}
                 identifier={`theme-${theme.id}`}

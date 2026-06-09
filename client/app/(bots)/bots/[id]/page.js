@@ -3,31 +3,40 @@ import getBot from '@/lib/request/bots/getBot';
 import Content from '@/app/(bots)/bots/[id]/content';
 import { redirect } from 'next/navigation';
 import config from '@/config';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getBotMetadata(params.id).catch(error => error);
+  const { id } = await params;
+
+  const metadata = await getBotMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
-  return {
-    title: `Bot ${metadata.username}`,
+  return createMetadata({
     description: metadata.short_description,
+    keywords: [
+      `discord bot ${metadata.username}`,
+      'discord bot',
+      `bot ${metadata.username}`,
+      `discord ${metadata.category} bot`,
+      `bot ${metadata.category}`
+    ],
     openGraph: {
-      title: `Discord Place - ${metadata.username} Bot`,
-      description: metadata.short_description,
-      url: `${config.baseUrl}/bots/${params.id}`,
       images: [
         {
-          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'bot', metadata }))}`,
-          width: 1200,
-          height: 630
+          height: 630,
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'bot' }))}`,
+          width: 1200
         }
       ]
-    }
-  };
+    },
+    title: `Bot ${metadata.username}`
+  });
 }
 
 export default async function Page({ params }) {
-  const bot = await getBot(params.id).catch(error => error);
+  const { id } = await params;
+
+  const bot = await getBot(id).catch(error => error);
   if (typeof bot === 'string') return redirect(`/error?message=${encodeURIComponent(bot)}`);
 
   return <Content bot={bot} />;

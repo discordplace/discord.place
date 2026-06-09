@@ -11,7 +11,7 @@ import Link from 'next/link';
   const loading = useAccountStore(state => state.loading);
 
   const IconComponent = icon;
-  const ContainerComponent = href ? Link : onClick ? 'button' : 'div';
+  const ContainerComponent = href ? Link : (onClick ? 'button' : 'div');
   const TooltipContainer = isCollapsed ? Tooltip : 'div';
 
   if (condition && !condition()) {
@@ -31,16 +31,16 @@ import Link from 'next/link';
     >
       <ContainerComponent
         className={cn(
-          'flex items-center w-full py-2 rounded-lg gap-x-3 select-none',
-          activeTab === id ? 'bg-quaternary text-primary pointer-events-none' : 'cursor-pointer hover:bg-quaternary text-secondary hover:text-primary',
-          badge > 0 && 'hover:bg-tertiary hover:bg-gradient-to-l hover:from-purple-600/20',
-          activeTab === id && badge > 0 && 'bg-tertiary bg-gradient-to-l from-purple-600/20',
+          'flex w-full items-center gap-x-3 rounded-lg py-2 select-none',
+          activeTab === id ? 'pointer-events-none bg-quaternary text-primary' : 'cursor-pointer text-secondary hover:bg-quaternary hover:text-primary',
+          badge > 0 && 'hover:bg-tertiary hover:bg-linear-to-l hover:from-purple-600/20',
+          activeTab === id && badge > 0 && 'bg-tertiary bg-linear-to-l from-purple-600/20',
           isCollapsed ? 'justify-center' : 'pl-4',
-          disabled && 'opacity-50 pointer-events-none',
+          disabled && 'pointer-events-none opacity-50',
           loading && 'pointer-events-none'
         )}
         key={id}
-        onClick={() => onClick ? onClick() : !href && setActiveTab(id)}
+        onClick={() => (onClick ? onClick() : !href && setActiveTab(id))}
         href={href}
         target='_blank'
       >
@@ -48,7 +48,7 @@ import Link from 'next/link';
 
         <span
           className={cn(
-            'font-medium truncate',
+            'truncate font-medium',
             isCollapsed ? 'hidden' : 'block'
           )}
         >
@@ -56,17 +56,17 @@ import Link from 'next/link';
         </span>
 
         {!isCollapsed && href ? (
-          <MdOpenInNew className='ml-auto mr-4 size-4 text-tertiary' />
+          <MdOpenInNew className='mr-4 ml-auto size-4 text-tertiary' />
         ) : ''}
 
         {visited && !isCollapsed && badge ? (
-          <span className='ml-auto mr-4 rounded-full bg-purple-600 px-2 py-0.5 text-xs font-bold text-white'>
+          <span className='mr-4 ml-auto rounded-full bg-purple-600 px-2 py-0.5 text-xs font-bold text-white'>
             {badge}
           </span>
         ) : ''}
 
         {!visited && !isCollapsed && (
-          <span className='ml-auto mr-4 rounded-full bg-purple-600 px-2 py-0.5 text-xs font-bold text-white'>
+          <span className='mr-4 ml-auto rounded-full bg-purple-600 px-2 py-0.5 text-xs font-bold text-white'>
             {t('accountPage.sidebar.newBadge')}
           </span>
         )}

@@ -7,8 +7,7 @@ import { IoSearch } from 'react-icons/io5';
 import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
 import ColumnRenderer from '@/app/(dashboard)/components/Table/ColumnRenderer';
 import cn from '@/lib/cn';
-import { motion } from 'framer-motion';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import useDashboardStore from '@/stores/dashboard';
 import { useEffect, useRef, useState } from 'react';
 import ErrorState from '@/app/components/ErrorState';
@@ -22,12 +21,12 @@ import { useShallow } from 'zustand/react/shallow';
 
 export default function Table({ tabs }) {
   const { selectedItems, setSelectedItems, page, setPage, currentSort, setCurrentSort } = useDashboardStore(useShallow(state => ({
-    selectedItems: state.selectedItems,
-    setSelectedItems: state.setSelectedItems,
-    page: state.page,
-    setPage: state.setPage,
     currentSort: state.currentSort,
-    setCurrentSort: state.setCurrentSort
+    page: state.page,
+    selectedItems: state.selectedItems,
+    setCurrentSort: state.setCurrentSort,
+    setPage: state.setPage,
+    setSelectedItems: state.setSelectedItems
   })));
 
   function handleSelect(item) {
@@ -53,7 +52,6 @@ export default function Table({ tabs }) {
 
   const isMobile = useMedia('(max-width: 640px)');
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [mobileSelectedAction] = useState(null);
 
   if (!currentTabData || !currentTabData.columns) return null;
 
@@ -75,12 +73,11 @@ export default function Table({ tabs }) {
       });
     });
 
-  const deepCopiedColumns = JSON.parse(JSON.stringify(filteredColumns));
+  const deepCopiedColumns = structuredClone(filteredColumns);
 
   const sortedColumns = deepCopiedColumns
     .sort((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b]));
 
-  // Paginate columns
   const displayedColumns = sortedColumns.slice((page - 1) * 10, page * 10);
 
   const showPagination = deepCopiedColumns.length > 10;
@@ -91,8 +88,8 @@ export default function Table({ tabs }) {
     <>
       <div
         className={cn(
-          'transition-all duration-300 flex items-center gap-x-2',
-          (currentTabData.columns.length > 0 && currentSort.name) ? 'opacity-100 mb-0' : 'opacity-0 -mb-14'
+          'flex items-center gap-x-2 transition-all duration-300',
+          (currentTabData.columns.length > 0 && currentSort.name) ? 'mb-0 opacity-100' : '-mb-14 opacity-0'
         )}
       >
         <span className='text-xs font-medium text-tertiary'>
@@ -100,8 +97,8 @@ export default function Table({ tabs }) {
         </span>
 
         <button
-          className='flex items-center gap-x-1.5 rounded-full border border-primary bg-secondary py-0.5 pl-1.5 pr-2 text-xs text-secondary hover:bg-quaternary'
-          onClick={() => setCurrentSort({ name: '', key: '', order: '' })}
+          className='flex items-center gap-x-1.5 rounded-full border border-primary bg-secondary py-0.5 pr-2 pl-1.5 text-xs text-secondary hover:bg-quaternary'
+          onClick={() => setCurrentSort({ key: '', name: '', order: '' })}
         >
           {CurrentSortIcon && <CurrentSortIcon size={14} />}
 
@@ -116,8 +113,8 @@ export default function Table({ tabs }) {
           <div
             key={tab.label}
             className={cn(
-              'flex w-full justify-center sm:w-max bg-secondary sm:bg-[unset] items-center gap-x-2 sm:py-0 py-2 px-4 sm:px-2 relative text-sm hover:text-primary cursor-pointer text-tertiary transition-colors rounded-lg',
-              currentTab === tab.label && 'text-primary pointer-events-none'
+              'relative flex w-full cursor-pointer items-center justify-center gap-x-2 rounded-lg bg-secondary px-4 py-2 text-sm text-tertiary transition-colors hover:text-primary sm:w-max sm:bg-[unset] sm:px-2 sm:py-0',
+              currentTab === tab.label && 'pointer-events-none text-primary'
             )}
             onClick={() => setCurrentTab(tab.label)}
           >
@@ -130,7 +127,7 @@ export default function Table({ tabs }) {
             {currentTab === tab.label && (
               <motion.div
                 layoutId='emojisQueueCurrentTabIndicator'
-                className='absolute bottom-[-52.5px] left-0 hidden h-[35px] w-full rounded-lg bg-black dark:bg-white sm:block'
+                className='absolute bottom-[-52.5px] left-0 hidden h-[35px] w-full rounded-lg bg-black sm:block dark:bg-white'
               />
             )}
           </div>
@@ -139,9 +136,9 @@ export default function Table({ tabs }) {
         {hasSearchableColumns && (
           <div
             className={cn(
-              'select-none relative z-10 w-full sm:w-max justify-center flex-row flex items-center font-medium text-sm sm:text-xs text-tertiary gap-x-1.5 bg-secondary sm:bg-tertiary hover:text-primary transition-colors sm:transition-none sm:hover:bg-quaternary rounded-lg sm:rounded-full py-1.5 sm:py-1 px-2.5',
+              'relative z-10 flex w-full flex-row items-center justify-center gap-x-1.5 rounded-lg bg-secondary px-2.5 py-1.5 text-sm font-medium text-tertiary transition-colors select-none hover:text-primary sm:w-max sm:rounded-full sm:bg-tertiary sm:py-1 sm:text-xs sm:transition-none sm:hover:bg-quaternary',
               currentlySearching ? 'cursor-text' : 'cursor-pointer',
-              isMobile && currentlySearching && 'transition-none bg-transparent ring-2 ring-[rgba(var(--border-primary))] [&:has(input:is(:focus-visible))]:ring-purple-500'
+              isMobile && currentlySearching && 'bg-transparent ring-2 ring-[rgba(var(--border-primary))] transition-none [&:has(input:is(:focus-visible))]:ring-purple-500'
             )}
             onClick={() => {
               if (currentlySearching) {
@@ -154,11 +151,11 @@ export default function Table({ tabs }) {
                 <div className='relative flex w-full items-center'>
                   <input
                     type='text'
-                    className='peer w-full bg-transparent pl-5 text-secondary outline-none placeholder:text-[rgba(var(--text-tertiary))] focus-visible:text-primary sm:w-36'
+                    className='peer w-full bg-transparent pl-5 text-secondary outline-hidden placeholder:text-[rgba(var(--text-tertiary))] focus-visible:text-primary sm:w-36'
                     placeholder='Search anything...'
                     value={searchQuery}
                     onChange={event => setSearchQuery(event.target.value)}
-                    autoFocus
+                    autoFocus={true}
                     ref={searchInputRef}
                   />
 
@@ -188,11 +185,11 @@ export default function Table({ tabs }) {
                 {currentlySearching ? (
                   <input
                     type='text'
-                    className='w-24 bg-transparent text-secondary outline-none sm:w-36'
+                    className='w-24 bg-transparent text-secondary outline-hidden sm:w-36'
                     placeholder='Search anything...'
                     value={searchQuery}
                     onChange={event => setSearchQuery(event.target.value)}
-                    autoFocus
+                    autoFocus={true}
                     ref={searchInputRef}
                   />
                 ) : (
@@ -218,7 +215,7 @@ export default function Table({ tabs }) {
 
       <div className='relative -mt-8 w-full max-w-[230px] overflow-auto mobile:max-w-[360px] sm:max-w-[430px] lg:max-w-[unset]'>
         {(currentTabData.columns.length === 0 || displayedColumns.length === 0) && (
-          <div className='flex min-h-[calc(100svh_-_420px)] max-w-[calc(100vw_-_65px)] items-center justify-center sm:max-w-[unset]'>
+          <div className='flex min-h-[calc(100svh-420px)] max-w-[calc(100vw-65px)] items-center justify-center sm:max-w-[unset]'>
             <ErrorState
               title={
                 <div className='flex items-center gap-x-2'>
@@ -233,22 +230,22 @@ export default function Table({ tabs }) {
 
         <table className='w-full table-auto'>
           {displayedColumns.length > 0 && (
-            <thead className='relative select-none text-left'>
+            <thead className='relative text-left select-none'>
               <tr>
                 {currentTabData.rows?.map((row, index) => (
                   <th
                     key={`row-${row.name}`}
                     scope='col'
                     className={cn(
-                      'px-2 py-6 text-sm font-medium text-tertiary min-w-[150px]',
-                      row.sortable && 'cursor-pointer hover:text-primary transition-colors'
+                      'min-w-[150px] px-2 py-6 text-sm font-medium text-tertiary',
+                      row.sortable && 'cursor-pointer transition-colors hover:text-primary'
                     )}
                     onClick={() => {
                       if (!row.sortable) return;
 
                       setCurrentSort({
-                        name: row.name,
                         key: index,
+                        name: row.name,
                         order: currentSort.key === index ? (currentSort.order === 'asc' ? 'desc' : 'asc') : 'asc'
                       });
                     }}
@@ -282,8 +279,8 @@ export default function Table({ tabs }) {
                   <td
                     key={`row-${rowIndex}`}
                     className={cn(
-                      'p-2 min-w-[300px] sm:min-w-[unset] h-[60px] border-y border-[rgba(var(--bg-tertiary))] transition-colors group-hover:cursor-pointer',
-                      selectedItems.find(col => isEqual(col, column)) ? 'bg-tertiary border-[rgba(var(--bg-quaternary))] select-none' : 'group-hover:bg-secondary'
+                      'h-[60px] min-w-[300px] border-y border-[rgba(var(--bg-tertiary))] p-2 transition-colors group-hover:cursor-pointer sm:min-w-[unset]',
+                      selectedItems.find(col => isEqual(col, column)) ? 'border-[rgba(var(--bg-quaternary))] bg-tertiary select-none' : 'group-hover:bg-secondary'
                     )}
                     onClick={() => handleSelect(column)}
                   >
@@ -297,14 +294,14 @@ export default function Table({ tabs }) {
                         >
                           <button
                             className={cn(
-                              'w-[18px] h-[18px] flex justify-center items-center border-2 outline-none hover:bg-[rgba(var(--border-primary))] transition-colors border-primary rounded-md',
-                              selectedItems.find(col => isEqual(col, column)) && 'bg-purple-500 hover:bg-purple-500 text-white'
+                              'flex size-[18px] items-center justify-center rounded-md border-2 border-primary outline-hidden transition-colors hover:bg-[rgba(var(--border-primary))]',
+                              selectedItems.find(col => isEqual(col, column)) && 'bg-purple-500 text-white hover:bg-purple-500'
                             )}
                           >
                             <FaCheck
                               size={10}
                               className={cn(
-                                'transition-opacity opacity-0',
+                                'opacity-0 transition-opacity',
                                 selectedItems.find(col => isEqual(col, column)) && 'opacity-100'
                               )}
                             />
@@ -331,7 +328,7 @@ export default function Table({ tabs }) {
             loading={false}
             total={deepCopiedColumns?.length}
             limit={10}
-            disableAnimation
+            disableAnimation={true}
           />
         </div>
       )}
@@ -341,25 +338,25 @@ export default function Table({ tabs }) {
           {(isMobile && selectedItems.length > 0) && (
             <>
               <motion.button
-                className='fixed bottom-8 right-6 flex items-center gap-x-2 rounded-full bg-tertiary px-4 py-2 text-sm font-medium text-secondary transition-colors'
+                className='fixed right-6 bottom-8 flex items-center gap-x-2 rounded-full bg-tertiary px-4 py-2 text-sm font-medium text-secondary transition-colors'
                 onClick={() => setDrawerOpen(true)}
                 initial={{
+                  filter: 'blur(10px)',
                   opacity: 0,
-                  y: 60,
                   scale: 0.8,
-                  filter: 'blur(10px)'
+                  y: 60
                 }}
                 animate={{
+                  filter: 'blur(0px)',
                   opacity: 1,
-                  y: 0,
                   scale: 1,
-                  filter: 'blur(0px)'
+                  y: 0
                 }}
                 exit={{
+                  filter: 'blur(10px)',
                   opacity: 0,
-                  y: 60,
                   scale: 0.85,
-                  filter: 'blur(10px)'
+                  y: 60
                 }}
               >
                 <FaBookBookmark size={14} />
@@ -369,7 +366,7 @@ export default function Table({ tabs }) {
               <Drawer
                 openState={drawerOpen}
                 setOpenState={setDrawerOpen}
-                state={mobileSelectedAction}
+                state={null}
                 preventDefault={true}
                 setState={value => {
                   if (value.trigger) return;
@@ -403,26 +400,26 @@ export default function Table({ tabs }) {
             <motion.div
               className='fixed bottom-8 z-10 flex h-[50px] w-max items-center gap-x-4 rounded-2xl border-2 border-primary bg-secondary p-3 text-sm font-medium shadow-[rgba(var(--bg-secondary))]'
               initial={{
+                filter: 'blur(10px)',
                 opacity: 0,
-                y: 60,
                 scale: 0.8,
-                filter: 'blur(10px)'
+                y: 60
               }}
               animate={{
+                filter: 'blur(0px)',
                 opacity: 1,
-                y: 0,
                 scale: 1,
-                filter: 'blur(0px)'
+                y: 0
               }}
               exit={{
+                filter: 'blur(10px)',
                 opacity: 0,
-                y: 60,
                 scale: 0.85,
-                filter: 'blur(10px)'
+                y: 60
               }}
               transition={{
-                type: 'easeInOut',
-                duration: 0.2
+                duration: 0.2,
+                type: 'easeInOut'
               }}
             >
               <div className='rounded-lg border border-purple-500 p-1 text-purple-500 shadow-lg shadow-purple-500/30'>
@@ -447,7 +444,7 @@ export default function Table({ tabs }) {
                   >
                     <button
                       className={cn(
-                        'flex items-center gap-x-2 text-sm text-tertiary hover:text-primary hover:bg-quaternary transition-all px-3 py-1.5 rounded-xl',
+                        'flex items-center gap-x-2 rounded-xl px-3 py-1.5 text-sm text-tertiary transition-all hover:bg-quaternary hover:text-primary',
                         typeof action.hide === 'function' ? action.hide?.(selectedItems) : action.hide === true && 'hidden'
                       )}
                       onClick={() => action.action?.(selectedItems)}

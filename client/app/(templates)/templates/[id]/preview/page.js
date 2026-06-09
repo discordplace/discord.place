@@ -2,31 +2,33 @@ import getTemplate from '@/lib/request/templates/getTemplate';
 import getTemplateMetadata from '@/lib/request/templates/getTemplateMetadata';
 import { redirect } from 'next/navigation';
 import Content from '@/app/(templates)/templates/[id]/preview/content';
-import config from '@/config';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getTemplateMetadata(params.id).catch(error => error);
+  const { id } = await params;
+
+  const metadata = await getTemplateMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
-  return {
-    title: `Template ${metadata.name} by @${metadata.username}`,
+  return createMetadata({
+    description: metadata.description,
     openGraph: {
-      title: `Discord Place - Template ${metadata.name} by @${metadata.username}`,
-      description: metadata.description,
-      url: `${config.baseUrl}/templates/${params.id}`,
       images: [
         {
-          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'template', metadata }))}`,
-          width: 1200,
-          height: 630
+          height: 630,
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'template' }))}`,
+          width: 1200
         }
       ]
-    }
-  };
+    },
+    title: `Template ${metadata.name} by @${metadata.username}`
+  });
 }
 
 export default async function Page({ params }) {
-  const template = await getTemplate(params.id).catch(error => error);
+  const { id } = await params;
+
+  const template = await getTemplate(id).catch(error => error);
   if (typeof template === 'string') return redirect(`/error?message=${encodeURIComponent(template)}`);
 
   return <Content template={template} />;

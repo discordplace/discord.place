@@ -1,0 +1,16 @@
+{
+  "name": "discord.place",
+  "short_name": "discord.place",
+  "description": "A place for all things that related to Discord.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f14",
+  "theme_color": "#0f0f14",
+  "icons": [
+    {
+      "src": "/manifest/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

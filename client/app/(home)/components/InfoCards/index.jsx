@@ -2,7 +2,8 @@
 
 import { FaGithub } from 'react-icons/fa';
 import Square from '@/app/components/Background/Square';
-import InfoCard from '@/app/(home)/components/InfoCards/Card';import useAuthStore from '@/stores/auth';
+import InfoCard from '@/app/(home)/components/InfoCards/Card';
+import useAuthStore from '@/stores/auth';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
 import MockServerCard from '@/app/(home)/components/InfoCards/Mock/ServerCard';
@@ -16,14 +17,14 @@ export default function InfoCards() {
   const pathname = usePathname();
 
   return (
-    <div className='mt-48 flex w-full max-w-5xl flex-col items-center justify-center gap-y-32 px-4 lg:px-0'>
+    <div className='mt-24 flex w-full max-w-5xl flex-col items-center justify-center gap-y-32 px-4 lg:px-0'>
       <InfoCard
         index={0}
         title={t('home.infoCards.0.title')}
         description={t('home.infoCards.0.description')}
         button={{
-          text: t('home.infoCards.0.buttonText'),
-          href: 'https://github.com/discordplace/discord.place'
+          href: 'https://github.com/discordplace/discord.place',
+          text: t('home.infoCards.0.buttonText')
         }}
         content={(
           <div className='relative z-10 flex size-full items-center justify-center overflow-hidden rounded-3xl'>
@@ -44,9 +45,9 @@ export default function InfoCards() {
         title={t('home.infoCards.1.title')}
         description={t('home.infoCards.1.description')}
         button={{
-          text: loggedIn ? t('home.infoCards.1.buttonTextLoggedIn') : t('home.infoCards.1.buttonTextLoggedOut'),
           href: loggedIn ? '/account' : config.getLoginURL(pathname),
-          target: '_self'
+          target: '_self',
+          text: loggedIn ? t('home.infoCards.1.buttonTextLoggedIn') : t('home.infoCards.1.buttonTextLoggedOut')
         }}
         content={(
           <div className='grid size-full grid-cols-1 gap-x-40 gap-y-8 overflow-hidden rounded-3xl sm:grid-cols-2'>
@@ -63,7 +64,7 @@ export default function InfoCards() {
         title={t('home.infoCards.2.title')}
         description={t('home.infoCards.2.description')}
         content={(
-          <div className='grid size-full grid-cols-1 place-items-center overflow-hidden rounded-3xl mobile:grid-cols-2 mobile:gap-x-40 mobile:[place-items:unset]'>
+          <div className='grid size-full grid-cols-1 place-items-center overflow-hidden rounded-3xl mobile:grid-cols-2 mobile:[place-items:unset] mobile:gap-x-40'>
             <MockProfileCard />
             <MockProfileCard />
           </div>
@@ -76,7 +77,7 @@ export default function InfoCards() {
         description={t('home.infoCards.3.description')}
         content={(
           <div className='relative grid size-full grid-rows-2 gap-4 overflow-hidden rounded-3xl mobile:grid-cols-2'>
-            <div className='absolute left-0 top-0 z-[1] size-full'
+            <div className='absolute top-0 left-0 z-1 size-full'
               style={{
                 background: 'radial-gradient(circle, transparent, rgba(var(--bg-background)) 100%)'
               }}

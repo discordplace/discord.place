@@ -39,7 +39,7 @@ export default function ReportAreaModal({ type, metadata }) {
 
         <div className='relative'>
           <textarea
-            className='scrollbar-hide peer mt-2 block h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-quaternary p-2 text-sm font-medium text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base [&:not(:disabled)]:cursor-text'
+            className='peer mt-2 block h-[100px] w-full resize-none scrollbar-none rounded-lg border-2 border-transparent bg-quaternary p-2 text-sm font-medium text-placeholder outline-hidden not-disabled:cursor-text placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base'
             value={reason}
             onChange={event => setReason(event.target.value)}
             maxLength={config.reportReasonMaxCharacters}
@@ -47,7 +47,7 @@ export default function ReportAreaModal({ type, metadata }) {
 
           <span
             className={cn(
-              'absolute text-xs transition-opacity opacity-0 peer-focus-visible:opacity-100 -top-4 right-2 text-tertiary',
+              'absolute -top-4 right-2 text-xs text-tertiary opacity-0 transition-opacity peer-focus-visible:opacity-100',
               reason.length > 0 && reason.length < config.reportReasonMinCharacters && 'text-red-400'
             )}
           >

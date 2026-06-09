@@ -38,11 +38,11 @@ export default function NewBot() {
   const [botCategories, setBotCategories] = useState([]);
 
   const [localData, setLocalData] = useLocalStorage('bot-stored-data', {
-    botId: '',
-    botShortDescription: '',
+    botCategories: [],
     botDescription: '',
+    botId: '',
     botInviteUrl: '',
-    botCategories: []
+    botShortDescription: ''
   });
 
   useEffect(() => {
@@ -73,11 +73,11 @@ export default function NewBot() {
     if (botId === '' && botShortDescription === '' && botDescription === '' && botInviteUrl === '' && botCategories.length === 0) return;
 
     setLocalData({
-      botId,
-      botShortDescription,
+      botCategories,
       botDescription,
+      botId,
       botInviteUrl,
-      botCategories
+      botShortDescription
     });
   }, [botId, botShortDescription, botDescription, botInviteUrl, botCategories]);
 
@@ -107,22 +107,22 @@ export default function NewBot() {
     const locale = locales[dateFnsKey];
 
     const duration = intervalToDuration({
-      start: 0,
-      end: totalMinutes * 60 * 1000
+      end: totalMinutes * 60 * 1000,
+      start: 0
     });
 
     const formattedDuration = formatDuration(duration, {
-      locale,
-      format: ['hours', 'minutes'],
       delimiter: ' ',
+      format: ['hours', 'minutes'],
+      locale,
       zero: false
     });
 
     if (formattedDuration) return formattedDuration;
 
     return formatDuration({ minutes: 0 }, {
-      locale,
       format: ['minutes'],
+      locale,
       zero: true
     });
   }
@@ -133,50 +133,48 @@ export default function NewBot() {
     setLoading(true);
 
     const botData = {
-      short_description: botShortDescription,
+      categories: botCategories,
       description: botDescription,
       invite_url: botInviteUrl,
-      categories: botCategories
+      short_description: botShortDescription
     };
 
     toast.promise(createBot(botId, botData), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.myBots.sections.addBot.toast.addingBot', { botId }),
       success: () => {
         setTimeout(() => {
           router.push(`/bots/${botId}`);
 
-          // Reset states
           setCurrentlyAddingBot(false);
           setBotId('');
           setBotShortDescription('');
           setBotDescription('');
           setBotCategories([]);
 
-          // Clear local storage
           setLocalData({
-            botId: '',
-            botShortDescription: '',
+            botCategories: [],
             botDescription: '',
+            botId: '',
             botInviteUrl: '',
-            botCategories: []
+            botShortDescription: ''
           });
         }, 3000);
 
         setRenderConfetti(true);
 
         return t('accountPage.tabs.myBots.sections.addBot.toast.botAdded', { botId });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
 
   return (
     <>
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%'/>
       </div>
 
@@ -221,7 +219,7 @@ export default function NewBot() {
             </p>
 
             <input
-              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
               onChange={event => setBotId(event.target.value)}
               value={botId}
             />
@@ -235,7 +233,7 @@ export default function NewBot() {
             </p>
 
             <input
-              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
               maxLength={config.botShortDescriptionMaxLength}
               value={botShortDescription}
               onChange={event => setBotShortDescription(event.target.value)}
@@ -272,7 +270,7 @@ export default function NewBot() {
               </Markdown>
             ) : (
               <textarea
-                className='mt-4 block h-[250px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+                className='mt-4 block h-[250px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
                 value={botDescription}
                 onChange={event => setBotDescription(event.target.value)}
                 maxLength={config.botDescriptionMaxLength}
@@ -288,7 +286,7 @@ export default function NewBot() {
             </p>
 
             <input
-              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
               value={botInviteUrl}
               onChange={event => setBotInviteUrl(event.target.value)}
             />
@@ -308,7 +306,7 @@ export default function NewBot() {
                   <button
                     key={category}
                     className={cn(
-                      'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-quaternary',
+                      'flex size-max items-center gap-x-1 rounded-lg bg-secondary px-3 py-1.5 text-sm font-semibold hover:bg-quaternary',
                       botCategories.includes(category) && 'bg-quaternary'
                     )}
                     onClick={() => {

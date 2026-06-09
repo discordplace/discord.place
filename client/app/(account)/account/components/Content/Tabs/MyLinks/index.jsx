@@ -25,52 +25,46 @@ export default function MyLinks() {
     data.links?.length < 5 : data.links?.length < 1;
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   function continueDeleteLink(id) {
     disableButton('delete-link', 'confirm');
 
     toast.promise(deleteLink(id), {
+      error: error => {
+        enableButton('delete-link', 'confirm');
+
+        return error;
+      },
       loading: t('accountPage.tabs.myLinks.toast.deletingLink'),
       success: () => {
         closeModal('delete-link');
         fetchData(['links']);
 
         return t('accountPage.tabs.myLinks.toast.linkDeleted');
-      },
-      error: error => {
-        enableButton('delete-link', 'confirm');
-
-        return error;
       }
     });
   }
 
   function continueCreateLink() {
     openModal('create-link', {
-      title: t('accountPage.tabs.myLinks.createLinkModal.title'),
-      description: t('accountPage.tabs.myLinks.createLinkModal.description'),
-      content: <CreateLinkModal />,
       buttons: [
         {
+          actionType: 'close',
           id: 'cancel',
           label: t('buttons.cancel'),
-          variant: 'ghost',
-          actionType: 'close'
+          variant: 'ghost'
         },
         {
-          id: 'create',
-          label: t('buttons.create'),
-          variant: 'solid',
           action: () => {
-            const name = useGeneralStore.getState().createLinkModal.name;
-            const destinationURL = useGeneralStore.getState().createLinkModal.destinationURL;
-            const setName = useGeneralStore.getState().createLinkModal.setName;
-            const setDestinationURL = useGeneralStore.getState().createLinkModal.setDestinationURL;
+            const { name } = useGeneralStore.getState().createLinkModal;
+            const { destinationURL } = useGeneralStore.getState().createLinkModal;
+            const { setName } = useGeneralStore.getState().createLinkModal;
+            const { setDestinationURL } = useGeneralStore.getState().createLinkModal;
 
             if (!name) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.emptyName'));
 
@@ -87,7 +81,12 @@ export default function MyLinks() {
 
               disableButton('create-link', 'create');
 
-              toast.promise(createLink({ name, destinationURL }), {
+              toast.promise(createLink({ destinationURL, name }), {
+                error: error => {
+                  enableButton('create-link', 'create');
+
+                  return error;
+                },
                 loading: t('accountPage.tabs.myLinks.createLinkModal.toast.creatingLink'),
                 success: () => {
                   closeModal('create-link');
@@ -96,19 +95,20 @@ export default function MyLinks() {
                   fetchData(['links']);
 
                   return t('accountPage.tabs.myLinks.createLinkModal.toast.linkCreated');
-                },
-                error: error => {
-                  enableButton('create-link', 'create');
-
-                  return error;
                 }
               });
             } catch {
               return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.invalidDestinationUrl'));
             }
-          }
+          },
+          id: 'create',
+          label: t('buttons.create'),
+          variant: 'solid'
         }
-      ]
+      ],
+      content: <CreateLinkModal />,
+      description: t('accountPage.tabs.myLinks.createLinkModal.description'),
+      title: t('accountPage.tabs.myLinks.createLinkModal.title')
     });
   }
 
@@ -212,27 +212,27 @@ export default function MyLinks() {
                     className='hover:opacity-70'
                     onClick={() =>
                       openModal('delete-link', {
-                        title: t('accountPage.tabs.myLinks.deleteLinkModal.title'),
-                        description: t('accountPage.tabs.myLinks.deleteLinkModal.description'),
+                        buttons: [
+                          {
+                            actionType: 'close',
+                            id: 'cancel',
+                            label: t('buttons.cancel'),
+                            variant: 'ghost'
+                          },
+                          {
+                            action: () => continueDeleteLink(link.id),
+                            id: 'confirm',
+                            label: t('buttons.confirm'),
+                            variant: 'solid'
+                          }
+                        ],
                         content: (
                           <p className='text-sm text-tertiary'>
                             {t('accountPage.tabs.myLinks.deleteLinkModal.note', { br: <br /> })}
                           </p>
                         ),
-                        buttons: [
-                          {
-                            id: 'cancel',
-                            label: t('buttons.cancel'),
-                            variant: 'ghost',
-                            actionType: 'close'
-                          },
-                          {
-                            id: 'confirm',
-                            label: t('buttons.confirm'),
-                            variant: 'solid',
-                            action: () => continueDeleteLink(link.id)
-                          }
-                        ]
+                        description: t('accountPage.tabs.myLinks.deleteLinkModal.description'),
+                        title: t('accountPage.tabs.myLinks.deleteLinkModal.title')
                       })
                     }
                   >

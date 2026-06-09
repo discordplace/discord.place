@@ -6,12 +6,13 @@ import Image from 'next/image';
 import { Bricolage_Grotesque } from 'next/font/google';
 import cn from '@/lib/cn';
 import BlockItem from '@/app/(account)/account/components/Content/Sidebar/BlockItem';
-import CollapseIcon from '@/app/(account)/account/components/Content/Sidebar/Icons/Collapse';import Tooltip from '@/app/components/Tooltip';
+import CollapseIcon from '@/app/(account)/account/components/Content/Sidebar/Icons/Collapse';
+import Tooltip from '@/app/components/Tooltip';
 import Link from 'next/link';
 import { useMedia } from 'react-use';
 import useAccountStore from '@/stores/account';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Sidebar({ blocks }) {
   const theme = useThemeStore(state => state.theme);
@@ -24,13 +25,13 @@ export default function Sidebar({ blocks }) {
     <div
       className={cn(
         'flex',
-        isCollapsed ? 'min-w-[60px] w-[60px]' : 'min-w-[250px]'
+        isCollapsed ? 'w-[60px] min-w-[60px]' : 'min-w-[250px]'
       )}
     >
       <div className='sticky top-0 h-max w-full'>
         <div
           className={cn(
-            'flex items-center pt-8 select-none gap-4',
+            'flex items-center gap-4 pt-8 select-none',
             isCollapsed ? 'flex-col pl-4' : 'pl-8'
           )}
         >
@@ -115,7 +116,7 @@ export default function Sidebar({ blocks }) {
 
               <div
                 className={cn(
-                  'h-[1px] bg-quaternary w-full',
+                  'h-px w-full bg-quaternary',
                   !isCollapsed && 'hidden'
                 )}
               />

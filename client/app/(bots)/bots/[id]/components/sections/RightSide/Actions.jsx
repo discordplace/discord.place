@@ -33,8 +33,8 @@ export default function Actions({ bot }) {
   const router = useRouter();
 
   const formatter = new Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    compactDisplay: 'short'
+    compactDisplay: 'short',
+    notation: 'compact'
   });
 
   const captchaRef = useRef(null);
@@ -42,10 +42,10 @@ export default function Actions({ bot }) {
 
   useEffect(() => {
     if (showCaptcha) {
-      if (!window.turnstile) return setShowCaptcha(false);
+      if (!globalThis.turnstile) return setShowCaptcha(false);
 
       setLoading(true);
-      const turnstile = window.turnstile;
+      const { turnstile } = globalThis;
       turnstile?.render('.cf-turnstile');
 
       captchaIntervalRef.current = setInterval(() => {
@@ -55,18 +55,18 @@ export default function Actions({ bot }) {
           clearInterval(captchaIntervalRef.current);
 
           toast.promise(voteBot(bot.id, response), {
-            loading: t('botPage.actions.toast.voting', { botName: bot.username }),
-            success: () => {
-              setLoading(false);
-              setVoteTimeout({ createdAt: new Date().getTime() + 86400000 });
-              revalidateBot(bot.id);
-
-              return t('botPage.actions.toast.voted', { botName: bot.username });
-            },
             error: error => {
               setLoading(false);
 
               return error;
+            },
+            loading: t('botPage.actions.toast.voting', { botName: bot.username }),
+            success: () => {
+              setLoading(false);
+              setVoteTimeout({ createdAt: new Date().getTime() + 86_400_000 });
+              revalidateBot(bot.id);
+
+              return t('botPage.actions.toast.voted', { botName: bot.username });
             }
           });
         }
@@ -80,16 +80,16 @@ export default function Actions({ bot }) {
     setBuyTripledVotesLoading(true);
 
     toast.promise(createTripledVotesCheckout(bot.id), {
+      error: error => {
+        setBuyTripledVotesLoading(false);
+
+        return error;
+      },
       loading: t('botPage.actions.toast.creatingCheckout'),
       success: data => {
         setTimeout(() => router.push(data.url), 3000);
 
         return t('botPage.actions.toast.checkoutCreated');
-      },
-      error: error => {
-        setBuyTripledVotesLoading(false);
-
-        return error;
       }
     });
   }
@@ -98,16 +98,16 @@ export default function Actions({ bot }) {
     setBuyStandedOutLoading(true);
 
     toast.promise(createStandedOutCheckout(bot.id), {
+      error: error => {
+        setBuyStandedOutLoading(false);
+
+        return error;
+      },
       loading: t('botPage.actions.toast.creatingCheckout'),
       success: data => {
         setTimeout(() => router.push(data.url), 3000);
 
         return t('botPage.actions.toast.checkoutCreated');
-      },
-      error: error => {
-        setBuyStandedOutLoading(false);
-
-        return error;
       }
     });
   }
@@ -118,7 +118,7 @@ export default function Actions({ bot }) {
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+        transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {t('botPage.actions.title')}
       </motion.h2>
@@ -127,7 +127,7 @@ export default function Actions({ bot }) {
         className='mt-4 grid grid-cols-1 gap-2 mobile:grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-col'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .15 }}
+        transition={{ damping: 10, delay: .15, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {loggedIn && (
           <Script
@@ -140,7 +140,7 @@ export default function Actions({ bot }) {
         <AnimatePresence>
           {showCaptcha && (
             <motion.div
-              /* eslint-disable-next-line tailwindcss/no-custom-classname */
+              // oxlint-disable-next-line tailwindcss/no-unknown-classes
               className='cf-turnstile [&>iframe]:max-w-full'
               data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY}
               ref={captchaRef}
@@ -154,15 +154,15 @@ export default function Actions({ bot }) {
 
         <motion.button
           className={cn(
-            'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-black rounded-lg group gap-x-2 hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70',
-            loading && 'cursor-default !opacity-70 hover:bg-black dark:hover:bg-white'
+            'group flex w-full items-center justify-between gap-x-2 rounded-lg bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70',
+            loading && 'cursor-default opacity-70! hover:bg-black dark:hover:bg-white'
           )}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+          transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
           onClick={() => {
             if (!loggedIn) return toast.error(t('botPage.actions.toast.loginRequiredForVote'));
-            if (voteTimeout && new Date(voteTimeout.createdAt).getTime() + 86400000 > new Date().getTime()) return;
+            if (voteTimeout && new Date(voteTimeout.createdAt).getTime() + 86_400_000 > new Date().getTime()) return;
 
             setShowCaptcha(true);
           }}
@@ -170,7 +170,7 @@ export default function Actions({ bot }) {
           <div className='flex items-center gap-x-1.5'>
             {loading && <TbLoader className='animate-spin' />}
             {voteTimeout ? (
-              <VoteCountdown date={new Date(voteTimeout.createdAt).getTime() + 86400000} />
+              <VoteCountdown date={new Date(voteTimeout.createdAt).getTime() + 86_400_000} />
             ) : t('buttons.vote')}
           </div>
 
@@ -188,7 +188,7 @@ export default function Actions({ bot }) {
           className='group flex w-full items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+          transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
           href={bot.invite_url}
           target='_blank'
         >
@@ -196,7 +196,7 @@ export default function Actions({ bot }) {
           <BiSolidEnvelope />
         </MotionLink>
 
-        <motion.button className='cursor-auto' initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}>
+        <motion.button className='cursor-auto' initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}>
           <CopyButton
             className='group flex w-full cursor-pointer items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
             successText='Bot URL copied to clipboard!'
@@ -214,7 +214,7 @@ export default function Actions({ bot }) {
               className='group flex w-full items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+              transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
               href={`/bots/${bot.id}/manage`}
             >
               {t('buttons.manageBot')}
@@ -224,12 +224,12 @@ export default function Actions({ bot }) {
             {!bot.vote_triple_enabled?.created_at && (
               <motion.button
                 className={cn(
-                  'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-orange-500 rounded-lg group gap-x-2 hover:bg-orange-600',
-                  buyTripledVotesLoading && '!opacity-70 pointer-events-none'
+                  'group flex w-full items-center justify-between gap-x-2 rounded-lg bg-orange-500 px-3 py-2 text-sm font-semibold text-white hover:bg-orange-600',
+                  buyTripledVotesLoading && 'pointer-events-none opacity-70!'
                 )}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+                transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
                 onClick={buyTripledVotes}
               >
                 <div className='flex items-center gap-x-1.5'>
@@ -252,12 +252,12 @@ export default function Actions({ bot }) {
             {!bot.standed_out?.created_at && (
               <motion.button
                 className={cn(
-                  'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-green-800 rounded-lg group gap-x-2 hover:bg-green-900',
-                  buyStandedOutLoading && '!opacity-70 pointer-events-none'
+                  'group flex w-full items-center justify-between gap-x-2 rounded-lg bg-green-800 px-3 py-2 text-sm font-semibold text-white hover:bg-green-900',
+                  buyStandedOutLoading && 'pointer-events-none opacity-70!'
                 )}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+                transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
                 onClick={buyStandedOut}
               >
                 <div className='flex items-center gap-x-1.5'>

@@ -18,7 +18,7 @@ export default function Social({ data }) {
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.5 }}
+        transition={{ damping: 10, delay: 0.5, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {t('profilePage.social.title')}
       </motion.h2>
@@ -28,7 +28,7 @@ export default function Social({ data }) {
           className='mt-2 truncate text-tertiary'
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.615 }}
+          transition={{ damping: 10, delay: 0.615, duration: 0.3, stiffness: 100, type: 'spring' }}
         >
           {t('profilePage.social.noSocials')}
         </motion.p>
@@ -38,7 +38,7 @@ export default function Social({ data }) {
             className='mt-2 text-tertiary'
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.615 }}
+            transition={{ damping: 10, delay: 0.615, duration: 0.3, stiffness: 100, type: 'spring' }}
           >
             {t('profilePage.social.description', { count: data.length })}
           </motion.p>
@@ -48,13 +48,13 @@ export default function Social({ data }) {
               .map((social, index) => (
                 <MotionLink
                   key={social._id}
-                  className='group flex w-full select-none items-center gap-x-5 rounded-2xl bg-secondary py-4 pl-6 ring-purple-500 transition-[background-color] hover:bg-tertiary hover:ring-2'
+                  className='group flex w-full items-center gap-x-5 rounded-2xl bg-secondary py-4 pl-6 ring-purple-500 transition-[background-color] select-none hover:bg-tertiary hover:ring-2'
                   href={social.link}
                   target='_blank'
                   rel='noopener noreferrer'
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.715 + (.15 * index) }}
+                  transition={{ damping: 10, delay: 0.715 + (.15 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
                 >
                   {(() => {
                     const SocialIcon = getIcon(social.type);

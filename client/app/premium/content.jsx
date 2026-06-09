@@ -7,8 +7,7 @@ import { LuShieldQuestion } from 'react-icons/lu';
 import { TbLoader } from 'react-icons/tb';
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
-import { Bricolage_Grotesque } from 'next/font/google';
-import { Source_Serif_4 } from 'next/font/google';
+import { Source_Serif_4, Bricolage_Grotesque } from 'next/font/google';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import useAuthStore from '@/stores/auth';
@@ -20,18 +19,18 @@ import FaQs from '@/app/premium/components/FaQs';
 import Tooltip from '@/app/components/Tooltip';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
+const SourceSerif4 = Source_Serif_4({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Page({ plans }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   const containerVariants = {
@@ -42,8 +41,8 @@ export default function Page({ plans }) {
       opacity: 1,
       transition: {
         delay: 0.15,
-        when: 'beforeChildren',
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        when: 'beforeChildren'
       }
     }
   };
@@ -55,8 +54,8 @@ export default function Page({ plans }) {
     },
     visible: {
       opacity: 1,
-      y: 0,
-      transition: sequenceTransition
+      transition: sequenceTransition,
+      y: 0
     }
   };
 
@@ -65,8 +64,20 @@ export default function Page({ plans }) {
 
   const features = [
     {
-      label: t('premiumPage.features.0.label'),
+      available_to: [
+        {
+          id: 'free',
+          value: <FaXmark />
+        },
+        {
+          id: 'premium',
+          value: <FaCheck />
+        }
+      ],
       info: t('premiumPage.features.0.info'),
+      label: t('premiumPage.features.0.label')
+    },
+    {
       available_to: [
         {
           id: 'free',
@@ -76,11 +87,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
-    },
-    {
-      label: t('premiumPage.features.1.label'),
+      ],
       info: t('premiumPage.features.1.info'),
+      label: t('premiumPage.features.1.label')
+    },
+    {
       available_to: [
         {
           id: 'free',
@@ -90,11 +101,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
-    },
-    {
-      label: t('premiumPage.features.2.label'),
+      ],
       info: t('premiumPage.features.2.info'),
+      label: t('premiumPage.features.2.label')
+    },
+    {
       available_to: [
         {
           id: 'free',
@@ -104,11 +115,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
-    },
-    {
-      label: t('premiumPage.features.3.label'),
+      ],
       info: t('premiumPage.features.3.info'),
+      label: t('premiumPage.features.3.label')
+    },
+    {
       available_to: [
         {
           id: 'free',
@@ -118,25 +129,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
-    },
-    {
-      label: t('premiumPage.features.4.label'),
+      ],
       info: t('premiumPage.features.4.info'),
-      available_to: [
-        {
-          id: 'free',
-          value: <FaXmark />
-        },
-        {
-          id: 'premium',
-          value: <FaCheck />
-        }
-      ]
+      label: t('premiumPage.features.4.label')
     },
     {
-      label: t('premiumPage.features.5.label'),
-      info: t('premiumPage.features.5.info'),
       available_to: [
         {
           id: 'free',
@@ -146,11 +143,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: '20'
         }
-      ]
+      ],
+      info: t('premiumPage.features.5.info'),
+      label: t('premiumPage.features.5.label')
     },
     {
-      label: t('premiumPage.features.6.label'),
-      info: t('premiumPage.features.6.info'),
       available_to: [
         {
           id: 'free',
@@ -160,11 +157,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: '5'
         }
-      ]
+      ],
+      info: t('premiumPage.features.6.info'),
+      label: t('premiumPage.features.6.label')
     },
     {
-      label: t('premiumPage.features.7.label'),
-      info: t('premiumPage.features.7.info'),
       available_to: [
         {
           id: 'free',
@@ -174,7 +171,9 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
+      ],
+      info: t('premiumPage.features.7.info'),
+      label: t('premiumPage.features.7.label')
     }
   ];
 
@@ -192,21 +191,21 @@ export default function Page({ plans }) {
   function purchase() {
     setLoading(true);
 
-    const planIdToPurchase = preferredBillingCycle === 'monthly' ? monthlyPlan.id : preferredBillingCycle === 'annual' ? annualPlan.id : lifetimePlan.id;
+    const planIdToPurchase = preferredBillingCycle === 'monthly' ? monthlyPlan.id : (preferredBillingCycle === 'annual' ? annualPlan.id : lifetimePlan.id);
 
     toast.promise(createCheckout(planIdToPurchase), {
-      loading: t('premiumPage.toast.creatingCheckout'),
-      success: data => {
-        setTimeout(() => {
-          window.location.href = data.url;
-        }, 3000);
-
-        return t('premiumPage.toast.checkoutCreated');
-      },
       error: error => {
         setLoading(false);
 
         return error;
+      },
+      loading: t('premiumPage.toast.creatingCheckout'),
+      success: data => {
+        setTimeout(() => {
+          globalThis.location.href = data.url;
+        }, 3000);
+
+        return t('premiumPage.toast.checkoutCreated');
       }
     });
   }
@@ -220,7 +219,7 @@ export default function Page({ plans }) {
       <div className='flex w-full max-w-[800px] flex-col'>
         <motion.h1
           className={cn(
-            'text-5xl font-medium max-w-[800px] text-center text-primary',
+            'max-w-[800px] text-center text-5xl font-medium text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
@@ -245,16 +244,16 @@ export default function Page({ plans }) {
           <motion.div
             key={cycle}
             className={cn(
-              'select-none flex items-center w-full gap-x-2 p-4 rounded-lg',
-              preferredBillingCycle === cycle ? 'bg-purple-500/5 border-2 border-purple-500/20' : 'border-2 border-primary bg-secondary hover:bg-tertiary cursor-pointer'
+              'flex w-full items-center gap-x-2 rounded-lg p-4 select-none',
+              preferredBillingCycle === cycle ? 'border-2 border-purple-500/20 bg-purple-500/5' : 'cursor-pointer border-2 border-primary bg-secondary hover:bg-tertiary'
             )}
             onClick={() => setPreferredBillingCycle(cycle)}
             variants={itemVariants}
           >
             <span
               className={cn(
-                'w-[15px] h-[15px] rounded-full border-4',
-                preferredBillingCycle === cycle ? 'bg-white border-purple-500' : 'border-primary'
+                'size-[15px] rounded-full border-4',
+                preferredBillingCycle === cycle ? 'border-purple-500 bg-white' : 'border-primary'
               )}
             />
 
@@ -264,10 +263,10 @@ export default function Page({ plans }) {
               </h2>
 
               <div className='flex flex-col gap-y-0.5 text-xs font-medium'>
-                {currentPlanId === (cycle === 'monthly' ? monthlyPlan.id : cycle === 'annual' ? annualPlan.id : lifetimePlan.id) ? (
+                {currentPlanId === (cycle === 'monthly' ? monthlyPlan.id : (cycle === 'annual' ? annualPlan.id : lifetimePlan.id)) ? (
                   <span
                     className={cn(
-                      'text-purple-500 flex items-center gap-x-1',
+                      'flex items-center gap-x-1 text-purple-500',
                       SourceSerif4.className
                     )}
                   >
@@ -287,7 +286,7 @@ export default function Page({ plans }) {
                 )}
 
                 <span className='text-tertiary'>
-                  {cycle === 'monthly' ? monthlyPlan.price_formatted.replace('month', t('premiumPage.billingCycle.monthly').toLowerCase()) : cycle === 'annual' ? annualPlan.price_formatted.replace('year', t('premiumPage.billingCycle.annual').toLowerCase()) : lifetimePlan.price_formatted}
+                  {cycle === 'monthly' ? monthlyPlan.price_formatted.replace('month', t('premiumPage.billingCycle.monthly').toLowerCase()) : (cycle === 'annual' ? annualPlan.price_formatted.replace('year', t('premiumPage.billingCycle.annual').toLowerCase()) : lifetimePlan.price_formatted)}
                 </span>
               </div>
             </div>
@@ -347,7 +346,7 @@ export default function Page({ plans }) {
         {!currentPlanId && (
           <div
             className={cn(
-              'flex items-center justify-center w-full py-2 mt-4 font-semibold text-center text-white bg-purple-500 rounded-lg cursor-pointer hover:bg-purple-600 gap-x-2',
+              'mt-4 flex w-full cursor-pointer items-center justify-center gap-x-2 rounded-lg bg-purple-500 py-2 text-center font-semibold text-white hover:bg-purple-600',
               loading && 'pointer-events-none opacity-70'
             )}
             onClick={loggedIn ? purchase : () => router.push(config.getLoginURL('/premium'))}
@@ -372,7 +371,7 @@ export default function Page({ plans }) {
         className='mb-12 flex w-full max-w-[800px] flex-col gap-y-2'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ ...sequenceTransition, duration: 0.5, delay: 1 }}
+        transition={{ ...sequenceTransition, delay: 1, duration: 0.5 }}
       >
         <h2 className='mt-4 flex items-center gap-x-1 text-lg font-semibold sm:text-xl'>
           <LuShieldQuestion />

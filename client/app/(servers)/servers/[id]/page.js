@@ -3,31 +3,40 @@ import getServerMetadata from '@/lib/request/servers/getServerMetadata';
 import Content from '@/app/(servers)/servers/[id]/content';
 import { redirect } from 'next/navigation';
 import config from '@/config';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getServerMetadata(params.id).catch(error => error);
+  const { id } = await params;
+
+  const metadata = await getServerMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
-  return {
-    title: `Server ${metadata.name}`,
+  return createMetadata({
     description: metadata.description,
+    keywords: [
+      'discord server',
+      `discord ${metadata.category}`,
+      `discord ${metadata.category} server`
+    ],
     openGraph: {
-      title: `Discord Place - ${metadata.name} Server`,
-      description: metadata.description,
-      url: `${config.baseUrl}/servers/${params.id}`,
       images: [
         {
-          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'server', metadata }))}`,
-          width: 1200,
-          height: 630
+          height: 630,
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'server' }))}`,
+          width: 1200
         }
-      ]
-    }
-  };
+      ],
+      title: `Discord Place - ${metadata.name} Server`,
+      url: `${config.baseUrl}/servers/${id}`
+    },
+    title: `Server ${metadata.name}`
+  });
 }
 
 export default async function Page({ params }) {
-  const server = await getServer(params.id).catch(error => error);
+  const { id } = await params;
+
+  const server = await getServer(id).catch(error => error);
   if (typeof server === 'string') return redirect(`/error?message=${encodeURIComponent(server)}`);
 
   return <Content server={server} />;

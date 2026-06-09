@@ -6,12 +6,12 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
 
   return (
     <DropdownMenu.Root modal={false}>
-      <DropdownMenu.Trigger asChild>
+      <DropdownMenu.Trigger asChild={true}>
         {children}
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className='z-[10002] mb-4 flex min-w-[200px] flex-col gap-y-1 rounded-2xl border border-primary bg-secondary p-2 outline-none'>
+        <DropdownMenu.Content className='z-10002 mb-4 flex min-w-[200px] flex-col gap-y-1 rounded-2xl border border-primary bg-secondary p-2 outline-hidden'>
           <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
 
           <div className='m-2 flex flex-col gap-y-1'>
@@ -31,7 +31,7 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
               {Object.entries(reasons).map(([key, value]) => (
                 <DropdownMenu.Item
                   key={key}
-                  className='flex cursor-pointer items-center justify-between gap-x-2 rounded-lg px-2 py-1.5 text-sm font-medium text-secondary outline-none hover:bg-quaternary'
+                  className='flex cursor-pointer items-center justify-between gap-x-2 rounded-lg px-2 py-1.5 text-sm font-medium text-secondary outline-hidden hover:bg-quaternary'
                   onSelect={() => onDeny(key)}
                 >
                   {value.name}
@@ -43,7 +43,7 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
               <input
                 type='text'
                 placeholder='Enter a reason..'
-                className='w-full rounded-xl bg-tertiary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-quaternary hover:ring-2'
+                className='w-full rounded-xl bg-tertiary px-3 py-2 text-sm text-secondary ring-purple-500 outline-hidden transition-all placeholder:text-placeholder hover:bg-quaternary hover:ring-2'
                 value={value}
                 onChange={event => setValue(event.target.value)}
               />

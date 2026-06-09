@@ -1,25 +1,11 @@
 import Content from '@/app/(sounds)/sounds/content';
+import createMetadata from '@/lib/createMetadata';
 
-export const metadata = {
-  title: 'Sounds',
+export const metadata = createMetadata({
   description: 'Explore, find and download the perfect sounds for your Discord server soundboard!',
-  openGraph: {
-    title: 'Discord Place - Sounds',
-    description: 'Explore, find and download the perfect sounds for your Discord server soundboard!',
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://discord.place/sounds',
-    site_name: 'Discord Place',
-    images: [
-      {
-        url: '/og.png',
-        width: 960,
-        height: 540,
-        alt: 'Discord Place'
-      }
-    ]
-  }
-};
+  keywords: ['discord soundboard', 'discord sounds', 'free discord sounds', 'best discord sounds', 'custom discord sounds'],
+  title: 'Discover Sounds'
+});
 
 export default function Page() {
   return <Content />;

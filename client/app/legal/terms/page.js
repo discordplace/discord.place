@@ -1,12 +1,10 @@
 import config from '@/config';
 import Link from 'next/link';
+import createMetadata from '@/lib/createMetadata';
 
-export const metadata = {
-  title: 'Terms of Service',
-  openGraph: {
-    title: 'Discord Place - Terms of Service'
-  }
-};
+export const metadata = createMetadata({
+  title: 'Terms of Service'
+});
 
 export default function Page() {
   return (
@@ -16,7 +14,7 @@ export default function Page() {
       <p>Last updated: 07/12/2024</p>
 
       <h2>1. Acceptance of Terms</h2>
-      <p>By using our services, you agree to be bound by these Terms of Service ({'"'}Terms{'"'}). If you do not agree to these Terms, please do not use our services.</p>
+      <p>By using our services, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our services.</p>
 
       <h2>2. Description of Service</h2>
       <p>discord.place is designed to provide a platform for users to discover Discord servers, bots, emojis, templates and more. We reserve the right to modify or discontinue the bot at any time without notice.</p>
@@ -71,14 +69,14 @@ export default function Page() {
       <div className='mt-2 flex gap-x-2'>
         <Link
           href={config.supportInviteUrl}
-          className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'
+          className='rounded-lg bg-black px-3 py-1 text-sm font-medium text-white! no-underline hover:bg-black/70 dark:bg-white dark:text-black! dark:hover:bg-white/70'
         >
           Discord Server
         </Link>
 
         <Link
           href='mailto:legal@discord.place'
-          className='rounded-lg bg-black px-3 py-1 text-sm font-medium !text-white no-underline hover:bg-black/70 dark:bg-white dark:!text-black dark:hover:bg-white/70'
+          className='rounded-lg bg-black px-3 py-1 text-sm font-medium text-white! no-underline hover:bg-black/70 dark:bg-white dark:text-black! dark:hover:bg-white/70'
         >
           Email
         </Link>

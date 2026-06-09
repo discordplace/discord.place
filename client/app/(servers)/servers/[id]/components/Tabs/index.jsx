@@ -14,27 +14,27 @@ export default function Tabs({ server }) {
   const [activeTab, setActiveTab] = useState('reviews');
   const tabs = [
     {
-      label: t('serverPage.tabs.labels.reviews'),
+      component: <Reviews server={server} />,
       id: 'reviews',
-      component: <Reviews server={server} />
+      label: t('serverPage.tabs.labels.reviews')
     },
     {
-      label: t('serverPage.tabs.labels.topVoters'),
-      id: 'topVoters',
       component: <TopVoters server={server} />,
-      disabled: server.totalVoters <= 0
+      disabled: server.totalVoters <= 0,
+      id: 'topVoters',
+      label: t('serverPage.tabs.labels.topVoters')
     },
     {
-      label: t('serverPage.tabs.labels.rewards'),
-      id: 'rewards',
       component: <Rewards server={server} />,
-      disabled: server.rewards.length === 0
+      disabled: server.rewards.length === 0,
+      id: 'rewards',
+      label: t('serverPage.tabs.labels.rewards')
     },
     {
-      label: t('serverPage.tabs.labels.monthlyVotes'),
-      id: 'monthlyVotesGraph',
       component: <MonthlyVotesGraph server={server} />,
-      disabled: server.monthly_votes.length === 0
+      disabled: server.monthly_votes.length === 0,
+      id: 'monthlyVotesGraph',
+      label: t('serverPage.tabs.labels.monthlyVotes')
     }
   ];
 
@@ -48,9 +48,9 @@ export default function Tabs({ server }) {
             <div
               key={tab.id}
               className={cn(
-                'relative px-4 text-center py-2 text-sm font-semibold rounded-full select-none transition-all duration-500 bg-tertiary',
-                activeTab === tab.id && 'z-[10] text-white dark:text-black',
-                tab.disabled && 'opacity-50 cursor-not-allowed'
+                'relative rounded-full bg-tertiary px-4 py-2 text-center text-sm font-semibold transition-all duration-500 select-none',
+                activeTab === tab.id && 'z-10 text-white dark:text-black',
+                tab.disabled && 'cursor-not-allowed opacity-50'
               )}
               onClick={() => !tab.disabled && setActiveTab(tab.id)}
             >
@@ -73,9 +73,9 @@ export default function Tabs({ server }) {
             <div className='group relative cursor-pointer select-none' key={tab.id} onClick={() => !tab.disabled && setActiveTab(tab.id)}>
               <div
                 className={cn(
-                  'px-4 py-2 font-semibold text-sm z-10 relative transition-colors',
-                  activeTab === tab.id ? 'text-white dark:text-black duration-500' : 'group-hover:text-tertiary',
-                  tab.disabled && 'opacity-50 cursor-not-allowed group-hover:text-primary'
+                  'relative z-10 px-4 py-2 text-sm font-semibold transition-colors',
+                  activeTab === tab.id ? 'text-white duration-500 dark:text-black' : 'group-hover:text-tertiary',
+                  tab.disabled && 'cursor-not-allowed opacity-50 group-hover:text-primary'
                 )}
               >
                 {tab.label}

@@ -40,10 +40,10 @@ export default function Content() {
   const toggleTheme = useThemeStore(state => state.toggleTheme);
 
   const { data, activeTab, setActiveTab, fetchData, setCurrentlyAddingBot, setCurrentlyAddingServer, setCurrentlyAddingSound, setIsCollapsed } = useAccountStore(useShallow(state => ({
-    data: state.data,
     activeTab: state.activeTab,
-    setActiveTab: state.setActiveTab,
+    data: state.data,
     fetchData: state.fetchData,
+    setActiveTab: state.setActiveTab,
     setCurrentlyAddingBot: state.setCurrentlyAddingBot,
     setCurrentlyAddingServer: state.setCurrentlyAddingServer,
     setCurrentlyAddingSound: state.setCurrentlyAddingSound,
@@ -52,10 +52,11 @@ export default function Content() {
 
   const router = useRouter();
 
-  const [,, deleteToken] = useCookie('token');
+  const deleteToken = useCookie('token')[2];
 
   function logOut() {
     toast.promise(logout(), {
+      error: error => error,
       loading: 'Please wait while we log you out..',
       success: () => {
         setLoggedIn(false);
@@ -63,104 +64,103 @@ export default function Content() {
         deleteToken(null);
 
         return 'Logged out successfully.';
-      },
-      error: error => error
+      }
     });
   }
 
   const sidebar = [
     {
-      id: 'my-account',
+      component: <MyAccount />,
       icon: MdAccountCircle,
-      name: t('accountPage.sidebar.labels.myAccount'),
-      component: <MyAccount />
+      id: 'my-account',
+      name: t('accountPage.sidebar.labels.myAccount')
     },
     {
-      id: 'my-user-profile',
       icon: FaDiscord,
+      id: 'my-user-profile',
       name: t('accountPage.sidebar.labels.myUserProfile'),
       onClick: () => router.push(`/profile/u/${user?.id}`)
     },
     {
-      id: 'active-timeouts',
-      icon: MdAccessTimeFilled,
-      name: t('accountPage.sidebar.labels.activeTimeouts'),
+      badge: data.counts?.timeouts || 0,
       component: <ActiveTimeouts />,
-      badge: data.counts?.timeouts || 0
+      icon: MdAccessTimeFilled,
+      id: 'active-timeouts',
+      name: t('accountPage.sidebar.labels.activeTimeouts')
     },
     {
-      id: 'active-reminders',
-      icon: FaBell,
-      name: t('accountPage.sidebar.labels.activeReminders'),
+      badge: data.counts?.reminders || 0,
       component: <ActiveReminders />,
-      badge: data.counts?.reminders || 0
+      icon: FaBell,
+      id: 'active-reminders',
+      name: t('accountPage.sidebar.labels.activeReminders')
     },
     {
       name: t('accountPage.sidebar.labels.yourPublicContent'),
       tabs: [
         {
-          id: 'my-links',
-          icon: FiLink,
-          name: t('accountPage.sidebar.labels.myLinks'),
+          badge: data.counts?.links || 0,
           component: <MyLinks />,
-          badge: data.counts?.links || 0
+          icon: FiLink,
+          id: 'my-links',
+          name: t('accountPage.sidebar.labels.myLinks')
         },
         {
-          id: 'my-servers',
-          icon: FaCompass,
-          name: t('accountPage.sidebar.labels.myServers'),
+          badge: data.counts?.servers || 0,
           component: <MyServers />,
-          badge: data.counts?.servers || 0
+          icon: FaCompass,
+          id: 'my-servers',
+          name: t('accountPage.sidebar.labels.myServers')
         },
         {
-          id: 'my-bots',
-          icon: RiRobot2Fill,
-          name: t('accountPage.sidebar.labels.myBots'),
+          badge: data.counts?.bots || 0,
           component: <MyBots />,
-          badge: data.counts?.bots || 0
+          icon: RiRobot2Fill,
+          id: 'my-bots',
+          name: t('accountPage.sidebar.labels.myBots')
         },
         {
-          id: 'my-emojis',
-          icon: MdEmojiEmotions,
-          name: t('accountPage.sidebar.labels.myEmojis'),
+          badge: data.counts?.emojis || 0,
           component: <MyEmojis />,
-          badge: data.counts?.emojis || 0
+          icon: MdEmojiEmotions,
+          id: 'my-emojis',
+          name: t('accountPage.sidebar.labels.myEmojis')
         },
         {
-          id: 'my-templates',
-          icon: HiTemplate,
-          name: t('accountPage.sidebar.labels.myTemplates'),
+          badge: data.counts?.templates || 0,
           component: <MyTemplates />,
-          badge: data.counts?.templates || 0
+          icon: HiTemplate,
+          id: 'my-templates',
+          name: t('accountPage.sidebar.labels.myTemplates')
         },
         {
-          id: 'my-sounds',
-          icon: PiWaveformBold,
-          name: t('accountPage.sidebar.labels.mySounds'),
+          badge: data.counts?.sounds || 0,
           component: <MySounds />,
-          badge: data.counts?.sounds || 0
+          icon: PiWaveformBold,
+          id: 'my-sounds',
+          name: t('accountPage.sidebar.labels.mySounds')
         },
         {
-          id: 'my-themes',
-          icon: RiBrush2Fill,
-          name: t('accountPage.sidebar.labels.myThemes'),
-          component: <MyThemes />,
           badge: data.counts?.themes || 0,
+          component: <MyThemes />,
+          icon: RiBrush2Fill,
+          id: 'my-themes',
+          name: t('accountPage.sidebar.labels.myThemes'),
           onClick: () => setActiveTab('my-themes')
         },
         {
           id: 'divider-1'
         },
         {
-          id: 'admin-dashboard',
+          condition: () => user.can_view_dashboard === true,
           icon: FaShieldAlt,
+          id: 'admin-dashboard',
           name: t('accountPage.sidebar.labels.adminDashboard'),
-          onClick: () => router.push('/dashboard'),
-          condition: () => user.can_view_dashboard === true
+          onClick: () => router.push('/dashboard')
         },
         {
-          id: 'toggle-theme',
           icon: theme === 'dark' ? MdSunny : MdDarkMode,
+          id: 'toggle-theme',
           name: t('accountPage.sidebar.labels.switchTheme'),
           onClick: () => {
             if (!document.startViewTransition) return toggleTheme();
@@ -169,14 +169,14 @@ export default function Content() {
           }
         },
         {
-          id: 'logout',
           icon: IoMdLogOut,
+          id: 'logout',
           name: t('accountPage.sidebar.labels.logout'),
           onClick: logOut
         },
         {
-          id: 'back',
           icon: IoMdArrowBack,
+          id: 'back',
           name: t('accountPage.sidebar.labels.backToHome'),
           onClick: () => router.push('/')
         }
@@ -186,36 +186,46 @@ export default function Content() {
 
   useEffect(() => {
     switch (activeTab) {
-      case 'my-account':
+      case 'my-account': {
         fetchData([]);
         break;
-      case 'active-timeouts':
+      }
+      case 'active-timeouts': {
         fetchData(['timeouts']);
         break;
-      case 'my-links':
+      }
+      case 'my-links': {
         fetchData(['links']);
         break;
-      case 'my-servers':
+      }
+      case 'my-servers': {
         fetchData(['servers']);
         break;
-      case 'my-bots':
+      }
+      case 'my-bots': {
         fetchData(['bots']);
         break;
-      case 'my-emojis':
+      }
+      case 'my-emojis': {
         fetchData(['emojis']);
         break;
-      case 'my-templates':
+      }
+      case 'my-templates': {
         fetchData(['templates']);
         break;
-      case 'my-sounds':
+      }
+      case 'my-sounds': {
         fetchData(['sounds']);
         break;
-      case 'my-themes':
+      }
+      case 'my-themes': {
         fetchData(['themes']);
         break;
-      case 'active-reminders':
+      }
+      case 'active-reminders': {
         fetchData(['reminders']);
         break;
+      }
     }
 
     setCurrentlyAddingServer(null);
@@ -224,7 +234,7 @@ export default function Content() {
   }, [activeTab]);
 
   const loading = useAccountStore(state => state.loading);
-  const transition = { duration: 0.25, type: 'spring', damping: 10, stiffness: 100 };
+  const transition = { damping: 10, duration: 0.25, stiffness: 100, type: 'spring' };
 
   const isMobile = useMedia('(max-width: 768px)');
 
@@ -275,7 +285,7 @@ export default function Content() {
           <AnimatePresence>
             {loading && (
               <motion.div
-                className='absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center bg-background'
+                className='absolute top-0 left-0 z-10 flex size-full flex-col items-center justify-center bg-background'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -292,8 +302,8 @@ export default function Content() {
                 <div className='relative mt-8 h-[6px] w-[150px] overflow-hidden rounded-full bg-quaternary'>
                   <div
                     className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
-                      width: '50%',
-                      transform: 'translateX(-100%)'
+                      transform: 'translateX(-100%)',
+                      width: '50%'
                     }}
                   />
                 </div>

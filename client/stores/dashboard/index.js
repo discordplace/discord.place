@@ -4,11 +4,8 @@ import fetchData from '@/lib/request/dashboard/getData';
 
 export const useDashboardStore = create(set => ({
   activeTab: 'home',
-  setActiveTab: activeTab => set({ activeTab }),
+  currentSort: { key: '', name: '', order: '' },
   data: {},
-  setData: data => set({ data }),
-  loading: true,
-  setLoading: loading => set({ loading }),
   fetchData: async keys => {
     set({ loading: true, searchQuery: null });
 
@@ -20,15 +17,18 @@ export const useDashboardStore = create(set => ({
       });
   },
   isCollapsed: false,
-  setIsCollapsed: isCollapsed => set({ isCollapsed }),
-  selectedItems: [],
-  setSelectedItems: selectedItems => set({ selectedItems }),
-  searchQuery: null,
-  setSearchQuery: searchQuery => set({ searchQuery }),
+  loading: true,
   page: 1,
+  searchQuery: null,
+  selectedItems: [],
+  setActiveTab: activeTab => set({ activeTab }),
+  setCurrentSort: currentSort => set({ currentSort }),
+  setData: data => set({ data }),
+  setIsCollapsed: isCollapsed => set({ isCollapsed }),
+  setLoading: loading => set({ loading }),
   setPage: page => set({ page }),
-  currentSort: { name: '', key: '', order: '' },
-  setCurrentSort: currentSort => set({ currentSort })
+  setSearchQuery: searchQuery => set({ searchQuery }),
+  setSelectedItems: selectedItems => set({ selectedItems })
 }));
 
 export default useDashboardStore;

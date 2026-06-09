@@ -9,10 +9,10 @@ import { t } from '@/stores/language';
 
 export default function DangerZone({ botId }) {
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   const router = useRouter();
@@ -21,17 +21,17 @@ export default function DangerZone({ botId }) {
     disableButton('delete-bot', 'confirm');
 
     toast.promise(deleteBot(botId), {
+      error: error => {
+        enableButton('delete-bot', 'confirm');
+
+        return error;
+      },
       loading: t('botManagePage.dangerZone.toast.deletingBot'),
       success: () => {
         closeModal('delete-bot');
         setTimeout(() => router.push('/'), 3000);
 
         return t('botManagePage.dangerZone.toast.botDeleted');
-      },
-      error: error => {
-        enableButton('delete-bot', 'confirm');
-
-        return error;
       }
     });
   }
@@ -51,27 +51,27 @@ export default function DangerZone({ botId }) {
         className='w-max rounded-xl bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
         onClick={() =>
           openModal('delete-bot', {
-            title: t('botManagePage.dangerZone.deleteBotModal.title'),
-            description: t('botManagePage.dangerZone.deleteBotModal.description'),
+            buttons: [
+              {
+                actionType: 'close',
+                id: 'cancel',
+                label: t('buttons.cancel'),
+                variant: 'ghost'
+              },
+              {
+                action: continueDeleteBot,
+                id: 'confirm',
+                label: t('buttons.confirm'),
+                variant: 'solid'
+              }
+            ],
             content: (
               <p className='text-sm text-tertiary'>
                 {t('botManagePage.dangerZone.deleteBotModal.note', { br: <br /> })}
               </p>
             ),
-            buttons: [
-              {
-                id: 'cancel',
-                label: t('buttons.cancel'),
-                variant: 'ghost',
-                actionType: 'close'
-              },
-              {
-                id: 'confirm',
-                label: t('buttons.confirm'),
-                variant: 'solid',
-                action: continueDeleteBot
-              }
-            ]
+            description: t('botManagePage.dangerZone.deleteBotModal.description'),
+            title: t('botManagePage.dangerZone.deleteBotModal.title')
           })
         }
       >

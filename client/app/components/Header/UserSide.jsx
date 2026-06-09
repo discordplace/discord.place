@@ -19,7 +19,7 @@ export default function UserSide({ className }) {
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
-  const [,, deleteToken] = useCookie('token');
+  const deleteToken = useCookie('token')[2];
 
   const pathname = usePathname();
 
@@ -32,6 +32,7 @@ export default function UserSide({ className }) {
 
   function logOut() {
     toast.promise(logout, {
+      error: error => error,
       loading: 'Logging out..',
       success: () => {
         setUser(null);
@@ -39,8 +40,7 @@ export default function UserSide({ className }) {
         deleteToken();
 
         return 'Logged out successfully';
-      },
-      error: error => error
+      }
     });
   }
 
@@ -62,7 +62,7 @@ export default function UserSide({ className }) {
           </button>
 
           <Link
-            className='pointer-events-auto flex items-center gap-x-2 rounded font-medium outline-none'
+            className='pointer-events-auto flex items-center gap-x-2 rounded-sm font-medium outline-hidden'
             onClick={() => setOpen(!open)}
             href='/account'
           >

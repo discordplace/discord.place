@@ -54,7 +54,7 @@ export default function MyTemplates() {
               <TemplateCard
                 key={emoji.id}
                 data={emoji}
-                className='[&>div>a>div:first-child]:size-[75px] [&>div>a>div:first-child]:min-h-[75px] [&>div>a>div:first-child]:min-w-[75px] [&>div>a>div:first-child]:text-lg sm:[&>div>a>div:first-child]:size-[100px] sm:[&>div>a>div:first-child]:min-h-[100px] sm:[&>div>a>div:first-child]:min-w-[100px] sm:[&>div>a>div:first-child]:text-3xl [&>div>a]:items-start sm:[&>div>a]:items-center'
+                className='[&>div>a]:items-start sm:[&>div>a]:items-center [&>div>a>div:first-child]:size-[75px] [&>div>a>div:first-child]:min-h-[75px] [&>div>a>div:first-child]:min-w-[75px] [&>div>a>div:first-child]:text-lg sm:[&>div>a>div:first-child]:size-[100px] sm:[&>div>a>div:first-child]:min-h-[100px] sm:[&>div>a>div:first-child]:min-w-[100px] sm:[&>div>a>div:first-child]:text-3xl'
               />
             ))}
           </div>

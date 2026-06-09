@@ -1,25 +1,11 @@
 import Content from '@/app/(themes)/themes/content';
+import createMetadata from '@/lib/createMetadata';
 
-export const metadata = {
-  title: 'Themes',
+export const metadata = createMetadata({
   description: 'Discover the best two-color combinations to make your Discord profile stand out.',
-  openGraph: {
-    title: 'Discord Place - Themes',
-    description: 'Discover the best two-color combinations to make your Discord profile stand out.',
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://discord.place/themes',
-    site_name: 'Discord Place',
-    images: [
-      {
-        url: '/og.png',
-        width: 960,
-        height: 540,
-        alt: 'Discord Place'
-      }
-    ]
-  }
-};
+  keywords: ['discord themes', 'color combinations', 'profile customization', 'discord profile themes', 'best discord themes'],
+  title: 'Discover Themes'
+});
 
 export default function Page() {
   return <Content />;

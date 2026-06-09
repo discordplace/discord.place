@@ -25,7 +25,7 @@ export default function Rewards({ server }) {
           <div
             key={reward.id}
             className={cn(
-              'flex items-center w-full gap-4 p-4 odd:bg-secondary even:bg-tertiary',
+              'flex w-full items-center gap-4 p-4 odd:bg-secondary even:bg-tertiary',
               index === 0 && 'rounded-t-xl',
               index === server.rewards.length - 1 && 'rounded-b-xl'
             )}
@@ -66,7 +66,7 @@ export default function Rewards({ server }) {
                 <Tooltip content={reward.unlocked ? t('serverPage.tabs.rewards.tooltip.unlocked') : t('serverPage.tabs.rewards.tooltip.locked')}>
                   <span
                     className={cn(
-                      'flex items-center text-xs font-medium gap-x-1 text-tertiary select-none',
+                      'flex items-center gap-x-1 text-xs font-medium text-tertiary select-none',
                       reward.unlocked ? 'text-green-500' : 'text-yellow-500'
                     )}
                   >

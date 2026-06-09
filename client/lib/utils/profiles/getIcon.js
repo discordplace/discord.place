@@ -4,39 +4,56 @@ import { SiBluesky, SiFacebook, SiGithub, SiGitlab, SiInstagram, SiLinkedin, SiM
 
 export default function getIcon(type) {
   switch (type) {
-    case 'instagram':
+    case 'instagram': {
       return SiInstagram;
-    case 'x':
+    }
+    case 'x': {
       return SiX;
-    case 'twitter':
+    }
+    case 'twitter': {
       return FaTwitter;
-    case 'tiktok':
+    }
+    case 'tiktok': {
       return SiTiktok;
-    case 'facebook':
+    }
+    case 'facebook': {
       return SiFacebook;
-    case 'steam':
+    }
+    case 'steam': {
       return SiSteam;
-    case 'github':
+    }
+    case 'github': {
       return SiGithub;
-    case 'twitch':
+    }
+    case 'twitch': {
       return SiTwitch;
-    case 'youtube':
+    }
+    case 'youtube': {
       return SiYoutube;
-    case 'telegram':
+    }
+    case 'telegram': {
       return SiTelegram;
-    case 'linkedin':
+    }
+    case 'linkedin': {
       return SiLinkedin;
-    case 'gitlab':
+    }
+    case 'gitlab': {
       return SiGitlab;
-    case 'reddit':
+    }
+    case 'reddit': {
       return SiReddit;
-    case 'mastodon':
+    }
+    case 'mastodon': {
       return SiMastodon;
-    case 'bluesky':
+    }
+    case 'bluesky': {
       return SiBluesky;
-    case 'custom':
+    }
+    case 'custom': {
       return RiLink;
-    default:
+    }
+    default: {
       return null;
+    }
   }
 }

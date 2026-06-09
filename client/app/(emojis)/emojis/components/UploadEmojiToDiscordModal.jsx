@@ -59,7 +59,7 @@ export default function UploadEmojiToDiscordModal({ guilds }) {
                       width={48}
                       height={48}
                       className={cn(
-                        'rounded-full bg-quaternary hover:bg-secondary cursor-pointer hover:ring-2 transition-all ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))]',
+                        'cursor-pointer rounded-full bg-quaternary ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))] transition-all hover:bg-secondary hover:ring-2',
                         selectedGuildId === guild.id && 'ring-2 ring-purple-600'
                       )}
                     />
@@ -69,7 +69,7 @@ export default function UploadEmojiToDiscordModal({ guilds }) {
                     className='relative'
                     href={config.botInviteURL}
                   >
-                    <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-full bg-white/60 dark:bg-black/60'>
+                    <div className='absolute top-0 left-0 flex size-full items-center justify-center rounded-full bg-white/60 dark:bg-black/60'>
                       <HiPlus className='text-black dark:text-white' size={20} />
                     </div>
 
@@ -80,7 +80,7 @@ export default function UploadEmojiToDiscordModal({ guilds }) {
                       width={48}
                       height={48}
                       className={cn(
-                        'rounded-full bg-quaternary hover:bg-secondary cursor-pointer hover:ring-2 transition-all ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))]',
+                        'cursor-pointer rounded-full bg-quaternary ring-purple-500 ring-offset-4 ring-offset-[rgba(var(--bg-tertiary))] transition-all hover:bg-secondary hover:ring-2',
                         selectedGuildId === guild.id && 'ring-2 ring-purple-600'
                       )}
                     />

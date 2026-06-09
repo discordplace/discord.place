@@ -33,38 +33,33 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
         console.warn(`Failed to fetch banner image for user ${id} with hash ${hash}`, error);
 
         switch (error.response?.status) {
-          case 404:
-            // Check if the user has been fetched before
+          case 404: {
             if (hashesRefreshed.some(({ hash: userHash }) => userHash === hash)) break;
 
-            // Get new hashes
-            var hashes = await getHashes(id);
+            const hashes = await getHashes(id);
             if (!hashes) break;
 
-            // Update the hashesRefreshed state to include the current user ID if it doesn't already
-            // This is to prevent the user from being fetched again if the hashes are refreshed
-
-            var notExpiredHashes = hashesRefreshed.filter(({ expireTime }) => expireTime > Date.now());
+            const notExpiredHashes = hashesRefreshed.filter(({ expireTime }) => expireTime > Date.now());
 
             if (!notExpiredHashes.some(({ hash: userHash }) => userHash === hash)) {
-              const expireTime = Date.now() + 600000;
-              setHashesRefreshed(oldHashesRefreshed => oldHashesRefreshed.concat({ hash, expireTime }));
+              const expireTime = Date.now() + 600_000;
+              setHashesRefreshed(oldHashesRefreshed => oldHashesRefreshed.concat({ expireTime, hash }));
             }
 
             if (hashesRefreshed.length > 0) {
-              // Remove expired hashes from the hashesRefreshed state
               setHashesRefreshed(oldHashesRefreshed => oldHashesRefreshed.filter(hash => hash.expireTime > Date.now()));
             }
 
-            var newHash = hashes.banner;
+            const newHash = hashes.banner;
             if (!newHash) break;
 
-            // Update the image source with the new hash
             setCurrentSource(getUrl(id, newHash));
 
             break;
-          default:
+          }
+          default: {
             break;
+          }
         }
       }
     }
@@ -72,7 +67,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
     fetchImage();
   }, [id, hash]);
 
-  if (!hash || !currentSource) return (
+  if (!hash || !currentSource) {return (
     <MotionImage
       key={`user-banner-${id}-replaced-with-default-banner`}
       src={DEFAULT_BANNER_BASE64}
@@ -82,7 +77,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
       {...motionOptions}
       {...props}
     />
-  );
+  );}
 
   return (
     <MotionImage

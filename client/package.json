@@ -1,28 +1,31 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "client",
-  "private": true,
   "version": "2.0.0",
-  "scripts": {
-    "dev": "next dev --turbo -p 36706",
-    "build": "next build",
-    "start": "next start -p 36706",
-    "lint": "next lint"
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/discordplace/discord.place/issues"
   },
   "license": "AGPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "https://github.com/discordplace/discord.place/tree/main/apps/client"
   },
-  "bugs": {
-    "url": "https://github.com/discordplace/discord.place/issues"
+  "scripts": {
+    "dev": "next dev -p 36706",
+    "build": "next build",
+    "start": "next start -p 36706",
+    "lint": "oxlint",
+    "lint:github": "oxlint --format github",
+    "lint:fix": "oxlint --fix --fix-suggestions --fix-dangerously",
+    "typegen": "next typegen"
   },
   "dependencies": {
-    "@next/bundle-analyzer": "^14.1.4",
-    "@radix-ui/react-dialog": "^1.0.5",
-    "@radix-ui/react-dropdown-menu": "^2.0.6",
-    "@radix-ui/react-select": "^2.1.1",
-    "@radix-ui/react-tooltip": "^1.0.7",
+    "@openreplay/tracker": "^18.0.13",
+    "@radix-ui/react-dialog": "^1.1.16",
+    "@radix-ui/react-dropdown-menu": "^2.1.17",
+    "@radix-ui/react-select": "^2.3.0",
+    "@radix-ui/react-tooltip": "^1.2.9",
     "@wavesurfer/react": "^1.0.7",
     "apexcharts": "^3.48.0",
     "axios": "^1.6.8",
@@ -30,8 +33,7 @@
     "clsx": "^2.1.0",
     "colord": "^2.9.3",
     "date-fns": "^3.6.0",
-    "framer-motion": "^11.0.20",
-    "geist": "^1.2.2",
+    "framer-motion": "^12.40.0",
     "gray-matter": "^4.0.3",
     "i18next": "^23.12.7",
     "i18next-intervalplural-postprocessor": "^3.0.0",
@@ -40,21 +42,21 @@
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.1",
     "nanoid": "^5.0.6",
-    "next": "14.2.35",
+    "next": "16.2.7",
     "next-nprogress-bar": "^2.3.5",
-    "react": "^18.2.0",
+    "ogl": "^1.0.11",
+    "react": "19.2.7",
     "react-animate-height": "^3.2.3",
     "react-animated-numbers": "^0.18.0",
     "react-apexcharts": "^1.4.1",
     "react-colorful": "^5.6.1",
     "react-countdown": "^2.3.5",
-    "react-dom": "^18.2.0",
+    "react-dom": "19.2.7",
     "react-icons": "^5.5.0",
     "react-markdown": "^9.0.1",
-    "react-medium-image-zoom": "^5.2.11",
+    "react-medium-image-zoom": "^5.4.6",
     "react-ripples": "^2.2.1",
     "react-syntax-highlighter": "^15.5.0",
-    "react-text-transition": "^3.1.0",
     "react-twemoji": "^0.6.0",
     "react-use": "^17.5.1",
     "rehype-raw": "^7.0.0",
@@ -64,20 +66,20 @@
     "sonner": "^2.0.3",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.0",
+    "vaul": "^1.1.2",
     "virtua": "^0.36.3",
-    "zustand": "^4.5.2"
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@tailwindcss/node": "^4.3.0",
+    "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/typography": "^0.5.10",
-    "autoprefixer": "^10.4.19",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "14.1.0",
-    "eslint-plugin-depend": "^0.11.0",
-    "eslint-plugin-react": "^7.37.2",
-    "eslint-plugin-security": "^3.0.1",
-    "eslint-plugin-tailwindcss": "^3.17.5",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "oxfmt": "^0.53.0",
+    "oxlint": "^1.68.0",
+    "oxlint-tailwindcss": "^1.2.0",
     "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^4.3.0"
   }
 }

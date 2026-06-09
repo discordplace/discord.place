@@ -20,12 +20,12 @@ export default function Header({ data }) {
           ))}
         </div>
 
-        <h1 className='max-w-[400px] text-pretty text-center text-2xl font-semibold text-primary'>
+        <h1 className='max-w-[400px] text-center text-2xl font-semibold text-pretty text-primary'>
           {data.name}
         </h1>
 
         <span className='flex items-center gap-x-2 text-center text-sm text-tertiary'>
-          {new Date(data.date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
+          {new Date(data.date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
 
           <span className='size-1.5 rounded-full bg-quaternary' />
 

@@ -24,18 +24,18 @@ export default function Content({ server }) {
 
   const [description, setDescription] = useState(server.description);
 
-  const parsedInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
+  const handledInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
     server.invite_code.type === 'Deleted' ? '' :
       `https://discord.com/invite/${server.invite_code.code}`
   );
 
-  const [inviteURL, setInviteURL] = useState(parsedInviteUrl);
+  const [inviteURL, setInviteURL] = useState(handledInviteUrl);
   const [category, setCategory] = useState(server.category);
   const [keywords, setKeywords] = useState(server.keywords);
 
   useEffect(() => {
     const isDescriptionChanged = !isEqual(description, server.description);
-    const isInviteURLChanged = !isEqual(inviteURL, parsedInviteUrl);
+    const isInviteURLChanged = !isEqual(inviteURL, handledInviteUrl);
     const isCategoryChanged = !isEqual(category, server.category);
     const isKeywordsChanged = !isEqual(keywords, server.keywords);
 
@@ -47,11 +47,7 @@ export default function Content({ server }) {
     );
 
     function pushToChangedKeys(key, value) {
-      // if the current value is the same as the original value, remove the key from the array
       if (isEqual(value, server[key])) return setChangedKeys(oldKeys => oldKeys.filter(({ key: oldKey }) => oldKey !== key));
-
-      // if the key already exists, update the value
-      // otherwise, add the key and value to the array
 
       setChangedKeys(oldKeys =>
         oldKeys
@@ -72,23 +68,27 @@ export default function Content({ server }) {
   function resetChanges() {
     changedKeys.forEach(({ key }) => {
       switch (key) {
-        case 'description':
+        case 'description': {
           setDescription(server[key]);
           break;
-        case 'invite_url':
-          var parsedInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
+        }
+        case 'invite_url': {
+          const handledInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
             server.invite_code.type === 'Deleted' ? '' :
               `https://discord.com/invite/${server.invite_code.code}`
           );
 
-          setInviteURL(parsedInviteUrl);
+          setInviteURL(handledInviteUrl);
           break;
-        case 'category':
+        }
+        case 'category': {
           setCategory(server[key]);
           break;
-        case 'keywords':
+        }
+        case 'keywords': {
           setKeywords(server[key]);
           break;
+        }
       }
     });
 
@@ -99,6 +99,11 @@ export default function Content({ server }) {
     setSavingChanges(true);
 
     toast.promise(editServer(server.id, changedKeys), {
+      error: error => {
+        setSavingChanges(false);
+
+        return error;
+      },
       loading: t('serverManagePage.toast.savingChanges'),
       success: () => {
         setSavingChanges(false);
@@ -107,19 +112,14 @@ export default function Content({ server }) {
         revalidateServer(server.id);
 
         return t('serverManagePage.toast.changesSaved');
-      },
-      error: error => {
-        setSavingChanges(false);
-
-        return error;
       }
     });
   }
 
   const { openModal, closeModal, openedModals } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
     closeModal: state.closeModal,
-    openedModals: state.openedModals
+    openedModals: state.openedModals,
+    openModal: state.openModal
   })));
 
   const router = useRouter();
@@ -131,30 +131,30 @@ export default function Content({ server }) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
 
           openModal('confirm-exit', {
-            title: t('serverManagePage.discardChangesModal.title'),
-            description: t('serverManagePage.discardChangesModal.description'),
-            content: <p className='text-sm text-tertiary'>{t('serverManagePage.discardChangesModal.note')}</p>,
             buttons: [
               {
+                actionType: 'close',
                 id: 'cancel',
                 label: t('buttons.cancel'),
-                variant: 'ghost',
-                actionType: 'close'
+                variant: 'ghost'
               },
               {
-                id: 'discard-changes',
-                label: t('buttons.discardChanges'),
-                variant: 'solid',
                 action: () => {
                   resetChanges();
                   closeModal('confirm-exit');
                   router.push(`/servers/${server.id}`, { shallow: true });
-                }
+                },
+                id: 'discard-changes',
+                label: t('buttons.discardChanges'),
+                variant: 'solid'
               }
-            ]
+            ],
+            content: <p className='text-sm text-tertiary'>{t('serverManagePage.discardChangesModal.note')}</p>,
+            description: t('serverManagePage.discardChangesModal.description'),
+            title: t('serverManagePage.discardChangesModal.title')
           });
         } else {
-          window.location.href = `/servers/${server.id}`;
+          globalThis.location.href = `/servers/${server.id}`;
         }
       }
     }
@@ -182,7 +182,7 @@ export default function Content({ server }) {
               <h2 className='flex items-center gap-x-2 text-3xl font-bold'>
                 {t('serverManagePage.title')}
 
-                <div className='select-none rounded-lg bg-quaternary p-2 text-xs font-bold uppercase'>
+                <div className='rounded-lg bg-quaternary p-2 text-xs font-bold uppercase select-none'>
                   {t('serverManagePage.escToCloseBadge')}
                 </div>
               </h2>

@@ -31,7 +31,7 @@ export default function ColumnRenderer({ data }) {
   const currentlyPlaying = useGeneralStore(state => state.sounds.currentlyPlaying);
   const setCurrentlyPlaying = useGeneralStore(state => state.sounds.setCurrentlyPlaying);
 
-  const onPlayPause = () => {
+  function onPlayPause() {
     if (currentlyPlaying === data.id) setCurrentlyPlaying('');
     else setCurrentlyPlaying(data.id);
   };
@@ -61,7 +61,7 @@ export default function ColumnRenderer({ data }) {
   const dashboardData = useDashboardStore(state => state.data);
 
   switch (data?.type) {
-    case 'emoji':
+    case 'emoji': {
       return (
         <div className='flex items-center gap-x-2'>
           <Image
@@ -77,7 +77,8 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    case 'emojiPack':
+    }
+    case 'emojiPack': {
       return (
         <div className='flex items-center gap-x-2'>
           <div className='flex'>
@@ -98,9 +99,10 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    case 'user':
+    }
+    case 'user': {
       return (
-        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pr-2 pl-1'>
           <UserAvatar
             id={data.id}
             hash={data.avatar}
@@ -121,9 +123,10 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'server':
+    }
+    case 'server': {
       return (
-        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pr-2 pl-1'>
           <ServerIcon
             id={data.id}
             hash={data.icon}
@@ -144,9 +147,10 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'bot':
+    }
+    case 'bot': {
       return (
-        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pr-2 pl-1'>
           <UserAvatar
             id={data.id}
             hash={data.avatar}
@@ -171,7 +175,8 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'category':
+    }
+    case 'category': {
       return (
         <div className='flex items-center gap-x-2'>
           {Array.isArray(data.value) ? data.value.slice(0, 5).map(category => (
@@ -194,19 +199,21 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'date':
-      var date = new Date(data.value);
-      var now = new Date();
+    }
+    case 'date': {
+      const date = new Date(data.value);
+      const now = new Date();
 
-      var yesterday = new Date(now);
+      const yesterday = new Date(now);
       yesterday.setDate(now.getDate() - 1);
 
       return (
         <span>
-          {date > yesterday ? getRelativeTime(data.value, 'en') : date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          {date > yesterday ? getRelativeTime(data.value, 'en') : date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
         </span>
       );
-    case 'long-text':
+    }
+    case 'long-text': {
       return (
         <div className='flex items-center gap-x-2'>
           <div className='line-clamp-2 max-w-[200px] overflow-hidden text-xs font-medium text-tertiary'>
@@ -214,13 +221,15 @@ export default function ColumnRenderer({ data }) {
           </div>
         </div>
       );
-    case 'text':
+    }
+    case 'text': {
       return (
         <span className='text-sm font-medium'>
           {data.value}
         </span>
       );
-    case 'template':
+    }
+    case 'template': {
       return (
         <div className='flex items-center gap-x-2'>
           <div className='flex size-[32px] items-center justify-center rounded-md bg-quaternary font-bold'>
@@ -232,11 +241,12 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    case 'sound':
+    }
+    case 'sound': {
       return (
         <div className='ml-2 flex items-center gap-x-2'>
           <button
-            className='flex size-[24px] items-center justify-center rounded-full bg-black text-[rgba(var(--bg-secondary))] outline-none hover:bg-black/70 dark:bg-white dark:hover:bg-white/70'
+            className='flex size-[24px] items-center justify-center rounded-full bg-black text-[rgba(var(--bg-secondary))] outline-hidden hover:bg-black/70 dark:bg-white dark:hover:bg-white/70'
             onClick={onPlayPause}
           >
             {currentlyPlaying === data.id ? (
@@ -251,7 +261,8 @@ export default function ColumnRenderer({ data }) {
           </h2>
         </div>
       );
-    case 'rating':
+    }
+    case 'rating': {
       return (
         <div className='flex items-center gap-x-2'>
           <h2 className='flex items-center text-lg font-semibold'>
@@ -263,7 +274,7 @@ export default function ColumnRenderer({ data }) {
           </h2>
 
           <div className='flex items-center gap-x-1'>
-            {new Array(5).fill(null).map((_, index) => (
+            {Array.from({ length: 5 }).fill(null).map((_, index) => (
               <FaStar
                 key={index}
                 size={12}
@@ -275,13 +286,15 @@ export default function ColumnRenderer({ data }) {
           </div>
         </div>
       );
-    case 'ipAddress':
+    }
+    case 'ipAddress': {
       return (
         <span className='rounded-full bg-quaternary px-2 py-0.5 text-xs font-medium text-primary'>
           {data.value}
         </span>
       );
-    case 'link':
+    }
+    case 'link': {
       return (
         <div className='ml-2 flex flex-col gap-y-1'>
           <span className='text-xs font-medium text-tertiary'>
@@ -293,15 +306,17 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    case 'number':
-      var formatter = new Intl.NumberFormat('en-US', { style: 'decimal', notation: 'compact', maximumFractionDigits: 2 });
+    }
+    case 'number': {
+      const formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2, notation: 'compact', style: 'decimal' });
 
       return (
         <span className='rounded-full border border-primary bg-secondary px-2 py-1.5 text-xs font-semibold text-primary'>
           {formatter.format(data.value)}
         </span>
       );
-    case 'reason':
+    }
+    case 'reason': {
       return (
         <div className='flex flex-col gap-y-1'>
           <h2 className='text-sm font-medium'>
@@ -313,7 +328,8 @@ export default function ColumnRenderer({ data }) {
           </div>
         </div>
       );
-    case 'countdown':
+    }
+    case 'countdown': {
       return (
         <div className='text-xs font-medium text-tertiary'>
           {data.value ? (
@@ -330,19 +346,22 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'restriction':
+    }
+    case 'restriction': {
       return (
         <span className='rounded-full border border-primary bg-secondary px-2 py-1 text-xs font-medium text-secondary'>
           {data.value.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase())}
         </span>
       );
-    case 'email':
+    }
+    case 'email': {
       return (
         <span className='rounded-full border border-primary bg-secondary px-2 py-1 text-xs font-medium text-secondary'>
           {data.value}
         </span>
       );
-    case 'userSubscription':
+    }
+    case 'userSubscription': {
       if (data.value?.expiresAt) {
         return (
           <div className='flex flex-col gap-y-1'>
@@ -362,7 +381,7 @@ export default function ColumnRenderer({ data }) {
                 className='-rotate-45 text-green-500'
               />
 
-              {new Date(data.value.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              {new Date(data.value.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
 
               <span className='text-tertiary'>
                 ({getRelativeTime(data.value.createdAt, 'en')})
@@ -372,13 +391,13 @@ export default function ColumnRenderer({ data }) {
         );
       }
 
-      var foundPlan = dashboardData?.plans?.find(plan => plan.id === data.value?.planId);
+      const foundPlan = dashboardData?.plans?.find(plan => plan.id === data.value?.planId);
 
-      if (!foundPlan) return (
+      if (!foundPlan) {return (
         <span className='text-xs font-medium text-tertiary'>
           Unknown Plan
         </span>
-      );
+      );}
 
       return (
         <div className='flex flex-col gap-y-1'>
@@ -392,7 +411,7 @@ export default function ColumnRenderer({ data }) {
               className='-rotate-45 text-green-500'
             />
 
-            {new Date(data.value.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            {new Date(data.value.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
 
             <span className='text-tertiary'>
               ({getRelativeTime(data.value.createdAt, 'en')})
@@ -400,9 +419,10 @@ export default function ColumnRenderer({ data }) {
           </div>
         </div>
       );
-    case 'theme':
+    }
+    case 'theme': {
       return (
-        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pr-2 pl-1'>
           <div className='relative flex items-center justify-center'>
             <span
               className='block size-4 rounded-full'
@@ -423,7 +443,9 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    default:
+    }
+    default: {
       return JSON.stringify(data);
+    }
   }
 }

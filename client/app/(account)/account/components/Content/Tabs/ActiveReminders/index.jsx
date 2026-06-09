@@ -60,14 +60,14 @@ export default function ActiveReminders() {
                   .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
                   .map(reminder => (
                     <div
-                      className='flex w-full cursor-pointer select-none items-start justify-between rounded-xl border border-primary bg-secondary p-3 hover:bg-tertiary'
+                      className='flex w-full cursor-pointer items-start justify-between rounded-xl border border-primary bg-secondary p-3 select-none hover:bg-tertiary'
                       key={reminder._id}
                       onClick={() => setActiveReminder(activeReminder === reminder._id ? null : reminder._id)}
                     >
                       <div className='flex flex-col'>
                         <div
                           className={cn(
-                            'flex transition-all mt-[0.4rem] duration-300 items-center gap-x-2 text-sm font-semibold text-primary',
+                            'mt-[0.4rem] flex items-center gap-x-2 text-sm font-semibold text-primary transition-all duration-300',
                             activeReminder === reminder._id && 'mt-0'
                           )}
                         >
@@ -81,7 +81,7 @@ export default function ActiveReminders() {
                             <IoChevronDown
                               className={cn(
                                 'transition-transform',
-                                activeReminder === reminder._id && 'transform rotate-180'
+                                activeReminder === reminder._id && 'rotate-180 transform'
                               )}
                             />
                           </span>
@@ -97,7 +97,7 @@ export default function ActiveReminders() {
                               {t('accountPage.tabs.activeReminders.fields.reminders.about')}
                             </div>
 
-                            <div className='max-w-[60w] break-words text-xs font-medium text-tertiary xl:max-w-[450px]'>
+                            <div className='max-w-[60w] text-xs font-medium wrap-break-word text-tertiary xl:max-w-[450px]'>
                               {reminder.about}
                             </div>
 
@@ -114,7 +114,7 @@ export default function ActiveReminders() {
                               </span>
 
                               <span className='text-tertiary'>
-                                {new Date(reminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                                {new Date(reminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                               </span>
                             </div>
                           </div>
@@ -134,7 +134,7 @@ export default function ActiveReminders() {
                         </span>
 
                         <span className='text-tertiary'>
-                          {new Date(reminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                          {new Date(reminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                         </span>
                       </div>
                     </div>
@@ -159,7 +159,7 @@ export default function ActiveReminders() {
                   <div
                     key={voteReminder._id}
                     className={cn(
-                      'flex items-center p-3 gap-4 justify-center flex-wrap sm:justify-between bg-secondary border-y-primary',
+                      'flex flex-wrap items-center justify-center gap-4 border-y-primary bg-secondary p-3 sm:justify-between',
                       index === data.voteReminders.length - 1 ? 'rounded-b-xl' : '',
                       index === 0 ? 'rounded-t-xl' : ''
                     )}
@@ -191,7 +191,7 @@ export default function ActiveReminders() {
                     <div className='flex flex-col items-center sm:items-end'>
                       <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
-                          date={new Date(voteReminder.createdAt).getTime() + 86400000}
+                          date={new Date(voteReminder.createdAt).getTime() + 86_400_000}
                           renderer={({ hours, minutes, seconds, completed }) => {
                             if (completed) return t('accountPage.tabs.activeReminders.countdown.expired');
 
@@ -201,7 +201,7 @@ export default function ActiveReminders() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(voteReminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                        {new Date(voteReminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
                   </div>

@@ -4,7 +4,6 @@ import cn from '@/lib/cn';
 import Image from 'next/image';
 
 export default function ServerIcon({ width, height, className, icon_url, name }) {
-
   function getCompressedName(name, limit) {
     const noVowels = name.replace(/[AEIOUaeiou\s]/g, '');
 
@@ -31,19 +30,19 @@ export default function ServerIcon({ width, height, className, icon_url, name })
             className
           )}
           style={{
-            width: `${width}px`,
-            height: `${height}px`
+            height: `${height}px`,
+            width: `${width}px`
           }}
         />
       ) : (
         <div
           className={cn(
-            'select-none bg-quaternary rounded-lg flex items-center justify-center',
+            'flex items-center justify-center rounded-lg bg-quaternary select-none',
             className
           )}
           style={{
-            width: `${width}px`,
-            height: `${height}px`
+            height: `${height}px`,
+            width: `${width}px`
           }}
         >
           <h2 className='text-3xl font-bold'>

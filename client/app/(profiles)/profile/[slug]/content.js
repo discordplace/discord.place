@@ -32,7 +32,7 @@ export default function Content({ profile }) {
               <UserBanner
                 id={profile.id}
                 hash={profile.banner}
-                className='absolute left-0 top-0 z-[1] size-full rounded-xl object-cover'
+                className='absolute top-0 left-0 z-1 size-full rounded-xl object-cover'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 size={2048}
@@ -40,11 +40,11 @@ export default function Content({ profile }) {
                 height={2048}
               />
 
-              <div className='absolute left-0 top-0 z-[2] size-full rounded-xl bg-gradient-to-b from-transparent via-secondary/80 to-secondary' />
+              <div className='absolute top-0 left-0 z-2 size-full rounded-xl bg-linear-to-b from-transparent via-secondary/80 to-secondary' />
             </>
           )}
 
-          <div className='absolute -bottom-14 left-10 z-[3] w-[calc(100%_-_2.5rem)]'>
+          <div className='absolute -bottom-14 left-10 z-3 w-[calc(100%-2.5rem)]'>
             <UserAvatar
               id={profile.id}
               hash={profile.avatar}
@@ -53,7 +53,7 @@ export default function Content({ profile }) {
               height={150}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className='size-[128px] rounded-full border-[10px] border-[rgb(var(--bg-background))] bg-background'
+              className='size-[128px] rounded-full border-10 border-[rgb(var(--bg-background))] bg-background'
             />
           </div>
 
@@ -64,7 +64,7 @@ export default function Content({ profile }) {
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+            transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
             className='text-3xl font-bold'
           >
             @{profile.username}
@@ -75,11 +75,11 @@ export default function Content({ profile }) {
               {profile.badges.map(badgeId => (
                 <Tooltip
                   content={t(`badges.${badgeId}`, {
-                    premiumSince: profile.subscriptionCreatedAt,
-                    lng: language,
                     formatParams: {
-                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                    }
+                      premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                    },
+                    lng: language,
+                    premiumSince: profile.subscriptionCreatedAt
                   })}
                   key={badgeId}
                 >

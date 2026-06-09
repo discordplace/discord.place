@@ -19,22 +19,22 @@ export default function Socials({ profile }) {
   const [socials, setSocials] = useState(profile.socials);
 
   const typeRegexps = {
-    instagram: /(?:http(?:s)?:\/\/)?(?:www\.)?instagram\.com\/([\w](?!.*?\.{2})[\w.]{1,28}[\w])/,
-    x: /(?:http(?:s)?:\/\/)?(?:www\.)?x\.com\/([a-zA-Z0-9_]+)/,
-    twitter: /(?:http(?:s)?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)/,
-    tiktok: /(?:http(?:s)?:\/\/)?(?:www\.)?tiktok\.com\/@([a-zA-Z0-9_]+)/,
-    facebook: /(?:http(?:s)?:\/\/)?(?:www\.)?facebook\.com\/([a-zA-Z0-9_]+)/,
-    steam: /(?:http(?:s)?:\/\/)?(?:www\.)?steamcommunity\.com\/id\/([a-zA-Z0-9_]+)/,
-    github: /(?:http(?:s)?:\/\/)?(?:www\.)?github\.com\/([a-zA-Z0-9_-]+)/,
-    twitch: /(?:http(?:s)?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/,
-    youtube: /(?:http(?:s)?:\/\/)?(?:www\.)?youtube\.com\/@([a-zA-Z0-9_]+)/,
-    telegram: /(?:http(?:s)?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]+)/,
-    linkedin: /(?:http(?:s)?:\/\/)?(?:www\.)?linkedin\.com\/in\/([a-zA-Z0-9_-]+)/,
-    gitlab: /(?:http(?:s)?:\/\/)?(?:www\.)?gitlab\.com\/([a-zA-Z0-9_-]+)/,
-    reddit: /(?:http(?:s)?:\/\/)?(?:www\.)?reddit\.com\/u\/([a-zA-Z0-9_-]+)/,
-    mastodon: /(?:http(?:s)?:\/\/)?(?:www\.)?mastodon\.social\/@([a-zA-Z0-9_]+)/,
     bluesky: /(?:http(?:s)?:\/\/)?(?:www\.)?bsky\.app\/profile\/([a-zA-Z0-9_]+)/,
-    custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/
+    custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/,
+    facebook: /(?:http(?:s)?:\/\/)?(?:www\.)?facebook\.com\/([a-zA-Z0-9_]+)/,
+    github: /(?:http(?:s)?:\/\/)?(?:www\.)?github\.com\/([a-zA-Z0-9_-]+)/,
+    gitlab: /(?:http(?:s)?:\/\/)?(?:www\.)?gitlab\.com\/([a-zA-Z0-9_-]+)/,
+    instagram: /(?:http(?:s)?:\/\/)?(?:www\.)?instagram\.com\/([\w](?!.*?\.{2})[\w.]{1,28}[\w])/,
+    linkedin: /(?:http(?:s)?:\/\/)?(?:www\.)?linkedin\.com\/in\/([a-zA-Z0-9_-]+)/,
+    mastodon: /(?:http(?:s)?:\/\/)?(?:www\.)?mastodon\.social\/@([a-zA-Z0-9_]+)/,
+    reddit: /(?:http(?:s)?:\/\/)?(?:www\.)?reddit\.com\/u\/([a-zA-Z0-9_-]+)/,
+    steam: /(?:http(?:s)?:\/\/)?(?:www\.)?steamcommunity\.com\/id\/([a-zA-Z0-9_]+)/,
+    telegram: /(?:http(?:s)?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]+)/,
+    tiktok: /(?:http(?:s)?:\/\/)?(?:www\.)?tiktok\.com\/@([a-zA-Z0-9_]+)/,
+    twitch: /(?:http(?:s)?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/,
+    twitter: /(?:http(?:s)?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)/,
+    x: /(?:http(?:s)?:\/\/)?(?:www\.)?x\.com\/([a-zA-Z0-9_]+)/,
+    youtube: /(?:http(?:s)?:\/\/)?(?:www\.)?youtube\.com\/@([a-zA-Z0-9_]+)/
   };
 
   const [currentlyAddingNewSocial, setCurrentlyAddingNewSocial] = useState(false);
@@ -65,6 +65,11 @@ export default function Socials({ profile }) {
 
         toast.promise(addSocial(profile.slug, `https://${match[0]}`, 'custom'),
           {
+            error: error => {
+              setLoading(false);
+
+              return error;
+            },
             loading: t('editProfilePage.toast.socialAdding'),
             success: newSocials => {
               setCurrentlyAddingNewSocial(false);
@@ -75,11 +80,6 @@ export default function Socials({ profile }) {
               revalidateProfile(profile.slug);
 
               return t('editProfilePage.toast.socialAdded');
-            },
-            error: error => {
-              setLoading(false);
-
-              return error;
             }
           }
         );
@@ -91,6 +91,11 @@ export default function Socials({ profile }) {
         const handle = match[1];
         toast.promise(addSocial(profile.slug, handle, newSocialType),
           {
+            error: error => {
+              setLoading(false);
+
+              return error;
+            },
             loading: t('editProfilePage.toast.socialMediaAdding'),
             success: newSocials => {
               setCurrentlyAddingNewSocial(false);
@@ -101,11 +106,6 @@ export default function Socials({ profile }) {
               revalidateProfile(profile.slug);
 
               return t('editProfilePage.toast.socialMediaAdded');
-            },
-            error: error => {
-              setLoading(false);
-
-              return error;
             }
           }
         );
@@ -121,6 +121,12 @@ export default function Socials({ profile }) {
 
     toast.promise(deleteSocial(profile.slug, id),
       {
+        error: error => {
+          setLoading(false);
+          setDeletingSocialId(null);
+
+          return error;
+        },
         loading: t('editProfilePage.toast.deletingSocial'),
         success: newSocials => {
           setCurrentlyAddingNewSocial(false);
@@ -132,12 +138,6 @@ export default function Socials({ profile }) {
           revalidateProfile(profile.slug);
 
           return t('editProfilePage.toast.socialDeleted');
-        },
-        error: error => {
-          setLoading(false);
-          setDeletingSocialId(null);
-
-          return error;
         }
       }
     );
@@ -159,7 +159,7 @@ export default function Socials({ profile }) {
 
           return (
             <div
-              className='group flex w-full max-w-[calc(50%_-_1rem)] items-center justify-between gap-x-1 rounded-2xl border border-primary bg-secondary px-2 py-3 transition-colors hover:bg-tertiary'
+              className='group flex w-full max-w-[calc(50%-1rem)] items-center justify-between gap-x-1 rounded-2xl border border-primary bg-secondary px-2 py-3 transition-colors hover:bg-tertiary'
               key={social.link}
             >
               <div className='flex items-center gap-x-2 text-sm text-tertiary transition-colors group-hover:text-primary'>
@@ -168,14 +168,14 @@ export default function Socials({ profile }) {
                   size={20}
                 />
 
-                <span className='select-none font-semibold'>
+                <span className='font-semibold select-none'>
                   {social.type === 'custom' ? getDisplayableURL(social.link) : social.handle}
                 </span>
               </div>
 
               <div className='flex items-center gap-x-1'>
                 <Link
-                  className='text-tertiary opacity-0 transition-all hover:text-primary group-hover:opacity-100'
+                  className='text-tertiary opacity-0 transition-all group-hover:opacity-100 hover:text-primary'
                   href={social.link}
                   target='_blank'
                 >
@@ -203,16 +203,16 @@ export default function Socials({ profile }) {
 
         <div
           className={cn(
-            'transition-all [&:has(input:focus)]:bg-tertiary border border-primary w-full max-w-[calc(50%_-_1rem)] rounded-2xl px-2 py-3 text-sm font-semibold bg-secondary items-center justify-between gap-x-2',
+            'w-full max-w-[calc(50%-1rem)] items-center justify-between gap-x-2 rounded-2xl border border-primary bg-secondary px-2 py-3 text-sm font-semibold transition-all [&:has(input:focus)]:bg-tertiary',
             currentlyAddingNewSocial ? 'flex' : 'hidden'
           )}
         >
           <div className='flex w-full items-center gap-x-2'>
             {(() => {
               const Icon = getIcon(newSocialType);
-              if (!Icon) return (
+              if (!Icon) {return (
                 <div className='h-[18px] w-[20px] rounded-lg bg-quaternary' />
-              );
+              );}
 
               return (
                 <Icon
@@ -227,11 +227,11 @@ export default function Socials({ profile }) {
               value={newSocialValue}
               onChange={event => setNewSocialValue(event.target.value)}
               onKeyUp={event => event.key === 'Enter' && saveNewSocial()}
-              autoFocus
+              autoFocus={true}
               autoComplete='off'
               spellCheck='false'
               disabled={loading}
-              className='w-full bg-transparent font-medium text-secondary outline-none disabled:pointer-events-none disabled:opacity-70'
+              className='w-full bg-transparent font-medium text-secondary outline-hidden disabled:pointer-events-none disabled:opacity-70'
             />
           </div>
         </div>
@@ -243,7 +243,7 @@ export default function Socials({ profile }) {
           )}
         >
           <button
-            className='flex w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => {
+            className='flex w-full max-w-[calc(50%-1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => {
               setCurrentlyAddingNewSocial(false);
               setNewSocialType('unknown');
               setNewSocialValue('');
@@ -253,7 +253,7 @@ export default function Socials({ profile }) {
             {t('buttons.cancel')}
           </button>
 
-          <button className='flex w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={saveNewSocial} disabled={loading}>
+          <button className='flex w-full max-w-[calc(50%-1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={saveNewSocial} disabled={loading}>
             {t('buttons.add')}
           </button>
         </div>
@@ -261,7 +261,7 @@ export default function Socials({ profile }) {
         {socials.length < config.profilesMaxSocialsLength && (
           <button
             className={cn(
-              'flex w-full py-3 max-w-[calc(50%_-_1rem)] rounded-2xl justify-center text-sm font-semibold border-primary border hover:bg-tertiary hover:border-[rgb(var(--bg-tertiary))] items-center gap-x-2 text-secondary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
+              'flex w-full max-w-[calc(50%-1rem)] items-center justify-center gap-x-2 rounded-2xl border border-primary py-3 text-sm font-semibold text-secondary hover:border-[rgb(var(--bg-tertiary))] hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
               currentlyAddingNewSocial && 'hidden'
             )}
             onClick={() => setCurrentlyAddingNewSocial(true)}

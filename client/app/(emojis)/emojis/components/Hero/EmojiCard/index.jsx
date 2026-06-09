@@ -8,20 +8,20 @@ import { t } from '@/stores/language';
 
 export default function EmojiCard({ overridedImage, id, name, animated, categories, downloads, className }) {
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
+    maximumFractionDigits: 2,
     notation: 'compact',
-    maximumFractionDigits: 2
+    style: 'decimal'
   });
 
   return (
     <div
       className={cn(
-        'flex flex-col w-full min-w-[155px]',
+        'flex w-full min-w-[155px] flex-col',
         className
       )}
     >
       <Link
-        className='group relative flex h-[110px] items-center justify-center text-clip rounded-t-2xl bg-secondary transition-colors lg:hover:bg-quaternary'
+        className='group relative flex h-[110px] items-center justify-center rounded-t-2xl bg-secondary text-clip transition-colors lg:hover:bg-quaternary'
         href={`/emojis/${id}`}
       >
         <MotionImage
@@ -33,7 +33,7 @@ export default function EmojiCard({ overridedImage, id, name, animated, categori
         />
 
         {animated && (
-          <div className='absolute right-2 top-1.5 rounded-full bg-quaternary px-2 text-xs font-semibold uppercase transition-colors group-hover:bg-secondary'>
+          <div className='absolute top-1.5 right-2 rounded-full bg-quaternary px-2 text-xs font-semibold uppercase transition-colors group-hover:bg-secondary'>
             {t('emojiCard.gifBadge')}
           </div>
         )}

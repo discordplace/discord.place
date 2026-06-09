@@ -27,7 +27,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   const mutualFriendsCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
   const mutualServersCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
   const avatars = useMemo(() => {
-    const avatars = new Array(3).fill(null).map(() => `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 5)}.png`);
+    const avatars = Array.from({ length: 3 }).fill(null).map(() => `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 5)}.png`);
 
     return avatars;
   }, []);
@@ -45,17 +45,17 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   }, []);
 
   const roles = [
-    { name: t('themeCard.roles.0.name'), color: '#faa61a' },
-    { name: t('themeCard.roles.1.name'), color: '#3ba55c' },
+    { color: '#faa61a', name: t('themeCard.roles.0.name') },
+    { color: '#3ba55c', name: t('themeCard.roles.1.name') },
     { name: t('themeCard.roles.2.name') },
     { name: t('themeCard.roles.3.name') },
-    { name: t('themeCard.roles.4.name'), color: '#eb459f' }
+    { color: '#eb459f', name: t('themeCard.roles.4.name') }
   ];
 
   return (
     <Container
       className={cn(
-        'rounded-xl p-1 font-ggSans transition-all w-full',
+        'w-full rounded-xl p-1 font-ggSans transition-all',
         id ? 'hover:opacity-80' : 'pointer-events-none select-none'
       )}
       href={`/themes/${id}`}
@@ -67,12 +67,12 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
       <div
         className='relative flex w-full flex-col rounded-lg bg-secondary pb-4'
         style={{
-          '--profile-gradient-start': `color-mix(in oklab, ${profileGradientOverlayColor} 100%, ${primaryColor})`,
           '--profile-gradient-end': `color-mix(in oklab, ${profileGradientOverlayColor} 100%, ${secondaryColor})`,
+          '--profile-gradient-start': `color-mix(in oklab, ${profileGradientOverlayColor} 100%, ${primaryColor})`,
           background: 'linear-gradient(var(--profile-gradient-start), var(--profile-gradient-start) 100%, var(--profile-gradient-end))'
         }}
       >
-        <div className='absolute right-4 top-4'>
+        <div className='absolute top-4 right-4'>
           <div className='flex items-center gap-x-2'>
             <div className='flex items-center justify-center rounded-full bg-black/50 p-2 text-white'>
               <AddFriendIcon className='size-4' />
@@ -91,7 +91,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             size={512}
             width={325}
             height={125}
-            className='absolute left-0 top-0 h-[125px] w-full rounded-t-lg object-cover'
+            className='absolute top-0 left-0 h-[125px] w-full rounded-t-lg object-cover'
             style={{
               maskImage: 'radial-gradient(circle at 64px 122px, transparent 45px, black 46px)',
               WebkitMaskImage: 'radial-gradient(circle at 64px 122px, transparent 45px, black 46px)'
@@ -99,7 +99,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
           />
         ) : (
           <div
-            className='absolute left-0 top-0 h-[105px] w-full'
+            className='absolute top-0 left-0 h-[105px] w-full'
             style={{
               maskImage: 'radial-gradient(circle at 64px 122px, transparent 45px, black 46px)',
               WebkitMaskImage: 'radial-gradient(circle at 64px 122px, transparent 45px, black 46px)'
@@ -118,7 +118,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             alt={`${randomStatus} Status Badge`}
             width={18}
             height={18}
-            className='absolute bottom-[2px] right-[2px] rounded-full'
+            className='absolute right-[2px] bottom-[2px] rounded-full'
           />
 
           {(loggedIn && user?.avatar) ? (
@@ -128,7 +128,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
               size={128}
               width={78}
               height={78}
-              className='rounded-full [mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10.2px)]'
+              className='rounded-full mask-[radial-gradient(circle_at_85%_85%,transparent_10px,black_10.2px)]'
             />
           ) : (
             <Image
@@ -136,7 +136,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
               alt='Profile Picture'
               width={78}
               height={78}
-              className='rounded-full [mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10.2px)]'
+              className='rounded-full mask-[radial-gradient(circle_at_85%_85%,transparent_10px,black_10.2px)]'
             />
           )}
         </div>
@@ -153,7 +153,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
             {user?.flags.length > 0 && (
               <div
-                className='flex items-center gap-1 rounded border px-1 py-0.5'
+                className='flex items-center gap-1 rounded-sm border px-1 py-0.5'
                 style={{
                   background: backgroundColor,
                   borderColor
@@ -177,7 +177,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             <div className='flex items-center gap-x-1 text-xs'>
               <div className='flex -space-x-1'>
                 <Image
-                  className='relative z-[1] size-4 rounded-full'
+                  className='relative z-1 size-4 rounded-full'
                   src={avatars[0]}
                   width={128}
                   height={128}
@@ -189,7 +189,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
                 />
 
                 <Image
-                  className='relative z-[1] size-4 rounded-full'
+                  className='relative z-1 size-4 rounded-full'
                   src={avatars[1]}
                   width={128}
                   height={128}
@@ -201,7 +201,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
                 />
 
                 <Image
-                  className='relative z-[1] size-4 rounded-full'
+                  className='relative z-1 size-4 rounded-full'
                   src={avatars[2]}
                   width={128}
                   height={128}

@@ -50,13 +50,17 @@ export default function NewTheme() {
 
     setLoading(true);
 
-    toast.promise(createTheme({ colors, categories: themeCategories }), {
+    toast.promise(createTheme({ categories: themeCategories, colors }), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.myThemes.sections.addTheme.toast.addingTheme'),
       success: data => {
         setTimeout(() => {
           router.push(`/themes/${data.id}`);
 
-          // Reset states
           setColors({ primary: null, secondary: null });
           setThemeCategories([]);
           setCurrentlyAddingTheme(false);
@@ -65,18 +69,13 @@ export default function NewTheme() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.myThemes.sections.addTheme.toast.themeAdded');
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
 
   return (
     <>
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%' />
       </div>
 
@@ -120,7 +119,7 @@ export default function NewTheme() {
                     <div className='size-3 rounded-full' style={{ backgroundColor: colors.primary || '#000000' }} />
                   </h2>
 
-                  <div className='[&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
+                  <div className='[&_.react-colorful]:size-[120px] [&_.react-colorful\_\_hue]:h-[10px]! [&_.react-colorful\_\_pointer]:size-[10px]'>
                     <HexColorPicker
                       color={colors.primary || '#000000'}
                       onChange={color => setColors(oldColors => ({ ...oldColors, primary: color }))}
@@ -131,7 +130,7 @@ export default function NewTheme() {
                       value={colors.primary || '#000000'}
                       maxLength={7}
                       onChange={event => setColors(oldColors => ({ ...oldColors, primary: event.target.value }))}
-                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
+                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-hidden placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                     />
                   </div>
                 </div>
@@ -143,7 +142,7 @@ export default function NewTheme() {
                     <div className='size-3 rounded-full' style={{ backgroundColor: colors.secondary || '#000000' }} />
                   </h2>
 
-                  <div className='[&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
+                  <div className='[&_.react-colorful]:size-[120px] [&_.react-colorful\_\_hue]:h-[10px]! [&_.react-colorful\_\_pointer]:size-[10px]'>
                     <HexColorPicker
                       color={colors.secondary || '#000000'}
                       onChange={color => setColors(oldColors => ({ ...oldColors, secondary: color }))}
@@ -154,7 +153,7 @@ export default function NewTheme() {
                       value={colors.secondary || '#000000'}
                       maxLength={7}
                       onChange={event => setColors(oldColors => ({ ...oldColors, secondary: event.target.value }))}
-                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
+                      className='mt-4 w-full max-w-[120px] rounded-md bg-secondary px-2 py-1 text-sm font-medium text-secondary outline-hidden placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                     />
                   </div>
                 </div>
@@ -184,7 +183,7 @@ export default function NewTheme() {
                   <button
                     key={category}
                     className={cn(
-                      'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-quaternary',
+                      'flex size-max items-center gap-x-1 rounded-lg bg-secondary px-3 py-1.5 text-sm font-semibold hover:bg-quaternary',
                       themeCategories.includes(category) && 'bg-quaternary'
                     )}
                     onClick={() => {

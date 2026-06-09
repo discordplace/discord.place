@@ -67,28 +67,28 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     disableButton('upload-emoji-to-discord', 'upload');
 
     toast.promise(uploadEmojiToGuild(id, guildId, false), {
+      error: error => {
+        enableButton('upload-emoji-to-discord', 'upload');
+
+        return error;
+      },
       loading: t('createEmojiPage.emojisPreview.toast.uploadingEmojis'),
       success: () => {
         closeModal('upload-emoji-to-discord');
         setRenderConfetti(true);
 
         return t('createEmojiPage.emojisPreview.toast.emojisUploaded');
-      },
-      error: error => {
-        enableButton('upload-emoji-to-discord', 'upload');
-
-        return error;
       }
     });
   }
 
   const { openModal, openedModals, updateModal, closeModal, disableButton, enableButton } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
-    openedModals: state.openedModals,
-    updateModal: state.updateModal,
     closeModal: state.closeModal,
     disableButton: state.disableButton,
-    enableButton: state.enableButton
+    enableButton: state.enableButton,
+    openedModals: state.openedModals,
+    openModal: state.openModal,
+    updateModal: state.updateModal
   })));
 
   const selectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.selectedGuildId);
@@ -99,16 +99,16 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
       updateModal('upload-emoji-to-discord', {
         buttons: [
           {
+            actionType: 'close',
             id: 'cancel',
             label: t('buttons.cancel'),
-            variant: 'ghost',
-            actionType: 'close'
+            variant: 'ghost'
           },
           {
+            action: () => continueUploadEmojiToGuild(selectedGuildId),
             id: 'upload',
             label: t('buttons.upload'),
-            variant: 'solid',
-            action: () => continueUploadEmojiToGuild(selectedGuildId)
+            variant: 'solid'
           }
         ]
       });
@@ -117,28 +117,28 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     }
 
     openModal('upload-emoji-to-discord', {
+      buttons: [
+        {
+          actionType: 'close',
+          id: 'cancel',
+          label: t('buttons.cancel'),
+          variant: 'ghost'
+        },
+        {
+          action: () => continueUploadEmojiToGuild(selectedGuildId),
+          id: 'uplaod',
+          label: t('buttons.upload'),
+          variant: 'solid'
+        }
+      ],
+      content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
+      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
       title: (
         t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.titleWithEmoji', {
           emojiImage: <Image src={image_url} alt={name} width={24} height={24} className='inline h-[16px] w-auto' />,
           emojiName: name
         })
-      ),
-      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
-      content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
-      buttons: [
-        {
-          id: 'cancel',
-          label: t('buttons.cancel'),
-          variant: 'ghost',
-          actionType: 'close'
-        },
-        {
-          id: 'uplaod',
-          label: t('buttons.upload'),
-          variant: 'solid',
-          action: () => continueUploadEmojiToGuild(selectedGuildId)
-        }
-      ]
+      )
     });
   }, [uploadableGuilds, selectedGuildId]);
 
@@ -146,7 +146,7 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     <div className='relative flex h-[250px] w-full flex-col items-center justify-center gap-y-2 overflow-hidden rounded-md bg-secondary' style={{
       backgroundImage: `url(/${patternDarkMode ? 'transparent-pattern-dark' : 'transparent-pattern-light'}.png)`
     }}>
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%'/>
       </div>
 
@@ -175,8 +175,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
               {ableToChange ? (
                 <label
                   className={cn(
-                    'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
-                    patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                    'cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium',
+                    patternDarkMode ? 'bg-white text-black hover:bg-white/70' : 'bg-black text-white hover:bg-black/70'
                   )}
                   htmlFor='emojiFiles'
                 >
@@ -186,8 +186,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
                 <Tooltip content={loggedIn ? t('createEmojiPage.emojisPreview.tooltip.uploadToDiscord') : t('createEmojiPage.emojisPreview.tooltip.loginToUpload')}>
                   <button
                     className={cn(
-                      'px-3 py-1.5 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 rounded-lg cursor-pointer',
-                      patternDarkMode ? 'bg-white text-black' : ' bg-black text-white',
+                      'flex cursor-pointer items-center gap-x-1 rounded-lg px-3 py-1.5 text-sm font-medium disabled:opacity-70',
+                      patternDarkMode ? 'bg-white text-black' : 'bg-black text-white',
                       loggedIn && (patternDarkMode ? 'hover:bg-white/70' : 'hover:bg-black/70')
                     )}
                     onClick={() => {
@@ -208,8 +208,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
 
               <button
                 className={cn(
-                  'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
-                  patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                  'cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium',
+                  patternDarkMode ? 'bg-white text-black hover:bg-white/70' : 'bg-black text-white hover:bg-black/70'
                 )}
                 onClick={() => setPatternDarkMode(!patternDarkMode)}
               >
@@ -218,8 +218,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
 
               <button
                 className={cn(
-                  'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
-                  patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                  'cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium',
+                  patternDarkMode ? 'bg-white text-black hover:bg-white/70' : 'bg-black text-white hover:bg-black/70'
                 )}
                 onClick={() => setPreviewSize(previewSize === 32 ? 96 : 32)}
               >
@@ -231,8 +231,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
           ableToChange && (
             <motion.label
               className={cn(
-                'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
-                patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                'cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium',
+                patternDarkMode ? 'bg-white text-black hover:bg-white/70' : 'bg-black text-white hover:bg-black/70'
               )}
               htmlFor='emojiFiles'
               initial={{ opacity: 0 }}

@@ -24,7 +24,7 @@ export default function Tooltip({ children, content, side, sideOffset, hide, dis
 
             if (isMobile) setOpen(!open);
           }}
-          asChild
+          asChild={true}
         >
           {children}
         </RadixTooltip.Trigger>
@@ -32,7 +32,7 @@ export default function Tooltip({ children, content, side, sideOffset, hide, dis
         {content && (
           <RadixTooltip.Portal>
             <RadixTooltip.Content
-              className='z-[10000] max-w-[300px] rounded-lg bg-black px-3 py-1 text-center text-sm font-semibold text-white [transform-origin:var(--radix-tooltip-content-transform-origin)] dark:bg-white dark:text-black sm:max-w-[unset]'
+              className='z-10000 max-w-[300px] origin-(--radix-tooltip-content-transform-origin) rounded-lg bg-black px-3 py-1 text-center text-sm font-semibold text-white sm:max-w-[unset] dark:bg-white dark:text-black'
               sideOffset={sideOffset || 5}
               side={side || 'top'}
             >

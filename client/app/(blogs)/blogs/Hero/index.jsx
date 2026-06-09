@@ -12,14 +12,14 @@ import { toast } from 'sonner';
 import fetchBlogs from '@/lib/request/general/fetchBlogs';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   const theme = useThemeStore(state => state.theme);
@@ -44,7 +44,7 @@ export default function Hero() {
       <div className='flex w-full max-w-5xl flex-col items-center sm:items-start'>
         <motion.h1
           className={cn(
-            'text-5xl relative font-medium max-w-[800px] text-center text-primary',
+            'relative max-w-[800px] text-center text-5xl font-medium text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0 }}
@@ -58,7 +58,7 @@ export default function Hero() {
             alt=''
             width={32}
             height={5}
-            className='absolute -right-8 -top-2 hidden -rotate-12 sm:block'
+            className='absolute -top-2 -right-8 hidden -rotate-12 sm:block'
             priority={true}
           />
         </motion.h1>
@@ -74,13 +74,13 @@ export default function Hero() {
           transition={{ ...sequenceTransition, delay: 0.3 }}
         >
           {['All', ...new Set(data.map(data => data.tags).flat())]
-            .sort((a, b) => b === 'All' ? 1 : a.localeCompare(b))
+            .sort((a, b) => (b === 'All' ? 1 : a.localeCompare(b)))
             .map(tag => (
               <button
                 key={tag}
                 className={cn(
-                  'bg-secondary border border-primary lg:border-none rounded-full px-3 py-1.5 lg:pt-0 lg:px-0 lg:bg-[unset] relative select-none lg:pb-4 font-medium cursor-pointer text-tertiary outline-none',
-                  tag === activeTag ? 'text-primary select-none pointer-events-none' : 'hover:text-secondary active:text-primary'
+                  'relative cursor-pointer rounded-full border border-primary bg-secondary px-3 py-1.5 font-medium text-tertiary outline-hidden select-none lg:border-none lg:bg-[unset] lg:px-0 lg:pt-0 lg:pb-4',
+                  tag === activeTag ? 'pointer-events-none text-primary select-none' : 'hover:text-secondary active:text-primary'
                 )}
                 onClick={() => setActiveTag(tag)}
               >
@@ -88,9 +88,9 @@ export default function Hero() {
 
                 {tag === activeTag && (
                   <motion.div
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    transition={{ damping: 30, stiffness: 500, type: 'spring' }}
                     layoutId='blogActiveTagIndicator'
-                    className='absolute -bottom-0.5 left-0 hidden h-[2px] w-full bg-black dark:bg-white lg:block'
+                    className='absolute -bottom-0.5 left-0 hidden h-[2px] w-full bg-black lg:block dark:bg-white'
                   />
                 )}
               </button>
@@ -98,14 +98,14 @@ export default function Hero() {
         </motion.div>
 
         <motion.div
-          className='mb-24 mt-12 flex w-full flex-wrap gap-12'
+          className='mt-12 mb-24 flex w-full flex-wrap gap-12'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ ...sequenceTransition, delay: 0.4 }}
         >
           {loading ? (
-            new Array(3).fill().map((_, index) => (
-              <Card key={index} loading />
+            Array.from({ length: 3 }).fill().map((_, index) => (
+              <Card key={index} loading={true} />
             ))
           ) : (
             data

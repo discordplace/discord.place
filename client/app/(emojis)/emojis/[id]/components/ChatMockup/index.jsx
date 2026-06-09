@@ -11,7 +11,7 @@ export default function ChatMockup({ id, username, avatar, message, emoji_url, t
   return (
     <div
       className={cn(
-        'flex w-full h-20 gap-x-3 pl-4 pt-4 select-none',
+        'flex h-20 w-full gap-x-3 pt-4 pl-4 select-none',
         index === 0 ? 'rounded-t-xl' : 'rounded-b-xl',
         theme === 'dark' ? 'bg-[rgb(var(--dark-bg-secondary))]' : 'bg-[rgb(var(--light-bg-secondary))]'
       )}
@@ -36,18 +36,18 @@ export default function ChatMockup({ id, username, avatar, message, emoji_url, t
 
           <span
             className={cn(
-              'text-xs font-medium truncate max-w-[40%] mobile:max-w-[unset]',
+              'max-w-[40%] truncate text-xs font-medium mobile:max-w-[unset]',
               theme === 'dark' ? 'text-[rgb(var(--dark-text-tertiary))]' : 'text-[rgb(var(--light-text-tertiary))]'
             )}
           >
-            {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',','')}
+            {new Date().toLocaleDateString(language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(',','')}
           </span>
         </div>
 
         <div className='flex items-center gap-x-1'>
           <span
             className={cn(
-              'text-sm truncate max-w-[100%] w-full hidden mobile:flex',
+              'hidden w-full max-w-full truncate text-sm mobile:flex',
               theme === 'dark' ? 'text-[rgb(var(--dark-text-secondary))]' : 'text-[rgb(var(--light-text-secondary))]'
             )}
           >

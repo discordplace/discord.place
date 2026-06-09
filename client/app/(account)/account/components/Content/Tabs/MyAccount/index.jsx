@@ -28,10 +28,10 @@ export default function MyAccount() {
   const [plansLoading, setPlansLoading] = useState(true);
 
   const { openModal, disableButton, enableButton, closeModal, updateModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal,
+    openModal: state.openModal,
     updateModal: state.updateModal
   })));
 
@@ -45,25 +45,25 @@ export default function MyAccount() {
   }, []);
 
   const { slug, preferredHost } = useGeneralStore(useShallow(state => ({
-    slug: state.createProfileModal.slug,
-    preferredHost: state.createProfileModal.preferredHost
+    preferredHost: state.createProfileModal.preferredHost,
+    slug: state.createProfileModal.slug
   })));
 
   function continueCreateProfile(slug, preferredHost) {
     disableButton('create-profile', 'create');
 
     toast.promise(createProfile(slug, preferredHost), {
+      error: error => {
+        enableButton('create-profile', 'create');
+
+        return error;
+      },
       loading: t('accountPage.tabs.myAccount.toast.creatingProfile'),
       success: () => {
         closeModal('create-profile');
         router.push(`/profile/${slug}`);
 
         return t('accountPage.tabs.myAccount.toast.profileCreated');
-      },
-      error: error => {
-        enableButton('create-profile', 'create');
-
-        return error;
       }
     });
   }
@@ -72,21 +72,21 @@ export default function MyAccount() {
     updateModal('create-profile', {
       buttons: [
         {
+          actionType: 'close',
           id: 'cancel',
           label: t('buttons.cancel'),
-          variant: 'ghost',
-          actionType: 'close'
+          variant: 'ghost'
         },
         {
-          id: 'create',
-          label: t('buttons.create'),
-          variant: 'solid',
           action: () => {
             const newSlug = useGeneralStore.getState().createProfileModal.slug;
             const newPreferredHost = useGeneralStore.getState().createProfileModal.preferredHost;
 
             continueCreateProfile(newSlug, newPreferredHost);
-          }
+          },
+          id: 'create',
+          label: t('buttons.create'),
+          variant: 'solid'
         }
       ]
     });
@@ -137,17 +137,17 @@ export default function MyAccount() {
             size={96}
             width={80}
             height={80}
-            className='relative bottom-10 left-4 z-[1] -mb-20 rounded-full border-8 border-[rgba(var(--bg-secondary))]'
+            className='relative bottom-10 left-4 z-1 -mb-20 rounded-full border-8 border-[rgba(var(--bg-secondary))]'
           />
 
-          <div className='ml-28 mt-2'>
+          <div className='mt-2 ml-28'>
             <div className='flex flex-col'>
               <h3 className='text-lg font-bold text-primary'>{user?.global_name || user?.username}</h3>
               <p className='text-sm font-medium text-tertiary'>@{user?.username}</p>
             </div>
           </div>
 
-          <div className='mx-auto mb-1.5 mt-4 flex h-max w-[98%] flex-col gap-y-4 rounded-2xl bg-tertiary p-4'>
+          <div className='mx-auto mt-4 mb-1.5 flex h-max w-[98%] flex-col gap-y-4 rounded-2xl bg-tertiary p-4'>
             <div className='flex flex-col'>
               <h3 className='text-sm font-bold text-primary'>
                 {t('accountPage.tabs.myAccount.sections.connectedAccount.fields.displayName')}
@@ -186,8 +186,8 @@ export default function MyAccount() {
                   {t('accountPage.tabs.myAccount.sections.premium.subtitle')}
                 </p>
 
-                <div className='flex select-none flex-wrap items-center gap-2'>
-                  <span className='bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-sm font-semibold text-transparent'>
+                <div className='flex flex-wrap items-center gap-2 select-none'>
+                  <span className='bg-linear-to-r from-purple-400 to-purple-600 bg-clip-text text-sm font-semibold text-transparent'>
                     {plansLoading ? (
                       <>
                         <TbLoader className='animate-spin' />
@@ -197,19 +197,19 @@ export default function MyAccount() {
                       currentPlan ? (
                         t(`accountPage.tabs.myAccount.sections.premium.plans.${currentPlan?.name}`)
                       ) : (
-                        t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }) })
+                        t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }) })
                       )
                     )}
                   </span>
 
                   <p className='text-xs text-tertiary'>
-                    {new Date(user.premium.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
+                    {new Date(user.premium.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
                   </p>
                 </div>
               </>
             ) : (
               <div className='relative max-w-[500px] rounded-xl border-2 border-purple-500 p-2.5'>
-                <div className='absolute left-0 top-0 size-full rounded-xl bg-gradient-to-r from-purple-500/25 via-purple-500/10'></div>
+                <div className='absolute top-0 left-0 size-full rounded-xl bg-linear-to-r from-purple-500/25 via-purple-500/10'></div>
 
                 <div className='flex items-center gap-x-4'>
                   <GoHeartFill className='min-h-[20px] min-w-[20px]' />
@@ -225,12 +225,12 @@ export default function MyAccount() {
                         currentPlan ? (
                           t(`accountPage.tabs.myAccount.sections.premium.plans.${currentPlan?.name}`)
                         ) : (
-                          t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }) })
+                          t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }) })
                         )
                       )}
 
                       <span className='text-xs text-tertiary'>
-                        {new Date(user.premium.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
+                        {new Date(user.premium.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
                       </span>
                     </h2>
 
@@ -268,26 +268,26 @@ export default function MyAccount() {
                 {t('accountPage.tabs.myAccount.sections.yourProfile.noProfile')}
 
                 <button
-                  className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white outline-none hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
+                  className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white outline-hidden hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                   onClick={() =>
                     openModal('create-profile', {
-                      title: t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.title'),
-                      description: t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.description'),
-                      content: <CreateProfile />,
                       buttons: [
                         {
+                          actionType: 'close',
                           id: 'cancel',
                           label: t('buttons.cancel'),
-                          variant: 'ghost',
-                          actionType: 'close'
+                          variant: 'ghost'
                         },
                         {
+                          action: continueCreateProfile,
                           id: 'create',
                           label: t('buttons.create'),
-                          variant: 'solid',
-                          action: continueCreateProfile
+                          variant: 'solid'
                         }
-                      ]
+                      ],
+                      content: <CreateProfile />,
+                      description: t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.description'),
+                      title: t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.title')
                     })
                   }
                 >

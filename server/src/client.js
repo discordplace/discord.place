@@ -316,7 +316,7 @@ module.exports = class Client {
                 updatedDailyStats: {
                   $concatArrays: [
                     {
-                      $ifNull: ['$dailyStats', []] // If dailyLikes doesn't exist, use an empty array
+                      $ifNull: ['$dailyStats', []]
                     },
                     [
                       {
@@ -329,7 +329,7 @@ module.exports = class Client {
                 }
               },
               in: {
-                $slice: ['$$updatedDailyStats', -7] // Keep only the last 7 elements
+                $slice: ['$$updatedDailyStats', -7]
               }
             }
           }

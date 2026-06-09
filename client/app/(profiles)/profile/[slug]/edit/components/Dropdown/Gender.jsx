@@ -8,20 +8,20 @@ import { t } from '@/stores/language';
 export default function GenderDropdown({ profile, currentlyEditingValue, setCurrentlyEditingValue }) {
   return (
     <DropdownMenu.Root modal={false}>
-      <DropdownMenu.Trigger asChild>
-        <button className='flex max-w-[200px] rounded-lg bg-tertiary px-2 py-1 text-tertiary outline-none hover:bg-quaternary hover:text-primary'>
+      <DropdownMenu.Trigger asChild={true}>
+        <button className='flex max-w-[200px] rounded-lg bg-tertiary px-2 py-1 text-tertiary outline-hidden hover:bg-quaternary hover:text-primary'>
           {currentlyEditingValue || 'Unknown'}
         </button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className='relative top-2 z-10 flex min-w-[200px] flex-col gap-y-0.5 rounded-2xl border border-primary bg-secondary p-1.5 outline-none'>
+        <DropdownMenu.Content className='relative top-2 z-10 flex min-w-[200px] flex-col gap-y-0.5 rounded-2xl border border-primary bg-secondary p-1.5 outline-hidden'>
           <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
 
           <DropdownMenu.Item
             className={cn(
-              'flex items-center justify-between p-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2',
-              (currentlyEditingValue === 'Male' || profile.gender === 'Male') ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
+              'flex cursor-pointer items-center justify-between gap-x-2 rounded-xl p-2 font-medium outline-hidden',
+              (currentlyEditingValue === 'Male' || profile.gender === 'Male') ? 'pointer-events-none bg-tertiary text-primary' : 'text-tertiary data-highlighted:bg-tertiary data-highlighted:text-primary'
             )}
             onSelect={() => setCurrentlyEditingValue('Male')}
           >
@@ -31,8 +31,8 @@ export default function GenderDropdown({ profile, currentlyEditingValue, setCurr
 
           <DropdownMenu.Item
             className={cn(
-              'flex items-center justify-between p-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2',
-              (currentlyEditingValue === 'Female' || profile.gender === 'Female') ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
+              'flex cursor-pointer items-center justify-between gap-x-2 rounded-xl p-2 font-medium outline-hidden',
+              (currentlyEditingValue === 'Female' || profile.gender === 'Female') ? 'pointer-events-none bg-tertiary text-primary' : 'text-tertiary data-highlighted:bg-tertiary data-highlighted:text-primary'
             )}
             onSelect={() => setCurrentlyEditingValue('Female')}
           >
@@ -42,8 +42,8 @@ export default function GenderDropdown({ profile, currentlyEditingValue, setCurr
 
           <DropdownMenu.Item
             className={cn(
-              'flex items-center justify-between p-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2',
-              (currentlyEditingValue === 'Unknown' || !profile.gender) ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
+              'flex cursor-pointer items-center justify-between gap-x-2 rounded-xl p-2 font-medium outline-hidden',
+              (currentlyEditingValue === 'Unknown' || !profile.gender) ? 'pointer-events-none bg-tertiary text-primary' : 'text-tertiary data-highlighted:bg-tertiary data-highlighted:text-primary'
             )}
             onSelect={() => setCurrentlyEditingValue('Unknown')}
           >

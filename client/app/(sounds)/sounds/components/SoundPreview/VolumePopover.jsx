@@ -17,7 +17,7 @@ export default function VolumePopover() {
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className='relative z-10 flex min-w-[200px] flex-col gap-y-1 rounded-2xl border border-primary bg-secondary/80 p-4 outline-none backdrop-blur'
+          className='relative z-10 flex min-w-[200px] flex-col gap-y-1 rounded-2xl border border-primary bg-secondary/80 p-4 outline-hidden backdrop-blur-sm'
           side='bottom'
           sideOffset={20}
         >
@@ -45,7 +45,7 @@ export default function VolumePopover() {
               min='0'
               max='1'
               step='0.01'
-              className='h-2.5 w-full cursor-pointer appearance-none rounded-lg bg-quaternary accent-black outline-none dark:accent-white'
+              className='h-2.5 w-full cursor-pointer appearance-none rounded-lg bg-quaternary accent-black outline-hidden dark:accent-white'
             />
 
             <span className='flex min-w-[32px] justify-end text-xs font-medium text-tertiary'>

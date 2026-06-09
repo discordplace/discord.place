@@ -5,35 +5,38 @@ import Markdown from '@/app/components/Markdown';
 import BackButton from '@/app/(blogs)/blogs/[id]/components/BackButton';
 import Header from '@/app/(blogs)/blogs/[id]/components/Header';
 import { redirect } from 'next/navigation';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
-  if (!fs.existsSync(`${process.cwd()}/blogs/${params.id}.md`)) return;
+  const { id } = await params;
 
-  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf-8');
+  if (!fs.existsSync(`${process.cwd()}/blogs/${id}.md`)) return;
+
+  const source = fs.readFileSync(`${process.cwd()}/blogs/${id}.md`, 'utf8');
   const { data } = matter(source);
 
-  return {
-    title: data.name,
+  return createMetadata({
     description: data.description,
     keywords: ['blog', 'post', ...data.tags],
     openGraph: {
-      title: `Discord Place - ${data.name}`,
-      description: data.description,
       images: [
         {
-          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'blog', metadata: data }))}`,
-          width: 1200,
-          height: 630
+          height: 630,
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata: data, type: 'blog' }))}`,
+          width: 1200
         }
       ]
-    }
-  };
+    },
+    title: data.name
+  });
 }
 
 export default async function Page({ params }) {
-  if (!fs.existsSync(`${process.cwd()}/blogs/${params.id}.md`)) return redirect('/error?code=90001');
+  const { id } = await params;
 
-  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf-8');
+  if (!fs.existsSync(`${process.cwd()}/blogs/${id}.md`)) return redirect('/error?code=90001');
+
+  const source = fs.readFileSync(`${process.cwd()}/blogs/${id}.md`, 'utf8');
   const { data, content } = matter(source);
 
   return (

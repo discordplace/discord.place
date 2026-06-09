@@ -3,42 +3,43 @@
 import { BsEmojiAngry } from 'react-icons/bs';
 import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
 import useSearchStore from '@/stores/profiles/search';
-import ErrorState from '@/app/components/ErrorState';import { useShallow } from 'zustand/react/shallow';
+import ErrorState from '@/app/components/ErrorState';
+import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence, motion } from 'framer-motion';
 import Pagination from '@/app/components/Pagination';
 
 export default function Profiles() {
   const { search, setSearch, profiles, fetchProfiles, loading, page, setPage, limit, count } = useSearchStore(useShallow(state => ({
-    search: state.search,
-    setSearch: state.setSearch,
-    profiles: state.profiles,
+    count: state.count,
     fetchProfiles: state.fetchProfiles,
+    limit: state.limit,
     loading: state.loading,
     page: state.page,
+    profiles: state.profiles,
+    search: state.search,
     setPage: state.setPage,
-    limit: state.limit,
-    count: state.count
+    setSearch: state.setSearch
   })));
 
   const showPagination = !loading && count > limit;
 
   const stateVariants = {
+    exit: {
+      opacity: 0
+    },
     hidden: {
       opacity: 0
     },
     visible: {
       opacity: 1
-    },
-    exit: {
-      opacity: 0
     }
   };
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   return (
@@ -64,7 +65,7 @@ export default function Profiles() {
                   It{'\''}s quiet in here...
                 </div>
               }
-              message={'There are no profiles to display. Maybe that\'s a sign to create one?'}
+              message="There are no profiles to display. Maybe that's a sign to create one?"
             />
 
             <button className='text-tertiary hover:text-primary hover:underline' onClick={() => {
@@ -84,7 +85,7 @@ export default function Profiles() {
             animate={{ opacity: 1 }}
           >
             {loading ? (
-              new Array(limit).fill(0).map((_, index) => (
+              Array.from({ length: limit }).fill(0).map((_, index) => (
                 <div key={index} className='h-[461px] w-[300px] animate-pulse rounded-3xl bg-secondary' />
               ))
             ) : (

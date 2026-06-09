@@ -15,7 +15,7 @@ export default function Servers({ profile }) {
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.7 }}
+        transition={{ damping: 10, delay: 0.7, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {t('profilePage.servers.title')}
       </motion.h2>
@@ -23,7 +23,7 @@ export default function Servers({ profile }) {
       <motion.p className='mt-2 whitespace-pre-wrap text-tertiary'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.715 }}
+        transition={{ damping: 10, delay: 0.715, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {t('profilePage.servers.subtitle')}
       </motion.p>
@@ -32,17 +32,17 @@ export default function Servers({ profile }) {
         className='mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.785 }}
+        transition={{ damping: 10, delay: 0.785, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {profile.servers.map((server, index) => (
           <ReportableArea
             key={server.id}
             active={user?.id !== server.owner.id}
             metadata={{
-              id: server.id,
-              name: server.name,
+              description: server.description,
               icon: server.icon,
-              description: server.description
+              id: server.id,
+              name: server.name
             }}
             identifier={`server-${server.id}`}
           >
@@ -51,22 +51,22 @@ export default function Servers({ profile }) {
               key={server.id}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.79 + (index * 0.1) }}
+              transition={{ damping: 10, delay: 0.79 + (index * 0.1), duration: 0.3, stiffness: 100, type: 'spring' }}
             >
               <ServerCard
                 server={{
-                  premium: profile.premium,
+                  banner: server.banner,
+                  category: server.category,
                   data: {
                     members: server.total_members,
                     votes: server.votes
                   },
-                  joined_at: server.joined_at,
-                  id: server.id,
-                  banner: server.banner,
-                  icon: server.icon,
-                  name: server.name,
                   description: server.description,
-                  category: server.category
+                  icon: server.icon,
+                  id: server.id,
+                  joined_at: server.joined_at,
+                  name: server.name,
+                  premium: profile.premium
                 }}
                 overridedSort='Votes'
               />

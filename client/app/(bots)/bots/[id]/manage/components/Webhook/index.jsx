@@ -59,6 +59,11 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
       );
 
       toast.promise(functionToCall(botId, webhookURL || null, webhookToken || null, webhookLanguage || null), {
+        error: error => {
+          setSavingChanges(false);
+
+          return error;
+        },
         loading: t('botManagePage.webhook.toast.saving'),
         success: () => {
           revalidateBot(botId);
@@ -71,11 +76,6 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
           setDefaultWebhookLanguage(webhookLanguage || null);
 
           return t('botManagePage.webhook.toast.saved');
-        },
-        error: error => {
-          setSavingChanges(false);
-
-          return error;
         }
       });
     } catch {
@@ -135,8 +135,8 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
 
       if (errorMessage === 'Failed to send a test webhook to the bot.') {
         toast.error(<TestWebhookFailedToastContent />, {
-          id: testWebhookToastId.current,
-          duration: 25000
+          duration: 25_000,
+          id: testWebhookToastId.current
         });
 
         revalidateTimeoutRef.current = setTimeout(() => {
@@ -144,10 +144,10 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
           revalidateBot(botId);
 
           toast.success(t('botManagePage.webhook.toast.webhookTestedAndFailed'), {
-            id: testWebhookToastId.current,
-            duration: 5000
+            duration: 5000,
+            id: testWebhookToastId.current
           });
-        }, 20000);
+        }, 20_000);
       } else {
         toast.error(errorMessage, {
           id: testWebhookToastId.current
@@ -158,9 +158,9 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
     }
   }
 
-  useEffect(() => {
-    return () => clearTimeout(revalidateTimeoutRef.current);
-  }, []);
+  useEffect(() =>
+    () => clearTimeout(revalidateTimeoutRef.current)
+  , []);
 
   return (
     <div className='flex w-full flex-col gap-y-4'>
@@ -182,7 +182,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
 
         <div className='mt-4 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
           <button
-            className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-black/30 px-4 py-1.5 font-semibold text-white hover:bg-black/40 disabled:pointer-events-none disabled:opacity-70 dark:bg-white/30 dark:hover:bg-white/40 sm:w-max'
+            className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-black/30 px-4 py-1.5 font-semibold text-white hover:bg-black/40 disabled:pointer-events-none disabled:opacity-70 sm:w-max dark:bg-white/30 dark:hover:bg-white/40'
             disabled={!changesMade || savingChanges}
             onClick={saveChanges}
           >
@@ -300,14 +300,14 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
                       <button
                         key={`record-${record.created_at}`}
                         className={cn(
-                          'flex gap-x-2 select-none items-center bg-secondary py-2 px-4 rounded-lg',
-                          selectedRecord === record ? 'bg-quaternary cursor-default' : 'hover:bg-tertiary'
+                          'flex items-center gap-x-2 rounded-lg bg-secondary px-4 py-2 select-none',
+                          selectedRecord === record ? 'cursor-default bg-quaternary' : 'hover:bg-tertiary'
                         )}
                         onClick={() => setSelectedRecord(record)}
                       >
                         <span
                           className={cn(
-                            'flex font-semibold text-xs',
+                            'flex text-xs font-semibold',
                             isRecordSuccess ? 'text-green-600' : 'text-red-500'
                           )}
                           onClick={() => setSelectedRecord(record)}
@@ -324,7 +324,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
                         </span>
 
                         <span className='ml-auto flex text-xs text-tertiary'>
-                          {new Date(record.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                          {new Date(record.created_at).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'short', year: 'numeric' })}
                         </span>
                       </button>
                     );

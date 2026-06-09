@@ -2,37 +2,9 @@ import { create } from 'zustand';
 
 const useModalsStore = create((set, get) => ({
   activeModalId: null,
-  openedModals: [],
-  openModal: (modalId, modalData) => {
-    const openedModals = get().openedModals;
-
-    set({
-      activeModalId: modalId,
-      openedModals: [...openedModals, { id: modalId, data: modalData }]
-    });
-  },
-  updateModal: (modalId, newModalData) => {
-    const openedModals = get().openedModals;
-
-    set({
-      openedModals: openedModals.map(modal => {
-        if (modal.id === modalId) {
-          return {
-            ...modal,
-            data: {
-              ...modal.data,
-              ...newModalData
-            }
-          };
-        }
-
-        return modal;
-      })
-    });
-  },
   closeModal: modalId => {
-    const openedModals = get().openedModals;
-    const activeModalId = get().activeModalId;
+    const { openedModals } = get();
+    const { activeModalId } = get();
     const modal = openedModals.find(modal => modal.id === modalId);
 
     if (modalId === activeModalId && openedModals.length > 1) {
@@ -45,7 +17,7 @@ const useModalsStore = create((set, get) => ({
     set({ openedModals: openedModals.filter(({ id }) => id !== modalId) });
   },
   disableButton: (modalId, buttonId) => {
-    const openedModals = get().openedModals;
+    const { openedModals } = get();
 
     set({
       openedModals: openedModals.map(modal => {
@@ -68,7 +40,7 @@ const useModalsStore = create((set, get) => ({
     });
   },
   enableButton: (modalId, buttonId) => {
-    const openedModals = get().openedModals;
+    const { openedModals } = get();
 
     set({
       openedModals: openedModals.map(modal => {
@@ -82,6 +54,34 @@ const useModalsStore = create((set, get) => ({
 
                 return button;
               })
+            }
+          };
+        }
+
+        return modal;
+      })
+    });
+  },
+  openedModals: [],
+  openModal: (modalId, modalData) => {
+    const { openedModals } = get();
+
+    set({
+      activeModalId: modalId,
+      openedModals: [...openedModals, { data: modalData, id: modalId }]
+    });
+  },
+  updateModal: (modalId, newModalData) => {
+    const { openedModals } = get();
+
+    set({
+      openedModals: openedModals.map(modal => {
+        if (modal.id === modalId) {
+          return {
+            ...modal,
+            data: {
+              ...modal.data,
+              ...newModalData
             }
           };
         }

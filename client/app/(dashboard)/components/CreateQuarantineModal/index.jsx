@@ -14,26 +14,26 @@ import useDashboardStore from '@/stores/dashboard';
 
 export default function CreateQuarantineModal() {
   const { step, setStep, type, setType, value, setValue, restriction, setRestriction, reason, setReason, time, setTime } = useGeneralStore(useShallow(state => ({
-    step: state.createQuarantineModal.step,
-    setStep: state.createQuarantineModal.setStep,
-    type: state.createQuarantineModal.type,
-    setType: state.createQuarantineModal.setType,
-    value: state.createQuarantineModal.value,
-    setValue: state.createQuarantineModal.setValue,
-    restriction: state.createQuarantineModal.restriction,
-    setRestriction: state.createQuarantineModal.setRestriction,
     reason: state.createQuarantineModal.reason,
+    restriction: state.createQuarantineModal.restriction,
     setReason: state.createQuarantineModal.setReason,
+    setRestriction: state.createQuarantineModal.setRestriction,
+    setStep: state.createQuarantineModal.setStep,
+    setTime: state.createQuarantineModal.setTime,
+    setType: state.createQuarantineModal.setType,
+    setValue: state.createQuarantineModal.setValue,
+    step: state.createQuarantineModal.step,
     time: state.createQuarantineModal.time,
-    setTime: state.createQuarantineModal.setTime
+    type: state.createQuarantineModal.type,
+    value: state.createQuarantineModal.value
   })));
 
   const fetchData = useDashboardStore(state => state.fetchData);
 
   const { disableButton, enableButton, closeModal, updateModal } = useModalsStore(useShallow(state => ({
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal,
     updateModal: state.updateModal
   })));
 
@@ -45,7 +45,12 @@ export default function CreateQuarantineModal() {
     try {
       disableButton('create-quarantine-record', 'confirm');
 
-      toast.promise(createQuarantine({ type, value, restriction, reason, time }), {
+      toast.promise(createQuarantine({ reason, restriction, time, type, value }), {
+        error: error => {
+          enableButton('create-quarantine-record', 'confirm');
+
+          return error;
+        },
         loading: 'Creating quarantine...',
         success: () => {
           closeModal('create-quarantine-record');
@@ -59,11 +64,6 @@ export default function CreateQuarantineModal() {
           setTime('');
 
           return 'Created quarantine successfully.';
-        },
-        error: error => {
-          enableButton('create-quarantine-record', 'confirm');
-
-          return error;
         }
       });
     } catch (error) {
@@ -76,16 +76,16 @@ export default function CreateQuarantineModal() {
       updateModal('create-quarantine-record', {
         buttons: [
           {
+            action: () => setStep(0),
             id: 'previous',
             label: 'Previous',
-            variant: 'ghost',
-            action: () => setStep(0)
+            variant: 'ghost'
           },
           {
+            action: () => continueCreateQuarantine(type, value, restriction, reason, time),
             id: 'confirm',
             label: 'Confirm',
-            variant: 'solid',
-            action: () => continueCreateQuarantine(type, value, restriction, reason, time)
+            variant: 'solid'
           }
         ]
       });
@@ -95,22 +95,22 @@ export default function CreateQuarantineModal() {
       updateModal('create-quarantine-record', {
         buttons: [
           {
+            actionType: 'close',
             id: 'cancel',
             label: 'Cancel',
-            variant: 'ghost',
-            actionType: 'close'
+            variant: 'ghost'
           },
           {
-            id: 'next',
-            label: 'Next',
-            variant: 'solid',
             action: () => {
               if (!type) return toast.error('You must select a quarantine type.');
               if (!value) return toast.error('You must enter a value.');
               if (!restriction) return toast.error('You must select a restriction.');
 
               setStep(1);
-            }
+            },
+            id: 'next',
+            label: 'Next',
+            variant: 'solid'
           }
         ]
       });
@@ -128,7 +128,7 @@ export default function CreateQuarantineModal() {
             <div className='mt-4 flex w-full gap-4'>
               <div
                 className={cn(
-                  'relative flex flex-1 transition-all select-none font-bold text-lg gap-x-2 items-center justify-center w-full h-[80px] rounded-xl cursor-pointer bg-secondary hover:bg-background',
+                  'relative flex h-[80px] w-full flex-1 cursor-pointer items-center justify-center gap-x-2 rounded-xl bg-secondary text-lg font-bold transition-all select-none hover:bg-background',
                   type === 'USER_ID' && 'pointer-events-none'
                 )}
                 onClick={() => setType('USER_ID')}
@@ -137,7 +137,7 @@ export default function CreateQuarantineModal() {
                 User ID
 
                 {type === 'USER_ID' && (
-                  <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl'>
+                  <div className='absolute top-0 left-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl'>
                     <IoMdCheckmarkCircle className='text-primary' />
                   </div>
                 )}
@@ -145,7 +145,7 @@ export default function CreateQuarantineModal() {
 
               <div
                 className={cn(
-                  'relative flex flex-1 transition-all select-none font-bold text-lg gap-x-2 items-center justify-center w-full h-[80px] rounded-xl cursor-pointer bg-secondary hover:bg-background',
+                  'relative flex h-[80px] w-full flex-1 cursor-pointer items-center justify-center gap-x-2 rounded-xl bg-secondary text-lg font-bold transition-all select-none hover:bg-background',
                   type === 'GUILD_ID' && 'pointer-events-none'
                 )}
                 onClick={() => setType('GUILD_ID')}
@@ -154,7 +154,7 @@ export default function CreateQuarantineModal() {
                 Guild ID
 
                 {type === 'GUILD_ID' && (
-                  <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl'>
+                  <div className='absolute top-0 left-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl'>
                     <IoMdCheckmarkCircle className='text-primary' />
                   </div>
                 )}
@@ -171,7 +171,7 @@ export default function CreateQuarantineModal() {
                 <input
                   type='text'
                   placeholder={`${type === 'USER_ID' ? 'User' : 'Guild'} ID`}
-                  className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+                  className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary ring-purple-500 outline-hidden transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
                   value={value}
                   onChange={event => setValue(event.target.value)}
                 />
@@ -181,14 +181,14 @@ export default function CreateQuarantineModal() {
                 <h2 className='text-sm font-semibold text-secondary'>Restriction</h2>
                 <p className='text-xs text-tertiary'>Select the type of restriction you want to apply to the quarantine.</p>
 
-                <div className='scrollbar-hide relative mt-4 grid max-h-[20svh] grid-cols-1 gap-2 overflow-y-auto'>
+                <div className='relative mt-4 grid max-h-[20svh] scrollbar-none grid-cols-1 gap-2 overflow-y-auto'>
                   {Object.keys(config.quarantineRestrictions)
                     .filter(quarantineRestriction => !type || config.quarantineRestrictions[quarantineRestriction].available_to.includes(type))
                     .map(quarantineRestriction => (
                       <div
                         key={quarantineRestriction}
                         className={cn(
-                          'relative flex transition-all select-none font-bold text-xs gap-x-2 items-center justify-center w-full h-[80px] rounded-xl cursor-pointer bg-secondary hover:bg-background',
+                          'relative flex h-[80px] w-full cursor-pointer items-center justify-center gap-x-2 rounded-xl bg-secondary text-xs font-bold transition-all select-none hover:bg-background',
                           restriction === quarantineRestriction && 'pointer-events-none'
                         )}
                         onClick={() => setRestriction(quarantineRestriction)}
@@ -202,7 +202,7 @@ export default function CreateQuarantineModal() {
                         </div>
 
                         {restriction === quarantineRestriction && (
-                          <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl'>
+                          <div className='absolute top-0 left-0 flex size-full items-center justify-center rounded-xl bg-secondary/80 text-2xl'>
                             <IoMdCheckmarkCircle className='text-primary' />
                           </div>
                         )}
@@ -225,7 +225,7 @@ export default function CreateQuarantineModal() {
             <input
               type='text'
               placeholder='Reason'
-              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary ring-purple-500 outline-hidden transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
               value={reason}
               onChange={event => setReason(event.target.value)}
             />
@@ -238,7 +238,7 @@ export default function CreateQuarantineModal() {
             <input
               type='text'
               placeholder='Time'
-              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary ring-purple-500 outline-hidden transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
               value={time}
               onChange={event => setTime(event.target.value)}
             />

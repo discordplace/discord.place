@@ -21,7 +21,6 @@ async function isUserBotOwner(userId, botId) {
     if (error instanceof axios.AxiosError) {
       if (error.response?.status === 403 && error.response?.data?.code === 20012) return false;
       if (error.response?.status === 401) {
-        // User revoked the applications.entitlements scope from the bot
         await User.updateOne(
           { id: userId },
           { applicationsEntitlementsScopeGranted: false }

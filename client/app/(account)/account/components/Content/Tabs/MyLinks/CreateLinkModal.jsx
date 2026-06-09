@@ -6,10 +6,10 @@ import { t } from '@/stores/language';
 
 export default function CreateLinkModal() {
   const { name, setName, destinationURL, setDestinationURL } = useGeneralStore(useShallow(state => ({
-    name: state.createLinkModal.name,
-    setName: state.createLinkModal.setName,
     destinationURL: state.createLinkModal.destinationURL,
-    setDestinationURL: state.createLinkModal.setDestinationURL
+    name: state.createLinkModal.name,
+    setDestinationURL: state.createLinkModal.setDestinationURL,
+    setName: state.createLinkModal.setName
   })));
 
   return (
@@ -26,7 +26,7 @@ export default function CreateLinkModal() {
         <input
           type='text'
           placeholder={t('accountPage.tabs.myLinks.createLinkModal.inputs.name.placeholder')}
-          className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+          className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary ring-purple-500 outline-hidden transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
           value={name}
           onChange={event => setName(event.target.value)}
         />
@@ -44,7 +44,7 @@ export default function CreateLinkModal() {
         <input
           type='text'
           placeholder={t('accountPage.tabs.myLinks.createLinkModal.inputs.destinationUrl.placeholder')}
-          className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+          className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary ring-purple-500 outline-hidden transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
           value={destinationURL}
           onChange={event => setDestinationURL(event.target.value)}
         />

@@ -17,16 +17,21 @@ export default function ApiKey({ botId, apiKey }) {
   const [apiKeyDeleting, setApiKeyDeleting] = useState(false);
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   async function createNewApiKey(isNew) {
     setApiKeyCreating(true);
 
     toast.promise(createApiKey(botId, isNew), {
+      error: error => {
+        setApiKeyCreating(false);
+
+        return error;
+      },
       loading: t('botManagePage.apiKey.toast.creatingApiKey'),
       success: apiKey => {
         setCurrentApiKey(apiKey);
@@ -39,11 +44,6 @@ export default function ApiKey({ botId, apiKey }) {
         }
 
         return t('botManagePage.apiKey.toast.createdApiKey');
-      },
-      error: error => {
-        setApiKeyCreating(false);
-
-        return error;
       }
     });
   }
@@ -53,6 +53,12 @@ export default function ApiKey({ botId, apiKey }) {
     disableButton('delete-api-key', 'confirm');
 
     toast.promise(deleteApiKey(botId), {
+      error: error => {
+        setApiKeyDeleting(false);
+        enableButton('delete-api-key', 'confirm');
+
+        return error;
+      },
       loading: t('botManagePage.apiKey.toast.deletingApiKey'),
       success: () => {
         closeModal('delete-api-key');
@@ -60,12 +66,6 @@ export default function ApiKey({ botId, apiKey }) {
         setApiKeyDeleting(false);
 
         return t('botManagePage.apiKey.toast.apiKeyDeleted');
-      },
-      error: error => {
-        setApiKeyDeleting(false);
-        enableButton('delete-api-key', 'confirm');
-
-        return error;
       }
     });
   }
@@ -88,7 +88,7 @@ export default function ApiKey({ botId, apiKey }) {
       {!currentApiKey ? (
         <>
           <button
-            className='flex w-max items-center gap-x-1 rounded-xl border border-purple-600 bg-gradient-to-r from-purple-600 via-purple-600 to-purple-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70'
+            className='flex w-max items-center gap-x-1 rounded-xl border border-purple-600 bg-linear-to-r from-purple-600 via-purple-600 to-purple-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70'
             onClick={() => createNewApiKey(true)}
             disabled={apiKeyCreating}
           >
@@ -100,30 +100,30 @@ export default function ApiKey({ botId, apiKey }) {
           <div className='flex flex-col gap-y-2'>
             <div className='flex flex-col items-center gap-2 sm:flex-row'>
               <button
-                className='flex w-full items-center gap-x-1 rounded-xl border border-red-600 bg-gradient-to-r from-red-600 via-red-600 to-red-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70 sm:w-max'
+                className='flex w-full items-center gap-x-1 rounded-xl border border-red-600 bg-linear-to-r from-red-600 via-red-600 to-red-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70 sm:w-max'
                 onClick={() => {
                   openModal('delete-api-key', {
-                    title: t('botManagePage.apiKey.deleteApiKeyModal.title'),
-                    description: t('botManagePage.apiKey.deleteApiKeyModal.description'),
+                    buttons: [
+                      {
+                        actionType: 'close',
+                        id: 'cancel',
+                        label: t('buttons.cancel'),
+                        variant: 'ghost'
+                      },
+                      {
+                        action: continueDeleteApiKey,
+                        id: 'confirm',
+                        label: t('buttons.confirm'),
+                        variant: 'solid'
+                      }
+                    ],
                     content: (
                       <p className='text-sm text-tertiary'>
                         {t('botManagePage.apiKey.deleteApiKeyModal.note')}
                       </p>
                     ),
-                    buttons: [
-                      {
-                        id: 'cancel',
-                        label: t('buttons.cancel'),
-                        variant: 'ghost',
-                        actionType: 'close'
-                      },
-                      {
-                        id: 'confirm',
-                        label: t('buttons.confirm'),
-                        variant: 'solid',
-                        action: continueDeleteApiKey
-                      }
-                    ]
+                    description: t('botManagePage.apiKey.deleteApiKeyModal.description'),
+                    title: t('botManagePage.apiKey.deleteApiKeyModal.title')
                   });
                 }}
                 disabled={apiKeyDeleting}
@@ -132,7 +132,7 @@ export default function ApiKey({ botId, apiKey }) {
               </button>
 
               <CopyButton
-                className='flex w-full items-center gap-x-2 rounded-xl border border-primary bg-quaternary bg-gradient-to-r px-4 py-1.5 text-sm font-semibold outline-none hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max'
+                className='flex w-full items-center gap-x-2 rounded-xl border border-primary bg-quaternary bg-linear-to-r px-4 py-1.5 text-sm font-semibold outline-hidden hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max'
                 successText={t('botManagePage.apiKey.toast.apiKeyCopied')}
                 copyText={currentApiKey}
               >
@@ -143,7 +143,7 @@ export default function ApiKey({ botId, apiKey }) {
                 href={config.docsUrl}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='flex h-max w-full items-center gap-x-1.5 rounded-lg bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 sm:w-max'
+                className='flex h-max w-full items-center gap-x-1.5 rounded-lg bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 sm:w-max dark:bg-white dark:text-black dark:hover:bg-white/70'
               >
                 {t('buttons.apiDocumentation')}
                 <HiExternalLink className='ml-auto' />

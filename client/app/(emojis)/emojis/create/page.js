@@ -65,16 +65,16 @@ export default function Page() {
     emoji.files.map(file => formData.append('file', file));
 
     toast.promise(createEmoji(formData), {
-      loading: t('createEmojiPage.toast.publishingEmojis', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 }),
-      success: emojiId => {
-        router.push(`/emojis/${isPackage ? 'packages/' : ''}${emojiId}`);
-
-        return t('createEmojiPage.toast.emojisPublished', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 });
-      },
       error: error => {
         setLoading(false);
 
         return error;
+      },
+      loading: t('createEmojiPage.toast.publishingEmojis', { count: isPackage ? emoji.files.length : 1, postProcess: 'interval' }),
+      success: emojiId => {
+        router.push(`/emojis/${isPackage ? 'packages/' : ''}${emojiId}`);
+
+        return t('createEmojiPage.toast.emojisPublished', { count: isPackage ? emoji.files.length : 1, postProcess: 'interval' });
       }
     });
   }
@@ -84,7 +84,7 @@ export default function Page() {
       <div className='relative z-0 flex w-full justify-center px-6 lg:px-0'>
         <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
-        <div className='mb-16 mt-48 flex w-full max-w-[600px] flex-col gap-y-2'>
+        <div className='mt-48 mb-16 flex w-full max-w-[600px] flex-col gap-y-2'>
           <h1 className='text-4xl font-bold text-primary'>
             {t('createEmojiPage.title')}
           </h1>
@@ -97,12 +97,12 @@ export default function Page() {
             <div className='flex justify-between gap-x-4 border-b border-y-primary pb-4'>
               {steps.map((step, index) => (
                 <div className='flex flex-col items-center gap-x-2' key={step}>
-                  <div className='text-xs uppercase text-tertiary'>
+                  <div className='text-xs text-tertiary uppercase'>
                     {t('step', { currentStep: index + 1 })}
                   </div>
 
                   <h2 className={cn(
-                    'text-sm mobile:text-base transition-colors font-medium text-secondary flex items-center',
+                    'flex items-center text-sm font-medium text-secondary transition-colors mobile:text-base',
                     activeStep === index && 'text-primary'
                   )}>
                     {step}
@@ -129,8 +129,8 @@ export default function Page() {
                     <button
                       key={nanoid()}
                       className={cn(
-                        'w-[100px] h-[100px] rounded-2xl font-semibold flex gap-x-1 items-center justify-center',
-                        selectedCategories.includes(category) ? 'text-primary bg-tertiary hover:bg-quaternary' : 'bg-secondary hover:bg-tertiary',
+                        'flex size-[100px] items-center justify-center gap-x-1 rounded-2xl font-semibold',
+                        selectedCategories.includes(category) ? 'bg-tertiary text-primary hover:bg-quaternary' : 'bg-secondary hover:bg-tertiary',
                         selectedCategories.length >= config.emojiMaxCategoriesLength && !selectedCategories.includes(category) && 'pointer-events-none opacity-70',
                         emoji.file && emoji.file.type === 'image/gif' && category === 'Animated' && 'pointer-events-none opacity-70'
                       )}
@@ -157,7 +157,7 @@ export default function Page() {
 
               <input
                 id='emojiName'
-                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-hidden placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={emoji.name}
                 onChange={event => setEmoji({ ...emoji, name: event.target.value })}
@@ -180,14 +180,14 @@ export default function Page() {
                 className='hidden'
                 type='file'
                 accept='.png,.gif'
-                multiple
+                multiple={true}
                 max={9}
                 onChange={event => {
-                  const files = event.target.files;
+                  const { files } = event.target;
                   if (files.length <= 0) return;
                   if (files.length > config.packagesMaxEmojisLength) return toast.error(t('createEmojiPage.toast.maxEmojisReached', { maxLength: config.packagesMaxEmojisLength }));
 
-                  if ([...files].some(file => file.size > 256000)) return toast.error(t('createEmojiPage.toast.fileSizeExceeded', { size: 256 }));
+                  if ([...files].some(file => file.size > 256_000)) return toast.error(t('createEmojiPage.toast.fileSizeExceeded', { size: 256 }));
                   if ([...files].some(file => file.type === 'image/gif' && !selectedCategories.includes('Animated'))) return toast.error(t('createEmojiPage.toast.animatedCategoryNotSelected'));
 
                   setEmoji({ ...emoji, files: [...files] });
@@ -258,8 +258,8 @@ export default function Page() {
               else setActiveStep(activeStep + 1);
             }} disabled={
               activeStep === 0 ? (selectedCategories.length <= 0 || !emoji.name) :
-                activeStep === 1 ? emoji.files?.length <= 0 :
-                  (loading === true || false)
+                (activeStep === 1 ? emoji.files?.length <= 0 :
+                  (loading === true || false))
             }>
               {activeStep === steps.length - 1 ? t('buttons.publish') : t('buttons.next')}
             </button>

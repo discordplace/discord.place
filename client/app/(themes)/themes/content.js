@@ -13,25 +13,25 @@ import { useEffect } from 'react';
 import { t } from '@/stores/language';
 import Themes from '@/app/(themes)/themes/components/Themes';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Content() {
   const { search, setPage, category, setCategory, sort, setSort, loading, fetchThemes } = useSearchStore(useShallow(state => ({
-    search: state.search,
-    setPage: state.setPage,
     category: state.category,
-    setCategory: state.setCategory,
-    sort: state.sort,
-    setSort: state.setSort,
+    fetchThemes: state.fetchThemes,
     loading: state.loading,
-    fetchThemes: state.fetchThemes
+    search: state.search,
+    setCategory: state.setCategory,
+    setPage: state.setPage,
+    setSort: state.setSort,
+    sort: state.sort
   })));
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function Content() {
       <div className='flex w-full max-w-[700px] flex-col'>
         <motion.h1
           className={cn(
-            'text-5xl font-medium max-w-[700px] text-center text-primary',
+            'max-w-[700px] text-center text-5xl font-medium text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
@@ -105,23 +105,21 @@ export default function Content() {
             <Select
               placeholder={t('themesPage.sortSelect.placeholder')}
               options={[
-                ...[
-                  {
-                    label: t('themesPage.sortSelect.items.newest'),
-                    value: 'Newest'
-                  },
-                  {
-                    label: t('themesPage.sortSelect.items.oldest'),
-                    value: 'Oldest'
-                  }
-                ].map(option => ({
-                  label: <div className='flex items-center gap-x-2'>
-                    {config.sortIcons[option.value.replace(' ', '')]}
-                    {option.label}
-                  </div>,
-                  value: option.value
-                }))
-              ]}
+                {
+                  label: t('themesPage.sortSelect.items.newest'),
+                  value: 'Newest'
+                },
+                {
+                  label: t('themesPage.sortSelect.items.oldest'),
+                  value: 'Oldest'
+                }
+              ].map(option => ({
+                label: <div className='flex items-center gap-x-2'>
+                  {config.sortIcons[option.value.replace(' ', '')]}
+                  {option.label}
+                </div>,
+                value: option.value
+              }))}
               value={sort}
               onChange={setSort}
               disabled={loading}

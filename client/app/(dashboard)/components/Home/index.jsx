@@ -17,15 +17,15 @@ export default function Home() {
     const isIncreased = value > previous;
     const isDecreased = value < previous;
     const diffInPercent = ((value - previous) / previous) * 100;
-    const diffInPercentClean = diffInPercent === Infinity ? 100 : isNaN(diffInPercent) ? 0 : diffInPercent;
+    const diffInPercentClean = diffInPercent === Infinity ? 100 : (isNaN(diffInPercent) ? 0 : diffInPercent);
 
     return (
-      <div className='group flex items-center gap-x-4 2xl:[&:not(:first-child)]:ml-4'>
-        <div className='hidden h-full w-px bg-[rgba(var(--border-primary))] 2xl:group-[&:not(:first-child)]:block' />
+      <div className='group flex items-center gap-x-4 2xl:not-first:ml-4'>
+        <div className='hidden h-full w-px bg-[rgba(var(--border-primary))] 2xl:group-not-first:block' />
 
         <div
           className={cn(
-            'relative flex rounded-3xl justify-center border 2xl:border-0 flex-col gap-y-2 w-full p-4 min-h-[100px] border-primary',
+            'relative flex min-h-[100px] w-full flex-col justify-center gap-y-2 rounded-3xl border border-primary p-4 2xl:border-0',
             activeStatBlock === label ? 'bg-secondary' : 'cursor-pointer hover:bg-secondary'
           )}
           onClick={() => setActiveStatBlock(label)}
@@ -57,8 +57,8 @@ export default function Home() {
     );
   }
 
-  const currentDay = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric' });
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toLocaleString('en-US', { month: 'short', day: 'numeric' });
+  const currentDay = new Date().toLocaleString('en-US', { day: 'numeric', month: 'short' });
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toLocaleString('en-US', { day: 'numeric', month: 'short' });
 
   return (
     <div className='my-8 flex flex-col gap-y-4'>
@@ -113,8 +113,8 @@ export default function Home() {
             id='dashboard-servers'
             data={data.servers || []}
             tooltipFormatter={value => `${value} Servers`}
-            tooltipLabel={'Servers'}
-            color={'rgb(168, 85, 247)'}
+            tooltipLabel="Servers"
+            color="rgb(168, 85, 247)"
             height={400}
           />
         )}
@@ -124,8 +124,8 @@ export default function Home() {
             id='dashboard-guilds'
             data={data.guilds || []}
             tooltipFormatter={value => `${value} Guilds`}
-            tooltipLabel={'Guilds'}
-            color={'rgb(168, 85, 247)'}
+            tooltipLabel="Guilds"
+            color="rgb(168, 85, 247)"
             height={400}
           />
         )}
@@ -135,8 +135,8 @@ export default function Home() {
             id='dashboard-users'
             data={data.users || []}
             tooltipFormatter={value => `${value} Users`}
-            tooltipLabel={'Users'}
-            color={'rgb(168, 85, 247)'}
+            tooltipLabel="Users"
+            color="rgb(168, 85, 247)"
             height={400}
           />
         )}
@@ -146,8 +146,8 @@ export default function Home() {
             id='dashboard-bots'
             data={data.bots || []}
             tooltipFormatter={value => `${value} Bots`}
-            tooltipLabel={'Bots'}
-            color={'rgb(168, 85, 247)'}
+            tooltipLabel="Bots"
+            color="rgb(168, 85, 247)"
             height={400}
           />
         )}

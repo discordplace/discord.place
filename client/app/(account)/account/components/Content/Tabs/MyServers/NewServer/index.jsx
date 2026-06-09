@@ -55,13 +55,17 @@ export default function NewServer() {
 
     setLoading(true);
 
-    toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords }), {
+    toast.promise(createServer(currentlyAddingServer.id, { category: serverCategory, description: serverDescription, invite_link: serverInviteLink, keywords: serverKeywords }), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.myServers.sections.newServer.toast.addingServer', { serverName: currentlyAddingServer.name }),
       success: () => {
         setTimeout(() => {
           router.push(`/servers/${currentlyAddingServer.id}`);
 
-          // Reset states
           setCurrentlyAddingServer(null);
           setServerDescription('');
           setServerInviteLink('');
@@ -71,11 +75,6 @@ export default function NewServer() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.myServers.sections.newServer.toast.serverAdded', { serverName: currentlyAddingServer.name });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -101,7 +100,7 @@ export default function NewServer() {
 
   return (
     <>
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%' />
       </div>
 
@@ -119,7 +118,6 @@ export default function NewServer() {
 
           <h1 className='flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl'>
             {t('accountPage.tabs.myServers.sections.newServer.title', {
-              serverName: <span className='truncate'>{currentlyAddingServer.name}</span>,
               serverIcon: (
                 currentlyAddingServer.icon ? (
                   <ServerIcon
@@ -139,7 +137,8 @@ export default function NewServer() {
                     className='rounded-lg'
                   />
                 )
-              )
+              ),
+              serverName: <span className='truncate'>{currentlyAddingServer.name}</span>
             })}
           </h1>
         </div>
@@ -153,8 +152,8 @@ export default function NewServer() {
         <div className='mt-8 flex w-full flex-col gap-y-1'>
           <div
             className={cn(
-              'flex-col w-full p-6 mb-8 border-2 h-max rounded-xl',
-              allRequirementsIsMet ? 'border-green-500' : 'dark:border-neutral-500 border-neutral-400'
+              'mb-8 h-max w-full flex-col rounded-xl border-2 p-6',
+              allRequirementsIsMet ? 'border-green-500' : 'border-neutral-400 dark:border-neutral-500'
             )}
           >
             <div className='flex w-full items-start justify-between'>
@@ -181,7 +180,7 @@ export default function NewServer() {
 
                 <div
                   className={cn(
-                    'w-full h-1 rounded-lg',
+                    'h-1 w-full rounded-lg',
                     allRequirementsIsMet ? 'bg-green-600' : 'bg-neutral-600/30'
                   )}
                 >
@@ -255,7 +254,7 @@ export default function NewServer() {
           <div
             className={cn(
               'flex flex-col gap-y-1',
-              !allRequirementsIsMet && 'opacity-50 pointer-events-none select-none filter grayscale'
+              !allRequirementsIsMet && 'pointer-events-none fixed opacity-50 grayscale select-none'
             )}
           >
             <h2 className='text-lg font-semibold'>
@@ -266,21 +265,11 @@ export default function NewServer() {
               {t('accountPage.tabs.myServers.sections.newServer.fields.description.description', { br: <br /> })}
             </p>
 
-            <span
-              contentEditable
-              suppressContentEditableWarning
-              className='mt-4 block h-[150px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
-              onKeyUp={event => {
-                if (event.target.innerText.length > config.serverDescriptionMaxCharacters) {
-                  event.target.innerText = event.target.innerText.slice(0, config.serverDescriptionMaxCharacters);
-                  event.preventDefault();
-                  event.stopPropagation();
-
-                  return toast.error(`Description can be maximum ${config.serverDescriptionMaxCharacters} characters long.`);
-                }
-
-                setServerDescription(event.target.textContent);
-              }}
+            <textarea
+              className='mt-4 block h-[150px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary'
+              maxLength={config.serverDescriptionMaxCharacters}
+              value={serverDescription}
+              onChange={event => setServerDescription(event.target.value)}
             />
 
             <h2 className='mt-8 text-lg font-semibold'>
@@ -292,7 +281,7 @@ export default function NewServer() {
             </p>
 
             <input
-              className='mt-4 block w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary'
               placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.placeholder')}
               autoComplete='off'
               spellCheck='false'
@@ -347,7 +336,7 @@ export default function NewServer() {
 
                 <div className='relative'>
                   <input
-                    className='mt-4 block h-[40px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary px-2 text-sm text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-70'
+                    className='mt-4 block h-[40px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary px-2 text-sm text-placeholder outline-hidden placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-70'
                     autoComplete='off'
                     spellCheck='false'
                     value={keywordsInputValue}
@@ -421,7 +410,6 @@ export default function NewServer() {
                 {loading && <TbLoader className='animate-spin' />}
 
                 {t('accountPage.tabs.myServers.sections.newServer.fields.areYouReady.addButton', {
-                  serverName: currentlyAddingServer.name,
                   serverIcon: (
                     currentlyAddingServer.icon ? (
                       <ServerIcon
@@ -430,7 +418,7 @@ export default function NewServer() {
                         size={32}
                         width={16}
                         height={16}
-                        className='rounded'
+                        className='rounded-sm'
                       />
                     ) : (
                       <Image
@@ -438,10 +426,11 @@ export default function NewServer() {
                         alt='Server Icon'
                         width={16}
                         height={16}
-                        className='rounded'
+                        className='rounded-sm'
                       />
                     )
-                  )
+                  ),
+                  serverName: currentlyAddingServer.name
                 })}
               </button>
 

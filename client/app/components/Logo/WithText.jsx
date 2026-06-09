@@ -6,7 +6,7 @@ import { useThemeStore } from '@/stores/theme';
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function WithText({ className }) {
   const theme = useThemeStore(state => state.theme);
@@ -14,7 +14,7 @@ export default function WithText({ className }) {
   return (
     <Link
       className={cn(
-        'flex items-center select-none gap-x-6 w-max',
+        'flex w-max items-center gap-x-6 select-none',
         className
       )}
       href='/'
@@ -25,6 +25,7 @@ export default function WithText({ className }) {
         height={64}
         alt='discord.place Logo'
         className='size-[32px]'
+        priority={true}
       />
 
       <div

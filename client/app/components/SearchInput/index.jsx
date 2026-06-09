@@ -1,7 +1,8 @@
 import { FiX } from 'react-icons/fi';
 import { IoSearch } from 'react-icons/io5';
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';import cn from '@/lib/cn';
+import { toast } from 'sonner';
+import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
 import { t } from '@/stores/language';
 
@@ -26,14 +27,14 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
   }
 
   useEffect(() => {
-    setValue(search);
+    setValue(search || '');
   }, [search]);
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   return (
@@ -45,7 +46,7 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
     >
       <button
         className={cn(
-          '[transition-duration:_250ms] peer transition-all cursor-pointer text-lg absolute p-1.5 rounded-md hover:bg-quaternary right-3 text-tertiary hover:text-primary',
+          'peer absolute right-3 cursor-pointer rounded-md p-1.5 text-lg text-tertiary transition-all [transition-duration:250ms] hover:bg-quaternary hover:text-primary',
           (value || (value !== undefined && value !== '')) && 'right-[2.7rem]'
         )}
         onClick={() => {
@@ -61,8 +62,8 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
 
       <button
         className={cn(
-          'absolute right-2 transition-all peer [transition-duration:_250ms] p-1.5 rounded-md hover:bg-quaternary text-lg text-tertiary hover:text-primary',
-          (value || (value !== undefined && value !== '')) ? 'right-2' : '-right-[30px] opacity-0'
+          'peer absolute right-2 rounded-md p-1.5 text-lg text-tertiary transition-all [transition-duration:250ms] hover:bg-quaternary hover:text-primary',
+          (value || (value !== undefined && value !== '')) ? 'right-2' : 'right-[-30px] opacity-0'
         )}
         onClick={() => {
           setValue('');
@@ -76,7 +77,7 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
       <input
         placeholder={placeholder}
         className={cn(
-          'caret-[rgba(var(--text-secondary))] [transition-duration:_250ms] flex w-full py-3 pl-4 pr-12 transition-all border-2 rounded-lg outline-none disalbed:pointer-events-none bg-secondary peer-hover:bg-secondary border-primary hover:bg-tertiary placeholder-placeholder text-secondary focus-visible:bg-tertiary focus-visible:border-purple-500 active:bg-quaternary',
+          'flex w-full rounded-lg border-2 border-primary bg-secondary py-3 pr-12 pl-4 text-secondary caret-[rgba(var(--text-secondary))] outline-hidden transition-all [transition-duration:250ms] peer-hover:bg-secondary placeholder:text-placeholder hover:bg-tertiary focus-visible:border-purple-500 focus-visible:bg-tertiary active:bg-quaternary disabled:pointer-events-none',
           (value || (value !== undefined && value !== '')) && 'pr-[4.7rem]'
         )}
         onChange={event => setValue(event.target.value)}

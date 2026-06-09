@@ -5,10 +5,13 @@ import { FiArrowUpRight } from 'react-icons/fi';
 import { ImTrophy } from 'react-icons/im';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
-import { motion } from 'framer-motion';import config from '@/config';
-import useLanguageStore, { t } from '@/stores/language';const formatter = new Intl.NumberFormat('en-US', {
-  notation: 'compact',
-  compactDisplay: 'short'
+import { motion } from 'framer-motion';
+import config from '@/config';
+import useLanguageStore, { t } from '@/stores/language';
+
+const formatter = new Intl.NumberFormat('en-US', {
+  compactDisplay: 'short',
+  notation: 'compact'
 });
 
 export default function About({ server }) {
@@ -16,39 +19,39 @@ export default function About({ server }) {
 
   const keys = [
     {
+      icon: config.serverCategoriesIcons[server.category],
       key: 'category',
       label: t('serverPage.about.labels.category'),
-      icon: config.serverCategoriesIcons[server.category],
       value: t(`categories.${server.category}`)
     },
     {
+      icon: <FaUsers />,
       key: 'members',
       label: t('serverPage.about.labels.members'),
-      icon: <FaUsers />,
       value: formatter.format(server.total_members)
     },
     {
+      icon: <ImTrophy />,
       key: 'rewards',
       label: t('serverPage.about.labels.rewards'),
-      icon: <ImTrophy />,
       value: server.rewards.length > 0 ? t('serverPage.about.availableVoteRewards', { count: server.rewards.length }) : t('serverPage.about.noVoteRewards')
     },
     {
+      icon: <TiStar />,
       key: 'boosts',
       label: t('serverPage.about.labels.boosts'),
-      icon: <TiStar />,
-      value: t('serverPage.about.boostsLabelValue', { level: server.boost_level, count: server.total_boosts })
+      value: t('serverPage.about.boostsLabelValue', { count: server.total_boosts, level: server.boost_level })
     },
     {
+      icon: <FiArrowUpRight />,
       key: 'joined_at',
       label: t('serverPage.about.labels.joinedAt'),
-      icon: <FiArrowUpRight />,
-      value: new Date(server.joined_at).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      value: new Date(server.joined_at).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })
     },
     {
+      icon: <TbSquareRoundedChevronUp />,
       key: 'votes',
       label: t('serverPage.about.labels.votes'),
-      icon: <TbSquareRoundedChevronUp />,
       value: formatter.format(server.votes)
     }
   ];
@@ -59,15 +62,15 @@ export default function About({ server }) {
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+        transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {t('serverPage.about.title')}
       </motion.h2>
 
-      <motion.p className='mt-2 whitespace-pre-wrap text-tertiary'
+      <motion.p className='mt-2 wrap-break-word whitespace-pre-wrap text-tertiary'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.15 }}
+        transition={{ damping: 10, delay: 0.15, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {server.description}
       </motion.p>
@@ -76,7 +79,7 @@ export default function About({ server }) {
         className='mt-8 grid h-max grid-cols-1 gap-8 rounded-xl bg-secondary p-4 py-8 sm:grid-cols-2'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.3 }}
+        transition={{ damping: 10, delay: 0.3, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {keys.map(({ key, label, icon, value }, index) => (
           <motion.div
@@ -84,7 +87,7 @@ export default function About({ server }) {
             className='flex h-max items-center gap-x-4'
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.20 + (.05 * index) }}
+            transition={{ damping: 10, delay: 0.2 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
           >
             <div className='rounded-full bg-tertiary p-3 text-secondary'>
               {icon}

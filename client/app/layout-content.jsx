@@ -5,8 +5,8 @@ import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import ThemeProvider from '@/app/components/Providers/Theme';
 import ProgressBarProvider from '@/app/components/Providers/ProgressBar';
-import ErrorBoundary from '@/app/components/Providers/Boundary/Error';
 import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
+import OpenReplayProvider from '@/app/components/Providers/OpenReplay';
 import Script from 'next/script';
 import CookieBanner from '@/app/components/CookieBanner';
 import { Suspense, useEffect } from 'react';
@@ -52,26 +52,30 @@ export default function RootLayoutContent({ children }) {
             data-mask-level='moderate'
             data-max-duration='300000'
           />
+
+          <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
+          <Script id='google-analytics'>
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+            
+              gtag('config', 'G-WEX8LKYTTD');
+            `}
+          </Script>
         </>
       )}
 
-      <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
-      <Script id='google-analytics'>
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-WEX8LKYTTD');
-        `}
-      </Script>
+      <link rel='manifest' href='/manifest.webmanifest' />
 
       <ProgressBarProvider>
         <Toaster
           toastOptions={{
-            className: '!bg-secondary !shadow-lg !border !border-primary !text-primary'
+            className: 'bg-secondary! shadow-lg! border! border-primary! text-primary!'
           }}
         />
+
+        <OpenReplayProvider />
 
         <ThemeProvider>
           <VaulWrapperProvider>
@@ -84,9 +88,7 @@ export default function RootLayoutContent({ children }) {
                 <Header />
               </Suspense>
 
-              <ErrorBoundary>
-                {children}
-              </ErrorBoundary>
+              {children}
 
               <Suspense fallback={<></>}>
                 <Footer />

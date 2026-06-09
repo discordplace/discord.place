@@ -22,65 +22,65 @@ import Tooltip from '@/app/components/Tooltip';
   const category = useSearchStore(state => state.category);
 
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    notation: 'compact'
+    notation: 'compact',
+    style: 'decimal'
   });
 
   const infos = [
     {
-      icon: IoHeart,
-      value: null,
       condition: data.owner.premium === true && !isMobile,
-      transform: () => 'Premium'
+      icon: IoHeart,
+      transform: () => 'Premium',
+      value: null
     },
     {
+      condition: sort === 'Votes',
       icon: TbSquareRoundedChevronUp,
-      value: data.votes,
-      condition: sort === 'Votes'
+      value: data.votes
     },
     {
-      icon: MdUpdate,
-      value: data.latest_voted_at,
       condition: sort === 'LatestVoted',
-      transform: date => date ? getRelativeTime(date, language) : t('botCard.neverVoted')
+      icon: MdUpdate,
+      transform: date => (date ? getRelativeTime(date, language) : t('botCard.neverVoted')),
+      value: data.latest_voted_at
     },
     {
-      icon: FaCompass,
-      value: data.servers,
       condition: sort === 'Servers',
+      icon: FaCompass,
       transform: value => {
         const serversFormatter = new Intl.NumberFormat('en-US', {
-          style: 'decimal',
+          maximumFractionDigits: 2,
           notation: 'compact',
-          maximumFractionDigits: 2
+          style: 'decimal'
         });
 
         return serversFormatter.format(value);
-      }
+      },
+      value: data.servers
     },
     {
-      icon: TiStar,
-      value: data.reviews,
       condition: sort === 'Most Reviewed',
-      transform: value => `${formatter.format(value)} Time Reviewed`
+      icon: TiStar,
+      transform: value => `${formatter.format(value)} Time Reviewed`,
+      value: data.reviews
     },
     {
-      icon: HiSortAscending,
-      value: data.created_at,
       condition: sort === 'Newest',
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      icon: HiSortAscending,
+      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
+      value: data.created_at
     },
     {
-      icon: HiSortDescending,
-      value: data.created_at,
       condition: sort === 'Oldest',
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      icon: HiSortDescending,
+      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
+      value: data.created_at
     }
   ];
 
   return (
     <Link
-      className='group relative z-[1] flex h-[250px] w-full cursor-pointer overflow-hidden rounded-3xl p-0.5'
+      className='group relative z-1 flex h-[250px] w-full cursor-pointer overflow-hidden rounded-3xl p-0.5'
       href={`/bots/${data.id}`}
     >
       {data.standed_out?.created_at ? (
@@ -96,22 +96,22 @@ import Tooltip from '@/app/components/Tooltip';
           <UserBanner
             id={data.id}
             hash={data.banner}
-            className='absolute left-0 top-0 z-[1] h-[calc(100%_-_1px)] w-full rounded-[1.25rem] bg-quaternary'
+            className='absolute top-0 left-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary'
             size={512}
             width={350}
             height={200}
           />
         ) : (
-          <div className='absolute left-0 top-0 z-[1] h-[calc(100%_-_1px)] w-full rounded-[1.25rem] bg-quaternary' />
+          <div className='absolute top-0 left-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary' />
         )}
-        <div className='relative top-[30px] z-[2] h-[calc(100%_-_30px)] w-full rounded-b-[1.25rem] rounded-t-3xl bg-secondary transition-colors group-hover:bg-tertiary'>
+        <div className='relative top-[30px] z-2 h-[calc(100%-30px)] w-full rounded-t-3xl rounded-b-[1.25rem] bg-secondary transition-colors group-hover:bg-tertiary'>
           <UserAvatar
             id={data.id}
             hash={data.avatar}
             size={64}
             width={64}
             height={64}
-            className='absolute left-4 top-[-25px] rounded-3xl border-4 border-[rgba(var(--bg-secondary))] bg-secondary transition-colors group-hover:border-[rgba(var(--bg-tertiary))] group-hover:bg-tertiary'
+            className='absolute top-[-25px] left-4 rounded-3xl border-4 border-[rgba(var(--bg-secondary))] bg-secondary transition-colors group-hover:border-[rgba(var(--bg-tertiary))] group-hover:bg-tertiary'
           />
 
           <div className='flex flex-col px-4 pt-12'>
@@ -128,8 +128,8 @@ import Tooltip from '@/app/components/Tooltip';
               className='mt-1 min-h-[40px] overflow-hidden text-sm text-tertiary'
               style={{
                 display: '-webkit-box',
-                WebkitLineClamp: '2',
-                WebkitBoxOrient: 'vertical'
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: '2'
               }}
             >
               {data.short_description || t('botCard.noDescription')}
@@ -154,7 +154,7 @@ import Tooltip from '@/app/components/Tooltip';
                 <Tooltip
                   content={t('botCard.mostVotedBadge.tooltip')}
                 >
-                  <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
+                  <div className='relative z-1 overflow-hidden rounded-full p-[0.1rem]'>
                     <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#3b82f6_10deg,transparent_90deg)]'></div>
 
                     <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md transition-all hover:bg-blue-500/50'>
@@ -168,7 +168,7 @@ import Tooltip from '@/app/components/Tooltip';
                 </Tooltip>
               ) : (
                 data.vote_triple_enabled?.created_at && (
-                  <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
+                  <div className='relative z-1 overflow-hidden rounded-full p-[0.1rem]'>
                     <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)]'></div>
 
                     <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-orange-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md'>

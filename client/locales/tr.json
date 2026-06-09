@@ -55,12 +55,28 @@
     "services": "Servislerimiz",
     "blog": "Blog",
     "premium": "Premium",
-    "logout": "Çıkış Yap"
+    "continueWithDiscord": "Giriş Yap",
+    "myAccount": "Hesabım"
   },
   "footer": {
-    "title": "Discord ile alakalı her şey, bir arada.",
-    "subtitle": "Bu site Discord Inc. ile ilişkili değildir. Tüm ticari markalar ilgili sahiplerine aittir.",
-    "copyRight": "{{year}} discord.place. Tüm hakları saklıdır.",
+    "description": "Discord ile alakalı her şey, bir arada.",
+    "disclaimer": "Bu site Discord Inc. ile ilişkili değildir.",
+    "pages": {
+      "title": "Sayfalar",
+      "home": "Anasayfa",
+      "apiDocumentation": "API Dokümantasyonu",
+      "premium": "Premium",
+      "blogs": "Blog"
+    },
+    "legal": {
+      "title": "Yasal Dökümanlar",
+      "privacy": "Gizlilik Sözleşmesi",
+      "terms": "Kullanım Şartları",
+      "cookie": "Çerez Politikası",
+      "content": "İçerik Politikası",
+      "purchase": "Satış Sözleşmesi"
+    },
+    "copyRight": "© {{year}} discord.place. Tüm hakları saklıdır.",
     "theme": {
       "light": "Aydınlık",
       "dark": "Karanlık"
@@ -70,44 +86,13 @@
       "tr": "Türkçe",
       "az": "Azerbaycanca"
     },
-    "blocks": [
-      {
-        "title": "Sayfalar",
-        "links": [
-          "Anasayfa",
-          "API Dokümantasyonu",
-          "Servis Durumu",
-          "Premium",
-          "Blog"
-        ]
-      },
-      {
-        "title": "Servislerimiz",
-        "links": [
-          "Profiller",
-          "Sunucular",
-          "Botlar",
-          "Emojiler",
-          "Şablonlar",
-          "Sesler",
-          "Temalar"
-        ]
-      },
-      {
-        "title": "Yasal Dökümanlar",
-        "links": [
-          "Gizlilik Sözleşmesi",
-          "Kullanım Şartları",
-          "Çerez Politikası",
-          "İçerik Politikası",
-          "Satış Sözleşmesi"
-        ]
-      },
-      {
-        "title": "Sosyal Medya"
-      }
-    ],
-    "newBadge": "Yeni"
+    "statusBadge": {
+      "up": "Tüm sistemler çalışıyor",
+      "degraded": "Dalgalı performans",
+      "down": "Büyük kesinti",
+      "maintenance": "Bakımda",
+      "unknown": "Bilinmiyor"
+    }
   },
   "premiumPage": {
     "title": "Premium Üyelik",
@@ -190,6 +175,12 @@
         }
       ]
     }
+  },
+  "notFoundPage": {
+    "title": "Boşlukta kayboldun, değil mi?",
+    "description": "Aradığınız yer mevcut değil. Ya da belki var, ama boşluğun bir yerinde gizli. Her iki durumda da, burada değil.",
+    "redirectText": "{{count}} saniye içinde ana sayfaya yönlendirileceksiniz.",
+    "redirectTextPlural": "{{count}} saniye içinde ana sayfaya yönlendirileceksiniz."
   },
   "errorPage": {
     "badge": "Hata",
@@ -286,7 +277,8 @@
     "dontTrust": "Güvenme",
     "testWebhook": "Webhook'u Test Et",
     "continue": "Devam Et",
-    "dontShowAgain": "Tekrar Gösterme"
+    "dontShowAgain": "Tekrar Gösterme",
+    "goHome": "Ana Sayfa"
   },
   "voteCountdown": {
     "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",

@@ -4,7 +4,6 @@ import axios from 'axios';
 import Endpoints from '@/lib/request/endpoints';
 
 export default function fetchPresences(userIds) {
-  // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const baseURL = Endpoints.FetchPresences;
     const url = new URL(baseURL);

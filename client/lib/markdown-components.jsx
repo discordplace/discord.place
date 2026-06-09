@@ -18,7 +18,6 @@ import Image from 'next/image';
 import Tooltip from '@/app/components/Tooltip';
 
 function DiscordEmoji({ children }) {
-  // Regular expressions to match both static and animated emoji formats
   const staticEmojiRegex = /<:([^:]+):(\d+)>/;
   const animatedEmojiRegex = /<a:([^:]+):(\d+)>/;
 
@@ -59,8 +58,6 @@ function DiscordEmoji({ children }) {
     );
   }
 
-  // Handle Twemoji
-  // Split text into emoji and non-emoji parts
   const parts = children.split(emojiRegex);
   if (parts.length === 1) return children;
 
@@ -96,7 +93,7 @@ function processContent(content, index) {
 }
 
 function withEmojiSupport(Component) {
-  return ({ children, node, ...props }) => {
+  return ({ children, _node, ...props }) => {
     if (!children) return <Component {...props} />;
 
     const content = Array.isArray(children) ? children.map((child, index) => processContent(child, index)) : processContent(children, 0);
@@ -147,10 +144,10 @@ function toCodePoint(emoji) {
   for (let i = 0; i < emoji.length; i++) {
     const code = emoji.charCodeAt(i);
 
-    if (code >= 0xD800 && code <= 0xDBFF) {
+    if (code >= 0xD8_00 && code <= 0xDB_FF) {
       const next = emoji.charCodeAt(i + 1);
-      if (next >= 0xDC00 && next <= 0xDFFF) {
-        const comp = ((code - 0xD800) * 0x400) + (next - 0xDC00) + 0x10000;
+      if (next >= 0xDC_00 && next <= 0xDF_FF) {
+        const comp = ((code - 0xD8_00) * 0x4_00) + (next - 0xDC_00) + 0x1_00_00;
         pairs.push(comp.toString(16));
         i++;
       }
@@ -160,42 +157,10 @@ function toCodePoint(emoji) {
   return pairs.join('-');
 }
 
-// Regular expression for matching emoji characters
 const emojiRegex = /(\p{Emoji_Presentation}|\p{Extended_Pictographic})/gu;
 const singleEmojiRegex = /^(\p{Emoji_Presentation}|\p{Extended_Pictographic})$/u;
 
 const markdownComponents = {
-  iframe: ({ src, title }) => {
-    try {
-      new URL(src);
-
-      return <CustomIFrame src={src} title={title} />;
-    } catch {
-      return null;
-    }
-  },
-  img: ({ src, alt, width, height }) => {
-    return (
-      <Zoom>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
-          alt={alt}
-          width={width || '100%'}
-          height={height || 'auto'}
-          className='my-4 rounded-xl'
-        />
-      </Zoom>
-    );
-  },
-  p: withEmojiSupport('p'),
-  h1: withEmojiSupport('h1'),
-  h2: withEmojiSupport('h2'),
-  h3: withEmojiSupport('h3'),
-  h4: withEmojiSupport('h4'),
-  h5: withEmojiSupport('h5'),
-  h6: withEmojiSupport('h6'),
-  li: withEmojiSupport('li'),
   a: ({ children, href, node }) => {
     if (isImageOnlyLinkNode(node) || isImageOnlyLinkChildren(children)) {
       return <>{children}</>;
@@ -213,11 +178,7 @@ const markdownComponents = {
       </Link>
     );
   },
-  strong: withEmojiSupport('strong'),
-  em: withEmojiSupport('em'),
   blockquote: withEmojiSupport('blockquote'),
-  td: withEmojiSupport('td'),
-  th: withEmojiSupport('th'),
   code: ({ children, className }) => {
     const languageMatch = /language-(\w+)/.exec(className || '');
     const language = languageMatch?.[1]?.toLowerCase();
@@ -226,38 +187,46 @@ const markdownComponents = {
     let FileIcon = <FaFileCode />;
 
     switch (language) {
-      case 'js':
+      case 'js': {
         fileName = 'index.js';
         FileIcon = <IoLogoJavascript />;
         break;
-      case 'python':
+      }
+      case 'python': {
         fileName = 'script.py';
         FileIcon = <IoLogoPython />;
         break;
-      case 'json':
+      }
+      case 'json': {
         fileName = 'data.json';
         FileIcon = <BiCodeCurly />;
         break;
-      case 'curl':
+      }
+      case 'curl': {
         fileName = 'request.sh';
         FileIcon = <BiCodeCurly />;
         break;
-      case 'html':
+      }
+      case 'html': {
         fileName = 'index.html';
         FileIcon = <FaFileCode />;
         break;
-      case 'xml':
+      }
+      case 'xml': {
         fileName = 'data.xml';
         FileIcon = <TbFileTypeXml />;
         break;
-      case 'http':
+      }
+      case 'http': {
         fileName = 'request.http';
         FileIcon = <MdHttps />;
         break;
-      case 'php':
+      }
+      case 'php': {
         fileName = 'index.php';
         FileIcon = <SiPhp />;
         break;
+      }
     }
 
     return languageMatch ? (
@@ -272,13 +241,47 @@ const markdownComponents = {
       <code
         className={cn(
           className,
-          'px-1.5 py-1 text-sm bg-quaternary text-primary rounded-lg before:content-[""] after:content-[""]'
+          'rounded-lg bg-quaternary px-1.5 py-1 text-sm text-primary before:content-[""] after:content-[""]'
         )}
       >
         {children}
       </code>
     );
-  }
+  },
+  em: withEmojiSupport('em'),
+  h1: withEmojiSupport('h1'),
+  h2: withEmojiSupport('h2'),
+  h3: withEmojiSupport('h3'),
+  h4: withEmojiSupport('h4'),
+  h5: withEmojiSupport('h5'),
+  h6: withEmojiSupport('h6'),
+  iframe: ({ src, title }) => {
+    try {
+      new URL(src);
+
+      return <CustomIFrame src={src} title={title} />;
+    } catch {
+      return null;
+    }
+  },
+  img: ({ src, alt, width, height }) =>
+    (
+      <Zoom>
+        <img
+          src={src}
+          alt={alt}
+          width={width || '100%'}
+          height={height || 'auto'}
+          className='my-4 rounded-xl'
+        />
+      </Zoom>
+    )
+  ,
+  li: withEmojiSupport('li'),
+  p: withEmojiSupport('p'),
+  strong: withEmojiSupport('strong'),
+  td: withEmojiSupport('td'),
+  th: withEmojiSupport('th')
 };
 
 export default markdownComponents;

@@ -12,25 +12,25 @@ import config from '@/config';
 import Select from '@/app/components/Select';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
   const { category, setCategory, sort, setSort, loading, search, fetchBots, setPage } = useSearchStore(useShallow(state => ({
     category: state.category,
-    setCategory: state.setCategory,
-    sort: state.sort,
-    setSort: state.setSort,
+    fetchBots: state.fetchBots,
     loading: state.loading,
     search: state.search,
-    fetchBots: state.fetchBots,
-    setPage: state.setPage
+    setCategory: state.setCategory,
+    setPage: state.setPage,
+    setSort: state.setSort,
+    sort: state.sort
   })));
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   return (
@@ -42,7 +42,7 @@ export default function Hero() {
       <div className='flex w-full max-w-[800px] flex-col items-center'>
         <motion.h1
           className={cn(
-            'text-5xl font-medium max-w-[800px] text-center text-primary',
+            'max-w-[800px] text-center text-5xl font-medium text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
@@ -94,39 +94,37 @@ export default function Hero() {
             <Select
               placeholder='Sorting'
               options={[
-                ...[
-                  {
-                    label: t('botsPage.sortSelect.items.votes'),
-                    value: 'Votes'
-                  },
-                  {
-                    label: t('botsPage.sortSelect.items.latestVoted'),
-                    value: 'LatestVoted'
-                  },
-                  {
-                    label: t('botsPage.sortSelect.items.servers'),
-                    value: 'Servers'
-                  },
-                  {
-                    label: t('botsPage.sortSelect.items.mostReviewed'),
-                    value: 'Most Reviewed'
-                  },
-                  {
-                    label: t('botsPage.sortSelect.items.newest'),
-                    value: 'Newest'
-                  },
-                  {
-                    label: t('botsPage.sortSelect.items.oldest'),
-                    value: 'Oldest'
-                  }
-                ].map(option => ({
-                  label: <div className='flex items-center gap-x-2'>
-                    {config.sortIcons[option.value.replace(' ', '')]}
-                    {option.label}
-                  </div>,
-                  value: option.value
-                }))
-              ]}
+                {
+                  label: t('botsPage.sortSelect.items.votes'),
+                  value: 'Votes'
+                },
+                {
+                  label: t('botsPage.sortSelect.items.latestVoted'),
+                  value: 'LatestVoted'
+                },
+                {
+                  label: t('botsPage.sortSelect.items.servers'),
+                  value: 'Servers'
+                },
+                {
+                  label: t('botsPage.sortSelect.items.mostReviewed'),
+                  value: 'Most Reviewed'
+                },
+                {
+                  label: t('botsPage.sortSelect.items.newest'),
+                  value: 'Newest'
+                },
+                {
+                  label: t('botsPage.sortSelect.items.oldest'),
+                  value: 'Oldest'
+                }
+              ].map(option => ({
+                label: <div className='flex items-center gap-x-2'>
+                  {config.sortIcons[option.value.replace(' ', '')]}
+                  {option.label}
+                </div>,
+                value: option.value
+              }))}
               value={sort}
               onChange={setSort}
               disabled={loading}

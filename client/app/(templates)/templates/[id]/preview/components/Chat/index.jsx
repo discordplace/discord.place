@@ -8,7 +8,7 @@ import EmojiIcon from '@/app/(templates)/templates/[id]/preview/components/Icons
 
 export default function Chat({ focusedChannel }) {
   return (
-    <div className='relative hidden h-[calc(100svh_-_49px)] w-full flex-1 flex-col gap-y-6 overflow-y-hidden bg-[#313338] pt-4 lg:flex'>
+    <div className='relative hidden h-[calc(100svh-49px)] w-full flex-1 flex-col gap-y-6 overflow-y-hidden bg-[#313338] pt-4 lg:flex'>
       <div className='flex gap-x-4 px-4'>
         <div className='size-[48px] shrink-0 rounded-full bg-[#3f4146]' />
         <div className='flex flex-col flex-wrap gap-2'>
@@ -90,7 +90,7 @@ export default function Chat({ focusedChannel }) {
         <div className='flex min-h-[44px] w-full items-center rounded-lg bg-[#383a40]'>
           <CirclePlusIcon className='ml-5 size-6 min-h-6 min-w-6 cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]' />
 
-          <span className='ml-4 mr-2 cursor-text select-none truncate text-[#6d6f78]'>
+          <span className='mr-2 ml-4 cursor-text truncate text-[#6d6f78] select-none'>
             Message #{focusedChannel.name}
           </span>
 

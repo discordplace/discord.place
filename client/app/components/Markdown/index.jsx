@@ -1,7 +1,7 @@
 'use client';
 
 import cn from '@/lib/cn';
-import MarkdownComponents from '@/lib/markdownComponents';
+import MarkdownComponents from '@/lib/markdown-components';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import raw from 'rehype-raw';
@@ -13,7 +13,8 @@ export default function Markdown({ children, className, rawEnabled }) {
   return (
     <div
       className={cn(
-        'markdown break-words prose max-w-5xl min-w-[0px] dark:prose-invert',
+        // oxlint-disable-next-line tailwindcss/no-unknown-classes
+        'markdown prose max-w-5xl min-w-0 wrap-break-word dark:prose-invert',
         /* blockquote Styles */
         'prose-blockquote:border-l-primary prose-blockquote:text-tertiary',
         /* list Styles */
@@ -25,7 +26,7 @@ export default function Markdown({ children, className, rawEnabled }) {
         /* pre Styles */
         'prose-pre:bg-[unset] prose-pre:p-0',
         /* iframe Styles */
-        '[&_:is(:where(iframe):not(:where([class~="not-prose"],[class~="not-prose"]_*)))]:w-full [&_:is(:where(iframe):not(:where([class~="not-prose"],[class~="not-prose"]_*)))]:h-[800px]',
+        '[&_:is(:where(iframe):not(:where([class~="not-prose"],[class~="not-prose"]_*)))]:h-[800px] [&_:is(:where(iframe):not(:where([class~="not-prose"],[class~="not-prose"]_*)))]:w-full',
         className
       )}
     >

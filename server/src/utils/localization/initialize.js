@@ -9,7 +9,6 @@ const translate = require('@/utils/localization/translate');
 
 async function initialize() {
   try {
-    // Get all stored server languages and add them to the cache
     const languages = await ServerLanguage.find();
     languages.forEach(language => client.languageCache.set(language.id, language.language));
 
@@ -18,10 +17,8 @@ async function initialize() {
       throw new Error('Default locale is not found in the available locales. Please set the default locale in the config file.');
     }
 
-    // Localization Setup for moment
     moment.locale(defaultLocale.code);
 
-    // i18next Setup
     await i18next
       .use(intervalPlural)
       .init({
@@ -44,9 +41,7 @@ async function initialize() {
       if (!Object.values(Discord.Locale).includes(locale.code) && locale.code !== 'en') logger.warn(`Locale ${locale.code} is not supported by Discord.`);
     }));
 
-    // Add methods to Discord.js prototypes
     extendDiscordPrototypes();
-
   } catch (error) {
     logger.error('Initialization failed:', error);
     process.exit(1);

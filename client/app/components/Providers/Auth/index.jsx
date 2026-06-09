@@ -6,6 +6,7 @@ import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
 import useLanguageStore from '@/stores/language';
 import useGeneralStore from '@/stores/general';
 import config from '@/config';
+import { tracker } from '@/lib/openreplay';
 
 export default function AuthProvider({ children }) {
   const user = useAuthStore(state => state.user);
@@ -25,20 +26,19 @@ export default function AuthProvider({ children }) {
       .finally(() => {
         const availableLanguages = config.availableLocales.map(locale => locale.code);
         const defaultLanguage = config.availableLocales.find(locale => locale.default).code;
-        const localStorageFound = 'localStorage' in window;
+        const localStorageFound = typeof globalThis.window !== 'undefined' && 'localStorage' in globalThis;
 
-        let language = localStorageFound ? window.localStorage.getItem('language') : null;
+        let language = localStorageFound ? globalThis.localStorage.getItem('language') : null;
 
         if (!language) {
           const localeHeader = navigator.language || navigator.languages[0];
           const preferredLanguage = availableLanguages.find(lang => localeHeader.startsWith(lang));
 
           language = preferredLanguage || defaultLanguage;
-
-          if (localStorageFound) window.localStorage.setItem('language', language);
+          if (localStorageFound) globalThis.localStorage.setItem('language', language);
         } else if (!availableLanguages.includes(language)) {
           language = defaultLanguage;
-          if (localStorageFound) window.localStorage.removeItem('language');
+          if (localStorageFound) globalThis.localStorage.removeItem('language');
         }
 
         setLanguage(language);
@@ -49,29 +49,42 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     if (!user || user === 'loading' || hasIdentified.current) return;
 
-    const identify = () => {
-      if (typeof window === 'undefined' || !window.umami?.identify) return false;
+    let attemptCount = 0;
+    const maxAttempts = 50;
 
-      window.umami.identify(user.username, {
-        id: user.id
-      });
+    function attemptIdentify() {
+      const umamiReady = globalThis.umami?.identify && typeof globalThis.umami.identify === 'function';
+      const trackerReady = tracker && typeof tracker.setUserID === 'function';
 
-      hasIdentified.current = true;
+      if (!umamiReady || !trackerReady) {
+        attemptCount++;
+        if (attemptCount < maxAttempts) {
+          setTimeout(attemptIdentify, 100);
 
-      return true;
+          return;
+        }
+      }
+
+      try {
+        if (umamiReady) {
+          globalThis.umami.identify(user.username, { id: user.id });
+        }
+
+        if (trackerReady) {
+          tracker.setUserID(user.id);
+          if (typeof tracker.setMetadata === 'function') {
+            tracker.setMetadata('username', user.username);
+          }
+        }
+
+        hasIdentified.current = true;
+      } catch (error) {
+        console.warn('Failed to identify user:', error);
+        hasIdentified.current = true;
+      }
     };
 
-    if (identify()) return;
-
-    let attempts = 0;
-    const maxAttempts = 10;
-    const interval = setInterval(() => {
-      attempts++;
-
-      if (identify() || attempts >= maxAttempts) clearInterval(interval);
-    }, 500);
-
-    return () => clearInterval(interval);
+    attemptIdentify();
   }, [user]);
 
   return children;

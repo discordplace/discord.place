@@ -3,7 +3,8 @@
 import { MdCheckCircle } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
 import Square from '@/app/components/Background/Square';
-import { useEffect, useState } from 'react';import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { nanoid } from 'nanoid';
 import cn from '@/lib/cn';
 import config from '@/config';
@@ -11,7 +12,8 @@ import Link from 'next/link';
 import createTemplate from '@/lib/request/templates/createTemplate';
 import fetchTemplateDetails from '@/lib/request/templates/fetchTemplateDetails';
 import { useRouter } from 'next-nprogress-bar';
-import AuthProtected from '@/app/components/Providers/Auth/Protected';import { t } from '@/stores/language';
+import AuthProtected from '@/app/components/Providers/Auth/Protected';
+import { t } from '@/stores/language';
 
 export default function Page() {
   const [templateId, setTemplateId] = useState('');
@@ -42,21 +44,21 @@ export default function Page() {
     setLoading(true);
 
     toast.promise(createTemplate({
-      id: templateId,
-      name: templateName,
+      categories: selectedCategories,
       description: templateDescription,
-      categories: selectedCategories
+      id: templateId,
+      name: templateName
     }), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('publishTemplatePage.toast.publishingTemplate'),
       success: () => {
         router.push(`/templates/${templateId}/preview`);
 
         return t('publishTemplatePage.toast.templatePublished');
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -66,7 +68,7 @@ export default function Page() {
       <div className='relative z-0 flex w-full justify-center px-6 lg:px-0'>
         <Square column='10' row='10' transparentEffectDirection='bottomToTop' blockColor='rgba(var(--bg-secondary))' />
 
-        <div className='mb-16 mt-48 flex w-full max-w-[600px] flex-col gap-y-2'>
+        <div className='mt-48 mb-16 flex w-full max-w-[600px] flex-col gap-y-2'>
           <h1 className='text-4xl font-bold text-primary'>
             {t('publishTemplatePage.title')}
           </h1>
@@ -79,12 +81,12 @@ export default function Page() {
             <div className='flex justify-between gap-x-4 border-b border-y-primary pb-4'>
               {steps.map((step, index) => (
                 <div className='flex flex-col items-center gap-x-2' key={step}>
-                  <div className='text-xs uppercase text-tertiary'>
+                  <div className='text-xs text-tertiary uppercase'>
                     {t('step', { currentStep: index + 1 })}
                   </div>
 
                   <h2 className={cn(
-                    'text-sm mobile:text-base transition-colors font-medium text-secondary flex items-center',
+                    'flex items-center text-sm font-medium text-secondary transition-colors mobile:text-base',
                     activeStep === index && 'text-primary'
                   )}>
                     {step}
@@ -106,7 +108,7 @@ export default function Page() {
 
               <input
                 id='templateId'
-                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-hidden placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={templateId}
                 onChange={event => setTemplateId(event.target.value)}
@@ -133,8 +135,8 @@ export default function Page() {
                     <button
                       key={nanoid()}
                       className={cn(
-                        'w-[100px] px-2 relative h-[100px] rounded-2xl font-semibold flex gap-x-1 items-center justify-center',
-                        selectedCategories.includes(category) ? 'text-primary bg-tertiary hover:bg-quaternary' : 'bg-secondary hover:bg-tertiary',
+                        'relative flex size-[100px] items-center justify-center gap-x-1 rounded-2xl px-2 font-semibold',
+                        selectedCategories.includes(category) ? 'bg-tertiary text-primary hover:bg-quaternary' : 'bg-secondary hover:bg-tertiary',
                         selectedCategories.length >= config.templateMaxCategoriesLength && !selectedCategories.includes(category) && 'pointer-events-none opacity-70'
                       )}
                       onClick={() => {
@@ -144,7 +146,7 @@ export default function Page() {
                     >
                       {t(`categories.${category}`)}
                       {selectedCategories.includes(category) && (
-                        <div className='absolute left-0 top-0 flex size-full items-center justify-center rounded-2xl bg-secondary/90'>
+                        <div className='absolute top-0 left-0 flex size-full items-center justify-center rounded-2xl bg-secondary/90'>
                           <MdCheckCircle className='text-primary' />
                         </div>
                       )}
@@ -164,7 +166,7 @@ export default function Page() {
 
               <input
                 id='templateName'
-                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-hidden placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={templateName}
                 onChange={event => setTemplateName(event.target.value)}
@@ -184,7 +186,7 @@ export default function Page() {
 
               <textarea
                 id='templateDescription'
-                className='scrollbar-hide h-[100px] w-full resize-none rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none ring-0 ring-purple-500 placeholder:text-placeholder hover:bg-tertiary focus:ring-2 focus-visible:bg-quaternary focus-visible:text-secondary'
+                className='h-[100px] w-full resize-none scrollbar-none rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary ring-0 ring-purple-500 outline-hidden placeholder:text-placeholder hover:bg-tertiary focus:ring-2 focus-visible:bg-quaternary focus-visible:text-secondary'
                 value={templateDescription}
                 onChange={event => setTemplateDescription(event.target.value)}
                 placeholder={t('publishTemplatePage.steps.1.inputs.templateDescription.placeholder', { min: config.templateDescriptionMinLength })}
@@ -226,7 +228,7 @@ export default function Page() {
                   <h3 className='text-sm text-tertiary'>
                     {t('publishTemplatePage.steps.2.fields.templateDescription')}
                   </h3>
-                  <p className='max-w-[250px] break-words text-sm text-tertiary'>
+                  <p className='max-w-[250px] text-sm wrap-break-word text-tertiary'>
                     {templateDescription}
                   </p>
                 </div>
@@ -271,8 +273,8 @@ export default function Page() {
                 else setActiveStep(activeStep + 1);
               }} disabled={
                 activeStep === 0 ? !templateId :
-                  activeStep === 1 ? (selectedCategories.length < 1 || templateName.length <= 0 || templateDescription.length < config.templateDescriptionMinLength || templateDescription.length > config.templateDescriptionMaxLength) :
-                    ((loading === true || templateDetailsLoading) || false)
+                  (activeStep === 1 ? (selectedCategories.length < 1 || templateName.length <= 0 || templateDescription.length < config.templateDescriptionMinLength || templateDescription.length > config.templateDescriptionMaxLength) :
+                    ((loading === true || templateDetailsLoading) || false))
               }
             >
               {activeStep === steps.length - 1 ? t('buttons.publish') : t('buttons.next')}

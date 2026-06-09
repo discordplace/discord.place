@@ -29,7 +29,7 @@ import { useCookie, useMedia } from 'react-use';
 import { useEffect } from 'react';
 import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Sidebar() {
   const theme = useThemeStore(state => state.theme);
@@ -39,82 +39,82 @@ export default function Sidebar() {
 
   const blocks = [
     {
+      icon: MdHome,
       id: 'home',
-      name: 'Home',
-      icon: MdHome
+      name: 'Home'
     },
     {
+      icon: FaUsers,
       id: 'users',
-      name: 'Users',
-      icon: FaUsers
+      name: 'Users'
     },
     {
+      icon: FaCompass,
       id: 'guilds',
-      name: 'Guilds',
-      icon: FaCompass
+      name: 'Guilds'
     },
     {
       name: 'Queues',
       tabs: [
         {
-          id: 'emojisQueue',
-          name: 'Emojis',
-          icon: MdEmojiEmotions,
-          disabled: data?.permissions?.canApproveEmojis === false,
           badge: {
             data: data?.importantCounts?.emojis,
             style: 'danger'
-          }
+          },
+          disabled: data?.permissions?.canApproveEmojis === false,
+          icon: MdEmojiEmotions,
+          id: 'emojisQueue',
+          name: 'Emojis'
         },
         {
-          id: 'botsQueue',
-          name: 'Bots',
-          icon: RiRobot2Fill,
-          disabled: data?.permissions?.canApproveBots === false,
           badge: {
             data: data?.importantCounts?.bots,
             style: 'danger'
-          }
+          },
+          disabled: data?.permissions?.canApproveBots === false,
+          icon: RiRobot2Fill,
+          id: 'botsQueue',
+          name: 'Bots'
         },
         {
-          id: 'templatesQueue',
-          name: 'Templates',
-          icon: HiTemplate,
-          disabled: data?.permissions?.canApproveTemplates === false,
           badge: {
             data: data?.importantCounts?.templates,
             style: 'danger'
-          }
+          },
+          disabled: data?.permissions?.canApproveTemplates === false,
+          icon: HiTemplate,
+          id: 'templatesQueue',
+          name: 'Templates'
         },
         {
-          id: 'soundsQueue',
-          name: 'Sounds',
-          icon: PiWaveformBold,
-          disabled: data?.permissions?.canApproveSounds === false,
           badge: {
             data: data?.importantCounts?.sounds,
             style: 'danger'
-          }
+          },
+          disabled: data?.permissions?.canApproveSounds === false,
+          icon: PiWaveformBold,
+          id: 'soundsQueue',
+          name: 'Sounds'
         },
         {
-          id: 'reviewsQueue',
-          name: 'Reviews',
-          icon: FaEye,
-          disabled: data?.permissions?.canApproveReviews === false && data?.permissions?.canDeleteReviews === false,
           badge: {
             data: data?.importantCounts?.reviews,
             style: 'danger'
-          }
+          },
+          disabled: data?.permissions?.canApproveReviews === false && data?.permissions?.canDeleteReviews === false,
+          icon: FaEye,
+          id: 'reviewsQueue',
+          name: 'Reviews'
         },
         {
-          id: 'themesQueue',
-          name: 'Themes',
-          icon: RiBrush2Fill,
-          disabled: data?.permissions?.canApproveThemes === false,
           badge: {
             data: data?.importantCounts?.themes,
             style: 'danger'
-          }
+          },
+          disabled: data?.permissions?.canApproveThemes === false,
+          icon: RiBrush2Fill,
+          id: 'themesQueue',
+          name: 'Themes'
         }
       ]
     },
@@ -122,55 +122,55 @@ export default function Sidebar() {
       name: 'Extra',
       tabs: [
         {
-          id: 'links',
-          name: 'Links',
-          icon: FiLink,
-          disabled: data?.permissions?.canDeleteLinks === false,
           badge: {
             data: data?.counts?.links,
             style: 'primary'
-          }
+          },
+          disabled: data?.permissions?.canDeleteLinks === false,
+          icon: FiLink,
+          id: 'links',
+          name: 'Links'
         },
         {
-          id: 'botDenies',
-          name: 'Bot Denies',
-          icon: FaUserTimes,
-          disabled: data?.permissions?.canDeleteBotDenies === false || data?.permissions?.canRestoreBots === false,
           badge: {
             data: data?.counts?.botDenies,
             style: 'primary'
-          }
+          },
+          disabled: data?.permissions?.canDeleteBotDenies === false || data?.permissions?.canRestoreBots === false,
+          icon: FaUserTimes,
+          id: 'botDenies',
+          name: 'Bot Denies'
         },
         {
-          id: 'timeouts',
-          name: 'Timeouts',
-          icon: TbSquareRoundedChevronUp,
-          disabled: data?.permissions?.canViewTimeouts === false || data?.permissions?.canDeleteTimeouts === false,
           badge: {
             data: data?.counts?.timeouts,
             style: 'primary'
-          }
+          },
+          disabled: data?.permissions?.canViewTimeouts === false || data?.permissions?.canDeleteTimeouts === false,
+          icon: TbSquareRoundedChevronUp,
+          id: 'timeouts',
+          name: 'Timeouts'
         },
         {
-          id: 'quarantines',
-          name: 'Quarantines',
-          icon: CgBlock,
-          disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false,
           badge: {
             data: data?.counts?.quarantines,
             style: 'primary'
-          }
+          },
+          disabled: data?.permissions?.canViewQuarantines === false || data?.permissions?.canCreateQuarantines === false,
+          icon: CgBlock,
+          id: 'quarantines',
+          name: 'Quarantines'
         },
         {
+          disabled: data?.permissions?.canSyncLemonSqueezyPlans === false,
+          icon: MdSync,
           id: 'syncPlans',
           name: 'Sync Plans',
-          icon: MdSync,
           onClick: () => toast.promise(syncLemonSqueezyPlans(), {
+            error: error => error,
             loading: 'Syncing Lemon Squeezy plans..',
-            success: () => 'Successfully synced Lemon Squeezy plans.',
-            error: error => error
-          }),
-          disabled: data?.permissions?.canSyncLemonSqueezyPlans === false
+            success: () => 'Successfully synced Lemon Squeezy plans.'
+          })
         }
       ]
     }
@@ -179,10 +179,11 @@ export default function Sidebar() {
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
-  const [,, deleteToken] = useCookie('token');
+  const deleteToken = useCookie('token')[2];
 
   function logOut() {
     toast.promise(logout(), {
+      error: error => error,
       loading: 'Please wait while we log you out..',
       success: () => {
         setLoggedIn(false);
@@ -190,8 +191,7 @@ export default function Sidebar() {
         deleteToken();
 
         return 'Logged out successfully.';
-      },
-      error: error => error
+      }
     });
   }
 
@@ -206,13 +206,13 @@ export default function Sidebar() {
     <div
       className={cn(
         'flex',
-        isCollapsed ? 'min-w-[60px] w-[60px]' : 'min-w-[250px]'
+        isCollapsed ? 'w-[60px] min-w-[60px]' : 'min-w-[250px]'
       )}
     >
       <div className='sticky top-0 h-max w-full'>
         <div
           className={cn(
-            'flex items-center pt-8 select-none gap-4',
+            'flex items-center gap-4 pt-8 select-none',
             isCollapsed ? 'flex-col pl-4' : 'pl-8'
           )}
         >
@@ -299,7 +299,7 @@ export default function Sidebar() {
 
               <div
                 className={cn(
-                  'h-[1px] bg-quaternary w-full',
+                  'h-px w-full bg-quaternary',
                   !isCollapsed && 'hidden'
                 )}
               />
@@ -323,11 +323,11 @@ export default function Sidebar() {
         </div>
 
         <DropdownMenu.Root modal={false}>
-          <DropdownMenu.Trigger asChild>
+          <DropdownMenu.Trigger asChild={true}>
             <div
               className={cn(
-                'my-2 w-full flex items-center gap-x-2 rounded-2xl max-w-[calc(100%-1rem)] cursor-pointer',
-                isCollapsed ? 'ml-5' : 'ml-4 hover:bg-quaternary border bg-tertiary border-[rgba(var(--bg-quaternary))] p-3'
+                'my-2 flex w-full max-w-[calc(100%-1rem)] cursor-pointer items-center gap-x-2 rounded-2xl',
+                isCollapsed ? 'ml-5' : 'ml-4 border border-[rgba(var(--bg-quaternary))] bg-tertiary p-3 hover:bg-quaternary'
               )}
             >
               <UserAvatar
@@ -359,7 +359,7 @@ export default function Sidebar() {
           <DropdownMenu.Portal>
             <DropdownMenu.Content
               className={cn(
-                'z-10 flex flex-col p-2 mb-4 border outline-none min-w-[235px] bg-secondary rounded-2xl border-primary',
+                'z-10 mb-4 flex min-w-[235px] flex-col rounded-2xl border border-primary bg-secondary p-2 outline-hidden',
                 isCollapsed ? 'shadow-[0px_-15px_20px_0px_rgba(var(--bg-background))]' : 'shadow-[0px_-15px_20px_0px_rgba(var(--bg-secondary))]'
               )}
               sideOffset={5}
@@ -368,7 +368,7 @@ export default function Sidebar() {
               <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
 
               <DropdownMenu.Item
-                className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'
+                className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 font-medium text-tertiary outline-hidden data-highlighted:bg-quaternary data-highlighted:text-primary'
                 onSelect={() => router.push('/account')}
               >
                 <MdAccountCircle />
@@ -376,7 +376,7 @@ export default function Sidebar() {
               </DropdownMenu.Item>
 
               <DropdownMenu.Item
-                className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 font-medium text-tertiary outline-none data-[highlighted]:bg-quaternary data-[highlighted]:text-primary'
+                className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 font-medium text-tertiary outline-hidden data-highlighted:bg-quaternary data-highlighted:text-primary'
                 onSelect={logOut}
               >
                 <IoMdLogOut />

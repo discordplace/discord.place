@@ -3,7 +3,6 @@
 import { BsEmojiAngry } from 'react-icons/bs';
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
-import { motion } from 'framer-motion';
 import { Bricolage_Grotesque } from 'next/font/google';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import SearchInput from '@/app/components/SearchInput';
@@ -11,7 +10,7 @@ import Select from '@/app/components/Select';
 import { useEffect } from 'react';
 import useSearchStore from '@/stores/servers/search';
 import { useShallow } from 'zustand/react/shallow';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import ErrorState from '@/app/components/ErrorState';
 import Pagination from '@/app/components/Pagination';
 import config from '@/config';
@@ -19,24 +18,24 @@ import { t } from '@/stores/language';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
   const user = useAuthStore(state => state.user);
 
   const { category, setCategory, sort, setSort, search, loading, servers, fetchServers, page, totalServers, limit, setPage } = useSearchStore(useShallow(state => ({
     category: state.category,
-    setCategory: state.setCategory,
-    sort: state.sort,
-    setSort: state.setSort,
-    search: state.search,
-    loading: state.loading,
-    servers: state.servers,
     fetchServers: state.fetchServers,
-    page: state.page,
-    totalServers: state.totalServers,
     limit: state.limit,
-    setPage: state.setPage
+    loading: state.loading,
+    page: state.page,
+    search: state.search,
+    servers: state.servers,
+    setCategory: state.setCategory,
+    setPage: state.setPage,
+    setSort: state.setSort,
+    sort: state.sort,
+    totalServers: state.totalServers
   })));
 
   useEffect(() => {
@@ -44,21 +43,21 @@ export default function Hero() {
   }, []);
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   const stateVariants = {
+    exit: {
+      opacity: 0
+    },
     hidden: {
       opacity: 0
     },
     visible: {
       opacity: 1
-    },
-    exit: {
-      opacity: 0
     }
   };
 
@@ -73,7 +72,7 @@ export default function Hero() {
       <div className='flex w-full max-w-[800px] flex-col items-center'>
         <motion.h1
           className={cn(
-            'text-5xl font-medium max-w-[800px] text-center text-primary',
+            'max-w-[800px] text-center text-5xl font-medium text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
@@ -95,6 +94,12 @@ export default function Hero() {
             setPage={setPage}
             animationDelay={0.3}
           />
+
+          <button className='relative z-[9999] hover:bg-white' onClick={() => {
+            throw new Error('Test error');
+          }}>
+            throw test error
+          </button>
 
           <motion.div
             className='flex w-full flex-col items-center gap-2 mobile:flex-row sm:w-max'
@@ -124,39 +129,37 @@ export default function Hero() {
             <Select
               placeholder={t('serversPage.sortSelect.placeholder')}
               options={[
-                ...[
-                  {
-                    label: t('serversPage.sortSelect.items.votes'),
-                    value: 'Votes'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.latestVoted'),
-                    value: 'LatestVoted'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.members'),
-                    value: 'Members'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.newest'),
-                    value: 'Newest'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.oldest'),
-                    value: 'Oldest'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.boosts'),
-                    value: 'Boosts'
-                  }
-                ].map(option => ({
-                  label: <div className='flex items-center gap-x-2'>
-                    {config.sortIcons[option.value.replace(' ', '')]}
-                    {option.label}
-                  </div>,
-                  value: option.value
-                }))
-              ]}
+                {
+                  label: t('serversPage.sortSelect.items.votes'),
+                  value: 'Votes'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.latestVoted'),
+                  value: 'LatestVoted'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.members'),
+                  value: 'Members'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.newest'),
+                  value: 'Newest'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.oldest'),
+                  value: 'Oldest'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.boosts'),
+                  value: 'Boosts'
+                }
+              ].map(option => ({
+                label: <div className='flex items-center gap-x-2'>
+                  {config.sortIcons[option.value.replace(' ', '')]}
+                  {option.label}
+                </div>,
+                value: option.value
+              }))}
               value={sort}
               onChange={setSort}
               disabled={loading}
@@ -205,7 +208,7 @@ export default function Hero() {
               animate={{ opacity: 1 }}
             >
               {loading ? (
-                new Array(limit).fill(0).map((_, index) => (
+                Array.from({ length: limit }).fill(0).map((_, index) => (
                   <div key={index} className='h-[250px] w-[322px] animate-pulse rounded-3xl bg-secondary' />
                 ))
               ) : (
@@ -216,10 +219,10 @@ export default function Hero() {
                       active={user?.id !== server.owner.id}
                       type='server'
                       metadata={{
-                        id: server.id,
-                        name: server.name,
+                        description: server.description,
                         icon: server.icon,
-                        description: server.description
+                        id: server.id,
+                        name: server.name
                       }}
                       identifier={`server-${server.id}`}
                     >
