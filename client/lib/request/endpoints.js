@@ -79,6 +79,7 @@ const Endpoints = {
   GetProfile: slug => `/profiles/${slug}`,
   GetProfileMetadata: id => `/profiles/${id}/metadata`,
   GetSoundUploadableGuilds: '/auth/@me/sound-uploadable-guilds',
+  GetStatus: '/status',
   GetUser: id => `/users/${id}`,
   IncrementEmojiDownloads: (id, isPack) => `/emojis/${isPack ? 'packages/' : ''}${id}/downloads`,
   IncrementSoundDownloads: id => `/sounds/${id}/downloads`,

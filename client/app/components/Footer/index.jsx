@@ -1,11 +1,10 @@
 'use client';
 
-import { FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaDiscord, FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { IoIosMoon } from 'react-icons/io';
 import { MdSunny } from 'react-icons/md';
 import useThemeStore from '@/stores/theme';
-import { nanoid } from 'nanoid';
 import Link from 'next/link';
 import cn from '@/lib/cn';
 import Image from 'next/image';
@@ -13,6 +12,7 @@ import config from '@/config';
 import { usePathname } from 'next/navigation';
 import useLanguageStore, { t } from '@/stores/language';
 import Select from '@/app/components/Select';
+import StatusBadge from '@/app/components/Footer/StatusBadge';
 
 export default function Footer() {
   const theme = useThemeStore(state => state.theme);
@@ -28,283 +28,247 @@ export default function Footer() {
 
   if (isDashboard || isTemplatePreview || isAccount) return null;
 
-  const blocks = [
-    {
-      links: [
-        {
-          href: '/',
-          label: t('footer.blocks.0.links.0')
-        },
-        {
-          href: config.docsUrl,
-          label: t('footer.blocks.0.links.1'),
-          target: '_blank'
-        },
-        {
-          href: config.statusUrl,
-          label: t('footer.blocks.0.links.2'),
-          target: '_blank'
-        },
-        {
-          href: '/premium',
-          label: t('footer.blocks.0.links.3')
-        },
-        {
-          href: '/blogs',
-          label: t('footer.blocks.0.links.4')
-        }
-      ],
-      title: t('footer.blocks.0.title') // Pages
-    },
-    {
-      links: [
-        {
-          href: '/profiles',
-          label: t('footer.blocks.1.links.0')
-        },
-        {
-          href: '/servers',
-          label: t('footer.blocks.1.links.1')
-        },
-        {
-          href: '/bots',
-          label: t('footer.blocks.1.links.2')
-        },
-        {
-          href: '/emojis',
-          label: t('footer.blocks.1.links.3')
-        },
-        {
-          href: '/templates',
-          label: t('footer.blocks.1.links.4')
-        },
-        {
-          href: '/sounds',
-          label: t('footer.blocks.1.links.5')
-        },
-        {
-          href: '/themes',
-          label: t('footer.blocks.1.links.6')
-        },
-        {
-          href: 'https://github.com/discordplace/lantern',
-          label: 'Lantern'
-        }
-      ],
-      title: t('footer.blocks.1.title') // Our Services
-    },
-    {
-      links: [
-        {
-          href: '/legal/privacy',
-          label: t('footer.blocks.2.links.0')
-        },
-        {
-          href: '/legal/terms',
-          label: t('footer.blocks.2.links.1')
-        },
-        {
-          href: '/legal/cookie-policy',
-          label: t('footer.blocks.2.links.2')
-        },
-        {
-          href: '/legal/content-policy',
-          label: t('footer.blocks.2.links.3')
-        },
-        {
-          href: '/legal/purchase-policy',
-          label: t('footer.blocks.2.links.4')
-        }
-      ],
-      title: t('footer.blocks.2.title') // Legal
-    },
-    {
-      links: [
-        {
-          disabled: false,
-          href: 'https://x.com/discord_place',
-          icon: FaXTwitter,
-          label: 'X',
-          target: '_blank'
-        },
-        {
-          href: 'https://invite.discord.place',
-          icon: FaDiscord,
-          label: 'Discord',
-          target: '_blank'
-        },
-        {
-          href: 'https://github.com/discordplace',
-          icon: FaGithub,
-          label: 'GitHub',
-          target: '_blank'
-        },
-        {
-          disabled: true,
-          href: '#',
-          icon: FaLinkedin,
-          label: 'LinkedIn',
-          target: '_blank'
-        }
-      ],
-      title: t('footer.blocks.3.title') // Social
-    }
-  ];
-
   return (
-    <section
-      className='mt-auto flex w-full flex-1 flex-col flex-wrap gap-16 border-t border-primary bg-secondary px-6 py-16 sm:px-24 xl:px-32 2xl:max-h-[800px] 2xl:flex-row 2xl:gap-x-48'
+    <div
+      className='relative mt-24 w-full lg:rounded-t-4xl lg:bg-secondary lg:p-10'
       id='footer'
     >
-      <div className='flex w-full max-w-[400px] flex-col gap-y-6'>
-        <Image
-          src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
-          width={200}
-          height={200}
-          className='size-[48px]'
-          alt='discord.place Logo'
-          priority={true}
-        />
+      <div className='mx-auto h-full max-w-[1000px] overflow-hidden rounded-3xl bg-background p-8 shadow-lg shadow-black/5 lg:p-16 dark:shadow-black/30'>
+        <div className='flex flex-col justify-between max-sm:items-center sm:flex-row'>
+          <div className='flex w-full flex-1 flex-col gap-y-8'>
+            <div className='flex items-center gap-x-4'>
+              <Image
+                src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
+                width={32}
+                height={32}
+                className='size-[32px]'
+                alt='discord.place Logo'
+                priority={true}
+              />
 
-        <h2 className='max-w-[350px] text-2xl font-bold text-primary'>
-          {t('footer.title')}
-        </h2>
+              <span className='flex items-center text-lg font-medium'>
+                discord.place
+              </span>
+            </div>
 
-        <span className='text-sm text-secondary'>
-          {t('footer.subtitle')}
-        </span>
-      </div>
+            <div className='flex flex-col gap-y-2'>
+              <span className='text-xs font-medium text-secondary'>
+                {t('footer.description')}
+              </span>
 
-      <div className='grid grid-cols-1 justify-between gap-8 mobile:grid-cols-2 sm:gap-16 lg:flex 2xl:w-[calc(100%-400px-12rem)]'>
-        {blocks.map(block => (
-          <div className='flex flex-col gap-y-6' key={nanoid()}>
-            <h2 className='text-sm font-medium text-tertiary'>
-              {block.title}
-            </h2>
+              <p className='text-[10px] text-tertiary'>
+                {t('footer.disclaimer')}
+              </p>
+            </div>
 
-            <div className='flex flex-col gap-y-4'>
-              {block.links.map(link => (
-                <Link
-                  key={nanoid()}
-                  href={link.href}
-                  className={cn(
-                    'flex w-max items-center gap-x-2 text-secondary',
-                    link.disabled ? 'pointer-events-none opacity-70' : 'hover:text-primary'
-                  )}
-                  target={link.target || '_self'}
-                >
-                  {link.icon && <link.icon />}
-                  {link.label}
+            <div className='flex flex-wrap items-center gap-4'>
+              <Link
+                href='https://nodesty.com'
+                target='_blank'
+                className='w-max'
+              >
+                <Image
+                  src={theme === 'dark' ? '/nodesty-logo-white.png' : '/nodesty-logo-blue.png'}
+                  className='h-[18px] w-auto'
+                  width={100}
+                  height={25}
+                  alt='nodesty.com Logo'
+                />
+              </Link>
 
-                  {link.new && (
-                    <span className='rounded-full bg-purple-500 px-2.5 py-0.5 text-xs font-bold text-white'>
-                      {t('footer.newBadge')}
-                    </span>
-                  )}
-                </Link>
-              ))}
+              <Link
+                href='https://x.com/discord_place'
+                className='text-xs text-secondary hover:text-primary'
+              >
+                <FaXTwitter size={20} />
+              </Link>
+
+              <Link
+                href='https://invite.discord.place'
+                className='text-xs text-secondary hover:text-primary'
+              >
+                <FaDiscord size={20} />
+              </Link>
+
+              <Link
+                href='https://github.com/discordplace'
+                className='text-xs text-secondary hover:text-primary'
+              >
+                <FaGithub size={20} />
+              </Link>
+
+              <StatusBadge />
             </div>
           </div>
-        ))}
-      </div>
 
-      <div className='h-px w-full bg-[rgb(var(--border-primary))] lg:mt-24' />
+          <div className='flex w-full flex-1 items-center justify-between sm:justify-end'>
+            <div className='mt-[calc(2rem_+_32px)] flex w-full max-w-[250px] justify-between'>
+              <div className='flex flex-col gap-y-2'>
+                <span className='text-xs font-medium text-secondary'>
+                  {t('footer.pages.title')}
+                </span>
 
-      <div className='-mt-8 flex w-full flex-col items-center justify-between gap-4 lg:flex-row'>
-        <div className='flex flex-col items-center gap-y-4 lg:items-start'>
-          <p className='text-sm text-tertiary'>
-            &copy; {t('footer.copyRight', { year: new Date().getFullYear() })}
-          </p>
+                <div className='flex flex-col gap-y-1'>
+                  <Link
+                    href='/'
+                    className='text-[10px] text-tertiary hover:text-primary'
+                  >
+                    {t('footer.pages.home')}
+                  </Link>
 
-          <Link
-            href='https://nodesty.com'
-            target='_blank'
-            className='w-max'
-          >
-            <Image
-              src={theme === 'dark' ? '/nodesty-logo-white.png' : '/nodesty-logo-blue.png'}
-              className='h-[25px] w-auto max-w-[100px]'
-              width={100}
-              height={25}
-              alt='nodesty.com Logo'
-            />
-          </Link>
+                  <Link
+                    href={config.docsUrl}
+                    target='_blank'
+                    className='text-[10px] text-tertiary hover:text-primary'
+                  >
+                    {t('footer.pages.apiDocumentation')}
+                  </Link>
+
+                  <Link
+                    href='/premium'
+                    target='_blank'
+                    className='text-[10px] text-tertiary hover:text-primary'
+                  >
+                    {t('footer.pages.premium')}
+                  </Link>
+
+                  <Link
+                    href='/blogs'
+                    target='_blank'
+                    className='text-[10px] text-tertiary hover:text-primary'
+                  >
+                    {t('footer.pages.blogs')}
+                  </Link>
+                </div>
+              </div>
+
+              <div className='flex flex-col gap-y-2'>
+                <span className='text-xs font-medium text-secondary'>
+                  {t('footer.legal.title')}
+                </span>
+
+                <div className='flex flex-col gap-y-1'>
+                  <Link
+                    href='/legal/privacy'
+                    className='text-[10px] text-tertiary hover:text-primary'
+                  >
+                    {t('footer.legal.privacy')}
+                  </Link>
+
+                  <Link
+                    href='/legal/terms'
+                    className='text-[10px] text-tertiary hover:text-primary'
+                  >
+                    {t('footer.legal.terms')}
+                  </Link>
+
+                  <Link
+                    href='/legal/cookie-policy'
+                    className='text-[10px] text-tertiary hover:text-primary'
+                  >
+                    {t('footer.legal.cookie')}
+                  </Link>
+
+                  <Link
+                    href='/legal/content-policy'
+                    className='text-[10px] text-tertiary hover:text-primary'
+                  >
+                    {t('footer.legal.content')}
+                  </Link>
+
+                  <Link
+                    href='/legal/purchase-policy'
+                    className='text-[10px] text-tertiary hover:text-primary'
+                  >
+                    {t('footer.legal.purchase')}
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className='mt-4 flex flex-col items-center gap-y-2 lg:items-end'>
-          <div className='flex gap-x-1 rounded-xl bg-quaternary p-[3px] dark:bg-background'>
-            <button
-              className={cn(
-                'relative z-10 flex items-center justify-center px-3 py-1 text-sm font-medium select-none',
-                theme !== 'light' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
-              )}
-              onClick={() => {
-                if (!document.startViewTransition) return setTheme('light');
+        <div className='my-8 h-px w-full bg-tertiary' />
 
-                document.startViewTransition(() => setTheme('light'));
-              }}
-            >
-              <span className='relative z-10 flex items-center gap-x-1.5'>
-                <MdSunny size={16} />
-                {t('footer.theme.light')}
-              </span>
-
-              {theme === 'light' && (
-                <div className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary' />
-              )}
-            </button>
-
-            <button
-              className={cn(
-                'relative z-10 flex items-center justify-center px-3 py-1 text-sm font-semibold select-none',
-                theme !== 'dark' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
-              )}
-              onClick={() => {
-                if (!document.startViewTransition) return setTheme('dark');
-
-                document.startViewTransition(() => setTheme('dark'));
-              }}
-            >
-              <span className='relative z-10 flex items-center gap-x-1.5'>
-                <IoIosMoon size={16} />
-                {t('footer.theme.dark')}
-              </span>
-
-              {theme === 'dark' && (
-                <div className='absolute size-full rounded-xl bg-secondary dark:bg-quaternary' />
-              )}
-            </button>
+        <div className='flex flex-wrap items-center justify-between max-sm:gap-4'>
+          <div className='text-xs text-tertiary'>
+            {t('footer.copyRight', { year: new Date().getFullYear() })}
           </div>
 
-          <Select
-            triggerClassName='w-max bg-background py-1.5 hover:bg-quaternary'
-            itemContainerClassName='py-2'
-            position='popper'
-            sideOffset={10}
-            options={config.availableLocales.map(locale => ({
-              label: (
-                <div
-                  key={locale.code}
-                  className='flex items-center gap-x-2 text-sm'
-                >
-                  <Image
-                    src={`https://hatscripts.github.io/circle-flags/flags/${locale.countryCode}.svg`}
-                    width={20}
-                    height={20}
-                    className='size-4'
-                    alt={`Flag of ${locale.countryCode}`}
-                  />
+          <div className='flex items-center gap-x-2'>
+            <div className='flex gap-x-1 rounded-xl bg-secondary p-[3px]'>
+              <button
+                className={cn(
+                  'relative z-10 flex items-center justify-center px-2 py-1 text-xs font-medium select-none',
+                  theme !== 'light' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
+                )}
+                onClick={() => {
+                  if (!document.startViewTransition) return setTheme('light');
 
-                  {t(`footer.language.${locale.code}`)}
-                </div>
-              ),
-              value: locale.code
-            }))}
-            value={language}
-            onChange={setLanguage}
-          />
+                  document.startViewTransition(() => setTheme('light'));
+                }}
+              >
+                <span className='relative z-10 flex items-center gap-x-1.5'>
+                  <MdSunny size={12} />
+                  {t('footer.theme.light')}
+                </span>
+
+                {theme === 'light' && (
+                  <div className='absolute size-full rounded-lg bg-quaternary' />
+                )}
+              </button>
+
+              <button
+                className={cn(
+                  'relative z-10 flex items-center justify-center px-2 py-1 text-xs font-medium select-none',
+                  theme !== 'dark' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
+                )}
+                onClick={() => {
+                  if (!document.startViewTransition) return setTheme('dark');
+
+                  document.startViewTransition(() => setTheme('dark'));
+                }}
+              >
+                <span className='relative z-10 flex items-center gap-x-1.5'>
+                  <IoIosMoon size={12} />
+                  {t('footer.theme.dark')}
+                </span>
+
+                {theme === 'dark' && (
+                  <div className='absolute size-full rounded-lg bg-quaternary' />
+                )}
+              </button>
+            </div>
+
+            <Select
+              triggerClassName='w-max border py-2 bg-background hover:bg-quaternary'
+              itemContainerClassName='py-2'
+              sideOffset={10}
+              options={config.availableLocales.map(locale => ({
+                label: (
+                  <div
+                    key={locale.code}
+                    className='flex items-center gap-x-2 text-sm'
+                  >
+                    <Image
+                      src={`https://hatscripts.github.io/circle-flags/flags/${locale.countryCode}.svg`}
+                      width={20}
+                      height={20}
+                      className='size-4'
+                      alt={`Flag of ${locale.countryCode}`}
+                    />
+
+                    {t(`footer.language.${locale.code}`)}
+                  </div>
+                ),
+                value: locale.code
+              }))}
+              value={language}
+              onChange={setLanguage}
+            />
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

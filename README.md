@@ -198,7 +198,6 @@ Navigate to the `client` directory and find the `config.js` file. This file cont
 | `supportInviteUrl` | String | URL for the your Discord support server invite. Used in the many places in the website. |
 | `docsUrl` | String | URL for the your website documentation website. |
 | `statusUrl` | String | URL for the your website status page. |
-| `statusBadgeUrl` | String | URL for the embeddable status badge for the website. |
 | `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:16540`. |
 | `analytics.script` | String | Your analytics script URL. |
 | `analytics.recorderScript` | String | Your analytics recorder script URL. |

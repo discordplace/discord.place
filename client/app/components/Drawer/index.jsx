@@ -2,7 +2,8 @@
 
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import cn from '@/lib/cn';
-import { nanoid } from 'nanoid';import { Drawer } from 'vaul';
+import { nanoid } from 'nanoid';
+import { Drawer } from 'vaul';
 
 export default function CustomDrawer({ openState, setOpenState, state, setState, items, preventDefault = false }) {
   return (
@@ -36,6 +37,7 @@ export default function CustomDrawer({ openState, setOpenState, state, setState,
             ))}
           </div>
         </Drawer.Content>
+        <Drawer.Title className='sr-only'>Drawer</Drawer.Title>
         <Drawer.Overlay className='fixed inset-0 z-10000 bg-white/40 dark:bg-black/40' />
       </Drawer.Portal>
     </Drawer.Root>

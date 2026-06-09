@@ -53,6 +53,8 @@ export default function NotFound() {
           centerY={0}
           zoom={0.9}
         />
+
+        <div className='absolute bottom-0 z-[9999] h-[400px] w-full bg-linear-to-t from-[rgba(var(--bg-background))] via-[rgba(var(--bg-background),0.6)] to-transparent' />
       </div>
 
       <div className='flex flex-col'>
@@ -65,7 +67,7 @@ export default function NotFound() {
         </p>
 
         <span className='mt-2 text-xs text-tertiary'>
-          {t('notFoundPage.redirectText', { count: remainingTime })}
+          {remainingTime > 1 ? t('notFoundPage.redirectTextPlural', { count: remainingTime }) : t('notFoundPage.redirectText', { count: remainingTime })}
         </span>
 
         <div className='mt-6 flex w-full items-center justify-between'>
@@ -73,7 +75,7 @@ export default function NotFound() {
             className='pointer-events-auto w-max rounded-full bg-black/5 px-4 py-1.5 text-sm font-semibold text-primary backdrop-blur-sm hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10'
             href='/'
           >
-            {t('notFoundPage.goHome')}
+            {t('buttons.goHome')}
           </Link>
 
           <Image

@@ -79,8 +79,11 @@ export default function ModalProvider({ children }) {
           >
             {/* oxlint-disable-next-line tailwindcss/no-unknown-classes */}
             <Dialog.Overlay className='radix-overlay fixed inset-0 z-9999 bg-white/50 backdrop-blur-xs dark:bg-black/50' />
-            {/* oxlint-disable-next-line tailwindcss/no-unknown-classes */}
-            <Dialog.Content className='radix-dialog-content fixed z-9999 flex size-full items-center justify-center focus:outline-hidden'>
+            <Dialog.Content
+              // oxlint-disable-next-line tailwindcss/no-unknown-classes
+              className='radix-dialog-content fixed z-9999 flex size-full items-center justify-center focus:outline-hidden'
+              aria-describedby={id}
+            >
               <div
                 className='flex max-h-[85vh] w-[90vw] flex-col gap-y-2 rounded-2xl border border-primary bg-secondary dark:bg-tertiary'
                 style={{ maxWidth: data.maxWidth || '450px' }}

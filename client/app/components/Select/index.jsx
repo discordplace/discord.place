@@ -59,7 +59,12 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
         >
           <RadixSelect.Value placeholder={placeholder} />
 
-          <RadixSelect.Icon className='text-tertiary'>
+          <RadixSelect.Icon
+            className={cn(
+              'text-tertiary transition-transform duration-300',
+              openState && '-rotate-180 transform'
+            )}
+          >
             <IoChevronDownSharp />
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
@@ -69,7 +74,6 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
             className='z-9999 overflow-hidden rounded-lg border-2 border-primary bg-secondary'
             position={position}
             sideOffset={sideOffset}
-            align='center'
           >
             <RadixSelect.ScrollUpButton className='absolute flex w-full items-center justify-center rounded-b bg-linear-to-b from-quaternary via-quaternary/50 py-3' />
 

@@ -41,6 +41,8 @@ export default function Error() {
           centerY={0}
           zoom={0.9}
         />
+
+        <div className='absolute bottom-0 z-[9999] h-[400px] w-full bg-linear-to-t from-[rgba(var(--bg-background))] via-[rgba(var(--bg-background),0.6)] to-transparent' />
       </div>
 
       <div className='flex flex-col'>

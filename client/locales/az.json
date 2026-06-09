@@ -55,59 +55,37 @@
     "services": "Xidmətlər",
     "blog": "Blog",
     "premium": "Premium",
-    "logout": "Çıxın"
+    "contactUs": "Daxil Ol",
+    "myAccount": "Hesabım"
   },
-  "footer": {
-    "title": "Discord ilə əlaqəli hər şey bir yerdə.",
-    "subtitle": "Bu sayt Discord Inc. ilə əlaqəli deyil. Bütün ticarət markaları müvafiq sahiblərinin mülkiyyətindədir.",
-    "copyRight": "{{year}} discord.place ",
+    "footer": {
+    "description": "Discord ilə əlaqəli hər şey bir yerdə.",
+    "disclaimer": "Bu sayt Discord Inc. ilə əlaqəli deyil.",
+    "pages": {
+      "title": "Səhifələr",
+      "home": "Ev",
+      "apiDocumentation": "API Sənədləri",
+      "premium": "Premium",
+      "blogs": "Blog"
+    },
+    "legal": {
+      "title": "Hüquqi",
+      "privacy": "Məxfilik Siyasəti",
+      "terms": "Xidmət Şərtləri",
+      "cookie": "Kuki Siyasəti",
+      "content": "Məzmun Siyasəti",
+      "purchase": "Satınalma Siyasəti"
+    },
+    "copyRight": "© {{year}} discord.place. Bütün hüquqlar qorunur.",
     "theme": {
-      "light": "İşıq",
+      "light": "Işıq",
       "dark": "Qaranlıq"
     },
     "language": {
       "en": "İngiliscə",
       "tr": "Türkcə",
       "az": "Azərbaycanca"
-    },
-    "blocks": [
-      {
-        "title": "Səhifələr",
-        "links": [
-          "Ev",
-          "API Sənədləri",
-          "Xidmət Vəziyyəti",
-          "Premium",
-          "Blog"
-        ]
-      },
-      {
-        "title": "Xidmətlərimiz",
-        "links": [
-          "Profillər",
-          "Serverlər",
-          "Botlar",
-          "Emojilər",
-          "Şablonlar",
-          "Səslər",
-          "Temalar"
-        ]
-      },
-      {
-        "title": "Hüquqi",
-        "links": [
-          "Məxfilik Siyasəti",
-          "Xidmət Şərtləri",
-          "Kuki Siyasəti",
-          "Məzmun Siyasəti",
-          "Satınalma Siyasəti"
-        ]
-      },
-      {
-        "title": "Sosial"
-      }
-    ],
-    "newBadge": "Yeni"
+    }
   },
   "premiumPage": {
     "title": "Premium Üzvlük",
@@ -194,7 +172,8 @@
   "notFoundPage": {
     "title": "Boşluqda itdin, elə deyilmi?",
     "description": "Axtardığınız yer mövcud deyil. Ya da bəlkə var, amma boşluğun bir yerində gizlənib. Hər halda, burada deyil.",
-    "redirectText": "(1)[{{count}} saniyə ərzində ana səhifəyə yönləndiriləcəksiniz.];(2-inf)[{{count}} saniyə ərzində ana səhifəyə yönləndiriləcəksiniz.];"
+    "redirectText": "{{count}} saniyə ərzində ana səhifəyə yönləndiriləcəksiniz.",
+    "redirectTextPlural": "{{count}} saniyə ərzində ana səhifəyə yönləndiriləcəksiniz."
   },
   "errorPage": {
     "badge": "Xəta",

@@ -16,6 +16,8 @@ export default function ServerIcon({ id, hash, format, size, className, motionOp
     />
   );}
 
+  const isSmallImage = (props.width && props.width < 40) || (props.height && props.height < 40);
+
   return (
     <MotionImage
       key={`server-icon-${id}-${hash}`}
@@ -23,7 +25,7 @@ export default function ServerIcon({ id, hash, format, size, className, motionOp
       alt={`Image ${hash}`}
       className={className}
       unoptimized={format === 'gif' || hash?.startsWith('a_')}
-      placeholder={DEFAULT_AVATAR_BASE64}
+      placeholder={isSmallImage ? 'empty' : DEFAULT_AVATAR_BASE64}
       {...motionOptions}
       {...props}
     />

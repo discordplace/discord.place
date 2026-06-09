@@ -27,7 +27,6 @@ const baseUrl = isDev ? 'http://localhost:36706' : 'https://discord.place';
 const supportInviteUrl = 'https://invite.discord.place';
 const docsUrl = 'https://docs.discord.place';
 const statusUrl = 'https://status.discord.place';
-const statusBadgeUrl = 'https://status.discord.place/badge';
 const botInviteURL = 'https://bot.discord.place';
 const githubIssuesUrl = 'https://github.com/discordplace/discord.place/issues/new?template=bug-report---feature-request.md';
 
@@ -274,7 +273,6 @@ const data = {
   soundCategories,
   soundCategoriesIcons,
   soundsDenyReasons,
-  statusBadgeUrl,
   statusUrl,
   supportInviteUrl,
   templateCategories,
