@@ -89,7 +89,7 @@ export default function StatusBadge() {
           <span className='relative inline-flex size-1.5 rounded-full bg-tertiary' />
         </span>
 
-        <span className='relative h-4 w-[169.63px] overflow-hidden rounded bg-tertiary'>
+        <span className='relative h-4 w-[130.517px] overflow-hidden rounded bg-tertiary'>
           <span className='absolute inset-0 -translate-x-full animate-shimmer bg-linear-to-r from-transparent to-transparent dark:via-white/5' />
         </span>
       </div>
