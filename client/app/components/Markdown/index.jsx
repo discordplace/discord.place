@@ -1,7 +1,7 @@
 'use client';
 
 import cn from '@/lib/cn';
-import MarkdownComponents from '@/lib/markdownComponents';
+import MarkdownComponents from '@/lib/markdown-components';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import raw from 'rehype-raw';

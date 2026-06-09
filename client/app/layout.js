@@ -6,6 +6,28 @@ import LayoutContent from '@/app/layout-content';
 import AuthProvider from '@/app/components/Providers/Auth';
 import localFont from 'next/font/local';
 
+const GGSans = localFont({
+  display: 'swap',
+  src: [
+    {
+      path: '../public/fonts/GG-Sans-Medium.ttf',
+      style: 'normal',
+      weight: '500'
+    },
+    {
+      path: '../public/fonts/GG-Sans-Bold.ttf',
+      style: 'normal',
+      weight: '700'
+    },
+    {
+      path: '../public/fonts/GG-Sans-Normal.ttf',
+      style: 'normal',
+      weight: '400'
+    }
+  ],
+  variable: '--font-gg-sans'
+});
+
 export const metadata = {
   description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
   keywords: ['discord', 'discord place', 'discord emojis', 'discord servers', 'discord profiles', 'discord emojis', 'discord bots', 'discord developers'],
@@ -39,28 +61,6 @@ export const viewport = {
   userScalable: false,
   width: 'device-width'
 };
-
-const GGSans = localFont({
-  display: 'swap',
-  src: [
-    {
-      path: '../public/fonts/GG-Sans-Medium.ttf',
-      style: 'normal',
-      weight: '500'
-    },
-    {
-      path: '../public/fonts/GG-Sans-Bold.ttf',
-      style: 'normal',
-      weight: '700'
-    },
-    {
-      path: '../public/fonts/GG-Sans-Normal.ttf',
-      style: 'normal',
-      weight: '400'
-    }
-  ],
-  variable: '--font-gg-sans'
-});
 
 export default function RootLayout(props) {
   return (

@@ -45,7 +45,10 @@
     "import/newline-after-import": "off",
     "stylistic/padded-blocks": ["error", "never"],
     "stylistic/padding-line-between-statements": ["error", { "blankLine": "always", "prev": "*", "next": "return" }],
-    "stylistic/no-confusing-arrow": "error"
+    "stylistic/no-confusing-arrow": "error",
+    "import/prefer-default-export": "off",
+    "prefer-named-capture-group": "off",
+    "no-continue": "off"
   },
   "env": { "browser": true, "node": true }
 }

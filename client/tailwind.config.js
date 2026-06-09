@@ -4,7 +4,7 @@ module.exports = {
   content: [
     './app/**/*.{js,jsx}',
     './public/profile-badges/*.svg',
-    './lib/markdownComponents.jsx',
+    './lib/markdown-components.jsx',
     './config.js'
   ],
   darkMode: ['class'],
