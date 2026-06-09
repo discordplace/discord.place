@@ -116,9 +116,6 @@ importers:
       react-syntax-highlighter:
         specifier: ^15.5.0
         version: 15.5.0(react@19.2.7)
-      react-text-transition:
-        specifier: ^3.1.0
-        version: 3.1.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-twemoji:
         specifier: ^0.6.0
         version: 0.6.0(react@19.2.7)
@@ -2507,11 +2504,6 @@ packages:
     resolution: {integrity: sha512-+zq2myprEnQmH5yw6Gqc8lD55QHnpKaU8TOcFeC/Lg/MQSs8UknEA0JC4nTZGFAXC2J2Hyj/ijJ7NlabyPi2gg==}
     peerDependencies:
       react: '>= 0.14.0'
-
-  react-text-transition@3.1.0:
-    resolution: {integrity: sha512-NtXEVAXvSh78+8JAnrVjpbftzD4kPowacv4GB2Nyq9C/8ko6fSm6M/XvKWQLCaZi68i9F28b++Sp8uVThlzLyg==}
-    peerDependencies:
-      react: '>=18.0.0'
 
   react-twemoji@0.6.0:
     resolution: {integrity: sha512-D7lP83ysE+yXZd5U1RV3aFiD90D0LCz5tgDaIXt4AYazCakGVTYClof8lf0uYLr4TzDHgYX46rMASEEqiopSAQ==}
@@ -5326,13 +5318,6 @@ snapshots:
       prismjs: 1.29.0
       react: 19.2.7
       refractor: 3.6.0
-
-  react-text-transition@3.1.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
-    dependencies:
-      '@react-spring/web': 9.7.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      react: 19.2.7
-    transitivePeerDependencies:
-      - react-dom
 
   react-twemoji@0.6.0(react@19.2.7):
     dependencies:
