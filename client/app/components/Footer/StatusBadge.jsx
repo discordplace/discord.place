@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import getStatus from '@/lib/request/general/getStatus';
 import config from '@/config';
+import { t } from '@/stores/language';
 
 export default function StatusBadge() {
   const [statusData, setStatusData] = useState(null);
