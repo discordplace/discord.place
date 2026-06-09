@@ -9,18 +9,6 @@ export default function Theme({ data, avatar_base64 }) {
   return (
     <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0px' }}>
       { }
-      {/* <h1
-        style={{
-          fontSize: '64px',
-          fontWeight: 700,
-          maxWidth: '1000px',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap'
-        }}>
-        {data.name}
-      </h1> */}
-
       <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center', marginBottom: '16px', position: 'relative' }}>
         <span
           style={{
