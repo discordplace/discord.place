@@ -1,3 +1,4 @@
+// oxlint-disable tailwindcss/no-unknown-classes
 'use client';
 
 import { FiArrowUpRight } from 'react-icons/fi';
@@ -176,7 +177,7 @@ export default function Card(props) {
                 <h2
                   className={cn(
                     'mr-1 max-w-[170px] truncate text-lg font-medium',
-                    !haveCustomColors ? 'text-primary' : `text-lg ${variables.textPrimary} h-0`
+                    !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
                   )}
                 >
                   {props.global_name || props.username}
@@ -223,7 +224,7 @@ export default function Card(props) {
               <h3
                 className={cn(
                   '-mt-1 text-sm font-medium',
-                  !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
+                  !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
                 )}
               >
                 @{props.username}
@@ -233,7 +234,7 @@ export default function Card(props) {
                 <h3
                   className={cn(
                     'text-sm font-medium',
-                    !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
+                    !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
                   )}
                 >
                   {t('profileCard.aboutMe')}
@@ -242,7 +243,7 @@ export default function Card(props) {
                 <p
                   className={cn(
                     'line-clamp-2 text-sm font-medium whitespace-pre-wrap',
-                    !haveCustomColors ? 'text-secondary' : `text-lg ${variables.textSecondary} h-0`
+                    !haveCustomColors ? 'text-secondary' : `text-[${variables.textSecondary}]`
                   )}
                 >
                   {props.bio === 'No bio provided.' ?
@@ -266,7 +267,7 @@ export default function Card(props) {
                   <h3
                     className={cn(
                       'text-sm font-medium',
-                      !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
+                      !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
                     )}
                   >
                     {t('profileCard.fields.likes')}
@@ -274,7 +275,7 @@ export default function Card(props) {
 
                   <p className={cn(
                     'text-sm font-medium',
-                    !haveCustomColors ? 'text-primary' : `text-lg ${variables.textPrimary} h-0`
+                    !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
                   )}>
                     {formatter.format(props.likes)}
                   </p>
@@ -284,7 +285,7 @@ export default function Card(props) {
                   <h3
                     className={cn(
                       'text-sm font-medium',
-                      !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
+                      !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
                     )}
                   >
                     {t('profileCard.fields.views')}
@@ -292,7 +293,7 @@ export default function Card(props) {
 
                   <p className={cn(
                     'text-sm font-medium',
-                    !haveCustomColors ? 'text-primary' : `text-lg ${variables.textPrimary} h-0`
+                    !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
                   )}>
                     {formatter.format(props.views)}
                   </p>
@@ -302,7 +303,7 @@ export default function Card(props) {
                   <h3
                     className={cn(
                       'text-sm font-medium',
-                      !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
+                      !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
                     )}
                   >
                     {t('profileCard.fields.createdAt')}
@@ -311,7 +312,7 @@ export default function Card(props) {
                   <p
                     className={cn(
                       'w-[130px] truncate text-sm font-medium',
-                      !haveCustomColors ? 'text-primary' : `text-lg ${variables.textPrimary} h-0`
+                      !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
                     )}
                   >
                     {new Date(props.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
