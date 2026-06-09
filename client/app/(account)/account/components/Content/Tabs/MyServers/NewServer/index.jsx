@@ -100,7 +100,7 @@ export default function NewServer() {
 
   return (
     <>
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%' />
       </div>
 
@@ -152,8 +152,8 @@ export default function NewServer() {
         <div className='mt-8 flex w-full flex-col gap-y-1'>
           <div
             className={cn(
-              'flex-col w-full p-6 mb-8 border-2 h-max rounded-xl',
-              allRequirementsIsMet ? 'border-green-500' : 'dark:border-neutral-500 border-neutral-400'
+              'mb-8 h-max w-full flex-col rounded-xl border-2 p-6',
+              allRequirementsIsMet ? 'border-green-500' : 'border-neutral-400 dark:border-neutral-500'
             )}
           >
             <div className='flex w-full items-start justify-between'>
@@ -180,7 +180,7 @@ export default function NewServer() {
 
                 <div
                   className={cn(
-                    'w-full h-1 rounded-lg',
+                    'h-1 w-full rounded-lg',
                     allRequirementsIsMet ? 'bg-green-600' : 'bg-neutral-600/30'
                   )}
                 >
@@ -254,7 +254,7 @@ export default function NewServer() {
           <div
             className={cn(
               'flex flex-col gap-y-1',
-              !allRequirementsIsMet && 'opacity-50 pointer-events-none select-none filter grayscale'
+              !allRequirementsIsMet && 'pointer-events-none fixed opacity-50 grayscale select-none'
             )}
           >
             <h2 className='text-lg font-semibold'>

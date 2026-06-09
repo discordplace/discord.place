@@ -104,7 +104,7 @@ const themeCategoriesIcons = {
   'All': <BiSolidCategory />,
   'Blue': <span className='block size-[14px] rounded-full bg-blue-500' />,
   'Dark': <span className='block size-[14px] rounded-full bg-black' />,
-  'Gradient': <span className='block size-[14px] rounded-full bg-gradient-to-r from-pink-400 to-purple-500' />,
+  'Gradient': <span className='block size-[14px] rounded-full bg-linear-to-r from-pink-400 to-purple-500' />,
   'Green': <span className='block size-[14px] rounded-full bg-green-500' />,
   'Light': <span className='block size-[14px] rounded-full bg-white' />,
   'Orange': <span className='block size-[14px] rounded-full bg-orange-500' />,

@@ -18,8 +18,8 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
 
           <DropdownMenu.Item
             className={cn(
-              'flex items-center justify-between p-2 font-medium rounded-xl outline-hidden cursor-pointer gap-x-2',
-              currentlyEditingValue === 'discord.place/p' ? 'bg-tertiary text-primary pointer-events-none' : 'data-highlighted:bg-tertiary text-tertiary data-highlighted:text-primary'
+              'flex cursor-pointer items-center justify-between gap-x-2 rounded-xl p-2 font-medium outline-hidden',
+              currentlyEditingValue === 'discord.place/p' ? 'pointer-events-none bg-tertiary text-primary' : 'text-tertiary data-highlighted:bg-tertiary data-highlighted:text-primary'
             )}
             onSelect={() => setCurrentlyEditingValue('discord.place/p')}
           >
@@ -31,8 +31,8 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
             <DropdownMenu.Item
               key={hostname}
               className={cn(
-                'flex items-center justify-between p-2 font-medium rounded-xl outline-hidden cursor-pointer gap-x-2',
-                currentlyEditingValue === hostname ? 'bg-tertiary text-primary pointer-events-none' : 'data-highlighted:bg-tertiary text-tertiary data-highlighted:text-primary'
+                'flex cursor-pointer items-center justify-between gap-x-2 rounded-xl p-2 font-medium outline-hidden',
+                currentlyEditingValue === hostname ? 'pointer-events-none bg-tertiary text-primary' : 'text-tertiary data-highlighted:bg-tertiary data-highlighted:text-primary'
               )}
               onSelect={() => setCurrentlyEditingValue(hostname)}
             >

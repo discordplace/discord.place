@@ -7,7 +7,7 @@ export default function ErrorState({ title, message }) {
   return (
     <div className='flex flex-col items-center gap-y-2'>
       <h2 className={cn(
-        'text-xl font-semibold text-center text-primary',
+        'text-center text-xl font-semibold text-primary',
         BricolageGrotesque.className
       )}>
         {title}

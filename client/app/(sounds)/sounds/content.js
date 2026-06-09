@@ -52,7 +52,7 @@ export default function Content() {
       <div className='flex w-full max-w-[700px] flex-col'>
         <motion.h1
           className={cn(
-            'text-5xl font-medium max-w-[700px] text-center text-primary',
+            'max-w-[700px] text-center text-5xl font-medium text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}

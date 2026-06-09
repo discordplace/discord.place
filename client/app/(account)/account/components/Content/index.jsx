@@ -285,7 +285,7 @@ export default function Content() {
           <AnimatePresence>
             {loading && (
               <motion.div
-                className='absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center bg-background'
+                className='absolute top-0 left-0 z-10 flex size-full flex-col items-center justify-center bg-background'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

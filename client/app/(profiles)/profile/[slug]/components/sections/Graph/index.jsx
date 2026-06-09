@@ -41,9 +41,9 @@ export default function Graph({ profile }) {
               <div
                 key={tab.id}
                 className={cn(
-                  'relative px-4 text-center py-2 text-sm font-semibold rounded-full select-none transition-all duration-500 bg-tertiary',
+                  'relative rounded-full bg-tertiary px-4 py-2 text-center text-sm font-semibold transition-all duration-500 select-none',
                   activeTab === tab.id && 'z-10 text-white dark:text-black',
-                  tab.disabled && 'opacity-50 cursor-not-allowed'
+                  tab.disabled && 'cursor-not-allowed opacity-50'
                 )}
                 onClick={() => !tab.disabled && setActiveTab(tab.id)}
               >
@@ -66,9 +66,9 @@ export default function Graph({ profile }) {
               <div className='group relative cursor-pointer select-none' key={tab.id} onClick={() => !tab.disabled && setActiveTab(tab.id)}>
                 <div
                   className={cn(
-                    'px-4 py-2 font-semibold text-sm z-10 relative transition-colors',
-                    activeTab === tab.id ? 'text-white dark:text-black duration-500' : 'group-hover:text-tertiary',
-                    tab.disabled && 'opacity-50 cursor-not-allowed group-hover:text-primary'
+                    'relative z-10 px-4 py-2 text-sm font-semibold transition-colors',
+                    activeTab === tab.id ? 'text-white duration-500 dark:text-black' : 'group-hover:text-tertiary',
+                    tab.disabled && 'cursor-not-allowed opacity-50 group-hover:text-primary'
                   )}
                 >
                   {tab.label}

@@ -39,7 +39,7 @@ export default function Content({ bot }) {
             <UserBanner
               id={bot.id}
               hash={bot.banner}
-              className='absolute left-0 top-0 z-1 size-full rounded-xl object-cover'
+              className='absolute top-0 left-0 z-1 size-full rounded-xl object-cover'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               size={2048}
@@ -71,7 +71,7 @@ export default function Content({ bot }) {
           >
             {bot.username}
 
-            <span className='inline select-none text-sm font-medium text-tertiary'>
+            <span className='inline text-sm font-medium text-tertiary select-none'>
               #{bot.discriminator}
             </span>
           </motion.h1>

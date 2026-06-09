@@ -1850,7 +1850,7 @@ export default function Page() {
     <div className='relative flex w-full overflow-x-clip bg-secondary'>
       <Sidebar />
 
-      <div className='flex min-h-svh w-full py-4 pl-4 pr-2'>
+      <div className='flex min-h-svh w-full py-4 pr-2 pl-4'>
         <div className='relative flex w-full flex-1 flex-col overflow-x-auto rounded-3xl border border-primary bg-background p-6 sm:p-8'>
           <div className='flex items-center text-sm font-medium'>
             <span className='text-tertiary'>
@@ -1870,7 +1870,7 @@ export default function Page() {
 
           {loading && (
             <AnimatePresence>
-              <div className='absolute left-0 top-0 z-10 flex size-full max-h-[919px] flex-col items-center justify-center bg-background'>
+              <div className='absolute top-0 left-0 z-10 flex size-full max-h-[919px] flex-col items-center justify-center bg-background'>
                 <MotionImage
                   className='size-[64px]'
                   src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}

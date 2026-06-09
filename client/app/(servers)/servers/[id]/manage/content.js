@@ -182,7 +182,7 @@ export default function Content({ server }) {
               <h2 className='flex items-center gap-x-2 text-3xl font-bold'>
                 {t('serverManagePage.title')}
 
-                <div className='select-none rounded-lg bg-quaternary p-2 text-xs font-bold uppercase'>
+                <div className='rounded-lg bg-quaternary p-2 text-xs font-bold uppercase select-none'>
                   {t('serverManagePage.escToCloseBadge')}
                 </div>
               </h2>

@@ -16,9 +16,9 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
       <>
         <div
           className={cn(
-            'inline-flex cursor-pointer items-center justify-center rounded-lg py-4 w-full leading-none border-2 border-primary px-2 sm:px-4 gap-1 sm:gap-4 bg-secondary transition-all text-tertiary select-none font-medium outline-hidden',
+            'inline-flex w-full cursor-pointer items-center justify-center gap-1 rounded-lg border-2 border-primary bg-secondary px-2 py-4 leading-none font-medium text-tertiary outline-hidden transition-all select-none sm:gap-4 sm:px-4',
             openState && 'border-purple-500 bg-quaternary',
-            disabled && 'opacity-50 pointer-events-none',
+            disabled && 'pointer-events-none opacity-50',
             triggerClassName
           )}
           onClick={() => setOpenState(!openState)}
@@ -29,7 +29,7 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
           <IoChevronDownSharp
             className={cn(
               'text-tertiary transition-transform duration-300',
-              openState && 'transform rotate-180'
+              openState && 'rotate-180 transform'
             )}
           />
         </div>
@@ -51,8 +51,8 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
       >
         <RadixSelect.Trigger
           className={cn(
-            'inline-flex items-center justify-center rounded-lg py-4 w-max leading-none border-2 border-primary px-4 gap-4 bg-secondary hover:bg-tertiary focus-visible:border-purple-500 transition-all focus-visible:bg-quaternary text-tertiary select-none font-medium outline-hidden data-[state=open]:border-purple-500 data-[state=open]:bg-quaternary',
-            disabled && 'opacity-50 pointer-events-none',
+            'inline-flex w-max items-center justify-center gap-4 rounded-lg border-2 border-primary bg-secondary p-4 leading-none font-medium text-tertiary outline-hidden transition-all select-none hover:bg-tertiary focus-visible:border-purple-500 focus-visible:bg-quaternary data-[state=open]:border-purple-500 data-[state=open]:bg-quaternary',
+            disabled && 'pointer-events-none opacity-50',
             triggerClassName
           )}
           aria-label={placeholder}
@@ -78,7 +78,7 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
                 <RadixSelect.Item
                   key={option.value}
                   className={cn(
-                    'relative flex cursor-pointer select-none items-center gap-x-2 p-4 font-medium leading-none text-tertiary transition-colors data-disabled:pointer-events-none data-[state=checked]:pointer-events-none data-highlighted:bg-tertiary data-[state=checked]:bg-quaternary data-highlighted:text-primary data-[state=checked]:text-primary data-disabled:opacity-50 data-highlighted:outline-hidden',
+                    'relative flex cursor-pointer items-center gap-x-2 p-4 leading-none font-medium text-tertiary transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-highlighted:bg-tertiary data-highlighted:text-primary data-highlighted:outline-hidden data-[state=checked]:pointer-events-none data-[state=checked]:bg-quaternary data-[state=checked]:text-primary',
                     itemContainerClassName
                   )}
                   value={option.value}

@@ -58,7 +58,7 @@ export default function ActiveTimeouts() {
                   <div
                     key={timeout.id}
                     className={cn(
-                      'flex items-center flex-wrap p-3 gap-4 justify-center sm:justify-between bg-secondary border-y-primary',
+                      'flex flex-wrap items-center justify-center gap-4 border-y-primary bg-secondary p-3 sm:justify-between',
                       index === data.timeouts.servers.length - 1 ? 'rounded-b-xl' : '',
                       index === 0 ? 'rounded-t-xl' : ''
                     )}
@@ -124,7 +124,7 @@ export default function ActiveTimeouts() {
                   <div
                     key={timeout.id}
                     className={cn(
-                      'flex items-center flex-wrap justify-center p-3 gap-4 sm:justify-between bg-secondary border-y-primary',
+                      'flex flex-wrap items-center justify-center gap-4 border-y-primary bg-secondary p-3 sm:justify-between',
                       index === data.timeouts.bots.length - 1 ? 'rounded-b-xl' : '',
                       index === 0 ? 'rounded-t-xl' : ''
                     )}

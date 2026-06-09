@@ -88,8 +88,8 @@ export default function Table({ tabs }) {
     <>
       <div
         className={cn(
-          'transition-all duration-300 flex items-center gap-x-2',
-          (currentTabData.columns.length > 0 && currentSort.name) ? 'opacity-100 mb-0' : 'opacity-0 -mb-14'
+          'flex items-center gap-x-2 transition-all duration-300',
+          (currentTabData.columns.length > 0 && currentSort.name) ? 'mb-0 opacity-100' : '-mb-14 opacity-0'
         )}
       >
         <span className='text-xs font-medium text-tertiary'>
@@ -97,7 +97,7 @@ export default function Table({ tabs }) {
         </span>
 
         <button
-          className='flex items-center gap-x-1.5 rounded-full border border-primary bg-secondary py-0.5 pl-1.5 pr-2 text-xs text-secondary hover:bg-quaternary'
+          className='flex items-center gap-x-1.5 rounded-full border border-primary bg-secondary py-0.5 pr-2 pl-1.5 text-xs text-secondary hover:bg-quaternary'
           onClick={() => setCurrentSort({ key: '', name: '', order: '' })}
         >
           {CurrentSortIcon && <CurrentSortIcon size={14} />}
@@ -113,8 +113,8 @@ export default function Table({ tabs }) {
           <div
             key={tab.label}
             className={cn(
-              'flex w-full justify-center sm:w-max bg-secondary sm:bg-[unset] items-center gap-x-2 sm:py-0 py-2 px-4 sm:px-2 relative text-sm hover:text-primary cursor-pointer text-tertiary transition-colors rounded-lg',
-              currentTab === tab.label && 'text-primary pointer-events-none'
+              'relative flex w-full cursor-pointer items-center justify-center gap-x-2 rounded-lg bg-secondary px-4 py-2 text-sm text-tertiary transition-colors hover:text-primary sm:w-max sm:bg-[unset] sm:px-2 sm:py-0',
+              currentTab === tab.label && 'pointer-events-none text-primary'
             )}
             onClick={() => setCurrentTab(tab.label)}
           >
@@ -127,7 +127,7 @@ export default function Table({ tabs }) {
             {currentTab === tab.label && (
               <motion.div
                 layoutId='emojisQueueCurrentTabIndicator'
-                className='absolute bottom-[-52.5px] left-0 hidden h-[35px] w-full rounded-lg bg-black dark:bg-white sm:block'
+                className='absolute bottom-[-52.5px] left-0 hidden h-[35px] w-full rounded-lg bg-black sm:block dark:bg-white'
               />
             )}
           </div>
@@ -136,9 +136,9 @@ export default function Table({ tabs }) {
         {hasSearchableColumns && (
           <div
             className={cn(
-              'select-none relative z-10 w-full sm:w-max justify-center flex-row flex items-center font-medium text-sm sm:text-xs text-tertiary gap-x-1.5 bg-secondary sm:bg-tertiary hover:text-primary transition-colors sm:transition-none sm:hover:bg-quaternary rounded-lg sm:rounded-full py-1.5 sm:py-1 px-2.5',
+              'relative z-10 flex w-full flex-row items-center justify-center gap-x-1.5 rounded-lg bg-secondary px-2.5 py-1.5 text-sm font-medium text-tertiary transition-colors select-none hover:text-primary sm:w-max sm:rounded-full sm:bg-tertiary sm:py-1 sm:text-xs sm:transition-none sm:hover:bg-quaternary',
               currentlySearching ? 'cursor-text' : 'cursor-pointer',
-              isMobile && currentlySearching && 'transition-none bg-transparent ring-2 ring-[rgba(var(--border-primary))] [&:has(input:is(:focus-visible))]:ring-purple-500'
+              isMobile && currentlySearching && 'bg-transparent ring-2 ring-[rgba(var(--border-primary))] transition-none [&:has(input:is(:focus-visible))]:ring-purple-500'
             )}
             onClick={() => {
               if (currentlySearching) {
@@ -230,15 +230,15 @@ export default function Table({ tabs }) {
 
         <table className='w-full table-auto'>
           {displayedColumns.length > 0 && (
-            <thead className='relative select-none text-left'>
+            <thead className='relative text-left select-none'>
               <tr>
                 {currentTabData.rows?.map((row, index) => (
                   <th
                     key={`row-${row.name}`}
                     scope='col'
                     className={cn(
-                      'px-2 py-6 text-sm font-medium text-tertiary min-w-[150px]',
-                      row.sortable && 'cursor-pointer hover:text-primary transition-colors'
+                      'min-w-[150px] px-2 py-6 text-sm font-medium text-tertiary',
+                      row.sortable && 'cursor-pointer transition-colors hover:text-primary'
                     )}
                     onClick={() => {
                       if (!row.sortable) return;
@@ -279,8 +279,8 @@ export default function Table({ tabs }) {
                   <td
                     key={`row-${rowIndex}`}
                     className={cn(
-                      'p-2 min-w-[300px] sm:min-w-[unset] h-[60px] border-y border-[rgba(var(--bg-tertiary))] transition-colors group-hover:cursor-pointer',
-                      selectedItems.find(col => isEqual(col, column)) ? 'bg-tertiary border-[rgba(var(--bg-quaternary))] select-none' : 'group-hover:bg-secondary'
+                      'h-[60px] min-w-[300px] border-y border-[rgba(var(--bg-tertiary))] p-2 transition-colors group-hover:cursor-pointer sm:min-w-[unset]',
+                      selectedItems.find(col => isEqual(col, column)) ? 'border-[rgba(var(--bg-quaternary))] bg-tertiary select-none' : 'group-hover:bg-secondary'
                     )}
                     onClick={() => handleSelect(column)}
                   >
@@ -294,14 +294,14 @@ export default function Table({ tabs }) {
                         >
                           <button
                             className={cn(
-                              'w-[18px] h-[18px] flex justify-center items-center border-2 outline-hidden hover:bg-[rgba(var(--border-primary))] transition-colors border-primary rounded-md',
-                              selectedItems.find(col => isEqual(col, column)) && 'bg-purple-500 hover:bg-purple-500 text-white'
+                              'flex size-[18px] items-center justify-center rounded-md border-2 border-primary outline-hidden transition-colors hover:bg-[rgba(var(--border-primary))]',
+                              selectedItems.find(col => isEqual(col, column)) && 'bg-purple-500 text-white hover:bg-purple-500'
                             )}
                           >
                             <FaCheck
                               size={10}
                               className={cn(
-                                'transition-opacity opacity-0',
+                                'opacity-0 transition-opacity',
                                 selectedItems.find(col => isEqual(col, column)) && 'opacity-100'
                               )}
                             />
@@ -338,7 +338,7 @@ export default function Table({ tabs }) {
           {(isMobile && selectedItems.length > 0) && (
             <>
               <motion.button
-                className='fixed bottom-8 right-6 flex items-center gap-x-2 rounded-full bg-tertiary px-4 py-2 text-sm font-medium text-secondary transition-colors'
+                className='fixed right-6 bottom-8 flex items-center gap-x-2 rounded-full bg-tertiary px-4 py-2 text-sm font-medium text-secondary transition-colors'
                 onClick={() => setDrawerOpen(true)}
                 initial={{
                   filter: 'blur(10px)',
@@ -444,7 +444,7 @@ export default function Table({ tabs }) {
                   >
                     <button
                       className={cn(
-                        'flex items-center gap-x-2 text-sm text-tertiary hover:text-primary hover:bg-quaternary transition-all px-3 py-1.5 rounded-xl',
+                        'flex items-center gap-x-2 rounded-xl px-3 py-1.5 text-sm text-tertiary transition-all hover:bg-quaternary hover:text-primary',
                         typeof action.hide === 'function' ? action.hide?.(selectedItems) : action.hide === true && 'hidden'
                       )}
                       onClick={() => action.action?.(selectedItems)}

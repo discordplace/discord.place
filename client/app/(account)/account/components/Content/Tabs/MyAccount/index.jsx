@@ -140,14 +140,14 @@ export default function MyAccount() {
             className='relative bottom-10 left-4 z-1 -mb-20 rounded-full border-8 border-[rgba(var(--bg-secondary))]'
           />
 
-          <div className='ml-28 mt-2'>
+          <div className='mt-2 ml-28'>
             <div className='flex flex-col'>
               <h3 className='text-lg font-bold text-primary'>{user?.global_name || user?.username}</h3>
               <p className='text-sm font-medium text-tertiary'>@{user?.username}</p>
             </div>
           </div>
 
-          <div className='mx-auto mb-1.5 mt-4 flex h-max w-[98%] flex-col gap-y-4 rounded-2xl bg-tertiary p-4'>
+          <div className='mx-auto mt-4 mb-1.5 flex h-max w-[98%] flex-col gap-y-4 rounded-2xl bg-tertiary p-4'>
             <div className='flex flex-col'>
               <h3 className='text-sm font-bold text-primary'>
                 {t('accountPage.tabs.myAccount.sections.connectedAccount.fields.displayName')}
@@ -186,7 +186,7 @@ export default function MyAccount() {
                   {t('accountPage.tabs.myAccount.sections.premium.subtitle')}
                 </p>
 
-                <div className='flex select-none flex-wrap items-center gap-2'>
+                <div className='flex flex-wrap items-center gap-2 select-none'>
                   <span className='bg-linear-to-r from-purple-400 to-purple-600 bg-clip-text text-sm font-semibold text-transparent'>
                     {plansLoading ? (
                       <>
@@ -209,7 +209,7 @@ export default function MyAccount() {
               </>
             ) : (
               <div className='relative max-w-[500px] rounded-xl border-2 border-purple-500 p-2.5'>
-                <div className='absolute left-0 top-0 size-full rounded-xl bg-linear-to-r from-purple-500/25 via-purple-500/10'></div>
+                <div className='absolute top-0 left-0 size-full rounded-xl bg-linear-to-r from-purple-500/25 via-purple-500/10'></div>
 
                 <div className='flex items-center gap-x-4'>
                   <GoHeartFill className='min-h-[20px] min-w-[20px]' />

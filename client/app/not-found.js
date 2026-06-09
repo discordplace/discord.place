@@ -28,7 +28,7 @@ export default function NotFound() {
 
   return (
     <div className='relative z-0 flex h-svh w-full flex-col items-center justify-center px-8 sm:px-0'>
-      <div className='absolute left-0 top-0 z-[-1] size-full overflow-hidden rounded-lg'>
+      <div className='absolute top-0 left-0 z-[-1] size-full overflow-hidden rounded-lg'>
         <Grainient
           color1={theme === 'dark' ? '#0f0f14' : '#eeeeee'}
           color2="#5b3f76"
@@ -70,7 +70,7 @@ export default function NotFound() {
 
         <div className='mt-6 flex w-full items-center justify-between'>
           <Link
-            className='pointer-events-auto w-max rounded-full px-4 py-1.5 text-sm font-semibold backdrop-blur-xs dark:bg-white/5 text-primary bg-black/5 hover:bg-black/10 dark:hover:bg-white/10'
+            className='pointer-events-auto w-max rounded-full bg-black/5 px-4 py-1.5 text-sm font-semibold text-primary backdrop-blur-xs hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10'
             href='/'
           >
             {t('buttons.goHome')}

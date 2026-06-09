@@ -63,7 +63,7 @@ export default function CollapsedHeader({ pathname }) {
         >
           <FiX
             className={cn(
-              'text-2xl text-tertiary absolute transition-opacity duration-300',
+              'absolute text-2xl text-tertiary transition-opacity duration-300',
               !open && 'opacity-0'
             )}
           />

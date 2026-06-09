@@ -105,7 +105,7 @@ export default function About({ bot }) {
         rel='noopener noreferrer'
       >
         {bot.github_repository.data.language && (
-          <span className='w-max select-none rounded-full border border-black/40 bg-black/20 px-2 py-0.5 text-xs font-medium text-primary dark:border-white/40 dark:bg-white/20'>
+          <span className='w-max rounded-full border border-black/40 bg-black/20 px-2 py-0.5 text-xs font-medium text-primary select-none dark:border-white/40 dark:bg-white/20'>
             {bot.github_repository.data.language}
           </span>
         )}
@@ -133,7 +133,7 @@ export default function About({ bot }) {
           </span>
         </div>
 
-        <p className='-mt-2 line-clamp-3 whitespace-pre-wrap text-xs text-tertiary'>
+        <p className='-mt-2 line-clamp-3 text-xs whitespace-pre-wrap text-tertiary'>
           {bot.github_repository.data.description}
         </p>
 
@@ -194,7 +194,7 @@ export default function About({ bot }) {
           <motion.div
             key={key}
             className={cn(
-              'flex w-full items-start h-max gap-x-4',
+              'flex h-max w-full items-start gap-x-4',
               index === keys.length - 1 && index % 2 === 0 && 'sm:col-span-2'
             )}
             initial={{ opacity: 0, y: -10 }}

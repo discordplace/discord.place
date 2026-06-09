@@ -102,7 +102,7 @@ export default function ColumnRenderer({ data }) {
     }
     case 'user': {
       return (
-        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pr-2 pl-1'>
           <UserAvatar
             id={data.id}
             hash={data.avatar}
@@ -126,7 +126,7 @@ export default function ColumnRenderer({ data }) {
     }
     case 'server': {
       return (
-        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pr-2 pl-1'>
           <ServerIcon
             id={data.id}
             hash={data.icon}
@@ -150,7 +150,7 @@ export default function ColumnRenderer({ data }) {
     }
     case 'bot': {
       return (
-        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pr-2 pl-1'>
           <UserAvatar
             id={data.id}
             hash={data.avatar}
@@ -422,7 +422,7 @@ export default function ColumnRenderer({ data }) {
     }
     case 'theme': {
       return (
-        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
+        <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pr-2 pl-1'>
           <div className='relative flex items-center justify-center'>
             <span
               className='block size-4 rounded-full'

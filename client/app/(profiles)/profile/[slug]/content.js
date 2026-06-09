@@ -32,7 +32,7 @@ export default function Content({ profile }) {
               <UserBanner
                 id={profile.id}
                 hash={profile.banner}
-                className='absolute left-0 top-0 z-1 size-full rounded-xl object-cover'
+                className='absolute top-0 left-0 z-1 size-full rounded-xl object-cover'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 size={2048}
@@ -40,7 +40,7 @@ export default function Content({ profile }) {
                 height={2048}
               />
 
-              <div className='absolute left-0 top-0 z-2 size-full rounded-xl bg-linear-to-b from-transparent via-secondary/80 to-secondary' />
+              <div className='absolute top-0 left-0 z-2 size-full rounded-xl bg-linear-to-b from-transparent via-secondary/80 to-secondary' />
             </>
           )}
 

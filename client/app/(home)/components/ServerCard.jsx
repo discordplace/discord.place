@@ -19,8 +19,8 @@ export default function ServerCard({ data }) {
   return (
     <Container
       className={cn(
-        'flex select-none items-center gap-x-1 rounded-full border border-primary bg-secondary py-1 pl-1 pr-3',
-        data.is_listed ? 'hover:bg-quaternary transition-colors' : 'pointer-events-none'
+        'flex items-center gap-x-1 rounded-full border border-primary bg-secondary py-1 pr-3 pl-1 select-none',
+        data.is_listed ? 'transition-colors hover:bg-quaternary' : 'pointer-events-none'
       )}
       href={data.is_listed ? `/servers/${data.id}` : null}
     >
@@ -39,7 +39,7 @@ export default function ServerCard({ data }) {
         </div>
       )}
 
-      <span className='max-w-[100px] overflow-hidden whitespace-nowrap text-xs  font-medium text-tertiary'>
+      <span className='max-w-[100px] overflow-hidden text-xs font-medium whitespace-nowrap text-tertiary'>
         {data.name}
       </span>
 

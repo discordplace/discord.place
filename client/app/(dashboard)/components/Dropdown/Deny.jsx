@@ -43,7 +43,7 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
               <input
                 type='text'
                 placeholder='Enter a reason..'
-                className='w-full rounded-xl bg-tertiary px-3 py-2 text-sm text-secondary outline-hidden ring-purple-500 transition-all placeholder:text-placeholder hover:bg-quaternary hover:ring-2'
+                className='w-full rounded-xl bg-tertiary px-3 py-2 text-sm text-secondary ring-purple-500 outline-hidden transition-all placeholder:text-placeholder hover:bg-quaternary hover:ring-2'
                 value={value}
                 onChange={event => setValue(event.target.value)}
               />

@@ -241,7 +241,7 @@ const markdownComponents = {
       <code
         className={cn(
           className,
-          'px-1.5 py-1 text-sm bg-quaternary text-primary rounded-lg before:content-[""] after:content-[""]'
+          'rounded-lg bg-quaternary px-1.5 py-1 text-sm text-primary before:content-[""] after:content-[""]'
         )}
       >
         {children}

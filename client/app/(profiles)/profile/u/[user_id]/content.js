@@ -72,7 +72,7 @@ export default function Content({ user }) {
   const sortedFlags = useSortFlags(user.flags);
 
   return (
-    <div className='mb-8 mt-32 flex w-full flex-col items-center gap-y-8 px-8 lg:px-0'>
+    <div className='mt-32 mb-8 flex w-full flex-col items-center gap-y-8 px-8 lg:px-0'>
       <div className='relative h-max w-full max-w-[600px] rounded-4xl bg-secondary p-3'>
         {user.bannerURL ? (
           <div className='relative'>
@@ -88,7 +88,7 @@ export default function Content({ user }) {
             />
 
             {user.bannerURL.includes('.gif') && (
-              <div className='pointer-events-none absolute right-4 top-4 rounded-full px-2 py-0.5 text-xs font-bold text-white shadow-xl shadow-black backdrop-blur-2xl'>
+              <div className='pointer-events-none absolute top-4 right-4 rounded-full px-2 py-0.5 text-xs font-bold text-white shadow-xl shadow-black backdrop-blur-2xl'>
                 GIF
               </div>
             )}
@@ -152,7 +152,7 @@ export default function Content({ user }) {
               {user.globalName || user.username}
 
               {user.bot && (
-                <span className='flex select-none items-center gap-x-1 rounded-full bg-[#5865F2] px-1.5 py-0.5 text-xs font-semibold uppercase text-white'>
+                <span className='flex items-center gap-x-1 rounded-full bg-[#5865F2] px-1.5 py-0.5 text-xs font-semibold text-white uppercase select-none'>
                   {user.bot_verified && (
                     <Tooltip content={t('userProfile.tooltip.verifiedApp')}>
                       <div>
@@ -232,14 +232,14 @@ export default function Content({ user }) {
               {t('userProfile.about.title')}
             </h3>
 
-            <p className='line-clamp-3 whitespace-pre-wrap text-sm font-normal text-tertiary'>
+            <p className='line-clamp-3 text-sm font-normal whitespace-pre-wrap text-tertiary'>
               {user.profile?.bio || t('userProfile.about.noBio')}
             </p>
           </div>
 
           <div
             className={cn(
-              'hidden sm:flex flex-col w-full items-end gap-y-2',
+              'hidden w-full flex-col items-end gap-y-2 sm:flex',
               user.bot && 'opacity-20 select-none'
             )}
           >

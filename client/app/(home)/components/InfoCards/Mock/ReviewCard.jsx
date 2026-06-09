@@ -19,7 +19,7 @@ export default function MockReviewCard({ username, content, rating }) {
 
         <div
           className={cn(
-            'flex mobile:text-base text-xs items-center font-bold gap-x-1',
+            'flex items-center gap-x-1 text-xs font-bold mobile:text-base',
             rating === 5 && 'text-yellow-500',
             rating === 4 && 'text-orange-400',
             rating === 3 && 'text-orange-600',

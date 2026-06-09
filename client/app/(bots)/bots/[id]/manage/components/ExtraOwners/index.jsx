@@ -107,7 +107,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
                   <input
                     type='text'
                     placeholder={botId}
-                    className='w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-hidden ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+                    className='w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary ring-purple-500 outline-hidden transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
                     ref={newExtraOwnerIdInputRef}
                   />
                 ),
@@ -162,7 +162,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
             >
               <div
                 className={cn(
-                  'flex items-center transition-opacity cursor-pointer disabled:pointer-events-none disabled:opacity-70 gap-x-2 hover:opacity-70',
+                  'flex cursor-pointer items-center gap-x-2 transition-opacity hover:opacity-70 disabled:pointer-events-none disabled:opacity-70',
                   !canEditExtraOwners && 'pointer-events-none'
                 )}
                 onClick={() => continueRemoveExtraOwner(extraOwner.id)}

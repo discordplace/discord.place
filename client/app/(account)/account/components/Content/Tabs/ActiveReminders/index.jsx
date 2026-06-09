@@ -60,14 +60,14 @@ export default function ActiveReminders() {
                   .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
                   .map(reminder => (
                     <div
-                      className='flex w-full cursor-pointer select-none items-start justify-between rounded-xl border border-primary bg-secondary p-3 hover:bg-tertiary'
+                      className='flex w-full cursor-pointer items-start justify-between rounded-xl border border-primary bg-secondary p-3 select-none hover:bg-tertiary'
                       key={reminder._id}
                       onClick={() => setActiveReminder(activeReminder === reminder._id ? null : reminder._id)}
                     >
                       <div className='flex flex-col'>
                         <div
                           className={cn(
-                            'flex transition-all mt-[0.4rem] duration-300 items-center gap-x-2 text-sm font-semibold text-primary',
+                            'mt-[0.4rem] flex items-center gap-x-2 text-sm font-semibold text-primary transition-all duration-300',
                             activeReminder === reminder._id && 'mt-0'
                           )}
                         >
@@ -81,7 +81,7 @@ export default function ActiveReminders() {
                             <IoChevronDown
                               className={cn(
                                 'transition-transform',
-                                activeReminder === reminder._id && 'transform rotate-180'
+                                activeReminder === reminder._id && 'rotate-180 transform'
                               )}
                             />
                           </span>
@@ -97,7 +97,7 @@ export default function ActiveReminders() {
                               {t('accountPage.tabs.activeReminders.fields.reminders.about')}
                             </div>
 
-                            <div className='max-w-[60w] wrap-break-word text-xs font-medium text-tertiary xl:max-w-[450px]'>
+                            <div className='max-w-[60w] text-xs font-medium wrap-break-word text-tertiary xl:max-w-[450px]'>
                               {reminder.about}
                             </div>
 
@@ -159,7 +159,7 @@ export default function ActiveReminders() {
                   <div
                     key={voteReminder._id}
                     className={cn(
-                      'flex items-center p-3 gap-4 justify-center flex-wrap sm:justify-between bg-secondary border-y-primary',
+                      'flex flex-wrap items-center justify-center gap-4 border-y-primary bg-secondary p-3 sm:justify-between',
                       index === data.voteReminders.length - 1 ? 'rounded-b-xl' : '',
                       index === 0 ? 'rounded-t-xl' : ''
                     )}

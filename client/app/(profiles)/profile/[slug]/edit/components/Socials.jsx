@@ -168,14 +168,14 @@ export default function Socials({ profile }) {
                   size={20}
                 />
 
-                <span className='select-none font-semibold'>
+                <span className='font-semibold select-none'>
                   {social.type === 'custom' ? getDisplayableURL(social.link) : social.handle}
                 </span>
               </div>
 
               <div className='flex items-center gap-x-1'>
                 <Link
-                  className='text-tertiary opacity-0 transition-all hover:text-primary group-hover:opacity-100'
+                  className='text-tertiary opacity-0 transition-all group-hover:opacity-100 hover:text-primary'
                   href={social.link}
                   target='_blank'
                 >
@@ -203,7 +203,7 @@ export default function Socials({ profile }) {
 
         <div
           className={cn(
-            'transition-all [&:has(input:focus)]:bg-tertiary border border-primary w-full max-w-[calc(50%-1rem)] rounded-2xl px-2 py-3 text-sm font-semibold bg-secondary items-center justify-between gap-x-2',
+            'w-full max-w-[calc(50%-1rem)] items-center justify-between gap-x-2 rounded-2xl border border-primary bg-secondary px-2 py-3 text-sm font-semibold transition-all [&:has(input:focus)]:bg-tertiary',
             currentlyAddingNewSocial ? 'flex' : 'hidden'
           )}
         >
@@ -261,7 +261,7 @@ export default function Socials({ profile }) {
         {socials.length < config.profilesMaxSocialsLength && (
           <button
             className={cn(
-              'flex w-full py-3 max-w-[calc(50%-1rem)] rounded-2xl justify-center text-sm font-semibold border-primary border hover:bg-tertiary hover:border-[rgb(var(--bg-tertiary))] items-center gap-x-2 text-secondary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
+              'flex w-full max-w-[calc(50%-1rem)] items-center justify-center gap-x-2 rounded-2xl border border-primary py-3 text-sm font-semibold text-secondary hover:border-[rgb(var(--bg-tertiary))] hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
               currentlyAddingNewSocial && 'hidden'
             )}
             onClick={() => setCurrentlyAddingNewSocial(true)}

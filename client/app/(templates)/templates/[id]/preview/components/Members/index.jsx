@@ -17,16 +17,16 @@ export default function Members({ template, isMobile, currentlyOpenedSection }) 
   return (
     <div
       className={cn(
-        'px-4 pt-6 max-w-[250px] flex flex-col overflow-y-auto max-h-[calc(100svh-49px)] pb-4 scrollbar-hide gap-y-6 h-full bg-[#2b2d31] w-full',
+        'flex size-full max-h-[calc(100svh-49px)] max-w-[250px] scrollbar-none flex-col gap-y-6 overflow-y-auto bg-[#2b2d31] px-4 pt-6 pb-4',
         isMobile && currentlyOpenedSection === 'members' && 'max-h-svh max-w-[unset]'
       )}
     >
       {template.data.roles.map((role, index) => (
         <div className='flex flex-col' key={index}>
-          <h2 className='flex flex-wrap items-center gap-x-2 text-sm font-semibold uppercase text-[#949ba4]'>
+          <h2 className='flex flex-wrap items-center gap-x-2 text-sm font-semibold text-[#949ba4] uppercase'>
             <span className='max-w-[180px] truncate'>{role.name}</span> — 1
 
-            <span className='block text-xs font-medium normal-case text-[#949ba480] lg:hidden'>
+            <span className='block text-xs font-medium text-[#949ba480] normal-case lg:hidden'>
               {t('templatePreviewPage.clickToCopyColor')}
             </span>
           </h2>
@@ -38,7 +38,7 @@ export default function Members({ template, isMobile, currentlyOpenedSection }) 
               hide={isMobile}
             >
               <div
-                className='group -ml-2 flex cursor-pointer select-none items-center gap-x-2 rounded-md px-1.5 py-1 hover:bg-[#35373c]'
+                className='group -ml-2 flex cursor-pointer items-center gap-x-2 rounded-md px-1.5 py-1 select-none hover:bg-[#35373c]'
                 onClick={() => {
                   if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
 
@@ -49,7 +49,7 @@ export default function Members({ template, isMobile, currentlyOpenedSection }) 
                 <div className='relative flex size-[32px] items-center justify-center rounded-full' style={{ backgroundColor: brandColors[index] }}>
                   <FaDiscord className='text-white' size={20} />
 
-                  <span className='absolute -bottom-0.5 -right-1 size-4 rounded-full border-4 border-[#2b2d31] bg-[#3ba55c]' />
+                  <span className='absolute -right-1 -bottom-0.5 size-4 rounded-full border-4 border-[#2b2d31] bg-[#3ba55c]' />
                 </div>
 
                 <div className='text-sm font-medium' style={{ color: role.color }}>

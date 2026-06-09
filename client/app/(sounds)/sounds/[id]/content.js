@@ -50,7 +50,7 @@ export default function Content({ sound }) {
 
   return (
     <div className='flex w-full items-center justify-center'>
-      <div className='mb-16 mt-48 flex w-full max-w-[1000px] flex-col gap-y-4 px-4 lg:px-0'>
+      <div className='mt-48 mb-16 flex w-full max-w-[1000px] flex-col gap-y-4 px-4 lg:px-0'>
         {!sound.approved && (
           <div className='flex flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4'>
             <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>
@@ -128,7 +128,7 @@ export default function Content({ sound }) {
                   {sound.categories.map(category => (
                     <span
                       key={category}
-                      className='flex select-none items-center gap-x-1 rounded-lg text-sm font-semibold text-tertiary'
+                      className='flex items-center gap-x-1 rounded-lg text-sm font-semibold text-tertiary select-none'
                     >
                       {config.soundCategoriesIcons[category]}
                       {t(`categories.${category}`)}

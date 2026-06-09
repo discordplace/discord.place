@@ -156,6 +156,9 @@ importers:
       '@stylistic/eslint-plugin':
         specifier: ^5.10.0
         version: 5.10.0(eslint@10.4.1(jiti@2.7.0))
+      '@tailwindcss/node':
+        specifier: ^4.3.0
+        version: 4.3.0
       '@tailwindcss/postcss':
         specifier: ^4.3.0
         version: 4.3.0
@@ -171,6 +174,9 @@ importers:
       oxlint:
         specifier: ^1.68.0
         version: 1.68.0
+      oxlint-tailwindcss:
+        specifier: ^1.2.0
+        version: 1.2.0(@oxlint/plugins@1.69.0)
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -827,6 +833,10 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [win32]
+
+  '@oxlint/plugins@1.69.0':
+    resolution: {integrity: sha512-4MLUf2a9ai9EymFvcIBvaCkHJkvOA/WHmPhzrTu0cRBYpaaMBxmwwjGTOYdBC149XAwtaL7eaCnojkqxdMvuKg==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   '@radix-ui/number@1.1.2':
     resolution: {integrity: sha512-ceTwaxc4I5IOi97DgCotl3pqiyRGvffcc0oOsE2dQYaJOFIDsDt4VWG6xEbg1QePv9QWausCEIppud/tJ1wNig==}
@@ -2236,6 +2246,12 @@ packages:
       vite-plus:
         optional: true
 
+  oxlint-tailwindcss@1.2.0:
+    resolution: {integrity: sha512-qUAguxH9aPmzQI3GyDwqqKqxXv6U/QrxohKnF9s1dKvv2x/3mSwOQajT1+ZvCw9DFBVeMbXGagMBoe5v5nhl0Q==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@oxlint/plugins': '>=1.43.0'
+
   oxlint@1.68.0:
     resolution: {integrity: sha512-dXcbq+xsmLrMy6T8d0euf3IYUfLmjHIE11pOxiUSi5LHkFZaYPv568R6sEjcavVpUxoaQe66UBuK4HEi74NxpA==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -3108,7 +3124,7 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.31':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.5
 
   '@next/env@16.2.7': {}
 
@@ -3261,6 +3277,8 @@ snapshots:
 
   '@oxlint/binding-win32-x64-msvc@1.68.0':
     optional: true
+
+  '@oxlint/plugins@1.69.0': {}
 
   '@radix-ui/number@1.1.2': {}
 
@@ -4858,6 +4876,12 @@ snapshots:
       '@oxfmt/binding-win32-arm64-msvc': 0.53.0
       '@oxfmt/binding-win32-ia32-msvc': 0.53.0
       '@oxfmt/binding-win32-x64-msvc': 0.53.0
+
+  oxlint-tailwindcss@1.2.0(@oxlint/plugins@1.69.0):
+    dependencies:
+      '@oxlint/plugins': 1.69.0
+      '@tailwindcss/node': 4.3.0
+      tailwindcss: 4.3.0
 
   oxlint@1.68.0:
     optionalDependencies:

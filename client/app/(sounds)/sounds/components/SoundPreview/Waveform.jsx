@@ -161,7 +161,7 @@ export default function Waveform({ id, name: soundName }) {
         onSeeking={wavesurfer => setCurrentTime(wavesurfer.getCurrentTime())}
       />
 
-      <div className='mt-2 flex select-none items-center justify-between'>
+      <div className='mt-2 flex items-center justify-between select-none'>
         <span className='min-w-[40px] text-xs font-medium text-tertiary'>
           {currentTime > totalTime ? totalTime.toFixed(2) : currentTime.toFixed(2)}s
         </span>

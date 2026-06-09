@@ -93,14 +93,14 @@ export default function ServicesDropdown() {
             <div className='group flex items-center gap-x-3 rounded-xl px-4 py-2 hover:bg-tertiary'>
               <div className={cn(
                 'flex size-[40px] shrink-0 items-center justify-center rounded-lg text-lg',
-                link.href ? 'bg-quaternary text-primary' : 'text-white bg-purple-700'
+                link.href ? 'bg-quaternary text-primary' : 'bg-purple-700 text-white'
               )}>
                 <link.icon className='transition-all group-hover:scale-110' />
               </div>
 
               <div className='flex flex-col'>
                 <h1 className='text-sm font-semibold text-secondary group-hover:text-primary'>{link.name}</h1>
-                <p className='line-clamp-2 overflow-hidden whitespace-pre-wrap text-xs font-medium text-tertiary group-hover:text-secondary'>{link.description}</p>
+                <p className='line-clamp-2 overflow-hidden text-xs font-medium whitespace-pre-wrap text-tertiary group-hover:text-secondary'>{link.description}</p>
               </div>
             </div>
           </Container>

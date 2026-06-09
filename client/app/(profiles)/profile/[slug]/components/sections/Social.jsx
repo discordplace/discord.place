@@ -48,7 +48,7 @@ export default function Social({ data }) {
               .map((social, index) => (
                 <MotionLink
                   key={social._id}
-                  className='group flex w-full select-none items-center gap-x-5 rounded-2xl bg-secondary py-4 pl-6 ring-purple-500 transition-[background-color] hover:bg-tertiary hover:ring-2'
+                  className='group flex w-full items-center gap-x-5 rounded-2xl bg-secondary py-4 pl-6 ring-purple-500 transition-[background-color] select-none hover:bg-tertiary hover:ring-2'
                   href={social.link}
                   target='_blank'
                   rel='noopener noreferrer'

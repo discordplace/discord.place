@@ -64,7 +64,7 @@ export default function InfoCards() {
         title={t('home.infoCards.2.title')}
         description={t('home.infoCards.2.description')}
         content={(
-          <div className='grid size-full grid-cols-1 place-items-center overflow-hidden rounded-3xl mobile:grid-cols-2 mobile:gap-x-40 mobile:[place-items:unset]'>
+          <div className='grid size-full grid-cols-1 place-items-center overflow-hidden rounded-3xl mobile:grid-cols-2 mobile:[place-items:unset] mobile:gap-x-40'>
             <MockProfileCard />
             <MockProfileCard />
           </div>
@@ -77,7 +77,7 @@ export default function InfoCards() {
         description={t('home.infoCards.3.description')}
         content={(
           <div className='relative grid size-full grid-rows-2 gap-4 overflow-hidden rounded-3xl mobile:grid-cols-2'>
-            <div className='absolute left-0 top-0 z-1 size-full'
+            <div className='absolute top-0 left-0 z-1 size-full'
               style={{
                 background: 'radial-gradient(circle, transparent, rgba(var(--bg-background)) 100%)'
               }}

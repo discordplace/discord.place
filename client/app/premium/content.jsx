@@ -219,7 +219,7 @@ export default function Page({ plans }) {
       <div className='flex w-full max-w-[800px] flex-col'>
         <motion.h1
           className={cn(
-            'text-5xl font-medium max-w-[800px] text-center text-primary',
+            'max-w-[800px] text-center text-5xl font-medium text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}
@@ -244,16 +244,16 @@ export default function Page({ plans }) {
           <motion.div
             key={cycle}
             className={cn(
-              'select-none flex items-center w-full gap-x-2 p-4 rounded-lg',
-              preferredBillingCycle === cycle ? 'bg-purple-500/5 border-2 border-purple-500/20' : 'border-2 border-primary bg-secondary hover:bg-tertiary cursor-pointer'
+              'flex w-full items-center gap-x-2 rounded-lg p-4 select-none',
+              preferredBillingCycle === cycle ? 'border-2 border-purple-500/20 bg-purple-500/5' : 'cursor-pointer border-2 border-primary bg-secondary hover:bg-tertiary'
             )}
             onClick={() => setPreferredBillingCycle(cycle)}
             variants={itemVariants}
           >
             <span
               className={cn(
-                'w-[15px] h-[15px] rounded-full border-4',
-                preferredBillingCycle === cycle ? 'bg-white border-purple-500' : 'border-primary'
+                'size-[15px] rounded-full border-4',
+                preferredBillingCycle === cycle ? 'border-purple-500 bg-white' : 'border-primary'
               )}
             />
 
@@ -266,7 +266,7 @@ export default function Page({ plans }) {
                 {currentPlanId === (cycle === 'monthly' ? monthlyPlan.id : (cycle === 'annual' ? annualPlan.id : lifetimePlan.id)) ? (
                   <span
                     className={cn(
-                      'text-purple-500 flex items-center gap-x-1',
+                      'flex items-center gap-x-1 text-purple-500',
                       SourceSerif4.className
                     )}
                   >
@@ -346,7 +346,7 @@ export default function Page({ plans }) {
         {!currentPlanId && (
           <div
             className={cn(
-              'flex items-center justify-center w-full py-2 mt-4 font-semibold text-center text-white bg-purple-500 rounded-lg cursor-pointer hover:bg-purple-600 gap-x-2',
+              'mt-4 flex w-full cursor-pointer items-center justify-center gap-x-2 rounded-lg bg-purple-500 py-2 text-center font-semibold text-white hover:bg-purple-600',
               loading && 'pointer-events-none opacity-70'
             )}
             onClick={loggedIn ? purchase : () => router.push(config.getLoginURL('/premium'))}

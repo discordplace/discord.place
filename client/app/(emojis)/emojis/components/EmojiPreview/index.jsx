@@ -146,7 +146,7 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     <div className='relative flex h-[250px] w-full flex-col items-center justify-center gap-y-2 overflow-hidden rounded-md bg-secondary' style={{
       backgroundImage: `url(/${patternDarkMode ? 'transparent-pattern-dark' : 'transparent-pattern-light'}.png)`
     }}>
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%'/>
       </div>
 
@@ -175,8 +175,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
               {ableToChange ? (
                 <label
                   className={cn(
-                    'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
-                    patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                    'cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium',
+                    patternDarkMode ? 'bg-white text-black hover:bg-white/70' : 'bg-black text-white hover:bg-black/70'
                   )}
                   htmlFor='emojiFiles'
                 >
@@ -186,8 +186,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
                 <Tooltip content={loggedIn ? t('createEmojiPage.emojisPreview.tooltip.uploadToDiscord') : t('createEmojiPage.emojisPreview.tooltip.loginToUpload')}>
                   <button
                     className={cn(
-                      'px-3 py-1.5 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 rounded-lg cursor-pointer',
-                      patternDarkMode ? 'bg-white text-black' : ' bg-black text-white',
+                      'flex cursor-pointer items-center gap-x-1 rounded-lg px-3 py-1.5 text-sm font-medium disabled:opacity-70',
+                      patternDarkMode ? 'bg-white text-black' : 'bg-black text-white',
                       loggedIn && (patternDarkMode ? 'hover:bg-white/70' : 'hover:bg-black/70')
                     )}
                     onClick={() => {
@@ -208,8 +208,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
 
               <button
                 className={cn(
-                  'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
-                  patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                  'cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium',
+                  patternDarkMode ? 'bg-white text-black hover:bg-white/70' : 'bg-black text-white hover:bg-black/70'
                 )}
                 onClick={() => setPatternDarkMode(!patternDarkMode)}
               >
@@ -218,8 +218,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
 
               <button
                 className={cn(
-                  'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
-                  patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                  'cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium',
+                  patternDarkMode ? 'bg-white text-black hover:bg-white/70' : 'bg-black text-white hover:bg-black/70'
                 )}
                 onClick={() => setPreviewSize(previewSize === 32 ? 96 : 32)}
               >
@@ -231,8 +231,8 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
           ableToChange && (
             <motion.label
               className={cn(
-                'px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer',
-                patternDarkMode ? 'hover:bg-white/70 bg-white text-black' : 'hover:bg-black/70 bg-black text-white'
+                'cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium',
+                patternDarkMode ? 'bg-white text-black hover:bg-white/70' : 'bg-black text-white hover:bg-black/70'
               )}
               htmlFor='emojiFiles'
               initial={{ opacity: 0 }}

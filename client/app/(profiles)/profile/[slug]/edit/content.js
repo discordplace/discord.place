@@ -10,7 +10,7 @@ import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ profile }) {
   return (
-    <div className='mb-8 mt-36 flex w-full justify-center px-4 sm:px-0'>
+    <div className='mt-36 mb-8 flex w-full justify-center px-4 sm:px-0'>
       <div className='flex w-full max-w-[650px] justify-center'>
         <div className='flex w-full flex-col'>
           <div className='flex items-center gap-x-4'>

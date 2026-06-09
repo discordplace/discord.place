@@ -143,7 +143,7 @@ export default function ApiKey({ botId, apiKey }) {
                 href={config.docsUrl}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='flex h-max w-full items-center gap-x-1.5 rounded-lg bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70 sm:w-max'
+                className='flex h-max w-full items-center gap-x-1.5 rounded-lg bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 sm:w-max dark:bg-white dark:text-black dark:hover:bg-white/70'
               >
                 {t('buttons.apiDocumentation')}
                 <HiExternalLink className='ml-auto' />

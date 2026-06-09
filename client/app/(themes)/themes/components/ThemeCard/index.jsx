@@ -55,7 +55,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   return (
     <Container
       className={cn(
-        'rounded-xl p-1 font-ggSans transition-all w-full',
+        'w-full rounded-xl p-1 font-ggSans transition-all',
         id ? 'hover:opacity-80' : 'pointer-events-none select-none'
       )}
       href={`/themes/${id}`}
@@ -72,7 +72,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
           background: 'linear-gradient(var(--profile-gradient-start), var(--profile-gradient-start) 100%, var(--profile-gradient-end))'
         }}
       >
-        <div className='absolute right-4 top-4'>
+        <div className='absolute top-4 right-4'>
           <div className='flex items-center gap-x-2'>
             <div className='flex items-center justify-center rounded-full bg-black/50 p-2 text-white'>
               <AddFriendIcon className='size-4' />
@@ -91,7 +91,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             size={512}
             width={325}
             height={125}
-            className='absolute left-0 top-0 h-[125px] w-full rounded-t-lg object-cover'
+            className='absolute top-0 left-0 h-[125px] w-full rounded-t-lg object-cover'
             style={{
               maskImage: 'radial-gradient(circle at 64px 122px, transparent 45px, black 46px)',
               WebkitMaskImage: 'radial-gradient(circle at 64px 122px, transparent 45px, black 46px)'
@@ -99,7 +99,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
           />
         ) : (
           <div
-            className='absolute left-0 top-0 h-[105px] w-full'
+            className='absolute top-0 left-0 h-[105px] w-full'
             style={{
               maskImage: 'radial-gradient(circle at 64px 122px, transparent 45px, black 46px)',
               WebkitMaskImage: 'radial-gradient(circle at 64px 122px, transparent 45px, black 46px)'
@@ -118,7 +118,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             alt={`${randomStatus} Status Badge`}
             width={18}
             height={18}
-            className='absolute bottom-[2px] right-[2px] rounded-full'
+            className='absolute right-[2px] bottom-[2px] rounded-full'
           />
 
           {(loggedIn && user?.avatar) ? (

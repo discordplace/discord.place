@@ -21,9 +21,9 @@ export default function BlogCard({ data, loading }) {
           priority={true}
         />
 
-        <div className='absolute left-0 top-0 size-full rounded-xl bg-black/50' />
+        <div className='absolute top-0 left-0 size-full rounded-xl bg-black/50' />
 
-        <div className='absolute left-4 top-4'>
+        <div className='absolute top-4 left-4'>
           {data.tags.map(tag => (
             <span
               key={tag}
@@ -35,11 +35,11 @@ export default function BlogCard({ data, loading }) {
         </div>
       </div>
 
-      <h2 className='line-clamp-1 whitespace-nowrap text-pretty font-medium text-primary'>
+      <h2 className='line-clamp-1 font-medium text-pretty whitespace-nowrap text-primary'>
         {data.name}
       </h2>
 
-      <p className='line-clamp-3 whitespace-pre-wrap text-sm text-tertiary'>
+      <p className='line-clamp-3 text-sm whitespace-pre-wrap text-tertiary'>
         {data.description}
       </p>
     </Link>

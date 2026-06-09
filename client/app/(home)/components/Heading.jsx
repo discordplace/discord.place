@@ -11,7 +11,7 @@ export default function Heading() {
     <div className='mt-80 flex w-full max-w-5xl flex-col items-center justify-center px-4 text-center lg:px-0'>
       <h1
         className={cn(
-          'text-4xl mobile:text-5xl font-medium',
+          'text-4xl font-medium mobile:text-5xl',
           BricolageGrotesque.className
         )}
       >

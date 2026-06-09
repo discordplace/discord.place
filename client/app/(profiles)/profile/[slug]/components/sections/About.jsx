@@ -56,7 +56,7 @@ export default function About({ profile }) {
         {t('profilePage.about.title')}
       </motion.h2>
 
-      <motion.p className='mt-2 whitespace-pre-wrap wrap-break-word text-tertiary'
+      <motion.p className='mt-2 wrap-break-word whitespace-pre-wrap text-tertiary'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ damping: 10, delay: 0.15, duration: 0.3, stiffness: 100, type: 'spring' }}

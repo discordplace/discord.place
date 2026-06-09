@@ -174,7 +174,7 @@ export default function NewBot() {
 
   return (
     <>
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%'/>
       </div>
 
@@ -306,7 +306,7 @@ export default function NewBot() {
                   <button
                     key={category}
                     className={cn(
-                      'rounded-lg flex items-center gap-x-1 font-semibold w-max h-max text-sm px-3 py-1.5 bg-secondary hover:bg-quaternary',
+                      'flex size-max items-center gap-x-1 rounded-lg bg-secondary px-3 py-1.5 text-sm font-semibold hover:bg-quaternary',
                       botCategories.includes(category) && 'bg-quaternary'
                     )}
                     onClick={() => {

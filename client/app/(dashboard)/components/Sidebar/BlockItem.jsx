@@ -20,10 +20,10 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
     >
       <ContainerComponent
         className={cn(
-          'flex items-center w-full py-2 rounded-lg gap-x-3 select-none',
-          activeTab === id ? 'bg-quaternary text-primary pointer-events-none' : 'cursor-pointer hover:bg-quaternary text-secondary hover:text-primary',
+          'flex w-full items-center gap-x-3 rounded-lg py-2 select-none',
+          activeTab === id ? 'pointer-events-none bg-quaternary text-primary' : 'cursor-pointer text-secondary hover:bg-quaternary hover:text-primary',
           isCollapsed ? 'justify-center' : 'pl-4',
-          disabled && 'opacity-50 pointer-events-none',
+          disabled && 'pointer-events-none opacity-50',
           loading && 'pointer-events-none',
 
           // Danger style
@@ -53,7 +53,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
         {!isCollapsed && badge?.data > 0 ? (
           <span
             className={cn(
-              'ml-auto mr-4 rounded-full px-2 py-0.5 text-xs font-bold text-white',
+              'mr-4 ml-auto rounded-full px-2 py-0.5 text-xs font-bold text-white',
               badge.style === 'danger' ? 'bg-red-600' : 'bg-purple-500'
             )}
           >

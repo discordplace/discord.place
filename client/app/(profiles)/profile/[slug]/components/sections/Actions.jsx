@@ -43,7 +43,7 @@ export default function Actions({ profile }) {
 
   return (
     <motion.div
-      className='absolute bottom-4 right-4 z-4 flex w-full justify-end'
+      className='absolute right-4 bottom-4 z-4 flex w-full justify-end'
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
@@ -56,14 +56,14 @@ export default function Actions({ profile }) {
             <IoMdHeartEmpty
               className={cn(
                 'absolute transition-[transform,colors]',
-                liked ? 'opacity-0' : 'opacity-100 group-hover:opacity-0 group-hover:text-red-500 group-hover:scale-[1.2]'
+                liked ? 'opacity-0' : 'opacity-100 group-hover:scale-[1.2] group-hover:text-red-500 group-hover:opacity-0'
               )}
             />
 
             <IoMdHeart
               className={cn(
                 'transition-[transform,colors]',
-                liked ? 'opacity-100 group-hover:scale-[1.2] text-red-500' : 'opacity-0 group-hover:opacity-100 group-hover:scale-[1.2] group-hover:text-red-500'
+                liked ? 'text-red-500 opacity-100 group-hover:scale-[1.2]' : 'opacity-0 group-hover:scale-[1.2] group-hover:text-red-500 group-hover:opacity-100'
               )}
             />
           </button>

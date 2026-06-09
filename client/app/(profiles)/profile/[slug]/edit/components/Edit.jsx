@@ -218,7 +218,7 @@ export default function Edit({ profileData }) {
                     suppressContentEditableWarning={true}
                     onKeyUp={() => setCurrentlyEditingValue(bioValueSpanRef?.current?.textContent)}
                     ref={bioValueSpanRef}
-                    className='max-h-[200px] w-full resize-none overflow-y-auto break-all rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-hidden placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
+                    className='max-h-[200px] w-full resize-none overflow-y-auto rounded-md bg-tertiary px-2 py-1 font-medium break-all text-secondary outline-hidden placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
                   >
                     {profileData.bio}
                   </span>
@@ -244,7 +244,7 @@ export default function Edit({ profileData }) {
                   />
                 )
               ) : (
-                <p className='max-h-[300px] overflow-y-auto truncate whitespace-pre-wrap font-medium text-primary'>{profile[key] || 'Unknown'}</p>
+                <p className='max-h-[300px] truncate overflow-y-auto font-medium whitespace-pre-wrap text-primary'>{profile[key] || 'Unknown'}</p>
               )}
             </div>
 
@@ -264,8 +264,8 @@ export default function Edit({ profileData }) {
 
               <button
                 className={cn(
-                  'h-max px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none',
-                  currentlyEditingIndex === index ? 'text-white dark:text-black dark:bg-white bg-black hover:bg-black/70 dark:hover:bg-white/70' : 'text-secondary bg-tertiary hover:text-primary hover:bg-quaternary'
+                  'h-max rounded-lg px-4 py-1.5 text-sm font-semibold disabled:pointer-events-none disabled:opacity-70',
+                  currentlyEditingIndex === index ? 'bg-black text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70' : 'bg-tertiary text-secondary hover:bg-quaternary hover:text-primary'
                 )}
                 onClick={() => {
                   if (currentlyEditingIndex === index) return editKey(canBeEditedKeys[currentlyEditingIndex]);
@@ -304,7 +304,7 @@ export default function Edit({ profileData }) {
                       <div className='size-3 rounded-full' style={{ backgroundColor: colors.primary || '#000000' }} />
                     </h2>
 
-                    <div className='[&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px] [&_.react-colorful\_\_hue]:h-[10px]! [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
+                    <div className='[&_.react-colorful]:size-[120px] [&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px] [&_.react-colorful\_\_hue]:h-[10px]! [&_.react-colorful\_\_pointer]:size-[10px]'>
                       <HexAlphaColorPicker
                         color={colors.primary || '#000000'}
                         onChange={color => setColors(oldColors => ({ ...oldColors, primary: color }))}
@@ -326,7 +326,7 @@ export default function Edit({ profileData }) {
                       <div className='size-3 rounded-full' style={{ backgroundColor: colors.secondary || '#000000' }} />
                     </h2>
 
-                    <div className='[&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px] [&_.react-colorful\_\_hue]:h-[10px]! [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
+                    <div className='[&_.react-colorful]:size-[120px] [&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px] [&_.react-colorful\_\_hue]:h-[10px]! [&_.react-colorful\_\_pointer]:size-[10px]'>
                       <HexAlphaColorPicker
                         color={colors.secondary || '#000000'}
                         onChange={color => setColors(oldColors => ({ ...oldColors, secondary: color }))}
@@ -364,7 +364,7 @@ export default function Edit({ profileData }) {
 
                       <div
                         className={cn(
-                          'absolute flex items-center justify-center text-xs font-semibold max-w-[50px] text-center transition-opacity duration-200 opacity-0 gap-x-2 group-hover:opacity-100',
+                          'absolute flex max-w-[50px] items-center justify-center gap-x-2 text-center text-xs font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100',
                           colord(profile.colors?.primary || '#000000').isLight() ? 'text-black' : 'text-white'
                         )}
                       >
@@ -392,7 +392,7 @@ export default function Edit({ profileData }) {
 
                       <div
                         className={cn(
-                          'absolute flex items-center justify-center text-xs font-semibold max-w-[50px] text-center transition-opacity duration-200 opacity-0 gap-x-2 group-hover:opacity-100',
+                          'absolute flex max-w-[50px] items-center justify-center gap-x-2 text-center text-xs font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100',
                           colord(profile.colors?.secondary || '#000000').isLight() ? 'text-black' : 'text-white'
                         )}
                       >
@@ -456,8 +456,8 @@ export default function Edit({ profileData }) {
 
             <button
               className={cn(
-                'h-max px-4 py-1.5 text-sm font-semibold rounded-lg disabled:opacity-70 disabled:pointer-events-none',
-                currentlyEditingIndex === 'cardColors' ? 'text-white dark:text-black dark:bg-white bg-black hover:bg-black/70 dark:hover:bg-white/70' : 'text-secondary bg-tertiary hover:text-primary hover:bg-quaternary'
+                'h-max rounded-lg px-4 py-1.5 text-sm font-semibold disabled:pointer-events-none disabled:opacity-70',
+                currentlyEditingIndex === 'cardColors' ? 'bg-black text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70' : 'bg-tertiary text-secondary hover:bg-quaternary hover:text-primary'
               )}
               onClick={() => {
                 if (currentlyEditingIndex === 'cardColors') return editKey('cardColors');

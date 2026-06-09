@@ -85,7 +85,7 @@ export default function Header({ focusedChannel, memberListCollapsed, setMemberL
           </div>
         </Tooltip>
 
-        <div className='flex w-[150px] cursor-text select-none items-center justify-between rounded-md bg-[#1e1f22] px-2 text-sm text-[#949ba4]'>
+        <div className='flex w-[150px] cursor-text items-center justify-between rounded-md bg-[#1e1f22] px-2 text-sm text-[#949ba4] select-none'>
           {t('templatePreviewPage.searchInputPlaceholder')}
 
           <SearchIcon className='size-4' />

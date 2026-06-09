@@ -195,11 +195,11 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
   return (
     <div
       className={cn(
-        'flex flex-col gap-y-4 rounded-3xl overflow-hidden w-full h-max bg-secondary border-2 transition-all p-6',
+        'flex h-max w-full flex-col gap-y-4 overflow-hidden rounded-3xl border-2 bg-secondary p-6 transition-all',
         currentlyPlaying === sound.id ? 'border-purple-500' : 'border-primary'
       )}
     >
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%' />
       </div>
 
@@ -256,8 +256,8 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
             <Tooltip content={t(`soundCard.buttons.${loggedIn ? 'upload' : 'login'}`)}>
               <button
                 className={cn(
-                  'px-1.5 py-1 flex items-center gap-x-1 text-sm font-medium disabled:opacity-70 rounded-lg cursor-pointer',
-                  theme === 'dark' ? 'bg-white text-black' : ' bg-black text-white',
+                  'flex cursor-pointer items-center gap-x-1 rounded-lg px-1.5 py-1 text-sm font-medium disabled:opacity-70',
+                  theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white',
                   loggedIn && (theme === 'dark' ? 'hover:bg-white/70' : 'hover:bg-black/70')
                 )}
                 onClick={() => {

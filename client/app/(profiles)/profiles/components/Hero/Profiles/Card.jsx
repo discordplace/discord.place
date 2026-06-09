@@ -70,8 +70,8 @@ export default function Card(props) {
         {props.premium === true && (
           <div
             className={cn(
-              'w-full h-full z-20 absolute inset-0',
-              !haveCustomColors && 'animate-rotate rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none'
+              'absolute inset-0 z-20 size-full',
+              !haveCustomColors && 'pointer-events-none animate-rotate rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)]'
             )}
             style={{
               backgroundImage: haveCustomColors ? `linear-gradient(180deg, ${props.colors.primary}, ${props.colors.secondary})` : null
@@ -90,7 +90,7 @@ export default function Card(props) {
 
         <div
           className={cn(
-            'z-20 relative flex flex-col w-full h-full p-3 rounded-3xl',
+            'relative z-20 flex size-full flex-col rounded-3xl p-3',
             !haveCustomColors && 'bg-tertiary'
           )}
           style={{
@@ -110,7 +110,7 @@ export default function Card(props) {
               />
 
               {props.banner.startsWith('a_') && (
-                <div className='pointer-events-none absolute right-3 top-3 rounded-full px-2 py-0.5 text-xs font-bold text-white backdrop-blur-2xl'>
+                <div className='pointer-events-none absolute top-3 right-3 rounded-full px-2 py-0.5 text-xs font-bold text-white backdrop-blur-2xl'>
                   GIF
                 </div>
               )}
@@ -118,7 +118,7 @@ export default function Card(props) {
           ) : (
             <div
               className={cn(
-                'w-full h-[140px] rounded-2xl',
+                'h-[140px] w-full rounded-2xl',
                 !haveCustomColors ? 'bg-secondary' : 'bg-black/20'
               )}
             />
@@ -158,7 +158,7 @@ export default function Card(props) {
                     alt={userStatus}
                     width={20}
                     height={20}
-                    className='absolute bottom-0 right-0 rounded-full p-0.5'
+                    className='absolute right-0 bottom-0 rounded-full p-0.5'
                   />
                 </Tooltip>
               )}
@@ -167,7 +167,7 @@ export default function Card(props) {
 
           <div
             className={cn(
-              'flex flex-col flex-1 w-full mt-6 rounded-2xl',
+              'mt-6 flex w-full flex-1 flex-col rounded-2xl',
               !haveCustomColors ? 'bg-secondary' : 'bg-black/20'
             )}
           >
@@ -175,8 +175,8 @@ export default function Card(props) {
               <div className='flex gap-x-1'>
                 <h2
                   className={cn(
-                    'text-lg font-medium truncate max-w-[170px] mr-1',
-                    !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
+                    'mr-1 max-w-[170px] truncate text-lg font-medium',
+                    !haveCustomColors ? 'text-primary' : `text-lg ${variables.textPrimary} h-0`
                   )}
                 >
                   {props.global_name || props.username}
@@ -223,7 +223,7 @@ export default function Card(props) {
               <h3
                 className={cn(
                   '-mt-1 text-sm font-medium',
-                  !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
+                  !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
                 )}
               >
                 @{props.username}
@@ -233,7 +233,7 @@ export default function Card(props) {
                 <h3
                   className={cn(
                     'text-sm font-medium',
-                    !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
+                    !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
                   )}
                 >
                   {t('profileCard.aboutMe')}
@@ -241,8 +241,8 @@ export default function Card(props) {
 
                 <p
                   className={cn(
-                    'text-sm font-medium whitespace-pre-wrap line-clamp-2',
-                    !haveCustomColors ? 'text-secondary' : `text-[${variables.textSecondary}]`
+                    'line-clamp-2 text-sm font-medium whitespace-pre-wrap',
+                    !haveCustomColors ? 'text-secondary' : `text-lg ${variables.textSecondary} h-0`
                   )}
                 >
                   {props.bio === 'No bio provided.' ?
@@ -255,7 +255,7 @@ export default function Card(props) {
 
             <div
               className={cn(
-                'w-full my-4 h-px',
+                'my-4 h-px w-full',
                 !haveCustomColors ? 'bg-quaternary' : 'bg-black/20'
               )}
             />
@@ -266,7 +266,7 @@ export default function Card(props) {
                   <h3
                     className={cn(
                       'text-sm font-medium',
-                      !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
+                      !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
                     )}
                   >
                     {t('profileCard.fields.likes')}
@@ -274,7 +274,7 @@ export default function Card(props) {
 
                   <p className={cn(
                     'text-sm font-medium',
-                    !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
+                    !haveCustomColors ? 'text-primary' : `text-lg ${variables.textPrimary} h-0`
                   )}>
                     {formatter.format(props.likes)}
                   </p>
@@ -284,7 +284,7 @@ export default function Card(props) {
                   <h3
                     className={cn(
                       'text-sm font-medium',
-                      !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
+                      !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
                     )}
                   >
                     {t('profileCard.fields.views')}
@@ -292,7 +292,7 @@ export default function Card(props) {
 
                   <p className={cn(
                     'text-sm font-medium',
-                    !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
+                    !haveCustomColors ? 'text-primary' : `text-lg ${variables.textPrimary} h-0`
                   )}>
                     {formatter.format(props.views)}
                   </p>
@@ -302,7 +302,7 @@ export default function Card(props) {
                   <h3
                     className={cn(
                       'text-sm font-medium',
-                      !haveCustomColors ? 'text-tertiary' : `text-[${variables.textTertiary}]`
+                      !haveCustomColors ? 'text-tertiary' : `text-lg ${variables.textTertiary} h-0`
                     )}
                   >
                     {t('profileCard.fields.createdAt')}
@@ -310,8 +310,8 @@ export default function Card(props) {
 
                   <p
                     className={cn(
-                      'text-sm font-medium truncate w-[130px]',
-                      !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
+                      'w-[130px] truncate text-sm font-medium',
+                      !haveCustomColors ? 'text-primary' : `text-lg ${variables.textPrimary} h-0`
                     )}
                   >
                     {new Date(props.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -322,8 +322,8 @@ export default function Card(props) {
               <div className='flex gap-x-2.5'>
                 <Link
                   className={cn(
-                    'flex text-white items-center px-2 py-1.5 font-semibold text-sm gap-x-0.5 rounded-lg',
-                    !haveCustomColors ? 'hover:bg-purple-700 bg-purple-600' : 'shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-xs'
+                    'flex items-center gap-x-0.5 rounded-lg px-2 py-1.5 text-sm font-semibold text-white',
+                    !haveCustomColors ? 'bg-purple-600 hover:bg-purple-700' : 'bg-black/30 shadow-xl backdrop-blur-xs hover:bg-black/50'
                   )}
                   href={`/profile/${props.slug}`}
                 >
@@ -337,8 +337,8 @@ export default function Card(props) {
                 >
                   <button
                     className={cn(
-                      'flex items-center px-2 py-1.5 font-semibold text-sm gap-x-0.5 rounded-lg',
-                      !haveCustomColors ? 'bg-quaternary hover:bg-purple-600 text-tertiary hover:text-white' : 'text-white shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-xs'
+                      'flex items-center gap-x-0.5 rounded-lg px-2 py-1.5 text-sm font-semibold',
+                      !haveCustomColors ? 'bg-quaternary text-tertiary hover:bg-purple-600 hover:text-white' : 'bg-black/30 text-white shadow-xl backdrop-blur-xs hover:bg-black/50'
                     )}
                   >
                     <TbWorldShare size={16} />

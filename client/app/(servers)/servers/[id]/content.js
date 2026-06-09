@@ -28,7 +28,7 @@ export default function Content({ server }) {
             <ServerBanner
               id={server.id}
               hash={server.banner}
-              className='absolute left-0 top-0 z-1 size-full rounded-xl object-cover'
+              className='absolute top-0 left-0 z-1 size-full rounded-xl object-cover'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               size={2048}
@@ -45,7 +45,7 @@ export default function Content({ server }) {
               width={150}
               height={150}
               className={cn(
-                'border-10 border-[rgb(var(--bg-background))] rounded-3xl w-[128px] h-[128px]',
+                'size-[128px] rounded-3xl border-10 border-[rgb(var(--bg-background))]',
                 server.icon && 'bg-background'
               )}
               initial={{ opacity: 0, y: 20 }}

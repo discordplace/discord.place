@@ -67,7 +67,7 @@ export default function NotCollapsedHeader() {
   }, [hoveringHeaderTab, lastMouseOut]);
 
   return (
-    <div className='absolute left-0 top-0 z-9998 flex w-full items-center justify-center'>
+    <div className='absolute top-0 left-0 z-9998 flex w-full items-center justify-center'>
       <div className='mt-8 flex w-full max-w-5xl items-center justify-between'>
         <div className='flex items-center gap-x-12'>
           <LogoWithText />
@@ -102,7 +102,7 @@ export default function NotCollapsedHeader() {
                       <FiChevronDown
                         size={14}
                         className={cn(
-                          'transition-transform transform',
+                          'transform transition-transform',
                           hoveringHeaderTab === link.name && '-rotate-180'
                         )}
                       />
@@ -112,18 +112,18 @@ export default function NotCollapsedHeader() {
                   {link.id === 'services' && (
                     <div
                       className={cn(
-                        'absolute pt-12 pb-4 pl-4 pr-4 z-1',
+                        'absolute z-1 px-4 pt-12 pb-4',
                         hoveringHeaderTab !== link.name && 'pointer-events-none'
                       )}
                     >
                       <div
                         className={cn(
-                          'transition-all drop-shadow-lg w-max h-max bg-secondary border-2 relative border-primary p-2 rounded-xl',
-                          hoveringHeaderTab === link.name ? 'opacity-100' : 'opacity-0 scale-90 -translate-y-2'
+                          'relative size-max rounded-xl border-2 border-primary bg-secondary p-2 drop-shadow-lg transition-all',
+                          hoveringHeaderTab === link.name ? 'opacity-100' : '-translate-y-2 scale-90 opacity-0'
                         )}
                       >
-                        <div className='absolute left-0 top-0 flex size-full justify-center'>
-                          <div className='size-3 -translate-y-2 rotate-45 rounded-t-[2px] border-l-2 border-t-2 border-primary bg-secondary' />
+                        <div className='absolute top-0 left-0 flex size-full justify-center'>
+                          <div className='size-3 -translate-y-2 rotate-45 rounded-t-[2px] border-t-2 border-l-2 border-primary bg-secondary' />
                         </div>
 
                         <ServicesDropdown />
@@ -136,7 +136,7 @@ export default function NotCollapsedHeader() {
 
             <div
               className={cn(
-                'transition-all absolute top-0 left-0 w-full h-full rounded-full z-[-1] bg-secondary',
+                'absolute top-0 left-0 z-[-1] size-full rounded-full bg-secondary transition-all',
                 hoveringHeaderTab ? 'opacity-100' : 'opacity-0'
               )}
               id='hoveringHeaderTab'

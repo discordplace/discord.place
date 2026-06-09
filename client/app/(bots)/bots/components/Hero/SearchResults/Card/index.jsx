@@ -96,22 +96,22 @@ import Tooltip from '@/app/components/Tooltip';
           <UserBanner
             id={data.id}
             hash={data.banner}
-            className='absolute left-0 top-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary'
+            className='absolute top-0 left-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary'
             size={512}
             width={350}
             height={200}
           />
         ) : (
-          <div className='absolute left-0 top-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary' />
+          <div className='absolute top-0 left-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary' />
         )}
-        <div className='relative top-[30px] z-2 h-[calc(100%-30px)] w-full rounded-b-[1.25rem] rounded-t-3xl bg-secondary transition-colors group-hover:bg-tertiary'>
+        <div className='relative top-[30px] z-2 h-[calc(100%-30px)] w-full rounded-t-3xl rounded-b-[1.25rem] bg-secondary transition-colors group-hover:bg-tertiary'>
           <UserAvatar
             id={data.id}
             hash={data.avatar}
             size={64}
             width={64}
             height={64}
-            className='absolute left-4 top-[-25px] rounded-3xl border-4 border-[rgba(var(--bg-secondary))] bg-secondary transition-colors group-hover:border-[rgba(var(--bg-tertiary))] group-hover:bg-tertiary'
+            className='absolute top-[-25px] left-4 rounded-3xl border-4 border-[rgba(var(--bg-secondary))] bg-secondary transition-colors group-hover:border-[rgba(var(--bg-tertiary))] group-hover:bg-tertiary'
           />
 
           <div className='flex flex-col px-4 pt-12'>

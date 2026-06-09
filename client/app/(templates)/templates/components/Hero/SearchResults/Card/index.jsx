@@ -34,7 +34,7 @@ export default function Card({ data, className }) {
   return (
     <div
       className={cn(
-        'inline-flex rounded-3xl w-full [&>div]:w-full',
+        'inline-flex w-full rounded-3xl [&>div]:w-full',
         isClicked && 'pointer-events-none',
         className
       )}
@@ -44,7 +44,7 @@ export default function Card({ data, className }) {
         during={1000}
       >
         <Link
-          className='flex h-max w-full cursor-pointer select-none items-center gap-x-4 rounded-3xl bg-secondary p-3 transition-all hover:opacity-70'
+          className='flex h-max w-full cursor-pointer items-center gap-x-4 rounded-3xl bg-secondary p-3 transition-all select-none hover:opacity-70'
           onClick={() => setIsClicked(true)}
           href={`/templates/${data.id}/preview`}
         >
@@ -66,7 +66,7 @@ export default function Card({ data, className }) {
               ))}
             </div>
 
-            <p className='line-clamp-2 whitespace-pre-wrap break-all text-xs text-tertiary mobile:text-sm'>
+            <p className='line-clamp-2 text-xs break-all whitespace-pre-wrap text-tertiary mobile:text-sm'>
               {data.description}
             </p>
 

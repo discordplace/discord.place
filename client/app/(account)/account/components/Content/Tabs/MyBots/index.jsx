@@ -218,7 +218,7 @@ export default function MyBots() {
 
           <div
             className={cn(
-              'flex flex-col items-center w-full max-w-[800px] gap-y-4',
+              'flex w-full max-w-[800px] flex-col items-center gap-y-4',
               (data.denies || []).length === 0 && 'my-20'
             )}
           >

@@ -92,15 +92,15 @@ export default function CreateProfile() {
                 onClick={() => setPreferredHost(hostname)}
                 key={hostname}
                 className={cn(
-                  'w-full border select-none border-primary relative first:rounded-l-xl last:rounded-r-xl group px-3 py-2 font-medium text-center not-first:rounded-xl cursor-pointer hover:text-primary bg-quaternary hover:bg-secondary text-secondary',
+                  'group relative w-full cursor-pointer border border-primary bg-quaternary px-3 py-2 text-center font-medium text-secondary select-none not-first:rounded-xl first:rounded-l-xl last:rounded-r-xl hover:bg-secondary hover:text-primary',
                   preferredHost === hostname && 'pointer-events-none',
-                  config.customHostnames.includes(hostname) && !user.premium?.createdAt && 'opacity-50 pointer-events-none'
+                  config.customHostnames.includes(hostname) && !user.premium?.createdAt && 'pointer-events-none opacity-50'
                 )}
               >
                 {hostname}
 
                 {preferredHost === hostname && (
-                  <div className='absolute left-0 top-0 flex size-full items-center justify-center bg-secondary/80 group-first:rounded-l-xl group-last:rounded-r-xl'>
+                  <div className='absolute top-0 left-0 flex size-full items-center justify-center bg-secondary/80 group-first:rounded-l-xl group-last:rounded-r-xl'>
                     <IoMdCheckmarkCircle className='text-primary' />
                   </div>
                 )}
@@ -118,7 +118,7 @@ export default function CreateProfile() {
           {slugStatus !== 'idle' && (
             <div
               className={cn(
-                'flex text-xs items-center gap-x-1 font-medium',
+                'flex items-center gap-x-1 text-xs font-medium',
                 slugStatus === 'available' && 'text-green-500',
                 slugStatus === 'unavailable' && 'text-red-500',
                 slugStatus === 'loading' && 'text-yellow-500'
@@ -153,7 +153,7 @@ export default function CreateProfile() {
         <input
           type='text'
           placeholder={t('accountPage.tabs.myAccount.sections.yourProfile.createProfileModal.fields.slug.placeholder')}
-          className='mt-2 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-hidden ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+          className='mt-2 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary ring-purple-500 outline-hidden transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
           value={slug}
           maxLength={32}
           onChange={event => setSlug(event.target.value)}

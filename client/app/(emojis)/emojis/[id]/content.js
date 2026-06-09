@@ -56,7 +56,7 @@ export default function Content({ emoji }) {
 
   return (
     <div className='flex w-full items-center justify-center'>
-      <div className='mb-16 mt-48 flex w-full max-w-[1000px] flex-col gap-y-4 px-4 lg:px-0'>
+      <div className='mt-48 mb-16 flex w-full max-w-[1000px] flex-col gap-y-4 px-4 lg:px-0'>
         {!emoji.approved && (
           <div className='flex flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4'>
             <h1 className='flex items-center gap-x-1.5 text-lg font-semibold text-primary'>

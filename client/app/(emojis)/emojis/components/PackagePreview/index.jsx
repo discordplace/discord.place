@@ -155,7 +155,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
 
   return (
     <div className='flex flex-col gap-y-4'>
-      <div className='pointer-events-none fixed left-0 top-0 z-10 h-svh w-full'>
+      <div className='pointer-events-none fixed top-0 left-0 z-10 h-svh w-full'>
         <Lottie lottieRef={lottieRef} loop={false} autoplay={false} animationData={confetti} height='100%' width='100%'/>
       </div>
 
@@ -198,8 +198,8 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
               >
                 <div
                   className={cn(
-                    'absolute p-1 text-sm text-white dark:text-black bg-black dark:bg-white rounded-md cursor-pointer disabled:opacity-70 left-1 bottom-1',
-                    loggedIn && 'dark:hover:bg-white/70 hover:bg-black/70'
+                    'absolute bottom-1 left-1 cursor-pointer rounded-md bg-black p-1 text-sm text-white disabled:opacity-70 dark:bg-white dark:text-black',
+                    loggedIn && 'hover:bg-black/70 dark:hover:bg-white/70'
                   )}
                   onClick={() => {
                     if (!loggedIn) return;

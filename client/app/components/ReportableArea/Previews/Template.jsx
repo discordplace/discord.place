@@ -25,7 +25,7 @@ export default function TemplatePreview({ metadata }) {
           {t('inAppReporting.reportModal.labels.description')}
         </h2>
 
-        <p className='line-clamp-2 whitespace-pre-wrap text-xs font-medium text-tertiary'>
+        <p className='line-clamp-2 text-xs font-medium whitespace-pre-wrap text-tertiary'>
           {metadata.description}
         </p>
       </div>

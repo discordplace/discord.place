@@ -26,8 +26,8 @@ export default function CustomDrawer({ openState, setOpenState, state, setState,
                   setOpenState(false);
                 }}
                 className={cn(
-                  'flex items-center justify-between px-4 py-3 text-base font-medium rounded-lg disabled:pointer-events-none',
-                  state === item.value ? 'pointer-events-none bg-quaternary text-primary' : 'sm:hover:bg-quaternary text-tertiary sm:hover:text-primary'
+                  'flex items-center justify-between rounded-lg px-4 py-3 text-base font-medium disabled:pointer-events-none',
+                  state === item.value ? 'pointer-events-none bg-quaternary text-primary' : 'text-tertiary sm:hover:bg-quaternary sm:hover:text-primary'
                 )}
               >
                 {item.label}

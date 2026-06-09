@@ -55,7 +55,7 @@ export default function TopVoters({ bot }) {
               href={`/profile/u/${voter.user.id}`}
               key={voter.id}
               className={cn(
-                'flex items-center w-full gap-4 p-4 odd:bg-secondary even:bg-tertiary hover:opacity-70 transition-opacity',
+                'flex w-full items-center gap-4 p-4 transition-opacity odd:bg-secondary even:bg-tertiary hover:opacity-70',
                 index === 0 && 'rounded-t-xl',
                 index === voters.length - 1 && 'rounded-b-xl',
                 page === 1 && voters.length > 3 && voters.indexOf(voter) === 0 && 'border-x-2 border-t-2 border-yellow-500 odd:bg-yellow-500/10',
@@ -76,7 +76,7 @@ export default function TopVoters({ bot }) {
                 {[0, 1, 2].includes(voters.indexOf(voter)) && (
                   <div
                     className={cn(
-                      'absolute top-0 left-0 w-full h-full rounded-full',
+                      'absolute top-0 left-0 size-full rounded-full',
                       page === 1 && 'border-2',
                       page === 1 && voters.indexOf(voter) === 0 && 'border-yellow-500',
                       page === 1 && voters.indexOf(voter) === 1 && 'border-gray-500',

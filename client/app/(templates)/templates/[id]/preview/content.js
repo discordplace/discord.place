@@ -48,7 +48,7 @@ export default function Content({ template }) {
 
       <div
         className={cn(
-          'flex flex-col w-full',
+          'flex w-full flex-col',
           (isMobile && currentlyOpenedSection !== 'members') && 'hidden'
         )}
       >

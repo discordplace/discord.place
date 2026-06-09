@@ -14,7 +14,7 @@ export default function WithText({ className }) {
   return (
     <Link
       className={cn(
-        'flex items-center select-none gap-x-6 w-max',
+        'flex w-max items-center gap-x-6 select-none',
         className
       )}
       href='/'

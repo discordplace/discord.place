@@ -76,7 +76,7 @@ export default function Themes() {
     ) : (
       <>
         <motion.div
-          className='grid w-full max-w-[1000px] grid-cols-1 gap-8 px-2 sm:px-4 themes-cols-2:grid-cols-2 lg:grid-cols-3 lg:px-0'
+          className='grid w-full max-w-[1000px] grid-cols-1 gap-8 px-2 themes-cols-2:grid-cols-2 sm:px-4 lg:grid-cols-3 lg:px-0'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >

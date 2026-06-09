@@ -52,11 +52,11 @@ export default function ModalProvider({ children }) {
                           key={index}
                           onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}
                           className={cn(
-                            'w-full rounded-full justify-center py-2 px-4 flex select-none items-center gap-x-1 font-medium outline-hidden',
-                            button.variant === 'solid' && 'font-semibold dark:bg-white dark:text-black dark:hover:bg-white/70 text-white bg-black hover:bg-black/70',
+                            'flex w-full items-center justify-center gap-x-1 rounded-full px-4 py-2 font-medium outline-hidden select-none',
+                            button.variant === 'solid' && 'bg-black font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70',
                             button.variant === 'ghost' && 'text-secondary hover:bg-quaternary hover:text-primary',
                             button.variant === 'outlined' && 'border border-[rgba(var(--bg-quaternary))] text-secondary hover:text-primary',
-                            button.disabled && 'opacity-50 pointer-events-none'
+                            button.disabled && 'pointer-events-none opacity-50'
                           )}
                           disabled={button.disabled}
                         >
@@ -77,7 +77,9 @@ export default function ModalProvider({ children }) {
             open={activeModalId === id}
             onOpenChange={open => !open && closeModal(id)}
           >
+            {/* oxlint-disable-next-line tailwindcss/no-unknown-classes */}
             <Dialog.Overlay className='radix-overlay fixed inset-0 z-9999 bg-white/50 backdrop-blur-xs dark:bg-black/50' />
+            {/* oxlint-disable-next-line tailwindcss/no-unknown-classes */}
             <Dialog.Content className='radix-dialog-content fixed z-9999 flex size-full items-center justify-center focus:outline-hidden'>
               <div
                 className='flex max-h-[85vh] w-[90vw] flex-col gap-y-2 rounded-2xl border border-primary bg-secondary dark:bg-tertiary'
@@ -109,11 +111,11 @@ export default function ModalProvider({ children }) {
                           key={index}
                           onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}
                           className={cn(
-                            'w-max py-2 px-4 flex select-none items-center gap-x-1 font-medium rounded-lg outline-hidden',
-                            button.variant === 'solid' && 'font-semibold dark:bg-white dark:text-black dark:hover:bg-white/70 text-white bg-black hover:bg-black/70',
+                            'flex w-max items-center gap-x-1 rounded-lg px-4 py-2 font-medium outline-hidden select-none',
+                            button.variant === 'solid' && 'bg-black font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70',
                             button.variant === 'ghost' && 'text-secondary hover:bg-quaternary hover:text-primary',
                             button.variant === 'outlined' && 'border border-[rgba(var(--bg-quaternary))] text-secondary hover:text-primary',
-                            button.disabled && 'opacity-50 pointer-events-none'
+                            button.disabled && 'pointer-events-none opacity-50'
                           )}
                           disabled={button.disabled}
                         >

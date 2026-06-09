@@ -9,9 +9,13 @@ import { IoHeart } from 'react-icons/io5';
 import { MdUpdate } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
-import Link from 'next/link';import useSearchStore from '@/stores/servers/search';import { useMedia } from 'react-use';
+import Link from 'next/link';
+import useSearchStore from '@/stores/servers/search';
+import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
-import getRelativeTime from '@/lib/getRelativeTime';import config from '@/config';import useLanguageStore, { t } from '@/stores/language';
+import getRelativeTime from '@/lib/getRelativeTime';
+import config from '@/config';
+import useLanguageStore, { t } from '@/stores/language';
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Tooltip from '@/app/components/Tooltip';
@@ -87,16 +91,16 @@ export default function ServerCard(props) {
           <ServerBanner
             id={props.server.id}
             hash={props.server.banner}
-            className='absolute left-0 top-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary'
+            className='absolute top-0 left-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary'
             size={512}
             width={350}
             height={200}
           />
         ) : (
-          <div className='absolute left-0 top-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary' />
+          <div className='absolute top-0 left-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary' />
         )}
 
-        <div className='relative top-[30px] z-10 h-[calc(100%-30px)] w-full rounded-b-[1.25rem] rounded-t-3xl bg-secondary transition-colors group-hover:bg-tertiary'>
+        <div className='relative top-[30px] z-10 h-[calc(100%-30px)] w-full rounded-t-3xl rounded-b-[1.25rem] bg-secondary transition-colors group-hover:bg-tertiary'>
           <div className='relative'>
             <ServerIcon
               id={props.server.id}
@@ -105,7 +109,7 @@ export default function ServerCard(props) {
               width={64}
               height={64}
               className={cn(
-                'absolute top-[-25px] left-4 border-4 border-[rgba(var(--bg-secondary))] group-hover:border-[rgba(var(--bg-tertiary))] transition-colors rounded-3xl',
+                'absolute top-[-25px] left-4 rounded-3xl border-4 border-[rgba(var(--bg-secondary))] transition-colors group-hover:border-[rgba(var(--bg-tertiary))]',
                 props.server.icon && 'bg-secondary group-hover:bg-tertiary'
               )}
             />
@@ -114,7 +118,7 @@ export default function ServerCard(props) {
               props.server.standed_out?.created_at ? (
                 <div
                   className={cn(
-                    'flex items-center justify-center text-secondary text-sm absolute top-[20px] bg-green-500/10 text-green-500 backdrop-blur-lg font-bold rounded-full transition-colors w-[20px] h-[20px] left-[60px]'
+                    'absolute top-[20px] left-[60px] flex size-[20px] items-center justify-center rounded-full bg-green-500/10 text-sm font-bold text-green-500 backdrop-blur-lg transition-colors'
                   )}
                 >
                   <GiInfinity />
@@ -122,7 +126,7 @@ export default function ServerCard(props) {
               ) : (
                 <div
                   className={cn(
-                    'flex items-center justify-center text-secondary text-sm absolute top-[20px] font-bold rounded-full transition-colors w-[20px] h-[20px] left-[60px]',
+                    'absolute top-[20px] left-[60px] flex size-[20px] items-center justify-center rounded-full text-sm font-bold text-secondary transition-colors',
                     props.index === 0 ? 'bg-yellow-600/10 text-yellow-500 backdrop-blur-lg' : 'bg-secondary group-hover:bg-tertiary'
                   )}
                 >

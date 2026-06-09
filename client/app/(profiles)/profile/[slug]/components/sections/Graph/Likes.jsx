@@ -30,9 +30,9 @@ export default function LikesGraph({ profile }) {
         >
           <div
             className={cn(
-              'select-none flex w-max gap-x-1 px-2 items-center py-1 text-xs font-semibold rounded-lg',
-              isIncreased && 'dark:bg-emerald-300/10 dark:text-emerald-300 bg-emerald-600/10 text-emerald-600',
-              isDecreased && 'dark:bg-red-400/10 dark:text-red-400 bg-red-600/10 text-red-600',
+              'flex w-max items-center gap-x-1 rounded-lg px-2 py-1 text-xs font-semibold select-none',
+              isIncreased && 'bg-emerald-600/10 text-emerald-600 dark:bg-emerald-300/10 dark:text-emerald-300',
+              isDecreased && 'bg-red-600/10 text-red-600 dark:bg-red-400/10 dark:text-red-400',
               isEqual && 'bg-quaternary text-tertiary'
             )}
           >

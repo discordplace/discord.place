@@ -33,8 +33,8 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
       }}
     >
       {data.length === 0 && (
-        <div className='absolute left-0 top-0 z-1 flex size-full items-center justify-center bg-background/50 backdrop-blur-xs'>
-          <span className='select-none text-sm font-medium text-tertiary'>
+        <div className='absolute top-0 left-0 z-1 flex size-full items-center justify-center bg-background/50 backdrop-blur-xs'>
+          <span className='text-sm font-medium text-tertiary select-none'>
             {t('graph.noData')}
           </span>
         </div>

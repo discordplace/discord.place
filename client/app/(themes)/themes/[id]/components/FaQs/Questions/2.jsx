@@ -14,49 +14,49 @@ export default function Question2() {
 
         <div className='mt-2 flex flex-col gap-y-1'>
           <div className='flex gap-x-2'>
-            <span className='select-none font-bold text-primary'>1.</span>
+            <span className='font-bold text-primary select-none'>1.</span>
             <span>
               {t('themePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.0')}
             </span>
           </div>
 
           <div className='flex gap-x-2'>
-            <span className='select-none font-bold text-primary'>2.</span>
+            <span className='font-bold text-primary select-none'>2.</span>
             <span>
               {t('themePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.1')}
             </span>
           </div>
 
           <div className='flex gap-x-2'>
-            <span className='select-none font-bold text-primary'>3.</span>
+            <span className='font-bold text-primary select-none'>3.</span>
             <span>
               {t('themePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.2')}
             </span>
           </div>
 
           <div className='flex gap-x-2'>
-            <span className='select-none font-bold text-primary'>4.</span>
+            <span className='font-bold text-primary select-none'>4.</span>
             <span>
               {t('themePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.3')}
             </span>
           </div>
 
           <div className='flex gap-x-2'>
-            <span className='select-none font-bold text-primary'>5.</span>
+            <span className='font-bold text-primary select-none'>5.</span>
             <span>
               {t('themePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.4')}
             </span>
           </div>
 
           <div className='flex gap-x-2'>
-            <span className='select-none font-bold text-primary'>6.</span>
+            <span className='font-bold text-primary select-none'>6.</span>
             <span>
               {t('themePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.5')}
             </span>
           </div>
 
           <div className='flex gap-x-2'>
-            <span className='select-none font-bold text-primary'>7.</span>
+            <span className='font-bold text-primary select-none'>7.</span>
             <span>
               {t('themePage.frequentlyAskedQuestions.answers.1.methods.0.instructions.6')}
             </span>

@@ -80,7 +80,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
             alt='discord.place Square Logo'
             width={48}
             height={48}
-            className='select-none rounded-2xl'
+            className='rounded-2xl select-none'
           />
         </Tooltip>
       </div>
@@ -106,7 +106,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
             alt='Disbot Square Logo'
             width={48}
             height={48}
-            className='select-none rounded-2xl'
+            className='rounded-2xl select-none'
           />
         </Tooltip>
       </Link>
@@ -151,7 +151,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           {currentlyOpenedSection === 'channels' && (
             <div
               className={cn(
-                'bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl',
+                'flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white',
                 !focusedChannel.topic && 'opacity-50'
               )}
               onClick={() =>
@@ -167,7 +167,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                       }
                     ],
                     content: <>
-                      <p className='wrap-break-word text-sm font-medium text-[#dbdee1]'>{focusedChannel.topic}</p>
+                      <p className='text-sm font-medium wrap-break-word text-[#dbdee1]'>{focusedChannel.topic}</p>
                     </>,
                     description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
                     title: t('templatePreviewPage.topicModal.title')
@@ -198,8 +198,8 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
       >
         <div
           className={cn(
-            'bg-[#313338] w-[48px] h-[48px] flex items-center justify-center hover:bg-[#23a559] text-[#23a559] hover:text-white cursor-pointer transition-all ease-in-out duration-100 rounded-[100%] hover:rounded-2xl',
-            templateIdCopied && 'opacity-70 pointer-events-none'
+            'flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#23a559] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#23a559] hover:text-white',
+            templateIdCopied && 'pointer-events-none opacity-70'
           )}
           onClick={() => {
             if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
@@ -212,7 +212,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           <IoCheckmarkCircle
             size={20}
             className={cn(
-              'transition-opacity ease-in-out absolute',
+              'absolute transition-opacity ease-in-out',
               !templateIdCopied && 'opacity-0'
             )}
           />

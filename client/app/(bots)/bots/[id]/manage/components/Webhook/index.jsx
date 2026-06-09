@@ -182,7 +182,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
 
         <div className='mt-4 flex w-full flex-1 justify-end gap-x-2 sm:mt-0'>
           <button
-            className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-black/30 px-4 py-1.5 font-semibold text-white hover:bg-black/40 disabled:pointer-events-none disabled:opacity-70 dark:bg-white/30 dark:hover:bg-white/40 sm:w-max'
+            className='flex w-full items-center justify-center gap-x-1 rounded-xl bg-black/30 px-4 py-1.5 font-semibold text-white hover:bg-black/40 disabled:pointer-events-none disabled:opacity-70 sm:w-max dark:bg-white/30 dark:hover:bg-white/40'
             disabled={!changesMade || savingChanges}
             onClick={saveChanges}
           >
@@ -300,14 +300,14 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
                       <button
                         key={`record-${record.created_at}`}
                         className={cn(
-                          'flex gap-x-2 select-none items-center bg-secondary py-2 px-4 rounded-lg',
-                          selectedRecord === record ? 'bg-quaternary cursor-default' : 'hover:bg-tertiary'
+                          'flex items-center gap-x-2 rounded-lg bg-secondary px-4 py-2 select-none',
+                          selectedRecord === record ? 'cursor-default bg-quaternary' : 'hover:bg-tertiary'
                         )}
                         onClick={() => setSelectedRecord(record)}
                       >
                         <span
                           className={cn(
-                            'flex font-semibold text-xs',
+                            'flex text-xs font-semibold',
                             isRecordSuccess ? 'text-green-600' : 'text-red-500'
                           )}
                           onClick={() => setSelectedRecord(record)}

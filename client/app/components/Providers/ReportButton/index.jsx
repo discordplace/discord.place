@@ -47,14 +47,14 @@ export default function ReportButtonProvider() {
 
   return (
     <motion.div
-      className='fixed bottom-4 right-4 z-999'
+      className='fixed right-4 bottom-4 z-999'
       animate={animate}
     >
       <Tooltip content={t('inAppReporting.tooltip.hide')}>
         <button
           className={cn(
-            'absolute p-2 text-xl rounded-full transition-[opacity,transform] duration-300 ease-in-out bg-quaternary dark:hover:bg-white dark:hover:text-black hover:text-white hover:bg-black',
-            !showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[30px]' : 'scale-100 translate-y-0 translate-x-0'
+            'absolute rounded-full bg-quaternary p-2 text-xl transition-[opacity,transform] duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
+            !showReportableAreas ? 'pointer-events-none translate-x-[30px] translate-y-[30px] scale-50 opacity-0' : 'translate-x-0 translate-y-0 scale-100'
           )}
           onClick={() => setShowReportableAreas(false)}
         >
@@ -65,8 +65,8 @@ export default function ReportButtonProvider() {
       <Tooltip content={t('inAppReporting.tooltip.reportSomething')}>
         <Link
           className={cn(
-            'absolute p-2 text-xl rounded-full transition-[opacity,transform] duration-300 ease-in-out bg-quaternary dark:hover:bg-white dark:hover:text-black hover:text-white hover:bg-black',
-            !showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[-45px]' : 'delay-150 scale-100 translate-y-0 translate-x-[-45px]'
+            'absolute rounded-full bg-quaternary p-2 text-xl transition-[opacity,transform] duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
+            !showReportableAreas ? 'pointer-events-none translate-x-[-45px] translate-y-[30px] scale-50 opacity-0' : 'translate-x-[-45px] translate-y-0 scale-100 delay-150'
           )}
           href={config.githubIssuesUrl}
           target='_blank'
@@ -81,9 +81,9 @@ export default function ReportButtonProvider() {
       >
         <button
           className={cn(
-            'p-2 text-xl rounded-full transition-[opacity,transform] duration-300 ease-in-out bg-quaternary dark:hover:bg-white dark:hover:text-black hover:text-white hover:bg-black',
-            showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[-30px]' : 'scale-100 translate-y-0 translate-x-0',
-            !loggedIn && 'opacity-50 cursor-default'
+            'rounded-full bg-quaternary p-2 text-xl transition-[opacity,transform] duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
+            showReportableAreas ? 'pointer-events-none translate-x-[-30px] translate-y-[30px] scale-50 opacity-0' : 'translate-x-0 translate-y-0 scale-100',
+            !loggedIn && 'cursor-default opacity-50'
           )}
           onClick={() => loggedIn && setShowReportableAreas(true)}
         >

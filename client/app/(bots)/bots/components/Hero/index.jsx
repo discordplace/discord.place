@@ -42,7 +42,7 @@ export default function Hero() {
       <div className='flex w-full max-w-[800px] flex-col items-center'>
         <motion.h1
           className={cn(
-            'text-5xl font-medium max-w-[800px] text-center text-primary',
+            'max-w-[800px] text-center text-5xl font-medium text-primary',
             BricolageGrotesque.className
           )}
           initial={{ opacity: 0, y: -25 }}

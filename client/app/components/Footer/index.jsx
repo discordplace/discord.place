@@ -188,7 +188,7 @@ export default function Footer() {
                   key={nanoid()}
                   href={link.href}
                   className={cn(
-                    'flex items-center gap-x-2 text-secondary w-max',
+                    'flex w-max items-center gap-x-2 text-secondary',
                     link.disabled ? 'pointer-events-none opacity-70' : 'hover:text-primary'
                   )}
                   target={link.target || '_self'}
@@ -235,7 +235,7 @@ export default function Footer() {
           <div className='flex gap-x-1 rounded-xl bg-quaternary p-[3px] dark:bg-background'>
             <button
               className={cn(
-                'z-10 select-none justify-center relative flex items-center text-sm font-medium px-3 py-1',
+                'relative z-10 flex items-center justify-center px-3 py-1 text-sm font-medium select-none',
                 theme !== 'light' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
               )}
               onClick={() => {
@@ -256,7 +256,7 @@ export default function Footer() {
 
             <button
               className={cn(
-                'z-10 select-none justify-center relative flex items-center text-sm font-semibold px-3 py-1',
+                'relative z-10 flex items-center justify-center px-3 py-1 text-sm font-semibold select-none',
                 theme !== 'dark' ? 'text-tertiary hover:text-secondary' : 'pointer-events-none'
               )}
               onClick={() => {

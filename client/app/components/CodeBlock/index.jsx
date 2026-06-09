@@ -11,7 +11,7 @@ export default function CodeBlock({ children, FileIcon, fileName, language, clas
 
   return (
     <div className='rounded-xl border border-primary'>
-      <div className='font-geist -mb-2 flex w-full justify-between rounded-t-xl border-b border-b-primary bg-secondary px-4 py-2'>
+      <div className='-mb-2 flex w-full justify-between rounded-t-xl border-b border-b-primary bg-secondary px-4 py-2 font-sans'>
         <div className='flex items-center gap-x-1.5 text-xs text-tertiary'>
           {FileIcon}
 

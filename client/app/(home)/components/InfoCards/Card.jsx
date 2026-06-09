@@ -10,7 +10,7 @@ export default function InfoCard({ index, title, description, button, content })
   return (
     <div
       className={cn(
-        'flex w-full gap-12 flex-col lg:h-[300px] items-center',
+        'flex w-full flex-col items-center gap-12 lg:h-[300px]',
         index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
       )}
     >
@@ -29,7 +29,7 @@ export default function InfoCard({ index, title, description, button, content })
           {title}
         </h2>
 
-        <p className='text-balance text-lg font-light text-secondary'>
+        <p className='text-lg font-light text-balance text-secondary'>
           {description}
         </p>
 
@@ -37,7 +37,7 @@ export default function InfoCard({ index, title, description, button, content })
           <Link
             href={button.href}
             target={button.target || '_blank'}
-            className='-ml-4 mt-2 flex w-max items-center gap-x-1 rounded-full px-4 py-2 text-sm text-tertiary ring-purple-500 ring-offset-2 ring-offset-[rgba(var(--bg-background))] transition-all hover:ml-0 hover:bg-purple-500/20 hover:font-semibold hover:text-primary hover:ring-2'
+            className='mt-2 -ml-4 flex w-max items-center gap-x-1 rounded-full px-4 py-2 text-sm text-tertiary ring-purple-500 ring-offset-2 ring-offset-[rgba(var(--bg-background))] transition-all hover:ml-0 hover:bg-purple-500/20 hover:font-semibold hover:text-primary hover:ring-2'
           >
             {button.text}
 

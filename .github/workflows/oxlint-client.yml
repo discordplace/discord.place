@@ -30,7 +30,7 @@ jobs:
           cache-key: "${{hashFiles('client/pnpm-lock.yaml')}}"
           project: client
           
-      - name: Run lint script on /client
+      - name: Run lint:github script on /client
         run: |
           cd client
-          npm run lint
+          npm run lint:github

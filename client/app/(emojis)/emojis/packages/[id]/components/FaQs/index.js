@@ -28,7 +28,7 @@ export default function FaQs({ emoji }) {
   return QA.map(({ label, content }, index) => (
     <div
       className={cn(
-        'overflow-hidden flex flex-col w-full p-3 rounded-md group',
+        'group flex w-full flex-col overflow-hidden rounded-md p-3',
         activeQA === index ? 'bg-quaternary' : 'cursor-pointer bg-secondary hover:bg-tertiary'
       )}
       key={label}
@@ -42,7 +42,7 @@ export default function FaQs({ emoji }) {
 
           <h3
             className={cn(
-              'text-sm lg:text-base font-medium group-hover:text-primary',
+              'text-sm font-medium group-hover:text-primary lg:text-base',
               activeQA === index ? 'text-primary' : 'text-secondary group-hover:text-primary'
             )}
           >

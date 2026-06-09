@@ -52,7 +52,7 @@ export default function FlipWords({ words, duration = 3000, className, onStartAn
           opacity: 0
         }}
         className={cn(
-          'z-10 inline-block w-fit min-w-fit relative text-left text-neutral-900 dark:text-neutral-100 px-2',
+          'relative z-10 inline-block w-fit min-w-fit px-2 text-left text-neutral-900 dark:text-neutral-100',
           className
         )}
         key={currentWord}

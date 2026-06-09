@@ -25,7 +25,7 @@ export default function Home() {
 
         <div
           className={cn(
-            'relative flex rounded-3xl justify-center border 2xl:border-0 flex-col gap-y-2 w-full p-4 min-h-[100px] border-primary',
+            'relative flex min-h-[100px] w-full flex-col justify-center gap-y-2 rounded-3xl border border-primary p-4 2xl:border-0',
             activeStatBlock === label ? 'bg-secondary' : 'cursor-pointer hover:bg-secondary'
           )}
           onClick={() => setActiveStatBlock(label)}

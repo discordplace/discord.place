@@ -46,7 +46,7 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
     >
       <button
         className={cn(
-          '[transition-duration:250ms] peer transition-all cursor-pointer text-lg absolute p-1.5 rounded-md hover:bg-quaternary right-3 text-tertiary hover:text-primary',
+          'peer absolute right-3 cursor-pointer rounded-md p-1.5 text-lg text-tertiary transition-all [transition-duration:250ms] hover:bg-quaternary hover:text-primary',
           (value || (value !== undefined && value !== '')) && 'right-[2.7rem]'
         )}
         onClick={() => {
@@ -62,7 +62,7 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
 
       <button
         className={cn(
-          'absolute right-2 transition-all peer [transition-duration:250ms] p-1.5 rounded-md hover:bg-quaternary text-lg text-tertiary hover:text-primary',
+          'peer absolute right-2 rounded-md p-1.5 text-lg text-tertiary transition-all [transition-duration:250ms] hover:bg-quaternary hover:text-primary',
           (value || (value !== undefined && value !== '')) ? 'right-2' : 'right-[-30px] opacity-0'
         )}
         onClick={() => {
@@ -77,7 +77,7 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
       <input
         placeholder={placeholder}
         className={cn(
-          'caret-[rgba(var(--text-secondary))] [transition-duration:250ms] flex w-full py-3 pl-4 pr-12 transition-all border-2 rounded-lg outline-hidden disalbed:pointer-events-none bg-secondary peer-hover:bg-secondary border-primary hover:bg-tertiary placeholder-placeholder text-secondary focus-visible:bg-tertiary focus-visible:border-purple-500 active:bg-quaternary',
+          'flex w-full rounded-lg border-2 border-primary bg-secondary py-3 pr-12 pl-4 text-secondary caret-[rgba(var(--text-secondary))] outline-hidden transition-all [transition-duration:250ms] peer-hover:bg-secondary placeholder:text-placeholder hover:bg-tertiary focus-visible:border-purple-500 focus-visible:bg-tertiary active:bg-quaternary disabled:pointer-events-none',
           (value || (value !== undefined && value !== '')) && 'pr-[4.7rem]'
         )}
         onChange={event => setValue(event.target.value)}
