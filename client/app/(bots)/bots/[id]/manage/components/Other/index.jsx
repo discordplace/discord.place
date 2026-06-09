@@ -47,6 +47,11 @@ export default function Other({ botId, categories, setCategories, canEditSupport
     setSavingGithubRepository(true);
 
     toast.promise(editBot(botId, [{ key: 'github_repository', value: githubRepository }]), {
+      error: error => {
+        setSavingGithubRepository(false);
+
+        return error;
+      },
       loading: t('botManagePage.other.githubRepository.toast.savingRepository'),
       success: () => {
         setSavingGithubRepository(false);
@@ -54,11 +59,6 @@ export default function Other({ botId, categories, setCategories, canEditSupport
         revalidateBot(botId);
 
         return t('botManagePage.other.githubRepository.toast.repositorySaved');
-      },
-      error: error => {
-        setSavingGithubRepository(false);
-
-        return error;
       }
     });
   }
@@ -169,7 +169,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
 
             <div className='mt-2 flex w-full flex-wrap gap-4'>
               {ownedServersLoading ? (
-                new Array(9).fill().map((_, index) => (
+                Array.from({length: 9}).fill().map((_, index) => (
                   <div key={index} className='size-24 animate-pulse rounded-xl bg-secondary' />
                 ))
               ) : (

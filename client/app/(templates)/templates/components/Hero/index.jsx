@@ -12,25 +12,25 @@ import config from '@/config';
 import Select from '@/app/components/Select';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
   const { category, setCategory, sort, setSort, loading, search, setPage, fetchTemplates } = useSearchStore(useShallow(state => ({
     category: state.category,
-    setCategory: state.setCategory,
-    sort: state.sort,
-    setSort: state.setSort,
+    fetchTemplates: state.fetchTemplates,
     loading: state.loading,
     search: state.search,
+    setCategory: state.setCategory,
     setPage: state.setPage,
-    fetchTemplates: state.fetchTemplates
+    setSort: state.setSort,
+    sort: state.sort
   })));
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   return (
@@ -93,7 +93,6 @@ export default function Hero() {
             <Select
               placeholder={t('templatesPage.sortSelect.placeholder')}
               options={[
-                ...[
                   {
                     label: t('templatesPage.sortSelect.items.popular'),
                     value: 'Popular'
@@ -112,8 +111,7 @@ export default function Hero() {
                     {option.label}
                   </div>,
                   value: option.value
-                }))
-              ]}
+                }))}
               value={sort}
               onChange={setSort}
               disabled={loading}

@@ -27,7 +27,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   const mutualFriendsCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
   const mutualServersCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
   const avatars = useMemo(() => {
-    const avatars = new Array(3).fill(null).map(() => `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 5)}.png`);
+    const avatars = Array.from({length: 3}).fill(null).map(() => `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 5)}.png`);
 
     return avatars;
   }, []);
@@ -45,11 +45,11 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   }, []);
 
   const roles = [
-    { name: t('themeCard.roles.0.name'), color: '#faa61a' },
-    { name: t('themeCard.roles.1.name'), color: '#3ba55c' },
+    { color: '#faa61a', name: t('themeCard.roles.0.name') },
+    { color: '#3ba55c', name: t('themeCard.roles.1.name') },
     { name: t('themeCard.roles.2.name') },
     { name: t('themeCard.roles.3.name') },
-    { name: t('themeCard.roles.4.name'), color: '#eb459f' }
+    { color: '#eb459f', name: t('themeCard.roles.4.name') }
   ];
 
   return (
@@ -67,8 +67,8 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
       <div
         className='relative flex w-full flex-col rounded-lg bg-secondary pb-4'
         style={{
-          '--profile-gradient-start': `color-mix(in oklab, ${profileGradientOverlayColor} 100%, ${primaryColor})`,
           '--profile-gradient-end': `color-mix(in oklab, ${profileGradientOverlayColor} 100%, ${secondaryColor})`,
+          '--profile-gradient-start': `color-mix(in oklab, ${profileGradientOverlayColor} 100%, ${primaryColor})`,
           background: 'linear-gradient(var(--profile-gradient-start), var(--profile-gradient-start) 100%, var(--profile-gradient-end))'
         }}
       >

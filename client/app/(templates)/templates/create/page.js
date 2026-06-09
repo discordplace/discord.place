@@ -42,21 +42,21 @@ export default function Page() {
     setLoading(true);
 
     toast.promise(createTemplate({
-      id: templateId,
-      name: templateName,
+      categories: selectedCategories,
       description: templateDescription,
-      categories: selectedCategories
+      id: templateId,
+      name: templateName
     }), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('publishTemplatePage.toast.publishingTemplate'),
       success: () => {
         router.push(`/templates/${templateId}/preview`);
 
         return t('publishTemplatePage.toast.templatePublished');
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -271,8 +271,8 @@ export default function Page() {
                 else setActiveStep(activeStep + 1);
               }} disabled={
                 activeStep === 0 ? !templateId :
-                  activeStep === 1 ? (selectedCategories.length < 1 || templateName.length <= 0 || templateDescription.length < config.templateDescriptionMinLength || templateDescription.length > config.templateDescriptionMaxLength) :
-                    ((loading === true || templateDetailsLoading) || false)
+                  (activeStep === 1 ? (selectedCategories.length < 1 || templateName.length <= 0 || templateDescription.length < config.templateDescriptionMinLength || templateDescription.length > config.templateDescriptionMaxLength) :
+                    ((loading === true || templateDetailsLoading) || false))
               }
             >
               {activeStep === steps.length - 1 ? t('buttons.publish') : t('buttons.next')}

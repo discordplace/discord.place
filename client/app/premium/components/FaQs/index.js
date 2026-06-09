@@ -10,24 +10,24 @@ export default function FaQs() {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.0.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.0.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.0.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.0.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.1.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.1.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.1.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.1.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.2.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.2.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.2.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.2.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.3.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.3.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.3.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.3.label')
     },
     {
-      label: t('premiumPage.frequentlyAskedQuestions.items.4.label'),
-      content: t('premiumPage.frequentlyAskedQuestions.items.4.content')
+      content: t('premiumPage.frequentlyAskedQuestions.items.4.content'),
+      label: t('premiumPage.frequentlyAskedQuestions.items.4.label')
     }
   ];
 
@@ -41,7 +41,7 @@ export default function FaQs() {
       onClick={() => setActiveQA(index)}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 1.1 + (index * 0.2) }}
+      transition={{ delay: 1.1 + (index * 0.2), duration: 0.5 }}
     >
       <div className='flex items-center justify-between text-clip'>
         <div className='flex items-center gap-x-4'>

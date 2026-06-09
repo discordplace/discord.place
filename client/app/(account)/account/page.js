@@ -2,12 +2,7 @@ import Content from '@/app/(account)/account/components/Content';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 
 export const metadata = {
-  title: 'Account',
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://discord.place',
-    site_name: 'Discord Place',
     images: [
       {
         url: '/og.png',
@@ -15,8 +10,13 @@ export const metadata = {
         height: 540,
         alt: 'Discord Place'
       }
-    ]
-  }
+    ],
+    locale: 'en_US',
+    site_name: 'Discord Place',
+    type: 'website',
+    url: 'https://discord.place'
+  },
+  title: 'Account'
 };
 
 export default function Page() {

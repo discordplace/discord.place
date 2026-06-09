@@ -33,7 +33,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
         console.warn(`Failed to fetch banner image for user ${id} with hash ${hash}`, error);
 
         switch (error.response?.status) {
-          case 404:
+          case 404: {
             // Check if the user has been fetched before
             if (hashesRefreshed.some(({ hash: userHash }) => userHash === hash)) break;
 
@@ -63,8 +63,10 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
             setCurrentSource(getUrl(id, newHash));
 
             break;
-          default:
+          }
+          default: {
             break;
+          }
         }
       }
     }
@@ -72,7 +74,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
     fetchImage();
   }, [id, hash]);
 
-  if (!hash || !currentSource) return (
+  if (!hash || !currentSource) {return (
     <MotionImage
       key={`user-banner-${id}-replaced-with-default-banner`}
       src={DEFAULT_BANNER_BASE64}
@@ -82,7 +84,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
       {...motionOptions}
       {...props}
     />
-  );
+  );}
 
   return (
     <MotionImage

@@ -23,49 +23,49 @@ export default function ServerCard(props) {
   const sort = props.overridedSort || storedSort;
 
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    notation: 'compact'
+    notation: 'compact',
+    style: 'decimal'
   });
 
   const infos = [
     {
-      icon: IoHeart,
-      value: null,
       condition: props.server.premium === true && !isMobile,
-      transform: () => 'Premium'
+      icon: IoHeart,
+      transform: () => 'Premium',
+      value: null
     },
     {
+      condition: true,
       icon: FaUsers,
-      value: props.server.data.members,
-      condition: true
+      value: props.server.data.members
     },
     {
+      condition: sort === 'Votes',
       icon: TbSquareRoundedChevronUp,
-      value: props.server.data.votes,
-      condition: sort === 'Votes'
+      value: props.server.data.votes
     },
     {
-      icon: MdUpdate,
-      value: props.server.data.latest_voted_at,
       condition: sort === 'LatestVoted',
-      transform: date => date ? getRelativeTime(date, language) : t('serverCard.neverVoted')
+      icon: MdUpdate,
+      transform: date => date ? getRelativeTime(date, language) : t('serverCard.neverVoted'),
+      value: props.server.data.latest_voted_at
     },
     {
-      icon: HiSortAscending,
-      value: props.server.joined_at,
       condition: sort === 'Newest',
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      icon: HiSortAscending,
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }),
+      value: props.server.joined_at
     },
     {
-      icon: HiSortDescending,
-      value: props.server.joined_at,
       condition: sort === 'Oldest',
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      icon: HiSortDescending,
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }),
+      value: props.server.joined_at
     },
     {
+      condition: sort === 'Boosts',
       icon: TiStar,
-      value: props.server.data.boosts,
-      condition: sort === 'Boosts'
+      value: props.server.data.boosts
     }
   ];
 
@@ -142,8 +142,8 @@ export default function ServerCard(props) {
               className='mt-1 min-h-[40px] overflow-hidden text-sm text-tertiary'
               style={{
                 display: '-webkit-box',
-                WebkitLineClamp: '2',
-                WebkitBoxOrient: 'vertical'
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: '2'
               }}
             >
               {props.server.description || t('serverCard.noDescription')}

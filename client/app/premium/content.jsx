@@ -20,18 +20,18 @@ import FaQs from '@/app/premium/components/FaQs';
 import Tooltip from '@/app/components/Tooltip';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
-const SourceSerif4 = Source_Serif_4({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
+const SourceSerif4 = Source_Serif_4({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Page({ plans }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   const containerVariants = {
@@ -42,8 +42,8 @@ export default function Page({ plans }) {
       opacity: 1,
       transition: {
         delay: 0.15,
-        when: 'beforeChildren',
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        when: 'beforeChildren'
       }
     }
   };
@@ -55,8 +55,8 @@ export default function Page({ plans }) {
     },
     visible: {
       opacity: 1,
-      y: 0,
-      transition: sequenceTransition
+      transition: sequenceTransition,
+      y: 0
     }
   };
 
@@ -65,8 +65,20 @@ export default function Page({ plans }) {
 
   const features = [
     {
-      label: t('premiumPage.features.0.label'),
+      available_to: [
+        {
+          id: 'free',
+          value: <FaXmark />
+        },
+        {
+          id: 'premium',
+          value: <FaCheck />
+        }
+      ],
       info: t('premiumPage.features.0.info'),
+      label: t('premiumPage.features.0.label')
+    },
+    {
       available_to: [
         {
           id: 'free',
@@ -76,11 +88,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
-    },
-    {
-      label: t('premiumPage.features.1.label'),
+      ],
       info: t('premiumPage.features.1.info'),
+      label: t('premiumPage.features.1.label')
+    },
+    {
       available_to: [
         {
           id: 'free',
@@ -90,11 +102,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
-    },
-    {
-      label: t('premiumPage.features.2.label'),
+      ],
       info: t('premiumPage.features.2.info'),
+      label: t('premiumPage.features.2.label')
+    },
+    {
       available_to: [
         {
           id: 'free',
@@ -104,11 +116,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
-    },
-    {
-      label: t('premiumPage.features.3.label'),
+      ],
       info: t('premiumPage.features.3.info'),
+      label: t('premiumPage.features.3.label')
+    },
+    {
       available_to: [
         {
           id: 'free',
@@ -118,25 +130,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
-    },
-    {
-      label: t('premiumPage.features.4.label'),
+      ],
       info: t('premiumPage.features.4.info'),
-      available_to: [
-        {
-          id: 'free',
-          value: <FaXmark />
-        },
-        {
-          id: 'premium',
-          value: <FaCheck />
-        }
-      ]
+      label: t('premiumPage.features.4.label')
     },
     {
-      label: t('premiumPage.features.5.label'),
-      info: t('premiumPage.features.5.info'),
       available_to: [
         {
           id: 'free',
@@ -146,11 +144,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: '20'
         }
-      ]
+      ],
+      info: t('premiumPage.features.5.info'),
+      label: t('premiumPage.features.5.label')
     },
     {
-      label: t('premiumPage.features.6.label'),
-      info: t('premiumPage.features.6.info'),
       available_to: [
         {
           id: 'free',
@@ -160,11 +158,11 @@ export default function Page({ plans }) {
           id: 'premium',
           value: '5'
         }
-      ]
+      ],
+      info: t('premiumPage.features.6.info'),
+      label: t('premiumPage.features.6.label')
     },
     {
-      label: t('premiumPage.features.7.label'),
-      info: t('premiumPage.features.7.info'),
       available_to: [
         {
           id: 'free',
@@ -174,7 +172,9 @@ export default function Page({ plans }) {
           id: 'premium',
           value: <FaCheck />
         }
-      ]
+      ],
+      info: t('premiumPage.features.7.info'),
+      label: t('premiumPage.features.7.label')
     }
   ];
 
@@ -192,9 +192,14 @@ export default function Page({ plans }) {
   function purchase() {
     setLoading(true);
 
-    const planIdToPurchase = preferredBillingCycle === 'monthly' ? monthlyPlan.id : preferredBillingCycle === 'annual' ? annualPlan.id : lifetimePlan.id;
+    const planIdToPurchase = preferredBillingCycle === 'monthly' ? monthlyPlan.id : (preferredBillingCycle === 'annual' ? annualPlan.id : lifetimePlan.id);
 
     toast.promise(createCheckout(planIdToPurchase), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('premiumPage.toast.creatingCheckout'),
       success: data => {
         setTimeout(() => {
@@ -202,11 +207,6 @@ export default function Page({ plans }) {
         }, 3000);
 
         return t('premiumPage.toast.checkoutCreated');
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -264,7 +264,7 @@ export default function Page({ plans }) {
               </h2>
 
               <div className='flex flex-col gap-y-0.5 text-xs font-medium'>
-                {currentPlanId === (cycle === 'monthly' ? monthlyPlan.id : cycle === 'annual' ? annualPlan.id : lifetimePlan.id) ? (
+                {currentPlanId === (cycle === 'monthly' ? monthlyPlan.id : (cycle === 'annual' ? annualPlan.id : lifetimePlan.id)) ? (
                   <span
                     className={cn(
                       'text-purple-500 flex items-center gap-x-1',
@@ -287,7 +287,7 @@ export default function Page({ plans }) {
                 )}
 
                 <span className='text-tertiary'>
-                  {cycle === 'monthly' ? monthlyPlan.price_formatted.replace('month', t('premiumPage.billingCycle.monthly').toLowerCase()) : cycle === 'annual' ? annualPlan.price_formatted.replace('year', t('premiumPage.billingCycle.annual').toLowerCase()) : lifetimePlan.price_formatted}
+                  {cycle === 'monthly' ? monthlyPlan.price_formatted.replace('month', t('premiumPage.billingCycle.monthly').toLowerCase()) : (cycle === 'annual' ? annualPlan.price_formatted.replace('year', t('premiumPage.billingCycle.annual').toLowerCase()) : lifetimePlan.price_formatted)}
                 </span>
               </div>
             </div>
@@ -372,7 +372,7 @@ export default function Page({ plans }) {
         className='mb-12 flex w-full max-w-[800px] flex-col gap-y-2'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ ...sequenceTransition, duration: 0.5, delay: 1 }}
+        transition={{ ...sequenceTransition, delay: 1, duration: 0.5 }}
       >
         <h2 className='mt-4 flex items-center gap-x-1 text-lg font-semibold sm:text-xl'>
           <LuShieldQuestion />

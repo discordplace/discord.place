@@ -12,16 +12,16 @@ export default function FaQs() {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: t('themePage.frequentlyAskedQuestions.labels.0'),
-      content: <Question1 />
+      content: <Question1 />,
+      label: t('themePage.frequentlyAskedQuestions.labels.0')
     },
     {
-      label: t('themePage.frequentlyAskedQuestions.labels.1'),
-      content: <Question2 />
+      content: <Question2 />,
+      label: t('themePage.frequentlyAskedQuestions.labels.1')
     },
     {
-      label: t('themePage.frequentlyAskedQuestions.labels.2'),
-      content: <Question3 />
+      content: <Question3 />,
+      label: t('themePage.frequentlyAskedQuestions.labels.2')
     }
   ];
 

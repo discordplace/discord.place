@@ -9,13 +9,13 @@ const DynamicApexCharts = dynamic(() => import('react-apexcharts'), {
 
 function generateEmptyData() {
   return [
-    { value: 532, createdAt: new Date() },
-    { value: 353, createdAt: new Date() },
-    { value: 453, createdAt: new Date() },
-    { value: 437, createdAt: new Date() },
-    { value: 343, createdAt: new Date() },
-    { value: 544, createdAt: new Date() },
-    { value: 356, createdAt: new Date() }
+    { createdAt: new Date(), value: 532 },
+    { createdAt: new Date(), value: 353 },
+    { createdAt: new Date(), value: 453 },
+    { createdAt: new Date(), value: 437 },
+    { createdAt: new Date(), value: 343 },
+    { createdAt: new Date(), value: 544 },
+    { createdAt: new Date(), value: 356 }
   ];
 }
 
@@ -46,23 +46,22 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
         height={height}
         width='100%'
         series={[{
-          name: id,
-          data: reversedData.filter(({ createdAt }) => new Date(createdAt)).map(({ value }) => value)
+          data: reversedData.filter(({ createdAt }) => new Date(createdAt)).map(({ value }) => value),
+          name: id
         }]}
         options={{
           chart: {
             animations: {
               enabled: false
             },
-            type: 'area',
             height: 350,
+            type: 'area',
             zoom: {
               enabled: false
             }
           },
-          grid: {
-            show: true,
-            borderColor: 'rgba(var(--bg-secondary))'
+          dataLabels: {
+            enabled: false
           },
           fill: {
             colors: [color],
@@ -72,32 +71,27 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
               opacityTo: 0
             }
           },
+          grid: {
+            borderColor: 'rgba(var(--bg-secondary))',
+            show: true
+          },
           markers: {
-            size: 0,
-            style: 'hollow',
+            colors: ['rgba(var(--bg-background))'],
             hover: {
               size: 6
             },
-            colors: ['rgba(var(--bg-background))'],
+            shape: 'circle',
+            size: 0,
             strokeColors: [color],
             strokeWidth: 2,
-            shape: 'circle'
-          },
-          dataLabels: {
-            enabled: false
+            style: 'hollow'
           },
           stroke: {
-            curve: 'smooth',
             colors: [color],
+            curve: 'smooth',
             width: 2
           },
           tooltip: {
-            x: {
-              show: false
-            },
-            y: {
-              formatter: tooltipFormatter
-            },
             custom: ({ series, seriesIndex, dataPointIndex }) => {
               return `
                 <div class='w-full px-2 py-1.5 h-full bg-secondary rounded-lg border border-primary flex gap-x-2'>
@@ -114,57 +108,63 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
                   </div>
                 </div>
               `;
+            },
+            x: {
+              show: false
+            },
+            y: {
+              formatter: tooltipFormatter
             }
           },
           xaxis: {
-            range: xaxisRange || 6,
+            axisBorder: {
+              color: 'rgba(var(--bg-secondary))',
+              show: true
+            },
+            axisTicks: {
+              color: 'rgba(var(--bg-secondary))',
+              height: 5,
+              show: true
+            },
             categories: xAxisCategories || reversedData.map(({ createdAt }) => {
               const date = new Date(createdAt);
 
               return date.toLocaleString(language, { month: 'short', day: 'numeric' });
             }),
-            tooltip: {
-              enabled: false
-            },
             crosshairs: {
               show: true,
-              width: 1,
               stroke: {
                 color: 'rgba(var(--bg-quaternary))',
-                width: 1,
-                dashArray: 8
-              }
+                dashArray: 8,
+                width: 1
+              },
+              width: 1
             },
-            show: false,
             labels: {
+              offsetY: 5,
               show: true,
               style: {
                 colors: 'rgba(var(--text-tertiary), 0.5)',
                 fontSize: '12px',
                 fontWeight: 400
-              },
-              offsetY: 5
+              }
             },
-            axisBorder: {
-              show: true,
-              color: 'rgba(var(--bg-secondary))'
-            },
-            axisTicks: {
-              show: true,
-              color: 'rgba(var(--bg-secondary))',
-              height: 5
+            range: xaxisRange || 6,
+            show: false,
+            tooltip: {
+              enabled: false
             }
           },
           yaxis: {
-            show: true,
-            tickAmount: 4,
             labels: {
               style: {
                 colors: 'rgba(var(--text-tertiary), 0.5)',
                 fontSize: '12px',
                 fontWeight: 600
               }
-            }
+            },
+            show: true,
+            tickAmount: 4
           },
           ...extraGraphOptions
         }}

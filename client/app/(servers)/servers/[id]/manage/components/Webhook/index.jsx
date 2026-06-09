@@ -59,6 +59,11 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
       );
 
       toast.promise(functionToCall(serverId, webhookURL || null, webhookToken || null, webhookLanguage || null), {
+        error: error => {
+          setSavingChanges(false);
+
+          return error;
+        },
         loading: t('serverManagePage.webhook.toast.saving'),
         success: () => {
           revalidateServer(serverId);
@@ -71,11 +76,6 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
           setDefaultWebhookLanguage(webhookLanguage || null);
 
           return t('serverManagePage.webhook.toast.saved');
-        },
-        error: error => {
-          setSavingChanges(false);
-
-          return error;
         }
       });
     } catch {
@@ -135,8 +135,8 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
 
       if (errorMessage === 'Failed to send a test webhook to the server.') {
         toast.error(<TestWebhookFailedToastContent />, {
-          id: testWebhookToastId.current,
-          duration: 25000
+          duration: 25000,
+          id: testWebhookToastId.current
         });
 
         revalidateTimeoutRef.current = setTimeout(() => {
@@ -144,10 +144,10 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
           revalidateServer(serverId);
 
           toast.success(t('serverManagePage.webhook.toast.webhookTestedAndFailed'), {
-            id: testWebhookToastId.current,
-            duration: 5000
+            duration: 5000,
+            id: testWebhookToastId.current
           });
-        }, 20000);
+        }, 20_000);
       } else {
         toast.error(errorMessage, {
           id: testWebhookToastId.current
@@ -158,9 +158,9 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
     }
   }
 
-  useEffect(() => {
-    return () => clearTimeout(revalidateTimeoutRef.current);
-  }, []);
+  useEffect(() => 
+    () => clearTimeout(revalidateTimeoutRef.current)
+  , []);
 
   useEffect(() => {
     if (isDiscordWebhook) setWebhookToken('');
@@ -328,7 +328,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
                         </span>
 
                         <span className='ml-auto flex text-xs text-tertiary'>
-                          {new Date(record.created_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                          {new Date(record.created_at).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'short', year: 'numeric' })}
                         </span>
                       </button>
                     );

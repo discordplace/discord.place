@@ -9,18 +9,18 @@ export async function generateMetadata({ params }) {
   if (typeof metadata === 'string') return;
 
   return {
-    title: `Emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'}`,
     openGraph: {
-      title: `Discord Place - Emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'}`,
-      url: `/emojis/${params.id}`,
       images: [
         {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'emoji', metadata }))}`,
           width: 1200,
           height: 630
         }
-      ]
-    }
+      ],
+      title: `Discord Place - Emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'}`,
+      url: `/emojis/${params.id}`
+    },
+    title: `Emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'}`
   };
 }
 

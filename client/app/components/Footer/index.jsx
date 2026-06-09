@@ -30,7 +30,6 @@ export default function Footer() {
 
   const blocks = [
     {
-      title: t('footer.blocks.0.title'), // Pages
       links: [
         {
           label: t('footer.blocks.0.links.0'),
@@ -54,10 +53,10 @@ export default function Footer() {
           label: t('footer.blocks.0.links.4'),
           href: '/blogs'
         }
-      ]
+      ],
+      title: t('footer.blocks.0.title'), // Pages
     },
     {
-      title: t('footer.blocks.1.title'), // Our Services
       links: [
         {
           label: t('footer.blocks.1.links.0'),
@@ -91,10 +90,10 @@ export default function Footer() {
           label: 'Lantern',
           href: 'https://github.com/discordplace/lantern'
         }
-      ]
+      ],
+      title: t('footer.blocks.1.title'), // Our Services
     },
     {
-      title: t('footer.blocks.2.title'), // Legal
       links: [
         {
           label: t('footer.blocks.2.links.0'),
@@ -116,10 +115,10 @@ export default function Footer() {
           label: t('footer.blocks.2.links.4'),
           href: '/legal/purchase-policy'
         }
-      ]
+      ],
+      title: t('footer.blocks.2.title'), // Legal
     },
     {
-      title: t('footer.blocks.3.title'), // Social
       links: [
         {
           label: 'X',
@@ -147,7 +146,8 @@ export default function Footer() {
           disabled: true,
           target: '_blank'
         }
-      ]
+      ],
+      title: t('footer.blocks.3.title'), // Social
     }
   ];
 

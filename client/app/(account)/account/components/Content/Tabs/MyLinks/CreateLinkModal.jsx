@@ -6,10 +6,10 @@ import { t } from '@/stores/language';
 
 export default function CreateLinkModal() {
   const { name, setName, destinationURL, setDestinationURL } = useGeneralStore(useShallow(state => ({
-    name: state.createLinkModal.name,
-    setName: state.createLinkModal.setName,
     destinationURL: state.createLinkModal.destinationURL,
-    setDestinationURL: state.createLinkModal.setDestinationURL
+    name: state.createLinkModal.name,
+    setDestinationURL: state.createLinkModal.setDestinationURL,
+    setName: state.createLinkModal.setName
   })));
 
   return (

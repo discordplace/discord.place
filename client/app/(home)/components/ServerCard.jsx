@@ -7,9 +7,9 @@ import Link from 'next/link';
 import cn from '@/lib/cn';
 
 const formatter = new Intl.NumberFormat('en-US', {
-  style: 'decimal',
+  maximumFractionDigits: 1,
   notation: 'compact',
-  maximumFractionDigits: 1
+  style: 'decimal'
 });
 
 export default function ServerCard({ data }) {

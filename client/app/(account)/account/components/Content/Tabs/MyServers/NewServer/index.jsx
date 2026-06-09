@@ -55,7 +55,12 @@ export default function NewServer() {
 
     setLoading(true);
 
-    toast.promise(createServer(currentlyAddingServer.id, { description: serverDescription, invite_link: serverInviteLink, category: serverCategory, keywords: serverKeywords }), {
+    toast.promise(createServer(currentlyAddingServer.id, { category: serverCategory, description: serverDescription, invite_link: serverInviteLink, keywords: serverKeywords }), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.myServers.sections.newServer.toast.addingServer', { serverName: currentlyAddingServer.name }),
       success: () => {
         setTimeout(() => {
@@ -71,11 +76,6 @@ export default function NewServer() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.myServers.sections.newServer.toast.serverAdded', { serverName: currentlyAddingServer.name });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -119,7 +119,6 @@ export default function NewServer() {
 
           <h1 className='flex flex-wrap items-center gap-x-1 text-lg font-bold sm:text-3xl'>
             {t('accountPage.tabs.myServers.sections.newServer.title', {
-              serverName: <span className='truncate'>{currentlyAddingServer.name}</span>,
               serverIcon: (
                 currentlyAddingServer.icon ? (
                   <ServerIcon
@@ -139,7 +138,8 @@ export default function NewServer() {
                     className='rounded-lg'
                   />
                 )
-              )
+              ),
+              serverName: <span className='truncate'>{currentlyAddingServer.name}</span>
             })}
           </h1>
         </div>
@@ -267,12 +267,12 @@ export default function NewServer() {
             </p>
 
             <span
-              contentEditable
-              suppressContentEditableWarning
+              contentEditable={true}
+              suppressContentEditableWarning={true}
               className='mt-4 block h-[150px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
               onKeyUp={event => {
-                if (event.target.innerText.length > config.serverDescriptionMaxCharacters) {
-                  event.target.innerText = event.target.innerText.slice(0, config.serverDescriptionMaxCharacters);
+                if (event.target.textContent.length > config.serverDescriptionMaxCharacters) {
+                  event.target.textContent = event.target.textContent.slice(0, config.serverDescriptionMaxCharacters);
                   event.preventDefault();
                   event.stopPropagation();
 
@@ -421,7 +421,6 @@ export default function NewServer() {
                 {loading && <TbLoader className='animate-spin' />}
 
                 {t('accountPage.tabs.myServers.sections.newServer.fields.areYouReady.addButton', {
-                  serverName: currentlyAddingServer.name,
                   serverIcon: (
                     currentlyAddingServer.icon ? (
                       <ServerIcon
@@ -441,7 +440,8 @@ export default function NewServer() {
                         className='rounded'
                       />
                     )
-                  )
+                  ),
+                  serverName: currentlyAddingServer.name
                 })}
               </button>
 

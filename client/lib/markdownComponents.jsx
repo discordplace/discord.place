@@ -147,10 +147,10 @@ function toCodePoint(emoji) {
   for (let i = 0; i < emoji.length; i++) {
     const code = emoji.charCodeAt(i);
 
-    if (code >= 0xD800 && code <= 0xDBFF) {
+    if (code >= 0xD8_00 && code <= 0xDB_FF) {
       const next = emoji.charCodeAt(i + 1);
-      if (next >= 0xDC00 && next <= 0xDFFF) {
-        const comp = ((code - 0xD800) * 0x400) + (next - 0xDC00) + 0x10000;
+      if (next >= 0xDC_00 && next <= 0xDF_FF) {
+        const comp = ((code - 0xD8_00) * 0x4_00) + (next - 0xDC_00) + 0x1_00_00;
         pairs.push(comp.toString(16));
         i++;
       }
@@ -165,37 +165,6 @@ const emojiRegex = /(\p{Emoji_Presentation}|\p{Extended_Pictographic})/gu;
 const singleEmojiRegex = /^(\p{Emoji_Presentation}|\p{Extended_Pictographic})$/u;
 
 const markdownComponents = {
-  iframe: ({ src, title }) => {
-    try {
-      new URL(src);
-
-      return <CustomIFrame src={src} title={title} />;
-    } catch {
-      return null;
-    }
-  },
-  img: ({ src, alt, width, height }) => {
-    return (
-      <Zoom>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
-          alt={alt}
-          width={width || '100%'}
-          height={height || 'auto'}
-          className='my-4 rounded-xl'
-        />
-      </Zoom>
-    );
-  },
-  p: withEmojiSupport('p'),
-  h1: withEmojiSupport('h1'),
-  h2: withEmojiSupport('h2'),
-  h3: withEmojiSupport('h3'),
-  h4: withEmojiSupport('h4'),
-  h5: withEmojiSupport('h5'),
-  h6: withEmojiSupport('h6'),
-  li: withEmojiSupport('li'),
   a: ({ children, href, node }) => {
     if (isImageOnlyLinkNode(node) || isImageOnlyLinkChildren(children)) {
       return <>{children}</>;
@@ -213,11 +182,7 @@ const markdownComponents = {
       </Link>
     );
   },
-  strong: withEmojiSupport('strong'),
-  em: withEmojiSupport('em'),
   blockquote: withEmojiSupport('blockquote'),
-  td: withEmojiSupport('td'),
-  th: withEmojiSupport('th'),
   code: ({ children, className }) => {
     const languageMatch = /language-(\w+)/.exec(className || '');
     const language = languageMatch?.[1]?.toLowerCase();
@@ -278,7 +243,42 @@ const markdownComponents = {
         {children}
       </code>
     );
-  }
+  },
+  em: withEmojiSupport('em'),
+  h1: withEmojiSupport('h1'),
+  h2: withEmojiSupport('h2'),
+  h3: withEmojiSupport('h3'),
+  h4: withEmojiSupport('h4'),
+  h5: withEmojiSupport('h5'),
+  h6: withEmojiSupport('h6'),
+  iframe: ({ src, title }) => {
+    try {
+      new URL(src);
+
+      return <CustomIFrame src={src} title={title} />;
+    } catch {
+      return null;
+    }
+  },
+  img: ({ src, alt, width, height }) => {
+    return (
+      <Zoom>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={src}
+          alt={alt}
+          width={width || '100%'}
+          height={height || 'auto'}
+          className='my-4 rounded-xl'
+        />
+      </Zoom>
+    );
+  },
+  li: withEmojiSupport('li'),
+  p: withEmojiSupport('p'),
+  strong: withEmojiSupport('strong'),
+  td: withEmojiSupport('td'),
+  th: withEmojiSupport('th')
 };
 
 export default markdownComponents;

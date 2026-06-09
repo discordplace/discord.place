@@ -15,15 +15,15 @@ export default function ReportableArea(props) {
   const setShowReportableAreas = useGeneralStore(state => state.setShowReportableAreas);
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal,
+    openModal: state.openModal,
     updateModal: state.updateModal
   })));
 
   function submitReport() {
-    const reason = useGeneralStore.getState().reportAreaModal.reason;
+    const {reason} = useGeneralStore.getState().reportAreaModal;
     if (!reason) return toast.error(t('inAppReporting.reportModal.toast.noReason'));
 
     if (reason.length < config.reportReasonMinCharacters) return toast.error(t('inAppReporting.reportModal.toast.reasonTooShort', { minLength: config.reportReasonMinCharacters }));
@@ -32,31 +32,23 @@ export default function ReportableArea(props) {
     disableButton('report-area', 'createReport');
 
     toast.promise(createReport(props.type, props.identifier, reason), {
+      error: error => {
+        enableButton('report-area', 'createReport');
+
+        return error;
+      },
       loading: t('inAppReporting.reportModal.toast.submittingReport'),
       success: () => {
         closeModal('report-area');
         setShowReportableAreas(false);
 
         return t('inAppReporting.reportModal.toast.reportSubmitted');
-      },
-      error: error => {
-        enableButton('report-area', 'createReport');
-
-        return error;
       }
     });
   }
 
   function handleReportClick() {
     openModal('report-area', {
-      title: t('inAppReporting.reportModal.title'),
-      description: t('inAppReporting.reportModal.description'),
-      content: (
-        <ReportAreaModal
-          type={props.type}
-          metadata={props.metadata}
-        />
-      ),
       buttons: [
         {
           id: 'cancel',
@@ -70,7 +62,15 @@ export default function ReportableArea(props) {
           variant: 'solid',
           action: submitReport
         }
-      ]
+      ],
+      content: (
+        <ReportAreaModal
+          type={props.type}
+          metadata={props.metadata}
+        />
+      ),
+      description: t('inAppReporting.reportModal.description'),
+      title: t('inAppReporting.reportModal.title')
     });
   }
 

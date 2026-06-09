@@ -50,7 +50,12 @@ export default function NewTheme() {
 
     setLoading(true);
 
-    toast.promise(createTheme({ colors, categories: themeCategories }), {
+    toast.promise(createTheme({ categories: themeCategories, colors }), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.myThemes.sections.addTheme.toast.addingTheme'),
       success: data => {
         setTimeout(() => {
@@ -65,11 +70,6 @@ export default function NewTheme() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.myThemes.sections.addTheme.toast.themeAdded');
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }

@@ -6,12 +6,12 @@ import Content from '@/app/premium/content';
 
 export async function generateMetadata() {
   return {
-    title: 'Premium',
     description: 'Get access to exclusive features by subscribing to Discord Place Premium.',
     openGraph: {
-      title: 'Discord Place - Premium',
-      description: 'Get access to exclusive features by subscribing to Discord Place Premium.'
-    }
+      description: 'Get access to exclusive features by subscribing to Discord Place Premium.',
+      title: 'Discord Place - Premium'
+    },
+    title: 'Premium'
   };
 }
 

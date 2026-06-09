@@ -2,9 +2,9 @@ import Tracker from '@openreplay/tracker';
 import config from '@/config';
 
 const trackerOptions = {
-  projectKey: config.openreplay.projectKey,
+  __DISABLE_SECURE_MODE: process.env.NODE_ENV === 'development',
   ingestPoint: config.openreplay.ingestPoint,
-  __DISABLE_SECURE_MODE: process.env.NODE_ENV === 'development'
+  projectKey: config.openreplay.projectKey
 };
 
-export const tracker = typeof window !== 'undefined' ? new Tracker(trackerOptions) : null;
+export const tracker = typeof globalThis.window !== 'undefined' ? new Tracker(trackerOptions) : null;

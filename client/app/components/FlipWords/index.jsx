@@ -22,10 +22,10 @@ export default function FlipWords({ words, duration = 3000, className, onStartAn
 
   useEffect(() => {
     if (!isAnimating)
-      setTimeout(() => {
+      {setTimeout(() => {
         startAnimation();
         onStartAnimation && onStartAnimation();
-      }, duration);
+      }, duration);}
   }, [isAnimating, duration, startAnimation]);
 
   return (
@@ -57,11 +57,11 @@ export default function FlipWords({ words, duration = 3000, className, onStartAn
         )}
         key={currentWord}
       >
-        {currentWord?.split('').map((letter, index) => (
+        {[...currentWord].map((letter, index) => (
           <motion.span
             key={currentWord + index}
-            initial={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={{ filter: 'blur(8px)', opacity: 0, y: 10 }}
+            animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
             transition={{
               delay: index * 0.08,
               duration: 0.4

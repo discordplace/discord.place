@@ -21,21 +21,21 @@ export default function NotCollapsedHeader() {
 
   const links = [
     {
-      id: 'services',
       icon: MdMiscellaneousServices,
+      id: 'services',
       name: t('header.services')
     },
     {
-      id: 'blog',
+      href: '/blogs',
       icon: HiNewspaper,
-      name: t('header.blog'),
-      href: '/blogs'
+      id: 'blog',
+      name: t('header.blog')
     },
     {
-      id: 'premium',
+      href: '/premium',
       icon: BsStars,
-      name: t('header.premium'),
-      href: '/premium'
+      id: 'premium',
+      name: t('header.premium')
     }
   ];
 

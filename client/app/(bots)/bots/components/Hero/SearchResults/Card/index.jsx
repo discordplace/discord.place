@@ -14,6 +14,7 @@ import useLanguageStore, { t } from '@/stores/language';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Tooltip from '@/app/components/Tooltip';
+
 export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
   const language = useLanguageStore(state => state.language);
@@ -22,32 +23,31 @@ import Tooltip from '@/app/components/Tooltip';
   const category = useSearchStore(state => state.category);
 
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    notation: 'compact'
+    notation: 'compact',
+    style: 'decimal'
   });
 
   const infos = [
     {
-      icon: IoHeart,
-      value: null,
       condition: data.owner.premium === true && !isMobile,
-      transform: () => 'Premium'
+      icon: IoHeart,
+      transform: () => 'Premium',
+      value: null
     },
     {
+      condition: sort === 'Votes',
       icon: TbSquareRoundedChevronUp,
-      value: data.votes,
-      condition: sort === 'Votes'
+      value: data.votes
     },
     {
-      icon: MdUpdate,
-      value: data.latest_voted_at,
       condition: sort === 'LatestVoted',
-      transform: date => date ? getRelativeTime(date, language) : t('botCard.neverVoted')
+      icon: MdUpdate,
+      transform: date => date ? getRelativeTime(date, language) : t('botCard.neverVoted'),
+      value: data.latest_voted_at
     },
     {
-      icon: FaCompass,
-      value: data.servers,
       condition: sort === 'Servers',
+      icon: FaCompass,
       transform: value => {
         const serversFormatter = new Intl.NumberFormat('en-US', {
           style: 'decimal',
@@ -56,25 +56,26 @@ import Tooltip from '@/app/components/Tooltip';
         });
 
         return serversFormatter.format(value);
-      }
+      },
+      value: data.servers
     },
     {
-      icon: TiStar,
-      value: data.reviews,
       condition: sort === 'Most Reviewed',
-      transform: value => `${formatter.format(value)} Time Reviewed`
+      icon: TiStar,
+      transform: value => `${formatter.format(value)} Time Reviewed`,
+      value: data.reviews
     },
     {
-      icon: HiSortAscending,
-      value: data.created_at,
       condition: sort === 'Newest',
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      icon: HiSortAscending,
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }),
+      value: data.created_at
     },
     {
-      icon: HiSortDescending,
-      value: data.created_at,
       condition: sort === 'Oldest',
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      icon: HiSortDescending,
+      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }),
+      value: data.created_at
     }
   ];
 
@@ -128,8 +129,8 @@ import Tooltip from '@/app/components/Tooltip';
               className='mt-1 min-h-[40px] overflow-hidden text-sm text-tertiary'
               style={{
                 display: '-webkit-box',
-                WebkitLineClamp: '2',
-                WebkitBoxOrient: 'vertical'
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: '2'
               }}
             >
               {data.short_description || t('botCard.noDescription')}

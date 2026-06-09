@@ -58,7 +58,7 @@ export default function Content({ server }) {
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+            transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
             className='text-3xl font-bold'
           >
             {server.name}
@@ -70,11 +70,11 @@ export default function Content({ server }) {
                 <Tooltip
                   key={badge}
                   content={t(`badges.${badge.toLowerCase()}`, {
-                    premiumSince: server.ownerSubscriptionCreatedAt,
-                    lng: language,
                     formatParams: {
-                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                    }
+                      premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                    },
+                    lng: language,
+                    premiumSince: server.ownerSubscriptionCreatedAt
                   })}
                 >
                   <MotionImage
@@ -93,7 +93,7 @@ export default function Content({ server }) {
               <Tooltip content={
                 <>
                   <Countdown
-                    date={new Date(server.vote_triple_enabled.created_at).getTime() + 86400000}
+                    date={new Date(server.vote_triple_enabled.created_at).getTime() + 86_400_000}
                     renderer={({ completed, hours, minutes }) => {
                       if (completed) return t('serverPage.countdown.tripledVoteExpired');
 
@@ -106,7 +106,7 @@ export default function Content({ server }) {
                   src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_votes_tripled.svg`}
                   width={24}
                   height={24}
-                  alt={'Votes Tripled Badge'}
+                  alt="Votes Tripled Badge"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                 />
@@ -117,7 +117,7 @@ export default function Content({ server }) {
               <Tooltip content={
                 <>
                   <Countdown
-                    date={new Date(server.standed_out.created_at).getTime() + 43200000}
+                    date={new Date(server.standed_out.created_at).getTime() + 43_200_000}
                     renderer={({ completed, hours, minutes }) => {
                       if (completed) return t('serverPage.countdown.standedOutExpired');
 
@@ -130,7 +130,7 @@ export default function Content({ server }) {
                   src={`/profile-badges/${theme === 'dark' ? 'white' : 'black'}_standed_out.svg`}
                   width={24}
                   height={24}
-                  alt={'Standed Out Badge'}
+                  alt="Standed Out Badge"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                 />
@@ -147,7 +147,7 @@ export default function Content({ server }) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .8 }}
+          transition={{ damping: 10, delay: .8, duration: 0.3, stiffness: 100, type: 'spring' }}
         >
           <Tabs server={server} />
         </motion.div>

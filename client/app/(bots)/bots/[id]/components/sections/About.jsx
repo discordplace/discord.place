@@ -15,14 +15,14 @@ import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 const formatter = new Intl.NumberFormat('en-US', {
-  notation: 'compact',
-  compactDisplay: 'short'
+  compactDisplay: 'short',
+  notation: 'compact'
 });
 
 const serversFormatter = new Intl.NumberFormat('en-US', {
-  style: 'decimal',
+  maximumFractionDigits: 2,
   notation: 'compact',
-  maximumFractionDigits: 2
+  style: 'decimal'
 });
 
 export default function About({ bot }) {
@@ -30,9 +30,6 @@ export default function About({ bot }) {
 
   const keys = [
     {
-      key: 'owner',
-      label: t('botPage.about.labels.owner'),
-      icon: <RiUserAddLine />,
       component: (
         <Link
           className='flex items-center gap-x-2 transition-opacity hover:opacity-50'
@@ -51,39 +48,42 @@ export default function About({ bot }) {
             className='size-[16px] rounded-full'
           />
         </Link>
-      )
+      ),
+      icon: <RiUserAddLine />,
+      key: 'owner',
+      label: t('botPage.about.labels.owner')
     },
     {
-      key: 'servers',
-      label: t('botPage.about.labels.servers'),
-      icon: <FaCompass />,
       component: (
         <>
           {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date(bot.servers_updated_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
-      )
+      ),
+      icon: <FaCompass />,
+      key: 'servers',
+      label: t('botPage.about.labels.servers')
     },
     {
+      icon: <TbSquareRoundedChevronUp />,
       key: 'votes',
       label: t('botPage.about.labels.votes'),
-      icon: <TbSquareRoundedChevronUp />,
       value: formatter.format(bot.votes)
     },
     {
-      key: 'commands',
-      label: t('botPage.about.labels.commands'),
-      icon: <RiSlashCommands2 />,
       component: (
         <>
           {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
         </>
-      )
+      ),
+      icon: <RiSlashCommands2 />,
+      key: 'commands',
+      label: t('botPage.about.labels.commands')
     }
   ];
 
   const isMobile = useMedia('(max-width: 640px)', false);
 
-  if (bot.github_repository?.data) keys.push({
+  if (bot.github_repository?.data) {keys.push({
     key: 'GitHub Repository',
     label: t('botPage.about.labels.githubRepository.label'),
     icon: <FaGithub />,
@@ -153,7 +153,7 @@ export default function About({ bot }) {
         </div>
       </Link>
     </>
-  });
+  });}
 
   return (
     <div className='flex w-full flex-col lg:w-[70%]'>
@@ -161,7 +161,7 @@ export default function About({ bot }) {
         className='text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+        transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {t('botPage.about.title')}
       </motion.h2>
@@ -169,7 +169,7 @@ export default function About({ bot }) {
       <motion.p className='mt-2 whitespace-pre-wrap text-tertiary'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.15 }}
+        transition={{ damping: 10, delay: 0.15, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {bot.short_description}
       </motion.p>
@@ -177,7 +177,7 @@ export default function About({ bot }) {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.3 }}
+        transition={{ damping: 10, delay: 0.3, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         <Markdown className='mt-8'>
           {bot.description}
@@ -188,7 +188,7 @@ export default function About({ bot }) {
         className='mt-8 grid h-max grid-cols-1 gap-8 rounded-xl bg-secondary p-4 py-8 sm:grid-cols-2'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.35 }}
+        transition={{ damping: 10, delay: 0.35, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {keys.map(({ key, label, icon, value, component }, index) => (
           <motion.div
@@ -199,7 +199,7 @@ export default function About({ bot }) {
             )}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.20 + (.05 * index) }}
+            transition={{ damping: 10, delay: 0.20 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
           >
             <div className='rounded-full bg-tertiary p-3 text-secondary'>
               {icon}

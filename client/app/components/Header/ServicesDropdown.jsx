@@ -16,49 +16,48 @@ export default function ServicesDropdown() {
 
   const links = [
     {
-      name: t('header.servicesDropdownLinks.0'),
       description: t('profilesPage.subtitle', { count: 0 }),
       href: '/profiles',
-      icon: HiUserGroup
+      icon: HiUserGroup,
+      name: t('header.servicesDropdownLinks.0')
     },
     {
-      name: t('header.servicesDropdownLinks.1'),
       description: t('serversPage.subtitle'),
       href: '/servers',
-      icon: FaCompass
+      icon: FaCompass,
+      name: t('header.servicesDropdownLinks.1')
     },
     {
-      name: t('header.servicesDropdownLinks.2'),
       description: t('botsPage.subtitle'),
       href: '/bots',
-      icon: RiRobot2Fill
+      icon: RiRobot2Fill,
+      name: t('header.servicesDropdownLinks.2')
     },
     {
-      name: t('header.servicesDropdownLinks.3'),
       description: t('emojisPage.subtitle', { count: 0 }),
       href: '/emojis',
-      icon: MdEmojiEmotions
+      icon: MdEmojiEmotions,
+      name: t('header.servicesDropdownLinks.3')
     },
     {
-      name: t('header.servicesDropdownLinks.4'),
       description: t('templatesPage.subtitle'),
       href: '/templates',
-      icon: HiTemplate
+      icon: HiTemplate,
+      name: t('header.servicesDropdownLinks.4')
     },
     {
-      name: t('header.servicesDropdownLinks.5'),
       description: t('soundsPage.subtitle'),
       href: '/sounds',
-      icon: PiWaveformBold
+      icon: PiWaveformBold,
+      name: t('header.servicesDropdownLinks.5')
     },
     {
-      name: t('header.servicesDropdownLinks.6'),
       description: t('themesPage.subtitle'),
       href: '/themes',
-      icon: RiBrush2Fill
+      icon: RiBrush2Fill,
+      name: t('header.servicesDropdownLinks.6')
     },
     {
-      name: t('header.servicesDropdownLinks.7'),
       description: t('header.upcomingServiceDescription'),
       icon: function QuestionMarks() {
         return (
@@ -68,7 +67,8 @@ export default function ServicesDropdown() {
             <FaQuestion className='relative top-[3px] rotate-[10deg]' />
           </div>
         );
-      }
+      },
+      name: t('header.servicesDropdownLinks.7')
     }
   ];
 

@@ -12,25 +12,25 @@ import config from '@/config';
 import Select from '@/app/components/Select';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
   const { category, setCategory, sort, setSort, loading, search, fetchBots, setPage } = useSearchStore(useShallow(state => ({
     category: state.category,
-    setCategory: state.setCategory,
-    sort: state.sort,
-    setSort: state.setSort,
+    fetchBots: state.fetchBots,
     loading: state.loading,
     search: state.search,
-    fetchBots: state.fetchBots,
-    setPage: state.setPage
+    setCategory: state.setCategory,
+    setPage: state.setPage,
+    setSort: state.setSort,
+    sort: state.sort
   })));
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   return (
@@ -94,7 +94,6 @@ export default function Hero() {
             <Select
               placeholder='Sorting'
               options={[
-                ...[
                   {
                     label: t('botsPage.sortSelect.items.votes'),
                     value: 'Votes'
@@ -125,8 +124,7 @@ export default function Hero() {
                     {option.label}
                   </div>,
                   value: option.value
-                }))
-              ]}
+                }))}
               value={sort}
               onChange={setSort}
               disabled={loading}

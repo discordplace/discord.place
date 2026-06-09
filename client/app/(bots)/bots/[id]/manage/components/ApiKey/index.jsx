@@ -17,16 +17,21 @@ export default function ApiKey({ botId, apiKey }) {
   const [apiKeyDeleting, setApiKeyDeleting] = useState(false);
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   async function createNewApiKey(isNew) {
     setApiKeyCreating(true);
 
     toast.promise(createApiKey(botId, isNew), {
+      error: error => {
+        setApiKeyCreating(false);
+
+        return error;
+      },
       loading: t('botManagePage.apiKey.toast.creatingApiKey'),
       success: apiKey => {
         setCurrentApiKey(apiKey);
@@ -39,11 +44,6 @@ export default function ApiKey({ botId, apiKey }) {
         }
 
         return t('botManagePage.apiKey.toast.createdApiKey');
-      },
-      error: error => {
-        setApiKeyCreating(false);
-
-        return error;
       }
     });
   }
@@ -53,6 +53,12 @@ export default function ApiKey({ botId, apiKey }) {
     disableButton('delete-api-key', 'confirm');
 
     toast.promise(deleteApiKey(botId), {
+      error: error => {
+        setApiKeyDeleting(false);
+        enableButton('delete-api-key', 'confirm');
+
+        return error;
+      },
       loading: t('botManagePage.apiKey.toast.deletingApiKey'),
       success: () => {
         closeModal('delete-api-key');
@@ -60,12 +66,6 @@ export default function ApiKey({ botId, apiKey }) {
         setApiKeyDeleting(false);
 
         return t('botManagePage.apiKey.toast.apiKeyDeleted');
-      },
-      error: error => {
-        setApiKeyDeleting(false);
-        enableButton('delete-api-key', 'confirm');
-
-        return error;
       }
     });
   }
@@ -103,13 +103,6 @@ export default function ApiKey({ botId, apiKey }) {
                 className='flex w-full items-center gap-x-1 rounded-xl border border-red-600 bg-gradient-to-r from-red-600 via-red-600 to-red-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70 sm:w-max'
                 onClick={() => {
                   openModal('delete-api-key', {
-                    title: t('botManagePage.apiKey.deleteApiKeyModal.title'),
-                    description: t('botManagePage.apiKey.deleteApiKeyModal.description'),
-                    content: (
-                      <p className='text-sm text-tertiary'>
-                        {t('botManagePage.apiKey.deleteApiKeyModal.note')}
-                      </p>
-                    ),
                     buttons: [
                       {
                         id: 'cancel',
@@ -123,7 +116,14 @@ export default function ApiKey({ botId, apiKey }) {
                         variant: 'solid',
                         action: continueDeleteApiKey
                       }
-                    ]
+                    ],
+                    content: (
+                      <p className='text-sm text-tertiary'>
+                        {t('botManagePage.apiKey.deleteApiKeyModal.note')}
+                      </p>
+                    ),
+                    description: t('botManagePage.apiKey.deleteApiKeyModal.description'),
+                    title: t('botManagePage.apiKey.deleteApiKeyModal.title')
                   });
                 }}
                 disabled={apiKeyDeleting}

@@ -12,7 +12,7 @@ export default function SupportServer({ bot }) {
         className='mt-4 text-xl font-semibold'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .7 }}
+        transition={{ damping: 10, delay: .7, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {t('botPage.supportServer.title')}
       </motion.h2>
@@ -21,7 +21,7 @@ export default function SupportServer({ bot }) {
         className='mt-4 flex w-full gap-x-3 rounded-lg bg-secondary p-2 hover:bg-tertiary'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: .9 }}
+        transition={{ damping: 10, delay: .9, duration: 0.3, stiffness: 100, type: 'spring' }}
         href={`/servers/${bot.support_server.id}`}
       >
         <ServerIcon

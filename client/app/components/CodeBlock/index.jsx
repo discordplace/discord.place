@@ -29,7 +29,7 @@ export default function CodeBlock({ children, FileIcon, fileName, language, clas
       </div>
 
       <SyntaxHighlighter
-        PreTag={'div'}
+        PreTag="div"
         // eslint-disable-next-line react/no-children-prop
         children={String(children).replace(/\n$/, '')}
         language={language}

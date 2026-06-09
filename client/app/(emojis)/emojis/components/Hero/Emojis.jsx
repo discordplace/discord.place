@@ -15,29 +15,29 @@ export default function Emojis() {
   const user = useAuthStore(state => state.user);
 
   const { page, setPage, search, setSearch, loading, emojis, fetchEmojis, setSort, setCategory, totalEmojis, limit } = useSearchStore(useShallow(state => ({
-    page: state.page,
-    setPage: state.setPage,
-    search: state.search,
-    setSearch: state.setSearch,
-    loading: state.loading,
     emojis: state.emojis,
     fetchEmojis: state.fetchEmojis,
+    limit: state.limit,
+    loading: state.loading,
     maxReached: state.maxReached,
-    setSort: state.setSort,
+    page: state.page,
+    search: state.search,
     setCategory: state.setCategory,
-    totalEmojis: state.totalEmojis,
-    limit: state.limit
+    setPage: state.setPage,
+    setSearch: state.setSearch,
+    setSort: state.setSort,
+    totalEmojis: state.totalEmojis
   })));
 
   const stateVariants = {
+    exit: {
+      opacity: 0
+    },
     hidden: {
       opacity: 0
     },
     visible: {
       opacity: 1
-    },
-    exit: {
-      opacity: 0
     }
   };
 
@@ -82,7 +82,7 @@ export default function Emojis() {
           animate={{ opacity: 1 }}
         >
           {loading ? (
-            new Array(12).fill(0).map((_, index) => (
+            Array.from({length: 12}).fill(0).map((_, index) => (
               <div key={index} className='h-[164px] w-[322px] animate-pulse rounded-2xl bg-secondary' />
             ))
           ) : (
@@ -92,10 +92,10 @@ export default function Emojis() {
                 active={user?.id !== emoji.user.id}
                 type='emoji'
                 metadata={{
-                  id: emoji.id,
-                  name: emoji.name,
                   animated: emoji.animated,
-                  emoji_ids: emoji.emoji_ids
+                  emoji_ids: emoji.emoji_ids,
+                  id: emoji.id,
+                  name: emoji.name
                 }}
                 identifier={`emoji-${emoji.emoji_ids?.length > 0 ? 'package-' : ''}${emoji.id}`}
               >

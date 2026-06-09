@@ -25,36 +25,33 @@ export default function MyLinks() {
     data.links?.length < 5 : data.links?.length < 1;
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   function continueDeleteLink(id) {
     disableButton('delete-link', 'confirm');
 
     toast.promise(deleteLink(id), {
+      error: error => {
+        enableButton('delete-link', 'confirm');
+
+        return error;
+      },
       loading: t('accountPage.tabs.myLinks.toast.deletingLink'),
       success: () => {
         closeModal('delete-link');
         fetchData(['links']);
 
         return t('accountPage.tabs.myLinks.toast.linkDeleted');
-      },
-      error: error => {
-        enableButton('delete-link', 'confirm');
-
-        return error;
       }
     });
   }
 
   function continueCreateLink() {
     openModal('create-link', {
-      title: t('accountPage.tabs.myLinks.createLinkModal.title'),
-      description: t('accountPage.tabs.myLinks.createLinkModal.description'),
-      content: <CreateLinkModal />,
       buttons: [
         {
           id: 'cancel',
@@ -108,7 +105,10 @@ export default function MyLinks() {
             }
           }
         }
-      ]
+      ],
+      content: <CreateLinkModal />,
+      description: t('accountPage.tabs.myLinks.createLinkModal.description'),
+      title: t('accountPage.tabs.myLinks.createLinkModal.title')
     });
   }
 
@@ -212,13 +212,6 @@ export default function MyLinks() {
                     className='hover:opacity-70'
                     onClick={() =>
                       openModal('delete-link', {
-                        title: t('accountPage.tabs.myLinks.deleteLinkModal.title'),
-                        description: t('accountPage.tabs.myLinks.deleteLinkModal.description'),
-                        content: (
-                          <p className='text-sm text-tertiary'>
-                            {t('accountPage.tabs.myLinks.deleteLinkModal.note', { br: <br /> })}
-                          </p>
-                        ),
                         buttons: [
                           {
                             id: 'cancel',
@@ -232,7 +225,14 @@ export default function MyLinks() {
                             variant: 'solid',
                             action: () => continueDeleteLink(link.id)
                           }
-                        ]
+                        ],
+                        content: (
+                          <p className='text-sm text-tertiary'>
+                            {t('accountPage.tabs.myLinks.deleteLinkModal.note', { br: <br /> })}
+                          </p>
+                        ),
+                        description: t('accountPage.tabs.myLinks.deleteLinkModal.description'),
+                        title: t('accountPage.tabs.myLinks.deleteLinkModal.title')
                       })
                     }
                   >

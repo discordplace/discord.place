@@ -14,17 +14,17 @@ export default function ForceRefresh({ botId }) {
     setRefreshingData(true);
 
     toast.promise(refreshBot(botId), {
+      error: error => {
+        setRefreshingData(false);
+
+        return error;
+      },
       loading: t('botManagePage.forceRefresh.toast.refreshingData'),
       success: () => {
         setRefreshingData(false);
         revalidateBot(botId);
 
         return t('botManagePage.forceRefresh.toast.dataRefreshed');
-      },
-      error: error => {
-        setRefreshingData(false);
-
-        return error;
       }
     });
   }

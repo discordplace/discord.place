@@ -37,7 +37,7 @@ export default function TopVoters({ bot }) {
 
       {loading ? (
         <div className='mt-4 grid w-full grid-cols-1' key='loading'>
-          {new Array(limit).fill().map((_, index) => (
+          {Array.from({length: limit}).fill().map((_, index) => (
             <div key={index} className='flex h-[72px] w-full items-center gap-4 px-4 first:rounded-t-xl last:rounded-b-xl odd:bg-secondary even:bg-tertiary'>
               <div className='size-10 animate-pulse rounded-full bg-quaternary' />
               <div className='h-4 w-1/3 animate-pulse rounded-lg bg-quaternary' />
@@ -107,7 +107,7 @@ export default function TopVoters({ bot }) {
             loading={false}
             total={totalVoters}
             limit={limit}
-            disableAnimation
+            disableAnimation={true}
           />
         </div>
       )}

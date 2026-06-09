@@ -24,27 +24,27 @@ export default function Content({ theme }) {
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   function continueDeleteTheme() {
     disableButton('delete-theme', 'confirm');
 
     toast.promise(deleteTheme(theme.id), {
+      error: error => {
+        enableButton('delete-theme', 'confirm');
+
+        return error;
+      },
       loading: t('themePage.toast.deletingTheme', { id: theme.id }),
       success: () => {
         closeModal('delete-theme');
         setTimeout(() => router.push('/'), 3000);
 
         return t('themePage.toast.themeDeleted', { id: theme.id });
-      },
-      error: error => {
-        enableButton('delete-theme', 'confirm');
-
-        return error;
       }
     });
   }
@@ -72,8 +72,8 @@ export default function Content({ theme }) {
               active={user?.id !== theme.publisher.id}
               type='theme'
               metadata={{
-                id: theme.id,
                 colors: theme.colors,
+                id: theme.id,
                 publisher: theme.publisher
               }}
               identifier={`theme-${theme.id}`}
@@ -214,13 +214,6 @@ export default function Content({ theme }) {
                 className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 onClick={() =>
                   openModal('delete-theme', {
-                    title: t('themePage.dangerZone.deleteThemeModal.title'),
-                    description: t('themePage.dangerZone.deleteThemeModal.description', { id: theme.id }),
-                    content: (
-                      <p className='text-sm text-tertiary'>
-                        {t('themePage.dangerZone.deleteThemeModal.content')}
-                      </p>
-                    ),
                     buttons: [
                       {
                         id: 'cancel',
@@ -234,7 +227,14 @@ export default function Content({ theme }) {
                         variant: 'solid',
                         action: continueDeleteTheme
                       }
-                    ]
+                    ],
+                    content: (
+                      <p className='text-sm text-tertiary'>
+                        {t('themePage.dangerZone.deleteThemeModal.content')}
+                      </p>
+                    ),
+                    description: t('themePage.dangerZone.deleteThemeModal.description', { id: theme.id }),
+                    title: t('themePage.dangerZone.deleteThemeModal.title')
                   })
                 }
               >

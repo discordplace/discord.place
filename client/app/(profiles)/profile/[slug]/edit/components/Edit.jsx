@@ -87,6 +87,11 @@ export default function Edit({ profileData }) {
     setLoading(true);
 
     toast.promise(editProfile(profileData.slug, changedKeys), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('editProfilePage.toast.updatingProfile'),
       success: newProfile => {
         setChangedKeys({});
@@ -103,11 +108,6 @@ export default function Edit({ profileData }) {
 
           return t('editProfilePage.toast.profileUpdated');
         }
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -154,10 +154,10 @@ export default function Edit({ profileData }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
             transition={{
+              damping: 20,
               duration: 0.25,
-              type: 'spring',
               stiffness: 260,
-              damping: 20
+              type: 'spring'
             }}
           >
             <h1 className='text-lg font-medium text-primary'>
@@ -210,13 +210,13 @@ export default function Edit({ profileData }) {
               {currentlyEditingIndex === index ? (
                 key === 'bio' ? (
                   <span
-                    autoFocus
+                    autoFocus={true}
                     autoComplete='off'
                     spellCheck='false'
                     disabled={loading}
-                    contentEditable
-                    suppressContentEditableWarning
-                    onKeyUp={() => setCurrentlyEditingValue(bioValueSpanRef?.current?.innerText)}
+                    contentEditable={true}
+                    suppressContentEditableWarning={true}
+                    onKeyUp={() => setCurrentlyEditingValue(bioValueSpanRef?.current?.textContent)}
                     ref={bioValueSpanRef}
                     className='max-h-[200px] w-full resize-none overflow-y-auto break-all rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
                   >
@@ -236,7 +236,7 @@ export default function Edit({ profileData }) {
                     value={currentlyEditingValue}
                     onChange={event => setCurrentlyEditingValue(event.target.value)}
                     onKeyUp={event => event.key === 'Enter' && editKey(canBeEditedKeys[currentlyEditingIndex])}
-                    autoFocus
+                    autoFocus={true}
                     autoComplete='off'
                     spellCheck='false'
                     disabled={loading}
@@ -422,6 +422,11 @@ export default function Edit({ profileData }) {
                     setLoading(true);
 
                     toast.promise(editProfile(profileData.slug, { colors: { primary: null, secondary: null } }), {
+                      error: error => {
+                        setLoading(false);
+
+                        return error;
+                      },
                       loading: t('editProfilePage.toast.resettingColors'),
                       success: newProfile => {
                         setLoading(false);
@@ -438,11 +443,6 @@ export default function Edit({ profileData }) {
                         }));
 
                         return t('editProfilePage.toast.colorsReset');
-                      },
-                      error: error => {
-                        setLoading(false);
-
-                        return error;
                       }
                     });
                   }}

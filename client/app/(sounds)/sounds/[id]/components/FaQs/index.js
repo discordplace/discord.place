@@ -12,16 +12,16 @@ export default function FaQs({ sound }) {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: t('soundPage.frequentlyAskedQuestions.labels.0'),
-      content: <Question1 sound={sound} />
+      content: <Question1 sound={sound} />,
+      label: t('soundPage.frequentlyAskedQuestions.labels.0')
     },
     {
-      label: t('soundPage.frequentlyAskedQuestions.labels.1'),
-      content: <Question2 sound={sound} />
+      content: <Question2 sound={sound} />,
+      label: t('soundPage.frequentlyAskedQuestions.labels.1')
     },
     {
-      label: t('soundPage.frequentlyAskedQuestions.labels.2'),
-      content: <Question3 />
+      content: <Question3 />,
+      label: t('soundPage.frequentlyAskedQuestions.labels.2')
     }
   ];
 

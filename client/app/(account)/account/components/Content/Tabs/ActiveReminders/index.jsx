@@ -114,7 +114,7 @@ export default function ActiveReminders() {
                               </span>
 
                               <span className='text-tertiary'>
-                                {new Date(reminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                                {new Date(reminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                               </span>
                             </div>
                           </div>
@@ -134,7 +134,7 @@ export default function ActiveReminders() {
                         </span>
 
                         <span className='text-tertiary'>
-                          {new Date(reminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                          {new Date(reminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                         </span>
                       </div>
                     </div>
@@ -191,7 +191,7 @@ export default function ActiveReminders() {
                     <div className='flex flex-col items-center sm:items-end'>
                       <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
-                          date={new Date(voteReminder.createdAt).getTime() + 86400000}
+                          date={new Date(voteReminder.createdAt).getTime() + 86_400_000}
                           renderer={({ hours, minutes, seconds, completed }) => {
                             if (completed) return t('accountPage.tabs.activeReminders.countdown.expired');
 
@@ -201,7 +201,7 @@ export default function ActiveReminders() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(voteReminder.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                        {new Date(voteReminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
                   </div>

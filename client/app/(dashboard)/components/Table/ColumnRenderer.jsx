@@ -61,7 +61,7 @@ export default function ColumnRenderer({ data }) {
   const dashboardData = useDashboardStore(state => state.data);
 
   switch (data?.type) {
-    case 'emoji':
+    case 'emoji': {
       return (
         <div className='flex items-center gap-x-2'>
           <Image
@@ -77,7 +77,8 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    case 'emojiPack':
+    }
+    case 'emojiPack': {
       return (
         <div className='flex items-center gap-x-2'>
           <div className='flex'>
@@ -98,7 +99,8 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    case 'user':
+    }
+    case 'user': {
       return (
         <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
           <UserAvatar
@@ -121,7 +123,8 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'server':
+    }
+    case 'server': {
       return (
         <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
           <ServerIcon
@@ -144,7 +147,8 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'bot':
+    }
+    case 'bot': {
       return (
         <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
           <UserAvatar
@@ -171,7 +175,8 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'category':
+    }
+    case 'category': {
       return (
         <div className='flex items-center gap-x-2'>
           {Array.isArray(data.value) ? data.value.slice(0, 5).map(category => (
@@ -194,7 +199,8 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'date':
+    }
+    case 'date': {
       var date = new Date(data.value);
       var now = new Date();
 
@@ -206,7 +212,8 @@ export default function ColumnRenderer({ data }) {
           {date > yesterday ? getRelativeTime(data.value, 'en') : date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
         </span>
       );
-    case 'long-text':
+    }
+    case 'long-text': {
       return (
         <div className='flex items-center gap-x-2'>
           <div className='line-clamp-2 max-w-[200px] overflow-hidden text-xs font-medium text-tertiary'>
@@ -214,13 +221,15 @@ export default function ColumnRenderer({ data }) {
           </div>
         </div>
       );
-    case 'text':
+    }
+    case 'text': {
       return (
         <span className='text-sm font-medium'>
           {data.value}
         </span>
       );
-    case 'template':
+    }
+    case 'template': {
       return (
         <div className='flex items-center gap-x-2'>
           <div className='flex size-[32px] items-center justify-center rounded-md bg-quaternary font-bold'>
@@ -232,7 +241,8 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    case 'sound':
+    }
+    case 'sound': {
       return (
         <div className='ml-2 flex items-center gap-x-2'>
           <button
@@ -251,7 +261,8 @@ export default function ColumnRenderer({ data }) {
           </h2>
         </div>
       );
-    case 'rating':
+    }
+    case 'rating': {
       return (
         <div className='flex items-center gap-x-2'>
           <h2 className='flex items-center text-lg font-semibold'>
@@ -275,13 +286,15 @@ export default function ColumnRenderer({ data }) {
           </div>
         </div>
       );
-    case 'ipAddress':
+    }
+    case 'ipAddress': {
       return (
         <span className='rounded-full bg-quaternary px-2 py-0.5 text-xs font-medium text-primary'>
           {data.value}
         </span>
       );
-    case 'link':
+    }
+    case 'link': {
       return (
         <div className='ml-2 flex flex-col gap-y-1'>
           <span className='text-xs font-medium text-tertiary'>
@@ -293,7 +306,8 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    case 'number':
+    }
+    case 'number': {
       var formatter = new Intl.NumberFormat('en-US', { style: 'decimal', notation: 'compact', maximumFractionDigits: 2 });
 
       return (
@@ -301,7 +315,8 @@ export default function ColumnRenderer({ data }) {
           {formatter.format(data.value)}
         </span>
       );
-    case 'reason':
+    }
+    case 'reason': {
       return (
         <div className='flex flex-col gap-y-1'>
           <h2 className='text-sm font-medium'>
@@ -313,7 +328,8 @@ export default function ColumnRenderer({ data }) {
           </div>
         </div>
       );
-    case 'countdown':
+    }
+    case 'countdown': {
       return (
         <div className='text-xs font-medium text-tertiary'>
           {data.value ? (
@@ -330,19 +346,22 @@ export default function ColumnRenderer({ data }) {
           )}
         </div>
       );
-    case 'restriction':
+    }
+    case 'restriction': {
       return (
         <span className='rounded-full border border-primary bg-secondary px-2 py-1 text-xs font-medium text-secondary'>
           {data.value.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase())}
         </span>
       );
-    case 'email':
+    }
+    case 'email': {
       return (
         <span className='rounded-full border border-primary bg-secondary px-2 py-1 text-xs font-medium text-secondary'>
           {data.value}
         </span>
       );
-    case 'userSubscription':
+    }
+    case 'userSubscription': {
       if (data.value?.expiresAt) {
         return (
           <div className='flex flex-col gap-y-1'>
@@ -400,7 +419,8 @@ export default function ColumnRenderer({ data }) {
           </div>
         </div>
       );
-    case 'theme':
+    }
+    case 'theme': {
       return (
         <div className='flex w-max items-center gap-x-2 rounded-full bg-quaternary py-0.5 pl-1 pr-2'>
           <div className='relative flex items-center justify-center'>
@@ -423,7 +443,9 @@ export default function ColumnRenderer({ data }) {
           </span>
         </div>
       );
-    default:
+    }
+    default: {
       return JSON.stringify(data);
+    }
   }
 }

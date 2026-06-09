@@ -17,8 +17,8 @@ export default function CustomIFrame({ src, title }) {
       <div
         className='relative my-4 flex w-full items-center justify-center rounded-xl bg-background'
         style={{
-          height: '800px',
-          border: '2px dashed rgba(var(--bg-quaternary))'
+          border: '2px dashed rgba(var(--bg-quaternary))',
+          height: '800px'
         }}
       >
         {untrustedFrames.includes(src) ? (
@@ -28,8 +28,8 @@ export default function CustomIFrame({ src, title }) {
 
               <p className='text-center text-sm font-medium'>
                 {t('components.markdown.iframe.blockedSource', {
-                  span: <span className='text-primary'>{domain}</span>,
-                  br: <br />
+                  br: <br />,
+                  span: <span className='text-primary'>{domain}</span>
                 })}
               </p>
 
@@ -51,8 +51,8 @@ export default function CustomIFrame({ src, title }) {
               <div className='absolute top-0 flex w-full flex-wrap items-center justify-between gap-4 rounded-t-xl bg-tertiary px-5 py-4' id='trustConsentContainer'>
                 <span className='text-sm font-medium text-tertiary'>
                   {t('components.markdown.iframe.sourceConsent', {
-                    span: <span className='text-primary'>{domain}</span>,
-                    br: <br />
+                    br: <br />,
+                    span: <span className='text-primary'>{domain}</span>
                   })}
                 </span>
 

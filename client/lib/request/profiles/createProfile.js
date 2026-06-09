@@ -4,5 +4,5 @@ import Endpoints from '@/lib/request/endpoints';
 export default function createProfile(slug, preferredHost) {
   const endpoint = Endpoints.CreateProfile;
 
-  return ClientRequestClient.post(endpoint, { slug, preferredHost });
+  return ClientRequestClient.post(endpoint, { preferredHost, slug });
 }

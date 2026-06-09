@@ -38,11 +38,11 @@ export default function NewBot() {
   const [botCategories, setBotCategories] = useState([]);
 
   const [localData, setLocalData] = useLocalStorage('bot-stored-data', {
-    botId: '',
-    botShortDescription: '',
+    botCategories: [],
     botDescription: '',
+    botId: '',
     botInviteUrl: '',
-    botCategories: []
+    botShortDescription: ''
   });
 
   useEffect(() => {
@@ -73,11 +73,11 @@ export default function NewBot() {
     if (botId === '' && botShortDescription === '' && botDescription === '' && botInviteUrl === '' && botCategories.length === 0) return;
 
     setLocalData({
-      botId,
-      botShortDescription,
+      botCategories,
       botDescription,
+      botId,
       botInviteUrl,
-      botCategories
+      botShortDescription
     });
   }, [botId, botShortDescription, botDescription, botInviteUrl, botCategories]);
 
@@ -107,22 +107,22 @@ export default function NewBot() {
     const locale = locales[dateFnsKey];
 
     const duration = intervalToDuration({
-      start: 0,
-      end: totalMinutes * 60 * 1000
+      end: totalMinutes * 60 * 1000,
+      start: 0
     });
 
     const formattedDuration = formatDuration(duration, {
-      locale,
-      format: ['hours', 'minutes'],
       delimiter: ' ',
+      format: ['hours', 'minutes'],
+      locale,
       zero: false
     });
 
     if (formattedDuration) return formattedDuration;
 
     return formatDuration({ minutes: 0 }, {
-      locale,
       format: ['minutes'],
+      locale,
       zero: true
     });
   }
@@ -133,13 +133,18 @@ export default function NewBot() {
     setLoading(true);
 
     const botData = {
-      short_description: botShortDescription,
+      categories: botCategories,
       description: botDescription,
       invite_url: botInviteUrl,
-      categories: botCategories
+      short_description: botShortDescription
     };
 
     toast.promise(createBot(botId, botData), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.myBots.sections.addBot.toast.addingBot', { botId }),
       success: () => {
         setTimeout(() => {
@@ -165,11 +170,6 @@ export default function NewBot() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.myBots.sections.addBot.toast.botAdded', { botId });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }

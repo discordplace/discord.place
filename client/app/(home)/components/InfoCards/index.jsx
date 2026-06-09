@@ -22,8 +22,8 @@ export default function InfoCards() {
         title={t('home.infoCards.0.title')}
         description={t('home.infoCards.0.description')}
         button={{
-          text: t('home.infoCards.0.buttonText'),
-          href: 'https://github.com/discordplace/discord.place'
+          href: 'https://github.com/discordplace/discord.place',
+          text: t('home.infoCards.0.buttonText')
         }}
         content={(
           <div className='relative z-10 flex size-full items-center justify-center overflow-hidden rounded-3xl'>
@@ -44,9 +44,9 @@ export default function InfoCards() {
         title={t('home.infoCards.1.title')}
         description={t('home.infoCards.1.description')}
         button={{
-          text: loggedIn ? t('home.infoCards.1.buttonTextLoggedIn') : t('home.infoCards.1.buttonTextLoggedOut'),
           href: loggedIn ? '/account' : config.getLoginURL(pathname),
-          target: '_self'
+          target: '_self',
+          text: loggedIn ? t('home.infoCards.1.buttonTextLoggedIn') : t('home.infoCards.1.buttonTextLoggedOut')
         }}
         content={(
           <div className='grid size-full grid-cols-1 gap-x-40 gap-y-8 overflow-hidden rounded-3xl sm:grid-cols-2'>

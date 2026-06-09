@@ -44,18 +44,18 @@ export default function Page() {
 
   const { activeTab, loading, setLoading, data, selectedItems, setSelectedItems, setPage } = useDashboardStore(useShallow(state => ({
     activeTab: state.activeTab,
-    loading: state.loading,
-    setLoading: state.setLoading,
     data: state.data,
+    loading: state.loading,
     selectedItems: state.selectedItems,
-    setSelectedItems: state.setSelectedItems,
-    setPage: state.setPage
+    setLoading: state.setLoading,
+    setPage: state.setPage,
+    setSelectedItems: state.setSelectedItems
   })));
 
   const openModal = useModalsStore(state => state.openModal);
 
   async function bulkAction(params) {
-    const selectedItems = useDashboardStore.getState().selectedItems;
+    const {selectedItems} = useDashboardStore.getState();
     const data = selectedItems;
 
     setSelectedItems([]);
@@ -94,17 +94,13 @@ export default function Page() {
 
   const tabs = [
     {
+      component: <Home />,
       id: 'home',
-      name: 'Home',
-      component: <Home />
+      name: 'Home'
     },
     {
-      id: 'users',
-      name: 'Users',
       data: {
-        title: 'Users',
         subtitle: 'Here you can see the all the users that have logged in to discord.place.',
-        totalCount: data?.users?.length || 0,
         tableData: {
           tabs: [
             {
@@ -203,16 +199,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Users',
+        totalCount: data?.users?.length || 0
+      },
+      id: 'users',
+      name: 'Users'
     },
     {
-      id: 'guilds',
-      name: 'Guilds',
       data: {
-        title: 'Guilds',
         subtitle: 'Here you can see the all the guilds that have been added discord.place bot to.',
-        totalCount: data?.guilds?.length || 0,
         tableData: {
           tabs: [
             {
@@ -255,16 +251,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Guilds',
+        totalCount: data?.guilds?.length || 0
+      },
+      id: 'guilds',
+      name: 'Guilds'
     },
     {
-      id: 'emojisQueue',
-      name: 'Emojis Queue',
       data: {
-        title: 'Emojis Queue',
         subtitle: 'Here you can see the all the emojis that published on discord.place.',
-        totalCount: data?.queue?.emojis?.length || 0,
         tableData: {
           tabs: [
             {
@@ -425,16 +421,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Emojis Queue',
+        totalCount: data?.queue?.emojis?.length || 0
+      },
+      id: 'emojisQueue',
+      name: 'Emojis Queue'
     },
     {
-      id: 'botsQueue',
-      name: 'Bots Queue',
       data: {
-        title: 'Bots Queue',
         subtitle: 'Here you can see the all the bots that listed on discord.place.',
-        totalCount: data?.queue?.bots?.length || 0,
         tableData: {
           tabs: [
             {
@@ -606,16 +602,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Bots Queue',
+        totalCount: data?.queue?.bots?.length || 0
+      },
+      id: 'botsQueue',
+      name: 'Bots Queue'
     },
     {
-      id: 'templatesQueue',
-      name: 'Templates Queue',
       data: {
-        title: 'Templates Queue',
         subtitle: 'Here you can see the all the templates that published on discord.place.',
-        totalCount: data?.queue?.templates?.length || 0,
         tableData: {
           tabs: [
             {
@@ -782,16 +778,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Templates Queue',
+        totalCount: data?.queue?.templates?.length || 0
+      },
+      id: 'templatesQueue',
+      name: 'Templates Queue'
     },
     {
-      id: 'soundsQueue',
-      name: 'Sounds Queue',
       data: {
-        title: 'Sounds Queue',
         subtitle: 'Here you can see the all the sounds that published on discord.place.',
-        totalCount: data?.queue?.sounds?.length || 0,
         tableData: {
           tabs: [
             {
@@ -959,16 +955,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Sounds Queue',
+        totalCount: data?.queue?.sounds?.length || 0
+      },
+      id: 'soundsQueue',
+      name: 'Sounds Queue'
     },
     {
-      id: 'reviewsQueue',
-      name: 'Reviews Queue',
       data: {
-        title: 'Reviews Queue',
         subtitle: 'Here you can see the all the reviews that published on discord.place.',
-        totalCount: data?.queue?.reviews?.length || 0,
         tableData: {
           tabs: [
             {
@@ -1157,16 +1153,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Reviews Queue',
+        totalCount: data?.queue?.reviews?.length || 0
+      },
+      id: 'reviewsQueue',
+      name: 'Reviews Queue'
     },
     {
-      id: 'themesQueue',
-      name: 'Themes Queue',
       data: {
-        title: 'Themes Queue',
         subtitle: 'Here you can see the all the themes that published on discord.place.',
-        totalCount: data?.queue?.themes?.length || 0,
         tableData: {
           tabs: [
             {
@@ -1333,16 +1329,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Themes Queue',
+        totalCount: data?.queue?.themes?.length || 0
+      },
+      id: 'themesQueue',
+      name: 'Themes Queue'
     },
     {
-      id: 'links',
-      name: 'Links',
       data: {
-        title: 'Links',
         subtitle: 'Here you can see the all the links that have been created.',
-        totalCount: data?.links?.length || 0,
         tableData: {
           tabs: [
             {
@@ -1420,16 +1416,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Links',
+        totalCount: data?.links?.length || 0
+      },
+      id: 'links',
+      name: 'Links'
     },
     {
-      id: 'botDenies',
-      name: 'Bot Denies',
       data: {
-        title: 'Bot Denies',
         subtitle: 'Here you can see the all the bot denies that have been recorded. (last 7 days only)',
-        totalCount: data?.botDenies?.length || 0,
         tableData: {
           tabs: [
             {
@@ -1531,16 +1527,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Bot Denies',
+        totalCount: data?.botDenies?.length || 0
+      },
+      id: 'botDenies',
+      name: 'Bot Denies'
     },
     {
-      id: 'timeouts',
-      name: 'Timeouts',
       data: {
-        title: 'Timeouts',
         subtitle: 'Here you can see the all the vote timeouts that have been recorded.',
-        totalCount: data?.timeouts?.length || 0,
         tableData: {
           tabs: [
             {
@@ -1649,19 +1645,16 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Timeouts',
+        totalCount: data?.timeouts?.length || 0
+      },
+      id: 'timeouts',
+      name: 'Timeouts'
     },
     {
-      id: 'quarantines',
-      name: 'Quarantines',
       data: {
-        title: 'Quarantines',
-        subtitle: 'Here you can see the all the quarantines that have been created and not yet expired.',
-        totalCount: data?.quarantines?.length || 0,
         actionButton: {
-          name: 'Create Quarantine',
-          icon: TbLockPlus,
           action: () => {
             openModal('create-quarantine-record', {
               title: 'Create Quarantine Record',
@@ -1669,8 +1662,11 @@ export default function Page() {
               content: <CreateQuarantineModal />
             });
           },
-          hide: !data.permissions?.canCreateQuarantines
+          hide: !data.permissions?.canCreateQuarantines,
+          icon: TbLockPlus,
+          name: 'Create Quarantine'
         },
+        subtitle: 'Here you can see the all the quarantines that have been created and not yet expired.',
         tableData: {
           tabs: [
             {
@@ -1766,8 +1762,12 @@ export default function Page() {
               ]
             }
           ]
-        }
-      }
+        },
+        title: 'Quarantines',
+        totalCount: data?.quarantines?.length || 0
+      },
+      id: 'quarantines',
+      name: 'Quarantines'
     }
   ];
 
@@ -1777,50 +1777,63 @@ export default function Page() {
     setSelectedItems([]);
 
     switch (activeTab) {
-      case 'home':
+      case 'home': {
         fetchData(['stats']);
         break;
-      case 'users':
+      }
+      case 'users': {
         fetchData(['users']);
         break;
-      case 'guilds':
+      }
+      case 'guilds': {
         fetchData(['guilds']);
         break;
-      case 'emojisQueue':
+      }
+      case 'emojisQueue': {
         fetchData(['emojis']);
         break;
-      case 'botsQueue':
+      }
+      case 'botsQueue': {
         fetchData(['bots']);
         break;
-      case 'templatesQueue':
+      }
+      case 'templatesQueue': {
         fetchData(['templates']);
         break;
-      case 'soundsQueue':
+      }
+      case 'soundsQueue': {
         fetchData(['sounds']);
         break;
-      case 'reviewsQueue':
+      }
+      case 'reviewsQueue': {
         fetchData(['reviews']);
         break;
-      case 'themesQueue':
+      }
+      case 'themesQueue': {
         fetchData(['themes']);
         break;
-      case 'botDenies':
+      }
+      case 'botDenies': {
         fetchData(['botdenies']);
         break;
-      case 'timeouts':
+      }
+      case 'timeouts': {
         fetchData(['timeouts']);
         break;
-      case 'quarantines':
+      }
+      case 'quarantines': {
         fetchData(['quarantines']);
         break;
-      case 'links':
+      }
+      case 'links': {
         fetchData(['links']);
         break;
+      }
     }
   }, [activeTab]);
 
   const theme = useThemeStore(state => state.theme);
-  const transition = { duration: 0.25, type: 'spring', damping: 10, stiffness: 100 };
+  const transition = { damping: 10, duration: 0.25, stiffness: 100, type: 'spring' };
 
   useEffect(() => {
     if (loading) {
@@ -1879,8 +1892,8 @@ export default function Page() {
                 >
                   <div
                     className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
-                      width: '50%',
-                      transform: 'translateX(-100%)'
+                      transform: 'translateX(-100%)',
+                      width: '50%'
                     }}
                   />
                 </motion.div>

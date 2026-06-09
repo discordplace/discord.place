@@ -90,7 +90,7 @@ export default function ActiveTimeouts() {
                     <div className='flex flex-col items-center sm:items-end'>
                       <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
-                          date={new Date(timeout.createdAt).getTime() + 86400000}
+                          date={new Date(timeout.createdAt).getTime() + 86_400_000}
                           renderer={({ hours, minutes, seconds, completed }) => {
                             if (completed) return t('accountPage.tabs.activeTimeouts.countdown.expired');
 
@@ -100,7 +100,7 @@ export default function ActiveTimeouts() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(timeout.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                        {new Date(timeout.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
                   </div>
@@ -166,7 +166,7 @@ export default function ActiveTimeouts() {
                     <div className='flex flex-col items-center sm:items-end'>
                       <div className='text-center text-base font-semibold text-primary'>
                         <Countdown
-                          date={new Date(timeout.createdAt).getTime() + 86400000}
+                          date={new Date(timeout.createdAt).getTime() + 86_400_000}
                           renderer={({ hours, minutes, seconds, completed }) => {
                             if (completed) return t('accountPage.tabs.activeTimeouts.countdown.expired');
 
@@ -176,7 +176,7 @@ export default function ActiveTimeouts() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(timeout.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+                        {new Date(timeout.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
                   </div>

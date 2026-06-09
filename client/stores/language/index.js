@@ -29,7 +29,7 @@ const useLanguageStore = create(set => ({
     const availableLanguages = config.availableLocales.map(locale => locale.code);
     if (!availableLanguages.includes(language)) language = config.availableLocales.find(locale => locale.default).code;
 
-    if ('localStorage' in window) window.localStorage.setItem('language', language);
+    if ('localStorage' in globalThis) globalThis.localStorage.setItem('language', language);
 
     set({ language });
 
@@ -46,14 +46,14 @@ const useLanguageStore = create(set => ({
 }));
 
 export function t(key, variables = {}) {
-  const language = useLanguageStore.getState().language;
+  const {language} = useLanguageStore.getState();
 
   if (language === 'loading') return '';
 
   const localeContents = {
+    az,
     en,
-    tr,
-    az
+    tr
   };
 
   i18n.addResourceBundle(language, 'translation', localeContents[language], true, true);
@@ -66,9 +66,9 @@ export function t(key, variables = {}) {
 
   return i18n.t(key, {
     ...variables,
-    lng: language,
+    defaultValue: key,
     fallbackLng: config.availableLocales.find(locale => locale.default).code,
-    defaultValue: key
+    lng: language
   });
 }
 

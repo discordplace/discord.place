@@ -65,16 +65,16 @@ export default function Page() {
     emoji.files.map(file => formData.append('file', file));
 
     toast.promise(createEmoji(formData), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('createEmojiPage.toast.publishingEmojis', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 }),
       success: emojiId => {
         router.push(`/emojis/${isPackage ? 'packages/' : ''}${emojiId}`);
 
         return t('createEmojiPage.toast.emojisPublished', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -180,14 +180,14 @@ export default function Page() {
                 className='hidden'
                 type='file'
                 accept='.png,.gif'
-                multiple
+                multiple={true}
                 max={9}
                 onChange={event => {
-                  const files = event.target.files;
+                  const {files} = event.target;
                   if (files.length <= 0) return;
                   if (files.length > config.packagesMaxEmojisLength) return toast.error(t('createEmojiPage.toast.maxEmojisReached', { maxLength: config.packagesMaxEmojisLength }));
 
-                  if ([...files].some(file => file.size > 256000)) return toast.error(t('createEmojiPage.toast.fileSizeExceeded', { size: 256 }));
+                  if ([...files].some(file => file.size > 256_000)) return toast.error(t('createEmojiPage.toast.fileSizeExceeded', { size: 256 }));
                   if ([...files].some(file => file.type === 'image/gif' && !selectedCategories.includes('Animated'))) return toast.error(t('createEmojiPage.toast.animatedCategoryNotSelected'));
 
                   setEmoji({ ...emoji, files: [...files] });
@@ -258,8 +258,8 @@ export default function Page() {
               else setActiveStep(activeStep + 1);
             }} disabled={
               activeStep === 0 ? (selectedCategories.length <= 0 || !emoji.name) :
-                activeStep === 1 ? emoji.files?.length <= 0 :
-                  (loading === true || false)
+                (activeStep === 1 ? emoji.files?.length <= 0 :
+                  (loading === true || false))
             }>
               {activeStep === steps.length - 1 ? t('buttons.publish') : t('buttons.next')}
             </button>

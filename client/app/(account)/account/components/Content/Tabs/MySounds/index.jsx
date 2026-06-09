@@ -12,8 +12,8 @@ import { t } from '@/stores/language';
 
 export default function MySounds() {
   const { data, currentlyAddingSound, setCurrentlyAddingSound } = useAccountStore(useShallow(state => ({
-    data: state.data,
     currentlyAddingSound: state.currentlyAddingSound,
+    data: state.data,
     setCurrentlyAddingSound: state.setCurrentlyAddingSound
   })));
 

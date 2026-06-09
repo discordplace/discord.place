@@ -71,28 +71,28 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
     disableButton('upload-emoji-to-discord', 'upload');
 
     toast.promise(uploadEmojiToGuild(config.getEmojiIdFromURL(emojiUrl), guildId, image_urls.indexOf(emojiUrl)), {
+      error: error => {
+        enableButton('upload-emoji-to-discord', 'upload');
+
+        return error;
+      },
       loading: t('createEmojiPage.emojisPreview.toast.uploadingEmojis'),
       success: () => {
         closeModal('upload-emoji-to-discord');
         setRenderConfetti(true);
 
         return t('createEmojiPage.emojisPreview.toast.emojisUploaded');
-      },
-      error: error => {
-        enableButton('upload-emoji-to-discord', 'upload');
-
-        return error;
       }
     });
   }
 
   const { openModal, openedModals, updateModal, closeModal, disableButton, enableButton } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
-    openedModals: state.openedModals,
-    updateModal: state.updateModal,
     closeModal: state.closeModal,
     disableButton: state.disableButton,
-    enableButton: state.enableButton
+    enableButton: state.enableButton,
+    openedModals: state.openedModals,
+    openModal: state.openModal,
+    updateModal: state.updateModal
   })));
 
   const selectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.selectedGuildId);
@@ -105,16 +105,16 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
       updateModal('upload-emoji-to-discord', {
         buttons: [
           {
+            actionType: 'close',
             id: 'cancel',
             label: t('buttons.cancel'),
-            variant: 'ghost',
-            actionType: 'close'
+            variant: 'ghost'
           },
           {
+            action: () => continueUploadEmojiToGuild(selectedEmojiURL, selectedGuildId),
             id: 'upload',
             label: t('buttons.upload'),
-            variant: 'solid',
-            action: () => continueUploadEmojiToGuild(selectedEmojiURL, selectedGuildId)
+            variant: 'solid'
           }
         ]
       });
@@ -123,19 +123,6 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
     }
 
     openModal('upload-emoji-to-discord', {
-      title: <>
-        <Image
-          src={selectedEmojiURL}
-          alt='Emoji Preview'
-          width={48}
-          height={48}
-          className='inline h-[20px] w-auto'
-        />
-
-        {t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.title')}
-      </>,
-      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
-      content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
       buttons: [
         {
           id: 'cancel',
@@ -149,7 +136,20 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
           variant: 'solid',
           action: () => continueUploadEmojiToGuild(selectedEmojiURL, selectedGuildId)
         }
-      ]
+      ],
+      content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
+      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
+      title: <>
+        <Image
+          src={selectedEmojiURL}
+          alt='Emoji Preview'
+          width={48}
+          height={48}
+          className='inline h-[20px] w-auto'
+        />
+
+        {t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.title')}
+      </>
     });
   }, [uploadableGuilds, selectedGuildId, selectedEmojiURL]);
 
@@ -222,13 +222,13 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
               src={url}
               width={64}
               height={64}
-              alt={''}
+              alt=""
               className='size-[46px] object-contain sm:size-[64px]'
             />
           </motion.div>
         ))}
 
-        {new Array(9 - image_urls.length).fill(0).map((_, index) => (
+        {Array.from({length: 9 - image_urls.length}).fill(0).map((_, index) => (
           <div className='flex size-full min-h-[120px] items-center justify-center rounded-xl bg-secondary' key={index}>
             <MdEmojiEmotions size={64} className='text-tertiary' />
           </div>

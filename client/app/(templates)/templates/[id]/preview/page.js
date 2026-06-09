@@ -9,19 +9,19 @@ export async function generateMetadata({ params }) {
   if (typeof metadata === 'string') return;
 
   return {
-    title: `Template ${metadata.name} by @${metadata.username}`,
     openGraph: {
-      title: `Discord Place - Template ${metadata.name} by @${metadata.username}`,
       description: metadata.description,
-      url: `${config.baseUrl}/templates/${params.id}`,
       images: [
         {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'template', metadata }))}`,
           width: 1200,
           height: 630
         }
-      ]
-    }
+      ],
+      title: `Discord Place - Template ${metadata.name} by @${metadata.username}`,
+      url: `${config.baseUrl}/templates/${params.id}`
+    },
+    title: `Template ${metadata.name} by @${metadata.username}`
   };
 }
 

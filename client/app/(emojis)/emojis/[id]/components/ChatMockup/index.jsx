@@ -40,7 +40,7 @@ export default function ChatMockup({ id, username, avatar, message, emoji_url, t
               theme === 'dark' ? 'text-[rgb(var(--dark-text-tertiary))]' : 'text-[rgb(var(--light-text-tertiary))]'
             )}
           >
-            {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',','')}
+            {new Date().toLocaleDateString(language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(',','')}
           </span>
         </div>
 

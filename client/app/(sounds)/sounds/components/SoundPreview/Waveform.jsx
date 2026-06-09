@@ -28,15 +28,15 @@ export default function Waveform({ id, name: soundName }) {
   const { currentlyPlaying, setCurrentlyPlaying, volume, setVolume } = useGeneralStore(useShallow(state => ({
     currentlyPlaying: state.sounds.currentlyPlaying,
     setCurrentlyPlaying: state.sounds.setCurrentlyPlaying,
-    volume: state.sounds.volume,
-    setVolume: state.sounds.setVolume
+    setVolume: state.sounds.setVolume,
+    volume: state.sounds.volume
   })));
 
   const { openModal, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal,
+    openModal: state.openModal,
     updateModal: state.updateModal
   })));
 
@@ -55,9 +55,6 @@ export default function Waveform({ id, name: soundName }) {
     if (currentlyPlaying === id) setCurrentlyPlaying('');
     else if (isLoud && !loudSoundsIgnored) {
       openModal(`sound-${id}-is-loud`, {
-        title: t('soundPlayer.loudWarningModal.title', { soundName }),
-        description: t('soundPlayer.loudWarningModal.description'),
-        content: t('soundPlayer.loudWarningModal.content'),
         buttons: [
           {
             id: 'dont-show-again',
@@ -84,7 +81,10 @@ export default function Waveform({ id, name: soundName }) {
               setCurrentlyPlaying(id);
             }
           }
-        ]
+        ],
+        content: t('soundPlayer.loudWarningModal.content'),
+        description: t('soundPlayer.loudWarningModal.description'),
+        title: t('soundPlayer.loudWarningModal.title', { soundName })
       });
     } else setCurrentlyPlaying(id);
   }
@@ -134,7 +134,7 @@ export default function Waveform({ id, name: soundName }) {
         barRadius={5}
         barGap={2}
         height={50}
-        responsive
+        responsive={true}
         cursorWidth={0}
         cursorHeight={20}
         dragToSeek={true}
@@ -143,7 +143,7 @@ export default function Waveform({ id, name: soundName }) {
           setTotalTime(wavesurfer.getDuration());
           setWavesurfer(wavesurfer);
 
-          const decodedData = wavesurfer.decodedData;
+          const {decodedData} = wavesurfer;
           if (!decodedData) return;
 
           const channelData = decodedData.getChannelData(0);
@@ -181,7 +181,7 @@ export default function Waveform({ id, name: soundName }) {
           </button>
 
           <DropdownMenu.Root modal={false}>
-            <DropdownMenu.Trigger asChild>
+            <DropdownMenu.Trigger asChild={true}>
               <button className='flex max-w-[200px] text-tertiary outline-none hover:text-primary'>
                 <BsThreeDots />
               </button>
@@ -192,7 +192,7 @@ export default function Waveform({ id, name: soundName }) {
                 <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
 
                 {!pathname.startsWith('/sounds/') && (
-                  <DropdownMenu.Item asChild>
+                  <DropdownMenu.Item asChild={true}>
                     <Link
                       className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-none transition-colors data-[highlighted]:bg-tertiary data-[highlighted]:text-primary'
                       href={`/sounds/${id}`}

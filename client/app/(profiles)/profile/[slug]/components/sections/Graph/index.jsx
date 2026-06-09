@@ -12,16 +12,16 @@ export default function Graph({ profile }) {
   const [activeTab, setActiveTab] = useState('likes');
   const tabs = [
     {
-      label: t('profilePage.graph.likes.label'),
-      id: 'likes',
       component: <LikesGraph profile={profile} />,
-      disabled: profile.dailyStats?.length === 0
+      disabled: profile.dailyStats?.length === 0,
+      id: 'likes',
+      label: t('profilePage.graph.likes.label')
     },
     {
-      label: t('profilePage.graph.views.label'),
-      id: 'views',
       component: <ViewsGraph profile={profile} />,
-      disabled: profile.dailyStats?.length === 0
+      disabled: profile.dailyStats?.length === 0,
+      id: 'views',
+      label: t('profilePage.graph.views.label')
     }
   ];
 
@@ -33,7 +33,7 @@ export default function Graph({ profile }) {
         className='w-full'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10, delay: 0.6 }}
+        transition={{ damping: 10, delay: 0.6, duration: 0.3, stiffness: 100, type: 'spring' }}
       >
         {isMobile ? (
           <div className='my-8 grid grid-cols-2 grid-rows-1 gap-2'>

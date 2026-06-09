@@ -106,7 +106,7 @@ export default function Other({ category, setCategory, keywords, setKeywords }) 
             }
             description={t('serverManagePage.other.addedKeywords.description')}
             value={keywords.join(', ')}
-            disabled
+            disabled={true}
             CustomInput={
               <div className='mt-2 flex flex-wrap gap-2'>
                 {keywords.map(keyword => (

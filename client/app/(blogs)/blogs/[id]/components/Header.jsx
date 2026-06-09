@@ -25,7 +25,7 @@ export default function Header({ data }) {
         </h1>
 
         <span className='flex items-center gap-x-2 text-center text-sm text-tertiary'>
-          {new Date(data.date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })}
+          {new Date(data.date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
 
           <span className='size-1.5 rounded-full bg-quaternary' />
 

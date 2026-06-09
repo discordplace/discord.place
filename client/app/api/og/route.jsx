@@ -15,14 +15,16 @@ import Bot from '@/app/api/og/content/Bot';
 import Emoji from '@/app/api/og/content/Emoji';
 import Template from '@/app/api/og/content/Template';
 import Sound from '@/app/api/og/content/Sound';
-import Blog from '@/app/api/og/content/Blog';function getFontData(fontName) {
+import Blog from '@/app/api/og/content/Blog';
+
+function getFontData(fontName) {
   const file = fs.readFileSync(`${process.cwd()}/public/fonts/${fontName}.ttf`);
 
   return file.buffer;
 }
 
 function sendError(message, status) {
-  return NextResponse.json({ success: false, error: message, status }, { status });
+  return NextResponse.json({ error: message, status, success: false }, { status });
 }
 
 export async function GET(request) {
@@ -31,38 +33,38 @@ export async function GET(request) {
 
   try {
     data = JSON.parse(decodeURIComponent(data));
-  } catch (error) {
+  } catch  {
     return sendError('Data query parameter must be a valid JSON string.', 400);
   }
 
   const icons = {
-    'profile': FaUserCircle,
-    'server': FaCompass,
+    'blog': HiNewspaper,
     'bot': RiRobot2Fill,
     'emoji': MdEmojiEmotions,
-    'template': HiTemplate,
+    'profile': FaUserCircle,
+    'server': FaCompass,
     'sound': PiWaveformBold,
-    'blog': HiNewspaper
+    'template': HiTemplate
   };
 
   if (!data.type || !icons[data.type]) return sendError('Invalid type.', 400);
 
   const fonts = [
     {
-      name: 'Geist',
       data: getFontData('Geist-Bold'),
+      name: 'Geist',
       style: 'normal',
       weight: 700
     },
     {
-      name: 'Geist',
       data: getFontData('Geist-SemiBold'),
+      name: 'Geist',
       style: 'normal',
       weight: 600
     },
     {
-      name: 'Geist',
       data: getFontData('Geist-Medium'),
+      name: 'Geist',
       style: 'normal',
       weight: 500
     }
@@ -72,28 +74,28 @@ export async function GET(request) {
     (
       <div
         style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
+          alignItems: 'center',
           backgroundColor: 'rgba(16, 16, 19)',
           color: 'white',
+          display: 'flex',
           fontWeight: '500',
-          alignItems: 'center',
-          justifyContent: 'center'
+          height: '100%',
+          justifyContent: 'center',
+          width: '100%'
         }}
       >
         <div
           style={{
-            position: 'absolute',
-            inset: 0,
-            height: '100%',
-            width: '100%',
             backgroundImage: 'linear-gradient(to right, rgba(23, 23, 28) 1px, transparent 1px), linear-gradient(to bottom, rgba(23, 23, 28) 1px, transparent 1px)',
-            backgroundSize: '100px 127.5px'
+            backgroundSize: '100px 127.5px',
+            height: '100%',
+            inset: 0,
+            position: 'absolute',
+            width: '100%'
           }}
         />
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           {data.type === 'profile' && (
             <Profile
               data={data.metadata}
@@ -143,21 +145,21 @@ export async function GET(request) {
 
         <div
           style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            width: '100%',
-            height: '120px',
-            backgroundColor: 'rgba(23, 23, 28)',
-            display: 'flex',
             alignItems: 'center',
-            gap: '28px'
+            backgroundColor: 'rgba(23, 23, 28)',
+            bottom: 0,
+            display: 'flex',
+            gap: '28px',
+            height: '120px',
+            left: 0,
+            position: 'absolute',
+            width: '100%'
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/symbol_white.png`}
-            style={{ width: '56px', height: '56px', marginLeft: '20px' }}
+            style={{ height: '56px', marginLeft: '20px', width: '56px' }}
             alt='discord.place Logo'
           />
 
@@ -165,22 +167,22 @@ export async function GET(request) {
 
           <div
             style={{
-              display: 'block',
-              width: '4px',
-              height: '40%',
               backgroundColor: 'rgba(37, 37, 45)',
+              borderRadius: '10px',
+              display: 'block',
+              height: '40%',
               transform: 'rotate(20deg)',
-              borderRadius: '10px'
+              width: '4px'
             }}
           />
 
           <span
             style={{
-              fontSize: '20px',
-              fontWeight: 600,
+              alignItems: 'center',
               color: 'rgba(204, 204, 204)',
               display: 'flex',
-              alignItems: 'center',
+              fontSize: '20px',
+              fontWeight: 600,
               gap: '12px'
             }}
           >
@@ -192,9 +194,9 @@ export async function GET(request) {
       </div>
     ),
     {
-      width: 1200,
+      fonts,
       height: 630,
-      fonts
+      width: 1200
     }
   );
 }

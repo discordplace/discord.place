@@ -21,9 +21,7 @@ export default function Input({ label, customLabelPeer, description, type, Custo
         {description}
       </p>
 
-      {CustomInput ? (
-        CustomInput
-      ) : (
+      {CustomInput || (
         <>
           {type === 'paragraph' && (
             <textarea

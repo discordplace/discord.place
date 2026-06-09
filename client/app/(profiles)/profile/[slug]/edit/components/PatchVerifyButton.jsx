@@ -15,17 +15,17 @@ export default function PatchVerifyButton({ profile }) {
     setLoading(true);
 
     toast.promise(patchProfileVerify(profile.slug, !profile.verified), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t(`editProfilePage.toast.${profile.verified ? 'unverifyingProfile' : 'verifyingProfile'}`),
       success: () => {
         revalidateProfile(profile.slug);
         setLoading(false);
 
         return t(`editProfilePage.toast.${profile.verified ? 'profileUnverified' : 'profileVerified'}`);
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }

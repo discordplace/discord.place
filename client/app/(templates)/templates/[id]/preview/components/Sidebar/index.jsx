@@ -16,27 +16,27 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   async function continueDeleteTemplate() {
     disableButton('delete-template', 'confirm');
 
     toast.promise(deleteTemplate(template.id), {
+      error: error => {
+        enableButton('delete-template', 'confirm');
+
+        return error;
+      },
       loading: t('templatePreviewPage.toast.deletingTempalte'),
       success: () => {
         closeModal('delete-template');
         setTimeout(() => router.push('/'), 3000);
 
         return t('templatePreviewPage.toast.templateDeleted', { templateName: template.name });
-      },
-      error: error => {
-        enableButton('delete-template', 'confirm');
-
-        return error;
       }
     });
   }
@@ -158,11 +158,6 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                 !focusedChannel.topic ?
                   toast.error(t('templatePreviewPage.noTopic', { focusedChannelName: focusedChannel.name })) :
                   openModal('view-topic', {
-                    title: t('templatePreviewPage.topicModal.title'),
-                    description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
-                    content: <>
-                      <p className='break-words text-sm font-medium text-[#dbdee1]'>{focusedChannel.topic}</p>
-                    </>,
                     buttons: [
                       {
                         id: 'cancel',
@@ -170,7 +165,12 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                         variant: 'ghost',
                         actionType: 'close'
                       }
-                    ]
+                    ],
+                    content: <>
+                      <p className='break-words text-sm font-medium text-[#dbdee1]'>{focusedChannel.topic}</p>
+                    </>,
+                    description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
+                    title: t('templatePreviewPage.topicModal.title')
                   })
               }
             >
@@ -235,13 +235,6 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
             className='flex size-[48px] cursor-pointer items-center justify-center rounded-[100%] bg-[#313338] text-[#ff4d4d] transition-all duration-100 ease-in-out hover:rounded-2xl hover:bg-[#ff4d4d] hover:text-white'
             onClick={() =>
               openModal('delete-template', {
-                title: t('templatePreviewPage.deleteTemplateModal.title'),
-                description: t('templatePreviewPage.deleteTemplateModal.description', { templateName: template.name }),
-                content: (
-                  <p className='text-sm text-tertiary'>
-                    {t('templatePreviewPage.deleteTemplateModal.note')}
-                  </p>
-                ),
                 buttons: [
                   {
                     id: 'cancel',
@@ -255,7 +248,14 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                     variant: 'solid',
                     action: continueDeleteTemplate
                   }
-                ]
+                ],
+                content: (
+                  <p className='text-sm text-tertiary'>
+                    {t('templatePreviewPage.deleteTemplateModal.note')}
+                  </p>
+                ),
+                description: t('templatePreviewPage.deleteTemplateModal.description', { templateName: template.name }),
+                title: t('templatePreviewPage.deleteTemplateModal.title')
               })
             }
           >

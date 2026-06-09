@@ -12,15 +12,15 @@ export default function Tabs({ bot }) {
   const [activeTab, setActiveTab] = useState('reviews');
   const tabs = [
     {
-      label: t('botPage.tabs.labels.reviews'),
+      component: <Reviews bot={bot} />,
       id: 'reviews',
-      component: <Reviews bot={bot} />
+      label: t('botPage.tabs.labels.reviews')
     },
     {
-      label: t('botPage.tabs.labels.topVoters'),
-      id: 'topVoters',
       component: <TopVoters bot={bot} />,
-      disabled: bot.totalVoters <= 0
+      disabled: bot.totalVoters <= 0,
+      id: 'topVoters',
+      label: t('botPage.tabs.labels.topVoters')
     }
   ];
 

@@ -19,22 +19,22 @@ export default function Socials({ profile }) {
   const [socials, setSocials] = useState(profile.socials);
 
   const typeRegexps = {
-    instagram: /(?:http(?:s)?:\/\/)?(?:www\.)?instagram\.com\/([\w](?!.*?\.{2})[\w.]{1,28}[\w])/,
-    x: /(?:http(?:s)?:\/\/)?(?:www\.)?x\.com\/([a-zA-Z0-9_]+)/,
-    twitter: /(?:http(?:s)?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)/,
-    tiktok: /(?:http(?:s)?:\/\/)?(?:www\.)?tiktok\.com\/@([a-zA-Z0-9_]+)/,
-    facebook: /(?:http(?:s)?:\/\/)?(?:www\.)?facebook\.com\/([a-zA-Z0-9_]+)/,
-    steam: /(?:http(?:s)?:\/\/)?(?:www\.)?steamcommunity\.com\/id\/([a-zA-Z0-9_]+)/,
-    github: /(?:http(?:s)?:\/\/)?(?:www\.)?github\.com\/([a-zA-Z0-9_-]+)/,
-    twitch: /(?:http(?:s)?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/,
-    youtube: /(?:http(?:s)?:\/\/)?(?:www\.)?youtube\.com\/@([a-zA-Z0-9_]+)/,
-    telegram: /(?:http(?:s)?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]+)/,
-    linkedin: /(?:http(?:s)?:\/\/)?(?:www\.)?linkedin\.com\/in\/([a-zA-Z0-9_-]+)/,
-    gitlab: /(?:http(?:s)?:\/\/)?(?:www\.)?gitlab\.com\/([a-zA-Z0-9_-]+)/,
-    reddit: /(?:http(?:s)?:\/\/)?(?:www\.)?reddit\.com\/u\/([a-zA-Z0-9_-]+)/,
-    mastodon: /(?:http(?:s)?:\/\/)?(?:www\.)?mastodon\.social\/@([a-zA-Z0-9_]+)/,
     bluesky: /(?:http(?:s)?:\/\/)?(?:www\.)?bsky\.app\/profile\/([a-zA-Z0-9_]+)/,
-    custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/
+    custom: /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?\b/,
+    facebook: /(?:http(?:s)?:\/\/)?(?:www\.)?facebook\.com\/([a-zA-Z0-9_]+)/,
+    github: /(?:http(?:s)?:\/\/)?(?:www\.)?github\.com\/([a-zA-Z0-9_-]+)/,
+    gitlab: /(?:http(?:s)?:\/\/)?(?:www\.)?gitlab\.com\/([a-zA-Z0-9_-]+)/,
+    instagram: /(?:http(?:s)?:\/\/)?(?:www\.)?instagram\.com\/([\w](?!.*?\.{2})[\w.]{1,28}[\w])/,
+    linkedin: /(?:http(?:s)?:\/\/)?(?:www\.)?linkedin\.com\/in\/([a-zA-Z0-9_-]+)/,
+    mastodon: /(?:http(?:s)?:\/\/)?(?:www\.)?mastodon\.social\/@([a-zA-Z0-9_]+)/,
+    reddit: /(?:http(?:s)?:\/\/)?(?:www\.)?reddit\.com\/u\/([a-zA-Z0-9_-]+)/,
+    steam: /(?:http(?:s)?:\/\/)?(?:www\.)?steamcommunity\.com\/id\/([a-zA-Z0-9_]+)/,
+    telegram: /(?:http(?:s)?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]+)/,
+    tiktok: /(?:http(?:s)?:\/\/)?(?:www\.)?tiktok\.com\/@([a-zA-Z0-9_]+)/,
+    twitch: /(?:http(?:s)?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/,
+    twitter: /(?:http(?:s)?:\/\/)?(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)/,
+    x: /(?:http(?:s)?:\/\/)?(?:www\.)?x\.com\/([a-zA-Z0-9_]+)/,
+    youtube: /(?:http(?:s)?:\/\/)?(?:www\.)?youtube\.com\/@([a-zA-Z0-9_]+)/
   };
 
   const [currentlyAddingNewSocial, setCurrentlyAddingNewSocial] = useState(false);
@@ -65,6 +65,11 @@ export default function Socials({ profile }) {
 
         toast.promise(addSocial(profile.slug, `https://${match[0]}`, 'custom'),
           {
+            error: error => {
+              setLoading(false);
+
+              return error;
+            },
             loading: t('editProfilePage.toast.socialAdding'),
             success: newSocials => {
               setCurrentlyAddingNewSocial(false);
@@ -75,11 +80,6 @@ export default function Socials({ profile }) {
               revalidateProfile(profile.slug);
 
               return t('editProfilePage.toast.socialAdded');
-            },
-            error: error => {
-              setLoading(false);
-
-              return error;
             }
           }
         );
@@ -91,6 +91,11 @@ export default function Socials({ profile }) {
         const handle = match[1];
         toast.promise(addSocial(profile.slug, handle, newSocialType),
           {
+            error: error => {
+              setLoading(false);
+
+              return error;
+            },
             loading: t('editProfilePage.toast.socialMediaAdding'),
             success: newSocials => {
               setCurrentlyAddingNewSocial(false);
@@ -101,11 +106,6 @@ export default function Socials({ profile }) {
               revalidateProfile(profile.slug);
 
               return t('editProfilePage.toast.socialMediaAdded');
-            },
-            error: error => {
-              setLoading(false);
-
-              return error;
             }
           }
         );
@@ -121,6 +121,12 @@ export default function Socials({ profile }) {
 
     toast.promise(deleteSocial(profile.slug, id),
       {
+        error: error => {
+          setLoading(false);
+          setDeletingSocialId(null);
+
+          return error;
+        },
         loading: t('editProfilePage.toast.deletingSocial'),
         success: newSocials => {
           setCurrentlyAddingNewSocial(false);
@@ -132,12 +138,6 @@ export default function Socials({ profile }) {
           revalidateProfile(profile.slug);
 
           return t('editProfilePage.toast.socialDeleted');
-        },
-        error: error => {
-          setLoading(false);
-          setDeletingSocialId(null);
-
-          return error;
         }
       }
     );
@@ -210,9 +210,9 @@ export default function Socials({ profile }) {
           <div className='flex w-full items-center gap-x-2'>
             {(() => {
               const Icon = getIcon(newSocialType);
-              if (!Icon) return (
+              if (!Icon) {return (
                 <div className='h-[18px] w-[20px] rounded-lg bg-quaternary' />
-              );
+              );}
 
               return (
                 <Icon
@@ -227,7 +227,7 @@ export default function Socials({ profile }) {
               value={newSocialValue}
               onChange={event => setNewSocialValue(event.target.value)}
               onKeyUp={event => event.key === 'Enter' && saveNewSocial()}
-              autoFocus
+              autoFocus={true}
               autoComplete='off'
               spellCheck='false'
               disabled={loading}

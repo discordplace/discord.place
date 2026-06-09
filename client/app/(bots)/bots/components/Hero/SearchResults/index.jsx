@@ -18,14 +18,14 @@ export default function SearchResults() {
   const user = useAuthStore(state => state.user);
 
   const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
-    loading: state.loading,
     bots: state.bots,
     fetchBots: state.fetchBots,
-    total: state.total,
     limit: state.limit,
+    loading: state.loading,
     page: state.page,
+    search: state.search,
     setPage: state.setPage,
-    search: state.search
+    total: state.total
   })));
 
   useEffect(() => {
@@ -36,14 +36,14 @@ export default function SearchResults() {
   const showPagination = !loading && totalBots > limit;
 
   const stateVariants = {
+    exit: {
+      opacity: 0
+    },
     hidden: {
       opacity: 0
     },
     visible: {
       opacity: 1
-    },
-    exit: {
-      opacity: 0
     }
   };
 
@@ -85,7 +85,7 @@ export default function SearchResults() {
           animate={{ opacity: 1 }}
         >
           {loading ? (
-            new Array(limit).fill(0).map((_, index) => (
+            Array.from({length: limit}).fill(0).map((_, index) => (
               <div key={index} className='h-[240px] w-full animate-pulse rounded-3xl bg-secondary' />
             ))
           ) : (
@@ -96,11 +96,11 @@ export default function SearchResults() {
                   active={user?.id !== bot.owner.id}
                   type='bot'
                   metadata={{
-                    id: bot.id,
-                    username: bot.username,
-                    discriminator: bot.discriminator,
                     avatar: bot.avatar,
-                    short_description: bot.short_description
+                    discriminator: bot.discriminator,
+                    id: bot.id,
+                    short_description: bot.short_description,
+                    username: bot.username
                   }}
                   identifier={`bot-${bot.id}`}
                 >

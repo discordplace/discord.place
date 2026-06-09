@@ -9,10 +9,10 @@ export async function generateMetadata({ params }) {
   if (typeof server === 'string') return;
 
   return {
-    title: `Manage ${metadata.name}`,
     openGraph: {
       title: `Discord Place - Manage ${metadata.name}`
-    }
+    },
+    title: `Manage ${metadata.name}`
   };
 }
 

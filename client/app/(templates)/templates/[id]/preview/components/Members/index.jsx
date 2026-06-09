@@ -10,9 +10,9 @@ import { useMemo } from 'react';
 export default function Members({ template, isMobile, currentlyOpenedSection }) {
   const colors = ['#5865F2', '#757e8a', '#3ba55c', '#faa61a', '#ed4245', '#eb459f'];
 
-  const brandColors = useMemo(() => {
-    return template.data.roles.map(() => colors[Math.floor(Math.random() * colors.length)]);
-  }, [template.data.roles]);
+  const brandColors = useMemo(() => 
+    template.data.roles.map(() => colors[Math.floor(Math.random() * colors.length)])
+  , [template.data.roles]);
 
   return (
     <div
@@ -34,7 +34,7 @@ export default function Members({ template, isMobile, currentlyOpenedSection }) 
           <div className='mt-2 flex flex-col gap-y-0.5'>
             <Tooltip
               content={t('templatePreviewPage.tooltip.clickToCopyColor')}
-              side={'left'}
+              side="left"
               hide={isMobile}
             >
               <div

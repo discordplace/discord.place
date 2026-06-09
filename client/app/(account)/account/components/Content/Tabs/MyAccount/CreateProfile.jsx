@@ -19,8 +19,8 @@ export default function CreateProfile() {
   const { preferredHost, setPreferredHost, slug, setSlug } = useGeneralStore(useShallow(state => ({
     preferredHost: state.createProfileModal.preferredHost,
     setPreferredHost: state.createProfileModal.setPreferredHost,
-    slug: state.createProfileModal.slug,
-    setSlug: state.createProfileModal.setSlug
+    setSlug: state.createProfileModal.setSlug,
+    slug: state.createProfileModal.slug
   })));
 
   const user = useAuthStore(state => state.user);

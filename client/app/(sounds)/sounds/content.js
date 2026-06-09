@@ -13,25 +13,25 @@ import { useShallow } from 'zustand/react/shallow';
 import { useEffect } from 'react';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Content() {
   const { search, setPage, category, setCategory, sort, setSort, loading, fetchSounds } = useSearchStore(useShallow(state => ({
-    search: state.search,
-    setPage: state.setPage,
     category: state.category,
-    setCategory: state.setCategory,
-    sort: state.sort,
-    setSort: state.setSort,
+    fetchSounds: state.fetchSounds,
     loading: state.loading,
-    fetchSounds: state.fetchSounds
+    search: state.search,
+    setCategory: state.setCategory,
+    setPage: state.setPage,
+    setSort: state.setSort,
+    sort: state.sort
   })));
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   useEffect(() => {
@@ -105,7 +105,6 @@ export default function Content() {
             <Select
               placeholder={t('soundsPage.sortSelect.placeholder')}
               options={[
-                ...[
                   {
                     label: t('soundsPage.sortSelect.items.downloads'),
                     value: 'Downloads'
@@ -128,8 +127,7 @@ export default function Content() {
                     {option.label}
                   </div>,
                   value: option.value
-                }))
-              ]}
+                }))}
               value={sort}
               onChange={setSort}
               disabled={loading}

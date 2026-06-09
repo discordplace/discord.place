@@ -3,6 +3,7 @@
 import { LuChevronLeft } from 'react-icons/lu';
 import { t } from '@/stores/language';
 import Link from 'next/link';
+
 export default function BackButton() {
   return (
     <Link

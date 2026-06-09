@@ -25,7 +25,7 @@ export default function Tooltip({ children, content, side, sideOffset, size, hid
 
             if (isMobile) setOpen(!open);
           }}
-          asChild
+          asChild={true}
         >
           {children}
         </RadixTooltip.Trigger>

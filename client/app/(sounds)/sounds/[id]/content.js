@@ -23,27 +23,27 @@ export default function Content({ sound }) {
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   function continueDeleteSound() {
     disableButton('delete-sound', 'confirm');
 
     toast.promise(deleteSound(sound.id), {
+      error: error => {
+        enableButton('delete-sound', 'confirm');
+
+        return error;
+      },
       loading: t('soundPage.toast.deletingSound', { soundName: sound.name }),
       success: () => {
         closeModal('delete-sound');
         setTimeout(() => router.push('/'), 3000);
 
         return t('soundPage.toast.soundDeleted', { soundName: sound.name });
-      },
-      error: error => {
-        enableButton('delete-sound', 'confirm');
-
-        return error;
       }
     });
   }
@@ -180,13 +180,6 @@ export default function Content({ sound }) {
                 className='w-max rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                 onClick={() =>
                   openModal('delete-sound', {
-                    title: t('soundPage.dangerZone.deleteSoundModal.title'),
-                    description: t('soundPage.dangerZone.deleteSoundModal.description', { soundName: sound.name }),
-                    content: (
-                      <p className='text-sm text-tertiary'>
-                        {t('soundPage.dangerZone.deleteSoundModal.content', { br: <br /> })}
-                      </p>
-                    ),
                     buttons: [
                       {
                         id: 'cancel',
@@ -200,7 +193,14 @@ export default function Content({ sound }) {
                         variant: 'solid',
                         action: continueDeleteSound
                       }
-                    ]
+                    ],
+                    content: (
+                      <p className='text-sm text-tertiary'>
+                        {t('soundPage.dangerZone.deleteSoundModal.content', { br: <br /> })}
+                      </p>
+                    ),
+                    description: t('soundPage.dangerZone.deleteSoundModal.description', { soundName: sound.name }),
+                    title: t('soundPage.dangerZone.deleteSoundModal.title')
                   })
                 }
               >

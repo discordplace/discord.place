@@ -9,20 +9,20 @@ export async function generateMetadata({ params }) {
   if (typeof metadata === 'string') return;
 
   return {
-    title: `Bot ${metadata.username}`,
     description: metadata.short_description,
     openGraph: {
-      title: `Discord Place - ${metadata.username} Bot`,
       description: metadata.short_description,
-      url: `${config.baseUrl}/bots/${params.id}`,
       images: [
         {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'bot', metadata }))}`,
           width: 1200,
           height: 630
         }
-      ]
-    }
+      ],
+      title: `Discord Place - ${metadata.username} Bot`,
+      url: `${config.baseUrl}/bots/${params.id}`
+    },
+    title: `Bot ${metadata.username}`
   };
 }
 

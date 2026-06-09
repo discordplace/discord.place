@@ -1,42 +1,45 @@
-{  
+{
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "unicorn",
-    "oxc",
-    "import",
-    "eslint",
-    "react"
+  "plugins": ["unicorn", "oxc", "import", "eslint", "react"],
+  "jsPlugins": [
+    {
+      "name": "stylistic",
+      "specifier": "@stylistic/eslint-plugin"
+    }
   ],
-  "categories": {
-    "correctness": "error",
-    "style": "warn"
-  },
-"rules": {
-    "react/self-closing-comp": [
-      "error",
-      {
-        "component": true,
-        "html": false
-      }
-    ],
+  "categories": { "correctness": "error", "style": "warn" },
+  "rules": {
+    "react/self-closing-comp": ["error", { "component": true, "html": false }],
     "no-empty-function": "error",
     "no-lonely-if": "error",
     "no-useless-return": "error",
     "default-param-last": "error",
-    "no-duplicate-imports": [
-      "error",
-      {
-        "includeExports": true
-      }
-    ],
+    "no-duplicate-imports": ["error", { "includeExports": true }],
     "prefer-template": "error",
     "prefer-arrow-callback": "error",
     "no-return-assign": "error",
     "object-shorthand": "error",
-    "no-unneeded-ternary": "error"
+    "no-unneeded-ternary": "error",
+    "curly": ["error", "multi-line"],
+    "id-length": "off",
+    "unicorn/no-null": "off",
+    "capitalized-comments": "off",
+    "no-ternary": "off",
+    "sort-imports": "off",
+    "sort-keys": ["error", "asc", { "caseSensitive": false, "natural": true }],
+    "import/no-cycle": "error",
+    "stylistic/object-curly-spacing": ["error", "always"],
+    "stylistic/array-bracket-spacing": "off",
+    "func-style": ["error", "declaration"],
+    "react/jsx-max-depth": "off",
+    "no-magic-numbers": "off",
+    "react/jsx-props-no-spreading": "off",
+    "max-statements": "off",
+    "import/no-named-export": "off",
+    "import/group-exports": "off",
+    "max-params": "off",
+    "react/exhaustive-deps": "off",
+    "react/jsx-boolean-value": ["error", "always"],
   },
-  "env": {
-    "browser": true,
-    "node": true
-  }
+  "env": { "browser": true, "node": true }
 }

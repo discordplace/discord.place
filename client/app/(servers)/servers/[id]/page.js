@@ -9,20 +9,20 @@ export async function generateMetadata({ params }) {
   if (typeof metadata === 'string') return;
 
   return {
-    title: `Server ${metadata.name}`,
     description: metadata.description,
     openGraph: {
-      title: `Discord Place - ${metadata.name} Server`,
       description: metadata.description,
-      url: `${config.baseUrl}/servers/${params.id}`,
       images: [
         {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'server', metadata }))}`,
           width: 1200,
           height: 630
         }
-      ]
-    }
+      ],
+      title: `Discord Place - ${metadata.name} Server`,
+      url: `${config.baseUrl}/servers/${params.id}`
+    },
+    title: `Server ${metadata.name}`
   };
 }
 

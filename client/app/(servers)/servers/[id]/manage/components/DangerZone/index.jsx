@@ -9,10 +9,10 @@ import { t } from '@/stores/language';
 
 export default function DangerZone({ serverId }) {
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal
+    openModal: state.openModal
   })));
 
   const router = useRouter();
@@ -21,17 +21,17 @@ export default function DangerZone({ serverId }) {
     disableButton('delete-server', 'confirm');
 
     toast.promise(deleteServer(serverId), {
+      error: error => {
+        enableButton('delete-server', 'confirm');
+
+        return error;
+      },
       loading: t('serverManagePage.dangerZone.toast.deletingServer'),
       success: () => {
         closeModal('delete-server');
         setTimeout(() => router.push('/'), 3000);
 
         return t('serverManagePage.dangerZone.toast.serverDeleted');
-      },
-      error: error => {
-        enableButton('delete-server', 'confirm');
-
-        return error;
       }
     });
   }
@@ -51,13 +51,6 @@ export default function DangerZone({ serverId }) {
         className='w-max rounded-xl bg-black px-4 py-1.5 text-sm font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
         onClick={() =>
           openModal('delete-server', {
-            title: t('serverManagePage.dangerZone.deleteServerModal.title'),
-            description: t('serverManagePage.dangerZone.deleteServerModal.description'),
-            content: (
-              <p className='text-sm text-tertiary'>
-                {t('serverManagePage.dangerZone.deleteServerModal.note', { br: <br /> })}
-              </p>
-            ),
             buttons: [
               {
                 id: 'cancel',
@@ -71,7 +64,14 @@ export default function DangerZone({ serverId }) {
                 variant: 'solid',
                 action: continueDeleteServer
               }
-            ]
+            ],
+            content: (
+              <p className='text-sm text-tertiary'>
+                {t('serverManagePage.dangerZone.deleteServerModal.note', { br: <br /> })}
+              </p>
+            ),
+            description: t('serverManagePage.dangerZone.deleteServerModal.description'),
+            title: t('serverManagePage.dangerZone.deleteServerModal.title')
           })
         }
       >

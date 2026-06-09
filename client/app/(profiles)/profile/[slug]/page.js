@@ -9,18 +9,18 @@ export async function generateMetadata({ params }) {
   if (typeof metadata === 'string') return redirect(`/error?message=${encodeURIComponent(metadata)}`);
 
   return {
-    title: `${params.slug}'s Profile`,
     openGraph: {
-      title: `Discord Place - ${params.slug}'s Profile`,
-      url: `${config.baseUrl}/profile/${params.slug}`,
       images: [
         {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'profile', metadata }))}`,
           width: 1200,
           height: 630
         }
-      ]
-    }
+      ],
+      title: `Discord Place - ${params.slug}'s Profile`,
+      url: `${config.baseUrl}/profile/${params.slug}`
+    },
+    title: `${params.slug}'s Profile`
   };
 }
 

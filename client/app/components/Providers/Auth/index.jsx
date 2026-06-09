@@ -26,19 +26,19 @@ export default function AuthProvider({ children }) {
       .finally(() => {
         const availableLanguages = config.availableLocales.map(locale => locale.code);
         const defaultLanguage = config.availableLocales.find(locale => locale.default).code;
-        const localStorageFound = typeof window !== 'undefined' && 'localStorage' in window;
+        const localStorageFound = typeof globalThis.window !== 'undefined' && 'localStorage' in globalThis;
 
-        let language = localStorageFound ? window.localStorage.getItem('language') : null;
+        let language = localStorageFound ? globalThis.localStorage.getItem('language') : null;
 
         if (!language) {
           const localeHeader = navigator.language || navigator.languages[0];
           const preferredLanguage = availableLanguages.find(lang => localeHeader.startsWith(lang));
 
           language = preferredLanguage || defaultLanguage;
-          if (localStorageFound) window.localStorage.setItem('language', language);
+          if (localStorageFound) globalThis.localStorage.setItem('language', language);
         } else if (!availableLanguages.includes(language)) {
           language = defaultLanguage;
-          if (localStorageFound) window.localStorage.removeItem('language');
+          if (localStorageFound) globalThis.localStorage.removeItem('language');
         }
 
         setLanguage(language);
@@ -49,8 +49,8 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     if (!user || user === 'loading' || hasIdentified.current) return;
 
-    if (window.umami?.identify) {
-      window.umami.identify(user.username, { id: user.id });
+    if (globalThis.umami?.identify) {
+      globalThis.umami.identify(user.username, { id: user.id });
     }
 
     if (tracker) {

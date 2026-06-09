@@ -8,9 +8,9 @@ import Image from 'next/image';
 
 export default function EmojiPackageCard({ overridedImages, id, name, categories, downloads, emoji_ids, className }) {
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
+    maximumFractionDigits: 2,
     notation: 'compact',
-    maximumFractionDigits: 2
+    style: 'decimal'
   });
 
   return (
@@ -37,7 +37,7 @@ export default function EmojiPackageCard({ overridedImages, id, name, categories
               />
             ))}
 
-            {new Array(9 - emoji_ids.length).fill(0).map((_, index) => (
+            {Array.from({length: 9 - emoji_ids.length}).fill(0).map((_, index) => (
               <div
                 key={index}
                 className='size-[48px] rounded-md bg-secondary'

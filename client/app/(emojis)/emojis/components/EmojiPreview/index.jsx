@@ -67,28 +67,28 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     disableButton('upload-emoji-to-discord', 'upload');
 
     toast.promise(uploadEmojiToGuild(id, guildId, false), {
+      error: error => {
+        enableButton('upload-emoji-to-discord', 'upload');
+
+        return error;
+      },
       loading: t('createEmojiPage.emojisPreview.toast.uploadingEmojis'),
       success: () => {
         closeModal('upload-emoji-to-discord');
         setRenderConfetti(true);
 
         return t('createEmojiPage.emojisPreview.toast.emojisUploaded');
-      },
-      error: error => {
-        enableButton('upload-emoji-to-discord', 'upload');
-
-        return error;
       }
     });
   }
 
   const { openModal, openedModals, updateModal, closeModal, disableButton, enableButton } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
-    openedModals: state.openedModals,
-    updateModal: state.updateModal,
     closeModal: state.closeModal,
     disableButton: state.disableButton,
-    enableButton: state.enableButton
+    enableButton: state.enableButton,
+    openedModals: state.openedModals,
+    openModal: state.openModal,
+    updateModal: state.updateModal
   })));
 
   const selectedGuildId = useGeneralStore(state => state.uploadEmojiToDiscordModal.selectedGuildId);
@@ -99,16 +99,16 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
       updateModal('upload-emoji-to-discord', {
         buttons: [
           {
+            actionType: 'close',
             id: 'cancel',
             label: t('buttons.cancel'),
-            variant: 'ghost',
-            actionType: 'close'
+            variant: 'ghost'
           },
           {
+            action: () => continueUploadEmojiToGuild(selectedGuildId),
             id: 'upload',
             label: t('buttons.upload'),
-            variant: 'solid',
-            action: () => continueUploadEmojiToGuild(selectedGuildId)
+            variant: 'solid'
           }
         ]
       });
@@ -117,14 +117,6 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     }
 
     openModal('upload-emoji-to-discord', {
-      title: (
-        t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.titleWithEmoji', {
-          emojiImage: <Image src={image_url} alt={name} width={24} height={24} className='inline h-[16px] w-auto' />,
-          emojiName: name
-        })
-      ),
-      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
-      content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
       buttons: [
         {
           id: 'cancel',
@@ -138,7 +130,15 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
           variant: 'solid',
           action: () => continueUploadEmojiToGuild(selectedGuildId)
         }
-      ]
+      ],
+      content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
+      description: t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.description'),
+      title: (
+        t('createEmojiPage.emojisPreview.uploadEmojiToDiscordModal.titleWithEmoji', {
+          emojiImage: <Image src={image_url} alt={name} width={24} height={24} className='inline h-[16px] w-auto' />,
+          emojiName: name
+        })
+      )
     });
   }, [uploadableGuilds, selectedGuildId]);
 

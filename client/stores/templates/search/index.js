@@ -3,31 +3,7 @@ import { toast } from 'sonner';
 import fetchTemplates from '@/lib/request/templates/fetchTemplates';
 
 const useSearchStore = create((set, get) => ({
-  loading: true,
-  setLoading: loading => set({ loading }),
-  search: '',
-  setSearch: search => set({ search }),
-  sort: 'Popular',
-  setSort: sort => {
-    set({ sort, page: 1 });
-
-    get().fetchTemplates(get().search);
-  },
   category: 'All',
-  setCategory: category => {
-    set({ category, page: 1 });
-
-    get().fetchTemplates(get().search);
-  },
-  page: 1,
-  setPage: page => set({ page }),
-  limit: 9,
-  setLimit: limit => set({ limit }),
-  templates: [],
-  setTemplates: templates => set({ templates }),
-  total: 0,
-  setTotal: total => set({ total }),
-  maxReached: false,
   fetchTemplates: async (search, page, limit, category, sort) => {
     if (page) set({ page });
     if (limit) set({ limit });
@@ -42,7 +18,31 @@ const useSearchStore = create((set, get) => ({
         toast.error(error);
         set({ loading: false });
       });
-  }
+  },
+  limit: 9,
+  loading: true,
+  maxReached: false,
+  page: 1,
+  search: '',
+  setCategory: category => {
+    set({ category, page: 1 });
+
+    get().fetchTemplates(get().search);
+  },
+  setLimit: limit => set({ limit }),
+  setLoading: loading => set({ loading }),
+  setPage: page => set({ page }),
+  setSearch: search => set({ search }),
+  setSort: sort => {
+    set({ sort, page: 1 });
+
+    get().fetchTemplates(get().search);
+  },
+  setTemplates: templates => set({ templates }),
+  setTotal: total => set({ total }),
+  sort: 'Popular',
+  templates: [],
+  total: 0
 }));
 
 export default useSearchStore;

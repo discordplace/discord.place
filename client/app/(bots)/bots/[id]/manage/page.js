@@ -9,10 +9,10 @@ export async function generateMetadata({ params }) {
   if (typeof metadata === 'string') return;
 
   return {
-    title: `Manage ${metadata.username}`,
     openGraph: {
       title: `Discord Place - Manage ${metadata.username}`
-    }
+    },
+    title: `Manage ${metadata.username}`
   };
 }
 

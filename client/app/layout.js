@@ -7,20 +7,11 @@ import AuthProvider from '@/app/components/Providers/Auth';
 import localFont from 'next/font/local';
 
 export const metadata = {
-  metadataBase: new URL('https://discord.place'),
-  title: {
-    template: 'Discord Place - %s',
-    default: 'Discord Place'
-  },
-  keywords: ['discord', 'discord place', 'discord emojis', 'discord servers', 'discord profiles', 'discord emojis', 'discord bots', 'discord developers'],
   description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
+  keywords: ['discord', 'discord place', 'discord emojis', 'discord servers', 'discord profiles', 'discord emojis', 'discord bots', 'discord developers'],
+  metadataBase: new URL('https://discord.place'),
   openGraph: {
-    title: 'Discord Place',
     description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://discord.place',
-    site_name: 'Discord Place',
     images: [
       {
         url: '/og.png',
@@ -28,19 +19,29 @@ export const metadata = {
         height: 540,
         alt: 'Discord Place'
       }
-    ]
+    ],
+    locale: 'en_US',
+    site_name: 'Discord Place',
+    title: 'Discord Place',
+    type: 'website',
+    url: 'https://discord.place'
+  },
+  title: {
+    default: 'Discord Place',
+    template: 'Discord Place - %s'
   }
 };
 
 export const viewport = {
-  themeColor: '#000000',
-  width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  userScalable: false
+  themeColor: '#000000',
+  userScalable: false,
+  width: 'device-width'
 };
 
 const GGSans = localFont({
+  display: 'swap',
   src: [
     {
       path: '../public/fonts/GG-Sans-Medium.ttf',
@@ -58,8 +59,7 @@ const GGSans = localFont({
       style: 'normal'
     }
   ],
-  variable: '--font-gg-sans',
-  display: 'swap'
+  variable: '--font-gg-sans'
 });
 
 export default function RootLayout(props) {

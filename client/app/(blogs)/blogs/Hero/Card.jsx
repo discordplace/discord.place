@@ -2,9 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function BlogCard({ data, loading }) {
-  if (loading) return (
+  if (loading) {return (
     <div className='flex h-[312px] w-full max-w-[calc(33%_-_2rem)] animate-pulse flex-col gap-y-3 rounded-xl bg-secondary' />
-  );
+  );}
 
   return (
     <Link

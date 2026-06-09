@@ -18,8 +18,8 @@ export default function MockProfileCard() {
           secondary: null
         }}
         badges={loggedIn ? [] : ['verified']}
-        views={100000}
-        likes={100000}
+        views={100_000}
+        likes={100_000}
         username={loggedIn ? user.username : 'discordplace'}
         global_name={loggedIn ? user.global_name : 'discord.place'}
         bio={loggedIn ? 'No bio provided.' : t('home.infoCards.2.profileCardBio')}

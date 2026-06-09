@@ -14,26 +14,26 @@ import useDashboardStore from '@/stores/dashboard';
 
 export default function CreateQuarantineModal() {
   const { step, setStep, type, setType, value, setValue, restriction, setRestriction, reason, setReason, time, setTime } = useGeneralStore(useShallow(state => ({
-    step: state.createQuarantineModal.step,
-    setStep: state.createQuarantineModal.setStep,
-    type: state.createQuarantineModal.type,
-    setType: state.createQuarantineModal.setType,
-    value: state.createQuarantineModal.value,
-    setValue: state.createQuarantineModal.setValue,
-    restriction: state.createQuarantineModal.restriction,
-    setRestriction: state.createQuarantineModal.setRestriction,
     reason: state.createQuarantineModal.reason,
+    restriction: state.createQuarantineModal.restriction,
     setReason: state.createQuarantineModal.setReason,
+    setRestriction: state.createQuarantineModal.setRestriction,
+    setStep: state.createQuarantineModal.setStep,
+    setTime: state.createQuarantineModal.setTime,
+    setType: state.createQuarantineModal.setType,
+    setValue: state.createQuarantineModal.setValue,
+    step: state.createQuarantineModal.step,
     time: state.createQuarantineModal.time,
-    setTime: state.createQuarantineModal.setTime
+    type: state.createQuarantineModal.type,
+    value: state.createQuarantineModal.value
   })));
 
   const fetchData = useDashboardStore(state => state.fetchData);
 
   const { disableButton, enableButton, closeModal, updateModal } = useModalsStore(useShallow(state => ({
+    closeModal: state.closeModal,
     disableButton: state.disableButton,
     enableButton: state.enableButton,
-    closeModal: state.closeModal,
     updateModal: state.updateModal
   })));
 
@@ -45,7 +45,12 @@ export default function CreateQuarantineModal() {
     try {
       disableButton('create-quarantine-record', 'confirm');
 
-      toast.promise(createQuarantine({ type, value, restriction, reason, time }), {
+      toast.promise(createQuarantine({ reason, restriction, time, type, value }), {
+        error: error => {
+          enableButton('create-quarantine-record', 'confirm');
+
+          return error;
+        },
         loading: 'Creating quarantine...',
         success: () => {
           closeModal('create-quarantine-record');
@@ -59,11 +64,6 @@ export default function CreateQuarantineModal() {
           setTime('');
 
           return 'Created quarantine successfully.';
-        },
-        error: error => {
-          enableButton('create-quarantine-record', 'confirm');
-
-          return error;
         }
       });
     } catch (error) {
@@ -76,16 +76,16 @@ export default function CreateQuarantineModal() {
       updateModal('create-quarantine-record', {
         buttons: [
           {
+            action: () => setStep(0),
             id: 'previous',
             label: 'Previous',
-            variant: 'ghost',
-            action: () => setStep(0)
+            variant: 'ghost'
           },
           {
+            action: () => continueCreateQuarantine(type, value, restriction, reason, time),
             id: 'confirm',
             label: 'Confirm',
-            variant: 'solid',
-            action: () => continueCreateQuarantine(type, value, restriction, reason, time)
+            variant: 'solid'
           }
         ]
       });
@@ -95,22 +95,22 @@ export default function CreateQuarantineModal() {
       updateModal('create-quarantine-record', {
         buttons: [
           {
+            actionType: 'close',
             id: 'cancel',
             label: 'Cancel',
-            variant: 'ghost',
-            actionType: 'close'
+            variant: 'ghost'
           },
           {
-            id: 'next',
-            label: 'Next',
-            variant: 'solid',
             action: () => {
               if (!type) return toast.error('You must select a quarantine type.');
               if (!value) return toast.error('You must enter a value.');
               if (!restriction) return toast.error('You must select a restriction.');
 
               setStep(1);
-            }
+            },
+            id: 'next',
+            label: 'Next',
+            variant: 'solid'
           }
         ]
       });

@@ -6,7 +6,7 @@ import config from '@/config';
 export default function PreferredHostDropdown({ currentlyEditingValue, setCurrentlyEditingValue }) {
   return (
     <DropdownMenu.Root modal={false}>
-      <DropdownMenu.Trigger asChild>
+      <DropdownMenu.Trigger asChild={true}>
         <button className='flex max-w-[200px] rounded-lg bg-tertiary px-2 py-1 text-tertiary outline-none hover:bg-quaternary hover:text-primary'>
           {currentlyEditingValue || 'Unknown'}
         </button>

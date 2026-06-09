@@ -10,7 +10,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
   const loading = useDashboardStore(state => state.loading);
 
   const IconComponent = icon;
-  const ContainerComponent = href ? Link : onClick ? 'button' : 'div';
+  const ContainerComponent = href ? Link : (onClick ? 'button' : 'div');
   const TooltipContainer = isCollapsed ? Tooltip : 'div';
 
   return (

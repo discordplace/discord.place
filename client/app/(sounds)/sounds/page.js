@@ -1,15 +1,9 @@
 import Content from '@/app/(sounds)/sounds/content';
 
 export const metadata = {
-  title: 'Sounds',
   description: 'Explore, find and download the perfect sounds for your Discord server soundboard!',
   openGraph: {
-    title: 'Discord Place - Sounds',
     description: 'Explore, find and download the perfect sounds for your Discord server soundboard!',
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://discord.place/sounds',
-    site_name: 'Discord Place',
     images: [
       {
         url: '/og.png',
@@ -17,8 +11,14 @@ export const metadata = {
         height: 540,
         alt: 'Discord Place'
       }
-    ]
-  }
+    ],
+    locale: 'en_US',
+    site_name: 'Discord Place',
+    title: 'Discord Place - Sounds',
+    type: 'website',
+    url: 'https://discord.place/sounds'
+  },
+  title: 'Sounds'
 };
 
 export default function Page() {

@@ -6,7 +6,7 @@ import { tracker } from '@/lib/openreplay';
 export default function OpenReplay() {
   useEffect(() => {
     if (tracker) {
-      tracker.start().catch(err => console.error('OpenReplay failed to start:', err));
+      tracker.start().catch(error => console.error('OpenReplay failed to start:', error));
     }
   }, []);
 

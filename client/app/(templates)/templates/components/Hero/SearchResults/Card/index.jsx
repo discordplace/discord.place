@@ -26,9 +26,9 @@ export default function Card({ data, className }) {
   }, [isClicked]);
 
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
+    maximumFractionDigits: 2,
     notation: 'compact',
-    maximumFractionDigits: 2
+    style: 'decimal'
   });
 
   return (
@@ -85,7 +85,7 @@ export default function Card({ data, className }) {
                   <>
                     <HiSortAscending className='text-tertiary' />
                     <span className='text-xs font-medium text-secondary'>
-                      {new Date(data.created_at).toLocaleDateString(language, { month: 'short', day: 'numeric', year: 'numeric' })}
+                      {new Date(data.created_at).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
                     </span>
                   </>
                 )}
@@ -94,7 +94,7 @@ export default function Card({ data, className }) {
                   <>
                     <HiSortAscending className='text-tertiary' />
                     <span className='text-xs font-medium text-secondary'>
-                      {new Date(data.created_at).toLocaleDateString(language, { month: 'short', day: 'numeric', year: 'numeric' })}
+                      {new Date(data.created_at).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
                     </span>
                   </>
                 )}

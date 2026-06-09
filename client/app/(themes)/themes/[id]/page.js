@@ -8,7 +8,6 @@ export async function generateMetadata({ params }) {
   if (typeof metadata === 'string') return;
 
   return {
-    title: 'Theme',
     keywords: [
       metadata.colors.primary,
       metadata.colors.secondary,
@@ -20,16 +19,17 @@ export async function generateMetadata({ params }) {
       `discord ${metadata.colors.secondary} theme`
     ],
     openGraph: {
-      title: 'Discord Place - Theme',
-      url: `/themes/${params.id}`,
       images: [
         {
           url: '/og.png',
           width: 1200,
           height: 630
         }
-      ]
-    }
+      ],
+      title: 'Discord Place - Theme',
+      url: `/themes/${params.id}`
+    },
+    title: 'Theme'
   };
 }
 

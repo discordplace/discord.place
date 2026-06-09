@@ -25,6 +25,11 @@ export default function Actions({ profile }) {
     setLoading(true);
 
     toast.promise(likeProfile(profile.slug), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t(`profilePage.actions.toast.${liked ? 'unliking' : 'liking'}`, { profileSlug: profile.slug }),
       success: isLiked => {
         setLiked(isLiked);
@@ -32,11 +37,6 @@ export default function Actions({ profile }) {
         revalidateProfile(profile.slug);
 
         return t(`profilePage.actions.toast.${isLiked ? 'liked' : 'unliked'}`, { profileSlug: profile.slug });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   };
@@ -46,7 +46,7 @@ export default function Actions({ profile }) {
       className='absolute bottom-4 right-4 z-[4] flex w-full justify-end'
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+      transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
     >
       <div className='flex flex-col gap-2 sm:flex-row'>
         <Tooltip

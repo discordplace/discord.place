@@ -12,16 +12,16 @@ export default function FaQs({ emoji }) {
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {
-      label: t('emojiPackagePage.frequentlyAskedQuestions.labels.0'),
-      content: <Question1 emoji={emoji} />
+      content: <Question1 emoji={emoji} />,
+      label: t('emojiPackagePage.frequentlyAskedQuestions.labels.0')
     },
     {
-      label: t('emojiPackagePage.frequentlyAskedQuestions.labels.1'),
-      content: <Question2 emoji={emoji} />
+      content: <Question2 emoji={emoji} />,
+      label: t('emojiPackagePage.frequentlyAskedQuestions.labels.1')
     },
     {
-      label: t('emojiPackagePage.frequentlyAskedQuestions.labels.2'),
-      content: <Question3 />
+      content: <Question3 />,
+      label: t('emojiPackagePage.frequentlyAskedQuestions.labels.2')
     }
   ];
 

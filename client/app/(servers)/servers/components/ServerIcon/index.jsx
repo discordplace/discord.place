@@ -31,8 +31,8 @@ export default function ServerIcon({ width, height, className, icon_url, name })
             className
           )}
           style={{
-            width: `${width}px`,
-            height: `${height}px`
+            height: `${height}px`,
+            width: `${width}px`
           }}
         />
       ) : (
@@ -42,8 +42,8 @@ export default function ServerIcon({ width, height, className, icon_url, name })
             className
           )}
           style={{
-            width: `${width}px`,
-            height: `${height}px`
+            height: `${height}px`,
+            width: `${width}px`
           }}
         >
           <h2 className='text-3xl font-bold'>

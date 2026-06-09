@@ -6,7 +6,7 @@ export default function DenyDropdown({ description, reasons, onDeny, customReaso
 
   return (
     <DropdownMenu.Root modal={false}>
-      <DropdownMenu.Trigger asChild>
+      <DropdownMenu.Trigger asChild={true}>
         {children}
       </DropdownMenu.Trigger>
 

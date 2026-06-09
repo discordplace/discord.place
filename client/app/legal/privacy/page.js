@@ -2,10 +2,10 @@ import config from '@/config';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Privacy Policy',
   openGraph: {
     title: 'Discord Place - Privacy Policy'
-  }
+  },
+  title: 'Privacy Policy'
 };
 
 export default function Page() {

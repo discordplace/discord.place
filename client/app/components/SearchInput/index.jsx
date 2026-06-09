@@ -30,10 +30,10 @@ export default function SearchInput({ placeholder, loading, search, fetchData, s
   }, [search]);
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   return (

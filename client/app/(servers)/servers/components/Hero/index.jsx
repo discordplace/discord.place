@@ -19,24 +19,24 @@ import { t } from '@/stores/language';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
   const user = useAuthStore(state => state.user);
 
   const { category, setCategory, sort, setSort, search, loading, servers, fetchServers, page, totalServers, limit, setPage } = useSearchStore(useShallow(state => ({
     category: state.category,
-    setCategory: state.setCategory,
-    sort: state.sort,
-    setSort: state.setSort,
-    search: state.search,
-    loading: state.loading,
-    servers: state.servers,
     fetchServers: state.fetchServers,
-    page: state.page,
-    totalServers: state.totalServers,
     limit: state.limit,
-    setPage: state.setPage
+    loading: state.loading,
+    page: state.page,
+    search: state.search,
+    servers: state.servers,
+    setCategory: state.setCategory,
+    setPage: state.setPage,
+    setSort: state.setSort,
+    sort: state.sort,
+    totalServers: state.totalServers
   })));
 
   useEffect(() => {
@@ -44,21 +44,21 @@ export default function Hero() {
   }, []);
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   const stateVariants = {
+    exit: {
+      opacity: 0
+    },
     hidden: {
       opacity: 0
     },
     visible: {
       opacity: 1
-    },
-    exit: {
-      opacity: 0
     }
   };
 
@@ -124,7 +124,6 @@ export default function Hero() {
             <Select
               placeholder={t('serversPage.sortSelect.placeholder')}
               options={[
-                ...[
                   {
                     label: t('serversPage.sortSelect.items.votes'),
                     value: 'Votes'
@@ -155,8 +154,7 @@ export default function Hero() {
                     {option.label}
                   </div>,
                   value: option.value
-                }))
-              ]}
+                }))}
               value={sort}
               onChange={setSort}
               disabled={loading}
@@ -205,7 +203,7 @@ export default function Hero() {
               animate={{ opacity: 1 }}
             >
               {loading ? (
-                new Array(limit).fill(0).map((_, index) => (
+                Array.from({length: limit}).fill(0).map((_, index) => (
                   <div key={index} className='h-[250px] w-[322px] animate-pulse rounded-3xl bg-secondary' />
                 ))
               ) : (
@@ -216,10 +214,10 @@ export default function Hero() {
                       active={user?.id !== server.owner.id}
                       type='server'
                       metadata={{
-                        id: server.id,
-                        name: server.name,
+                        description: server.description,
                         icon: server.icon,
-                        description: server.description
+                        id: server.id,
+                        name: server.name
                       }}
                       identifier={`server-${server.id}`}
                     >

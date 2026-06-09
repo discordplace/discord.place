@@ -9,7 +9,6 @@ export async function generateMetadata({ params }) {
   if (typeof metadata === 'string') return;
 
   return {
-    title: `Sound ${metadata.name}`,
     keywords: [
       metadata.name,
       `discord sound ${metadata.name}`,
@@ -19,16 +18,17 @@ export async function generateMetadata({ params }) {
       `${metadata.name} download`
     ],
     openGraph: {
-      title: `Discord Place - Sound ${metadata.name}`,
-      url: `/sounds/${params.id}`,
       images: [
         {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'sound', metadata }))}`,
           width: 1200,
           height: 630
         }
-      ]
-    }
+      ],
+      title: `Discord Place - Sound ${metadata.name}`,
+      url: `/sounds/${params.id}`
+    },
+    title: `Sound ${metadata.name}`
   };
 }
 

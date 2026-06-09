@@ -48,6 +48,11 @@ export default function NewSound() {
     formData.append('file', file);
 
     toast.promise(createSound(formData), {
+      error: error => {
+        setLoading(false);
+
+        return error;
+      },
       loading: t('accountPage.tabs.mySounds.sections.addSound.toast.addingSound', { soundName }),
       success: data => {
         setTimeout(() => {
@@ -63,11 +68,6 @@ export default function NewSound() {
         setRenderConfetti(true);
 
         return t('accountPage.tabs.mySounds.sections.addSound.toast.soundAdded', { soundName });
-      },
-      error: error => {
-        setLoading(false);
-
-        return error;
       }
     });
   }
@@ -87,11 +87,11 @@ export default function NewSound() {
     console.log(file.type, allowedFileTypes.includes(file.type));
     if (!allowedFileTypes.includes(file.type)) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.invalidFile'));
 
-    if (file.size >= 1024 * 1024) return toast.error(
+    if (file.size >= 1024 * 1024) {return toast.error(
       t('accountPage.tabs.mySounds.sections.addSound.toast.fileSizeExceeded', {
         size: 1
       })
-    );
+    );}
 
     const audioUrl = URL.createObjectURL(file);
     const audio = new Audio(audioUrl);

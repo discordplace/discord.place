@@ -8,9 +8,9 @@ import { t } from '@/stores/language';
 
 export default function EmojiCard({ overridedImage, id, name, animated, categories, downloads, className }) {
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
+    maximumFractionDigits: 2,
     notation: 'compact',
-    maximumFractionDigits: 2
+    style: 'decimal'
   });
 
   return (

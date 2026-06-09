@@ -12,14 +12,14 @@ import { toast } from 'sonner';
 import fetchBlogs from '@/lib/request/general/fetchBlogs';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   const theme = useThemeStore(state => state.theme);
@@ -88,7 +88,7 @@ export default function Hero() {
 
                 {tag === activeTag && (
                   <motion.div
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    transition={{ damping: 30, stiffness: 500, type: 'spring' }}
                     layoutId='blogActiveTagIndicator'
                     className='absolute -bottom-0.5 left-0 hidden h-[2px] w-full bg-black dark:bg-white lg:block'
                   />
@@ -104,8 +104,8 @@ export default function Hero() {
           transition={{ ...sequenceTransition, delay: 0.4 }}
         >
           {loading ? (
-            new Array(3).fill().map((_, index) => (
-              <Card key={index} loading />
+            Array.from({length: 3}).fill().map((_, index) => (
+              <Card key={index} loading={true} />
             ))
           ) : (
             data

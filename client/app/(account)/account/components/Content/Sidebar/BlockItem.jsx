@@ -4,6 +4,7 @@ import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
 import { t } from '@/stores/language';
 import Link from 'next/link';
+
 export default function BlockItem({ id, name, icon, href, onClick, badge, disabled, condition, visited = true }) {
   const isCollapsed = useAccountStore(state => state.isCollapsed);
   const activeTab = useAccountStore(state => state.activeTab);
@@ -11,7 +12,7 @@ import Link from 'next/link';
   const loading = useAccountStore(state => state.loading);
 
   const IconComponent = icon;
-  const ContainerComponent = href ? Link : onClick ? 'button' : 'div';
+  const ContainerComponent = href ? Link : (onClick ? 'button' : 'div');
   const TooltipContainer = isCollapsed ? Tooltip : 'div';
 
   if (condition && !condition()) {

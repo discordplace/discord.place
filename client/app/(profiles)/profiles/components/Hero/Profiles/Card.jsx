@@ -28,9 +28,9 @@ export default function Card(props) {
   const language = useLanguageStore(state => state.language);
 
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
+    maximumFractionDigits: 2,
     notation: 'compact',
-    maximumFractionDigits: 2
+    style: 'decimal'
   });
 
   const theme = useThemeStore(state => state.theme);
@@ -58,11 +58,11 @@ export default function Card(props) {
       type='profile'
       identifier={`profile-${props.id}-${props.username}`}
       metadata={{
-        id: props.id,
         avatar: props.avatar,
+        bio: props.bio,
         global_name: props.global_name,
-        username: props.username,
-        bio: props.bio
+        id: props.id,
+        username: props.username
       }}
     >
       <div className='group relative z-[1] h-[461px] w-[300px] overflow-hidden rounded-3xl p-0.5'>
@@ -184,11 +184,11 @@ export default function Card(props) {
                 {props.badges.map(badgeId => (
                   <Tooltip
                     content={t(`badges.${badgeId}`, {
-                      premiumSince: props.subscriptionCreatedAt,
-                      lng: language,
                       formatParams: {
-                        premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                      }
+                        premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                      },
+                      lng: language,
+                      premiumSince: props.subscriptionCreatedAt
                     })}
                     key={badgeId}
                   >
@@ -203,7 +203,7 @@ export default function Card(props) {
                           src={`/profile-badges/${(haveCustomColors || theme === 'dark') ? 'white' : 'black'}_poweredByLantern.svg`}
                           width={16}
                           height={16}
-                          alt={'poweredByLantern Badge'}
+                          alt="poweredByLantern Badge"
                         />
                       </Link>
                     ) : (
@@ -311,7 +311,7 @@ export default function Card(props) {
                       !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
                     )}
                   >
-                    {new Date(props.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })}
+                    {new Date(props.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
                   </p>
                 </div>
               </div>

@@ -5,7 +5,7 @@ export default function uploadEmojiToGuild(id, guildId, packIndex) {
   const endpoint = Endpoints.UploadEmojiToGuild(id, packIndex);
 
   return ClientRequestClient.post(endpoint, {
-    packIndex: packIndex !== false ? packIndex : null,
-    guildId
+    guildId,
+    packIndex: packIndex !== false ? packIndex : null
   });
 }

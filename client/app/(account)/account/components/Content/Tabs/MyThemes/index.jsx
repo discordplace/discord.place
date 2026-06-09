@@ -13,8 +13,8 @@ import { t } from '@/stores/language';
 
 export default function MyThemes() {
   const { data, currentlyAddingTheme, setCurrentlyAddingTheme } = useAccountStore(useShallow(state => ({
-    data: state.data,
     currentlyAddingTheme: state.currentlyAddingTheme,
+    data: state.data,
     setCurrentlyAddingTheme: state.setCurrentlyAddingTheme
   })));
 

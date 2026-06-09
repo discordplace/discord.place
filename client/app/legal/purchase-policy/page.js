@@ -2,10 +2,10 @@ import config from '@/config';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Purchase Policy',
   openGraph: {
     title: 'Discord Place - Purchase Policy'
-  }
+  },
+  title: 'Purchase Policy'
 };
 
 export default function PurchasePolicy() {

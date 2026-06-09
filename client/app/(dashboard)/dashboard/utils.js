@@ -31,24 +31,21 @@ import useModalsStore from '@/stores/modals';
 
 function sendRequest({ params, promise, successMessage, error, loadingMessage }) {
   toast.promise(typeof params === 'object' ? promise(...Object.values(params)) : promise(params), {
-    loading: loadingMessage,
-    success: successMessage,
     error: errorMessage => {
       error?.callback?.();
 
       return errorMessage;
-    }
+    },
+    loading: loadingMessage,
+    success: successMessage
   });
 }
 
-const openModal = useModalsStore.getState().openModal;
-const closeModal = useModalsStore.getState().closeModal;
+const {openModal} = useModalsStore.getState();
+const {closeModal} = useModalsStore.getState();
 
 export function showConfirmationModal(message, callback) {
   openModal('delete-confirmation', {
-    title: 'Delete Confirmation',
-    description: 'Are you really sure you want to delete?',
-    content: message,
     buttons: [
       {
         id: 'cancel',
@@ -65,174 +62,177 @@ export function showConfirmationModal(message, callback) {
           callback();
         }
       }
-    ]
+    ],
+    content: message,
+    description: 'Are you really sure you want to delete?',
+    title: 'Delete Confirmation'
   });
 }
 
 export const approveEmoji = id => sendRequest({
+  loadingMessage: `Approving emoji ${id}..`,
   params: id,
   promise: INTERNAL_approveEmoji,
-  successMessage: `Emoji ${id} approved successfully!`,
-  loadingMessage: `Approving emoji ${id}..`
+  successMessage: `Emoji ${id} approved successfully!`
 });
 
 export const denyEmoji = (id, reason) => sendRequest({
+  loadingMessage: `Denying emoji ${id}..`,
   params: { id, reason },
   promise: INTERNAL_denyEmoji,
-  successMessage: `Emoji ${id} denied successfully`,
-  loadingMessage: `Denying emoji ${id}..`
+  successMessage: `Emoji ${id} denied successfully`
 });
 
 export const deleteEmoji = id => sendRequest({
+  loadingMessage: `Deleting emoji ${id}..`,
   params: id,
   promise: INTERNAL_deleteEmoji,
-  successMessage: `Emoji ${id} deleted successfully!`,
-  loadingMessage: `Deleting emoji ${id}..`
+  successMessage: `Emoji ${id} deleted successfully!`
 });
 
 export const approveBot = id => sendRequest({
+  loadingMessage: `Approving bot ${id}..`,
   params: id,
   promise: INTERNAL_approveBot,
-  successMessage: `Bot ${id} approved successfully!`,
-  loadingMessage: `Approving bot ${id}..`
+  successMessage: `Bot ${id} approved successfully!`
 });
 
 export const denyBot = (id, reason) => sendRequest({
+  loadingMessage: `Denying bot ${id}..`,
   params: { id, reason },
   promise: INTERNAL_denyBot,
-  successMessage: `Bot ${id} denied successfully!`,
-  loadingMessage: `Denying bot ${id}..`
+  successMessage: `Bot ${id} denied successfully!`
 });
 
 export const deleteBot = id => sendRequest({
+  loadingMessage: `Deleting bot ${id}..`,
   params: id,
   promise: INTERNAL_deleteBot,
-  successMessage: `Bot ${id} deleted successfully!`,
-  loadingMessage: `Deleting bot ${id}..`
+  successMessage: `Bot ${id} deleted successfully!`
 });
 
 export const approveTemplate = id => sendRequest({
+  loadingMessage: `Approving template ${id}..`,
   params: id,
   promise: INTERNAL_approveTemplate,
-  successMessage: `Template ${id} approved successfully!`,
-  loadingMessage: `Approving template ${id}..`
+  successMessage: `Template ${id} approved successfully!`
 });
 
 export const denyTemplate = (id, reason) => sendRequest({
+  loadingMessage: `Denying template ${id}..`,
   params: { id, reason },
   promise: INTERNAL_denyTemplate,
-  successMessage: `Template ${id} denied successfully!`,
-  loadingMessage: `Denying template ${id}..`
+  successMessage: `Template ${id} denied successfully!`
 });
 
 export const deleteTemplate = id => sendRequest({
+  loadingMessage: `Deleting template ${id}..`,
   params: id,
   promise: INTERNAL_deleteTemplate,
-  successMessage: `Template ${id} deleted successfully!`,
-  loadingMessage: `Deleting template ${id}..`
+  successMessage: `Template ${id} deleted successfully!`
 });
 
 export const approveSound = id => sendRequest({
+  loadingMessage: `Approving sound ${id}..`,
   params: id,
   promise: INTERNAL_approveSound,
-  successMessage: `Sound ${id} approved successfully!`,
-  loadingMessage: `Approving sound ${id}..`
+  successMessage: `Sound ${id} approved successfully!`
 });
 
 export const denySound = (id, reason) => sendRequest({
+  loadingMessage: `Denying sound ${id}..`,
   params: { id, reason },
   promise: INTERNAL_denySound,
-  successMessage: `Sound ${id} denied successfully!`,
-  loadingMessage: `Denying sound ${id}..`
+  successMessage: `Sound ${id} denied successfully!`
 });
 
 export const deleteSound = id => sendRequest({
+  loadingMessage: `Deleting sound ${id}..`,
   params: id,
   promise: INTERNAL_deleteSound,
-  successMessage: `Sound ${id} deleted successfully!`,
-  loadingMessage: `Deleting sound ${id}..`
+  successMessage: `Sound ${id} deleted successfully!`
 });
 
 export const approveReview = (type, serverOrBotId, reviewId) => sendRequest({
-  params: { serverOrBotId, reviewId },
+  loadingMessage: `Approving ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`,
+  params: { reviewId, serverOrBotId },
   promise: type === 'server' ? INTERNAL_approveServerReview : INTERNAL_approveBotReview,
-  successMessage: `${type === 'server' ? 'Server' : 'Bot'} review ${reviewId} approved successfully!`,
-  loadingMessage: `Approving ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`
+  successMessage: `${type === 'server' ? 'Server' : 'Bot'} review ${reviewId} approved successfully!`
 });
 
 export const denyReview = (type, serverOrBotId, reviewId, reason) => sendRequest({
-  params: { serverOrBotId, reviewId, reason },
+  loadingMessage: `Denying ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`,
+  params: { reason, reviewId, serverOrBotId },
   promise: type === 'server' ? INTERNAL_denyServerReview : INTERNAL_denyBotReview,
-  successMessage: `${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId} denied successfully!`,
-  loadingMessage: `Denying ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`
+  successMessage: `${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId} denied successfully!`
 });
 
 export const deleteReview = (type, serverOrBotId, reviewId) => sendRequest({
-  params: { serverOrBotId, reviewId },
+  loadingMessage: `Deleting ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`,
+  params: { reviewId, serverOrBotId },
   promise: type === 'server' ? INTERNAL_deleteServerReview : INTERNAL_deleteBotReview,
-  successMessage: `${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId} deleted successfully!`,
-  loadingMessage: `Deleting ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`
+  successMessage: `${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId} deleted successfully!`
 });
 
 export const approveTheme = id => sendRequest({
+  loadingMessage: `Approving theme ${id}..`,
   params: id,
   promise: INTERNAL_approveTheme,
-  successMessage: `Theme ${id} approved successfully!`,
-  loadingMessage: `Approving theme ${id}..`
+  successMessage: `Theme ${id} approved successfully!`
 });
 
 export const denyTheme = (id, reason) => sendRequest({
+  loadingMessage: `Denying theme ${id}..`,
   params: { id, reason },
   promise: INTERNAL_denyTheme,
-  successMessage: `Theme ${id} denied successfully!`,
-  loadingMessage: `Denying theme ${id}..`
+  successMessage: `Theme ${id} denied successfully!`
 });
 
 export const deleteTheme = id => sendRequest({
+  loadingMessage: `Deleting theme ${id}..`,
   params: id,
   promise: INTERNAL_deleteTheme,
-  successMessage: `Theme ${id} deleted successfully!`,
-  loadingMessage: `Deleting theme ${id}..`
+  successMessage: `Theme ${id} deleted successfully!`
 });
 
 export const deleteLink = id => sendRequest({
+  loadingMessage: `Deleting link ${id}..`,
   params: id,
   promise: INTERNAL_deleteLink,
-  successMessage: `Link ${id} deleted successfully!`,
-  loadingMessage: `Deleting link ${id}..`
+  successMessage: `Link ${id} deleted successfully!`
 });
 
 export const deleteBotDenyRecord = id => sendRequest({
+  loadingMessage: `Deleting bot deny record ${id}..`,
   params: id,
   promise: INTERNAL_deleteBotDenyRecord,
-  successMessage: `Bot deny record ${id} deleted successfully!`,
-  loadingMessage: `Deleting bot deny record ${id}..`
+  successMessage: `Bot deny record ${id} deleted successfully!`
 });
 
 export const restoreBot = id => sendRequest({
+  loadingMessage: `Restoring bot ${id}..`,
   params: { id },
   promise: INTERNAL_restoreBot,
-  successMessage: `Bot ${id} restored successfully! Please review it again.`,
-  loadingMessage: `Restoring bot ${id}..`
+  successMessage: `Bot ${id} restored successfully! Please review it again.`
 });
 
 export const deleteBotTimeout = (timeoutId, botId) => sendRequest({
-  params: { timeoutId, botId },
+  loadingMessage: `Deleting bot timeout ${timeoutId}..`,
+  params: { botId, timeoutId },
   promise: INTERNAL_deleteBotTimeout,
-  successMessage: `Bot timeout ${timeoutId} deleted successfully!`,
-  loadingMessage: `Deleting bot timeout ${timeoutId}..`
+  successMessage: `Bot timeout ${timeoutId} deleted successfully!`
 });
 
 export const deleteServerTimeout = (timeoutId, serverId) => sendRequest({
-  params: { timeoutId, serverId },
+  loadingMessage: `Deleting server timeout ${timeoutId}..`,
+  params: { serverId, timeoutId },
   promise: INTERNAL_deleteServerTimeout,
-  successMessage: `Server timeout ${timeoutId} deleted successfully!`,
-  loadingMessage: `Deleting server timeout ${timeoutId}..`
+  successMessage: `Server timeout ${timeoutId} deleted successfully!`
 });
 
 export const deleteQuarantineRecord = id => sendRequest({
+  loadingMessage: `Deleting quarantine record ${id}..`,
   params: id,
   promise: INTERNAL_deleteQuarantineRecord,
-  successMessage: `Quarantine record ${id} deleted successfully!`,
-  loadingMessage: `Deleting quarantine record ${id}..`
+  successMessage: `Quarantine record ${id} deleted successfully!`
 });

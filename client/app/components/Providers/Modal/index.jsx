@@ -10,9 +10,9 @@ import { useMedia } from 'react-use';
 
 export default function ModalProvider({ children }) {
   const { openedModals, activeModalId, closeModal } = useModalsStore(useShallow(state => ({
-    openedModals: state.openedModals,
     activeModalId: state.activeModalId,
-    closeModal: state.closeModal
+    closeModal: state.closeModal,
+    openedModals: state.openedModals
   })));
 
   const isMobile = useMedia('(max-width: 640px)', false);
@@ -88,7 +88,7 @@ export default function ModalProvider({ children }) {
                     {data.title}
                   </Dialog.Title>
 
-                  <Dialog.Close asChild>
+                  <Dialog.Close asChild={true}>
                     <IoMdCloseCircle className='cursor-pointer hover:opacity-70' />
                   </Dialog.Close>
                 </div>

@@ -4,10 +4,10 @@ import { redirect } from 'next/navigation';
 
 export function generateMetadata({ params }) {
   return {
-    title: `User ${params.user_id}`,
     openGraph: {
       title: `Discord Place - User ${params.user_id}`
-    }
+    },
+    title: `User ${params.user_id}`
   };
 }
 

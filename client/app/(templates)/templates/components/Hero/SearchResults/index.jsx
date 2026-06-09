@@ -16,14 +16,14 @@ export default function SearchResults() {
   const user = useAuthStore(state => state.user);
 
   const { loading, templates, fetchTemplates, total: totalTemplates, limit, page, setPage, search } = useSearchStore(useShallow(state => ({
-    loading: state.loading,
-    templates: state.templates,
     fetchTemplates: state.fetchTemplates,
-    total: state.total,
     limit: state.limit,
+    loading: state.loading,
     page: state.page,
+    search: state.search,
     setPage: state.setPage,
-    search: state.search
+    templates: state.templates,
+    total: state.total
   })));
 
   useEffect(() => {
@@ -34,14 +34,14 @@ export default function SearchResults() {
   const showPagination = !loading && totalTemplates > limit;
 
   const stateVariants = {
+    exit: {
+      opacity: 0
+    },
     hidden: {
       opacity: 0
     },
     visible: {
       opacity: 1
-    },
-    exit: {
-      opacity: 0
     }
   };
 
@@ -80,7 +80,7 @@ export default function SearchResults() {
           animate={{ opacity: 1 }}
         >
           {loading ? (
-            new Array(9).fill(0).map((_, index) => (
+            Array.from({length: 9}).fill(0).map((_, index) => (
               <div key={index} className='h-[164px] w-full animate-pulse rounded-3xl bg-secondary' />
             ))
           ) : (
@@ -90,9 +90,9 @@ export default function SearchResults() {
                 active={user?.id !== template.user.id}
                 type='template'
                 metadata={{
+                  description: template.description,
                   id: template.id,
-                  name: template.name,
-                  description: template.description
+                  name: template.name
                 }}
                 identifier={`template-${template.id}`}
               >

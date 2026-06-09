@@ -75,21 +75,26 @@ export default function Content({ bot }) {
   function resetChanges() {
     changedKeys.forEach(({ key }) => {
       switch (key) {
-        case 'short_description':
+        case 'short_description': {
           setShortDescription(bot[key]);
           break;
-        case 'description':
+        }
+        case 'description': {
           setDescription(bot[key]);
           break;
-        case 'invite_url':
+        }
+        case 'invite_url': {
           setInviteURL(bot[key]);
           break;
-        case 'categories':
+        }
+        case 'categories': {
           setCategories(bot[key]);
           break;
-        case 'support_server_id':
+        }
+        case 'support_server_id': {
           setSupportServerId(bot.support_server?.id || '0');
           break;
+        }
       }
     });
 
@@ -100,6 +105,11 @@ export default function Content({ bot }) {
     setSavingChanges(true);
 
     toast.promise(editBot(bot.id, changedKeys), {
+      error: error => {
+        setSavingChanges(false);
+
+        return error;
+      },
       loading: t('botManagePage.toast.savingChanges'),
       success: () => {
         setSavingChanges(false);
@@ -108,11 +118,6 @@ export default function Content({ bot }) {
         revalidateBot(bot.id);
 
         return t('botManagePage.toast.changesSaved');
-      },
-      error: error => {
-        setSavingChanges(false);
-
-        return error;
       }
     });
   }
@@ -120,9 +125,9 @@ export default function Content({ bot }) {
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
 
   const { openModal, closeModal, openedModals } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
     closeModal: state.closeModal,
-    openedModals: state.openedModals
+    openedModals: state.openedModals,
+    openModal: state.openModal
   })));
 
   const router = useRouter();
@@ -135,9 +140,6 @@ export default function Content({ bot }) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
 
           openModal('confirm-exit', {
-            title: t('botManagePage.discardChangesModal.title'),
-            description: t('botManagePage.discardChangesModal.description'),
-            content: <p className='text-sm text-tertiary'>{t('botManagePage.discardChangesModal.note')}</p>,
             buttons: [
               {
                 id: 'cancel',
@@ -155,10 +157,13 @@ export default function Content({ bot }) {
                   router.push(`/bots/${bot.id}`, { shallow: true });
                 }
               }
-            ]
+            ],
+            content: <p className='text-sm text-tertiary'>{t('botManagePage.discardChangesModal.note')}</p>,
+            description: t('botManagePage.discardChangesModal.description'),
+            title: t('botManagePage.discardChangesModal.title')
           });
         } else {
-          window.location.href = `/bots/${bot.id}`;
+          globalThis.location.href = `/bots/${bot.id}`;
         }
       }
     }

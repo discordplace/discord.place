@@ -14,27 +14,27 @@ export default function Tabs({ server }) {
   const [activeTab, setActiveTab] = useState('reviews');
   const tabs = [
     {
-      label: t('serverPage.tabs.labels.reviews'),
+      component: <Reviews server={server} />,
       id: 'reviews',
-      component: <Reviews server={server} />
+      label: t('serverPage.tabs.labels.reviews')
     },
     {
-      label: t('serverPage.tabs.labels.topVoters'),
-      id: 'topVoters',
       component: <TopVoters server={server} />,
-      disabled: server.totalVoters <= 0
+      disabled: server.totalVoters <= 0,
+      id: 'topVoters',
+      label: t('serverPage.tabs.labels.topVoters')
     },
     {
-      label: t('serverPage.tabs.labels.rewards'),
-      id: 'rewards',
       component: <Rewards server={server} />,
-      disabled: server.rewards.length === 0
+      disabled: server.rewards.length === 0,
+      id: 'rewards',
+      label: t('serverPage.tabs.labels.rewards')
     },
     {
-      label: t('serverPage.tabs.labels.monthlyVotes'),
-      id: 'monthlyVotesGraph',
       component: <MonthlyVotesGraph server={server} />,
-      disabled: server.monthly_votes.length === 0
+      disabled: server.monthly_votes.length === 0,
+      id: 'monthlyVotesGraph',
+      label: t('serverPage.tabs.labels.monthlyVotes')
     }
   ];
 

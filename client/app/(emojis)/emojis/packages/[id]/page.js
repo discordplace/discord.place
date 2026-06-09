@@ -9,18 +9,18 @@ export async function generateMetadata({ params }) {
   if (typeof metadata === 'string') return;
 
   return {
-    title: `Emoji Pack ${metadata.name}`,
     openGraph: {
-      title: `Discord Place - Emoji Pack ${metadata.name}`,
-      url: `/emojis/packages/${params.id}`,
       images: [
         {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'emoji', metadata }))}`,
           width: 1200,
           height: 630
         }
-      ]
-    }
+      ],
+      title: `Discord Place - Emoji Pack ${metadata.name}`,
+      url: `/emojis/packages/${params.id}`
+    },
+    title: `Emoji Pack ${metadata.name}`
   };
 }
 

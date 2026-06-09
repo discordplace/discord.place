@@ -17,7 +17,7 @@ export default function MonthlyVotesGraph({ server }) {
   const isDecreased = difference < 0;
   const isEqual = difference === 0;
   const diffInPercent = ((latestValue - previousValue) / previousValue) * 100;
-  const diffInPercentClean = diffInPercent === Infinity ? 100 : isNaN(diffInPercent) ? 0 : diffInPercent;
+  const diffInPercentClean = diffInPercent === Infinity ? 100 : (isNaN(diffInPercent) ? 0 : diffInPercent);
 
   const isMobile = useMedia('(max-width: 640px)', false);
 
@@ -28,7 +28,7 @@ export default function MonthlyVotesGraph({ server }) {
 
         <Tooltip
           side={isMobile ? 'bottom' : 'right'}
-          content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChanges'}`, { postProcess: 'interval', count: 1, difference })}
+          content={t(`graph.tooltip.${isIncreased ? 'increased' : (isDecreased ? 'decreased' : 'noChanges')}`, { count: 1, difference, postProcess: 'interval' })}
         >
           <div
             className={cn(
@@ -57,7 +57,7 @@ export default function MonthlyVotesGraph({ server }) {
           tooltipFormatter={value => value.toLocaleString('en-US')}
           color={(isIncreased || isDecreased) ? 'rgb(168, 85, 247)' : '#b4b4b4'}
           xaxisRange={server.monthly_votes.length - 1}
-          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { year: 'numeric', month: 'short' }))}
+          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { month: 'short', year: 'numeric' }))}
         />
       </div>
     </div>

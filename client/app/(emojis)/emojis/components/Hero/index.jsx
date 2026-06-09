@@ -13,19 +13,19 @@ import Select from '@/app/components/Select';
 import config from '@/config';
 import { t } from '@/stores/language';
 
-const BricolageGrotesque = Bricolage_Grotesque({ subsets: ['latin'], display: 'swap', adjustFontFallback: false });
+const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
   const { fetchEmojis, total, category, setCategory, sort, setSort, loading, search, setPage } = useSearchStore(useShallow(state => ({
-    fetchEmojis: state.fetchEmojis,
-    total: state.total,
     category: state.category,
-    setCategory: state.setCategory,
-    sort: state.sort,
-    setSort: state.setSort,
+    fetchEmojis: state.fetchEmojis,
     loading: state.loading,
     search: state.search,
-    setPage: state.setPage
+    setCategory: state.setCategory,
+    setPage: state.setPage,
+    setSort: state.setSort,
+    sort: state.sort,
+    total: state.total
   })));
 
   useEffect(() => {
@@ -33,10 +33,10 @@ export default function Hero() {
   }, []);
 
   const sequenceTransition = {
+    damping: 20,
     duration: 0.25,
-    type: 'spring',
     stiffness: 260,
-    damping: 20
+    type: 'spring'
   };
 
   return (
@@ -101,7 +101,6 @@ export default function Hero() {
             <Select
               placeholder={t('emojisPage.sortSelect.placeholder')}
               options={[
-                ...[
                   {
                     label: t('emojisPage.sortSelect.items.popular'),
                     value: 'Popular'
@@ -120,8 +119,7 @@ export default function Hero() {
                     {option.label}
                   </div>,
                   value: option.value
-                }))
-              ]}
+                }))}
               value={sort}
               onChange={setSort}
               disabled={loading}

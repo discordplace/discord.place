@@ -15,7 +15,7 @@ export default function LikesGraph({ profile }) {
   const isDecreased = difference < 0;
   const isEqual = difference === 0;
   const diffInPercent = ((latestValue - previousValue) / previousValue) * 100;
-  const diffInPercentClean = diffInPercent === Infinity ? 100 : isNaN(diffInPercent) ? 0 : diffInPercent;
+  const diffInPercentClean = diffInPercent === Infinity ? 100 : (isNaN(diffInPercent) ? 0 : diffInPercent);
 
   const isMobile = useMedia('(max-width: 640px)', false);
 
@@ -26,7 +26,7 @@ export default function LikesGraph({ profile }) {
 
         <Tooltip
           side={isMobile ? 'bottom' : 'right'}
-          content={t(`graph.tooltip.${isIncreased ? 'increased' : isDecreased ? 'decreased' : 'noChanges'}`, { postProcess: 'interval', count: 0, difference })}
+          content={t(`graph.tooltip.${isIncreased ? 'increased' : (isDecreased ? 'decreased' : 'noChanges')}`, { count: 0, difference, postProcess: 'interval' })}
         >
           <div
             className={cn(

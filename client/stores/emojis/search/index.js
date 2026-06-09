@@ -3,19 +3,8 @@ import { toast } from 'sonner';
 import fetchEmojis from '@/lib/request/emojis/fetchEmojis';
 
 const useSearchStore = create((set, get) => ({
-  loading: true,
-  setLoading: loading => set({ loading }),
-  search: '',
-  setSearch: search => set({ search }),
-  page: 1,
-  setPage: page => set({ page }),
-  limit: 12,
-  setLimit: limit => set({ limit }),
+  category: 'All',
   emojis: [],
-  setEmojis: emojis => set({ emojis }),
-  totalEmojis: 0,
-  total: 0,
-  maxReached: false,
   fetchEmojis: async search => {
     const page = get().page;
     const limit = get().limit;
@@ -31,18 +20,29 @@ const useSearchStore = create((set, get) => ({
         set({ loading: false });
       });
   },
-  category: 'All',
+  limit: 12,
+  loading: true,
+  maxReached: false,
+  page: 1,
+  search: '',
   setCategory: category => {
     set({ category, page: 1 });
 
     get().fetchEmojis(get().search);
   },
-  sort: 'Newest',
+  setEmojis: emojis => set({ emojis }),
+  setLimit: limit => set({ limit }),
+  setLoading: loading => set({ loading }),
+  setPage: page => set({ page }),
+  setSearch: search => set({ search }),
   setSort: sort => {
     set({ sort, page: 1 });
 
     get().fetchEmojis(get().search);
-  }
+  },
+  sort: 'Newest',
+  total: 0,
+  totalEmojis: 0
 }));
 
 export default useSearchStore;

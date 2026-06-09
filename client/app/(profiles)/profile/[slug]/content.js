@@ -64,7 +64,7 @@ export default function Content({ profile }) {
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, type: 'spring', stiffness: 100, damping: 10 }}
+            transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
             className='text-3xl font-bold'
           >
             @{profile.username}
@@ -75,11 +75,11 @@ export default function Content({ profile }) {
               {profile.badges.map(badgeId => (
                 <Tooltip
                   content={t(`badges.${badgeId}`, {
-                    premiumSince: profile.subscriptionCreatedAt,
-                    lng: language,
                     formatParams: {
-                      premiumSince: { year: 'numeric', month: 'long', day: 'numeric' }
-                    }
+                      premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
+                    },
+                    lng: language,
+                    premiumSince: profile.subscriptionCreatedAt
                   })}
                   key={badgeId}
                 >

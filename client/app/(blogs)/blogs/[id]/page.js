@@ -9,15 +9,13 @@ import { redirect } from 'next/navigation';
 export async function generateMetadata({ params }) {
   if (!fs.existsSync(`${process.cwd()}/blogs/${params.id}.md`)) return;
 
-  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf-8');
+  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf8');
   const { data } = matter(source);
 
   return {
-    title: data.name,
     description: data.description,
     keywords: ['blog', 'post', ...data.tags],
     openGraph: {
-      title: `Discord Place - ${data.name}`,
       description: data.description,
       images: [
         {
@@ -25,15 +23,17 @@ export async function generateMetadata({ params }) {
           width: 1200,
           height: 630
         }
-      ]
-    }
+      ],
+      title: `Discord Place - ${data.name}`
+    },
+    title: data.name
   };
 }
 
 export default async function Page({ params }) {
   if (!fs.existsSync(`${process.cwd()}/blogs/${params.id}.md`)) return redirect('/error?code=90001');
 
-  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf-8');
+  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf8');
   const { data, content } = matter(source);
 
   return (

@@ -72,10 +72,11 @@ export default function Content({ server }) {
   function resetChanges() {
     changedKeys.forEach(({ key }) => {
       switch (key) {
-        case 'description':
+        case 'description': {
           setDescription(server[key]);
           break;
-        case 'invite_url':
+        }
+        case 'invite_url': {
           var parsedInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
             server.invite_code.type === 'Deleted' ? '' :
               `https://discord.com/invite/${server.invite_code.code}`
@@ -83,12 +84,15 @@ export default function Content({ server }) {
 
           setInviteURL(parsedInviteUrl);
           break;
-        case 'category':
+        }
+        case 'category': {
           setCategory(server[key]);
           break;
-        case 'keywords':
+        }
+        case 'keywords': {
           setKeywords(server[key]);
           break;
+        }
       }
     });
 
@@ -99,6 +103,11 @@ export default function Content({ server }) {
     setSavingChanges(true);
 
     toast.promise(editServer(server.id, changedKeys), {
+      error: error => {
+        setSavingChanges(false);
+
+        return error;
+      },
       loading: t('serverManagePage.toast.savingChanges'),
       success: () => {
         setSavingChanges(false);
@@ -107,19 +116,14 @@ export default function Content({ server }) {
         revalidateServer(server.id);
 
         return t('serverManagePage.toast.changesSaved');
-      },
-      error: error => {
-        setSavingChanges(false);
-
-        return error;
       }
     });
   }
 
   const { openModal, closeModal, openedModals } = useModalsStore(useShallow(state => ({
-    openModal: state.openModal,
     closeModal: state.closeModal,
-    openedModals: state.openedModals
+    openedModals: state.openedModals,
+    openModal: state.openModal
   })));
 
   const router = useRouter();
@@ -131,9 +135,6 @@ export default function Content({ server }) {
           if (openedModals.some(modal => modal.id === 'confirm-exit')) return;
 
           openModal('confirm-exit', {
-            title: t('serverManagePage.discardChangesModal.title'),
-            description: t('serverManagePage.discardChangesModal.description'),
-            content: <p className='text-sm text-tertiary'>{t('serverManagePage.discardChangesModal.note')}</p>,
             buttons: [
               {
                 id: 'cancel',
@@ -151,10 +152,13 @@ export default function Content({ server }) {
                   router.push(`/servers/${server.id}`, { shallow: true });
                 }
               }
-            ]
+            ],
+            content: <p className='text-sm text-tertiary'>{t('serverManagePage.discardChangesModal.note')}</p>,
+            description: t('serverManagePage.discardChangesModal.description'),
+            title: t('serverManagePage.discardChangesModal.title')
           });
         } else {
-          window.location.href = `/servers/${server.id}`;
+          globalThis.location.href = `/servers/${server.id}`;
         }
       }
     }

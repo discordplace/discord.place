@@ -32,6 +32,7 @@ export default function UserSide({ className }) {
 
   function logOut() {
     toast.promise(logout, {
+      error: error => error,
       loading: 'Logging out..',
       success: () => {
         setUser(null);
@@ -39,8 +40,7 @@ export default function UserSide({ className }) {
         deleteToken();
 
         return 'Logged out successfully';
-      },
-      error: error => error
+      }
     });
   }
 

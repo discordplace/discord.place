@@ -22,12 +22,12 @@ import { useShallow } from 'zustand/react/shallow';
 
 export default function Table({ tabs }) {
   const { selectedItems, setSelectedItems, page, setPage, currentSort, setCurrentSort } = useDashboardStore(useShallow(state => ({
-    selectedItems: state.selectedItems,
-    setSelectedItems: state.setSelectedItems,
-    page: state.page,
-    setPage: state.setPage,
     currentSort: state.currentSort,
-    setCurrentSort: state.setCurrentSort
+    page: state.page,
+    selectedItems: state.selectedItems,
+    setCurrentSort: state.setCurrentSort,
+    setPage: state.setPage,
+    setSelectedItems: state.setSelectedItems
   })));
 
   function handleSelect(item) {
@@ -75,7 +75,7 @@ export default function Table({ tabs }) {
       });
     });
 
-  const deepCopiedColumns = JSON.parse(JSON.stringify(filteredColumns));
+  const deepCopiedColumns = structuredClone(filteredColumns);
 
   const sortedColumns = deepCopiedColumns
     .sort((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b]));
@@ -101,7 +101,7 @@ export default function Table({ tabs }) {
 
         <button
           className='flex items-center gap-x-1.5 rounded-full border border-primary bg-secondary py-0.5 pl-1.5 pr-2 text-xs text-secondary hover:bg-quaternary'
-          onClick={() => setCurrentSort({ name: '', key: '', order: '' })}
+          onClick={() => setCurrentSort({ key: '', name: '', order: '' })}
         >
           {CurrentSortIcon && <CurrentSortIcon size={14} />}
 
@@ -158,7 +158,7 @@ export default function Table({ tabs }) {
                     placeholder='Search anything...'
                     value={searchQuery}
                     onChange={event => setSearchQuery(event.target.value)}
-                    autoFocus
+                    autoFocus={true}
                     ref={searchInputRef}
                   />
 
@@ -192,7 +192,7 @@ export default function Table({ tabs }) {
                     placeholder='Search anything...'
                     value={searchQuery}
                     onChange={event => setSearchQuery(event.target.value)}
-                    autoFocus
+                    autoFocus={true}
                     ref={searchInputRef}
                   />
                 ) : (
@@ -247,8 +247,8 @@ export default function Table({ tabs }) {
                       if (!row.sortable) return;
 
                       setCurrentSort({
-                        name: row.name,
                         key: index,
+                        name: row.name,
                         order: currentSort.key === index ? (currentSort.order === 'asc' ? 'desc' : 'asc') : 'asc'
                       });
                     }}
@@ -331,7 +331,7 @@ export default function Table({ tabs }) {
             loading={false}
             total={deepCopiedColumns?.length}
             limit={10}
-            disableAnimation
+            disableAnimation={true}
           />
         </div>
       )}
@@ -344,22 +344,22 @@ export default function Table({ tabs }) {
                 className='fixed bottom-8 right-6 flex items-center gap-x-2 rounded-full bg-tertiary px-4 py-2 text-sm font-medium text-secondary transition-colors'
                 onClick={() => setDrawerOpen(true)}
                 initial={{
+                  filter: 'blur(10px)',
                   opacity: 0,
-                  y: 60,
                   scale: 0.8,
-                  filter: 'blur(10px)'
+                  y: 60
                 }}
                 animate={{
+                  filter: 'blur(0px)',
                   opacity: 1,
-                  y: 0,
                   scale: 1,
-                  filter: 'blur(0px)'
+                  y: 0
                 }}
                 exit={{
+                  filter: 'blur(10px)',
                   opacity: 0,
-                  y: 60,
                   scale: 0.85,
-                  filter: 'blur(10px)'
+                  y: 60
                 }}
               >
                 <FaBookBookmark size={14} />
@@ -403,26 +403,26 @@ export default function Table({ tabs }) {
             <motion.div
               className='fixed bottom-8 z-10 flex h-[50px] w-max items-center gap-x-4 rounded-2xl border-2 border-primary bg-secondary p-3 text-sm font-medium shadow-[rgba(var(--bg-secondary))]'
               initial={{
+                filter: 'blur(10px)',
                 opacity: 0,
-                y: 60,
                 scale: 0.8,
-                filter: 'blur(10px)'
+                y: 60
               }}
               animate={{
+                filter: 'blur(0px)',
                 opacity: 1,
-                y: 0,
                 scale: 1,
-                filter: 'blur(0px)'
+                y: 0
               }}
               exit={{
+                filter: 'blur(10px)',
                 opacity: 0,
-                y: 60,
                 scale: 0.85,
-                filter: 'blur(10px)'
+                y: 60
               }}
               transition={{
-                type: 'easeInOut',
-                duration: 0.2
+                duration: 0.2,
+                type: 'easeInOut'
               }}
             >
               <div className='rounded-lg border border-purple-500 p-1 text-purple-500 shadow-lg shadow-purple-500/30'>

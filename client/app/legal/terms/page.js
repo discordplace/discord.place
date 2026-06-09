@@ -2,10 +2,10 @@ import config from '@/config';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Terms of Service',
   openGraph: {
     title: 'Discord Place - Terms of Service'
-  }
+  },
+  title: 'Terms of Service'
 };
 
 export default function Page() {
@@ -16,7 +16,7 @@ export default function Page() {
       <p>Last updated: 07/12/2024</p>
 
       <h2>1. Acceptance of Terms</h2>
-      <p>By using our services, you agree to be bound by these Terms of Service ({'"'}Terms{'"'}). If you do not agree to these Terms, please do not use our services.</p>
+      <p>By using our services, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our services.</p>
 
       <h2>2. Description of Service</h2>
       <p>discord.place is designed to provide a platform for users to discover Discord servers, bots, emojis, templates and more. We reserve the right to modify or discontinue the bot at any time without notice.</p>
