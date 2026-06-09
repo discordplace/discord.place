@@ -43,8 +43,8 @@ export default function Error({ error }) {
           {t('errorPage.title')}
         </h2>
 
-        <div className='rounded-2xl bg-black/5 p-3 text-sm text-secondary backdrop-blur-xs'>
-          <pre className='font-mono'>
+        <div className='rounded-2xl bg-black/10 p-3 text-sm text-secondary backdrop-blur-xs'>
+          <pre className='max-w-[500px] text-left font-mono break-words whitespace-pre-wrap'>
             Error: {error.message}
           </pre>
         </div>
