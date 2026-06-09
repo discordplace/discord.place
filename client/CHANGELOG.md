@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.0.1](https://github.com/discordplace/discord.place/compare/client@v3.0.0...client@v3.0.1) (2026-06-09)
+
+
+### Bug Fixes
+
+* **client/footer:** add missing t import ([3ef7cfb](https://github.com/discordplace/discord.place/commit/3ef7cfbd3105c27c5c29349c51f26d84ce5a3d0d))
+* **client:** align text to the left for better readability in the services dropdown component ([af5cdc6](https://github.com/discordplace/discord.place/commit/af5cdc67cb9e5aa80aa239d68416da51b9c06752))
+* **client:** disable no-unknown-classes rule and revert back it's auto fixes ([c85e984](https://github.com/discordplace/discord.place/commit/c85e98425798a69e5274dc88439c5e9d6b4759b7))
+* **client:** redirect to home page after successful logout ([d709232](https://github.com/discordplace/discord.place/commit/d709232ffaba4169db659d8cabb9ebff0426cbec))
+* **client:** remove redundant metadata entry ([ddddd4f](https://github.com/discordplace/discord.place/commit/ddddd4fb49a4cfb3ef802c83a512f87763332753))
+* **client:** update error message styling for better readability ([55ba202](https://github.com/discordplace/discord.place/commit/55ba202cce2aa2ac445a084303c428f9aa402121))
+* **client:** update profile card badges container to use items-center ([7e38455](https://github.com/discordplace/discord.place/commit/7e38455097efea69514b44f6c70b2d9b814bf47b))
+* remove test button ([0fc58e3](https://github.com/discordplace/discord.place/commit/0fc58e3bd484305a3d4905f0aeccaa54cadc155d))
+
 ## [3.0.0](https://github.com/discordplace/discord.place/compare/client@v2.0.0...client@v3.0.0) (2026-06-09)
 
 
