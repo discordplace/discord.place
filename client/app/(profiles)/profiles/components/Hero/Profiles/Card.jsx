@@ -173,7 +173,7 @@ export default function Card(props) {
             )}
           >
             <div className='mb-auto px-5 pt-5'>
-              <div className='flex gap-x-1'>
+              <div className='flex items-center gap-x-1'>
                 <h2
                   className={cn(
                     'mr-1 max-w-[170px] truncate text-lg font-medium',
