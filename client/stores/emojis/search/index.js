@@ -6,15 +6,15 @@ const useSearchStore = create((set, get) => ({
   category: 'All',
   emojis: [],
   fetchEmojis: async search => {
-    const page = get().page;
-    const limit = get().limit;
-    const category = get().category;
-    const sort = get().sort;
+    const { page } = get();
+    const { limit } = get();
+    const { category } = get();
+    const { sort } = get();
 
     set({ loading: true, search });
 
     fetchEmojis(search, category, sort, page, limit)
-      .then(data => set({ emojis: data.emojis, loading: false, totalEmojis: data.totalEmojis, total: data.total, maxReached: data.maxReached }))
+      .then(data => set({ emojis: data.emojis, loading: false, maxReached: data.maxReached, total: data.total, totalEmojis: data.totalEmojis }))
       .catch(error => {
         toast.error(error);
         set({ loading: false });
@@ -36,7 +36,7 @@ const useSearchStore = create((set, get) => ({
   setPage: page => set({ page }),
   setSearch: search => set({ search }),
   setSort: sort => {
-    set({ sort, page: 1 });
+    set({ page: 1, sort });
 
     get().fetchEmojis(get().search);
   },

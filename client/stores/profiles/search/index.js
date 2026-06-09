@@ -6,15 +6,15 @@ import fetchPresences from '@/lib/request/profiles/fetchPresences';
 const useSearchStore = create((set, get) => ({
   count: 0,
   fetchProfiles: async search => {
-    const page = get().page;
-    const limit = get().limit;
-    const sort = get().sort;
+    const { page } = get();
+    const { limit } = get();
+    const { sort } = get();
 
     set({ loading: true, search });
 
     fetchProfiles(search, page, limit, sort)
       .then(data => {
-        set({ profiles: data.profiles, loading: false, totalProfiles: data.total, maxReached: data.maxReached, count: data.count });
+        set({ count: data.count, loading: false, maxReached: data.maxReached, profiles: data.profiles, totalProfiles: data.total });
 
         if (data.profiles.length > 0) {
           const userIds = data.profiles.map(profile => profile.id);
@@ -42,7 +42,7 @@ const useSearchStore = create((set, get) => ({
   setProfiles: profiles => set({ profiles }),
   setSearch: search => set({ search }),
   setSort: sort => {
-    set({ sort, page: 1 });
+    set({ page: 1, sort });
 
     get().fetchProfiles(get().search);
   },

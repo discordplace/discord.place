@@ -28,7 +28,7 @@ export default function DangerZone({ profile }) {
       success: () => {
         closeModal('delete-profile');
 
-        window.location.href = '/profiles';
+        globalThis.location.href = '/profiles';
 
         return t('editProfilePage.toast.profileDeleted');
       }
@@ -53,16 +53,16 @@ export default function DangerZone({ profile }) {
             openModal('delete-profile', {
               buttons: [
                 {
+                  actionType: 'close',
                   id: 'cancel',
                   label: t('buttons.cancel'),
-                  variant: 'ghost',
-                  actionType: 'close'
+                  variant: 'ghost'
                 },
                 {
+                  action: continueDeleteProfile,
                   id: 'confirm',
                   label: t('buttons.delete'),
-                  variant: 'solid',
-                  action: continueDeleteProfile
+                  variant: 'solid'
                 }
               ],
               content: (

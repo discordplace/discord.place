@@ -203,7 +203,7 @@ export default function Hero() {
               animate={{ opacity: 1 }}
             >
               {loading ? (
-                Array.from({length: limit}).fill(0).map((_, index) => (
+                Array.from({ length: limit }).fill(0).map((_, index) => (
                   <div key={index} className='h-[250px] w-[322px] animate-pulse rounded-3xl bg-secondary' />
                 ))
               ) : (

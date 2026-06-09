@@ -50,9 +50,9 @@ import Tooltip from '@/app/components/Tooltip';
       icon: FaCompass,
       transform: value => {
         const serversFormatter = new Intl.NumberFormat('en-US', {
-          style: 'decimal',
+          maximumFractionDigits: 2,
           notation: 'compact',
-          maximumFractionDigits: 2
+          style: 'decimal'
         });
 
         return serversFormatter.format(value);
@@ -68,13 +68,13 @@ import Tooltip from '@/app/components/Tooltip';
     {
       condition: sort === 'Newest',
       icon: HiSortAscending,
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }),
+      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
       value: data.created_at
     },
     {
       condition: sort === 'Oldest',
       icon: HiSortDescending,
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }),
+      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
       value: data.created_at
     }
   ];

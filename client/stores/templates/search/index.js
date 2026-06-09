@@ -13,7 +13,7 @@ const useSearchStore = create((set, get) => ({
     set({ loading: true, search });
 
     fetchTemplates(search, get().page, get().limit, get().category, get().sort)
-      .then(data => set({ templates: data.templates, loading: false, maxReached: data.maxReached, total: data.total }))
+      .then(data => set({ loading: false, maxReached: data.maxReached, templates: data.templates, total: data.total }))
       .catch(error => {
         toast.error(error);
         set({ loading: false });
@@ -34,7 +34,7 @@ const useSearchStore = create((set, get) => ({
   setPage: page => set({ page }),
   setSearch: search => set({ search }),
   setSort: sort => {
-    set({ sort, page: 1 });
+    set({ page: 1, sort });
 
     get().fetchTemplates(get().search);
   },

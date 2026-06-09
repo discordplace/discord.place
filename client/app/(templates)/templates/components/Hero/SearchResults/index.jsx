@@ -80,7 +80,7 @@ export default function SearchResults() {
           animate={{ opacity: 1 }}
         >
           {loading ? (
-            Array.from({length: 9}).fill(0).map((_, index) => (
+            Array.from({ length: 9 }).fill(0).map((_, index) => (
               <div key={index} className='h-[164px] w-full animate-pulse rounded-3xl bg-secondary' />
             ))
           ) : (

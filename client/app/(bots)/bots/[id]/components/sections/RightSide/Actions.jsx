@@ -45,7 +45,7 @@ export default function Actions({ bot }) {
       if (!globalThis.turnstile) return setShowCaptcha(false);
 
       setLoading(true);
-      const {turnstile} = window;
+      const { turnstile } = globalThis;
       turnstile?.render('.cf-turnstile');
 
       captchaIntervalRef.current = setInterval(() => {
@@ -63,7 +63,7 @@ export default function Actions({ bot }) {
             loading: t('botPage.actions.toast.voting', { botName: bot.username }),
             success: () => {
               setLoading(false);
-              setVoteTimeout({ createdAt: new Date().getTime() + 86400000 });
+              setVoteTimeout({ createdAt: new Date().getTime() + 86_400_000 });
               revalidateBot(bot.id);
 
               return t('botPage.actions.toast.voted', { botName: bot.username });

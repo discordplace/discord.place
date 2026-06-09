@@ -14,10 +14,10 @@ export const metadata = {
     description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
     images: [
       {
-        url: '/og.png',
-        width: 960,
+        alt: 'Discord Place',
         height: 540,
-        alt: 'Discord Place'
+        url: '/og.png',
+        width: 960
       }
     ],
     locale: 'en_US',
@@ -45,18 +45,18 @@ const GGSans = localFont({
   src: [
     {
       path: '../public/fonts/GG-Sans-Medium.ttf',
-      weight: '500',
-      style: 'normal'
+      style: 'normal',
+      weight: '500'
     },
     {
       path: '../public/fonts/GG-Sans-Bold.ttf',
-      weight: '700',
-      style: 'normal'
+      style: 'normal',
+      weight: '700'
     },
     {
       path: '../public/fonts/GG-Sans-Normal.ttf',
-      weight: '400',
-      style: 'normal'
+      style: 'normal',
+      weight: '400'
     }
   ],
   variable: '--font-gg-sans'

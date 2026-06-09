@@ -209,7 +209,7 @@ export default function ColumnRenderer({ data }) {
 
       return (
         <span>
-          {date > yesterday ? getRelativeTime(data.value, 'en') : date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          {date > yesterday ? getRelativeTime(data.value, 'en') : date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
         </span>
       );
     }
@@ -274,7 +274,7 @@ export default function ColumnRenderer({ data }) {
           </h2>
 
           <div className='flex items-center gap-x-1'>
-            {new Array(5).fill(null).map((_, index) => (
+            {Array.from({ length: 5 }).fill(null).map((_, index) => (
               <FaStar
                 key={index}
                 size={12}
@@ -308,7 +308,7 @@ export default function ColumnRenderer({ data }) {
       );
     }
     case 'number': {
-      var formatter = new Intl.NumberFormat('en-US', { style: 'decimal', notation: 'compact', maximumFractionDigits: 2 });
+      var formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2, notation: 'compact', style: 'decimal' });
 
       return (
         <span className='rounded-full border border-primary bg-secondary px-2 py-1.5 text-xs font-semibold text-primary'>
@@ -381,7 +381,7 @@ export default function ColumnRenderer({ data }) {
                 className='-rotate-45 text-green-500'
               />
 
-              {new Date(data.value.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              {new Date(data.value.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
 
               <span className='text-tertiary'>
                 ({getRelativeTime(data.value.createdAt, 'en')})
@@ -393,11 +393,11 @@ export default function ColumnRenderer({ data }) {
 
       var foundPlan = dashboardData?.plans?.find(plan => plan.id === data.value?.planId);
 
-      if (!foundPlan) return (
+      if (!foundPlan) {return (
         <span className='text-xs font-medium text-tertiary'>
           Unknown Plan
         </span>
-      );
+      );}
 
       return (
         <div className='flex flex-col gap-y-1'>
@@ -411,7 +411,7 @@ export default function ColumnRenderer({ data }) {
               className='-rotate-45 text-green-500'
             />
 
-            {new Date(data.value.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            {new Date(data.value.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
 
             <span className='text-tertiary'>
               ({getRelativeTime(data.value.createdAt, 'en')})

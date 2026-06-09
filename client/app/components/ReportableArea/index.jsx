@@ -23,7 +23,7 @@ export default function ReportableArea(props) {
   })));
 
   function submitReport() {
-    const {reason} = useGeneralStore.getState().reportAreaModal;
+    const { reason } = useGeneralStore.getState().reportAreaModal;
     if (!reason) return toast.error(t('inAppReporting.reportModal.toast.noReason'));
 
     if (reason.length < config.reportReasonMinCharacters) return toast.error(t('inAppReporting.reportModal.toast.reasonTooShort', { minLength: config.reportReasonMinCharacters }));
@@ -51,16 +51,16 @@ export default function ReportableArea(props) {
     openModal('report-area', {
       buttons: [
         {
+          actionType: 'close',
           id: 'cancel',
           label: t('buttons.cancel'),
-          variant: 'ghost',
-          actionType: 'close'
+          variant: 'ghost'
         },
         {
+          action: submitReport,
           id: 'createReport',
           label: t('buttons.createReport'),
-          variant: 'solid',
-          action: submitReport
+          variant: 'solid'
         }
       ],
       content: (

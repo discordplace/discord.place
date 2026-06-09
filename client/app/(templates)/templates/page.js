@@ -6,10 +6,10 @@ export const metadata = {
     description: 'Explore, find and download the perfect emoji for your Discord server!',
     images: [
       {
-        url: '/og.png',
-        width: 960,
+        alt: 'Discord Place',
         height: 540,
-        alt: 'Discord Place'
+        url: '/og.png',
+        width: 960
       }
     ],
     locale: 'en_US',

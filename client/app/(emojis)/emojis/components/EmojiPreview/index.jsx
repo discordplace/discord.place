@@ -119,16 +119,16 @@ export default function EmojiPreview({ id, name, image_url, ableToChange, defaul
     openModal('upload-emoji-to-discord', {
       buttons: [
         {
+          actionType: 'close',
           id: 'cancel',
           label: t('buttons.cancel'),
-          variant: 'ghost',
-          actionType: 'close'
+          variant: 'ghost'
         },
         {
+          action: () => continueUploadEmojiToGuild(selectedGuildId),
           id: 'uplaod',
           label: t('buttons.upload'),
-          variant: 'solid',
-          action: () => continueUploadEmojiToGuild(selectedGuildId)
+          variant: 'solid'
         }
       ],
       content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,

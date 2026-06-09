@@ -187,38 +187,46 @@ const markdownComponents = {
     let FileIcon = <FaFileCode />;
 
     switch (language) {
-      case 'js':
+      case 'js': {
         fileName = 'index.js';
         FileIcon = <IoLogoJavascript />;
         break;
-      case 'python':
+      }
+      case 'python': {
         fileName = 'script.py';
         FileIcon = <IoLogoPython />;
         break;
-      case 'json':
+      }
+      case 'json': {
         fileName = 'data.json';
         FileIcon = <BiCodeCurly />;
         break;
-      case 'curl':
+      }
+      case 'curl': {
         fileName = 'request.sh';
         FileIcon = <BiCodeCurly />;
         break;
-      case 'html':
+      }
+      case 'html': {
         fileName = 'index.html';
         FileIcon = <FaFileCode />;
         break;
-      case 'xml':
+      }
+      case 'xml': {
         fileName = 'data.xml';
         FileIcon = <TbFileTypeXml />;
         break;
-      case 'http':
+      }
+      case 'http': {
         fileName = 'request.http';
         FileIcon = <MdHttps />;
         break;
-      case 'php':
+      }
+      case 'php': {
         fileName = 'index.php';
         FileIcon = <SiPhp />;
         break;
+      }
     }
 
     return languageMatch ? (
@@ -256,8 +264,8 @@ const markdownComponents = {
       return null;
     }
   },
-  img: ({ src, alt, width, height }) => {
-    return (
+  img: ({ src, alt, width, height }) => 
+    (
       <Zoom>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -268,8 +276,8 @@ const markdownComponents = {
           className='my-4 rounded-xl'
         />
       </Zoom>
-    );
-  },
+    )
+  ,
   li: withEmojiSupport('li'),
   p: withEmojiSupport('p'),
   strong: withEmojiSupport('strong'),

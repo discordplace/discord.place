@@ -438,8 +438,8 @@ export default function Edit({ profileData }) {
 
                         setColors(oldColors => ({
                           ...oldColors,
-                          secondary: newProfile.colors?.secondary || '#000000',
-                          primary: newProfile.colors?.primary || '#000000'
+                          primary: newProfile.colors?.primary || '#000000',
+                          secondary: newProfile.colors?.secondary || '#000000'
                         }));
 
                         return t('editProfilePage.toast.colorsReset');

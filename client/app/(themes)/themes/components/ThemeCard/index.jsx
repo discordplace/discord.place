@@ -27,7 +27,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   const mutualFriendsCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
   const mutualServersCount = useMemo(() => Math.floor(Math.random() * 7) + 3, []);
   const avatars = useMemo(() => {
-    const avatars = Array.from({length: 3}).fill(null).map(() => `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 5)}.png`);
+    const avatars = Array.from({ length: 3 }).fill(null).map(() => `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 5)}.png`);
 
     return avatars;
   }, []);

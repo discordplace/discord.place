@@ -182,16 +182,16 @@ export default function Content({ sound }) {
                   openModal('delete-sound', {
                     buttons: [
                       {
+                        actionType: 'close',
                         id: 'cancel',
                         label: t('buttons.cancel'),
-                        variant: 'ghost',
-                        actionType: 'close'
+                        variant: 'ghost'
                       },
                       {
+                        action: continueDeleteSound,
                         id: 'confirm',
                         label: t('buttons.delete'),
-                        variant: 'solid',
-                        action: continueDeleteSound
+                        variant: 'solid'
                       }
                     ],
                     content: (

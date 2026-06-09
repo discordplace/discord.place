@@ -41,26 +41,26 @@ function sendRequest({ params, promise, successMessage, error, loadingMessage })
   });
 }
 
-const {openModal} = useModalsStore.getState();
-const {closeModal} = useModalsStore.getState();
+const { openModal } = useModalsStore.getState();
+const { closeModal } = useModalsStore.getState();
 
 export function showConfirmationModal(message, callback) {
   openModal('delete-confirmation', {
     buttons: [
       {
+        actionType: 'close',
         id: 'cancel',
         label: 'Cancel',
-        variant: 'ghost',
-        actionType: 'close'
+        variant: 'ghost'
       },
       {
-        id: 'confirm',
-        label: 'Confirm',
-        variant: 'solid',
         action: () => {
           closeModal('delete-confirmation');
           callback();
-        }
+        },
+        id: 'confirm',
+        label: 'Confirm',
+        variant: 'solid'
       }
     ],
     content: message,

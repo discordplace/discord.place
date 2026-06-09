@@ -37,7 +37,7 @@ export default function EmojiPackageCard({ overridedImages, id, name, categories
               />
             ))}
 
-            {Array.from({length: 9 - emoji_ids.length}).fill(0).map((_, index) => (
+            {Array.from({ length: 9 - emoji_ids.length }).fill(0).map((_, index) => (
               <div
                 key={index}
                 className='size-[48px] rounded-md bg-secondary'

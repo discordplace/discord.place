@@ -46,7 +46,7 @@ const useLanguageStore = create(set => ({
 }));
 
 export function t(key, variables = {}) {
-  const {language} = useLanguageStore.getState();
+  const { language } = useLanguageStore.getState();
 
   if (language === 'loading') return '';
 

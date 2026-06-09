@@ -108,7 +108,7 @@ export default function Reviews({ bot }) {
 
         <div className='flex w-full flex-1'>
           <div className='flex w-full flex-col gap-y-2'>
-            {Array.from({length: 5}).fill(null).map((_, index) => (
+            {Array.from({ length: 5 }).fill(null).map((_, index) => (
               <div key={index} className='flex w-full items-center gap-x-4'>
                 <span className='font-semibold'>{5 - index}</span>
 

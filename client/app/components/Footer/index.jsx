@@ -32,26 +32,26 @@ export default function Footer() {
     {
       links: [
         {
-          label: t('footer.blocks.0.links.0'),
-          href: '/'
+          href: '/',
+          label: t('footer.blocks.0.links.0')
         },
         {
-          label: t('footer.blocks.0.links.1'),
           href: config.docsUrl,
+          label: t('footer.blocks.0.links.1'),
           target: '_blank'
         },
         {
-          label: t('footer.blocks.0.links.2'),
           href: config.statusUrl,
+          label: t('footer.blocks.0.links.2'),
           target: '_blank'
         },
         {
-          label: t('footer.blocks.0.links.3'),
-          href: '/premium'
+          href: '/premium',
+          label: t('footer.blocks.0.links.3')
         },
         {
-          label: t('footer.blocks.0.links.4'),
-          href: '/blogs'
+          href: '/blogs',
+          label: t('footer.blocks.0.links.4')
         }
       ],
       title: t('footer.blocks.0.title'), // Pages
@@ -59,36 +59,36 @@ export default function Footer() {
     {
       links: [
         {
-          label: t('footer.blocks.1.links.0'),
-          href: '/profiles'
+          href: '/profiles',
+          label: t('footer.blocks.1.links.0')
         },
         {
-          label: t('footer.blocks.1.links.1'),
-          href: '/servers'
+          href: '/servers',
+          label: t('footer.blocks.1.links.1')
         },
         {
-          label: t('footer.blocks.1.links.2'),
-          href: '/bots'
+          href: '/bots',
+          label: t('footer.blocks.1.links.2')
         },
         {
-          label: t('footer.blocks.1.links.3'),
-          href: '/emojis'
+          href: '/emojis',
+          label: t('footer.blocks.1.links.3')
         },
         {
-          label: t('footer.blocks.1.links.4'),
-          href: '/templates'
+          href: '/templates',
+          label: t('footer.blocks.1.links.4')
         },
         {
-          label: t('footer.blocks.1.links.5'),
-          href: '/sounds'
+          href: '/sounds',
+          label: t('footer.blocks.1.links.5')
         },
         {
-          label: t('footer.blocks.1.links.6'),
-          href: '/themes'
+          href: '/themes',
+          label: t('footer.blocks.1.links.6')
         },
         {
-          label: 'Lantern',
-          href: 'https://github.com/discordplace/lantern'
+          href: 'https://github.com/discordplace/lantern',
+          label: 'Lantern'
         }
       ],
       title: t('footer.blocks.1.title'), // Our Services
@@ -96,24 +96,24 @@ export default function Footer() {
     {
       links: [
         {
-          label: t('footer.blocks.2.links.0'),
-          href: '/legal/privacy'
+          href: '/legal/privacy',
+          label: t('footer.blocks.2.links.0')
         },
         {
-          label: t('footer.blocks.2.links.1'),
-          href: '/legal/terms'
+          href: '/legal/terms',
+          label: t('footer.blocks.2.links.1')
         },
         {
-          label: t('footer.blocks.2.links.2'),
-          href: '/legal/cookie-policy'
+          href: '/legal/cookie-policy',
+          label: t('footer.blocks.2.links.2')
         },
         {
-          label: t('footer.blocks.2.links.3'),
-          href: '/legal/content-policy'
+          href: '/legal/content-policy',
+          label: t('footer.blocks.2.links.3')
         },
         {
-          label: t('footer.blocks.2.links.4'),
-          href: '/legal/purchase-policy'
+          href: '/legal/purchase-policy',
+          label: t('footer.blocks.2.links.4')
         }
       ],
       title: t('footer.blocks.2.title'), // Legal
@@ -121,29 +121,29 @@ export default function Footer() {
     {
       links: [
         {
-          label: 'X',
+          disabled: false,
           href: 'https://x.com/discord_place',
           icon: FaXTwitter,
-          disabled: false,
+          label: 'X',
           target: '_blank'
         },
         {
-          label: 'Discord',
           href: 'https://invite.discord.place',
           icon: FaDiscord,
+          label: 'Discord',
           target: '_blank'
         },
         {
-          label: 'GitHub',
           href: 'https://github.com/discordplace',
           icon: FaGithub,
+          label: 'GitHub',
           target: '_blank'
         },
         {
-          label: 'LinkedIn',
+          disabled: true,
           href: '#',
           icon: FaLinkedin,
-          disabled: true,
+          label: 'LinkedIn',
           target: '_blank'
         }
       ],

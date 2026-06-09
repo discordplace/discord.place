@@ -167,9 +167,9 @@ export default function Sidebar() {
           id: 'syncPlans',
           name: 'Sync Plans',
           onClick: () => toast.promise(syncLemonSqueezyPlans(), {
+            error: error => error,
             loading: 'Syncing Lemon Squeezy plans..',
-            success: () => 'Successfully synced Lemon Squeezy plans.',
-            error: error => error
+            success: () => 'Successfully synced Lemon Squeezy plans.'
           })
         }
       ]

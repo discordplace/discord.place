@@ -104,7 +104,7 @@ export default function Hero() {
           transition={{ ...sequenceTransition, delay: 0.4 }}
         >
           {loading ? (
-            Array.from({length: 3}).fill().map((_, index) => (
+            Array.from({ length: 3 }).fill().map((_, index) => (
               <Card key={index} loading={true} />
             ))
           ) : (

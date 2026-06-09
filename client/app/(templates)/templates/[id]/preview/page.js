@@ -13,9 +13,9 @@ export async function generateMetadata({ params }) {
       description: metadata.description,
       images: [
         {
-          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'template', metadata }))}`,
-          width: 1200,
-          height: 630
+          height: 630,
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'template' }))}`,
+          width: 1200
         }
       ],
       title: `Discord Place - Template ${metadata.name} by @${metadata.username}`,

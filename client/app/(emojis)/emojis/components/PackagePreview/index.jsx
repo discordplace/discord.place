@@ -125,16 +125,16 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
     openModal('upload-emoji-to-discord', {
       buttons: [
         {
+          actionType: 'close',
           id: 'cancel',
           label: t('buttons.cancel'),
-          variant: 'ghost',
-          actionType: 'close'
+          variant: 'ghost'
         },
         {
+          action: () => continueUploadEmojiToGuild(selectedEmojiURL, selectedGuildId),
           id: 'uplaod',
           label: t('buttons.upload'),
-          variant: 'solid',
-          action: () => continueUploadEmojiToGuild(selectedEmojiURL, selectedGuildId)
+          variant: 'solid'
         }
       ],
       content: <UploadEmojiToDiscordModal guilds={uploadableGuilds} />,
@@ -228,7 +228,7 @@ export default function PackagePreview({ image_urls, setImageURLs, setIsPackage,
           </motion.div>
         ))}
 
-        {Array.from({length: 9 - image_urls.length}).fill(0).map((_, index) => (
+        {Array.from({ length: 9 - image_urls.length }).fill(0).map((_, index) => (
           <div className='flex size-full min-h-[120px] items-center justify-center rounded-xl bg-secondary' key={index}>
             <MdEmojiEmotions size={64} className='text-tertiary' />
           </div>

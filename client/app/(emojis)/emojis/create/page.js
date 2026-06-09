@@ -70,11 +70,11 @@ export default function Page() {
 
         return error;
       },
-      loading: t('createEmojiPage.toast.publishingEmojis', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 }),
+      loading: t('createEmojiPage.toast.publishingEmojis', { count: isPackage ? emoji.files.length : 1, postProcess: 'interval' }),
       success: emojiId => {
         router.push(`/emojis/${isPackage ? 'packages/' : ''}${emojiId}`);
 
-        return t('createEmojiPage.toast.emojisPublished', { postProcess: 'interval', count: isPackage ? emoji.files.length : 1 });
+        return t('createEmojiPage.toast.emojisPublished', { count: isPackage ? emoji.files.length : 1, postProcess: 'interval' });
       }
     });
   }
@@ -183,7 +183,7 @@ export default function Page() {
                 multiple={true}
                 max={9}
                 onChange={event => {
-                  const {files} = event.target;
+                  const { files } = event.target;
                   if (files.length <= 0) return;
                   if (files.length > config.packagesMaxEmojisLength) return toast.error(t('createEmojiPage.toast.maxEmojisReached', { maxLength: config.packagesMaxEmojisLength }));
 

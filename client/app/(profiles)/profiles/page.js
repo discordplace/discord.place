@@ -7,10 +7,10 @@ export const metadata = {
     description: 'Find, share and explore the customized page of Discord profiles!',
     images: [
       {
-        url: '/og.png',
-        width: 960,
+        alt: 'Discord Place',
         height: 540,
-        alt: 'Discord Place'
+        url: '/og.png',
+        width: 960
       }
     ],
     locale: 'en_US',

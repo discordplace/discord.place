@@ -81,7 +81,7 @@ export default function Themes() {
           animate={{ opacity: 1 }}
         >
           {loading ? (
-            Array.from({length: limit}).fill(0).map((_, index) => (
+            Array.from({ length: limit }).fill(0).map((_, index) => (
               <div key={index} className='h-[200px] w-full animate-pulse rounded-2xl bg-secondary' />
             ))
           ) : (

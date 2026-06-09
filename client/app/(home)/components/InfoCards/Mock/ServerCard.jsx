@@ -10,8 +10,8 @@ export default function MockServerCard() {
         server={{
           category: 'Community',
           data: {
-            members: 100000,
-            votes: 100000
+            members: 100_000,
+            votes: 100_000
           },
           description: t('home.infoCards.1.serverCardDescription'),
           icon: 'e0d586009f0533809078b40357d74597',

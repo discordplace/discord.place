@@ -91,16 +91,16 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
               openModal('add-extra-owner', {
                 buttons: [
                   {
+                    actionType: 'close',
                     id: 'cancel',
                     label: t('buttons.cancel'),
-                    variant: 'ghost',
-                    actionType: 'close'
+                    variant: 'ghost'
                   },
                   {
+                    action: continueAddingExtraOwner,
                     id: 'confirm',
                     label: t('buttons.confirm'),
-                    variant: 'solid',
-                    action: continueAddingExtraOwner
+                    variant: 'solid'
                   }
                 ],
                 content: (
@@ -140,7 +140,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
 
       <div className='flex flex-wrap gap-4'>
         {extraOwnersLoading ? (
-          Array.from({length: 7}).fill().map((_, index) => (
+          Array.from({ length: 7 }).fill().map((_, index) => (
             <div
               key={index}
               className='flex items-center gap-x-2'

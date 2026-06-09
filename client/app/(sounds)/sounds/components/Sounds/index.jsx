@@ -77,7 +77,7 @@ export default function Sounds() {
           animate={{ opacity: 1 }}
         >
           {loading ? (
-            Array.from({length: 9}).fill(0).map((_, index) => (
+            Array.from({ length: 9 }).fill(0).map((_, index) => (
               <div key={index} className='h-[196px] w-full animate-pulse rounded-2xl bg-secondary' />
             ))
           ) : (

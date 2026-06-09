@@ -6,10 +6,10 @@ export const metadata = {
     description: 'Discover the best two-color combinations to make your Discord profile stand out.',
     images: [
       {
-        url: '/og.png',
-        width: 960,
+        alt: 'Discord Place',
         height: 540,
-        alt: 'Discord Place'
+        url: '/og.png',
+        width: 960
       }
     ],
     locale: 'en_US',

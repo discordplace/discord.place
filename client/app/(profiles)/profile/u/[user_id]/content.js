@@ -214,7 +214,7 @@ export default function Content({ user }) {
                 </Tooltip>
               ))}
 
-              {Array.from({length: 6 - (user.profile?.badges || []).length}).fill(null).map((_, index) => (
+              {Array.from({ length: 6 - (user.profile?.badges || []).length }).fill(null).map((_, index) => (
                 <div className='size-[20px] rounded-full bg-tertiary' key={index} />
               ))}
             </div>
@@ -269,7 +269,7 @@ export default function Content({ user }) {
                 </Tooltip>
               ))}
 
-              {Array.from({length: 6 - (user.profile?.badges || []).length}).fill(null).map((_, index) => (
+              {Array.from({ length: 6 - (user.profile?.badges || []).length }).fill(null).map((_, index) => (
                 <div className='size-[20px] rounded-full bg-tertiary' key={index} />
               ))}
             </div>

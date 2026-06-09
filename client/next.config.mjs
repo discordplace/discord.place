@@ -29,8 +29,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/sitemap.xml',
-        destination: 'https://api.discord.place/sitemap.xml'
+        destination: 'https://api.discord.place/sitemap.xml',
+        source: '/sitemap.xml'
       }
     ];
   }

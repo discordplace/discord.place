@@ -135,7 +135,7 @@ export default function Webhook({ serverId, webhookURL: currentWebhookURL, webho
 
       if (errorMessage === 'Failed to send a test webhook to the server.') {
         toast.error(<TestWebhookFailedToastContent />, {
-          duration: 25000,
+          duration: 25_000,
           id: testWebhookToastId.current
         });
 

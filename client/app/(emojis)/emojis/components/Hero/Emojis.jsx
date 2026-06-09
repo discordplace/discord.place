@@ -82,7 +82,7 @@ export default function Emojis() {
           animate={{ opacity: 1 }}
         >
           {loading ? (
-            Array.from({length: 12}).fill(0).map((_, index) => (
+            Array.from({ length: 12 }).fill(0).map((_, index) => (
               <div key={index} className='h-[164px] w-[322px] animate-pulse rounded-2xl bg-secondary' />
             ))
           ) : (

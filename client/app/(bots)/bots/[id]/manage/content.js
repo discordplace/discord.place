@@ -136,20 +136,20 @@ export default function Content({ bot }) {
           openModal('confirm-exit', {
             buttons: [
               {
+                actionType: 'close',
                 id: 'cancel',
                 label: t('buttons.cancel'),
-                variant: 'ghost',
-                actionType: 'close'
+                variant: 'ghost'
               },
               {
-                id: 'discard-changes',
-                label: t('buttons.discardChanges'),
-                variant: 'solid',
                 action: () => {
                   resetChanges();
                   closeModal('confirm-exit');
                   router.push(`/bots/${bot.id}`, { shallow: true });
-                }
+                },
+                id: 'discard-changes',
+                label: t('buttons.discardChanges'),
+                variant: 'solid'
               }
             ],
             content: <p className='text-sm text-tertiary'>{t('botManagePage.discardChangesModal.note')}</p>,

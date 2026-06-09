@@ -57,29 +57,29 @@ export default function Waveform({ id, name: soundName }) {
       openModal(`sound-${id}-is-loud`, {
         buttons: [
           {
-            id: 'dont-show-again',
-            label: t('buttons.dontShowAgain'),
-            variant: 'ghost',
             action: () => {
               closeModal(`sound-${id}-is-loud`);
               setLocalLoudSoundsIgnored(true);
               setCurrentlyPlaying(id);
-            }
+            },
+            id: 'dont-show-again',
+            label: t('buttons.dontShowAgain'),
+            variant: 'ghost'
           },
           {
+            actionType: 'close',
             id: 'cancel',
             label: t('buttons.cancel'),
-            variant: 'outlined',
-            actionType: 'close'
+            variant: 'outlined'
           },
           {
-            id: 'continue',
-            label: t('buttons.continue'),
-            variant: 'solid',
             action: () => {
               closeModal(`sound-${id}-is-loud`);
               setCurrentlyPlaying(id);
-            }
+            },
+            id: 'continue',
+            label: t('buttons.continue'),
+            variant: 'solid'
           }
         ],
         content: t('soundPlayer.loudWarningModal.content'),
@@ -143,7 +143,7 @@ export default function Waveform({ id, name: soundName }) {
           setTotalTime(wavesurfer.getDuration());
           setWavesurfer(wavesurfer);
 
-          const {decodedData} = wavesurfer;
+          const { decodedData } = wavesurfer;
           if (!decodedData) return;
 
           const channelData = decodedData.getChannelData(0);

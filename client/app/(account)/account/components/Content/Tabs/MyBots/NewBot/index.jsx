@@ -157,11 +157,11 @@ export default function NewBot() {
           setBotCategories([]);
 
           setLocalData({
-            botId: '',
-            botShortDescription: '',
+            botCategories: [],
             botDescription: '',
+            botId: '',
             botInviteUrl: '',
-            botCategories: []
+            botShortDescription: ''
           });
         }, 3000);
 

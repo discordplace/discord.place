@@ -92,8 +92,8 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
             width: 2
           },
           tooltip: {
-            custom: ({ series, seriesIndex, dataPointIndex }) => {
-              return `
+            custom: ({ series, seriesIndex, dataPointIndex }) => 
+              `
                 <div class='w-full px-2 py-1.5 h-full bg-secondary rounded-lg border border-primary flex gap-x-2'>
                   <div class='w-[2px] h-full py-5 rounded-full' style='background-color: ${color}'></div>
 
@@ -103,12 +103,12 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
                     </span>
 
                     <span class='text-xs font-medium text-secondary'>
-                      ${xAxisCategories ? xAxisCategories[dataPointIndex] : new Date(reversedData[dataPointIndex].createdAt).toLocaleString(language, { month: 'short', day: 'numeric' })}
+                      ${xAxisCategories ? xAxisCategories[dataPointIndex] : new Date(reversedData[dataPointIndex].createdAt).toLocaleString(language, { day: 'numeric', month: 'short' })}
                     </span>
                   </div>
                 </div>
-              `;
-            },
+              `
+            ,
             x: {
               show: false
             },
@@ -129,7 +129,7 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
             categories: xAxisCategories || reversedData.map(({ createdAt }) => {
               const date = new Date(createdAt);
 
-              return date.toLocaleString(language, { month: 'short', day: 'numeric' });
+              return date.toLocaleString(language, { day: 'numeric', month: 'short' });
             }),
             crosshairs: {
               show: true,

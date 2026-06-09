@@ -39,13 +39,13 @@ export default function About({ server }) {
       icon: <TiStar />,
       key: 'boosts',
       label: t('serverPage.about.labels.boosts'),
-      value: t('serverPage.about.boostsLabelValue', { level: server.boost_level, count: server.total_boosts })
+      value: t('serverPage.about.boostsLabelValue', { count: server.total_boosts, level: server.boost_level })
     },
     {
       icon: <FiArrowUpRight />,
       key: 'joined_at',
       label: t('serverPage.about.labels.joinedAt'),
-      value: new Date(server.joined_at).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' })
+      value: new Date(server.joined_at).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })
     },
     {
       icon: <TbSquareRoundedChevronUp />,
@@ -86,7 +86,7 @@ export default function About({ server }) {
             className='flex h-max items-center gap-x-4'
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ damping: 10, delay: 0.20 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
+            transition={{ damping: 10, delay: 0.2 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
           >
             <div className='rounded-full bg-tertiary p-3 text-secondary'>
               {icon}

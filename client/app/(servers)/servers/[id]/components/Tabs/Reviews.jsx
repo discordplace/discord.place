@@ -108,7 +108,7 @@ export default function Reviews({ server }) {
 
         <div className='flex w-full flex-1'>
           <div className='flex w-full flex-col gap-y-2'>
-            {Array.from({length: 5}).fill(null).map((_, index) => (
+            {Array.from({ length: 5 }).fill(null).map((_, index) => (
               <div key={index} className='flex w-full items-center gap-x-4'>
                 <span className='font-semibold'>{5 - index}</span>
 
@@ -272,7 +272,7 @@ export default function Reviews({ server }) {
       </div>
 
       {reviewsLoading ? (
-        Array.from({length: 6}).fill(null).map((_, index) => (
+        Array.from({ length: 6 }).fill(null).map((_, index) => (
           <div
             className='mt-8 flex w-full flex-col gap-y-4 sm:flex-row'
             key={`review-loading-${index}`}

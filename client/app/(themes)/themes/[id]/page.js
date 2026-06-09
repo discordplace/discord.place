@@ -21,9 +21,9 @@ export async function generateMetadata({ params }) {
     openGraph: {
       images: [
         {
+          height: 630,
           url: '/og.png',
-          width: 1200,
-          height: 630
+          width: 1200
         }
       ],
       title: 'Discord Place - Theme',

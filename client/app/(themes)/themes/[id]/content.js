@@ -216,16 +216,16 @@ export default function Content({ theme }) {
                   openModal('delete-theme', {
                     buttons: [
                       {
+                        actionType: 'close',
                         id: 'cancel',
                         label: t('buttons.cancel'),
-                        variant: 'ghost',
-                        actionType: 'close'
+                        variant: 'ghost'
                       },
                       {
+                        action: continueDeleteTheme,
                         id: 'confirm',
                         label: t('buttons.delete'),
-                        variant: 'solid',
-                        action: continueDeleteTheme
+                        variant: 'solid'
                       }
                     ],
                     content: (

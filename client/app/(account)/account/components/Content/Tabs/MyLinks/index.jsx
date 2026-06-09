@@ -54,20 +54,17 @@ export default function MyLinks() {
     openModal('create-link', {
       buttons: [
         {
+          actionType: 'close',
           id: 'cancel',
           label: t('buttons.cancel'),
-          variant: 'ghost',
-          actionType: 'close'
+          variant: 'ghost'
         },
         {
-          id: 'create',
-          label: t('buttons.create'),
-          variant: 'solid',
           action: () => {
-            const name = useGeneralStore.getState().createLinkModal.name;
-            const destinationURL = useGeneralStore.getState().createLinkModal.destinationURL;
-            const setName = useGeneralStore.getState().createLinkModal.setName;
-            const setDestinationURL = useGeneralStore.getState().createLinkModal.setDestinationURL;
+            const {name} = useGeneralStore.getState().createLinkModal;
+            const {destinationURL} = useGeneralStore.getState().createLinkModal;
+            const {setName} = useGeneralStore.getState().createLinkModal;
+            const {setDestinationURL} = useGeneralStore.getState().createLinkModal;
 
             if (!name) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.emptyName'));
 
@@ -84,7 +81,12 @@ export default function MyLinks() {
 
               disableButton('create-link', 'create');
 
-              toast.promise(createLink({ name, destinationURL }), {
+              toast.promise(createLink({ destinationURL, name }), {
+                error: error => {
+                  enableButton('create-link', 'create');
+
+                  return error;
+                },
                 loading: t('accountPage.tabs.myLinks.createLinkModal.toast.creatingLink'),
                 success: () => {
                   closeModal('create-link');
@@ -93,17 +95,15 @@ export default function MyLinks() {
                   fetchData(['links']);
 
                   return t('accountPage.tabs.myLinks.createLinkModal.toast.linkCreated');
-                },
-                error: error => {
-                  enableButton('create-link', 'create');
-
-                  return error;
                 }
               });
             } catch {
               return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.invalidDestinationUrl'));
             }
-          }
+          },
+          id: 'create',
+          label: t('buttons.create'),
+          variant: 'solid'
         }
       ],
       content: <CreateLinkModal />,
@@ -214,16 +214,16 @@ export default function MyLinks() {
                       openModal('delete-link', {
                         buttons: [
                           {
+                            actionType: 'close',
                             id: 'cancel',
                             label: t('buttons.cancel'),
-                            variant: 'ghost',
-                            actionType: 'close'
+                            variant: 'ghost'
                           },
                           {
+                            action: () => continueDeleteLink(link.id),
                             id: 'confirm',
                             label: t('buttons.confirm'),
-                            variant: 'solid',
-                            action: () => continueDeleteLink(link.id)
+                            variant: 'solid'
                           }
                         ],
                         content: (

@@ -133,20 +133,20 @@ export default function Content({ server }) {
           openModal('confirm-exit', {
             buttons: [
               {
+                actionType: 'close',
                 id: 'cancel',
                 label: t('buttons.cancel'),
-                variant: 'ghost',
-                actionType: 'close'
+                variant: 'ghost'
               },
               {
-                id: 'discard-changes',
-                label: t('buttons.discardChanges'),
-                variant: 'solid',
                 action: () => {
                   resetChanges();
                   closeModal('confirm-exit');
                   router.push(`/servers/${server.id}`, { shallow: true });
-                }
+                },
+                id: 'discard-changes',
+                label: t('buttons.discardChanges'),
+                variant: 'solid'
               }
             ],
             content: <p className='text-sm text-tertiary'>{t('serverManagePage.discardChangesModal.note')}</p>,

@@ -20,9 +20,9 @@ export async function generateMetadata({ params }) {
     openGraph: {
       images: [
         {
-          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'sound', metadata }))}`,
-          width: 1200,
-          height: 630
+          height: 630,
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'sound' }))}`,
+          width: 1200
         }
       ],
       title: `Discord Place - Sound ${metadata.name}`,

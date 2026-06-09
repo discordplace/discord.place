@@ -53,13 +53,13 @@ export default function ServerCard(props) {
     {
       condition: sort === 'Newest',
       icon: HiSortAscending,
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }),
+      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
       value: props.server.joined_at
     },
     {
       condition: sort === 'Oldest',
       icon: HiSortDescending,
-      transform: date => new Date(date).toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' }),
+      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
       value: props.server.joined_at
     },
     {

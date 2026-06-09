@@ -37,7 +37,7 @@ const useSearchStore = create((set, get) => ({
   setPage: page => set({ page }),
   setSearch: search => set({ search }),
   setSort: sort => {
-    set({ sort, page: 1 });
+    set({ page: 1, sort });
 
     get().fetchBots(get().search);
   },

@@ -221,16 +221,16 @@ export default function Content({ emoji }) {
                   openModal('delete-emoji-package', {
                     buttons: [
                       {
+                        actionType: 'close',
                         id: 'cancel',
                         label: t('buttons.cancel'),
-                        variant: 'ghost',
-                        actionType: 'close'
+                        variant: 'ghost'
                       },
                       {
+                        action: continueDeleteEmojiPackage,
                         id: 'confirm',
                         label: t('buttons.confirm'),
-                        variant: 'solid',
-                        action: continueDeleteEmojiPackage
+                        variant: 'solid'
                       }
                     ],
                     content: (

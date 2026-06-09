@@ -3,8 +3,8 @@ import { create } from 'zustand';
 const useModalsStore = create((set, get) => ({
   activeModalId: null,
   closeModal: modalId => {
-    const openedModals = get().openedModals;
-    const activeModalId = get().activeModalId;
+    const { openedModals } = get();
+    const { activeModalId } = get();
     const modal = openedModals.find(modal => modal.id === modalId);
 
     if (modalId === activeModalId && openedModals.length > 1) {
@@ -17,7 +17,7 @@ const useModalsStore = create((set, get) => ({
     set({ openedModals: openedModals.filter(({ id }) => id !== modalId) });
   },
   disableButton: (modalId, buttonId) => {
-    const openedModals = get().openedModals;
+    const { openedModals } = get();
 
     set({
       openedModals: openedModals.map(modal => {
@@ -40,7 +40,7 @@ const useModalsStore = create((set, get) => ({
     });
   },
   enableButton: (modalId, buttonId) => {
-    const openedModals = get().openedModals;
+    const { openedModals } = get();
 
     set({
       openedModals: openedModals.map(modal => {
@@ -64,15 +64,15 @@ const useModalsStore = create((set, get) => ({
   },
   openedModals: [],
   openModal: (modalId, modalData) => {
-    const openedModals = get().openedModals;
+    const { openedModals } = get();
 
     set({
       activeModalId: modalId,
-      openedModals: [...openedModals, { id: modalId, data: modalData }]
+      openedModals: [...openedModals, { data: modalData, id: modalId }]
     });
   },
   updateModal: (modalId, newModalData) => {
-    const openedModals = get().openedModals;
+    const { openedModals } = get();
 
     set({
       openedModals: openedModals.map(modal => {

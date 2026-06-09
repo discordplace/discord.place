@@ -49,7 +49,7 @@ export default function Actions({ server }) {
       if (!globalThis.turnstile) return setShowCaptcha(false);
 
       setLoading(true);
-      const {turnstile} = window;
+      const { turnstile } = globalThis;
       turnstile?.render('.cf-turnstile');
 
       captchaIntervalRef.current = setInterval(() => {
@@ -68,7 +68,7 @@ export default function Actions({ server }) {
             success: data => {
               setLoading(false);
               setServerVotes(serverVotes + (server.badges.includes('Premium') ? 2 : 1));
-              setVoteTimeout({ createdAt: new Date().getTime() + 86400000 });
+              setVoteTimeout({ createdAt: new Date().getTime() + 86_400_000 });
               setCanSetReminder(data.inGuild);
               revalidateServer(server.id);
 

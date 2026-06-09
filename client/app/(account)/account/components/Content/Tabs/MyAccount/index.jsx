@@ -273,16 +273,16 @@ export default function MyAccount() {
                     openModal('create-profile', {
                       buttons: [
                         {
+                          actionType: 'close',
                           id: 'cancel',
                           label: t('buttons.cancel'),
-                          variant: 'ghost',
-                          actionType: 'close'
+                          variant: 'ghost'
                         },
                         {
+                          action: continueCreateProfile,
                           id: 'create',
                           label: t('buttons.create'),
-                          variant: 'solid',
-                          action: continueCreateProfile
+                          variant: 'solid'
                         }
                       ],
                       content: <CreateProfile />,

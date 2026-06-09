@@ -160,10 +160,10 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                   openModal('view-topic', {
                     buttons: [
                       {
+                        actionType: 'close',
                         id: 'cancel',
                         label: t('buttons.close'),
-                        variant: 'ghost',
-                        actionType: 'close'
+                        variant: 'ghost'
                       }
                     ],
                     content: <>
@@ -237,16 +237,16 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
               openModal('delete-template', {
                 buttons: [
                   {
+                    actionType: 'close',
                     id: 'cancel',
                     label: t('buttons.cancel'),
-                    variant: 'ghost',
-                    actionType: 'close'
+                    variant: 'ghost'
                   },
                   {
+                    action: continueDeleteTemplate,
                     id: 'confirm',
                     label: t('buttons.confirm'),
-                    variant: 'solid',
-                    action: continueDeleteTemplate
+                    variant: 'solid'
                   }
                 ],
                 content: (

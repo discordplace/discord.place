@@ -42,8 +42,8 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
             var notExpiredHashes = hashesRefreshed.filter(({ expireTime }) => expireTime > Date.now());
 
             if (!notExpiredHashes.some(({ hash: userHash }) => userHash === hash)) {
-              const expireTime = Date.now() + 600000;
-              setHashesRefreshed(oldHashesRefreshed => oldHashesRefreshed.concat({ hash, expireTime }));
+              const expireTime = Date.now() + 600_000;
+              setHashesRefreshed(oldHashesRefreshed => oldHashesRefreshed.concat({ expireTime, hash }));
             }
 
             if (hashesRefreshed.length > 0) {

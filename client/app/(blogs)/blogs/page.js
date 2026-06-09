@@ -6,10 +6,10 @@ export const metadata = {
     description: 'The latest news, updates and guides from the Discord Place team.',
     images: [
       {
-        url: '/og.png',
-        width: 960,
+        alt: 'Discord Place',
         height: 540,
-        alt: 'Discord Place'
+        url: '/og.png',
+        width: 960
       }
     ],
     locale: 'en_US',

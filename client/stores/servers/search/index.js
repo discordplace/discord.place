@@ -14,7 +14,7 @@ const useSearchStore = create((set, get) => ({
     set({ loading: true, search });
 
     fetchServers(search, get().page, get().limit, get().category, get().sort)
-      .then(data => set({ servers: data.servers, loading: false, maxReached: data.maxReached, totalServers: data.total }))
+      .then(data => set({ loading: false, maxReached: data.maxReached, servers: data.servers, totalServers: data.total }))
       .catch(error => {
         toast.error(error);
         set({ loading: false });
@@ -38,7 +38,7 @@ const useSearchStore = create((set, get) => ({
   setSearch: search => set({ search }),
   setServers: servers => set({ servers }),
   setSort: sort => {
-    set({ sort, page: 1 });
+    set({ page: 1, sort });
 
     get().fetchServers(get().search);
   },

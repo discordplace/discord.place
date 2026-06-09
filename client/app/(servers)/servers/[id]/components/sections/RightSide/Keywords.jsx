@@ -27,7 +27,7 @@ export default function Keywords({ server }) {
             className='w-full max-w-full truncate rounded-lg bg-secondary px-3 py-2 text-center text-sm font-medium text-tertiary'
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ damping: 10, delay: 0.40 + (.20 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
+            transition={{ damping: 10, delay: 0.4 + (.2 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
           >
             <FaSlackHash className='mr-1.5 inline-block text-primary' />
             {keyword}

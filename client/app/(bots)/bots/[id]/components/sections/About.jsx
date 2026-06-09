@@ -56,7 +56,7 @@ export default function About({ bot }) {
     {
       component: (
         <>
-          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date(bot.servers_updated_at).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
+          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date(bot.servers_updated_at).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })})</span>
         </>
       ),
       icon: <FaCompass />,
@@ -72,7 +72,7 @@ export default function About({ bot }) {
     {
       component: (
         <>
-          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })})</span>
+          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })})</span>
         </>
       ),
       icon: <RiSlashCommands2 />,
@@ -84,9 +84,6 @@ export default function About({ bot }) {
   const isMobile = useMedia('(max-width: 640px)', false);
 
   if (bot.github_repository?.data) {keys.push({
-    key: 'GitHub Repository',
-    label: t('botPage.about.labels.githubRepository.label'),
-    icon: <FaGithub />,
     component: <>
       {isMobile ? (
         <Link
@@ -152,7 +149,10 @@ export default function About({ bot }) {
           </div>
         </div>
       </Link>
-    </>
+    </>,
+    icon: <FaGithub />,
+    key: 'GitHub Repository',
+    label: t('botPage.about.labels.githubRepository.label')
   });}
 
   return (
@@ -199,7 +199,7 @@ export default function About({ bot }) {
             )}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ damping: 10, delay: 0.20 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
+            transition={{ damping: 10, delay: 0.2 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
           >
             <div className='rounded-full bg-tertiary p-3 text-secondary'>
               {icon}

@@ -14,7 +14,7 @@ export default function About({ profile }) {
       value: profile.occupation || t('profilePage.about.valueUnknown')
     },
     {
-      icon: profile.gender === 'Male' ? <MdOutlineMale /> : profile.gender === 'Female' ? <MdOutlineFemale /> : <FaGenderless />,
+      icon: profile.gender === 'Male' ? <MdOutlineMale /> : (profile.gender === 'Female' ? <MdOutlineFemale /> : <FaGenderless />),
       key: 'gender',
       label: t('profilePage.about.labels.gender'),
       value: profile.gender ? t(`profilePage.about.gender.${profile.gender}`) : t('profilePage.about.valueUnknown')
@@ -76,7 +76,7 @@ export default function About({ profile }) {
             className='flex h-max items-center gap-x-4'
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ damping: 10, delay: 0.20 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
+            transition={{ damping: 10, delay: 0.2 + (.05 * index), duration: 0.3, stiffness: 100, type: 'spring' }}
           >
             <div className='rounded-full bg-tertiary p-3 text-secondary'>
               {icon}

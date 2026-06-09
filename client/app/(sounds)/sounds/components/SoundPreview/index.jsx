@@ -90,7 +90,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     {
       condition: sort === 'Newest' || sort === 'Oldest',
       icon: IoMdCalendar,
-      value: new Date(sound.createdAt).toLocaleDateString(language, { year: 'numeric', month: 'short', day: 'numeric' })
+      value: new Date(sound.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })
     }
   ];
 
@@ -171,16 +171,16 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     openModal('upload-sound-to-discord', {
       buttons: [
         {
+          actionType: 'close',
           id: 'cancel',
           label: 'Cancel',
-          variant: 'ghost',
-          actionType: 'close'
+          variant: 'ghost'
         },
         {
+          action: () => continueUploadSoundToGuild(selectedGuildId),
           id: 'uplaod',
           label: 'Upload',
-          variant: 'solid',
-          action: () => continueUploadSoundToGuild(selectedGuildId)
+          variant: 'solid'
         }
       ],
       content: <UploadSoundToDiscordModal guilds={uploadableGuilds} />,

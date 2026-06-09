@@ -169,7 +169,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
 
             <div className='mt-2 flex w-full flex-wrap gap-4'>
               {ownedServersLoading ? (
-                Array.from({length: 9}).fill().map((_, index) => (
+                Array.from({ length: 9 }).fill().map((_, index) => (
                   <div key={index} className='size-24 animate-pulse rounded-xl bg-secondary' />
                 ))
               ) : (

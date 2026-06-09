@@ -203,7 +203,7 @@ export default function Page({ plans }) {
       loading: t('premiumPage.toast.creatingCheckout'),
       success: data => {
         setTimeout(() => {
-          window.location.href = data.url;
+          globalThis.location.href = data.url;
         }, 3000);
 
         return t('premiumPage.toast.checkoutCreated');

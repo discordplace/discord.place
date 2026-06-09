@@ -61,7 +61,7 @@ export default function Emoji({ data, avatar_base64 }) {
                   />
                 ))}
 
-                {Array.from({length: 9 - data.emoji_ids.length}).fill(0).map((_, index) => (
+                {Array.from({ length: 9 - data.emoji_ids.length }).fill(0).map((_, index) => (
                   <div
                     key={index}
                     style={{

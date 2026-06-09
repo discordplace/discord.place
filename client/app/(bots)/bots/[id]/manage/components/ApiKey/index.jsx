@@ -105,16 +105,16 @@ export default function ApiKey({ botId, apiKey }) {
                   openModal('delete-api-key', {
                     buttons: [
                       {
+                        actionType: 'close',
                         id: 'cancel',
                         label: t('buttons.cancel'),
-                        variant: 'ghost',
-                        actionType: 'close'
+                        variant: 'ghost'
                       },
                       {
+                        action: continueDeleteApiKey,
                         id: 'confirm',
                         label: t('buttons.confirm'),
-                        variant: 'solid',
-                        action: continueDeleteApiKey
+                        variant: 'solid'
                       }
                     ],
                     content: (

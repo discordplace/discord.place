@@ -53,16 +53,16 @@ export default function DangerZone({ serverId }) {
           openModal('delete-server', {
             buttons: [
               {
+                actionType: 'close',
                 id: 'cancel',
                 label: t('buttons.cancel'),
-                variant: 'ghost',
-                actionType: 'close'
+                variant: 'ghost'
               },
               {
+                action: continueDeleteServer,
                 id: 'confirm',
                 label: t('buttons.confirm'),
-                variant: 'solid',
-                action: continueDeleteServer
+                variant: 'solid'
               }
             ],
             content: (

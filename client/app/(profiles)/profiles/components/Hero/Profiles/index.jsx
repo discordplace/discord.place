@@ -85,7 +85,7 @@ export default function Profiles() {
             animate={{ opacity: 1 }}
           >
             {loading ? (
-              Array.from({length: limit}).fill(0).map((_, index) => (
+              Array.from({ length: limit }).fill(0).map((_, index) => (
                 <div key={index} className='h-[461px] w-[300px] animate-pulse rounded-3xl bg-secondary' />
               ))
             ) : (

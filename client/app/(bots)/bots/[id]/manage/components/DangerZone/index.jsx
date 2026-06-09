@@ -53,16 +53,16 @@ export default function DangerZone({ botId }) {
           openModal('delete-bot', {
             buttons: [
               {
+                actionType: 'close',
                 id: 'cancel',
                 label: t('buttons.cancel'),
-                variant: 'ghost',
-                actionType: 'close'
+                variant: 'ghost'
               },
               {
+                action: continueDeleteBot,
                 id: 'confirm',
                 label: t('buttons.confirm'),
-                variant: 'solid',
-                action: continueDeleteBot
+                variant: 'solid'
               }
             ],
             content: (

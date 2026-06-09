@@ -13,7 +13,7 @@ const useSearchStore = create((set, get) => ({
     set({ loading: true, search });
 
     fetchSounds(search, get().page, get().limit, get().category, get().sort)
-      .then(data => set({ sounds: data.sounds, loading: false, maxReached: data.maxReached, totalSounds: data.total }))
+      .then(data => set({ loading: false, maxReached: data.maxReached, sounds: data.sounds, totalSounds: data.total }))
       .catch(error => {
         toast.error(error);
         set({ loading: false });
@@ -34,7 +34,7 @@ const useSearchStore = create((set, get) => ({
   setPage: page => set({ page }),
   setSearch: search => set({ search }),
   setSort: sort => {
-    set({ sort, page: 1 });
+    set({ page: 1, sort });
 
     get().fetchSounds(get().search);
   },

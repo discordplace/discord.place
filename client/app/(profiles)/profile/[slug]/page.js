@@ -12,9 +12,9 @@ export async function generateMetadata({ params }) {
     openGraph: {
       images: [
         {
-          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ type: 'profile', metadata }))}`,
-          width: 1200,
-          height: 630
+          height: 630,
+          url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'profile' }))}`,
+          width: 1200
         }
       ],
       title: `Discord Place - ${params.slug}'s Profile`,
