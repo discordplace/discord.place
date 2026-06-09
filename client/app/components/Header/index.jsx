@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -35,6 +35,7 @@ export default function Header() {
   const loggedIn = useAuthStore(state => state.loggedIn);
   const theme = useThemeStore(state => state.theme);
   const smBreakpoint = useMedia('(max-width: 640px)');
+  const router = useRouter();
 
   const [pathnameState, setPathnameState] = useState(pathname);
 
@@ -184,7 +185,7 @@ export default function Header() {
             </>
           ) : (
             <>
-              {t('header.continueWithDiscord')}
+              <span className='max-sm:hidden'>{t('header.continueWithDiscord')}</span>
               <FaDiscord className='size-5' />
             </>
           )}
