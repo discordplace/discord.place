@@ -58,7 +58,7 @@ export default function StatusBadge() {
       }
       case 'MAINTENANCE': { return 'bg-sky-500';
       }
-      default: { return 'bg-bgQuaternary';
+      default: { return 'bg-quaternary';
       }
     }
   };
