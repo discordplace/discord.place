@@ -28,7 +28,6 @@ export default function DangerZone({ profile }) {
       success: () => {
         closeModal('delete-profile');
 
-        // Immediately redirect to /profiles after deleting the profile
         window.location.href = '/profiles';
 
         return t('editProfilePage.toast.profileDeleted');

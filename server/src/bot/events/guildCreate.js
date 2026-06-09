@@ -19,7 +19,6 @@ module.exports = async guild => {
     ]
   );
 
-  // Set the guild's language to the preferred locale if it's supported by us
   const foundLanguage = config.availableLocales.find(locale => locale.code === guild.preferredLocale.split('-')[0]);
   if (foundLanguage) {
     await ServerLanguage.findOneAndUpdate(

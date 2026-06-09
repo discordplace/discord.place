@@ -58,7 +58,6 @@ export default function NewSound() {
         setTimeout(() => {
           router.push(`/sounds/${data.id}`);
 
-          // Reset states
           setSoundName('');
           setSoundCategories([]);
           setFile(null);

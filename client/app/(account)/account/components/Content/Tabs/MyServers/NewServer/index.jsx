@@ -66,7 +66,6 @@ export default function NewServer() {
         setTimeout(() => {
           router.push(`/servers/${currentlyAddingServer.id}`);
 
-          // Reset states
           setCurrentlyAddingServer(null);
           setServerDescription('');
           setServerInviteLink('');

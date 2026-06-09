@@ -31,8 +31,6 @@ export default function Content({ bot }) {
   const [categories, setCategories] = useState(bot.categories);
   const [supportServerId, setSupportServerId] = useState(bot.support_server?.id || '0');
 
-  // calculate if any changes made, if so, enable the save button
-
   useEffect(() => {
     const isShortDescriptionChanged = !isEqual(shortDescription, bot.short_description);
     const isDescriptionChanged = !isEqual(description, bot.description);
@@ -49,11 +47,7 @@ export default function Content({ bot }) {
     );
 
     function pushToChangedKeys(key, value) {
-      // if the current value is the same as the original value, remove the key from the array
       if (isEqual(value, bot[key])) return setChangedKeys(oldKeys => oldKeys.filter(({ key: oldKey }) => oldKey !== key));
-
-      // if the key already exists, update the value
-      // otherwise, add the key and value to the array
 
       setChangedKeys(oldKeys =>
         oldKeys

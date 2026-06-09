@@ -61,7 +61,6 @@ export default function NewTheme() {
         setTimeout(() => {
           router.push(`/themes/${data.id}`);
 
-          // Reset states
           setColors({ primary: null, secondary: null });
           setThemeCategories([]);
           setCurrentlyAddingTheme(false);

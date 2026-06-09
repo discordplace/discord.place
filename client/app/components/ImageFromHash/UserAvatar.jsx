@@ -34,15 +34,10 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
 
         switch (error.response?.status) {
           case 404: {
-            // Check if the user has been fetched before
             if (hashesRefreshed.some(({ hash: userHash }) => userHash === hash)) break;
 
-            // Get new hashes
             var hashes = await getHashes(id);
             if (!hashes) break;
-
-            // Update the hashesRefreshed state to include the current user ID if it doesn't already
-            // This is to prevent the user from being fetched again if the hashes are refreshed
 
             var notExpiredHashes = hashesRefreshed.filter(({ expireTime }) => expireTime > Date.now());
 
@@ -52,14 +47,12 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
             }
 
             if (hashesRefreshed.length > 0) {
-              // Remove expired hashes from the hashesRefreshed state
               setHashesRefreshed(oldHashesRefreshed => oldHashesRefreshed.filter(hash => hash.expireTime > Date.now()));
             }
 
             var newHash = hashes.avatar;
             if (!newHash) break;
 
-            // Update the image source with the new hash
             setCurrentSource(getUrl(id, newHash));
 
             break;

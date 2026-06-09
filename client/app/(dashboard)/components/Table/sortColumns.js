@@ -23,8 +23,6 @@ export default function sortColumns(key, order, [a, b]) {
 
   if (checkType('user') || checkType('server') || checkType('bot')) return first.id - second.id;
 
-  // Check if the column is a user subscription
-  // If it is, sort by the date the subscription was created
   if (checkType('userSubscription')) {
     const firstHasSubscription = first.value !== null;
     const secondHasSubscription = second.value !== null;
@@ -37,17 +35,9 @@ export default function sortColumns(key, order, [a, b]) {
   }
 
   if (checkType('email')) return first.value.localeCompare(second.value);
-
-  // Sort by the date
   if (checkType('date')) return new Date(first.value) - new Date(second.value);
-
-  // Sort by the number of the value
   if (checkType('number') || checkType('rating') || checkType('countdown')) return first.value - second.value;
-
-  // Sort by the size of the array
   if (checkType('category')) return first.value.length - second.value.length;
-
-  // Sort by the name
   if (checkType('template') || checkType('sound') || checkType('link')) return first.name.localeCompare(second.name);
 
   return 0;

@@ -1,7 +1,8 @@
 import { HiDocumentDownload } from 'react-icons/hi';
 import config from '@/config';
 
-export default function Emoji({ data, avatar_base64 }) {
+
+export default function Emoji({ data, avatar_base64 }) {
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
     notation: 'compact',
@@ -63,7 +64,6 @@ import config from '@/config';
                 {Array.from({length: 9 - data.emoji_ids.length}).fill(0).map((_, index) => (
                   <div
                     key={index}
-                    // className='w-[32px] h-[32px] p-0.5 rounded-md bg-secondary'
                     style={{
                       backgroundColor: 'rgba(37, 37, 45)',
                       borderRadius: '0.25rem',

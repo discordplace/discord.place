@@ -118,7 +118,6 @@ module.exports = {
           )
       ]
     }).catch(async () => {
-      // Check here also if the user has DMs disabled
       currentlyApplyingTemplates.delete(interaction.guild.id);
 
       collectedMessage.reply(await interaction.translate('commands.templates.errors.dms_disabled'));

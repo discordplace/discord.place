@@ -47,11 +47,7 @@ export default function Content({ server }) {
     );
 
     function pushToChangedKeys(key, value) {
-      // if the current value is the same as the original value, remove the key from the array
       if (isEqual(value, server[key])) return setChangedKeys(oldKeys => oldKeys.filter(({ key: oldKey }) => oldKey !== key));
-
-      // if the key already exists, update the value
-      // otherwise, add the key and value to the array
 
       setChangedKeys(oldKeys =>
         oldKeys

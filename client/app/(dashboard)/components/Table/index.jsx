@@ -80,7 +80,6 @@ export default function Table({ tabs }) {
   const sortedColumns = deepCopiedColumns
     .sort((a, b) => sortColumns(currentSort.key, currentSort.order, [a, b]));
 
-  // Paginate columns
   const displayedColumns = sortedColumns.slice((page - 1) * 10, page * 10);
 
   const showPagination = deepCopiedColumns.length > 10;

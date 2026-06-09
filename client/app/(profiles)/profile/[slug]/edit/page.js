@@ -7,7 +7,5 @@ export default async function Page({ params }) {
   if (typeof profile === 'string') return redirect(`/error?message=${encodeURIComponent(profile)}`);
   if (profile.permissions.canEdit === false) return redirect('/error?code=50001');
 
-  // No need to add Auth protection here
-  // We checking permissions above
   return <Content profile={profile} />;
 }

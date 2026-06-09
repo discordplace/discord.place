@@ -42,33 +42,27 @@ MonthlyVotesSchema.statics.updateMonthlyVotes = async function (identifier, data
     is_most_voted: data.isMostVoted
   };
 
-  // Try to update the existing document
   const foundDocument = await this.findOne({ identifier });
   if (!foundDocument) {
-    // If no document exists, create a new one
     await this.create({
       identifier,
       data: [updateData]
     });
   } else {
-    // If a document exists, check if the month/year data already exists
     const existingData = foundDocument.data.find(data => data.month === month && data.year === year);
     if (existingData) {
-      // If it exists, update the existing data
       existingData.votes = data.votes;
       existingData.most_voted_user = mostVotedUser ? mostVotedUser.user.id : null;
       existingData.is_most_voted = data.isMostVoted;
 
       await foundDocument.save();
     } else {
-      // If it doesn't exist, push the new data
       foundDocument.data.push(updateData);
 
       await foundDocument.save();
     }
   }
 
-  // Reset votes for the next month
   await Model.updateOne({ id: identifier }, { $set: { votes: 0 } });
 };
 

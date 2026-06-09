@@ -19,14 +19,12 @@ filteredLocales.forEach(localeFile => {
   try {
     JSON.parse(content);
 
-    // check for missing keys
     const defaultLocalePath = path.join(localesDir, 'en.json');
     const defaultLocaleContent = fs.readFileSync(defaultLocalePath, 'utf8');
     const defaultLocale = JSON.parse(defaultLocaleContent);
 
     const localeContent = JSON.parse(content);
     
-    // keys can be object in object so we need to flatten it
     const flattenedDefaultLocale = lodash.toPairs(lodash.flattenDeep(defaultLocale));
     const flattenedLocaleContent = lodash.toPairs(lodash.flattenDeep(localeContent));
 
@@ -40,7 +38,6 @@ filteredLocales.forEach(localeFile => {
       });
     }
 
-    // check for extra keys
     const extraKeys = flattenedLocaleContent.filter(([key]) => !flattenedDefaultLocale.some(([localeKey]) => localeKey === key));
 
     if (extraKeys.length > 0) {

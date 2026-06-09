@@ -51,7 +51,6 @@ async function syncMemberRoles() {
           if (isTranslatorRoleGiven) {
             const dmChannel = member.dmChannel || await member.createDM().catch(() => null);
             if (dmChannel) {
-              // Send a message to the user that they've been given the Translator role
               member.send({ content: dedent`
                 Hey there, Language Legend! 🌍✨
 

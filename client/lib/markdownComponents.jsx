@@ -18,7 +18,6 @@ import Image from 'next/image';
 import Tooltip from '@/app/components/Tooltip';
 
 function DiscordEmoji({ children }) {
-  // Regular expressions to match both static and animated emoji formats
   const staticEmojiRegex = /<:([^:]+):(\d+)>/;
   const animatedEmojiRegex = /<a:([^:]+):(\d+)>/;
 
@@ -59,8 +58,6 @@ function DiscordEmoji({ children }) {
     );
   }
 
-  // Handle Twemoji
-  // Split text into emoji and non-emoji parts
   const parts = children.split(emojiRegex);
   if (parts.length === 1) return children;
 
@@ -160,7 +157,6 @@ function toCodePoint(emoji) {
   return pairs.join('-');
 }
 
-// Regular expression for matching emoji characters
 const emojiRegex = /(\p{Emoji_Presentation}|\p{Extended_Pictographic})/gu;
 const singleEmojiRegex = /^(\p{Emoji_Presentation}|\p{Extended_Pictographic})$/u;
 

@@ -150,14 +150,12 @@ export default function NewBot() {
         setTimeout(() => {
           router.push(`/bots/${botId}`);
 
-          // Reset states
           setCurrentlyAddingBot(false);
           setBotId('');
           setBotShortDescription('');
           setBotDescription('');
           setBotCategories([]);
 
-          // Clear local storage
           setLocalData({
             botId: '',
             botShortDescription: '',
