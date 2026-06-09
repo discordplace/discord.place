@@ -83,6 +83,7 @@
     "tailwindcss/enforce-sort-order": "warn",
     "tailwindcss/enforce-shorthand": "warn",
     "tailwindcss/no-hardcoded-colors": "off",
+    "no-undef": "error"
   },
   "env": { "browser": true, "node": true }
 }
