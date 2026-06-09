@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.0.0](https://github.com/discordplace/discord.place/compare/client@v2.0.0...client@v3.0.0) (2026-06-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade Next.js to v16, Tailwind to v4, and overhaul UI/tooling ([#215](https://github.com/discordplace/discord.place/issues/215))
+
+### Features
+
+* upgrade Next.js to v16, Tailwind to v4, and overhaul UI/tooling ([#215](https://github.com/discordplace/discord.place/issues/215)) ([7f3ee50](https://github.com/discordplace/discord.place/commit/7f3ee50d936b44aff66f916a4d6ba2d1ee25ac03))
+
+
+### Bug Fixes
+
+* update local development ports in README, config files, and package.json ([34073da](https://github.com/discordplace/discord.place/commit/34073da7e385ae2ef5e56806239b4b853860233c))
+* update pnpm-workspace.yaml to use onlyBuiltDependencies for sharp ([1bd39e4](https://github.com/discordplace/discord.place/commit/1bd39e48ae81c1b5447488ee9b50687c39aa9c12))
+
 ## [2.0.0](https://github.com/discordplace/discord.place/compare/client@v1.24.0...client@v2.0.0) (2026-05-22)
 
 
