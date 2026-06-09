@@ -3,7 +3,7 @@ import getTemplateMetadata from '@/lib/request/templates/getTemplateMetadata';
 import { redirect } from 'next/navigation';
 import Content from '@/app/(templates)/templates/[id]/preview/content';
 import createMetadata from '@/lib/createMetadata';
-import config from '@/lib/config';
+import config from '@/config';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
