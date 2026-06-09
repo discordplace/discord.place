@@ -18,7 +18,6 @@ import Template from '@/app/api/og/content/Template';
 import Sound from '@/app/api/og/content/Sound';
 import Blog from '@/app/api/og/content/Blog';
 
-
 function getFontData(fontName) {
   const file = fs.readFileSync(`${process.cwd()}/public/fonts/${fontName}.ttf`);
 

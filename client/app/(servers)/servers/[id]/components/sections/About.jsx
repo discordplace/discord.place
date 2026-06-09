@@ -7,7 +7,6 @@ import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
 import { motion } from 'framer-motion';import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';
-
 const formatter = new Intl.NumberFormat('en-US', {
   compactDisplay: 'short',
   notation: 'compact'

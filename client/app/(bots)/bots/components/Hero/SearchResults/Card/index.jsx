@@ -14,7 +14,6 @@ import useLanguageStore, { t } from '@/stores/language';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Tooltip from '@/app/components/Tooltip';
-
 export default function Card({ data, overridedSort }) {
   const isMobile = useMedia('(max-width: 420px)', false);
   const language = useLanguageStore(state => state.language);

@@ -40,6 +40,7 @@
     "max-params": "off",
     "react/exhaustive-deps": "off",
     "react/jsx-boolean-value": ["error", "always"],
+    "stylistic/no-multiple-empty-lines": ["error", { "max": 1 }]
   },
   "env": { "browser": true, "node": true }
 }

@@ -2,7 +2,6 @@ import { FaDiscord } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import config from '@/config';
 import Link from 'next/link';
-
 export default function LoginButton() {
   const pathname = usePathname();
 

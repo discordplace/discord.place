@@ -1,7 +1,6 @@
 import { FaStar } from 'react-icons/fa';
 import config from '@/config';
 
-
 export default function Profile({ data, avatar_base64 }) {
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
