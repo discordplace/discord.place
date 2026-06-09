@@ -1,3 +1,6 @@
 {
-  "eslint.workingDirectories": [ "./client", "./server" ]
+  "eslint.workingDirectories": [ "./server" ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always"
+  }
 }
