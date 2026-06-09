@@ -1,4 +1,4 @@
-name: "ESLint: client"
+name: "Oxlint: client"
 
 on:
   pull_request:
