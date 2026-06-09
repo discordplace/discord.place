@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.1.0](https://github.com/discordplace/discord.place/compare/client@v3.0.1...client@v3.1.0) (2026-06-09)
+
+
+### Features
+
+* **client:** add unoptimized prop for animated emojis ([1ebcb1a](https://github.com/discordplace/discord.place/commit/1ebcb1a7299c3e7db5683296137db0d317e59929))
+
+
+### Bug Fixes
+
+* **client:** add missing config import ([3201728](https://github.com/discordplace/discord.place/commit/32017281a6f4a5120910ee726527d21c88145dbd))
+* **client:** add missing light theme styling in header ([66d2692](https://github.com/discordplace/discord.place/commit/66d2692f11d12d16df6b017bcf80ec2b4a792f6c))
+* **client:** adjust width of the status badge ([a3d47aa](https://github.com/discordplace/discord.place/commit/a3d47aa0fc00ba981153693153db46a1ebf59f46))
+* **client:** update wrong config import path ([550b614](https://github.com/discordplace/discord.place/commit/550b6146d401b5b3938c837a1f486bb606c25e06))
+
 ## [3.0.1](https://github.com/discordplace/discord.place/compare/client@v3.0.0...client@v3.0.1) (2026-06-09)
 
 
