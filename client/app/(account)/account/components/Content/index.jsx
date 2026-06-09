@@ -63,6 +63,8 @@ export default function Content() {
         setUser(null);
         deleteToken(null);
 
+        router.push('/');
+
         return 'Logged out successfully.';
       }
     });
