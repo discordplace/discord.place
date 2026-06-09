@@ -18,8 +18,7 @@ export async function generateMetadata({ params }) {
       `discord user ${metadata.username}`,
       `discord profile ${metadata.username}`,
       'discord profile',
-      `${metadata.username} profile`,
-      `discord ${user_id} profile`
+      `${metadata.username} profile`
     ],
     openGraph: {
       images: [
