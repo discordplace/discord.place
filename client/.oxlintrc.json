@@ -48,7 +48,18 @@
     "stylistic/no-confusing-arrow": "error",
     "import/prefer-default-export": "off",
     "prefer-named-capture-group": "off",
-    "no-continue": "off"
+    "no-continue": "off",
+    "unicorn/filename-case": "off",
+    "new-cap": ["error", { "newIsCap": true, "capIsNew": false }],
+    "no-nested-ternary": "off",
+    "unicorn/no-nested-ternary": "off",
+    "import/no-nodejs-modules": "off",
+    "import/no-namespace": "off",
+    "prefer-destructuring": "off",
+    "react/no-children-prop": "off",
+    "no-async-promise-executor": "off",
+    "unicorn/prefer-spread": "off",
+    "react/jsx-handler-names": "off"
   },
   "env": { "browser": true, "node": true }
 }

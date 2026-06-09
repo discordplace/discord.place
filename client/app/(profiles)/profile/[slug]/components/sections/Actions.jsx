@@ -19,7 +19,7 @@ export default function Actions({ profile }) {
   const [loading, setLoading] = useState(false);
   const [liked, setLiked] = useState(profile.isLiked);
 
-  const handleLike = () => {
+  function handleLike() {
     if (!loggedIn) return toast.error(t('profilePage.actions.toast.loginRequiredForLike'));
 
     setLoading(true);

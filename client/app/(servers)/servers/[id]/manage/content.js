@@ -24,18 +24,18 @@ export default function Content({ server }) {
 
   const [description, setDescription] = useState(server.description);
 
-  const parsedInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
+  const handledInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
     server.invite_code.type === 'Deleted' ? '' :
       `https://discord.com/invite/${server.invite_code.code}`
   );
 
-  const [inviteURL, setInviteURL] = useState(parsedInviteUrl);
+  const [inviteURL, setInviteURL] = useState(handledInviteUrl);
   const [category, setCategory] = useState(server.category);
   const [keywords, setKeywords] = useState(server.keywords);
 
   useEffect(() => {
     const isDescriptionChanged = !isEqual(description, server.description);
-    const isInviteURLChanged = !isEqual(inviteURL, parsedInviteUrl);
+    const isInviteURLChanged = !isEqual(inviteURL, handledInviteUrl);
     const isCategoryChanged = !isEqual(category, server.category);
     const isKeywordsChanged = !isEqual(keywords, server.keywords);
 
@@ -73,12 +73,12 @@ export default function Content({ server }) {
           break;
         }
         case 'invite_url': {
-          var parsedInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
+          const handledInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
             server.invite_code.type === 'Deleted' ? '' :
               `https://discord.com/invite/${server.invite_code.code}`
           );
 
-          setInviteURL(parsedInviteUrl);
+          setInviteURL(handledInviteUrl);
           break;
         }
         case 'category': {

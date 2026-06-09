@@ -48,7 +48,7 @@ export default function Reviews({ server }) {
       .finally(() => setReviewsLoading(false));
   }, [server.id, page, limit]);
 
-  const calcRating = rating => {
+  function calcRating(rating) {
     const totalReviews = server.reviews.length;
     const ratingCount = server.reviews.filter(review => review.rating === rating).length;
     const percentage = (ratingCount / totalReviews) * 100;

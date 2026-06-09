@@ -25,13 +25,13 @@ export default function CollapsedHeader({ pathname }) {
     window.scrollTo(0, 0);
   }, [open]);
 
-  const [statedPathname, setPathname] = useState(pathname);
+  const [pathnameState, setPathnameState] = useState(pathname);
 
   useEffect(() => {
-    if (statedPathname === null) return;
+    if (pathnameState === null) return;
 
-    if (statedPathname !== pathname) router.push(statedPathname);
-  }, [statedPathname]);
+    if (pathnameState !== pathname) router.push(pathnameState);
+  }, [pathnameState]);
 
   return (
     <header className='pointer-events-none absolute top-0 z-[9998] flex w-full justify-between px-4 pb-6 [transition-duration:750ms] sm:px-12 lg:px-28 2xl:px-48'>
@@ -77,8 +77,8 @@ export default function CollapsedHeader({ pathname }) {
         <Drawer
           openState={open}
           setOpenState={setOpen}
-          state={statedPathname}
-          setState={setPathname}
+          state={pathnameState}
+          setState={setPathnameState}
           items={config.headerLinks.map(headerLink => ({
             label: <>
               <div className='flex items-center gap-x-1.5'>

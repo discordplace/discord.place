@@ -179,7 +179,7 @@ export default function Sidebar() {
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
-  const [,, deleteToken] = useCookie('token');
+  const deleteToken = useCookie('token')[2];
 
   function logOut() {
     toast.promise(logout(), {

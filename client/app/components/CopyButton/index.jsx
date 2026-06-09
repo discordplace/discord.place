@@ -9,7 +9,7 @@ export default function CopyButton({ timeout = 2000, successText, copyText, clas
   const [copied, setCopied] = useState(false);
   const copyTimeoutRef = useRef(null);
 
-  const handleCopy = () => {
+  function handleCopy() {
     if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
 
     navigator.clipboard.writeText(copyText);

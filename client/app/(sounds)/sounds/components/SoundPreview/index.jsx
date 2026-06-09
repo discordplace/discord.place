@@ -44,7 +44,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     }
   }, [renderConfetti]);
 
-  const handleLike = () => {
+  function handleLike() {
     if (!loggedIn) return toast.error(t('soundCard.toast.notLoggedIn'));
 
     setLoading(true);

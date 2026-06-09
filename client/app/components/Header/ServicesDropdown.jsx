@@ -59,15 +59,15 @@ export default function ServicesDropdown() {
     },
     {
       description: t('header.upcomingServiceDescription'),
-      icon: function QuestionMarks() {
-        return (
+      icon: () => 
+        (
           <div className='flex -space-x-1 text-sm'>
             <FaQuestion className='relative top-[3px] rotate-[-10deg]' />
             <FaQuestion />
             <FaQuestion className='relative top-[3px] rotate-[10deg]' />
           </div>
-        );
-      },
+        )
+      ,
       name: t('header.servicesDropdownLinks.7')
     }
   ];

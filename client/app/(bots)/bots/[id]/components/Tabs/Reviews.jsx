@@ -48,7 +48,7 @@ export default function Reviews({ bot }) {
       .finally(() => setReviewsLoading(false));
   }, [bot.id, page, limit]);
 
-  const calcRating = rating => {
+  function calcRating(rating) {
     const totalReviews = bot.reviews.length;
     const ratingCount = bot.reviews.filter(review => review.rating === rating).length;
     const percentage = (ratingCount / totalReviews) * 100;

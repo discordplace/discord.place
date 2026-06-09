@@ -4,8 +4,8 @@ export default function sortColumns(key, order, [a, b]) {
   const columnA = a[key];
   const columnB = b[key];
 
-  let first;
-  let second;
+  let first = null;
+  let second = null;
 
   if (order === 'asc') {
     first = columnA;

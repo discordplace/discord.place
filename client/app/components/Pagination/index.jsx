@@ -47,9 +47,9 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
     }
   }, [inputOpened]);
 
-  let initial;
-  let animate;
-  let exit;
+  let initial = null;
+  let animate = null;
+  let exit = null;
 
   if (disableAnimation) {
     initial = { opacity: 1, y: 0 };

@@ -3,7 +3,6 @@
 import { BsEmojiAngry } from 'react-icons/bs';
 import Square from '@/app/components/Background/Square';
 import cn from '@/lib/cn';
-import { motion } from 'framer-motion';
 import { Bricolage_Grotesque } from 'next/font/google';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import SearchInput from '@/app/components/SearchInput';
@@ -11,7 +10,7 @@ import Select from '@/app/components/Select';
 import { useEffect } from 'react';
 import useSearchStore from '@/stores/servers/search';
 import { useShallow } from 'zustand/react/shallow';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import ErrorState from '@/app/components/ErrorState';
 import Pagination from '@/app/components/Pagination';
 import config from '@/config';

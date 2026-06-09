@@ -24,7 +24,7 @@ export default function FlipWords({ words, duration = 3000, className, onStartAn
     if (!isAnimating)
       {setTimeout(() => {
         startAnimation();
-        onStartAnimation && onStartAnimation();
+        if (onStartAnimation) onStartAnimation();
       }, duration);}
   }, [isAnimating, duration, startAnimation]);
 

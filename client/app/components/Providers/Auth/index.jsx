@@ -52,7 +52,7 @@ export default function AuthProvider({ children }) {
     let attemptCount = 0;
     const maxAttempts = 50;
 
-    const attemptIdentify = () => {
+    function attemptIdentify() {
       const umamiReady = globalThis.umami?.identify && typeof globalThis.umami.identify === 'function';
       const trackerReady = tracker && typeof tracker.setUserID === 'function';
 

@@ -3,13 +3,12 @@
 import { BsEmojiAngry } from 'react-icons/bs';
 import useSearchStore from '@/stores/bots/search';
 import { useShallow } from 'zustand/react/shallow';
-import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import Card from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
 import ErrorState from '@/app/components/ErrorState';
 import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { t } from '@/stores/language';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';

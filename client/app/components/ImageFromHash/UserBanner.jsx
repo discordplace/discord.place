@@ -36,10 +36,10 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
           case 404: {
             if (hashesRefreshed.some(({ hash: userHash }) => userHash === hash)) break;
 
-            var hashes = await getHashes(id);
+            const hashes = await getHashes(id);
             if (!hashes) break;
 
-            var notExpiredHashes = hashesRefreshed.filter(({ expireTime }) => expireTime > Date.now());
+            const notExpiredHashes = hashesRefreshed.filter(({ expireTime }) => expireTime > Date.now());
 
             if (!notExpiredHashes.some(({ hash: userHash }) => userHash === hash)) {
               const expireTime = Date.now() + 600_000;
@@ -50,7 +50,7 @@ export default function UserBanner({ id, hash, format, size, className, motionOp
               setHashesRefreshed(oldHashesRefreshed => oldHashesRefreshed.filter(hash => hash.expireTime > Date.now()));
             }
 
-            var newHash = hashes.banner;
+            const newHash = hashes.banner;
             if (!newHash) break;
 
             setCurrentSource(getUrl(id, newHash));

@@ -52,7 +52,7 @@ export default function Content() {
 
   const router = useRouter();
 
-  const [,, deleteToken] = useCookie('token');
+  const deleteToken = useCookie('token')[2];
 
   function logOut() {
     toast.promise(logout(), {

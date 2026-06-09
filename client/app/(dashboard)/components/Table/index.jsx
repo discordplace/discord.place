@@ -7,8 +7,7 @@ import { IoSearch } from 'react-icons/io5';
 import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
 import ColumnRenderer from '@/app/(dashboard)/components/Table/ColumnRenderer';
 import cn from '@/lib/cn';
-import { motion } from 'framer-motion';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import useDashboardStore from '@/stores/dashboard';
 import { useEffect, useRef, useState } from 'react';
 import ErrorState from '@/app/components/ErrorState';
@@ -53,7 +52,6 @@ export default function Table({ tabs }) {
 
   const isMobile = useMedia('(max-width: 640px)');
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [mobileSelectedAction] = useState(null);
 
   if (!currentTabData || !currentTabData.columns) return null;
 
@@ -368,7 +366,7 @@ export default function Table({ tabs }) {
               <Drawer
                 openState={drawerOpen}
                 setOpenState={setDrawerOpen}
-                state={mobileSelectedAction}
+                state={null}
                 preventDefault={true}
                 setState={value => {
                   if (value.trigger) return;

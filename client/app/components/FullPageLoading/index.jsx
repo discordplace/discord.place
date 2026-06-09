@@ -2,9 +2,8 @@
 
 import useThemeStore from '@/stores/theme';
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function FullPageLoading() {
   const theme = useThemeStore(state => state.theme);

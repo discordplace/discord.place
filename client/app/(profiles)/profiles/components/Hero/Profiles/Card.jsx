@@ -2,7 +2,8 @@
 
 import { FiArrowUpRight } from 'react-icons/fi';
 import { TbWorldShare } from 'react-icons/tb';
-import Image from 'next/image';import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
+import Image from 'next/image';
+import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
 import config from '@/config';
 import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
@@ -50,7 +51,7 @@ export default function Card(props) {
   const presences = useSearchStore(state => state.presences);
   const userStatus = presences?.find?.(presence => presence.metadata.id === props.id)?.status;
 
-  userStatus && !props.badges.includes('poweredByLantern') && props.badges.push('poweredByLantern');
+  if (userStatus && !props.badges.includes('poweredByLantern') && props.badges.push('poweredByLantern'));
 
   return (
     <ReportableArea

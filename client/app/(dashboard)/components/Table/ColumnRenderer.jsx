@@ -31,7 +31,7 @@ export default function ColumnRenderer({ data }) {
   const currentlyPlaying = useGeneralStore(state => state.sounds.currentlyPlaying);
   const setCurrentlyPlaying = useGeneralStore(state => state.sounds.setCurrentlyPlaying);
 
-  const onPlayPause = () => {
+  function onPlayPause() {
     if (currentlyPlaying === data.id) setCurrentlyPlaying('');
     else setCurrentlyPlaying(data.id);
   };
@@ -201,10 +201,10 @@ export default function ColumnRenderer({ data }) {
       );
     }
     case 'date': {
-      var date = new Date(data.value);
-      var now = new Date();
+      const date = new Date(data.value);
+      const now = new Date();
 
-      var yesterday = new Date(now);
+      const yesterday = new Date(now);
       yesterday.setDate(now.getDate() - 1);
 
       return (
@@ -308,7 +308,7 @@ export default function ColumnRenderer({ data }) {
       );
     }
     case 'number': {
-      var formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2, notation: 'compact', style: 'decimal' });
+      const formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2, notation: 'compact', style: 'decimal' });
 
       return (
         <span className='rounded-full border border-primary bg-secondary px-2 py-1.5 text-xs font-semibold text-primary'>
@@ -391,7 +391,7 @@ export default function ColumnRenderer({ data }) {
         );
       }
 
-      var foundPlan = dashboardData?.plans?.find(plan => plan.id === data.value?.planId);
+      const foundPlan = dashboardData?.plans?.find(plan => plan.id === data.value?.planId);
 
       if (!foundPlan) {return (
         <span className='text-xs font-medium text-tertiary'>
