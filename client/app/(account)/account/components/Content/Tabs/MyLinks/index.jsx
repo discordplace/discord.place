@@ -61,10 +61,10 @@ export default function MyLinks() {
         },
         {
           action: () => {
-            const {name} = useGeneralStore.getState().createLinkModal;
-            const {destinationURL} = useGeneralStore.getState().createLinkModal;
-            const {setName} = useGeneralStore.getState().createLinkModal;
-            const {setDestinationURL} = useGeneralStore.getState().createLinkModal;
+            const { name } = useGeneralStore.getState().createLinkModal;
+            const { destinationURL } = useGeneralStore.getState().createLinkModal;
+            const { setName } = useGeneralStore.getState().createLinkModal;
+            const { setDestinationURL } = useGeneralStore.getState().createLinkModal;
 
             if (!name) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.emptyName'));
 

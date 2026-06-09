@@ -121,9 +121,9 @@ export default function Page() {
                   action: () => bulkAction({
                     action: item => {
                       toast.promise(getHashes(item.id), {
+                        error: error => error,
                         loading: `Refreshing ${item.username}'s hashes...`,
-                        success: `Successfully refreshed ${item.username}'s hashes.`,
-                        error: error => error
+                        success: `Successfully refreshed ${item.username}'s hashes.`
                       });
                     },
                     fetchKey: 'users'
@@ -369,9 +369,9 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'emoji',
                     action: item => deleteEmoji(item.id),
-                    fetchKey: 'emojis'
+                    fetchKey: 'emojis',
+                    name: 'emoji'
                   }),
                   hide: !data.permissions?.canDeleteEmojis,
                   icon: IoMdCloseCircle,
@@ -539,9 +539,9 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'bot',
                     action: item => deleteBot(item.id),
-                    fetchKey: 'bots'
+                    fetchKey: 'bots',
+                    name: 'bot'
                   }),
                   hide: !data.permissions?.canDeleteBots,
                   icon: IoMdCloseCircle,
@@ -718,9 +718,9 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'template',
                     action: item => deleteTemplate(item.id),
-                    fetchKey: 'templates'
+                    fetchKey: 'templates',
+                    name: 'template'
                   }),
                   hide: !data.permissions?.canDeleteTemplates,
                   icon: IoMdCloseCircle,
@@ -806,8 +806,8 @@ export default function Page() {
                 },
                 {
                   action: () => bulkAction({
-                    data: data.queue.sounds,
                     action: item => approveSound(item.id),
+                    data: data.queue.sounds,
                     fetchKey: 'sounds'
                   }),
                   hide: !data.permissions?.canApproveSounds,
@@ -895,9 +895,9 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'sound',
                     action: item => deleteSound(item.id),
-                    fetchKey: 'sounds'
+                    fetchKey: 'sounds',
+                    name: 'sound'
                   }),
                   hide: !data.permissions?.canDeleteSounds,
                   icon: IoMdCloseCircle,
@@ -983,8 +983,8 @@ export default function Page() {
                 },
                 {
                   action: () => bulkAction({
-                    data: data.queue.reviews,
                     action: item => approveReview(item.custom.type, item.value, item.custom.id),
+                    data: data.queue.reviews,
                     fetchKey: 'reviews'
                   }),
                   hide: !data.permissions?.canApproveReviews,
@@ -1083,9 +1083,9 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'review',
                     action: item => deleteReview(item.custom.type, item.value, item.custom.id),
-                    fetchKey: 'reviews'
+                    fetchKey: 'reviews',
+                    name: 'review'
                   }),
                   hide: !data.permissions?.canDeleteReviews,
                   icon: IoMdCloseCircle,
@@ -1269,9 +1269,9 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'theme',
                     action: item => deleteTheme(item.id),
-                    fetchKey: 'themes'
+                    fetchKey: 'themes',
+                    name: 'theme'
                   }),
                   hide: !data.permissions?.canDeleteThemes,
                   icon: IoMdCloseCircle,
@@ -1357,9 +1357,9 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'link',
                     action: item => deleteLink(item.id),
-                    fetchKey: 'links'
+                    fetchKey: 'links',
+                    name: 'link'
                   }),
                   hide: !data.permissions?.canDeleteLinks,
                   icon: IoMdCloseCircle,
@@ -1444,9 +1444,9 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'bot deny',
                     action: item => deleteBotDenyRecord(item.id),
-                    fetchKey: 'botdenies'
+                    fetchKey: 'botdenies',
+                    name: 'bot deny'
                   }),
                   hide: !data.permissions?.canDeleteBotDenies,
                   icon: IoMdCloseCircle,
@@ -1567,9 +1567,9 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'timeout',
                     action: item => item.custom.type === 'bot' ? deleteBotTimeout(item.id, item.custom.userId) : deleteServerTimeout(item.id, item.custom.userId),
-                    fetchKey: 'timeouts'
+                    fetchKey: 'timeouts',
+                    name: 'timeout'
                   }),
                   hide: !data.permissions?.canDeleteTimeouts,
                   icon: IoMdCloseCircle,
@@ -1673,9 +1673,9 @@ export default function Page() {
               actions: [
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    name: 'quarantine',
                     action: item => deleteQuarantineRecord(item._id),
-                    fetchKey: 'quarantines'
+                    fetchKey: 'quarantines',
+                    name: 'quarantine'
                   }),
                   hide: !data.permissions?.canDeleteQuarantines,
                   icon: IoMdCloseCircle,
