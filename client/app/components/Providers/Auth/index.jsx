@@ -60,6 +60,7 @@ export default function AuthProvider({ children }) {
         attemptCount++;
         if (attemptCount < maxAttempts) {
           setTimeout(attemptIdentify, 100);
+
           return;
         }
       }

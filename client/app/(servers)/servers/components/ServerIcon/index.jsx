@@ -4,7 +4,6 @@ import cn from '@/lib/cn';
 import Image from 'next/image';
 
 export default function ServerIcon({ width, height, className, icon_url, name }) {
-
   function getCompressedName(name, limit) {
     const noVowels = name.replace(/[AEIOUaeiou\s]/g, '');
 

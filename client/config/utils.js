@@ -13,6 +13,7 @@ function getSoundURL(id) {
 function getEmojiIdFromURL(url) {
   const match = url.match(/emojis\/(?:packages\/(?<packageId>[a-zA-Z0-9-]+)\/)?(?<emojiId>[a-zA-Z0-9-]+)\.(?<type>gif|png)/);
   if (!match) return null;
+
   return match.groups.packageId;
 }
 

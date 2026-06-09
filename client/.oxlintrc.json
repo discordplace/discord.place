@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "$schema": "./node_modules/.pnpm/oxlint@1.68.0/node_modules/oxlint/configuration_schema.json",
   "plugins": ["unicorn", "oxc", "import", "eslint", "react"],
   "jsPlugins": [
     {
@@ -40,7 +40,11 @@
     "max-params": "off",
     "react/exhaustive-deps": "off",
     "react/jsx-boolean-value": ["error", "always"],
-    "stylistic/no-multiple-empty-lines": ["error", { "max": 1 }]
+    "stylistic/no-multiple-empty-lines": ["error", { "max": 1 }],
+    "stylistic/nonblock-statement-body-position": ["error", "beside"],
+    "import/newline-after-import": ["error", { "count": 1 }],
+    "stylistic/padded-blocks": ["error", "never"],
+    "stylistic/padding-line-between-statements": ["error", { "blankLine": "always", "prev": "*", "next": "return" }]
   },
   "env": { "browser": true, "node": true }
 }
