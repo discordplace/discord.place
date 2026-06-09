@@ -81,13 +81,5 @@
     "oxlint-tailwindcss": "^1.2.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^4.3.0"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "react": "19",
-        "react-dom": "19"
-      }
-    }
   }
 }
