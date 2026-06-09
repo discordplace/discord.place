@@ -43,7 +43,7 @@ export default function Actions({ profile }) {
 
   return (
     <motion.div
-      className='absolute bottom-4 right-4 z-[4] flex w-full justify-end'
+      className='absolute bottom-4 right-4 z-4 flex w-full justify-end'
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}

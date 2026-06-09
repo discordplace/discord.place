@@ -7,19 +7,19 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
   return (
     <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild={true}>
-        <button className='flex max-w-[200px] rounded-lg bg-tertiary px-2 py-1 text-tertiary outline-none hover:bg-quaternary hover:text-primary'>
+        <button className='flex max-w-[200px] rounded-lg bg-tertiary px-2 py-1 text-tertiary outline-hidden hover:bg-quaternary hover:text-primary'>
           {currentlyEditingValue || 'Unknown'}
         </button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className='relative top-2 z-10 flex min-w-[200px] flex-col gap-y-0.5 rounded-2xl border border-primary bg-secondary p-1.5 outline-none'>
+        <DropdownMenu.Content className='relative top-2 z-10 flex min-w-[200px] flex-col gap-y-0.5 rounded-2xl border border-primary bg-secondary p-1.5 outline-hidden'>
           <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
 
           <DropdownMenu.Item
             className={cn(
-              'flex items-center justify-between p-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2',
-              currentlyEditingValue === 'discord.place/p' ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
+              'flex items-center justify-between p-2 font-medium rounded-xl outline-hidden cursor-pointer gap-x-2',
+              currentlyEditingValue === 'discord.place/p' ? 'bg-tertiary text-primary pointer-events-none' : 'data-highlighted:bg-tertiary text-tertiary data-highlighted:text-primary'
             )}
             onSelect={() => setCurrentlyEditingValue('discord.place/p')}
           >
@@ -31,8 +31,8 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
             <DropdownMenu.Item
               key={hostname}
               className={cn(
-                'flex items-center justify-between p-2 font-medium rounded-xl outline-none cursor-pointer gap-x-2',
-                currentlyEditingValue === hostname ? 'bg-tertiary text-primary pointer-events-none' : 'data-[highlighted]:bg-tertiary text-tertiary data-[highlighted]:text-primary'
+                'flex items-center justify-between p-2 font-medium rounded-xl outline-hidden cursor-pointer gap-x-2',
+                currentlyEditingValue === hostname ? 'bg-tertiary text-primary pointer-events-none' : 'data-highlighted:bg-tertiary text-tertiary data-highlighted:text-primary'
               )}
               onSelect={() => setCurrentlyEditingValue(hostname)}
             >

@@ -106,7 +106,7 @@ export default function Page() {
 
               <input
                 id='templateId'
-                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-hidden placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={templateId}
                 onChange={event => setTemplateId(event.target.value)}
@@ -164,7 +164,7 @@ export default function Page() {
 
               <input
                 id='templateName'
-                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-hidden placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={templateName}
                 onChange={event => setTemplateName(event.target.value)}
@@ -184,7 +184,7 @@ export default function Page() {
 
               <textarea
                 id='templateDescription'
-                className='scrollbar-hide h-[100px] w-full resize-none rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none ring-0 ring-purple-500 placeholder:text-placeholder hover:bg-tertiary focus:ring-2 focus-visible:bg-quaternary focus-visible:text-secondary'
+                className='scrollbar-hide h-[100px] w-full resize-none rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-hidden ring-0 ring-purple-500 placeholder:text-placeholder hover:bg-tertiary focus:ring-2 focus-visible:bg-quaternary focus-visible:text-secondary'
                 value={templateDescription}
                 onChange={event => setTemplateDescription(event.target.value)}
                 placeholder={t('publishTemplatePage.steps.1.inputs.templateDescription.placeholder', { min: config.templateDescriptionMinLength })}
@@ -226,7 +226,7 @@ export default function Page() {
                   <h3 className='text-sm text-tertiary'>
                     {t('publishTemplatePage.steps.2.fields.templateDescription')}
                   </h3>
-                  <p className='max-w-[250px] break-words text-sm text-tertiary'>
+                  <p className='max-w-[250px] wrap-break-word text-sm text-tertiary'>
                     {templateDescription}
                   </p>
                 </div>

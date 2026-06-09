@@ -157,7 +157,7 @@ export default function Page() {
 
               <input
                 id='emojiName'
-                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-none placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
+                className='w-full rounded-lg bg-secondary px-3 py-2 text-sm text-tertiary outline-hidden placeholder:text-placeholder hover:bg-tertiary focus-visible:bg-quaternary focus-visible:text-secondary'
                 type='text'
                 value={emoji.name}
                 onChange={event => setEmoji({ ...emoji, name: event.target.value })}

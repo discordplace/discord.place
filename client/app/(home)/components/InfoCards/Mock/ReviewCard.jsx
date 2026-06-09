@@ -3,7 +3,7 @@ import Image from 'next/image';import cn from '@/lib/cn';
 
 export default function MockReviewCard({ username, content, rating }) {
   return (
-    <div className='relative top-3 flex h-max max-w-[300px] rotate-[10deg] flex-col gap-y-2 rounded-2xl bg-tertiary p-2 mobile:p-4'>
+    <div className='relative top-3 flex h-max max-w-[300px] rotate-10 flex-col gap-y-2 rounded-2xl bg-tertiary p-2 mobile:p-4'>
       <div className='flex items-center gap-x-2'>
         <Image
           src={`/dicebear/${username}.jpg`}

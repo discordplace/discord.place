@@ -47,14 +47,14 @@ export default function ReportButtonProvider() {
 
   return (
     <motion.div
-      className='fixed bottom-4 right-4 z-[999]'
+      className='fixed bottom-4 right-4 z-999'
       animate={animate}
     >
       <Tooltip content={t('inAppReporting.tooltip.hide')}>
         <button
           className={cn(
             'absolute p-2 text-xl rounded-full transition-[opacity,transform] duration-300 ease-in-out bg-quaternary dark:hover:bg-white dark:hover:text-black hover:text-white hover:bg-black',
-            !showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[30px]' : 'scale-100 translate-y-[0px] translate-x-[0px]'
+            !showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[30px]' : 'scale-100 translate-y-0 translate-x-0'
           )}
           onClick={() => setShowReportableAreas(false)}
         >
@@ -66,7 +66,7 @@ export default function ReportButtonProvider() {
         <Link
           className={cn(
             'absolute p-2 text-xl rounded-full transition-[opacity,transform] duration-300 ease-in-out bg-quaternary dark:hover:bg-white dark:hover:text-black hover:text-white hover:bg-black',
-            !showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[-45px]' : 'delay-150 scale-100 translate-y-[0px] translate-x-[-45px]'
+            !showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[-45px]' : 'delay-150 scale-100 translate-y-0 translate-x-[-45px]'
           )}
           href={config.githubIssuesUrl}
           target='_blank'
@@ -82,7 +82,7 @@ export default function ReportButtonProvider() {
         <button
           className={cn(
             'p-2 text-xl rounded-full transition-[opacity,transform] duration-300 ease-in-out bg-quaternary dark:hover:bg-white dark:hover:text-black hover:text-white hover:bg-black',
-            showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[-30px]' : 'scale-100 translate-y-[0px] translate-x-[0px]',
+            showReportableAreas ? 'scale-50 opacity-0 pointer-events-none translate-y-[30px] translate-x-[-30px]' : 'scale-100 translate-y-0 translate-x-0',
             !loggedIn && 'opacity-50 cursor-default'
           )}
           onClick={() => loggedIn && setShowReportableAreas(true)}

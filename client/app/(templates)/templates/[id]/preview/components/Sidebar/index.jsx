@@ -167,7 +167,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                       }
                     ],
                     content: <>
-                      <p className='break-words text-sm font-medium text-[#dbdee1]'>{focusedChannel.topic}</p>
+                      <p className='wrap-break-word text-sm font-medium text-[#dbdee1]'>{focusedChannel.topic}</p>
                     </>,
                     description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
                     title: t('templatePreviewPage.topicModal.title')
@@ -212,14 +212,14 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
           <IoCheckmarkCircle
             size={20}
             className={cn(
-              'transition-[opacity] ease-in-out absolute',
+              'transition-opacity ease-in-out absolute',
               !templateIdCopied && 'opacity-0'
             )}
           />
           <BiSolidCopy
             size={20}
             className={cn(
-              'transition-[opacity] ease-in-out',
+              'transition-opacity ease-in-out',
               templateIdCopied && 'opacity-0'
             )}
           />

@@ -30,7 +30,7 @@ export default function ModalProvider({ children }) {
               onOpenChange={open => !open && closeModal(id)}
             >
               <Drawer.Portal>
-                <Drawer.Content className='fixed inset-x-0 bottom-0 z-[10001] flex h-max flex-col gap-y-1 rounded-t-3xl bg-quaternary p-6 outline-none dark:bg-background'>
+                <Drawer.Content className='fixed inset-x-0 bottom-0 z-10001 flex h-max flex-col gap-y-1 rounded-t-3xl bg-quaternary p-6 outline-hidden dark:bg-background'>
                   <div className='mx-auto mb-8 h-1.5 w-12 shrink-0 rounded-full bg-background dark:bg-quaternary' />
 
                   <div className='flex flex-col gap-y-2'>
@@ -52,7 +52,7 @@ export default function ModalProvider({ children }) {
                           key={index}
                           onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}
                           className={cn(
-                            'w-full rounded-full justify-center py-2 px-4 flex select-none items-center gap-x-1 font-medium outline-none',
+                            'w-full rounded-full justify-center py-2 px-4 flex select-none items-center gap-x-1 font-medium outline-hidden',
                             button.variant === 'solid' && 'font-semibold dark:bg-white dark:text-black dark:hover:bg-white/70 text-white bg-black hover:bg-black/70',
                             button.variant === 'ghost' && 'text-secondary hover:bg-quaternary hover:text-primary',
                             button.variant === 'outlined' && 'border border-[rgba(var(--bg-quaternary))] text-secondary hover:text-primary',
@@ -67,7 +67,7 @@ export default function ModalProvider({ children }) {
                     </div>
                   </div>
                 </Drawer.Content>
-                <Drawer.Overlay className='fixed inset-0 z-[10000] bg-white/50 dark:bg-black/50' />
+                <Drawer.Overlay className='fixed inset-0 z-10000 bg-white/50 dark:bg-black/50' />
               </Drawer.Portal>
             </Drawer.Root>
           </>
@@ -77,8 +77,8 @@ export default function ModalProvider({ children }) {
             open={activeModalId === id}
             onOpenChange={open => !open && closeModal(id)}
           >
-            <Dialog.Overlay className='radix-overlay fixed inset-0 z-[9999] bg-white/50 backdrop-blur-sm dark:bg-black/50' />
-            <Dialog.Content className='radix-dialog-content fixed z-[9999] flex size-full items-center justify-center focus:outline-none'>
+            <Dialog.Overlay className='radix-overlay fixed inset-0 z-9999 bg-white/50 backdrop-blur-xs dark:bg-black/50' />
+            <Dialog.Content className='radix-dialog-content fixed z-9999 flex size-full items-center justify-center focus:outline-hidden'>
               <div
                 className='flex max-h-[85vh] w-[90vw] flex-col gap-y-2 rounded-2xl border border-primary bg-secondary dark:bg-tertiary'
                 style={{ maxWidth: data.maxWidth || '450px' }}
@@ -109,7 +109,7 @@ export default function ModalProvider({ children }) {
                           key={index}
                           onClick={button.actionType === 'close' ? () => closeModal(id) : button.action}
                           className={cn(
-                            'w-max py-2 px-4 flex select-none items-center gap-x-1 font-medium rounded-lg outline-none',
+                            'w-max py-2 px-4 flex select-none items-center gap-x-1 font-medium rounded-lg outline-hidden',
                             button.variant === 'solid' && 'font-semibold dark:bg-white dark:text-black dark:hover:bg-white/70 text-white bg-black hover:bg-black/70',
                             button.variant === 'ghost' && 'text-secondary hover:bg-quaternary hover:text-primary',
                             button.variant === 'outlined' && 'border border-[rgba(var(--bg-quaternary))] text-secondary hover:text-primary',

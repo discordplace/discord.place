@@ -149,7 +149,7 @@ export default function Edit({ profileData }) {
       <AnimatePresence>
         {Object.keys(changedKeys).length > 0 && (
           <motion.div
-            className='fixed bottom-4 flex h-[60px] w-full max-w-[650px] items-center justify-between rounded-full border border-green-700 bg-green-800/20 px-8 backdrop-blur-sm'
+            className='fixed bottom-4 flex h-[60px] w-full max-w-[650px] items-center justify-between rounded-full border border-green-700 bg-green-800/20 px-8 backdrop-blur-xs'
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
@@ -218,7 +218,7 @@ export default function Edit({ profileData }) {
                     suppressContentEditableWarning={true}
                     onKeyUp={() => setCurrentlyEditingValue(bioValueSpanRef?.current?.textContent)}
                     ref={bioValueSpanRef}
-                    className='max-h-[200px] w-full resize-none overflow-y-auto break-all rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
+                    className='max-h-[200px] w-full resize-none overflow-y-auto break-all rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-hidden placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70'
                   >
                     {profileData.bio}
                   </span>
@@ -240,7 +240,7 @@ export default function Edit({ profileData }) {
                     autoComplete='off'
                     spellCheck='false'
                     disabled={loading}
-                    className='w-full rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70 sm:max-w-[200px]'
+                    className='w-full rounded-md bg-tertiary px-2 py-1 font-medium text-secondary outline-hidden placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary disabled:pointer-events-none disabled:opacity-70 sm:max-w-[200px]'
                   />
                 )
               ) : (
@@ -304,7 +304,7 @@ export default function Edit({ profileData }) {
                       <div className='size-3 rounded-full' style={{ backgroundColor: colors.primary || '#000000' }} />
                     </h2>
 
-                    <div className='[&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
+                    <div className='[&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px] [&_.react-colorful\_\_hue]:h-[10px]! [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
                       <HexAlphaColorPicker
                         color={colors.primary || '#000000'}
                         onChange={color => setColors(oldColors => ({ ...oldColors, primary: color }))}
@@ -314,7 +314,7 @@ export default function Edit({ profileData }) {
                         type='text'
                         value={colors.primary || '#000000'}
                         onChange={event => setColors(oldColors => ({ ...oldColors, primary: event.target.value }))}
-                        className='mt-4 w-full max-w-[120px] rounded-md bg-tertiary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
+                        className='mt-4 w-full max-w-[120px] rounded-md bg-tertiary px-2 py-1 text-sm font-medium text-secondary outline-hidden placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                       />
                     </div>
                   </div>
@@ -326,7 +326,7 @@ export default function Edit({ profileData }) {
                       <div className='size-3 rounded-full' style={{ backgroundColor: colors.secondary || '#000000' }} />
                     </h2>
 
-                    <div className='[&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px] [&_.react-colorful\_\_hue]:!h-[10px] [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
+                    <div className='[&_.react-colorful\_\_alpha]:h-[10px] [&_.react-colorful\_\_alpha]:w-[120px] [&_.react-colorful\_\_hue]:h-[10px]! [&_.react-colorful\_\_pointer]:size-[10px] [&_.react-colorful]:size-[120px]'>
                       <HexAlphaColorPicker
                         color={colors.secondary || '#000000'}
                         onChange={color => setColors(oldColors => ({ ...oldColors, secondary: color }))}
@@ -336,7 +336,7 @@ export default function Edit({ profileData }) {
                         type='text'
                         value={colors.secondary || '#000000'}
                         onChange={event => setColors(oldColors => ({ ...oldColors, secondary: event.target.value }))}
-                        className='mt-4 w-full max-w-[120px] rounded-md bg-tertiary px-2 py-1 text-sm font-medium text-secondary outline-none placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
+                        className='mt-4 w-full max-w-[120px] rounded-md bg-tertiary px-2 py-1 text-sm font-medium text-secondary outline-hidden placeholder:text-placeholder hover:bg-quaternary focus-visible:bg-quaternary'
                       />
                     </div>
                   </div>

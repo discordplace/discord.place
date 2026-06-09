@@ -52,7 +52,7 @@ export default function FaQs({ emoji }) {
 
         <MdChevronLeft
           className={cn(
-            activeQA === index ? 'rotate-[90deg]' : 'rotate-[-90deg]'
+            activeQA === index ? 'rotate-90' : '-rotate-90'
           )}
           size={20}
         />

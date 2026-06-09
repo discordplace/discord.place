@@ -33,7 +33,7 @@ export default function Tooltip({ children, content, side, sideOffset, size, hid
           <RadixTooltip.Portal>
             <RadixTooltip.Content
               className={cn(
-                'max-w-[200px] font-semibold [transform-origin:var(--radix-tooltip-content-transform-origin)] discord-theme bg-[#111214] px-4 py-1.5 rounded-lg',
+                'max-w-[200px] font-semibold origin-(--radix-tooltip-content-transform-origin) discord-theme bg-[#111214] px-4 py-1.5 rounded-lg',
                 size === 'small' && 'text-xs px-2.5'
               )}
               sideOffset={sideOffset || 18}

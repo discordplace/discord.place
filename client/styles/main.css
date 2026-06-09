@@ -1,5 +1,5 @@
-@import 'tailwind.css';
-@import 'radix-animations.css';
+@import './tailwind.css';
+@import './radix-animations.css';
 
 html, body {
   width: 100%;

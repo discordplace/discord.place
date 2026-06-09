@@ -171,7 +171,7 @@ export default function CreateQuarantineModal() {
                 <input
                   type='text'
                   placeholder={`${type === 'USER_ID' ? 'User' : 'Guild'} ID`}
-                  className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+                  className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-hidden ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
                   value={value}
                   onChange={event => setValue(event.target.value)}
                 />
@@ -225,7 +225,7 @@ export default function CreateQuarantineModal() {
             <input
               type='text'
               placeholder='Reason'
-              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-hidden ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
               value={reason}
               onChange={event => setReason(event.target.value)}
             />
@@ -238,7 +238,7 @@ export default function CreateQuarantineModal() {
             <input
               type='text'
               placeholder='Time'
-              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+              className='mt-3 w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-hidden ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
               value={time}
               onChange={event => setTime(event.target.value)}
             />

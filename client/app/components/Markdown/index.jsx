@@ -13,7 +13,7 @@ export default function Markdown({ children, className, rawEnabled }) {
   return (
     <div
       className={cn(
-        'markdown break-words prose max-w-5xl min-w-[0px] dark:prose-invert',
+        'markdown wrap-break-word prose max-w-5xl min-w-0 dark:prose-invert',
         /* blockquote Styles */
         'prose-blockquote:border-l-primary prose-blockquote:text-tertiary',
         /* list Styles */

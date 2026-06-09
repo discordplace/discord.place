@@ -72,13 +72,13 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.10.0",
+    "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/typography": "^0.5.10",
-    "autoprefixer": "^10.4.19",
     "babel-plugin-react-compiler": "^1.0.0",
     "oxfmt": "^0.53.0",
     "oxlint": "^1.68.0",
     "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^4.3.0"
   },
   "pnpm": {
     "peerDependencyRules": {

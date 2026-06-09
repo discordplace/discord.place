@@ -69,7 +69,7 @@ export default function RootLayoutContent({ children }) {
       <ProgressBarProvider>
         <Toaster
           toastOptions={{
-            className: '!bg-secondary !shadow-lg !border !border-primary !text-primary'
+            className: 'bg-secondary! shadow-lg! border! border-primary! text-primary!'
           }}
         />
 

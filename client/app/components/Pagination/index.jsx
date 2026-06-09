@@ -69,7 +69,7 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
       exit={exit}
     >
       <button
-        className='select-none rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-1.5 py-1 text-sm font-bold outline-none hover:bg-quaternary disabled:pointer-events-none disabled:opacity-60'
+        className='select-none rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-1.5 py-1 text-sm font-bold outline-hidden hover:bg-quaternary disabled:pointer-events-none disabled:opacity-60'
         onClick={() => setPage(page - 1)}
         disabled={loading || page === 1}
       >
@@ -81,8 +81,8 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
           <button
             key={pageNumber}
             className={cn(
-              'outline-none px-2.5 py-1 relative overflow-hidden bg-secondary select-none hover:bg-quaternary duration-300 [&:not(:disabled)]:hover:border-purple-500 rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))] disabled:pointer-events-none disabled:opacity-60',
-              pageNumber === page ? '!opacity-100 border-purple-500' : 'transition-[background-color,border-color]'
+              'outline-hidden px-2.5 py-1 relative overflow-hidden bg-secondary select-none hover:bg-quaternary duration-300 not-disabled:hover:border-purple-500 rounded-lg text-sm font-bold border-2 border-[rgba(var(--bg-quaternary))] disabled:pointer-events-none disabled:opacity-60',
+              pageNumber === page ? 'opacity-100! border-purple-500' : 'transition-[background-color,border-color]'
             )}
             onClick={() => setPage(pageNumber)}
             disabled={loading || pageNumber === page}
@@ -97,7 +97,7 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
                 inputMode='numeric'
                 pattern='[0-9]*'
                 ref={inputRef}
-                className='relative max-w-[50px] select-none overflow-hidden rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-2.5 py-1 text-center text-sm font-bold text-secondary caret-[rgba(var(--text-secondary))] outline-none duration-300 placeholder:text-[rgba(var(--text-tertiary))] hover:bg-quaternary focus-visible:bg-quaternary'
+                className='relative max-w-[50px] select-none overflow-hidden rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-2.5 py-1 text-center text-sm font-bold text-secondary caret-[rgba(var(--text-secondary))] outline-hidden duration-300 placeholder:text-[rgba(var(--text-tertiary))] hover:bg-quaternary focus-visible:bg-quaternary'
                 value={inputValue}
                 onChange={event => {
                   if (event.target.validity.patternMismatch) return;
@@ -138,7 +138,7 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
               />
             ) : (
               <button
-                className='relative flex select-none items-center justify-center gap-x-0.5 overflow-hidden rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-2.5 py-1 text-sm font-bold outline-none duration-300 hover:bg-quaternary [&:not(:disabled)]:hover:border-purple-500'
+                className='relative flex select-none items-center justify-center gap-x-0.5 overflow-hidden rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-2.5 py-1 text-sm font-bold outline-hidden duration-300 hover:bg-quaternary not-disabled:hover:border-purple-500'
                 onClick={() => setInputOpened(true)}
               >
                 <span className='block size-[2.5px] rounded-full bg-[rgba(var(--text-primary))]' />
@@ -151,7 +151,7 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
       ))}
 
       <button
-        className='select-none rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-1.5 py-1 text-sm font-bold outline-none hover:bg-quaternary disabled:pointer-events-none disabled:opacity-60'
+        className='select-none rounded-lg border-2 border-[rgba(var(--bg-quaternary))] bg-secondary px-1.5 py-1 text-sm font-bold outline-hidden hover:bg-quaternary disabled:pointer-events-none disabled:opacity-60'
         onClick={() => setPage(page + 1)}
         disabled={loading || page === totalPages}
       >

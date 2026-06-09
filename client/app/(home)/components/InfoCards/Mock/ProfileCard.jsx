@@ -9,7 +9,7 @@ export default function MockProfileCard() {
   const user = useAuthStore(state => state.user);
 
   return (
-    <div className='pointer-events-none relative bottom-24 right-2 rotate-[15deg] select-none'>
+    <div className='pointer-events-none relative bottom-24 right-2 rotate-15 select-none'>
       <ProfileCard
         id={loggedIn ? user.id : '1207874300070199356'}
         avatar={loggedIn ? user.avatar : 'a_a20e76287cb0a3316d55995f0126e3e7'}

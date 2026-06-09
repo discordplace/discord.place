@@ -77,7 +77,7 @@ export default function InfoCards() {
         description={t('home.infoCards.3.description')}
         content={(
           <div className='relative grid size-full grid-rows-2 gap-4 overflow-hidden rounded-3xl mobile:grid-cols-2'>
-            <div className='absolute left-0 top-0 z-[1] size-full'
+            <div className='absolute left-0 top-0 z-1 size-full'
               style={{
                 background: 'radial-gradient(circle, transparent, rgba(var(--bg-background)) 100%)'
               }}

@@ -116,7 +116,7 @@ export default function Sidebar({ blocks }) {
 
               <div
                 className={cn(
-                  'h-[1px] bg-quaternary w-full',
+                  'h-px bg-quaternary w-full',
                   !isCollapsed && 'hidden'
                 )}
               />

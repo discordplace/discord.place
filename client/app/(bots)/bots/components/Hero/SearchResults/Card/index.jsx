@@ -80,7 +80,7 @@ import Tooltip from '@/app/components/Tooltip';
 
   return (
     <Link
-      className='group relative z-[1] flex h-[250px] w-full cursor-pointer overflow-hidden rounded-3xl p-0.5'
+      className='group relative z-1 flex h-[250px] w-full cursor-pointer overflow-hidden rounded-3xl p-0.5'
       href={`/bots/${data.id}`}
     >
       {data.standed_out?.created_at ? (
@@ -96,15 +96,15 @@ import Tooltip from '@/app/components/Tooltip';
           <UserBanner
             id={data.id}
             hash={data.banner}
-            className='absolute left-0 top-0 z-[1] h-[calc(100%_-_1px)] w-full rounded-[1.25rem] bg-quaternary'
+            className='absolute left-0 top-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary'
             size={512}
             width={350}
             height={200}
           />
         ) : (
-          <div className='absolute left-0 top-0 z-[1] h-[calc(100%_-_1px)] w-full rounded-[1.25rem] bg-quaternary' />
+          <div className='absolute left-0 top-0 z-1 h-[calc(100%-1px)] w-full rounded-[1.25rem] bg-quaternary' />
         )}
-        <div className='relative top-[30px] z-[2] h-[calc(100%_-_30px)] w-full rounded-b-[1.25rem] rounded-t-3xl bg-secondary transition-colors group-hover:bg-tertiary'>
+        <div className='relative top-[30px] z-2 h-[calc(100%-30px)] w-full rounded-b-[1.25rem] rounded-t-3xl bg-secondary transition-colors group-hover:bg-tertiary'>
           <UserAvatar
             id={data.id}
             hash={data.avatar}
@@ -154,7 +154,7 @@ import Tooltip from '@/app/components/Tooltip';
                 <Tooltip
                   content={t('botCard.mostVotedBadge.tooltip')}
                 >
-                  <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
+                  <div className='relative z-1 overflow-hidden rounded-full p-[0.1rem]'>
                     <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#3b82f6_10deg,transparent_90deg)]'></div>
 
                     <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md transition-all hover:bg-blue-500/50'>
@@ -168,7 +168,7 @@ import Tooltip from '@/app/components/Tooltip';
                 </Tooltip>
               ) : (
                 data.vote_triple_enabled?.created_at && (
-                  <div className='relative z-[1] overflow-hidden rounded-full p-[0.1rem]'>
+                  <div className='relative z-1 overflow-hidden rounded-full p-[0.1rem]'>
                     <div className='pointer-events-none absolute inset-0 z-10 size-full animate-rotate rounded-full bg-[conic-gradient(#f97316_10deg,transparent_90deg)]'></div>
 
                     <div className='relative z-20 flex items-center gap-x-1 rounded-full bg-orange-500/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md'>

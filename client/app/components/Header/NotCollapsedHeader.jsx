@@ -67,7 +67,7 @@ export default function NotCollapsedHeader() {
   }, [hoveringHeaderTab, lastMouseOut]);
 
   return (
-    <div className='absolute left-0 top-0 z-[9998] flex w-full items-center justify-center'>
+    <div className='absolute left-0 top-0 z-9998 flex w-full items-center justify-center'>
       <div className='mt-8 flex w-full max-w-5xl items-center justify-between'>
         <div className='flex items-center gap-x-12'>
           <LogoWithText />
@@ -91,7 +91,7 @@ export default function NotCollapsedHeader() {
                   }}
                 >
                   <div
-                    className='group relative z-[2] flex items-center gap-x-2 px-3 py-1 text-sm font-semibold text-tertiary transition-all hover:text-primary'
+                    className='group relative z-2 flex items-center gap-x-2 px-3 py-1 text-sm font-semibold text-tertiary transition-all hover:text-primary'
                     id={`headerTab-${link.name}`}
                   >
                     <link.icon />
@@ -112,7 +112,7 @@ export default function NotCollapsedHeader() {
                   {link.id === 'services' && (
                     <div
                       className={cn(
-                        'absolute pt-12 pb-4 pl-4 pr-4 z-[1]',
+                        'absolute pt-12 pb-4 pl-4 pr-4 z-1',
                         hoveringHeaderTab !== link.name && 'pointer-events-none'
                       )}
                     >

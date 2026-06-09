@@ -107,7 +107,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
                   <input
                     type='text'
                     placeholder={botId}
-                    className='w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-none ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
+                    className='w-full rounded-xl bg-secondary px-3 py-2 text-sm text-secondary outline-hidden ring-purple-500 transition-all placeholder:text-placeholder hover:bg-background hover:ring-2 focus-visible:bg-background'
                     ref={newExtraOwnerIdInputRef}
                   />
                 ),
@@ -146,7 +146,7 @@ export default function ExtraOwners({ botId, canEditExtraOwners }) {
               className='flex items-center gap-x-2'
             >
               <div className='size-8 animate-pulse rounded-full bg-tertiary' />
-              <div className='h-4 w-[85px] flex-1 animate-pulse rounded bg-tertiary' />
+              <div className='h-4 w-[85px] flex-1 animate-pulse rounded-sm bg-tertiary' />
             </div>
           ))
         ) : (extraOwners.length === 0 ? (

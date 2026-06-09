@@ -53,7 +53,7 @@ export default function Error() {
 
         <div className='mt-6 flex w-full items-center justify-between'>
           <Link
-            className='pointer-events-auto w-max rounded-full px-4 py-1.5 text-sm font-semibold backdrop-blur-sm dark:bg-white/5 text-primary bg-black/5 hover:bg-black/10 dark:hover:bg-white/10'
+            className='pointer-events-auto w-max rounded-full px-4 py-1.5 text-sm font-semibold backdrop-blur-xs dark:bg-white/5 text-primary bg-black/5 hover:bg-black/10 dark:hover:bg-white/10'
             href='/'
           >
             {t('buttons.goHome')}

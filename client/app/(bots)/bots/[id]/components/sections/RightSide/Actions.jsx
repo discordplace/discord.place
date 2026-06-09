@@ -154,7 +154,7 @@ export default function Actions({ bot }) {
         <motion.button
           className={cn(
             'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-black rounded-lg group gap-x-2 hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70',
-            loading && 'cursor-default !opacity-70 hover:bg-black dark:hover:bg-white'
+            loading && 'cursor-default opacity-70! hover:bg-black dark:hover:bg-white'
           )}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -224,7 +224,7 @@ export default function Actions({ bot }) {
               <motion.button
                 className={cn(
                   'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-orange-500 rounded-lg group gap-x-2 hover:bg-orange-600',
-                  buyTripledVotesLoading && '!opacity-70 pointer-events-none'
+                  buyTripledVotesLoading && 'opacity-70! pointer-events-none'
                 )}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -252,7 +252,7 @@ export default function Actions({ bot }) {
               <motion.button
                 className={cn(
                   'flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-white bg-green-800 rounded-lg group gap-x-2 hover:bg-green-900',
-                  buyStandedOutLoading && '!opacity-70 pointer-events-none'
+                  buyStandedOutLoading && 'opacity-70! pointer-events-none'
                 )}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}

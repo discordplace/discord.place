@@ -64,7 +64,7 @@ export default function ServicesDropdown() {
           <div className='flex -space-x-1 text-sm'>
             <FaQuestion className='relative top-[3px] rotate-[-10deg]' />
             <FaQuestion />
-            <FaQuestion className='relative top-[3px] rotate-[10deg]' />
+            <FaQuestion className='relative top-[3px] rotate-10' />
           </div>
         )
       ,

@@ -34,7 +34,7 @@ export default function CodeBlock({ children, FileIcon, fileName, language, clas
         style={theme === 'dark' ? oneDark : oneLight}
         wrapLongLines={false}
         className={cn(
-          '!mb-0 max-w-[calc(100vw_-_4rem)] !bg-[unset] [&>code]:!bg-[unset]',
+          'mb-0! max-w-[calc(100vw-4rem)] bg-[unset]! [&>code]:bg-[unset]!',
           className
         )}
       />

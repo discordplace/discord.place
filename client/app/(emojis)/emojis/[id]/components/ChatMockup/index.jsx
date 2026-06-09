@@ -47,7 +47,7 @@ export default function ChatMockup({ id, username, avatar, message, emoji_url, t
         <div className='flex items-center gap-x-1'>
           <span
             className={cn(
-              'text-sm truncate max-w-[100%] w-full hidden mobile:flex',
+              'text-sm truncate max-w-full w-full hidden mobile:flex',
               theme === 'dark' ? 'text-[rgb(var(--dark-text-secondary))]' : 'text-[rgb(var(--light-text-secondary))]'
             )}
           >

@@ -3,12 +3,12 @@ import Image from 'next/image';
 
 export default function BlogCard({ data, loading }) {
   if (loading) {return (
-    <div className='flex h-[312px] w-full max-w-[calc(33%_-_2rem)] animate-pulse flex-col gap-y-3 rounded-xl bg-secondary' />
+    <div className='flex h-[312px] w-full max-w-[calc(33%-2rem)] animate-pulse flex-col gap-y-3 rounded-xl bg-secondary' />
   );}
 
   return (
     <Link
-      className='flex size-full max-w-full flex-col gap-y-3 transition-opacity hover:opacity-80 sm:max-w-[calc(50%_-_2rem)] lg:max-w-[calc(33%_-_2rem)]'
+      className='flex size-full max-w-full flex-col gap-y-3 transition-opacity hover:opacity-80 sm:max-w-[calc(50%-2rem)] lg:max-w-[calc(33%-2rem)]'
       href={`/blogs/${data.id}`}
     >
       <div className='relative'>

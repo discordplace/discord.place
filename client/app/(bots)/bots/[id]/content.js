@@ -39,7 +39,7 @@ export default function Content({ bot }) {
             <UserBanner
               id={bot.id}
               hash={bot.banner}
-              className='absolute left-0 top-0 z-[1] size-full rounded-xl object-cover'
+              className='absolute left-0 top-0 z-1 size-full rounded-xl object-cover'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               size={2048}
@@ -48,7 +48,7 @@ export default function Content({ bot }) {
             />
           )}
 
-          <div className='absolute -bottom-14 left-10 z-[3] w-[calc(100%_-_2.5rem)]'>
+          <div className='absolute -bottom-14 left-10 z-3 w-[calc(100%-2.5rem)]'>
             <UserAvatar
               id={bot.id}
               hash={bot.avatar}
@@ -57,7 +57,7 @@ export default function Content({ bot }) {
               height={150}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className='size-[128px] rounded-3xl border-[10px] border-[rgb(var(--bg-background))] bg-background'
+              className='size-[128px] rounded-3xl border-10 border-[rgb(var(--bg-background))] bg-background'
             />
           </div>
         </div>

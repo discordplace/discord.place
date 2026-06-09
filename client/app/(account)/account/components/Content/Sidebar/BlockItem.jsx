@@ -33,8 +33,8 @@ import Link from 'next/link';
         className={cn(
           'flex items-center w-full py-2 rounded-lg gap-x-3 select-none',
           activeTab === id ? 'bg-quaternary text-primary pointer-events-none' : 'cursor-pointer hover:bg-quaternary text-secondary hover:text-primary',
-          badge > 0 && 'hover:bg-tertiary hover:bg-gradient-to-l hover:from-purple-600/20',
-          activeTab === id && badge > 0 && 'bg-tertiary bg-gradient-to-l from-purple-600/20',
+          badge > 0 && 'hover:bg-tertiary hover:bg-linear-to-l hover:from-purple-600/20',
+          activeTab === id && badge > 0 && 'bg-tertiary bg-linear-to-l from-purple-600/20',
           isCollapsed ? 'justify-center' : 'pl-4',
           disabled && 'opacity-50 pointer-events-none',
           loading && 'pointer-events-none'

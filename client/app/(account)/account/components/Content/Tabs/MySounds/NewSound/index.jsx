@@ -206,7 +206,7 @@ export default function NewSound() {
             </p>
 
             <input
-              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
               onChange={event => setSoundName(event.target.value)}
               value={soundName}
               maxLength={config.soundNameMaxLength}

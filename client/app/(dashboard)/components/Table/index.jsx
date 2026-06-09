@@ -151,7 +151,7 @@ export default function Table({ tabs }) {
                 <div className='relative flex w-full items-center'>
                   <input
                     type='text'
-                    className='peer w-full bg-transparent pl-5 text-secondary outline-none placeholder:text-[rgba(var(--text-tertiary))] focus-visible:text-primary sm:w-36'
+                    className='peer w-full bg-transparent pl-5 text-secondary outline-hidden placeholder:text-[rgba(var(--text-tertiary))] focus-visible:text-primary sm:w-36'
                     placeholder='Search anything...'
                     value={searchQuery}
                     onChange={event => setSearchQuery(event.target.value)}
@@ -185,7 +185,7 @@ export default function Table({ tabs }) {
                 {currentlySearching ? (
                   <input
                     type='text'
-                    className='w-24 bg-transparent text-secondary outline-none sm:w-36'
+                    className='w-24 bg-transparent text-secondary outline-hidden sm:w-36'
                     placeholder='Search anything...'
                     value={searchQuery}
                     onChange={event => setSearchQuery(event.target.value)}
@@ -215,7 +215,7 @@ export default function Table({ tabs }) {
 
       <div className='relative -mt-8 w-full max-w-[230px] overflow-auto mobile:max-w-[360px] sm:max-w-[430px] lg:max-w-[unset]'>
         {(currentTabData.columns.length === 0 || displayedColumns.length === 0) && (
-          <div className='flex min-h-[calc(100svh_-_420px)] max-w-[calc(100vw_-_65px)] items-center justify-center sm:max-w-[unset]'>
+          <div className='flex min-h-[calc(100svh-420px)] max-w-[calc(100vw-65px)] items-center justify-center sm:max-w-[unset]'>
             <ErrorState
               title={
                 <div className='flex items-center gap-x-2'>
@@ -294,7 +294,7 @@ export default function Table({ tabs }) {
                         >
                           <button
                             className={cn(
-                              'w-[18px] h-[18px] flex justify-center items-center border-2 outline-none hover:bg-[rgba(var(--border-primary))] transition-colors border-primary rounded-md',
+                              'w-[18px] h-[18px] flex justify-center items-center border-2 outline-hidden hover:bg-[rgba(var(--border-primary))] transition-colors border-primary rounded-md',
                               selectedItems.find(col => isEqual(col, column)) && 'bg-purple-500 hover:bg-purple-500 text-white'
                             )}
                           >

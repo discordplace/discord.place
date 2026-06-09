@@ -28,7 +28,7 @@ export default function Content({ server }) {
             <ServerBanner
               id={server.id}
               hash={server.banner}
-              className='absolute left-0 top-0 z-[1] size-full rounded-xl object-cover'
+              className='absolute left-0 top-0 z-1 size-full rounded-xl object-cover'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               size={2048}
@@ -37,7 +37,7 @@ export default function Content({ server }) {
             />
           )}
 
-          <div className='absolute -bottom-14 left-10 z-[3] w-[calc(100%_-_2.5rem)]'>
+          <div className='absolute -bottom-14 left-10 z-3 w-[calc(100%-2.5rem)]'>
             <ServerIcon
               id={server.id}
               hash={server.icon}
@@ -45,7 +45,7 @@ export default function Content({ server }) {
               width={150}
               height={150}
               className={cn(
-                'border-[10px] border-[rgb(var(--bg-background))] rounded-3xl w-[128px] h-[128px]',
+                'border-10 border-[rgb(var(--bg-background))] rounded-3xl w-[128px] h-[128px]',
                 server.icon && 'bg-background'
               )}
               initial={{ opacity: 0, y: 20 }}

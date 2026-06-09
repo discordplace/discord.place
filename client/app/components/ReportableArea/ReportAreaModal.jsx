@@ -39,7 +39,7 @@ export default function ReportAreaModal({ type, metadata }) {
 
         <div className='relative'>
           <textarea
-            className='scrollbar-hide peer mt-2 block h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-quaternary p-2 text-sm font-medium text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base [&:not(:disabled)]:cursor-text'
+            className='scrollbar-hide peer mt-2 block h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-quaternary p-2 text-sm font-medium text-placeholder outline-hidden placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base not-disabled:cursor-text'
             value={reason}
             onChange={event => setReason(event.target.value)}
             maxLength={config.reportReasonMaxCharacters}

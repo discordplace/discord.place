@@ -26,7 +26,7 @@ function StatBlock({ fields, index }) {
     <div className='flex w-full flex-col gap-y-4' style={{
       alignItems: index % 2 === 0 ? 'flex-start' : 'flex-end'
     }}>
-      <div className='flex w-full flex-col gap-y-2 rounded-[2rem] bg-background px-4 py-2'>
+      <div className='flex w-full flex-col gap-y-2 rounded-4xl bg-background px-4 py-2'>
         {fields.map(({ Icon, label, value, tooltip, disabled }, index) => (
           <>
             <div
@@ -73,7 +73,7 @@ export default function Content({ user }) {
 
   return (
     <div className='mb-8 mt-32 flex w-full flex-col items-center gap-y-8 px-8 lg:px-0'>
-      <div className='relative h-max w-full max-w-[600px] rounded-[2rem] bg-secondary p-3'>
+      <div className='relative h-max w-full max-w-[600px] rounded-4xl bg-secondary p-3'>
         {user.bannerURL ? (
           <div className='relative'>
             <UserBanner
@@ -97,7 +97,7 @@ export default function Content({ user }) {
           <div className='h-[200px] rounded-[2.5rem] bg-tertiary' />
         )}
 
-        <div className='pointer-events-none relative bottom-16 left-8 -mb-12 flex w-full items-center sm:mb-[-7.5rem]'>
+        <div className='pointer-events-none relative bottom-16 left-8 -mb-12 flex w-full items-center sm:-mb-30'>
           {user.avatarURL ? (
             <UserAvatar
               id={user.id}

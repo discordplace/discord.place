@@ -48,7 +48,7 @@ export default function FaQs() {
         </div>
 
         <MdChevronLeft className={cn(
-          activeQA === index ? 'rotate-[90deg]' : 'rotate-[-90deg]'
+          activeQA === index ? 'rotate-90' : '-rotate-90'
         )} size={20} />
       </div>
 

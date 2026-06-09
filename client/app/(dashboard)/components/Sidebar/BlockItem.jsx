@@ -27,12 +27,12 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
           loading && 'pointer-events-none',
 
           // Danger style
-          badge?.data > 0 && badge.style === 'danger' && 'hover:bg-tertiary hover:bg-gradient-to-l hover:from-red-600/20',
-          activeTab === id && badge?.data > 0 && badge.style === 'danger' && 'bg-tertiary bg-gradient-to-l from-red-600/20',
+          badge?.data > 0 && badge.style === 'danger' && 'hover:bg-tertiary hover:bg-linear-to-l hover:from-red-600/20',
+          activeTab === id && badge?.data > 0 && badge.style === 'danger' && 'bg-tertiary bg-linear-to-l from-red-600/20',
 
           // Primary style
-          badge?.data > 0 && badge.style === 'primary' && 'hover:bg-tertiary hover:bg-gradient-to-l hover:from-purple-500/20',
-          activeTab === id && badge?.data > 0 && badge.style === 'primary' && 'bg-tertiary bg-gradient-to-l from-purple-500/20'
+          badge?.data > 0 && badge.style === 'primary' && 'hover:bg-tertiary hover:bg-linear-to-l hover:from-purple-500/20',
+          activeTab === id && badge?.data > 0 && badge.style === 'primary' && 'bg-tertiary bg-linear-to-l from-purple-500/20'
         )}
         key={id}
         onClick={() => (onClick ? onClick() : !href && setActiveTab(id))}

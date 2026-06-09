@@ -19,12 +19,12 @@ export default function Channels({ data, focusedChannel, setFocusedChannel, curr
   return (
     <div
       className={cn(
-        'overflow-y-auto max-h-[100svh] scrollbar-hide pb-4 min-h-full flex flex-col w-full max-w-[240px] bg-[#2b2d31]',
+        'overflow-y-auto max-h-svh scrollbar-hide pb-4 min-h-full flex flex-col w-full max-w-[240px] bg-[#2b2d31]',
         isMobile && 'max-w-[unset]',
         currentlyOpenedSection !== 'channels' && 'hidden'
       )}
     >
-      <div className='relative z-[1] flex items-center gap-x-2 bg-gradient-to-b from-black/50 via-black/30 to-black/[0.04] px-5 py-3'>
+      <div className='relative z-1 flex items-center gap-x-2 bg-linear-to-b from-black/50 via-black/30 to-black/4 px-5 py-3'>
         <CommunityServerBoostedIcon className='size-4' />
 
         <h1 className='text-sm font-semibold text-white '>discord.place</h1>
@@ -40,7 +40,7 @@ export default function Channels({ data, focusedChannel, setFocusedChannel, curr
         width={512}
         height={512}
         className={cn(
-          'relative -mt-12 z-[0]',
+          'relative -mt-12 z-0',
           isMobile && 'w-full h-[150px] mobile:h-[200px] object-cover'
         )}
       />

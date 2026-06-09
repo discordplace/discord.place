@@ -20,8 +20,8 @@ export default function Home() {
     const diffInPercentClean = diffInPercent === Infinity ? 100 : (isNaN(diffInPercent) ? 0 : diffInPercent);
 
     return (
-      <div className='group flex items-center gap-x-4 2xl:[&:not(:first-child)]:ml-4'>
-        <div className='hidden h-full w-px bg-[rgba(var(--border-primary))] 2xl:group-[&:not(:first-child)]:block' />
+      <div className='group flex items-center gap-x-4 2xl:not-first:ml-4'>
+        <div className='hidden h-full w-px bg-[rgba(var(--border-primary))] 2xl:group-not-first:block' />
 
         <div
           className={cn(

@@ -12,7 +12,7 @@ export default function Layout({ children }) {
           'prose-h3:text-secondary',
           'prose-h4:text-secondary',
           'prose-p:text-tertiary prose-p:my-1',
-          'prose-a:text-secondary hover:prose-a:text-primary',
+          'prose-a:text-secondary prose-a:hover:text-primary',
           'prose-strong:text-secondary',
           'prose-li:text-tertiary prose-li:my-0',
           '[&>ol>li]:marker:text-tertiary',

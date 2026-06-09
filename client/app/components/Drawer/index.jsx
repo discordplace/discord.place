@@ -13,7 +13,7 @@ export default function CustomDrawer({ openState, setOpenState, state, setState,
       onOpenChange={setOpenState}
     >
       <Drawer.Portal>
-        <Drawer.Content className='fixed inset-x-0 bottom-0 z-[10001] flex h-max flex-col gap-y-1 rounded-t-3xl bg-secondary p-4 outline-none'>
+        <Drawer.Content className='fixed inset-x-0 bottom-0 z-10001 flex h-max flex-col gap-y-1 rounded-t-3xl bg-secondary p-4 outline-hidden'>
           <div className='mx-auto mb-8 h-1.5 w-12 shrink-0 rounded-full bg-quaternary' />
           <div className='flex max-h-[80svh] w-full flex-col gap-y-2 overflow-y-auto'>
             {items.map(item => (
@@ -36,7 +36,7 @@ export default function CustomDrawer({ openState, setOpenState, state, setState,
             ))}
           </div>
         </Drawer.Content>
-        <Drawer.Overlay className='fixed inset-0 z-[10000] bg-white/40 dark:bg-black/40' />
+        <Drawer.Overlay className='fixed inset-0 z-10000 bg-white/40 dark:bg-black/40' />
       </Drawer.Portal>
     </Drawer.Root>
   );

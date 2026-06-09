@@ -54,7 +54,7 @@ export default function MyEmojis() {
           </div>
         ) : (
           <VList
-            className='mt-2 grid !h-[500px] max-w-[800px] grid-cols-1 gap-4 mobile:grid-cols-2 2xl:grid-cols-3 [&>div>div>div]:my-4 [&>div>div>div]:max-w-[98%]'
+            className='mt-2 grid h-[500px]! max-w-[800px] grid-cols-1 gap-4 mobile:grid-cols-2 2xl:grid-cols-3 [&>div>div>div]:my-4 [&>div>div>div]:max-w-[98%]'
           >
             {concatenatedEmojis.map(emoji => (
               emoji.emoji_ids ? (

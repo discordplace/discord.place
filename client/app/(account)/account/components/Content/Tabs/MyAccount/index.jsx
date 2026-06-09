@@ -137,7 +137,7 @@ export default function MyAccount() {
             size={96}
             width={80}
             height={80}
-            className='relative bottom-10 left-4 z-[1] -mb-20 rounded-full border-8 border-[rgba(var(--bg-secondary))]'
+            className='relative bottom-10 left-4 z-1 -mb-20 rounded-full border-8 border-[rgba(var(--bg-secondary))]'
           />
 
           <div className='ml-28 mt-2'>
@@ -187,7 +187,7 @@ export default function MyAccount() {
                 </p>
 
                 <div className='flex select-none flex-wrap items-center gap-2'>
-                  <span className='bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-sm font-semibold text-transparent'>
+                  <span className='bg-linear-to-r from-purple-400 to-purple-600 bg-clip-text text-sm font-semibold text-transparent'>
                     {plansLoading ? (
                       <>
                         <TbLoader className='animate-spin' />
@@ -209,7 +209,7 @@ export default function MyAccount() {
               </>
             ) : (
               <div className='relative max-w-[500px] rounded-xl border-2 border-purple-500 p-2.5'>
-                <div className='absolute left-0 top-0 size-full rounded-xl bg-gradient-to-r from-purple-500/25 via-purple-500/10'></div>
+                <div className='absolute left-0 top-0 size-full rounded-xl bg-linear-to-r from-purple-500/25 via-purple-500/10'></div>
 
                 <div className='flex items-center gap-x-4'>
                   <GoHeartFill className='min-h-[20px] min-w-[20px]' />
@@ -268,7 +268,7 @@ export default function MyAccount() {
                 {t('accountPage.tabs.myAccount.sections.yourProfile.noProfile')}
 
                 <button
-                  className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white outline-none hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
+                  className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white outline-hidden hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
                   onClick={() =>
                     openModal('create-profile', {
                       buttons: [

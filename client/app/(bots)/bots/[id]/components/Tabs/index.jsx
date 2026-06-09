@@ -35,7 +35,7 @@ export default function Tabs({ bot }) {
               key={tab.id}
               className={cn(
                 'relative px-4 text-center py-2 text-sm font-semibold rounded-full select-none transition-all duration-500 bg-tertiary',
-                activeTab === tab.id && 'z-[10] text-white dark:text-black',
+                activeTab === tab.id && 'z-10 text-white dark:text-black',
                 tab.disabled && 'opacity-50 cursor-not-allowed'
               )}
               onClick={() => !tab.disabled && setActiveTab(tab.id)}

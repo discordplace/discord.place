@@ -246,7 +246,7 @@ export default function ColumnRenderer({ data }) {
       return (
         <div className='ml-2 flex items-center gap-x-2'>
           <button
-            className='flex size-[24px] items-center justify-center rounded-full bg-black text-[rgba(var(--bg-secondary))] outline-none hover:bg-black/70 dark:bg-white dark:hover:bg-white/70'
+            className='flex size-[24px] items-center justify-center rounded-full bg-black text-[rgba(var(--bg-secondary))] outline-hidden hover:bg-black/70 dark:bg-white dark:hover:bg-white/70'
             onClick={onPlayPause}
           >
             {currentlyPlaying === data.id ? (

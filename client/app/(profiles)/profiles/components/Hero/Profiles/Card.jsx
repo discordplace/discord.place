@@ -66,11 +66,11 @@ export default function Card(props) {
         username: props.username
       }}
     >
-      <div className='group relative z-[1] h-[461px] w-[300px] overflow-hidden rounded-3xl p-0.5'>
+      <div className='group relative z-1 h-[461px] w-[300px] overflow-hidden rounded-3xl p-0.5'>
         {props.premium === true && (
           <div
             className={cn(
-              'w-full h-full z-[20] absolute inset-0',
+              'w-full h-full z-20 absolute inset-0',
               !haveCustomColors && 'animate-rotate rounded-full bg-[conic-gradient(#a855f7_20deg,transparent_120deg)] pointer-events-none'
             )}
             style={{
@@ -90,7 +90,7 @@ export default function Card(props) {
 
         <div
           className={cn(
-            'z-[20] relative flex flex-col w-full h-full p-3 rounded-3xl',
+            'z-20 relative flex flex-col w-full h-full p-3 rounded-3xl',
             !haveCustomColors && 'bg-tertiary'
           )}
           style={{
@@ -124,7 +124,7 @@ export default function Card(props) {
             />
           )}
 
-          <div className='relative left-[10px] mt-[-4.5rem]'>
+          <div className='relative left-[10px] -mt-18'>
             <div className='relative w-max'>
               {props.avatar ? (
                 <UserAvatar
@@ -135,7 +135,7 @@ export default function Card(props) {
                   height={64}
                   className={cn(
                     'rounded-full',
-                    userStatus && '[mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10.2px)]'
+                    userStatus && 'mask-[radial-gradient(circle_at_85%_85%,transparent_10px,black_10.2px)]'
                   )}
                 />
               ) : (
@@ -146,7 +146,7 @@ export default function Card(props) {
                   height={64}
                   className={cn(
                     'rounded-full',
-                    userStatus && '[mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10.2px)]'
+                    userStatus && 'mask-[radial-gradient(circle_at_85%_85%,transparent_10px,black_10.2px)]'
                   )}
                 />
               )}
@@ -255,7 +255,7 @@ export default function Card(props) {
 
             <div
               className={cn(
-                'w-full my-4 h-[1px]',
+                'w-full my-4 h-px',
                 !haveCustomColors ? 'bg-quaternary' : 'bg-black/20'
               )}
             />
@@ -323,7 +323,7 @@ export default function Card(props) {
                 <Link
                   className={cn(
                     'flex text-white items-center px-2 py-1.5 font-semibold text-sm gap-x-0.5 rounded-lg',
-                    !haveCustomColors ? 'hover:bg-purple-700 bg-purple-600' : 'shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-sm'
+                    !haveCustomColors ? 'hover:bg-purple-700 bg-purple-600' : 'shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-xs'
                   )}
                   href={`/profile/${props.slug}`}
                 >
@@ -338,7 +338,7 @@ export default function Card(props) {
                   <button
                     className={cn(
                       'flex items-center px-2 py-1.5 font-semibold text-sm gap-x-0.5 rounded-lg',
-                      !haveCustomColors ? 'bg-quaternary hover:bg-purple-600 text-tertiary hover:text-white' : 'text-white shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-sm'
+                      !haveCustomColors ? 'bg-quaternary hover:bg-purple-600 text-tertiary hover:text-white' : 'text-white shadow-xl bg-black/30 hover:bg-black/50 backdrop-blur-xs'
                     )}
                   >
                     <TbWorldShare size={16} />

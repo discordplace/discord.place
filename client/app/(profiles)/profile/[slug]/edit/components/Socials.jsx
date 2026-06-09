@@ -159,7 +159,7 @@ export default function Socials({ profile }) {
 
           return (
             <div
-              className='group flex w-full max-w-[calc(50%_-_1rem)] items-center justify-between gap-x-1 rounded-2xl border border-primary bg-secondary px-2 py-3 transition-colors hover:bg-tertiary'
+              className='group flex w-full max-w-[calc(50%-1rem)] items-center justify-between gap-x-1 rounded-2xl border border-primary bg-secondary px-2 py-3 transition-colors hover:bg-tertiary'
               key={social.link}
             >
               <div className='flex items-center gap-x-2 text-sm text-tertiary transition-colors group-hover:text-primary'>
@@ -203,7 +203,7 @@ export default function Socials({ profile }) {
 
         <div
           className={cn(
-            'transition-all [&:has(input:focus)]:bg-tertiary border border-primary w-full max-w-[calc(50%_-_1rem)] rounded-2xl px-2 py-3 text-sm font-semibold bg-secondary items-center justify-between gap-x-2',
+            'transition-all [&:has(input:focus)]:bg-tertiary border border-primary w-full max-w-[calc(50%-1rem)] rounded-2xl px-2 py-3 text-sm font-semibold bg-secondary items-center justify-between gap-x-2',
             currentlyAddingNewSocial ? 'flex' : 'hidden'
           )}
         >
@@ -231,7 +231,7 @@ export default function Socials({ profile }) {
               autoComplete='off'
               spellCheck='false'
               disabled={loading}
-              className='w-full bg-transparent font-medium text-secondary outline-none disabled:pointer-events-none disabled:opacity-70'
+              className='w-full bg-transparent font-medium text-secondary outline-hidden disabled:pointer-events-none disabled:opacity-70'
             />
           </div>
         </div>
@@ -243,7 +243,7 @@ export default function Socials({ profile }) {
           )}
         >
           <button
-            className='flex w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => {
+            className='flex w-full max-w-[calc(50%-1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={() => {
               setCurrentlyAddingNewSocial(false);
               setNewSocialType('unknown');
               setNewSocialValue('');
@@ -253,7 +253,7 @@ export default function Socials({ profile }) {
             {t('buttons.cancel')}
           </button>
 
-          <button className='flex w-full max-w-[calc(50%_-_1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={saveNewSocial} disabled={loading}>
+          <button className='flex w-full max-w-[calc(50%-1rem)] items-center justify-center gap-x-2 rounded-2xl bg-tertiary py-3 text-sm font-semibold text-secondary hover:bg-quaternary hover:text-primary disabled:pointer-events-none disabled:opacity-70' onClick={saveNewSocial} disabled={loading}>
             {t('buttons.add')}
           </button>
         </div>
@@ -261,7 +261,7 @@ export default function Socials({ profile }) {
         {socials.length < config.profilesMaxSocialsLength && (
           <button
             className={cn(
-              'flex w-full py-3 max-w-[calc(50%_-_1rem)] rounded-2xl justify-center text-sm font-semibold border-primary border hover:bg-tertiary hover:border-[rgb(var(--bg-tertiary))] items-center gap-x-2 text-secondary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
+              'flex w-full py-3 max-w-[calc(50%-1rem)] rounded-2xl justify-center text-sm font-semibold border-primary border hover:bg-tertiary hover:border-[rgb(var(--bg-tertiary))] items-center gap-x-2 text-secondary hover:text-primary disabled:pointer-events-none disabled:opacity-70',
               currentlyAddingNewSocial && 'hidden'
             )}
             onClick={() => setCurrentlyAddingNewSocial(true)}

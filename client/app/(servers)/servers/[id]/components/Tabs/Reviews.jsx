@@ -235,7 +235,7 @@ export default function Reviews({ server }) {
               <div className='relative'>
                 <textarea
                   disabled={loading || reviewSubmitted || !loggedIn}
-                  className='scrollbar-hide peer mt-4 block max-h-[200px] min-h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base lg:max-w-[450px] [&:not(:disabled)]:cursor-text'
+                  className='scrollbar-hide peer mt-4 block max-h-[200px] min-h-[100px] w-full resize-none rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-80 sm:text-base lg:max-w-[450px] not-disabled:cursor-text'
                   value={review}
                   onChange={event => setReview(event.target.value)}
                   maxLength={config.reviewsMaxCharacters}
@@ -294,7 +294,7 @@ export default function Reviews({ server }) {
               </div>
             </div>
 
-            <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0'>
+            <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap wrap-break-word font-medium text-secondary sm:gap-y-0'>
               <span className='h-[15px] w-full max-w-[150px] animate-pulse rounded-xl bg-quaternary text-xs font-medium text-tertiary'>
                 &thinsp;
               </span>
@@ -358,7 +358,7 @@ export default function Reviews({ server }) {
               }}
               identifier={`server-${server.id}-review-${review._id}`}
             >
-              <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap break-words font-medium text-secondary sm:gap-y-0'>
+              <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 whitespace-pre-wrap wrap-break-word font-medium text-secondary sm:gap-y-0'>
                 <span className='text-xs font-medium text-tertiary'>
                   {new Date(review.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', year: 'numeric' })}
                 </span>

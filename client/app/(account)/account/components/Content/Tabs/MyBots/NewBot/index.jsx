@@ -219,7 +219,7 @@ export default function NewBot() {
             </p>
 
             <input
-              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
               onChange={event => setBotId(event.target.value)}
               value={botId}
             />
@@ -233,7 +233,7 @@ export default function NewBot() {
             </p>
 
             <input
-              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
               maxLength={config.botShortDescriptionMaxLength}
               value={botShortDescription}
               onChange={event => setBotShortDescription(event.target.value)}
@@ -270,7 +270,7 @@ export default function NewBot() {
               </Markdown>
             ) : (
               <textarea
-                className='mt-4 block h-[250px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+                className='mt-4 block h-[250px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
                 value={botDescription}
                 onChange={event => setBotDescription(event.target.value)}
                 maxLength={config.botDescriptionMaxLength}
@@ -286,7 +286,7 @@ export default function NewBot() {
             </p>
 
             <input
-              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
               value={botInviteUrl}
               onChange={event => setBotInviteUrl(event.target.value)}
             />

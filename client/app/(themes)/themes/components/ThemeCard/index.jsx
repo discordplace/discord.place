@@ -128,7 +128,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
               size={128}
               width={78}
               height={78}
-              className='rounded-full [mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10.2px)]'
+              className='rounded-full mask-[radial-gradient(circle_at_85%_85%,transparent_10px,black_10.2px)]'
             />
           ) : (
             <Image
@@ -136,7 +136,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
               alt='Profile Picture'
               width={78}
               height={78}
-              className='rounded-full [mask-image:radial-gradient(circle_at_85%_85%,_transparent_10px,_black_10.2px)]'
+              className='rounded-full mask-[radial-gradient(circle_at_85%_85%,transparent_10px,black_10.2px)]'
             />
           )}
         </div>
@@ -153,7 +153,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
 
             {user?.flags.length > 0 && (
               <div
-                className='flex items-center gap-1 rounded border px-1 py-0.5'
+                className='flex items-center gap-1 rounded-sm border px-1 py-0.5'
                 style={{
                   background: backgroundColor,
                   borderColor
@@ -177,7 +177,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
             <div className='flex items-center gap-x-1 text-xs'>
               <div className='flex -space-x-1'>
                 <Image
-                  className='relative z-[1] size-4 rounded-full'
+                  className='relative z-1 size-4 rounded-full'
                   src={avatars[0]}
                   width={128}
                   height={128}
@@ -189,7 +189,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
                 />
 
                 <Image
-                  className='relative z-[1] size-4 rounded-full'
+                  className='relative z-1 size-4 rounded-full'
                   src={avatars[1]}
                   width={128}
                   height={128}
@@ -201,7 +201,7 @@ export default function ThemeCard({ id, primaryColor, secondaryColor }) {
                 />
 
                 <Image
-                  className='relative z-[1] size-4 rounded-full'
+                  className='relative z-1 size-4 rounded-full'
                   src={avatars[2]}
                   width={128}
                   height={128}

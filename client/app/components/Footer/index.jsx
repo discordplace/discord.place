@@ -175,7 +175,7 @@ export default function Footer() {
         </span>
       </div>
 
-      <div className='grid grid-cols-1 justify-between gap-8 mobile:grid-cols-2 sm:gap-16 lg:flex 2xl:w-[calc(100%_-_400px_-_12rem)]'>
+      <div className='grid grid-cols-1 justify-between gap-8 mobile:grid-cols-2 sm:gap-16 lg:flex 2xl:w-[calc(100%-400px-12rem)]'>
         {blocks.map(block => (
           <div className='flex flex-col gap-y-6' key={nanoid()}>
             <h2 className='text-sm font-medium text-tertiary'>

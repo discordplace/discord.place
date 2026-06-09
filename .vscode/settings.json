@@ -2,5 +2,10 @@
   "eslint.workingDirectories": [ "./server" ],
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "always"
+  },
+  "css.validate": false,
+  "workbench.editor.customLabels.patterns": {
+    "**/app/**/{page,layout,index}.{js,jsx}": "(${dirname})/${filename}.${extname}",
+    "**/index.{js,jsx}": "${dirname}/index.${extname}"
   }
 }

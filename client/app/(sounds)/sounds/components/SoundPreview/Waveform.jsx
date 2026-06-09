@@ -170,7 +170,7 @@ export default function Waveform({ id, name: soundName }) {
           <VolumePopover />
 
           <button
-            className='flex size-[30px] items-center justify-center rounded-full bg-black text-[rgba(var(--bg-secondary))] outline-none hover:bg-black/70 dark:bg-white dark:hover:bg-white/70'
+            className='flex size-[30px] items-center justify-center rounded-full bg-black text-[rgba(var(--bg-secondary))] outline-hidden hover:bg-black/70 dark:bg-white dark:hover:bg-white/70'
             onClick={onPlayPause}
           >
             {currentlyPlaying === id ? (
@@ -182,19 +182,19 @@ export default function Waveform({ id, name: soundName }) {
 
           <DropdownMenu.Root modal={false}>
             <DropdownMenu.Trigger asChild={true}>
-              <button className='flex max-w-[200px] text-tertiary outline-none hover:text-primary'>
+              <button className='flex max-w-[200px] text-tertiary outline-hidden hover:text-primary'>
                 <BsThreeDots />
               </button>
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Portal>
-              <DropdownMenu.Content className='relative top-2 z-10 flex min-w-[200px] flex-col gap-y-0.5 rounded-2xl border border-primary bg-secondary p-1.5 outline-none'>
+              <DropdownMenu.Content className='relative top-2 z-10 flex min-w-[200px] flex-col gap-y-0.5 rounded-2xl border border-primary bg-secondary p-1.5 outline-hidden'>
                 <DropdownMenu.Arrow className='fill-[rgba(var(--border-primary))]' />
 
                 {!pathname.startsWith('/sounds/') && (
                   <DropdownMenu.Item asChild={true}>
                     <Link
-                      className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-none transition-colors data-[highlighted]:bg-tertiary data-[highlighted]:text-primary'
+                      className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-hidden transition-colors data-highlighted:bg-tertiary data-highlighted:text-primary'
                       href={`/sounds/${id}`}
                     >
                       <TiArrowUpOutline className='rotate-45' size={20} />
@@ -206,7 +206,7 @@ export default function Waveform({ id, name: soundName }) {
                 )}
 
                 <DropdownMenu.Item
-                  className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-none transition-colors data-[highlighted]:bg-tertiary data-[highlighted]:text-primary'
+                  className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-hidden transition-colors data-highlighted:bg-tertiary data-highlighted:text-primary'
                   onSelect={() => downloadSound({ id, name: soundName })}
                 >
                   <LuCloudDownload size={18} />
@@ -214,7 +214,7 @@ export default function Waveform({ id, name: soundName }) {
                 </DropdownMenu.Item>
 
                 <DropdownMenu.Item
-                  className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-none transition-colors data-[highlighted]:bg-tertiary data-[highlighted]:text-primary'
+                  className='flex cursor-pointer items-center gap-x-2 rounded-xl p-2 text-sm font-medium text-tertiary outline-hidden transition-colors data-highlighted:bg-tertiary data-highlighted:text-primary'
                   onSelect={() => {
                     if ('clipboard' in navigator === false) return toast.error(t('errorMessages.clipboardNotSupported'));
 

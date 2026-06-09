@@ -41,7 +41,7 @@ export default function ForceRefresh({ botId }) {
       </p>
 
       <button
-        className='flex w-max items-center gap-x-1 rounded-xl border border-purple-600 bg-gradient-to-r from-purple-600 via-purple-600 to-purple-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70'
+        className='flex w-max items-center gap-x-1 rounded-xl border border-purple-600 bg-linear-to-r from-purple-600 via-purple-600 to-purple-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70'
         disabled={refreshingData}
         onClick={refreshData}
       >

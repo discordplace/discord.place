@@ -268,7 +268,7 @@ export default function NewServer() {
             <span
               contentEditable={true}
               suppressContentEditableWarning={true}
-              className='mt-4 block h-[150px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-none focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block h-[150px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
               onKeyUp={event => {
                 if (event.target.textContent.length > config.serverDescriptionMaxCharacters) {
                   event.target.textContent = event.target.textContent.slice(0, config.serverDescriptionMaxCharacters);
@@ -291,7 +291,7 @@ export default function NewServer() {
             </p>
 
             <input
-              className='mt-4 block w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary'
+              className='mt-4 block w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary'
               placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.placeholder')}
               autoComplete='off'
               spellCheck='false'
@@ -346,7 +346,7 @@ export default function NewServer() {
 
                 <div className='relative'>
                   <input
-                    className='mt-4 block h-[40px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary px-2 text-sm text-placeholder outline-none placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-70'
+                    className='mt-4 block h-[40px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary px-2 text-sm text-placeholder outline-hidden placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary disabled:pointer-events-none disabled:opacity-70'
                     autoComplete='off'
                     spellCheck='false'
                     value={keywordsInputValue}
@@ -428,7 +428,7 @@ export default function NewServer() {
                         size={32}
                         width={16}
                         height={16}
-                        className='rounded'
+                        className='rounded-sm'
                       />
                     ) : (
                       <Image
@@ -436,7 +436,7 @@ export default function NewServer() {
                         alt='Server Icon'
                         width={16}
                         height={16}
-                        className='rounded'
+                        className='rounded-sm'
                       />
                     )
                   ),

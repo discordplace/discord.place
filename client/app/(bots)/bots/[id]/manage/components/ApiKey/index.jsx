@@ -88,7 +88,7 @@ export default function ApiKey({ botId, apiKey }) {
       {!currentApiKey ? (
         <>
           <button
-            className='flex w-max items-center gap-x-1 rounded-xl border border-purple-600 bg-gradient-to-r from-purple-600 via-purple-600 to-purple-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70'
+            className='flex w-max items-center gap-x-1 rounded-xl border border-purple-600 bg-linear-to-r from-purple-600 via-purple-600 to-purple-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70'
             onClick={() => createNewApiKey(true)}
             disabled={apiKeyCreating}
           >
@@ -100,7 +100,7 @@ export default function ApiKey({ botId, apiKey }) {
           <div className='flex flex-col gap-y-2'>
             <div className='flex flex-col items-center gap-2 sm:flex-row'>
               <button
-                className='flex w-full items-center gap-x-1 rounded-xl border border-red-600 bg-gradient-to-r from-red-600 via-red-600 to-red-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70 sm:w-max'
+                className='flex w-full items-center gap-x-1 rounded-xl border border-red-600 bg-linear-to-r from-red-600 via-red-600 to-red-900 px-4 py-1.5 text-sm font-semibold text-white hover:opacity-80 disabled:pointer-events-none disabled:opacity-70 sm:w-max'
                 onClick={() => {
                   openModal('delete-api-key', {
                     buttons: [
@@ -132,7 +132,7 @@ export default function ApiKey({ botId, apiKey }) {
               </button>
 
               <CopyButton
-                className='flex w-full items-center gap-x-2 rounded-xl border border-primary bg-quaternary bg-gradient-to-r px-4 py-1.5 text-sm font-semibold outline-none hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max'
+                className='flex w-full items-center gap-x-2 rounded-xl border border-primary bg-quaternary bg-linear-to-r px-4 py-1.5 text-sm font-semibold outline-hidden hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70 sm:w-max'
                 successText={t('botManagePage.apiKey.toast.apiKeyCopied')}
                 copyText={currentApiKey}
               >
