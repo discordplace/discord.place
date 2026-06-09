@@ -102,16 +102,16 @@ const soundCategoriesIcons = {
 
 const themeCategoriesIcons = {
   'All': <BiSolidCategory />,
-  'Blue': <span className='block size-[14px] rounded-full bg-blue-500' />,
-  'Dark': <span className='block size-[14px] rounded-full bg-black' />,
-  'Gradient': <span className='block size-[14px] rounded-full bg-linear-to-r from-pink-400 to-purple-500' />,
-  'Green': <span className='block size-[14px] rounded-full bg-green-500' />,
-  'Light': <span className='block size-[14px] rounded-full bg-white' />,
-  'Orange': <span className='block size-[14px] rounded-full bg-orange-500' />,
-  'Pink': <span className='block size-[14px] rounded-full bg-pink-500' />,
-  'Purple': <span className='block size-[14px] rounded-full bg-purple-500' />,
-  'Red': <span className='block size-[14px] rounded-full bg-red-500' />,
-  'Yellow': <span className='block size-[14px] rounded-full bg-yellow-500' />
+  'Blue': <span style={{ backgroundColor: '#2B7FFF', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />,
+  'Dark': <span style={{ backgroundColor: 'black', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />,
+  'Gradient': <span style={{ background: 'linear-gradient(to right, #FB64B6, #AD46FF)', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />,
+  'Green': <span style={{ backgroundColor: '#00C950', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />,
+  'Light': <span style={{ backgroundColor: 'white', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />,
+  'Orange': <span style={{ backgroundColor: '#FF6900', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />,
+  'Pink': <span style={{ backgroundColor: '#F6339A', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />,
+  'Purple': <span style={{ backgroundColor: '#AD46FF', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />,
+  'Red': <span style={{ backgroundColor: '#FB2C36', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />,
+  'Yellow': <span style={{ backgroundColor: '#F0B100', borderRadius: '50%', display: 'block', height: '14px', width: '14px' }} />
 };
 
 const sortIcons = {

@@ -67,16 +67,20 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
     fetchImage();
   }, [id, hash]);
 
-  if (!hash || !currentSource) {return (
-    <MotionImage
-      key={`user-avatar-${id}-replaced-with-default-avatar`}
-      src={DEFAULT_AVATAR_BASE64}
-      alt={`Image ${hash}`}
-      className={className}
-      {...motionOptions}
-      {...props}
-    />
-  );}
+  const isSmallImage = (props.width && props.width < 40) || (props.height && props.height < 40);
+
+  if (!hash || !currentSource) {
+    return (
+      <MotionImage
+        key={`user-avatar-${id}-replaced-with-default-avatar`}
+        src={DEFAULT_AVATAR_BASE64}
+        alt={`Image ${hash}`}
+        className={className}
+        {...motionOptions}
+        {...props}
+      />
+    );
+  }
 
   return (
     <MotionImage
@@ -85,7 +89,7 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
       alt={`Image ${hash}`}
       className={className}
       unoptimized={format === 'gif' || hash?.startsWith('a_')}
-      placeholder={DEFAULT_AVATAR_BASE64}
+      placeholder={isSmallImage ? 'empty' : DEFAULT_AVATAR_BASE64}
       {...motionOptions}
       {...props}
     />

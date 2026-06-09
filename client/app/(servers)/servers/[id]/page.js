@@ -3,6 +3,7 @@ import getServerMetadata from '@/lib/request/servers/getServerMetadata';
 import Content from '@/app/(servers)/servers/[id]/content';
 import { redirect } from 'next/navigation';
 import config from '@/config';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -10,10 +11,14 @@ export async function generateMetadata({ params }) {
   const metadata = await getServerMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
-  return {
+  return createMetadata({
     description: metadata.description,
+    keywords: [
+      'discord server',
+      `discord ${metadata.category}`,
+      `discord ${metadata.category} server`
+    ],
     openGraph: {
-      description: metadata.description,
       images: [
         {
           height: 630,
@@ -25,7 +30,7 @@ export async function generateMetadata({ params }) {
       url: `${config.baseUrl}/servers/${id}`
     },
     title: `Server ${metadata.name}`
-  };
+  });
 }
 
 export default async function Page({ params }) {

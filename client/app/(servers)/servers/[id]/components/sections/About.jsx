@@ -5,9 +5,11 @@ import { FiArrowUpRight } from 'react-icons/fi';
 import { ImTrophy } from 'react-icons/im';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
-import { motion } from 'framer-motion';import config from '@/config';
+import { motion } from 'framer-motion';
+import config from '@/config';
 import useLanguageStore, { t } from '@/stores/language';
-const formatter = new Intl.NumberFormat('en-US', {
+
+const formatter = new Intl.NumberFormat('en-US', {
   compactDisplay: 'short',
   notation: 'compact'
 });
@@ -65,7 +67,7 @@ export default function About({ server }) {
         {t('serverPage.about.title')}
       </motion.h2>
 
-      <motion.p className='mt-2 whitespace-pre-wrap text-tertiary'
+      <motion.p className='mt-2 wrap-break-word whitespace-pre-wrap text-tertiary'
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ damping: 10, delay: 0.15, duration: 0.3, stiffness: 100, type: 'spring' }}

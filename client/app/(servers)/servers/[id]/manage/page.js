@@ -3,6 +3,7 @@ import getServerMetadata from '@/lib/request/servers/getServerMetadata';
 import Content from '@/app/(servers)/servers/[id]/manage/content';
 import { redirect } from 'next/navigation';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -10,12 +11,9 @@ export async function generateMetadata({ params }) {
   const metadata = await getServerMetadata(id).catch(error => error);
   if (typeof server === 'string') return;
 
-  return {
-    openGraph: {
-      title: `Discord Place - Manage ${metadata.name}`
-    },
+  return createMetadata({
     title: `Manage ${metadata.name}`
-  };
+  });
 }
 
 export default async function Page({ params }) {

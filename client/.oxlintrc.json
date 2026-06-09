@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/.pnpm/oxlint@1.68.0/node_modules/oxlint/configuration_schema.json",
-  "plugins": ["unicorn", "oxc", "import", "eslint", "react"],
+  "plugins": ["unicorn", "oxc", "import", "react"],
   "jsPlugins": [
     {
       "name": "stylistic",
@@ -16,6 +16,7 @@
       "entryPoint": "tailwind.css"
     },
   },
+  "ignorePatterns": ["server/**/*"],
   "categories": { "correctness": "error", "style": "warn" },
   "rules": {
     "stylistic/semi": ["error", "always"],

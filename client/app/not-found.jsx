@@ -4,15 +4,27 @@ import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import Link from 'next/link';
 import Grainient from '@/app/components/Background/Grainient';
-import { useSearchParams } from 'next/navigation';
+import { useRef, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { t } from '@/stores/language';
 
-export default function Error() {
+export default function NotFound() {
   const theme = useThemeStore(state => state.theme);
 
-  const searchParams = useSearchParams();
-  const errorCode = searchParams.get('code') || '0';
-  const errorMessage = searchParams.get('message');
+  const timeoutRef = useRef(null);
+  const remainingTimeIntervalRef = useRef(null);
+  const router = useRouter();
+  const [remainingTime, setRemainingTime] = useState(10);
+
+  useEffect(() => {
+    timeoutRef.current = setTimeout(() => router.push('/'), 10_000);
+    remainingTimeIntervalRef.current = setInterval(() => setRemainingTime(prev => (prev <= 1 ? 0 : prev - 1)), 1000);
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+      clearInterval(remainingTimeIntervalRef.current);
+    };
+  }, []);
 
   return (
     <div className='relative z-0 flex h-svh w-full flex-col items-center justify-center px-8 sm:px-0'>
@@ -45,19 +57,23 @@ export default function Error() {
 
       <div className='flex flex-col'>
         <h2 className='font-oranienbaum text-3xl'>
-          {t('errorPage.title')}
+          {t('notFoundPage.title')}
         </h2>
 
         <p className='mt-6 max-h-[200px] w-full max-w-[500px] text-base text-secondary'>
-          {errorMessage || t(`errorPage.messages.${errorCode}`)}
+          {t('notFoundPage.description')}
         </p>
+
+        <span className='mt-2 text-xs text-tertiary'>
+          {t('notFoundPage.redirectText', { count: remainingTime })}
+        </span>
 
         <div className='mt-6 flex w-full items-center justify-between'>
           <Link
-            className='pointer-events-auto w-max rounded-full bg-black/5 px-4 py-1.5 text-sm font-semibold text-primary backdrop-blur-xs hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10'
+            className='pointer-events-auto w-max rounded-full bg-black/5 px-4 py-1.5 text-sm font-semibold text-primary backdrop-blur-sm hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10'
             href='/'
           >
-            {t('buttons.goHome')}
+            {t('notFoundPage.goHome')}
           </Link>
 
           <Image

@@ -3,6 +3,7 @@ import getProfileMetadata from '@/lib/request/profiles/getProfileMetadata';
 import Content from '@/app/(profiles)/profile/[slug]/content';
 import { redirect } from 'next/navigation';
 import config from '@/config';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -10,7 +11,16 @@ export async function generateMetadata({ params }) {
   const metadata = await getProfileMetadata(slug).catch(error => error);
   if (typeof metadata === 'string') return redirect(`/error?message=${encodeURIComponent(metadata)}`);
 
-  return {
+  return createMetadata({
+    description: metadata.bio,
+    keywords: [
+      `discord ${metadata.username}`,
+      `discord user ${metadata.username}`,
+      `discord profile ${metadata.username}`,
+      'discord profile',
+      `${metadata.username} profile`,
+      `discord ${user_id} profile`
+    ],
     openGraph: {
       images: [
         {
@@ -18,12 +28,10 @@ export async function generateMetadata({ params }) {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'profile' }))}`,
           width: 1200
         }
-      ],
-      title: `Discord Place - ${slug}'s Profile`,
-      url: `${config.baseUrl}/profile/${slug}`
+      ]
     },
     title: `${slug}'s Profile`
-  };
+  });
 }
 
 export default async function Page({ params }) {

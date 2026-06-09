@@ -1,17 +1,15 @@
-import { FaStar } from 'react-icons/fa';
 import config from '@/config';
 
-export default function Template({ data, avatar_base64 }) {
-  const formatter = new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 2,
-    notation: 'compact',
-    style: 'decimal'
+export default function Theme({ data, avatar_base64 }) {
+  console.log(config.themeCategoriesIcons, 'config.themeCategoriesIcons');
+  data.categories.forEach(category => {
+    console.log(config.themeCategoriesIcons[category], `config.themeCategoriesIcons[${category}]`);
   });
 
   return (
     <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0px' }}>
       { }
-      <h1
+      {/* <h1
         style={{
           fontSize: '64px',
           fontWeight: 700,
@@ -21,27 +19,31 @@ export default function Template({ data, avatar_base64 }) {
           whiteSpace: 'nowrap'
         }}>
         {data.name}
-      </h1>
+      </h1> */}
 
-      <p
-        style={{
-          color: 'rgba(153, 153, 153)',
-          display: '-webkit-box',
-          fontSize: '24px',
-          fontWeight: 500,
-          lineClamp: 2,
-          lineHeight: '1.5',
-          maxWidth: '800px',
-          overflow: 'hidden',
-          textAlign: 'center',
-          textOverflow: 'ellipsis',
-          textWrap: 'pretty',
-          WebkitBoxOrient: 'vertical',
-          WebkitLineClamp: 2
-        }}
-      >
-        {data.description}
-      </p>
+      <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center', marginBottom: '16px', position: 'relative' }}>
+        <span
+          style={{
+            backgroundColor: data.colors.primary,
+            borderRadius: '50%',
+            height: '64px',
+            width: '64px'
+          }}
+        />
+
+        <span
+          style={{
+            backgroundColor: data.colors.secondary,
+            borderRadius: '50%',
+            clipPath: 'polygon(100% 0, 100% 48%, 100% 100%, 0 100%)',
+            height: '64px',
+            left: 0,
+            position: 'absolute',
+            top: 0,
+            width: '64px'
+          }}
+        />
+      </div>
 
       <div
         style={{
@@ -78,21 +80,13 @@ export default function Template({ data, avatar_base64 }) {
           marginTop: '24px'
         }}
       >
-        <div style={{ alignItems: 'center', display: 'flex', gap: '12px' }}>
-          <FaStar size={32} color='#c7c7c7' />
-
-          <span style={{ fontSize: '32px', fontWeight: 500 }}>
-            {formatter.format(data.uses)}
-          </span>
-        </div>
-
         {data.categories.map(category => (
           <div
             style={{ alignItems: 'center', display: 'flex', gap: '12px' }}
             key={category}
           >
             <span style={{ color: '#c7c7c7', fontSize: '32px' }}>
-              {config.templateCategoriesIcons[category]}
+              {config.themeCategoriesIcons[category]}
             </span>
 
             <span style={{ fontSize: '32px', fontWeight: 500 }}>

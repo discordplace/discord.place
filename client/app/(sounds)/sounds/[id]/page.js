@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Content from '@/app/(sounds)/sounds/[id]/content';
 import getSoundMetadata from '@/lib/request/sounds/getSoundMetadata';
 import config from '@/config';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -10,7 +11,8 @@ export async function generateMetadata({ params }) {
   const metadata = await getSoundMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
-  return {
+  return createMetadata({
+    description: `Download the sound ${metadata.name} for your Discord server soundboard!`,
     keywords: [
       metadata.name,
       `discord sound ${metadata.name}`,
@@ -26,12 +28,10 @@ export async function generateMetadata({ params }) {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'sound' }))}`,
           width: 1200
         }
-      ],
-      title: `Discord Place - Sound ${metadata.name}`,
-      url: `/sounds/${id}`
+      ]
     },
     title: `Sound ${metadata.name}`
-  };
+  });
 }
 
 export default async function Page({ params }) {

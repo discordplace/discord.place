@@ -4,27 +4,10 @@ import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import Link from 'next/link';
 import Grainient from '@/app/components/Background/Grainient';
-import { useRef, useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { t } from '@/stores/language';
 
-export default function NotFound() {
+export default function Error({ error }) {
   const theme = useThemeStore(state => state.theme);
-
-  const timeoutRef = useRef(null);
-  const remainingTimeIntervalRef = useRef(null);
-  const router = useRouter();
-  const [remainingTime, setRemainingTime] = useState(10);
-
-  useEffect(() => {
-    timeoutRef.current = setTimeout(() => router.push('/'), 10_000);
-    remainingTimeIntervalRef.current = setInterval(() => setRemainingTime(prev => (prev <= 1 ? 0 : prev - 1)), 1000);
-
-    return () => {
-      clearTimeout(timeoutRef.current);
-      clearInterval(remainingTimeIntervalRef.current);
-    };
-  }, []);
 
   return (
     <div className='relative z-0 flex h-svh w-full flex-col items-center justify-center px-8 sm:px-0'>
@@ -57,16 +40,14 @@ export default function NotFound() {
 
       <div className='flex flex-col'>
         <h2 className='font-oranienbaum text-3xl'>
-          {t('notFoundPage.title')}
+          {t('errorPage.title')}
         </h2>
 
-        <p className='mt-6 max-h-[200px] w-full max-w-[500px] text-base text-secondary'>
-          {t('notFoundPage.description')}
-        </p>
-
-        <span className='mt-2 text-xs text-tertiary'>
-          {t('notFoundPage.redirectText', { count: remainingTime })}
-        </span>
+        <div className='rounded-2xl bg-black/5 p-3 text-sm text-secondary backdrop-blur-xs'>
+          <pre className='font-mono'>
+            Error: {error.message}
+          </pre>
+        </div>
 
         <div className='mt-6 flex w-full items-center justify-between'>
           <Link

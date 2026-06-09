@@ -265,21 +265,11 @@ export default function NewServer() {
               {t('accountPage.tabs.myServers.sections.newServer.fields.description.description', { br: <br /> })}
             </p>
 
-            <span
-              contentEditable={true}
-              suppressContentEditableWarning={true}
-              className='mt-4 block h-[150px] w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-placeholder outline-hidden focus-visible:border-purple-500 focus-visible:text-primary'
-              onKeyUp={event => {
-                if (event.target.textContent.length > config.serverDescriptionMaxCharacters) {
-                  event.target.textContent = event.target.textContent.slice(0, config.serverDescriptionMaxCharacters);
-                  event.preventDefault();
-                  event.stopPropagation();
-
-                  return toast.error(`Description can be maximum ${config.serverDescriptionMaxCharacters} characters long.`);
-                }
-
-                setServerDescription(event.target.textContent);
-              }}
+            <textarea
+              className='mt-4 block h-[150px] w-full resize-none overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary'
+              maxLength={config.serverDescriptionMaxCharacters}
+              value={serverDescription}
+              onChange={event => setServerDescription(event.target.value)}
             />
 
             <h2 className='mt-8 text-lg font-semibold'>

@@ -1,10 +1,11 @@
 import '@/styles/main.css';
 import 'react-medium-image-zoom/dist/styles.css';
-import { Geist, Oranienbaum } from 'next/font/google';
+import { Geist, Geist_Mono, Oranienbaum } from 'next/font/google';
 import cn from '@/lib/cn';
 import LayoutContent from '@/app/layout-content';
 import AuthProvider from '@/app/components/Providers/Auth';
 import localFont from 'next/font/local';
+import createMetadata from '@/lib/createMetadata';
 
 const ggSansFont = localFont({
   display: 'swap',
@@ -39,31 +40,12 @@ const geistFont = Geist({
   variable: '--font-geist'
 });
 
-export const metadata = {
-  description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
-  keywords: ['discord', 'discord place', 'discord emojis', 'discord servers', 'discord profiles', 'discord emojis', 'discord bots', 'discord developers'],
-  metadataBase: new URL('https://discord.place'),
-  openGraph: {
-    description: 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.',
-    images: [
-      {
-        alt: 'Discord Place',
-        height: 540,
-        url: '/og.png',
-        width: 960
-      }
-    ],
-    locale: 'en_US',
-    site_name: 'Discord Place',
-    title: 'Discord Place',
-    type: 'website',
-    url: 'https://discord.place'
-  },
-  title: {
-    default: 'Discord Place',
-    template: 'Discord Place - %s'
-  }
-};
+const geistMonoFont = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono'
+});
+
+export const metadata = createMetadata();
 
 export const viewport = {
   initialScale: 1,
@@ -81,6 +63,7 @@ export default function RootLayout(props) {
           'flex flex-col',
           geistFont.className,
           geistFont.variable,
+          geistMonoFont.variable,
           ggSansFont.variable,
           oranienbaumFont.variable
         )}

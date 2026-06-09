@@ -1,25 +1,21 @@
 import Hero from '@/app/(blogs)/blogs/Hero';
+import createMetadata from '@/lib/createMetadata';
 
-export const metadata = {
+export const metadata = createMetadata({
   description: 'The latest news, updates and guides from the Discord Place team.',
-  openGraph: {
-    description: 'The latest news, updates and guides from the Discord Place team.',
-    images: [
-      {
-        alt: 'Discord Place',
-        height: 540,
-        url: '/og.png',
-        width: 960
-      }
-    ],
-    locale: 'en_US',
-    site_name: 'Discord Place',
-    title: 'Discord Place - Blogs',
-    type: 'website',
-    url: 'https://discord.place/blog'
-  },
+  keywords: [
+    'discord place news',
+    'discord place updates',
+    'discord place guides',
+    'discord place announcements',
+    'discord place blog',
+    'latest news from discord place',
+    'latest updates from discord place',
+    'latest guides from discord place',
+    'latest announcements from discord place'
+  ],
   title: 'Blogs'
-};
+});
 
 export default function Page() {
   return (

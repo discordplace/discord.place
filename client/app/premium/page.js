@@ -3,16 +3,13 @@
 import { redirect } from 'next/navigation';
 import getPlans from '@/lib/request/payments/getPlansFromServer';
 import Content from '@/app/premium/content';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata() {
-  return {
+  return createMetadata({
     description: 'Get access to exclusive features by subscribing to Discord Place Premium.',
-    openGraph: {
-      description: 'Get access to exclusive features by subscribing to Discord Place Premium.',
-      title: 'Discord Place - Premium'
-    },
     title: 'Premium'
-  };
+  });
 }
 
 export default async function Page() {

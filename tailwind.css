@@ -32,6 +32,7 @@
   --font-ggSans: var(--font-gg-sans);
   --font-oranienbaum: var(--font-oranienbaum);
   --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 
   --gradient-color-stops-primary: rgba(var(--bg-background));
   --gradient-color-stops-quaternary: rgba(var(--bg-quaternary));

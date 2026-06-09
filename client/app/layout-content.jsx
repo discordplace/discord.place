@@ -52,19 +52,21 @@ export default function RootLayoutContent({ children }) {
             data-mask-level='moderate'
             data-max-duration='300000'
           />
+
+          <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
+          <Script id='google-analytics'>
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+            
+              gtag('config', 'G-WEX8LKYTTD');
+            `}
+          </Script>
         </>
       )}
 
-      <Script id='google-analytics-tag-manager' src='https://www.googletagmanager.com/gtag/js?id=G-WEX8LKYTTD' />
-      <Script id='google-analytics'>
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-WEX8LKYTTD');
-        `}
-      </Script>
+      <link rel='manifest' href='/manifest.webmanifest' />
 
       <ProgressBarProvider>
         <Toaster

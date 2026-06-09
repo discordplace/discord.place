@@ -4,7 +4,7 @@ import { FaCompass, FaUserCircle } from 'react-icons/fa';
 import { HiNewspaper, HiTemplate } from 'react-icons/hi';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { PiWaveformBold } from 'react-icons/pi';
-import { RiRobot2Fill } from 'react-icons/ri';
+import { RiRobot2Fill, RiBrush2Fill } from 'react-icons/ri';
 import { ImageResponse } from '@vercel/og';
 import fs from 'node:fs';
 import { NextResponse } from 'next/server';
@@ -17,6 +17,7 @@ import Emoji from '@/app/api/og/content/Emoji';
 import Template from '@/app/api/og/content/Template';
 import Sound from '@/app/api/og/content/Sound';
 import Blog from '@/app/api/og/content/Blog';
+import Theme from '@/app/api/og/content/Theme';
 
 function getFontData(fontName) {
   const file = fs.readFileSync(`${process.cwd()}/public/fonts/${fontName}.ttf`);
@@ -45,7 +46,8 @@ export async function GET(request) {
     'profile': FaUserCircle,
     'server': FaCompass,
     'sound': PiWaveformBold,
-    'template': HiTemplate
+    'template': HiTemplate,
+    'theme': RiBrush2Fill
   };
 
   if (!data.type || !icons[data.type]) return sendError('Invalid type.', 400);
@@ -141,6 +143,13 @@ export async function GET(request) {
 
           {data.type === 'sound' && (
             <Sound
+              data={data.metadata}
+              avatar_base64={avatarBase64}
+            />
+          )}
+
+          {data.type === 'theme' && (
+            <Theme
               data={data.metadata}
               avatar_base64={avatarBase64}
             />

@@ -1,25 +1,21 @@
 import Hero from '@/app/(bots)/bots/components/Hero';
+import createMetadata from '@/lib/createMetadata';
 
-export const metadata = {
+export const metadata = createMetadata({
   description: 'Browse and find the perfect bot for your Discord server!',
-  openGraph: {
-    description: 'Browse and find the perfect bot for your Discord server!',
-    images: [
-      {
-        alt: 'Discord Place',
-        height: 540,
-        url: '/og.png',
-        width: 960
-      }
-    ],
-    locale: 'en_US',
-    site_name: 'Discord Place',
-    title: 'Discord Place - Bots',
-    type: 'website',
-    url: 'https://discord.place/bots'
-  },
-  title: 'Bots'
-};
+  keywords: [
+    'discord bots',
+    'best discord bots',
+    'cool discord bots',
+    'unique discord bots',
+    'useful discord bots',
+    'fun discord bots',
+    'discord bot list',
+    'browse discord bots',
+    'find discord bots'
+  ],
+  title: 'Discover Bots'
+});
 
 export default function Page() {
   return <Hero />;

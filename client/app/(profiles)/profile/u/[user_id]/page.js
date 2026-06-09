@@ -1,16 +1,14 @@
 import getUser from '@/lib/request/general/getUser';
 import Content from '@/app/(profiles)/profile/u/[user_id]/content';
 import { redirect } from 'next/navigation';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
   const { user_id } = await params;
 
-  return {
-    openGraph: {
-      title: `Discord Place - User ${user_id}`
-    },
+  return createMetadata({
     title: `User ${user_id}`
-  };
+  });
 }
 
 export default async function Page({ params }) {

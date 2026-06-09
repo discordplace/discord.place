@@ -3,6 +3,7 @@ import getEmojiMetadata from '@/lib/request/emojis/getEmojiMetadata';
 import { redirect } from 'next/navigation';
 import Content from '@/app/(emojis)/emojis/[id]/content';
 import config from '@/config';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -10,7 +11,19 @@ export async function generateMetadata({ params }) {
   const metadata = await getEmojiMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
-  return {
+  const keywords = [
+    `discord emoji ${metadata.name}`,
+    'discord emoji',
+    `emoji ${metadata.name}`,
+    `discord ${metadata.category} emoji`,
+    `emoji ${metadata.category}`
+  ];
+
+  if (metadata.animated) keywords.push(`animated discord emoji ${metadata.name}`, `animated emoji ${metadata.name}`);
+
+  return createMetadata({
+    description: `View the Discord emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'} on discord.place.`,
+    keywords,
     openGraph: {
       images: [
         {
@@ -18,12 +31,10 @@ export async function generateMetadata({ params }) {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'emoji' }))}`,
           width: 1200
         }
-      ],
-      title: `Discord Place - Emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'}`,
-      url: `/emojis/${params.id}`
+      ]
     },
     title: `Emoji ${metadata.name}.${metadata.animated ? 'gif' : 'png'}`
-  };
+  });
 }
 
 export default async function Page({ params }) {

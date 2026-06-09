@@ -1,12 +1,10 @@
 import config from '@/config';
 import Link from 'next/link';
+import createMetadata from '@/lib/createMetadata';
 
-export const metadata = {
-  openGraph: {
-    title: 'Discord Place - Cookie Policy'
-  },
+export const metadata = createMetadata({
   title: 'Cookie Policy'
-};
+});
 
 export default function ContentPolicy() {
   return (

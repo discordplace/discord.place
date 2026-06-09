@@ -3,6 +3,7 @@ import getEmojiMetadata from '@/lib/request/emojis/getEmojiMetadata';
 import { redirect } from 'next/navigation';
 import Content from '@/app/(emojis)/emojis/packages/[id]/content';
 import config from '@/config';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -10,7 +11,17 @@ export async function generateMetadata({ params }) {
   const metadata = await getEmojiMetadata(id, true).catch(error => error);
   if (typeof metadata === 'string') return;
 
-  return {
+  const keywords = [
+    `discord emoji pack ${metadata.name}`,
+    'discord emoji pack',
+    `emoji pack ${metadata.name}`,
+    `discord ${metadata.category} emoji pack`,
+    `emoji pack ${metadata.category}`
+  ];
+
+  return createMetadata({
+    description: `View the Discord emoji pack ${metadata.name} on discord.place.`,
+    keywords,
     openGraph: {
       images: [
         {
@@ -18,12 +29,10 @@ export async function generateMetadata({ params }) {
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata, type: 'emoji' }))}`,
           width: 1200
         }
-      ],
-      title: `Discord Place - Emoji Pack ${metadata.name}`,
-      url: `/emojis/packages/${id}`
+      ]
     },
     title: `Emoji Pack ${metadata.name}`
-  };
+  });
 }
 
 export default async function Page({ params }) {

@@ -3,7 +3,8 @@
 import { MdCheckCircle } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
 import Square from '@/app/components/Background/Square';
-import { useEffect, useState } from 'react';import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { nanoid } from 'nanoid';
 import cn from '@/lib/cn';
 import config from '@/config';
@@ -11,7 +12,8 @@ import Link from 'next/link';
 import createTemplate from '@/lib/request/templates/createTemplate';
 import fetchTemplateDetails from '@/lib/request/templates/fetchTemplateDetails';
 import { useRouter } from 'next-nprogress-bar';
-import AuthProtected from '@/app/components/Providers/Auth/Protected';import { t } from '@/stores/language';
+import AuthProtected from '@/app/components/Providers/Auth/Protected';
+import { t } from '@/stores/language';
 
 export default function Page() {
   const [templateId, setTemplateId] = useState('');

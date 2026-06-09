@@ -5,6 +5,7 @@ import Markdown from '@/app/components/Markdown';
 import BackButton from '@/app/(blogs)/blogs/[id]/components/BackButton';
 import Header from '@/app/(blogs)/blogs/[id]/components/Header';
 import { redirect } from 'next/navigation';
+import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -14,22 +15,20 @@ export async function generateMetadata({ params }) {
   const source = fs.readFileSync(`${process.cwd()}/blogs/${id}.md`, 'utf8');
   const { data } = matter(source);
 
-  return {
+  return createMetadata({
     description: data.description,
     keywords: ['blog', 'post', ...data.tags],
     openGraph: {
-      description: data.description,
       images: [
         {
           height: 630,
           url: `${config.baseUrl}/api/og?data=${encodeURIComponent(JSON.stringify({ metadata: data, type: 'blog' }))}`,
           width: 1200
         }
-      ],
-      title: `Discord Place - ${data.name}`
+      ]
     },
     title: data.name
-  };
+  });
 }
 
 export default async function Page({ params }) {

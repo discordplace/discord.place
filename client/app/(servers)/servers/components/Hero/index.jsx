@@ -95,6 +95,12 @@ export default function Hero() {
             animationDelay={0.3}
           />
 
+          <button className='relative z-[9999] hover:bg-white' onClick={() => {
+            throw new Error('Test error');
+          }}>
+            throw test error
+          </button>
+
           <motion.div
             className='flex w-full flex-col items-center gap-2 mobile:flex-row sm:w-max'
             initial={{ opacity: 0, y: -25 }}
