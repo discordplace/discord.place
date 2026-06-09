@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.0.0](https://github.com/discordplace/discord.place/compare/server@v2.1.0...server@v3.0.0) (2026-06-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade Next.js to v16, Tailwind to v4, and overhaul UI/tooling ([#215](https://github.com/discordplace/discord.place/issues/215))
+
+### Features
+
+* upgrade Next.js to v16, Tailwind to v4, and overhaul UI/tooling ([#215](https://github.com/discordplace/discord.place/issues/215)) ([7f3ee50](https://github.com/discordplace/discord.place/commit/7f3ee50d936b44aff66f916a4d6ba2d1ee25ac03))
+
+
+### Bug Fixes
+
+* **server/sitemap:** add sitemap configuration and update blog fetching logic ([08e9f27](https://github.com/discordplace/discord.place/commit/08e9f277edf2952c52e0546a2212afb8b13b4d35))
+* **server:** enhance API key revocation handling and update OpenAPI document ([8250780](https://github.com/discordplace/discord.place/commit/82507809b6615df4dc12158ec427950398b835ad))
+* update local development ports in README, config files, and package.json ([34073da](https://github.com/discordplace/discord.place/commit/34073da7e385ae2ef5e56806239b4b853860233c))
+* update pnpm-workspace.yaml to use onlyBuiltDependencies for sharp ([1bd39e4](https://github.com/discordplace/discord.place/commit/1bd39e48ae81c1b5447488ee9b50687c39aa9c12))
+
 ## [2.1.0](https://github.com/discordplace/discord.place/compare/server@v2.0.0...server@v2.1.0) (2026-05-21)
 
 
