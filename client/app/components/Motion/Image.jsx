@@ -5,6 +5,6 @@ import { forwardRef } from 'react';
 const ForwardedImage = forwardRef((props, ref) => (
   <Image {...props} ref={ref} />
 ));
-const MotionImage = motion(ForwardedImage);
+const MotionImage = motion.create(ForwardedImage);
 
 export default MotionImage;

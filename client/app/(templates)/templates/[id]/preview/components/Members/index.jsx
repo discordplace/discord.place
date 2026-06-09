@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 export default function Members({ template, isMobile, currentlyOpenedSection }) {
   const colors = ['#5865F2', '#757e8a', '#3ba55c', '#faa61a', '#ed4245', '#eb459f'];
 
-  const brandColors = useMemo(() => 
+  const brandColors = useMemo(() =>
     template.data.roles.map(() => colors[Math.floor(Math.random() * colors.length)])
   , [template.data.roles]);
 

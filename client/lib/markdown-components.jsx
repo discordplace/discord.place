@@ -264,7 +264,7 @@ const markdownComponents = {
       return null;
     }
   },
-  img: ({ src, alt, width, height }) => 
+  img: ({ src, alt, width, height }) =>
     (
       <Zoom>
         <img

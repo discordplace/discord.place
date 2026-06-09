@@ -5,7 +5,9 @@ import Content from '@/app/(emojis)/emojis/[id]/content';
 import config from '@/config';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getEmojiMetadata(params.id).catch(error => error);
+  const { id } = await params;
+
+  const metadata = await getEmojiMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
   return {
@@ -25,7 +27,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const emoji = await getEmoji(params.id).catch(error => error);
+  const { id } = await params;
+
+  const emoji = await getEmoji(id).catch(error => error);
   if (typeof emoji === 'string') return redirect(`/error?message=${encodeURIComponent(emoji)}`);
 
   return <Content emoji={emoji} />;

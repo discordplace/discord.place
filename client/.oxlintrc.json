@@ -59,7 +59,8 @@
     "react/no-children-prop": "off",
     "no-async-promise-executor": "off",
     "unicorn/prefer-spread": "off",
-    "react/jsx-handler-names": "off"
+    "react/jsx-handler-names": "off",
+    "stylistic/no-trailing-spaces": "error"
   },
   "env": { "browser": true, "node": true }
 }

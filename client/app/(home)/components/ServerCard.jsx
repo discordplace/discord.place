@@ -1,7 +1,8 @@
 'use client';
 
 import { HiMiniUserGroup } from 'react-icons/hi2';
-import getCompressedName from '@/lib/getCompressedName';import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import getCompressedName from '@/lib/getCompressedName';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import getHashFromURL from '@/lib/getHashFromURL';
 import Link from 'next/link';
 import cn from '@/lib/cn';
@@ -21,7 +22,7 @@ export default function ServerCard({ data }) {
         'flex select-none items-center gap-x-1 rounded-full border border-primary bg-secondary py-1 pl-1 pr-3',
         data.is_listed ? 'hover:bg-quaternary transition-colors' : 'pointer-events-none'
       )}
-      href={data.is_listed ? `/servers/${data.id}` : ''}
+      href={data.is_listed ? `/servers/${data.id}` : null}
     >
       {data.icon_url ? (
         <ServerIcon

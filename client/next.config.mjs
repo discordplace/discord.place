@@ -12,8 +12,8 @@ if (process.env.NEXT_PUBLIC_CDN_URL) {
       hostname: cdnUrl.hostname,
       protocol: cdnUrl.protocol.replace(':', '')
     });
-  } catch  {
-    console.error('Invalid NEXT_PUBLIC_CDN_URL. Please check your environment variable.');
+  } catch {
+    console.error('Invalid NEXT_PUBLIC_CDN_URL');
   }
 }
 
@@ -26,6 +26,15 @@ const nextConfig = {
     remotePatterns
   },
   reactStrictMode: false,
+  async redirects() {
+    return [
+      {
+        destination: '/profile/:slug',
+        permanent: true,
+        source: '/p/:slug'
+      }
+    ]
+  },
   async rewrites() {
     return [
       {
@@ -33,6 +42,9 @@ const nextConfig = {
         source: '/sitemap.xml'
       }
     ];
+  },
+  turbopack: {
+    root: process.cwd()
   }
 };
 

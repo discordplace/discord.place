@@ -4,7 +4,9 @@ import Content from '@/app/(themes)/themes/[id]/content';
 import getThemeMetadata from '@/lib/request/themes/getThemeMetadata';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getThemeMetadata(params.id).catch(error => error);
+  const { id } = await params;
+
+  const metadata = await getThemeMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
   return {
@@ -34,7 +36,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const theme = await getTheme(params.id).catch(error => error);
+  const { id } = await params;
+
+  const theme = await getTheme(id).catch(error => error);
   if (typeof theme === 'string') return redirect(`/error?message=${encodeURIComponent(theme)}`);
 
   return <Content theme={theme} />;

@@ -92,7 +92,7 @@ export default function CreateProfile() {
                 onClick={() => setPreferredHost(hostname)}
                 key={hostname}
                 className={cn(
-                  'w-full border select-none border-primary relative first:rounded-l-xl last:rounded-r-xl group px-3 py-2 font-medium text-center [&:not(:first)]:rounded-xl cursor-pointer hover:text-primary bg-quaternary hover:bg-secondary text-secondary',
+                  'w-full border select-none border-primary relative first:rounded-l-xl last:rounded-r-xl group px-3 py-2 font-medium text-center [&:not(:first-child)]:rounded-xl cursor-pointer hover:text-primary bg-quaternary hover:bg-secondary text-secondary',
                   preferredHost === hostname && 'pointer-events-none',
                   config.customHostnames.includes(hostname) && !user.premium?.createdAt && 'opacity-50 pointer-events-none'
                 )}

@@ -1,31 +1,36 @@
 import '@/styles/main.css';
 import 'react-medium-image-zoom/dist/styles.css';
-import { GeistSans } from 'geist/font/sans';
+import { Geist } from 'next/font/google';
 import cn from '@/lib/cn';
 import LayoutContent from '@/app/layout-content';
 import AuthProvider from '@/app/components/Providers/Auth';
 import localFont from 'next/font/local';
 
-const GGSans = localFont({
+const ggSansFont = localFont({
   display: 'swap',
   src: [
     {
-      path: '../public/fonts/GG-Sans-Medium.ttf',
+      path: './fonts/GG-Sans-Medium.woff2',
       style: 'normal',
       weight: '500'
     },
     {
-      path: '../public/fonts/GG-Sans-Bold.ttf',
+      path: './fonts/GG-Sans-Bold.woff2',
       style: 'normal',
       weight: '700'
     },
     {
-      path: '../public/fonts/GG-Sans-Normal.ttf',
+      path: './fonts/GG-Sans-Normal.woff2',
       style: 'normal',
       weight: '400'
     }
   ],
   variable: '--font-gg-sans'
+});
+
+const geistFont = Geist({
+  subsets: ['latin'],
+  variable: '--font-geist'
 });
 
 export const metadata = {
@@ -68,9 +73,9 @@ export default function RootLayout(props) {
       <body
         className={cn(
           'flex flex-col',
-          GeistSans.className,
-          GeistSans.variable,
-          GGSans.variable
+          geistFont.className,
+          geistFont.variable,
+          ggSansFont.variable
         )}
       >
         <AuthProvider>

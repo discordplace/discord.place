@@ -59,7 +59,7 @@ export default function ServicesDropdown() {
     },
     {
       description: t('header.upcomingServiceDescription'),
-      icon: () => 
+      icon: () =>
         (
           <div className='flex -space-x-1 text-sm'>
             <FaQuestion className='relative top-[3px] rotate-[-10deg]' />

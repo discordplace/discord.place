@@ -18,6 +18,6 @@ export default function Protected({ children }) {
   if (process.env.NODE_ENV === 'development') return children;
 
   if (user === 'loading') return <FullPageLoading />;
-  
+
   return user ? children : <FullPageLoading />;
 }

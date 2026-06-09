@@ -158,7 +158,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
     }
   }
 
-  useEffect(() => 
+  useEffect(() =>
     () => clearTimeout(revalidateTimeoutRef.current)
   , []);
 

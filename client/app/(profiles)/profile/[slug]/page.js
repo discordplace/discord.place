@@ -5,7 +5,9 @@ import { redirect } from 'next/navigation';
 import config from '@/config';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getProfileMetadata(params.slug).catch(error => error);
+  const { slug } = await params;
+
+  const metadata = await getProfileMetadata(slug).catch(error => error);
   if (typeof metadata === 'string') return redirect(`/error?message=${encodeURIComponent(metadata)}`);
 
   return {
@@ -17,15 +19,17 @@ export async function generateMetadata({ params }) {
           width: 1200
         }
       ],
-      title: `Discord Place - ${params.slug}'s Profile`,
-      url: `${config.baseUrl}/profile/${params.slug}`
+      title: `Discord Place - ${slug}'s Profile`,
+      url: `${config.baseUrl}/profile/${slug}`
     },
-    title: `${params.slug}'s Profile`
+    title: `${slug}'s Profile`
   };
 }
 
 export default async function Page({ params }) {
-  const profile = await getProfile(params.slug).catch(error => error);
+  const { slug } = await params;
+
+  const profile = await getProfile(slug).catch(error => error);
   if (typeof profile === 'string') return redirect(`/error?message=${encodeURIComponent(profile)}`);
 
   return <Content profile={profile} />;

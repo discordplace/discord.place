@@ -5,7 +5,9 @@ import Content from '@/app/(templates)/templates/[id]/preview/content';
 import config from '@/config';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getTemplateMetadata(params.id).catch(error => error);
+  const { id } = await params;
+
+  const metadata = await getTemplateMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
   return {
@@ -19,14 +21,16 @@ export async function generateMetadata({ params }) {
         }
       ],
       title: `Discord Place - Template ${metadata.name} by @${metadata.username}`,
-      url: `${config.baseUrl}/templates/${params.id}`
+      url: `${config.baseUrl}/templates/${id}`
     },
     title: `Template ${metadata.name} by @${metadata.username}`
   };
 }
 
 export default async function Page({ params }) {
-  const template = await getTemplate(params.id).catch(error => error);
+  const { id } = await params;
+
+  const template = await getTemplate(id).catch(error => error);
   if (typeof template === 'string') return redirect(`/error?message=${encodeURIComponent(template)}`);
 
   return <Content template={template} />;

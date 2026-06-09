@@ -92,7 +92,7 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
             width: 2
           },
           tooltip: {
-            custom: ({ series, seriesIndex, dataPointIndex }) => 
+            custom: ({ series, seriesIndex, dataPointIndex }) =>
               `
                 <div class='w-full px-2 py-1.5 h-full bg-secondary rounded-lg border border-primary flex gap-x-2'>
                   <div class='w-[2px] h-full py-5 rounded-full' style='background-color: ${color}'></div>

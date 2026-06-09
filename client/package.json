@@ -33,7 +33,6 @@
     "colord": "^2.9.3",
     "date-fns": "^3.6.0",
     "framer-motion": "^12.40.0",
-    "geist": "^1.7.2",
     "gray-matter": "^4.0.3",
     "i18next": "^23.12.7",
     "i18next-intervalplural-postprocessor": "^3.0.0",

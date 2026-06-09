@@ -7,9 +7,11 @@ import Header from '@/app/(blogs)/blogs/[id]/components/Header';
 import { redirect } from 'next/navigation';
 
 export async function generateMetadata({ params }) {
-  if (!fs.existsSync(`${process.cwd()}/blogs/${params.id}.md`)) return;
+  const { id } = await params;
 
-  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf8');
+  if (!fs.existsSync(`${process.cwd()}/blogs/${id}.md`)) return;
+
+  const source = fs.readFileSync(`${process.cwd()}/blogs/${id}.md`, 'utf8');
   const { data } = matter(source);
 
   return {
@@ -31,9 +33,11 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  if (!fs.existsSync(`${process.cwd()}/blogs/${params.id}.md`)) return redirect('/error?code=90001');
+  const { id } = await params;
 
-  const source = fs.readFileSync(`${process.cwd()}/blogs/${params.id}.md`, 'utf8');
+  if (!fs.existsSync(`${process.cwd()}/blogs/${id}.md`)) return redirect('/error?code=90001');
+
+  const source = fs.readFileSync(`${process.cwd()}/blogs/${id}.md`, 'utf8');
   const { data, content } = matter(source);
 
   return (

@@ -5,7 +5,9 @@ import getSoundMetadata from '@/lib/request/sounds/getSoundMetadata';
 import config from '@/config';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getSoundMetadata(params.id).catch(error => error);
+  const { id } = await params;
+
+  const metadata = await getSoundMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
   return {
@@ -26,14 +28,16 @@ export async function generateMetadata({ params }) {
         }
       ],
       title: `Discord Place - Sound ${metadata.name}`,
-      url: `/sounds/${params.id}`
+      url: `/sounds/${id}`
     },
     title: `Sound ${metadata.name}`
   };
 }
 
 export default async function Page({ params }) {
-  const sound = await getSound(params.id).catch(error => error);
+  const { id } = await params;
+
+  const sound = await getSound(id).catch(error => error);
   if (typeof sound === 'string') return redirect(`/error?message=${encodeURIComponent(sound)}`);
 
   return <Content sound={sound} />;

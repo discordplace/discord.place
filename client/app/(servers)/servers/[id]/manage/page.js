@@ -5,7 +5,9 @@ import { redirect } from 'next/navigation';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getServerMetadata(params.id).catch(error => error);
+  const { id } = await params;
+
+  const metadata = await getServerMetadata(id).catch(error => error);
   if (typeof server === 'string') return;
 
   return {
@@ -17,7 +19,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const server = await getServer(params.id).catch(error => error);
+  const { id } = await params;
+
+  const server = await getServer(id).catch(error => error);
   if (typeof server === 'string') return redirect(`/error?message=${encodeURIComponent(server)}`);
   if (server.permissions.canEdit === false) return redirect('/error?code=60001');
 

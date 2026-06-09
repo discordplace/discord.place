@@ -5,7 +5,9 @@ import { redirect } from 'next/navigation';
 import config from '@/config';
 
 export async function generateMetadata({ params }) {
-  const metadata = await getServerMetadata(params.id).catch(error => error);
+  const { id } = await params;
+
+  const metadata = await getServerMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
 
   return {
@@ -20,14 +22,16 @@ export async function generateMetadata({ params }) {
         }
       ],
       title: `Discord Place - ${metadata.name} Server`,
-      url: `${config.baseUrl}/servers/${params.id}`
+      url: `${config.baseUrl}/servers/${id}`
     },
     title: `Server ${metadata.name}`
   };
 }
 
 export default async function Page({ params }) {
-  const server = await getServer(params.id).catch(error => error);
+  const { id } = await params;
+
+  const server = await getServer(id).catch(error => error);
   if (typeof server === 'string') return redirect(`/error?message=${encodeURIComponent(server)}`);
 
   return <Content server={server} />;

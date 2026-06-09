@@ -6,6 +6,6 @@ const ForwardedImage = forwardRef((props, ref) => (
 
   <Link {...props} ref={ref} />
 ));
-const MotionLink = motion(ForwardedImage);
+const MotionLink = motion.create(ForwardedImage);
 
 export default MotionLink;
