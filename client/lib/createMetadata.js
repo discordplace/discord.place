@@ -1,27 +1,42 @@
 import config from '@/config';
 
-export default function createMetadata(metadata) {
-  const siteName = 'discord.place';
-  const baseTitle = 'discord.place - A place for all things that related to Discord';
-  const baseDescription = 'A place for all things that related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.';
-  const baseUrl = config.baseUrl;
+const siteName = 'discord.place';
+const baseTitle = 'discord.place - A place for all things related to Discord';
+const baseDescription = 'A place for all things related to Discord. No matter if you are a developer, a server owner, or just a user, you can find something useful here.';
+const baseUrl = config.baseUrl;
 
-  const defaultMetadata = {
+export default function createMetadata(customMetadata = {}) {
+  const { openGraph, twitter, alternates, ...rest } = customMetadata;
+
+  const resolvedTitle = customMetadata.title || baseTitle;
+  const resolvedDescription = customMetadata.description || baseDescription;
+
+  return {
     alternates: {
-      canonical: baseUrl
+      canonical: baseUrl,
+      ...alternates
     },
     authors: [{ name: siteName, url: baseUrl }],
     creator: siteName,
     description: baseDescription,
-    keywords: ['discord', 'discord place', 'discord emojis', 'discord servers', 'discord profiles', 'discord emojis', 'discord bots', 'discord developers'],
+    keywords: [
+      'discord',
+      'discord bots',
+      'discord developers',
+      'discord emojis',
+      'discord place',
+      'discord profiles',
+      'discord servers'
+    ],
     metadataBase: new URL(baseUrl),
     openGraph: {
-      description: baseDescription,
+      description: resolvedDescription,
       locale: 'en_US',
       siteName,
-      title: baseTitle,
+      title: resolvedTitle,
       type: 'website',
-      url: baseUrl
+      url: baseUrl,
+      ...openGraph
     },
     publisher: siteName,
     robots: {
@@ -42,22 +57,11 @@ export default function createMetadata(metadata) {
     twitter: {
       card: 'summary_large_image',
       creator: '@discord_place',
-      description: baseDescription,
+      description: resolvedDescription,
       site: '@discord_place',
-      title: baseTitle
-    }
-  };
-
-  return {
-    ...defaultMetadata,
-    ...metadata,
-    openGraph: {
-      ...defaultMetadata.openGraph,
-      ...metadata?.openGraph
+      title: resolvedTitle,
+      ...twitter
     },
-    twitter: {
-      ...defaultMetadata.twitter,
-      ...metadata?.twitter
-    }
+    ...rest
   };
 }
