@@ -49,16 +49,41 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     if (!user || user === 'loading' || hasIdentified.current) return;
 
-    if (globalThis.umami?.identify) {
-      globalThis.umami.identify(user.username, { id: user.id });
-    }
+    let attemptCount = 0;
+    const maxAttempts = 50;
 
-    if (tracker) {
-      tracker.setUserID(user.id);
-      tracker.setMetadata('username', user.username);
-    }
+    const attemptIdentify = () => {
+      const umamiReady = globalThis.umami?.identify && typeof globalThis.umami.identify === 'function';
+      const trackerReady = tracker && typeof tracker.setUserID === 'function';
 
-    hasIdentified.current = true;
+      if (!umamiReady || !trackerReady) {
+        attemptCount++;
+        if (attemptCount < maxAttempts) {
+          setTimeout(attemptIdentify, 100);
+          return;
+        }
+      }
+
+      try {
+        if (umamiReady) {
+          globalThis.umami.identify(user.username, { id: user.id });
+        }
+
+        if (trackerReady) {
+          tracker.setUserID(user.id);
+          if (typeof tracker.setMetadata === 'function') {
+            tracker.setMetadata('username', user.username);
+          }
+        }
+
+        hasIdentified.current = true;
+      } catch (error) {
+        console.warn('Failed to identify user:', error);
+        hasIdentified.current = true;
+      }
+    };
+
+    attemptIdentify();
   }, [user]);
 
   return children;
