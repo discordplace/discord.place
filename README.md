@@ -189,37 +189,36 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 
 ### About Configuration File (Client)
 
-Navigate to the `client` directory and find the `config.js` file. This file contains the configuration for the client. You can modify the values in this file to customize the client according to your requirements.
+Navigate to the `client/config` directory and find the `data.js` file. This file contains the configuration for the client. You can modify the values in this file to customize the client according to your requirements.
 
 ##### Parameters
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| `availableLocales` | Array<String> | Available locales for the website. |
-| `supportInviteUrl` | String | URL for the your Discord support server invite. Used in the many places in the website. |
-| `docsUrl` | String | URL for the your website documentation website. |
-| `statusUrl` | String | URL for the your website status page. |
-| `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:16540`. |
-| `analytics.script` | String | Your analytics script URL. |
 | `analytics.recorderScript` | String | Your analytics recorder script URL. |
+| `analytics.script` | String | Your analytics script URL. |
 | `analytics.websiteId` | String | Your website ID assigned by Umami. |
-| `openreplay.projectKey` | String | Your OpenReplay project key. Leave empty to disable OpenReplay. |
-| `openreplay.ingestPoint` | String | Your OpenReplay ingest point URL (e.g. `https://openreplay.yourdomain.com/ingest`). Leave empty to disable OpenReplay. |
-| `botTestGuildId` | String | Your test guild ID for the bots testing. |
+| `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:16540`. |
+| `availableLocales` | Array<String> | Available locales for the website. |
+| `baseUrl` | String | Base URL for the website. In development, it will be `http://localhost:36706`. |
 | `botInviteURL` | String | URL for the your bot invite. Used in the many places in the website. |
-| `customHostnames` | Array<String> | Custom hostnames for the profiles. You may need to change this to your own custom hostnames. |
+| `botTestGuildId` | String | Your test guild ID for the bots testing. |
+| `customHostnames` | Array<String> | Custom hostnames for the profiles. You
+| `openreplay.ingestPoint` | String | Your OpenReplay ingest point URL (e.g. `https://openreplay.yourdomain.com/ingest`). |
+| `openreplay.projectKey` | String | Your OpenReplay project key. |
 
 > [!NOTE]
-> - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
-> - The `supportInviteUrl` and `docsUrl` values are used in the website for the support server and documentation links. You can change these values to your own support server and documentation links.
-> - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
 > - The `analytics.script`, `analytics.recorderScript`, and `analytics.websiteId` values are used for setting up analytics on the website. We use [Umami](https://umami.is) for analytics. Any other analytics service is not supported.
-> - The `openreplay.projectKey` and `openreplay.ingestPoint` values are used for setting up [OpenReplay](https://openreplay.com) session replay on the website. 
-> - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
+> - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
+> - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
+> - The `baseUrl` value is used for the base URL for the website. You should change this value to your own base URL. Make sure to use domain names instead of IP addresses for the base URL. Also you should use Cloudflare for the client domain.
+
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
+> - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the website with different ports and use a reverse proxy to redirect the requests to the correct port.
+> - The `openreplay.projectKey` and `openreplay.ingestPoint` values are used for setting up [OpenReplay](https://openreplay.com) session replay on the website.
 
 > [!WARNING]
-> - If you wanna change the default locale, you should change the `default` value in the `client/config.js` file. This value should be one of the values in the `availableLocales` array. After changing this value, you also need to change the `DEFAULT_LOCALE_CODE` environment value in the `.github/workflows/validate-locale-files.yml` file. (if you don't want to get any unnecessary errors in the GitHub Actions)
+> - If you wanna change the default locale, you should change the `default` value in the `client/config/data.js` file. This value should be one of the values in the `availableLocales` array. After changing this value, you also need to change the `DEFAULT_LOCALE_CODE` environment value in the `.github/workflows/validate-locale-files.yml` file. (if you don't want to get any unnecessary errors in the GitHub Actions)
 
 ### About Configuration File (Server)
 
@@ -284,7 +283,7 @@ We use Tailwind CSS for styling the frontend. If you want to customize the Tailw
 To add a new language to the website, follow these steps:
 
 1. Create a new JSON file in the `client/locales` directory with the format `xx.json`, where `xx` is the language code. For example, `fr.json` for French. You can use the existing language files as a reference.
-2. Add the language code to the `availableLocales` value in the `client/config.js` file.
+2. Add the language code to the `availableLocales` value in the `client/config/data.js` file.
 3. Import the new language file in the `client/stores/language/index.js` file.
 4. Add the new language to the `localeContents` object in the `client/stores/language/index.js` file.
 3. Add the translations for the new language to the JSON file you created. The JSON file should have the following structure:
