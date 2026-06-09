@@ -191,6 +191,11 @@
       ]
     }
   },
+  "notFoundPage": {
+    "title": "Boşlukta kayboldun, değil mi?",
+    "description": "Aradığınız yer mevcut değil. Ya da belki var, ama boşluğun bir yerinde gizli. Her iki durumda da, burada değil.",
+    "redirectText": "(1)[{{count}} saniye içinde ana sayfaya yönlendirileceksiniz.];(2-inf)[{{count}} saniye içinde ana sayfaya yönlendirileceksiniz.];"
+  },
   "errorPage": {
     "badge": "Hata",
     "title": "Üzgünüz, bir hata oluştu.",
@@ -286,7 +291,8 @@
     "dontTrust": "Güvenme",
     "testWebhook": "Webhook'u Test Et",
     "continue": "Devam Et",
-    "dontShowAgain": "Tekrar Gösterme"
+    "dontShowAgain": "Tekrar Gösterme",
+    "goHome": "Ana Sayfa"
   },
   "voteCountdown": {
     "desktop": "{{hours}}sa {{minutes}}dk {{seconds}}sn kaldı",

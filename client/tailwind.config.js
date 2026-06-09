@@ -45,6 +45,7 @@ module.exports = {
       },
       fontFamily: {
         ggSans: ['var(--font-gg-sans)'],
+        oranienbaum: ['var(--font-oranienbaum)'],
         sans: ['var(--font-geist-sans)']
       },
       gradientColorStops: {

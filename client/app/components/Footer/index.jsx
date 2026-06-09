@@ -54,7 +54,7 @@ export default function Footer() {
           label: t('footer.blocks.0.links.4')
         }
       ],
-      title: t('footer.blocks.0.title'), // Pages
+      title: t('footer.blocks.0.title') // Pages
     },
     {
       links: [
@@ -91,7 +91,7 @@ export default function Footer() {
           label: 'Lantern'
         }
       ],
-      title: t('footer.blocks.1.title'), // Our Services
+      title: t('footer.blocks.1.title') // Our Services
     },
     {
       links: [
@@ -116,7 +116,7 @@ export default function Footer() {
           label: t('footer.blocks.2.links.4')
         }
       ],
-      title: t('footer.blocks.2.title'), // Legal
+      title: t('footer.blocks.2.title') // Legal
     },
     {
       links: [
@@ -147,7 +147,7 @@ export default function Footer() {
           target: '_blank'
         }
       ],
-      title: t('footer.blocks.3.title'), // Social
+      title: t('footer.blocks.3.title') // Social
     }
   ];
 
@@ -163,6 +163,7 @@ export default function Footer() {
           height={200}
           className='size-[48px]'
           alt='discord.place Logo'
+          priority={true}
         />
 
         <h2 className='max-w-[350px] text-2xl font-bold text-primary'>

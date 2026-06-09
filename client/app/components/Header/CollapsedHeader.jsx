@@ -47,6 +47,7 @@ export default function CollapsedHeader({ pathname }) {
             height={64}
             className='size-[48px]'
             alt='discord.place Logo'
+            priority={true}
           />
         </Link>
       </div>

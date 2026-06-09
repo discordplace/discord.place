@@ -205,6 +205,7 @@ export default function Card(props) {
                           width={16}
                           height={16}
                           alt="poweredByLantern Badge"
+                          className='size-[16px]'
                         />
                       </Link>
                     ) : (
@@ -213,6 +214,7 @@ export default function Card(props) {
                         width={16}
                         height={16}
                         alt={`${badgeId} Badge`}
+                        className='size-[16px]'
                       />
                     )}
                   </Tooltip>

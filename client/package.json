@@ -12,12 +12,13 @@
     "url": "https://github.com/discordplace/discord.place/tree/main/apps/client"
   },
   "scripts": {
-    "dev": "next dev --turbopack -p 36706",
+    "dev": "next dev -p 36706",
     "build": "next build",
     "start": "next start -p 36706",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix --fix-suggestions --fix-dangerously",
-    "fmt": "oxfmt --write ."
+    "fmt": "oxfmt --write .",
+    "typegen": "next typegen"
   },
   "dependencies": {
     "@openreplay/tracker": "^18.0.13",
@@ -41,8 +42,9 @@
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.1",
     "nanoid": "^5.0.6",
-    "next": "15.5.19",
+    "next": "16.2.7",
     "next-nprogress-bar": "^2.3.5",
+    "ogl": "^1.0.11",
     "react": "19.2.7",
     "react-animate-height": "^3.2.3",
     "react-animated-numbers": "^0.18.0",
@@ -72,6 +74,7 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tailwindcss/typography": "^0.5.10",
     "autoprefixer": "^10.4.19",
+    "babel-plugin-react-compiler": "^1.0.0",
     "oxfmt": "^0.53.0",
     "oxlint": "^1.68.0",
     "postcss": "^8.4.38",

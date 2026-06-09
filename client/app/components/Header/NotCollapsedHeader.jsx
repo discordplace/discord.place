@@ -136,7 +136,7 @@ export default function NotCollapsedHeader() {
 
             <div
               className={cn(
-                'transition-all absolute top-0 left-0 w-full h-full rounded-full z-[-1] bg-tertiary',
+                'transition-all absolute top-0 left-0 w-full h-full rounded-full z-[-1] bg-secondary',
                 hoveringHeaderTab ? 'opacity-100' : 'opacity-0'
               )}
               id='hoveringHeaderTab'

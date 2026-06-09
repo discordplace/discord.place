@@ -22,10 +22,10 @@ export default function FlipWords({ words, duration = 3000, className, onStartAn
 
   useEffect(() => {
     if (!isAnimating)
-      {setTimeout(() => {
-        startAnimation();
-        if (onStartAnimation) onStartAnimation();
-      }, duration);}
+    {setTimeout(() => {
+      startAnimation();
+      if (onStartAnimation) onStartAnimation();
+    }, duration);}
   }, [isAnimating, duration, startAnimation]);
 
   return (

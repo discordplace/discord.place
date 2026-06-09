@@ -13,7 +13,7 @@ const config = {
   ...dataDefaults,
   ...utils,
   applicationsEntitlementsScopeURL,
-  getLoginURL,
+  getLoginURL
 };
 
 export default config;

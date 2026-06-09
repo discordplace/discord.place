@@ -1881,6 +1881,7 @@ export default function Page() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={transition}
+                  priority={true}
                 />
 
                 <motion.div

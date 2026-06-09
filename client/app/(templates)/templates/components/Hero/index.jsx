@@ -93,25 +93,25 @@ export default function Hero() {
             <Select
               placeholder={t('templatesPage.sortSelect.placeholder')}
               options={[
-                  {
-                    label: t('templatesPage.sortSelect.items.popular'),
-                    value: 'Popular'
-                  },
-                  {
-                    label: t('templatesPage.sortSelect.items.newest'),
-                    value: 'Newest'
-                  },
-                  {
-                    label: t('templatesPage.sortSelect.items.oldest'),
-                    value: 'Oldest'
-                  }
-                ].map(option => ({
-                  label: <div className='flex items-center gap-x-2'>
-                    {config.sortIcons[option.value.replace(' ', '')]}
-                    {option.label}
-                  </div>,
-                  value: option.value
-                }))}
+                {
+                  label: t('templatesPage.sortSelect.items.popular'),
+                  value: 'Popular'
+                },
+                {
+                  label: t('templatesPage.sortSelect.items.newest'),
+                  value: 'Newest'
+                },
+                {
+                  label: t('templatesPage.sortSelect.items.oldest'),
+                  value: 'Oldest'
+                }
+              ].map(option => ({
+                label: <div className='flex items-center gap-x-2'>
+                  {config.sortIcons[option.value.replace(' ', '')]}
+                  {option.label}
+                </div>,
+                value: option.value
+              }))}
               value={sort}
               onChange={setSort}
               disabled={loading}

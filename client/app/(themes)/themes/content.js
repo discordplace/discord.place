@@ -105,21 +105,21 @@ export default function Content() {
             <Select
               placeholder={t('themesPage.sortSelect.placeholder')}
               options={[
-                  {
-                    label: t('themesPage.sortSelect.items.newest'),
-                    value: 'Newest'
-                  },
-                  {
-                    label: t('themesPage.sortSelect.items.oldest'),
-                    value: 'Oldest'
-                  }
-                ].map(option => ({
-                  label: <div className='flex items-center gap-x-2'>
-                    {config.sortIcons[option.value.replace(' ', '')]}
-                    {option.label}
-                  </div>,
-                  value: option.value
-                }))}
+                {
+                  label: t('themesPage.sortSelect.items.newest'),
+                  value: 'Newest'
+                },
+                {
+                  label: t('themesPage.sortSelect.items.oldest'),
+                  value: 'Oldest'
+                }
+              ].map(option => ({
+                label: <div className='flex items-center gap-x-2'>
+                  {config.sortIcons[option.value.replace(' ', '')]}
+                  {option.label}
+                </div>,
+                value: option.value
+              }))}
               value={sort}
               onChange={setSort}
               disabled={loading}

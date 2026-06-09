@@ -20,11 +20,29 @@ if (process.env.NEXT_PUBLIC_CDN_URL) {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ['react-icons']
+    optimizePackageImports: ['react-icons'],
+    turbopackFileSystemCacheForDev: true
+  },
+  async headers() {
+    return [
+      {
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+        source: '/manifest.webmanifest'
+      }
+    ];
   },
   images: {
     remotePatterns
   },
+  logging: {
+    browserToTerminal: true
+  },
+  reactCompiler: true,
   reactStrictMode: false,
   async redirects() {
     return [
@@ -33,7 +51,7 @@ const nextConfig = {
         permanent: true,
         source: '/p/:slug'
       }
-    ]
+    ];
   },
   async rewrites() {
     return [
@@ -45,7 +63,8 @@ const nextConfig = {
   },
   turbopack: {
     root: process.cwd()
-  }
+  },
+  typedRoutes: true
 };
 
 export default nextConfig;

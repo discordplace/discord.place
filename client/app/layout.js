@@ -1,6 +1,6 @@
 import '@/styles/main.css';
 import 'react-medium-image-zoom/dist/styles.css';
-import { Geist } from 'next/font/google';
+import { Geist, Oranienbaum } from 'next/font/google';
 import cn from '@/lib/cn';
 import LayoutContent from '@/app/layout-content';
 import AuthProvider from '@/app/components/Providers/Auth';
@@ -26,6 +26,12 @@ const ggSansFont = localFont({
     }
   ],
   variable: '--font-gg-sans'
+});
+
+const oranienbaumFont = Oranienbaum({
+  subsets: ['latin'],
+  variable: '--font-oranienbaum',
+  weight: ['400']
 });
 
 const geistFont = Geist({
@@ -75,7 +81,8 @@ export default function RootLayout(props) {
           'flex flex-col',
           geistFont.className,
           geistFont.variable,
-          ggSansFont.variable
+          ggSansFont.variable,
+          oranienbaumFont.variable
         )}
       >
         <AuthProvider>

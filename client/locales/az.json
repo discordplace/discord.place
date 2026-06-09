@@ -191,6 +191,11 @@
       ]
     }
   },
+  "notFoundPage": {
+    "title": "Boşluqda itdin, elə deyilmi?",
+    "description": "Axtardığınız yer mövcud deyil. Ya da bəlkə var, amma boşluğun bir yerində gizlənib. Hər halda, burada deyil.",
+    "redirectText": "(1)[{{count}} saniyə ərzində ana səhifəyə yönləndiriləcəksiniz.];(2-inf)[{{count}} saniyə ərzində ana səhifəyə yönləndiriləcəksiniz.];"
+  },
   "errorPage": {
     "badge": "Xəta",
     "title": "Üzr istəyirik, xəta baş verdi.",
@@ -286,7 +291,8 @@
     "dontTrust": "Etibar etmə",
     "testWebhook": "Sınaq Vebhooku",
     "continue": "Davam edin",
-    "dontShowAgain": "Bir daha göstərmə"
+    "dontShowAgain": "Bir daha göstərmə",
+    "goHome": "Ana Səhifə"
   },
   "voteCountdown": {
     "desktop": "gözləyin {{hours}}h {{minutes}}m {{seconds}}səs vermək",

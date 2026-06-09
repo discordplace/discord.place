@@ -2,7 +2,8 @@
 
 import { FaGithub } from 'react-icons/fa';
 import Square from '@/app/components/Background/Square';
-import InfoCard from '@/app/(home)/components/InfoCards/Card';import useAuthStore from '@/stores/auth';
+import InfoCard from '@/app/(home)/components/InfoCards/Card';
+import useAuthStore from '@/stores/auth';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
 import MockServerCard from '@/app/(home)/components/InfoCards/Mock/ServerCard';
@@ -16,7 +17,7 @@ export default function InfoCards() {
   const pathname = usePathname();
 
   return (
-    <div className='mt-48 flex w-full max-w-5xl flex-col items-center justify-center gap-y-32 px-4 lg:px-0'>
+    <div className='mt-24 flex w-full max-w-5xl flex-col items-center justify-center gap-y-32 px-4 lg:px-0'>
       <InfoCard
         index={0}
         title={t('home.infoCards.0.title')}

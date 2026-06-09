@@ -79,31 +79,31 @@ export default function Hero() {
               <Select
                 placeholder={t('profilesPage.sortSelect.placeholder')}
                 options={[
-                    {
-                      label: t('profilesPage.sortSelect.items.likes'),
-                      value: 'Likes'
-                    },
-                    {
-                      label: t('profilesPage.sortSelect.items.mostViewed'),
-                      value: 'MostViewed'
-                    },
-                    {
-                      label: t('profilesPage.sortSelect.items.newest'),
-                      value: 'Newest'
-                    },
-                    {
-                      label: t('profilesPage.sortSelect.items.oldest'),
-                      value: 'Oldest'
-                    }
-                  ].map(option => ({
-                    label: (
-                      <div className='flex items-center gap-x-2'>
-                        {config.sortIcons[option.value.replace(' ', '')]}
-                        {option.label}
-                      </div>
-                    ),
-                    value: option.value
-                  }))}
+                  {
+                    label: t('profilesPage.sortSelect.items.likes'),
+                    value: 'Likes'
+                  },
+                  {
+                    label: t('profilesPage.sortSelect.items.mostViewed'),
+                    value: 'MostViewed'
+                  },
+                  {
+                    label: t('profilesPage.sortSelect.items.newest'),
+                    value: 'Newest'
+                  },
+                  {
+                    label: t('profilesPage.sortSelect.items.oldest'),
+                    value: 'Oldest'
+                  }
+                ].map(option => ({
+                  label: (
+                    <div className='flex items-center gap-x-2'>
+                      {config.sortIcons[option.value.replace(' ', '')]}
+                      {option.label}
+                    </div>
+                  ),
+                  value: option.value
+                }))}
                 value={sort}
                 onChange={setSort}
                 disabled={loading}

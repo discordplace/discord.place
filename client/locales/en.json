@@ -191,6 +191,11 @@
       ]
     }
   },
+  "notFoundPage": {
+    "title": "You lost in the void, didn't you?",
+    "description": "The place you are looking for doesn't exist. Or maybe it does, but it's hidden somewhere in the void. Either way, it's not here.",
+    "redirectText": "(1)[You will be redirected to the homepage in {{count}} second.];(2-inf)[You will be redirected to the homepage in {{count}} seconds.];"
+  },
   "errorPage": {
     "badge": "Error",
     "title": "We're sorry, an error occurred.",
@@ -286,7 +291,8 @@
     "dontTrust": "Don't Trust",
     "testWebhook": "Test Webhook",
     "continue": "Continue",
-    "dontShowAgain": "Don't Show Again"
+    "dontShowAgain": "Don't Show Again",
+    "goHome": "Go Home"
   },
   "voteCountdown": {
     "desktop": "Wait {{hours}}h {{minutes}}m {{seconds}}s to vote",

@@ -123,37 +123,37 @@ export default function Hero() {
             <Select
               placeholder={t('serversPage.sortSelect.placeholder')}
               options={[
-                  {
-                    label: t('serversPage.sortSelect.items.votes'),
-                    value: 'Votes'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.latestVoted'),
-                    value: 'LatestVoted'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.members'),
-                    value: 'Members'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.newest'),
-                    value: 'Newest'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.oldest'),
-                    value: 'Oldest'
-                  },
-                  {
-                    label: t('serversPage.sortSelect.items.boosts'),
-                    value: 'Boosts'
-                  }
-                ].map(option => ({
-                  label: <div className='flex items-center gap-x-2'>
-                    {config.sortIcons[option.value.replace(' ', '')]}
-                    {option.label}
-                  </div>,
-                  value: option.value
-                }))}
+                {
+                  label: t('serversPage.sortSelect.items.votes'),
+                  value: 'Votes'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.latestVoted'),
+                  value: 'LatestVoted'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.members'),
+                  value: 'Members'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.newest'),
+                  value: 'Newest'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.oldest'),
+                  value: 'Oldest'
+                },
+                {
+                  label: t('serversPage.sortSelect.items.boosts'),
+                  value: 'Boosts'
+                }
+              ].map(option => ({
+                label: <div className='flex items-center gap-x-2'>
+                  {config.sortIcons[option.value.replace(' ', '')]}
+                  {option.label}
+                </div>,
+                value: option.value
+              }))}
               value={sort}
               onChange={setSort}
               disabled={loading}
