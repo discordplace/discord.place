@@ -14,7 +14,6 @@ export default function Emoji({ data, avatar_base64 }) {
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
         {data.is_pack === false ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={config.getEmojiURL(data.id)}
               alt={`${data.name} emoji`}
@@ -46,7 +45,6 @@ export default function Emoji({ data, avatar_base64 }) {
                 }}
               >
                 {data.emoji_ids.map(packaged_emoji => (
-                  // eslint-disable-next-line @next/next/no-img-element
                   <img
                     key={packaged_emoji.id}
                     src={config.getEmojiURL(`packages/${data.id}/${packaged_emoji.id}`, packaged_emoji.animated)}
@@ -101,7 +99,6 @@ export default function Emoji({ data, avatar_base64 }) {
 
         by
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : `http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/default-discord-avatar.png`}
           alt={`${data.username}'s avatar`}

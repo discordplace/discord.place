@@ -11,7 +11,6 @@ export default function Profile({ data, avatar_base64 }) {
   return (
     <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0px' }}>
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : `http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/default-discord-avatar.png`}
           alt={`${data.username}'s avatar`}

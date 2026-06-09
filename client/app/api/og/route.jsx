@@ -8,7 +8,8 @@ import { RiRobot2Fill } from 'react-icons/ri';
 import { ImageResponse } from '@vercel/og';
 import fs from 'node:fs';
 import { NextResponse } from 'next/server';
-import fuc from '@/lib/fuc';import getImageBuffer from '@/lib/getImageBuffer';
+import fuc from '@/lib/fuc';
+import getImageBuffer from '@/lib/getImageBuffer';
 import Profile from '@/app/api/og/content/Profile';
 import Server from '@/app/api/og/content/Server';
 import Bot from '@/app/api/og/content/Bot';
@@ -17,7 +18,8 @@ import Template from '@/app/api/og/content/Template';
 import Sound from '@/app/api/og/content/Sound';
 import Blog from '@/app/api/og/content/Blog';
 
-function getFontData(fontName) {
+
+function getFontData(fontName) {
   const file = fs.readFileSync(`${process.cwd()}/public/fonts/${fontName}.ttf`);
 
   return file.buffer;
@@ -156,7 +158,6 @@ export async function GET(request) {
             width: '100%'
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/symbol_white.png`}
             style={{ height: '56px', marginLeft: '20px', width: '56px' }}

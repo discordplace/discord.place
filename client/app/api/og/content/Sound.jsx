@@ -3,7 +3,8 @@ import { FiArrowRightCircle } from 'react-icons/fi';
 import { HiDocumentDownload } from 'react-icons/hi';
 import config from '@/config';
 
-export default function Sound({ data, avatar_base64 }) {
+
+export default function Sound({ data, avatar_base64 }) {
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
     notation: 'compact',
@@ -30,7 +31,6 @@ import config from '@/config';
       <div style={{ alignItems: 'center', display: 'flex', gap: '8px' }}>
         by {' '}
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : `http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/default-discord-avatar.png`}
           alt={`${data.username}'s avatar`}

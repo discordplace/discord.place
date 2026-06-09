@@ -140,7 +140,6 @@ export default function Actions({ bot }) {
         <AnimatePresence>
           {showCaptcha && (
             <motion.div
-              /* eslint-disable-next-line tailwindcss/no-custom-classname */
               className='cf-turnstile [&>iframe]:max-w-full'
               data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY}
               ref={captchaRef}

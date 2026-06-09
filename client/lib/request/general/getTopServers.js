@@ -1,7 +1,6 @@
 import config from '@/config';
 
 export default function getTopServers() {
-  // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const url = `${config.api.url}/top-servers`;
 

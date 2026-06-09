@@ -166,7 +166,6 @@ export default function Actions({ server }) {
 
         <AnimatePresence>
           {showCaptcha && (
-            /* eslint-disable-next-line tailwindcss/no-custom-classname */
             <motion.div className='cf-turnstile [&>iframe]:max-w-full' data-sitekey={process.env.NEXT_PUBLIC_CF_SITE_KEY} ref={captchaRef} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
           )}
         </AnimatePresence>

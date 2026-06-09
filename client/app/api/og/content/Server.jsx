@@ -3,7 +3,8 @@ import { FaUsers } from 'react-icons/fa';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import config from '@/config';
 
-export default function Server({ data, icon_base64 }) {
+
+export default function Server({ data, icon_base64 }) {
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
     notation: 'compact',
@@ -18,7 +19,6 @@ import config from '@/config';
   return (
     <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0px' }}>
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={icon_base64 ? `data:image/png;base64,${icon_base64}` : `http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/default-discord-avatar.png`}
           alt={`${data.name}'s icon`}

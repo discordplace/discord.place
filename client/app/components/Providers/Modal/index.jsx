@@ -4,7 +4,8 @@ import { IoMdCloseCircle } from 'react-icons/io';
 import { TbLoader } from 'react-icons/tb';
 import cn from '@/lib/cn';
 import useModalsStore from '@/stores/modals';
-import * as Dialog from '@radix-ui/react-dialog';import { useShallow } from 'zustand/react/shallow';
+import * as Dialog from '@radix-ui/react-dialog';
+import { useShallow } from 'zustand/react/shallow';
 import { Drawer } from 'vaul';
 import { useMedia } from 'react-use';
 
@@ -76,7 +77,6 @@ export default function ModalProvider({ children }) {
             open={activeModalId === id}
             onOpenChange={open => !open && closeModal(id)}
           >
-            {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
             <Dialog.Overlay className='radix-overlay fixed inset-0 z-[9999] bg-white/50 backdrop-blur-sm dark:bg-black/50' />
             <Dialog.Content className='radix-dialog-content fixed z-[9999] flex size-full items-center justify-center focus:outline-none'>
               <div

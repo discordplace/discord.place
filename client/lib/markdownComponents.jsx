@@ -267,7 +267,6 @@ const markdownComponents = {
   img: ({ src, alt, width, height }) => 
     (
       <Zoom>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={alt}
