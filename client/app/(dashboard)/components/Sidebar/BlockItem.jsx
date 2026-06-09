@@ -35,7 +35,7 @@ export default function BlockItem({ id, name, icon, href, onClick, badge, disabl
           activeTab === id && badge?.data > 0 && badge.style === 'primary' && 'bg-tertiary bg-gradient-to-l from-purple-500/20'
         )}
         key={id}
-        onClick={() => onClick ? onClick() : !href && setActiveTab(id)}
+        onClick={() => (onClick ? onClick() : !href && setActiveTab(id))}
         href={href}
         target='_blank'
       >

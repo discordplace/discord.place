@@ -1567,7 +1567,7 @@ export default function Page() {
                 },
                 {
                   action: () => bulkActionWithConfirmationModal({
-                    action: item => item.custom.type === 'bot' ? deleteBotTimeout(item.id, item.custom.userId) : deleteServerTimeout(item.id, item.custom.userId),
+                    action: item => (item.custom.type === 'bot' ? deleteBotTimeout(item.id, item.custom.userId) : deleteServerTimeout(item.id, item.custom.userId)),
                     fetchKey: 'timeouts',
                     name: 'timeout'
                   }),

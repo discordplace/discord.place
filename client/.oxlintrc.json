@@ -42,9 +42,10 @@
     "react/jsx-boolean-value": ["error", "always"],
     "stylistic/no-multiple-empty-lines": ["error", { "max": 1 }],
     "stylistic/nonblock-statement-body-position": ["error", "beside"],
-    "import/newline-after-import": ["error", { "count": 1 }],
+    "import/newline-after-import": "off",
     "stylistic/padded-blocks": ["error", "never"],
-    "stylistic/padding-line-between-statements": ["error", { "blankLine": "always", "prev": "*", "next": "return" }]
+    "stylistic/padding-line-between-statements": ["error", { "blankLine": "always", "prev": "*", "next": "return" }],
+    "stylistic/no-confusing-arrow": "error"
   },
   "env": { "browser": true, "node": true }
 }

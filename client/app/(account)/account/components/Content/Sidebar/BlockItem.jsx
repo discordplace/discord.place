@@ -40,7 +40,7 @@ import Link from 'next/link';
           loading && 'pointer-events-none'
         )}
         key={id}
-        onClick={() => onClick ? onClick() : !href && setActiveTab(id)}
+        onClick={() => (onClick ? onClick() : !href && setActiveTab(id))}
         href={href}
         target='_blank'
       >

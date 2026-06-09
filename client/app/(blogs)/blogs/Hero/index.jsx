@@ -74,7 +74,7 @@ export default function Hero() {
           transition={{ ...sequenceTransition, delay: 0.3 }}
         >
           {['All', ...new Set(data.map(data => data.tags).flat())]
-            .sort((a, b) => b === 'All' ? 1 : a.localeCompare(b))
+            .sort((a, b) => (b === 'All' ? 1 : a.localeCompare(b)))
             .map(tag => (
               <button
                 key={tag}

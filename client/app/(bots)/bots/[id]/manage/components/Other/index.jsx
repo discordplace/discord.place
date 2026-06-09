@@ -144,7 +144,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
               className='-mt-2 pl-[6.525rem] focus-visible:text-secondary'
               type='text'
               value={githubRepository}
-              onChange={event => event.target.value === '' ? setGithubRepository(undefined) : setGithubRepository(event.target.value)}
+              onChange={event => (event.target.value === '' ? setGithubRepository(undefined) : setGithubRepository(event.target.value))}
               placeholder={t('botManagePage.other.githubRepository.usernameRepositoryInputPlaceholder')}
               onKeyUp={event => event.key === 'Enter' && saveGithubRepository()}
             />
@@ -182,7 +182,7 @@ export default function Other({ botId, categories, setCategories, canEditSupport
                     <div
                       className='relative'
                       key={server.id}
-                      onClick={() => supportServerId === server.id ? setSupportServerId('0') : setSupportServerId(server.id)}
+                      onClick={() => (supportServerId === server.id ? setSupportServerId('0') : setSupportServerId(server.id))}
                     >
                       {server.icon ? (
                         <HashServerIcon

@@ -155,7 +155,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                 !focusedChannel.topic && 'opacity-50'
               )}
               onClick={() =>
-                !focusedChannel.topic ?
+                (!focusedChannel.topic ?
                   toast.error(t('templatePreviewPage.noTopic', { focusedChannelName: focusedChannel.name })) :
                   openModal('view-topic', {
                     buttons: [
@@ -171,7 +171,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
                     </>,
                     description: t('templatePreviewPage.topicModal.description', { focusedChannelName: focusedChannel.name }),
                     title: t('templatePreviewPage.topicModal.title')
-                  })
+                  }))
               }
             >
               <FaPenFancy size={24} />

@@ -191,7 +191,7 @@ export default function Reviews({ bot }) {
                             else setSelectedRating(index + 1);
                           }}
                           onMouseEnter={() => (isMobile ? setSelectedRating : setHoveredRating)(index + 1)}
-                          onMouseLeave={() => isMobile ? setSelectedRating(0) : setHoveredRating(0)}
+                          onMouseLeave={() => (isMobile ? setSelectedRating(0) : setHoveredRating(0))}
                         />
                       ) : (
                         <TiStarOutline
@@ -199,7 +199,7 @@ export default function Reviews({ bot }) {
                           className='cursor-pointer text-tertiary'
                           onClick={() => setSelectedRating(index + 1)}
                           onMouseEnter={() => (isMobile ? setSelectedRating : setHoveredRating)(index + 1)}
-                          onMouseLeave={() => isMobile ? setSelectedRating(0) : setHoveredRating(0)}
+                          onMouseLeave={() => (isMobile ? setSelectedRating(0) : setHoveredRating(0))}
                         />
                       )
                     ))}

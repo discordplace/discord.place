@@ -41,7 +41,7 @@ import Tooltip from '@/app/components/Tooltip';
     {
       condition: sort === 'LatestVoted',
       icon: MdUpdate,
-      transform: date => date ? getRelativeTime(date, language) : t('botCard.neverVoted'),
+      transform: date => (date ? getRelativeTime(date, language) : t('botCard.neverVoted')),
       value: data.latest_voted_at
     },
     {

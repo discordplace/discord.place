@@ -71,7 +71,7 @@ export default function Channels({ data, focusedChannel, setFocusedChannel, curr
             >
               <span
                 className='-ml-1.5 flex cursor-pointer items-center gap-x-1 text-[11px] font-semibold uppercase text-[#949ba4] hover:text-[#dbdee1]'
-                onClick={() => setCollapsedCategories(old => old.includes(index) ? old.filter(i => i !== index) : [...old, index])}
+                onClick={() => setCollapsedCategories(old => (old.includes(index) ? old.filter(i => i !== index) : [...old, index]))}
               >
                 <IoChevronDown
                   className={cn(

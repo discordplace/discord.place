@@ -47,7 +47,7 @@ export default function ServerCard(props) {
     {
       condition: sort === 'LatestVoted',
       icon: MdUpdate,
-      transform: date => date ? getRelativeTime(date, language) : t('serverCard.neverVoted'),
+      transform: date => (date ? getRelativeTime(date, language) : t('serverCard.neverVoted')),
       value: props.server.data.latest_voted_at
     },
     {
