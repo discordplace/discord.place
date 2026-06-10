@@ -1,6 +1,6 @@
-import { FaTwitter } from 'react-icons/fa';
+import { FaTwitter, FaLinkedin } from 'react-icons/fa';
 import { RiLink } from 'react-icons/ri';
-import { SiBluesky, SiFacebook, SiGithub, SiGitlab, SiInstagram, SiLinkedin, SiMastodon, SiReddit, SiSteam, SiTelegram, SiTiktok, SiTwitch, SiX, SiYoutube } from 'react-icons/si';
+import { SiBluesky, SiFacebook, SiGithub, SiGitlab, SiInstagram, SiMastodon, SiReddit, SiSteam, SiTelegram, SiTiktok, SiTwitch, SiX, SiYoutube } from 'react-icons/si';
 
 export default function getIcon(type) {
   switch (type) {
@@ -35,7 +35,7 @@ export default function getIcon(type) {
       return SiTelegram;
     }
     case 'linkedin': {
-      return SiLinkedin;
+      return FaLinkedin;
     }
     case 'gitlab': {
       return SiGitlab;
