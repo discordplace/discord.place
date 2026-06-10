@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import getStatus from '@/lib/request/general/getStatus';
 import config from '@/config';
 import { t } from '@/stores/language';
+import * as Sentry from '@sentry/nextjs';
 
 export default function StatusBadge() {
   const [statusData, setStatusData] = useState(null);
@@ -40,7 +41,7 @@ export default function StatusBadge() {
       setStatusData(data);
       setHasLoaded(true);
     } catch (error) {
-      console.error('Failed to fetch status:', error);
+      Sentry.captureException(error);
 
       setStatusData({ message: 'Status Unknown', status: 'unknown' });
       setHasLoaded(true);

@@ -167,7 +167,7 @@ export default function Header() {
         />
 
         <Link
-          className='ml-6 flex items-center justify-center gap-x-1.5 rounded-full bg-black px-2 text-sm font-semibold text-black select-none hover:bg-white/60 sm:w-[155.5px] sm:px-4.5 dark:bg-white dark:hover:bg-black/60'
+          className='ml-6 flex items-center justify-center gap-x-1.5 rounded-full bg-black px-2 text-sm font-semibold text-black select-none hover:bg-black/60 sm:w-[155.5px] sm:px-4.5 dark:bg-white dark:hover:bg-white/60'
           href={loggedIn ? '/account' : config.getLoginURL(pathname)}
         >
           {loggedIn ? (

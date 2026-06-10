@@ -83,7 +83,6 @@ export default function NewSound() {
 
   function validateAudioFile(file) {
     const allowedFileTypes = ['audio/mpeg', 'audio/mp3', 'audio/x-mpeg', 'audio/x-mp3', 'audio/mpeg3', 'audio/x-mpeg3'];
-    console.log(file.type, allowedFileTypes.includes(file.type));
     if (!allowedFileTypes.includes(file.type)) return toast.error(t('accountPage.tabs.mySounds.sections.addSound.toast.invalidFile'));
 
     if (file.size >= 1024 * 1024) {return toast.error(

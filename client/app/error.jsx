@@ -5,9 +5,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Grainient from '@/app/components/Background/Grainient';
 import { t } from '@/stores/language';
+import * as Sentry from '@sentry/nextjs';
+import { useEffect } from 'react';
 
 export default function Error({ error }) {
   const theme = useThemeStore(state => state.theme);
+
+  useEffect(() => {
+    Sentry.captureException(error);
+  }, [error]);
 
   return (
     <div className='relative z-0 flex h-svh w-full flex-col items-center justify-center px-8 sm:px-0'>

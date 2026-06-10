@@ -34,17 +34,6 @@ const api = {
   url: isDev ? 'http://localhost:16540' : 'https://api.discord.place'
 };
 
-const analytics = {
-  recorderScript: 'https://analytics.skyhan.cloud/recorder.js',
-  script: 'https://analytics.skyhan.cloud/script.js',
-  websiteId: 'ab6a730b-372e-4821-a4da-a8fcc32a76e9'
-};
-
-const openreplay = {
-  ingestPoint: 'https://openreplay.discord.place/ingest',
-  projectKey: 'uNGLYSNRpxpW5S50hKYP'
-};
-
 const headerLinks = [
   { href: '/profiles', icon: CgProfile, id: 'profiles' },
   { href: '/servers', icon: FaCompass, id: 'servers' },
@@ -230,7 +219,6 @@ const quarantineRestrictions = {
 };
 
 const data = {
-  analytics,
   api,
   availableLocales,
   baseUrl,
@@ -254,7 +242,6 @@ const data = {
   emojisDenyReasons,
   githubIssuesUrl,
   headerLinks,
-  openreplay,
   packagesMaxEmojisLength,
   packagesMinEmojisLength,
   profilesMaxSocialsLength,

@@ -78,6 +78,10 @@ NEXT_PUBLIC_PORT=36706
 NEXT_PUBLIC_CF_SITE_KEY=
 CLIENT_SECRET=
 NEXT_PUBLIC_CDN_URL=
+SENTRY_ORG=
+SENTRY_PROJECT=
+NEXT_PUBLIC_SENTRY_DSN=
+SENTRY_AUTH_TOKEN=
 ```
 
 ##### Parameters
@@ -87,11 +91,16 @@ NEXT_PUBLIC_CDN_URL=
 | `NEXT_PUBLIC_CF_SITE_KEY` | Cloudflare site key for Turnstile. |
 | `CLIENT_SECRET` | Secret key for client. |
 | `NEXT_PUBLIC_CDN_URL` | CDN URL for the website. Used for serving emojis and sounds files. Must be a valid URL. |
+| `SENTRY_ORG` | Sentry organization for error tracking. |
+| `SENTRY_PROJECT` | Sentry project for error tracking. |
+| `NEXT_PUBLIC_SENTRY_DSN` | Sentry DSN for error tracking. |
+| `SENTRY_AUTH_TOKEN` | Sentry auth token for error tracking. |
 
 > [!NOTE]  
 > - Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile site key.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the server's `CLIENT_SECRET` value.
 > - The `NEXT_PUBLIC_CDN_URL` is used for serving emojis and sounds files. You should set this to your own CDN URL. Make sure to use valid URL format (e.g., `https://cdn.yourdomain.com`).
+> - The `SENTRY_ORG`, `SENTRY_PROJECT`, `NEXT_PUBLIC_SENTRY_DSN`, and `SENTRY_AUTH_TOKEN` values are used for Sentry error tracking. We use Sentry for error tracking. Refer to the [Sentry documentation](https://docs.sentry.io/) for more information.
 
 ### Environment Variables Configuration (Server)
 
@@ -194,20 +203,14 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 ##### Parameters
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| `analytics.recorderScript` | String | Your analytics recorder script URL. |
-| `analytics.script` | String | Your analytics script URL. |
-| `analytics.websiteId` | String | Your website ID assigned by Umami. |
 | `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:16540`. |
 | `availableLocales` | Array<String> | Available locales for the website. |
 | `baseUrl` | String | Base URL for the website. In development, it will be `http://localhost:36706`. |
 | `botInviteURL` | String | URL for the your bot invite. Used in the many places in the website. |
 | `botTestGuildId` | String | Your test guild ID for the bots testing. |
 | `customHostnames` | Array<String> | Custom hostnames for the profiles. You
-| `openreplay.ingestPoint` | String | Your OpenReplay ingest point URL (e.g. `https://openreplay.yourdomain.com/ingest`). |
-| `openreplay.projectKey` | String | Your OpenReplay project key. |
 
 > [!NOTE]
-> - The `analytics.script`, `analytics.recorderScript`, and `analytics.websiteId` values are used for setting up analytics on the website. We use [Umami](https://umami.is) for analytics. Any other analytics service is not supported.
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
 > - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
 > - The `baseUrl` value is used for the base URL for the website. You should change this value to your own base URL. Make sure to use domain names instead of IP addresses for the base URL. Also you should use Cloudflare for the client domain.
@@ -215,7 +218,6 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the website with different ports and use a reverse proxy to redirect the requests to the correct port.
-> - The `openreplay.projectKey` and `openreplay.ingestPoint` values are used for setting up [OpenReplay](https://openreplay.com) session replay on the website.
 
 > [!WARNING]
 > - If you wanna change the default locale, you should change the `default` value in the `client/config/data.js` file. This value should be one of the values in the `availableLocales` array. After changing this value, you also need to change the `DEFAULT_LOCALE_CODE` environment value in the `.github/workflows/validate-locale-files.yml` file. (if you don't want to get any unnecessary errors in the GitHub Actions)

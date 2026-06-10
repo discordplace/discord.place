@@ -17,6 +17,7 @@ import useAuthStore from '@/stores/auth';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import getApplicationsEntitlementsScopeGranted from '@/lib/request/auth/getApplicationsEntitlementsScopeGranted';
+import * as Sentry from '@sentry/nextjs';
 
 export default function MyBots() {
   const data = useAccountStore(state => state.data);
@@ -29,7 +30,6 @@ export default function MyBots() {
   const grantScopeIntervalRef = useRef(null);
 
   function grantScope() {
-    console.log('grantScope', user);
     const authorizeUrl = new URL(config.applicationsEntitlementsScopeURL(user.id));
 
     window.open(authorizeUrl, '_blank');
@@ -62,7 +62,7 @@ export default function MyBots() {
         clearInterval(grantScopeIntervalRef.current);
         toast.error(error.message);
 
-        console.error(error);
+        Sentry.captureException(error);
       }
 
       retryCount++;

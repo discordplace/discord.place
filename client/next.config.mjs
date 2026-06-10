@@ -1,3 +1,5 @@
+import { withSentryConfig } from '@sentry/nextjs';
+
 const remotePatterns = [
   {
     hostname: 'cdn.discordapp.com',
@@ -21,7 +23,7 @@ if (process.env.NEXT_PUBLIC_CDN_URL) {
 const nextConfig = {
   experimental: {
     optimizePackageImports: ['react-icons'],
-    turbopackFileSystemCacheForDev: true
+    turbopackFileSystemCacheForDev: false
   },
   async headers() {
     return [
@@ -67,4 +69,11 @@ const nextConfig = {
   typedRoutes: true
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  silent: !process.env.CI,
+  telemetry: false,
+  widenClientFileUpload: true
+});

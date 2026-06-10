@@ -1,11 +1,6 @@
 import config from '@/config';
 
 export default function Theme({ data, avatar_base64 }) {
-  console.log(config.themeCategoriesIcons, 'config.themeCategoriesIcons');
-  data.categories.forEach(category => {
-    console.log(config.themeCategoriesIcons[category], `config.themeCategoriesIcons[${category}]`);
-  });
-
   return (
     <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0px' }}>
       { }

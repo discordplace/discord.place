@@ -16,7 +16,7 @@
       "entryPoint": "tailwind.css"
     },
   },
-  "ignorePatterns": ["server/**/*"],
+  "ignorePatterns": ["server/**/*", ".vscode/**/*", ".husky/**/*", ".github/**/*"],
   "categories": { "correctness": "error", "style": "warn" },
   "rules": {
     "stylistic/semi": ["error", "always"],
