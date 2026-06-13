@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.3.0](https://github.com/discordplace/discord.place/compare/client@v3.2.0...client@v3.3.0) (2026-06-13)
+
+
+### Features
+
+* change openreplay integration with sentry integration ([b431bef](https://github.com/discordplace/discord.place/commit/b431beff72cb54ee363477a63e541dcc4c45bd92))
+
+
+### Bug Fixes
+
+* **client:** add missing theme styles in header ([59fd128](https://github.com/discordplace/discord.place/commit/59fd128d14289eb73c19a3cc131db97d3b24a343))
+* **client:** use FaLinkedin instead of SiLinkedin ([b7e0cf1](https://github.com/discordplace/discord.place/commit/b7e0cf1b0c0d81ba07219259b524142a23a0c281))
+* proxy status API requests to prevent client-side fetch errors ([#220](https://github.com/discordplace/discord.place/issues/220)) ([806c22d](https://github.com/discordplace/discord.place/commit/806c22dec43a8e304c12c7ff2f5e399bee8357f5))
+
 ## [3.2.0](https://github.com/discordplace/discord.place/compare/client@v3.1.0...client@v3.2.0) (2026-06-09)
 
 
