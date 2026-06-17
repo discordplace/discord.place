@@ -13,8 +13,8 @@
   ],
   "settings": {
     "tailwindcss": {
-      "entryPoint": "tailwind.css"
-    },
+      "entryPoint": "./styles/tailwind.css"
+    }
   },
   "ignorePatterns": ["server/**/*", ".vscode/**/*", ".husky/**/*", ".github/**/*"],
   "categories": { "correctness": "error", "style": "warn" },
