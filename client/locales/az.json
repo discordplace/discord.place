@@ -1695,6 +1695,10 @@
         "backToHome": "Evə qayıt"
       }
     },
+    "toast": {
+      "loggingOut": "Çıxış edərkən xahiş edirəm gözləyin..",
+      "loggedOut": "Uğurla çıxış edildi!"
+    },
     "tabs": {
       "myAccount": {
         "title": "Hesabım",

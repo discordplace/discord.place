@@ -1695,6 +1695,10 @@
         "backToHome": "Ana Sayfaya Dön"
       }
     },
+    "toast": {
+      "loggingOut": "Çıkış yapılırken lütfen bekleyin..",
+      "loggedOut": "Başarıyla çıkış yapıldı!"
+    },
     "tabs": {
       "myAccount": {
         "title": "Hesabım",

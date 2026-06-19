@@ -33,8 +33,6 @@ import { toast } from 'sonner';
 
 export default function Content() {
   const user = useAuthStore(state => state.user);
-  const setLoggedIn = useAuthStore(state => state.setLoggedIn);
-  const setUser = useAuthStore(state => state.setUser);
 
   const theme = useThemeStore(state => state.theme);
   const toggleTheme = useThemeStore(state => state.toggleTheme);
@@ -57,15 +55,12 @@ export default function Content() {
   function logOut() {
     toast.promise(logout(), {
       error: error => error,
-      loading: 'Please wait while we log you out..',
+      loading: t('accountPage.toast.loggingOut'),
       success: () => {
-        setLoggedIn(false);
-        setUser(null);
+        globalThis.window.location.href = '/';
         deleteToken(null);
 
-        router.push('/');
-
-        return 'Logged out successfully.';
+        return t('accountPage.toast.loggedOut');
       }
     });
   }

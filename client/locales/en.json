@@ -1695,6 +1695,10 @@
         "backToHome": "Back to Home"
       }
     },
+    "toast": {
+      "loggingOut": "Please wait while we log you out..",
+      "loggedOut": "Logged out successfully!"
+    },
     "tabs": {
       "myAccount": {
         "title": "My Account",
