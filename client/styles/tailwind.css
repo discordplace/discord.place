@@ -134,3 +134,12 @@
   animation-timeline: view();
   animation-range: entry cover 25%;
 }
+
+ /* 
+ Set the default cursor for buttons. 
+ */ 
+  
+ button, 
+ [role="button"] { 
+   cursor: pointer; 
+ } 
