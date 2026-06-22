@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import getStatus from '@/lib/request/general/getStatus';
 import config from '@/config';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/nextjs';
 
 export default function StatusBadge() {
+  const { t } = useTranslation();
   const [statusData, setStatusData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);

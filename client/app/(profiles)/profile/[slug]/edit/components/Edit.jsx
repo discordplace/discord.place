@@ -20,11 +20,13 @@ import Tooltip from '@/app/components/Tooltip';
 import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
 import { colord, extend } from 'colord';
 import a11yPlugin from 'colord/plugins/a11y';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 extend([a11yPlugin]);
 
 export default function Edit({ profileData }) {
+  const { t } = useTranslation();
+
   const canBeEditedKeys = [
     'slug',
     'occupation',

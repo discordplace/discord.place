@@ -3,9 +3,11 @@
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { LuShieldAlert } from 'react-icons/lu';
 import { PiFrameCornersBold } from 'react-icons/pi';
-import { useLocalStorage } from 'react-use';import { t } from '@/stores/language';
+import { useLocalStorage } from 'react-use';
+import { useTranslation } from 'react-i18next';
 
 export default function CustomIFrame({ src, title }) {
+  const { t } = useTranslation();
   const url = new URL(src);
   const domain = url.hostname;
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const flagsPositions = [
   'Staff',
@@ -19,6 +19,8 @@ const flagsPositions = [
 ];
 
 export function useFlagTranslations() {
+  const { t } = useTranslation();
+
   const flags = Object.fromEntries(flagsPositions
     .filter(flag => flagsPositions.includes(flag))
     .map(flag => ([flag, t(`userProfile.flags.${flag}`)])));

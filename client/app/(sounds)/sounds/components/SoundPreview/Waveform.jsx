@@ -15,7 +15,7 @@ import VolumePopover from '@/app/(sounds)/sounds/components/SoundPreview/VolumeP
 import config from '@/config';
 import { useLocalStorage } from 'react-use';
 import useModalsStore from '@/stores/modals';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,6 +23,7 @@ import { toast } from 'sonner';
 import downloadSound from '@/lib/utils/sounds/downloadSound';
 
 export default function Waveform({ id, name: soundName }) {
+  const { t } = useTranslation();
   const theme = useThemeStore(state => state.theme);
 
   const { currentlyPlaying, setCurrentlyPlaying, volume, setVolume } = useGeneralStore(useShallow(state => ({

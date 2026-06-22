@@ -13,11 +13,11 @@ import Graph from '@/app/(profiles)/profile/[slug]/components/sections/Graph';
 import useThemeStore from '@/stores/theme';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Content({ profile }) {
+  const { t, i18n } = useTranslation();
   const theme = useThemeStore(state => state.theme);
-  const language = useLanguageStore(state => state.language);
 
   useEffect(() => {
     incrementViews(profile.slug);
@@ -78,7 +78,7 @@ export default function Content({ profile }) {
                     formatParams: {
                       premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
                     },
-                    lng: language,
+                    lng: i18n.language,
                     premiumSince: profile.subscriptionCreatedAt
                   })}
                   key={badgeId}

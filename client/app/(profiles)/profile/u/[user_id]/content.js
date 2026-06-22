@@ -13,7 +13,7 @@ import cn from '@/lib/cn';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
 import useThemeStore from '@/stores/theme';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import config from '@/config';
 import ReportableArea from '@/app/components/ReportableArea';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
@@ -65,8 +65,8 @@ function StatBlock({ fields, index }) {
 }
 
 export default function Content({ user }) {
+  const { t, i18n } = useTranslation();
   const theme = useThemeStore(state => state.theme);
-  const language = useLanguageStore(state => state.language);
 
   const flagTranslations = useFlagTranslations();
   const sortedFlags = useSortFlags(user.flags);
@@ -199,7 +199,7 @@ export default function Content({ user }) {
                     formatParams: {
                       premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
                     },
-                    lng: language,
+                    lng: i18n.language,
                     premiumSince: user.subscriptionCreatedAt
                   })}
                   key={badgeId}
@@ -254,7 +254,7 @@ export default function Content({ user }) {
                     formatParams: {
                       premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
                     },
-                    lng: language,
+                    lng: i18n.language,
                     premiumSince: user.subscriptionCreatedAt
                   })}
                   key={badgeId}
@@ -282,7 +282,7 @@ export default function Content({ user }) {
               {
                 Icon: FaDiscord,
                 label: t('userProfile.fields.memberSince'),
-                value: new Date(user.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })
+                value: new Date(user.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })
               },
               {
                 disabled: user.bot,

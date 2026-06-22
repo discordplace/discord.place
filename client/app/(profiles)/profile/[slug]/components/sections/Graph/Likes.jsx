@@ -2,11 +2,13 @@
 
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import Graph from '@/app/(dashboard)/components/Home/Graph/index';
-import cn from '@/lib/cn';import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
+import Tooltip from '@/app/components/Tooltip';
+import { useTranslation } from 'react-i18next';
 import { useMedia } from 'react-use';
-import { t } from '@/stores/language';
 
 export default function LikesGraph({ profile }) {
+  const { t } = useTranslation();
   const data = profile.dailyStats || [];
   const latestValue = data[data.length - 1]?.likes || 0;
   const previousValue = data[data.length - 2]?.likes || 0;

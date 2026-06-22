@@ -7,7 +7,7 @@ import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
 import { motion } from 'framer-motion';
 import config from '@/config';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const formatter = new Intl.NumberFormat('en-US', {
   compactDisplay: 'short',
@@ -15,7 +15,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
 
 export default function About({ server }) {
-  const language = useLanguageStore(state => state.language);
+  const { t, i18n } = useTranslation();
 
   const keys = [
     {
@@ -46,7 +46,7 @@ export default function About({ server }) {
       icon: <FiArrowUpRight />,
       key: 'joined_at',
       label: t('serverPage.about.labels.joinedAt'),
-      value: new Date(server.joined_at).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })
+      value: new Date(server.joined_at).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' })
     },
     {
       icon: <TbSquareRoundedChevronUp />,

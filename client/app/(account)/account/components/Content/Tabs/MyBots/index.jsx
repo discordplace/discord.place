@@ -12,7 +12,7 @@ import NewBot from '@/app/(account)/account/components/Content/Tabs/MyBots/NewBo
 import config from '@/config';
 import Countdown from '@/app/components/Countdown';
 import cn from '@/lib/cn';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import useAuthStore from '@/stores/auth';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -20,6 +20,7 @@ import getApplicationsEntitlementsScopeGranted from '@/lib/request/auth/getAppli
 import * as Sentry from '@sentry/nextjs';
 
 export default function MyBots() {
+  const { t } = useTranslation();
   const data = useAccountStore(state => state.data);
   const user = useAuthStore(state => state.user);
 

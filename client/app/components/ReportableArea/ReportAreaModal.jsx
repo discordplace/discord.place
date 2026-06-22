@@ -9,9 +9,10 @@ import ReviewPreview from '@/app/components/ReportableArea/Previews/Review';
 import ThemePreview from '@/app/components/ReportableArea/Previews/Theme';
 import config from '@/config';
 import cn from '@/lib/cn';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function ReportAreaModal({ type, metadata }) {
+  const { t } = useTranslation();
   const reason = useGeneralStore(state => state.reportAreaModal.reason);
   const setReason = useGeneralStore(state => state.reportAreaModal.setReason);
 

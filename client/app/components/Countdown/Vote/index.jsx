@@ -2,13 +2,14 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const ReactCountdown = dynamic(() => import('react-countdown'), {
   ssr: false
 });
 
 export default function Countdown({ date }) {
+  const { t } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

@@ -3,9 +3,10 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'react-use';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function CookieBanner() {
+  const { t } = useTranslation();
   const [cookieConsent, setCookieConsent] = useLocalStorage('cookieConsent', false);
   const [showCookieBanner, setShowCookieBanner] = useState(false);
 

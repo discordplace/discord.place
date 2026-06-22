@@ -19,9 +19,10 @@ import Lottie from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import useAuthStore from '@/stores/auth';
 import Tooltip from '@/app/components/Tooltip';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function EmojiPreview({ id, name, image_url, ableToChange, defaultSize }) {
+  const { t } = useTranslation();
   const loggedIn = useAuthStore(state => state.loggedIn);
   const [previewSize, setPreviewSize] = useState(defaultSize === 'shrink' ? 32 : 96);
   const theme = useThemeStore(state => state.theme);

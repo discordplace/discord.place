@@ -5,10 +5,11 @@ import { LuPackage } from 'react-icons/lu';
 import Link from 'next/link';
 import config from '@/config';
 import cn from '@/lib/cn';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
 
 export default function EmojiPackageCard({ overridedImages, id, name, categories, downloads, emoji_ids, className }) {
+  const { t } = useTranslation();
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
     notation: 'compact',

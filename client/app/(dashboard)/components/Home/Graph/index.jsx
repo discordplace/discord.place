@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const DynamicApexCharts = dynamic(() => import('react-apexcharts'), {
   ssr: false
@@ -20,7 +20,7 @@ function generateEmptyData() {
 }
 
 export default function Graph({ id, data, tooltipFormatter, color, extraGraphOptions = {}, xAxisCategories, xaxisRange, height = 300 }) {
-  const language = useLanguageStore(state => state.language);
+  const { t, i18n } = useTranslation();
 
   let reversedData = [...data].reverse();
   if (reversedData.length === 0) reversedData = generateEmptyData();
@@ -103,7 +103,7 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
                     </span>
 
                     <span class='text-xs font-medium text-secondary'>
-                      ${xAxisCategories ? xAxisCategories[dataPointIndex] : new Date(reversedData[dataPointIndex].createdAt).toLocaleString(language, { day: 'numeric', month: 'short' })}
+                      ${xAxisCategories ? xAxisCategories[dataPointIndex] : new Date(reversedData[dataPointIndex].createdAt).toLocaleString(i18n.language, { day: 'numeric', month: 'short' })}
                     </span>
                   </div>
                 </div>
@@ -129,7 +129,7 @@ export default function Graph({ id, data, tooltipFormatter, color, extraGraphOpt
             categories: xAxisCategories || reversedData.map(({ createdAt }) => {
               const date = new Date(createdAt);
 
-              return date.toLocaleString(language, { day: 'numeric', month: 'short' });
+              return date.toLocaleString(i18n.language, { day: 'numeric', month: 'short' });
             }),
             crosshairs: {
               show: true,

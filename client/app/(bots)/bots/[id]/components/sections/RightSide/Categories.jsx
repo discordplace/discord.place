@@ -2,9 +2,11 @@
 
 import config from '@/config';
 import { motion } from 'framer-motion';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Categories({ bot }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <motion.h2

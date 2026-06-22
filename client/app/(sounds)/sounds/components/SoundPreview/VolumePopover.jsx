@@ -3,9 +3,10 @@
 import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
 import useGeneralStore from '@/stores/general';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function VolumePopover() {
+  const { t } = useTranslation();
   const volume = useGeneralStore(state => state.sounds.volume);
   const setVolume = useGeneralStore(state => state.sounds.setVolume);
 

@@ -15,14 +15,14 @@ import confetti from '@/lib/lotties/confetti.json';
 import Markdown from '@/app/components/Markdown';
 import useAccountStore from '@/stores/account';
 import { useLocalStorage } from 'react-use';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import getBotStats from '@/lib/request/bots/getBotStats';
 import { formatDuration, intervalToDuration } from 'date-fns';
 import * as locales from 'date-fns/locale';
 
 export default function NewBot() {
+  const { t, i18n } = useTranslation();
   const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
-  const language = useLanguageStore(state => state.language);
 
   const [markdownPreviewing, setMarkdownPreviewing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -102,7 +102,7 @@ export default function NewBot() {
   function formatAverageApprovalTime(totalMinutes) {
     if (typeof totalMinutes !== 'number' || Number.isNaN(totalMinutes)) return null;
 
-    const selectedLanguage = language === 'loading' ? 'en' : language;
+    const selectedLanguage = i18n.language === 'loading' ? 'en' : i18n.language;
     const dateFnsKey = config.availableLocales.find(locale => locale.code === selectedLanguage)?.dateFnsKey || 'enUS';
     const locale = locales[dateFnsKey];
 

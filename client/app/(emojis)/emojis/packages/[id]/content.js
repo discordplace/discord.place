@@ -16,13 +16,14 @@ import { useRouter } from 'next-nprogress-bar';
 import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ReportableArea from '@/app/components/ReportableArea';
+import useAuthStore from '@/stores/auth';
 
 export default function Content({ emoji }) {
-  const language = useLanguageStore(state => state.language);
-  const user = useLanguageStore(state => state.user);
+  const { t, i18n } = useTranslation();
+  const user = useAuthStore(state => state.user);
   const [imageURLs, setImageURLs] = useState(emoji.emoji_ids.map(({ id, animated }) => config.getEmojiURL(`packages/${emoji.id}/${id}`, animated)));
   const router = useRouter();
 
@@ -109,7 +110,7 @@ export default function Content({ emoji }) {
               </h1>
 
               <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
-                {new Date(emoji.created_at).toLocaleDateString(language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(/,/g,'')}
+                {new Date(emoji.created_at).toLocaleDateString(i18n.language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(/,/g,'')}
               </span>
             </div>
 

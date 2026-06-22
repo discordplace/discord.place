@@ -7,11 +7,12 @@ import Pagination from '@/app/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
 import ErrorState from '@/app/components/ErrorState';
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
 export default function Themes() {
+  const { t } = useTranslation();
   const user = useAuthStore(state => state.user);
 
   const { page, setPage, search, loading, themes, fetchThemes, sort, category, totalThemes, limit } = useSearchStore(useShallow(state => ({

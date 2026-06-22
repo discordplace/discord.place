@@ -8,9 +8,10 @@ import Reviews from '@/app/(servers)/servers/[id]/components/Tabs/Reviews';
 import Rewards from '@/app/(servers)/servers/[id]/components/Tabs/Rewards';
 import { motion } from 'framer-motion';
 import { useMedia } from 'react-use';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Tabs({ server }) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('reviews');
   const tabs = [
     {

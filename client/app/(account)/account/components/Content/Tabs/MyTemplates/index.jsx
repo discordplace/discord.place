@@ -4,11 +4,13 @@ import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
 import { LuPlus } from 'react-icons/lu';
 import ErrorState from '@/app/components/ErrorState';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';import config from '@/config';
+import Link from 'next/link';
+import config from '@/config';
+import { useTranslation } from 'react-i18next';
 import TemplateCard from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
-import { t } from '@/stores/language';
 
 export default function MyTemplates() {
+  const { t } = useTranslation();
   const data = useAccountStore(state => state.data);
 
   return (

@@ -10,16 +10,14 @@ import cn from '@/lib/cn';
 import Image from 'next/image';
 import config from '@/config';
 import { usePathname } from 'next/navigation';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Select from '@/app/components/Select';
 import StatusBadge from '@/app/components/Footer/StatusBadge';
 
 export default function Footer() {
+  const { t, i18n } = useTranslation();
   const theme = useThemeStore(state => state.theme);
   const setTheme = useThemeStore(state => state.setTheme);
-  const language = useLanguageStore(state => state.language);
-  const setLanguage = useLanguageStore(state => state.setLanguage);
-
   const pathname = usePathname();
 
   const isDashboard = pathname === '/dashboard';
@@ -263,8 +261,8 @@ export default function Footer() {
                 ),
                 value: locale.code
               }))}
-              value={language}
-              onChange={setLanguage}
+              value={i18n.language}
+              onChange={value => i18n.changeLanguage(value)}
             />
           </div>
         </div>

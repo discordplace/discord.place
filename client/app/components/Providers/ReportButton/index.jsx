@@ -10,11 +10,12 @@ import useGeneralStore from '@/stores/general';
 import cn from '@/lib/cn';
 import { motion, useAnimationControls } from 'framer-motion';
 import useAuthStore from '@/stores/auth';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import config from '@/config';
 import Link from 'next/link';
 
 export default function ReportButtonProvider() {
+  const { t } = useTranslation();
   const loggedIn = useAuthStore(state => state.loggedIn);
   const pathname = usePathname();
 
@@ -53,7 +54,7 @@ export default function ReportButtonProvider() {
       <Tooltip content={t('inAppReporting.tooltip.hide')}>
         <button
           className={cn(
-            'absolute rounded-full bg-quaternary p-2 text-xl transition-[opacity,transform] duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
+            'absolute rounded-full bg-quaternary p-2 text-xl transition-all duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
             !showReportableAreas ? 'pointer-events-none translate-x-[30px] translate-y-[30px] scale-50 opacity-0' : 'translate-x-0 translate-y-0 scale-100'
           )}
           onClick={() => setShowReportableAreas(false)}
@@ -65,7 +66,7 @@ export default function ReportButtonProvider() {
       <Tooltip content={t('inAppReporting.tooltip.reportSomething')}>
         <Link
           className={cn(
-            'absolute rounded-full bg-quaternary p-2 text-xl transition-[opacity,transform] duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
+            'absolute rounded-full bg-quaternary p-2 text-xl transition-all duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
             !showReportableAreas ? 'pointer-events-none translate-x-[-45px] translate-y-[30px] scale-50 opacity-0' : 'translate-x-[-45px] translate-y-0 scale-100 delay-150'
           )}
           href={config.githubIssuesUrl}
@@ -81,8 +82,8 @@ export default function ReportButtonProvider() {
       >
         <button
           className={cn(
-            'rounded-full bg-quaternary p-2 text-xl transition-[opacity,transform] duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
-            showReportableAreas ? 'pointer-events-none translate-x-[-30px] translate-y-[30px] scale-50 opacity-0' : 'translate-x-0 translate-y-0 scale-100',
+            'rounded-full bg-quaternary p-2 text-xl transition-all duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
+            showReportableAreas ? 'pointer-events-none translate-y-[30px] scale-50 opacity-0' : 'translate-y-0 scale-100',
             !loggedIn && 'cursor-default opacity-50'
           )}
           onClick={() => loggedIn && setShowReportableAreas(true)}

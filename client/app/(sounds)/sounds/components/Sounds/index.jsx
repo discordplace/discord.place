@@ -5,12 +5,14 @@ import useSearchStore from '@/stores/sounds/search';
 import { useShallow } from 'zustand/react/shallow';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
-import ErrorState from '@/app/components/ErrorState';import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
-import { t } from '@/stores/language';
+import ErrorState from '@/app/components/ErrorState';
+import { useTranslation } from 'react-i18next';
+import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
 export default function Sounds() {
+  const { t } = useTranslation();
   const user = useAuthStore(state => state.user);
 
   const { page, setPage, search, loading, sounds, fetchSounds, sort, category, totalSounds, limit } = useSearchStore(useShallow(state => ({

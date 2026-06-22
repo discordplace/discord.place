@@ -13,9 +13,10 @@ import VoiceChannelIcon from '@/app/(templates)/templates/[id]/preview/component
 import VoiceChannelNSFWIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/VoiceChannelNSFW';
 import cn from '@/lib/cn';
 import { useState } from 'react';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Channels({ data, focusedChannel, setFocusedChannel, currentlyOpenedSection, isMobile }) {
+  const { t } = useTranslation();
   const [collapsedCategories, setCollapsedCategories] = useState([]);
 
   return (

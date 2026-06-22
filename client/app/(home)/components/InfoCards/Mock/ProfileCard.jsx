@@ -2,9 +2,10 @@
 
 import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
 import useAuthStore from '@/stores/auth';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function MockProfileCard() {
+  const { t } = useTranslation();
   const loggedIn = useAuthStore(state => state.user);
   const user = useAuthStore(state => state.user);
 

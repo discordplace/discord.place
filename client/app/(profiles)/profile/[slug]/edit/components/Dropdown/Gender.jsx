@@ -3,9 +3,11 @@
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import cn from '@/lib/cn';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function GenderDropdown({ profile, currentlyEditingValue, setCurrentlyEditingValue }) {
+  const { t } = useTranslation();
+
   return (
     <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild={true}>

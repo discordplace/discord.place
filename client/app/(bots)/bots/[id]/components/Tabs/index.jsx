@@ -6,9 +6,10 @@ import TopVoters from '@/app/(bots)/bots/[id]/components/Tabs/TopVoters';
 import Reviews from '@/app/(bots)/bots/[id]/components/Tabs/Reviews';
 import { motion } from 'framer-motion';
 import { useMedia } from 'react-use';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Tabs({ bot }) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('reviews');
   const tabs = [
     {

@@ -3,9 +3,12 @@ import { FaGenderless } from 'react-icons/fa';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { LiaBirthdayCakeSolid } from 'react-icons/lia';
 import { MdOutlineFemale, MdOutlineMale } from 'react-icons/md';
-import { motion } from 'framer-motion';import { t } from '@/stores/language';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function About({ profile }) {
+  const { t } = useTranslation();
+
   const keys = [
     {
       icon: <BsSuitcaseLg />,

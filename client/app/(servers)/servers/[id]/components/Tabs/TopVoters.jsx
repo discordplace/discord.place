@@ -7,10 +7,11 @@ import cn from '@/lib/cn';
 import fetchVoters from '@/lib/request/servers/fetchVoters';
 import { toast } from 'sonner';
 import Link from 'next/link';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function TopVoters({ server }) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [voters, setVoters] = useState([]);
   const [totalPages, setTotalPages] = useState(0);

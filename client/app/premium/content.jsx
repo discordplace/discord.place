@@ -17,12 +17,13 @@ import { useRouter } from 'next-nprogress-bar';
 import config from '@/config';
 import FaQs from '@/app/premium/components/FaQs';
 import Tooltip from '@/app/components/Tooltip';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 const SourceSerif4 = Source_Serif_4({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Page({ plans }) {
+  const { t } = useTranslation();
   const loggedIn = useAuthStore(state => state.loggedIn);
   const user = useAuthStore(state => state.user);
 

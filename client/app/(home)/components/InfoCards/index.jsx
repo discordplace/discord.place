@@ -9,9 +9,10 @@ import { usePathname } from 'next/navigation';
 import MockServerCard from '@/app/(home)/components/InfoCards/Mock/ServerCard';
 import MockProfileCard from '@/app/(home)/components/InfoCards/Mock/ProfileCard';
 import MockReviewCard from '@/app/(home)/components/InfoCards/Mock/ReviewCard';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function InfoCards() {
+  const { t } = useTranslation();
   const loggedIn = useAuthStore(state => state.loggedIn);
 
   const pathname = usePathname();

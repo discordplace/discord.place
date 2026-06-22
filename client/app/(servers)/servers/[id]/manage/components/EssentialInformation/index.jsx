@@ -1,9 +1,11 @@
 'use client';
 import { FaDisplay } from 'react-icons/fa6';
 import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function EssentialInformation({ description, setDescription, inviteURL, setInviteURL }) {
+  const { t } = useTranslation();
+
   return (
     <div className='flex w-full flex-col gap-y-4'>
       <h3 className='flex items-center gap-x-4 text-xl font-semibold'>

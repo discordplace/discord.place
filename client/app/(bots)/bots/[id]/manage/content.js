@@ -17,10 +17,11 @@ import revalidateBot from '@/lib/revalidate/bot';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import { useRouter } from 'next-nprogress-bar';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ bot }) {
+  const { t } = useTranslation();
   const [savingChanges, setSavingChanges] = useState(false);
   const [changesMade, setChangesMade] = useState(false);
   const [changedKeys, setChangedKeys] = useState([]);

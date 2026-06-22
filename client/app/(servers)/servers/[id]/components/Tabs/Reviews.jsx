@@ -13,13 +13,14 @@ import LoginButton from '@/app/(servers)/servers/[id]/components/Tabs/LoginButto
 import cn from '@/lib/cn';
 import Link from 'next/link';
 import config from '@/config';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ReportableArea from '@/app/components/ReportableArea';
 import Image from 'next/image';
 import { useMedia } from 'react-use';
 
 export default function Reviews({ server }) {
+  const { t, i18n } = useTranslation();
   const [page, setPage] = useState(1);
   const limit = 6;
   const [reviews, setReviews] = useState([]);
@@ -32,7 +33,6 @@ export default function Reviews({ server }) {
   const [hoveredRating, setHoveredRating] = useState(0);
   const user = useAuthStore(state => state.user);
   const loggedIn = useAuthStore(state => state.loggedIn);
-  const language = useLanguageStore(state => state.language);
 
   const isMobile = useMedia('(max-width: 640px)', false);
 
@@ -360,7 +360,7 @@ export default function Reviews({ server }) {
             >
               <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 font-medium wrap-break-word whitespace-pre-wrap text-secondary sm:gap-y-0'>
                 <span className='text-xs font-medium text-tertiary'>
-                  {new Date(review.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', year: 'numeric' })}
+                  {new Date(review.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', year: 'numeric' })}
                 </span>
 
                 {review.content}

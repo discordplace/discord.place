@@ -7,7 +7,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --animate-loading: loading 3s infinite cubic-bezier(0.48, -0.03, 0.12, 0.97);
   --animate-logo-spin: logo-spin 1.5s forwards
     cubic-bezier(0.83, -0.16, 0.04, 1.36);
   --animate-reportable-area: reportable-area 3s infinite ease-in-out;
@@ -47,27 +46,6 @@
   --text-color-primary: rgba(var(--text-primary));
   --text-color-secondary: rgba(var(--text-secondary));
   --text-color-tertiary: rgba(var(--text-tertiary));
-
-  @keyframes loading {
-    0% {
-      transform: translateX(-100%);
-      width: 50%;
-    }
-    49.9% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-      transform: translateX(205%);
-    }
-    99.9% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(-100%);
-    }
-  }
 
   @keyframes logo-spin {
     0% {

@@ -5,13 +5,15 @@ import useSearchStore from '@/stores/emojis/search';
 import { useShallow } from 'zustand/react/shallow';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
-import ErrorState from '@/app/components/ErrorState';import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
+import ErrorState from '@/app/components/ErrorState';
+import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
+import { useTranslation } from 'react-i18next';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
-import { t } from '@/stores/language';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
 export default function Emojis() {
+  const { t } = useTranslation();
   const user = useAuthStore(state => state.user);
 
   const { page, setPage, search, setSearch, loading, emojis, fetchEmojis, setSort, setCategory, totalEmojis, limit } = useSearchStore(useShallow(state => ({

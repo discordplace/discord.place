@@ -6,6 +6,8 @@ import LayoutContent from '@/app/layout-content';
 import AuthProvider from '@/app/components/Providers/Auth';
 import localFont from 'next/font/local';
 import createMetadata from '@/lib/createMetadata';
+import getLocale from '@/lib/utils/getLocale';
+import I18nProvider from '@/app/components/Providers/I18n';
 
 const ggSansFont = localFont({
   display: 'swap',
@@ -55,9 +57,15 @@ export const viewport = {
   width: 'device-width'
 };
 
-export default function RootLayout(props) {
+export default async function RootLayout(props) {
+  const locale = await getLocale();
+
   return (
-    <html lang='en' translate='no' className='dark'>
+    <html
+      lang={locale.code}
+      translate='no'
+      className='dark'
+    >
       <body
         className={cn(
           'flex flex-col',
@@ -68,11 +76,13 @@ export default function RootLayout(props) {
           oranienbaumFont.variable
         )}
       >
-        <AuthProvider>
-          <LayoutContent>
-            {props.children}
-          </LayoutContent>
-        </AuthProvider>
+        <I18nProvider>
+          <AuthProvider>
+            <LayoutContent>
+              {props.children}
+            </LayoutContent>
+          </AuthProvider>
+        </I18nProvider>
       </body>
     </html>
   );

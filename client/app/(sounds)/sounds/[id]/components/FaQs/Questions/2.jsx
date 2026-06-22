@@ -4,9 +4,10 @@ import { useState } from 'react';
 import downloadSound from '@/lib/utils/sounds/downloadSound';
 import Link from 'next/link';
 import config from '@/config';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Question2({ sound }) {
+  const { t } = useTranslation();
   const [activeMethod, setActiveMethod] = useState(0);
 
   return (

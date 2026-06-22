@@ -12,9 +12,10 @@ import Tooltip from '@/app/components/Tooltip';
 import useAuthStore from '@/stores/auth';
 import CopyButton from '@/app/components/CopyButton';
 import revalidateProfile from '@/lib/revalidate/profile';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Actions({ profile }) {
+  const { t } = useTranslation();
   const loggedIn = useAuthStore(state => state.loggedIn);
   const [loading, setLoading] = useState(false);
   const [liked, setLiked] = useState(profile.isLiked);

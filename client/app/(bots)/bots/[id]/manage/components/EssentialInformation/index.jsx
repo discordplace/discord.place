@@ -3,9 +3,11 @@ import { FaDisplay } from 'react-icons/fa6';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import Markdown from '@/app/components/Markdown';
 import Input from '@/app/(bots)/bots/[id]/manage/components/Input';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function EssentialInformation({ shortDescription, setShortDescription, description, setDescription, inviteURL, setInviteURL, markdownPreviewing, setMarkdownPreviewing }) {
+  const { t } = useTranslation();
+
   return (
     <div className='flex w-full flex-col gap-y-4'>
       <h3 className='flex items-center gap-x-4 text-xl font-semibold'>

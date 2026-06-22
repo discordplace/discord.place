@@ -6,17 +6,18 @@ import { motion } from 'framer-motion';
 import About from '@/app/(bots)/bots/[id]/components/sections/About';
 import RightSide from '@/app/(bots)/bots/[id]/components/sections/RightSide';
 import Tooltip from '@/app/components/Tooltip';
-import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';import Link from 'next/link';
+import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';
+import Link from 'next/link';
 import config from '@/config';
 import useThemeStore from '@/stores/theme';
+import { useTranslation } from 'react-i18next';
 import Countdown from '@/app/components/Countdown';
-import useLanguageStore, { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 
 export default function Content({ bot }) {
+  const { t, i18n } = useTranslation();
   const theme = useThemeStore(state => state.theme);
-  const language = useLanguageStore(state => state.language);
 
   return (
     <div className='mt-32 flex w-full justify-center'>
@@ -85,7 +86,7 @@ export default function Content({ bot }) {
                     formatParams: {
                       premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
                     },
-                    lng: language,
+                    lng: i18n.language,
                     premiumSince: bot.owner.subscriptionCreatedAt
                   })}
                 >

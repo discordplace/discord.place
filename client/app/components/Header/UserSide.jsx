@@ -10,10 +10,11 @@ import { useEffect, useState } from 'react';
 import { useCookie, useWindowScroll } from 'react-use';
 import logout from '@/lib/request/auth/logout';
 import { toast } from 'sonner';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function UserSide({ className }) {
+  const { t } = useTranslation();
   const loggedIn = useAuthStore(state => state.loggedIn);
 
   const user = useAuthStore(state => state.user);

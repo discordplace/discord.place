@@ -8,11 +8,11 @@ import ErrorState from '@/app/components/ErrorState';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
 import Link from 'next/link';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function ActiveTimeouts() {
+  const { t, i18n } = useTranslation();
   const data = useAccountStore(state => state.data);
-  const language = useLanguageStore(state => state.language);
 
   const timeoutedBotsCount = data?.timeouts?.bots?.length || 0;
   const timeoutedServersCount = data?.timeouts?.servers?.length || 0;
@@ -100,7 +100,7 @@ export default function ActiveTimeouts() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(timeout.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
+                        {new Date(timeout.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
                   </div>
@@ -176,7 +176,7 @@ export default function ActiveTimeouts() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(timeout.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
+                        {new Date(timeout.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
                   </div>

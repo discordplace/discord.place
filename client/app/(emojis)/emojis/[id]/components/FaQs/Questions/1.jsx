@@ -1,7 +1,9 @@
 import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Question1({ emoji }) {
+  const { t } = useTranslation();
+
   return (
     <div className='mt-2 flex flex-col'>
       <p>

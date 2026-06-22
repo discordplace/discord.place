@@ -16,11 +16,12 @@ import Lottie from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import config from '@/config';
 import Select from '@/app/components/Select';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import cn from '@/lib/cn';
 import Tooltip from '@/app/components/Tooltip';
 
 export default function NewServer() {
+  const { t } = useTranslation();
   const currentlyAddingServer = useAccountStore(state => state.currentlyAddingServer);
   const setCurrentlyAddingServer = useAccountStore(state => state.setCurrentlyAddingServer);
 

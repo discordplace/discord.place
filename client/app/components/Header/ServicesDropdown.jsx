@@ -7,10 +7,11 @@ import { PiWaveformBold } from 'react-icons/pi';
 import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 
 export default function ServicesDropdown() {
+  const { t } = useTranslation();
   const setHoveringHeaderTab = useGeneralStore(state => state.header.setHoveringHeaderTab);
   const setLastMouseOut = useGeneralStore(state => state.header.setLastMouseOut);
 

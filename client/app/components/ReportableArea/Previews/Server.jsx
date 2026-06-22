@@ -1,7 +1,9 @@
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function ServerPreview({ metadata }) {
+  const { t } = useTranslation();
+
   return (
     <div className='flex flex-col gap-y-4'>
       <div className='flex items-center gap-x-2'>

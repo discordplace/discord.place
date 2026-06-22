@@ -6,9 +6,10 @@ import { useState } from 'react';
 import { useMedia } from 'react-use';
 import LikesGraph from '@/app/(profiles)/profile/[slug]/components/sections/Graph/Likes';
 import ViewsGraph from '@/app/(profiles)/profile/[slug]/components/sections/Graph/Views';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Graph({ profile }) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('likes');
   const tabs = [
     {

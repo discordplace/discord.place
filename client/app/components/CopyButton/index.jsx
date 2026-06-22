@@ -3,9 +3,10 @@ import { MdCheckCircle } from 'react-icons/md';
 import cn from '@/lib/cn';
 import { useState, useRef } from 'react';
 import { toast } from 'sonner';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function CopyButton({ timeout = 2000, successText, copyText, className, DefaultIcon = BiCopy, HoverIcon = BiSolidCopy, children }) {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const copyTimeoutRef = useRef(null);
 

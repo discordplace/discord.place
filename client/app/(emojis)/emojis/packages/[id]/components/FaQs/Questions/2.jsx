@@ -4,9 +4,10 @@ import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
 import config from '@/config';
 import Link from 'next/link';
 import { useState } from 'react';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Question2({ emoji }) {
+  const { t } = useTranslation();
   const [activeMethod, setActiveMethod] = useState(0);
 
   return (

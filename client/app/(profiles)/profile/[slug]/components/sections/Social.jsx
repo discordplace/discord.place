@@ -1,6 +1,6 @@
 'use client';
 
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import getIcon from '@/lib/utils/profiles/getIcon';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import config from '@/config';
@@ -8,6 +8,8 @@ import { motion } from 'framer-motion';
 import MotionLink from '@/app/components/Motion/Link';
 
 export default function Social({ data }) {
+  const { t } = useTranslation();
+
   const noSocialsFound = data.length === 0;
 
   const socialsThatHavePrefix = ['github', 'twitter', 'x', 'instagram', 'tiktok', 'telegram', 'bluesky', 'youtube', 'mastodon'];

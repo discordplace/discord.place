@@ -1,9 +1,11 @@
 'use client';
 
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function MockServerCard() {
+  const { t } = useTranslation();
+
   return (
     <div className='relative flex min-w-[300px] rotate-15 sm:bottom-8'>
       <ServerCard

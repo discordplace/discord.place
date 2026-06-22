@@ -5,9 +5,10 @@ import { toast } from 'sonner';
 import deleteProfile from '@/lib/request/profiles/deleteProfile';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function DangerZone({ profile }) {
+  const { t } = useTranslation();
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
     closeModal: state.closeModal,
     disableButton: state.disableButton,

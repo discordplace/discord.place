@@ -3,9 +3,11 @@
 import { FaDiscord } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import config from '@/config';
-import Link from 'next/link';import { t } from '@/stores/language';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginButton() {
+  const { t } = useTranslation();
   const pathname = usePathname();
 
   return (

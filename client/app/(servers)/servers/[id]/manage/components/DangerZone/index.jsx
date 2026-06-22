@@ -3,11 +3,13 @@
 import { RiErrorWarningFill } from 'react-icons/ri';
 import { toast } from 'sonner';
 import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';import deleteServer from '@/lib/request/servers/deleteServer';
-import { useRouter } from 'next-nprogress-bar';
-import { t } from '@/stores/language';
+import { useShallow } from 'zustand/react/shallow';
+import deleteServer from '@/lib/request/servers/deleteServer';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 
 export default function DangerZone({ serverId }) {
+  const { t } = useTranslation();
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({
     closeModal: state.closeModal,
     disableButton: state.disableButton,

@@ -21,12 +21,12 @@ import confetti from '@/lib/lotties/confetti.json';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import Lottie from 'lottie-react';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 
 export default function SoundPreview({ sound, overridedSort, showUploadToGuildButton }) {
+  const { t, i18n } = useTranslation();
   const loggedIn = useAuthStore(state => state.loggedIn);
-  const language = useLanguageStore(state => state.language);
   const [liked, setLiked] = useState(sound.isLiked);
   const [loading, setLoading] = useState(false);
   const [renderConfetti, setRenderConfetti] = useState(false);
@@ -90,7 +90,7 @@ export default function SoundPreview({ sound, overridedSort, showUploadToGuildBu
     {
       condition: sort === 'Newest' || sort === 'Oldest',
       icon: IoMdCalendar,
-      value: new Date(sound.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })
+      value: new Date(sound.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })
     }
   ];
 

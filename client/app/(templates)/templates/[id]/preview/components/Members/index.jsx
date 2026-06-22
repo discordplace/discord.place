@@ -4,10 +4,11 @@ import { FaDiscord } from 'react-icons/fa';
 import Tooltip from '@/app/components/Tooltip';
 import { toast } from 'sonner';
 import cn from '@/lib/cn';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
 
 export default function Members({ template, isMobile, currentlyOpenedSection }) {
+  const { t } = useTranslation();
   const colors = ['#5865F2', '#757e8a', '#3ba55c', '#faa61a', '#ed4245', '#eb459f'];
 
   const brandColors = useMemo(() =>

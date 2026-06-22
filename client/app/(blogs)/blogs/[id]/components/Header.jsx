@@ -1,10 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import useLanguageStore from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Header({ data }) {
-  const language = useLanguageStore(state => state.language);
+  const { i18n } = useTranslation();
 
   return (
     <>
@@ -25,11 +25,11 @@ export default function Header({ data }) {
         </h1>
 
         <span className='flex items-center gap-x-2 text-center text-sm text-tertiary'>
-          {new Date(data.date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
+          {new Date(data.date).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' })}
 
           <span className='size-1.5 rounded-full bg-quaternary' />
 
-          {new Date(data.date).toLocaleTimeString(language, { hour: 'numeric', minute: 'numeric' })}
+          {new Date(data.date).toLocaleTimeString(i18n.language, { hour: 'numeric', minute: 'numeric' })}
         </span>
       </div>
 

@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { colord, extend } from 'colord';
 import mixPlugin from 'colord/plugins/mix';
 import a11yPlugin from 'colord/plugins/a11y';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import useSearchStore from '@/stores/profiles/search';
@@ -26,8 +26,8 @@ extend([
 ]);
 
 export default function Card(props) {
+  const { t, i18n } = useTranslation();
   const user = useAuthStore(state => state.user);
-  const language = useLanguageStore(state => state.language);
 
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
@@ -189,7 +189,7 @@ export default function Card(props) {
                       formatParams: {
                         premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
                       },
-                      lng: language,
+                      lng: i18n.language,
                       premiumSince: props.subscriptionCreatedAt
                     })}
                     key={badgeId}
@@ -315,7 +315,7 @@ export default function Card(props) {
                       !haveCustomColors ? 'text-primary' : `text-[${variables.textPrimary}]`
                     )}
                   >
-                    {new Date(props.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
+                    {new Date(props.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}
                   </p>
                 </div>
               </div>

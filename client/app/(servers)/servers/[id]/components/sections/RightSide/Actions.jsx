@@ -22,9 +22,10 @@ import revalidateServer from '@/lib/revalidate/server';
 import createTripledVotesCheckout from '@/lib/request/servers/createTripledVotesCheckout';
 import createStandedOutCheckout from '@/lib/request/servers/createStandedOutCheckout';
 import { useRouter } from 'next-nprogress-bar';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Actions({ server }) {
+  const { t } = useTranslation();
   const [serverVotes, setServerVotes] = useState(server.votes);
   const [voteTimeout, setVoteTimeout] = useState(server.vote_timeout);
   const [canSetReminder, setCanSetReminder] = useState(server.can_set_reminder);

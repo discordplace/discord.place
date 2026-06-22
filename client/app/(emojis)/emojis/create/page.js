@@ -14,9 +14,10 @@ import { useRouter } from 'next-nprogress-bar';
 import EmojiPreview from '@/app/(emojis)/emojis/components/EmojiPreview';
 import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Page() {
+  const { t } = useTranslation();
   const [isPackage, setIsPackage] = useState(false);
   const [emoji, setEmoji] = useState({});
   const [emojiURL, setEmojiURL] = useState(null);

@@ -9,11 +9,12 @@ import ErrorState from '@/app/components/ErrorState';
 import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
 export default function SearchResults() {
+  const { t } = useTranslation();
   const user = useAuthStore(state => state.user);
 
   const { loading, bots, fetchBots, total: totalBots, limit, page, setPage, search } = useSearchStore(useShallow(state => ({

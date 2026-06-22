@@ -3,14 +3,11 @@
 import { useEffect } from 'react';
 import useAuthStore from '@/stores/auth';
 import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
-import useLanguageStore from '@/stores/language';
 import useGeneralStore from '@/stores/general';
-import config from '@/config';
 
 export default function AuthProvider({ children }) {
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
-  const setLanguage = useLanguageStore(state => state.setLanguage);
   const setShowFullPageLoading = useGeneralStore(state => state.setShowFullPageLoading);
 
   useEffect(() => {
@@ -20,27 +17,7 @@ export default function AuthProvider({ children }) {
         setLoggedIn(true);
       })
       .catch(() => setUser(null))
-      .finally(() => {
-        const availableLanguages = config.availableLocales.map(locale => locale.code);
-        const defaultLanguage = config.availableLocales.find(locale => locale.default).code;
-        const localStorageFound = typeof globalThis.window !== 'undefined' && 'localStorage' in globalThis;
-
-        let language = localStorageFound ? globalThis.localStorage.getItem('language') : null;
-
-        if (!language) {
-          const localeHeader = navigator.language || navigator.languages[0];
-          const preferredLanguage = availableLanguages.find(lang => localeHeader.startsWith(lang));
-
-          language = preferredLanguage || defaultLanguage;
-          if (localStorageFound) globalThis.localStorage.setItem('language', language);
-        } else if (!availableLanguages.includes(language)) {
-          language = defaultLanguage;
-          if (localStorageFound) globalThis.localStorage.removeItem('language');
-        }
-
-        setLanguage(language);
-        setShowFullPageLoading(false);
-      });
+      .finally(() => setShowFullPageLoading(false));
   }, []);
 
   return children;

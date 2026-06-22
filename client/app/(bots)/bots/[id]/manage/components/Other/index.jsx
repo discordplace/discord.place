@@ -15,9 +15,10 @@ import HashServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Input from '../Input';
 import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Other({ botId, categories, setCategories, canEditSupportServer, supportServerId, setSupportServerId, githubRepository: currentGithubRepository }) {
+  const { t } = useTranslation();
   const [ownedServers, setOwnedServers] = useState([]);
   const [ownedServersLoading, setOwnedServersLoading] = useState(true);
 

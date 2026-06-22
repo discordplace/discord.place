@@ -21,17 +21,18 @@ import MyThemes from '@/app/(account)/account/components/Content/Tabs/MyThemes';
 import useAccountStore from '@/stores/account';
 import useThemeStore from '@/stores/theme';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import { useRouter } from 'next-nprogress-bar';
 import useAuthStore from '@/stores/auth';
 import { useCookie, useMedia } from 'react-use';
 import { useShallow } from 'zustand/react/shallow';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Sidebar from '@/app/(account)/account/components/Content/Sidebar';
 import logout from '@/lib/request/auth/logout';
 import { toast } from 'sonner';
+import FullPageLoading from '@/app/components/FullPageLoading';
 
 export default function Content() {
+  const { t } = useTranslation();
   const user = useAuthStore(state => state.user);
 
   const theme = useThemeStore(state => state.theme);
@@ -93,6 +94,7 @@ export default function Content() {
       name: t('accountPage.sidebar.labels.activeReminders')
     },
     {
+      id: 'divider-0',
       name: t('accountPage.sidebar.labels.yourPublicContent'),
       tabs: [
         {
@@ -245,10 +247,36 @@ export default function Content() {
 
       <div className='flex w-full sm:py-4 sm:pr-4'>
         <div className='relative flex w-full flex-col overflow-y-auto border border-primary bg-background sm:rounded-3xl'>
-          {!loading && (
-            <AnimatePresence>
-              {sidebar.filter(({ tabs }) => tabs).map(({ tabs }) => (
-                tabs.map(({ id, component }) => (
+          <AnimatePresence mode='wait'>
+            {loading ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                key='account-page-tab-content-loading'
+              >
+                <FullPageLoading position='absolute' />
+              </motion.div>
+            ) : (
+              <>
+                {sidebar.filter(({ tabs }) => tabs).map(({ tabs }) => (
+                  tabs.map(({ id, component }) => (
+                    activeTab === id && (
+                      <motion.div
+                        key={id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={transition}
+                        className='flex size-full flex-col gap-y-4 p-4 sm:p-8'
+                      >
+                        {component}
+                      </motion.div>
+                    )
+                  ))
+                ))}
+
+                {sidebar.filter(({ tabs }) => !tabs).map(({ id, component }) => (
                   activeTab === id && (
                     <motion.div
                       key={id}
@@ -260,51 +288,8 @@ export default function Content() {
                       {component}
                     </motion.div>
                   )
-                ))
-              ))}
-
-              {sidebar.filter(({ tabs }) => !tabs).map(({ id, component }) => (
-                activeTab === id && (
-                  <motion.div
-                    key={id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={transition}
-                    className='flex size-full flex-col gap-y-4 p-4 sm:p-8'
-                  >
-                    {component}
-                  </motion.div>
-                )
-              ))}
-            </AnimatePresence>
-          )}
-
-          <AnimatePresence>
-            {loading && (
-              <motion.div
-                className='absolute top-0 left-0 z-10 flex size-full flex-col items-center justify-center bg-background'
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <Image
-                  className='size-[64px]'
-                  src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
-                  alt='discord.place Logo'
-                  width={256}
-                  height={256}
-                  priority={true}
-                />
-
-                <div className='relative mt-8 h-[6px] w-[150px] overflow-hidden rounded-full bg-quaternary'>
-                  <div
-                    className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
-                      transform: 'translateX(-100%)',
-                      width: '50%'
-                    }}
-                  />
-                </div>
-              </motion.div>
+                ))}
+              </>
             )}
           </AnimatePresence>
         </div>

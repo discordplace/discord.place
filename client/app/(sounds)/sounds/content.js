@@ -11,11 +11,13 @@ import Sounds from '@/app/(sounds)/sounds/components/Sounds';
 import useSearchStore from '@/stores/sounds/search';
 import { useShallow } from 'zustand/react/shallow';
 import { useEffect } from 'react';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Content() {
+  const { t } = useTranslation();
+
   const { search, setPage, category, setCategory, sort, setSort, loading, fetchSounds } = useSearchStore(useShallow(state => ({
     category: state.category,
     fetchSounds: state.fetchSounds,

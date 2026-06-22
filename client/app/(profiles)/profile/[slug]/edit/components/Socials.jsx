@@ -12,10 +12,11 @@ import cn from '@/lib/cn';
 import config from '@/config';
 import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import revalidateProfile from '@/lib/revalidate/profile';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import getIcon from '@/lib/utils/profiles/getIcon';
 
 export default function Socials({ profile }) {
+  const { t } = useTranslation();
   const [socials, setSocials] = useState(profile.socials);
 
   const typeRegexps = {

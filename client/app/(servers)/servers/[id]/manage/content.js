@@ -15,9 +15,10 @@ import revalidateServer from '@/lib/revalidate/server';
 import { useRouter } from 'next-nprogress-bar';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Content({ server }) {
+  const { t } = useTranslation();
   const [savingChanges, setSavingChanges] = useState(false);
   const [changesMade, setChangesMade] = useState(false);
   const [changedKeys, setChangedKeys] = useState([]);

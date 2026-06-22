@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import FullPageLoading from '@/app/components/FullPageLoading';
 import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Content({ template }) {
   const [focusedChannel, setFocusedChannel] = useState(
@@ -25,53 +26,70 @@ export default function Content({ template }) {
     else if (!isMobile && memberListCollapsed) setMemberListCollapsed(false);
   }, [isMobile, currentlyOpenedSection]);
 
-  if (!focusedChannel) return <FullPageLoading />;
-
   return (
-    <div className='flex size-full min-h-svh'>
-      <Sidebar
-        template={template}
-        focusedChannel={focusedChannel}
-        currentlyOpenedSection={currentlyOpenedSection}
-        setCurrentlyOpenedSection={setCurrentlyOpenedSection}
-        isMobile={isMobile}
-        setMemberListCollapsed={setMemberListCollapsed}
-      />
-
-      <Channels
-        data={template.data.channels}
-        focusedChannel={focusedChannel}
-        setFocusedChannel={setFocusedChannel}
-        currentlyOpenedSection={currentlyOpenedSection}
-        isMobile={isMobile}
-      />
-
-      <div
-        className={cn(
-          'flex w-full flex-col',
-          (isMobile && currentlyOpenedSection !== 'members') && 'hidden'
-        )}
-      >
-        <Header
-          focusedChannel={focusedChannel}
-          memberListCollapsed={memberListCollapsed}
-          setMemberListCollapsed={setMemberListCollapsed}
-        />
-
-        <div className='flex size-full'>
-          <Chat
+    <AnimatePresence mode='wait'>
+      {!focusedChannel ? (
+        <motion.div
+          initial={{ filter: 'blur(4px)', opacity: 0 }}
+          animate={{ filter: 'blur(0px)', opacity: 1 }}
+          exit={{ filter: 'blur(4px)', opacity: 0 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+        >
+          <FullPageLoading />
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          className='flex size-full min-h-svh'
+        >
+          <Sidebar
+            template={template}
             focusedChannel={focusedChannel}
+            currentlyOpenedSection={currentlyOpenedSection}
+            setCurrentlyOpenedSection={setCurrentlyOpenedSection}
+            isMobile={isMobile}
+            setMemberListCollapsed={setMemberListCollapsed}
           />
 
-          {!memberListCollapsed && (
-            <Members
-              template={template}
-              isMobile={isMobile}
-              currentlyOpenedSection={currentlyOpenedSection}
+          <Channels
+            data={template.data.channels}
+            focusedChannel={focusedChannel}
+            setFocusedChannel={setFocusedChannel}
+            currentlyOpenedSection={currentlyOpenedSection}
+            isMobile={isMobile}
+          />
+
+          <div
+            className={cn(
+              'flex w-full flex-col',
+              (isMobile && currentlyOpenedSection !== 'members') && 'hidden'
+            )}
+          >
+            <Header
+              focusedChannel={focusedChannel}
+              memberListCollapsed={memberListCollapsed}
+              setMemberListCollapsed={setMemberListCollapsed}
             />
-          )}
-        </div>
-      </div>
-    </div>
+
+            <div className='flex size-full'>
+              <Chat
+                focusedChannel={focusedChannel}
+              />
+
+              {!memberListCollapsed && (
+                <Members
+                  template={template}
+                  isMobile={isMobile}
+                  currentlyOpenedSection={currentlyOpenedSection}
+                />
+              )}
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

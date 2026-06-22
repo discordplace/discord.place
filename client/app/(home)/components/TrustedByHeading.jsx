@@ -2,11 +2,13 @@
 
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function TrustedByHeading({ totalServers }) {
+  const { t } = useTranslation();
+
   return (
     <p
       className={cn(

@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cn from '@/lib/cn';
 import { useMedia } from 'react-use';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 const formatter = new Intl.NumberFormat('en-US', {
@@ -26,7 +26,7 @@ const serversFormatter = new Intl.NumberFormat('en-US', {
 });
 
 export default function About({ bot }) {
-  const language = useLanguageStore(state => state.language);
+  const { t, i18n } = useTranslation();
 
   const keys = [
     {
@@ -56,7 +56,7 @@ export default function About({ bot }) {
     {
       component: (
         <>
-          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date(bot.servers_updated_at).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })})</span>
+          {serversFormatter.format(bot.servers)} <span className='opacity-50'>(Updated at {new Date(bot.servers_updated_at).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })})</span>
         </>
       ),
       icon: <FaCompass />,
@@ -72,7 +72,7 @@ export default function About({ bot }) {
     {
       component: (
         <>
-          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })})</span>
+          {formatter.format(bot.commands)} <span className='opacity-50'>(Updated at {new Date().toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })})</span>
         </>
       ),
       icon: <RiSlashCommands2 />,

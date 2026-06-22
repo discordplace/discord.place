@@ -10,11 +10,13 @@ import Card from '@/app/(blogs)/blogs/Hero/Card';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import fetchBlogs from '@/lib/request/general/fetchBlogs';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
+  const { t } = useTranslation();
+
   const sequenceTransition = {
     damping: 20,
     duration: 0.25,

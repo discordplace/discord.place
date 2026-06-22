@@ -10,11 +10,12 @@ import useSearchStore from '@/stores/templates/search';
 import { useShallow } from 'zustand/react/shallow';
 import config from '@/config';
 import Select from '@/app/components/Select';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
+  const { t } = useTranslation();
   const { category, setCategory, sort, setSort, loading, search, setPage, fetchTemplates } = useSearchStore(useShallow(state => ({
     category: state.category,
     fetchTemplates: state.fetchTemplates,

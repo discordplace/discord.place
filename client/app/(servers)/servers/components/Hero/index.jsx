@@ -14,13 +14,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import ErrorState from '@/app/components/ErrorState';
 import Pagination from '@/app/components/Pagination';
 import config from '@/config';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
+  const { t } = useTranslation();
   const user = useAuthStore(state => state.user);
 
   const { category, setCategory, sort, setSort, search, loading, servers, fetchServers, page, totalServers, limit, setPage } = useSearchStore(useShallow(state => ({

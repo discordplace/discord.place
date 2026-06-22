@@ -7,12 +7,14 @@ import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';import useLanguageStore, { t } from '@/stores/language';import AnimateHeight from 'react-animate-height';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import AnimateHeight from 'react-animate-height';
 import { useState } from 'react';
 
 export default function ActiveReminders() {
+  const { t, i18n } = useTranslation();
   const data = useAccountStore(state => state.data);
-  const language = useLanguageStore(state => state.language);
 
   const remindersCount = data.reminders?.length || 0;
   const voteRemindersCount = data.voteReminders?.length || 0;
@@ -114,7 +116,7 @@ export default function ActiveReminders() {
                               </span>
 
                               <span className='text-tertiary'>
-                                {new Date(reminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
+                                {new Date(reminder.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                               </span>
                             </div>
                           </div>
@@ -134,7 +136,7 @@ export default function ActiveReminders() {
                         </span>
 
                         <span className='text-tertiary'>
-                          {new Date(reminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
+                          {new Date(reminder.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                         </span>
                       </div>
                     </div>
@@ -201,7 +203,7 @@ export default function ActiveReminders() {
                       </div>
 
                       <div className='text-xs font-medium text-tertiary'>
-                        {new Date(voteReminder.createdAt).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
+                        {new Date(voteReminder.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', second: 'numeric', year: 'numeric' })}
                       </div>
                     </div>
                   </div>

@@ -4,11 +4,12 @@ import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
 import Link from 'next/link';
 import Grainient from '@/app/components/Background/Grainient';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
 
 export default function Error({ error }) {
+  const { t } = useTranslation();
   const theme = useThemeStore(state => state.theme);
 
   useEffect(() => {

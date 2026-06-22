@@ -10,12 +10,13 @@ import config from '@/config';
 import useSearchStore from '@/stores/themes/search';
 import { useShallow } from 'zustand/react/shallow';
 import { useEffect } from 'react';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Themes from '@/app/(themes)/themes/components/Themes';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Content() {
+  const { t } = useTranslation();
   const { search, setPage, category, setCategory, sort, setSort, loading, fetchThemes } = useSearchStore(useShallow(state => ({
     category: state.category,
     fetchThemes: state.fetchThemes,

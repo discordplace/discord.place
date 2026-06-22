@@ -13,9 +13,10 @@ import { useEffect, useState } from 'react';
 import { useDebounce } from 'react-use';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function CreateProfile() {
+  const { t } = useTranslation();
   const { preferredHost, setPreferredHost, slug, setSlug } = useGeneralStore(useShallow(state => ({
     preferredHost: state.createProfileModal.preferredHost,
     setPreferredHost: state.createProfileModal.setPreferredHost,

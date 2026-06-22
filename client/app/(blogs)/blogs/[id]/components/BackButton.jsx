@@ -1,9 +1,12 @@
 'use client';
 
 import { LuChevronLeft } from 'react-icons/lu';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
-export default function BackButton() {
+
+export default function BackButton() {
+  const { t } = useTranslation();
+
   return (
     <Link
       href='/blogs'

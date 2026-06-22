@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function SearchInput({ placeholder, loading, search, fetchData, setPage, animationDelay }) {
+  const { t } = useTranslation();
   const [value, setValue] = useState('');
 
   function validateValue(throwError = true) {

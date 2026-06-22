@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import cn from '@/lib/cn';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import { useMedia } from 'react-use';
 
 function generateClickableNumbers(currentPage, totalPages, limit) {
@@ -32,6 +32,7 @@ function generateClickableNumbers(currentPage, totalPages, limit) {
 }
 
 export default function Pagination({ page, setPage, loading, total, limit, disableAnimation }) {
+  const { t } = useTranslation();
   const isMobile = useMedia('(max-width: 640px)', false);
   const totalPages = Math.ceil(total / limit);
   const pages = generateClickableNumbers(page, totalPages, 4);

@@ -2,10 +2,11 @@
 
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import useAccountStore from '@/stores/account';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
 
 export default function UnlistedCard({ server }) {
+  const { t } = useTranslation();
   const setCurrentlyAddingServer = useAccountStore(state => state.setCurrentlyAddingServer);
 
   return (

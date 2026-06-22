@@ -3,11 +3,13 @@
 import { IoMdLock, IoMdUnlock } from 'react-icons/io';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import cn from '@/lib/cn';
-import Image from 'next/image';import useAuthStore from '@/stores/auth';
+import Image from 'next/image';
+import useAuthStore from '@/stores/auth';
+import { useTranslation } from 'react-i18next';
 import Tooltip from '@/app/components/Tooltip';
-import { t } from '@/stores/language';
 
 export default function Rewards({ server }) {
+  const { t } = useTranslation();
   const loggedIn = useAuthStore(state => state.loggedIn);
 
   return (

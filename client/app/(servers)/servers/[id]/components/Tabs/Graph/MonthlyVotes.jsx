@@ -2,12 +2,13 @@
 
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import Graph from '@/app/(dashboard)/components/Home/Graph/index';
-import cn from '@/lib/cn';import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
+import Tooltip from '@/app/components/Tooltip';
+import { useTranslation } from 'react-i18next';
 import { useMedia } from 'react-use';
-import useLanguageStore, { t } from '@/stores/language';
 
 export default function MonthlyVotesGraph({ server }) {
-  const language = useLanguageStore(state => state.language);
+  const { t, i18n } = useTranslation();
 
   const data = server.monthly_votes || [];
   const latestValue = data[data.length - 1]?.votes || 0;
@@ -57,7 +58,7 @@ export default function MonthlyVotesGraph({ server }) {
           tooltipFormatter={value => value.toLocaleString('en-US')}
           color={(isIncreased || isDecreased) ? 'rgb(168, 85, 247)' : '#b4b4b4'}
           xaxisRange={server.monthly_votes.length - 1}
-          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(language, { month: 'short', year: 'numeric' }))}
+          xAxisCategories={server.monthly_votes.map(({ created_at }) => new Date(created_at).toLocaleDateString(i18n.language, { month: 'short', year: 'numeric' }))}
         />
       </div>
     </div>

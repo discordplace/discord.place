@@ -2,11 +2,13 @@
 
 import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Heading() {
+  const { t } = useTranslation();
+
   return (
     <div className='mt-80 flex w-full max-w-5xl flex-col items-center justify-center px-4 text-center lg:px-0'>
       <h1

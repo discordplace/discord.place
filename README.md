@@ -286,8 +286,7 @@ To add a new language to the website, follow these steps:
 
 1. Create a new JSON file in the `client/locales` directory with the format `xx.json`, where `xx` is the language code. For example, `fr.json` for French. You can use the existing language files as a reference.
 2. Add the language code to the `availableLocales` value in the `client/config/data.js` file.
-3. Import the new language file in the `client/stores/language/index.js` file.
-4. Add the new language to the `localeContents` object in the `client/stores/language/index.js` file.
+4. Add the new language import to the `client/lib/i18n.js` file and add it to the `resources` object in the i18n initialization.
 3. Add the translations for the new language to the JSON file you created. The JSON file should have the following structure:
 
 ```json

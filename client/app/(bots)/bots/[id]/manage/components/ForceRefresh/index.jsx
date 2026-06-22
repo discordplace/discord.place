@@ -5,9 +5,10 @@ import { toast } from 'sonner';
 import { useState } from 'react';
 import refreshBot from '@/lib/request/bots/refreshBot';
 import revalidateBot from '@/lib/revalidate/bot';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function ForceRefresh({ botId }) {
+  const { t } = useTranslation();
   const [refreshingData, setRefreshingData] = useState(false);
 
   async function refreshData() {

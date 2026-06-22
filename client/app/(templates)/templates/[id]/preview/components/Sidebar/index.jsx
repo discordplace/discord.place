@@ -6,13 +6,20 @@ import { HiAtSymbol, HiHashtag, HiPlus } from 'react-icons/hi';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import Tooltip from '@/app/components/Tooltip/Discord';
-import Image from 'next/image';import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';import { useRouter } from 'next-nprogress-bar';import useModalsStore from '@/stores/modals';
+import Image from 'next/image';
+import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';
+import { useRouter } from 'next-nprogress-bar';
+import useModalsStore from '@/stores/modals';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+import deleteTemplate from '@/lib/request/templates/deleteTemplate';
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import cn from '@/lib/cn';
-import { toast } from 'sonner';import { useShallow } from 'zustand/react/shallow';
-import deleteTemplate from '@/lib/request/templates/deleteTemplate';import { useEffect, useRef, useState } from 'react';import Link from 'next/link';
-import { t } from '@/stores/language';
 
 export default function Sidebar({ template, focusedChannel, currentlyOpenedSection, setCurrentlyOpenedSection, isMobile, setMemberListCollapsed }) {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const { openModal, disableButton, enableButton, closeModal } = useModalsStore(useShallow(state => ({

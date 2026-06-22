@@ -2,11 +2,12 @@
 
 import { motion } from 'framer-motion';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
 export default function Servers({ profile }) {
+  const { t } = useTranslation();
   const user = useAuthStore(state => state.user);
 
   return (

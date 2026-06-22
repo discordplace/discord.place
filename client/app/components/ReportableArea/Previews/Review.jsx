@@ -1,8 +1,10 @@
 import { TiStarFullOutline } from 'react-icons/ti';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function ReviewPreview({ metadata }) {
+  const { t } = useTranslation();
+
   return (
     <div className='flex flex-col gap-y-4'>
       <div className='flex items-center gap-x-3'>

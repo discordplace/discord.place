@@ -4,13 +4,15 @@ import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
 import { LuPlus } from 'react-icons/lu';
 import ErrorState from '@/app/components/ErrorState';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';import config from '@/config';
+import Link from 'next/link';
+import config from '@/config';
 import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
+import { useTranslation } from 'react-i18next';
 import { VList } from 'virtua';
-import { t } from '@/stores/language';
 
 export default function MyEmojis() {
+  const { t } = useTranslation();
   const data = useAccountStore(state => state.data);
 
   const concatenatedEmojis = data.emojis?.concat(data.emojiPacks).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());

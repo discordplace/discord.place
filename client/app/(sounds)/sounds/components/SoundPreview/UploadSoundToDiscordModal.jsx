@@ -8,9 +8,11 @@ import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
-import Link from 'next/link';import { t } from '@/stores/language';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 export default function UploadSoundToDiscordModal({ guilds }) {
+  const { t } = useTranslation();
   const selectedGuildId = useGeneralStore(state => state.uploadSoundToDiscordModal.selectedGuildId);
   const setSelectedGuildId = useGeneralStore(state => state.uploadSoundToDiscordModal.setSelectedGuildId);
 

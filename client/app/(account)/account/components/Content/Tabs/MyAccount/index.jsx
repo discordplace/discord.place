@@ -14,14 +14,14 @@ import createProfile from '@/lib/request/profiles/createProfile';
 import { useShallow } from 'zustand/react/shallow';
 import useGeneralStore from '@/stores/general';
 import { useRouter } from 'next-nprogress-bar';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import { useMedia } from 'react-use';
 
 export default function MyAccount() {
+  const { t, i18n } = useTranslation();
   const user = useAuthStore(state => state.user);
-  const language = useLanguageStore(state => state.language);
   const router = useRouter();
 
   const [plans, setPlans] = useState([]);
@@ -197,13 +197,13 @@ export default function MyAccount() {
                       currentPlan ? (
                         t(`accountPage.tabs.myAccount.sections.premium.plans.${currentPlan?.name}`)
                       ) : (
-                        t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }) })
+                        t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' }) })
                       )
                     )}
                   </span>
 
                   <p className='text-xs text-tertiary'>
-                    {new Date(user.premium.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
+                    {new Date(user.premium.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' })}
                   </p>
                 </div>
               </>
@@ -225,12 +225,12 @@ export default function MyAccount() {
                         currentPlan ? (
                           t(`accountPage.tabs.myAccount.sections.premium.plans.${currentPlan?.name}`)
                         ) : (
-                          t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }) })
+                          t('accountPage.tabs.myAccount.sections.premium.plans.custom', { date: new Date(user.premium.expiresAt).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' }) })
                         )
                       )}
 
                       <span className='text-xs text-tertiary'>
-                        {new Date(user.premium.createdAt).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' })}
+                        {new Date(user.premium.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' })}
                       </span>
                     </h2>
 

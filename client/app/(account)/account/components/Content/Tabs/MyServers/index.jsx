@@ -5,12 +5,14 @@ import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import ErrorState from '@/app/components/ErrorState';
 import config from '@/config';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';import UnlistedCard from '@/app/(account)/account/components/Content/Tabs/MyServers/UnlistedCard';
+import Link from 'next/link';
+import UnlistedCard from '@/app/(account)/account/components/Content/Tabs/MyServers/UnlistedCard';
+import { useTranslation } from 'react-i18next';
 import NewServer from '@/app/(account)/account/components/Content/Tabs/MyServers/NewServer';
-import { t } from '@/stores/language';
 import Image from 'next/image';
 
 export default function MyServers() {
+  const { t } = useTranslation();
   const data = useAccountStore(state => state.data);
   const currentlyAddingServer = useAccountStore(state => state.currentlyAddingServer);
 

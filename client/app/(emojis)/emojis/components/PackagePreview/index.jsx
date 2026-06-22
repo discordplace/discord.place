@@ -20,9 +20,10 @@ import config from '@/config';
 import Tooltip from '@/app/components/Tooltip';
 import useAuthStore from '@/stores/auth';
 import cn from '@/lib/cn';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function PackagePreview({ image_urls, setImageURLs, setIsPackage, setEmojiURL, ableToChange }) {
+  const { t } = useTranslation();
   const loggedIn = useAuthStore(state => state.loggedIn);
   const theme = useThemeStore(state => state.theme);
   const [patternDarkMode, setPatternDarkMode] = useState(theme === 'dark');

@@ -6,9 +6,10 @@ import Link from 'next/link';
 import Grainient from '@/app/components/Background/Grainient';
 import { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function NotFound() {
+  const { t } = useTranslation();
   const theme = useThemeStore(state => state.theme);
 
   const timeoutRef = useRef(null);

@@ -13,12 +13,12 @@ import { useRouter } from 'next-nprogress-bar';
 import deleteSound from '@/lib/request/sounds/deleteSound';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
 export default function Content({ sound }) {
-  const language = useLanguageStore(state => state.language);
+  const { t, i18n } = useTranslation();
   const user = useAuthStore(state => state.user);
   const router = useRouter();
 
@@ -95,7 +95,7 @@ export default function Content({ sound }) {
                 </span>
 
                 <span className='text-sm font-semibold text-primary'>
-                  {new Date(sound.createdAt).toLocaleString(language, { dateStyle: 'medium', timeStyle: 'short' })}
+                  {new Date(sound.createdAt).toLocaleString(i18n.language, { dateStyle: 'medium', timeStyle: 'short' })}
                 </span>
               </div>
 

@@ -8,15 +8,19 @@ import { IoHeart } from 'react-icons/io5';
 import { MdUpdate } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
-import Link from 'next/link';import useSearchStore from '@/stores/bots/search';import { useMedia } from 'react-use';
-import getRelativeTime from '@/lib/getRelativeTime';import config from '@/config';
-import useLanguageStore, { t } from '@/stores/language';
+import Link from 'next/link';
+import useSearchStore from '@/stores/bots/search';
+import { useTranslation } from 'react-i18next';
+import getRelativeTime from '@/lib/getRelativeTime';
+import config from '@/config';
+import { useMedia } from 'react-use';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Tooltip from '@/app/components/Tooltip';
-export default function Card({ data, overridedSort }) {
+
+export default function Card({ data, overridedSort }) {
+  const { t, i18n } = useTranslation();
   const isMobile = useMedia('(max-width: 420px)', false);
-  const language = useLanguageStore(state => state.language);
   const storedSort = useSearchStore(state => state.sort);
   const sort = overridedSort || storedSort;
   const category = useSearchStore(state => state.category);
@@ -41,7 +45,7 @@ import Tooltip from '@/app/components/Tooltip';
     {
       condition: sort === 'LatestVoted',
       icon: MdUpdate,
-      transform: date => (date ? getRelativeTime(date, language) : t('botCard.neverVoted')),
+      transform: date => (date ? getRelativeTime(date, i18n.language) : t('botCard.neverVoted')),
       value: data.latest_voted_at
     },
     {
@@ -67,13 +71,13 @@ import Tooltip from '@/app/components/Tooltip';
     {
       condition: sort === 'Newest',
       icon: HiSortAscending,
-      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
+      transform: date => new Date(date).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' }),
       value: data.created_at
     },
     {
       condition: sort === 'Oldest',
       icon: HiSortDescending,
-      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
+      transform: date => new Date(date).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' }),
       value: data.created_at
     }
   ];

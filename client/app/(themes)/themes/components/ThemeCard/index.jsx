@@ -7,13 +7,14 @@ import Image from 'next/image';
 import useAuthStore from '@/stores/auth';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Twemoji from 'react-twemoji';
 import { useMemo } from 'react';
 import AddFriendIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/AddFriend';
 import MoreIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/More';
 
 export default function ThemeCard({ id, primaryColor, secondaryColor }) {
+  const { t } = useTranslation();
   const isLight = colord(primaryColor).isLight();
   const user = useAuthStore(state => state.user);
   const loggedIn = useAuthStore(state => state.loggedIn);

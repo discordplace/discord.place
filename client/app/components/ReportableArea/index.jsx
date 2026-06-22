@@ -2,7 +2,7 @@ import Tooltip from '@/app/components/Tooltip';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
 import useModalsStore from '@/stores/modals';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import ReportAreaModal from '@/app/components/ReportableArea/ReportAreaModal';
 import config from '@/config';
 import { toast } from 'sonner';
@@ -10,6 +10,7 @@ import createReport from '@/lib/request/general/createReport';
 import { useShallow } from 'zustand/react/shallow';
 
 export default function ReportableArea(props) {
+  const { t } = useTranslation();
   const state_showReportableAreas = useGeneralStore(state => state.showReportableAreas);
   const showReportableAreas = props.active !== false && state_showReportableAreas;
   const setShowReportableAreas = useGeneralStore(state => state.setShowReportableAreas);

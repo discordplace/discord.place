@@ -8,13 +8,15 @@ import SearchInput from '@/app/components/SearchInput';
 import useSearchStore from '@/stores/profiles/search';
 import { motion } from 'framer-motion';
 import { useShallow } from 'zustand/react/shallow';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import Select from '@/app/components/Select';
 import config from '@/config';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
+  const { t } = useTranslation();
+
   const { fetchProfiles, totalProfiles, loading, search, setPage, sort, setSort } = useSearchStore(useShallow(state => ({
     fetchProfiles: state.fetchProfiles,
     loading: state.loading,

@@ -2,9 +2,11 @@
 
 import useGeneralStore from '@/stores/general';
 import { useShallow } from 'zustand/react/shallow';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function CreateLinkModal() {
+  const { t } = useTranslation();
+
   const { name, setName, destinationURL, setDestinationURL } = useGeneralStore(useShallow(state => ({
     destinationURL: state.createLinkModal.destinationURL,
     name: state.createLinkModal.name,

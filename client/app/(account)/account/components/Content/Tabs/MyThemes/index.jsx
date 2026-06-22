@@ -9,9 +9,10 @@ import config from '@/config';
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import NewTheme from '@/app/(account)/account/components/Content/Tabs/MyThemes/NewTheme';
 import { useShallow } from 'zustand/react/shallow';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function MyThemes() {
+  const { t } = useTranslation();
   const { data, currentlyAddingTheme, setCurrentlyAddingTheme } = useAccountStore(useShallow(state => ({
     currentlyAddingTheme: state.currentlyAddingTheme,
     data: state.data,

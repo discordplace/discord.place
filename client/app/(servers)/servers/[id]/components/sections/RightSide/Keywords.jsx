@@ -1,9 +1,12 @@
 'use client';
 
 import { FaSlackHash } from 'react-icons/fa';
-import { motion } from 'framer-motion';import { t } from '@/stores/language';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function Keywords({ server }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <motion.h2

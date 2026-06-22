@@ -8,9 +8,10 @@ import config from '@/config';
 import cn from '@/lib/cn';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Other({ category, setCategory, keywords, setKeywords }) {
+  const { t } = useTranslation();
   const [value, setValue] = useState('');
 
   return (

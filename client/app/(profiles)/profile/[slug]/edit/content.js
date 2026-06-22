@@ -1,14 +1,17 @@
 'use client';
 
 import { MdChevronLeft } from 'react-icons/md';
-import Link from 'next/link';import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
+import Link from 'next/link';
+import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
 import DangerZone from '@/app/(profiles)/profile/[slug]/edit/components/DangerZone';
 import VerifiedBadge from '@/app/(profiles)/profile/[slug]/edit/components/VerifiedBadge';
+import { useTranslation } from 'react-i18next';
 import PatchVerifyButton from '@/app/(profiles)/profile/[slug]/edit/components/PatchVerifyButton';
-import { t } from '@/stores/language';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ profile }) {
+  const { t } = useTranslation();
+
   return (
     <div className='mt-36 mb-8 flex w-full justify-center px-4 sm:px-0'>
       <div className='flex w-full max-w-[650px] justify-center'>

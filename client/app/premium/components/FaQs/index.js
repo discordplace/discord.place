@@ -2,11 +2,13 @@
 
 import { MdChevronLeft } from 'react-icons/md';
 import cn from '@/lib/cn';
-import { useState } from 'react';import AnimateHeight from 'react-animate-height';
+import { useState } from 'react';
+import AnimateHeight from 'react-animate-height';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { t } from '@/stores/language';
 
 export default function FaQs() {
+  const { t } = useTranslation();
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {

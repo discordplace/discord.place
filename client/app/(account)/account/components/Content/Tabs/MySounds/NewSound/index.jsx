@@ -12,9 +12,10 @@ import { useRouter } from 'next/navigation';
 import Lottie from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import useAccountStore from '@/stores/account';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function NewSound() {
+  const { t } = useTranslation();
   const setCurrentlyAddingSound = useAccountStore(state => state.setCurrentlyAddingSound);
 
   const [loading, setLoading] = useState(false);

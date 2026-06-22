@@ -162,3 +162,82 @@ body[data-scroll-locked] {
     mask-size: 350vmax;
   }
 }
+
+@keyframes logoLoading {
+  0% {
+    opacity: 0.2;
+  }
+
+  22% {
+    opacity: 0.2;
+  }
+
+  42% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: .2;
+  }
+
+  100% {
+    opacity: .2;
+  }
+}
+
+@keyframes logoLoadingInner {
+  0% {
+    background: rgba(var(--bg-secondary));
+  }
+
+  22% {
+    background: rgba(var(--bg-secondary));
+  }
+
+  42% {
+    background: rgba(var(--bg-quaternary));
+  }
+
+  92% {
+    background: rgba(var(--bg-secondary));
+  }
+
+  100% {
+    background: rgba(var(--bg-secondary));
+  }
+}
+
+@keyframes logoLoadingInnerAfter {
+  0% {
+    top: -40%;
+    left: -40%;
+  }
+
+  92% {
+    top: 80%;
+    left: 105%;
+  }
+
+  100% {
+    top: 80%;
+    left: 105%;
+  }
+}
+
+.logoLoadingInner:after {
+  content: "";
+  background: linear-gradient(232deg, #eeeeee 20%, #ffffff 70%);
+  filter: blur(5px);
+  z-index: -1;
+  width: 25%;
+  height: 60%;
+  animation-name: logoLoadingInnerAfter;
+  animation-duration: 2.15s;
+  animation-timing-function: cubic-bezier(.77, 0, .175, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  position: absolute;
+  top: -40%;
+  left: -40%;
+  transform: skew(-45deg, 45deg);
+}

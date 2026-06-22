@@ -2,9 +2,10 @@
 
 import useThemeStore from '@/stores/theme';
 import Image from 'next/image';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function VerifiedBadge() {
+  const { t } = useTranslation();
   const theme = useThemeStore(state => state.theme);
 
   return (

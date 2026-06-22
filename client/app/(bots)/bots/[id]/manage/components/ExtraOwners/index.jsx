@@ -11,9 +11,10 @@ import createExtraOwner from '@/lib/request/bots/createExtraOwner';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import cn from '@/lib/cn';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function ExtraOwners({ botId, canEditExtraOwners }) {
+  const { t } = useTranslation();
   const [extraOwners, setExtraOwners] = useState([]);
   const [extraOwnersLoading, setExtraOwnersLoading] = useState(true);
   const [extraOwnerRemoving, setExtraOwnerRemoving] = useState('');

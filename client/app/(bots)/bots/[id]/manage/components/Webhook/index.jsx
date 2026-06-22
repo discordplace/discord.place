@@ -11,7 +11,7 @@ import { toast } from 'sonner';
 import deleteWebhookSettings from '@/lib/request/bots/deleteWebhookSettings';
 import setWebhookSettings from '@/lib/request/bots/setWebhookSettings';
 import testBotWebhook from '@/lib/request/bots/testWebhook';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import cn from '@/lib/cn';
 import CodeBlock from '@/app/components/CodeBlock';
 import revalidateBot from '@/lib/revalidate/bot';
@@ -22,6 +22,7 @@ import Select from '@/app/components/Select';
 import { isAxiosError } from 'axios';
 
 export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, webhookLanguage: currentWebhookLanguage, webhookLanguages, records }) {
+  const { t, i18n } = useTranslation();
   const [defaultWebhookURL, setDefaultWebhookURL] = useState(currentWebhookURL);
   const [defaultWebhookToken, setDefaultWebhookToken] = useState(currentWebhookToken);
   const [defaultWebhookLanguage, setDefaultWebhookLanguage] = useState(currentWebhookLanguage);
@@ -84,8 +85,6 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
   }
 
   const [selectedRecord, setSelectedRecord] = useState(records?.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())?.[0] || null);
-  const language = useLanguageStore(state => state.language);
-
   const [webhookTestLoading, setWebhookTestLoading] = useState(false);
   const revalidateTimeoutRef = useRef(null);
   const testWebhookToastId = useRef(null);
@@ -324,7 +323,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
                         </span>
 
                         <span className='ml-auto flex text-xs text-tertiary'>
-                          {new Date(record.created_at).toLocaleDateString(language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'short', year: 'numeric' })}
+                          {new Date(record.created_at).toLocaleDateString(i18n.language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'short', year: 'numeric' })}
                         </span>
                       </button>
                     );

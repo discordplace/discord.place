@@ -11,7 +11,7 @@ import { useRouter } from 'next-nprogress-bar';
 import deleteTheme from '@/lib/request/themes/deleteTheme';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import CopyButton from '@/app/components/CopyButton/CustomTrigger';
 import { colord } from 'colord';
@@ -19,7 +19,7 @@ import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 
 export default function Content({ theme }) {
-  const language = useLanguageStore(state => state.language);
+  const { t, i18n } = useTranslation();
   const user = useAuthStore(state => state.user);
   const router = useRouter();
 
@@ -97,7 +97,7 @@ export default function Content({ theme }) {
                 </span>
 
                 <span className='text-sm font-semibold text-primary'>
-                  {new Date(theme.createdAt).toLocaleString(language, { dateStyle: 'medium', timeStyle: 'short' })}
+                  {new Date(theme.createdAt).toLocaleString(i18n.language, { dateStyle: 'medium', timeStyle: 'short' })}
                 </span>
               </div>
 

@@ -12,12 +12,13 @@ import { useRouter } from 'next/navigation';
 import Lottie from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import useAccountStore from '@/stores/account';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import { HexColorPicker } from 'react-colorful';
 import isEqual from 'lodash/isEqual';
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 
 export default function NewTheme() {
+  const { t } = useTranslation();
   const setCurrentlyAddingTheme = useAccountStore(state => state.setCurrentlyAddingTheme);
 
   const [loading, setLoading] = useState(false);

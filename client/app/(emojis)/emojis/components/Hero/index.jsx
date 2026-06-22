@@ -11,11 +11,12 @@ import SearchInput from '@/app/components/SearchInput';
 import { useShallow } from 'zustand/react/shallow';
 import Select from '@/app/components/Select';
 import config from '@/config';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function Hero() {
+  const { t } = useTranslation();
   const { fetchEmojis, total, category, setCategory, sort, setSort, loading, search, setPage } = useSearchStore(useShallow(state => ({
     category: state.category,
     fetchEmojis: state.fetchEmojis,

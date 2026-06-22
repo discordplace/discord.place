@@ -20,9 +20,10 @@ import useThemeStore from '@/stores/theme';
 import createTripledVotesCheckout from '@/lib/request/bots/createTripledVotesCheckout';
 import createStandedOutCheckout from '@/lib/request/bots/createStandedOutCheckout';
 import { useRouter } from 'next-nprogress-bar';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Actions({ bot }) {
+  const { t } = useTranslation();
   const theme = useThemeStore(state => state.theme);
   const [voteTimeout, setVoteTimeout] = useState(bot.vote_timeout);
   const loggedIn = useAuthStore(state => state.loggedIn);

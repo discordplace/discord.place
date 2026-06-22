@@ -13,9 +13,10 @@ import createTemplate from '@/lib/request/templates/createTemplate';
 import fetchTemplateDetails from '@/lib/request/templates/fetchTemplateDetails';
 import { useRouter } from 'next-nprogress-bar';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Page() {
+  const { t } = useTranslation();
   const [templateId, setTemplateId] = useState('');
   const [templateDetailsLoading, setTemplateDetailsLoading] = useState(false);
   const [templateDetails, setTemplateDetails] = useState(null);

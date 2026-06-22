@@ -10,9 +10,11 @@ import InboxIcon from '@/app/(templates)/templates/[id]/preview/components/Icons
 import HelpIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Help';
 import SearchIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Search';
 import Tooltip from '@/app/components/Tooltip/Discord';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Header({ focusedChannel, memberListCollapsed, setMemberListCollapsed }) {
+  const { t } = useTranslation();
+
   return (
     <div className='hidden w-full justify-between border-b border-b-[#26282c] bg-[#313338] px-[8px] py-[12px] lg:flex'>
       <div className='ml-2 flex items-center gap-x-2 text-sm'>

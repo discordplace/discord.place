@@ -15,14 +15,14 @@ import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
 import getRelativeTime from '@/lib/getRelativeTime';
 import config from '@/config';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Tooltip from '@/app/components/Tooltip';
 
 export default function ServerCard(props) {
+  const { t, i18n } = useTranslation();
   const isMobile = useMedia('(max-width: 420px)', false);
-  const language = useLanguageStore(state => state.language);
   const storedSort = useSearchStore(state => state.sort);
   const sort = props.overridedSort || storedSort;
 
@@ -51,19 +51,19 @@ export default function ServerCard(props) {
     {
       condition: sort === 'LatestVoted',
       icon: MdUpdate,
-      transform: date => (date ? getRelativeTime(date, language) : t('serverCard.neverVoted')),
+      transform: date => (date ? getRelativeTime(date, i18n.language) : t('serverCard.neverVoted')),
       value: props.server.data.latest_voted_at
     },
     {
       condition: sort === 'Newest',
       icon: HiSortAscending,
-      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
+      transform: date => new Date(date).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' }),
       value: props.server.joined_at
     },
     {
       condition: sort === 'Oldest',
       icon: HiSortDescending,
-      transform: date => new Date(date).toLocaleDateString(language, { day: 'numeric', month: 'long', year: 'numeric' }),
+      transform: date => new Date(date).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' }),
       value: props.server.joined_at
     },
     {

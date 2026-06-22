@@ -3,10 +3,12 @@
 import { TbLoader } from 'react-icons/tb';
 import patchProfileVerify from '@/lib/request/profiles/patchProfileVerify';
 import revalidateProfile from '@/lib/revalidate/profile';
-import { useState } from 'react';import { toast } from 'sonner';
-import { t } from '@/stores/language';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 
 export default function PatchVerifyButton({ profile }) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 
   if (!profile.permissions.canVerify) return null;

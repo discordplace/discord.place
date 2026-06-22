@@ -14,17 +14,16 @@ import cn from '@/lib/cn';
 import Drawer from '@/app/components/Drawer';
 import { MdOutlineOpenInNew } from 'react-icons/md';
 import config from '@/config';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import { useMedia } from 'react-use';
 
 export default function Header() {
+  const { t } = useTranslation();
   const pathname = usePathname();
 
   const isDashboard = pathname === '/dashboard';
   const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview');
   const isAccount = pathname === '/account';
-
-  if (isDashboard || isTemplatePreview || isAccount) return null;
 
   const [, setY] = useState(0);
   const [prevY, setPrevY] = useState(0);
@@ -67,6 +66,8 @@ export default function Header() {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevY]);
+
+  if (isDashboard || isTemplatePreview || isAccount) return null;
 
   return (
     <div className='fixed top-6 left-0 z-[9999] flex w-full items-center justify-center'>

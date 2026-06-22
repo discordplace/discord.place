@@ -4,17 +4,18 @@ import { HiSortAscending } from 'react-icons/hi';
 import { TiStar } from 'react-icons/ti';
 import config from '@/config';
 import cn from '@/lib/cn';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import useSearchStore from '@/stores/templates/search';
 import useThemeStore from '@/stores/theme';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';import Ripples from 'react-ripples';
+import { useEffect, useRef, useState } from 'react';
+import Ripples from 'react-ripples';
 import getCompressedName from '@/lib/getCompressedName';
 
 export default function Card({ data, className }) {
+  const { t, i18n } = useTranslation();
   const theme = useThemeStore(state => state.theme);
   const sort = useSearchStore(state => state.sort);
-  const language = useLanguageStore(state => state.language);
 
   const [isClicked, setIsClicked] = useState(false);
   const timeoutRef = useRef(null);
@@ -85,7 +86,7 @@ export default function Card({ data, className }) {
                   <>
                     <HiSortAscending className='text-tertiary' />
                     <span className='text-xs font-medium text-secondary'>
-                      {new Date(data.created_at).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {new Date(data.created_at).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}
                     </span>
                   </>
                 )}
@@ -94,7 +95,7 @@ export default function Card({ data, className }) {
                   <>
                     <HiSortAscending className='text-tertiary' />
                     <span className='text-xs font-medium text-secondary'>
-                      {new Date(data.created_at).toLocaleDateString(language, { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {new Date(data.created_at).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}
                     </span>
                   </>
                 )}

@@ -10,13 +10,13 @@ import Script from 'next/script';
 import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';
-import useLanguageStore, { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 
 export default function Content({ server }) {
+  const { t, i18n } = useTranslation();
   const theme = useThemeStore(state => state.theme);
-  const language = useLanguageStore(state => state.language);
 
   return (
     <div className='mt-32 flex w-full justify-center'>
@@ -73,7 +73,7 @@ export default function Content({ server }) {
                     formatParams: {
                       premiumSince: { day: 'numeric', month: 'long', year: 'numeric' }
                     },
-                    lng: language,
+                    lng: i18n.language,
                     premiumSince: server.ownerSubscriptionCreatedAt
                   })}
                 >

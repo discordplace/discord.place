@@ -1,7 +1,9 @@
 import downloadSound from '@/lib/utils/sounds/downloadSound';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function Question1({ sound }) {
+  const { t } = useTranslation();
+
   return (
     <div className='mt-2 flex flex-col'>
       <p>

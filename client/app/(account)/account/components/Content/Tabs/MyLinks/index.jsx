@@ -17,9 +17,10 @@ import useGeneralStore from '@/stores/general';
 import createLink from '@/lib/request/links/createLink';
 import useAccountStore from '@/stores/account';
 import CopyButton from '@/app/components/CopyButton/CustomTrigger';
-import { t } from '@/stores/language';
+import { useTranslation } from 'react-i18next';
 
 export default function MyLinks() {
+  const { t } = useTranslation();
   const user = useAuthStore(state => state.user);
   const fetchData = useAccountStore(state => state.fetchData);
   const data = useAccountStore(state => state.data);

@@ -2,13 +2,15 @@
 
 import { MdChevronLeft } from 'react-icons/md';
 import cn from '@/lib/cn';
-import { useState } from 'react';import Question1 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/1';
+import { useState } from 'react';
+import Question1 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/1';
 import Question2 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/2';
 import Question3 from '@/app/(sounds)/sounds/[id]/components/FaQs/Questions/3';
+import { useTranslation } from 'react-i18next';
 import AnimateHeight from 'react-animate-height';
-import { t } from '@/stores/language';
 
 export default function FaQs({ sound }) {
+  const { t } = useTranslation();
   const [activeQA, setActiveQA] = useState(0);
   const QA = [
     {

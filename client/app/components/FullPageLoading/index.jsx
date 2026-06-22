@@ -1,52 +1,48 @@
 'use client';
 
-import useThemeStore from '@/stores/theme';
-import { useEffect } from 'react';
-import MotionImage from '@/app/components/Motion/Image';
-import { AnimatePresence, motion } from 'framer-motion';
+import cn from '@/lib/cn';
+import { useThemeStore } from '@/stores/theme';
 
-export default function FullPageLoading() {
+export default function FullPageLoading({ position = 'fixed' }) {
   const theme = useThemeStore(state => state.theme);
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
-
-  const transition = { damping: 10, duration: 0.25, stiffness: 100, type: 'spring' };
+  const logoBase64 = `/symbol_${theme === 'dark' ?'black': 'white'}_outline.svg`;
 
   return (
-    <AnimatePresence>
-      <div className='fixed top-0 z-10 flex size-full flex-col items-center justify-center bg-background'>
-        <MotionImage
-          className='size-[64px]'
-          src={theme === 'dark' ? '/symbol_white.png' : '/symbol_black.png'}
-          alt='discord.place Logo'
-          width={256}
-          height={256}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={transition}
-          priority={true}
+    <div
+      className={cn(
+        'pointer-events-none top-0 left-0 z-[99999] flex size-full items-center justify-center bg-background',
+        position === 'fixed' ? 'fixed' : 'absolute'
+      )}
+    >
+      <div className='relative'>
+        <div
+          className='absolute top-0 left-0 -z-[2] size-full drop-shadow-[0_0px_min(calc(1vw/2),calc(2560px*.01/2))_rgba(var(--bg-secondary))]'
+          style={{
+            animationDuration: '2.15s',
+            animationFillMode: 'both',
+            animationIterationCount: 'infinite',
+            animationName: 'logoLoading',
+            animationTimingFunction: 'cubic-bezier(.455, .03, .515, .955)',
+            background: `url(${logoBase64}) 50%/cover no-repeat`
+          }}
         />
 
-        <motion.div
-          className='relative mt-8 h-[6px] w-[150px] overflow-hidden rounded-full bg-tertiary'
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={transition}
-        >
-          <div className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
-            transform: 'translateX(-100%)',
-            width: '50%'
-          }} />
-        </motion.div>
+        <div
+          // oxlint-disable-next-line tailwindcss/no-unknown-classes
+          className='logoLoadingInner relative z-[9999] size-[min(calc(24vw/2),calc(2560px*.24/2))] bg-secondary'
+          style={{
+            animationDuration: '2.15s',
+            animationFillMode: 'both',
+            animationIterationCount: 'infinite',
+            animationName: 'logoLoadingInner',
+            animationTimingFunction: 'cubic-bezier(.455, .03, .515, .955)',
+            maskImage: `url(${logoBase64})`,
+            maskSize: 'cover',
+            WebkitMaskImage: `url(${logoBase64})`,
+            WebkitMaskSize: 'cover'
+          }}
+        />
       </div>
-    </AnimatePresence>
+    </div>
   );
 }
