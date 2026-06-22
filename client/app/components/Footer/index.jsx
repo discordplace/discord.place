@@ -13,9 +13,11 @@ import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import Select from '@/app/components/Select';
 import StatusBadge from '@/app/components/Footer/StatusBadge';
+import { useLocalStorage } from 'react-use';
 
 export default function Footer() {
   const { t, i18n } = useTranslation();
+  const [, setLocalLocale] = useLocalStorage('locale', i18n.language);
   const theme = useThemeStore(state => state.theme);
   const setTheme = useThemeStore(state => state.setTheme);
   const pathname = usePathname();
@@ -262,7 +264,10 @@ export default function Footer() {
                 value: locale.code
               }))}
               value={i18n.language}
-              onChange={value => i18n.changeLanguage(value)}
+              onChange={value => {
+                i18n.changeLanguage(value);
+                setLocalLocale(value);
+              }}
             />
           </div>
         </div>
