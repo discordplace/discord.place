@@ -17,6 +17,7 @@ i18n
       escapeValue: false // React already does escaping
     },
     lng: config.availableLocales.find(locale => locale.default).code,
+    postProcess: ['intervalPlural', 'reactPostprocessor'],
     react: {
       useSuspense: false
     },
