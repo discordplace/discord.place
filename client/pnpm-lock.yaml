@@ -53,9 +53,6 @@ importers:
       i18next:
         specifier: ^26.3.1
         version: 26.3.1
-      i18next-http-backend:
-        specifier: ^4.0.0
-        version: 4.0.0
       i18next-intervalplural-postprocessor:
         specifier: ^3.0.0
         version: 3.0.0
@@ -2426,10 +2423,6 @@ packages:
 
   hyphenate-style-name@1.1.0:
     resolution: {integrity: sha512-WDC/ui2VVRrz3jOVi+XtjqkDjiVjTtFaAGiW37k6b+ohyQ5wYDOGkvCZa8+H0nx3gyvv0+BST9xuOgIyGQ00gw==}
-
-  i18next-http-backend@4.0.0:
-    resolution: {integrity: sha512-EgSjO3Q1G6f2Q5oy7u9mmxuesE0oSfzAD97NFBjC8EmkK4guBSYLljM0Fng3DarMWIIkU70jfo4+mUzmyVISTA==}
-    engines: {node: '>=18'}
 
   i18next-intervalplural-postprocessor@3.0.0:
     resolution: {integrity: sha512-ZJWg2Gcb0kQqVI7kygLj9wVwQHK3mzRAg94uLsdoHqss0M9n0HSPr1pThd2AttkBsJFWR26G18hnKCqcTB8shQ==}
@@ -5693,8 +5686,6 @@ snapshots:
       - supports-color
 
   hyphenate-style-name@1.1.0: {}
-
-  i18next-http-backend@4.0.0: {}
 
   i18next-intervalplural-postprocessor@3.0.0: {}
 
