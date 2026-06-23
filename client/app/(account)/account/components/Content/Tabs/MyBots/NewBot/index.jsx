@@ -102,7 +102,7 @@ export default function NewBot() {
   function formatAverageApprovalTime(totalMinutes) {
     if (typeof totalMinutes !== 'number' || Number.isNaN(totalMinutes)) return null;
 
-    const selectedLanguage = i18n.language === 'loading' ? 'en' : i18n.language;
+    const selectedLanguage = i18n.language;
     const dateFnsKey = config.availableLocales.find(locale => locale.code === selectedLanguage)?.dateFnsKey || 'enUS';
     const locale = locales[dateFnsKey];
 
