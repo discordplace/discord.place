@@ -56,7 +56,8 @@
     "blog": "Blog",
     "premium": "Premium",
     "contactUs": "Daxil Ol",
-    "myAccount": "Hesabım"
+    "myAccount": "Hesabım",
+    "continueWithDiscord": "Daxil Ol"
   },
     "footer": {
     "description": "Discord ilə əlaqəli hər şey bir yerdə.",
@@ -2148,6 +2149,58 @@
             "dragAndDrop": {
               "drop": "Faylınızı bura buraxın.",
               "click": "Faylı yükləmək üçün klikləyin."
+            }
+          }
+        }
+      },
+      "myThemes": {
+        "title": "Mövzularım",
+        "subtitle": "discord.place-də siyahıya aldığınız mövzulara baxın. Həmçinin discord.place-ə yeni mövzu da göndərə bilərsiniz.",
+        "sections": {
+          "listedThemes": {
+            "title": "Siyahıya Alınmış Mövzular",
+            "subtitle": "Burada discord.place-də siyahıya aldığınız mövzuları görə bilərsiniz.",
+            "emptyErrorState": {
+              "title": "Bura çox sakitdir...",
+              "message": "discord.place-də heç bir mövzu siyahıya almamısınız."
+            }
+          },
+          "newTheme": {
+            "title": "Yeni Mövzu",
+            "subtitle": "discord.place-ə yeni mövzu göndərin.",
+            "note": {
+              "title": "Qeyd",
+              "description": "Göndərdiyiniz mövzu discord.place-də siyahıya alınmazdan əvvəl komandamız tərəfindən nəzərdən keçiriləcək. Lütfən, mövzunuzun mövzu göndərmə qaydalarımızı pozmadığından əmin olun. Mövzu göndərmə qaydalarımızı <link>-də tapa bilərsiniz.",
+              "linkText": "Discord serverimiz"
+            }
+          },
+          "addTheme": {
+            "title": "Yeni mövzu əlavə edilir",
+            "subtitle": "discord.place-ə yeni mövzu göndərmək üzrəsiniz. Bu o deməkdir ki, mövzunuz discord.place-də siyahıya alınacaq və hər kəs onu görə biləcək. İstənilən vaxt mövzunuzu discord.place-dən silə bilərsiniz.",
+            "toast": {
+              "gradientCategoryRequired": "Əgər iki fərqli rəng seçsəniz, qradiyent kateqoriyası seçməlisiniz.",
+              "addingTheme": "Mövzu əlavə edilir..",
+              "themeAdded": "Mövzu əlavə edildi! Bir neçə saniyə ərzində mövzu səhifəsinə yönləndiriləcəksiniz."
+            },
+            "fields": {
+              "colors": {
+                "label": "Rənglər",
+                "description": "Mövzunuz üçün əsas və ikinci dərəcəli rəng seçin.",
+                "primaryLabel": "Əsas Rəng",
+                "secondaryLabel": "İkinci Dərəcəli Rəng"
+              },
+              "categories": {
+                "label": "Kateqoriyalar",
+                "description": "Mövzunuzun aid olduğu bütün kateqoriyaları seçin. Bu, istifadəçilərə mövzunuzu tapmağa kömək edəcək."
+              },
+              "contentPolicy": {
+                "label": "Məzmun Siyasəti",
+                "description": "Mövzunuzu discord.place-ə əlavə etməklə, Mövzu Göndərmə Qaydalarımızla razılaşırsınız. <note>",
+                "note": "* Discord serverimizdə tapıla bilər."
+              },
+              "areYouReady": {
+                "label": "Hazırsınız?"
+              }
             }
           }
         }
