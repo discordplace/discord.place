@@ -1892,7 +1892,8 @@ export default function Page() {
                   transition={transition}
                 >
                   <div
-                    className='absolute h-[6px] animate-loading rounded-full bg-black dark:bg-white' style={{
+                    // oxlint-disable-next-line tailwindcss/no-unknown-classes
+                    className='animate-loading absolute h-[6px] rounded-full bg-black dark:bg-white' style={{
                       transform: 'translateX(-100%)',
                       width: '50%'
                     }}
