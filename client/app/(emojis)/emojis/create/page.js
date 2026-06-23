@@ -254,14 +254,20 @@ export default function Page() {
               {t('buttons.previous')}
             </button>
 
-            <button className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70' onClick={() => {
-              if (activeStep === steps.length - 1) publishEmoji();
-              else setActiveStep(activeStep + 1);
-            }} disabled={
-              activeStep === 0 ? (selectedCategories.length <= 0 || !emoji.name) :
-                (activeStep === 1 ? emoji.files?.length <= 0 :
-                  (loading === true || false))
-            }>
+            <button
+              className='flex items-center gap-x-1 rounded-lg bg-black px-3 py-1 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
+              onClick={() => {
+                if (activeStep === steps.length - 1) publishEmoji();
+                else setActiveStep(activeStep + 1);
+              }}
+              disabled={
+                activeStep === 0
+                  ? selectedCategories.length <= 0 || !emoji.name
+                  : activeStep === 1
+                    ? !emoji.files?.length
+                    : loading
+              }
+            >
               {activeStep === steps.length - 1 ? t('buttons.publish') : t('buttons.next')}
             </button>
           </div>
