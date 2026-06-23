@@ -7,7 +7,13 @@ export default async function getLocale() {
 
   const userLocale = c.get('language')?.value;
   if (userLocale) {
-    const locale = config.availableLocales.find(l => l.code === userLocale);
+    const locale = config.availableLocales.find(locale => locale.code === userLocale);
+    if (locale) return locale;
+  }
+
+  const countryCode = h.get('cf-ipcountry')?.toLowerCase();
+  if (countryCode) {
+    const locale = config.availableLocales.find(locale => locale.countryCode === countryCode);
     if (locale) return locale;
   }
 
