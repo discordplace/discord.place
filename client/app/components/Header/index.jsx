@@ -109,7 +109,7 @@ export default function Header() {
             return (
               <Element
                 key={link.label}
-                className='group relative cursor-pointer text-sm text-black/85 hover:text-black dark:text-white/85 dark:hover:text-white'
+                className='group relative text-sm text-black/85 hover:text-black dark:text-white/85 dark:hover:text-white'
                 href={link.href || '#'}
                 onClick={event => {
                   if (link.label === t('header.services') && smBreakpoint) {
@@ -121,7 +121,8 @@ export default function Header() {
                 {link.label === t('header.services') ? (
                   <div
                     className={cn(
-                      'pointer-events-none absolute left-12 size-max translate-x-[-50%] pt-12',
+                      'pointer-events-none absolute top-14 left-12 size-max translate-x-[-50%]',
+                      'before:absolute before:-top-14 before:left-48 before:h-14 before:w-24 before:bg-transparent before:content-[""]',
                       'sm:group-hover:pointer-events-auto sm:group-hover:[&>div]:opacity-100',
                       isServicesOpen && 'max-sm:pointer-events-none max-sm:[&>div]:opacity-0',
                       shouldHide && 'pointer-events-none! [&>div]:opacity-0!'
@@ -133,7 +134,7 @@ export default function Header() {
                   </div>
                 ) : null}
 
-                <div className='group relative flex h-[20px] items-center overflow-clip'>
+                <div className='group relative flex h-[20px] cursor-pointer items-center overflow-clip'>
                   <div className='transition-all duration-300 group-hover:translate-y-[-30px]'>
                     {link.label}
                   </div>
