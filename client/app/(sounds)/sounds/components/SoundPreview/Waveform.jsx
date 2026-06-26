@@ -2,7 +2,7 @@
 
 import { BsThreeDots } from 'react-icons/bs';
 import { FaPause } from 'react-icons/fa';
-import { HiPlay } from 'react-icons/hi';
+import { HiPlay } from 'react-icons/hi2';
 import { LuCloudDownload } from 'react-icons/lu';
 import { PiShareFat } from 'react-icons/pi';
 import { TiArrowUpOutline } from 'react-icons/ti';
