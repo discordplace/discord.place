@@ -23,7 +23,7 @@ module.exports = {
         return response.redirect(`${config.frontendUrl}/profile/${foundProfile.slug}`);
       }
 
-      if (host === 'dsc.ink') {
+      if (host === config.linkShortenerHostname) {
         const foundLink = await Link.findOne({ name: slug_or_link.toLocaleLowerCase('en-US') });
         if (!foundLink) return response.redirect(`${config.frontendUrl}/error?code=80001`);
 

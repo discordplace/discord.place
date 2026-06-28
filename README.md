@@ -208,7 +208,8 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 | `baseUrl` | String | Base URL for the website. In development, it will be `http://localhost:36706`. |
 | `botInviteURL` | String | URL for the your bot invite. Used in the many places in the website. |
 | `botTestGuildId` | String | Your test guild ID for the bots testing. |
-| `customHostnames` | Array<String> | Custom hostnames for the profiles. You
+| `customHostnames` | Array<String> | Custom hostnames for the profiles. You should connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API. |
+| `linkShortenerHostname` | String | Hostname for the link shortener. |
 
 > [!NOTE]
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
@@ -217,7 +218,8 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
-> - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the website with different ports and use a reverse proxy to redirect the requests to the correct port.
+> - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API.
+> - The `linkShortenerHostname` value is used for the hostname of the link shortener. You can change this value to your own link shortener hostname. Make sure to connect this hostname to the same server where you host the API and connect it to the correct port, same as the API.
 
 > [!WARNING]
 > - If you wanna change the default locale, you should change the `default` value in the `client/config/data.js` file. This value should be one of the values in the `availableLocales` array. After changing this value, you also need to change the `DEFAULT_LOCALE_CODE` environment value in the `.github/workflows/validate-locale-files.yml` file. (if you don't want to get any unnecessary errors in the GitHub Actions)
@@ -248,6 +250,7 @@ We use YML files for the configuration of the server. You can find the configura
 | `roles` | Object | Role IDs from the base guild. |
 | `excludeCollectionsInBackup` | Array<String> | Collections to exclude from database backups. |
 | `customHostnames` | Array<String> | Custom hostnames for the profiles. |
+| `linkShortenerHostname` | String | Hostname for the link shortener. |
 | `lemonSqueezy.variantIds` | Object | Variant IDs for the Lemon Squeezy. |
 | `availableLocales` | Array<Object> | Available locales for the website. |
 
@@ -266,7 +269,8 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `maxServerCountDifference` value is used for the allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. When new requests come to the stats API route, we check the server count of the bot. If the difference between the provided server count and the actual server count is greater than this value, we reject the request.
 > - The `roles` value is used for the role IDs from the base guild. You can change these values to your own role IDs.
 > - The `excludeCollectionsInBackup` value is used for collections to exclude from database backups. We take daily backups of the database. If you don't want to take backups of some collections, you can add those collections to this value. Make sure to add the collection name exactly as it is in the database.
-> - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the website with different ports and use a reverse proxy to redirect the requests to the correct port.
+> - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API.
+> - The `linkShortenerHostname` value is used for the hostname of the link shortener. You can change this value to your own link shortener hostname. Make sure to connect this hostname to the same server where you host the API and connect it to the correct port, same as the API.
 > - The `lemonSqueezy.variantIds` value is used for the variant IDs for the Lemon Squeezy. We sell some products on Lemon Squeezy with different variants. You should create these variants on the Lemon Squeezy and get the variant IDs from there.
 > - Make sure to fill all fields that end with `ChannelId` with the correct channel IDs from the base guild.
 > - The `availableLocales` value is used for the available locales for the server. You can change these values to your own available locales. Locale files should be in the `server/src/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.

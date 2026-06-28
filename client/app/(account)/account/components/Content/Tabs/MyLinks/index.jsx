@@ -18,6 +18,7 @@ import createLink from '@/lib/request/links/createLink';
 import useAccountStore from '@/stores/account';
 import CopyButton from '@/app/components/CopyButton/CustomTrigger';
 import { useTranslation } from 'react-i18next';
+import config from '@/config';
 
 export default function MyLinks() {
   const { t } = useTranslation();
@@ -179,7 +180,7 @@ export default function MyLinks() {
               <FiLink className='text-primary' size={20} />
 
               <span className='flex w-full items-center text-sm font-medium text-secondary'>
-                dsc.ink/{link.name}
+                ${config.linkShortenerHostname}/{link.name}
 
                 <span className='ml-2 hidden max-w-[70%] truncate text-xs font-medium text-tertiary sm:block'>
                   ({link.redirectTo})
@@ -196,7 +197,7 @@ export default function MyLinks() {
 
                   <CopyButton
                     successText='Link copied!'
-                    copyText={`https://dsc.ink/${link.name}`}
+                    copyText={`https://${config.linkShortenerHostname}/${link.name}`}
                   >
                     <div className='cursor-pointer hover:opacity-70'>
                       <MdOutlineCopyAll size={15} />

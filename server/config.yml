@@ -316,8 +316,7 @@ quarantineRestrictions:
       - 'USER_ID'
 customHostnames:
   - 'dsc.mom'
-  - 'dsc.wtf'
-  - 'dsc.baby'
+linkShortenerHostname: 'dsc.im'
 emojisDenyReasons:
   reposted-emoji:
     name: 'Reposted Emoji'

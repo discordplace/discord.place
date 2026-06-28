@@ -300,7 +300,7 @@ export default function ColumnRenderer({ data }) {
       return (
         <div className='ml-2 flex flex-col gap-y-1'>
           <span className='text-xs font-medium text-tertiary'>
-            dsc.ink/<span className='text-sm text-primary'>{data.name}</span>
+            {config.linkShortenerHostname}/{data.name}
           </span>
 
           <span className='text-xs font-medium text-secondary'>

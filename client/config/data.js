@@ -29,6 +29,7 @@ const docsUrl = 'https://docs.discord.place';
 const statusUrl = 'https://status.discord.place';
 const botInviteURL = 'https://bot.discord.place';
 const githubIssuesUrl = 'https://github.com/discordplace/discord.place/issues/new?template=bug-report---feature-request.md';
+const linkShortenerHostname = 'dsc.im';
 
 const api = {
   url: isDev ? 'http://localhost:16540' : 'https://api.discord.place'
@@ -133,7 +134,7 @@ const dashboardRequestDelay = 1000;
 
 const themeSensitiveSocialTypes = [ 'x', 'custom', 'tiktok', 'github' ];
 const discordWebhookRegex = /^https:\/\/discord(?:app)?\.com\/api\/webhooks\/\d+\/[\w-]+$/;
-const customHostnames = [ 'dsc.mom', 'dsc.wtf', 'dsc.baby' ];
+const customHostnames = [ 'dsc.mom' ];
 
 const socialNames = {
   bluesky: 'Bluesky', facebook: 'Facebook', github: 'GitHub', gitlab: 'GitLab',
@@ -242,6 +243,7 @@ const data = {
   emojisDenyReasons,
   githubIssuesUrl,
   headerLinks,
+  linkShortenerHostname,
   packagesMaxEmojisLength,
   packagesMinEmojisLength,
   profilesMaxSocialsLength,
