@@ -180,7 +180,7 @@ export default function MyLinks() {
               <FiLink className='text-primary' size={20} />
 
               <span className='flex w-full items-center text-sm font-medium text-secondary'>
-                ${config.linkShortenerHostname}/{link.name}
+                {config.linkShortenerHostname}/{link.name}
 
                 <span className='ml-2 hidden max-w-[70%] truncate text-xs font-medium text-tertiary sm:block'>
                   ({link.redirectTo})
