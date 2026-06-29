@@ -1,5 +1,34 @@
 # Changelog
 
+## [3.3.0](https://github.com/discordplace/discord.place/compare/client@v3.2.0...client@v3.3.0) (2026-06-29)
+
+
+### Features
+
+* change openreplay integration with sentry integration ([b431bef](https://github.com/discordplace/discord.place/commit/b431beff72cb54ee363477a63e541dcc4c45bd92))
+* **client:** add country based locale detection via Cloudflare headers ([6c6a63c](https://github.com/discordplace/discord.place/commit/6c6a63c1e4d04c191280beec914e1dc984ae9027))
+* **client:** add default cursor style for buttons ([908c8bb](https://github.com/discordplace/discord.place/commit/908c8bb46a13032369eea7a9a8ca529d035f9266))
+* new i18n approach and new loading page ([8330c0d](https://github.com/discordplace/discord.place/commit/8330c0d76706c5b555bdfe1ba4979204fb2a7ba6))
+* remove dsc.wtf, dsc.baby. dsc.ink and add dsc.im as new link shortener hostname ([b61695a](https://github.com/discordplace/discord.place/commit/b61695a74331d9eb00cafaf25daf9e26ca5a8d38))
+
+
+### Bug Fixes
+
+* **client/dashboard:** localize missing toast messages and update logout process for better ux ([79d7e8a](https://github.com/discordplace/discord.place/commit/79d7e8aca3998bc6d1c6dbfea5051e4fa570175f))
+* **client/footer:** set locale in localStorage after changing language ([111e803](https://github.com/discordplace/discord.place/commit/111e803882b1d5950afc5a53f4845379f10b09e8))
+* **client:** add default postProcess option for i18n ([3f590bc](https://github.com/discordplace/discord.place/commit/3f590bc22882e15f6f088b2447b09451280f2cda))
+* **client:** add fill mode both to smooth theme switch animation ([80e5e3b](https://github.com/discordplace/discord.place/commit/80e5e3b58695323cc0861d3a1f9aa14b0624c9c3))
+* **client:** add missing localization keys ([108351d](https://github.com/discordplace/discord.place/commit/108351db49df506a7bad70ac509e13f27f017998))
+* **client:** add missing theme styles in header ([59fd128](https://github.com/discordplace/discord.place/commit/59fd128d14289eb73c19a3cc131db97d3b24a343))
+* **client:** adjust CSS classes for better layout and hover effects in the Header component ([6c59916](https://github.com/discordplace/discord.place/commit/6c59916cb1452da95a674f2cad0ed177c8aca1bc))
+* **client:** handle undefined files in step validation ([0a44231](https://github.com/discordplace/discord.place/commit/0a4423148a3891cae10de61da1d722ba10947536))
+* **client:** remove unnecessary check ([36c98e3](https://github.com/discordplace/discord.place/commit/36c98e358056d5e21b57a74ce86189a215e7355f))
+* **client:** update link display to use curly braces for JSX expression to ensure proper rendering ([6926b2a](https://github.com/discordplace/discord.place/commit/6926b2a2074820c499602fc0feff5fa12c1cf278))
+* **client:** use FaLinkedin instead of SiLinkedin ([b7e0cf1](https://github.com/discordplace/discord.place/commit/b7e0cf1b0c0d81ba07219259b524142a23a0c281))
+* handle non-2xx responses for /api/status gracefully ([#221](https://github.com/discordplace/discord.place/issues/221)) ([7fe0319](https://github.com/discordplace/discord.place/commit/7fe03193935575ce270ec203ce05ec8890794d7a))
+* proxy status API requests to prevent client-side fetch errors ([#220](https://github.com/discordplace/discord.place/issues/220)) ([806c22d](https://github.com/discordplace/discord.place/commit/806c22dec43a8e304c12c7ff2f5e399bee8357f5))
+* update HiPlay import from react-icons/hi to react-icons/hi2 ([0bd8895](https://github.com/discordplace/discord.place/commit/0bd88951957a319ca10f45d948fe5b3f3151efa8))
+
 ## [3.2.0](https://github.com/discordplace/discord.place/compare/client@v3.1.0...client@v3.2.0) (2026-06-09)
 
 

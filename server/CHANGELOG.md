@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.1.0](https://github.com/discordplace/discord.place/compare/server@v3.0.0...server@v3.1.0) (2026-06-29)
+
+
+### Features
+
+* new i18n approach and new loading page ([8330c0d](https://github.com/discordplace/discord.place/commit/8330c0d76706c5b555bdfe1ba4979204fb2a7ba6))
+* remove dsc.wtf, dsc.baby. dsc.ink and add dsc.im as new link shortener hostname ([b61695a](https://github.com/discordplace/discord.place/commit/b61695a74331d9eb00cafaf25daf9e26ca5a8d38))
+
 ## [3.0.0](https://github.com/discordplace/discord.place/compare/server@v2.1.0...server@v3.0.0) (2026-06-09)
 
 
