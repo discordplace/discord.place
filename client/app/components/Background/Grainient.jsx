@@ -133,12 +133,24 @@ function Grainient({
     const container = containerRef.current;
     if (!container) return;
 
+    // Check WebGL availability before attempting to create the renderer.
+    // Some browsers (e.g. Firefox with hardware acceleration disabled) return
+    // null for both webgl2 and webgl contexts, which causes OGL's Renderer to
+    // crash when it tries to assign `this.gl.renderer = this` on a null object.
+    const testCanvas = document.createElement('canvas');
+    const isWebGLAvailable =
+      testCanvas.getContext('webgl2') || testCanvas.getContext('webgl');
+    if (!isWebGLAvailable) return;
+
     const renderer = new Renderer({
       alpha: true,
       antialias: false,
       dpr: Math.min(window.devicePixelRatio || 1, 2),
       webgl: 2
     });
+
+    // Belt-and-suspenders: bail out if OGL still couldn't obtain a GL context.
+    if (!renderer.gl) return;
 
     const gl = renderer.gl;
     const canvas = gl.canvas;
