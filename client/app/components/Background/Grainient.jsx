@@ -133,12 +133,21 @@ function Grainient({
     const container = containerRef.current;
     if (!container) return;
 
+    const testCanvas = document.createElement('canvas');
+    const testGl = testCanvas.getContext('webgl2') || testCanvas.getContext('webgl');
+    if (!testGl) return;
+
+    const loseTestContext = testGl.getExtension('WEBGL_lose_context');
+    if (loseTestContext) loseTestContext.loseContext();
+
     const renderer = new Renderer({
       alpha: true,
       antialias: false,
       dpr: Math.min(window.devicePixelRatio || 1, 2),
       webgl: 2
     });
+
+    if (!renderer.gl) return;
 
     const gl = renderer.gl;
     const canvas = gl.canvas;
@@ -238,7 +247,11 @@ function Grainient({
       io.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
       ctxMap.delete(container);
+
       try { container.removeChild(canvas); } catch { /* ignore */ }
+
+      const loseMainContext = gl.getExtension('WEBGL_lose_context');
+      if (loseMainContext) loseMainContext.loseContext();
     };
   }, []); // renderer created once
 
