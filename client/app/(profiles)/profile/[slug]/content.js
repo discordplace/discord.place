@@ -20,7 +20,7 @@ export default function Content({ profile }) {
   const theme = useThemeStore(state => state.theme);
 
   useEffect(() => {
-    incrementViews(profile.slug);
+    incrementViews(profile.slug).catch(() => {});
   }, []);
 
   return (
