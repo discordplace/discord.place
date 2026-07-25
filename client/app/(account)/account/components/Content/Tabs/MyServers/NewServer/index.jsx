@@ -255,7 +255,7 @@ export default function NewServer() {
           <div
             className={cn(
               'flex flex-col gap-y-1',
-              !allRequirementsIsMet && 'pointer-events-none fixed opacity-50 grayscale select-none'
+              !allRequirementsIsMet && 'pointer-events-none opacity-50 grayscale select-none'
             )}
           >
             <h2 className='text-lg font-semibold'>
