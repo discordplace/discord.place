@@ -20,6 +20,7 @@ export default function Content({ profile }) {
   const theme = useThemeStore(state => state.theme);
 
   useEffect(() => {
+    // oxlint-disable-next-line no-empty-function
     incrementViews(profile.slug).catch(() => {});
   }, []);
 
