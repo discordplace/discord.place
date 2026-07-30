@@ -1,7 +1,6 @@
 import { HiDocumentDownload } from 'react-icons/hi';
-import config from '@/config';
 
-export default function Emoji({ data, avatar_base64 }) {
+export default function Emoji({ data, avatar_base64, emoji_base64, emoji_pack_base64_map }) {
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
     notation: 'compact',
@@ -13,11 +12,13 @@ export default function Emoji({ data, avatar_base64 }) {
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
         {data.is_pack === false ? (
           <>
-            <img
-              src={config.getEmojiURL(data.id)}
-              alt={`${data.name} emoji`}
-              style={{ borderRadius: '50%', height: '64px', marginRight: '24px', marginTop: '24px', width: '64px' }}
-            />
+            {emoji_base64 && (
+              <img
+                src={`data:image/png;base64,${emoji_base64}`}
+                alt={`${data.name} emoji`}
+                style={{ borderRadius: '50%', height: '64px', marginRight: '24px', marginTop: '24px', width: '64px' }}
+              />
+            )}
 
             <h1 style={{ fontSize: '64px', fontWeight: 700 }}>
               {data.name}
@@ -43,20 +44,33 @@ export default function Emoji({ data, avatar_base64 }) {
                   top: '0'
                 }}
               >
-                {data.emoji_ids.map(packaged_emoji => (
-                  <img
-                    key={packaged_emoji.id}
-                    src={config.getEmojiURL(`packages/${data.id}/${packaged_emoji.id}`, packaged_emoji.animated)}
-                    alt={`Emoji ${packaged_emoji.id}`}
-                    style={{
-                      backgroundColor: 'rgba(30, 30, 36)',
-                      borderRadius: '8px',
-                      height: '64px',
-                      objectFit: 'contain',
-                      width: '64px'
-                    }}
-                  />
-                ))}
+                {data.emoji_ids.map(packaged_emoji => {
+                  const b64 = emoji_pack_base64_map?.[packaged_emoji.id];
+                  return b64 ? (
+                    <img
+                      key={packaged_emoji.id}
+                      src={`data:image/png;base64,${b64}`}
+                      alt={`Emoji ${packaged_emoji.id}`}
+                      style={{
+                        backgroundColor: 'rgba(30, 30, 36)',
+                        borderRadius: '8px',
+                        height: '64px',
+                        objectFit: 'contain',
+                        width: '64px'
+                      }}
+                    />
+                  ) : (
+                    <div
+                      key={packaged_emoji.id}
+                      style={{
+                        backgroundColor: 'rgba(37, 37, 45)',
+                        borderRadius: '8px',
+                        height: '64px',
+                        width: '64px'
+                      }}
+                    />
+                  );
+                })}
 
                 {Array.from({ length: 9 - data.emoji_ids.length }).fill(0).map((_, index) => (
                   <div
