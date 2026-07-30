@@ -80,6 +80,27 @@ export async function GET(request) {
     avatarBase64 = imageBuffer?.toString?.('base64');
   }
 
+  // Pre-fetch emoji image(s) to avoid @vercel/og failing on CDN 404s
+  let emojiBase64 = null;
+  const emojiPackBase64Map = {};
+
+  if (data.type === 'emoji') {
+    if (data.metadata.is_pack === false) {
+      const { default: config } = await import('@/config');
+      const emojiBuffer = await getImageBuffer(config.getEmojiURL(data.metadata.id, data.metadata.animated));
+      emojiBase64 = emojiBuffer?.toString?.('base64') ?? null;
+    } else if (data.metadata.is_pack === true && Array.isArray(data.metadata.emoji_ids)) {
+      const { default: config } = await import('@/config');
+      await Promise.all(
+        data.metadata.emoji_ids.map(async packaged_emoji => {
+          const url = config.getEmojiURL(`packages/${data.metadata.id}/${packaged_emoji.id}`, packaged_emoji.animated);
+          const buf = await getImageBuffer(url);
+          emojiPackBase64Map[packaged_emoji.id] = buf?.toString?.('base64') ?? null;
+        })
+      );
+    }
+  }
+
   return new ImageResponse(
     (
       <div
@@ -131,6 +152,8 @@ export async function GET(request) {
             <Emoji
               data={data.metadata}
               avatar_base64={avatarBase64}
+              emoji_base64={emojiBase64}
+              emoji_pack_base64_map={emojiPackBase64Map}
             />
           )}
 
