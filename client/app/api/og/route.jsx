@@ -82,7 +82,7 @@ export async function GET(request) {
 
   // Pre-fetch emoji image(s) to avoid @vercel/og failing on CDN 404s
   let emojiBase64 = null;
-  let emojiPackBase64Map = {};
+  const emojiPackBase64Map = {};
 
   if (data.type === 'emoji') {
     if (data.metadata.is_pack === false) {

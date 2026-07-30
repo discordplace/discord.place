@@ -1,4 +1,5 @@
 import { HiDocumentDownload } from 'react-icons/hi';
+import config from '@/config';
 
 export default function Emoji({ data, avatar_base64, emoji_base64, emoji_pack_base64_map }) {
   const formatter = new Intl.NumberFormat('en-US', {
@@ -46,6 +47,7 @@ export default function Emoji({ data, avatar_base64, emoji_base64, emoji_pack_ba
               >
                 {data.emoji_ids.map(packaged_emoji => {
                   const b64 = emoji_pack_base64_map?.[packaged_emoji.id];
+
                   return b64 ? (
                     <img
                       key={packaged_emoji.id}
