@@ -180,7 +180,7 @@ export function deleteSound(id) {
 export function approveReview(type, serverOrBotId, reviewId) {
   return sendRequest({
     loadingMessage: `Approving ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`,
-    params: { reviewId, serverOrBotId },
+    params: [serverOrBotId, reviewId],
     promise: type === 'server' ? INTERNAL_approveServerReview : INTERNAL_approveBotReview,
     successMessage: `${type === 'server' ? 'Server' : 'Bot'} review ${reviewId} approved successfully!`
   });
@@ -189,7 +189,7 @@ export function approveReview(type, serverOrBotId, reviewId) {
 export function denyReview(type, serverOrBotId, reviewId, reason) {
   return sendRequest({
     loadingMessage: `Denying ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`,
-    params: { reason, reviewId, serverOrBotId },
+    params: [serverOrBotId, reviewId, reason],
     promise: type === 'server' ? INTERNAL_denyServerReview : INTERNAL_denyBotReview,
     successMessage: `${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId} denied successfully!`
   });
@@ -198,7 +198,7 @@ export function denyReview(type, serverOrBotId, reviewId, reason) {
 export function deleteReview(type, serverOrBotId, reviewId) {
   return sendRequest({
     loadingMessage: `Deleting ${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId}..`,
-    params: { reviewId, serverOrBotId },
+    params: [serverOrBotId, reviewId],
     promise: type === 'server' ? INTERNAL_deleteServerReview : INTERNAL_deleteBotReview,
     successMessage: `${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId} deleted successfully!`
   });
