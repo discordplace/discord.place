@@ -5,10 +5,20 @@ import MarkdownComponents from '@/lib/markdown-components';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import raw from 'rehype-raw';
-import sanitize from 'rehype-sanitize';
+import sanitize, { defaultSchema } from 'rehype-sanitize';
+
+const schema = {
+  ...defaultSchema,
+  attributes: {
+    ...defaultSchema.attributes,
+    iframe: ['src', 'title']
+  },
+  strip: [...defaultSchema.strip, 'style'],
+  tagNames: [...defaultSchema.tagNames, 'iframe']
+};
 
 export default function Markdown({ children, className, rawEnabled }) {
-  const rehypePlugins = [raw, sanitize(rawEnabled ? { tagNames: ['iframe'] } : {})];
+  const rehypePlugins = rawEnabled ? [raw, [sanitize, schema]] : [];
 
   return (
     <div
