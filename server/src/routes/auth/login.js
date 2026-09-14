@@ -5,7 +5,7 @@ module.exports = {
   get: [
     query('redirect')
       .optional()
-      .customSanitizer(value => decodeURIComponent(value)).custom(value => {
+      .custom(value => {
         try {
           new URL(value);
 

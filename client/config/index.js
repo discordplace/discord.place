@@ -1,8 +1,10 @@
 import dataDefaults from './data';
 import utils from './utils';
 
-function getLoginURL(pathname) {
-  return `${dataDefaults.api.url}/auth/login?redirect=${encodeURIComponent(dataDefaults.baseUrl + pathname)}`;
+function getLoginURL(pathname, searchParams) {
+  const queryString = searchParams?.toString();
+
+  return `${dataDefaults.api.url}/auth/login?redirect=${encodeURIComponent(dataDefaults.baseUrl + pathname + (queryString ? `?${queryString}` : ''))}`;
 }
 
 function applicationsEntitlementsScopeURL(userId) {

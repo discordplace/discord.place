@@ -14,7 +14,7 @@ module.exports = {
       .matches(/^[a-zA-Z0-9]{32}$/).withMessage('Invalid state.'),
     cookie('redirect')
       .optional()
-      .customSanitizer(value => decodeURIComponent(value)).custom(value => {
+      .custom(value => {
         try {
           new URL(value);
 
@@ -36,6 +36,7 @@ module.exports = {
       const storedState = request.cookies.state;
       if (!storedState) return response.sendError('State not found.', 400);
 
+      response.clearCookie('redirect');
       response.clearCookie('state');
 
       if (state !== storedState) return response.sendError('Invalid state.', 400);

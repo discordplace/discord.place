@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,6 +20,7 @@ import { useMedia } from 'react-use';
 export default function Header() {
   const { t } = useTranslation();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const isDashboard = pathname === '/dashboard';
   const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview');
@@ -170,7 +171,7 @@ export default function Header() {
 
         <Link
           className='ml-6 flex items-center justify-center gap-x-1.5 rounded-full bg-black px-2 text-sm font-semibold text-white select-none hover:bg-black/60 sm:w-[155.5px] sm:px-4.5 dark:bg-white dark:text-black dark:hover:bg-white/60'
-          href={loggedIn ? '/account' : config.getLoginURL(pathname)}
+          href={loggedIn ? '/account' : config.getLoginURL(pathname, searchParams)}
         >
           {loggedIn ? (
             <>
