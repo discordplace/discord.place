@@ -113,7 +113,8 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
     setHealAttempted(true);
 
     try {
-      await axios.get(getUrl(id, current.hash, current.format));
+      const probe = await axios.get(getUrl(id, current.hash, current.format));
+      if (!probe.headers?.['content-type']?.startsWith('image/')) throw { response: { status: 404 } };
     } catch (error) {
       if (error.response && error.response.status !== 404) {
         setCurrent({ ...current, src: DEFAULT_AVATAR_BASE64 });
