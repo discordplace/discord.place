@@ -14,6 +14,8 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
 
 export default function ServerCard({ data }) {
+  if (!data?.name) return null;
+
   const Container = data.is_listed ? Link : 'div';
 
   return (

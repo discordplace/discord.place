@@ -1,4 +1,6 @@
 export default function getCompressedName(name, limit) {
+  if (!name) return '';
+
   const noVowels = name.replace(/[AEIOUaeiou\s]/g, '');
 
   let compressedName = '';

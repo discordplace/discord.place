@@ -4,7 +4,9 @@ module.exports = {
   get: async (request, response) => {
     const servers = await Server.find({ id: { $in: client.guilds.cache.map(guild => guild.id) } });
 
-    const data = client.guilds.cache.map(guild => guild).sort((a, b) => b.memberCount - a.memberCount)
+    const data = client.guilds.cache
+      .filter(guild => guild.available !== false && guild.name)
+      .map(guild => guild).sort((a, b) => b.memberCount - a.memberCount)
       .slice(0, 5)
       .map(guild => ({
         id: guild.id,
