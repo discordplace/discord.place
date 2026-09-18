@@ -35,20 +35,20 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
 
     try {
       await axios.get(getUrl(id, hash));
-
-      // Underlying avatar is fine, the optimizer request failed transiently.
-      setCurrentSource(DEFAULT_AVATAR_BASE64);
     } catch (error) {
-      if (error.response?.status === 404) {
-        const hashes = await getHashes(id).catch(() => null);
-        const newHash = hashes?.avatar;
-
-        if (newHash && newHash !== hash) setCurrentSource(getUrl(id, newHash));
-        else setCurrentSource(DEFAULT_AVATAR_BASE64);
-      } else {
+      if (error.response && error.response.status !== 404) {
         setCurrentSource(DEFAULT_AVATAR_BASE64);
+
+        return;
       }
+      // 404, or probe failed without a status -> fall through to heal attempt.
     }
+
+    const hashes = await getHashes(id).catch(() => null);
+    const newHash = hashes?.avatar;
+
+    if (newHash && newHash !== hash) setCurrentSource(getUrl(id, newHash));
+    else setCurrentSource(DEFAULT_AVATAR_BASE64);
   }
 
   const isSmallImage = (props.width && props.width < 40) || (props.height && props.height < 40);
