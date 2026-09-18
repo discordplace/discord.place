@@ -6,7 +6,28 @@ const dedent = require('dedent');
 
 async function syncMemberRoles() {
   const guild = client.guilds.cache.get(config.guildId);
-  const members = await guild.members.fetch();
+
+  let members;
+  try {
+    members = await guild.members.fetch();
+  } catch (error) {
+    const retryAfter = error?.retryAfter ?? error?.data?.retry_after;
+
+    if (typeof retryAfter === 'number') {
+      logger.warn(`Member list request was rate limited. Retrying in ${Math.ceil(retryAfter)} seconds.`);
+
+      await sleep(Math.ceil(retryAfter * 1000) + 1000);
+
+      members = await guild.members.fetch().catch(retryError => {
+        logger.warn('Skipping member role sync due to failed member fetch.', retryError?.message || retryError);
+
+        return null;
+      });
+
+      if (!members) return;
+    } else throw error;
+  }
+
   const currentDate = new Date();
 
   const premiumUsers = await User.find({ subscription: { $ne: null } });
@@ -68,7 +89,9 @@ async function syncMemberRoles() {
     })
   )
     .catch(error => logger.error('Failed to sync member roles:', error))
-    .finally(() => logger.info(`Synced member roles for ${members.size} members in ${new Date() - currentDate}ms.`));
+    .finally(() => {
+      if (members) logger.info(`Synced member roles for ${members.size} members in ${new Date() - currentDate}ms.`);
+    });
 }
 
 module.exports = syncMemberRoles;

@@ -78,8 +78,6 @@ module.exports = class Client {
         process.exit(1);
       }
 
-      await client.guilds.cache.get(config.guildId).members.fetch();
-
       logger.info(`Client logged in as ${this.client.user.tag}`);
 
       const CommandsHandler = require('@/src/bot/handlers/commands.js');
