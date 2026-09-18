@@ -10,7 +10,7 @@ import { HiMiniIdentification } from 'react-icons/hi2';
 import { IoMdCheckmarkCircle, IoMdCloseCircle, IoMdUndo } from 'react-icons/io';
 import { MdAlternateEmail, MdEmojiEmotions, MdOpenInNew, MdRefresh, MdStarRate, MdTimer, MdVisibility } from 'react-icons/md';
 import { PiWaveformBold } from 'react-icons/pi';
-import { RiGroup2Fill, RiPencilFill, RiToolsFill } from 'react-icons/ri';
+import { RiGroup2Fill, RiPencilFill } from 'react-icons/ri';
 import { TbLockPlus } from 'react-icons/tb';
 import useAuthStore from '@/stores/auth';
 import { useEffect } from 'react';
@@ -23,7 +23,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
 import Queue from '@/app/(dashboard)/components/Queue';
 import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
-import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, approveTool, denyTool, deleteTool, deleteLink, deleteBotDenyRecord, restoreBot, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
+import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, deleteLink, deleteBotDenyRecord, restoreBot, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
 import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
 import config from '@/config';
 import sleep from '@/lib/sleep';
@@ -1338,185 +1338,6 @@ export default function Page() {
     },
     {
       data: {
-        subtitle: 'Here you can see the all the tools that published on discord.place.',
-        tableData: {
-          tabs: [
-            {
-              actions: [
-                {
-                  action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-
-                    setSelectedItems([]);
-                    setPage(1);
-
-                    router.push(`/tools/${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Tool'
-                },
-                {
-                  action: () => bulkAction({
-                    action: item => approveTool(item.id),
-                    data: data.queue.tools,
-                    fetchKey: 'tools'
-                  }),
-                  hide: !data.permissions?.canApproveTools,
-                  icon: IoMdCheckmarkCircle,
-                  name: 'Approve'
-                },
-                {
-                  hide: !data.permissions?.canApproveTools,
-                  icon: IoMdCloseCircle,
-                  name: 'Deny',
-                  trigger: DenyDropdown,
-                  triggerProps: {
-                    description: 'Please select a reason to deny.',
-                    onDeny: reason => bulkAction({
-                      action: item => denyTool(item.id, reason),
-                      fetchKey: 'tools'
-                    }),
-                    reasons: config.toolsDenyReasons
-                  }
-                }
-              ],
-              columns: data?.queue?.tools?.filter(tool => !tool.approved).map(tool => [
-                {
-                  id: tool.id,
-                  logo: tool.logo,
-                  name: tool.name,
-                  searchValues: [tool.name, tool.id],
-                  type: 'tool'
-                },
-                {
-                  avatar: tool.publisher.avatar,
-                  id: tool.publisher.id,
-                  searchValues: [tool.publisher.username, tool.publisher.id],
-                  showId: true,
-                  type: 'user',
-                  username: tool.publisher.username
-                },
-                {
-                  iconsKey: 'toolCategoriesIcons',
-                  searchValues: tool.categories,
-                  type: 'category',
-                  value: tool.categories
-                },
-                {
-                  type: 'date',
-                  value: new Date(tool.createdAt)
-                }
-              ]),
-              label: 'Waiting Approval',
-              rows: [
-                {
-                  icon: RiToolsFill,
-                  name: 'Tool',
-                  sortable: true
-                },
-                {
-                  icon: FaUserCircle,
-                  name: 'Publisher',
-                  sortable: true
-                },
-                {
-                  icon: BiSolidCategory,
-                  name: 'Categories',
-                  sortable: true
-                },
-                {
-                  icon: FiArrowRightCircle,
-                  name: 'Date Added',
-                  sortable: true
-                }
-              ]
-            },
-            {
-              actions: [
-                {
-                  action: () => {
-                    const column = useDashboardStore.getState().selectedItems[0];
-
-                    setSelectedItems([]);
-                    setPage(1);
-
-                    router.push(`/tools/${column[0].id}`);
-                  },
-                  icon: FaEye,
-                  name: 'View Tool'
-                },
-                {
-                  action: () => bulkActionWithConfirmationModal({
-                    action: item => deleteTool(item.id),
-                    fetchKey: 'tools',
-                    name: 'tool'
-                  }),
-                  hide: !data.permissions?.canDeleteTools,
-                  icon: IoMdCloseCircle,
-                  name: 'Delete'
-                }
-              ],
-              columns: data?.queue?.tools?.filter(tool => tool.approved).map(tool => [
-                {
-                  id: tool.id,
-                  logo: tool.logo,
-                  name: tool.name,
-                  searchValues: [tool.name, tool.id],
-                  type: 'tool'
-                },
-                {
-                  avatar: tool.publisher.avatar,
-                  id: tool.publisher.id,
-                  searchValues: [tool.publisher.username, tool.publisher.id],
-                  showId: true,
-                  type: 'user',
-                  username: tool.publisher.username
-                },
-                {
-                  iconsKey: 'toolCategoriesIcons',
-                  searchValues: tool.categories,
-                  type: 'category',
-                  value: tool.categories
-                },
-                {
-                  type: 'date',
-                  value: new Date(tool.createdAt)
-                }
-              ]),
-              label: 'Approved',
-              rows: [
-                {
-                  icon: RiToolsFill,
-                  name: 'Tool',
-                  sortable: true
-                },
-                {
-                  icon: FaUserCircle,
-                  name: 'Publisher',
-                  sortable: true
-                },
-                {
-                  icon: BiSolidCategory,
-                  name: 'Categories',
-                  sortable: true
-                },
-                {
-                  icon: FiArrowRightCircle,
-                  name: 'Date Added',
-                  sortable: true
-                }
-              ]
-            }
-          ]
-        },
-        title: 'Tools Queue',
-        totalCount: data?.queue?.tools?.length || 0
-      },
-      id: 'toolsQueue',
-      name: 'Tools Queue'
-    },
-    {
-      data: {
         subtitle: 'Here you can see the all the links that have been created.',
         tableData: {
           tabs: [
@@ -1991,10 +1812,6 @@ export default function Page() {
       }
       case 'themesQueue': {
         fetchData(['themes']);
-        break;
-      }
-      case 'toolsQueue': {
-        fetchData(['tools']);
         break;
       }
       case 'botDenies': {
