@@ -160,12 +160,32 @@ module.exports = class Client {
   async checkDeletedInviteCodes() {
     const servers = await Server.find({ 'invite_code.type': 'Invite' });
     for (const server of servers) {
-      const invite = await client.fetchInvite(server.invite_code.code).catch(() => null);
-      if (!invite || invite.guild?.id !== server.id) {
-        await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
+      const invite = await client.fetchInvite(server.invite_code.code).catch(error => ({ __fetchError: error }));
 
-        logger.info(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
+      if (invite && !invite.__fetchError) {
+        if (invite.guild?.id !== server.id) {
+          await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
+
+          logger.info(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
+        }
+      } else {
+        const error = invite?.__fetchError;
+        const apiCode = error?.code;
+        const status = error?.status ?? error?.response?.status;
+
+        if (status === 404 || apiCode === 10006) {
+          await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
+
+          logger.info(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);
+        } else {
+          logger.warn(`Skipping invite check for server ${server.id} (code ${server.invite_code.code}) due to transient error (status: ${status ?? 'unknown'}, code: ${apiCode ?? 'unknown'}). Not marking as deleted.`);
+
+          const retryAfter = error?.retryAfter ?? error?.data?.retry_after;
+          if (status === 429 && typeof retryAfter === 'number') await sleep(Math.ceil(retryAfter * 1000));
+        }
       }
+
+      await sleep(500);
     }
   }
 
