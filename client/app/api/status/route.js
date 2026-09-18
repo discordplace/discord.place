@@ -4,13 +4,18 @@ import config from '@/config';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const response = await fetch(`${config.api.url}/status`, {
-    next: {
-      revalidate: 60
-    }
-  });
+  try {
+    const response = await fetch(`${config.api.url}/status`, {
+      next: {
+        revalidate: 60
+      },
+      signal: AbortSignal.timeout(8000)
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  return NextResponse.json(data);
+    return NextResponse.json(data);
+  } catch {
+    return NextResponse.json({ status: 'DOWN' }, { status: 503 });
+  }
 }
