@@ -139,6 +139,7 @@ export default function Actions({ server }) {
   }
 
   const inviteLinkNotAvailable = server.invite_code.type === 'Deleted' || (server.invite_code.type === 'Vanity' && server.vanity_url === null);
+  const joinUrl = server.invite_code.type === 'Vanity' ? server.vanity_url : `https://discord.com/invite/${server.invite_code.code}`;
 
   return (
     <div>
@@ -253,7 +254,7 @@ export default function Actions({ server }) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ damping: 10, duration: 0.3, stiffness: 100, type: 'spring' }}
-            href={server.vanity_url || `https://discord.com/invite/${server.invite_code.code}`}
+            href={joinUrl}
           >
             {t('buttons.joinServer')}
             <BiSolidEnvelope />
@@ -264,7 +265,7 @@ export default function Actions({ server }) {
           <CopyButton
             className='group flex w-full cursor-pointer items-center justify-between gap-x-2 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-secondary hover:bg-tertiary hover:text-primary disabled:pointer-events-none disabled:opacity-70'
             successText={t('serverPage.actions.toast.serverUrlCopied')}
-            copyText={server.vanity_url || `https://discord.com/invite/${server.invite_code.code}`}
+            copyText={joinUrl}
             defaultIcon={PiShareFat}
             hoverIcon={PiShareFatFill}
           >

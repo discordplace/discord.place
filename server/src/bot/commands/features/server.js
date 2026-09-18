@@ -34,7 +34,6 @@ module.exports = {
                 .setName('code')
                 .setDescription('The new invite code.')
                 .setRequired(true)
-                .setAutocomplete(true)
                 .setNameLocalizations(getLocalizedCommand('server.groups.set.subcommands.invite.options.code').names)
                 .setDescriptionLocalizations(getLocalizedCommand('server.groups.set.subcommands.invite.options.code').descriptions)))
         .addSubcommand(subcommand =>
@@ -183,8 +182,8 @@ module.exports = {
 
         if (newInviteCode === interaction.guild.vanityURLCode) await Server.findOneAndUpdate({ id: interaction.guild.id }, { invite_code: { type: 'Vanity' } });
         else {
-          const invite = await interaction.guild.invites.fetch(newInviteCode).catch(() => null);
-          if (!invite) return interaction.followUp(await interaction.translate('commands.server.errors.invalid_invite_code'));
+          const invite = await client.fetchInvite(newInviteCode).catch(() => null);
+          if (!invite || invite.guild?.id !== interaction.guild.id) return interaction.followUp(await interaction.translate('commands.server.errors.invalid_invite_code'));
 
           await Server.findOneAndUpdate({ id: interaction.guild.id }, { invite_code: { type: 'Invite', code: newInviteCode } });
         }
@@ -411,22 +410,6 @@ ${(await Promise.all(rewards.sort((a, b) => a.required_votes - b.required_votes)
   autocomplete: async interaction => {
     const subcommand = interaction.options.getSubcommand();
     const group = interaction.options.getSubcommandGroup();
-
-    if (group === 'set') {
-      if (subcommand === 'invite') {
-        const invites = await interaction.guild.invites.fetch().catch(() => null);
-        if (!invites) return;
-
-        const server = await Server.findOne({ id: interaction.guild.id });
-
-        return interaction.customRespond(
-          [interaction.guild.vanityURLCode ? { name: `https://discord.com/invite/${interaction.guild.vanityURLCode} (Vanity)`, value: interaction.guild.vanityURLCode } : null]
-            .filter(Boolean)
-            .concat(invites.map(invite => ({ name: `https://discord.com/invite/${invite.code}`, value: invite.code })))
-            .filter(choice => server?.invite_code?.type === 'Vanity' ? choice.value !== interaction.guild.vanityURLCode : choice.value !== server?.invite_code?.code)
-        );
-      }
-    }
 
     if (group === 'remove') {
       if (subcommand === 'reward') {

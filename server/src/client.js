@@ -160,11 +160,8 @@ module.exports = class Client {
   async checkDeletedInviteCodes() {
     const servers = await Server.find({ 'invite_code.type': 'Invite' });
     for (const server of servers) {
-      const guild = client.guilds.cache.get(server.id);
-      if (!guild) continue;
-
-      const invite = await guild.invites.fetch().catch(() => null);
-      if (!invite || !invite.find(invite => invite.code === server.invite_code.code)) {
+      const invite = await client.fetchInvite(server.invite_code.code).catch(() => null);
+      if (!invite || invite.guild?.id !== server.id) {
         await server.updateOne({ $set: { invite_code: { type: 'Deleted' } } });
 
         logger.info(`Invite code ${server.invite_code.code} for server ${server.id} was deleted.`);

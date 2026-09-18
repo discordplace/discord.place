@@ -182,8 +182,8 @@ module.exports = {
 
       const inviteCode = inviteLinkMatch[0].split('/').pop();
       if (inviteCode !== guild.vanityURLCode) {
-        const invite = await guild.invites.fetch(inviteCode).catch(() => null);
-        if (!invite) return response.sendError('Invite link is not valid.', 400);
+        const invite = await client.fetchInvite(inviteCode).catch(() => null);
+        if (!invite || invite.guild?.id !== id) return response.sendError('Invite link is not valid.', 400);
       }
 
       const allRequirementsIsMet = config.serverListingRequirements.map(({ id: reqId, name: reqName, description }) => {
@@ -324,8 +324,8 @@ module.exports = {
 
         const inviteCode = inviteLinkMatch[0].split('/').pop();
         if (inviteCode !== guild.vanityURLCode) {
-          const invite = await guild.invites.fetch(inviteCode).catch(() => null);
-          if (!invite) return response.sendError('Invite link is not valid.', 400);
+          const invite = await client.fetchInvite(inviteCode).catch(() => null);
+          if (!invite || invite.guild?.id !== id) return response.sendError('Invite link is not valid.', 400);
         }
 
         server.invite_code = {
