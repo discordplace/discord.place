@@ -1,5 +1,54 @@
 # Changelog
 
+## [3.3.0](https://github.com/discordplace/discord.place/compare/client@v3.2.0...client@v3.3.0) (2026-09-18)
+
+
+### Features
+
+* change openreplay integration with sentry integration ([b431bef](https://github.com/discordplace/discord.place/commit/b431beff72cb54ee363477a63e541dcc4c45bd92))
+* **client:** add country based locale detection via Cloudflare headers ([6c6a63c](https://github.com/discordplace/discord.place/commit/6c6a63c1e4d04c191280beec914e1dc984ae9027))
+* **client:** add default cursor style for buttons ([908c8bb](https://github.com/discordplace/discord.place/commit/908c8bb46a13032369eea7a9a8ca529d035f9266))
+* new i18n approach and new loading page ([8330c0d](https://github.com/discordplace/discord.place/commit/8330c0d76706c5b555bdfe1ba4979204fb2a7ba6))
+* remove dsc.wtf, dsc.baby. dsc.ink and add dsc.im as new link shortener hostname ([b61695a](https://github.com/discordplace/discord.place/commit/b61695a74331d9eb00cafaf25daf9e26ca5a8d38))
+
+
+### Bug Fixes
+
+* **auth:** preserve query params in login redirect ([b867eca](https://github.com/discordplace/discord.place/commit/b867ecaddf96b27ec855c39336e9adb5962a2248))
+* **client/dashboard:** localize missing toast messages and update logout process for better ux ([79d7e8a](https://github.com/discordplace/discord.place/commit/79d7e8aca3998bc6d1c6dbfea5051e4fa570175f))
+* **client/footer:** set locale in localStorage after changing language ([111e803](https://github.com/discordplace/discord.place/commit/111e803882b1d5950afc5a53f4845379f10b09e8))
+* **client:** add default postProcess option for i18n ([3f590bc](https://github.com/discordplace/discord.place/commit/3f590bc22882e15f6f088b2447b09451280f2cda))
+* **client:** add fill mode both to smooth theme switch animation ([80e5e3b](https://github.com/discordplace/discord.place/commit/80e5e3b58695323cc0861d3a1f9aa14b0624c9c3))
+* **client:** add missing localization keys ([108351d](https://github.com/discordplace/discord.place/commit/108351db49df506a7bad70ac509e13f27f017998))
+* **client:** add missing theme styles in header ([59fd128](https://github.com/discordplace/discord.place/commit/59fd128d14289eb73c19a3cc131db97d3b24a343))
+* **client:** adjust CSS classes for better layout and hover effects in the Header component ([6c59916](https://github.com/discordplace/discord.place/commit/6c59916cb1452da95a674f2cad0ed177c8aca1bc))
+* **client:** always heal user avatar on render error ([bf9573b](https://github.com/discordplace/discord.place/commit/bf9573bfd1d15511cbdf39dae7a0a48ee363af87))
+* **client:** distinct backdrop for avatar placeholder ([c55c0a6](https://github.com/discordplace/discord.place/commit/c55c0a6bda57e808c3cc1651cd309b4b536652a7))
+* **client:** drop accidentally committed tools WIP from pagination fix ([4f41a61](https://github.com/discordplace/discord.place/commit/4f41a6134d6f63872d7c1f80c962222d3c01056f))
+* **client:** handle undefined files in step validation ([0a44231](https://github.com/discordplace/discord.place/commit/0a4423148a3891cae10de61da1d722ba10947536))
+* **client:** heal user avatars on render error instead of pre-check ([01b2ca2](https://github.com/discordplace/discord.place/commit/01b2ca257c48326f0b3d7d81b097a0a72ac0dd03))
+* **client:** let placeholder backdrop win over caller bg ([bcd3d2e](https://github.com/discordplace/discord.place/commit/bcd3d2ed4c0455bcccd56ef9d6e07d9888e42f8d))
+* **client:** pass server/bot id before review id in review actions ([5c76c6a](https://github.com/discordplace/discord.place/commit/5c76c6a29c8c8322feb2cad2485824ef0b58152f))
+* **client:** properly sanitize raw HTML in markdown rendering ([194f064](https://github.com/discordplace/discord.place/commit/194f064a09059c05a9e2807b2d80e586ee1c26b5))
+* **client:** remove unnecessary check ([36c98e3](https://github.com/discordplace/discord.place/commit/36c98e358056d5e21b57a74ce86189a215e7355f))
+* **client:** remove unnecessary position fixed from new server page ([ed69499](https://github.com/discordplace/discord.place/commit/ed6949978b1b3a9fe7b540fb7dfe012026387cfd))
+* **client:** reset dashboard page on tab change ([b4653fe](https://github.com/discordplace/discord.place/commit/b4653fef41bb3e177cf8c7deb78480fcae0e8035))
+* **client:** return 503 from status proxy when backend unreachable ([f4755cf](https://github.com/discordplace/discord.place/commit/f4755cfe0beb863fea5ad51e82b431b2496791b3))
+* **client:** share avatar heal across component instances ([e908b42](https://github.com/discordplace/discord.place/commit/e908b422d414b654c8ded5e8415d70a3a2c8162a))
+* **client:** share avatar heal and add gif fallback ([82e1fd4](https://github.com/discordplace/discord.place/commit/82e1fd4e9d31db6d359e5f4d2c577523e3fed0e0))
+* **client:** treat non-image probe bodies as dead avatars ([3bacb4a](https://github.com/discordplace/discord.place/commit/3bacb4a4e149e5da71357f96eab6cc81f676ffa9))
+* **client:** update link display to use curly braces for JSX expression to ensure proper rendering ([6926b2a](https://github.com/discordplace/discord.place/commit/6926b2a2074820c499602fc0feff5fa12c1cf278))
+* **client:** use FaLinkedin instead of SiLinkedin ([b7e0cf1](https://github.com/discordplace/discord.place/commit/b7e0cf1b0c0d81ba07219259b524142a23a0c281))
+* handle missing emoji images in OG generation ([#224](https://github.com/discordplace/discord.place/issues/224)) ([3efd22f](https://github.com/discordplace/discord.place/commit/3efd22f3efc474891944c06e788c2a1960b00740))
+* handle non-2xx responses for /api/status gracefully ([#221](https://github.com/discordplace/discord.place/issues/221)) ([7fe0319](https://github.com/discordplace/discord.place/commit/7fe03193935575ce270ec203ce05ec8890794d7a))
+* ignore unavailable guilds in top servers ([65e89a3](https://github.com/discordplace/discord.place/commit/65e89a3165f74ba0e36f0dd6a964ba897107700b))
+* Prevent unhandled promise rejection on profile view increment ([7d84ed5](https://github.com/discordplace/discord.place/commit/7d84ed56ad7a53baf633e218213cde30fa6c8cfe))
+* prevent unhandled promise rejection on profile view increment ([#223](https://github.com/discordplace/discord.place/issues/223)) ([7d84ed5](https://github.com/discordplace/discord.place/commit/7d84ed56ad7a53baf633e218213cde30fa6c8cfe))
+* Prevent WebGL TypeError when context creation fails ([#222](https://github.com/discordplace/discord.place/issues/222)) ([d14b604](https://github.com/discordplace/discord.place/commit/d14b604ebdf4eb8cec3702d1d8061bac8b9beba1))
+* proxy status API requests to prevent client-side fetch errors ([#220](https://github.com/discordplace/discord.place/issues/220)) ([806c22d](https://github.com/discordplace/discord.place/commit/806c22dec43a8e304c12c7ff2f5e399bee8357f5))
+* **server:** validate invites via public lookup ([a9da6a6](https://github.com/discordplace/discord.place/commit/a9da6a659a94208f74b2c071d0c66d66fc702300))
+* update HiPlay import from react-icons/hi to react-icons/hi2 ([0bd8895](https://github.com/discordplace/discord.place/commit/0bd88951957a319ca10f45d948fe5b3f3151efa8))
+
 ## [3.2.0](https://github.com/discordplace/discord.place/compare/client@v3.1.0...client@v3.2.0) (2026-06-09)
 
 

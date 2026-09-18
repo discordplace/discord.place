@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.1.0](https://github.com/discordplace/discord.place/compare/server@v3.0.0...server@v3.1.0) (2026-09-18)
+
+
+### Features
+
+* new i18n approach and new loading page ([8330c0d](https://github.com/discordplace/discord.place/commit/8330c0d76706c5b555bdfe1ba4979204fb2a7ba6))
+* remove dsc.wtf, dsc.baby. dsc.ink and add dsc.im as new link shortener hostname ([b61695a](https://github.com/discordplace/discord.place/commit/b61695a74331d9eb00cafaf25daf9e26ca5a8d38))
+
+
+### Bug Fixes
+
+* **auth:** preserve query params in login redirect ([b867eca](https://github.com/discordplace/discord.place/commit/b867ecaddf96b27ec855c39336e9adb5962a2248))
+* **eslint:** remove linebreak-style rule ([18bb98f](https://github.com/discordplace/discord.place/commit/18bb98f2a9a0fe647ca2e8c45de521be0ddeae15))
+* ignore unavailable guilds in top servers ([65e89a3](https://github.com/discordplace/discord.place/commit/65e89a3165f74ba0e36f0dd6a964ba897107700b))
+* **server:** allow users to reuse support servers across their own bots ([efc5b1e](https://github.com/discordplace/discord.place/commit/efc5b1e899d1bac2b0214bfb68d4360cd7fbe80f))
+* **server:** avoid gateway rate limit on startup member fetch ([fffc708](https://github.com/discordplace/discord.place/commit/fffc708d54967c66fbf0a1b3fe3977d4ec5aa9bc))
+* **server:** only mark invites deleted on unknown invite ([122dacc](https://github.com/discordplace/discord.place/commit/122dacc92a86a480d779bbe41c87ded5acb8d245))
+* **server:** validate invites via public lookup ([a9da6a6](https://github.com/discordplace/discord.place/commit/a9da6a659a94208f74b2c071d0c66d66fc702300))
+
 ## [3.0.0](https://github.com/discordplace/discord.place/compare/server@v2.1.0...server@v3.0.0) (2026-06-09)
 
 
