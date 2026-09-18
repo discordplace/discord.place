@@ -11,7 +11,7 @@ export default function ServerIcon({ id, hash, format, size, className, motionOp
       key={`server-icon-${id}-replaced-with-default-avatar`}
       src={DEFAULT_AVATAR_BASE64}
       alt={`Image ${hash}`}
-      className={cn('bg-quinary text-tertiary', className)}
+      className={cn(className, 'bg-quinary text-tertiary')}
       {...motionOptions}
       {...props}
     />

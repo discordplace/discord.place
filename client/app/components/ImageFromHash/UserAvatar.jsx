@@ -150,7 +150,7 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
         key={`user-avatar-${id}-replaced-with-default-avatar`}
         src={DEFAULT_AVATAR_BASE64}
         alt={alt}
-        className={cn('bg-quinary text-tertiary', className)}
+        className={cn(className, 'bg-quinary text-tertiary')}
         {...motionOptions}
         {...props}
       />
@@ -162,7 +162,7 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
       key={`user-avatar-${id}-${current.hash}-${current.format ?? 'default'}`}
       src={current.src}
       alt={alt}
-      className={cn(current.src === DEFAULT_AVATAR_BASE64 && 'bg-quinary text-tertiary', className)}
+      className={cn(className, current.src === DEFAULT_AVATAR_BASE64 && 'bg-quinary text-tertiary')}
       onError={handleError}
       unoptimized={format === 'gif' || hash?.startsWith('a_')}
       placeholder={isSmallImage ? 'empty' : DEFAULT_AVATAR_BASE64}
