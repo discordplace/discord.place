@@ -11,6 +11,7 @@ html, body {
   --light-bg-secondary: 230, 230, 230;
   --light-bg-tertiary: 220, 220, 220;
   --light-bg-quaternary: 210, 210, 210;
+  --light-bg-quinary: 200, 200, 200;
   --light-text-primary: 36, 42, 49;
   --light-text-secondary: 73, 80, 87;
   --light-text-tertiary: 108, 117, 125;
@@ -20,6 +21,7 @@ html, body {
   --dark-bg-secondary: 22, 22, 30;
   --dark-bg-tertiary: 30, 30, 40;
   --dark-bg-quaternary: 40, 40, 50;
+  --dark-bg-quinary: 50, 50, 62;
   --dark-text-primary: 235, 235, 245;
   --dark-text-secondary: 200, 200, 210;
   --dark-text-tertiary: 160, 160, 170;
@@ -32,6 +34,7 @@ html {
   --bg-secondary: var(--light-bg-secondary);
   --bg-tertiary: var(--light-bg-tertiary);
   --bg-quaternary: var(--light-bg-quaternary);
+  --bg-quinary: var(--light-bg-quinary);
   --text-primary: var(--light-text-primary);
   --text-secondary: var(--light-text-secondary);
   --text-tertiary: var(--light-text-tertiary);
@@ -44,6 +47,7 @@ html.dark {
   --bg-secondary: var(--dark-bg-secondary);
   --bg-tertiary: var(--dark-bg-tertiary);
   --bg-quaternary: var(--dark-bg-quaternary);
+  --bg-quinary: var(--dark-bg-quinary);
   --text-primary: var(--dark-text-primary);
   --text-secondary: var(--dark-text-secondary);
   --text-tertiary: var(--dark-text-tertiary);

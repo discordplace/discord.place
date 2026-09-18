@@ -17,6 +17,7 @@
 
   --background-color-background: rgba(var(--bg-background));
   --background-color-quaternary: rgba(var(--bg-quaternary));
+  --background-color-quinary: rgba(var(--bg-quinary));
   --background-color-secondary: rgba(var(--bg-secondary));
   --background-color-tertiary: rgba(var(--bg-tertiary));
 
