@@ -19,6 +19,7 @@ const Endpoints = {
   CreateQuarantine: '/quarantines',
   CreateReminder: id => `/servers/${id}/reminder`,
   CreateReport: '/reports',
+  CreateServerReview: id => `/servers/${id}/reviews`,
   CreateSound: '/sounds',
   CreateStandedOutCheckout: '/payments/checkout',
   CreateTemplate: '/templates',

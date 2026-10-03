@@ -1,15 +1,9 @@
-export default function getStatus() {
-  return new Promise(async (resolve, reject) => {
-    fetch('/api/status')
-      .then(async response => {
-        if (!response.ok) {
-          throw new Error(`Status check failed: ${response.status}`);
-        }
+export default async function getStatus() {
+  const response = await fetch('/api/status');
 
-        const data = await response.json();
+  if (!response.ok) {
+    throw new Error(`Status check failed: ${response.status}`);
+  }
 
-        resolve(data);
-      })
-      .catch(reject);
-  });
+  return response.json();
 }

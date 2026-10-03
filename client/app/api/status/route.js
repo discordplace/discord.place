@@ -6,11 +6,13 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const response = await fetch(`${config.api.url}/status`, {
-      next: {
-        revalidate: 60
-      },
-      signal: AbortSignal.timeout(8000)
+      cache: 'no-store',
+      signal: AbortSignal.timeout(3000)
     });
+
+    if (!response.ok) {
+      return NextResponse.json({ status: 'DOWN' }, { status: 503 });
+    }
 
     const data = await response.json();
 

@@ -5,7 +5,7 @@ const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
   get: [
-    useRateLimiter({ maxRequests: 2, perMinutes: 0.016666666666666666 }),
+    useRateLimiter({ maxRequests: 10, perMinutes: 1 }),
     checkAuthentication,
     validateRequest,
     async (request, response) => {

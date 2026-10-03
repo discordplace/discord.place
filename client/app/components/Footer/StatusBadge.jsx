@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from 'react';
 import getStatus from '@/lib/request/general/getStatus';
 import config from '@/config';
 import { useTranslation } from 'react-i18next';
-import * as Sentry from '@sentry/nextjs';
 
 export default function StatusBadge() {
   const { t } = useTranslation();
@@ -41,9 +40,7 @@ export default function StatusBadge() {
       const data = await getStatus();
       setStatusData(data);
       setHasLoaded(true);
-    } catch (error) {
-      Sentry.captureException(error);
-
+    } catch {
       setStatusData({ message: 'Status Unknown', status: 'unknown' });
       setHasLoaded(true);
     } finally {
