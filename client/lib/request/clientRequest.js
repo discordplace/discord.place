@@ -11,7 +11,7 @@ class RequestClient {
     this.instance.interceptors.response.use(response => response, error => {
       const errorMessage = error instanceof axios.AxiosError ? (error.response?.data?.error || error.message) : error.message;
 
-      return Promise.reject(new Error(typeof errorMessage === 'string' ? errorMessage : 'Request failed.'));
+      return Promise.reject(typeof errorMessage === 'string' ? errorMessage : 'Request failed.');
     });
   }
 
