@@ -61,9 +61,9 @@ export default function MyBots() {
         }
       } catch (error) {
         clearInterval(grantScopeIntervalRef.current);
-        toast.error(error.message);
+        toast.error(typeof error === 'string' ? error : error.message);
 
-        Sentry.captureException(error);
+        Sentry.captureException(typeof error === 'string' ? new Error(error) : error);
       }
 
       retryCount++;
