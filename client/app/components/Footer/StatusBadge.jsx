@@ -41,7 +41,7 @@ export default function StatusBadge() {
       setStatusData(data);
       setHasLoaded(true);
     } catch {
-      setStatusData({ message: 'Status Unknown', status: 'unknown' });
+      setStatusData({ status: 'unknown' });
       setHasLoaded(true);
     } finally {
       setIsLoading(false);
