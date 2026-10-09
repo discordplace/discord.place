@@ -1,0 +1,9 @@
+/var/log/update-cf-ips.log {
+    su root root
+    monthly
+    rotate 3
+    missingok
+    notifempty
+    compress
+    delaycompress
+}
