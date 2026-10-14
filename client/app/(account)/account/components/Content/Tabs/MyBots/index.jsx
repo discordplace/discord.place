@@ -60,8 +60,18 @@ export default function MyBots() {
           toast.error(t('accountPage.tabs.myBots.sections.newBot.toast.permissionGrantError'));
         }
       } catch (error) {
+        const message = typeof error === 'string' ? error : error?.message;
+
+        // Transient throttle from the 1s poll cadence: keep polling silently
+        // instead of aborting the grant flow and reporting noise to Sentry.
+        if (/too many requests|\b429\b/i.test(message || '')) {
+          retryCount++;
+
+          return;
+        }
+
         clearInterval(grantScopeIntervalRef.current);
-        toast.error(typeof error === 'string' ? error : error.message);
+        toast.error(message);
 
         Sentry.captureException(typeof error === 'string' ? new Error(error) : error);
       }
