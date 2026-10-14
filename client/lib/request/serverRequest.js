@@ -5,7 +5,7 @@ import { cookies, headers } from 'next/headers';
 class RequestClient {
   constructor() {
     this.instance = axios.create({
-      baseURL: config.api.url,
+      baseURL: config.api.internalUrl || config.api.url,
       headers: {
         'x-discord-place-client-secret': process.env.CLIENT_SECRET
       },

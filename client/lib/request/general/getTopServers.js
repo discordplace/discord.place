@@ -2,7 +2,7 @@ import config from '@/config';
 
 export default function getTopServers() {
   return new Promise(async (resolve, reject) => {
-    const url = `${config.api.url}/top-servers`;
+    const url = `${config.api.internalUrl || config.api.url}/top-servers`;
 
     fetch(url, {
       next: {

@@ -39,6 +39,7 @@ const nextConfig = {
     ];
   },
   images: {
+    loaderFile: './lib/image-loader.js',
     remotePatterns
   },
   logging: {
@@ -58,7 +59,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        destination: 'https://api.discord.place/sitemap.xml',
+        destination: `${process.env.INTERNAL_API_URL || 'http://127.0.0.1:16540'}/sitemap.xml`,
         source: '/sitemap.xml'
       }
     ];
