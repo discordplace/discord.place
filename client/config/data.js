@@ -32,6 +32,7 @@ const githubIssuesUrl = 'https://github.com/discordplace/discord.place/issues/ne
 const linkShortenerHostname = 'dsc.im';
 
 const api = {
+  internalUrl: isDev ? 'http://localhost:16540' : (process.env.INTERNAL_API_URL || 'http://127.0.0.1:16540'),
   url: isDev ? 'http://localhost:16540' : 'https://api.discord.place'
 };
 

@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 // into the Next Data Cache, collapsing it to one upstream call per 30s and
 // letting every visitor share the cached result.
 export async function GET() {
-  const response = await fetch(`${config.api.url}/status`, {
+  const response = await fetch(`${config.api.internalUrl || config.api.url}/status`, {
     next: { revalidate: 30 },
     signal: AbortSignal.timeout(8000)
   });
