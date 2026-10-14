@@ -46,7 +46,7 @@ function getFreshAvatarHash(id) {
   const promise = getHashes(id)
     .then(hashes => {
       const newHash = hashes?.avatar || null;
-      if (newHash) freshAvatarValues.set(id, { hash: newHash, at: Date.now() });
+      if (newHash) freshAvatarValues.set(id, { at: Date.now(), hash: newHash });
       freshAvatarRequests.delete(id);
 
       return newHash;
@@ -68,7 +68,7 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
   }
 
   function buildEntry(hash, format) {
-    return { src: hash ? getUrl(id, hash, format) : null, hash, format };
+    return { format, hash, src: hash ? getUrl(id, hash, format) : null };
   }
 
   function resolveInitial(id, hash) {
@@ -127,14 +127,14 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
     const newSrc = newHash ? getUrl(id, newHash) : null;
 
     if (newSrc && newSrc !== current.src) {
-      setCurrent({ src: newSrc, hash: newHash, format: undefined });
+      setCurrent({ format: undefined, hash: newHash, src: newSrc });
 
       return;
     }
 
     if (current.hash?.startsWith('a_') && current.format !== 'webp') {
-      freshAvatarValues.set(id, { hash: current.hash, format: 'webp', at: Date.now() });
-      setCurrent({ src: getUrl(id, current.hash, 'webp'), hash: current.hash, format: 'webp' });
+      freshAvatarValues.set(id, { at: Date.now(), format: 'webp', hash: current.hash });
+      setCurrent({ format: 'webp', hash: current.hash, src: getUrl(id, current.hash, 'webp') });
 
       return;
     }
