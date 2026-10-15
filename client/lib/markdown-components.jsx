@@ -34,7 +34,7 @@ function DiscordEmoji({ children }) {
         <Image
           src={`https://cdn.discordapp.com/emojis/${id}.png`}
           alt={`Emoji ${name}`}
-          className='my-0 inline-block h-[20px] w-auto align-middle'
+          className='my-0! inline-block h-[20px] w-auto align-middle'
           width={20}
           height={20}
         />
@@ -50,7 +50,7 @@ function DiscordEmoji({ children }) {
         <Image
           src={`https://cdn.discordapp.com/emojis/${id}.gif`}
           alt={`Emoji ${name}`}
-          className='my-0 inline-block h-[20px] w-auto align-middle'
+          className='my-0! inline-block h-[20px] w-auto align-middle'
           width={20}
           height={20}
         />
@@ -74,7 +74,7 @@ function DiscordEmoji({ children }) {
         alt={part}
         width={20}
         height={20}
-        className='my-0 inline-block h-[20px] w-auto align-middle'
+        className='my-0! inline-block h-[20px] w-auto align-middle'
       />
     );
   });
