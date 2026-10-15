@@ -28,11 +28,14 @@ export default function Markdown({ children, className, rawEnabled }) {
         /* blockquote Styles */
         'prose-blockquote:border-l-primary prose-blockquote:text-tertiary',
         /* list Styles */
-        'prose-li:marker:text-tertiary',
+        'prose-ol:my-2! prose-ul:my-2! prose-li:my-1! prose-li:marker:text-tertiary',
+        '[&_li>p]:my-1!',
+        /* paragraph Styles */
+        'prose-p:my-2!',
+        /* heading Styles */
+        'prose-headings:mt-6! prose-headings:mb-2!',
         /* table Styles */
         'prose-thead:border-b-[rgba(var(--bg-quaternary))] prose-tr:border-b-[rgba(var(--bg-tertiary))]',
-        /* paragraph Styles */
-        'prose-p:whitespace-pre-wrap',
         /* pre Styles */
         'prose-pre:bg-[unset] prose-pre:p-0',
         /* iframe Styles */
