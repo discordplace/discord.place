@@ -29,8 +29,8 @@ export default async function Page() {
           <TrustedByHeading totalServers={totalServers} />
 
           <div className='flex flex-col flex-wrap justify-center gap-4 sm:flex-row'>
-            {data?.map(server => (
-              <ServerCard data={server} key={server.id} />
+            {data?.map((server, index) => (
+              <ServerCard data={server} key={server.id} priority={index === 0} />
             ))}
           </div>
         </div>

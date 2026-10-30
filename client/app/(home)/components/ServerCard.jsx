@@ -13,7 +13,7 @@ const formatter = new Intl.NumberFormat('en-US', {
   style: 'decimal'
 });
 
-export default function ServerCard({ data }) {
+export default function ServerCard({ data, priority }) {
   if (!data?.name) return null;
 
   const Container = data.is_listed ? Link : 'div';
@@ -34,6 +34,7 @@ export default function ServerCard({ data }) {
           className='rounded-full'
           width={24}
           height={24}
+          loading={priority ? 'eager' : undefined}
         />
       ) : (
         <div className='flex size-[24px] items-center justify-center rounded-full bg-quaternary text-xs font-semibold'>
