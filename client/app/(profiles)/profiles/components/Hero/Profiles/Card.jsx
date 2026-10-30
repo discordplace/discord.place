@@ -3,7 +3,7 @@
 
 import { FiArrowUpRight } from 'react-icons/fi';
 import { TbWorldShare } from 'react-icons/tb';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
 import config from '@/config';
 import cn from '@/lib/cn';

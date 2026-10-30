@@ -1,7 +1,7 @@
 'use client';
 
 import cn from '@/lib/cn';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import { useTranslation } from 'react-i18next';
 

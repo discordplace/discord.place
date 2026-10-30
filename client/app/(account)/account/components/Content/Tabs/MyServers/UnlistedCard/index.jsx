@@ -3,7 +3,7 @@
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import useAccountStore from '@/stores/account';
 import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 
 export default function UnlistedCard({ server }) {
   const { t } = useTranslation();

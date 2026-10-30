@@ -5,7 +5,7 @@ import cn from '@/lib/cn';
 import useThemeStore from '@/stores/theme';
 import { motion } from 'framer-motion';
 import { Bricolage_Grotesque } from 'next/font/google';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import Card from '@/app/(blogs)/blogs/Hero/Card';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';

@@ -6,7 +6,7 @@ import { HiAtSymbol, HiHashtag, HiPlus } from 'react-icons/hi';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import Tooltip from '@/app/components/Tooltip/Discord';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';
 import { useRouter } from 'next-nprogress-bar';
 import useModalsStore from '@/stores/modals';

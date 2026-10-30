@@ -7,7 +7,7 @@ import { IoMdHeart } from 'react-icons/io';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import Tooltip from '@/app/components/Tooltip';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import Link from 'next/link';
 import cn from '@/lib/cn';
 import ServerCard from '@/app/(servers)/servers/components/ServerCard';

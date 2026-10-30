@@ -7,7 +7,7 @@ import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStarFullOutline } from 'react-icons/ti';
 import { motion } from 'framer-motion';
 import Markdown from '@/app/components/Markdown';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import Link from 'next/link';
 import cn from '@/lib/cn';
 import { useMedia } from 'react-use';

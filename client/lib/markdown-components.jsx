@@ -14,7 +14,7 @@ import cn from './cn';
 import Zoom from 'react-medium-image-zoom';
 import CodeBlock from '@/app/components/CodeBlock';
 import CustomIFrame from '@/app/components/Markdown/iframe';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import Tooltip from '@/app/components/Tooltip';
 
 function DiscordEmoji({ children }) {

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 
 export default function BlogCard({ data, loading }) {
   if (loading) {return (

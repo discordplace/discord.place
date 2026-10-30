@@ -1,7 +1,7 @@
 'use client';
 
 import useThemeStore from '@/stores/theme';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import Link from 'next/link';
 import Grainient from '@/app/components/Background/Grainient';
 import { useTranslation } from 'react-i18next';

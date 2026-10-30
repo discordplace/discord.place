@@ -18,7 +18,7 @@ import revalidateServer from '@/lib/revalidate/server';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import Select from '@/app/components/Select';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import { isAxiosError } from 'axios';
 
 export default function Webhook({ serverId, webhookURL: currentWebhookURL, webhookToken: currentWebhookToken, webhookLanguage: currentWebhookLanguage, webhookLanguages, records }) {

@@ -5,7 +5,7 @@ import { FiArrowRightCircle } from 'react-icons/fi';
 import { HiPlay } from 'react-icons/hi2';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import config from '@/config';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import getRelativeTime from '@/lib/getRelativeTime';
 import getCompressedName from '@/lib/getCompressedName';
 import useGeneralStore from '@/stores/general';

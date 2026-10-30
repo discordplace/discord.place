@@ -17,7 +17,7 @@ import CodeBlock from '@/app/components/CodeBlock';
 import revalidateBot from '@/lib/revalidate/bot';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import Select from '@/app/components/Select';
 import { isAxiosError } from 'axios';
 

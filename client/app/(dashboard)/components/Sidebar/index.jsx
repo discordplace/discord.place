@@ -11,7 +11,7 @@ import { PiWaveformBold } from 'react-icons/pi';
 import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import useThemeStore from '@/stores/theme';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import { Bricolage_Grotesque } from 'next/font/google';
 import cn from '@/lib/cn';
 import useDashboardStore from '@/stores/dashboard';

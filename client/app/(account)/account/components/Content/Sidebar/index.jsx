@@ -2,7 +2,7 @@
 
 import { BiSolidChevronRight } from 'react-icons/bi';
 import useThemeStore from '@/stores/theme';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import { Bricolage_Grotesque } from 'next/font/google';
 import cn from '@/lib/cn';
 import BlockItem from '@/app/(account)/account/components/Content/Sidebar/BlockItem';

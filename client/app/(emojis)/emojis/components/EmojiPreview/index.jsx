@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
 import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import useGeneralStore from '@/stores/general';
 import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
 import Lottie from 'lottie-react';

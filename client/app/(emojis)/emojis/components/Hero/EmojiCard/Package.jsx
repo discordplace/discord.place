@@ -6,7 +6,7 @@ import Link from 'next/link';
 import config from '@/config';
 import cn from '@/lib/cn';
 import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 
 export default function EmojiPackageCard({ overridedImages, id, name, categories, downloads, emoji_ids, className }) {
   const { t } = useTranslation();

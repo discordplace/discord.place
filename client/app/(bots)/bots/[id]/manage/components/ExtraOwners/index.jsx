@@ -4,7 +4,7 @@ import { ImHammer2 } from 'react-icons/im';
 import { useEffect, useRef, useState } from 'react';
 import getExtraOwners from '@/lib/request/bots/getExtraOwners';
 import { toast } from 'sonner';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import Tooltip from '@/app/components/Tooltip';
 import removeExtraOwner from '@/lib/request/bots/removeExtraOwner';
 import createExtraOwner from '@/lib/request/bots/createExtraOwner';

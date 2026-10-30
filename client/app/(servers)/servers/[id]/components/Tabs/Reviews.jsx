@@ -16,7 +16,7 @@ import config from '@/config';
 import { useTranslation } from 'react-i18next';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ReportableArea from '@/app/components/ReportableArea';
-import Image from 'next/image';
+import Image from '@/app/components/AppImage';
 import { useMedia } from 'react-use';
 
 export default function Reviews({ server }) {
