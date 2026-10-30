@@ -51,7 +51,7 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
       >
         <RadixSelect.Trigger
           className={cn(
-            'inline-flex w-max items-center justify-center gap-4 rounded-lg border-2 border-primary bg-secondary p-4 leading-none font-medium text-tertiary outline-hidden transition-all select-none hover:bg-tertiary focus-visible:border-purple-500 focus-visible:bg-quaternary data-[state=open]:border-purple-500 data-[state=open]:bg-quaternary',
+            'inline-flex min-w-max gap-4 rounded-lg border-2 border-primary bg-secondary p-4 leading-none font-medium text-tertiary outline-hidden transition-all select-none hover:bg-tertiary focus-visible:border-purple-500 focus-visible:bg-quaternary data-[state=open]:border-purple-500 data-[state=open]:bg-quaternary',
             disabled && 'pointer-events-none opacity-50',
             triggerClassName
           )}
@@ -61,7 +61,7 @@ export default function Select({ mobileOverride, triggerClassName, placeholder, 
 
           <RadixSelect.Icon
             className={cn(
-              'text-tertiary transition-transform duration-300',
+              'ml-auto text-tertiary transition-transform duration-300',
               openState && '-rotate-180 transform'
             )}
           >

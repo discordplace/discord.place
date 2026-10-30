@@ -302,7 +302,6 @@ export default function NewServer() {
 
                 <div className='mt-4 w-full'>
                   <Select
-                    mobileOverride={true}
                     triggerClassName='w-full py-2.5'
                     placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.category.placeholder')}
                     options={
