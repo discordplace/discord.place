@@ -54,6 +54,7 @@ export default function Sidebar() {
       name: 'Guilds'
     },
     {
+      id: 'queues',
       name: 'Queues',
       tabs: [
         {
@@ -119,6 +120,7 @@ export default function Sidebar() {
       ]
     },
     {
+      id: 'extra',
       name: 'Extra',
       tabs: [
         {
@@ -282,7 +284,7 @@ export default function Sidebar() {
 
           {blocks.filter(({ tabs }) => tabs).map(block => (
             <div
-              key={block.id}
+              key={block.id || block.name}
               className={cn(
                 'flex flex-col gap-y-1',
                 !isCollapsed && 'mt-3'
