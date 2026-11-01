@@ -20,11 +20,11 @@ module.exports = {
     body('name')
       .isString().withMessage('Name should be a string.')
       .trim()
-      .isLength({ max: config.templateNameMaxLength }).withMessage(`Name must be less than ${config.templateNameMaxLength} characters.`),
+      .isLength({ max: config.templateMaxNameLength }).withMessage(`Name must be less than ${config.templateMaxNameLength} characters.`),
     body('description')
       .isString().withMessage('Description should be a string.')
       .trim()
-      .isLength({ min: config.templateDescriptionMinLength, max: config.templateDescriptionMaxLength }).withMessage(`Description must be between ${config.templateDescriptionMinLength} and ${config.templateDescriptionMaxLength} characters.`),
+      .isLength({ min: config.templateMinDescriptionLength, max: config.templateMaxDescriptionLength }).withMessage(`Description must be between ${config.templateMinDescriptionLength} and ${config.templateMaxDescriptionLength} characters.`),
     body('categories')
       .isArray().withMessage('Categories should be an array.')
       .custom(categoriesValidation),

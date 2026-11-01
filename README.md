@@ -63,6 +63,7 @@ Create a `.env` file in the `client` directory with the following environment va
 NEXT_PUBLIC_PORT=36706
 NEXT_PUBLIC_CF_SITE_KEY=
 CLIENT_SECRET=
+INTERNAL_API_URL=
 NEXT_PUBLIC_CDN_URL=
 SENTRY_ORG=
 SENTRY_PROJECT=
@@ -77,6 +78,7 @@ SENTRY_AUTH_TOKEN=
 | `NEXT_PUBLIC_PORT` | Port for the client. |
 | `NEXT_PUBLIC_CF_SITE_KEY` | Cloudflare site key for Turnstile. |
 | `CLIENT_SECRET` | Secret key for client. |
+| `INTERNAL_API_URL` | Internal API URL used by the client server for server-side requests. Defaults to `http://127.0.0.1:16540`. |
 | `NEXT_PUBLIC_CDN_URL` | CDN URL for the website. Used for serving emojis and sounds files. Must be a valid URL. |
 | `SENTRY_ORG` | Sentry organization for error tracking. |
 | `SENTRY_PROJECT` | Sentry project for error tracking. |
@@ -86,6 +88,7 @@ SENTRY_AUTH_TOKEN=
 > [!NOTE]
 > - Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile site key.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the server's `CLIENT_SECRET` value.
+> - The `INTERNAL_API_URL` value is used by the client server to reach the API during server-side rendering. It defaults to `http://127.0.0.1:16540`. Set it when the client and server run on different hosts or the API uses another port.
 > - The `NEXT_PUBLIC_CDN_URL` is used for serving emojis and sounds files. You should set this to your own CDN URL. Make sure to use valid URL format (e.g., `https://cdn.yourdomain.com`).
 > - The `SENTRY_ORG`, `SENTRY_PROJECT`, `NEXT_PUBLIC_SENTRY_DSN`, and `SENTRY_AUTH_TOKEN` values are used for Sentry error tracking. We use Sentry for error tracking. Refer to the [Sentry documentation](https://docs.sentry.io/) for more information.
 
@@ -126,6 +129,8 @@ LEMON_SQUEEZY_WEBHOOK_SECRET=
 LEMON_SQUEEZY_API_KEY=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
+KENERING_INSTANCE_URL=
+KENERING_API_KEY=
 WEBHOOKS_PROXY_SERVER_PROTOCOL=
 WEBHOOKS_PROXY_SERVER_HOST=
 WEBHOOKS_PROXY_SERVER_PORT=
@@ -160,13 +165,15 @@ SENTRY_DSN=
 | `S3_DATABASE_BACKUP_SECRET_ACCESS_KEY` | S3 secret access key for database backups. (not required) |
 | `S3_DATABASE_BACKUP_REGION` | S3 region for database backups. (not required) |
 | `S3_DATABASE_BACKUP_ENDPOINT` | S3 endpoint for database backups. (not required) |
+| `DAILY_DATABASE_BACKUP_HEARTBEAT_URL` | Heartbeat URL for daily database backup. (not required) |
 | `CDN_URL` | CDN URL for the website. Used for serving emojis and sounds files. Must be a valid URL. |
 | `CLOUDFLARE_TURNSTILE_SECRET_KEY` | Cloudflare Turnstile secret key. |
 | `LEMON_SQUEEZY_WEBHOOK_SECRET` | Lemon Squeezy webhook secret. (not required) |
 | `LEMON_SQUEEZY_API_KEY` | Lemon Squeezy API key. (not required) |
-| `DAILY_DATABASE_BACKUP_HEARTBEAT_URL` | Heartbeat URL for daily database backup. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` | Secret key for getting approximate guild count of a bot. (not required) |
+| `KENERING_INSTANCE_URL` | Base URL of the Kener.ing instance used by the status page. (not required) |
+| `KENERING_API_KEY` | API key for the Kener.ing instance used by the status page. (not required) |
 | `WEBHOOKS_PROXY_SERVER_PROTOCOL` | Protocol for the proxy server. |
 | `WEBHOOKS_PROXY_SERVER_HOST` | Host for the proxy server. |
 | `WEBHOOKS_PROXY_SERVER_PORT` | Port for the proxy server. |
@@ -177,6 +184,7 @@ SENTRY_DSN=
 > [!NOTE]
 > - The `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` is used for syncing the translators roles when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically sync the translators roles in the base guild with the ids in the `client/locales/translators.json` file.
 > - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET`, `USER_TOKEN_ENCRYPT_SECRET` and `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
+> - The `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` value is required when `LEMON_SQUEEZY_API_KEY` is set.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the client's `CLIENT_SECRET` value.
 > - The `DISCORD_PORTAL_CHANNEL_WEBHOOK_URL` is used for sending messages to the portal channel. This is not required for self-hosting. We use this webhook for sending messages to the portal channel for certain events like new bot approved, new emoji published, etc. __This webhook should be created by bot.__ Otherwise, no components (link buttons) will be sent with the messages. You can leave this value empty. Make sure to use a valid Discord webhook URL format (e.g., `https://discord.com/api/webhooks/XXX/XXX`).
 > - For the `MONGO_URL` value, you can use a local MongoDB instance or a cloud-based MongoDB service like MongoDB Atlas. Refer to the [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string) for more information on constructing the connection URL.
@@ -186,6 +194,7 @@ SENTRY_DSN=
 > - The `LEMON_SQUEEZY_WEBHOOK_SECRET` is used for verifying the Lemon Squeezy webhook. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy documentation](https://docs.lemonsqueezy.com/help/webhooks) for more information.
 > - The `LEMON_SQUEEZY_API_KEY` is used for authenticating requests to the Lemon Squeezy API. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy Developer Guide](https://docs.lemonsqueezy.com/guides/developer-guide/getting-started#create-an-api-key) to get your API key.
 > - The `DAILY_DATABASE_BACKUP_HEARTBEAT_URL` is used for the heartbeat URL for daily database backups. We use [Kener.ing](https://kener.ing) for monitoring the uptime of the website.
+> - The `KENERING_INSTANCE_URL` and `KENERING_API_KEY` values are used by the status page to read monitor status from your Kener.ing instance. They are optional, but the status endpoint returns an error until they are set.
 > - The `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` and `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` values are used for getting the approximate guild count of a bot. This is half required for self-hosting. If you don't want to use this feature, you can leave these values empty, but this will result in bots not being able to update server_count using the API. For now, we use private API for this because Discord doesn't provide an official API for getting the approximate guild count of a bot. We don't want to share this API source code with everyone.
 > - The `WEBHOOKS_PROXY_SERVER_PROTOCOL`, `WEBHOOKS_PROXY_SERVER_HOST`, `WEBHOOKS_PROXY_SERVER_PORT`, `WEBHOOKS_PROXY_SERVER_USERNAME`, and `WEBHOOKS_PROXY_SERVER_PASSWORD` values are used for the proxy server settings. We use a proxy server for sending webhooks requests. If you don't want to use a proxy server, you can leave these values empty. Username and password are not required for the proxy server.
 > - The `SENTRY_DSN` value is used for Sentry error tracking. This is not required for self-hosting. We use Sentry for error tracking. Refer to the [Sentry documentation](https://docs.sentry.io) for more information.
@@ -238,7 +247,6 @@ We use YML files for the configuration of the server. You can find the configura
 | `trustProxy` | Number | Trust proxy setting for the server. |
 | `frontendUrl` | String | Client website URL for the website. |
 | `backendUrl` | String | Server API URL for the website. |
-| `cdnUrl` | String | CDN URL for the website. |
 | `supportInviteUrl` | String | URL for the your Discord support server invite. |
 | `emojis` | Object | Emojis used in the bot. |
 | `sitemapConfig` | Object | Configuration for generating the website sitemap |
@@ -260,7 +268,7 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `botPresenceStatus` value is used for the presence status of the bot. You can change this value to your own presence status.
 > - The `rateLimitWhitelist` value is used for whitelisted user IDs for bypassing rate limits. You can change these values to your own whitelisted user IDs.
 > - The `trustProxy` value is used for the trust proxy setting for the server. You can change this value to your own trust proxy setting.
-> - The `frontendUrl`, `backendUrl`, and `cdnUrl` values are used for the client website URL, server API URL, and CDN URL for the website. You can change these values to your own URLs.
+> - The `frontendUrl` and `backendUrl` values are used for the client website URL and server API URL. You can change these values to your own URLs. The CDN URL is configured with the `CDN_URL` environment variable.
 > - The `supportInviteUrl` value is used for the support server invite URL. You can change this value to your own support server invite URL.
 > - The `emojis` value is used for the emojis used in the bot. You should change these values to your own emojis.
 > - The `sitemapConfig` value is used to configure sitemap generation settings, such as `blogsChangeFrequency` for how often blog items are expected to change, and `useInternalNetworking` for toggling whether to fetch blogs internally on localhost or via public domains.

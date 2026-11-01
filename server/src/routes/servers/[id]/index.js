@@ -289,7 +289,7 @@ module.exports = {
       .optional()
       .isString().withMessage('Description should be a string.')
       .trim()
-      .isLength({ min: config.serverDescriptionMinLength, max: config.serverDescriptionMaxLength }).withMessage(`Description must be between ${config.serverDescriptionMinLength} and ${config.serverDescriptionMaxLength} characters.`),
+      .isLength({ min: 1, max: config.serverDescriptionMaxCharacters }).withMessage(`Description must be between 1 and ${config.serverDescriptionMaxCharacters} characters.`),
     body('invite_url')
       .optional()
       .isString().withMessage('Invite URL should be a string.')
