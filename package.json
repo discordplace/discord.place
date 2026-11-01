@@ -15,8 +15,10 @@
   },
   "scripts": {
     "check:locales": "node scripts/check-locales.js",
+    "check:shared": "node scripts/sync-shared.js --check",
     "prepare": "husky",
     "lint": "pnpm --dir client lint && pnpm --dir server lint",
+    "sync:shared": "node scripts/sync-shared.js",
     "dev": "concurrently --kill-others --names client,server --prefix-colors cyan,magenta \"pnpm --dir client dev\" \"pnpm --dir server dev\""
   }
 }

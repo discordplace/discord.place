@@ -284,9 +284,11 @@ The tracked `config.yml` contains defaults shared by every deployment. Copy `con
 cp server/config.local.example.yml server/config.local.yml
 ```
 
+Limits, categories, deny reasons, and quarantine rules are shared across the client and server in `shared/config.json`. After changing that file, run `pnpm sync:shared`; the pre-commit hook also checks that the generated copies are current.
+
 **Parameters**
 
-The keys below are split between `config.yml` and `config.local.yml`. Deployment-specific keys are marked.
+The keys below are split between `config.yml`, `config.local.yml`, and `shared/config.json`. Deployment-specific keys are marked.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
@@ -304,7 +306,6 @@ The keys below are split between `config.yml` and `config.local.yml`. Deployment
 | `guildId` | String | Base guild ID for the Discord bot. (config.local.yml) |
 | `guildInviteUrl` | String | Invite URL for the base guild. (config.local.yml) |
 | `permissions` | Object | Permissions for the server. (config.local.yml) |
-| `maxServerCountDifference` | Number | Allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. |
 | `roles` | Object | Role IDs from the base guild. (config.local.yml) |
 | `excludeCollectionsInBackup` | Array<String> | Collections to exclude from database backups. |
 | `customHostnames` | Array<String> | Custom hostnames for the profiles. (config.local.yml) |
@@ -325,7 +326,7 @@ The keys below are split between `config.yml` and `config.local.yml`. Deployment
 > - The client and server ports are configured with the `CLIENT_PORT` and `SERVER_PORT` environment variables, not in `config.yml`.
 > - The `guildId` and `guildInviteUrl` values are used for the base guild ID and invite URL for the base guild. Set them in `config.local.yml`.
 > - The `permissions` value is used for the permissions for the server. If a permission name has `Roles` in the end, that means the permission is role-based. Otherwise, the permission is user ID-based. Set these values in `config.local.yml`.
-> - The `maxServerCountDifference` value is used for the allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. When new requests come to the stats API route, we check the server count of the bot. If the difference between the provided server count and the actual server count is greater than this value, we reject the request.
+> - The shared `maxServerCountDifference` limit is used for the allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. When new requests come to the stats API route, we check the server count of the bot. If the difference between the provided server count and the actual server count is greater than this value, we reject the request.
 > - The `roles` value is used for the role IDs from the base guild. Set these values in `config.local.yml`.
 > - The `excludeCollectionsInBackup` value is used for collections to exclude from database backups. We take daily backups of the database. If you don't want to take backups of some collections, you can add those collections to this value. Make sure to add the collection name exactly as it is in the database.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. Set it in `config.local.yml` and connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API.
