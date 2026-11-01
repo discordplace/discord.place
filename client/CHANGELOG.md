@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.1](https://github.com/discordplace/discord.place/compare/client@v3.3.0...client@v3.3.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* **client:** correct vote countdown showing 0h instead of 24h ([572ed07](https://github.com/discordplace/discord.place/commit/572ed0792e43a9a453396fa5cd07038aa9c1371d))
+
 ## [3.3.0](https://github.com/discordplace/discord.place/compare/client@v3.2.0...client@v3.3.0) (2026-11-01)
 
 
