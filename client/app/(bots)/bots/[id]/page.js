@@ -1,13 +1,16 @@
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import Content from '@/app/(bots)/bots/[id]/content';
 import config from '@/config';
 import createMetadata from '@/lib/createMetadata';
+import isSnowflake from '@/lib/isSnowflake';
 import getBot from '@/lib/request/bots/getBot';
 import getBotMetadata from '@/lib/request/bots/getBotMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
+
+  if (!isSnowflake(id)) notFound();
 
   const metadata = await getBotMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
@@ -36,6 +39,8 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { id } = await params;
+
+  if (!isSnowflake(id)) notFound();
 
   const bot = await getBot(id).catch(error => error);
   if (typeof bot === 'string') return redirect(`/error?message=${encodeURIComponent(bot)}`);
