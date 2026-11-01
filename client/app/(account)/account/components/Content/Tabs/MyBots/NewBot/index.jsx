@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 import cn from '@/lib/cn';
 import createBot from '@/lib/request/bots/createBot';
 import { useRouter } from 'next/navigation';
-import Lottie from 'lottie-react';
+import { Lottie } from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import Markdown from '@/app/components/Markdown';
 import useAccountStore from '@/stores/account';

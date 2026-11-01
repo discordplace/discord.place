@@ -14,7 +14,7 @@ import { useShallow } from 'zustand/react/shallow';
 import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
 import useGeneralStore from '@/stores/general';
 import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
-import Lottie from 'lottie-react';
+import { Lottie } from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import config from '@/config';
 import Tooltip from '@/app/components/Tooltip';

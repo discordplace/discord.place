@@ -15,7 +15,7 @@ import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEm
 import Image from '@/app/components/AppImage';
 import useGeneralStore from '@/stores/general';
 import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
-import Lottie from 'lottie-react';
+import { Lottie } from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import useAuthStore from '@/stores/auth';
 import Tooltip from '@/app/components/Tooltip';

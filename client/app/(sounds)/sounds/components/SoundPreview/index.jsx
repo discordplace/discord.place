@@ -20,7 +20,7 @@ import uploadSoundToGuild from '@/lib/request/sounds/uploadSoundToGuild';
 import confetti from '@/lib/lotties/confetti.json';
 import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import Lottie from 'lottie-react';
+import { Lottie } from 'lottie-react';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 

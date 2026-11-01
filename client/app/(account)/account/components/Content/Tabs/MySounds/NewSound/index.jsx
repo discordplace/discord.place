@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import cn from '@/lib/cn';
 import createSound from '@/lib/request/sounds/createSound';
 import { useRouter } from 'next/navigation';
-import Lottie from 'lottie-react';
+import { Lottie } from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
 import useAccountStore from '@/stores/account';
 import { useTranslation } from 'react-i18next';
