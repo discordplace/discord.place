@@ -9,12 +9,14 @@
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
     "@tailwindcss/typography": "^0.5.20",
+    "concurrently": "^10.0.6",
     "husky": "^9.1.7",
     "jsonc-parser": "^3.3.1"
   },
   "scripts": {
     "check:locales": "node scripts/check-locales.js",
     "prepare": "husky",
-    "lint": "pnpm --dir client lint && pnpm --dir server lint"
+    "lint": "pnpm --dir client lint && pnpm --dir server lint",
+    "dev": "concurrently --kill-others --names client,server --prefix-colors cyan,magenta \"pnpm --dir client dev\" \"pnpm --dir server dev\""
   }
 }

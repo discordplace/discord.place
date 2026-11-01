@@ -325,6 +325,23 @@ To add a new language to the server, follow these steps:
 > [!NOTE]
 > - Some languages may not be supported by Discord client.
 
+## Development
+
+Install dependencies for both packages:
+
+```bash
+pnpm install --dir server
+pnpm install --dir client
+```
+
+Start the client and server together from the repository root:
+
+```bash
+pnpm dev
+```
+
+This starts the Next.js client with Turbopack on `http://localhost:36706` and the API server on port `16540`. The server uses Node's built-in watch mode, so it restarts automatically when server files change. To run either side on its own, use `pnpm --dir client dev` or `pnpm --dir server dev`.
+
 ## Contributing
 
 We welcome contributions from the community! If you'd like to contribute to the project, please follow these guidelines:
