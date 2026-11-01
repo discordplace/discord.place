@@ -6,7 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const sendHeartbeat = require('@/utils/sendHeartbeat');
 
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { PutObjectCommand, S3Client } = require('@aws-sdk/client-s3');
 
 async function createMongoBackup() {
   try {

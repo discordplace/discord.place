@@ -8,7 +8,7 @@ const Server = require('@/schemas/Server');
 const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const Bot = require('@/schemas/Bot');
 const BotVoteTripleEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
-const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
+const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const Discord = require('discord.js');
 const decrypt = require('@/utils/encryption/decrypt');
 const getImageFromHash = require('@/utils/getImageFromHash');
@@ -176,7 +176,7 @@ module.exports = {
 
           var profile = await Profile.findOne({ id: user.id });
           if (profile) {
-            profile.preferredHost = 'discord.place/p',
+            profile.preferredHost = 'discord.place/p';
 
             await profile.save();
           }
@@ -217,7 +217,7 @@ module.exports = {
 
           var profile = await Profile.findOne({ id: user.id });
           if (profile) {
-            profile.preferredHost = 'discord.place/p',
+            profile.preferredHost = 'discord.place/p';
 
             await profile.save();
           }

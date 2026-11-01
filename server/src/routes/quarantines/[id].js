@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const Quarantine = require('@/schemas/Quarantine');
-const { param, matchedData } = require('express-validator');
+const { matchedData, param } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');

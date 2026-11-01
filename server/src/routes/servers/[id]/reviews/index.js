@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body, query } = require('express-validator');
+const { body, matchedData, param, query } = require('express-validator');
 const Server = require('@/schemas/Server');
 const Review = require('@/schemas/Server/Review');
 const Discord = require('discord.js');

@@ -1,4 +1,4 @@
-const { ServerMonthlyVotes, BotMonthlyVotes } = require('@/schemas/MonthlyVotes');
+const { BotMonthlyVotes, ServerMonthlyVotes } = require('@/schemas/MonthlyVotes');
 const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 

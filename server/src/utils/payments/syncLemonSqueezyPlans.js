@@ -1,4 +1,4 @@
-const { listVariants, listProducts } = require('@lemonsqueezy/lemonsqueezy.js');
+const { listProducts, listVariants } = require('@lemonsqueezy/lemonsqueezy.js');
 const Plan = require('@/schemas/LemonSqueezy/Plan');
 
 async function syncLemonSqueezyPlans() {

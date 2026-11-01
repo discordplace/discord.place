@@ -9,7 +9,7 @@
     "start": "cross-env NODE_ENV=production node --env-file=.env index.js --optimize_for_size",
     "register:commands": "node --env-file=.env startup/registerCommands.js",
     "unregister:commands": "node --env-file=.env startup/unregisterCommands.js",
-    "lint": "eslint ."
+    "lint": "oxlint"
   },
   "license": "AGPL-3.0-only",
   "repository": {
@@ -69,12 +69,12 @@
     "@/validations": "./src/utils/validations"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "cross-env": "^10.1.0",
-    "eslint": "^10.14.0",
     "eslint-plugin-ban": "^2.0.0",
     "eslint-plugin-depend": "^1.5.0",
     "eslint-plugin-security": "^4.2.1",
-    "globals": "^17.14.0"
+    "eslint-plugin-sort-imports-requires": "^2.1.0",
+    "oxlint": "1.90.0"
   }
 }

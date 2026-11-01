@@ -1,4 +1,4 @@
-const { query, param, matchedData } = require('express-validator');
+const { matchedData, param, query } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const Bot = require('@/schemas/Bot');
 const getUserHashes = require('@/utils/getUserHashes');

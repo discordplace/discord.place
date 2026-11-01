@@ -1,6 +1,6 @@
 const slugValidation = require('@/validations/profiles/slug');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body } = require('express-validator');
+const { body, matchedData, param } = require('express-validator');
 const Profile = require('@/schemas/Profile');
 const User = require('@/schemas/User');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
@@ -37,7 +37,7 @@ module.exports = {
           (request.member && config.permissions.canDeleteProfilesRoles.some(role => request.member.roles.cache.has(role)))
         ) || false,
         canVerify: request.user && (
-          (request.member && request.member && config.permissions.canVerifyProfilesRoles.some(role => request.member.roles.cache.has(role)))
+          (request.member && config.permissions.canVerifyProfilesRoles.some(role => request.member.roles.cache.has(role)))
         )
       };
 

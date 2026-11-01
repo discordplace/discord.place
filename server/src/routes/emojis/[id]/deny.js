@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData, body } = require('express-validator');
+const { body, matchedData, param } = require('express-validator');
 const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const idValidation = require('@/validations/emojis/id');
@@ -9,7 +9,7 @@ const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
 const sendPortalMessage = require('@/utils/sendPortalMessage');
 
-const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { DeleteObjectCommand, S3Client } = require('@aws-sdk/client-s3');
 const S3 = new S3Client({
   region: process.env.S3_REGION,
   endpoint: process.env.S3_ENDPOINT,

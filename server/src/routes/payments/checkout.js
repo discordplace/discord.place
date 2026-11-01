@@ -1,7 +1,7 @@
 const Plan = require('@/schemas/LemonSqueezy/Plan');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { matchedData, body } = require('express-validator');
+const { body, matchedData } = require('express-validator');
 const createCheckout = require('@/utils/payments/createCheckout');
 const createTripledVotesCheckout = require('@/utils/payments/createTripledVotesCheckout');
 const createStandedOutCheckout = require('@/utils/payments/createStandedOutCheckout');
@@ -9,7 +9,7 @@ const Server = require('@/schemas/Server');
 const Bot = require('@/schemas/Bot');
 const ServerVoteTripledEnabled = require('@/schemas/Server/Vote/TripleEnabled');
 const BotVoteTripledEnabled = require('@/schemas/Bot/Vote/TripleEnabled');
-const { StandedOutServer, StandedOutBot } = require('@/schemas/StandedOut');
+const { StandedOutBot, StandedOutServer } = require('@/schemas/StandedOut');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
 

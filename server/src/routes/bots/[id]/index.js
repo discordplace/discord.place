@@ -1,7 +1,7 @@
 const categoriesValidation = require('@/utils/validations/bots/categories');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, body, matchedData } = require('express-validator');
+const { body, matchedData, param } = require('express-validator');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const Bot = require('@/schemas/Bot');
 const Server = require('@/schemas/Server');

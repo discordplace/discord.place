@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, body, matchedData } = require('express-validator');
+const { body, matchedData, param } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount');
 const validateRequest = require('@/utils/middlewares/validateRequest');

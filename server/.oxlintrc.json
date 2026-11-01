@@ -1,0 +1,202 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "import",
+    "unicorn",
+    "oxc",
+    "node"
+  ],
+  "jsPlugins": [
+    {
+      "name": "stylistic",
+      "specifier": "@stylistic/eslint-plugin"
+    },
+    {
+      "name": "security",
+      "specifier": "eslint-plugin-security"
+    },
+    {
+      "name": "depend",
+      "specifier": "eslint-plugin-depend"
+    },
+    {
+      "name": "ban",
+      "specifier": "eslint-plugin-ban"
+    },
+    {
+      "name": "sort-imports-requires",
+      "specifier": "eslint-plugin-sort-imports-requires"
+    }
+  ],
+  "env": {
+    "node": true
+  },
+  "globals": {
+    "client": "readonly",
+    "config": "readonly",
+    "i18n": "readonly",
+    "logger": "readonly"
+  },
+  "ignorePatterns": [
+    "node_modules/**",
+    "logs/**",
+    "src/database/backups/**"
+  ],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "stylistic/array-bracket-spacing": [
+      "error",
+      "never"
+    ],
+    "stylistic/arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "stylistic/arrow-spacing": [
+      "error",
+      {
+        "after": true,
+        "before": true
+      }
+    ],
+    "ban/ban": [
+      2,
+      {
+        "message": "Use a global logger methods instead. E.g. logger.info()",
+        "name": [
+          "console",
+          "*"
+        ]
+      }
+    ],
+    "stylistic/brace-style": [
+      "error",
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "stylistic/comma-dangle": [
+      "error",
+      "never"
+    ],
+    "default-param-last": "error",
+    "depend/ban-dependencies": [
+      2,
+      {
+        "allowed": [
+          "axios",
+          "body-parser",
+          "js-yaml",
+          "lodash.shuffle",
+          "moment"
+        ]
+      }
+    ],
+    "stylistic/function-call-spacing": [
+      "error",
+      "never"
+    ],
+    "func-style": [
+      "error",
+      "declaration",
+      {
+        "allowArrowFunctions": true
+      }
+    ],
+    "stylistic/indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "stylistic/key-spacing": [
+      "error",
+      {
+        "afterColon": true,
+        "beforeColon": false
+      }
+    ],
+    "stylistic/keyword-spacing": [
+      "error",
+      {
+        "after": true,
+        "before": true
+      }
+    ],
+    "no-duplicate-imports": [
+      "error",
+      {
+        "includeExports": true
+      }
+    ],
+    "no-empty-function": "error",
+    "no-lonely-if": "error",
+    "stylistic/no-multi-spaces": "error",
+    "stylistic/no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
+    "no-return-assign": "error",
+    "stylistic/no-trailing-spaces": "error",
+    "no-unneeded-ternary": "error",
+    "no-useless-return": "error",
+    "stylistic/object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "object-shorthand": "error",
+    "prefer-arrow-callback": "error",
+    "prefer-template": "error",
+    "stylistic/quotes": [
+      "error",
+      "single"
+    ],
+    "security/detect-non-literal-fs-filename": "off",
+    "security/detect-non-literal-require": "off",
+    "security/detect-object-injection": "off",
+    "security/detect-unsafe-regex": "off",
+    "stylistic/semi": [
+      "error",
+      "always"
+    ],
+    "stylistic/space-in-parens": [
+      "error",
+      "never"
+    ],
+    "stylistic/space-infix-ops": "error",
+    "stylistic/spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": [
+          "/"
+        ]
+      }
+    ],
+    "stylistic/template-curly-spacing": [
+      "error",
+      "never"
+    ],
+    "sort-imports-requires/sort-requires": [
+      "error",
+      {
+        "unsafeAutofix": true,
+        "ignoreDeclarationSort": true
+      }
+    ],
+    "no-undef": "error",
+    "stylistic/comma-spacing": [
+      "error",
+      {
+        "after": true,
+        "before": false
+      }
+    ]
+  }
+}

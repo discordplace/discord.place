@@ -43,10 +43,10 @@ module.exports = {
 
     if (!showVerification) return this.continueVote(interaction);
 
-    const emojis = new Array(9).fill(null).map(() => emoji.random());
+    const emojis = Array.from({ length: 9 }, () => emoji.random());
     const selectedEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-    const rows = new Array(3).fill(null).map(() => new Discord.ActionRowBuilder());
+    const rows = Array.from({ length: 3 }, () => new Discord.ActionRowBuilder());
 
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {

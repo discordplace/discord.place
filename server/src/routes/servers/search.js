@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { query, matchedData } = require('express-validator');
+const { matchedData, query } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const ServerVoteTripleEnabled = require('@/schemas/Server/Vote/TripleEnabled');

@@ -1,7 +1,7 @@
 const Sound = require('@/src/schemas/Sound');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const idValidation = require('@/validations/sounds/id');
-const { param, matchedData } = require('express-validator');
+const { matchedData, param } = require('express-validator');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {

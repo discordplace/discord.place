@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { query, matchedData } = require('express-validator');
+const { matchedData, query } = require('express-validator');
 const Emoji = require('@/src/schemas/Emoji');
 const EmojiPack = require('@/src/schemas/Emoji/Pack');
 const validateRequest = require('@/utils/middlewares/validateRequest');

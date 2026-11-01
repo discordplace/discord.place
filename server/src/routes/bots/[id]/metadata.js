@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
+const { matchedData, param } = require('express-validator');
 const Bot = require('@/schemas/Bot');
 const User = require('@/schemas/User');
 const getUserHashes = require('@/utils/getUserHashes');

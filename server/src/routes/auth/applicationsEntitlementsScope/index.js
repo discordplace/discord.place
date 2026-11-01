@@ -1,5 +1,5 @@
 const crypto = require('node:crypto');
-const { query, matchedData } = require('express-validator');
+const { matchedData, query } = require('express-validator');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {

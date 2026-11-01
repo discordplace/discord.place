@@ -2,7 +2,7 @@ const Profile = require('@/schemas/Profile');
 const ProfileViews = require('@/schemas/Profile/Views');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const slugValidation = require('@/validations/profiles/slug');
-const { param, matchedData } = require('express-validator');
+const { matchedData, param } = require('express-validator');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {

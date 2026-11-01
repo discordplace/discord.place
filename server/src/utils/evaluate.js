@@ -7,7 +7,7 @@ module.exports = async code => new Promise(async resolve => {
   const id = crypto.randomBytes(16).toString('hex');
 
   try {
-    // eslint-disable-next-line security/detect-eval-with-expression
+    // eslint-disable-next-line security/detect-eval-with-expression, no-eval
     const result = await eval(isAsync ? `(async () => { ${code} })()` : code);
     const inspectedResult = inspect(result, { depth: Infinity });
 

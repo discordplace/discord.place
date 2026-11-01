@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const BotDeny = require('@/schemas/Bot/Deny');
 const Bot = require('@/schemas/Bot');
-const { param, matchedData } = require('express-validator');
+const { matchedData, param } = require('express-validator');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');

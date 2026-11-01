@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
+const { matchedData, param } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const Discord = require('discord.js');
 const DashboardData = require('@/schemas/Dashboard/Data');

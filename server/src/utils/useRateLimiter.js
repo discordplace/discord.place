@@ -1,4 +1,4 @@
-const { rateLimit, ipKeyGenerator } = require('express-rate-limit');
+const { ipKeyGenerator, rateLimit } = require('express-rate-limit');
 
 module.exports = function ({ maxRequests, perMinutes, keyGenerator }) {
   const limiter = rateLimit({

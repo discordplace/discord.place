@@ -1,7 +1,7 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const keywordsValidation = require('@/validations/servers/keywords');
-const { param, body, matchedData } = require('express-validator');
+const { body, matchedData, param } = require('express-validator');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const VoteTimeout = require('@/schemas/Server/Vote/Timeout');

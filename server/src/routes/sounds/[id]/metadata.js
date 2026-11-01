@@ -1,5 +1,5 @@
 const useRateLimiter = require('@/utils/useRateLimiter');
-const { param, matchedData } = require('express-validator');
+const { matchedData, param } = require('express-validator');
 const Sound = require('@/schemas/Sound');
 const idValidation = require('@/utils/validations/sounds/id');
 const getUserHashes = require('@/utils/getUserHashes');
