@@ -5,10 +5,10 @@
   "version": "3.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node --watch --env-file=.env index.js",
-    "start": "cross-env NODE_ENV=production node --env-file=.env index.js --optimize_for_size",
-    "register:commands": "node --env-file=.env startup/registerCommands.js",
-    "unregister:commands": "node --env-file=.env startup/unregisterCommands.js",
+    "dev": "cross-env NODE_ENV=development node --watch --env-file-if-exists=.env index.js",
+    "start": "cross-env NODE_ENV=production node --env-file-if-exists=.env index.js --optimize_for_size",
+    "register:commands": "node --env-file-if-exists=.env startup/registerCommands.js",
+    "unregister:commands": "node --env-file-if-exists=.env startup/unregisterCommands.js",
     "lint": "oxlint"
   },
   "license": "AGPL-3.0-only",

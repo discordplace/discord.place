@@ -23,7 +23,7 @@
 
 ## Self-Hosting
 
-**Prerequisites:** [Node.js](https://nodejs.org) 22 or newer, [pnpm](https://pnpm.io), [Git](https://git-scm.com), and [MongoDB](https://www.mongodb.com/try/download/community).
+**Prerequisites:** [Node.js](https://nodejs.org) 22.9 or newer, [pnpm](https://pnpm.io), [Git](https://git-scm.com), and [MongoDB](https://www.mongodb.com/try/download/community).
 
 **1. Clone the repository**
 
@@ -404,6 +404,38 @@ pnpm dev
 The client runs on [http://localhost:5000](http://localhost:5000) by default (`CLIENT_PORT`). The server runs on port `5001` by default (`SERVER_PORT`) and restarts when its files change. To run either side on its own, use `pnpm --dir client dev` or `pnpm --dir server dev`.
 
 Run `pnpm lint` before committing. It checks both apps with oxlint. The pre-commit hook runs the same command together with the locale check. To apply automatic fixes, run `pnpm --dir client exec oxlint --fix` and `pnpm --dir server exec oxlint --fix`.
+
+## Production Secrets
+
+The apps read environment variables from the process, so a secret manager can inject them instead of keeping plaintext `.env` files on the server. Doppler works with the current scripts.
+
+1. Create a Doppler project and a production config, then add the variables from `client/.example.env` and `server/.example.env`. The same config can hold both client and server values.
+2. Install the Doppler CLI on the server.
+3. Create a service token scoped to the production config and store it on the server. Do not commit it.
+4. Run builds and processes through `doppler run`:
+
+```bash
+doppler run --project discord-place --config prd -- pnpm --dir client build
+doppler run --project discord-place --config prd -- pm2 restart discord.place --update-env
+
+doppler run --project discord-place --config prd -- pm2 restart api.discord.place --update-env
+```
+
+PM2 needs `--update-env` so restarted processes receive the injected values. If the server is not managed by PM2, start it with:
+
+```bash
+doppler run --project discord-place --config prd -- pnpm --dir server start
+```
+
+For local development:
+
+```bash
+doppler run --project discord-place --config dev -- pnpm dev
+```
+
+`.env` files remain optional. When both are present, process environment variables take precedence over `.env` values.
+
+If you use the GitHub deploy workflow, wrap its build and `pm2 restart` commands with the same `doppler run` calls after the server has the CLI and service token configured.
 
 ## Community
 
