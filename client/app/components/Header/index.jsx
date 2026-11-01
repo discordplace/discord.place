@@ -10,12 +10,23 @@ import useAuthStore from '@/stores/auth';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import { useThemeStore } from '@/stores/theme';
 import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
-import cn from '@/lib/cn';
 import Drawer from '@/app/components/Drawer';
 import { MdOutlineOpenInNew } from 'react-icons/md';
 import config from '@/config';
 import { useTranslation } from 'react-i18next';
 import { useMedia } from 'react-use';
+import {
+  autoUpdate,
+  flip,
+  FloatingPortal,
+  offset,
+  safePolygon,
+  shift,
+  useFloating,
+  useHover,
+  useInteractions,
+  useTransitionStyles
+} from '@floating-ui/react';
 
 export default function Header() {
   const { t } = useTranslation();
@@ -30,12 +41,47 @@ export default function Header() {
   const [prevY, setPrevY] = useState(0);
   const [shouldHide, setShouldHide] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isServicesHovered, setIsServicesHovered] = useState(false);
 
   const user = useAuthStore(state => state.user);
   const loggedIn = useAuthStore(state => state.loggedIn);
   const theme = useThemeStore(state => state.theme);
   const smBreakpoint = useMedia('(max-width: 640px)');
   const router = useRouter();
+
+  const { refs, floatingStyles, context: floatingContext } = useFloating({
+    middleware: [
+      offset(36),
+      flip({ padding: 8 }),
+      shift({ padding: 8 })
+    ],
+    onOpenChange: setIsServicesHovered,
+    open: isServicesHovered,
+    placement: 'bottom',
+    strategy: 'fixed',
+    whileElementsMounted: autoUpdate
+  });
+
+  const hover = useHover(floatingContext, {
+    enabled: !smBreakpoint && !shouldHide,
+    handleClose: safePolygon({
+      buffer: 1,
+      requireIntent: false
+    }),
+    mouseOnly: true
+  });
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
+  const { isMounted, styles: transitionStyles } = useTransitionStyles(floatingContext, {
+    close: { opacity: 0 },
+    duration: 150,
+    initial: { opacity: 0 },
+    open: { opacity: 1 }
+  });
+
+  useEffect(() => {
+    if (smBreakpoint || shouldHide) setIsServicesHovered(false);
+  }, [smBreakpoint, shouldHide]);
 
   const [pathnameState, setPathnameState] = useState(pathname);
 
@@ -105,36 +151,25 @@ export default function Header() {
             { href: '/blogs', label: t('header.blog') },
             { href: '/premium', label: t('header.premium') }
           ].map(link => {
+            const isServices = link.label === t('header.services');
             const Element = link.href ? Link : 'button';
 
             return (
               <Element
                 key={link.label}
+                ref={isServices ? refs.setReference : undefined}
                 className='group relative text-sm text-black/85 hover:text-black dark:text-white/85 dark:hover:text-white'
                 href={link.href || '#'}
+                {...(isServices ? getReferenceProps() : {})}
+                aria-haspopup={isServices ? 'true' : undefined}
+                aria-expanded={isServices ? isServicesHovered : undefined}
                 onClick={event => {
-                  if (link.label === t('header.services') && smBreakpoint) {
+                  if (isServices && smBreakpoint) {
                     event.preventDefault();
                     setIsServicesOpen(!isServicesOpen);
                   }
                 }}
               >
-                {link.label === t('header.services') ? (
-                  <div
-                    className={cn(
-                      'pointer-events-none absolute top-14 left-12 size-max translate-x-[-50%]',
-                      'before:absolute before:-top-14 before:left-48 before:h-14 before:w-24 before:bg-transparent before:content-[""]',
-                      'sm:group-hover:pointer-events-auto sm:group-hover:[&>div]:opacity-100',
-                      isServicesOpen && 'max-sm:pointer-events-none max-sm:[&>div]:opacity-0',
-                      shouldHide && 'pointer-events-none! [&>div]:opacity-0!'
-                    )}
-                  >
-                    <div className='rounded-xl border-2 border-primary bg-secondary p-2 opacity-0 drop-shadow-lg transition-all duration-300'>
-                      <ServicesDropdown />
-                    </div>
-                  </div>
-                ) : null}
-
                 <div className='group relative flex h-[20px] cursor-pointer items-center overflow-clip'>
                   <div className='transition-all duration-300 group-hover:translate-y-[-30px]'>
                     {link.label}
@@ -194,6 +229,25 @@ export default function Header() {
           )}
         </Link>
       </motion.div>
+
+      {!smBreakpoint && !shouldHide && isMounted && (
+        <FloatingPortal>
+          <div
+            ref={refs.setFloating}
+            className='z-[9999]'
+            style={{
+              ...floatingStyles,
+              ...transitionStyles,
+              pointerEvents: isServicesHovered ? 'auto' : 'none'
+            }}
+            {...getFloatingProps()}
+          >
+            <div className='rounded-xl border-2 border-primary bg-secondary p-2 drop-shadow-lg'>
+              <ServicesDropdown />
+            </div>
+          </div>
+        </FloatingPortal>
+      )}
     </div>
   );
 }
