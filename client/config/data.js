@@ -14,11 +14,12 @@ import { PiWaveformBold } from 'react-icons/pi';
 import { RiBrush2Fill, RiCommunityFill, RiInstagramFill, RiRobot2Fill } from 'react-icons/ri';
 import { TbBrush, TbCategoryFilled, TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiPlus, TiStar } from 'react-icons/ti';
+import { az, enUS, tr } from 'date-fns/locale';
 
 const availableLocales = [
-  { code: 'en', countryCode: 'us', dateFnsKey: 'enUS', default: true, flag: '🇺🇸', name: 'English' },
-  { code: 'tr', countryCode: 'tr', dateFnsKey: 'tr', flag: '🇹🇷', name: 'Turkish' },
-  { code: 'az', countryCode: 'az', dateFnsKey: 'az', flag: '🇦🇿', name: 'Azerbaijani' }
+  { code: 'en', countryCode: 'us', dateFnsLocale: enUS, default: true, flag: '🇺🇸', name: 'English' },
+  { code: 'tr', countryCode: 'tr', dateFnsLocale: tr, flag: '🇹🇷', name: 'Turkish' },
+  { code: 'az', countryCode: 'az', dateFnsLocale: az, flag: '🇦🇿', name: 'Azerbaijani' }
 ];
 
 const isDev = process.env.NODE_ENV === 'development';

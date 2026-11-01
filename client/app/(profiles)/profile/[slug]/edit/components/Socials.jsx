@@ -15,6 +15,19 @@ import revalidateProfile from '@/lib/revalidate/profile';
 import { useTranslation } from 'react-i18next';
 import getIcon from '@/lib/utils/profiles/getIcon';
 
+function SocialIcon({ type, className, size, fallback = null }) {
+  const Icon = getIcon(type);
+  if (!Icon) return fallback;
+
+  return (
+    // oxlint-disable-next-line react/static-components
+    <Icon
+      className={className}
+      size={size}
+    />
+  );
+}
+
 export default function Socials({ profile }) {
   const { t } = useTranslation();
   const [socials, setSocials] = useState(profile.socials);
@@ -156,8 +169,6 @@ export default function Socials({ profile }) {
 
       <div className='mt-4 flex flex-wrap gap-4'>
         {socials.map(social => {
-          const SocialIcon = getIcon(social.type);
-
           return (
             <div
               className='group flex w-full max-w-[calc(50%-1rem)] items-center justify-between gap-x-1 rounded-2xl border border-primary bg-secondary px-2 py-3 transition-colors hover:bg-tertiary'
@@ -165,6 +176,7 @@ export default function Socials({ profile }) {
             >
               <div className='flex items-center gap-x-2 text-sm text-tertiary transition-colors group-hover:text-primary'>
                 <SocialIcon
+                  type={social.type}
                   className='text-tertiary'
                   size={20}
                 />
@@ -209,19 +221,12 @@ export default function Socials({ profile }) {
           )}
         >
           <div className='flex w-full items-center gap-x-2'>
-            {(() => {
-              const Icon = getIcon(newSocialType);
-              if (!Icon) {return (
-                <div className='h-[18px] w-[20px] rounded-lg bg-quaternary' />
-              );}
-
-              return (
-                <Icon
-                  className='text-tertiary'
-                  size={20}
-                />
-              );
-            })()}
+            <SocialIcon
+              type={newSocialType}
+              className='text-tertiary'
+              size={20}
+              fallback={<div className='h-[18px] w-[20px] rounded-lg bg-quaternary' />}
+            />
 
             <input
               type='text'

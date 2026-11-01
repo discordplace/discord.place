@@ -116,6 +116,7 @@ export default function Header() {
 
   if (isDashboard || isTemplatePreview || isAccount) return null;
 
+  /* oxlint-disable react/refs */
   return (
     <div className='fixed top-6 left-0 z-[9999] flex w-full items-center justify-center'>
       <motion.div
@@ -250,4 +251,5 @@ export default function Header() {
       )}
     </div>
   );
+  /* oxlint-enable react/refs */
 }

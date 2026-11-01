@@ -6,56 +6,56 @@ import useAuthStore from '@/stores/auth';
 import { useState } from 'react';
 import Graph from '@/app/(dashboard)/components/Home/Graph';
 
+function StatBlock({ label, value, previous, activeStatBlock, setActiveStatBlock }) {
+  const isIncreased = value > previous;
+  const isDecreased = value < previous;
+  const diffInPercent = ((value - previous) / previous) * 100;
+  const diffInPercentClean = diffInPercent === Infinity ? 100 : (isNaN(diffInPercent) ? 0 : diffInPercent);
+
+  return (
+    <div className='group flex items-center gap-x-4 2xl:not-first:ml-4'>
+      <div className='hidden h-full w-px bg-[rgba(var(--border-primary))] 2xl:group-not-first:block' />
+
+      <div
+        className={cn(
+          'relative flex min-h-[100px] w-full flex-col justify-center gap-y-2 rounded-3xl border border-primary p-4 2xl:border-0',
+          activeStatBlock === label ? 'bg-secondary' : 'cursor-pointer hover:bg-secondary'
+        )}
+        onClick={() => setActiveStatBlock(label)}
+      >
+        <h2 className='text-sm font-semibold text-secondary'>
+          {label}
+        </h2>
+
+        <h1 className='text-3xl font-bold text-primary'>
+          {value.toLocaleString('en-US')}
+        </h1>
+
+        <div className='flex items-center gap-x-1 text-sm text-tertiary'>
+          <span
+            className={cn(
+              'font-medium text-secondary',
+              isIncreased && 'text-green-400',
+              isDecreased && 'text-red-400'
+            )}
+          >
+            {diffInPercentClean.toFixed(2)}%
+          </span>
+          from yesterday
+        </div>
+
+        {activeStatBlock === label && <div className='absolute bottom-[-1.06rem] left-0 hidden h-px w-full bg-purple-500 2xl:block' />}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const data = useDashboardStore(state => state.data);
   const user = useAuthStore(state => state.user);
   const isCollapsed = useDashboardStore(state => state.isCollapsed);
 
   const [activeStatBlock, setActiveStatBlock] = useState('Guilds');
-
-  function StatBlock({ label, value, previous }) {
-    const isIncreased = value > previous;
-    const isDecreased = value < previous;
-    const diffInPercent = ((value - previous) / previous) * 100;
-    const diffInPercentClean = diffInPercent === Infinity ? 100 : (isNaN(diffInPercent) ? 0 : diffInPercent);
-
-    return (
-      <div className='group flex items-center gap-x-4 2xl:not-first:ml-4'>
-        <div className='hidden h-full w-px bg-[rgba(var(--border-primary))] 2xl:group-not-first:block' />
-
-        <div
-          className={cn(
-            'relative flex min-h-[100px] w-full flex-col justify-center gap-y-2 rounded-3xl border border-primary p-4 2xl:border-0',
-            activeStatBlock === label ? 'bg-secondary' : 'cursor-pointer hover:bg-secondary'
-          )}
-          onClick={() => setActiveStatBlock(label)}
-        >
-          <h2 className='text-sm font-semibold text-secondary'>
-            {label}
-          </h2>
-
-          <h1 className='text-3xl font-bold text-primary'>
-            {value.toLocaleString('en-US')}
-          </h1>
-
-          <div className='flex items-center gap-x-1 text-sm text-tertiary'>
-            <span
-              className={cn(
-                'font-medium text-secondary',
-                isIncreased && 'text-green-400',
-                isDecreased && 'text-red-400'
-              )}
-            >
-              {diffInPercentClean.toFixed(2)}%
-            </span>
-            from yesterday
-          </div>
-
-          {activeStatBlock === label && <div className='absolute bottom-[-1.06rem] left-0 hidden h-px w-full bg-purple-500 2xl:block' />}
-        </div>
-      </div>
-    );
-  }
 
   const currentDay = new Date().toLocaleString('en-US', { day: 'numeric', month: 'short' });
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toLocaleString('en-US', { day: 'numeric', month: 'short' });
@@ -80,24 +80,32 @@ export default function Home() {
           label='Guilds'
           value={data.guilds?.[0]?.value || 0}
           previous={data.guilds?.[1]?.value || 0}
+          activeStatBlock={activeStatBlock}
+          setActiveStatBlock={setActiveStatBlock}
         />
 
         <StatBlock
           label='Servers'
           value={data.servers?.[0]?.value || 0}
           previous={data.servers?.[1]?.value || 0}
+          activeStatBlock={activeStatBlock}
+          setActiveStatBlock={setActiveStatBlock}
         />
 
         <StatBlock
           label='Users'
           value={data.users?.[0]?.value || 0}
           previous={data.users?.[1]?.value || 0}
+          activeStatBlock={activeStatBlock}
+          setActiveStatBlock={setActiveStatBlock}
         />
 
         <StatBlock
           label='Bots'
           value={data.bots?.[0]?.value || 0}
           previous={data.bots?.[1]?.value || 0}
+          activeStatBlock={activeStatBlock}
+          setActiveStatBlock={setActiveStatBlock}
         />
       </div>
 

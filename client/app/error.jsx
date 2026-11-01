@@ -51,7 +51,7 @@ export default function Error({ error }) {
         </h2>
 
         <div className='rounded-2xl bg-black/10 p-3 text-sm text-secondary backdrop-blur-xs'>
-          <pre className='max-w-[500px] text-left font-mono break-words whitespace-pre-wrap'>
+          <pre className='max-w-[500px] text-left font-mono wrap-break-word whitespace-pre-wrap'>
             Error: {error.message}
           </pre>
         </div>

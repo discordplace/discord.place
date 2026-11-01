@@ -204,7 +204,7 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:16540`. |
-| `availableLocales` | Array<String> | Available locales for the website. |
+| `availableLocales` | Array<Object> | Available locales for the website, including the matching date-fns locale. |
 | `baseUrl` | String | Base URL for the website. In development, it will be `http://localhost:36706`. |
 | `botInviteURL` | String | URL for the your bot invite. Used in the many places in the website. |
 | `botTestGuildId` | String | Your test guild ID for the bots testing. |
@@ -213,7 +213,7 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 
 > [!NOTE]
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
-> - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
+> - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. Each entry also has a `dateFnsLocale` value, which is the [date-fns locale](https://date-fns.org/docs/I18n) object used for localized date and duration formatting. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
 > - The `baseUrl` value is used for the base URL for the website. You should change this value to your own base URL. Make sure to use domain names instead of IP addresses for the base URL. Also you should use Cloudflare for the client domain.
 
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
@@ -289,9 +289,17 @@ We use Tailwind CSS for styling the frontend. If you want to customize the Tailw
 To add a new language to the website, follow these steps:
 
 1. Create a new JSON file in the `client/locales` directory with the format `xx.json`, where `xx` is the language code. For example, `fr.json` for French. You can use the existing language files as a reference.
-2. Add the language code to the `availableLocales` value in the `client/config/data.js` file.
-4. Add the new language import to the `client/lib/i18n.js` file and add it to the `resources` object in the i18n initialization.
-3. Add the translations for the new language to the JSON file you created. The JSON file should have the following structure:
+2. Add an entry to the `availableLocales` array in the `client/config/data.js` file. The entry needs the language `code`, `countryCode`, `flag`, `name`, and the matching `dateFnsLocale` object imported from `date-fns/locale`. Only the default locale should have `default: true`.
+
+```js
+import { fr } from 'date-fns/locale';
+
+// ...
+{ code: 'fr', countryCode: 'fr', dateFnsLocale: fr, flag: '🇫🇷', name: 'French' }
+```
+
+3. Import the new locale JSON file in the `client/lib/i18n.js` file and add it to the `resources` object in the i18n initialization.
+4. Add the translations for the new language to the JSON file you created. The JSON file should have the following structure:
 
 ```json
 {

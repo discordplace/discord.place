@@ -18,7 +18,6 @@ import { useLocalStorage } from 'react-use';
 import { useTranslation } from 'react-i18next';
 import getBotStats from '@/lib/request/bots/getBotStats';
 import { formatDuration, intervalToDuration } from 'date-fns';
-import * as locales from 'date-fns/locale';
 
 export default function NewBot() {
   const { t, i18n } = useTranslation();
@@ -103,8 +102,8 @@ export default function NewBot() {
     if (typeof totalMinutes !== 'number' || Number.isNaN(totalMinutes)) return null;
 
     const selectedLanguage = i18n.language;
-    const dateFnsKey = config.availableLocales.find(locale => locale.code === selectedLanguage)?.dateFnsKey || 'enUS';
-    const locale = locales[dateFnsKey];
+    const locale = config.availableLocales.find(locale => locale.code === selectedLanguage)?.dateFnsLocale
+      || config.availableLocales.find(locale => locale.default).dateFnsLocale;
 
     const duration = intervalToDuration({
       end: totalMinutes * 60 * 1000,

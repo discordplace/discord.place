@@ -24,6 +24,22 @@ import { useTranslation } from 'react-i18next';
 
 extend([a11yPlugin]);
 
+function PremiumRequiredBlock() {
+  const { t } = useTranslation();
+
+  return (
+    <div className='mt-4 flex w-full flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4'>
+      <h2 className='flex items-center gap-x-2 text-lg font-bold text-primary'>
+        <PiWarningCircleFill /> {t('editProfilePage.premiumRequiredInfo.title')}
+      </h2>
+
+      <p className='text-sm font-medium text-tertiary'>
+        {t('editProfilePage.premiumRequiredInfo.description', { link: <Link href='/premium' className='text-secondary hover:text-primary'>{t('editProfilePage.premiumRequiredInfo.linkText')}</Link> })}
+      </p>
+    </div>
+  );
+}
+
 export default function Edit({ profileData }) {
   const { t } = useTranslation();
 
@@ -115,20 +131,6 @@ export default function Edit({ profileData }) {
   }
 
   const bioValueSpanRef = useRef(null);
-
-  function PremiumRequiredBlock() {
-    return (
-      <div className='mt-4 flex w-full flex-col gap-y-2 rounded-xl border border-yellow-500 bg-yellow-500/10 p-4'>
-        <h2 className='flex items-center gap-x-2 text-lg font-bold text-primary'>
-          <PiWarningCircleFill /> {t('editProfilePage.premiumRequiredInfo.title')}
-        </h2>
-
-        <p className='text-sm font-medium text-tertiary'>
-          {t('editProfilePage.premiumRequiredInfo.description', { link: <Link href='/premium' className='text-secondary hover:text-primary'>{t('editProfilePage.premiumRequiredInfo.linkText')}</Link> })}
-        </p>
-      </div>
-    );
-  }
 
   useEffect(() => {
     function handlePaste(event) {
@@ -246,7 +248,7 @@ export default function Edit({ profileData }) {
                   />
                 )
               ) : (
-                <p className='max-h-[300px] truncate overflow-y-auto font-medium whitespace-pre-wrap text-primary'>{profile[key] || 'Unknown'}</p>
+                <p className='max-h-[300px] overflow-y-auto font-medium whitespace-pre-wrap text-primary'>{profile[key] || 'Unknown'}</p>
               )}
             </div>
 

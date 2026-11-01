@@ -218,7 +218,7 @@ export default function ColumnRenderer({ data }) {
     case 'long-text': {
       return (
         <div className='flex items-center gap-x-2'>
-          <div className='line-clamp-2 max-w-[200px] overflow-hidden text-xs font-medium text-tertiary'>
+          <div className='line-clamp-2 max-w-[200px] text-xs font-medium text-tertiary'>
             {data.value}
           </div>
         </div>
@@ -325,7 +325,7 @@ export default function ColumnRenderer({ data }) {
             {data.value.title}
           </h2>
 
-          <div className='line-clamp-2 max-w-[200px] overflow-hidden text-xs font-medium text-tertiary'>
+          <div className='line-clamp-2 max-w-[200px] text-xs font-medium text-tertiary'>
             {data.value.description}
           </div>
         </div>

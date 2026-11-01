@@ -14,6 +14,21 @@ export default function StatusBadge() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const containerRef = useRef(null);
 
+  async function fetchStatus() {
+    setIsLoading(true);
+
+    try {
+      const data = await getStatus();
+      setStatusData(data);
+      setHasLoaded(true);
+    } catch {
+      setStatusData({ status: 'unknown' });
+      setHasLoaded(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     const element = containerRef.current;
     if (!element || hasLoaded) return;
@@ -32,21 +47,6 @@ export default function StatusBadge() {
 
     return () => observer.disconnect();
   }, [hasLoaded]);
-
-  async function fetchStatus() {
-    setIsLoading(true);
-
-    try {
-      const data = await getStatus();
-      setStatusData(data);
-      setHasLoaded(true);
-    } catch {
-      setStatusData({ status: 'unknown' });
-      setHasLoaded(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   function getStatusColor(status) {
     switch (status) {

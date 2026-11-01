@@ -101,7 +101,7 @@ export default function ServicesDropdown() {
 
               <div className='flex flex-col'>
                 <h1 className='text-left text-sm font-semibold text-secondary group-hover:text-primary'>{link.name}</h1>
-                <p className='line-clamp-2 overflow-hidden text-left text-xs font-medium whitespace-pre-wrap text-tertiary group-hover:text-secondary'>{link.description}</p>
+                <p className='line-clamp-2 text-left text-xs font-medium whitespace-pre-wrap text-tertiary group-hover:text-secondary'>{link.description}</p>
               </div>
             </div>
           </Container>
