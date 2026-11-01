@@ -124,7 +124,9 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
 
                     if (isNaN(inputValue) || inputValue === '') return;
 
-                    setPage(Math.max(1, Math.min(totalPages, parseInt(inputValue))));
+                    const pageNumber = Math.max(1, Math.min(totalPages, parseInt(inputValue)));
+
+                    setPage(pageNumber);
                   }
                 }}
                 onBlur={() => {
@@ -132,7 +134,9 @@ export default function Pagination({ page, setPage, loading, total, limit, disab
 
                   if (isNaN(inputValue) || inputValue === '') return;
 
-                  setPage(Math.max(1, Math.min(totalPages, parseInt(inputValue))));
+                  const pageNumber = Math.max(1, Math.min(totalPages, parseInt(inputValue)));
+
+                  setPage(pageNumber);
 
                   if (isMobile) window.scrollTo(0, 0);
                 }}

@@ -169,51 +169,49 @@ export default function Socials({ profile }) {
       </p>
 
       <div className='mt-4 flex flex-wrap gap-4'>
-        {socials.map(social => {
-          return (
-            <div
-              className='group flex w-full max-w-[calc(50%-1rem)] items-center justify-between gap-x-1 rounded-2xl border border-primary bg-secondary px-2 py-3 transition-colors hover:bg-tertiary'
-              key={social.link}
-            >
-              <div className='flex items-center gap-x-2 text-sm text-tertiary transition-colors group-hover:text-primary'>
-                <SocialIcon
-                  type={social.type}
-                  className='text-tertiary'
-                  size={20}
-                />
+        {socials.map(social => (
+          <div
+            className='group flex w-full max-w-[calc(50%-1rem)] items-center justify-between gap-x-1 rounded-2xl border border-primary bg-secondary px-2 py-3 transition-colors hover:bg-tertiary'
+            key={social.link}
+          >
+            <div className='flex items-center gap-x-2 text-sm text-tertiary transition-colors group-hover:text-primary'>
+              <SocialIcon
+                type={social.type}
+                className='text-tertiary'
+                size={20}
+              />
 
-                <span className='font-semibold select-none'>
-                  {social.type === 'custom' ? getDisplayableURL(social.link) : social.handle}
-                </span>
-              </div>
-
-              <div className='flex items-center gap-x-1'>
-                <Link
-                  className='text-tertiary opacity-0 transition-all group-hover:opacity-100 hover:text-primary'
-                  href={social.link}
-                  target='_blank'
-                >
-                  <MdArrowOutward size={18} />
-                </Link>
-
-                <button
-                  className='text-tertiary transition-all hover:text-primary disabled:pointer-events-none disabled:opacity-70'
-                  onClick={() => deleteSelectedSocial(social._id)}
-                  disabled={loading}
-                >
-                  {(loading && deletingSocialId === social._id) ? (
-                    <TbLoader
-                      className='animate-spin'
-                      size={18}
-                    />
-                  ) : (
-                    <FiX size={18} />
-                  )}
-                </button>
-              </div>
+              <span className='font-semibold select-none'>
+                {social.type === 'custom' ? getDisplayableURL(social.link) : social.handle}
+              </span>
             </div>
-          );
-        })}
+
+            <div className='flex items-center gap-x-1'>
+              <Link
+                className='text-tertiary opacity-0 transition-all group-hover:opacity-100 hover:text-primary'
+                href={social.link}
+                target='_blank'
+              >
+                <MdArrowOutward size={18} />
+              </Link>
+
+              <button
+                className='text-tertiary transition-all hover:text-primary disabled:pointer-events-none disabled:opacity-70'
+                onClick={() => deleteSelectedSocial(social._id)}
+                disabled={loading}
+              >
+                {(loading && deletingSocialId === social._id) ? (
+                  <TbLoader
+                    className='animate-spin'
+                    size={18}
+                  />
+                ) : (
+                  <FiX size={18} />
+                )}
+              </button>
+            </div>
+          </div>
+        ))}
 
         <div
           className={cn(
