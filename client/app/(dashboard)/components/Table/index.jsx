@@ -153,7 +153,7 @@ export default function Table({ tabs }) {
                     type='text'
                     className='peer w-full bg-transparent pl-5 text-secondary outline-hidden placeholder:text-[rgba(var(--text-tertiary))] focus-visible:text-primary sm:w-36'
                     placeholder='Search anything...'
-                    value={searchQuery}
+                    value={searchQuery || ''}
                     onChange={event => setSearchQuery(event.target.value)}
                     autoFocus={true}
                     ref={searchInputRef}
@@ -187,7 +187,7 @@ export default function Table({ tabs }) {
                     type='text'
                     className='w-24 bg-transparent text-secondary outline-hidden sm:w-36'
                     placeholder='Search anything...'
-                    value={searchQuery}
+                    value={searchQuery || ''}
                     onChange={event => setSearchQuery(event.target.value)}
                     autoFocus={true}
                     ref={searchInputRef}
