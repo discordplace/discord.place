@@ -1,175 +1,71 @@
+# Default configuration shared by all deployments.
+# Deployment-specific values belong in config.local.yml.
+
 discordScopes:
   - 'identify'
   - 'email'
   - 'guilds'
+
 botPresenceStatus: 'online'
-rateLimitWhitelist:
-  - '957840712404193290'
+
 trustProxy: true
-frontendUrl: 'https://discord.place'
-backendUrl: 'https://api.discord.place'
-docsUrl: 'https://docs.discord.place'
-statusUrl: 'https://status.discord.place'
-supportInviteUrl: 'https://invite.discord.place'
-emojis:
-  loading: '<a:loading:1247786499076915252>'
-  checkmark: '<:yes:1226129515718381568>'
-  pink_heart: '<:heart:1211809043564339290>'
-  badges:
-    admin: '<:white_admin:1267620006183571530>'
-    moderator: '<:white_moderator:1251538987592712345>'
-    premium: '<:white_premium:1251538989312249947>'
-    verified: '<:white_verified:1251538990524403793>'
-  empty_badge_slot: '<:empty_badge_slot:1251541500282798090>'
+
 discordWebhookRegex: ^https:\/\/discord(app)?\.com\/api\/webhooks\/\d+\/[\w-]+$
+
 sitemapConfig:
   blogsChangeFrequency: 'monthly'
   useInternalNetworking: true
-guildId: '1200254872059121764'
-guildInviteUrl: 'https://invite.discord.place'
-permissions:
-  canEditProfilesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canDeleteProfilesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canDeleteServersRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canDeleteEmojisRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canDeleteBotsRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canDeleteReviewsRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canDeleteTemplatesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canDeleteSoundsRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canDeleteThemesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canApproveEmojisRoles:
-    - '1238588360193216695'
-  canApproveBotsRoles:
-    - '1238588360193216695'
-  canApproveReviewsRoles:
-    - '1238588360193216695'
-  canApproveTemplatesRoles:
-    - '1238588360193216695'
-  canApproveSoundsRoles:
-    - '1238588360193216695'
-  canApproveThemesRoles:
-    - '1238588360193216695'
-  canEditServersRoles:
-    - '1238588360193216695'
-  canEditBotsRoles:
-    - '1238588360193216695'
-  canViewQuarantinesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-    - '1206355082883371049'
-  canCreateQuarantinesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-  canDeleteQuarantinesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-  canViewDashboardRoles:
-    - '1267549977379471403'
-  canDeleteBotDeniesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206355082883371049'
-    - '1238588360193216695'
-  canRestoreBotDeniesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206355082883371049'
-    - '1238588360193216695'
-  canViewTimeoutsRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206355082883371049'
-  canDeleteTimeoutsRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-  canSyncLemonSqueezyPlans:
-    - '957840712404193290'
-  canExecuteEval:
-    - '957840712404193290'
-    - '937316083533230110'
-  canExecuteFetchRoles:
-    - '1206032198562742312'
-    - '1206354879321210900'
-    - '1267549562957205645'
-  canExecuteRefreshBotDataRoles:
-    - '1206032198562742312'
-    - '1206354879321210900'
-    - '1267549562957205645'
-  canExecuteRefreshCacheRoles:
-    - '1206032198562742312'
-    - '1206354879321210900'
-    - '1267549562957205645'
-  canExecuteAddPremium:
-    - '957840712404193290'
-    - '937316083533230110'
-  canVerifyProfilesRoles:
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
-  canDeleteLinksRoles: 
-    - '1206032198562742312'
-    - '1267549562957205645'
-    - '1206354879321210900'
+
 profilesMaxSocialsLength: 8
+
 packagesMaxEmojisLength: 9
+
 packagesMinEmojisLength: 4
+
 serverKeywordsMaxLength: 5
+
 serverKeywordsMaxCharacters: 32
+
 serverDescriptionMaxCharacters: 256
+
 reviewsMaxCharacters: 256
+
 reviewsMinCharacters: 64
+
 reviewReplyMaxCharacters: 256
+
 reviewReplyMinCharacters: 16
+
 botShortDescriptionMinLength: 16
+
 botShortDescriptionMaxLength: 150
+
 botDescriptionMinLength: 32
+
 botDescriptionMaxLength: 8192
+
 botWebhookTokenMaxLength: 256
+
 serverWebhookTokenMaxLength: 256
+
 templateMaxNameLength: 32
+
 templateMinDescriptionLength: 32
+
 templateMaxDescriptionLength: 256
+
 templateMaxCategoriesLength: 3
+
 reportReasonMinLength: 32
+
 reportReasonMaxLength: 4096
+
 soundNameMaxLength: 64
+
 botMaxExtraOwners: 4
+
 maxServerCountDifference: 50
-roles:
-  jrModerator: '1206355082883371049'
-  moderator: '1267549562957205645'
-  headModerator: '1206354879321210900'
-  admin: '1206032198562742312'
-  premium: '1252335063123628084'
-  translator: '1275014710692941896'
+
 emojiCategories:
   - 'Gaming'
   - 'Anime'
@@ -181,6 +77,7 @@ emojiCategories:
   - 'Utility'
   - 'Other'
   - 'Animated'
+
 serverCategories:
   - 'Gaming'
   - 'Anime'
@@ -194,6 +91,7 @@ serverCategories:
   - 'Education'
   - 'Language'
   - 'Other'
+
 botCategories:
   - 'Moderation'
   - 'Utility'
@@ -207,6 +105,7 @@ botCategories:
   - 'Social Media Integration'
   - 'Anime & Manga'
   - 'Other'
+
 templateCategories: 
   - 'Chat'
   - 'Design'
@@ -218,11 +117,13 @@ templateCategories:
   - 'Roleplay'
   - 'Event'
   - 'Other'
+
 soundCategories:
   - 'Memes'
   - 'Loud'
   - 'NSFW'
   - 'Other'
+
 themeCategories:
   - 'Gradient'
   - 'Light'
@@ -234,16 +135,9 @@ themeCategories:
   - 'Blue'
   - 'Purple'
   - 'Pink'
+
 emojiMaxCategoriesLength: 4
-emojiQueueChannelId: '1267552786162389085'
-soundQueueChannelId: '1267552786162389085'
-reviewQueueChannelId: '1267552786162389085'
-themeQueueChannelId: '1267552786162389085'
-reportsQueueChannelId: '1267552786162389085'
-botQueueChannelId: '1267552786162389085'
-templateQueueChannelId: '1267552786162389085'
-webLogsChannelId: '1267553398337572905'
-testWebhookLogsChannelId: '1267553398337572905'
+
 excludeCollectionsInBackup:
   - 'botdenies'
   - 'botvotetimeouts'
@@ -253,9 +147,11 @@ excludeCollectionsInBackup:
   - 'evaluateresults'
   - 'githubcaches'
   - 'plans'
+
 quarantineTypes:
   - 'USER_ID'
   - 'GUILD_ID'
+
 quarantineRestrictions:
   'PROFILES_CREATE':
     available_to:
@@ -314,9 +210,7 @@ quarantineRestrictions:
   'THEMES_CREATE':
     available_to:
       - 'USER_ID'
-customHostnames:
-  - 'dsc.mom'
-linkShortenerHostname: 'dsc.im'
+
 emojisDenyReasons:
   reposted-emoji:
     name: 'Reposted Emoji'
@@ -339,6 +233,7 @@ emojisDenyReasons:
   clear-representation:
     name: 'Clear Representation'
     description: 'Emojis should clearly represent their intended concept or object. Avoid submitting emojis that are overly abstract or ambiguous, as they may cause confusion or misinterpretation among users.'
+
 botsDenyReasons:
   reposted-bot:
     name: 'Reposted Bot'
@@ -367,6 +262,7 @@ botsDenyReasons:
   misleading-or-inaccurate-information:
     name: 'Misleading or Inaccurate Information'
     description: "Bot with misleading descriptions or information may be removed. Provide clear and accurate details about your bot's purpose and content."
+
 templateDenyReasons:
   duplicate-template:
     name: 'Duplicate Template'
@@ -395,6 +291,7 @@ templateDenyReasons:
   proper-categorization:
     name: 'Proper Categorization'
     description: 'Ensure your template is categorized correctly. Misleading categorization can result in rejection.'
+
 soundDenyReasons:
   offensive-or-inappropriate-content:
     name: 'Offensive or Inappropriate Content'
@@ -423,18 +320,12 @@ soundDenyReasons:
   sound-licensing:
     name: 'Sound Licensing'
     description: 'Ensure your sound does not violate any copyright or intellectual property rights. Avoid using copyrighted audio, music, or sound effects without proper authorization.'
+
 themeDenyReasons:
   proper-categorization:
     name: 'Proper Categorization'
     description: 'Ensure your theme is categorized correctly. Misleading categorization can result in rejection.'
-lemonSqueezy:
-  variantIds:
-    tripledVotes:
-      servers: '421124'
-      bots: '421125'
-    standedOut:
-      servers: '425991'
-      bots: '425992'
+
 serverListingRequirements:
   - id: 'enough_members'
     name: 'Minimum Member Count'
@@ -448,6 +339,7 @@ serverListingRequirements:
     name: 'Community Server'
   - id: 'no_nsfw'
     name: 'No NSFW Content'
+
 availableLocales:
   - name: 'English'
     code: 'en'

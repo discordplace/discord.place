@@ -1,0 +1,160 @@
+# Copy this file to config.local.yml and replace the placeholders.
+# config.local.yml is ignored by Git.
+
+rateLimitWhitelist:
+  - '000000000000000000'
+frontendUrl: https://yourdomain.com
+backendUrl: https://api.yourdomain.com
+docsUrl: https://docs.yourdomain.com
+statusUrl: https://status.yourdomain.com
+supportInviteUrl: https://discord.gg/your-invite
+emojis:
+  loading: <a:loading:000000000000000000>
+  checkmark: <:emoji:000000000000000000>
+  pink_heart: <:emoji:000000000000000000>
+  badges:
+    admin: <:emoji:000000000000000000>
+    moderator: <:emoji:000000000000000000>
+    premium: <:emoji:000000000000000000>
+    verified: <:emoji:000000000000000000>
+  empty_badge_slot: <:emoji:000000000000000000>
+guildId: '000000000000000000'
+guildInviteUrl: https://discord.gg/your-invite
+permissions:
+  canEditProfilesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteProfilesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteServersRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteEmojisRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteBotsRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteReviewsRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteTemplatesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteSoundsRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteThemesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canApproveEmojisRoles:
+    - '000000000000000000'
+  canApproveBotsRoles:
+    - '000000000000000000'
+  canApproveReviewsRoles:
+    - '000000000000000000'
+  canApproveTemplatesRoles:
+    - '000000000000000000'
+  canApproveSoundsRoles:
+    - '000000000000000000'
+  canApproveThemesRoles:
+    - '000000000000000000'
+  canEditServersRoles:
+    - '000000000000000000'
+  canEditBotsRoles:
+    - '000000000000000000'
+  canViewQuarantinesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canCreateQuarantinesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteQuarantinesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+  canViewDashboardRoles:
+    - '000000000000000000'
+  canDeleteBotDeniesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canRestoreBotDeniesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canViewTimeoutsRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteTimeoutsRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+  canSyncLemonSqueezyPlans:
+    - '000000000000000000'
+  canExecuteEval:
+    - '000000000000000000'
+    - '000000000000000000'
+  canExecuteFetchRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canExecuteRefreshBotDataRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canExecuteRefreshCacheRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canExecuteAddPremium:
+    - '000000000000000000'
+    - '000000000000000000'
+  canVerifyProfilesRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+  canDeleteLinksRoles:
+    - '000000000000000000'
+    - '000000000000000000'
+    - '000000000000000000'
+roles:
+  jrModerator: '000000000000000000'
+  moderator: '000000000000000000'
+  headModerator: '000000000000000000'
+  admin: '000000000000000000'
+  premium: '000000000000000000'
+  translator: '000000000000000000'
+emojiQueueChannelId: '000000000000000000'
+soundQueueChannelId: '000000000000000000'
+reviewQueueChannelId: '000000000000000000'
+themeQueueChannelId: '000000000000000000'
+reportsQueueChannelId: '000000000000000000'
+botQueueChannelId: '000000000000000000'
+templateQueueChannelId: '000000000000000000'
+webLogsChannelId: '000000000000000000'
+testWebhookLogsChannelId: '000000000000000000'
+customHostnames:
+  - yourdomain.com
+linkShortenerHostname: your.link
+lemonSqueezy:
+  variantIds:
+    tripledVotes:
+      servers: '000000'
+      bots: '000000'
+    standedOut:
+      servers: '000000'
+      bots: '000000'

@@ -41,7 +41,7 @@ pnpm --dir client install
 
 **3. Configure the apps**
 
-Create `server/.env` and `client/.env`. The tracked `server/config.yml` and `client/config/data.js` contain defaults; create `server/config.local.yml` for deployment-specific overrides. Every option is documented in the collapsible sections below.
+Create `server/.env` and `client/.env`. Copy `server/config.local.example.yml` to `server/config.local.yml` and fill in your deployment values. The tracked `server/config.yml` and `client/config/data.js` contain defaults. Every option is documented in the collapsible sections below.
 
 **4. Start both apps**
 
@@ -276,38 +276,38 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 
 We use YML files for the configuration of the server. You can find the configuration file in the `server` directory. You can modify the values in these files to customize the server according to your requirements.
 
-The tracked `config.yml` contains the base configuration. To override only the values your deployment needs, create `config.local.yml` in the `server` directory. It is ignored by Git and deep-merged over `config.yml`.
+The tracked `config.yml` contains defaults shared by every deployment. Copy `config.local.example.yml` to `config.local.yml` and fill in the values for your Discord instance. `config.local.yml` is ignored by Git and deep-merged over `config.yml`.
 
-```yaml
-frontendUrl: 'https://yourdomain.com'
-backendUrl: 'https://api.yourdomain.com'
-guildId: 'your-guild-id'
+```bash
+cp server/config.local.example.yml server/config.local.yml
 ```
 
 **Parameters**
+
+The keys below are split between `config.yml` and `config.local.yml`. Deployment-specific keys are marked.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | `discordScopes` | Array<String> | Discord OAuth scopes required for the website. |
 | `botPresenceStatus` | String | Presence status for the bots. |
-| `rateLimitWhitelist` | Array<String> | Whitelisted user IDs for bypassing rate limits. |
+| `rateLimitWhitelist` | Array<String> | Whitelisted user IDs for bypassing rate limits. (config.local.yml) |
 | `trustProxy` | Number | Trust proxy setting for the server. |
-| `frontendUrl` | String | Client website URL. Overridden by `FRONTEND_URL`. |
-| `backendUrl` | String | Server API URL. Overridden by `BACKEND_URL`. |
-| `docsUrl` | String | Documentation URL used in the sitemap. |
-| `statusUrl` | String | Status page URL used in the sitemap. |
-| `supportInviteUrl` | String | URL for your Discord support server invite. |
-| `emojis` | Object | Emojis used in the bot. |
+| `frontendUrl` | String | Client website URL. (config.local.yml; overridden by `FRONTEND_URL`.) |
+| `backendUrl` | String | Server API URL. (config.local.yml; overridden by `BACKEND_URL`.) |
+| `docsUrl` | String | Documentation URL used in the sitemap. (config.local.yml) |
+| `statusUrl` | String | Status page URL used in the sitemap. (config.local.yml) |
+| `supportInviteUrl` | String | URL for your Discord support server invite. (config.local.yml) |
+| `emojis` | Object | Emojis used in the bot. (config.local.yml) |
 | `sitemapConfig` | Object | Configuration for generating the website sitemap. |
-| `guildId` | String | Base guild ID for the Discord bot. |
-| `guildInviteUrl` | String | Invite URL for the base guild. |
-| `permissions` | Object | Permissions for the server. |
+| `guildId` | String | Base guild ID for the Discord bot. (config.local.yml) |
+| `guildInviteUrl` | String | Invite URL for the base guild. (config.local.yml) |
+| `permissions` | Object | Permissions for the server. (config.local.yml) |
 | `maxServerCountDifference` | Number | Allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. |
-| `roles` | Object | Role IDs from the base guild. |
+| `roles` | Object | Role IDs from the base guild. (config.local.yml) |
 | `excludeCollectionsInBackup` | Array<String> | Collections to exclude from database backups. |
-| `customHostnames` | Array<String> | Custom hostnames for the profiles. |
-| `linkShortenerHostname` | String | Hostname for the link shortener. |
-| `lemonSqueezy.variantIds` | Object | Variant IDs for the Lemon Squeezy. |
+| `customHostnames` | Array<String> | Custom hostnames for the profiles. (config.local.yml) |
+| `linkShortenerHostname` | String | Hostname for the link shortener. (config.local.yml) |
+| `lemonSqueezy.variantIds` | Object | Variant IDs for the Lemon Squeezy. (config.local.yml) |
 | `availableLocales` | Array<Object> | Available locales for the website. |
 
 > [!NOTE]
@@ -315,21 +315,21 @@ guildId: 'your-guild-id'
 > - The `botPresenceStatus` value is used for the presence status of the bot. You can change this value to your own presence status.
 > - The `rateLimitWhitelist` value is used for whitelisted user IDs for bypassing rate limits. You can change these values to your own whitelisted user IDs.
 > - The `trustProxy` value is used for the trust proxy setting for the server. You can change this value to your own trust proxy setting.
-> - The `frontendUrl` and `backendUrl` values are used for the client website URL and server API URL. You can change these values to your own URLs or override them with `FRONTEND_URL` and `BACKEND_URL`. The CDN URL is configured with the `CDN_URL` environment variable.
+> - The `frontendUrl` and `backendUrl` values are configured in `config.local.yml` and are used for the client website URL and server API URL. Override them with `FRONTEND_URL` and `BACKEND_URL` when needed. The CDN URL is configured with the `CDN_URL` environment variable.
 > - The `docsUrl` and `statusUrl` values are used in the sitemap. Set them to your own documentation and status pages.
-> - The `supportInviteUrl` value is used for the support server invite URL. You can change this value to your own support server invite URL.
-> - The `emojis` value is used for the emojis used in the bot. You should change these values to your own emojis.
+> - The `supportInviteUrl` value is used for the support server invite URL. Set it in `config.local.yml`.
+> - The `emojis` value is used for the emojis used in the bot. Set these values in `config.local.yml`.
 > - The `sitemapConfig` value is used to configure sitemap generation settings, such as `blogsChangeFrequency` for how often blog items are expected to change, and `useInternalNetworking` for toggling whether to fetch blogs internally. When enabled, the server uses `INTERNAL_FRONTEND_URL` if it is set, otherwise it uses `config.frontendUrl`.
 > - The client and server ports are configured with the `CLIENT_PORT` and `SERVER_PORT` environment variables, not in `config.yml`.
-> - The `guildId` and `guildInviteUrl` values are used for the base guild ID and invite URL for the base guild. You can change these values to your own guild ID and invite URL.
-> - The `permissions` value is used for the permissions for the server. If permission name has `Roles` in the end, that means that permission is role-based. Otherwise, permission is user ID-based. You can change these values to your own permissions.
+> - The `guildId` and `guildInviteUrl` values are used for the base guild ID and invite URL for the base guild. Set them in `config.local.yml`.
+> - The `permissions` value is used for the permissions for the server. If a permission name has `Roles` in the end, that means the permission is role-based. Otherwise, the permission is user ID-based. Set these values in `config.local.yml`.
 > - The `maxServerCountDifference` value is used for the allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. When new requests come to the stats API route, we check the server count of the bot. If the difference between the provided server count and the actual server count is greater than this value, we reject the request.
-> - The `roles` value is used for the role IDs from the base guild. You can change these values to your own role IDs.
+> - The `roles` value is used for the role IDs from the base guild. Set these values in `config.local.yml`.
 > - The `excludeCollectionsInBackup` value is used for collections to exclude from database backups. We take daily backups of the database. If you don't want to take backups of some collections, you can add those collections to this value. Make sure to add the collection name exactly as it is in the database.
-> - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API.
-> - The `linkShortenerHostname` value is used for the hostname of the link shortener. You can change this value to your own link shortener hostname. Make sure to connect this hostname to the same server where you host the API and connect it to the correct port, same as the API.
-> - The `lemonSqueezy.variantIds` value is used for the variant IDs for the Lemon Squeezy. We sell some products on Lemon Squeezy with different variants. You should create these variants on the Lemon Squeezy and get the variant IDs from there.
-> - Make sure to fill all fields that end with `ChannelId` with the correct channel IDs from the base guild.
+> - The `customHostnames` value is used for the custom hostnames for the profiles. Set it in `config.local.yml` and connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API.
+> - The `linkShortenerHostname` value is used for the hostname of the link shortener. Set it in `config.local.yml` and connect this hostname to the same server where you host the API and connect it to the correct port, same as the API.
+> - The `lemonSqueezy.variantIds` value is used for the variant IDs for Lemon Squeezy. Set these in `config.local.yml` after creating the corresponding variants in Lemon Squeezy.
+> - All fields ending with `ChannelId` are in `config.local.yml`. Fill them with the correct channel IDs from the base guild.
 > - The `availableLocales` value is used for the available locales for the server. You can change these values to your own available locales. Locale files should be in the `server/src/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the **Adding a new language** section below.
 
 </details>
