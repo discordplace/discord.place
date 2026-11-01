@@ -106,6 +106,7 @@ SENTRY_AUTH_TOKEN=
 | `SENTRY_AUTH_TOKEN` | Sentry auth token for error tracking. |
 
 > [!NOTE]
+> - The client validates these variables with zod when Next.js loads. Missing required values or malformed URLs, ports, or hostnames stop the build or start with a list of errors.
 > - Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile site key.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the server's `CLIENT_SECRET` value.
 > - The `CLIENT_PORT` value controls the Next.js listener. Set it in the environment where you build and start the client.
@@ -213,6 +214,7 @@ SENTRY_DSN=
 | `SENTRY_DSN` | Sentry DSN for error tracking. (not required) |
 
 > [!NOTE]
+> - The server validates these variables with zod at startup. Missing required values or malformed URLs or ports stop the process with a list of errors.
 > - The `SERVER_PORT` value controls the API listener. Set it in the environment where you start the server.
 > - The `FRONTEND_URL` and `BACKEND_URL` values override the URLs in `config.yml`. Leave them empty to use the values from the configuration file.
 > - The `INTERNAL_FRONTEND_URL` value is optional. It is used by the sitemap when `sitemapConfig.useInternalNetworking` is enabled, so the server can fetch blogs from the client without going through the public domain.

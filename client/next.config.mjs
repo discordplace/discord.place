@@ -1,5 +1,9 @@
 import { withSentryConfig } from '@sentry/nextjs/config';
 
+import { validateClientEnv } from './config/env.mjs';
+
+validateClientEnv();
+
 const clientPort = process.env.CLIENT_PORT || process.env.NEXT_PUBLIC_PORT || '5000';
 const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'development' ? 'http://localhost:5001' : 'https://api.discord.place');
 

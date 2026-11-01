@@ -1,7 +1,7 @@
 require('module-alias/register');
 
-const environmentCheck = require('@/utils/environmentCheck.js');
-environmentCheck();
+const { validateEnvironment } = require('@/utils/env');
+validateEnvironment();
 
 const config = require('@/utils/loadConfig')();
 global.config = config;
