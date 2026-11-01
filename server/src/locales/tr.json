@@ -488,7 +488,7 @@
       ]
     },
     "reminder": {
-      "name": "Hatırlatıcı",
+      "name": "hatırlatıcı",
       "errors": {
         "reminder_too_long": "Hatırlatıcı 512 karakter veya daha az olmalıdır.",
         "invalid_time": "Geçersiz zaman dilimi. Örnekler: `tomorrow`, `in 9 hours`, `next week`, `next Friday at 3pm`",

@@ -394,7 +394,7 @@
           }
         }
       },
-      "name": "Reminder",
+      "name": "reminder",
       "description": "Create, list or delete reminders."
     },
     "reminders": {
