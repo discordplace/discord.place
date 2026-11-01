@@ -5,6 +5,7 @@ const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
 const updateClientActivity = require('@/utils/updateClientActivity');
 const syncMemberRoles = require('@/utils/syncMemberRoles');
+const fetchGuildMembers = require('@/utils/fetchGuildMembers');
 const sleep = require('@/utils/sleep');
 
 // Schemas
@@ -77,6 +78,9 @@ module.exports = class Client {
         logger.error(`Guild with ID ${config.guildId} not found. You can change this guild ID in the config file.`);
         process.exit(1);
       }
+
+      const members = await fetchGuildMembers();
+      if (members) logger.info(`Fetched ${members.size} members for guild ${config.guildId}.`);
 
       logger.info(`Client logged in as ${this.client.user.tag}`);
 

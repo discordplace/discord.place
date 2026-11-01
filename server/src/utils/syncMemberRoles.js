@@ -1,5 +1,6 @@
 const User = require('@/schemas/User');
 const sleep = require('@/utils/sleep');
+const fetchGuildMembers = require('@/utils/fetchGuildMembers');
 const fs = require('node:fs');
 const path = require('node:path');
 const dedent = require('dedent');
@@ -7,26 +8,8 @@ const dedent = require('dedent');
 async function syncMemberRoles() {
   const guild = client.guilds.cache.get(config.guildId);
 
-  let members;
-  try {
-    members = await guild.members.fetch();
-  } catch (error) {
-    const retryAfter = error?.retryAfter ?? error?.data?.retry_after;
-
-    if (typeof retryAfter === 'number') {
-      logger.warn(`Member list request was rate limited. Retrying in ${Math.ceil(retryAfter)} seconds.`);
-
-      await sleep(Math.ceil(retryAfter * 1000) + 1000);
-
-      members = await guild.members.fetch().catch(retryError => {
-        logger.warn('Skipping member role sync due to failed member fetch.', retryError?.message || retryError);
-
-        return null;
-      });
-
-      if (!members) return;
-    } else throw error;
-  }
+  const members = await fetchGuildMembers(guild);
+  if (!members) return;
 
   const currentDate = new Date();
 
