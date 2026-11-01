@@ -65,7 +65,7 @@ export default function Actions({ bot }) {
             loading: t('botPage.actions.toast.voting', { botName: bot.username }),
             success: () => {
               setLoading(false);
-              setVoteTimeout({ createdAt: new Date().getTime() + 86_400_000 });
+              setVoteTimeout({ createdAt: Date.now() });
               revalidateBot(bot.id);
 
               return t('botPage.actions.toast.voted', { botName: bot.username });

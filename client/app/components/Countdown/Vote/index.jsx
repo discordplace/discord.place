@@ -19,17 +19,20 @@ export default function Countdown({ date }) {
   return loaded ? (
     <ReactCountdown
       date={date}
-      renderer={({ hours, minutes, seconds, completed }) => {
+      renderer={({ days, hours, minutes, seconds, completed }) => {
         if (completed) return t('buttons.vote');
+
+        // `hours` is always 0-23, so include the days to display the total hours.
+        const totalHours = (days * 24) + hours;
 
         return (
           <>
             <span className='hidden items-center gap-x-1 lg:flex'>
-              {t('voteCountdown.desktop', { hours, minutes, seconds })}
+              {t('voteCountdown.desktop', { hours: totalHours, minutes, seconds })}
             </span>
 
             <span className='flex items-center gap-x-1 lg:hidden'>
-              {t('voteCountdown.mobile', { hours, minutes })}
+              {t('voteCountdown.mobile', { hours: totalHours, minutes })}
             </span>
           </>
         );

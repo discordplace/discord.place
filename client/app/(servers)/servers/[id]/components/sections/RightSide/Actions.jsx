@@ -70,7 +70,7 @@ export default function Actions({ server }) {
             success: data => {
               setLoading(false);
               setServerVotes(serverVotes + (server.badges.includes('Premium') ? 2 : 1));
-              setVoteTimeout({ createdAt: new Date().getTime() + 86_400_000 });
+              setVoteTimeout({ createdAt: Date.now() });
               setCanSetReminder(data.inGuild);
               revalidateServer(server.id);
 
