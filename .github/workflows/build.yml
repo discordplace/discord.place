@@ -98,7 +98,7 @@ jobs:
             pnpm install --frozen-lockfile
             
             echo "Starting application..."
-            doppler run --project discord-place --config prd -- pm2 restart discord.place --update-env
+            pm2 startOrReload /root/apps/discord.place/ecosystem.config.cjs --only discord.place --update-env
             
             echo "Cleaning up temporary directory..."
             rm -rf "$TEMP_DIR"
@@ -157,7 +157,7 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use $(nvm current)
             pnpm install > /dev/null 2>&1
-            doppler run --project discord-place --config prd -- pm2 restart api.discord.place --update-env > /dev/null 2>&1
+            pm2 startOrReload /root/apps/discord.place/ecosystem.config.cjs --only api.discord.place --update-env > /dev/null 2>&1
           EOF
 
       - uses: chimpdev/bark-github-action@v1.0.1

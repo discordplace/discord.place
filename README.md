@@ -440,7 +440,13 @@ doppler run --project discord-place --config dev -- pnpm dev
 
 `.env` files remain optional. When both are present, process environment variables take precedence over `.env` values.
 
-The GitHub deploy workflow already wraps the client build and both PM2 restarts with these commands. The server must have the Doppler CLI and service token configured before deploying.
+Both apps are defined in `ecosystem.config.cjs`, and each process runs through `doppler run`. After changing that file, reload PM2 with:
+
+```bash
+pm2 startOrReload ecosystem.config.cjs --update-env
+```
+
+The deploy workflow uses the same ecosystem file and reloads only the affected app. The server must have the Doppler CLI and token configured before deploying.
 
 ## Community
 
