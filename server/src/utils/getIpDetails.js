@@ -11,7 +11,7 @@ async function getIpDetails(ip) {
   const axiosInstance = axios.create();
 
   const headers = {
-    'User-Agent': 'discord.place (https://discord.place)',
+    'User-Agent': `discord.place (${config.frontendUrl})`,
     'Content-Type': 'application/json'
   };
 

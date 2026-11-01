@@ -9,7 +9,7 @@
     "accept_policies": {
       "embed": {
         "title": "Politikalarımız Hakkında",
-        "description": "Botu kullanmadan önce politikalarımızı kabul etmeniz gerekiyor.\nPolitikaları kabul ettikten sonra, botu istediğiniz gibi kullanabilirsiniz.\n\n- [Gizlilik Politikası](https://discord.place/legal/privacy)\n- [Hizmet Şartları](https://discord.place/legal/terms)\n- [Çerez Politikası](https://discord.place/legal/cookie)\n- [İçerik Politikası](https://discord.place/legal/content-policy)\n- [Satın Alma Politikası](https://discord.place/legal/purchase-policy)\n\nHerhangi bir sorunuz varsa, **legal@discord.place** adresinden bize ulaşabilirsiniz."
+        "description": "Botu kullanmadan önce politikalarımızı kabul etmeniz gerekiyor.\nPolitikaları kabul ettikten sonra, botu istediğiniz gibi kullanabilirsiniz.\n\n- [Gizlilik Politikası]({frontendUrl}/legal/privacy)\n- [Hizmet Şartları]({frontendUrl}/legal/terms)\n- [Çerez Politikası]({frontendUrl}/legal/cookie-policy)\n- [İçerik Politikası]({frontendUrl}/legal/content-policy)\n- [Satın Alma Politikası]({frontendUrl}/legal/purchase-policy)\n\nHerhangi bir sorunuz varsa, **{legalEmail}** adresinden bize ulaşabilirsiniz."
       },
       "button_label": "Politikaları Kabul Et",
       "timeout": "Politikaları zamanında kabul etmediniz.",

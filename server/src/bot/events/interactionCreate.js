@@ -19,10 +19,13 @@ module.exports = async interaction => {
     const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, returnDocument: 'after' });
 
     if (!user.acceptedPolicies) {
+      const frontendUrl = config.frontendUrl.replace(/\/$/, '');
+      const legalEmail = `legal@${new URL(frontendUrl).hostname}`;
+
       const embeds = [
         new Discord.EmbedBuilder()
           .setTitle(await interaction.translate('commands.accept_policies.embed.title'))
-          .setDescription(await interaction.translate('commands.accept_policies.embed.description'))
+          .setDescription(await interaction.translate('commands.accept_policies.embed.description', { frontendUrl, legalEmail }))
           .setColor(Discord.Colors.Blurple)
           .setFooter({ text: 'discord.place', iconURL: client.user.displayAvatarURL() })
       ];

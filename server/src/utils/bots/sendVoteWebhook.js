@@ -13,7 +13,7 @@ async function sendVoteWebhook(bot, voter, data) {
   const axiosInstance = axios.create();
 
   const headers = {
-    'User-Agent': 'discord.place (https://discord.place)',
+    'User-Agent': `discord.place (${config.frontendUrl})`,
     'Content-Type': 'application/json'
   };
 
@@ -92,7 +92,7 @@ async function sendVoteWebhook(bot, voter, data) {
           }
         ])
         .setColor('#5865f2')
-        .setFooter({ text: 'discord.place', iconURL: 'https://discord.place/templates/square_logo.png' });
+        .setFooter({ text: 'discord.place', iconURL: `${config.frontendUrl}/templates/square_logo.png` });
 
       requestConfig.data = {
         embeds: [embed.toJSON()]
