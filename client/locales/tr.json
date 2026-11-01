@@ -227,6 +227,7 @@
     "buyTripleVotes": "3X Oy Satın Al",
     "standOut": "Öne Çık",
     "submitReview": "İncelemeyi Gönder",
+    "reply": "Yanıtla",
     "loginWithDiscord": "Discord ile Giriş Yap",
     "discardChanges": "Değişiklikleri İptal Et",
     "saveChanges": "Değişiklikleri Kaydet",
@@ -748,7 +749,9 @@
         "title": "Yorumlar",
         "toast": {
           "submittingReview": "Yorum gönderiliyor..",
-          "reviewSubmitted": "Yorumunuz başarıyla gönderildi!"
+          "reviewSubmitted": "Yorumunuz başarıyla gönderildi!",
+          "submittingReply": "Yanıt gönderiliyor..",
+          "replySubmitted": "Yanıtınız onay için gönderildi!"
         },
         "totalReviews": "(0)[Yorum yok];(1-inf)[{{count}} yorum];",
         "reviewSubmitted": {
@@ -765,7 +768,22 @@
         },
         "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız.",
         "ratingRequired": "Lütfen bir derecelendirme seçin.",
-        "ratingSelected": "Seçilen derecelendirme: {{count}}/5"
+        "ratingSelected": "Seçilen derecelendirme: {{count}}/5",
+        "reply": {
+          "owner": "Sahip",
+          "pending": "Bu yanıt onay bekliyor. Onaylandıktan sonra herkes tarafından görülebilecek."
+        },
+        "replyModal": {
+          "title": "Yoruma Yanıt Ver",
+          "description": "Bu yoruma bir yanıt yazın. Onaylandıktan sonra görünür olacaktır.",
+          "inputs": {
+            "reply": {
+              "label": "Yanıtınız",
+              "description": "Bu yanıt onaylandıktan sonra yorumun altında herkese açık gösterilecektir."
+            }
+          },
+          "tooShort": "Yanıt en az {{min}} karakter olmalıdır."
+        }
       },
       "topVoters": {
         "title": "En Çok Oy Verenler"
@@ -1468,7 +1486,9 @@
         "title": "Yorumlar",
         "toast": {
           "submittingReview": "Yorum gönderiliyor..",
-          "reviewSubmitted": "Yorumunuz başarıyla gönderildi!"
+          "reviewSubmitted": "Yorumunuz başarıyla gönderildi!",
+          "submittingReply": "Yanıt gönderiliyor..",
+          "replySubmitted": "Yanıtınız onay için gönderildi!"
         },
         "totalReviews": "(0)[Yorum yok];(1-inf)[{{count}} yorum];",
         "reviewSubmitted": {
@@ -1486,7 +1506,22 @@
         },
         "loginRequiredForReview": "Bir yorum yapmak için giriş yapmalısınız.",
         "ratingRequired": "Lütfen bir derecelendirme seçin.",
-        "ratingSelected": "Seçilen derecelendirme: {{count}}/5"
+        "ratingSelected": "Seçilen derecelendirme: {{count}}/5",
+        "reply": {
+          "owner": "Sahip",
+          "pending": "Bu yanıt onay bekliyor. Onaylandıktan sonra herkes tarafından görülebilecek."
+        },
+        "replyModal": {
+          "title": "Yoruma Yanıt Ver",
+          "description": "Bu yoruma bir yanıt yazın. Onaylandıktan sonra görünür olacaktır.",
+          "inputs": {
+            "reply": {
+              "label": "Yanıtınız",
+              "description": "Bu yanıt onaylandıktan sonra yorumun altında herkese açık gösterilecektir."
+            }
+          },
+          "tooShort": "Yanıt en az {{min}} karakter olmalıdır."
+        }
       },
       "topVoters": {
         "title": "En Çok Oy Verenler"

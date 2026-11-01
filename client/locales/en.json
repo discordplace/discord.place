@@ -227,6 +227,7 @@
     "buyTripleVotes": "Get Triple Votes",
     "standOut": "Stand Out",
     "submitReview": "Submit Review",
+    "reply": "Reply",
     "loginWithDiscord": "Log in with Discord",
     "discardChanges": "Discard Changes",
     "saveChanges": "Save Changes",
@@ -748,7 +749,9 @@
         "title": "Reviews",
         "toast": {
           "submittingReview": "Submitting review..",
-          "reviewSubmitted": "Your review has been submitted successfully!"
+          "reviewSubmitted": "Your review has been submitted successfully!",
+          "submittingReply": "Submitting reply..",
+          "replySubmitted": "Your reply has been submitted for approval!"
         },
         "totalReviews": "(0)[No reviews];(1)[1 review];(2-inf)[{{count}} reviews];",
         "reviewSubmitted": {
@@ -765,7 +768,22 @@
         },
         "loginRequiredForReview": "You need to be logged in to leave a review.",
         "ratingRequired": "Please select a rating.",
-        "ratingSelected": "Selected rating: {{count}}/5"
+        "ratingSelected": "Selected rating: {{count}}/5",
+        "reply": {
+          "owner": "Owner",
+          "pending": "This reply is waiting for approval. It will be visible to everyone once approved."
+        },
+        "replyModal": {
+          "title": "Reply to Review",
+          "description": "Write a reply to this review. It will be visible after approval.",
+          "inputs": {
+            "reply": {
+              "label": "Your Reply",
+              "description": "This reply will be shown publicly under the review once approved."
+            }
+          },
+          "tooShort": "Reply must be at least {{min}} characters."
+        }
       },
       "topVoters": {
         "title": "Top Voters"
@@ -1468,7 +1486,9 @@
         "title": "Reviews",
         "toast": {
           "submittingReview": "Submitting review..",
-          "reviewSubmitted": "Your review has been submitted successfully!"
+          "reviewSubmitted": "Your review has been submitted successfully!",
+          "submittingReply": "Submitting reply..",
+          "replySubmitted": "Your reply has been submitted for approval!"
         },
         "totalReviews": "(0)[No reviews];(1)[1 review];(2-inf)[{{count}} reviews];",
         "reviewSubmitted": {
@@ -1486,7 +1506,22 @@
         },
         "loginRequiredForReview": "You need to be logged in to leave a review.",
         "ratingRequired": "Please select a rating.",
-        "ratingSelected": "Selected rating: {{count}}/5"
+        "ratingSelected": "Selected rating: {{count}}/5",
+        "reply": {
+          "owner": "Owner",
+          "pending": "This reply is waiting for approval. It will be visible to everyone once approved."
+        },
+        "replyModal": {
+          "title": "Reply to Review",
+          "description": "Write a reply to this review. It will be visible after approval.",
+          "inputs": {
+            "reply": {
+              "label": "Your Reply",
+              "description": "This reply will be shown publicly under the review once approved."
+            }
+          },
+          "tooShort": "Reply must be at least {{min}} characters."
+        }
       },
       "topVoters": {
         "title": "Top Voters"

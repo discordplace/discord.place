@@ -228,6 +228,7 @@
     "buyTripleVotes": "Üçqat səs alın",
     "standOut": "Fərqli olun",
     "submitReview": "Rəy göndərin",
+    "reply": "Cavab ver",
     "loginWithDiscord": "Discord ilə daxil olun",
     "discardChanges": "Dəyişiklikləri ləğv edin",
     "saveChanges": "Dəyişiklikləri Saxla",
@@ -749,7 +750,9 @@
         "title": "Rəylər",
         "toast": {
           "submittingReview": "Rəy göndərilir..",
-          "reviewSubmitted": "Rəyiniz uğurla təqdim edildi!"
+          "reviewSubmitted": "Rəyiniz uğurla təqdim edildi!",
+          "submittingReply": "Cavab göndərilir..",
+          "replySubmitted": "Cavabınız təsdiq üçün göndərildi!"
         },
         "totalReviews": "(0)[Rəy yoxdur];(1)[1 rəy];(2-inf)[{{count}} rəylər];",
         "reviewSubmitted": {
@@ -766,7 +769,22 @@
         },
         "loginRequiredForReview": "Rəy yazmaq üçün daxil olmalısınız.",
         "ratingRequired": "Zəhmət olmasa reytinq seçin.",
-        "ratingSelected": "Seçilmiş reytinq: {{count}}/5"
+        "ratingSelected": "Seçilmiş reytinq: {{count}}/5",
+        "reply": {
+          "owner": "Sahib",
+          "pending": "Bu cavab təsdiq gözləyir. Təsdiqləndikdən sonra hamı tərəfindən görünəcək."
+        },
+        "replyModal": {
+          "title": "Rəyə Cavab Ver",
+          "description": "Bu rəyə cavab yazın. Təsdiqləndikdən sonra görünəcək.",
+          "inputs": {
+            "reply": {
+              "label": "Cavabınız",
+              "description": "Bu cavab təsdiqləndikdən sonra rəyin altında ictimaiyyətə göstəriləcək."
+            }
+          },
+          "tooShort": "Cavab ən azı {{min}} simvol olmalıdır."
+        }
       },
       "topVoters": {
         "title": "Ən çox səs verənlər"
@@ -1469,7 +1487,9 @@
         "title": "Rəylər",
         "toast": {
           "submittingReview": "Rəy göndərilir..",
-          "reviewSubmitted": "Rəyiniz uğurla təqdim edildi!"
+          "reviewSubmitted": "Rəyiniz uğurla təqdim edildi!",
+          "submittingReply": "Cavab göndərilir..",
+          "replySubmitted": "Cavabınız təsdiq üçün göndərildi!"
         },
         "totalReviews": "(0)[Rəy yoxdur];(1)[1 rəy];(2-inf)[{{count}} rəylər];",
         "reviewSubmitted": {
@@ -1487,7 +1507,22 @@
         },
         "loginRequiredForReview": "Rəy yazmaq üçün daxil olmalısınız.",
         "ratingRequired": "Zəhmət olmasa reytinq seçin.",
-        "ratingSelected": "Seçilmiş reytinq: {{count}}/5"
+        "ratingSelected": "Seçilmiş reytinq: {{count}}/5",
+        "reply": {
+          "owner": "Sahib",
+          "pending": "Bu cavab təsdiq gözləyir. Təsdiqləndikdən sonra hamı tərəfindən görünəcək."
+        },
+        "replyModal": {
+          "title": "Rəyə Cavab Ver",
+          "description": "Bu rəyə cavab yazın. Təsdiqləndikdən sonra görünəcək.",
+          "inputs": {
+            "reply": {
+              "label": "Cavabınız",
+              "description": "Bu cavab təsdiqləndikdən sonra rəyin altında ictimaiyyətə göstəriləcək."
+            }
+          },
+          "tooShort": "Cavab ən azı {{min}} simvol olmalıdır."
+        }
       },
       "topVoters": {
         "title": "Ən çox səs verənlər"

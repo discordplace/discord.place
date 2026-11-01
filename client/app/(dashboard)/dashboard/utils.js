@@ -13,9 +13,15 @@ import INTERNAL_deleteSound from '@/lib/request/sounds/deleteSound';
 import INTERNAL_approveServerReview from '@/lib/request/servers/approveReview';
 import INTERNAL_denyServerReview from '@/lib/request/servers/denyReview';
 import INTERNAL_deleteServerReview from '@/lib/request/servers/deleteReview';
+import INTERNAL_approveServerReviewReply from '@/lib/request/servers/approveReviewReply';
+import INTERNAL_denyServerReviewReply from '@/lib/request/servers/denyReviewReply';
+import INTERNAL_deleteServerReviewReply from '@/lib/request/servers/deleteReviewReply';
 import INTERNAL_approveBotReview from '@/lib/request/bots/approveReview';
 import INTERNAL_denyBotReview from '@/lib/request/bots/denyReview';
 import INTERNAL_deleteBotReview from '@/lib/request/bots/deleteReview';
+import INTERNAL_approveBotReviewReply from '@/lib/request/bots/approveReviewReply';
+import INTERNAL_denyBotReviewReply from '@/lib/request/bots/denyReviewReply';
+import INTERNAL_deleteBotReviewReply from '@/lib/request/bots/deleteReviewReply';
 import INTERNAL_approveTheme from '@/lib/request/themes/approveTheme';
 import INTERNAL_denyTheme from '@/lib/request/themes/denyTheme';
 import INTERNAL_deleteTheme from '@/lib/request/themes/deleteTheme';
@@ -201,6 +207,33 @@ export function deleteReview(type, serverOrBotId, reviewId) {
     params: [serverOrBotId, reviewId],
     promise: type === 'server' ? INTERNAL_deleteServerReview : INTERNAL_deleteBotReview,
     successMessage: `${type === 'server' ? 'Server' : 'Bot'}  review ${reviewId} deleted successfully!`
+  });
+}
+
+export function approveReviewReply(type, serverOrBotId, reviewId) {
+  return sendRequest({
+    loadingMessage: `Approving ${type === 'server' ? 'Server' : 'Bot'} review reply ${reviewId}..`,
+    params: [serverOrBotId, reviewId],
+    promise: type === 'server' ? INTERNAL_approveServerReviewReply : INTERNAL_approveBotReviewReply,
+    successMessage: `${type === 'server' ? 'Server' : 'Bot'} review reply ${reviewId} approved successfully!`
+  });
+}
+
+export function denyReviewReply(type, serverOrBotId, reviewId, reason) {
+  return sendRequest({
+    loadingMessage: `Denying ${type === 'server' ? 'Server' : 'Bot'} review reply ${reviewId}..`,
+    params: [serverOrBotId, reviewId, reason],
+    promise: type === 'server' ? INTERNAL_denyServerReviewReply : INTERNAL_denyBotReviewReply,
+    successMessage: `${type === 'server' ? 'Server' : 'Bot'} review reply ${reviewId} denied successfully!`
+  });
+}
+
+export function deleteReviewReply(type, serverOrBotId, reviewId) {
+  return sendRequest({
+    loadingMessage: `Deleting ${type === 'server' ? 'Server' : 'Bot'} review reply ${reviewId}..`,
+    params: [serverOrBotId, reviewId],
+    promise: type === 'server' ? INTERNAL_deleteServerReviewReply : INTERNAL_deleteBotReviewReply,
+    successMessage: `${type === 'server' ? 'Server' : 'Bot'} review reply ${reviewId} deleted successfully!`
   });
 }
 

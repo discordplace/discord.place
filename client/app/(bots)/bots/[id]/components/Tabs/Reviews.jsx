@@ -8,6 +8,7 @@ import useAuthStore from '@/stores/auth';
 import { Suspense, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import createReview from '@/lib/request/bots/createReview';
+import replyReview from '@/lib/request/bots/replyReview';
 import fetchReviews from '@/lib/request/bots/fetchReviews';
 import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';
 import cn from '@/lib/cn';
@@ -18,6 +19,12 @@ import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ReportableArea from '@/app/components/ReportableArea';
 import Image from '@/app/components/AppImage';
 import { useMedia } from 'react-use';
+import getRelativeTime from '@/lib/getRelativeTime';
+import useModalsStore from '@/stores/modals';
+import { useShallow } from 'zustand/react/shallow';
+import ReplyReviewModalContent from '@/app/(bots)/bots/[id]/components/Tabs/ReplyReviewModalContent';
+import useGeneralStore from '@/stores/general';
+import ReviewReply from '@/app/components/ReviewReply';
 
 export default function Reviews({ bot }) {
   const { t, i18n } = useTranslation();
@@ -31,6 +38,13 @@ export default function Reviews({ bot }) {
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
   const [review, setReview] = useState('');
   const [hoveredRating, setHoveredRating] = useState(0);
+  const setReplyContent = useGeneralStore(state => state.replyReviewModal.setReplyContent);
+  const { openModal, closeModal, disableButton, enableButton } = useModalsStore(useShallow(state => ({
+    closeModal: state.closeModal,
+    disableButton: state.disableButton,
+    enableButton: state.enableButton,
+    openModal: state.openModal
+  })));
   const user = useAuthStore(state => state.user);
   const loggedIn = useAuthStore(state => state.loggedIn);
 
@@ -73,6 +87,45 @@ export default function Reviews({ bot }) {
         setReviewSubmitted(true);
 
         return t('botPage.tabs.reviews.toast.reviewSubmitted');
+      }
+    });
+  }
+
+  function submitReply(reviewId, modalId) {
+    const content = useGeneralStore.getState().replyReviewModal.replyContent.trim();
+
+    if (content.length < config.reviewReplyMinCharacters) {
+      return toast.error(t('botPage.tabs.reviews.replyModal.tooShort', { min: config.reviewReplyMinCharacters }));
+    }
+
+    disableButton(modalId, 'reply');
+
+    toast.promise(replyReview(bot.id, reviewId, content), {
+      error: error => {
+        enableButton(modalId, 'reply');
+
+        return error;
+      },
+      loading: t('botPage.tabs.reviews.toast.submittingReply'),
+      success: () => {
+        enableButton(modalId, 'reply');
+        setReplyContent('');
+        setReviews(currentReviews => currentReviews.map(item => (item._id === reviewId ? {
+          ...item,
+          reply: {
+            approved: false,
+            content,
+            created_at: new Date().toISOString(),
+            user: {
+              avatar: user?.avatar,
+              id: user?.id,
+              username: user?.username
+            }
+          }
+        } : item)));
+        closeModal(modalId);
+
+        return t('botPage.tabs.reviews.toast.replySubmitted');
       }
     });
   }
@@ -271,7 +324,11 @@ export default function Reviews({ bot }) {
       </div>
 
       {reviews.map(review => (
-        <div className='mt-8 flex w-full flex-col gap-y-4 sm:flex-row' key={review._id}>
+        <div
+          className='relative mt-8 flex w-full flex-col gap-y-4 sm:flex-row'
+          id={`review-${review._id}`}
+          key={review._id}
+        >
           <div className='flex w-full gap-x-4 sm:w-[35%]'>
             <Link
               href={`/profile/u/${review.user.id}`}
@@ -318,11 +375,48 @@ export default function Reviews({ bot }) {
             identifier={`bot-${bot.id}-review-${review._id}`}
           >
             <div className='flex w-full max-w-[440px] flex-1 flex-col justify-between gap-y-2 font-medium wrap-break-word whitespace-pre-wrap text-secondary sm:gap-y-0'>
-              <span className='text-xs font-medium text-tertiary'>
-                {new Date(review.createdAt).toLocaleDateString(i18n.language, { day: 'numeric', hour: 'numeric', minute: 'numeric', month: 'long', year: 'numeric' })}
-              </span>
+              <div className='flex items-center justify-between gap-x-2'>
+                <span className='text-xs font-medium text-tertiary'>
+                  {getRelativeTime(review.createdAt, i18n.language)}
+                </span>
+
+                {bot.permissions?.canReply && !review.reply && (
+                  <button
+                    className='text-xs font-medium text-tertiary transition-colors hover:text-primary'
+                    onClick={() => {
+                      const modalId = `bot-${bot.id}-review-${review._id}-reply`;
+
+                      setReplyContent(review.reply?.content || '');
+
+                      openModal(modalId, {
+                        buttons: [
+                          {
+                            actionType: 'close',
+                            id: 'cancel',
+                            label: t('buttons.cancel'),
+                            variant: 'ghost'
+                          },
+                          {
+                            action: () => submitReply(review._id, modalId),
+                            id: 'reply',
+                            label: t('buttons.reply'),
+                            variant: 'solid'
+                          }
+                        ],
+                        content: <ReplyReviewModalContent review={review} />,
+                        description: t('botPage.tabs.reviews.replyModal.description'),
+                        title: t('botPage.tabs.reviews.replyModal.title')
+                      });
+                    }}
+                  >
+                    {t('buttons.reply')}
+                  </button>
+                )}
+              </div>
 
               {review.content}
+
+              {review.reply && <ReviewReply page='bot' reply={review.reply} />}
             </div>
           </ReportableArea>
         </div>

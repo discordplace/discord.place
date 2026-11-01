@@ -32,6 +32,7 @@ const validKeys = [
   'sounds',
   'themes',
   'reviews',
+  'reviewReplies',
   'botdenies',
   'timeouts',
   'quarantines'
@@ -76,7 +77,7 @@ module.exports = {
 
       if (!permissions.canViewDashboard) return response.sendError('You do not have permission to view the dashboard.', 403);
 
-      const [emojisCount, emojiPacksCount, botsCount, templatesCount, soundsCount, themesCount, botReviewsCount, serverReviewsCount, linksCount, botDeniesCount, botTimeoutsCount, serverTimeoutsCount, quarantinesCount] = await Promise.all([
+      const [emojisCount, emojiPacksCount, botsCount, templatesCount, soundsCount, themesCount, botReviewsCount, serverReviewsCount, botReviewRepliesCount, serverReviewRepliesCount, linksCount, botDeniesCount, botTimeoutsCount, serverTimeoutsCount, quarantinesCount] = await Promise.all([
         Emoji.countDocuments({ approved: false }),
         EmojiPack.countDocuments({ approved: false }),
         Bot.countDocuments({ verified: false }),
@@ -85,6 +86,8 @@ module.exports = {
         Theme.countDocuments({ approved: false }),
         BotReview.countDocuments({ approved: false }),
         ServerReview.countDocuments({ approved: false }),
+        BotReview.countDocuments({ 'reply.approved': false, 'reply.content': { $exists: true } }),
+        ServerReview.countDocuments({ 'reply.approved': false, 'reply.content': { $exists: true } }),
         Link.countDocuments(),
         BotDeny.countDocuments(),
         BotTimeout.countDocuments(),
@@ -101,7 +104,8 @@ module.exports = {
           templates: templatesCount,
           sounds: soundsCount,
           themes: themesCount,
-          reviews: botReviewsCount + serverReviewsCount
+          reviews: botReviewsCount + serverReviewsCount,
+          reviewReplies: botReviewRepliesCount + serverReviewRepliesCount
         },
         counts: {
           links: linksCount,
@@ -293,6 +297,66 @@ module.exports = {
               username: review.user.username,
               avatar: userHashes.avatar
             }
+          };
+        }));
+      }
+
+      if (keys?.includes('reviewReplies')) {
+        if (!permissions.canApproveReviews) return response.sendError('You do not have permission to approve review replies.', 403);
+
+        const botReplies = await BotReview.find({ approved: true, 'reply.content': { $exists: true } });
+        const serverReplies = await ServerReview.find({ approved: true, 'reply.content': { $exists: true } });
+        const sortedReplies = botReplies.concat(serverReplies).sort((a, b) => new Date(b.reply.created_at) - new Date(a.reply.created_at));
+
+        responseData.reviewReplies = await Promise.all(sortedReplies.map(async review => {
+          const isServer = !!review.server;
+          const reviewerHashes = await getUserHashes(review.user.id);
+          const replierHashes = await getUserHashes(review.reply.user.id);
+
+          let target;
+          if (isServer) {
+            const guild = client.guilds.cache.get(review.server.id);
+            target = {
+              id: review.server.id,
+              name: guild?.name || review.server.id,
+              icon: guild?.icon || null
+            };
+          } else {
+            const botUser = client.users.cache.get(review.bot.id) || await client.users.fetch(review.bot.id).catch(() => null);
+            const botHashes = await getUserHashes(review.bot.id);
+
+            target = {
+              id: review.bot.id,
+              username: botUser?.username || 'Unknown',
+              discriminator: botUser?.discriminator || '0',
+              avatar: botHashes.avatar
+            };
+          }
+
+          return {
+            _id: review._id,
+            type: isServer ? 'server' : 'bot',
+            target,
+            reviewer: {
+              id: review.user.id,
+              username: review.user.username,
+              avatar: reviewerHashes.avatar
+            },
+            reply: {
+              content: review.reply.content,
+              approved: review.reply.approved,
+              created_at: review.reply.created_at,
+              user: {
+                id: review.reply.user.id,
+                username: review.reply.user.username,
+                avatar: replierHashes.avatar
+              }
+            },
+            review: {
+              content: review.content,
+              rating: review.rating
+            },
+            createdAt: review.createdAt
           };
         }));
       }

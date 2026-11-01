@@ -2,7 +2,7 @@
 
 import { BiSolidChevronRight } from 'react-icons/bi';
 import { CgBlock } from 'react-icons/cg';
-import { FaCompass, FaEye, FaUserTimes, FaUsers } from 'react-icons/fa';
+import { FaCompass, FaEye, FaReply, FaUserTimes, FaUsers } from 'react-icons/fa';
 import { FiLink } from 'react-icons/fi';
 import { HiTemplate } from 'react-icons/hi';
 import { IoMdLogOut } from 'react-icons/io';
@@ -106,6 +106,16 @@ export default function Sidebar() {
           icon: FaEye,
           id: 'reviewsQueue',
           name: 'Reviews'
+        },
+        {
+          badge: {
+            data: data?.importantCounts?.reviewReplies,
+            style: 'danger'
+          },
+          disabled: data?.permissions?.canApproveReviews === false,
+          icon: FaReply,
+          id: 'reviewReplies',
+          name: 'Review Replies'
         },
         {
           badge: {

@@ -15,6 +15,7 @@ const getApproximateGuildCount = require('@/utils/bots/getApproximateGuildCount'
 const githubRepositoryValidation = require('@/validations/bots/githubRepository');
 const findRepository = require('@/utils/bots/findRepository');
 const getUserHashes = require('@/utils/getUserHashes');
+const getPublicReview = require('@/utils/getPublicReview');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const isUserBotOwner = require('@/utils/bots/isUserBotOwner');
 const sendLog = require('@/utils/sendLog');
@@ -45,6 +46,10 @@ module.exports = {
         canEditExtraOwners: request.user && (
           request.user.id === bot.owner.id ||
           (request.member && config.permissions.canEditBotsRoles.some(roleId => request.member.roles.cache.has(roleId)))
+        ),
+        canReply: request.user && (
+          request.user.id === bot.owner.id ||
+          bot.extra_owners.includes(request.user.id)
         )
       };
 
@@ -56,7 +61,7 @@ module.exports = {
           const userHashes = await getUserHashes(review.user.id);
 
           return {
-            ...review.toJSON(),
+            ...await getPublicReview(review, { includePendingReply: permissions.canReply }),
             user: {
               id: review.user.id,
               username: review.user.username,

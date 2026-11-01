@@ -33,6 +33,10 @@ const useGeneralStore = create(set => ({
     setHoveringHeaderTab: hoveringHeaderTab => set(state => ({ header: { ...state.header, hoveringHeaderTab } })),
     setLastMouseOut: lastMouseOut => set(state => ({ header: { ...state.header, lastMouseOut } }))
   },
+  replyReviewModal: {
+    replyContent: '',
+    setReplyContent: replyContent => set(state => ({ replyReviewModal: { ...state.replyReviewModal, replyContent } }))
+  },
   reportAreaModal: {
     reason: '',
     setReason: reason => set(state => ({ reportAreaModal: { ...state.reportAreaModal, reason } }))

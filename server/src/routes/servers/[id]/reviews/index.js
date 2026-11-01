@@ -8,6 +8,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const getUserHashes = require('@/utils/getUserHashes');
+const getPublicReview = require('@/utils/getPublicReview');
 const sendLog = require('@/utils/sendLog');
 
 module.exports = {
@@ -33,6 +34,8 @@ module.exports = {
       const server = await Server.findOne({ id });
       if (!server) return response.sendError('Server not found.', 404);
 
+      const canReply = request.user && request.user.id === guild.ownerId;
+
       const foundReviews = await Review.find({ 'server.id': id, approved: true })
         .sort({ createdAt: -1 })
         .skip(skip)
@@ -44,7 +47,7 @@ module.exports = {
           const userHashes = await getUserHashes(review.user.id);
 
           return {
-            ...review.toJSON(),
+            ...await getPublicReview(review, { includePendingReply: canReply }),
             user: {
               id: review.user.id,
               username: review.user.username,

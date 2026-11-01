@@ -8,6 +8,7 @@ const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const getValidationError = require('@/utils/getValidationError');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const getUserHashes = require('@/utils/getUserHashes');
+const getPublicReview = require('@/utils/getPublicReview');
 const sendLog = require('@/utils/sendLog');
 
 module.exports = {
@@ -35,6 +36,11 @@ module.exports = {
       const bot = await Bot.findOne({ id });
       if (!bot) return response.sendError('Bot not found.', 404);
 
+      const canReply = request.user && (
+        request.user.id === bot.owner.id ||
+        bot.extra_owners.includes(request.user.id)
+      );
+
       const foundReviews = await Review.find({ 'bot.id': id, approved: true })
         .sort({ createdAt: -1 })
         .skip(skip)
@@ -46,7 +52,7 @@ module.exports = {
           const userHashes = await getUserHashes(review.user.id);
 
           return {
-            ...review.toJSON(),
+            ...await getPublicReview(review, { includePendingReply: canReply }),
             user: {
               id: review.user.id,
               username: review.user.username,

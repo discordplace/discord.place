@@ -15,6 +15,7 @@ const getValidationError = require('@/utils/getValidationError');
 const Reward = require('@/schemas/Server/Vote/Reward');
 const DashboardData = require('@/schemas/Dashboard/Data');
 const getUserHashes = require('@/utils/getUserHashes');
+const getPublicReview = require('@/utils/getPublicReview');
 const requirementChecks = require('@/utils/servers/requirementChecks');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const sendLog = require('@/utils/sendLog');
@@ -36,13 +37,15 @@ module.exports = {
 
       const rewards = await Reward.find({ 'guild.id': id });
 
+      const canReply = request.user && request.user.id === guild.ownerId;
+
       const foundReviews = await Review.find({ 'server.id': id, approved: true }).sort({ createdAt: -1 });
       const parsedReviews = await Promise.all(foundReviews
         .map(async review => {
           const userHashes = await getUserHashes(review.user.id);
 
           return {
-            ...review.toJSON(),
+            ...await getPublicReview(review, { includePendingReply: canReply }),
             user: {
               id: review.user.id,
               username: review.user.username,
@@ -63,7 +66,8 @@ module.exports = {
         canEdit: request.user && (
           request.user.id === guild.ownerId ||
           (request.member && config.permissions.canEditServersRoles.some(role => request.member.roles.cache.has(role)))
-        )
+        ),
+        canReply: request.user && request.user.id === guild.ownerId
       };
 
       const voteTimeout = await VoteTimeout.findOne({ 'user.id': request.user?.id, 'guild.id': id });

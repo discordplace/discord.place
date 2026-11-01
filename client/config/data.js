@@ -120,6 +120,8 @@ const serverKeywordsMaxCharacters = 32;
 const serverDescriptionMaxCharacters = 256;
 const reviewsMaxCharacters = 256;
 const reviewsMinCharacters = 64;
+const reviewReplyMaxCharacters = 256;
+const reviewReplyMinCharacters = 16;
 const botShortDescriptionMinLength = 16;
 const botShortDescriptionMaxLength = 150;
 const botDescriptionMinLength = 32;
@@ -251,6 +253,8 @@ const data = {
   quarantineRestrictions,
   reportReasonMaxCharacters,
   reportReasonMinCharacters,
+  reviewReplyMaxCharacters,
+  reviewReplyMinCharacters,
   reviewsMaxCharacters,
   reviewsMinCharacters,
   serverCategories,

@@ -23,7 +23,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import MotionImage from '@/app/components/Motion/Image';
 import Queue from '@/app/(dashboard)/components/Queue';
 import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
-import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveTheme, denyTheme, deleteTheme, deleteLink, deleteBotDenyRecord, restoreBot, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
+import { showConfirmationModal, approveEmoji, denyEmoji, deleteEmoji, approveBot, denyBot, deleteBot, approveTemplate, denyTemplate, deleteTemplate, approveSound, denySound, deleteSound, approveReview, denyReview, deleteReview, approveReviewReply, denyReviewReply, deleteReviewReply, approveTheme, denyTheme, deleteTheme, deleteLink, deleteBotDenyRecord, restoreBot, deleteBotTimeout, deleteServerTimeout, deleteQuarantineRecord } from '@/app/(dashboard)/dashboard/utils';
 import DenyDropdown from '@/app/(dashboard)/components/Dropdown/Deny';
 import config from '@/config';
 import sleep from '@/lib/sleep';
@@ -90,6 +90,62 @@ export default function Page() {
         bulkAction(params);
       }
     );
+  }
+
+  function reviewReplyColumns(replies = []) {
+    return replies.map(reply => [
+      reply.type === 'server' ? {
+        custom: {
+          id: reply._id,
+          type: reply.type,
+          value: reply.target.id
+        },
+        icon: reply.target.icon,
+        id: reply.target.id,
+        name: reply.target.name,
+        searchValues: [reply.target.name, reply.target.id],
+        showId: true,
+        type: 'server'
+      } : {
+        avatar: reply.target.avatar,
+        custom: {
+          id: reply._id,
+          type: reply.type,
+          value: reply.target.id
+        },
+        discriminator: reply.target.discriminator,
+        id: reply.target.id,
+        searchValues: [reply.target.username, reply.target.id],
+        showId: true,
+        type: 'bot',
+        username: reply.target.username
+      },
+      {
+        avatar: reply.reviewer.avatar,
+        id: reply.reviewer.id,
+        searchValues: [reply.reviewer.username, reply.reviewer.id],
+        showId: true,
+        type: 'user',
+        username: reply.reviewer.username
+      },
+      {
+        avatar: reply.reply.user.avatar,
+        id: reply.reply.user.id,
+        searchValues: [reply.reply.user.username, reply.reply.user.id],
+        showId: true,
+        type: 'user',
+        username: reply.reply.user.username
+      },
+      {
+        searchValues: [reply.reply.content],
+        type: 'long-text',
+        value: reply.reply.content
+      },
+      {
+        type: 'date',
+        value: new Date(reply.reply.created_at)
+      }
+    ]);
   }
 
   const tabs = [
@@ -1162,6 +1218,141 @@ export default function Page() {
     },
     {
       data: {
+        subtitle: 'Review replies from servers and bots waiting for approval or already approved.',
+        tableData: {
+          tabs: [
+            {
+              actions: [
+                {
+                  action: () => {
+                    const [column] = useDashboardStore.getState().selectedItems[0];
+
+                    setSelectedItems([]);
+                    setPage(1);
+
+                    router.push(`/${column.custom.type === 'server' ? 'servers' : 'bots'}/${column.custom.value}`);
+                  },
+                  icon: FaEye,
+                  name: 'View Server/Bot'
+                },
+                {
+                  action: () => bulkAction({
+                    action: item => approveReviewReply(item.custom.type, item.custom.value, item.custom.id),
+                    fetchKey: 'reviewReplies'
+                  }),
+                  hide: !data.permissions?.canApproveReviews,
+                  icon: IoMdCheckmarkCircle,
+                  name: 'Approve'
+                },
+                {
+                  hide: !data.permissions?.canApproveReviews,
+                  icon: IoMdCloseCircle,
+                  name: 'Deny',
+                  trigger: DenyDropdown,
+                  triggerProps: {
+                    customReason: true,
+                    description: 'Add a custom reason to deny this reply.',
+                    onDeny: reason => bulkAction({
+                      action: item => denyReviewReply(item.custom.type, item.custom.value, item.custom.id, reason),
+                      fetchKey: 'reviewReplies'
+                    }),
+                    reasons: {}
+                  }
+                }
+              ],
+              columns: reviewReplyColumns(data?.reviewReplies?.filter(reply => !reply.reply.approved)),
+              label: 'Waiting Approval',
+              rows: [
+                {
+                  icon: FaCompass,
+                  name: 'Server/Bot',
+                  sortable: true
+                },
+                {
+                  icon: FaUserCircle,
+                  name: 'Reviewer',
+                  sortable: true
+                },
+                {
+                  icon: FaUserCircle,
+                  name: 'Replied By',
+                  sortable: true
+                },
+                {
+                  icon: FaEye,
+                  name: 'Reply'
+                },
+                {
+                  icon: FiArrowRightCircle,
+                  name: 'Date Added',
+                  sortable: true
+                }
+              ]
+            },
+            {
+              actions: [
+                {
+                  action: () => {
+                    const [column] = useDashboardStore.getState().selectedItems[0];
+
+                    setSelectedItems([]);
+                    setPage(1);
+
+                    router.push(`/${column.custom.type === 'server' ? 'servers' : 'bots'}/${column.custom.value}`);
+                  },
+                  icon: FaEye,
+                  name: 'View Server/Bot'
+                },
+                {
+                  action: () => bulkActionWithConfirmationModal({
+                    action: item => deleteReviewReply(item.custom.type, item.custom.value, item.custom.id),
+                    fetchKey: 'reviewReplies',
+                    name: 'reply'
+                  }),
+                  hide: !data.permissions?.canApproveReviews,
+                  icon: IoMdCloseCircle,
+                  name: 'Delete'
+                }
+              ],
+              columns: reviewReplyColumns(data?.reviewReplies?.filter(reply => reply.reply.approved)),
+              label: 'Approved',
+              rows: [
+                {
+                  icon: FaCompass,
+                  name: 'Server/Bot',
+                  sortable: true
+                },
+                {
+                  icon: FaUserCircle,
+                  name: 'Reviewer',
+                  sortable: true
+                },
+                {
+                  icon: FaUserCircle,
+                  name: 'Replied By',
+                  sortable: true
+                },
+                {
+                  icon: FaEye,
+                  name: 'Reply'
+                },
+                {
+                  icon: FiArrowRightCircle,
+                  name: 'Date Added',
+                  sortable: true
+                }
+              ]
+            }
+          ]
+        },
+        title: 'Review Replies',
+        totalCount: data?.reviewReplies?.length || 0
+      },
+      id: 'reviewReplies',
+      name: 'Review Replies'
+    },
+    {
+      data: {
         subtitle: 'Here you can see the all the themes that published on discord.place.',
         tableData: {
           tabs: [
@@ -1808,6 +1999,10 @@ export default function Page() {
       }
       case 'reviewsQueue': {
         fetchData(['reviews']);
+        break;
+      }
+      case 'reviewReplies': {
+        fetchData(['reviewReplies']);
         break;
       }
       case 'themesQueue': {
