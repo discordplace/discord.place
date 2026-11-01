@@ -18,6 +18,15 @@ const getUserHashes = require('@/utils/getUserHashes');
 const requirementChecks = require('@/utils/servers/requirementChecks');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 
+async function getGuildVanityCode(guild) {
+  if (guild.vanityURLCode) return guild.vanityURLCode;
+
+  if (!guild.features.includes('VANITY_URL')) return null;
+  if (!guild.members.me.permissions.has('ManageGuild')) return null;
+
+  return guild.fetchVanityData().then(data => data.code ?? null).catch(() => null);
+}
+
 const validKeys = [
   'timeouts',
   'links',
@@ -118,14 +127,31 @@ module.exports = {
       if (keys.includes('servers')) {
         const servers = await Server.find();
 
-        const data = ownedGuilds.map(guild => {
+        const data = await Promise.all(ownedGuilds.map(async guild => {
           const { id, name, icon, memberCount } = guild;
+
+          const canFetchInvites = guild.members.me.permissions.has('ManageGuild') || guild.members.me.permissions.has('ManageChannels');
+
+          const vanityCode = await getGuildVanityCode(guild);
+          const vanityURL = vanityCode ? `https://discord.gg/${vanityCode}` : null;
+
+          const invites = [
+            ...(vanityURL ? [{ url: vanityURL, channel_name: null, is_vanity: true }] : []),
+            ...(canFetchInvites ? await guild.invites.fetch().then(invites => invites.map(invite => ({
+              url: invite.url,
+              channel_name: invite.channel?.name ?? null,
+              is_vanity: false
+            }))).catch(() => []) : [])
+          ];
 
           return {
             id,
             name,
             icon,
             is_created: servers.some(server => server.id === id),
+            can_fetch_invites: canFetchInvites,
+            vanity_url: vanityURL,
+            invites,
             members: memberCount,
             requirements: config.serverListingRequirements.map(({ id: reqId, name: reqName, description }) => {
               const checkFunction = requirementChecks[reqId];
@@ -138,7 +164,7 @@ module.exports = {
               };
             })
           };
-        });
+        }));
 
         Object.assign(responseData, { servers: data });
       }

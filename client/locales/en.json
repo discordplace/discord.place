@@ -1933,7 +1933,9 @@
               "inviteLink": {
                 "label": "Invite Link",
                 "description": "Add an invite link to your server. This will be helpful for people who want to join your server.<br>Make sure to set the invite link to never expire.",
-                "placeholder": "https://discord.gg/invite"
+                "placeholder": "Found {{count}} invite links. Select one to use.",
+                "noChannel": "#unknown",
+                "vanityUrl": "Vanity URL"
               },
               "category": {
                 "label": "Category",

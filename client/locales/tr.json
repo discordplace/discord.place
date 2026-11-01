@@ -1933,7 +1933,9 @@
               "inviteLink": {
                 "label": "Davet Bağlantısı",
                 "description": "Sunucunuzun davet bağlantısını ekleyin. Bu, sunucunuza katılmak isteyen kişiler için faydalı olacaktır.<br>Davet bağlantısının süresiz olduğundan emin olun.",
-                "placeholder": "https://discord.gg/invite"
+                "placeholder": "{{count}} davet bağlantısı bulundu. Kullanmak için birini seçin.",
+                "noChannel": "#bilinmeyen",
+                "vanityUrl": "Özel URL"
               },
               "category": {
                 "label": "Kategori",

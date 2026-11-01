@@ -278,17 +278,34 @@ export default function NewServer() {
             </h2>
 
             <p className='text-sm text-tertiary sm:text-base'>
-              {t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.description')}
+              {t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.description', { br: <br /> })}
             </p>
 
-            <input
-              className='mt-4 block w-full overflow-y-auto rounded-lg border-2 border-transparent bg-secondary p-2 text-sm text-placeholder outline-hidden placeholder:text-placeholder focus-visible:border-purple-500 focus-visible:text-primary'
-              placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.placeholder')}
-              autoComplete='off'
-              spellCheck='false'
-              value={serverInviteLink}
-              onChange={event => setServerInviteLink(event.target.value)}
-            />
+            <div className='mt-4 w-full'>
+              <Select
+                triggerClassName='w-full py-2.5'
+                placeholder={t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.placeholder', { count: currentlyAddingServer.invites.length })}
+                options={
+                  currentlyAddingServer.invites.map(invite => ({
+                    label: (
+                      <div className='flex items-center gap-x-2'>
+                        <span className='text-tertiary'>
+                          {invite.url}
+                        </span>
+
+                        <span className='text-sm text-placeholder'>
+                          {invite.is_vanity ? t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.vanityUrl') : invite.channel_name ? `#${invite.channel_name}` : t('accountPage.tabs.myServers.sections.newServer.fields.inviteLink.noChannel')}
+                        </span>
+                      </div>
+                    ),
+                    value: invite.url
+                  }))
+                }
+                value={serverInviteLink}
+                onChange={setServerInviteLink}
+                disabled={loading}
+              />
+            </div>
 
             <div className='mt-8 flex flex-col gap-4 sm:flex-row'>
               <div className='flex flex-col gap-y-2'>

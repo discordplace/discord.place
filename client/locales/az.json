@@ -1933,7 +1933,9 @@
               "inviteLink": {
                 "label": "Dəvət Linki",
                 "description": "Serverinizə dəvət linki əlavə edin. <br>Dəvət linkini heç vaxt bitməyəcək şəkildə təyin etdiyinizə əmin olun.",
-                "placeholder": "https://discord.gg/invite"
+                "placeholder": "{{count}} dəvət linkləri tapıldı. İstifadə etmək üçün birini seçin.",
+                "noChannel": "#naməlum",
+                "vanityUrl": "Xüsusi URL"
               },
               "category": {
                 "label": "Kateqoriya",
