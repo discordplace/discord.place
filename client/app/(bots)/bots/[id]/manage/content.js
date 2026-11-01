@@ -24,77 +24,36 @@ import useModalsStore from '@/stores/modals';
 export default function Content({ bot }) {
   const { t } = useTranslation();
   const [savingChanges, setSavingChanges] = useState(false);
-  const [changesMade, setChangesMade] = useState(false);
-  const [changedKeys, setChangedKeys] = useState([]);
 
   const [shortDescription, setShortDescription] = useState(bot.short_description);
   const [description, setDescription] = useState(bot.description);
   const [inviteURL, setInviteURL] = useState(bot.invite_url);
   const [categories, setCategories] = useState(bot.categories);
   const [supportServerId, setSupportServerId] = useState(bot.support_server?.id || '0');
+  const [savedValues, setSavedValues] = useState({
+    categories: bot.categories,
+    description: bot.description,
+    inviteURL: bot.invite_url,
+    shortDescription: bot.short_description,
+    supportServerId: bot.support_server?.id || '0'
+  });
 
-  useEffect(() => {
-    const isShortDescriptionChanged = !isEqual(shortDescription, bot.short_description);
-    const isDescriptionChanged = !isEqual(description, bot.description);
-    const isInviteURLChanged = !isEqual(inviteURL, bot.invite_url);
-    const isCategoriesChanged = !isEqual(categories, bot.categories);
-    const isSupportServerIdChanged = !isEqual(supportServerId, bot.support_server?.id || '0');
+  const changedKeys = [];
 
-    setChangesMade(
-      isShortDescriptionChanged ||
-      isDescriptionChanged ||
-      isInviteURLChanged ||
-      isCategoriesChanged ||
-      isSupportServerIdChanged
-    );
+  if (!isEqual(shortDescription, savedValues.shortDescription)) changedKeys.push({ key: 'short_description', value: isEqual(shortDescription, '') ? null : shortDescription });
+  if (!isEqual(description, savedValues.description)) changedKeys.push({ key: 'description', value: isEqual(description, '') ? null : description });
+  if (!isEqual(inviteURL, savedValues.inviteURL)) changedKeys.push({ key: 'invite_url', value: isEqual(inviteURL, '') ? null : inviteURL });
+  if (!isEqual(categories, savedValues.categories)) changedKeys.push({ key: 'categories', value: categories });
+  if (!isEqual(supportServerId, savedValues.supportServerId)) changedKeys.push({ key: 'support_server_id', value: isEqual(supportServerId, '') ? null : supportServerId });
 
-    function pushToChangedKeys(key, value) {
-      if (isEqual(value, bot[key])) return setChangedKeys(oldKeys => oldKeys.filter(({ key: oldKey }) => oldKey !== key));
-
-      setChangedKeys(oldKeys =>
-        oldKeys
-          .filter(({ key: oldKey }) => oldKey !== key)
-          .concat({
-            key,
-            value: isEqual(value, '') ? null : value
-          })
-      );
-    }
-
-    if (isShortDescriptionChanged) pushToChangedKeys('short_description', shortDescription);
-    if (isDescriptionChanged) pushToChangedKeys('description', description);
-    if (isInviteURLChanged) pushToChangedKeys('invite_url', inviteURL);
-    if (isCategoriesChanged) pushToChangedKeys('categories', categories);
-    if (isSupportServerIdChanged) pushToChangedKeys('support_server_id', supportServerId);
-  }, [shortDescription, description, inviteURL, categories, supportServerId]);
+  const changesMade = changedKeys.length > 0;
 
   function resetChanges() {
-    changedKeys.forEach(({ key }) => {
-      switch (key) {
-        case 'short_description': {
-          setShortDescription(bot[key]);
-          break;
-        }
-        case 'description': {
-          setDescription(bot[key]);
-          break;
-        }
-        case 'invite_url': {
-          setInviteURL(bot[key]);
-          break;
-        }
-        case 'categories': {
-          setCategories(bot[key]);
-          break;
-        }
-        case 'support_server_id': {
-          setSupportServerId(bot.support_server?.id || '0');
-          break;
-        }
-      }
-    });
-
-    setChangedKeys([]);
+    setShortDescription(savedValues.shortDescription);
+    setDescription(savedValues.description);
+    setInviteURL(savedValues.inviteURL);
+    setCategories(savedValues.categories);
+    setSupportServerId(savedValues.supportServerId);
   }
 
   async function saveChanges() {
@@ -108,9 +67,14 @@ export default function Content({ bot }) {
       },
       loading: t('botManagePage.toast.savingChanges'),
       success: () => {
+        setSavedValues({
+          categories,
+          description,
+          inviteURL,
+          shortDescription,
+          supportServerId
+        });
         setSavingChanges(false);
-        setChangedKeys([]);
-        setChangesMade(false);
         revalidateBot(bot.id);
 
         return t('botManagePage.toast.changesSaved');

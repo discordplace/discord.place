@@ -21,8 +21,6 @@ import useModalsStore from '@/stores/modals';
 export default function Content({ server }) {
   const { t } = useTranslation();
   const [savingChanges, setSavingChanges] = useState(false);
-  const [changesMade, setChangesMade] = useState(false);
-  const [changedKeys, setChangedKeys] = useState([]);
 
   const [description, setDescription] = useState(server.description);
 
@@ -34,67 +32,27 @@ export default function Content({ server }) {
   const [inviteURL, setInviteURL] = useState(handledInviteUrl);
   const [category, setCategory] = useState(server.category);
   const [keywords, setKeywords] = useState(server.keywords);
+  const [savedValues, setSavedValues] = useState({
+    category: server.category,
+    description: server.description,
+    inviteURL: handledInviteUrl,
+    keywords: server.keywords
+  });
 
-  useEffect(() => {
-    const isDescriptionChanged = !isEqual(description, server.description);
-    const isInviteURLChanged = !isEqual(inviteURL, handledInviteUrl);
-    const isCategoryChanged = !isEqual(category, server.category);
-    const isKeywordsChanged = !isEqual(keywords, server.keywords);
+  const changedKeys = [];
 
-    setChangesMade(
-      isDescriptionChanged ||
-      isInviteURLChanged ||
-      isCategoryChanged ||
-      isKeywordsChanged
-    );
+  if (!isEqual(description, savedValues.description)) changedKeys.push({ key: 'description', value: isEqual(description, '') ? null : description });
+  if (!isEqual(inviteURL, savedValues.inviteURL)) changedKeys.push({ key: 'invite_url', value: isEqual(inviteURL, '') ? null : inviteURL });
+  if (!isEqual(category, savedValues.category)) changedKeys.push({ key: 'category', value: isEqual(category, '') ? null : category });
+  if (!isEqual(keywords, savedValues.keywords)) changedKeys.push({ key: 'keywords', value: keywords });
 
-    function pushToChangedKeys(key, value) {
-      if (isEqual(value, server[key])) return setChangedKeys(oldKeys => oldKeys.filter(({ key: oldKey }) => oldKey !== key));
-
-      setChangedKeys(oldKeys =>
-        oldKeys
-          .filter(({ key: oldKey }) => oldKey !== key)
-          .concat({
-            key,
-            value: isEqual(value, '') ? null : value
-          })
-      );
-    }
-
-    if (isDescriptionChanged) pushToChangedKeys('description', description);
-    if (isInviteURLChanged) pushToChangedKeys('invite_url', inviteURL);
-    if (isCategoryChanged) pushToChangedKeys('category', category);
-    if (isKeywordsChanged) pushToChangedKeys('keywords', keywords);
-  }, [description, inviteURL, category, keywords]);
+  const changesMade = changedKeys.length > 0;
 
   function resetChanges() {
-    changedKeys.forEach(({ key }) => {
-      switch (key) {
-        case 'description': {
-          setDescription(server[key]);
-          break;
-        }
-        case 'invite_url': {
-          const handledInviteUrl = server.invite_code.type === 'Vanity' ? (server.vanity_url || '') : (
-            server.invite_code.type === 'Deleted' ? '' :
-              `https://discord.com/invite/${server.invite_code.code}`
-          );
-
-          setInviteURL(handledInviteUrl);
-          break;
-        }
-        case 'category': {
-          setCategory(server[key]);
-          break;
-        }
-        case 'keywords': {
-          setKeywords(server[key]);
-          break;
-        }
-      }
-    });
-
-    setChangedKeys([]);
+    setDescription(savedValues.description);
+    setInviteURL(savedValues.inviteURL);
+    setCategory(savedValues.category);
+    setKeywords(savedValues.keywords);
   }
 
   async function saveChanges() {
@@ -108,9 +66,13 @@ export default function Content({ server }) {
       },
       loading: t('serverManagePage.toast.savingChanges'),
       success: () => {
+        setSavedValues({
+          category,
+          description,
+          inviteURL,
+          keywords
+        });
         setSavingChanges(false);
-        setChangedKeys([]);
-        setChangesMade(false);
         revalidateServer(server.id);
 
         return t('serverManagePage.toast.changesSaved');
