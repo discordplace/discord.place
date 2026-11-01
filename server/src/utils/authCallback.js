@@ -55,7 +55,7 @@ async function authCallback(access_token, response, setApplicationsEntitlementsS
       accessToken: encrypt(access_token, process.env.USER_TOKEN_ENCRYPT_SECRET),
       lastLoginAt: new Date(currentDate)
     },
-    { upsert: true, new: true }
+    { upsert: true, returnDocument: 'after' }
   );
 
   await UserHashes.findOneAndUpdate(

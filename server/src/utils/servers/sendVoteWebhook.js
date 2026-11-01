@@ -32,7 +32,7 @@ async function sendVoteWebhook(server, voter, data) {
 
   if (process.env.WEBHOOKS_PROXY_SERVER_HOST) {
     try {
-      requestConfig.httpsAgent = getProxyAgent();
+      requestConfig.httpsAgent = await getProxyAgent();
     } catch (error) {
       logger.error('Error while creating proxy agent for webhook request:', error);
     }

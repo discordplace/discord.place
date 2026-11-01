@@ -32,7 +32,7 @@ module.exports = {
       }
 
       return interaction.editReply({ content: `${type === 'user' ? 'User' : 'Guild'} with **ID ${id}** fetched.` });
-    } catch (error) {
+    } catch {
       return interaction.editReply({ content: `An error occurred while fetching ${type === 'user' ? 'User' : 'Guild'} with **ID ${id}**.` });
     }
   }

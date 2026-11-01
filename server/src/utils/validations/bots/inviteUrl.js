@@ -8,7 +8,7 @@ function inviteUrlValidation(text) {
 
     return true;
   } catch (error) {
-    throw new Error('Invalid URL format. Please provide a valid HTTPS URL.');
+    throw new Error('Invalid URL format. Please provide a valid HTTPS URL.', { cause: error });
   }
 }
 

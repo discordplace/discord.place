@@ -9,7 +9,7 @@ async function getServerResponseTime() {
     const response = await axios.get(url, { timeout: 1000 }).catch(() => null);
 
     return response?.data?.responseTime || 'N/A';
-  } catch (error) {
+  } catch {
     return 'N/A';
   }
 }

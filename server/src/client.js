@@ -354,7 +354,9 @@ module.exports = class Client {
           }
         }
       }
-    ]);
+    ], {
+      updatePipeline: true
+    });
 
     logger.info(`Saved daily stats for ${updatedProfiles.modifiedCount} profiles.`);
   }

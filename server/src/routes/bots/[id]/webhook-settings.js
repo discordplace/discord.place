@@ -68,7 +68,7 @@ module.exports = {
       .isLength({ min: 1, max: config.botWebhookTokenMaxLength }).withMessage(`Token must be between 1 and ${config.botWebhookTokenMaxLength} characters.`)
       .trim()
       .custom((value, { req: request }) => {
-        const url = request.body.url;
+        const url = request.body?.url;
 
         // eslint-disable-next-line security/detect-non-literal-regexp
         const isDiscordWebhook = new RegExp(config.discordWebhookRegex).test(url);
@@ -81,7 +81,7 @@ module.exports = {
       .isString().withMessage('Language should be a string.')
       .isIn(config.availableLocales.map(locale => locale.code)).withMessage(`Language should be one of: ${config.availableLocales.map(locale => locale.code).join(', ')}.`)
       .custom((value, { req: request }) => {
-        const url = request.body.url;
+        const url = request.body?.url;
 
         // eslint-disable-next-line security/detect-non-literal-regexp
         const isDiscordWebhook = new RegExp(config.discordWebhookRegex).test(url);

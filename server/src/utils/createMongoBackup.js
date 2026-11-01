@@ -4,7 +4,6 @@ const exec = promisify(require('child_process').exec);
 const moment = require('moment');
 const fs = require('node:fs');
 const path = require('node:path');
-const archiver = require('archiver');
 const sendHeartbeat = require('@/utils/sendHeartbeat');
 
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
@@ -45,11 +44,13 @@ async function executeBackupCommand(cmd) {
   try {
     await exec(cmd);
   } catch (error) {
-    throw new Error(`Backup command execution failed: ${error.message}`);
+    throw new Error(`Backup command execution failed: ${error.message}`, { cause: error });
   }
 }
 
 async function zipBackupFolder(backupPath) {
+  const { ZipArchive } = await import('archiver');
+
   return new Promise((resolve, reject) => {
     const files = fs.readdirSync(`${backupPath}/api`);
 
@@ -57,7 +58,7 @@ async function zipBackupFolder(backupPath) {
 
     const output = fs.createWriteStream(zipFileName);
 
-    const archive = archiver('zip', {
+    const archive = new ZipArchive({
       zlib: { level: 9 }
     });
 

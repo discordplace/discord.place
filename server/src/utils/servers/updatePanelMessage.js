@@ -5,7 +5,6 @@ const Reward = require('@/schemas/Server/Vote/Reward');
 const Server = require('@/schemas/Server');
 const User = require('@/schemas/User');
 const ansiColors = require('ansi-colors');
-const { getAverageColor } = require('fast-average-color-node');
 
 async function updatePanelMessage(guildId) {
   const guild = client.guilds.cache.get(guildId);
@@ -61,6 +60,7 @@ async function createPanelMessageOptions(guild, server) {
     topVotersTable.push([index + 1, formatter.format(voter.vote), usernameText]);
   }
 
+  const { getAverageColor } = await import('fast-average-color-node');
   const embedColor = await getAverageColor(guild.iconURL({ format: 'webp', size: 64, dynamic: false }));
 
   const embeds = [

@@ -212,7 +212,6 @@ ${await interaction.translate('commands.info.subcommands.user.embed.fields.1.val
             },
             {
               name: 'Badges',
-              // eslint-disable-next-line no-irregular-whitespace
               value: badgesText
             }
           ]);

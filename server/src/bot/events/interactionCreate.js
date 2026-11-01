@@ -16,7 +16,7 @@ module.exports = async interaction => {
       flags: Discord.MessageFlags.Ephemeral
     });
 
-    const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, new: true });
+    const user = await User.findOneAndUpdate({ id: interaction.user.id }, { id: interaction.user.id }, { upsert: true, returnDocument: 'after' });
 
     if (!user.acceptedPolicies) {
       const embeds = [

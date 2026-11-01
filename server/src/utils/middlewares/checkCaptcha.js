@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports = async function checkCaptcha(request, response, next) {
-  const { captchaResponse } = request.body;
+  const { captchaResponse } = request.body || {};
   if (!captchaResponse) return response.sendError('Captcha is required.', 400);
 
   const baseURL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
@@ -15,7 +15,7 @@ module.exports = async function checkCaptcha(request, response, next) {
     if (!success) return response.sendError('Captcha is invalid.', 400);
 
     next();
-  } catch (error) {
+  } catch {
     return response.sendError('Captcha verification failed.', 500);
   }
 };

@@ -1,2 +1,4 @@
 allowBuilds:
   sharp: true
+minimumReleaseAgeExclude:
+  - globals@17.14.0

@@ -1,4 +1,4 @@
-const { rateLimit } = require('express-rate-limit');
+const { rateLimit, ipKeyGenerator } = require('express-rate-limit');
 
 module.exports = function ({ maxRequests, perMinutes, keyGenerator }) {
   const limiter = rateLimit({
@@ -9,7 +9,7 @@ module.exports = function ({ maxRequests, perMinutes, keyGenerator }) {
     keyGenerator: keyGenerator || (request => {
       if (request.user) return request.user.id;
 
-      return request.clientIp?.replace(/:\d+[^:]*$/, '');
+      return ipKeyGenerator(request.clientIp);
     }),
     message: (request, response) => {
       const reset = request.rateLimit?.resetTime;

@@ -1,6 +1,5 @@
-const { HttpsProxyAgent } = require('https-proxy-agent');
-
-function getProxyAgent() {
+async function getProxyAgent() {
+  const { HttpsProxyAgent } = await import('https-proxy-agent');
   const {
     WEBHOOKS_PROXY_SERVER_PROTOCOL,
     WEBHOOKS_PROXY_SERVER_HOST,
