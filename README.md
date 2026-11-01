@@ -411,8 +411,13 @@ The apps read environment variables from the process, so a secret manager can in
 
 1. Create a Doppler project and a production config, then add the variables from `client/.example.env` and `server/.example.env`. The same config can hold both client and server values.
 2. Install the Doppler CLI on the server.
-3. Create a service token scoped to the production config and store it on the server. Do not commit it.
-4. Run builds and processes through `doppler run`:
+3. In the Doppler dashboard, open the `discord-place` project, select the `prd` config, go to Access, and create a service token with read-only access. The token starts with `dp.st.`.
+4. Store the token on the server outside the repository:
+   ```bash
+   doppler configure set token <service-token>
+   ```
+   Alternatively, set `DOPPLER_TOKEN` in the server environment. Do not commit the token.
+5. Run builds and processes through `doppler run`:
 
 ```bash
 doppler run --project discord-place --config prd -- pnpm --dir client build
@@ -435,7 +440,7 @@ doppler run --project discord-place --config dev -- pnpm dev
 
 `.env` files remain optional. When both are present, process environment variables take precedence over `.env` values.
 
-If you use the GitHub deploy workflow, wrap its build and `pm2 restart` commands with the same `doppler run` calls after the server has the CLI and service token configured.
+The GitHub deploy workflow already wraps the client build and both PM2 restarts with these commands. The server must have the Doppler CLI and service token configured before deploying.
 
 ## Community
 
