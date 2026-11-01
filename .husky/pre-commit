@@ -1,1 +1,3 @@
+set -e
 node scripts/check-locales.js
+pnpm lint

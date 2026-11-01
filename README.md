@@ -369,6 +369,25 @@ Please make sure to follow the [Code of Conduct](.github/CODE_OF_CONDUCT.md) and
   6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
 </details>
 
+### Linting
+
+Both the client and the server are linted with [oxlint](https://oxc.rs/docs/guide/usage/linter.html). The configuration files are `client/.oxlintrc.json` and `server/.oxlintrc.json`. They load the shared ESLint plugins used for formatting, security rules, dependency bans, and `require` sorting through oxlint's `jsPlugins` support.
+
+Run both linters from the repository root:
+
+```sh
+pnpm lint
+```
+
+To apply the automatic fixes (import sorting, formatting, and other fixable rules):
+
+```sh
+pnpm --dir client exec oxlint --fix
+pnpm --dir server exec oxlint --fix
+```
+
+The same lint command runs automatically on `git commit` together with the locale check, so commits containing lint errors are rejected.
+
 ## Help
 
 If you encounter any issues with the discord.place or have any questions, feel free to [open an issue](https://github.com/discordplace/discordplace/issues) on this repository. We'll do our best to assist you!

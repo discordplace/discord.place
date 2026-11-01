@@ -14,6 +14,7 @@
   },
   "scripts": {
     "check:locales": "node scripts/check-locales.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "pnpm --dir client lint && pnpm --dir server lint"
   }
 }
