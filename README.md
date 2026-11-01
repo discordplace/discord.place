@@ -1,75 +1,61 @@
-[![discord.place](https://discord.place/og.png)](https://discord.place)
+<p align="center">
+  <a href="https://discord.place">
+    <img src="https://shieldcn.dev/header/glow.svg?title=discord.place&amp;subtitle=Discover+Discord+emojis,+sounds,+themes,+servers,+bots+and+profiles.&amp;logo=https%3A%2F%2Fdiscord.place%2Fsymbol_white.png&amp;theme=violet&amp;font=geist" alt="discord.place" />
+  </a>
+</p>
 
-# discord.place
+<p align="center">
+  <a href="https://github.com/discordplace/discord.place">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/group/github/stars/discordplace/discord.place+github/forks/discordplace/discord.place+github/issues/discordplace/discord.place+github/license/discordplace/discord.place.svg?variant=outline&amp;theme=violet&amp;font=geist&amp;mode=dark" />
+      <img alt="GitHub stars, forks, issues and license" src="https://shieldcn.dev/group/github/stars/discordplace/discord.place+github/forks/discordplace/discord.place+github/issues/discordplace/discord.place+github/license/discordplace/discord.place.svg?variant=outline&amp;theme=violet&amp;font=geist&amp;mode=light" />
+    </picture>
+  </a>
+  <a href="https://discord.gg/sMkykssTtV">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/discord/members/sMkykssTtV.svg?variant=outline&amp;theme=violet&amp;font=geist&amp;mode=dark" />
+      <img alt="Discord members" src="https://shieldcn.dev/discord/members/sMkykssTtV.svg?variant=outline&amp;theme=violet&amp;font=geist&amp;mode=light" />
+    </picture>
+  </a>
+</p>
 
-discord.place is your comprehensive hub for everything related to Discord. Whether you're a developer, server owner, or a regular user, discord.place offers valuable resources to enhance your Discord experience.
-
-From finding perfect emojis for your Discord servers to discovering the latest bots and servers, discord.place caters to all your Discord needs. Enjoy easy navigation and up-to-date content designed to help you make the most out of your Discord interactions.
-
-This repository contains the client and server files for the discord.place website. 
-
----
+**discord.place** is a community hub for everything related to Discord. Find emojis, sounds, themes, servers, bots, templates, and profiles. You can also list your own. This repository contains the Next.js client and the Node.js API/bot server.
 
 ## Self-Hosting
 
-To self-host discord.place, you will need to have the following prerequisites installed on your system:
+**Prerequisites:** [Node.js](https://nodejs.org) 22 or newer, [pnpm](https://pnpm.io), [Git](https://git-scm.com), and [MongoDB](https://www.mongodb.com/try/download/community).
 
-- [Node.js](https://nodejs.org/en/download/) (Node.js 18.x should be used on the client side)
-- [npm](https://www.npmjs.com/get-npm) (usually comes with Node.js)
-- [Git](https://git-scm.com/downloads)
-- [MongoDB](https://www.mongodb.com/try/download/community)
-
-Once you have the prerequisites installed, follow these steps to self-host discord.place:
-
-1. Clone the repository to your local machine:
+**1. Clone the repository**
 
 ```bash
 git clone https://github.com/discordplace/discord.place.git
-```
-
-2. Navigate to the cloned repository:
-
-```bash
 cd discord.place
 ```
 
-3. Install the required dependencies for bot server & client:
+**2. Install dependencies**
 
 ```bash
-cd server
-
-npm install
-
-cd ../client
-
-npm install
+pnpm --dir server install
+pnpm --dir client install
 ```
 
-4. Get information about how to fill in the environment values from the sections below, two for [server](#environment-variables-configuration-server) and [client](#environment-variables-configuration-client).
+**3. Configure the apps**
 
-5. Get information about how to fill in the config file from the sections below, two for [server](#about-configuration-file-server) and [client](#about-configuration-file-client).
+Create `server/.env` and `client/.env`, then adjust `server/config.yml` and `client/config/data.js`. Every option is documented in the collapsible sections below.
 
-6. Start the server:
+**4. Start both apps**
 
 ```bash
-cd server
-
-npm start
+pnpm dev
 ```
 
-7. Start the client:
+Open [http://localhost:36706](http://localhost:36706). The client runs on port `36706`; the server runs on port `16540` and restarts when its files change.
 
-```bash
-cd client
+> [!NOTE]
+> `pnpm dev` runs the development servers. For a production deployment, run `pnpm --dir client build`, then `pnpm --dir server start` and `pnpm --dir client start`.
 
-npm run dev
-```
-
-8. Open your browser and navigate to `http://localhost:36706` to view the website locally.
-
----
-
-### Environment Variables Configuration (Client)
+<details>
+<summary><strong>Environment variables (client)</strong></summary>
 
 Create a `.env` file in the `client` directory with the following environment variables:
 
@@ -84,7 +70,8 @@ NEXT_PUBLIC_SENTRY_DSN=
 SENTRY_AUTH_TOKEN=
 ```
 
-##### Parameters
+**Parameters**
+
 | Name | Description |
 | ---- | ----------- |
 | `NEXT_PUBLIC_PORT` | Port for the client. |
@@ -96,13 +83,16 @@ SENTRY_AUTH_TOKEN=
 | `NEXT_PUBLIC_SENTRY_DSN` | Sentry DSN for error tracking. |
 | `SENTRY_AUTH_TOKEN` | Sentry auth token for error tracking. |
 
-> [!NOTE]  
+> [!NOTE]
 > - Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile site key.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the server's `CLIENT_SECRET` value.
 > - The `NEXT_PUBLIC_CDN_URL` is used for serving emojis and sounds files. You should set this to your own CDN URL. Make sure to use valid URL format (e.g., `https://cdn.yourdomain.com`).
 > - The `SENTRY_ORG`, `SENTRY_PROJECT`, `NEXT_PUBLIC_SENTRY_DSN`, and `SENTRY_AUTH_TOKEN` values are used for Sentry error tracking. We use Sentry for error tracking. Refer to the [Sentry documentation](https://docs.sentry.io/) for more information.
 
-### Environment Variables Configuration (Server)
+</details>
+
+<details>
+<summary><strong>Environment variables (server)</strong></summary>
 
 Create a `.env` file in the `server` directory with the following environment variables:
 
@@ -117,6 +107,7 @@ CLIENT_SECRET=
 DISCORD_CLIENT_TOKEN=
 DISCORD_CLIENT_SECRET=
 DISCORD_CLIENT_ID=
+DISCORD_PORTAL_CHANNEL_WEBHOOK_URL=
 MONGO_URL=
 S3_BUCKET_NAME=
 S3_ACCESS_KEY_ID=
@@ -128,6 +119,7 @@ S3_DATABASE_BACKUP_ACCESS_KEY_ID=
 S3_DATABASE_BACKUP_SECRET_ACCESS_KEY=
 S3_DATABASE_BACKUP_REGION=
 S3_DATABASE_BACKUP_ENDPOINT=
+DAILY_DATABASE_BACKUP_HEARTBEAT_URL=
 CDN_URL=
 CLOUDFLARE_TURNSTILE_SECRET_KEY=
 LEMON_SQUEEZY_WEBHOOK_SECRET=
@@ -139,9 +131,11 @@ WEBHOOKS_PROXY_SERVER_HOST=
 WEBHOOKS_PROXY_SERVER_PORT=
 WEBHOOKS_PROXY_SERVER_USERNAME=
 WEBHOOKS_PROXY_SERVER_PASSWORD=
+SENTRY_DSN=
 ```
 
-##### Parameters
+**Parameters**
+
 | Name | Description |
 | ---- | ----------- |
 | `COOKIE_SECRET` | Secret key for cookie encryption. |
@@ -196,11 +190,15 @@ WEBHOOKS_PROXY_SERVER_PASSWORD=
 > - The `WEBHOOKS_PROXY_SERVER_PROTOCOL`, `WEBHOOKS_PROXY_SERVER_HOST`, `WEBHOOKS_PROXY_SERVER_PORT`, `WEBHOOKS_PROXY_SERVER_USERNAME`, and `WEBHOOKS_PROXY_SERVER_PASSWORD` values are used for the proxy server settings. We use a proxy server for sending webhooks requests. If you don't want to use a proxy server, you can leave these values empty. Username and password are not required for the proxy server.
 > - The `SENTRY_DSN` value is used for Sentry error tracking. This is not required for self-hosting. We use Sentry for error tracking. Refer to the [Sentry documentation](https://docs.sentry.io) for more information.
 
-### About Configuration File (Client)
+</details>
+
+<details>
+<summary><strong>Configuration (client)</strong></summary>
 
 Navigate to the `client/config` directory and find the `data.js` file. This file contains the configuration for the client. You can modify the values in this file to customize the client according to your requirements.
 
-##### Parameters
+**Parameters**
+
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:16540`. |
@@ -213,22 +211,25 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 
 > [!NOTE]
 > - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
-> - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. Each entry also has a `dateFnsLocale` value, which is the [date-fns locale](https://date-fns.org/docs/I18n) object used for localized date and duration formatting. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
+> - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. Each entry also has a `dateFnsLocale` value, which is the [date-fns locale](https://date-fns.org/docs/I18n) object used for localized date and duration formatting. To find more details about the adding new languages to the website, check the **Adding a new language** section below.
 > - The `baseUrl` value is used for the base URL for the website. You should change this value to your own base URL. Make sure to use domain names instead of IP addresses for the base URL. Also you should use Cloudflare for the client domain.
-
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API.
 > - The `linkShortenerHostname` value is used for the hostname of the link shortener. You can change this value to your own link shortener hostname. Make sure to connect this hostname to the same server where you host the API and connect it to the correct port, same as the API.
 
 > [!WARNING]
-> - If you wanna change the default locale, you should change the `default` value in the `client/config/data.js` file. This value should be one of the values in the `availableLocales` array. After changing this value, you also need to change the `DEFAULT_LOCALE_CODE` environment value in the `.github/workflows/validate-locale-files.yml` file. (if you don't want to get any unnecessary errors in the GitHub Actions)
+> - If you wanna change the default locale, you should change the `default` value in the `client/config/data.js` file. This value should be one of the values in the `availableLocales` array. After changing this value, you also need to change the `DEFAULT_LOCALE_CODE` environment value in the `.github/workflows/client-validate-locale-files.yml` file. (if you don't want to get any unnecessary errors in the GitHub Actions)
 
-### About Configuration File (Server)
+</details>
+
+<details>
+<summary><strong>Configuration (server)</strong></summary>
 
 We use YML files for the configuration of the server. You can find the configuration file in the `server` directory. You can modify the values in these files to customize the server according to your requirements.
 
-##### Parameters
+**Parameters**
+
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | `discordScopes` | Array<String> | Discord OAuth scopes required for the website. |
@@ -265,7 +266,7 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `sitemapConfig` value is used to configure sitemap generation settings, such as `blogsChangeFrequency` for how often blog items are expected to change, and `useInternalNetworking` for toggling whether to fetch blogs internally on localhost or via public domains.
 > - The `port.frontend` and `port.backend` values are used for the client and server ports. You can change these values to your own ports.
 > - The `guildId` and `guildInviteUrl` values are used for the base guild ID and invite URL for the base guild. You can change these values to your own guild ID and invite URL.
-> - The `permissions` value is used for the permissions for the server. If permission name has `Roles` in the end, that means that permission is role-based. Otherwise, that permission is user ID-based. You can change these values to your own permissions.
+> - The `permissions` value is used for the permissions for the server. If permission name has `Roles` in the end, that means that permission is role-based. Otherwise, permission is user ID-based. You can change these values to your own permissions.
 > - The `maxServerCountDifference` value is used for the allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. When new requests come to the stats API route, we check the server count of the bot. If the difference between the provided server count and the actual server count is greater than this value, we reject the request.
 > - The `roles` value is used for the role IDs from the base guild. You can change these values to your own role IDs.
 > - The `excludeCollectionsInBackup` value is used for collections to exclude from database backups. We take daily backups of the database. If you don't want to take backups of some collections, you can add those collections to this value. Make sure to add the collection name exactly as it is in the database.
@@ -273,20 +274,14 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `linkShortenerHostname` value is used for the hostname of the link shortener. You can change this value to your own link shortener hostname. Make sure to connect this hostname to the same server where you host the API and connect it to the correct port, same as the API.
 > - The `lemonSqueezy.variantIds` value is used for the variant IDs for the Lemon Squeezy. We sell some products on Lemon Squeezy with different variants. You should create these variants on the Lemon Squeezy and get the variant IDs from there.
 > - Make sure to fill all fields that end with `ChannelId` with the correct channel IDs from the base guild.
-> - The `availableLocales` value is used for the available locales for the server. You can change these values to your own available locales. Locale files should be in the `server/src/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the [New Languages](#new-languages) section.
+> - The `availableLocales` value is used for the available locales for the server. You can change these values to your own available locales. Locale files should be in the `server/src/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the **Adding a new language** section below.
 
-### About react-icons
+</details>
 
-The `@react-icons/all-files` package is used for the icons in the client. We use our version of the `@react-icons/all-files` package that hosted on our CDN (https://cdn.discord.place/react-icons-all-files-5.5.0.tgz). You can just simply replace the package with the original one (https://github.com/react-icons/react-icons/releases/download/v5.5.0/react-icons-all-files-5.5.0.tgz) if you want to use the original package. We highly recommend you to use original package.
+<details>
+<summary><strong>Adding a new language</strong></summary>
 
-### About Tailwind CSS
-
-We use Tailwind CSS for styling the frontend. If you want to customize the Tailwind CSS configuration, you can modify the `tailwind.css` file in the following folders: `/` and `/client`. Both files should have the same content. Make sure to not change the first line.
-
-### New Languages
-
-#### Client
-To add a new language to the website, follow these steps:
+**Client**
 
 1. Create a new JSON file in the `client/locales` directory with the format `xx.json`, where `xx` is the language code. For example, `fr.json` for French. You can use the existing language files as a reference.
 2. Add an entry to the `availableLocales` array in the `client/config/data.js` file. The entry needs the language `code`, `countryCode`, `flag`, `name`, and the matching `dateFnsLocale` object imported from `date-fns/locale`. Only the default locale should have `default: true`.
@@ -308,8 +303,7 @@ import { fr } from 'date-fns/locale';
 }
 ```
 
-#### Server
-To add a new language to the server, follow these steps:
+**Server**
 
 1. Create a new JSON file in the `server/src/locales` directory with the format `xx.json`, where `xx` is the language code. For example, `fr.json` for French. You can use the existing language files as a reference.
 2. Add the language code to the `availableLocales` value in the `server/config.yml` file.
@@ -325,86 +319,87 @@ To add a new language to the server, follow these steps:
 > [!NOTE]
 > - Some languages may not be supported by Discord client.
 
+</details>
+
+<details>
+<summary><strong>Project notes</strong></summary>
+
+**react-icons**
+
+The `@react-icons/all-files` package is used for the icons in the client. We use our version of the `@react-icons/all-files` package that hosted on our CDN (https://cdn.discord.place/react-icons-all-files-5.5.0.tgz). You can just simply replace the package with the original one (https://github.com/react-icons/react-icons/releases/download/v5.5.0/react-icons-all-files-5.5.0.tgz) if you want to use the original package. We highly recommend you to use original package.
+
+**Tailwind CSS**
+
+We use Tailwind CSS for styling the frontend. If you want to customize the Tailwind CSS configuration, you can modify the `tailwind.css` file in the following folders: `/` and `/client`. Both files should have the same content. Make sure to not change the first line.
+
+</details>
+
 ## Development
 
-Install dependencies for both packages:
-
-```bash
-pnpm install --dir server
-pnpm install --dir client
-```
-
-Start the client and server together from the repository root:
+Run both apps from the repository root:
 
 ```bash
 pnpm dev
 ```
 
-This starts the Next.js client with Turbopack on `http://localhost:36706` and the API server on port `16540`. The server uses Node's built-in watch mode, so it restarts automatically when server files change. To run either side on its own, use `pnpm --dir client dev` or `pnpm --dir server dev`.
+The client runs on [http://localhost:36706](http://localhost:36706). The server runs on port `16540` and restarts when its files change. To run either side on its own, use `pnpm --dir client dev` or `pnpm --dir server dev`.
+
+Run `pnpm lint` before committing. It checks both apps with oxlint. The pre-commit hook runs the same command together with the locale check. To apply automatic fixes, run `pnpm --dir client exec oxlint --fix` and `pnpm --dir server exec oxlint --fix`.
+
+## Community
+
+Thanks to everyone who has contributed to discord.place.
+
+<p align="center">
+  <a href="https://github.com/discordplace/discord.place/graphs/contributors">
+    <img src="https://shieldcn.dev/contributors/discordplace/discord.place.svg?limit=30&amp;size=48&amp;theme=violet&amp;bg=transparent" alt="Contributors" />
+  </a>
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/chart/github/stars/discordplace/discord.place.svg?theme=violet&amp;mode=dark" />
+    <img alt="Star history" src="https://shieldcn.dev/chart/github/stars/discordplace/discord.place.svg?theme=violet&amp;mode=light" />
+  </picture>
+</p>
 
 ## Contributing
 
-We welcome contributions from the community! If you'd like to contribute to the project, please follow these guidelines:
+We welcome contributions from the community. Please read the [Contributing Guidelines](.github/CONTRIBUTING.md) and [Code of Conduct](.github/CODE_OF_CONDUCT.md) before opening a pull request.
+
+1. Fork and clone the repository.
+2. Create a branch for your change.
+3. Make your changes and run `pnpm lint`.
+4. Commit with a message that follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+5. Push your branch and open a pull request against `main`.
+
+<details>
+<summary><strong>Contributing translations</strong></summary>
+
+**Website**
 
 1. Fork the repository and clone it locally.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and ensure the code passes any existing tests.
-4. Commit your changes with descriptive commit messages that follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
-5. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
+2. Create a new branch for your translation.
+3. Find the language file you want to translate in the `client/locales` directory.
+4. Add the translations for the missing keys in the language file or update the existing translations.
+5. Commit your changes with descriptive commit messages that follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
+6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
 
-Please make sure to follow the [Code of Conduct](.github/CODE_OF_CONDUCT.md) and [Contributing Guidelines](.github/CONTRIBUTING.md) when contributing to this project.
+**Server**
 
-<details>
-<summary>
-  <strong>
-    Contributing Translations to the Website
-  </strong>
-</summary>
-  If you'd like to contribute translations to the discord.place website, follow these steps:
+1. Fork the repository and clone it locally.
+2. Create a new branch for your translation.
+3. Find the language file you want to translate in the `server/src/locales` directory.
+4. Add the translations for the missing keys in the language file or update the existing translations.
+5. Commit your changes with descriptive commit messages that follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
+6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
 
-  1. Fork the repository and clone it locally.
-  2. Create a new branch for your translation.
-  3. Find the language file you want to translate in the `client/locales` directory.
-  4. Add the translations for the missing keys in the language file or update the existing translations.
-  5. Commit your changes with descriptive commit messages that follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
-  6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
 </details>
 
-<details>
-<summary>
-  <strong>
-    Contributing Translations to the Server
-  </strong>
-</summary>
-  If you'd like to contribute translations to the discord.place server, follow these steps:
+## License
 
-  1. Fork the repository and clone it locally.
-  2. Create a new branch for your translation.
-  3. Find the language file you want to translate in the `server/src/locales` directory.
-  4. Add the translations for the missing keys in the language file or update the existing translations.
-  5. Commit your changes with descriptive commit messages that follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard.
-  6. Push your changes to your fork and submit a pull request to the `main` branch of the original repository.
-</details>
-
-### Linting
-
-Both the client and the server are linted with [oxlint](https://oxc.rs/docs/guide/usage/linter.html). The configuration files are `client/.oxlintrc.json` and `server/.oxlintrc.json`. They load the shared ESLint plugins used for formatting, security rules, dependency bans, and `require` sorting through oxlint's `jsPlugins` support.
-
-Run both linters from the repository root:
-
-```sh
-pnpm lint
-```
-
-To apply the automatic fixes (import sorting, formatting, and other fixable rules):
-
-```sh
-pnpm --dir client exec oxlint --fix
-pnpm --dir server exec oxlint --fix
-```
-
-The same lint command runs automatically on `git commit` together with the locale check, so commits containing lint errors are rejected.
+Released under the [AGPL-3.0 License](LICENSE).
 
 ## Help
 
-If you encounter any issues with the discord.place or have any questions, feel free to [open an issue](https://github.com/discordplace/discordplace/issues) on this repository. We'll do our best to assist you!
+If you encounter any issues or have questions, [open an issue](https://github.com/discordplace/discord.place/issues) or join our [Discord server](https://discord.gg/sMkykssTtV).
