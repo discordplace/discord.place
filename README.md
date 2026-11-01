@@ -41,7 +41,7 @@ pnpm --dir client install
 
 **3. Configure the apps**
 
-Create `server/.env` and `client/.env`, then adjust `server/config.yml` and `client/config/data.js`. Every option is documented in the collapsible sections below.
+Create `server/.env` and `client/.env`. The tracked `server/config.yml` and `client/config/data.js` contain defaults; create `server/config.local.yml` for deployment-specific overrides. Every option is documented in the collapsible sections below.
 
 **4. Start both apps**
 
@@ -49,7 +49,7 @@ Create `server/.env` and `client/.env`, then adjust `server/config.yml` and `cli
 pnpm dev
 ```
 
-Open [http://localhost:36706](http://localhost:36706). The client runs on port `36706`; the server runs on port `16540` and restarts when its files change.
+Open [http://localhost:5000](http://localhost:5000). The client runs on `CLIENT_PORT` (default `5000`) and the server on `SERVER_PORT` (default `5001`). The server restarts when its files change.
 
 > [!NOTE]
 > `pnpm dev` runs the development servers. For a production deployment, run `pnpm --dir client build`, then `pnpm --dir server start` and `pnpm --dir client start`.
@@ -60,11 +60,21 @@ Open [http://localhost:36706](http://localhost:36706). The client runs on port `
 Create a `.env` file in the `client` directory with the following environment variables:
 
 ```env
-NEXT_PUBLIC_PORT=36706
+CLIENT_PORT=5000
+NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_API_URL=
+INTERNAL_API_URL=
 NEXT_PUBLIC_CF_SITE_KEY=
 CLIENT_SECRET=
-INTERNAL_API_URL=
 NEXT_PUBLIC_CDN_URL=
+NEXT_PUBLIC_SUPPORT_INVITE_URL=
+NEXT_PUBLIC_DOCS_URL=
+NEXT_PUBLIC_STATUS_URL=
+NEXT_PUBLIC_BOT_INVITE_URL=
+NEXT_PUBLIC_GITHUB_ISSUES_URL=
+NEXT_PUBLIC_LINK_SHORTENER_HOSTNAME=
+NEXT_PUBLIC_CUSTOM_HOSTNAMES=
+NEXT_PUBLIC_BOT_TEST_GUILD_ID=
 SENTRY_ORG=
 SENTRY_PROJECT=
 NEXT_PUBLIC_SENTRY_DSN=
@@ -75,11 +85,21 @@ SENTRY_AUTH_TOKEN=
 
 | Name | Description |
 | ---- | ----------- |
-| `NEXT_PUBLIC_PORT` | Port for the client. |
+| `CLIENT_PORT` | Port the Next.js client listens on. Defaults to `5000`. |
+| `NEXT_PUBLIC_SITE_URL` | Public URL of the client. Defaults to `http://localhost:5000` in development and `https://discord.place` in production. |
+| `NEXT_PUBLIC_API_URL` | Public URL of the API. Defaults to `http://localhost:5001` in development and `https://api.discord.place` in production. |
+| `INTERNAL_API_URL` | Internal API URL used by the client server for server-side requests. Defaults to `NEXT_PUBLIC_API_URL`. |
 | `NEXT_PUBLIC_CF_SITE_KEY` | Cloudflare site key for Turnstile. |
 | `CLIENT_SECRET` | Secret key for client. |
-| `INTERNAL_API_URL` | Internal API URL used by the client server for server-side requests. Defaults to `http://127.0.0.1:16540`. |
 | `NEXT_PUBLIC_CDN_URL` | CDN URL for the website. Used for serving emojis and sounds files. Must be a valid URL. |
+| `NEXT_PUBLIC_SUPPORT_INVITE_URL` | Support server invite URL. Defaults to `https://invite.discord.place`. |
+| `NEXT_PUBLIC_DOCS_URL` | Documentation URL. Defaults to `https://docs.discord.place`. |
+| `NEXT_PUBLIC_STATUS_URL` | Status page URL. Defaults to `https://status.discord.place`. |
+| `NEXT_PUBLIC_BOT_INVITE_URL` | Bot invite URL. Defaults to `https://bot.discord.place`. |
+| `NEXT_PUBLIC_GITHUB_ISSUES_URL` | Issue creation URL. Defaults to the repository issue form. |
+| `NEXT_PUBLIC_LINK_SHORTENER_HOSTNAME` | Link shortener hostname. Defaults to `dsc.im`. |
+| `NEXT_PUBLIC_CUSTOM_HOSTNAMES` | Comma-separated custom profile hostnames. Defaults to `dsc.mom`. |
+| `NEXT_PUBLIC_BOT_TEST_GUILD_ID` | Guild ID used when testing newly added bots. |
 | `SENTRY_ORG` | Sentry organization for error tracking. |
 | `SENTRY_PROJECT` | Sentry project for error tracking. |
 | `NEXT_PUBLIC_SENTRY_DSN` | Sentry DSN for error tracking. |
@@ -88,7 +108,10 @@ SENTRY_AUTH_TOKEN=
 > [!NOTE]
 > - Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile site key.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the server's `CLIENT_SECRET` value.
-> - The `INTERNAL_API_URL` value is used by the client server to reach the API during server-side rendering. It defaults to `http://127.0.0.1:16540`. Set it when the client and server run on different hosts or the API uses another port.
+> - The `CLIENT_PORT` value controls the Next.js listener. Set it in the environment where you build and start the client.
+> - The `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` values are public and are used by both the browser and server rendering. Set them to your own domains. The defaults are for local development.
+> - The `INTERNAL_API_URL` value is used by the client server to reach the API during server-side rendering. It defaults to `NEXT_PUBLIC_API_URL`. Set it to an internal address when the API is reachable directly from the client server.
+> - The `NEXT_PUBLIC_SUPPORT_INVITE_URL`, `NEXT_PUBLIC_DOCS_URL`, `NEXT_PUBLIC_STATUS_URL`, `NEXT_PUBLIC_BOT_INVITE_URL`, `NEXT_PUBLIC_GITHUB_ISSUES_URL`, `NEXT_PUBLIC_LINK_SHORTENER_HOSTNAME`, `NEXT_PUBLIC_CUSTOM_HOSTNAMES`, and `NEXT_PUBLIC_BOT_TEST_GUILD_ID` values override the matching defaults in `client/config/data.js`.
 > - The `NEXT_PUBLIC_CDN_URL` is used for serving emojis and sounds files. You should set this to your own CDN URL. Make sure to use valid URL format (e.g., `https://cdn.yourdomain.com`).
 > - The `SENTRY_ORG`, `SENTRY_PROJECT`, `NEXT_PUBLIC_SENTRY_DSN`, and `SENTRY_AUTH_TOKEN` values are used for Sentry error tracking. We use Sentry for error tracking. Refer to the [Sentry documentation](https://docs.sentry.io/) for more information.
 
@@ -100,6 +123,10 @@ SENTRY_AUTH_TOKEN=
 Create a `.env` file in the `server` directory with the following environment variables:
 
 ```env
+SERVER_PORT=5001
+FRONTEND_URL=
+BACKEND_URL=
+INTERNAL_FRONTEND_URL=
 COOKIE_SECRET=
 GITHUB_AUTO_SYNC_TRANSLATORS_SECRET=
 BOT_API_KEY_ENCRYPT_SECRET=
@@ -143,6 +170,10 @@ SENTRY_DSN=
 
 | Name | Description |
 | ---- | ----------- |
+| `SERVER_PORT` | Port the API listens on. Defaults to `5001`. |
+| `FRONTEND_URL` | Public URL of the client. Overrides `frontendUrl` in `config.yml`. Defaults to `http://localhost:5000` in development. |
+| `BACKEND_URL` | Public URL of the API. Overrides `backendUrl` in `config.yml`. Defaults to `http://localhost:5001` in development. |
+| `INTERNAL_FRONTEND_URL` | Optional internal client URL used by the sitemap. Defaults to `FRONTEND_URL` or `config.frontendUrl`. |
 | `COOKIE_SECRET` | Secret key for cookie encryption. |
 | `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` | Secret key for GitHub trigger to sync translators roles. (not required) |
 | `BOT_API_KEY_ENCRYPT_SECRET` | Secret key for bot API key encryption. |
@@ -182,6 +213,9 @@ SENTRY_DSN=
 | `SENTRY_DSN` | Sentry DSN for error tracking. (not required) |
 
 > [!NOTE]
+> - The `SERVER_PORT` value controls the API listener. Set it in the environment where you start the server.
+> - The `FRONTEND_URL` and `BACKEND_URL` values override the URLs in `config.yml`. Leave them empty to use the values from the configuration file.
+> - The `INTERNAL_FRONTEND_URL` value is optional. It is used by the sitemap when `sitemapConfig.useInternalNetworking` is enabled, so the server can fetch blogs from the client without going through the public domain.
 > - The `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` is used for syncing the translators roles when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically sync the translators roles in the base guild with the ids in the `client/locales/translators.json` file.
 > - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET`, `USER_TOKEN_ENCRYPT_SECRET` and `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
 > - The `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` value is required when `LEMON_SQUEEZY_API_KEY` is set.
@@ -210,22 +244,27 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| `api.url` | String | Base API URL for the website. In development, it will be `http://localhost:16540`. |
+| `api.url` | String | Base API URL. Defaults to `http://localhost:5001` in development and `https://api.discord.place` in production. Override with `NEXT_PUBLIC_API_URL`. |
 | `availableLocales` | Array<Object> | Available locales for the website, including the matching date-fns locale. |
-| `baseUrl` | String | Base URL for the website. In development, it will be `http://localhost:36706`. |
-| `botInviteURL` | String | URL for the your bot invite. Used in the many places in the website. |
-| `botTestGuildId` | String | Your test guild ID for the bots testing. |
-| `customHostnames` | Array<String> | Custom hostnames for the profiles. You should connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API. |
-| `linkShortenerHostname` | String | Hostname for the link shortener. |
+| `baseUrl` | String | Base URL for the website. Defaults to `http://localhost:5000` in development and `https://discord.place` in production. Override with `NEXT_PUBLIC_SITE_URL`. |
+| `botInviteURL` | String | URL for your bot invite. Used in many places on the website. Override with `NEXT_PUBLIC_BOT_INVITE_URL`. |
+| `botTestGuildId` | String | Your test guild ID for bot testing. Override with `NEXT_PUBLIC_BOT_TEST_GUILD_ID`. |
+| `customHostnames` | Array<String> | Custom hostnames for profiles. You should connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API. Override with `NEXT_PUBLIC_CUSTOM_HOSTNAMES`. |
+| `docsUrl` | String | Documentation URL. Override with `NEXT_PUBLIC_DOCS_URL`. |
+| `githubIssuesUrl` | String | Issue creation URL. Override with `NEXT_PUBLIC_GITHUB_ISSUES_URL`. |
+| `linkShortenerHostname` | String | Hostname for the link shortener. Override with `NEXT_PUBLIC_LINK_SHORTENER_HOSTNAME`. |
+| `statusUrl` | String | Status page URL. Override with `NEXT_PUBLIC_STATUS_URL`. |
+| `supportInviteUrl` | String | Support server invite URL. Override with `NEXT_PUBLIC_SUPPORT_INVITE_URL`. |
 
 > [!NOTE]
-> - The `api.url` value is used for making API requests from the client to the server. You should change this value to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
+> - The `api.url` value is used for making API requests from the client to the server. Set `NEXT_PUBLIC_API_URL` to your own API URL. Make sure to use domain names instead of IP addresses for the API URL. Also you should use Cloudflare for both client and server domains.
 > - The `availableLocales` value is used for the available locales for the website. You can change these values to your own available locales. Locale files should be in the `client/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. Each entry also has a `dateFnsLocale` value, which is the [date-fns locale](https://date-fns.org/docs/I18n) object used for localized date and duration formatting. To find more details about the adding new languages to the website, check the **Adding a new language** section below.
-> - The `baseUrl` value is used for the base URL for the website. You should change this value to your own base URL. Make sure to use domain names instead of IP addresses for the base URL. Also you should use Cloudflare for the client domain.
+> - The `baseUrl` value is used for the base URL for the website. Set `NEXT_PUBLIC_SITE_URL` to your own base URL. Make sure to use domain names instead of IP addresses for the base URL. Also you should use Cloudflare for the client domain.
 > - The `botInviteURL` value is used for the bot invite link. You can change this value to your own bot invite link.
 > - The `botTestGuildId` value is used for when you want to quickly invite newly added bots to your test guild for testing. You can change this value to your own test guild ID.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. You should change this value to your own custom hostnames. You should connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API.
 > - The `linkShortenerHostname` value is used for the hostname of the link shortener. You can change this value to your own link shortener hostname. Make sure to connect this hostname to the same server where you host the API and connect it to the correct port, same as the API.
+> - The URL and hostname values in this table can be overridden with the matching `NEXT_PUBLIC_*` environment variables. The defaults are for local development.
 
 > [!WARNING]
 > - If you wanna change the default locale, you should change the `default` value in the `client/config/data.js` file. This value should be one of the values in the `availableLocales` array. After changing this value, you also need to change the `DEFAULT_LOCALE_CODE` environment value in the `.github/workflows/client-validate-locale-files.yml` file. (if you don't want to get any unnecessary errors in the GitHub Actions)
@@ -237,6 +276,14 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 
 We use YML files for the configuration of the server. You can find the configuration file in the `server` directory. You can modify the values in these files to customize the server according to your requirements.
 
+The tracked `config.yml` contains the base configuration. To override only the values your deployment needs, create `config.local.yml` in the `server` directory. It is ignored by Git and deep-merged over `config.yml`.
+
+```yaml
+frontendUrl: 'https://yourdomain.com'
+backendUrl: 'https://api.yourdomain.com'
+guildId: 'your-guild-id'
+```
+
 **Parameters**
 
 | Name | Type | Description |
@@ -245,13 +292,13 @@ We use YML files for the configuration of the server. You can find the configura
 | `botPresenceStatus` | String | Presence status for the bots. |
 | `rateLimitWhitelist` | Array<String> | Whitelisted user IDs for bypassing rate limits. |
 | `trustProxy` | Number | Trust proxy setting for the server. |
-| `frontendUrl` | String | Client website URL for the website. |
-| `backendUrl` | String | Server API URL for the website. |
-| `supportInviteUrl` | String | URL for the your Discord support server invite. |
+| `frontendUrl` | String | Client website URL. Overridden by `FRONTEND_URL`. |
+| `backendUrl` | String | Server API URL. Overridden by `BACKEND_URL`. |
+| `docsUrl` | String | Documentation URL used in the sitemap. |
+| `statusUrl` | String | Status page URL used in the sitemap. |
+| `supportInviteUrl` | String | URL for your Discord support server invite. |
 | `emojis` | Object | Emojis used in the bot. |
-| `sitemapConfig` | Object | Configuration for generating the website sitemap |
-| `port.frontend` | Number | Port for the client. |
-| `port.backend` | Number | Port for the server. |
+| `sitemapConfig` | Object | Configuration for generating the website sitemap. |
 | `guildId` | String | Base guild ID for the Discord bot. |
 | `guildInviteUrl` | String | Invite URL for the base guild. |
 | `permissions` | Object | Permissions for the server. |
@@ -268,11 +315,12 @@ We use YML files for the configuration of the server. You can find the configura
 > - The `botPresenceStatus` value is used for the presence status of the bot. You can change this value to your own presence status.
 > - The `rateLimitWhitelist` value is used for whitelisted user IDs for bypassing rate limits. You can change these values to your own whitelisted user IDs.
 > - The `trustProxy` value is used for the trust proxy setting for the server. You can change this value to your own trust proxy setting.
-> - The `frontendUrl` and `backendUrl` values are used for the client website URL and server API URL. You can change these values to your own URLs. The CDN URL is configured with the `CDN_URL` environment variable.
+> - The `frontendUrl` and `backendUrl` values are used for the client website URL and server API URL. You can change these values to your own URLs or override them with `FRONTEND_URL` and `BACKEND_URL`. The CDN URL is configured with the `CDN_URL` environment variable.
+> - The `docsUrl` and `statusUrl` values are used in the sitemap. Set them to your own documentation and status pages.
 > - The `supportInviteUrl` value is used for the support server invite URL. You can change this value to your own support server invite URL.
 > - The `emojis` value is used for the emojis used in the bot. You should change these values to your own emojis.
-> - The `sitemapConfig` value is used to configure sitemap generation settings, such as `blogsChangeFrequency` for how often blog items are expected to change, and `useInternalNetworking` for toggling whether to fetch blogs internally on localhost or via public domains.
-> - The `port.frontend` and `port.backend` values are used for the client and server ports. You can change these values to your own ports.
+> - The `sitemapConfig` value is used to configure sitemap generation settings, such as `blogsChangeFrequency` for how often blog items are expected to change, and `useInternalNetworking` for toggling whether to fetch blogs internally. When enabled, the server uses `INTERNAL_FRONTEND_URL` if it is set, otherwise it uses `config.frontendUrl`.
+> - The client and server ports are configured with the `CLIENT_PORT` and `SERVER_PORT` environment variables, not in `config.yml`.
 > - The `guildId` and `guildInviteUrl` values are used for the base guild ID and invite URL for the base guild. You can change these values to your own guild ID and invite URL.
 > - The `permissions` value is used for the permissions for the server. If permission name has `Roles` in the end, that means that permission is role-based. Otherwise, permission is user ID-based. You can change these values to your own permissions.
 > - The `maxServerCountDifference` value is used for the allowed maximum server count difference for the provided server_count and the actual server count in the bot's stats API route. When new requests come to the stats API route, we check the server count of the bot. If the difference between the provided server count and the actual server count is greater than this value, we reject the request.
@@ -350,7 +398,7 @@ Run both apps from the repository root:
 pnpm dev
 ```
 
-The client runs on [http://localhost:36706](http://localhost:36706). The server runs on port `16540` and restarts when its files change. To run either side on its own, use `pnpm --dir client dev` or `pnpm --dir server dev`.
+The client runs on [http://localhost:5000](http://localhost:5000) by default (`CLIENT_PORT`). The server runs on port `5001` by default (`SERVER_PORT`) and restarts when its files change. To run either side on its own, use `pnpm --dir client dev` or `pnpm --dir server dev`.
 
 Run `pnpm lint` before committing. It checks both apps with oxlint. The pre-commit hook runs the same command together with the locale check. To apply automatic fixes, run `pnpm --dir client exec oxlint --fix` and `pnpm --dir server exec oxlint --fix`.
 

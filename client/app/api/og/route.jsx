@@ -199,7 +199,7 @@ export async function GET(request) {
           }}
         >
           <img
-            src={`http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/symbol_white.png`}
+            src={`http://127.0.0.1:${process.env.CLIENT_PORT}/symbol_white.png`}
             style={{ height: '56px', marginLeft: '20px', width: '56px' }}
             alt='discord.place Logo'
           />

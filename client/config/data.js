@@ -24,17 +24,19 @@ const availableLocales = [
 
 const isDev = process.env.NODE_ENV === 'development';
 
-const baseUrl = isDev ? 'http://localhost:36706' : 'https://discord.place';
-const supportInviteUrl = 'https://invite.discord.place';
-const docsUrl = 'https://docs.discord.place';
-const statusUrl = 'https://status.discord.place';
-const botInviteURL = 'https://bot.discord.place';
-const githubIssuesUrl = 'https://github.com/discordplace/discord.place/issues/new?template=bug-report---feature-request.md';
-const linkShortenerHostname = 'dsc.im';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (isDev ? `http://localhost:${process.env.NEXT_PUBLIC_PORT || '5000'}` : 'https://discord.place');
+const supportInviteUrl = process.env.NEXT_PUBLIC_SUPPORT_INVITE_URL || 'https://invite.discord.place';
+const docsUrl = process.env.NEXT_PUBLIC_DOCS_URL || 'https://docs.discord.place';
+const statusUrl = process.env.NEXT_PUBLIC_STATUS_URL || 'https://status.discord.place';
+const botInviteURL = process.env.NEXT_PUBLIC_BOT_INVITE_URL || 'https://bot.discord.place';
+const githubIssuesUrl = process.env.NEXT_PUBLIC_GITHUB_ISSUES_URL || 'https://github.com/discordplace/discord.place/issues/new?template=bug-report---feature-request.md';
+const linkShortenerHostname = process.env.NEXT_PUBLIC_LINK_SHORTENER_HOSTNAME || 'dsc.im';
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || (isDev ? 'http://localhost:5001' : 'https://api.discord.place');
 
 const api = {
-  internalUrl: isDev ? 'http://localhost:16540' : (process.env.INTERNAL_API_URL || 'http://127.0.0.1:16540'),
-  url: isDev ? 'http://localhost:16540' : 'https://api.discord.place'
+  internalUrl: process.env.INTERNAL_API_URL || apiUrl,
+  url: apiUrl
 };
 
 const headerLinks = [
@@ -133,12 +135,14 @@ const templateDescriptionMaxLength = 256;
 const reportReasonMinCharacters = 32;
 const reportReasonMaxCharacters = 4096;
 const botMaxExtraOwners = 4;
-const botTestGuildId = '1239320384441159751';
+const botTestGuildId = process.env.NEXT_PUBLIC_BOT_TEST_GUILD_ID || '1239320384441159751';
 const dashboardRequestDelay = 1000;
 
 const themeSensitiveSocialTypes = [ 'x', 'custom', 'tiktok', 'github' ];
 const discordWebhookRegex = /^https:\/\/discord(?:app)?\.com\/api\/webhooks\/\d+\/[\w-]+$/;
-const customHostnames = [ 'dsc.mom' ];
+const customHostnames = process.env.NEXT_PUBLIC_CUSTOM_HOSTNAMES
+  ? process.env.NEXT_PUBLIC_CUSTOM_HOSTNAMES.split(',').map(hostname => hostname.trim()).filter(Boolean)
+  : [ 'dsc.mom' ];
 
 const socialNames = {
   bluesky: 'Bluesky', facebook: 'Facebook', github: 'GitHub', gitlab: 'GitLab',

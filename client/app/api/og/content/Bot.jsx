@@ -13,7 +13,7 @@ export default function Bot({ data, avatar_base64 }) {
     <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0px' }}>
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
         <img
-          src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : `http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/default-discord-avatar.png`}
+          src={avatar_base64 ? `data:image/png;base64,${avatar_base64}` : `http://127.0.0.1:${process.env.CLIENT_PORT}/default-discord-avatar.png`}
           alt={`${data.username}'s avatar`}
           style={{ borderRadius: '50%', height: '64px', width: '64px' }}
         />

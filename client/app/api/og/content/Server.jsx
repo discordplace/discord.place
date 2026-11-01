@@ -20,7 +20,7 @@ export default function Server({ data, icon_base64 }) {
     <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0px' }}>
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
         <img
-          src={icon_base64 ? `data:image/png;base64,${icon_base64}` : `http://127.0.0.1:${process.env.NEXT_PUBLIC_PORT}/default-discord-avatar.png`}
+          src={icon_base64 ? `data:image/png;base64,${icon_base64}` : `http://127.0.0.1:${process.env.CLIENT_PORT}/default-discord-avatar.png`}
           alt={`${data.name}'s icon`}
           style={{ borderRadius: '8px', height: '64px', width: '64px' }}
         />

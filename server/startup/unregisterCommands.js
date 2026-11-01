@@ -1,7 +1,6 @@
 require('module-alias/register');
 
-const fs = require('node:fs');
-const config = require('js-yaml').load(fs.readFileSync('./config.yml', 'utf8'));
+const config = require('@/utils/loadConfig')();
 global.config = config;
 
 const Logger = require('@/utils/logger');

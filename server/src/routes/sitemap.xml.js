@@ -14,7 +14,8 @@ const Theme = require('@/schemas/Theme');
 
 async function getBlogs() {
   try {
-    const response = await axios.get(config.sitemapConfig.useInternalNetworking ? `http://localhost:${config.port.frontend}/api/blogs` : 'https://discord.place/api/blogs');
+    const frontendUrl = config.sitemapConfig.useInternalNetworking ? (process.env.INTERNAL_FRONTEND_URL || config.frontendUrl) : config.frontendUrl;
+    const response = await axios.get(`${frontendUrl}/api/blogs`);
 
     return response.data;
   } catch (error) {
@@ -30,29 +31,30 @@ module.exports = {
 
     const currentDate = new Date();
     const currentMonthStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).toISOString();
+    const frontendUrl = config.frontendUrl;
 
     const blogs = await getBlogs();
 
     const pagesUpdatedMonthly = [
-      'https://docs.discord.place/',
-      'https://status.discord.place/',
-      'https://discord.place/premium',
-      'https://discord.place/blogs',
-      'https://discord.place/legal/privacy',
-      'https://discord.place/legal/terms',
-      'https://discord.place/legal/cookie-policy',
-      'https://discord.place/legal/content-policy',
-      'https://discord.place/legal/purchase-policy'
+      `${config.docsUrl}/`,
+      `${config.statusUrl}/`,
+      `${frontendUrl}/premium`,
+      `${frontendUrl}/blogs`,
+      `${frontendUrl}/legal/privacy`,
+      `${frontendUrl}/legal/terms`,
+      `${frontendUrl}/legal/cookie-policy`,
+      `${frontendUrl}/legal/content-policy`,
+      `${frontendUrl}/legal/purchase-policy`
     ];
 
     const pagesUpdatedDaily = [
-      'https://discord.place/profiles',
-      'https://discord.place/servers',
-      'https://discord.place/bots',
-      'https://discord.place/emojis',
-      'https://discord.place/templates',
-      'https://discord.place/sounds',
-      'https://discord.place/themes'
+      `${frontendUrl}/profiles`,
+      `${frontendUrl}/servers`,
+      `${frontendUrl}/bots`,
+      `${frontendUrl}/emojis`,
+      `${frontendUrl}/templates`,
+      `${frontendUrl}/sounds`,
+      `${frontendUrl}/themes`
     ];
 
     const [profiles, servers, bots, emojis, emojiPacks, templates, sounds, themes] = await Promise.all([
@@ -75,7 +77,7 @@ module.exports = {
         },
         {
           url: [
-            { loc: 'https://discord.place/' },
+            { loc: `${frontendUrl}/` },
             { lastmod: currentMonthStart },
             { changefreq: 'monthly' },
             { priority: 1.0 }
@@ -91,7 +93,7 @@ module.exports = {
         })),
         ...profiles.map(({ slug }) => ({
           url: [
-            { loc: `https://discord.place/profile/${slug}` },
+            { loc: `${frontendUrl}/profile/${slug}` },
             { lastmod: currentDate.toISOString() },
             { changefreq: 'daily' },
             { priority: 0.7 }
@@ -99,7 +101,7 @@ module.exports = {
         })),
         ...servers.map(({ id }) => ({
           url: [
-            { loc: `https://discord.place/servers/${id}` },
+            { loc: `${frontendUrl}/servers/${id}` },
             { lastmod: currentDate.toISOString() },
             { changefreq: 'daily' },
             { priority: 0.7 }
@@ -107,7 +109,7 @@ module.exports = {
         })),
         ...bots.map(({ id }) => ({
           url: [
-            { loc: `https://discord.place/bots/${id}` },
+            { loc: `${frontendUrl}/bots/${id}` },
             { lastmod: currentDate.toISOString() },
             { changefreq: 'daily' },
             { priority: 0.7 }
@@ -115,7 +117,7 @@ module.exports = {
         })),
         ...emojis.map(({ id }) => ({
           url: [
-            { loc: `https://discord.place/emojis/${id}` },
+            { loc: `${frontendUrl}/emojis/${id}` },
             { lastmod: currentDate.toISOString() },
             { changefreq: 'daily' },
             { priority: 0.7 }
@@ -123,7 +125,7 @@ module.exports = {
         })),
         ...emojiPacks.map(({ id }) => ({
           url: [
-            { loc: `https://discord.place/emojis/packages/${id}` },
+            { loc: `${frontendUrl}/emojis/packages/${id}` },
             { lastmod: currentDate.toISOString() },
             { changefreq: 'daily' },
             { priority: 0.7 }
@@ -131,7 +133,7 @@ module.exports = {
         })),
         ...templates.map(({ id }) => ({
           url: [
-            { loc: `https://discord.place/templates/${id}` },
+            { loc: `${frontendUrl}/templates/${id}` },
             { lastmod: currentDate.toISOString() },
             { changefreq: 'daily' },
             { priority: 0.7 }
@@ -139,7 +141,7 @@ module.exports = {
         })),
         ...sounds.map(({ id }) => ({
           url: [
-            { loc: `https://discord.place/sounds/${id}` },
+            { loc: `${frontendUrl}/sounds/${id}` },
             { lastmod: currentDate.toISOString() },
             { changefreq: 'daily' },
             { priority: 0.7 }
@@ -147,7 +149,7 @@ module.exports = {
         })),
         ...themes.map(({ id }) => ({
           url: [
-            { loc: `https://discord.place/themes/${id}` },
+            { loc: `${frontendUrl}/themes/${id}` },
             { lastmod: currentDate.toISOString() },
             { changefreq: 'daily' },
             { priority: 0.7 }
@@ -163,7 +165,7 @@ module.exports = {
         })),
         ...blogs.map(blog => ({
           url: [
-            { loc: `https://discord.place/blogs/${blog.id}` },
+            { loc: `${frontendUrl}/blogs/${blog.id}` },
             { lastmod: new Date(blog.date).toISOString() },
             { changefreq: config.sitemapConfig.blogsChangeFrequency },
             { priority: 0.5 }

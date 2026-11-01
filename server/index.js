@@ -3,14 +3,16 @@ require('module-alias/register');
 const environmentCheck = require('@/utils/environmentCheck.js');
 environmentCheck();
 
-const fs = require('node:fs');
-const config = require('js-yaml').load(fs.readFileSync('./config.yml', 'utf8'));
+const config = require('@/utils/loadConfig')();
 global.config = config;
 
-if (process.env.NODE_ENV === 'development') {
-  config.backendUrl = `http://localhost:${config.port.backend}`;
-  config.frontendUrl = `http://localhost:${config.port.frontend}`;
-}
+const isDev = process.env.NODE_ENV === 'development';
+const serverPort = Number(process.env.SERVER_PORT || process.env.PORT || 5001);
+
+if (!Number.isInteger(serverPort) || serverPort < 1 || serverPort > 65_535) throw new Error('SERVER_PORT must be a valid port number.');
+
+config.backendUrl = process.env.BACKEND_URL || (isDev ? `http://localhost:${serverPort}` : config.backendUrl);
+config.frontendUrl = process.env.FRONTEND_URL || (isDev ? 'http://localhost:5000' : config.frontendUrl);
 
 const Logger = require('@/utils/logger');
 new Logger();
@@ -42,7 +44,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
 
 const Server = require('@/src/server.js');
 const server = new Server();
-server.create().start(config.port.backend);
+server.create().start(serverPort);
 
 const connectDatabase = require('@/src/database/connect.js');
 connectDatabase(process.env.MONGO_URL, {

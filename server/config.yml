@@ -9,6 +9,7 @@ trustProxy: true
 frontendUrl: 'https://discord.place'
 backendUrl: 'https://api.discord.place'
 docsUrl: 'https://docs.discord.place'
+statusUrl: 'https://status.discord.place'
 supportInviteUrl: 'https://invite.discord.place'
 emojis:
   loading: '<a:loading:1247786499076915252>'
@@ -24,9 +25,6 @@ discordWebhookRegex: ^https:\/\/discord(app)?\.com\/api\/webhooks\/\d+\/[\w-]+$
 sitemapConfig:
   blogsChangeFrequency: 'monthly'
   useInternalNetworking: true
-port:
-  frontend: 36706
-  backend: 16540
 guildId: '1200254872059121764'
 guildInviteUrl: 'https://invite.discord.place'
 permissions:

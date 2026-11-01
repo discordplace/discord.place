@@ -12,9 +12,9 @@
     "url": "https://github.com/discordplace/discord.place/tree/main/apps/client"
   },
   "scripts": {
-    "dev": "next dev -p 36706",
+    "dev": "node --env-file=.env scripts/next.cjs dev",
     "build": "next build",
-    "start": "next start -p 36706",
+    "start": "node --env-file=.env scripts/next.cjs start",
     "lint": "oxlint",
     "lint:github": "oxlint --format github",
     "lint:fix": "oxlint --fix --fix-suggestions --fix-dangerously",

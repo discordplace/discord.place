@@ -1,5 +1,8 @@
 import { withSentryConfig } from '@sentry/nextjs/config';
 
+const clientPort = process.env.CLIENT_PORT || process.env.NEXT_PUBLIC_PORT || '5000';
+const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'development' ? 'http://localhost:5001' : 'https://api.discord.place');
+
 const remotePatterns = [
   {
     hostname: 'cdn.discordapp.com',
@@ -22,6 +25,9 @@ if (process.env.NEXT_PUBLIC_CDN_URL) {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   agentRules: false,
+  env: {
+    NEXT_PUBLIC_PORT: clientPort
+  },
   experimental: {
     optimizePackageImports: ['react-icons']
   },
@@ -59,7 +65,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        destination: `${process.env.INTERNAL_API_URL || 'http://127.0.0.1:16540'}/sitemap.xml`,
+        destination: `${apiUrl}/sitemap.xml`,
         source: '/sitemap.xml'
       }
     ];
