@@ -1,17 +1,19 @@
 import fs from 'node:fs';
 
 import matter from 'gray-matter';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import BackButton from '@/app/(blogs)/blogs/[id]/components/BackButton';
 import Header from '@/app/(blogs)/blogs/[id]/components/Header';
 import Markdown from '@/app/components/Markdown';
 import config from '@/config';
 import createMetadata from '@/lib/createMetadata';
+import isBlogId from '@/lib/isBlogId';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
 
+  if (!isBlogId(id)) notFound();
   if (!fs.existsSync(`${process.cwd()}/blogs/${id}.md`)) return;
 
   const source = fs.readFileSync(`${process.cwd()}/blogs/${id}.md`, 'utf8');
@@ -36,6 +38,7 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const { id } = await params;
 
+  if (!isBlogId(id)) notFound();
   if (!fs.existsSync(`${process.cwd()}/blogs/${id}.md`)) return redirect('/error?code=90001');
 
   const source = fs.readFileSync(`${process.cwd()}/blogs/${id}.md`, 'utf8');

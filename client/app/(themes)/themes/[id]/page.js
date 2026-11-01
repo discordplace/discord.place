@@ -1,10 +1,11 @@
 import { colord, extend } from 'colord';
 import namesPlugin from 'colord/plugins/names';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import Content from '@/app/(themes)/themes/[id]/content';
 import config from '@/config';
 import createMetadata from '@/lib/createMetadata';
+import isHexId from '@/lib/isHexId';
 import getTheme from '@/lib/request/themes/getTheme';
 import getThemeMetadata from '@/lib/request/themes/getThemeMetadata';
 
@@ -12,6 +13,8 @@ extend([namesPlugin]);
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
+
+  if (!isHexId(id)) notFound();
 
   const metadata = await getThemeMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
@@ -59,6 +62,8 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { id } = await params;
+
+  if (!isHexId(id)) notFound();
 
   const theme = await getTheme(id).catch(error => error);
   if (typeof theme === 'string') return redirect(`/error?message=${encodeURIComponent(theme)}`);

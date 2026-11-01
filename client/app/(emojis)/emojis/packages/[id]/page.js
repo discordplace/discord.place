@@ -1,13 +1,16 @@
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import Content from '@/app/(emojis)/emojis/packages/[id]/content';
 import config from '@/config';
 import createMetadata from '@/lib/createMetadata';
+import isHexId from '@/lib/isHexId';
 import getEmoji from '@/lib/request/emojis/getEmoji';
 import getEmojiMetadata from '@/lib/request/emojis/getEmojiMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
+
+  if (!isHexId(id)) notFound();
 
   const metadata = await getEmojiMetadata(id, true).catch(error => error);
   if (typeof metadata === 'string') return;
@@ -38,6 +41,8 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { id } = await params;
+
+  if (!isHexId(id)) notFound();
 
   const emoji = await getEmoji(id, true).catch(error => error);
   if (typeof emoji === 'string') return redirect(`/error?message=${encodeURIComponent(emoji)}`);

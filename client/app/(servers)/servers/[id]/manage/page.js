@@ -1,16 +1,19 @@
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import Content from '@/app/(servers)/servers/[id]/manage/content';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 import createMetadata from '@/lib/createMetadata';
+import isSnowflake from '@/lib/isSnowflake';
 import getServer from '@/lib/request/servers/getServer';
 import getServerMetadata from '@/lib/request/servers/getServerMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
 
+  if (!isSnowflake(id)) notFound();
+
   const metadata = await getServerMetadata(id).catch(error => error);
-  if (typeof server === 'string') return;
+  if (typeof metadata === 'string') return;
 
   return createMetadata({
     title: `Manage ${metadata.name}`
@@ -19,6 +22,8 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { id } = await params;
+
+  if (!isSnowflake(id)) notFound();
 
   const server = await getServer(id).catch(error => error);
   if (typeof server === 'string') return redirect(`/error?message=${encodeURIComponent(server)}`);

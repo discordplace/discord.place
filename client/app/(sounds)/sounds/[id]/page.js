@@ -1,13 +1,16 @@
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import Content from '@/app/(sounds)/sounds/[id]/content';
 import config from '@/config';
 import createMetadata from '@/lib/createMetadata';
+import isHexId from '@/lib/isHexId';
 import getSound from '@/lib/request/sounds/getSound';
 import getSoundMetadata from '@/lib/request/sounds/getSoundMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
+
+  if (!isHexId(id)) notFound();
 
   const metadata = await getSoundMetadata(id).catch(error => error);
   if (typeof metadata === 'string') return;
@@ -37,6 +40,8 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { id } = await params;
+
+  if (!isHexId(id)) notFound();
 
   const sound = await getSound(id).catch(error => error);
   if (typeof sound === 'string') return redirect(`/error?message=${encodeURIComponent(sound)}`);
