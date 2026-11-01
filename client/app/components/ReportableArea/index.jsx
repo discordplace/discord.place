@@ -80,6 +80,7 @@ export default function ReportableArea(props) {
     <div
       className={cn(
         'relative',
+        props.className,
         showReportableAreas && 'select-none'
       )}
       data-reportable-area={true}

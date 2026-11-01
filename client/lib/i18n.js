@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-export-from */
 import i18n from 'i18next';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 import ReactPostprocessor from 'i18next-react-postprocessor';

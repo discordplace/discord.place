@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import { TbLoader } from 'react-icons/tb';
@@ -21,11 +21,21 @@ import config from '@/config';
 import cn from '@/lib/cn';
 import getRelativeTime from '@/lib/getRelativeTime';
 import createReview from '@/lib/request/servers/createReview';
+import fetchReviewPage from '@/lib/request/servers/fetchReviewPage';
 import fetchReviews from '@/lib/request/servers/fetchReviews';
 import replyReview from '@/lib/request/servers/replyReview';
 import useAuthStore from '@/stores/auth';
 import useGeneralStore from '@/stores/general';
 import useModalsStore from '@/stores/modals';
+
+function getReviewIdFromHash() {
+  if (typeof globalThis.location === 'undefined') return null;
+
+  const { hash } = globalThis.location;
+  if (!hash.startsWith('#review-')) return null;
+
+  return hash.slice('#review-'.length) || null;
+}
 
 export default function Reviews({ server }) {
   const { t, i18n } = useTranslation();
@@ -51,18 +61,95 @@ export default function Reviews({ server }) {
   const loggedIn = useAuthStore(state => state.loggedIn);
 
   const isMobile = useMedia('(max-width: 640px)', false);
+  const [targetReviewId, setTargetReviewId] = useState(getReviewIdFromHash);
+  const pageRef = useRef(page);
 
   useEffect(() => {
+    pageRef.current = page;
+  }, [page]);
+
+  function changePage(nextPage) {
+    if (nextPage === pageRef.current) return;
+
     setReviewsLoading(true);
+    setPage(nextPage);
+  }
+
+  useEffect(() => {
+    if (!targetReviewId) return;
+
+    globalThis.history.replaceState(null, '', `${globalThis.location.pathname}${globalThis.location.search}`);
+
+    let cancelled = false;
+
+    fetchReviewPage(server.id, targetReviewId, limit)
+      .then(data => {
+        if (!cancelled) changePage(data.page);
+      })
+      .catch(() => null);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [server.id, limit, targetReviewId]);
+
+  useEffect(() => {
+    let cancelled = false;
 
     fetchReviews(server.id, page, limit)
       .then(data => {
+        if (cancelled) return;
+
         setReviews(data.reviews);
         setTotalReviews(data.total);
       })
-      .catch(error => toast.error(error))
-      .finally(() => setReviewsLoading(false));
+      .catch(error => {
+        if (!cancelled) toast.error(error);
+      })
+      .finally(() => {
+        if (!cancelled) setReviewsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [server.id, page, limit]);
+
+  useEffect(() => {
+    if (!targetReviewId || reviewsLoading) return;
+
+    const element = document.getElementById(`review-${targetReviewId}`);
+    if (!element) return;
+
+    let cancelled = false;
+    const y = Math.max(0, element.getBoundingClientRect().top + globalThis.scrollY - 96);
+
+    Promise.all([import('gsap'), import('gsap/ScrollToPlugin')])
+      .then(([gsapModule, pluginModule]) => {
+        if (cancelled) return;
+
+        const gsap = gsapModule.gsap || gsapModule.default;
+        const ScrollToPlugin = pluginModule.ScrollToPlugin || pluginModule.default;
+
+        gsap.registerPlugin(ScrollToPlugin);
+        gsap.to(globalThis, {
+          duration: 0.6,
+          ease: 'power2.out',
+          scrollTo: { y }
+        });
+        setTargetReviewId(null);
+      })
+      .catch(() => {
+        if (cancelled) return;
+
+        globalThis.scrollTo({ behavior: 'smooth', top: y });
+        setTargetReviewId(null);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [reviews, reviewsLoading, targetReviewId]);
 
   function calcRating(rating) {
     const totalReviews = server.reviews.length;
@@ -368,7 +455,7 @@ export default function Reviews({ server }) {
       ) : (
         reviews.map(review => (
           <div
-            className='relative mt-8 flex w-full flex-col gap-y-4 sm:flex-row'
+            className='relative mt-8 flex w-full scroll-mt-24 flex-col gap-y-4 sm:flex-row'
             id={`review-${review._id}`}
             key={review._id}
           >
@@ -404,6 +491,7 @@ export default function Reviews({ server }) {
             </div>
 
             <ReportableArea
+              className='w-full min-w-0 flex-1'
               type='review'
               active={user?.id !== review.user.id}
               metadata={{
@@ -470,7 +558,7 @@ export default function Reviews({ server }) {
         <div className='flex w-full items-center justify-center'>
           <Pagination
             page={page}
-            setPage={setPage}
+            setPage={changePage}
             loading={loading || reviewsLoading}
             total={totalReviews}
             limit={limit}

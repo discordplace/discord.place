@@ -95,7 +95,7 @@ function processContent(content, index) {
 }
 
 function withEmojiSupport(Component) {
-  return ({ children, _node, ...props }) => {
+  return function EmojiSupportedComponent({ children, _node, ...props }) {
     if (!children) return <Component {...props} />;
 
     const content = Array.isArray(children) ? children.map((child, index) => processContent(child, index)) : processContent(children, 0);

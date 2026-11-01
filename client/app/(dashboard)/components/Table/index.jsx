@@ -42,6 +42,11 @@ export default function Table({ tabs }) {
     setSelectedItems([]);
   }, [currentTab, currentSort]);
 
+  useEffect(() => {
+    setCurrentSort({ key: '', name: '', order: '' });
+    setPage(1);
+  }, [currentTab]);
+
   const [currentlySearching, setCurrentlySearching] = useState(false);
   const searchQuery = useDashboardStore(state => state.searchQuery);
   const setSearchQuery = useDashboardStore(state => state.setSearchQuery);

@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-export-from */
 import { browserSessionIntegration, captureRouterTransitionStart, httpClientIntegration, init as initSentry, replayIntegration } from '@sentry/nextjs';
 
 initSentry({

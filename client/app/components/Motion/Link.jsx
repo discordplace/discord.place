@@ -2,10 +2,10 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { forwardRef } from 'react';
 
-const ForwardedImage = forwardRef((props, ref) => (
+function ForwardedLink(props, ref) {
+  return <Link {...props} ref={ref} />;
+}
 
-  <Link {...props} ref={ref} />
-));
-const MotionLink = motion.create(ForwardedImage);
+const MotionLink = motion.create(forwardRef(ForwardedLink));
 
 export default MotionLink;

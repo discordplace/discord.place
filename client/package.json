@@ -36,6 +36,7 @@
     "date-fns": "^4.4.0",
     "framer-motion": "^14.9.0",
     "gray-matter": "^4.0.3",
+    "gsap": "^3.15.0",
     "i18next": "^26.5.12",
     "i18next-intervalplural-postprocessor": "^3.0.0",
     "i18next-react-postprocessor": "^3.1.0",
