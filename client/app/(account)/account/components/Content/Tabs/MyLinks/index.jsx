@@ -77,7 +77,7 @@ export default function MyLinks() {
             if (!nameRegex.test(name)) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.invalidName'));
             if (name.length > 20) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.nameTooLong', { maxLength: 20 }));
 
-            if (!destinationURL) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.emptyDestinationURL'));
+            if (!destinationURL) return toast.error(t('accountPage.tabs.myLinks.createLinkModal.toast.emptyDestinationUrl'));
 
             try {
               const parsedURL = new URL(destinationURL);

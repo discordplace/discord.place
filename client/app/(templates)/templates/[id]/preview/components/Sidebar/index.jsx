@@ -38,7 +38,7 @@ export default function Sidebar({ template, focusedChannel, currentlyOpenedSecti
 
         return error;
       },
-      loading: t('templatePreviewPage.toast.deletingTempalte'),
+      loading: t('templatePreviewPage.toast.deletingTemplate'),
       success: () => {
         closeModal('delete-template');
         setTimeout(() => router.push('/'), 3000);

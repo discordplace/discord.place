@@ -18,13 +18,12 @@
     "shared": {
       "errors": {
         "missing_permissions": "Bu komutu kullanmak için yetkiniz yok.",
-        "user_quarantined": "Hesabınız karantinaya alındığından bu komutu kullanamazsınız.",
-        "server_quarantined": "Bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
         "user_or_guild_quarantined": "Hesabınız veya bu sunucu karantinaya alındığından bu komutu kullanamazsınız.",
         "server_owner_only": "Bu komutu kullanabilmek için sunucu sahibi olmalısınız.",
         "unknown_error": "Bir hata oluştu: {errorMessage}",
         "guild_only": "Bu komut sadece bir sunucuda kullanılabilir.",
-        "command_error": "Komutu çalıştırırken bir hata oluştu."
+        "command_error": "Komutu çalıştırırken bir hata oluştu.",
+        "user_quarantined": "Hesabınız karantinaya alındığından bu komutu kullanamazsınız."
       }
     },
     "emoji": {
@@ -35,10 +34,10 @@
           "message": "Şu anda **{packName}** paketini yüklüyorum. Lütfen bitene kadar bekleyin.",
           "button_label": "Durumu Görüntüle"
         },
-        "no_emojis_uploaded": "Paket **{packName}** yüklenemedi.",
         "pack_failed": "{index}. emoji yüklenemedi. Göz ardı ediliyor.. **{remainingSeconds} saniye** kaldı.",
         "emoji_not_found": "Emoji bulunamadı.",
-        "emoji_failed": "Emoji yüklenemedi."
+        "emoji_failed": "Emoji yüklenemedi.",
+        "no_emojis_uploaded": "Paket **{packName}** yüklenemedi."
       },
       "subcommands": {
         "upload": {
@@ -86,9 +85,9 @@
         "role_is_managed": "Yönetilen bir rolü ödül olarak ekleyemezsiniz.",
         "role_is_higher": "Ödül olarak, en yüksek rolümden daha yüksek veya eşit bir rol ekleyemezsiniz.",
         "invalid_votes": "Gerekli oy sayısı en az 1 olmalıdır.",
-        "reward_server_not_listed": "Sunucunuzu listelemeden ödül ekleyemezsiniz. Bu sunucuyu listelemek için [buraya]({link}) gidin.",
         "max_rewards_reached": "{count} ödülden fazlasına sahip olamazsınız.",
-        "reward_exists": "Bu rolle zaten bir ödül mevcut."
+        "reward_exists": "Bu rolle zaten bir ödül mevcut.",
+        "server_not_listed": "Bu sunucu discord.place'de listelenmemiş. Bu sunucuyu listelemek için [buraya]({link}) gidin."
       },
       "groups": {
         "set": {
@@ -134,8 +133,6 @@
               "description": "Sunucunun dilini değiştirir.",
               "options": {
                 "language": {
-                  "name": "dil",
-                  "description": "Yeni dil."
                 }
               },
               "updated": "Sunucunun dili Türkçe olarak güncellendi."
@@ -186,7 +183,7 @@
               "errors": {
                 "missing_bot_permissions": "Kullanıcılara rol eklemek için yetkim yok."
               },
-              "added": "Yeni oy ödülü eklendi! **{requiredVotes}** oya ulaşan kullanıcılara {role} rolünü vereceğim."
+              "reward_added": "Yeni ödül {role} eklendi. Bu rol, **{requiredVotes}** oya ulaşan kullanıcılara verilecek."
             }
           }
         },
@@ -205,10 +202,10 @@
               "errors": {
                 "reward_not_found": "Ödül bulunamadı."
               },
-              "removed": "Ödül kaldırıldı.",
               "autocomplete": {
                 "item": "Rol: @{role} | Gerekli Oy: {requiredVotes}"
-              }
+              },
+              "reward_removed": "Ödül {role} kaldırıldı."
             }
           }
         },
@@ -243,15 +240,15 @@
     "templates": {
       "name": "şablon",
       "errors": {
-        "too_many_currently": "Şu anda çok fazla şablon uygulanıyor. Lütfen mevcut şablonların uygulanmasını bekleyin ve ardından komutu tekrar kullanın.",
-        "currently_applying": "Bu sunucu şu anda bir şablon uyguluyor. Lütfen mevcut şablonun uygulanmasını bekleyin ve ardından komutu tekrar kullanın.",
         "server_wait_for_applying": "Bu sunucuda başka bir şablon kullanmadan önce lütfen {remainingMinutes} dakika bekleyin.",
         "user_wait_for_applying": "Başka bir şablon kullanmadan önce lütfen {remainingMinutes} dakika bekleyin.",
         "template_not_found": "Şablon bulunamadı.",
         "confirmation_timeout": "İşlemi zamanında onaylamadınız. Şablon uygulanmadı.",
         "dms_disabled": "Size özel mesaj gönderemedim. Lütfen DM'lerinizin açık olduğundan emin olun ve tekrar deneyin.",
         "missing_highest_role": "Bu sunucuda en yüksek role sahip değilim. Lütfen en yüksek role sahip olduğumdan emin olun ve tekrar deneyin.",
-        "missing_bot_permissions": "En yüksek rolüm 'Yönetici' iznine sahip değil. Lütfen en yüksek rolümün 'Yönetici' iznine sahip olduğundan emin olun ve tekrar deneyin."
+        "missing_bot_permissions": "En yüksek rolüm 'Yönetici' iznine sahip değil. Lütfen en yüksek rolümün 'Yönetici' iznine sahip olduğundan emin olun ve tekrar deneyin.",
+        "currently_applying": "Bu sunucu şu anda bir şablon uyguluyor. Lütfen mevcut şablonun uygulanmasını bekleyin ve ardından komutu tekrar kullanın.",
+        "too_many_currently": "Şu anda çok fazla şablon uygulanıyor. Lütfen mevcut şablonların uygulanmasını bekleyin ve ardından komutu tekrar kullanın."
       },
       "subcommands": {
         "use": {
@@ -301,7 +298,6 @@
         "already_voted": "{hours} saat {minutes} dakika içinde tekrar oy verebilirsiniz."
       },
       "human_verification_text": "Şu an **{guildName}** sunucusuna oy vereceksiniz.\n**İnsan Doğrulaması Hakkında:**\n- Bu emoji üstünde olan butona tıklamalısınız: {emoji}\n- Butona tıklamak için 60 saniyeniz var.\n- Başarısız olursanız, tekrar deneyebilirsiniz.\n\n**Not:** Bu doğrulama, spam'i önlemek için sadece her üçüncü oyda gösterilir.",
-      "gif_hidden_now": "Gif şimdi gizlendi. Lütfen ezberlediğiniz sayıların sırasına göre butonlara tıklayın.",
       "create_reminder_button_label": "Hatırlatıcı Oluştur",
       "success": "Oy verdiğiniz için teşekkürler!",
       "logging_messages": {
@@ -368,7 +364,6 @@
                 "value": "Bu kullanıcı **{premiumSince}** tarihinden beri premium sahibi."
               },
               {
-                "name": "Profil",
                 "value": {
                   "occupation": "- **Meslek** 🔨 {occupation}",
                   "gender": "- **Cinsiyet** {gender_icon} {gender}",
@@ -493,12 +488,13 @@
       ]
     },
     "reminder": {
-      "name": "hatırlatıcı",
+      "name": "Hatırlatıcı",
       "errors": {
         "reminder_too_long": "Hatırlatıcı 512 karakter veya daha az olmalıdır.",
         "invalid_time": "Geçersiz zaman dilimi. Örnekler: `tomorrow`, `in 9 hours`, `next week`, `next Friday at 3pm`",
-        "reminder_too_short": "Hatırlatıcı süresi en az 5 dakika olmalıdır.",
-        "too_many_reminders": "Aynı anda en fazla 5 hatırlatıcınız olabilir."
+        "too_many_reminders": "Aynı anda en fazla 5 hatırlatıcınız olabilir.",
+        "reminder_not_found": "Hatırlatıcı bulunamadı.",
+        "time_too_short": "Zaman süresi çok kısa."
       },
       "subcommands": {
         "create": {
@@ -530,7 +526,8 @@
             "item": "Hatırlatıcı #{reminderId} | Hakkında: {about}"
           }
         }
-      }
+      },
+      "description": "Hatırlatıcı oluşturun, listeleyin veya silin."
     },
     "reminders": {
       "name": "hatırlatıcılar",
@@ -576,13 +573,9 @@
       },
       "human_verification": {
         "errors": {
-          "guild_not_found": "Sunucuyu bulamadım.",
-          "server_not_listed": "Bu sunucu discord.place'de listelenmemiş.",
-          "member_not_found": "Sunucuda değilsiniz.",
           "failed": "Kendinizi doğrulamada başarısız oldunuz.",
           "already_in_verification": "Zaten bir doğrulama sürecindesiniz. Lütfen yeni bir doğrulama süreci başlatmadan önce mevcut doğrulama sürecini tamamlayın."
-        },
-        "success": "Başarıyla kendinizi doğruladınız."
+        }
       }
     }
   },

@@ -56,7 +56,8 @@
     "blog": "Blog",
     "premium": "Premium",
     "continueWithDiscord": "Giriş Yap",
-    "myAccount": "Hesabım"
+    "myAccount": "Hesabım",
+    "logout": "Çıkış Yap"
   },
   "footer": {
     "description": "Discord ile alakalı her şey, bir arada.",
@@ -183,7 +184,6 @@
     "redirectTextPlural": "{{count}} saniye içinde ana sayfaya yönlendirileceksiniz."
   },
   "errorPage": {
-    "badge": "Hata",
     "title": "Üzgünüz, bir hata oluştu.",
     "messages": {
       "0": "Bir şeyler ters gitti.",
@@ -209,8 +209,6 @@
   "buttons": {
     "cancel": "İptal",
     "close": "Kapat",
-    "viewIncident": "Daha Fazla Bilgi",
-    "viewMaintenance": "Daha Fazla Bilgi",
     "back": "Geri",
     "next": "İleri",
     "publish": "Paylaş",
@@ -231,7 +229,6 @@
     "loginWithDiscord": "Discord ile Giriş Yap",
     "discardChanges": "Değişiklikleri İptal Et",
     "saveChanges": "Değişiklikleri Kaydet",
-    "enableTracking": "Takibi Etkinleştir",
     "saveWebhookSettings": "Webhook Ayarlarını Kaydet",
     "visit": "Görüntüle",
     "share": "Paylaş",
@@ -271,7 +268,6 @@
     "addTheme": "Tema Ekle",
     "createReport": "Bildirim Oluştur",
     "all": "Tümü",
-    "copy": "Kopyala",
     "grantPermission": "İzin Ver",
     "trust": "Güven",
     "trustAndLoad": "Güven ve Yükle",
@@ -482,9 +478,9 @@
       "description": "Bu sesi aşağıdan bir Discord sunucusu seçerek hızlıca yükleyin.",
       "emptyErrorState": {
         "title": "Buralar biraz sessiz...",
-        "message": "Ses yükleyebileceğiniz bir sunucu yok."
+        "message": "Ses yükleyebileceğiniz bir sunucu yok.",
+        "notes": "* Sunucuda \"İfadeleri Yönet\" iznine sahip olmalısınız.<br>* Listeyi yenilemek için siteden çıkış yapıp tekrar giriş yapın."
       },
-      "notes": "* Sunucuda \"İfadeleri Yönet\" iznine sahip olmalısınız.<br>* Listeyi yenilemek için siteden çıkış yapıp tekrar giriş yapın.",
       "tooltip": {
         "inviteOurBot": "{{guildName}} (Botumuzu Davet Et)"
       },
@@ -642,7 +638,6 @@
           "title": "Bunu duyduğuma sevindim! Bu renkleri Discord profilinizde kullanmanın 1 yolu var.",
           "methods": [
             {
-              "buttonText": "1. Kopyala & Yapıştır",
               "instructionsBefore": "Web sitemizi kullanarak, bu renkleri kopyalayabilir ve Discord profilinize yapıştırabilirsiniz. İşte nasıl yapacağınız:",
               "instructions": [
                 "Birincil rengi kopyalamak için \"Birincil Rengi Kopyala\" düğmesine tıklayın.",
@@ -696,7 +691,8 @@
     "mostVotedBadge": {
       "tooltip": "Bu sunucu geçen ay en çok oy alan sunucuydu.",
       "label": "En Çok Oy Alan"
-    }
+    },
+    "neverVoted": "Hiç oy verilmedi"
   },
   "serverPage": {
     "countdown": {
@@ -987,7 +983,6 @@
       },
       "profile": {
         "label": "Profil",
-        "tooltip": "Bu kullanıcının profili.",
         "noProfile": "Profil bulunamadı."
       },
       "likesReceived": {
@@ -1405,7 +1400,6 @@
     "searchInputPlaceholder": "Bir botu ID'ye, açıklamaya veya kategoriye göre arayın...",
     "categorySelectPlaceholder": "Kategori",
     "sortSelect": {
-      "placeholder": "Sıralama",
       "items": {
         "votes": "Oylar",
         "latestVoted": "Son Oy Verilen",
@@ -1467,8 +1461,7 @@
         "voted": "{{botName}} botuna oy verildi!",
         "creatingCheckout": "Sizin için bir ödeme sayfası oluşturuluyor..",
         "checkoutCreated": "Ödeme sayfası oluşturuldu! Birkaç saniye içinde ödeme sayfasına yönlendirileceksiniz..",
-        "loginRequiredForVote": "Oy verebilmek için giriş yapmalısınız.",
-        "botUrlCopied": "Bot bağlantısı panoya kopyalandı!"
+        "loginRequiredForVote": "Oy verebilmek için giriş yapmalısınız."
       }
     },
     "categories": {
@@ -1579,23 +1572,15 @@
           "description": "Botunuzun ait olduğu kategorileri seçin. Bu, kullanıcıların botunuzu bulmasına yardımcı olacaktır."
         },
         "keywords": {
-          "label": "Anahtar Kelimeler",
-          "description": "Botunuzun ile ilgili anahtar kelimeleri ekleyin. Bu, kullanıcıların botunuzu bulmasına yardımcı olacaktır.",
-          "placeholder": "ör. eğlence, moderasyon, müzik"
+          "description": "Botunuzun ile ilgili anahtar kelimeleri ekleyin. Bu, kullanıcıların botunuzu bulmasına yardımcı olacaktır."
         }
       },
       "toast": {
-        "notValidKeyword": "Lütfen geçerli bir anahtar kelime girin.",
-        "keywordExists": "Bu anahtar kelime zaten var.",
-        "keywordHasInvalidCharacters": "Anahtar kelimeler yalnızca harfler, rakamlar ve tireler içerebilir.",
-        "keywordTooLong": "Anahtar kelimeler yalnızca {{maxLength}} karakter uzunluğunda olabilir.",
         "noChangesMade": "Değişiklik yapılmadı.",
         "notValidRepositoryFormat": "Geçersiz kullanıcı/ad formatı."
       },
       "addedKeywords": {
-        "label": "Eklenen Anahtar Kelimeler",
-        "description": "Şu ana kadar eklediğiniz anahtar kelimeler. Bir anahtar kelimeyi kaldırmak için üstüne tıklayın.",
-        "max": " (maks)"
+        "description": "Şu ana kadar eklediğiniz anahtar kelimeler. Bir anahtar kelimeyi kaldırmak için üstüne tıklayın."
       },
       "githubRepository": {
         "title": "GitHub Deposu",
@@ -1683,10 +1668,10 @@
       "toast": {
         "creatingApiKey": "API anahtarı oluşturuluyor..",
         "createdApiKeyAndCopied": "Yeni API anahtarı başarıyla oluşturuldu! Anahtar panoya kopyalandı.",
-        "resettingApiKey": "API anahtarı sıfırlanıyor..",
         "deletingApiKey": "API anahtarı siliniyor..",
         "apiKeyDeleted": "API anahtarı başarıyla silindi!",
-        "apiKeyCopied": "API anahtarı panoya kopyalandı."
+        "apiKeyCopied": "API anahtarı panoya kopyalandı.",
+        "createdApiKey": "Yeni API anahtarı başarıyla oluşturuldu!"
       },
       "deleteApiKeyModal": {
         "title": "API Anahtarını Sil",
@@ -1878,12 +1863,12 @@
             "emptyName": "Lütfen bağlantınız için bir isim girin.",
             "invalidName": "Bağlantı adı yalnızca harfler, rakamlar, tireler ve alt çizgiler içerebilir.",
             "nameTooLong": "Bağlantı adı {{maxLength}} karakterden az olmalıdır.",
-            "emptyDestinationUrl": "Lütfen bağlantınız için bir hedef URL girin.",
             "destinationUrlNotHTTPS": "Bağlantı hedefi güvenli bir URL olmalıdır. (HTTPS)",
             "destinationUrlHavePort": "Bağlantı hedefi bir port içeremez.",
             "creatingLink": "Bağlantı oluşturuluyor..",
             "linkCreated": "Bağlantı başarıyla oluşturuldu!",
-            "invalidDestinationUrl": "Lütfen geçerli bir URL girin."
+            "invalidDestinationUrl": "Lütfen geçerli bir URL girin.",
+            "emptyDestinationUrl": "Lütfen bağlantınız için bir hedef URL girin."
           }
         },
         "deleteLinkModal": {

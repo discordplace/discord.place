@@ -105,7 +105,7 @@ export default function Webhook({ botId, webhookURL: currentWebhookURL, webhookT
 
     return (
       <>
-        {t('serverManagePage.webhook.toast.testFailed', {
+        {t('botManagePage.webhook.toast.testFailed', {
           remainingTime: secondsRemaining
         })}
       </>

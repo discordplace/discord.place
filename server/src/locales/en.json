@@ -18,13 +18,12 @@
     "shared": {
       "errors": {
         "missing_permissions": "You don't have permission to use this command.",
-        "user_quarantined": "You are not allowed to upload emojis.",
-        "server_quarantined": "You can't use this command because this server is quarantined.",
         "user_or_guild_quarantined": "You can't use this command because your account or this server is quarantined.",
         "server_owner_only": "You must be the server owner to use this command.",
         "unknown_error": "An error occured: {errorMessage}",
         "guild_only": "This command can only be used in a server.",
-        "command_error": "There was an error while executing the command."
+        "command_error": "There was an error while executing the command.",
+        "user_quarantined": "You are not allowed to upload emojis."
       }
     },
     "emoji": {
@@ -35,10 +34,10 @@
           "message": "I'm currently uploading the pack **{packName}**. Please wait until it's finished.",
           "button_label": "View Status"
         },
-        "no_emojis_uploaded": "Pack **{packName}** failed to upload.",
         "pack_failed": "Failed uploading {index}. emoji. Skipping.. **{remainingSeconds} seconds** remaining.",
         "emoji_not_found": "Emoji not found.",
-        "emoji_failed": "Failed to upload emoji."
+        "emoji_failed": "Failed to upload emoji.",
+        "no_emojis_uploaded": "Pack **{packName}** failed to upload."
       },
       "subcommands": {
         "upload": {
@@ -69,9 +68,9 @@
         "role_is_managed": "You can't add a managed role as a reward.",
         "role_is_higher": "You can't add a role higher or equal to my highest role as a reward.",
         "invalid_votes": "Required votes must be at least 1.",
-        "reward_server_not_listed": "You can't add a reward without listing your server. Visit [here]({link}) to list this server.",
         "max_rewards_reached": "You can't have more than {count} rewards.",
-        "reward_exists": "There is already a reward with that role."
+        "reward_exists": "There is already a reward with that role.",
+        "server_not_listed": "This server is not listed on discord.place. Visit [here]({link}) to list this server."
       },
       "groups": {
         "set": {
@@ -115,7 +114,7 @@
               "errors": {
                 "missing_bot_permissions": "I don't have permission to add roles to users."
               },
-              "added": "New vote reward added! I will give {role} to users who reach **{requiredVotes}** votes."
+              "reward_added": "New reward {role} added. It will be given to users who reach **{requiredVotes}** votes."
             }
           }
         },
@@ -125,10 +124,10 @@
               "errors": {
                 "reward_not_found": "Reward not found."
               },
-              "removed": "Reward removed.",
               "autocomplete": {
                 "item": "Role: @{role} | Required Votes: {requiredVotes}"
-              }
+              },
+              "reward_removed": "Reward {role} removed."
             }
           }
         },
@@ -159,15 +158,15 @@
     },
     "templates": {
       "errors": {
-        "too_many_currently": "There are too many templates being applied at the moment. Please wait for the current templates to be applied before using another template.",
-        "currently_applying": "This server is currently applying a template. Please wait for the current template to be applied before using another template.",
         "server_wait_for_applying": "Please wait {remainingMinutes} minutes before using another template in this server.",
         "user_wait_for_applying": "Please wait {remainingMinutes} minutes before using another template.",
         "template_not_found": "Template not found.",
         "confirmation_timeout": "You are did not confirm the action in time. The template was not applied.",
         "dms_disabled": "I could not send you a DM. Please make sure your DMs are open and try again",
         "missing_highest_role": "I do not have the highest role in this server. Please make sure I have the highest role in the server and try again.",
-        "missing_bot_permissions": "My highest role does not have the `Administrator` permission. Please make sure my highest role has the `Administrator` permission and try again."
+        "missing_bot_permissions": "My highest role does not have the `Administrator` permission. Please make sure my highest role has the `Administrator` permission and try again.",
+        "currently_applying": "This server is currently applying a template. Please wait for the current template to be applied before using another template.",
+        "too_many_currently": "There are too many templates being applied at the moment. Please wait for the current templates to be applied before using another template."
       },
       "subcommands": {
         "use": {
@@ -207,7 +206,6 @@
         "already_voted": "You can vote again in {hours} hours {minutes} minutes."
       },
       "human_verification_text": "You are going to vote for **{guildName}**.\n**About Human Verification:**\n- You must click on whichever button has this emoji on it: {emoji}\n- You have 60 seconds to click the button.\n- If you fail, you can try again.\n\n**Note:** This verification is only shown every third vote to prevent spamming.",
-      "gif_hidden_now": "The gif is hidden now. Please click the buttons in the order of the numbers you memorized.",
       "create_reminder_button_label": "Create Reminder",
       "success": "Thank you for voting!",
       "logging_messages": {
@@ -257,7 +255,6 @@
                 "value": "This user has premium since **{premiumSince}**."
               },
               {
-                "name": "Profile",
                 "value": {
                   "occupation": "- **Occupation** 🔨 {occupation}",
                   "gender": "- **Gender** {gender_icon} {gender}",
@@ -382,8 +379,9 @@
       "errors": {
         "reminder_too_long": "The reminder must be 512 characters or less.",
         "invalid_time": "Invalid time duration. Examples: `tomorrow`, `in 9 hours`, `next week`, `next Friday at 3pm`",
-        "reminder_too_short": "The reminder time must be at least 5 minutes.",
-        "too_many_reminders": "You can only have up to 5 reminders at a time."
+        "too_many_reminders": "You can only have up to 5 reminders at a time.",
+        "reminder_not_found": "Reminder not found.",
+        "time_too_short": "Time duration is too short."
       },
       "subcommands": {
         "create": {
@@ -395,7 +393,9 @@
             "item": "Reminder #{reminderId} | About: {about}"
           }
         }
-      }
+      },
+      "name": "Reminder",
+      "description": "Create, list or delete reminders."
     },
     "reminders": {
       "errors": {
@@ -439,13 +439,9 @@
       },
       "human_verification": {
         "errors": {
-          "guild_not_found": "I couldn't find the server.",
-          "server_not_listed": "This server is not listed on discord.place.",
-          "member_not_found": "You are not in the server.",
           "failed": "You failed to verify yourself.",
           "already_in_verification": "You are already in the process of verifying yourself. Please complete the current verification before starting a new one."
-        },
-        "success": "You successfully verified yourself."
+        }
       }
     }
   },

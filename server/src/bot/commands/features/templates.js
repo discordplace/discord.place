@@ -37,8 +37,8 @@ module.exports = {
   execute: async interaction => {
     if (interaction.guild.ownerId !== interaction.user.id) return interaction.reply(await interaction.translate('commands.shared.errors.server_owner_only'));
 
-    if (currentlyApplyingTemplates.size >= 5) return interaction.reply(await interaction.translate('commands.templates.errors.too_many_templates'));
-    if (currentlyApplyingTemplates.has(interaction.guild.id)) return interaction.reply(await interaction.translate('commands.templates.errors.already_applying_template'));
+    if (currentlyApplyingTemplates.size >= 5) return interaction.reply(await interaction.translate('commands.templates.errors.too_many_currently'));
+    if (currentlyApplyingTemplates.has(interaction.guild.id)) return interaction.reply(await interaction.translate('commands.templates.errors.currently_applying'));
 
     const guildLatestUse = latestUses.get(interaction.guild.id);
     if (guildLatestUse && guildLatestUse > Date.now()) return interaction.reply(await interaction.translate('commands.templates.errors.server_wait_for_applying', { remainingMinutes: Math.ceil((guildLatestUse - Date.now()) / 60000) }));
@@ -160,7 +160,7 @@ module.exports = {
     await template.updateOne({ $inc: { uses: 1 } });
 
     await dmMessage.edit({
-      content: await interaction.translate('commands.templates.subcommands.steps.0', { loadingEmoji: config.emojis.loading, templateName: template.name, guildName: interaction.guild.name }),
+      content: await interaction.translate('commands.templates.subcommands.use.steps.0', { loadingEmoji: config.emojis.loading, templateName: template.name, guildName: interaction.guild.name }),
       components: []
     });
 

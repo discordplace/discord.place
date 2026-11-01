@@ -56,7 +56,8 @@
     "blog": "Blog",
     "premium": "Premium",
     "continueWithDiscord": "Continue with",
-    "myAccount": "My Account"
+    "myAccount": "My Account",
+    "logout": "Logout"
   },
   "footer": {
     "description": "A place for all things that related to Discord.",
@@ -183,7 +184,6 @@
     "redirectTextPlural": "You will be redirected to the homepage in {{count}} seconds."
   },
   "errorPage": {
-    "badge": "Error",
     "title": "We're sorry, an error occurred.",
     "messages": {
       "0": "An unknown error occurred.",
@@ -209,8 +209,6 @@
   "buttons": {
     "cancel": "Cancel",
     "close": "Close",
-    "viewIncident": "View Incident",
-    "viewMaintenance": "View Maintenance",
     "back": "Back",
     "next": "Next",
     "publish": "Publish",
@@ -231,7 +229,6 @@
     "loginWithDiscord": "Log in with Discord",
     "discardChanges": "Discard Changes",
     "saveChanges": "Save Changes",
-    "enableTracking": "Enable Tracking",
     "saveWebhookSettings": "Save Webhook Settings",
     "visit": "Visit",
     "share": "Share",
@@ -271,7 +268,6 @@
     "addTheme": "Add Theme",
     "createReport": "Create Report",
     "all": "All",
-    "copy": "Copy",
     "grantPermission": "Grant Permission",
     "trust": "Trust",
     "trustAndLoad": "Trust and Load",
@@ -482,9 +478,9 @@
       "description": "Quickly upload this sound to Discord by selecting a server below.",
       "emptyErrorState": {
         "title": "It's quiet here...",
-        "message": "There are no servers you can upload sounds to."
+        "message": "There are no servers you can upload sounds to.",
+        "notes": "* You should have the permission to manage sounds in the server.<br>* Log out and back in to refresh the list."
       },
-      "notes": "* You should have the permission to manage sounds in the server.<br>* Log out and back in to refresh the list.",
       "tooltip": {
         "inviteOurBot": "{{guildName}} (Invite our Bot)"
       },
@@ -642,7 +638,6 @@
           "title": "I'm glad to hear that! There are 1 ways to use this colors in your Discord profile.",
           "methods": [
             {
-              "buttonText": "1. Copy & Paste",
               "instructionsBefore": "Using our website, you can copy the colors and paste them to your Discord profile. Here how you can do this:",
               "instructions": [
                 "Click the \"Copy Primary Color\" button to copy the primary color.",
@@ -696,7 +691,8 @@
     "mostVotedBadge": {
       "tooltip": "This server was the most voted server last month.",
       "label": "Most Voted"
-    }
+    },
+    "neverVoted": "Never Voted"
   },
   "serverPage": {
     "countdown": {
@@ -987,7 +983,6 @@
       },
       "profile": {
         "label": "Profile",
-        "tooltip": "The Profile of this user.",
         "noProfile": "No profile found."
       },
       "likesReceived": {
@@ -1405,7 +1400,6 @@
     "searchInputPlaceholder": "Search for a bot by id, description, or category...",
     "categorySelectPlaceholder": "Category",
     "sortSelect": {
-      "placeholder": "Sorting",
       "items": {
         "votes": "Votes",
         "latestVoted": "Latest Voted",
@@ -1467,8 +1461,7 @@
         "voted": "Successfully voted for {{botName}}!",
         "creatingCheckout": "We are creating a checkout for you..",
         "checkoutCreated": "Checkout created! Redirecting you to the payment page in few seconds..",
-        "loginRequiredForVote": "You need to be logged in to vote for bots.",
-        "botUrlCopied": "Bot URL copied to clipboard."
+        "loginRequiredForVote": "You need to be logged in to vote for bots."
       }
     },
     "categories": {
@@ -1579,23 +1572,15 @@
           "description": "Select the categories that your bot belongs to. This will help users find your bot."
         },
         "keywords": {
-          "label": "Keywords",
-          "description": "Add keywords to your bot. This will help people find your bot on discord.place. Separate each keyword with a comma.",
-          "placeholder": "e.g. fun, moderation, music"
+          "description": "Add keywords to your bot. This will help people find your bot on discord.place. Separate each keyword with a comma."
         }
       },
       "toast": {
-        "notValidKeyword": "Please enter a valid keyword.",
-        "keywordExists": "This keyword already exists.",
-        "keywordHasInvalidCharacters": "Keywords can only contain letters, numbers, and hyphens.",
-        "keywordTooLong": "Keywords must be shorter than {{maxLength}} characters long.",
         "noChangesMade": "No changes made.",
         "notValidRepositoryFormat": "Invalid username/repository format."
       },
       "addedKeywords": {
-        "label": "Added Keywords",
-        "description": "Keywords that you have added so far. Click on a keyword to remove it.",
-        "max": " (max)"
+        "description": "Keywords that you have added so far. Click on a keyword to remove it."
       },
       "githubRepository": {
         "title": "Git Repository",
@@ -1683,10 +1668,10 @@
       "toast": {
         "creatingApiKey": "Creating new API key..",
         "createdApiKeyAndCopied": "Successfully created new API key and copied it to clipboard!",
-        "resettingApiKey": "Successfully created new API key!",
         "deletingApiKey": "Deleting API key..",
         "apiKeyDeleted": "Successfully deleted API key!",
-        "apiKeyCopied": "API key copied to clipboard!"
+        "apiKeyCopied": "API key copied to clipboard!",
+        "createdApiKey": "Successfully created new API key!"
       },
       "deleteApiKeyModal": {
         "title": "Delete API Key",
@@ -1878,12 +1863,12 @@
             "emptyName": "Please enter a name for your link.",
             "invalidName": "Link name  must only consist of letters, numbers, hyphens, and underscores.",
             "nameTooLong": "Link name must be less than {{maxLength}} characters long.",
-            "emptyDestinationUrl": "Please enter a destination URL for your link.",
             "destinationUrlNotHTTPS": "Link destination must be a secure URL. (HTTPS)",
             "destinationUrlHavePort": "Link destination cannot have a port.",
             "creatingLink": "Creating link..",
             "linkCreated": "Link created successfully!",
-            "invalidDestinationUrl": "Please enter a valid URL."
+            "invalidDestinationUrl": "Please enter a valid URL.",
+            "emptyDestinationUrl": "Please enter a destination URL for your link."
           }
         },
         "deleteLinkModal": {

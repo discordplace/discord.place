@@ -57,7 +57,8 @@
     "premium": "Premium",
     "contactUs": "Daxil Ol",
     "myAccount": "Hesabım",
-    "continueWithDiscord": "Daxil Ol"
+    "continueWithDiscord": "Daxil Ol",
+    "logout": "Çıxış"
   },
     "footer": {
     "description": "Discord ilə əlaqəli hər şey bir yerdə.",
@@ -184,7 +185,6 @@
     "redirectTextPlural": "{{count}} saniyə ərzində ana səhifəyə yönləndiriləcəksiniz."
   },
   "errorPage": {
-    "badge": "Xəta",
     "title": "Üzr istəyirik, xəta baş verdi.",
     "messages": {
       "0": "Naməlum xəta baş verdi.",
@@ -210,8 +210,6 @@
   "buttons": {
     "cancel": "Ləğv et",
     "close": "Bağlayın",
-    "viewIncident": "Hadisəyə Baxın",
-    "viewMaintenance": "Baxın Baxım",
     "back": "Geri",
     "next": "Sonrakı",
     "publish": "Nəşr et",
@@ -232,7 +230,6 @@
     "loginWithDiscord": "Discord ilə daxil olun",
     "discardChanges": "Dəyişiklikləri ləğv edin",
     "saveChanges": "Dəyişiklikləri Saxla",
-    "enableTracking": "İzləməni aktivləşdirin",
     "saveWebhookSettings": "Webhook Parametrlərini yadda saxlayın",
     "visit": "ziyarət edin",
     "share": "Paylaşın",
@@ -272,7 +269,6 @@
     "addTheme": "Tema əlavə et",
     "createReport": "Hesabat yaradın",
     "all": "Hamısı",
-    "copy": "Kopyalayın",
     "grantPermission": "İcazə verin",
     "trust": "Etibar et",
     "trustAndLoad": "Etibar et və yüklə",
@@ -483,9 +479,9 @@
       "description": "Aşağıdakı serveri seçməklə bu səsi tez Discord-a yükləyin.",
       "emptyErrorState": {
         "title": "Bura sakitdir...",
-        "message": "Səsləri yükləyə biləcəyiniz heç bir server yoxdur."
+        "message": "Səsləri yükləyə biləcəyiniz heç bir server yoxdur.",
+        "notes": "* Serverdə səsləri idarə etmək icazəniz olmalıdır.<br>* Siyahını yeniləmək üçün sistemdən çıxın və yenidən daxil olun."
       },
-      "notes": "* Serverdə səsləri idarə etmək icazəniz olmalıdır.<br>* Siyahını yeniləmək üçün sistemdən çıxın və yenidən daxil olun.",
       "tooltip": {
         "inviteOurBot": "{{guildName}} (Botumuzu dəvət edin)"
       },
@@ -643,7 +639,6 @@
           "title": "Bunu eşitdiyimə şadam! Discord profilinizdə bu rənglərdən istifadə etməyin 1 yolu var.",
           "methods": [
             {
-              "buttonText": "1. Kopyala & Yapışdır",
               "instructionsBefore": "Veb saytımızdan istifadə edərək rəngləri kopyalayıb Discord profilinizə yapışdıra bilərsiniz. Bunu belə edə bilərsiniz:",
               "instructions": [
                 "Əsas rəngi kopyalamaq üçün \"Əsas Rəngi ​​Kopyala\" düyməsini klikləyin.",
@@ -697,7 +692,8 @@
     "mostVotedBadge": {
       "tooltip": "Bu server keçən ay ən çox səs alan server idi.",
       "label": "Ən çox səs alan"
-    }
+    },
+    "neverVoted": "Heç bir səs yoxdur"
   },
   "serverPage": {
     "countdown": {
@@ -988,7 +984,6 @@
       },
       "profile": {
         "label": "Profil",
-        "tooltip": "Bu istifadəçinin profili.",
         "noProfile": "Heç bir profil tapılmadı."
       },
       "likesReceived": {
@@ -1406,7 +1401,6 @@
     "searchInputPlaceholder": "İd, təsvir və ya kateqoriya üzrə botu axtarın...",
     "categorySelectPlaceholder": "Kateqoriya",
     "sortSelect": {
-      "placeholder": "Çeşidləmə",
       "items": {
         "votes": "Səslər",
         "latestVoted": "Ən son səsvermə",
@@ -1468,8 +1462,7 @@
         "voted": "Uğurla səs verdi {{botName}}!",
         "creatingCheckout": "Sizin üçün kassa yaradırıq..",
         "checkoutCreated": "Checkout yaradıldı! ",
-        "loginRequiredForVote": "Botlara səs vermək üçün daxil olmalısınız.",
-        "botUrlCopied": "Bot URL-i buferə kopyalandı."
+        "loginRequiredForVote": "Botlara səs vermək üçün daxil olmalısınız."
       }
     },
     "categories": {
@@ -1580,23 +1573,15 @@
           "description": "Botunuzun aid olduğu kateqoriyaları seçin. "
         },
         "keywords": {
-          "label": "Açar sözlər",
-          "description": "Botunuza açar sözlər əlavə edin. ",
-          "placeholder": "məs. "
+          "description": "Botunuza açar sözlər əlavə edin. "
         }
       },
       "toast": {
-        "notValidKeyword": "Etibarlı açar söz daxil edin.",
-        "keywordExists": "Bu açar söz artıq mövcuddur.",
-        "keywordHasInvalidCharacters": "Açar sözlər yalnız hərflər, rəqəmlər və defislərdən ibarət ola bilər.",
-        "keywordTooLong": "Açar sözlər daha qısa olmalıdır {{maxLength}} simvol uzun.",
         "noChangesMade": "Dəyişiklik edilmədi.",
         "notValidRepositoryFormat": "Yanlış istifadəçi adı/repozitoriya formatı."
       },
       "addedKeywords": {
-        "label": "Açar sözlər əlavə edildi",
-        "description": "İndiyə qədər əlavə etdiyiniz açar sözlər. ",
-        "max": " (maksimum)"
+        "description": "İndiyə qədər əlavə etdiyiniz açar sözlər. "
       },
       "githubRepository": {
         "title": "Git Repozitoriyası",
@@ -1684,10 +1669,10 @@
       "toast": {
         "creatingApiKey": "Yeni API açarı yaradılır..",
         "createdApiKeyAndCopied": "Yeni API açarı uğurla yaradıldı və onu mübadilə buferinə kopyaladı!",
-        "resettingApiKey": "Yeni API açarı uğurla yaradıldı!",
         "deletingApiKey": "API açarı silinir..",
         "apiKeyDeleted": "API açarı uğurla silindi!",
-        "apiKeyCopied": "API açarı buferə kopyalandı!"
+        "apiKeyCopied": "API açarı buferə kopyalandı!",
+        "createdApiKey": "Yeni API açarı uğurla yaradıldı!"
       },
       "deleteApiKeyModal": {
         "title": "API açarını silin",
@@ -1878,12 +1863,12 @@
             "emptyName": "Linkiniz üçün ad daxil edin.",
             "invalidName": "Link adı yalnız hərflərdən, rəqəmlərdən, defislərdən və alt xəttlərdən ibarət olmalıdır.",
             "nameTooLong": "Link adı daha az olmalıdır {{maxLength}} simvol uzun.",
-            "emptyDestinationUrl": "Lütfən, linkiniz üçün təyinat URL daxil edin.",
             "destinationUrlNotHTTPS": "Link təyinatı təhlükəsiz URL olmalıdır. ",
             "destinationUrlHavePort": "Link təyinatının portu ola bilməz.",
             "creatingLink": "Link yaradılır..",
             "linkCreated": "Link uğurla yaradıldı!",
-            "invalidDestinationUrl": "Lütfən, etibarlı URL daxil edin."
+            "invalidDestinationUrl": "Lütfən, etibarlı URL daxil edin.",
+            "emptyDestinationUrl": "Zəhmət olmasa linkiniz üçün hədəf URL daxil edin."
           }
         },
         "deleteLinkModal": {
@@ -2244,52 +2229,30 @@
       }
     },
     "myThemes": {
-      "title": "Mənim Temalarım",
-      "subtitle": "Discord.place saytında qeyd etdiyiniz temalara baxın. Siz həmçinin discord.place saytına yeni tema təqdim edə bilərsiniz.",
       "sections": {
         "listedThemes": {
-          "title": "Siyahılanmış Temalar",
-          "subtitle": "Burada, discord.place saytında qeyd etdiyiniz temaları görə bilərsiniz.",
           "emptyErrorState": {
-            "title": "Bura sakitlikdir...",
-            "message": "Siz discord.place saytında heç bir mövzu qeyd etməmisiniz."
           }
         },
         "newTheme": {
-          "title": "Yeni Tema",
-          "subtitle": "discord.place saytına yeni tema təqdim edin.",
           "note": {
-            "title": "Not",
-            "description": "Təqdim etdiyiniz tema discord.place-də qeyd olunmazdan əvvəl komandamız tərəfindən nəzərdən keçiriləcək. Lütfən əmin olun ki, temanız bizim tema təqdim etmə qaydalarımızı pozmur. Temanı təqdim etmə qaydalarımızı <link> bölməmizdə tapa bilərsiniz.",
-            "linkText": "Discord server"
+            "description": "Təqdim etdiyiniz tema discord.place-də qeyd olunmazdan əvvəl komandamız tərəfindən nəzərdən keçiriləcək. Lütfən əmin olun ki, temanız bizim tema təqdim etmə qaydalarımızı pozmur. Temanı təqdim etmə qaydalarımızı <link> bölməmizdə tapa bilərsiniz."
           }
         },
         "addTheme": {
-          "title": "Yeni tema əlavə et",
-          "subtitle": "Siz discord.place saytına yeni tema təqdim etmək üzrəsiniz. Bu o deməkdir ki, temanız discord.place saytında siyahıya alınacaq və hər kəs onu görə biləcək. Temanızı discord.place saytından istənilən vaxt silə bilərsiniz.",
           "toast": {
-            "gradientCategoryRequired": "Əgər iki fərqli rəng seçirsinizsə, rəng keçidli kateqoriyasını seçməlisiniz.",
-            "addingTheme": "Tema əlavə olunur..",
-            "themeAdded": "Tema əlavə edildi! Bir neçə saniyədən sonra tema səhifəsinə yönləndiriləcəksiniz."
           },
           "fields": {
             "colors": {
-              "label": "Rənglər",
-              "description": "Temanız üçün əsas və ikincil rəng seçin.",
-              "primaryLabel": "Əsas Rəng",
-              "secondaryLabel": "Ikincil Rəng"
+              "description": "Temanız üçün əsas və ikincil rəng seçin."
             },
             "categories": {
-              "label": "Kateaoriyalar",
               "description": "Temanızın aid olduğu bütün kateqoriyaları seçin. Bu, istifadəçilərə temanızı tapmağa kömək edəcək."
             },
             "contentPolicy": {
-              "label": "Məzmun Siyasəti",
-              "description": "Temanızı discord.place saytına əlavə etməklə siz Tema Təqdimetmə Qaydalarımızla razılaşırsınız. <qeyd>",
-              "note": "* Discord serverimizdə tapa bilərsiniz."
+              "description": "Temanızı discord.place saytına əlavə etməklə siz Tema Təqdimetmə Qaydalarımızla razılaşırsınız. <qeyd>"
             },
             "areYouReady": {
-              "label": "Hazırsan?"
             }
           }
         }

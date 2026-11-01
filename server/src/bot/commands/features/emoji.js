@@ -56,7 +56,7 @@ module.exports = {
     await interaction.deferReply();
 
     const userQuarantined = await findQuarantineEntry.single('USER_ID', interaction.user.id, 'EMOJIS_QUICKLY_UPLOAD').catch(() => false);
-    if (userQuarantined) return interaction.followUp(await interaction.translate('commands.emoji.errors.user_quarantined'));
+    if (userQuarantined) return interaction.followUp(await interaction.translate('commands.shared.errors.user_quarantined'));
 
     const group = interaction.options.getSubcommandGroup(false);
 
@@ -141,7 +141,7 @@ module.exports = {
 
         client.currentlyUploadingEmojiPack.delete(interaction.guild.id);
 
-        if (createdEmojis.length === 0) return message.edit(await interaction.translate('commands.emoji.groups.pack.subcommands.upload.no_emojis_uploaded', { packName: pack.name }));
+        if (createdEmojis.length === 0) return message.edit(await interaction.translate('commands.emoji.errors.no_emojis_uploaded', { packName: pack.name }));
 
         await EmojiPack.updateOne({ id: packId }, { $inc: { downloads: 1 } });
 

@@ -335,7 +335,7 @@ module.exports = {
         if (interaction.guild.members.me.roles.highest.comparePositionTo(role) <= 0) return interaction.reply(await interaction.translate('commands.server.errors.role_is_higher'));
 
         const requiredVotes = interaction.options.getInteger('required-votes');
-        if (requiredVotes < 1) return interaction.reply(await interaction.translate('commands.server.groups.add.subcommands.reward.errors.invalid_votes'));
+        if (requiredVotes < 1) return interaction.reply(await interaction.translate('commands.server.errors.invalid_votes'));
 
         await interaction.deferReply();
 
@@ -345,10 +345,10 @@ module.exports = {
         const ownerHasPremium = await User.exists({ id: interaction.guild.ownerId, subscription: { $ne: null } });
 
         const foundRewards = await Reward.find({ guild: { id: interaction.guild.id } });
-        if (foundRewards.length >= (ownerHasPremium ? 20 : 5)) return interaction.followUp(await interaction.translate('commands.server.groups.add.subcommands.reward.errors.max_rewards_reached', { count: ownerHasPremium ? 20 : 5 }));
+        if (foundRewards.length >= (ownerHasPremium ? 20 : 5)) return interaction.followUp(await interaction.translate('commands.server.errors.max_rewards_reached', { count: ownerHasPremium ? 20 : 5 }));
 
         const rewardExists = foundRewards.some(reward => reward.role.id === role.id);
-        if (rewardExists) return interaction.followUp(await interaction.translate('commands.server.groups.add.subcommands.reward.errors.reward_exists'));
+        if (rewardExists) return interaction.followUp(await interaction.translate('commands.server.errors.reward_exists'));
 
         await new Reward({
           guild: {
@@ -360,7 +360,7 @@ module.exports = {
           required_votes: requiredVotes
         }).save();
 
-        sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.vote_reward_added', { role: role.toString(), requiredVotes, user: interaction.user.toString() }))
+        sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.reward_added', { role: role.toString(), requiredVotes, user: interaction.user.toString() }))
           .catch(() => null);
 
         return interaction.followUp({
@@ -382,7 +382,7 @@ module.exports = {
 
         await reward.deleteOne();
 
-        sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.vote_reward_removed', { role: `<@&${roleId}>`, user: interaction.user.toString() }))
+        sendLog(interaction.guild.id, await interaction.translate('commands.server.logging_messages.reward_removed', { role: `<@&${roleId}>`, user: interaction.user.toString() }))
           .catch(() => null);
 
         return interaction.followUp(await interaction.translate('commands.server.groups.remove.subcommands.reward.reward_removed'));
@@ -394,7 +394,7 @@ module.exports = {
         await interaction.deferReply();
 
         const rewards = await Reward.find({ guild: { id: interaction.guild.id } });
-        if (!rewards.length) return interaction.followUp(await interaction.translate('commands.server.groups.list.subcommands.rewards.no_rewards'));
+        if (!rewards.length) return interaction.followUp(await interaction.translate('commands.server.groups.list.subcommands.rewards.errors.no_rewards'));
 
         const embed = new Discord.EmbedBuilder()
           .setColor('Random')
