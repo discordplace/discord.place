@@ -99,6 +99,7 @@ jobs:
             
             echo "Starting application..."
             pm2 startOrReload /root/apps/discord.place/ecosystem.config.cjs --only discord.place --update-env
+            pm2 save > /dev/null 2>&1
             
             echo "Cleaning up temporary directory..."
             rm -rf "$TEMP_DIR"
@@ -158,6 +159,7 @@ jobs:
             nvm use $(nvm current)
             pnpm install > /dev/null 2>&1
             pm2 startOrReload /root/apps/discord.place/ecosystem.config.cjs --only api.discord.place --update-env > /dev/null 2>&1
+            pm2 save > /dev/null 2>&1
           EOF
 
       - uses: chimpdev/bark-github-action@v1.0.1

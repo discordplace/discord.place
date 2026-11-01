@@ -444,6 +444,7 @@ Both apps are defined in `ecosystem.config.cjs`, and each process runs through `
 
 ```bash
 pm2 startOrReload ecosystem.config.cjs --update-env
+pm2 save
 ```
 
 The deploy workflow uses the same ecosystem file and reloads only the affected app. The server must have the Doppler CLI and token configured before deploying.
