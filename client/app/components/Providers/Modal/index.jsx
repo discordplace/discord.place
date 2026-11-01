@@ -83,6 +83,9 @@ export default function ModalProvider({ children }) {
               // oxlint-disable-next-line tailwindcss/no-unknown-classes
               className='radix-dialog-content fixed z-9999 flex size-full items-center justify-center focus:outline-hidden'
               aria-describedby={id}
+              onPointerDown={event => {
+                if (event.target === event.currentTarget) closeModal(id);
+              }}
             >
               <div
                 className='flex max-h-[85vh] w-[90vw] flex-col gap-y-2 rounded-2xl border border-primary bg-secondary dark:bg-tertiary'
