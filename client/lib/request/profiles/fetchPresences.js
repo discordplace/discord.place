@@ -1,6 +1,7 @@
 'use client';
 
 import axios from 'axios';
+
 import Endpoints from '@/lib/request/endpoints';
 
 export default function fetchPresences(userIds) {

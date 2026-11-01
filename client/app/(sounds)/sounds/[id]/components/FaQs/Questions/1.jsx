@@ -1,5 +1,6 @@
-import downloadSound from '@/lib/utils/sounds/downloadSound';
 import { useTranslation } from 'react-i18next';
+
+import downloadSound from '@/lib/utils/sounds/downloadSound';
 
 export default function Question1({ sound }) {
   const { t } = useTranslation();

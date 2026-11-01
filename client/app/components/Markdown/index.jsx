@@ -1,11 +1,12 @@
 'use client';
 
-import cn from '@/lib/cn';
-import MarkdownComponents from '@/lib/markdown-components';
 import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
 import raw from 'rehype-raw';
 import sanitize, { defaultSchema } from 'rehype-sanitize';
+import gfm from 'remark-gfm';
+
+import cn from '@/lib/cn';
+import MarkdownComponents from '@/lib/markdown-components';
 
 const schema = {
   ...defaultSchema,

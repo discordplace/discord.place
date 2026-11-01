@@ -1,14 +1,15 @@
 'use client';
 
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { FaCompass, FaQuestion } from 'react-icons/fa';
 import { HiTemplate, HiUserGroup } from 'react-icons/hi';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { PiWaveformBold } from 'react-icons/pi';
 import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
+
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
-import { useTranslation } from 'react-i18next';
-import Link from 'next/link';
 
 export default function ServicesDropdown() {
   const { t } = useTranslation();

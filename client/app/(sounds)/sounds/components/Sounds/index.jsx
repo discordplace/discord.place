@@ -1,15 +1,16 @@
 'use client';
 
-import { BsEmojiAngry } from 'react-icons/bs';
-import useSearchStore from '@/stores/sounds/search';
-import { useShallow } from 'zustand/react/shallow';
-import Pagination from '@/app/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
-import ErrorState from '@/app/components/ErrorState';
 import { useTranslation } from 'react-i18next';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { useShallow } from 'zustand/react/shallow';
+
 import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
+import ErrorState from '@/app/components/ErrorState';
+import Pagination from '@/app/components/Pagination';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
+import useSearchStore from '@/stores/sounds/search';
 
 export default function Sounds() {
   const { t } = useTranslation();

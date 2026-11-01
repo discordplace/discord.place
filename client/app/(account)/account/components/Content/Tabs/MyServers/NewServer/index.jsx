@@ -1,24 +1,25 @@
 'use client';
 
+import { Lottie } from 'lottie-react';
+import { useRouter } from 'next-nprogress-bar';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BiSolidInfoCircle } from 'react-icons/bi';
 import { BsFire } from 'react-icons/bs';
 import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
 import { MdChevronLeft } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import { toast } from 'sonner';
+
 import Image from '@/app/components/AppImage';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import Select from '@/app/components/Select';
+import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
+import cn from '@/lib/cn';
+import confetti from '@/lib/lotties/confetti.json';
 import createServer from '@/lib/request/servers/createServer';
 import useAccountStore from '@/stores/account';
-import { useRouter } from 'next-nprogress-bar';
-import { Fragment, useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
-import { Lottie } from 'lottie-react';
-import confetti from '@/lib/lotties/confetti.json';
-import config from '@/config';
-import Select from '@/app/components/Select';
-import { useTranslation } from 'react-i18next';
-import cn from '@/lib/cn';
-import Tooltip from '@/app/components/Tooltip';
 
 export default function NewServer() {
   const { t } = useTranslation();

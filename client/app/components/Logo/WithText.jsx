@@ -1,10 +1,11 @@
 'use client';
 
-import Image from '@/app/components/AppImage';
-import Link from 'next/link';
-import { useThemeStore } from '@/stores/theme';
-import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
+import Link from 'next/link';
+
+import Image from '@/app/components/AppImage';
+import cn from '@/lib/cn';
+import { useThemeStore } from '@/stores/theme';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 

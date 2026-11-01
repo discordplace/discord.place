@@ -1,7 +1,8 @@
 'use client';
 
-import Image from '@/app/components/AppImage';
 import { useTranslation } from 'react-i18next';
+
+import Image from '@/app/components/AppImage';
 
 export default function Header({ data }) {
   const { i18n } = useTranslation();

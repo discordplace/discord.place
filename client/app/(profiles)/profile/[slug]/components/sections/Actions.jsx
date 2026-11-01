@@ -1,18 +1,19 @@
 'use client';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BsPencil, BsPencilFill } from 'react-icons/bs';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { toast } from 'sonner';
-import likeProfile from '@/lib/request/profiles/likeProfile';
-import cn from '@/lib/cn';
-import { useState } from 'react';
-import config from '@/config';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import Tooltip from '@/app/components/Tooltip';
-import useAuthStore from '@/stores/auth';
+
 import CopyButton from '@/app/components/CopyButton';
+import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
+import cn from '@/lib/cn';
+import likeProfile from '@/lib/request/profiles/likeProfile';
 import revalidateProfile from '@/lib/revalidate/profile';
-import { useTranslation } from 'react-i18next';
+import useAuthStore from '@/stores/auth';
 
 export default function Actions({ profile }) {
   const { t } = useTranslation();

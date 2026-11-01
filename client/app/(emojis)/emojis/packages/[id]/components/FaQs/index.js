@@ -1,13 +1,14 @@
 'use client';
 
-import { MdChevronLeft } from 'react-icons/md';
-import cn from '@/lib/cn';
 import { useState } from 'react';
+import AnimateHeight from 'react-animate-height';
+import { useTranslation } from 'react-i18next';
+import { MdChevronLeft } from 'react-icons/md';
+
 import Question1 from '@/app/(emojis)/emojis/packages/[id]/components/FaQs/Questions/1';
 import Question2 from '@/app/(emojis)/emojis/packages/[id]/components/FaQs/Questions/2';
 import Question3 from '@/app/(emojis)/emojis/packages/[id]/components/FaQs/Questions/3';
-import { useTranslation } from 'react-i18next';
-import AnimateHeight from 'react-animate-height';
+import cn from '@/lib/cn';
 
 export default function FaQs({ emoji }) {
   const { t } = useTranslation();

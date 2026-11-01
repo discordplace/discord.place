@@ -1,9 +1,10 @@
-import getEmoji from '@/lib/request/emojis/getEmoji';
-import getEmojiMetadata from '@/lib/request/emojis/getEmojiMetadata';
 import { redirect } from 'next/navigation';
+
 import Content from '@/app/(emojis)/emojis/[id]/content';
 import config from '@/config';
 import createMetadata from '@/lib/createMetadata';
+import getEmoji from '@/lib/request/emojis/getEmoji';
+import getEmojiMetadata from '@/lib/request/emojis/getEmojiMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;

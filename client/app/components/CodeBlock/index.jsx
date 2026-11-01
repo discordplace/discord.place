@@ -1,10 +1,11 @@
 'use client';
 
-import useThemeStore from '@/stores/theme';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 import CopyButton from '@/app/components/CopyButton';
 import cn from '@/lib/cn';
+import useThemeStore from '@/stores/theme';
 
 export default function CodeBlock({ children, FileIcon, fileName, language, className }) {
   const theme = useThemeStore(state => state.theme);

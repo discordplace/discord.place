@@ -1,9 +1,10 @@
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { MdOpenInNew } from 'react-icons/md';
+
 import Tooltip from '@/app/components/Tooltip';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
-import { useTranslation } from 'react-i18next';
-import Link from 'next/link';
 
 export default function BlockItem({ id, name, icon, href, onClick, badge, disabled, condition, visited = true }) {
   const { t } = useTranslation();

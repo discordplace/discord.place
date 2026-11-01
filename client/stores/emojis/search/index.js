@@ -1,5 +1,6 @@
-import { create } from 'zustand';
 import { toast } from 'sonner';
+import { create } from 'zustand';
+
 import fetchEmojis from '@/lib/request/emojis/fetchEmojis';
 
 const useSearchStore = create((set, get) => ({

@@ -1,15 +1,16 @@
-import { BsEmojiAngry } from 'react-icons/bs';
-import useSearchStore from '@/stores/templates/search';
-import { useShallow } from 'zustand/react/shallow';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
 import Card from '@/app/(templates)/templates/components/Hero/SearchResults/Card';
 import ErrorState from '@/app/components/ErrorState';
-import { toast } from 'sonner';
 import Pagination from '@/app/components/Pagination';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
+import useSearchStore from '@/stores/templates/search';
 
 export default function SearchResults() {
   const { t } = useTranslation();

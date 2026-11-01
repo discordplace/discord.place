@@ -1,5 +1,6 @@
-import getCompressedName from '@/lib/getCompressedName';
 import { useTranslation } from 'react-i18next';
+
+import getCompressedName from '@/lib/getCompressedName';
 
 export default function TemplatePreview({ metadata }) {
   const { t } = useTranslation();

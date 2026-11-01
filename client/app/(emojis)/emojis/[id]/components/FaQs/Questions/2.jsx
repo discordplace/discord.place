@@ -1,10 +1,11 @@
 'use client';
 
-import config from '@/config';
 import Link from 'next/link';
 import { useState } from 'react';
-import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
 import { useTranslation } from 'react-i18next';
+
+import config from '@/config';
+import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
 
 export default function Question2({ emoji }) {
   const { t } = useTranslation();

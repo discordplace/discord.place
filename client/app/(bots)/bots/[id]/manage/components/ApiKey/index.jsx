@@ -1,17 +1,18 @@
 'use client';
 
+import Link from 'next/link';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HiExternalLink } from 'react-icons/hi';
 import { IoKey } from 'react-icons/io5';
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+
+import CopyButton from '@/app/components/CopyButton';
+import config from '@/config';
 import createApiKey from '@/lib/request/bots/createApiKey';
 import deleteApiKey from '@/lib/request/bots/deleteApiKey';
 import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
-import CopyButton from '@/app/components/CopyButton';
-import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
-import config from '@/config';
 
 export default function ApiKey({ botId, apiKey }) {
   const { t } = useTranslation();

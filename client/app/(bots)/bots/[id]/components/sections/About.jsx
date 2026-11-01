@@ -1,18 +1,19 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { FaCompass, FaGithub } from 'react-icons/fa';
 import { PiGitForkBold } from 'react-icons/pi';
 import { RiSlashCommands2, RiUserAddLine } from 'react-icons/ri';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStarFullOutline } from 'react-icons/ti';
-import { motion } from 'framer-motion';
-import Markdown from '@/app/components/Markdown';
-import Image from '@/app/components/AppImage';
-import Link from 'next/link';
-import cn from '@/lib/cn';
 import { useMedia } from 'react-use';
-import { useTranslation } from 'react-i18next';
+
+import Image from '@/app/components/AppImage';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import Markdown from '@/app/components/Markdown';
+import cn from '@/lib/cn';
 
 const formatter = new Intl.NumberFormat('en-US', {
   compactDisplay: 'short',

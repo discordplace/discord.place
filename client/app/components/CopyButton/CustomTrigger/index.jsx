@@ -1,7 +1,8 @@
-import cn from '@/lib/cn';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useState, useRef } from 'react';
 import { toast } from 'sonner';
+
+import cn from '@/lib/cn';
 
 export default function CopyButton({ timeout = 2000, successText, copyText, className = '', children }) {
   const { t } = useTranslation();

@@ -1,11 +1,12 @@
 'use client';
 
-import { HiMiniUserGroup } from 'react-icons/hi2';
-import getCompressedName from '@/lib/getCompressedName';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import getHashFromURL from '@/lib/getHashFromURL';
 import Link from 'next/link';
+import { HiMiniUserGroup } from 'react-icons/hi2';
+
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import cn from '@/lib/cn';
+import getCompressedName from '@/lib/getCompressedName';
+import getHashFromURL from '@/lib/getHashFromURL';
 
 const formatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 1,

@@ -1,19 +1,20 @@
 'use client';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 import { FaDiscord, FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { IoIosMoon } from 'react-icons/io';
 import { MdSunny } from 'react-icons/md';
-import useThemeStore from '@/stores/theme';
-import Link from 'next/link';
-import cn from '@/lib/cn';
-import Image from '@/app/components/AppImage';
-import config from '@/config';
-import { usePathname } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
-import Select from '@/app/components/Select';
-import StatusBadge from '@/app/components/Footer/StatusBadge';
 import { useLocalStorage } from 'react-use';
+
+import Image from '@/app/components/AppImage';
+import StatusBadge from '@/app/components/Footer/StatusBadge';
+import Select from '@/app/components/Select';
+import config from '@/config';
+import cn from '@/lib/cn';
+import useThemeStore from '@/stores/theme';
 
 export default function Footer() {
   const { t, i18n } = useTranslation();

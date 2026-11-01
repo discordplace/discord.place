@@ -1,12 +1,13 @@
 'use client';
 
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { HiDocumentDownload } from 'react-icons/hi';
 import { LuPackage } from 'react-icons/lu';
-import Link from 'next/link';
+
+import Image from '@/app/components/AppImage';
 import config from '@/config';
 import cn from '@/lib/cn';
-import { useTranslation } from 'react-i18next';
-import Image from '@/app/components/AppImage';
 
 export default function EmojiPackageCard({ overridedImages, id, name, categories, downloads, emoji_ids, className }) {
   const { t } = useTranslation();

@@ -1,9 +1,10 @@
 'use client';
 
-import cn from '@/lib/cn';
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { useState } from 'react';
 import { useMedia } from 'react-use';
+
+import cn from '@/lib/cn';
 
 export default function Tooltip({ children, content, side, sideOffset, size, hide }) {
   const [open, setOpen] = useState(false);

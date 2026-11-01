@@ -1,11 +1,12 @@
 'use client';
 
-import cn from '@/lib/cn';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import getStatus from '@/lib/request/general/getStatus';
-import config from '@/config';
 import { useTranslation } from 'react-i18next';
+
+import config from '@/config';
+import cn from '@/lib/cn';
+import getStatus from '@/lib/request/general/getStatus';
 
 export default function StatusBadge() {
   const { t } = useTranslation();

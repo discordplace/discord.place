@@ -1,23 +1,24 @@
 'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { GoHeartFill } from 'react-icons/go';
 import { MdOutlineOpenInNew } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
-import useAuthStore from '@/stores/auth';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import getPlans from '@/lib/request/payments/getPlansFromClient';
-import { toast } from 'sonner';
-import useModalsStore from '@/stores/modals';
-import CreateProfile from '@/app/(account)/account/components/Content/Tabs/MyAccount/CreateProfile';
-import createProfile from '@/lib/request/profiles/createProfile';
-import { useShallow } from 'zustand/react/shallow';
-import useGeneralStore from '@/stores/general';
-import { useRouter } from 'next-nprogress-bar';
-import { useTranslation } from 'react-i18next';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import { useMedia } from 'react-use';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
+import CreateProfile from '@/app/(account)/account/components/Content/Tabs/MyAccount/CreateProfile';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import getPlans from '@/lib/request/payments/getPlansFromClient';
+import createProfile from '@/lib/request/profiles/createProfile';
+import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
+import useModalsStore from '@/stores/modals';
 
 export default function MyAccount() {
   const { t, i18n } = useTranslation();

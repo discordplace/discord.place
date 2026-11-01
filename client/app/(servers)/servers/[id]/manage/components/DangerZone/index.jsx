@@ -1,12 +1,13 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import { toast } from 'sonner';
-import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+
 import deleteServer from '@/lib/request/servers/deleteServer';
-import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/navigation';
+import useModalsStore from '@/stores/modals';
 
 export default function DangerZone({ serverId }) {
   const { t } = useTranslation();

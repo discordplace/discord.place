@@ -1,10 +1,11 @@
 'use client';
 
-import useDashboardStore from '@/stores/dashboard';
+import { useState } from 'react';
+
+import Graph from '@/app/(dashboard)/components/Home/Graph';
 import cn from '@/lib/cn';
 import useAuthStore from '@/stores/auth';
-import { useState } from 'react';
-import Graph from '@/app/(dashboard)/components/Home/Graph';
+import useDashboardStore from '@/stores/dashboard';
 
 function StatBlock({ label, value, previous, activeStatBlock, setActiveStatBlock }) {
   const isIncreased = value > previous;

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import downloadSound from '@/lib/utils/sounds/downloadSound';
 import Link from 'next/link';
-import config from '@/config';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import config from '@/config';
+import downloadSound from '@/lib/utils/sounds/downloadSound';
 
 export default function Question2({ sound }) {
   const { t } = useTranslation();

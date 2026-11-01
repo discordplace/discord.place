@@ -1,7 +1,8 @@
 'use client';
-import { FaDisplay } from 'react-icons/fa6';
-import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 import { useTranslation } from 'react-i18next';
+import { FaDisplay } from 'react-icons/fa6';
+
+import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 
 export default function EssentialInformation({ description, setDescription, inviteURL, setInviteURL }) {
   const { t } = useTranslation();

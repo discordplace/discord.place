@@ -1,9 +1,10 @@
 'use client';
 
-import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
-import useGeneralStore from '@/stores/general';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useTranslation } from 'react-i18next';
+import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
+
+import useGeneralStore from '@/stores/general';
 
 export default function VolumePopover() {
   const { t } = useTranslation();

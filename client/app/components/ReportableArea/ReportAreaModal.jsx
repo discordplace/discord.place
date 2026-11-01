@@ -1,15 +1,16 @@
-import useGeneralStore from '@/stores/general';
-import ProfilePreview from '@/app/components/ReportableArea/Previews/Profile';
-import ServerPreview from '@/app/components/ReportableArea/Previews/Server';
+import { useTranslation } from 'react-i18next';
+
 import BotPreview from '@/app/components/ReportableArea/Previews/Bot';
 import EmojiPreview from '@/app/components/ReportableArea/Previews/Emoji';
-import TemplatePreview from '@/app/components/ReportableArea/Previews/Template';
-import SoundPreview from '@/app/components/ReportableArea/Previews/Sound';
+import ProfilePreview from '@/app/components/ReportableArea/Previews/Profile';
 import ReviewPreview from '@/app/components/ReportableArea/Previews/Review';
+import ServerPreview from '@/app/components/ReportableArea/Previews/Server';
+import SoundPreview from '@/app/components/ReportableArea/Previews/Sound';
+import TemplatePreview from '@/app/components/ReportableArea/Previews/Template';
 import ThemePreview from '@/app/components/ReportableArea/Previews/Theme';
 import config from '@/config';
 import cn from '@/lib/cn';
-import { useTranslation } from 'react-i18next';
+import useGeneralStore from '@/stores/general';
 
 export default function ReportAreaModal({ type, metadata }) {
   const { t } = useTranslation();

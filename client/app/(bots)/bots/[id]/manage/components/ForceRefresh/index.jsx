@@ -1,11 +1,12 @@
 'use client';
 
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MdSync } from 'react-icons/md';
 import { toast } from 'sonner';
-import { useState } from 'react';
+
 import refreshBot from '@/lib/request/bots/refreshBot';
 import revalidateBot from '@/lib/revalidate/bot';
-import { useTranslation } from 'react-i18next';
 
 export default function ForceRefresh({ botId }) {
   const { t } = useTranslation();

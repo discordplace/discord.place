@@ -1,10 +1,10 @@
 'use client';
 
+import { useTranslation } from 'react-i18next';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { LuShieldAlert } from 'react-icons/lu';
 import { PiFrameCornersBold } from 'react-icons/pi';
 import { useLocalStorage } from 'react-use';
-import { useTranslation } from 'react-i18next';
 
 export default function CustomIFrame({ src, title }) {
   const { t } = useTranslation();

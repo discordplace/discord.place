@@ -1,15 +1,16 @@
 'use client';
 
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+
+import NewServer from '@/app/(account)/account/components/Content/Tabs/MyServers/NewServer';
+import UnlistedCard from '@/app/(account)/account/components/Content/Tabs/MyServers/UnlistedCard';
+import Image from '@/app/components/AppImage';
 import ErrorState from '@/app/components/ErrorState';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import config from '@/config';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import UnlistedCard from '@/app/(account)/account/components/Content/Tabs/MyServers/UnlistedCard';
-import { useTranslation } from 'react-i18next';
-import NewServer from '@/app/(account)/account/components/Content/Tabs/MyServers/NewServer';
-import Image from '@/app/components/AppImage';
 
 export default function MyServers() {
   const { t } = useTranslation();

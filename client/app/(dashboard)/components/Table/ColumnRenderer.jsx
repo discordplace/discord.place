@@ -1,19 +1,20 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { FaPause, FaStar } from 'react-icons/fa';
 import { FiArrowRightCircle } from 'react-icons/fi';
 import { HiPlay } from 'react-icons/hi2';
+
+import Image from '@/app/components/AppImage';
+import Countdown from '@/app/components/Countdown';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import config from '@/config';
-import Image from '@/app/components/AppImage';
-import getRelativeTime from '@/lib/getRelativeTime';
-import getCompressedName from '@/lib/getCompressedName';
-import useGeneralStore from '@/stores/general';
-import { useEffect, useRef } from 'react';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import cn from '@/lib/cn';
-import Countdown from '@/app/components/Countdown';
+import getCompressedName from '@/lib/getCompressedName';
+import getRelativeTime from '@/lib/getRelativeTime';
 import useDashboardStore from '@/stores/dashboard';
+import useGeneralStore from '@/stores/general';
 
 function CategoryBadge({ children, iconsKey }) {
   return (

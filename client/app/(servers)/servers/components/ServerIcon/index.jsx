@@ -1,7 +1,7 @@
 'use client';
 
-import cn from '@/lib/cn';
 import Image from '@/app/components/AppImage';
+import cn from '@/lib/cn';
 
 export default function ServerIcon({ width, height, className, icon_url, name }) {
   function getCompressedName(name, limit) {

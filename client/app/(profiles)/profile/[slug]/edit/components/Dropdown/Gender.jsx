@@ -1,9 +1,10 @@
 'use client';
 
-import { IoMdCheckmarkCircle } from 'react-icons/io';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import cn from '@/lib/cn';
 import { useTranslation } from 'react-i18next';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
+
+import cn from '@/lib/cn';
 
 export default function GenderDropdown({ profile, currentlyEditingValue, setCurrentlyEditingValue }) {
   const { t } = useTranslation();

@@ -1,22 +1,23 @@
 'use client';
 
+import { colord } from 'colord';
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { useTranslation } from 'react-i18next';
 import { LuShieldQuestion } from 'react-icons/lu';
 import { RiErrorWarningFill } from 'react-icons/ri';
-import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
-import config from '@/config';
-import FaQs from '@/app/(themes)/themes/[id]/components/FaQs';
-import Link from 'next/link';
 import { toast } from 'sonner';
-import { useRouter } from 'next-nprogress-bar';
-import deleteTheme from '@/lib/request/themes/deleteTheme';
-import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import { useTranslation } from 'react-i18next';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+
+import FaQs from '@/app/(themes)/themes/[id]/components/FaQs';
+import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import CopyButton from '@/app/components/CopyButton/CustomTrigger';
-import { colord } from 'colord';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ReportableArea from '@/app/components/ReportableArea';
+import config from '@/config';
+import deleteTheme from '@/lib/request/themes/deleteTheme';
 import useAuthStore from '@/stores/auth';
+import useModalsStore from '@/stores/modals';
 
 export default function Content({ theme }) {
   const { t, i18n } = useTranslation();

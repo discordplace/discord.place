@@ -1,8 +1,8 @@
 'use client';
 
-import { FaSlackHash } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { FaSlackHash } from 'react-icons/fa';
 
 export default function Keywords({ server }) {
   const { t } = useTranslation();

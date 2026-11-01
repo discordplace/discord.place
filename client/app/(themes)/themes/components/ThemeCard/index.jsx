@@ -1,17 +1,18 @@
 'use client';
 
 import { colord } from 'colord';
-import cn from '@/lib/cn';
 import Link from 'next/link';
-import Image from '@/app/components/AppImage';
-import useAuthStore from '@/stores/auth';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import Twemoji from 'react-twemoji';
-import { useMemo } from 'react';
+
 import AddFriendIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/AddFriend';
 import MoreIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/More';
+import Image from '@/app/components/AppImage';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import cn from '@/lib/cn';
+import useAuthStore from '@/stores/auth';
 
 export default function ThemeCard({ id, primaryColor, secondaryColor }) {
   const { t } = useTranslation();

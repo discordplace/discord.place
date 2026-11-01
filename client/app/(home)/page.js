@@ -1,10 +1,11 @@
+import { Suspense } from 'react';
+
+import Heading from '@/app/(home)/components/Heading';
+import InfoCards from '@/app/(home)/components/InfoCards';
+import ServerCard from '@/app/(home)/components/ServerCard';
+import TrustedByHeading from '@/app/(home)/components/TrustedByHeading';
 import Square from '@/app/components/Background/Square';
 import getTopServers from '@/lib/request/general/getTopServers';
-import ServerCard from '@/app/(home)/components/ServerCard';
-import InfoCards from '@/app/(home)/components/InfoCards';
-import { Suspense } from 'react';
-import Heading from '@/app/(home)/components/Heading';
-import TrustedByHeading from '@/app/(home)/components/TrustedByHeading';
 
 export default async function Page() {
   const result = await getTopServers().catch(() => null);

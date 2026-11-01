@@ -1,26 +1,27 @@
 'use client';
 
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import WavesurferPlayer from '@wavesurfer/react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BsThreeDots } from 'react-icons/bs';
 import { FaPause } from 'react-icons/fa';
 import { HiPlay } from 'react-icons/hi2';
 import { LuCloudDownload } from 'react-icons/lu';
 import { PiShareFat } from 'react-icons/pi';
 import { TiArrowUpOutline } from 'react-icons/ti';
-import useThemeStore from '@/stores/theme';
-import { useEffect, useState } from 'react';
-import WavesurferPlayer from '@wavesurfer/react';
-import useGeneralStore from '@/stores/general';
+import { useLocalStorage } from 'react-use';
+import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
+
 import VolumePopover from '@/app/(sounds)/sounds/components/SoundPreview/VolumePopover';
 import config from '@/config';
-import { useLocalStorage } from 'react-use';
-import useModalsStore from '@/stores/modals';
-import { useTranslation } from 'react-i18next';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { toast } from 'sonner';
 import downloadSound from '@/lib/utils/sounds/downloadSound';
+import useGeneralStore from '@/stores/general';
+import useModalsStore from '@/stores/modals';
+import useThemeStore from '@/stores/theme';
 
 export default function Waveform({ id, name: soundName }) {
   const { t } = useTranslation();

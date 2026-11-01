@@ -1,15 +1,16 @@
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useMedia } from 'react-use';
+
+import Chat from '@/app/(templates)/templates/[id]/preview/components/Chat';
+import Header from '@/app/(templates)/templates/[id]/preview/components/Header';
+import Members from '@/app/(templates)/templates/[id]/preview/components/Members';
 import Sidebar from '@/app/(templates)/templates/[id]/preview/components/Sidebar';
 import Channels from '@/app/(templates)/templates/[id]/preview/components/Sidebar/Channels';
-import Header from '@/app/(templates)/templates/[id]/preview/components/Header';
-import Chat from '@/app/(templates)/templates/[id]/preview/components/Chat';
-import Members from '@/app/(templates)/templates/[id]/preview/components/Members';
-import { useState, useEffect } from 'react';
 import FullPageLoading from '@/app/components/FullPageLoading';
-import { useMedia } from 'react-use';
 import cn from '@/lib/cn';
-import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Content({ template }) {
   const [focusedChannel, setFocusedChannel] = useState(

@@ -1,14 +1,15 @@
 'use client';
 
-import cn from '@/lib/cn';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import TopVoters from '@/app/(servers)/servers/[id]/components/Tabs/TopVoters';
+import { useTranslation } from 'react-i18next';
+import { useMedia } from 'react-use';
+
 import MonthlyVotesGraph from '@/app/(servers)/servers/[id]/components/Tabs/Graph/MonthlyVotes';
 import Reviews from '@/app/(servers)/servers/[id]/components/Tabs/Reviews';
 import Rewards from '@/app/(servers)/servers/[id]/components/Tabs/Rewards';
-import { motion } from 'framer-motion';
-import { useMedia } from 'react-use';
-import { useTranslation } from 'react-i18next';
+import TopVoters from '@/app/(servers)/servers/[id]/components/Tabs/TopVoters';
+import cn from '@/lib/cn';
 
 export default function Tabs({ server }) {
   const { t } = useTranslation();

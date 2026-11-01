@@ -1,12 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import cn from '@/lib/cn';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMedia } from 'react-use';
+
 import LikesGraph from '@/app/(profiles)/profile/[slug]/components/sections/Graph/Likes';
 import ViewsGraph from '@/app/(profiles)/profile/[slug]/components/sections/Graph/Views';
-import { useTranslation } from 'react-i18next';
+import cn from '@/lib/cn';
 
 export default function Graph({ profile }) {
   const { t } = useTranslation();

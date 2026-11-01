@@ -1,7 +1,8 @@
-import { IoMdCheckmarkCircle } from 'react-icons/io';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import cn from '@/lib/cn';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
+
 import config from '@/config';
+import cn from '@/lib/cn';
 
 export default function PreferredHostDropdown({ currentlyEditingValue, setCurrentlyEditingValue }) {
   return (

@@ -1,7 +1,8 @@
-import getUser from '@/lib/request/general/getUser';
-import Content from '@/app/(profiles)/profile/u/[user_id]/content';
 import { redirect } from 'next/navigation';
+
+import Content from '@/app/(profiles)/profile/u/[user_id]/content';
 import createMetadata from '@/lib/createMetadata';
+import getUser from '@/lib/request/general/getUser';
 
 export async function generateMetadata({ params }) {
   const { user_id } = await params;

@@ -1,14 +1,15 @@
 'use client';
 
-import { BsEmojiAngry } from 'react-icons/bs';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import Countdown from '@/app/components/Countdown';
-import ErrorState from '@/app/components/ErrorState';
-import cn from '@/lib/cn';
-import useAccountStore from '@/stores/account';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import { BsEmojiAngry } from 'react-icons/bs';
+
+import Countdown from '@/app/components/Countdown';
+import ErrorState from '@/app/components/ErrorState';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import cn from '@/lib/cn';
+import useAccountStore from '@/stores/account';
 
 export default function ActiveTimeouts() {
   const { t, i18n } = useTranslation();

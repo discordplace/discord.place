@@ -1,24 +1,25 @@
 // oxlint-disable tailwindcss/no-unknown-classes
 'use client';
 
+import { colord, extend } from 'colord';
+import a11yPlugin from 'colord/plugins/a11y';
+import mixPlugin from 'colord/plugins/mix';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { TbWorldShare } from 'react-icons/tb';
+
 import Image from '@/app/components/AppImage';
 import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import ReportableArea from '@/app/components/ReportableArea';
+import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';
-import useThemeStore from '@/stores/theme';
-import Tooltip from '@/app/components/Tooltip';
-import Link from 'next/link';
-import { colord, extend } from 'colord';
-import mixPlugin from 'colord/plugins/mix';
-import a11yPlugin from 'colord/plugins/a11y';
-import { useTranslation } from 'react-i18next';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import useSearchStore from '@/stores/profiles/search';
-import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
+import useSearchStore from '@/stores/profiles/search';
+import useThemeStore from '@/stores/theme';
 
 extend([
   mixPlugin,

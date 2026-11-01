@@ -1,7 +1,8 @@
 'use client';
 
-import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import { useTranslation } from 'react-i18next';
+
+import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 
 export default function MockServerCard() {
   const { t } = useTranslation();

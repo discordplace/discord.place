@@ -1,19 +1,20 @@
 'use client';
 
-import { RiErrorWarningFill } from 'react-icons/ri';
-import MotionImage from '@/app/components/Motion/Image';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import { RiErrorWarningFill } from 'react-icons/ri';
+
 import About from '@/app/(bots)/bots/[id]/components/sections/About';
 import RightSide from '@/app/(bots)/bots/[id]/components/sections/RightSide';
-import Tooltip from '@/app/components/Tooltip';
 import Tabs from '@/app/(bots)/bots/[id]/components/Tabs';
-import Link from 'next/link';
-import config from '@/config';
-import useThemeStore from '@/stores/theme';
-import { useTranslation } from 'react-i18next';
 import Countdown from '@/app/components/Countdown';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import MotionImage from '@/app/components/Motion/Image';
+import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
+import useThemeStore from '@/stores/theme';
 
 export default function Content({ bot }) {
   const { t, i18n } = useTranslation();

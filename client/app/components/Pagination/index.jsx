@@ -1,12 +1,13 @@
 'use client';
 
-import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 import { motion } from 'framer-motion';
-import cn from '@/lib/cn';
 import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 import { useMedia } from 'react-use';
+import { toast } from 'sonner';
+
+import cn from '@/lib/cn';
 
 function generateClickableNumbers(currentPage, totalPages, limit) {
   currentPage = Math.max(1, Math.min(currentPage, totalPages));

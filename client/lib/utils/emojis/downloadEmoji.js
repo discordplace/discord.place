@@ -1,7 +1,8 @@
-import config from '@/config';
-import incrementDownloads from '@/lib/request/emojis/incrementDownloads';
 import JSZip from 'jszip';
 import { toast } from 'sonner';
+
+import config from '@/config';
+import incrementDownloads from '@/lib/request/emojis/incrementDownloads';
 
 function downloadEmoji(emoji) {
   if (emoji.emoji_ids) {

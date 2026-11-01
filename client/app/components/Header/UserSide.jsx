@@ -1,17 +1,18 @@
 'use client';
 
-import { BiLogOut } from 'react-icons/bi';
-import useAuthStore from '@/stores/auth';
 import Link from 'next/link';
-import config from '@/config';
 import { usePathname } from 'next/navigation';
-import cn from '@/lib/cn';
 import { useEffect, useState } from 'react';
-import { useCookie, useWindowScroll } from 'react-use';
-import logout from '@/lib/request/auth/logout';
-import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+import { BiLogOut } from 'react-icons/bi';
+import { useCookie, useWindowScroll } from 'react-use';
+import { toast } from 'sonner';
+
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import config from '@/config';
+import cn from '@/lib/cn';
+import logout from '@/lib/request/auth/logout';
+import useAuthStore from '@/stores/auth';
 
 export default function UserSide({ className }) {
   const { t } = useTranslation();

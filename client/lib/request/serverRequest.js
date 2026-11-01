@@ -1,6 +1,7 @@
 import axios from 'axios';
-import config from '@/config';
 import { cookies, headers } from 'next/headers';
+
+import config from '@/config';
 
 class RequestClient {
   constructor() {

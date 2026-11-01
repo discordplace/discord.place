@@ -1,9 +1,10 @@
-import getSound from '@/lib/request/sounds/getSound';
 import { redirect } from 'next/navigation';
+
 import Content from '@/app/(sounds)/sounds/[id]/content';
-import getSoundMetadata from '@/lib/request/sounds/getSoundMetadata';
 import config from '@/config';
 import createMetadata from '@/lib/createMetadata';
+import getSound from '@/lib/request/sounds/getSound';
+import getSoundMetadata from '@/lib/request/sounds/getSoundMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;

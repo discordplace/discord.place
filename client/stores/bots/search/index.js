@@ -1,5 +1,5 @@
-import { create } from 'zustand';
 import { toast } from 'sonner';
+import { create } from 'zustand';
 
 import fetchBots from '@/lib/request/bots/fetchBots';
 

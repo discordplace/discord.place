@@ -1,19 +1,20 @@
 'use client';
 
+import { nanoid } from 'nanoid';
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MdCheckCircle } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
-import Square from '@/app/components/Background/Square';
-import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { nanoid } from 'nanoid';
-import cn from '@/lib/cn';
+
+import Square from '@/app/components/Background/Square';
+import AuthProtected from '@/app/components/Providers/Auth/Protected';
 import config from '@/config';
-import Link from 'next/link';
+import cn from '@/lib/cn';
 import createTemplate from '@/lib/request/templates/createTemplate';
 import fetchTemplateDetails from '@/lib/request/templates/fetchTemplateDetails';
-import { useRouter } from 'next-nprogress-bar';
-import AuthProtected from '@/app/components/Providers/Auth/Protected';
-import { useTranslation } from 'react-i18next';
 
 export default function Page() {
   const { t } = useTranslation();

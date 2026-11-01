@@ -1,5 +1,6 @@
-import { create } from 'zustand';
 import { toast } from 'sonner';
+import { create } from 'zustand';
+
 import fetchTemplates from '@/lib/request/templates/fetchTemplates';
 
 const useSearchStore = create((set, get) => ({

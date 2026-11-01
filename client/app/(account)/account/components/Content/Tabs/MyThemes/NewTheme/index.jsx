@@ -1,21 +1,22 @@
 'use client';
 
+import isEqual from 'lodash/isEqual';
+import { Lottie } from 'lottie-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { HexColorPicker } from 'react-colorful';
+import { useTranslation } from 'react-i18next';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdChevronLeft } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
-import config from '@/config';
-import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import cn from '@/lib/cn';
-import createTheme from '@/lib/request/themes/createTheme';
-import { useRouter } from 'next/navigation';
-import { Lottie } from 'lottie-react';
-import confetti from '@/lib/lotties/confetti.json';
-import useAccountStore from '@/stores/account';
-import { useTranslation } from 'react-i18next';
-import { HexColorPicker } from 'react-colorful';
-import isEqual from 'lodash/isEqual';
+
 import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
+import config from '@/config';
+import cn from '@/lib/cn';
+import confetti from '@/lib/lotties/confetti.json';
+import createTheme from '@/lib/request/themes/createTheme';
+import useAccountStore from '@/stores/account';
 
 export default function NewTheme() {
   const { t } = useTranslation();

@@ -1,9 +1,10 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import getPlans from '@/lib/request/payments/getPlansFromServer';
+
 import Content from '@/app/premium/content';
 import createMetadata from '@/lib/createMetadata';
+import getPlans from '@/lib/request/payments/getPlansFromServer';
 
 export async function generateMetadata() {
   return createMetadata({

@@ -1,4 +1,5 @@
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+
 import config from '@/config';
 
 export default function Bot({ data, avatar_base64 }) {

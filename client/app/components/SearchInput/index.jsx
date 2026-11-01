@@ -1,10 +1,11 @@
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiX } from 'react-icons/fi';
 import { IoSearch } from 'react-icons/io5';
-import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+
 import cn from '@/lib/cn';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
 
 export default function SearchInput({ placeholder, loading, search, fetchData, setPage, animationDelay }) {
   const { t } = useTranslation();

@@ -1,9 +1,10 @@
 'use client';
 
-import cn from '@/lib/cn';
+import { useTranslation } from 'react-i18next';
+
 import Image from '@/app/components/AppImage';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import { useTranslation } from 'react-i18next';
+import cn from '@/lib/cn';
 
 export default function ChatMockup({ id, username, avatar, message, emoji_url, theme, index }) {
   const { i18n } = useTranslation();
@@ -40,7 +41,7 @@ export default function ChatMockup({ id, username, avatar, message, emoji_url, t
               theme === 'dark' ? 'text-[rgb(var(--dark-text-tertiary))]' : 'text-[rgb(var(--light-text-tertiary))]'
             )}
           >
-            {new Date().toLocaleDateString(i18n.language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(',','')}
+            {new Date().toLocaleDateString(i18n.language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(',', '')}
           </span>
         </div>
 

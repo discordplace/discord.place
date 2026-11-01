@@ -1,24 +1,25 @@
 'use client';
 
+import isEqual from 'lodash/isEqual';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MdSave } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
-import { useEffect, useState } from 'react';
-import isEqual from 'lodash/isEqual';
-import EssentialInformation from '@/app/(bots)/bots/[id]/manage/components/EssentialInformation';
-import Other from '@/app/(bots)/bots/[id]/manage/components/Other';
-import Webhook from '@/app/(bots)/bots/[id]/manage/components/Webhook';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
 import ApiKey from '@/app/(bots)/bots/[id]/manage/components/ApiKey';
 import DangerZone from '@/app/(bots)/bots/[id]/manage/components/DangerZone';
+import EssentialInformation from '@/app/(bots)/bots/[id]/manage/components/EssentialInformation';
 import ExtraOwners from '@/app/(bots)/bots/[id]/manage/components/ExtraOwners';
 import ForceRefresh from '@/app/(bots)/bots/[id]/manage/components/ForceRefresh';
-import { toast } from 'sonner';
+import Other from '@/app/(bots)/bots/[id]/manage/components/Other';
+import Webhook from '@/app/(bots)/bots/[id]/manage/components/Webhook';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
 import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
-import { useRouter } from 'next-nprogress-bar';
-import { useTranslation } from 'react-i18next';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ bot }) {
   const { t } = useTranslation();

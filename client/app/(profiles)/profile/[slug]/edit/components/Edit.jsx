@@ -1,26 +1,27 @@
 'use client';
 
+import { colord, extend } from 'colord';
+import a11yPlugin from 'colord/plugins/a11y';
+import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect, useRef, useState } from 'react';
+import { HexAlphaColorPicker } from 'react-colorful';
+import { useTranslation } from 'react-i18next';
 import { FaCrown } from 'react-icons/fa';
 import { PiWarningCircleFill } from 'react-icons/pi';
 import { TbLoader } from 'react-icons/tb';
-import { useEffect, useRef, useState } from 'react';
-import cn from '@/lib/cn';
-import editProfile from '@/lib/request/profiles/editProfile';
 import { toast } from 'sonner';
-import Socials from '@/app/(profiles)/profile/[slug]/edit/components/Socials';
-import { AnimatePresence, motion } from 'framer-motion';
-import config from '@/config';
-import { useRouter } from 'next-nprogress-bar';
+
 import GenderDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/Gender';
 import PreferredHostDropdown from '@/app/(profiles)/profile/[slug]/edit/components/Dropdown/PreferredHost';
-import Link from 'next/link';
-import revalidateProfile from '@/lib/revalidate/profile';
-import { HexAlphaColorPicker } from 'react-colorful';
-import Tooltip from '@/app/components/Tooltip';
+import Socials from '@/app/(profiles)/profile/[slug]/edit/components/Socials';
 import CopyButtonCustomTrigger from '@/app/components/CopyButton/CustomTrigger';
-import { colord, extend } from 'colord';
-import a11yPlugin from 'colord/plugins/a11y';
-import { useTranslation } from 'react-i18next';
+import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
+import cn from '@/lib/cn';
+import editProfile from '@/lib/request/profiles/editProfile';
+import revalidateProfile from '@/lib/revalidate/profile';
 
 extend([a11yPlugin]);
 

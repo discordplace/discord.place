@@ -1,17 +1,18 @@
 'use client';
 
-import { ImHammer2 } from 'react-icons/im';
 import { useEffect, useRef, useState } from 'react';
-import getExtraOwners from '@/lib/request/bots/getExtraOwners';
+import { useTranslation } from 'react-i18next';
+import { ImHammer2 } from 'react-icons/im';
 import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
 import Image from '@/app/components/AppImage';
 import Tooltip from '@/app/components/Tooltip';
-import removeExtraOwner from '@/lib/request/bots/removeExtraOwner';
-import createExtraOwner from '@/lib/request/bots/createExtraOwner';
-import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
 import cn from '@/lib/cn';
-import { useTranslation } from 'react-i18next';
+import createExtraOwner from '@/lib/request/bots/createExtraOwner';
+import getExtraOwners from '@/lib/request/bots/getExtraOwners';
+import removeExtraOwner from '@/lib/request/bots/removeExtraOwner';
+import useModalsStore from '@/stores/modals';
 
 export default function ExtraOwners({ botId, canEditExtraOwners }) {
   const { t } = useTranslation();

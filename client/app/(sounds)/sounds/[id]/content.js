@@ -1,21 +1,22 @@
 'use client';
 
-import { LuShieldQuestion } from 'react-icons/lu';
-import { RiErrorWarningFill } from 'react-icons/ri';
-import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
-import AnimatedCount from '@/app/components/AnimatedCount';
-import config from '@/config';
-import FaQs from '@/app/(sounds)/sounds/[id]/components/FaQs';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { toast } from 'sonner';
 import { useRouter } from 'next-nprogress-bar';
-import deleteSound from '@/lib/request/sounds/deleteSound';
-import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
 import { useTranslation } from 'react-i18next';
+import { LuShieldQuestion } from 'react-icons/lu';
+import { RiErrorWarningFill } from 'react-icons/ri';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
+import FaQs from '@/app/(sounds)/sounds/[id]/components/FaQs';
+import SoundPreview from '@/app/(sounds)/sounds/components/SoundPreview';
+import AnimatedCount from '@/app/components/AnimatedCount';
 import ReportableArea from '@/app/components/ReportableArea';
+import config from '@/config';
+import deleteSound from '@/lib/request/sounds/deleteSound';
 import useAuthStore from '@/stores/auth';
+import useModalsStore from '@/stores/modals';
 
 export default function Content({ sound }) {
   const { t, i18n } = useTranslation();

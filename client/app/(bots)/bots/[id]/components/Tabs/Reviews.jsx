@@ -1,30 +1,31 @@
 'use client';
 
+import Link from 'next/link';
+import { Suspense, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import { TbLoader } from 'react-icons/tb';
 import { TiStarFullOutline, TiStarHalfOutline, TiStarOutline } from 'react-icons/ti';
-import Pagination from '@/app/components/Pagination';
-import useAuthStore from '@/stores/auth';
-import { Suspense, useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import createReview from '@/lib/request/bots/createReview';
-import replyReview from '@/lib/request/bots/replyReview';
-import fetchReviews from '@/lib/request/bots/fetchReviews';
-import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';
-import cn from '@/lib/cn';
-import Link from 'next/link';
-import config from '@/config';
-import { useTranslation } from 'react-i18next';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import ReportableArea from '@/app/components/ReportableArea';
-import Image from '@/app/components/AppImage';
 import { useMedia } from 'react-use';
-import getRelativeTime from '@/lib/getRelativeTime';
-import useModalsStore from '@/stores/modals';
+import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
+
+import LoginButton from '@/app/(bots)/bots/[id]/components/Tabs/LoginButton';
 import ReplyReviewModalContent from '@/app/(bots)/bots/[id]/components/Tabs/ReplyReviewModalContent';
-import useGeneralStore from '@/stores/general';
+import Image from '@/app/components/AppImage';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import Pagination from '@/app/components/Pagination';
+import ReportableArea from '@/app/components/ReportableArea';
 import ReviewReply from '@/app/components/ReviewReply';
+import config from '@/config';
+import cn from '@/lib/cn';
+import getRelativeTime from '@/lib/getRelativeTime';
+import createReview from '@/lib/request/bots/createReview';
+import fetchReviews from '@/lib/request/bots/fetchReviews';
+import replyReview from '@/lib/request/bots/replyReview';
+import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
+import useModalsStore from '@/stores/modals';
 
 export default function Reviews({ bot }) {
   const { t, i18n } = useTranslation();

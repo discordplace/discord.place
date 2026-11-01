@@ -1,25 +1,26 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LuShieldQuestion } from 'react-icons/lu';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { RiErrorWarningFill } from 'react-icons/ri';
-import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
-import AnimatedCount from '@/app/components/AnimatedCount';
-import config from '@/config';
-import FaQs from '@/app/(emojis)/emojis/packages/[id]/components/FaQs';
-import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useState } from 'react';
 import { toast } from 'sonner';
-import { useRouter } from 'next-nprogress-bar';
-import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
-import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import { useTranslation } from 'react-i18next';
+
+import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
+import PackagePreview from '@/app/(emojis)/emojis/components/PackagePreview';
+import FaQs from '@/app/(emojis)/emojis/packages/[id]/components/FaQs';
+import AnimatedCount from '@/app/components/AnimatedCount';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import ReportableArea from '@/app/components/ReportableArea';
+import config from '@/config';
+import deleteEmoji from '@/lib/request/emojis/deleteEmoji';
 import useAuthStore from '@/stores/auth';
+import useModalsStore from '@/stores/modals';
 
 export default function Content({ emoji }) {
   const { t, i18n } = useTranslation();
@@ -110,7 +111,7 @@ export default function Content({ emoji }) {
               </h1>
 
               <span className='flex items-center gap-x-1 text-center text-sm text-primary'>
-                {new Date(emoji.created_at).toLocaleDateString(i18n.language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(/,/g,'')}
+                {new Date(emoji.created_at).toLocaleDateString(i18n.language, { day: '2-digit', hour: '2-digit', minute: '2-digit', month: 'short', year: 'numeric' }).replace(/,/g, '')}
               </span>
             </div>
 

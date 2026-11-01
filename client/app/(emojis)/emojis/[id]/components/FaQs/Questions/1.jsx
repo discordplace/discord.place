@@ -1,5 +1,6 @@
-import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
 import { useTranslation } from 'react-i18next';
+
+import downloadEmoji from '@/lib/utils/emojis/downloadEmoji';
 
 export default function Question1({ emoji }) {
   const { t } = useTranslation();

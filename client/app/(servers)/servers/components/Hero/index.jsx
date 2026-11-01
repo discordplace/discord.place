@@ -1,22 +1,23 @@
 'use client';
 
-import { BsEmojiAngry } from 'react-icons/bs';
-import Square from '@/app/components/Background/Square';
-import cn from '@/lib/cn';
-import { Bricolage_Grotesque } from 'next/font/google';
-import ServerCard from '@/app/(servers)/servers/components/ServerCard';
-import SearchInput from '@/app/components/SearchInput';
-import Select from '@/app/components/Select';
-import { useEffect } from 'react';
-import useSearchStore from '@/stores/servers/search';
-import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Bricolage_Grotesque } from 'next/font/google';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { useShallow } from 'zustand/react/shallow';
+
+import ServerCard from '@/app/(servers)/servers/components/ServerCard';
+import Square from '@/app/components/Background/Square';
 import ErrorState from '@/app/components/ErrorState';
 import Pagination from '@/app/components/Pagination';
-import config from '@/config';
-import { useTranslation } from 'react-i18next';
 import ReportableArea from '@/app/components/ReportableArea';
+import SearchInput from '@/app/components/SearchInput';
+import Select from '@/app/components/Select';
+import config from '@/config';
+import cn from '@/lib/cn';
 import useAuthStore from '@/stores/auth';
+import useSearchStore from '@/stores/servers/search';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 

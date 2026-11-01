@@ -1,5 +1,6 @@
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import { useTranslation } from 'react-i18next';
+
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function ProfilePreview({ metadata }) {
   const { t } = useTranslation();

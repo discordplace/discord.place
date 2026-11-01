@@ -1,4 +1,5 @@
-import { headers, cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
+
 import config from '@/config';
 
 export default async function getLocale() {

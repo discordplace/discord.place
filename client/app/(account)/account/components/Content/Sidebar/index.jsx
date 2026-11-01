@@ -1,16 +1,17 @@
 'use client';
 
-import { BiSolidChevronRight } from 'react-icons/bi';
-import useThemeStore from '@/stores/theme';
-import Image from '@/app/components/AppImage';
 import { Bricolage_Grotesque } from 'next/font/google';
-import cn from '@/lib/cn';
+import Link from 'next/link';
+import { BiSolidChevronRight } from 'react-icons/bi';
+import { useMedia } from 'react-use';
+
 import BlockItem from '@/app/(account)/account/components/Content/Sidebar/BlockItem';
 import CollapseIcon from '@/app/(account)/account/components/Content/Sidebar/Icons/Collapse';
+import Image from '@/app/components/AppImage';
 import Tooltip from '@/app/components/Tooltip';
-import Link from 'next/link';
-import { useMedia } from 'react-use';
+import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
+import useThemeStore from '@/stores/theme';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 

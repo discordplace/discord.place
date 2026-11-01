@@ -1,18 +1,20 @@
 'use client';
 
-import { Toaster } from 'sonner';
-import Header from '@/app/components/Header';
-import Footer from '@/app/components/Footer';
-import ThemeProvider from '@/app/components/Providers/Theme';
-import ProgressBarProvider from '@/app/components/Providers/ProgressBar';
-import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
-import CookieBanner from '@/app/components/CookieBanner';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Suspense } from 'react';
+import { Toaster } from 'sonner';
+
+import CookieBanner from '@/app/components/CookieBanner';
+import Footer from '@/app/components/Footer';
+import Header from '@/app/components/Header';
 import ModalProvider from '@/app/components/Providers/Modal';
-import useGeneralStore from '@/stores/general';
-import FullPageLoading from './components/FullPageLoading';
+import ProgressBarProvider from '@/app/components/Providers/ProgressBar';
 import ReportButtonProvider from '@/app/components/Providers/ReportButton';
-import { motion, AnimatePresence } from 'framer-motion';
+import ThemeProvider from '@/app/components/Providers/Theme';
+import VaulWrapperProvider from '@/app/components/Providers/VaulWrapper';
+import useGeneralStore from '@/stores/general';
+
+import FullPageLoading from './components/FullPageLoading';
 
 export default function RootLayoutContent({ children }) {
   const showFullPageLoading = useGeneralStore(state => state.showFullPageLoading);

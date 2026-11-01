@@ -1,16 +1,17 @@
 'use client';
 
-import { HiSortAscending } from 'react-icons/hi';
-import { TiStar } from 'react-icons/ti';
-import config from '@/config';
-import cn from '@/lib/cn';
-import { useTranslation } from 'react-i18next';
-import useSearchStore from '@/stores/templates/search';
-import useThemeStore from '@/stores/theme';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { HiSortAscending } from 'react-icons/hi';
+import { TiStar } from 'react-icons/ti';
 import Ripples from 'react-ripples';
+
+import config from '@/config';
+import cn from '@/lib/cn';
 import getCompressedName from '@/lib/getCompressedName';
+import useSearchStore from '@/stores/templates/search';
+import useThemeStore from '@/stores/theme';
 
 export default function Card({ data, className }) {
   const { t, i18n } = useTranslation();

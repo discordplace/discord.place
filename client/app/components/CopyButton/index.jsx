@@ -1,9 +1,10 @@
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BiCopy, BiSolidCopy } from 'react-icons/bi';
 import { MdCheckCircle } from 'react-icons/md';
-import cn from '@/lib/cn';
-import { useState, useRef } from 'react';
 import { toast } from 'sonner';
-import { useTranslation } from 'react-i18next';
+
+import cn from '@/lib/cn';
 
 export default function CopyButton({ timeout = 2000, successText, copyText, className, DefaultIcon = BiCopy, HoverIcon = BiSolidCopy, children }) {
   const { t } = useTranslation();

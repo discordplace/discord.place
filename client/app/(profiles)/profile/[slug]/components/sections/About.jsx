@@ -1,10 +1,10 @@
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { BsEye, BsGeoAlt, BsSuitcaseLg } from 'react-icons/bs';
 import { FaGenderless } from 'react-icons/fa';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { LiaBirthdayCakeSolid } from 'react-icons/lia';
 import { MdOutlineFemale, MdOutlineMale } from 'react-icons/md';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
 
 export default function About({ profile }) {
   const { t } = useTranslation();

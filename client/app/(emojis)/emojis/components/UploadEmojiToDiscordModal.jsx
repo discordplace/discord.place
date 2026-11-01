@@ -1,15 +1,16 @@
 'use client';
 
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { HiPlus } from 'react-icons/hi';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+
 import ErrorState from '@/app/components/ErrorState';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
-import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
 
 export default function UploadEmojiToDiscordModal({ guilds }) {
   const { t } = useTranslation();

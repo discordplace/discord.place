@@ -1,20 +1,5 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { motion } from 'framer-motion';
-import Image from '@/app/components/AppImage';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { FaDiscord } from 'react-icons/fa6';
-import useAuthStore from '@/stores/auth';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import { useThemeStore } from '@/stores/theme';
-import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
-import Drawer from '@/app/components/Drawer';
-import { MdOutlineOpenInNew } from 'react-icons/md';
-import config from '@/config';
-import { useTranslation } from 'react-i18next';
-import { useMedia } from 'react-use';
 import {
   autoUpdate,
   flip,
@@ -27,6 +12,22 @@ import {
   useInteractions,
   useTransitionStyles
 } from '@floating-ui/react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaDiscord } from 'react-icons/fa6';
+import { MdOutlineOpenInNew } from 'react-icons/md';
+import { useMedia } from 'react-use';
+
+import Image from '@/app/components/AppImage';
+import Drawer from '@/app/components/Drawer';
+import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import config from '@/config';
+import useAuthStore from '@/stores/auth';
+import { useThemeStore } from '@/stores/theme';
 
 export default function Header() {
   const { t } = useTranslation();

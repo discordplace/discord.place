@@ -1,12 +1,13 @@
-import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import Pagination from '@/app/components/Pagination';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { TbSquareRoundedChevronUp } from 'react-icons/tb';
+import { toast } from 'sonner';
+
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import Pagination from '@/app/components/Pagination';
 import cn from '@/lib/cn';
 import fetchVoters from '@/lib/request/bots/fetchVoters';
-import { toast } from 'sonner';
-import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function TopVoters({ bot }) {
   const { t } = useTranslation();

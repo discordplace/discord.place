@@ -1,15 +1,16 @@
 'use client';
 
-import { BsEmojiAngry } from 'react-icons/bs';
-import useSearchStore from '@/stores/themes/search';
-import { useShallow } from 'zustand/react/shallow';
-import Pagination from '@/app/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
-import ErrorState from '@/app/components/ErrorState';
-import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
 import { useTranslation } from 'react-i18next';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { useShallow } from 'zustand/react/shallow';
+
+import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
+import ErrorState from '@/app/components/ErrorState';
+import Pagination from '@/app/components/Pagination';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
+import useSearchStore from '@/stores/themes/search';
 
 export default function Themes() {
   const { t } = useTranslation();

@@ -1,23 +1,24 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import { Bricolage_Grotesque, Source_Serif_4 } from 'next/font/google';
+import { useRouter } from 'next-nprogress-bar';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaCheck, FaDiscord } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { LuShieldQuestion } from 'react-icons/lu';
 import { TbLoader } from 'react-icons/tb';
-import Square from '@/app/components/Background/Square';
-import cn from '@/lib/cn';
-import { Source_Serif_4, Bricolage_Grotesque } from 'next/font/google';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import useAuthStore from '@/stores/auth';
-import createCheckout from '@/lib/request/auth/createCheckout';
 import { toast } from 'sonner';
-import { useRouter } from 'next-nprogress-bar';
-import config from '@/config';
-import FaQs from '@/app/premium/components/FaQs';
+
+import Square from '@/app/components/Background/Square';
 import Tooltip from '@/app/components/Tooltip';
-import { useTranslation } from 'react-i18next';
+import FaQs from '@/app/premium/components/FaQs';
+import config from '@/config';
+import cn from '@/lib/cn';
+import createCheckout from '@/lib/request/auth/createCheckout';
+import useAuthStore from '@/stores/auth';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 const SourceSerif4 = Source_Serif_4({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });

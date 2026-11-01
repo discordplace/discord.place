@@ -1,9 +1,10 @@
 'use client';
 
-import { FiArrowUpRight } from 'react-icons/fi';
-import Link from 'next/link';
-import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
+import Link from 'next/link';
+import { FiArrowUpRight } from 'react-icons/fi';
+
+import cn from '@/lib/cn';
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 
 export default function InfoCard({ index, title, description, button, content }) {

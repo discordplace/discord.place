@@ -1,23 +1,24 @@
 'use client';
 
+import * as chrono from 'chrono-node';
+import { AnimatePresence, motion } from 'framer-motion';
+import isEqual from 'lodash/isEqual';
+import { useEffect, useRef, useState } from 'react';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { FaBookBookmark, FaCheck, FaXmark } from 'react-icons/fa6';
 import { FiX } from 'react-icons/fi';
 import { IoSearch } from 'react-icons/io5';
 import { PiSortAscendingBold, PiSortDescendingBold } from 'react-icons/pi';
+import { useMedia } from 'react-use';
+import { useShallow } from 'zustand/react/shallow';
+
 import ColumnRenderer from '@/app/(dashboard)/components/Table/ColumnRenderer';
-import cn from '@/lib/cn';
-import { AnimatePresence, motion } from 'framer-motion';
-import useDashboardStore from '@/stores/dashboard';
-import { useEffect, useRef, useState } from 'react';
+import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
+import Drawer from '@/app/components/Drawer';
 import ErrorState from '@/app/components/ErrorState';
 import Pagination from '@/app/components/Pagination';
-import sortColumns from '@/app/(dashboard)/components/Table/sortColumns';
-import isEqual from 'lodash/isEqual';
-import * as chrono from 'chrono-node';
-import { useMedia } from 'react-use';
-import Drawer from '@/app/components/Drawer';
-import { useShallow } from 'zustand/react/shallow';
+import cn from '@/lib/cn';
+import useDashboardStore from '@/stores/dashboard';
 
 export default function Table({ tabs }) {
   const { selectedItems, setSelectedItems, page, setPage, currentSort, setCurrentSort } = useDashboardStore(useShallow(state => ({

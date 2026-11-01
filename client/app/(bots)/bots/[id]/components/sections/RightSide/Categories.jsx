@@ -1,8 +1,9 @@
 'use client';
 
-import config from '@/config';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+
+import config from '@/config';
 
 export default function Categories({ bot }) {
   const { t } = useTranslation();

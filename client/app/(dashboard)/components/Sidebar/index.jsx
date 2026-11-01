@@ -1,8 +1,13 @@
 'use client';
 
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { Bricolage_Grotesque } from 'next/font/google';
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect } from 'react';
 import { BiSolidChevronRight } from 'react-icons/bi';
 import { CgBlock } from 'react-icons/cg';
-import { FaCompass, FaEye, FaReply, FaUserTimes, FaUsers } from 'react-icons/fa';
+import { FaCompass, FaEye, FaReply, FaUsers, FaUserTimes } from 'react-icons/fa';
 import { FiLink } from 'react-icons/fi';
 import { HiTemplate } from 'react-icons/hi';
 import { IoMdLogOut } from 'react-icons/io';
@@ -10,24 +15,20 @@ import { MdAccountCircle, MdEmojiEmotions, MdHome, MdSync } from 'react-icons/md
 import { PiWaveformBold } from 'react-icons/pi';
 import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import useThemeStore from '@/stores/theme';
-import Image from '@/app/components/AppImage';
-import { Bricolage_Grotesque } from 'next/font/google';
-import cn from '@/lib/cn';
-import useDashboardStore from '@/stores/dashboard';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import useAuthStore from '@/stores/auth';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { useRouter } from 'next-nprogress-bar';
-import logout from '@/lib/request/auth/logout';
+import { useCookie, useMedia } from 'react-use';
 import { toast } from 'sonner';
+
 import BlockItem from '@/app/(dashboard)/components/Sidebar/BlockItem';
 import CollapseIcon from '@/app/(dashboard)/components/Sidebar/Icons/Collapse';
+import Image from '@/app/components/AppImage';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Tooltip from '@/app/components/Tooltip';
-import Link from 'next/link';
-import { useCookie, useMedia } from 'react-use';
-import { useEffect } from 'react';
+import cn from '@/lib/cn';
+import logout from '@/lib/request/auth/logout';
 import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
+import useAuthStore from '@/stores/auth';
+import useDashboardStore from '@/stores/dashboard';
+import useThemeStore from '@/stores/theme';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 

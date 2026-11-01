@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/.pnpm/oxlint@1.68.0/node_modules/oxlint/configuration_schema.json",
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": ["unicorn", "oxc", "import", "react"],
   "jsPlugins": [
     {
@@ -9,6 +9,10 @@
     {
       "name": "tailwindcss",
       "specifier": "oxlint-tailwindcss"
+    },
+    {
+      "name": "simple-import-sort",
+      "specifier": "eslint-plugin-simple-import-sort"
     }
   ],
   "settings": {
@@ -19,9 +23,11 @@
   "ignorePatterns": ["server/**/*", ".vscode/**/*", ".husky/**/*", ".github/**/*"],
   "categories": { "correctness": "error", "style": "warn" },
   "rules": {
+    "simple-import-sort/imports": "error",
     "stylistic/semi": ["error", "always"],
     "stylistic/quotes": ["error", "single", { "avoidEscape": true }],
     "stylistic/comma-dangle": ["error", "never"],
+    "stylistic/comma-spacing": ["error", { "after": true, "before": false }],
     "stylistic/indent": ["error", 2, { "SwitchCase": 1 }],
     "react/self-closing-comp": ["error", { "component": true, "html": false }],
     "no-empty-function": "error",

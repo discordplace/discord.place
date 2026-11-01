@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import { useTranslation } from 'react-i18next';
+
+import ServerCard from '@/app/(servers)/servers/components/ServerCard';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
 

@@ -1,23 +1,24 @@
 'use client';
 
+import { formatDuration, intervalToDuration } from 'date-fns';
+import { Lottie } from 'lottie-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdAccessTimeFilled, MdChevronLeft } from 'react-icons/md';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import { TbLoader } from 'react-icons/tb';
-import config from '@/config';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
-import cn from '@/lib/cn';
-import createBot from '@/lib/request/bots/createBot';
-import { useRouter } from 'next/navigation';
-import { Lottie } from 'lottie-react';
-import confetti from '@/lib/lotties/confetti.json';
-import Markdown from '@/app/components/Markdown';
-import useAccountStore from '@/stores/account';
 import { useLocalStorage } from 'react-use';
-import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+
+import Markdown from '@/app/components/Markdown';
+import config from '@/config';
+import cn from '@/lib/cn';
+import confetti from '@/lib/lotties/confetti.json';
+import createBot from '@/lib/request/bots/createBot';
 import getBotStats from '@/lib/request/bots/getBotStats';
-import { formatDuration, intervalToDuration } from 'date-fns';
+import useAccountStore from '@/stores/account';
 
 export default function NewBot() {
   const { t, i18n } = useTranslation();

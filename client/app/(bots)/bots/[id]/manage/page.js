@@ -1,8 +1,9 @@
+import { redirect } from 'next/navigation';
+
+import Content from '@/app/(bots)/bots/[id]/manage/content';
+import AuthProtected from '@/app/components/Providers/Auth/Protected';
 import getBot from '@/lib/request/bots/getBot';
 import getBotMetadata from '@/lib/request/bots/getBotMetadata';
-import Content from '@/app/(bots)/bots/[id]/manage/content';
-import { redirect } from 'next/navigation';
-import AuthProtected from '@/app/components/Providers/Auth/Protected';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;

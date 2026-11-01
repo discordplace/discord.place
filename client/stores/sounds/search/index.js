@@ -1,5 +1,6 @@
-import { create } from 'zustand';
 import { toast } from 'sonner';
+import { create } from 'zustand';
+
 import fetchSounds from '@/lib/request/sounds/fetchSounds';
 
 const useSearchStore = create((set, get) => ({

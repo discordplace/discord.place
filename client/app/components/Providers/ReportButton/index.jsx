@@ -1,18 +1,19 @@
 'use client';
 
+import { motion, useAnimationControls } from 'framer-motion';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HiFlag } from 'react-icons/hi';
 import { IoClose } from 'react-icons/io5';
 import { MdBugReport } from 'react-icons/md';
-import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+
 import Tooltip from '@/app/components/Tooltip';
-import useGeneralStore from '@/stores/general';
-import cn from '@/lib/cn';
-import { motion, useAnimationControls } from 'framer-motion';
-import useAuthStore from '@/stores/auth';
-import { useTranslation } from 'react-i18next';
 import config from '@/config';
-import Link from 'next/link';
+import cn from '@/lib/cn';
+import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
 
 export default function ReportButtonProvider() {
   const { t } = useTranslation();
@@ -55,7 +56,7 @@ export default function ReportButtonProvider() {
         <button
           className={cn(
             'absolute rounded-full bg-quaternary p-2 text-xl transition-all duration-300 ease-in-out hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
-            !showReportableAreas ? 'pointer-events-none translate-x-[30px] translate-y-[30px] scale-50 opacity-0' : 'translate-x-0 translate-y-0 scale-100'
+            !showReportableAreas ? 'pointer-events-none translate-[30px] scale-50 opacity-0' : 'translate-0 scale-100'
           )}
           onClick={() => setShowReportableAreas(false)}
         >

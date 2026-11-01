@@ -1,6 +1,7 @@
+import { redirect } from 'next/navigation';
+
 import Content from '@/app/(profiles)/profile/[slug]/edit/content';
 import getProfile from '@/lib/request/profiles/getProfile';
-import { redirect } from 'next/navigation';
 
 export default async function Page({ params }) {
   const { slug } = await params;

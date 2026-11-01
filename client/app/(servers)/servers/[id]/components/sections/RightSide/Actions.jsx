@@ -1,28 +1,29 @@
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
+import Script from 'next/script';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AiOutlineRise } from 'react-icons/ai';
 import { BiPencil, BiSolidEnvelope } from 'react-icons/bi';
 import { BsFire } from 'react-icons/bs';
 import { FaBell, FaRegBell } from 'react-icons/fa';
 import { PiShareFat, PiShareFatFill } from 'react-icons/pi';
 import { TbLoader, TbSquareRoundedChevronUp, TbSquareRoundedChevronUpFilled } from 'react-icons/tb';
-import CopyButton from '@/app/components/CopyButton';
-import MotionLink from '@/app/components/Motion/Link';
-import { AnimatePresence, motion } from 'framer-motion';
-import useAuthStore from '@/stores/auth';
-import cn from '@/lib/cn';
-import Script from 'next/script';
-import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import voteServer from '@/lib/request/servers/voteServer';
-import createReminder from '@/lib/request/servers/createReminder';
+
+import CopyButton from '@/app/components/CopyButton';
 import VoteCountdown from '@/app/components/Countdown/Vote';
+import MotionLink from '@/app/components/Motion/Link';
 import Tooltip from '@/app/components/Tooltip';
-import revalidateServer from '@/lib/revalidate/server';
-import createTripledVotesCheckout from '@/lib/request/servers/createTripledVotesCheckout';
+import cn from '@/lib/cn';
+import createReminder from '@/lib/request/servers/createReminder';
 import createStandedOutCheckout from '@/lib/request/servers/createStandedOutCheckout';
-import { useRouter } from 'next-nprogress-bar';
-import { useTranslation } from 'react-i18next';
+import createTripledVotesCheckout from '@/lib/request/servers/createTripledVotesCheckout';
+import voteServer from '@/lib/request/servers/voteServer';
+import revalidateServer from '@/lib/revalidate/server';
+import useAuthStore from '@/stores/auth';
 
 export default function Actions({ server }) {
   const { t } = useTranslation();

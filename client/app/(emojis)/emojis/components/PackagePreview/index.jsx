@@ -1,26 +1,27 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import { Lottie } from 'lottie-react';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
-import Image from '@/app/components/AppImage';
-import { useEffect, useRef, useState } from 'react';
-import useThemeStore from '@/stores/theme';
-import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';
-import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
+
 import UploadEmojiToDiscordModal from '@/app/(emojis)/emojis/components/UploadEmojiToDiscordModal';
-import useGeneralStore from '@/stores/general';
-import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
-import { Lottie } from 'lottie-react';
-import confetti from '@/lib/lotties/confetti.json';
-import config from '@/config';
+import Image from '@/app/components/AppImage';
 import Tooltip from '@/app/components/Tooltip';
-import useAuthStore from '@/stores/auth';
+import config from '@/config';
 import cn from '@/lib/cn';
-import { useTranslation } from 'react-i18next';
+import confetti from '@/lib/lotties/confetti.json';
+import getEmojiUploadableGuilds from '@/lib/request/auth/getEmojiUploadableGuilds';
+import uploadEmojiToGuild from '@/lib/request/emojis/uploadEmojiToGuild';
+import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
+import useModalsStore from '@/stores/modals';
+import useThemeStore from '@/stores/theme';
 
 export default function PackagePreview({ image_urls, setImageURLs, setIsPackage, setEmojiURL, ableToChange }) {
   const { t } = useTranslation();

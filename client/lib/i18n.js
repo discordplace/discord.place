@@ -1,11 +1,12 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import config from '@/config';
-import ReactPostprocessor from 'i18next-react-postprocessor';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
+import ReactPostprocessor from 'i18next-react-postprocessor';
+import { initReactI18next } from 'react-i18next';
+
+import config from '@/config';
+import az from '@/locales/az.json';
 import en from '@/locales/en.json';
 import tr from '@/locales/tr.json';
-import az from '@/locales/az.json';
 
 i18n
   .use(new ReactPostprocessor())

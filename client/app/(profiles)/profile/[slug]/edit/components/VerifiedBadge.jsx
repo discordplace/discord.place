@@ -1,8 +1,9 @@
 'use client';
 
-import useThemeStore from '@/stores/theme';
-import Image from '@/app/components/AppImage';
 import { useTranslation } from 'react-i18next';
+
+import Image from '@/app/components/AppImage';
+import useThemeStore from '@/stores/theme';
 
 export default function VerifiedBadge() {
   const { t } = useTranslation();

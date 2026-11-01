@@ -1,22 +1,23 @@
 'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BiSolidCopy } from 'react-icons/bi';
 import { FaCompass, FaDiscord, FaPenFancy, FaTrashAlt } from 'react-icons/fa';
 import { HiAtSymbol, HiHashtag, HiPlus } from 'react-icons/hi';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoCheckmarkCircle } from 'react-icons/io5';
-import Tooltip from '@/app/components/Tooltip/Discord';
-import Image from '@/app/components/AppImage';
-import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';
-import { useRouter } from 'next-nprogress-bar';
-import useModalsStore from '@/stores/modals';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
-import deleteTemplate from '@/lib/request/templates/deleteTemplate';
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+
+import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';
+import Image from '@/app/components/AppImage';
+import Tooltip from '@/app/components/Tooltip/Discord';
 import cn from '@/lib/cn';
+import deleteTemplate from '@/lib/request/templates/deleteTemplate';
+import useModalsStore from '@/stores/modals';
 
 export default function Sidebar({ template, focusedChannel, currentlyOpenedSection, setCurrentlyOpenedSection, isMobile, setMemberListCollapsed }) {
   const { t } = useTranslation();

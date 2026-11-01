@@ -1,17 +1,18 @@
 'use client';
 
-import Square from '@/app/components/Background/Square';
-import cn from '@/lib/cn';
 import { motion } from 'framer-motion';
 import { Bricolage_Grotesque } from 'next/font/google';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useShallow } from 'zustand/react/shallow';
+
+import Sounds from '@/app/(sounds)/sounds/components/Sounds';
+import Square from '@/app/components/Background/Square';
 import SearchInput from '@/app/components/SearchInput';
 import Select from '@/app/components/Select';
 import config from '@/config';
-import Sounds from '@/app/(sounds)/sounds/components/Sounds';
+import cn from '@/lib/cn';
 import useSearchStore from '@/stores/sounds/search';
-import { useShallow } from 'zustand/react/shallow';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 

@@ -78,6 +78,7 @@
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.10",
     "babel-plugin-react-compiler": "^1.0.0",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
     "oxlint": "1.90.0",
     "oxlint-tailwindcss": "1.17.1",
     "postcss": "^8.5.32",

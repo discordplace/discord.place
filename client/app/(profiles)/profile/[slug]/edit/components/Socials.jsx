@@ -1,18 +1,19 @@
 'use client';
 
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiX } from 'react-icons/fi';
 import { MdArrowOutward } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+
+import config from '@/config';
+import cn from '@/lib/cn';
 import addSocial from '@/lib/request/profiles/addSocial';
 import deleteSocial from '@/lib/request/profiles/deleteSocial';
-import { toast } from 'sonner';
-import cn from '@/lib/cn';
-import config from '@/config';
-import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import revalidateProfile from '@/lib/revalidate/profile';
-import { useTranslation } from 'react-i18next';
+import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
 import getIcon from '@/lib/utils/profiles/getIcon';
 
 function SocialIcon({ type, className, size, fallback = null }) {

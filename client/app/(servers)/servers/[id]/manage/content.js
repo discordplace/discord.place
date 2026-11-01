@@ -1,21 +1,22 @@
 'use client';
 
+import isEqual from 'lodash/isEqual';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MdSave } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
+import DangerZone from '@/app/(servers)/servers/[id]/manage/components/DangerZone';
 import EssentialInformation from '@/app/(servers)/servers/[id]/manage/components/EssentialInformation';
 import Other from '@/app/(servers)/servers/[id]/manage/components/Other';
 import Webhook from '@/app/(servers)/servers/[id]/manage/components/Webhook';
-import DangerZone from '@/app/(servers)/servers/[id]/manage/components/DangerZone';
-import isEqual from 'lodash/isEqual';
-import { toast } from 'sonner';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import editServer from '@/lib/request/servers/editServer';
 import revalidateServer from '@/lib/revalidate/server';
-import { useRouter } from 'next-nprogress-bar';
 import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
-import { useTranslation } from 'react-i18next';
 
 export default function Content({ server }) {
   const { t } = useTranslation();

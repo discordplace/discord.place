@@ -1,10 +1,11 @@
 'use client';
 
-import { BiSolidCategory } from 'react-icons/bi';
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import MotionLink from '@/app/components/Motion/Link';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { BiSolidCategory } from 'react-icons/bi';
+
+import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import MotionLink from '@/app/components/Motion/Link';
 
 export default function SupportServer({ bot }) {
   const { t } = useTranslation();

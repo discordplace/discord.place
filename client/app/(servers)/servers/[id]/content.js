@@ -1,18 +1,19 @@
 'use client';
 
-import MotionImage from '@/app/components/Motion/Image';
 import { motion } from 'framer-motion';
+import Script from 'next/script';
+import { useTranslation } from 'react-i18next';
+
 import About from '@/app/(servers)/servers/[id]/components/sections/About';
 import RightSide from '@/app/(servers)/servers/[id]/components/sections/RightSide';
 import Tabs from '@/app/(servers)/servers/[id]/components/Tabs';
-import Tooltip from '@/app/components/Tooltip';
-import Script from 'next/script';
-import cn from '@/lib/cn';
-import useThemeStore from '@/stores/theme';
 import Countdown from '@/app/components/Countdown';
-import { useTranslation } from 'react-i18next';
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+import MotionImage from '@/app/components/Motion/Image';
+import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
+import useThemeStore from '@/stores/theme';
 
 export default function Content({ server }) {
   const { t, i18n } = useTranslation();

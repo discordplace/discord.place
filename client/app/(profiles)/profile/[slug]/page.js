@@ -1,9 +1,10 @@
-import getProfile from '@/lib/request/profiles/getProfile';
-import getProfileMetadata from '@/lib/request/profiles/getProfileMetadata';
-import Content from '@/app/(profiles)/profile/[slug]/content';
 import { redirect } from 'next/navigation';
+
+import Content from '@/app/(profiles)/profile/[slug]/content';
 import config from '@/config';
 import createMetadata from '@/lib/createMetadata';
+import getProfile from '@/lib/request/profiles/getProfile';
+import getProfileMetadata from '@/lib/request/profiles/getProfileMetadata';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

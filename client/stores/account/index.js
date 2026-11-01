@@ -1,5 +1,6 @@
 import { toast } from 'sonner';
 import { create } from 'zustand';
+
 import fetchData from '@/lib/request/auth/getData';
 
 export const useAccountStore = create(set => ({

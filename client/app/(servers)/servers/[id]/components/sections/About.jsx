@@ -1,13 +1,14 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { FaUsers } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { ImTrophy } from 'react-icons/im';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
-import { motion } from 'framer-motion';
+
 import config from '@/config';
-import { useTranslation } from 'react-i18next';
 
 const formatter = new Intl.NumberFormat('en-US', {
   compactDisplay: 'short',

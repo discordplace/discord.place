@@ -1,19 +1,20 @@
 'use client';
 
-import MotionImage from '@/app/components/Motion/Image';
 import { motion } from 'framer-motion';
-import Social from '@/app/(profiles)/profile/[slug]/components/sections/Social';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import About from '@/app/(profiles)/profile/[slug]/components/sections/About';
 import Actions from '@/app/(profiles)/profile/[slug]/components/sections/Actions';
-import incrementViews from '@/lib/request/profiles/incrementViews';
-import Tooltip from '@/app/components/Tooltip';
-import { useEffect } from 'react';
-import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers';
 import Graph from '@/app/(profiles)/profile/[slug]/components/sections/Graph';
-import useThemeStore from '@/stores/theme';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import Servers from '@/app/(profiles)/profile/[slug]/components/sections/Servers';
+import Social from '@/app/(profiles)/profile/[slug]/components/sections/Social';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import { useTranslation } from 'react-i18next';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import MotionImage from '@/app/components/Motion/Image';
+import Tooltip from '@/app/components/Tooltip';
+import incrementViews from '@/lib/request/profiles/incrementViews';
+import useThemeStore from '@/stores/theme';
 
 export default function Content({ profile }) {
   const { t, i18n } = useTranslation();

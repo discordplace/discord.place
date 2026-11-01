@@ -1,8 +1,9 @@
 'use client';
 
-import useGeneralStore from '@/stores/general';
-import { useShallow } from 'zustand/react/shallow';
 import { useTranslation } from 'react-i18next';
+import { useShallow } from 'zustand/react/shallow';
+
+import useGeneralStore from '@/stores/general';
 
 export default function CreateLinkModal() {
   const { t } = useTranslation();

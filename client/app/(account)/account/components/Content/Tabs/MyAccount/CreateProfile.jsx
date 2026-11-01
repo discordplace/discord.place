@@ -1,19 +1,20 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaCrown } from 'react-icons/fa';
 import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io';
 import { TbLoader } from 'react-icons/tb';
+import { useDebounce } from 'react-use';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
 import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';
 import checkSlugAvailability from '@/lib/request/profiles/checkSlugAvailability';
 import useAuthStore from '@/stores/auth';
 import useGeneralStore from '@/stores/general';
-import { useEffect, useState } from 'react';
-import { useDebounce } from 'react-use';
-import { toast } from 'sonner';
-import { useShallow } from 'zustand/react/shallow';
-import { useTranslation } from 'react-i18next';
 
 export default function CreateProfile() {
   const { t } = useTranslation();

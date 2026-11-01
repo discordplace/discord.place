@@ -1,12 +1,13 @@
 'use client';
 
-import cn from '@/lib/cn';
-import { useState } from 'react';
-import TopVoters from '@/app/(bots)/bots/[id]/components/Tabs/TopVoters';
-import Reviews from '@/app/(bots)/bots/[id]/components/Tabs/Reviews';
 import { motion } from 'framer-motion';
-import { useMedia } from 'react-use';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMedia } from 'react-use';
+
+import Reviews from '@/app/(bots)/bots/[id]/components/Tabs/Reviews';
+import TopVoters from '@/app/(bots)/bots/[id]/components/Tabs/TopVoters';
+import cn from '@/lib/cn';
 
 export default function Tabs({ bot }) {
   const { t } = useTranslation();

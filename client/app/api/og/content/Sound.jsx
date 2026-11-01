@@ -1,6 +1,7 @@
 import { FaHeart } from 'react-icons/fa';
 import { FiArrowRightCircle } from 'react-icons/fi';
 import { HiDocumentDownload } from 'react-icons/hi';
+
 import config from '@/config';
 
 export default function Sound({ data, avatar_base64 }) {

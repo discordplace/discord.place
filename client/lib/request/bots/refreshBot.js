@@ -1,5 +1,6 @@
-import config from '@/config';
 import axios from 'axios';
+
+import config from '@/config';
 
 export default function refreshBot(id) {
   return new Promise((resolve, reject) => {

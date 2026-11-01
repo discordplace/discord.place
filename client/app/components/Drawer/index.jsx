@@ -1,9 +1,10 @@
 'use client';
 
-import { IoMdCheckmarkCircle } from 'react-icons/io';
-import cn from '@/lib/cn';
 import { nanoid } from 'nanoid';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { Drawer } from 'vaul';
+
+import cn from '@/lib/cn';
 
 export default function CustomDrawer({ openState, setOpenState, state, setState, items, preventDefault = false }) {
   return (

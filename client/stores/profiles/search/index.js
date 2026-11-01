@@ -1,7 +1,8 @@
-import { create } from 'zustand';
 import { toast } from 'sonner';
-import fetchProfiles from '@/lib/request/profiles/fetchProfiles';
+import { create } from 'zustand';
+
 import fetchPresences from '@/lib/request/profiles/fetchPresences';
+import fetchProfiles from '@/lib/request/profiles/fetchProfiles';
 
 const useSearchStore = create((set, get) => ({
   count: 0,

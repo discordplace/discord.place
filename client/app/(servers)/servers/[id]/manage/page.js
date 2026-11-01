@@ -1,9 +1,10 @@
-import getServer from '@/lib/request/servers/getServer';
-import getServerMetadata from '@/lib/request/servers/getServerMetadata';
-import Content from '@/app/(servers)/servers/[id]/manage/content';
 import { redirect } from 'next/navigation';
+
+import Content from '@/app/(servers)/servers/[id]/manage/content';
 import AuthProtected from '@/app/components/Providers/Auth/Protected';
 import createMetadata from '@/lib/createMetadata';
+import getServer from '@/lib/request/servers/getServer';
+import getServerMetadata from '@/lib/request/servers/getServerMetadata';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;

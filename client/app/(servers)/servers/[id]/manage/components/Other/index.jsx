@@ -1,14 +1,15 @@
 'use client';
 
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaCirclePlus } from 'react-icons/fa6';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { LuHash } from 'react-icons/lu';
+import { toast } from 'sonner';
+
 import Input from '@/app/(servers)/servers/[id]/manage/components/Input';
 import config from '@/config';
 import cn from '@/lib/cn';
-import { useState } from 'react';
-import { toast } from 'sonner';
-import { useTranslation } from 'react-i18next';
 
 export default function Other({ category, setCategory, keywords, setKeywords }) {
   const { t } = useTranslation();

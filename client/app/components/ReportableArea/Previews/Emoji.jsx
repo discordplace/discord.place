@@ -1,5 +1,5 @@
-import config from '@/config';
 import Image from '@/app/components/AppImage';
+import config from '@/config';
 
 export default function EmojiPreview({ metadata }) {
   return (

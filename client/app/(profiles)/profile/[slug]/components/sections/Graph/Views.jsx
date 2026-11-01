@@ -1,11 +1,12 @@
 'use client';
 
-import { MdOutlineArrowOutward } from 'react-icons/md';
-import Graph from '@/app/(dashboard)/components/Home/Graph/index';
-import cn from '@/lib/cn';
-import Tooltip from '@/app/components/Tooltip';
 import { useTranslation } from 'react-i18next';
+import { MdOutlineArrowOutward } from 'react-icons/md';
 import { useMedia } from 'react-use';
+
+import Graph from '@/app/(dashboard)/components/Home/Graph/index';
+import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
 
 export default function ViewsGraph({ profile }) {
   const { t } = useTranslation();

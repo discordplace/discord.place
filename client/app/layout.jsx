@@ -1,13 +1,15 @@
 import '@/styles/main.css';
 import 'react-medium-image-zoom/dist/styles.css';
+
 import { Geist, Geist_Mono, Oranienbaum } from 'next/font/google';
-import cn from '@/lib/cn';
-import LayoutContent from '@/app/layout-content';
-import AuthProvider from '@/app/components/Providers/Auth';
 import localFont from 'next/font/local';
+
+import AuthProvider from '@/app/components/Providers/Auth';
+import I18nProvider from '@/app/components/Providers/I18n';
+import LayoutContent from '@/app/layout-content';
+import cn from '@/lib/cn';
 import createMetadata from '@/lib/createMetadata';
 import getLocale from '@/lib/utils/getLocale';
-import I18nProvider from '@/app/components/Providers/I18n';
 
 const ggSansFont = localFont({
   display: 'swap',

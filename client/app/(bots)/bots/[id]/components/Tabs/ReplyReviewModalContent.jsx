@@ -1,10 +1,11 @@
 'use client';
 
+import { useTranslation } from 'react-i18next';
+
 import ReviewPreview from '@/app/components/ReportableArea/Previews/Review';
 import config from '@/config';
 import cn from '@/lib/cn';
 import useGeneralStore from '@/stores/general';
-import { useTranslation } from 'react-i18next';
 
 export default function ReplyReviewModalContent({ review }) {
   const { t } = useTranslation();

@@ -1,12 +1,13 @@
 'use client';
 
+import { useTranslation } from 'react-i18next';
 import { IoMdLock, IoMdUnlock } from 'react-icons/io';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import cn from '@/lib/cn';
+
 import Image from '@/app/components/AppImage';
-import useAuthStore from '@/stores/auth';
-import { useTranslation } from 'react-i18next';
 import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
+import useAuthStore from '@/stores/auth';
 
 export default function Rewards({ server }) {
   const { t } = useTranslation();

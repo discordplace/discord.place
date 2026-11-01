@@ -1,5 +1,6 @@
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import { useTranslation } from 'react-i18next';
+
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 
 export default function ServerPreview({ metadata }) {
   const { t } = useTranslation();

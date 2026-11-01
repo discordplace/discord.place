@@ -1,7 +1,8 @@
+import Link from 'next/link';
+
 import Tooltip from '@/app/components/Tooltip';
 import cn from '@/lib/cn';
 import useDashboardStore from '@/stores/dashboard';
-import Link from 'next/link';
 
 export default function BlockItem({ id, name, icon, href, onClick, badge, disabled }) {
   const isCollapsed = useDashboardStore(state => state.isCollapsed);

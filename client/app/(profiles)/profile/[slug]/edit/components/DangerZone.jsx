@@ -1,11 +1,12 @@
 'use client';
 
+import { useTranslation } from 'react-i18next';
 import { RiErrorWarningFill } from 'react-icons/ri';
 import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
 import deleteProfile from '@/lib/request/profiles/deleteProfile';
 import useModalsStore from '@/stores/modals';
-import { useShallow } from 'zustand/react/shallow';
-import { useTranslation } from 'react-i18next';
 
 export default function DangerZone({ profile }) {
   const { t } = useTranslation();

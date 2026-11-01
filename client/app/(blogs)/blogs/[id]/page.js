@@ -1,10 +1,12 @@
 import fs from 'node:fs';
+
 import matter from 'gray-matter';
-import config from '@/config';
-import Markdown from '@/app/components/Markdown';
+import { redirect } from 'next/navigation';
+
 import BackButton from '@/app/(blogs)/blogs/[id]/components/BackButton';
 import Header from '@/app/(blogs)/blogs/[id]/components/Header';
-import { redirect } from 'next/navigation';
+import Markdown from '@/app/components/Markdown';
+import config from '@/config';
 import createMetadata from '@/lib/createMetadata';
 
 export async function generateMetadata({ params }) {

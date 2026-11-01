@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { BsFire } from 'react-icons/bs';
 import { FaUsers } from 'react-icons/fa';
 import { GiInfinity } from 'react-icons/gi';
@@ -9,16 +11,15 @@ import { IoHeart } from 'react-icons/io5';
 import { MdUpdate } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
-import Link from 'next/link';
-import useSearchStore from '@/stores/servers/search';
 import { useMedia } from 'react-use';
-import cn from '@/lib/cn';
-import getRelativeTime from '@/lib/getRelativeTime';
-import config from '@/config';
-import { useTranslation } from 'react-i18next';
+
 import ServerBanner from '@/app/components/ImageFromHash/ServerBanner';
 import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
+import cn from '@/lib/cn';
+import getRelativeTime from '@/lib/getRelativeTime';
+import useSearchStore from '@/stores/servers/search';
 
 export default function ServerCard(props) {
   const { t, i18n } = useTranslation();

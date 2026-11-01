@@ -1,11 +1,12 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
-import getIcon from '@/lib/utils/profiles/getIcon';
-import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
-import config from '@/config';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+
 import MotionLink from '@/app/components/Motion/Link';
+import config from '@/config';
+import getDisplayableURL from '@/lib/utils/profiles/getDisplayableURL';
+import getIcon from '@/lib/utils/profiles/getIcon';
 
 export default function Social({ data }) {
   const { t } = useTranslation();

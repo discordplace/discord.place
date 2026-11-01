@@ -1,15 +1,16 @@
 'use client';
 
-import { FaGithub } from 'react-icons/fa';
-import Square from '@/app/components/Background/Square';
-import InfoCard from '@/app/(home)/components/InfoCards/Card';
-import useAuthStore from '@/stores/auth';
-import config from '@/config';
 import { usePathname } from 'next/navigation';
-import MockServerCard from '@/app/(home)/components/InfoCards/Mock/ServerCard';
+import { useTranslation } from 'react-i18next';
+import { FaGithub } from 'react-icons/fa';
+
+import InfoCard from '@/app/(home)/components/InfoCards/Card';
 import MockProfileCard from '@/app/(home)/components/InfoCards/Mock/ProfileCard';
 import MockReviewCard from '@/app/(home)/components/InfoCards/Mock/ReviewCard';
-import { useTranslation } from 'react-i18next';
+import MockServerCard from '@/app/(home)/components/InfoCards/Mock/ServerCard';
+import Square from '@/app/components/Background/Square';
+import config from '@/config';
+import useAuthStore from '@/stores/auth';
 
 export default function InfoCards() {
   const { t } = useTranslation();

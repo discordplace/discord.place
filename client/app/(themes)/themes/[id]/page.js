@@ -1,11 +1,12 @@
-import getTheme from '@/lib/request/themes/getTheme';
-import { redirect } from 'next/navigation';
-import Content from '@/app/(themes)/themes/[id]/content';
-import getThemeMetadata from '@/lib/request/themes/getThemeMetadata';
-import createMetadata from '@/lib/createMetadata';
 import { colord, extend } from 'colord';
 import namesPlugin from 'colord/plugins/names';
+import { redirect } from 'next/navigation';
+
+import Content from '@/app/(themes)/themes/[id]/content';
 import config from '@/config';
+import createMetadata from '@/lib/createMetadata';
+import getTheme from '@/lib/request/themes/getTheme';
+import getThemeMetadata from '@/lib/request/themes/getThemeMetadata';
 
 extend([namesPlugin]);
 

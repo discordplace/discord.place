@@ -1,25 +1,26 @@
 'use client';
 
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { BiSolidInfoCircle } from 'react-icons/bi';
 import { FaDiscord, FaLink } from 'react-icons/fa';
 import { HiCheck } from 'react-icons/hi';
 import { IoMdHeart } from 'react-icons/io';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
-import Tooltip from '@/app/components/Tooltip';
-import Image from '@/app/components/AppImage';
-import Link from 'next/link';
-import cn from '@/lib/cn';
-import ServerCard from '@/app/(servers)/servers/components/ServerCard';
+
 import BotCard from '@/app/(bots)/bots/components/Hero/SearchResults/Card';
-import useThemeStore from '@/stores/theme';
-import { useTranslation } from 'react-i18next';
-import config from '@/config';
-import ReportableArea from '@/app/components/ReportableArea';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
-import getHashFromURL from '@/lib/getHashFromURL';
+import ServerCard from '@/app/(servers)/servers/components/ServerCard';
+import Image from '@/app/components/AppImage';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+import ReportableArea from '@/app/components/ReportableArea';
+import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
+import cn from '@/lib/cn';
+import getHashFromURL from '@/lib/getHashFromURL';
 import { useFlagTranslations, useSortFlags } from '@/lib/hooks/flags';
+import useThemeStore from '@/stores/theme';
 
 function StatBlock({ fields, index }) {
   return (

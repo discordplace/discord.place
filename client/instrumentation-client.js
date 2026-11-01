@@ -1,4 +1,4 @@
-import { init as initSentry, captureRouterTransitionStart, replayIntegration, browserSessionIntegration, httpClientIntegration } from '@sentry/nextjs';
+import { browserSessionIntegration, captureRouterTransitionStart, httpClientIntegration, init as initSentry, replayIntegration } from '@sentry/nextjs';
 
 initSentry({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,

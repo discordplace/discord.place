@@ -1,4 +1,5 @@
 import { FaStar } from 'react-icons/fa';
+
 import config from '@/config';
 
 export default function Template({ data, avatar_base64 }) {

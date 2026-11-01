@@ -1,16 +1,17 @@
 'use client';
 
+import { useEffect } from 'react';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { RiCommunityFill, RiUser3Fill } from 'react-icons/ri';
-import config from '@/config';
-import cn from '@/lib/cn';
-import { useEffect } from 'react';
-import useModalsStore from '@/stores/modals';
-import useGeneralStore from '@/stores/general';
 import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
+
+import config from '@/config';
+import cn from '@/lib/cn';
 import createQuarantine from '@/lib/request/dashboard/createQuarantine';
 import useDashboardStore from '@/stores/dashboard';
+import useGeneralStore from '@/stores/general';
+import useModalsStore from '@/stores/modals';
 
 export default function CreateQuarantineModal() {
   const { step, setStep, type, setType, value, setValue, restriction, setRestriction, reason, setReason, time, setTime } = useGeneralStore(useShallow(state => ({

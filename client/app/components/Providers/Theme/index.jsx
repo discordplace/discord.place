@@ -1,8 +1,9 @@
 'use client';
 
-import useThemeStore from '@/stores/theme';
 import { useEffect } from 'react';
 import { useLocalStorage } from 'react-use';
+
+import useThemeStore from '@/stores/theme';
 
 export default function ThemeProvider({ children }) {
   const [localTheme, setLocalTheme] = useLocalStorage('theme', 'dark');

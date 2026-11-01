@@ -1,5 +1,6 @@
 import { toast } from 'sonner';
 import { create } from 'zustand';
+
 import fetchData from '@/lib/request/dashboard/getData';
 
 export const useDashboardStore = create(set => ({

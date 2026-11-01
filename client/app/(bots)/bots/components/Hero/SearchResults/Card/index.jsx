@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { BsFire } from 'react-icons/bs';
 import { FaCompass } from 'react-icons/fa';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
@@ -8,15 +10,14 @@ import { IoHeart } from 'react-icons/io5';
 import { MdUpdate } from 'react-icons/md';
 import { TbSquareRoundedChevronUp } from 'react-icons/tb';
 import { TiStar } from 'react-icons/ti';
-import Link from 'next/link';
-import useSearchStore from '@/stores/bots/search';
-import { useTranslation } from 'react-i18next';
-import getRelativeTime from '@/lib/getRelativeTime';
-import config from '@/config';
 import { useMedia } from 'react-use';
-import UserBanner from '@/app/components/ImageFromHash/UserBanner';
+
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import UserBanner from '@/app/components/ImageFromHash/UserBanner';
 import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
+import getRelativeTime from '@/lib/getRelativeTime';
+import useSearchStore from '@/stores/bots/search';
 
 export default function Card({ data, overridedSort }) {
   const { t, i18n } = useTranslation();

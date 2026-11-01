@@ -1,8 +1,9 @@
 'use client';
 
+import { useTranslation } from 'react-i18next';
+
 import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
 import useAuthStore from '@/stores/auth';
-import { useTranslation } from 'react-i18next';
 
 export default function MockProfileCard() {
   const { t } = useTranslation();

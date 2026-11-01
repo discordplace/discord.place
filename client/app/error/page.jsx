@@ -1,11 +1,12 @@
 'use client';
 
-import useThemeStore from '@/stores/theme';
-import Image from '@/app/components/AppImage';
 import Link from 'next/link';
-import Grainient from '@/app/components/Background/Grainient';
 import { useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+
+import Image from '@/app/components/AppImage';
+import Grainient from '@/app/components/Background/Grainient';
+import useThemeStore from '@/stores/theme';
 
 export default function Error() {
   const { t } = useTranslation();

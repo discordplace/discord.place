@@ -1,4 +1,4 @@
-import { FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { RiLink } from 'react-icons/ri';
 import { SiBluesky, SiFacebook, SiGithub, SiGitlab, SiInstagram, SiMastodon, SiReddit, SiSteam, SiTelegram, SiTiktok, SiTwitch, SiX, SiYoutube } from 'react-icons/si';
 

@@ -1,24 +1,25 @@
 'use client';
 
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { FiExternalLink, FiLink, FiTrash2 } from 'react-icons/fi';
 import { LuPlus } from 'react-icons/lu';
 import { MdOutlineCopyAll } from 'react-icons/md';
 import { PiWarningCircleFill } from 'react-icons/pi';
-import ErrorState from '@/app/components/ErrorState';
-import useAuthStore from '@/stores/auth';
-import useModalsStore from '@/stores/modals';
-import Link from 'next/link';
-import { useShallow } from 'zustand/react/shallow';
-import deleteLink from '@/lib/request/links/deleteLink';
 import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
 import CreateLinkModal from '@/app/(account)/account/components/Content/Tabs/MyLinks/CreateLinkModal';
-import useGeneralStore from '@/stores/general';
-import createLink from '@/lib/request/links/createLink';
-import useAccountStore from '@/stores/account';
 import CopyButton from '@/app/components/CopyButton/CustomTrigger';
-import { useTranslation } from 'react-i18next';
+import ErrorState from '@/app/components/ErrorState';
 import config from '@/config';
+import createLink from '@/lib/request/links/createLink';
+import deleteLink from '@/lib/request/links/deleteLink';
+import useAccountStore from '@/stores/account';
+import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
+import useModalsStore from '@/stores/modals';
 
 export default function MyLinks() {
   const { t } = useTranslation();

@@ -1,16 +1,17 @@
 'use client';
 
-import Square from '@/app/components/Background/Square';
-import cn from '@/lib/cn';
-import useThemeStore from '@/stores/theme';
 import { motion } from 'framer-motion';
 import { Bricolage_Grotesque } from 'next/font/google';
-import Image from '@/app/components/AppImage';
-import Card from '@/app/(blogs)/blogs/Hero/Card';
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import fetchBlogs from '@/lib/request/general/fetchBlogs';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+
+import Card from '@/app/(blogs)/blogs/Hero/Card';
+import Image from '@/app/components/AppImage';
+import Square from '@/app/components/Background/Square';
+import cn from '@/lib/cn';
+import fetchBlogs from '@/lib/request/general/fetchBlogs';
+import useThemeStore from '@/stores/theme';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 

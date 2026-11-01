@@ -1,15 +1,16 @@
 'use client';
 
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
 import { LuPlus } from 'react-icons/lu';
-import ErrorState from '@/app/components/ErrorState';
-import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import config from '@/config';
-import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
-import NewTheme from '@/app/(account)/account/components/Content/Tabs/MyThemes/NewTheme';
 import { useShallow } from 'zustand/react/shallow';
-import { useTranslation } from 'react-i18next';
+
+import NewTheme from '@/app/(account)/account/components/Content/Tabs/MyThemes/NewTheme';
+import ThemeCard from '@/app/(themes)/themes/components/ThemeCard';
+import ErrorState from '@/app/components/ErrorState';
+import config from '@/config';
+import useAccountStore from '@/stores/account';
 
 export default function MyThemes() {
   const { t } = useTranslation();

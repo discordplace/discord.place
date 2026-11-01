@@ -1,5 +1,9 @@
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter } from 'next-nprogress-bar';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaBell, FaCompass, FaDiscord, FaShieldAlt } from 'react-icons/fa';
 import { FiLink } from 'react-icons/fi';
 import { HiTemplate } from 'react-icons/hi';
@@ -7,29 +11,26 @@ import { IoMdArrowBack, IoMdLogOut } from 'react-icons/io';
 import { MdAccessTimeFilled, MdAccountCircle, MdDarkMode, MdEmojiEmotions, MdSunny } from 'react-icons/md';
 import { PiWaveformBold } from 'react-icons/pi';
 import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
-import MyAccount from '@/app/(account)/account/components/Content/Tabs/MyAccount';
-import { useEffect } from 'react';
-import ActiveTimeouts from '@/app/(account)/account/components/Content/Tabs/ActiveTimeouts';
+import { useCookie, useMedia } from 'react-use';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
+import Sidebar from '@/app/(account)/account/components/Content/Sidebar';
 import ActiveReminders from '@/app/(account)/account/components/Content/Tabs/ActiveReminders';
-import MyLinks from '@/app/(account)/account/components/Content/Tabs/MyLinks';
-import MyServers from '@/app/(account)/account/components/Content/Tabs/MyServers';
+import ActiveTimeouts from '@/app/(account)/account/components/Content/Tabs/ActiveTimeouts';
+import MyAccount from '@/app/(account)/account/components/Content/Tabs/MyAccount';
 import MyBots from '@/app/(account)/account/components/Content/Tabs/MyBots';
 import MyEmojis from '@/app/(account)/account/components/Content/Tabs/MyEmojis';
-import MyTemplates from '@/app/(account)/account/components/Content/Tabs/MyTemplates';
+import MyLinks from '@/app/(account)/account/components/Content/Tabs/MyLinks';
+import MyServers from '@/app/(account)/account/components/Content/Tabs/MyServers';
 import MySounds from '@/app/(account)/account/components/Content/Tabs/MySounds';
+import MyTemplates from '@/app/(account)/account/components/Content/Tabs/MyTemplates';
 import MyThemes from '@/app/(account)/account/components/Content/Tabs/MyThemes';
-import useAccountStore from '@/stores/account';
-import useThemeStore from '@/stores/theme';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next-nprogress-bar';
-import useAuthStore from '@/stores/auth';
-import { useCookie, useMedia } from 'react-use';
-import { useShallow } from 'zustand/react/shallow';
-import { useTranslation } from 'react-i18next';
-import Sidebar from '@/app/(account)/account/components/Content/Sidebar';
-import logout from '@/lib/request/auth/logout';
-import { toast } from 'sonner';
 import FullPageLoading from '@/app/components/FullPageLoading';
+import logout from '@/lib/request/auth/logout';
+import useAccountStore from '@/stores/account';
+import useAuthStore from '@/stores/auth';
+import useThemeStore from '@/stores/theme';
 
 export default function Content() {
   const { t } = useTranslation();

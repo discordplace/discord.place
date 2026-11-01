@@ -1,8 +1,9 @@
 'use client';
 
-import cn from '@/lib/cn';
 import { Bricolage_Grotesque } from 'next/font/google';
 import { useTranslation } from 'react-i18next';
+
+import cn from '@/lib/cn';
 
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
 

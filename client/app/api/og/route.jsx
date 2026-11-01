@@ -1,23 +1,25 @@
 /* eslint no-unreachable: 0 */
 
+import fs from 'node:fs';
+
+import { ImageResponse } from '@vercel/og';
+import { NextResponse } from 'next/server';
 import { FaCompass, FaUserCircle } from 'react-icons/fa';
 import { HiNewspaper, HiTemplate } from 'react-icons/hi';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { PiWaveformBold } from 'react-icons/pi';
-import { RiRobot2Fill, RiBrush2Fill } from 'react-icons/ri';
-import { ImageResponse } from '@vercel/og';
-import fs from 'node:fs';
-import { NextResponse } from 'next/server';
-import fuc from '@/lib/fuc';
-import getImageBuffer from '@/lib/getImageBuffer';
-import Profile from '@/app/api/og/content/Profile';
-import Server from '@/app/api/og/content/Server';
+import { RiBrush2Fill, RiRobot2Fill } from 'react-icons/ri';
+
+import Blog from '@/app/api/og/content/Blog';
 import Bot from '@/app/api/og/content/Bot';
 import Emoji from '@/app/api/og/content/Emoji';
-import Template from '@/app/api/og/content/Template';
+import Profile from '@/app/api/og/content/Profile';
+import Server from '@/app/api/og/content/Server';
 import Sound from '@/app/api/og/content/Sound';
-import Blog from '@/app/api/og/content/Blog';
+import Template from '@/app/api/og/content/Template';
 import Theme from '@/app/api/og/content/Theme';
+import fuc from '@/lib/fuc';
+import getImageBuffer from '@/lib/getImageBuffer';
 
 function getFontData(fontName) {
   const file = fs.readFileSync(`${process.cwd()}/public/fonts/${fontName}.ttf`);

@@ -1,21 +1,23 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BsGithub } from 'react-icons/bs';
 import { FaCirclePlus } from 'react-icons/fa6';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { TbLoader } from 'react-icons/tb';
+import { toast } from 'sonner';
+
+import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
+import HashServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import config from '@/config';
 import cn from '@/lib/cn';
 import getData from '@/lib/request/auth/getData';
-import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
-import ServerIcon from '@/app/(servers)/servers/components/ServerIcon';
-import HashServerIcon from '@/app/components/ImageFromHash/ServerIcon';
-import Input from '../Input';
 import editBot from '@/lib/request/bots/editBot';
 import revalidateBot from '@/lib/revalidate/bot';
-import { useTranslation } from 'react-i18next';
+
+import Input from '../Input';
 
 export default function Other({ botId, categories, setCategories, canEditSupportServer, supportServerId, setSupportServerId, githubRepository: currentGithubRepository }) {
   const { t } = useTranslation();

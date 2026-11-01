@@ -1,16 +1,17 @@
 'use client';
 
-import { BsEmojiAngry } from 'react-icons/bs';
-import useSearchStore from '@/stores/emojis/search';
-import { useShallow } from 'zustand/react/shallow';
-import Pagination from '@/app/components/Pagination';
 import { AnimatePresence, motion } from 'framer-motion';
-import ErrorState from '@/app/components/ErrorState';
-import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import { useTranslation } from 'react-i18next';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { useShallow } from 'zustand/react/shallow';
+
+import EmojiCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard';
 import EmojiPackageCard from '@/app/(emojis)/emojis/components/Hero/EmojiCard/Package';
+import ErrorState from '@/app/components/ErrorState';
+import Pagination from '@/app/components/Pagination';
 import ReportableArea from '@/app/components/ReportableArea';
 import useAuthStore from '@/stores/auth';
+import useSearchStore from '@/stores/emojis/search';
 
 export default function Emojis() {
   const { t } = useTranslation();

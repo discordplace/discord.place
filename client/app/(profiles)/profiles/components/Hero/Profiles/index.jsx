@@ -1,12 +1,13 @@
 'use client';
 
-import { BsEmojiAngry } from 'react-icons/bs';
-import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
-import useSearchStore from '@/stores/profiles/search';
-import ErrorState from '@/app/components/ErrorState';
-import { useShallow } from 'zustand/react/shallow';
 import { AnimatePresence, motion } from 'framer-motion';
+import { BsEmojiAngry } from 'react-icons/bs';
+import { useShallow } from 'zustand/react/shallow';
+
+import ProfileCard from '@/app/(profiles)/profiles/components/Hero/Profiles/Card';
+import ErrorState from '@/app/components/ErrorState';
 import Pagination from '@/app/components/Pagination';
+import useSearchStore from '@/stores/profiles/search';
 
 export default function Profiles() {
   const { search, setSearch, profiles, fetchProfiles, loading, page, setPage, limit, count } = useSearchStore(useShallow(state => ({

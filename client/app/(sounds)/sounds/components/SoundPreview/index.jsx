@@ -1,28 +1,29 @@
+import { Lottie } from 'lottie-react';
+import Link from 'next/link';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { IoMdCalendar } from 'react-icons/io';
 import { MdAccountCircle, MdDownload } from 'react-icons/md';
 import { PiHeart, PiHeartFill, PiWaveformBold } from 'react-icons/pi';
 import { TbLoader } from 'react-icons/tb';
-import { Suspense, useEffect, useRef, useState } from 'react';
-import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
-import cn from '@/lib/cn';
-import useGeneralStore from '@/stores/general';
 import { toast } from 'sonner';
-import useAuthStore from '@/stores/auth';
-import likeSound from '@/lib/request/sounds/likeSound';
-import revalidateSound from '@/lib/revalidate/sound';
-import useSearchStore from '@/stores/sounds/search';
-import Tooltip from '@/app/components/Tooltip';
-import useThemeStore from '@/stores/theme';
-import UploadSoundToDiscordModal from '@/app/(sounds)/sounds/components/SoundPreview/UploadSoundToDiscordModal';
-import getSoundUploadableGuilds from '@/lib/request/auth/getSoundUploadableGuilds';
-import uploadSoundToGuild from '@/lib/request/sounds/uploadSoundToGuild';
-import confetti from '@/lib/lotties/confetti.json';
-import useModalsStore from '@/stores/modals';
 import { useShallow } from 'zustand/react/shallow';
-import { Lottie } from 'lottie-react';
-import { useTranslation } from 'react-i18next';
-import Link from 'next/link';
+
+import UploadSoundToDiscordModal from '@/app/(sounds)/sounds/components/SoundPreview/UploadSoundToDiscordModal';
+import Waveform from '@/app/(sounds)/sounds/components/SoundPreview/Waveform';
+import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
+import confetti from '@/lib/lotties/confetti.json';
+import getSoundUploadableGuilds from '@/lib/request/auth/getSoundUploadableGuilds';
+import likeSound from '@/lib/request/sounds/likeSound';
+import uploadSoundToGuild from '@/lib/request/sounds/uploadSoundToGuild';
+import revalidateSound from '@/lib/revalidate/sound';
+import useAuthStore from '@/stores/auth';
+import useGeneralStore from '@/stores/general';
+import useModalsStore from '@/stores/modals';
+import useSearchStore from '@/stores/sounds/search';
+import useThemeStore from '@/stores/theme';
 
 export default function SoundPreview({ sound, overridedSort, showUploadToGuildButton }) {
   const { t, i18n } = useTranslation();

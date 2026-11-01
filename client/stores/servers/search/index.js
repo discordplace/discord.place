@@ -1,5 +1,6 @@
-import { create } from 'zustand';
 import { toast } from 'sonner';
+import { create } from 'zustand';
+
 import fetchServers from '@/lib/request/servers/fetchServers';
 
 const useSearchStore = create((set, get) => ({

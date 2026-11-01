@@ -1,13 +1,14 @@
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
+
+import ReportAreaModal from '@/app/components/ReportableArea/ReportAreaModal';
 import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
 import cn from '@/lib/cn';
+import createReport from '@/lib/request/general/createReport';
 import useGeneralStore from '@/stores/general';
 import useModalsStore from '@/stores/modals';
-import { useTranslation } from 'react-i18next';
-import ReportAreaModal from '@/app/components/ReportableArea/ReportAreaModal';
-import config from '@/config';
-import { toast } from 'sonner';
-import createReport from '@/lib/request/general/createReport';
-import { useShallow } from 'zustand/react/shallow';
 
 export default function ReportableArea(props) {
   const { t } = useTranslation();
@@ -86,7 +87,7 @@ export default function ReportableArea(props) {
       <Tooltip content='Report this area'>
         <div
           className={cn(
-            'absolute top-0 left-0 z-10 size-[calc(100%+15px)] translate-x-[-7.5px] translate-y-[-7.5px] rounded-xl transition-opacity',
+            'absolute top-0 left-0 z-10 size-[calc(100%+15px)] translate-[-7.5px] rounded-xl transition-opacity',
             showReportableAreas ? 'animate-reportable-area cursor-pointer opacity-100 hover:opacity-60' : 'pointer-events-none opacity-0'
           )}
           onClick={handleReportClick}

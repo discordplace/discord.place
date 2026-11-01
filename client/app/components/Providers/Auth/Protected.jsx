@@ -1,7 +1,8 @@
 'use client';
 
-import { useAuthStore } from '@/stores/auth';
 import { redirect } from 'next/navigation';
+
+import { useAuthStore } from '@/stores/auth';
 
 export default function Protected({ children }) {
   const user = useAuthStore(state => state.user);

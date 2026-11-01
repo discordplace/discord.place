@@ -1,12 +1,13 @@
 'use client';
 
-import { MdChevronLeft } from 'react-icons/md';
 import Link from 'next/link';
-import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
-import DangerZone from '@/app/(profiles)/profile/[slug]/edit/components/DangerZone';
-import VerifiedBadge from '@/app/(profiles)/profile/[slug]/edit/components/VerifiedBadge';
 import { useTranslation } from 'react-i18next';
+import { MdChevronLeft } from 'react-icons/md';
+
+import DangerZone from '@/app/(profiles)/profile/[slug]/edit/components/DangerZone';
+import Edit from '@/app/(profiles)/profile/[slug]/edit/components/Edit';
 import PatchVerifyButton from '@/app/(profiles)/profile/[slug]/edit/components/PatchVerifyButton';
+import VerifiedBadge from '@/app/(profiles)/profile/[slug]/edit/components/VerifiedBadge';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 
 export default function Content({ profile }) {

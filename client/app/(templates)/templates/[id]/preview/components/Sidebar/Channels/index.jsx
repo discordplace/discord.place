@@ -1,19 +1,20 @@
 'use client';
 
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaChevronDown } from 'react-icons/fa';
 import { IoChevronDown } from 'react-icons/io5';
-import Image from '@/app/components/AppImage';
-import HomeIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Home';
-import EventsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Events';
+
 import BrowseChannelsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/BrowseChannels';
 import CommunityServerBoostedIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/CommunityServerBoosted';
+import EventsIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Events';
+import HomeIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/Home';
 import TextChannelIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/TextChannel';
 import TextChannelNSFWIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/TextChannelNSFW';
 import VoiceChannelIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/VoiceChannel';
 import VoiceChannelNSFWIcon from '@/app/(templates)/templates/[id]/preview/components/Icons/VoiceChannelNSFW';
+import Image from '@/app/components/AppImage';
 import cn from '@/lib/cn';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export default function Channels({ data, focusedChannel, setFocusedChannel, currentlyOpenedSection, isMobile }) {
   const { t } = useTranslation();

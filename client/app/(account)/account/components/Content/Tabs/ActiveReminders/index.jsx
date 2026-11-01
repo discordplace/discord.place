@@ -1,16 +1,17 @@
 'use client';
 
+import Link from 'next/link';
+import { useState } from 'react';
+import AnimateHeight from 'react-animate-height';
+import { useTranslation } from 'react-i18next';
 import { BsEmojiAngry } from 'react-icons/bs';
 import { IoChevronDown, IoPaperPlane } from 'react-icons/io5';
-import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
+
 import Countdown from '@/app/components/Countdown';
 import ErrorState from '@/app/components/ErrorState';
+import ServerIcon from '@/app/components/ImageFromHash/ServerIcon';
 import cn from '@/lib/cn';
 import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
-import AnimateHeight from 'react-animate-height';
-import { useState } from 'react';
 
 export default function ActiveReminders() {
   const { t, i18n } = useTranslation();

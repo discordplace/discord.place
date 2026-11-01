@@ -1,11 +1,12 @@
 'use client';
 
-import { FaDiscord } from 'react-icons/fa';
-import Tooltip from '@/app/components/Tooltip';
-import { toast } from 'sonner';
-import cn from '@/lib/cn';
-import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaDiscord } from 'react-icons/fa';
+import { toast } from 'sonner';
+
+import Tooltip from '@/app/components/Tooltip';
+import cn from '@/lib/cn';
 
 export default function Members({ template, isMobile, currentlyOpenedSection }) {
   const { t } = useTranslation();

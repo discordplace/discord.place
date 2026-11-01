@@ -1,18 +1,19 @@
 'use client';
 
+import { Lottie } from 'lottie-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdChevronLeft } from 'react-icons/md';
 import { TbLoader } from 'react-icons/tb';
-import config from '@/config';
-import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+
+import config from '@/config';
 import cn from '@/lib/cn';
-import createSound from '@/lib/request/sounds/createSound';
-import { useRouter } from 'next/navigation';
-import { Lottie } from 'lottie-react';
 import confetti from '@/lib/lotties/confetti.json';
+import createSound from '@/lib/request/sounds/createSound';
 import useAccountStore from '@/stores/account';
-import { useTranslation } from 'react-i18next';
 
 export default function NewSound() {
   const { t } = useTranslation();

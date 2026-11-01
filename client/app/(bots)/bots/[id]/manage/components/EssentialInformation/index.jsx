@@ -1,9 +1,10 @@
 'use client';
+import { useTranslation } from 'react-i18next';
 import { FaDisplay } from 'react-icons/fa6';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
-import Markdown from '@/app/components/Markdown';
+
 import Input from '@/app/(bots)/bots/[id]/manage/components/Input';
-import { useTranslation } from 'react-i18next';
+import Markdown from '@/app/components/Markdown';
 
 export default function EssentialInformation({ shortDescription, setShortDescription, description, setDescription, inviteURL, setInviteURL, markdownPreviewing, setMarkdownPreviewing }) {
   const { t } = useTranslation();

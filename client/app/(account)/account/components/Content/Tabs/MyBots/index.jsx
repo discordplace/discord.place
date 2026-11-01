@@ -1,23 +1,24 @@
 'use client';
 
+import * as Sentry from '@sentry/nextjs';
+import Link from 'next/link';
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
 import { FaCircleCheck, FaCircleExclamation } from 'react-icons/fa6';
 import { LuPlus } from 'react-icons/lu';
 import { PiWarningCircleFill } from 'react-icons/pi';
-import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
-import ErrorState from '@/app/components/ErrorState';
-import useAccountStore from '@/stores/account';
-import Link from 'next/link';
-import NewBot from '@/app/(account)/account/components/Content/Tabs/MyBots/NewBot';
-import config from '@/config';
-import Countdown from '@/app/components/Countdown';
-import cn from '@/lib/cn';
-import { useTranslation } from 'react-i18next';
-import useAuthStore from '@/stores/auth';
-import { useRef, useState } from 'react';
 import { toast } from 'sonner';
+
+import NewBot from '@/app/(account)/account/components/Content/Tabs/MyBots/NewBot';
+import Countdown from '@/app/components/Countdown';
+import ErrorState from '@/app/components/ErrorState';
+import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
+import config from '@/config';
+import cn from '@/lib/cn';
 import getApplicationsEntitlementsScopeGranted from '@/lib/request/auth/getApplicationsEntitlementsScopeGranted';
-import * as Sentry from '@sentry/nextjs';
+import useAccountStore from '@/stores/account';
+import useAuthStore from '@/stores/auth';
 
 export default function MyBots() {
   const { t } = useTranslation();
