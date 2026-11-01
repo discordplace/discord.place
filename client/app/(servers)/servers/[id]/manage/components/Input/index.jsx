@@ -3,7 +3,7 @@
 import cn from '@/lib/cn';
 
 export default function Input({ label, customLabelPeer, description, type, CustomInput, className, ...props }) {
-  const ignoreProps = ['label', 'customLabelPeer', 'description', 'type', 'CustomInput', 'className'];
+  const ignoreProps = ['label', 'customLabelPeer', 'description', 'type', 'CustomInput', 'className', 'value'];
 
   return (
     <div className='flex flex-1 flex-col gap-y-2'>
