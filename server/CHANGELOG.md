@@ -1,5 +1,36 @@
 # Changelog
 
+## [3.1.0](https://github.com/discordplace/discord.place/compare/server@v3.0.0...server@v3.1.0) (2026-11-01)
+
+
+### Features
+
+* add invite selector to new server flow ([3bb2c66](https://github.com/discordplace/discord.place/commit/3bb2c66731a8465d906fb7a402bc2b886bf8ea4c))
+* add review replies ([4934962](https://github.com/discordplace/discord.place/commit/49349620744d69299fe439432716989b3726170f))
+* centralize ports and deployment config ([920298e](https://github.com/discordplace/discord.place/commit/920298ea6e953ed48873d2636174b188427f71a6))
+* new i18n approach and new loading page ([8330c0d](https://github.com/discordplace/discord.place/commit/8330c0d76706c5b555bdfe1ba4979204fb2a7ba6))
+* remove dsc.wtf, dsc.baby. dsc.ink and add dsc.im as new link shortener hostname ([b61695a](https://github.com/discordplace/discord.place/commit/b61695a74331d9eb00cafaf25daf9e26ca5a8d38))
+* **server:** add review page lookup and reviewer notifications ([8df1714](https://github.com/discordplace/discord.place/commit/8df171464a374b6b4b146cbd8dcc0e01ccd15acb))
+* **server:** split deployment config into local overrides ([c28b718](https://github.com/discordplace/discord.place/commit/c28b718ecfa63771df872e0cc584d516b931d457))
+* support doppler environment injection ([4679002](https://github.com/discordplace/discord.place/commit/467900206f78918dff8175ce695d89cde5199a3a))
+* validate environment variables with zod ([388df05](https://github.com/discordplace/discord.place/commit/388df057f29c79a61bfd7ba20f4209d1eb21b19b))
+
+
+### Bug Fixes
+
+* **auth:** preserve query params in login redirect ([b867eca](https://github.com/discordplace/discord.place/commit/b867ecaddf96b27ec855c39336e9adb5962a2248))
+* **eslint:** remove linebreak-style rule ([18bb98f](https://github.com/discordplace/discord.place/commit/18bb98f2a9a0fe647ca2e8c45de521be0ddeae15))
+* ignore unavailable guilds in top servers ([65e89a3](https://github.com/discordplace/discord.place/commit/65e89a3165f74ba0e36f0dd6a964ba897107700b))
+* prevent false DOWN reports in the status badge ([5d89bf6](https://github.com/discordplace/discord.place/commit/5d89bf61500350be3162cd7fd4408378f75dc0f9))
+* resolve Sentry frontend issues and harden request errors ([eb5679f](https://github.com/discordplace/discord.place/commit/eb5679f61e19aa82382dffad101cc6da0c39d17a))
+* **server:** allow users to reuse support servers across their own bots ([efc5b1e](https://github.com/discordplace/discord.place/commit/efc5b1e899d1bac2b0214bfb68d4360cd7fbe80f))
+* **server:** avoid gateway rate limit on startup member fetch ([fffc708](https://github.com/discordplace/discord.place/commit/fffc708d54967c66fbf0a1b3fe3977d4ec5aa9bc))
+* **server:** cache guild members on client startup ([2c9ecbe](https://github.com/discordplace/discord.place/commit/2c9ecbe507493821f28f4c56366d86cad3da0dae))
+* **server:** correct config keys and env validation ([331da11](https://github.com/discordplace/discord.place/commit/331da11f8d0cae2f81158762cae8d85968b3320b))
+* **server:** lowercase localized reminder command name ([2afcc1d](https://github.com/discordplace/discord.place/commit/2afcc1d03deed2ad573ad6dd8e6dc7b94926035d))
+* **server:** only mark invites deleted on unknown invite ([122dacc](https://github.com/discordplace/discord.place/commit/122dacc92a86a480d779bbe41c87ded5acb8d245))
+* **server:** validate invites via public lookup ([a9da6a6](https://github.com/discordplace/discord.place/commit/a9da6a659a94208f74b2c071d0c66d66fc702300))
+
 ## [3.0.0](https://github.com/discordplace/discord.place/compare/server@v2.1.0...server@v3.0.0) (2026-06-09)
 
 
