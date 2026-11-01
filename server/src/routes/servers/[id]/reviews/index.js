@@ -37,7 +37,7 @@ module.exports = {
       const canReply = request.user && request.user.id === guild.ownerId;
 
       const foundReviews = await Review.find({ 'server.id': id, approved: true })
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: -1, _id: -1 })
         .skip(skip)
         .limit(limit);
       const totalReviews = await Review.countDocuments({ 'server.id': id });

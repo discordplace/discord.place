@@ -42,7 +42,7 @@ module.exports = {
       );
 
       const foundReviews = await Review.find({ 'bot.id': id, approved: true })
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: -1, _id: -1 })
         .skip(skip)
         .limit(limit);
       const totalReviews = await Review.countDocuments({ 'bot.id': id });

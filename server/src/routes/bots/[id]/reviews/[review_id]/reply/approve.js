@@ -39,6 +39,15 @@ module.exports = {
         }
       }
 
+      const reviewer = client.users.cache.get(review.user.id) || await client.users.fetch(review.user.id).catch(() => null);
+
+      if (reviewer) {
+        const dmChannel = reviewer.dmChannel || await reviewer.createDM().catch(() => null);
+        if (dmChannel) {
+          dmChannel.send({ content: `### Your review has a new reply!\n**${botUser?.username || id}** replied to your review:\n> ${review.reply.content.replace(/\n/g, '\n> ')}\n\n[View review](${config.frontendUrl}/bots/${id}#review-${review._id})` }).catch(() => null);
+        }
+      }
+
       sendLog(
         'reviewReplyApproved',
         [
