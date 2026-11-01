@@ -24,6 +24,7 @@ jobs:
       (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'client') ||
       (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/client): trigger build action'))
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     
     steps:
       - name: Checkout code
@@ -45,13 +46,22 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
         if: always() # Run this step regardless of the outcome of previous steps
 
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:discordplace-ci
+          args: --accept-dns=false
+        if: always() # Run this step regardless of the outcome of previous steps
+
       - name: Deploy to Server
         env:
           SSH_PORT: ${{ secrets.SSH_PORT }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -T -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+          ssh -T -o ConnectTimeout=20 -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null
             # Exit on any error
             set -e
             
@@ -125,6 +135,7 @@ jobs:
       (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'server') ||
       (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/server): trigger build action'))
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     
     steps:
       - name: Checkout code
@@ -145,13 +156,21 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:discordplace-ci
+          args: --accept-dns=false
+
       - name: Deploy to Server
         env:
           SSH_PORT: ${{ secrets.SSH_PORT }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -T -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null 2>&1
+          ssh -T -o ConnectTimeout=20 -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null
             cd apps/discord.place/server
             git pull origin main > /dev/null 2>&1
             export NVM_DIR="$HOME/.nvm"

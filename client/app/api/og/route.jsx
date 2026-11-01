@@ -20,6 +20,7 @@ import Template from '@/app/api/og/content/Template';
 import Theme from '@/app/api/og/content/Theme';
 import fuc from '@/lib/fuc';
 import getImageBuffer from '@/lib/getImageBuffer';
+import getStaticImage from '@/lib/getStaticImage';
 
 function getFontData(fontName) {
   const file = fs.readFileSync(`${process.cwd()}/public/fonts/${fontName}.ttf`);
@@ -199,7 +200,7 @@ export async function GET(request) {
           }}
         >
           <img
-            src={`http://127.0.0.1:${process.env.CLIENT_PORT}/symbol_white.png`}
+            src={getStaticImage('symbol_white.png')}
             style={{ height: '56px', marginLeft: '20px', width: '56px' }}
             alt='discord.place Logo'
           />
