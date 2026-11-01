@@ -383,7 +383,7 @@ export default function Reviews({ bot }) {
 
                 {bot.permissions?.canReply && !review.reply && (
                   <button
-                    className='text-xs font-medium text-tertiary transition-colors hover:text-primary'
+                    className='shrink-0 text-xs font-medium text-tertiary transition-colors hover:text-primary'
                     onClick={() => {
                       const modalId = `bot-${bot.id}-review-${review._id}-reply`;
 

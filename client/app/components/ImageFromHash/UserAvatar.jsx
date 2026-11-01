@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import { useState } from 'react';
 
 import MotionImage from '@/app/components/Motion/Image';
@@ -8,6 +7,7 @@ import cn from '@/lib/cn';
 import getHashes from '@/lib/request/general/getHashes';
 
 const DEFAULT_AVATAR_BASE64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAAAXNSR0IB2cksfwAAAAlwSFlzAAAK6wAACusBgosNWgAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAAPSURBVHicY2QAAsbBSwAACvAAIQlaz/gAAAAASUVORK5CYII=';
+const DEFAULT_AVATAR_SRC = '/default-discord-avatar.png';
 
 const HASH_TTL = 5 * 60 * 1000;
 const DEAD_TTL = 10 * 60 * 1000;
@@ -69,7 +69,7 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
   }
 
   function buildEntry(hash, format) {
-    return { format, hash, src: hash ? getUrl(id, hash, format) : null };
+    return { format, hash, src: hash ? getUrl(id, hash, format) : DEFAULT_AVATAR_SRC };
   }
 
   function resolveInitial(id, hash) {
@@ -77,12 +77,12 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
 
     const memo = getCachedHash(id);
     if (memo) {
-      if (isRecentlyDead(id, memo.hash, memo.format)) return { ...buildEntry(memo.hash, memo.format), src: DEFAULT_AVATAR_BASE64 };
+      if (isRecentlyDead(id, memo.hash, memo.format)) return { ...buildEntry(memo.hash, memo.format), src: DEFAULT_AVATAR_SRC };
 
       return buildEntry(memo.hash, memo.format);
     }
 
-    if (isRecentlyDead(id, hash)) return { ...buildEntry(hash), src: DEFAULT_AVATAR_BASE64 };
+    if (isRecentlyDead(id, hash)) return { ...buildEntry(hash), src: DEFAULT_AVATAR_SRC };
 
     return buildEntry(hash, undefined);
   }
@@ -102,27 +102,21 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
   }
 
   async function handleError() {
-    if (current.src === DEFAULT_AVATAR_BASE64) return;
+    if (!current.hash) {
+      setCurrent({ ...current, src: DEFAULT_AVATAR_SRC });
+
+      return;
+    }
 
     if (healAttempted) {
       markDead(current);
-      setCurrent({ ...current, src: DEFAULT_AVATAR_BASE64 });
+      setCurrent({ format: undefined, hash: null, src: DEFAULT_AVATAR_SRC });
 
       return;
     }
 
     setHealAttempted(true);
-
-    try {
-      const probe = await axios.get(getUrl(id, current.hash, current.format));
-      if (!probe.headers?.['content-type']?.startsWith('image/')) throw { response: { status: 404 } };
-    } catch (error) {
-      if (error.response && error.response.status !== 404) {
-        setCurrent({ ...current, src: DEFAULT_AVATAR_BASE64 });
-
-        return;
-      }
-    }
+    setCurrent({ ...current, src: DEFAULT_AVATAR_BASE64 });
 
     const newHash = await getFreshAvatarHash(id);
     const newSrc = newHash ? getUrl(id, newHash) : null;
@@ -141,7 +135,7 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
     }
 
     markDead(current);
-    setCurrent({ ...current, src: DEFAULT_AVATAR_BASE64 });
+    setCurrent({ format: undefined, hash: null, src: DEFAULT_AVATAR_SRC });
   }
 
   const isSmallImage = (props.width && props.width < 40) || (props.height && props.height < 40);
@@ -149,8 +143,8 @@ export default function UserAvatar({ id, hash, format, size, className, motionOp
   if (!hash || !current.src) {
     return (
       <MotionImage
-        key={`user-avatar-${id}-replaced-with-default-avatar`}
-        src={DEFAULT_AVATAR_BASE64}
+        key={`user-avatar-${id}-default-avatar`}
+        src={DEFAULT_AVATAR_SRC}
         alt={alt}
         className={cn(className, 'bg-quinary text-tertiary')}
         {...motionOptions}

@@ -417,15 +417,15 @@ export default function Reviews({ server }) {
               }}
               identifier={`server-${server.id}-review-${review._id}`}
             >
-              <div className='flex max-w-[440px] flex-col gap-y-2 font-medium wrap-break-word whitespace-pre-wrap text-secondary sm:gap-y-0'>
-                <div className='flex items-center justify-between'>
+              <div className='flex w-full max-w-[440px] flex-1 flex-col gap-y-2 font-medium wrap-break-word whitespace-pre-wrap text-secondary sm:gap-y-0'>
+                <div className='flex items-center justify-between gap-x-2'>
                   <span className='text-xs font-medium text-tertiary'>
                     {getRelativeTime(review.createdAt, i18n.language)}
                   </span>
 
                   {server.permissions?.canReply && !review.reply && (
                     <button
-                      className='text-xs font-medium text-tertiary transition-colors hover:text-primary'
+                      className='shrink-0 text-xs font-medium text-tertiary transition-colors hover:text-primary'
                       onClick={() => {
                         const modalId = `server-${server.id}-review-${review._id}-reply`;
 
