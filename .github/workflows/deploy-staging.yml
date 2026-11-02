@@ -157,7 +157,10 @@ jobs:
           curl -kfsS --max-time 30 --retry 15 --retry-delay 2 --resolve "$SITE_HOST:443:127.0.0.1" "https://$SITE_HOST/_api/health" >/dev/null
           curl -kfsS --max-time 30 --retry 15 --retry-delay 2 --resolve "$SITE_HOST:443:127.0.0.1" "https://$SITE_HOST/" >/dev/null
 
-          echo "Deployed commit $SHA" >&3
+          pm2 delete discord.place-staging api.discord.place-staging --silent >/dev/null 2>&1 || true
+          pm2 save --silent
+
+          echo "Deployed commit $SHA (staging left stopped)" >&3
           EOF
 
       - name: Notify Discord
