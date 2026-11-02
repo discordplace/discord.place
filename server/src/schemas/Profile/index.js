@@ -6,6 +6,7 @@ const birthdayValidation = require('@/validations/profiles/birthday');
 const colorsValidation = require('@/validations/profiles/colors');
 const getBadges = require('@/utils/profiles/getBadges');
 const getUserHashes = require('@/utils/getUserHashes');
+const defaultProfileHost = config.defaultProfileHost || 'discord.place/p';
 
 const ProfileSchema = new Schema({
   user: {
@@ -104,8 +105,8 @@ const ProfileSchema = new Schema({
   },
   preferredHost: {
     type: String,
-    enum: ['discord.place/p', ...config.customHostnames],
-    default: 'discord.place/p'
+    enum: [defaultProfileHost, ...config.customHostnames],
+    default: defaultProfileHost
   },
   colors: {
     primary: {

@@ -20,7 +20,7 @@ module.exports = {
       .custom(slugValidation).withMessage('Slug is not valid.'),
     body('preferredHost')
       .isString().withMessage('Preferred host must be a string.')
-      .isIn(['discord.place/p', ...config.customHostnames]).withMessage('Preferred host is not valid.'),
+      .isIn([config.defaultProfileHost || 'discord.place/p', ...config.customHostnames]).withMessage('Preferred host is not valid.'),
     validateRequest,
     async (request, response) => {
       const userQuarantined = await findQuarantineEntry.single('USER_ID', request.user.id, 'PROFILES_CREATE').catch(() => false);

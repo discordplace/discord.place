@@ -20,12 +20,12 @@ export default function PreferredHostDropdown({ currentlyEditingValue, setCurren
           <DropdownMenu.Item
             className={cn(
               'flex cursor-pointer items-center justify-between gap-x-2 rounded-xl p-2 font-medium outline-hidden',
-              currentlyEditingValue === 'discord.place/p' ? 'pointer-events-none bg-tertiary text-primary' : 'text-tertiary data-highlighted:bg-tertiary data-highlighted:text-primary'
+              currentlyEditingValue === config.defaultProfileHost ? 'pointer-events-none bg-tertiary text-primary' : 'text-tertiary data-highlighted:bg-tertiary data-highlighted:text-primary'
             )}
-            onSelect={() => setCurrentlyEditingValue('discord.place/p')}
+            onSelect={() => setCurrentlyEditingValue(config.defaultProfileHost)}
           >
-            discord.place/p
-            {currentlyEditingValue === 'discord.place/p' && <IoMdCheckmarkCircle />}
+            {config.defaultProfileHost}
+            {currentlyEditingValue === config.defaultProfileHost && <IoMdCheckmarkCircle />}
           </DropdownMenu.Item>
 
           {config.customHostnames.map(hostname => (

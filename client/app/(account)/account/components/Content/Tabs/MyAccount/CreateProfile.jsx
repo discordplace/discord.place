@@ -88,7 +88,7 @@ export default function CreateProfile() {
         </p>
 
         <div className='mt-2 flex w-full'>
-          {['discord.place/p', ...config.customHostnames]
+          {[config.defaultProfileHost, ...config.customHostnames]
             .map(hostname => (
               <div
                 onClick={() => setPreferredHost(hostname)}

@@ -146,6 +146,7 @@ reportsQueueChannelId: '000000000000000000'
 botQueueChannelId: '000000000000000000'
 templateQueueChannelId: '000000000000000000'
 webLogsChannelId: '000000000000000000'
+defaultProfileHost: discord.place/p
 customHostnames:
   - yourdomain.com
 linkShortenerHostname: your.link

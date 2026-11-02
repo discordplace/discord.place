@@ -43,6 +43,7 @@ const environmentSchema = z.object({
   NEXT_PUBLIC_GITHUB_ISSUES_URL: optionalUrl,
   NEXT_PUBLIC_LINK_SHORTENER_HOSTNAME: optionalHostname,
   NEXT_PUBLIC_PORT: optionalPort,
+  NEXT_PUBLIC_PROFILE_DEFAULT_HOST: z.string().optional(),
   NEXT_PUBLIC_SENTRY_DSN: optionalUrl,
   NEXT_PUBLIC_SITE_URL: optionalUrl,
   NEXT_PUBLIC_STATUS_URL: optionalUrl,

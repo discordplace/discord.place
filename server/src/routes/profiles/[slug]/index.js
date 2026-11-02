@@ -76,10 +76,11 @@ module.exports = {
 
       if (!publiclySafe.premium) {
         if (config.customHostnames.includes(publiclySafe.preferredHost)) {
-          await profile.updateOne({ preferredHost: 'discord.place/p' });
-          publiclySafe.preferredHost = 'discord.place/p';
+          const defaultProfileHost = config.defaultProfileHost || 'discord.place/p';
+          await profile.updateOne({ preferredHost: defaultProfileHost });
+          publiclySafe.preferredHost = defaultProfileHost;
 
-          logger.warn(`Profile ${profile.slug} preferred host was changed to discord.place/p because user is not premium anymore.`);
+          logger.warn(`Profile ${profile.slug} preferred host was reset because user is not premium anymore.`);
         }
 
         if (profile.colors.primary !== null || profile.colors.secondary !== null) {
@@ -132,7 +133,7 @@ module.exports = {
     body('preferredHost')
       .optional()
       .isString().withMessage('Preferred host must be a string.')
-      .isIn(['discord.place/p', ...config.customHostnames]).withMessage('Preferred host is not valid.'),
+      .isIn([config.defaultProfileHost || 'discord.place/p', ...config.customHostnames]).withMessage('Preferred host is not valid.'),
     body('colors')
       .optional()
       .isObject().withMessage('Colors must be an object.')

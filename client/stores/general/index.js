@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+import config from '@/config';
 const useGeneralStore = create(set => ({
   createLinkModal: {
     destinationURL: '',
@@ -8,7 +9,7 @@ const useGeneralStore = create(set => ({
     setName: name => set(state => ({ createLinkModal: { ...state.createLinkModal, name } }))
   },
   createProfileModal: {
-    preferredHost: 'discord.place/p',
+    preferredHost: config.defaultProfileHost,
     setPreferredHost: preferredHost => set(state => ({ createProfileModal: { ...state.createProfileModal, preferredHost } })),
     setSlug: slug => set(state => ({ createProfileModal: { ...state.createProfileModal, slug } })),
     slug: ''

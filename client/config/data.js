@@ -34,6 +34,7 @@ const botInviteURL = process.env.NEXT_PUBLIC_BOT_INVITE_URL || 'https://bot.disc
 const githubIssuesUrl = process.env.NEXT_PUBLIC_GITHUB_ISSUES_URL || 'https://github.com/discordplace/discord.place/issues/new?template=bug-report---feature-request.md';
 const linkShortenerHostname = process.env.NEXT_PUBLIC_LINK_SHORTENER_HOSTNAME || 'dsc.im';
 const authCookieName = process.env.NEXT_PUBLIC_AUTH_COOKIE_NAME || 'token';
+const defaultProfileHost = process.env.NEXT_PUBLIC_PROFILE_DEFAULT_HOST || 'discord.place/p';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || (isDev ? 'http://localhost:5001' : 'https://api.discord.place');
 
@@ -182,6 +183,7 @@ const data = {
   botTestGuildId,
   customHostnames,
   dashboardRequestDelay,
+  defaultProfileHost,
   discordWebhookRegex,
   docsUrl,
   emojiCategories,

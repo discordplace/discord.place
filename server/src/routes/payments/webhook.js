@@ -176,7 +176,7 @@ module.exports = {
 
           var profile = await Profile.findOne({ id: user.id });
           if (profile) {
-            profile.preferredHost = 'discord.place/p';
+            profile.preferredHost = config.defaultProfileHost || 'discord.place/p';
 
             await profile.save();
           }
@@ -217,7 +217,7 @@ module.exports = {
 
           var profile = await Profile.findOne({ id: user.id });
           if (profile) {
-            profile.preferredHost = 'discord.place/p';
+            profile.preferredHost = config.defaultProfileHost || 'discord.place/p';
 
             await profile.save();
           }
