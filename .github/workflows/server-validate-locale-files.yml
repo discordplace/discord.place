@@ -10,16 +10,16 @@ jobs:
   validate-locale-files:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     container:
-      image: node:20
+      image: node:24
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 9
 

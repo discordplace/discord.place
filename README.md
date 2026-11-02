@@ -43,6 +43,8 @@ pnpm --dir client install
 
 Create `server/.env` and `client/.env`. Copy `server/config.local.example.yml` to `server/config.local.yml` and fill in your deployment values. The tracked `server/config.yml` and `client/config/data.js` contain defaults. Every option is documented in the collapsible sections below.
 
+Both apps read environment variables from the process, so a secret manager can inject them instead of keeping `.env` files on disk. `.env` files are optional, and when both are present, process environment variables take precedence over `.env` values.
+
 **4. Start both apps**
 
 ```bash
@@ -269,7 +271,7 @@ Navigate to the `client/config` directory and find the `data.js` file. This file
 > - The URL and hostname values in this table can be overridden with the matching `NEXT_PUBLIC_*` environment variables. The defaults are for local development.
 
 > [!WARNING]
-> - If you wanna change the default locale, you should change the `default` value in the `client/config/data.js` file. This value should be one of the values in the `availableLocales` array. After changing this value, you also need to change the `DEFAULT_LOCALE_CODE` environment value in the `.github/workflows/client-validate-locale-files.yml` file. (if you don't want to get any unnecessary errors in the GitHub Actions)
+> - If you want to change the default locale, change the `default` value in the `client/config/data.js` file. It must be one of the entries in `availableLocales`. Locale validation reads the expected code from the `DEFAULT_LOCALE_CODE` environment variable, so set that to the same code wherever you run it.
 
 </details>
 
@@ -404,50 +406,6 @@ pnpm dev
 The client runs on [http://localhost:5000](http://localhost:5000) by default (`CLIENT_PORT`). The server runs on port `5001` by default (`SERVER_PORT`) and restarts when its files change. To run either side on its own, use `pnpm --dir client dev` or `pnpm --dir server dev`.
 
 Run `pnpm lint` before committing. It checks both apps with oxlint. The pre-commit hook runs the same command together with the locale check. To apply automatic fixes, run `pnpm --dir client exec oxlint --fix` and `pnpm --dir server exec oxlint --fix`.
-
-## Production Secrets
-
-The apps read environment variables from the process, so a secret manager can inject them instead of keeping plaintext `.env` files on the server. Doppler works with the current scripts.
-
-1. Create a Doppler project and a production config, then add the variables from `client/.example.env` and `server/.example.env`. The same config can hold both client and server values.
-2. Install the Doppler CLI on the server.
-3. In the Doppler dashboard, open the `discord-place` project, select the `prd` config, go to Access, and create a service token with read-only access. The token starts with `dp.st.`.
-4. Store the token on the server outside the repository:
-   ```bash
-   doppler configure set token <service-token>
-   ```
-   Alternatively, set `DOPPLER_TOKEN` in the server environment. Do not commit the token.
-5. Run builds and processes through `doppler run`:
-
-```bash
-doppler run --project discord-place --config prd -- pnpm --dir client build
-doppler run --project discord-place --config prd -- pm2 restart discord.place --update-env
-
-doppler run --project discord-place --config prd -- pm2 restart api.discord.place --update-env
-```
-
-PM2 needs `--update-env` so restarted processes receive the injected values. If the server is not managed by PM2, start it with:
-
-```bash
-doppler run --project discord-place --config prd -- pnpm --dir server start
-```
-
-For local development:
-
-```bash
-doppler run --project discord-place --config dev -- pnpm dev
-```
-
-`.env` files remain optional. When both are present, process environment variables take precedence over `.env` values.
-
-Both apps are defined in `ecosystem.config.cjs`, and each process runs through `doppler run`. After changing that file, reload PM2 with:
-
-```bash
-pm2 startOrReload ecosystem.config.cjs --update-env
-pm2 save
-```
-
-The deploy workflow uses the same ecosystem file and reloads only the affected app. The server must have the Doppler CLI and token configured before deploying.
 
 ## Community
 

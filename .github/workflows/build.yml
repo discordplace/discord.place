@@ -1,192 +1,194 @@
-name: 'Build and Deploy'
+name: Build and Deploy Production
+
+on:
+  workflow_dispatch:
 
 permissions:
   contents: read
 
-on:
-  workflow_dispatch:
-    inputs:
-      target:
-        description: 'What to build/deploy'
-        required: true
-        type: choice
-        options:
-          - client
-          - server
-  push:
-    branches:
-      - main
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy-client:
-    name: Build and Deploy /client
-    if: >
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'client') ||
-      (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/client): trigger build action'))
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    environment: Production
+    env:
+      BUILD_WEBHOOK_URL: ${{ secrets.BUILD_WEBHOOK_URL }}
+      DEPLOY_PATH: /root/apps/discord.place
+      ECOSYSTEM_FILE: ecosystem.config.cjs
+      SITE_HOST: discord.place
+      API_HOST: api.discord.place
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Configure git
+        run: git config --global init.defaultBranch main
 
-      - uses: tsickert/discord-webhook@v7.0.0
+      - name: Checkout
+        uses: actions/checkout@v7
         with:
-          webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
-          embed-title: 'Deployment Notification'
-          embed-description: 'Deployment triggered. Proceeding with build and restart.'
-          embed-footer-text: 'discord.place'
-          embed-color: 14194756
-        if: always() # Run this step regardless of the outcome of previous steps
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify deployable commit
+        env:
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --quiet origin main
+          git merge-base --is-ancestor "$SHA" origin/main || {
+            echo "::error::Commit $SHA is not reachable from main. Merge it first, then deploy."
+            exit 1
+          }
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11.2.2
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.16.0
+          cache: pnpm
+          cache-dependency-path: client/pnpm-lock.yaml
+
+      - name: Install client dependencies
+        run: pnpm --dir client install --frozen-lockfile --reporter=silent
+
+      - name: Restore Next build cache
+        uses: actions/cache@v6
+        with:
+          path: client/.next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('client/pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('client/pnpm-lock.yaml') }}-
+
+      - name: Build client
+        env:
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET || 'build-only' }}
+          NEXT_PUBLIC_SITE_URL: https://discord.place
+          NEXT_PUBLIC_API_URL: https://api.discord.place
+          NEXT_PUBLIC_CDN_URL: ${{ secrets.NEXT_PUBLIC_CDN_URL || vars.NEXT_PUBLIC_CDN_URL || 'https://cdn.discord.place' }}
+          NEXT_PUBLIC_CF_SITE_KEY: ${{ secrets.NEXT_PUBLIC_CF_SITE_KEY || vars.NEXT_PUBLIC_CF_SITE_KEY }}
+          NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN || vars.NEXT_PUBLIC_SENTRY_DSN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG || vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT || vars.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ (secrets.SENTRY_ORG || vars.SENTRY_ORG) != '' && (secrets.SENTRY_PROJECT || vars.SENTRY_PROJECT) != '' && secrets.SENTRY_AUTH_TOKEN || '' }}
+          NEXT_TELEMETRY_DISABLED: '1'
+        run: pnpm --dir client build
 
       - name: Set up SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-        if: always() # Run this step regardless of the outcome of previous steps
 
       - name: Connect to Tailscale
-        uses: tailscale/github-action@v3
+        uses: tailscale/github-action@v4
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:discordplace-ci
-          args: --accept-dns=false
-        if: always() # Run this step regardless of the outcome of previous steps
-
-      - name: Deploy to Server
-        env:
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-        run: |
-          ssh -T -o ConnectTimeout=20 -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null
-            # Exit on any error
-            set -e
-            
-            # Setup logging
-            LOG_FILE="/tmp/discord-place-client-deploy-$(date +%Y%m%d_%H%M%S).log"
-            exec > >(tee -a "$LOG_FILE") 2>&1
-            
-            echo "=== discord.place Client Deployment Started at $(date) ==="
-            echo "Log file: $LOG_FILE"
-            
-            echo "Updating source code..."
-            cd apps/discord.place/client
-            git pull origin main
-            
-            echo "Setting up Node environment..."
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm use $(nvm current)
-            
-            TEMP_DIR="/tmp/discord-place-client-build-$(date +%s)"
-            echo "Creating temporary build directory: $TEMP_DIR"
-            mkdir -p "$TEMP_DIR"
-            
-            echo "Copying client files to temporary directory..."
-            rsync -av --exclude='.next' --exclude='.git' --exclude='node_modules' . "$TEMP_DIR/"
-
-            echo "Installing dependencies in temporary directory..."
-            cd "$TEMP_DIR"
-            pnpm install --frozen-lockfile
-            
-            echo "Building application in temporary directory..."
-            cd "$TEMP_DIR"
-            doppler run --project discord-place --config prd -- pnpm build
-
-            echo "Stopping application..."
-            pm2 stop discord.place
-            
-            echo "Replacing .next folder in production directory..."
-            cd /root/apps/discord.place/client
-            rm -rf .next
-            mv "$TEMP_DIR/.next" ./
-            
-            echo "Updating production dependencies..."
-            pnpm install --frozen-lockfile
-            
-            echo "Starting application..."
-            pm2 startOrReload /root/apps/discord.place/ecosystem.config.cjs --only discord.place --update-env
-            pm2 save > /dev/null 2>&1
-            
-            echo "Cleaning up temporary directory..."
-            rm -rf "$TEMP_DIR"
-            
-            echo "=== Discord.place Client Deployment Completed Successfully at $(date) ==="
-            echo "Log file saved to: $LOG_FILE"
-          EOF
-        if: always() # Run this step regardless of the outcome of previous steps
-
-      - uses: chimpdev/bark-github-action@v1.0.1
-        with:
-            device_key: ${{ secrets.BARK_KEY }}
-            server_url: ${{ secrets.BARK_SERVER_URL }}
-            title: '${{ github.repository }}'
-            body: 'Client Build and Deploy triggered and completed. Job is ${{ job.status }}.'
-            url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-            icon: 'https://i.ibb.co/7d8rL1c3/Git-Hub-Mark-ea2971cee799.jpg'
-        if: always() # Run this step regardless of the outcome of previous steps
-
-  build-and-deploy-server:
-    name: Build and Deploy /server
-    if: >
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'server') ||
-      (github.event_name == 'push' && contains(github.event.head_commit.message, 'chore(build/server): trigger build action'))
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - uses: tsickert/discord-webhook@v7.0.0
-        with:
-          webhook-url: ${{ secrets.BUILD_WEBHOOK_URL }}
-          embed-title: 'Deployment Notification'
-          embed-description: 'Deployment triggered. Proceeding with restart.'
-          embed-footer-text: 'api.discord.place'
-          embed-color: 14194756
-        if: always() # Run this step regardless of the outcome of previous steps
-      
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v3
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:discordplace-ci
+          use-cache: true
           args: --accept-dns=false
 
-      - name: Deploy to Server
+      - name: Stream build to server
         env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
           SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -T -o ConnectTimeout=20 -o StrictHostKeyChecking=accept-new -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << 'EOF' > /dev/null
-            cd apps/discord.place/server
-            git pull origin main > /dev/null 2>&1
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm use $(nvm current)
-            pnpm install > /dev/null 2>&1
-            pm2 startOrReload /root/apps/discord.place/ecosystem.config.cjs --only api.discord.place --update-env > /dev/null 2>&1
-            pm2 save > /dev/null 2>&1
+          set -euo pipefail
+          tar -cf - --exclude='.next/cache' --exclude='.next/dev' -C client .next \
+            | zstd -3 -T0 -q \
+            | ssh -p "$SSH_PORT" -o ConnectTimeout=20 -o StrictHostKeyChecking=accept-new -o LogLevel=ERROR "$SSH_USER@$SSH_HOST" \
+              'set -e; rm -rf /tmp/next.new; mkdir -p /tmp/next.new; zstd -d -q | tar -xf - --strip-components=1 -C /tmp/next.new'
+
+      - name: Deploy on server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SHA: ${{ github.sha }}
+        run: |
+          ssh -p "$SSH_PORT" -o ConnectTimeout=20 -o StrictHostKeyChecking=accept-new -o LogLevel=ERROR "$SSH_USER@$SSH_HOST" \
+            "DEPLOY_PATH='$DEPLOY_PATH' ECOSYSTEM_FILE='$ECOSYSTEM_FILE' SITE_HOST='$SITE_HOST' API_HOST='$API_HOST' SHA='$SHA' bash -s" <<'EOF'
+          set -euo pipefail
+
+          exec 3>&1
+          DEPLOY_LOG="$(mktemp)"
+          exec >>"$DEPLOY_LOG" 2>&1
+          trap 'rc=$?; if [ "$rc" -ne 0 ]; then { echo "Deploy failed with exit code $rc"; tail -n 40 "$DEPLOY_LOG"; } >&3; fi; rm -f "$DEPLOY_LOG"' EXIT
+
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+          cd "$DEPLOY_PATH"
+          ECOSYSTEM_PATH="$DEPLOY_PATH/$ECOSYSTEM_FILE"
+
+          echo "Deploying commit $SHA" >&3
+
+          git fetch --all --tags --force --quiet
+          if ! git cat-file -e "$SHA^{commit}" 2>/dev/null; then
+            git fetch origin "$SHA" --quiet
+          fi
+          git -c advice.detachedHead=false checkout --force --quiet "$SHA"
+
+          pnpm --dir client install --frozen-lockfile --reporter=silent
+          pnpm --dir server install --frozen-lockfile --reporter=silent
+
+          rm -rf client/.next.new
+          mv /tmp/next.new client/.next.new
+          test -f client/.next.new/BUILD_ID
+
+          rm -rf client/.next.prev
+          if [ -d client/.next ]; then
+            mv client/.next client/.next.prev
+          fi
+          mv client/.next.new client/.next
+
+          pm2 startOrReload "$ECOSYSTEM_PATH" --update-env --silent
+          pm2 save --silent
+
+          curl -kfsS --max-time 30 --retry 15 --retry-delay 2 --resolve "$API_HOST:443:127.0.0.1" "https://$API_HOST/health" >/dev/null
+          curl -kfsS --max-time 30 --retry 15 --retry-delay 2 --resolve "$SITE_HOST:443:127.0.0.1" "https://$SITE_HOST/" >/dev/null
+
+          echo "Deployed commit $SHA" >&3
           EOF
 
-      - uses: chimpdev/bark-github-action@v1.0.1
-        with:
-            device_key: ${{ secrets.BARK_KEY }}
-            server_url: ${{ secrets.BARK_SERVER_URL }}
-            title: '${{ github.repository }}'
-            body: 'Server Build and Deploy triggered and completed. Job is ${{ job.status }}.'
-            url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-            icon: 'https://i.ibb.co/7d8rL1c3/Git-Hub-Mark-ea2971cee799.jpg'
-        if: always() # Run this step regardless of the outcome of previous steps
+      - name: Notify Discord
+        if: always() && env.BUILD_WEBHOOK_URL != ''
+        continue-on-error: true
+        env:
+          WEBHOOK_URL: ${{ secrets.BUILD_WEBHOOK_URL }}
+          COMMIT_SHA: ${{ github.sha }}
+          JOB_STATUS: ${{ job.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          node -e '
+            const url = process.env.WEBHOOK_URL;
+            const payload = {
+              embeds: [{
+                title: "Production deployment",
+                description: `Commit ${process.env.COMMIT_SHA} — ${process.env.JOB_STATUS}`,
+                url: process.env.RUN_URL,
+                footer: { text: "discord.place" },
+                color: 14194756
+              }]
+            };
+            fetch(url, {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(payload)
+            }).then(r => {
+              if (!r.ok) throw new Error(`Discord webhook failed with ${r.status}`);
+            }).catch(e => {
+              console.log(`Notification skipped: ${e.message}`);
+            });
+          '

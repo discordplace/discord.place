@@ -20,7 +20,7 @@ jobs:
       client--tag_name: ${{ steps.release.outputs.client--tag_name}}
       client--release_created: ${{ steps.release.outputs.client--release_created}}
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@v5
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -32,9 +32,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: release-please
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 9
       - uses: ./.github/actions/setup-node-env
@@ -54,9 +54,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: release-please
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 9
       - uses: ./.github/actions/setup-node-env
