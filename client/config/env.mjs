@@ -27,6 +27,7 @@ const environmentSchema = z.object({
   CLIENT_SECRET: z.string().min(1),
   INTERNAL_API_URL: optionalUrl,
   NEXT_PUBLIC_API_URL: optionalUrl,
+  NEXT_PUBLIC_AUTH_COOKIE_NAME: z.string().regex(/^[A-Za-z0-9_-]+$/).optional(),
   NEXT_PUBLIC_BOT_INVITE_URL: optionalUrl,
   NEXT_PUBLIC_BOT_TEST_GUILD_ID: z.string().optional().refine(
     value => !value || /^\d{17,20}$/.test(value),

@@ -21,7 +21,7 @@ export default function UserSide({ className }) {
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
-  const deleteToken = useCookie('token')[2];
+  const deleteToken = useCookie(config.authCookieName)[2];
 
   const pathname = usePathname();
 

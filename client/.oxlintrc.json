@@ -20,7 +20,7 @@
       "entryPoint": "./styles/tailwind.css"
     }
   },
-  "ignorePatterns": ["server/**/*", ".vscode/**/*", ".husky/**/*", ".github/**/*"],
+  "ignorePatterns": ["server/**/*", ".next/**/*", "node_modules/**/*", "public/**/*", ".vscode/**/*", ".husky/**/*", ".github/**/*"],
   "categories": { "correctness": "error", "style": "warn" },
   "rules": {
     "simple-import-sort/imports": "error",

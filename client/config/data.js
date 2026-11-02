@@ -33,6 +33,7 @@ const statusUrl = process.env.NEXT_PUBLIC_STATUS_URL || 'https://status.discord.
 const botInviteURL = process.env.NEXT_PUBLIC_BOT_INVITE_URL || 'https://bot.discord.place';
 const githubIssuesUrl = process.env.NEXT_PUBLIC_GITHUB_ISSUES_URL || 'https://github.com/discordplace/discord.place/issues/new?template=bug-report---feature-request.md';
 const linkShortenerHostname = process.env.NEXT_PUBLIC_LINK_SHORTENER_HOSTNAME || 'dsc.im';
+const authCookieName = process.env.NEXT_PUBLIC_AUTH_COOKIE_NAME || 'token';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || (isDev ? 'http://localhost:5001' : 'https://api.discord.place');
 
@@ -166,6 +167,7 @@ const quarantineRestrictions = shared.quarantine.restrictions;
 
 const data = {
   api,
+  authCookieName,
   availableLocales,
   baseUrl,
   botCategories,

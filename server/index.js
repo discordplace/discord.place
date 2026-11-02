@@ -7,6 +7,7 @@ const config = require('@/utils/loadConfig')();
 global.config = config;
 
 const isDev = process.env.NODE_ENV === 'development';
+const isProduction = (process.env.APP_ENV || process.env.NODE_ENV) === 'production';
 const serverPort = Number(process.env.SERVER_PORT || process.env.PORT || 5001);
 
 if (!Number.isInteger(serverPort) || serverPort < 1 || serverPort > 65_535) throw new Error('SERVER_PORT must be a valid port number.');
@@ -29,14 +30,14 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     checkExpiredPremiums: true,
     updateBotStats: false,
     createNewDashboardData: false,
-    syncMemberRoles: process.env.NODE_ENV === 'production',
-    syncLemonSqueezyPlans: process.env.NODE_ENV === 'production',
+    syncMemberRoles: isProduction,
+    syncLemonSqueezyPlans: isProduction,
     saveMonthlyVotes: false,
     saveDailyProfileStats: false,
     checkExpiredProducts: true,
     checkBucketAvailability: true,
     listenEvents: true,
-    listenCrons: process.env.NODE_ENV === 'production'
+    listenCrons: isProduction
   },
   registerCommands: false,
   unregisterCommands: false
@@ -48,7 +49,7 @@ server.create().start(serverPort);
 
 const connectDatabase = require('@/src/database/connect.js');
 connectDatabase(process.env.MONGO_URL, {
-  backup: process.env.NODE_ENV === 'production'
+  backup: isProduction
 });
 
 if (process.env.LEMON_SQUEEZY_API_KEY) {
@@ -74,5 +75,5 @@ process.on('warning', warning => {
 
 if (process.env.SENTRY_DSN) {
   const Sentry = require('@sentry/node');
-  Sentry.init({ dsn: process.env.SENTRY_DSN });
+  Sentry.init({ dsn: process.env.SENTRY_DSN, environment: process.env.APP_ENV || process.env.NODE_ENV });
 }

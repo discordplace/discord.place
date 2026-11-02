@@ -27,6 +27,7 @@ import MySounds from '@/app/(account)/account/components/Content/Tabs/MySounds';
 import MyTemplates from '@/app/(account)/account/components/Content/Tabs/MyTemplates';
 import MyThemes from '@/app/(account)/account/components/Content/Tabs/MyThemes';
 import FullPageLoading from '@/app/components/FullPageLoading';
+import config from '@/config';
 import logout from '@/lib/request/auth/logout';
 import useAccountStore from '@/stores/account';
 import useAuthStore from '@/stores/auth';
@@ -52,7 +53,7 @@ export default function Content() {
 
   const router = useRouter();
 
-  const deleteToken = useCookie('token')[2];
+  const deleteToken = useCookie(config.authCookieName)[2];
 
   function logOut() {
     toast.promise(logout(), {

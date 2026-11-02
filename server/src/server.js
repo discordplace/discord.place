@@ -16,6 +16,7 @@ const morgan = require('morgan');
 const sleep = require('@/utils/sleep');
 const User = require('@/schemas/User');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
+const authCookieName = require('@/utils/authCookie');
 
 module.exports = class Server {
   constructor() {
@@ -105,8 +106,8 @@ module.exports = class Server {
     });
 
     this.server.use(async (request, response, next) => {
-      if (request.cookies.token) {
-        const token = request.cookies.token;
+      if (request.cookies[authCookieName]) {
+        const token = request.cookies[authCookieName];
         const tokenRegex = /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/;
 
         try {
@@ -143,7 +144,7 @@ module.exports = class Server {
         } catch (error) {
           logger.error('There was an error verifying the token:', error);
 
-          response.clearCookie('token', {
+          response.clearCookie(authCookieName, {
             httpOnly: true,
             domain: `.${new URL(config.frontendUrl).hostname}`
           });

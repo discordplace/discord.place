@@ -6,6 +6,7 @@ const getUserHashes = require('@/utils/getUserHashes');
 const findQuarantineEntry = require('@/utils/findQuarantineEntry');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const Discord = require('discord.js');
+const authCookieName = require('@/utils/authCookie');
 
 module.exports = {
   get: [
@@ -21,7 +22,7 @@ module.exports = {
       if (!user) return response.sendError('User not found.', 404);
 
       if (userQuarantined) {
-        response.clearCookie('token', {
+        response.clearCookie(authCookieName, {
           httpOnly: true,
           domain: `.${new URL(config.frontendUrl).hostname}`
         });

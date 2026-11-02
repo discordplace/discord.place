@@ -9,7 +9,9 @@
     "start": "cross-env NODE_ENV=production node --env-file-if-exists=.env index.js --optimize_for_size",
     "register:commands": "node --env-file-if-exists=.env startup/registerCommands.js",
     "unregister:commands": "node --env-file-if-exists=.env startup/unregisterCommands.js",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "start:staging": "cross-env NODE_ENV=production APP_ENV=staging node --env-file-if-exists=.env index.js --optimize_for_size",
+    "register:commands:staging": "cross-env NODE_ENV=production APP_ENV=staging node --env-file-if-exists=.env startup/registerCommands.js"
   },
   "license": "AGPL-3.0-only",
   "repository": {

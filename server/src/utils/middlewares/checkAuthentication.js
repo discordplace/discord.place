@@ -1,5 +1,6 @@
+const authCookieName = require('@/utils/authCookie');
 module.exports = async function checkAuthentication(request, response, next) {
-  const token = request.cookies.token;
+  const token = request.cookies[authCookieName];
 
   // We don't need to validate token.
   // It's already validated by the our custom middleware in server.js

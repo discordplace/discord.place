@@ -19,6 +19,8 @@ const optionalPort = z.string().optional().refine(value => !value || isPort(valu
 const requiredString = z.string().min(1);
 
 const environmentSchema = z.object({
+  APP_ENV: z.enum(['development', 'staging', 'production']).optional(),
+  AUTH_COOKIE_NAME: z.string().regex(/^[A-Za-z0-9_-]+$/, 'Must be a valid cookie name').optional(),
   BACKEND_URL: optionalUrl,
   BOT_API_KEY_ENCRYPT_SECRET: requiredString,
   CDN_URL: z.string().refine(isUrl, 'Must be a valid URL'),
@@ -40,6 +42,7 @@ const environmentSchema = z.object({
   KENERING_INSTANCE_URL: optionalUrl,
   LEMON_SQUEEZY_API_KEY: z.string().optional(),
   LEMON_SQUEEZY_WEBHOOK_SECRET: z.string().optional(),
+  MONGO_DB_NAME: z.string().min(1).optional(),
   MONGO_URL: requiredString,
   NODE_ENV: z.enum(['development', 'production', 'test', 'staging']).optional(),
   PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY: z.string().optional(),
@@ -69,6 +72,24 @@ const environmentSchema = z.object({
       message: 'Required when LEMON_SQUEEZY_API_KEY is set',
       path: ['PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY']
     });
+  }
+
+  if (environment.APP_ENV === 'staging') {
+    if (!environment.MONGO_DB_NAME) {
+      context.addIssue({
+        code: 'custom',
+        message: 'Required in staging so it cannot fall back to the production database',
+        path: ['MONGO_DB_NAME']
+      });
+    }
+
+    if (!environment.AUTH_COOKIE_NAME || environment.AUTH_COOKIE_NAME === 'token') {
+      context.addIssue({
+        code: 'custom',
+        message: 'Must be set to a staging-specific name so it does not collide with the production cookie',
+        path: ['AUTH_COOKIE_NAME']
+      });
+    }
   }
 });
 

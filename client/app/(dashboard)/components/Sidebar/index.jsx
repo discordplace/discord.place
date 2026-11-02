@@ -23,6 +23,7 @@ import CollapseIcon from '@/app/(dashboard)/components/Sidebar/Icons/Collapse';
 import Image from '@/app/components/AppImage';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import Tooltip from '@/app/components/Tooltip';
+import config from '@/config';
 import cn from '@/lib/cn';
 import logout from '@/lib/request/auth/logout';
 import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
@@ -192,7 +193,7 @@ export default function Sidebar() {
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
   const setLoggedIn = useAuthStore(state => state.setLoggedIn);
-  const deleteToken = useCookie('token')[2];
+  const deleteToken = useCookie(config.authCookieName)[2];
 
   function logOut() {
     toast.promise(logout(), {

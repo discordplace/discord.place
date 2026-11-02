@@ -5,6 +5,7 @@ const User = require('@/schemas/User');
 const encrypt = require('@/utils/encryption/encrypt');
 const UserHashes = require('@/schemas/User/Hashes');
 const crypto = require('node:crypto');
+const authCookieName = require('@/utils/authCookie');
 
 async function authCallback(access_token, response, setApplicationsEntitlementsScopeGranted = false) {
   const { data: user } = await axios.get('https://discord.com/api/users/@me', {
@@ -35,7 +36,7 @@ async function authCallback(access_token, response, setApplicationsEntitlementsS
     }
   );
 
-  response.cookie('token', token, {
+  response.cookie(authCookieName, token, {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     domain: `.${new URL(config.frontendUrl).hostname}`,
