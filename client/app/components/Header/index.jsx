@@ -20,14 +20,12 @@ import { useTranslation } from 'react-i18next';
 import { FaDiscord } from 'react-icons/fa6';
 import { MdOutlineOpenInNew } from 'react-icons/md';
 import { useMedia } from 'react-use';
-import { useShallow } from 'zustand/react/shallow';
 
 import Image from '@/app/components/AppImage';
 import Drawer from '@/app/components/Drawer';
 import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import config from '@/config';
-import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
 import useAuthStore from '@/stores/auth';
 import { useThemeStore } from '@/stores/theme';
 
@@ -45,12 +43,8 @@ export default function Header() {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isServicesHovered, setIsServicesHovered] = useState(false);
 
-  const { user, setUser, loggedIn, setLoggedIn } = useAuthStore(useShallow(state => ({
-    loggedIn: state.loggedIn,
-    setLoggedIn: state.setLoggedIn,
-    setUser: state.setUser,
-    user: state.user
-  })));
+  const user = useAuthStore(state => state.user);
+  const loggedIn = useAuthStore(state => state.loggedIn);
 
   const theme = useThemeStore(state => state.theme);
   const smBreakpoint = useMedia('(max-width: 640px)');
@@ -86,14 +80,8 @@ export default function Header() {
 
       switch (data.type) {
         case 'discord_oauth_done': {
-          getAuthenticatedUser()
-            .then(user => {
-              setUser(user);
-              setLoggedIn(true);
-            })
-            .catch(() => setUser(null));
-
           if (data.redirect) router.push(data.redirect);
+          else globalThis.window.location.reload();
 
           break;
         }

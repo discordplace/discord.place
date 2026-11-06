@@ -45,6 +45,8 @@ export default function MyBots() {
             .then(user => {
               setIsApplicationsEntitlementsScopeGranted(user.applications_entitlements_scope_granted);
 
+              router.refresh();
+
               toast.success(t('accountPage.tabs.myBots.sections.newBot.toast.permissionGranted'));
             })
             .catch(() => setUser(null));
