@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.4.0](https://github.com/discordplace/discord.place/compare/client@v3.3.1...client@v3.4.0) (2026-11-06)
+
+
+### Features
+
+* **profiles:** make the default profile host configurable ([b47fa53](https://github.com/discordplace/discord.place/commit/b47fa53519d033ca58e966412ce2a699343019c2))
+* **staging:** isolate environment, database and auth cookie ([a25bd3a](https://github.com/discordplace/discord.place/commit/a25bd3a0a9d42c35d5ff52f9430f915fef9f1e91))
+* use popup window and postMessage for OAuth flow ([75ec4ca](https://github.com/discordplace/discord.place/commit/75ec4cabfde4ed4662099e1c97f7519fb851ffe6))
+
+
+### Bug Fixes
+
+* **client:** add Cross-Origin-Opener-Policy header and update state variable in OAuth callback ([d4b4578](https://github.com/discordplace/discord.place/commit/d4b457899dd9c0e285542d7910522f0b496cedfe))
+* **client:** inline og images and deploy over tailnet ([8b2bab5](https://github.com/discordplace/discord.place/commit/8b2bab54a66c9ad756585991822cf9916636a3b6))
+* **client:** refresh router after successful OAuth flow ([dc38054](https://github.com/discordplace/discord.place/commit/dc38054c2d4bfa6d4a30317f4970c795df5f52bb))
+
 ## [3.3.1](https://github.com/discordplace/discord.place/compare/client@v3.3.0...client@v3.3.1) (2026-11-01)
 
 
