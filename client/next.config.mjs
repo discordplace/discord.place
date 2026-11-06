@@ -40,6 +40,15 @@ const nextConfig = {
       {
         headers: [
           {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin-allow-popups'
+          }
+        ],
+        source: '/:path*'
+      },
+      {
+        headers: [
+          {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable'
           }

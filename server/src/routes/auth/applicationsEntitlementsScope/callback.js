@@ -57,7 +57,7 @@ module.exports = {
       const validationErrors = validationResult(request);
       if (validationErrors.isEmpty() === false) return sendResponse({ type: 'discord_oauth_applications_entitlements_scope_error', code: validationErrors.array()[0].msg });
 
-      const { code, error, state, discord_oauth_state: stateCookie } = matchedData(request);
+      const { code, error, state, discord_oauth_applications_entitlements_scope_state: stateCookie } = matchedData(request);
 
       if (error) {
         if (error === 'access_denied') return sendResponse({ type: 'discord_oauth_applications_entitlements_scope_access_denied' });

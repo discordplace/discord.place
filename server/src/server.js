@@ -90,7 +90,8 @@ module.exports = class Server {
       xXssProtection: false,
       xPoweredBy: false,
       xFrameOptions: { action: 'sameorigin' },
-      crossOriginOpenerPolicy: false
+      crossOriginOpenerPolicy: false,
+      originAgentCluster: false
     }));
     this.server.use(require('@/utils/middlewares/error'));
     this.server.use(ip);
