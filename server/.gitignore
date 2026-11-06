@@ -3,3 +3,4 @@ node_modules/
 config.local.yml
 src/database/backups/
 logs/
+.env.*
