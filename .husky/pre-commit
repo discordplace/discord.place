@@ -1,4 +1,4 @@
 set -e
 node scripts/check-locales.js
 node scripts/sync-shared.js --check
-pnpm lint
+pnpm lint-staged

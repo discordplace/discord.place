@@ -431,6 +431,7 @@ We welcome contributions from the community. Please read the [Contributing Guide
 1. Fork and clone the repository.
 2. Create a branch for your change.
 3. Make your changes and run `pnpm lint`.
+4. Don't forget to install dependencies using `pnpm install` in `scripts/` folder before committing anything otherwise the pre-commit hook will fail.
 4. Commit with a message that follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 5. Push your branch and open a pull request against `main`.
 

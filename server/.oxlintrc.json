@@ -6,10 +6,10 @@
     "oxc",
     "node"
   ],
-  "jsPlugins": [
+"jsPlugins": [
     {
       "name": "stylistic",
-      "specifier": "@stylistic/eslint-plugin"
+      "specifier": "../client/node_modules/@stylistic/eslint-plugin"
     },
     {
       "name": "security",

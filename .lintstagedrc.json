@@ -1,0 +1,4 @@
+{
+  "client/**/*.{js,jsx}": "oxlint",
+  "server/**/*.{js,jsx}": "oxlint"
+}

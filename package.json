@@ -11,7 +11,8 @@
     "@tailwindcss/typography": "^0.5.20",
     "concurrently": "^10.0.6",
     "husky": "^9.1.7",
-    "jsonc-parser": "^3.3.1"
+    "jsonc-parser": "^3.3.1",
+    "lint-staged": "^17.6.0"
   },
   "scripts": {
     "check:locales": "node scripts/check-locales.js",
