@@ -1,4 +1,4 @@
 {
-  "client/**/*.{js,jsx}": "oxlint",
-  "server/**/*.{js,jsx}": "oxlint"
+  "client/**/*.{js,jsx}": "pnpm --dir client exec oxlint",
+  "server/**/*.{js,jsx}": "pnpm --dir server exec oxlint"
 }
