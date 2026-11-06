@@ -5,19 +5,18 @@ const User = require('@/schemas/User');
 const encrypt = require('@/utils/encryption/encrypt');
 const UserHashes = require('@/schemas/User/Hashes');
 const crypto = require('node:crypto');
-const authCookieName = require('@/utils/authCookie');
 
-async function authCallback(access_token, response, setApplicationsEntitlementsScopeGranted = false) {
+async function authCallback(access_token) {
   const { data: user } = await axios.get('https://discord.com/api/users/@me', {
     headers: {
       Authorization: `Bearer ${access_token}`
     }
   });
 
-  if (!user.email) return response.sendError('User email not found.', 400);
+  if (!user.email) throw new Error('100009');
 
   const userQuarantined = await findQuarantineEntry.single('USER_ID', user.id, 'LOGIN').catch(() => false);
-  if (userQuarantined) return response.sendError('You are not allowed to login.', 403);
+  if (userQuarantined) throw new Error('100010');
 
   const currentDate = new Date();
 
@@ -36,13 +35,6 @@ async function authCallback(access_token, response, setApplicationsEntitlementsS
     }
   );
 
-  response.cookie(authCookieName, token, {
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    domain: `.${new URL(config.frontendUrl).hostname}`,
-    sameSite: 'lax'
-  });
-
   await User.findOneAndUpdate({ id: user.id },
     {
       id: user.id,
@@ -52,7 +44,6 @@ async function authCallback(access_token, response, setApplicationsEntitlementsS
         flags: user.flags
       },
       email: user.email,
-      applicationsEntitlementsScopeGranted: !!setApplicationsEntitlementsScopeGranted,
       accessToken: encrypt(access_token, process.env.USER_TOKEN_ENCRYPT_SECRET),
       lastLoginAt: new Date(currentDate)
     },
@@ -70,7 +61,7 @@ async function authCallback(access_token, response, setApplicationsEntitlementsS
     { upsert: true }
   );
 
-  return user.id;
+  return { token, user: user.id };
 }
 
 module.exports = authCallback;

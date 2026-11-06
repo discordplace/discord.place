@@ -14,25 +14,26 @@ import {
 } from '@floating-ui/react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaDiscord } from 'react-icons/fa6';
 import { MdOutlineOpenInNew } from 'react-icons/md';
 import { useMedia } from 'react-use';
+import { useShallow } from 'zustand/react/shallow';
 
 import Image from '@/app/components/AppImage';
 import Drawer from '@/app/components/Drawer';
 import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import config from '@/config';
+import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
 import useAuthStore from '@/stores/auth';
 import { useThemeStore } from '@/stores/theme';
 
 export default function Header() {
   const { t } = useTranslation();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const isDashboard = pathname === '/dashboard';
   const isTemplatePreview = pathname.startsWith('/templates/') && pathname.endsWith('/preview');
@@ -44,8 +45,13 @@ export default function Header() {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isServicesHovered, setIsServicesHovered] = useState(false);
 
-  const user = useAuthStore(state => state.user);
-  const loggedIn = useAuthStore(state => state.loggedIn);
+  const { user, setUser, loggedIn, setLoggedIn } = useAuthStore(useShallow(state => ({
+    loggedIn: state.loggedIn,
+    setLoggedIn: state.setLoggedIn,
+    setUser: state.setUser,
+    user: state.user
+  })));
+
   const theme = useThemeStore(state => state.theme);
   const smBreakpoint = useMedia('(max-width: 640px)');
   const router = useRouter();
@@ -71,6 +77,40 @@ export default function Header() {
     }),
     mouseOnly: true
   });
+
+  useEffect(() => {
+    function handleMessage(event) {
+      if (event.origin !== config.api.url) return;
+
+      const data = event.data;
+
+      switch (data.type) {
+        case 'discord_oauth_done': {
+          getAuthenticatedUser()
+            .then(user => {
+              setUser(user);
+              setLoggedIn(true);
+            })
+            .catch(() => setUser(null));
+
+          if (data.redirect) router.push(data.redirect);
+
+          break;
+        }
+        case 'discord_oauth_access_denied': {
+          break;
+        }
+        case 'discord_oauth_error': {
+          router.push(`/error?code=${data.code}${data.message ? `&message=${encodeURIComponent(data.message)}` : ''}`);
+          break;
+        }
+      }
+    }
+
+    window.addEventListener('message', handleMessage);
+
+    return () => window.removeEventListener('message', handleMessage);
+  }, [router]);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
   const { isMounted, styles: transitionStyles } = useTransitionStyles(floatingContext, {
@@ -206,9 +246,12 @@ export default function Header() {
           }))}
         />
 
-        <Link
+        <button
           className='ml-6 flex items-center justify-center gap-x-1.5 rounded-full bg-black px-2 text-sm font-semibold text-white select-none hover:bg-black/60 sm:w-[155.5px] sm:px-4.5 dark:bg-white dark:text-black dark:hover:bg-white/60'
-          href={loggedIn ? '/account' : config.getLoginURL(pathname, searchParams)}
+          onClick={() => {
+            if (loggedIn) router.push('/account');
+            else window.open(config.getLoginURL(pathname), '_blank', 'width=600,height=700');
+          }}
         >
           {loggedIn ? (
             <>
@@ -229,7 +272,7 @@ export default function Header() {
               <FaDiscord className='size-5' />
             </>
           )}
-        </Link>
+        </button>
       </motion.div>
 
       {!smBreakpoint && !shouldHide && isMounted && (

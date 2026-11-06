@@ -50,7 +50,6 @@ module.exports = class Client {
 
     this.client.currentlyUploadingEmojiPack = new Discord.Collection();
     this.client.languageCache = new Discord.Collection();
-    this.client.applicationsEntitlementsScopeCallbackError = new Discord.Collection();
     this.client.testVoteWebhooksDelivering = new Discord.Collection();
     this.client.currentlyInHumanVerification = new Discord.Collection();
 

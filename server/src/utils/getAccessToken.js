@@ -14,12 +14,9 @@ async function getAccessToken(code, scopes, callbackUrl) {
 
   if (!response || response.status !== 200) throw new Error(response?.data?.error || 'Unknown error.');
 
-  if (!scopes.some(scope => response.data.scope.split(' ').includes(scope))) throw new Error('Invalid scopes.');
+  if (!scopes.some(scope => response.data.scope.split(' ').includes(scope))) throw new Error('100008');
 
-  return {
-    access_token: response.data.access_token,
-    scopes: response.data.scope.split(' ')
-  };
+  return response.data.access_token;
 }
 
 module.exports = getAccessToken;

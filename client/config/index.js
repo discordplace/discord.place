@@ -7,8 +7,8 @@ function getLoginURL(pathname, searchParams) {
   return `${dataDefaults.api.url}/auth/login?redirect=${encodeURIComponent(dataDefaults.baseUrl + pathname + (queryString ? `?${queryString}` : ''))}`;
 }
 
-function applicationsEntitlementsScopeURL(userId) {
-  return `${dataDefaults.api.url}/auth/applicationsEntitlementsScope?userId=${userId}`;
+function applicationsEntitlementsScopeURL() {
+  return `${dataDefaults.api.url}/auth/applicationsEntitlementsScope`;
 }
 
 const config = {

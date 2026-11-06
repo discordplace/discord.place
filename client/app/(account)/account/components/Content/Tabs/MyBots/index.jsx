@@ -1,8 +1,8 @@
 'use client';
 
-import * as Sentry from '@sentry/nextjs';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsEmojiAngry, BsQuestionCircleFill } from 'react-icons/bs';
 import { FaCircleCheck, FaCircleExclamation } from 'react-icons/fa6';
@@ -16,7 +16,7 @@ import ErrorState from '@/app/components/ErrorState';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import config from '@/config';
 import cn from '@/lib/cn';
-import getApplicationsEntitlementsScopeGranted from '@/lib/request/auth/getApplicationsEntitlementsScopeGranted';
+import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
 import useAccountStore from '@/stores/account';
 import useAuthStore from '@/stores/auth';
 
@@ -24,66 +24,48 @@ export default function MyBots() {
   const { t } = useTranslation();
   const data = useAccountStore(state => state.data);
   const user = useAuthStore(state => state.user);
+  const setUser = useAuthStore(state => state.setUser);
 
   const currentlyAddingBot = useAccountStore(state => state.currentlyAddingBot);
   const setCurrentlyAddingBot = useAccountStore(state => state.setCurrentlyAddingBot);
 
   const [isApplicationsEntitlementsScopeGranted, setIsApplicationsEntitlementsScopeGranted] = useState(user.applications_entitlements_scope_granted);
-  const grantScopeIntervalRef = useRef(null);
 
-  function grantScope() {
-    const authorizeUrl = new URL(config.applicationsEntitlementsScopeURL(user.id));
+  const router = useRouter();
 
-    window.open(authorizeUrl, '_blank');
+  useEffect(() => {
+    function handleMessage(event) {
+      if (event.origin !== config.api.url) return;
 
-    let retryCount = 0;
+      const data = event.data;
 
-    grantScopeIntervalRef.current = setInterval(async () => {
-      if (retryCount > 30) {
-        clearInterval(grantScopeIntervalRef.current);
-        toast.error(t('accountPage.tabs.myBots.sections.newBot.toast.grantingPermissionTimeout'), { duration: 30_000 });
+      switch (data.type) {
+        case 'discord_oauth_applications_entitlements_scope_done': {
+          getAuthenticatedUser()
+            .then(user => {
+              setIsApplicationsEntitlementsScopeGranted(user.applications_entitlements_scope_granted);
 
-        return;
+              toast.success(t('accountPage.tabs.myBots.sections.newBot.toast.permissionGranted'));
+            })
+            .catch(() => setUser(null));
+
+          break;
+        }
+        case 'discord_oauth_applications_entitlements_scope_access_denied': {
+          break;
+        }
+        case 'discord_oauth_applications_entitlements_scope_error': {
+          toast.error(t(`errorPage.messages.${data.code}`, { error: data.message }));
+
+          break;
+        }
       }
+    }
 
-      try {
-        const applicationsEntitlementsScopeGranted = await getApplicationsEntitlementsScopeGranted();
-        if (applicationsEntitlementsScopeGranted === true) {
-          clearInterval(grantScopeIntervalRef.current);
-          setIsApplicationsEntitlementsScopeGranted(true);
+    window.addEventListener('message', handleMessage);
 
-          toast.success(t('accountPage.tabs.myBots.sections.newBot.toast.permissionGranted'));
-        }
-
-        if (applicationsEntitlementsScopeGranted === 'error') {
-          clearInterval(grantScopeIntervalRef.current);
-
-          toast.error(t('accountPage.tabs.myBots.sections.newBot.toast.permissionGrantError'));
-        }
-      } catch (error) {
-        const message = typeof error === 'string' ? error : error?.message;
-
-        // Transient throttle from the 1s poll cadence: keep polling silently
-        // instead of aborting the grant flow and reporting noise to Sentry.
-        if (/too many requests|\b429\b/i.test(message || '')) {
-          retryCount++;
-
-          return;
-        }
-
-        clearInterval(grantScopeIntervalRef.current);
-        toast.error(message);
-
-        Sentry.captureException(typeof error === 'string' ? new Error(error) : error);
-      }
-
-      retryCount++;
-    }, 1000);
-
-    return () => {
-      clearInterval(grantScopeIntervalRef?.current);
-    };
-  }
+    return () => window.removeEventListener('message', handleMessage);
+  }, [router]);
 
   return (
     currentlyAddingBot ? (
@@ -209,7 +191,7 @@ export default function MyBots() {
               <div className='mt-4 flex flex-col gap-y-4 text-sm text-tertiary'>
                 <button
                   className='flex w-max items-center gap-x-1 rounded-xl bg-black px-4 py-1.5 font-semibold text-white hover:bg-black/70 dark:bg-white dark:text-black dark:hover:bg-white/70'
-                  onClick={grantScope}
+                  onClick={() => window.open(config.applicationsEntitlementsScopeURL(), '_blank', 'width=600,height=700')}
                 >
                   {t('buttons.grantPermission')}
                   <FaCircleCheck />

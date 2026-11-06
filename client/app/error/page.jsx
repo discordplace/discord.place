@@ -53,7 +53,7 @@ export default function Error() {
         </h2>
 
         <p className='mt-6 max-h-[200px] w-full max-w-[500px] text-base text-secondary'>
-          {errorMessage || t(`errorPage.messages.${errorCode}`)}
+          {errorCode ? t(`errorPage.messages.${errorCode}`, { error: errorMessage }) : errorMessage}
         </p>
 
         <div className='mt-6 flex w-full items-center justify-between'>

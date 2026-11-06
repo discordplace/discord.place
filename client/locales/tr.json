@@ -194,7 +194,17 @@
       "60001": "Bu sunucuyu düzenleyebilmek için yetkiniz yok.",
       "70001": "Bu botu düzenleyebilmek için yetkiniz yok.",
       "80001": "Aradığınız kısaltılmış bağlantı bulunamadı.",
-      "90001": "Aradığınız blog yazısı bulunamadı."
+      "90001": "Aradığınız blog yazısı bulunamadı.",
+      "100001": "code parametresi geçersiz.",
+      "100002": "state parametresi geçersiz.",
+      "100003": "error parametresi geçersiz.",
+      "100004": "redirect çerezi geçersiz.",
+      "100005": "state çerezi geçersiz.",
+      "100006": "Doğrulama sürecinde bir hata oluştu: {{error}}",
+      "100007": "state çerezi state parametresiyle eşleşmiyor.",
+      "100008": "Discord tarafından döndürülen kapsamlar, istenen kapsamlarla eşleşmiyor.",
+      "100009": "Kullanıcı e-postası bulunamadı.",
+      "100010": "Giriş yapmanıza izin verilmiyor."
     }
   },
   "errorMessages": {
@@ -2007,9 +2017,7 @@
               "description": "Bot eklemeden önce, sahip olduğunuz botları görmemize izin vermeniz gerekmektedir. Bu, eklediğiniz botun size ait olduğunu doğrulamak için gereklidir. Bunun için aşağıdaki butona tıklayabilirsiniz."
             },
             "toast": {
-              "grantingPermissionTimeout": "İzin verme isteği zaman aşımına uğradı. Lütfen tekrar deneyin.",
-              "permissionGranted": "İzin başarıyla verildi!",
-              "permissionGrantError": "İzin vermeyi kabul etmediniz ya da bir hata oluştu. Tekrar deneyin."
+              "permissionGranted": "İzin başarıyla verildi!"
             }
           },
           "addBot": {

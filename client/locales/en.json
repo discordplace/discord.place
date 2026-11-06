@@ -194,7 +194,17 @@
       "60001": "You are not authorized to edit this server.",
       "70001": "You are not authorized to edit this bot.",
       "80001": "The link you are looking for does not exist.",
-      "90001": "The blog post you are looking for does not exist."
+      "90001": "The blog post you are looking for does not exist.",
+      "100001": "The code parameter is invalid.",
+      "100002": "The state parameter is invalid.",
+      "100003": "The error parameter is invalid.",
+      "100004": "The redirect cookie is invalid.",
+      "100005": "The state cookie is invalid.",
+      "100006": "An error occurred during the authentication process: {{error}}",
+      "100007": "The state cookie does not match the state parameter.",
+      "100008": "The scopes returned by Discord do not match the requested scopes.",
+      "100009": "User email not found.",
+      "100010": "You are not allowed to login."
     }
   },
   "errorMessages": {
@@ -2007,9 +2017,7 @@
               "description": "Before adding bots, you must give us permission to see the bots you own. This is required to verify that you own the bot you are adding. You can do this by clicking the button below."
             },
             "toast": {
-              "grantingPermissionTimeout": "Granting permission timed out. Please try again.",
-              "permissionGranted": "Permission granted successfully!",
-              "permissionGrantError": "You did not agree to give permission or an error occurred. Try again."
+              "permissionGranted": "Permission granted successfully!"
             }
           },
           "addBot": {

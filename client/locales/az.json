@@ -195,7 +195,17 @@
       "60001": "Sizin bu serveri redaktə etmək səlahiyyətiniz yoxdur.",
       "70001": "Sizin bu botu redaktə etmək səlahiyyətiniz yoxdur.",
       "80001": "Axtardığınız link mövcud deyil.",
-      "90001": "Axtardığınız blog mövcud deyil."
+      "90001": "Axtardığınız blog mövcud deyil.",
+      "100001": "Kod parametri etibarsızdır.",
+      "100002": "Dəyişiklik parametri etibarsızdır.",
+      "100003": "Səhv parametri etibarsızdır.",
+      "100004": "Yönləndirmə çerezinin dəyəri etibarsızdır.",
+      "100005": "Dəyişiklik çerezinin dəyəri etibarsızdır.",
+      "100006": "Doğrulama prosesində xəta baş verdi: {{error}}",
+      "100007": "Dəyişiklik çerezi dəyişiklik parametri ilə uyuşmur.",
+      "100008": "Discord tərəfindən qaytarılan sahələr, tələb olunan sahələrlə uyuşmur.",
+      "100009": "İstifadəçi e-poçtu tapılmadı.",
+      "100010": "Giriş etməyiniz icazə verilmir."
     }
   },
   "errorMessages": {
@@ -2007,9 +2017,7 @@
               "description": "Bot əlavə etmədən əvvəl, sizin botlarınızı görməyimizə icazə verilməlidir. Bu, əlavə etdiyiniz botun sizə məxsus olduğunu təsdiq etmək üçün vacibdir. Bunun üçün aşağıdakı düyməni klikləyə bilərsiniz."
             },
             "toast": {
-              "grantingPermissionTimeout": "İcazə verilməsi tələbi zaman aşımına uğradı. Zəhmət olmasa yenidən cəhd edin.",
-              "permissionGranted": "İcazə uğurla verildi!",
-              "permissionGrantError": "Siz icazə verməyi razılaşmadınız və ya bir xəta baş verdi. Yenidən cəhd edin."
+              "permissionGranted": "İcazə uğurla verildi!"
             }
           },
           "addBot": {
