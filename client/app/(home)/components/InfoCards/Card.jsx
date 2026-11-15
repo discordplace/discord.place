@@ -6,6 +6,7 @@ import { FiArrowUpRight } from 'react-icons/fi';
 
 import cn from '@/lib/cn';
 const BricolageGrotesque = Bricolage_Grotesque({ adjustFontFallback: false, display: 'swap', subsets: ['latin'] });
+const buttonClassName = 'mt-2 -ml-4 flex w-max items-center gap-x-1 rounded-full px-4 py-2 text-sm text-tertiary ring-purple-500 ring-offset-2 ring-offset-[rgba(var(--bg-background))] transition-all hover:ml-0 hover:bg-purple-500/20 hover:font-semibold hover:text-primary hover:ring-2';
 
 export default function InfoCard({ index, title, description, button, content }) {
   return (
@@ -35,15 +36,27 @@ export default function InfoCard({ index, title, description, button, content })
         </p>
 
         {button && (
-          <Link
-            href={button.href}
-            target={button.target || '_blank'}
-            className='mt-2 -ml-4 flex w-max items-center gap-x-1 rounded-full px-4 py-2 text-sm text-tertiary ring-purple-500 ring-offset-2 ring-offset-[rgba(var(--bg-background))] transition-all hover:ml-0 hover:bg-purple-500/20 hover:font-semibold hover:text-primary hover:ring-2'
-          >
-            {button.text}
+          button.onClick ? (
+            <button
+              className={buttonClassName}
+              onClick={button.onClick}
+              type='button'
+            >
+              {button.text}
 
-            <FiArrowUpRight />
-          </Link>
+              <FiArrowUpRight />
+            </button>
+          ) : (
+            <Link
+              href={button.href}
+              target={button.target || '_blank'}
+              className={buttonClassName}
+            >
+              {button.text}
+
+              <FiArrowUpRight />
+            </Link>
+          )
         )}
       </div>
     </div>

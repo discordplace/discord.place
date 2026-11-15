@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { Bricolage_Grotesque, Source_Serif_4 } from 'next/font/google';
-import { useRouter } from 'next-nprogress-bar';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaDiscord } from 'react-icons/fa';
@@ -15,8 +14,8 @@ import { toast } from 'sonner';
 import Square from '@/app/components/Background/Square';
 import Tooltip from '@/app/components/Tooltip';
 import FaQs from '@/app/premium/components/FaQs';
-import config from '@/config';
 import cn from '@/lib/cn';
+import openLoginWindow from '@/lib/openLoginWindow';
 import createCheckout from '@/lib/request/auth/createCheckout';
 import useAuthStore from '@/stores/auth';
 
@@ -187,7 +186,6 @@ export default function Page({ plans }) {
   const actualAnnualPrice = monthlyPlan.price * 12;
   const savePercentage = `${(((actualAnnualPrice - annualPlan.price) / actualAnnualPrice) * 100).toFixed(1)}%`;
 
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   function purchase() {
@@ -351,7 +349,7 @@ export default function Page({ plans }) {
               'mt-4 flex w-full cursor-pointer items-center justify-center gap-x-2 rounded-lg bg-purple-500 py-2 text-center font-semibold text-white hover:bg-purple-600',
               loading && 'pointer-events-none opacity-70'
             )}
-            onClick={loggedIn ? purchase : () => router.push(config.getLoginURL('/premium'))}
+            onClick={loggedIn ? purchase : () => openLoginWindow('/premium')}
           >
             {loading && (
               <TbLoader className='animate-spin' size={20} />

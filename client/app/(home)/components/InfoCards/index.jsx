@@ -9,7 +9,7 @@ import MockProfileCard from '@/app/(home)/components/InfoCards/Mock/ProfileCard'
 import MockReviewCard from '@/app/(home)/components/InfoCards/Mock/ReviewCard';
 import MockServerCard from '@/app/(home)/components/InfoCards/Mock/ServerCard';
 import Square from '@/app/components/Background/Square';
-import config from '@/config';
+import openLoginWindow from '@/lib/openLoginWindow';
 import useAuthStore from '@/stores/auth';
 
 export default function InfoCards() {
@@ -46,10 +46,13 @@ export default function InfoCards() {
         index={1}
         title={t('home.infoCards.1.title')}
         description={t('home.infoCards.1.description')}
-        button={{
-          href: loggedIn ? '/account' : config.getLoginURL(pathname),
+        button={loggedIn ? {
+          href: '/account',
           target: '_self',
-          text: loggedIn ? t('home.infoCards.1.buttonTextLoggedIn') : t('home.infoCards.1.buttonTextLoggedOut')
+          text: t('home.infoCards.1.buttonTextLoggedIn')
+        } : {
+          onClick: () => openLoginWindow(pathname),
+          text: t('home.infoCards.1.buttonTextLoggedOut')
         }}
         content={(
           <div className='grid size-full grid-cols-1 gap-x-40 gap-y-8 overflow-hidden rounded-3xl sm:grid-cols-2'>

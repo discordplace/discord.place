@@ -26,6 +26,8 @@ import Drawer from '@/app/components/Drawer';
 import ServicesDropdown from '@/app/components/Header/ServicesDropdown';
 import UserAvatar from '@/app/components/ImageFromHash/UserAvatar';
 import config from '@/config';
+import openLoginWindow from '@/lib/openLoginWindow';
+import getAuthenticatedUser from '@/lib/request/auth/getAuthenticatedUser';
 import useAuthStore from '@/stores/auth';
 import { useThemeStore } from '@/stores/theme';
 
@@ -45,6 +47,8 @@ export default function Header() {
 
   const user = useAuthStore(state => state.user);
   const loggedIn = useAuthStore(state => state.loggedIn);
+  const setUser = useAuthStore(state => state.setUser);
+  const setLoggedIn = useAuthStore(state => state.setLoggedIn);
 
   const theme = useThemeStore(state => state.theme);
   const smBreakpoint = useMedia('(max-width: 640px)');
@@ -80,8 +84,23 @@ export default function Header() {
 
       switch (data.type) {
         case 'discord_oauth_done': {
-          if (data.redirect) router.push(data.redirect);
-          else globalThis.window.location.reload();
+          getAuthenticatedUser()
+            .then(user => {
+              setUser(user);
+              setLoggedIn(true);
+            })
+            .catch(() => setUser(null));
+
+          if (data.redirect) {
+            const redirectURL = new URL(data.redirect, globalThis.window.location.href);
+
+            if (redirectURL.href !== globalThis.window.location.href) {
+              router.push(`${redirectURL.pathname}${redirectURL.search}${redirectURL.hash}`);
+              break;
+            }
+          }
+
+          router.refresh();
 
           break;
         }
@@ -98,7 +117,7 @@ export default function Header() {
     window.addEventListener('message', handleMessage);
 
     return () => window.removeEventListener('message', handleMessage);
-  }, [router]);
+  }, [router, setLoggedIn, setUser]);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
   const { isMounted, styles: transitionStyles } = useTransitionStyles(floatingContext, {
@@ -238,7 +257,7 @@ export default function Header() {
           className='ml-6 flex items-center justify-center gap-x-1.5 rounded-full bg-black px-2 text-sm font-semibold text-white select-none hover:bg-black/60 sm:w-[155.5px] sm:px-4.5 dark:bg-white dark:text-black dark:hover:bg-white/60'
           onClick={() => {
             if (loggedIn) router.push('/account');
-            else window.open(config.getLoginURL(pathname), '_blank', 'width=600,height=700');
+            else openLoginWindow(pathname);
           }}
         >
           {loggedIn ? (

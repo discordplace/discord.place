@@ -1,11 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { FaDiscord } from 'react-icons/fa';
 
-import config from '@/config';
+import openLoginWindow from '@/lib/openLoginWindow';
 
 export default function LoginButton() {
   const { t } = useTranslation();
@@ -13,12 +12,13 @@ export default function LoginButton() {
   const searchParams = useSearchParams();
 
   return (
-    <Link
-      href={config.getLoginURL(pathname, searchParams)}
+    <button
       className='mt-4 flex items-center justify-center gap-x-1.5 rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/70 disabled:pointer-events-none disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-white/70'
+      onClick={() => openLoginWindow(pathname, searchParams)}
+      type='button'
     >
       <FaDiscord className='size-5' />
       {t('buttons.loginWithDiscord')}
-    </Link>
+    </button>
   );
 }
