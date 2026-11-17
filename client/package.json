@@ -44,7 +44,7 @@
     "lodash": "^4.17.21",
     "lottie-react": "^3.1.2",
     "nanoid": "^6.0.2",
-    "next": "16.4.3",
+    "next": "16.4.6",
     "next-nprogress-bar": "^2.3.5",
     "ogl": "^1.0.11",
     "react": "19.3.1",
