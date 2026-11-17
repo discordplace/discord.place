@@ -1,7 +1,7 @@
 // Modules
 const Discord = require('discord.js');
 const { CronJob } = require('cron');
-const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
+const syncGumroadPlans = require('@/utils/payments/syncGumroadPlans');
 const updateMonthlyVotes = require('@/utils/updateMonthlyVotes');
 const updateClientActivity = require('@/utils/updateClientActivity');
 const syncMemberRoles = require('@/utils/syncMemberRoles');
@@ -119,7 +119,7 @@ module.exports = class Client {
       if (options.startup.updateBotStats) this.updateBotStats();
       if (options.startup.createNewDashboardData) this.createNewDashboardData();
       if (options.startup.syncMemberRoles) syncMemberRoles();
-      if (options.startup.syncLemonSqueezyPlans) this.syncLemonSqueezyPlans();
+      if (options.startup.syncPaymentPlans) this.syncPaymentPlans();
       if (options.startup.saveMonthlyVotes) this.saveMonthlyVotes();
       if (options.startup.saveDailyProfileStats) this.saveDailyProfileStats();
       if (options.startup.checkExpiredProducts) this.checkExpiredProducts();
@@ -133,7 +133,7 @@ module.exports = class Client {
           this.checkDeletedRewardsRoles();
           updateClientActivity();
           syncMemberRoles();
-          this.syncLemonSqueezyPlans();
+          this.syncPaymentPlans();
         }, null, true);
 
         new CronJob('59 23 * * *', () => {
@@ -317,11 +317,9 @@ module.exports = class Client {
     logger.info('Created new dashboard data.');
   }
 
-  async syncLemonSqueezyPlans() {
-    if (!process.env.LEMON_SQUEEZY_API_KEY) return logger.warn('[Lemon Squeezy] API key is not defined. Please define LEMON_SQUEEZY_API_KEY in your environment variables.');
-
-    return syncLemonSqueezyPlans()
-      .catch(error => logger.error('There was an error while syncing Lemon Squeezy plans:', error));
+  async syncPaymentPlans() {
+    return syncGumroadPlans()
+      .catch(error => logger.error('There was an error while syncing Gumroad plans:', error));
   }
 
   async saveDailyProfileStats() {

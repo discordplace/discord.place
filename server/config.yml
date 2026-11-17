@@ -50,3 +50,27 @@ availableLocales:
     code: 'tr'
     flag: '🇹🇷'
     countryCode: 'tr'
+
+gumroad:
+  storeUrl: https://shop.discord.place
+  tripledVotesPermalink: tripled-votes
+  standedOutPermalink: standed-out
+  plans:
+    - id: 1
+      name: Premium Membership Monthly
+      permalink: premium-monthly
+      price: 300
+      price_formatted: '$3.00/month'
+      billingCycle: monthly
+    - id: 2
+      name: Premium Membership Yearly
+      permalink: premium-yearly
+      price: 2500
+      price_formatted: '$25.00/year'
+      billingCycle: annual
+    - id: 3
+      name: Lifetime Premium Membership
+      permalink: premium-lifetime
+      price: 6000
+      price_formatted: '$60.00'
+      billingCycle: lifetime

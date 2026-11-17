@@ -26,7 +26,7 @@ import Tooltip from '@/app/components/Tooltip';
 import config from '@/config';
 import cn from '@/lib/cn';
 import logout from '@/lib/request/auth/logout';
-import syncLemonSqueezyPlans from '@/lib/request/auth/syncLemonSqueezyPlans';
+import syncPaymentPlans from '@/lib/request/auth/syncPaymentPlans';
 import useAuthStore from '@/stores/auth';
 import useDashboardStore from '@/stores/dashboard';
 import useThemeStore from '@/stores/theme';
@@ -176,14 +176,14 @@ export default function Sidebar() {
           name: 'Quarantines'
         },
         {
-          disabled: data?.permissions?.canSyncLemonSqueezyPlans === false,
+          disabled: data?.permissions?.canSyncPaymentPlans === false,
           icon: MdSync,
           id: 'syncPlans',
           name: 'Sync Plans',
-          onClick: () => toast.promise(syncLemonSqueezyPlans(), {
+          onClick: () => toast.promise(syncPaymentPlans(), {
             error: error => error,
-            loading: 'Syncing Lemon Squeezy plans..',
-            success: () => 'Successfully synced Lemon Squeezy plans.'
+            loading: 'Syncing payment plans..',
+            success: () => 'Successfully synced payment plans.'
           })
         }
       ]

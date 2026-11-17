@@ -31,7 +31,7 @@ client.create().start(process.env.DISCORD_CLIENT_TOKEN, {
     updateBotStats: false,
     createNewDashboardData: false,
     syncMemberRoles: isProduction,
-    syncLemonSqueezyPlans: isProduction,
+    syncPaymentPlans: isProduction,
     saveMonthlyVotes: false,
     saveDailyProfileStats: false,
     checkExpiredProducts: true,
@@ -51,15 +51,6 @@ const connectDatabase = require('@/src/database/connect.js');
 connectDatabase(process.env.MONGO_URL, {
   backup: isProduction
 });
-
-if (process.env.LEMON_SQUEEZY_API_KEY) {
-  const { lemonSqueezySetup } = require('@lemonsqueezy/lemonsqueezy.js');
-
-  lemonSqueezySetup({
-    apiKey: process.env.LEMON_SQUEEZY_API_KEY,
-    onError: error => logger.error('[Lemon Squeezy] Error:', error)
-  });
-}
 
 process.on('unhandledRejection', error => logger.error(error));
 process.on('uncaughtException', error => logger.error(error));

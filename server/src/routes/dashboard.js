@@ -17,7 +17,7 @@ const Quarantine = require('@/schemas/Quarantine');
 const Link = require('@/schemas/Link');
 const getUserHashes = require('@/utils/getUserHashes');
 const User = require('@/schemas/User');
-const Plan = require('@/schemas/LemonSqueezy/Plan');
+const Plan = require('@/schemas/Plan');
 const UserHashes = require('@/schemas/User/Hashes');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 
@@ -70,7 +70,7 @@ module.exports = {
         canDeleteReviews: request.member && config.permissions.canDeleteReviewsRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canDeleteQuarantines: request.member && config.permissions.canDeleteQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canCreateQuarantines: request.member && config.permissions.canCreateQuarantinesRoles.some(roleId => request.member.roles.cache.has(roleId)),
-        canSyncLemonSqueezyPlans: config.permissions.canSyncLemonSqueezyPlans.includes(request.user.id),
+        canSyncPaymentPlans: config.permissions.canSyncPaymentPlans.includes(request.user.id),
         canRefreshCache: request.member && config.permissions.canExecuteRefreshCacheRoles.some(roleId => request.member.roles.cache.has(roleId)),
         canRestoreBotDenies: request.member && config.permissions.canRestoreBotDeniesRoles.some(roleId => request.member.roles.cache.has(roleId))
       };

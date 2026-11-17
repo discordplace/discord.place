@@ -155,8 +155,7 @@ S3_DATABASE_BACKUP_ENDPOINT=
 DAILY_DATABASE_BACKUP_HEARTBEAT_URL=
 CDN_URL=
 CLOUDFLARE_TURNSTILE_SECRET_KEY=
-LEMON_SQUEEZY_WEBHOOK_SECRET=
-LEMON_SQUEEZY_API_KEY=
+GUMROAD_WEBHOOK_SECRET=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL=
 DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET=
 KENERING_INSTANCE_URL=
@@ -202,8 +201,7 @@ SENTRY_DSN=
 | `DAILY_DATABASE_BACKUP_HEARTBEAT_URL` | Heartbeat URL for daily database backup. (not required) |
 | `CDN_URL` | CDN URL for the website. Used for serving emojis and sounds files. Must be a valid URL. |
 | `CLOUDFLARE_TURNSTILE_SECRET_KEY` | Cloudflare Turnstile secret key. |
-| `LEMON_SQUEEZY_WEBHOOK_SECRET` | Lemon Squeezy webhook secret. (not required) |
-| `LEMON_SQUEEZY_API_KEY` | Lemon Squeezy API key. (not required) |
+| `GUMROAD_WEBHOOK_SECRET` | Gumroad webhook signing secret. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` | Base API URL for getting approximate guild count of a bot. (not required) |
 | `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` | Secret key for getting approximate guild count of a bot. (not required) |
 | `KENERING_INSTANCE_URL` | Base URL of the Kener.ing instance used by the status page. (not required) |
@@ -215,22 +213,22 @@ SENTRY_DSN=
 | `WEBHOOKS_PROXY_SERVER_PASSWORD` | Password for the proxy server. (not required) |
 | `SENTRY_DSN` | Sentry DSN for error tracking. (not required) |
 
-> [!NOTE]
+> **Note**
+>
 > - The server validates these variables with zod at startup. Missing required values or malformed URLs or ports stop the process with a list of errors.
 > - The `SERVER_PORT` value controls the API listener. Set it in the environment where you start the server.
 > - The `FRONTEND_URL` and `BACKEND_URL` values override the URLs in `config.yml`. Leave them empty to use the values from the configuration file.
 > - The `INTERNAL_FRONTEND_URL` value is optional. It is used by the sitemap when `sitemapConfig.useInternalNetworking` is enabled, so the server can fetch blogs from the client without going through the public domain.
 > - The `GITHUB_AUTO_SYNC_TRANSLATORS_SECRET` is used for syncing the translators roles when a push is made to the `main` branch. When this secret is set and you have set up the GitHub webhook, the server will automatically sync the translators roles in the base guild with the ids in the `client/locales/translators.json` file.
 > - You should use 256-bit secret keys for the `BOT_API_KEY_ENCRYPT_SECRET`, `USER_TOKEN_ENCRYPT_SECRET` and `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` values. You can use [this tool](https://asecuritysite.com/encryption/plain) to generate a 256-bit key in hexadecimal format quickly.
-> - The `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` value is required when `LEMON_SQUEEZY_API_KEY` is set.
+> - The `PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY` value is required when `GUMROAD_WEBHOOK_SECRET` is set.
 > - The `CLIENT_SECRET` value is attached to the requests sent by the client's server-side rendering. You can use any random string for this value. This value is used for verifying the requests sent by the client's server-side rendering and should match the client's `CLIENT_SECRET` value.
 > - The `DISCORD_PORTAL_CHANNEL_WEBHOOK_URL` is used for sending messages to the portal channel. This is not required for self-hosting. We use this webhook for sending messages to the portal channel for certain events like new bot approved, new emoji published, etc. __This webhook should be created by bot.__ Otherwise, no components (link buttons) will be sent with the messages. You can leave this value empty. Make sure to use a valid Discord webhook URL format (e.g., `https://discord.com/api/webhooks/XXX/XXX`).
 > - For the `MONGO_URL` value, you can use a local MongoDB instance or a cloud-based MongoDB service like MongoDB Atlas. Refer to the [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string) for more information on constructing the connection URL.
 > - Values starting with `S3_` are required. This is used for storing emojis & sounds files in S3 (and also database backups). We personally use Cloudflare R2 Storage for this. You can use any S3-compatible storage service with the same configuration. Note: You can leave the `S3_DATABASE_BACKUP_*` values empty if you don't want to use S3 for database backups. We use S3 for storing the database backups, but this is not required for self-hosting. If you leave these values empty, the server will not take any database backups and throws warnings in the console when you start the server.
 > - The `CDN_URL` is used for serving emojis and sounds files. You should set this to your own CDN URL. Make sure to use valid URL format (e.g., `https://cdn.yourdomain.com`).
 > - The `CLOUDFLARE_TURNSTILE_SECRET_KEY` is used for verifying the Turnstile token. We use Cloudflare Turnstile for ensuring that the user is a human and not a bot on the website. Refer to the [Cloudflare Turnstile documentation](https://developers.cloudflare.com/turnstile/get-started/#get-a-sitekey-and-secret-key) to get your Turnstile secret key.
-> - The `LEMON_SQUEEZY_WEBHOOK_SECRET` is used for verifying the Lemon Squeezy webhook. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy documentation](https://docs.lemonsqueezy.com/help/webhooks) for more information.
-> - The `LEMON_SQUEEZY_API_KEY` is used for authenticating requests to the Lemon Squeezy API. This is not required for self-hosting. We use Lemon Squeezy for our payment system. Refer to the [Lemon Squeezy Developer Guide](https://docs.lemonsqueezy.com/guides/developer-guide/getting-started#create-an-api-key) to get your API key.
+> - The `GUMROAD_WEBHOOK_SECRET` is used for verifying signed Gumroad pings. This is not required for self-hosting. We use Gumroad for our payment system. Refer to the [Gumroad Ping documentation](https://gumroad.com/ping) for more information.
 > - The `DAILY_DATABASE_BACKUP_HEARTBEAT_URL` is used for the heartbeat URL for daily database backups. We use [Kener.ing](https://kener.ing) for monitoring the uptime of the website.
 > - The `KENERING_INSTANCE_URL` and `KENERING_API_KEY` values are used by the status page to read monitor status from your Kener.ing instance. They are optional, but the status endpoint returns an error until they are set.
 > - The `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_URL` and `DISCORD_BOT_GET_APPROXIMATE_GUILD_COUNT_API_SECRET` values are used for getting the approximate guild count of a bot. This is half required for self-hosting. If you don't want to use this feature, you can leave these values empty, but this will result in bots not being able to update server_count using the API. For now, we use private API for this because Discord doesn't provide an official API for getting the approximate guild count of a bot. We don't want to share this API source code with everyone.
@@ -312,7 +310,7 @@ The keys below are split between `config.yml`, `config.local.yml`, and `shared/c
 | `excludeCollectionsInBackup` | Array<String> | Collections to exclude from database backups. |
 | `customHostnames` | Array<String> | Custom hostnames for the profiles. (config.local.yml) |
 | `linkShortenerHostname` | String | Hostname for the link shortener. (config.local.yml) |
-| `lemonSqueezy.variantIds` | Object | Variant IDs for the Lemon Squeezy. (config.local.yml) |
+| `gumroad` | Object | Gumroad store URL and product permalinks. (config.local.yml) |
 | `availableLocales` | Array<Object> | Available locales for the website. |
 
 > [!NOTE]
@@ -333,7 +331,7 @@ The keys below are split between `config.yml`, `config.local.yml`, and `shared/c
 > - The `excludeCollectionsInBackup` value is used for collections to exclude from database backups. We take daily backups of the database. If you don't want to take backups of some collections, you can add those collections to this value. Make sure to add the collection name exactly as it is in the database.
 > - The `customHostnames` value is used for the custom hostnames for the profiles. Set it in `config.local.yml` and connect these hostnames to the same server where you host the API and connect them to the correct port, same as the API.
 > - The `linkShortenerHostname` value is used for the hostname of the link shortener. Set it in `config.local.yml` and connect this hostname to the same server where you host the API and connect it to the correct port, same as the API.
-> - The `lemonSqueezy.variantIds` value is used for the variant IDs for Lemon Squeezy. Set these in `config.local.yml` after creating the corresponding variants in Lemon Squeezy.
+> - The `gumroad` value is used for the Gumroad store URL, product permalinks, and plans. Set these in `config.local.yml` to match your Gumroad products.
 > - All fields ending with `ChannelId` are in `config.local.yml`. Fill them with the correct channel IDs from the base guild.
 > - The `availableLocales` value is used for the available locales for the server. You can change these values to your own available locales. Locale files should be in the `server/src/locales` directory with the format `en.json`, `tr.json`, etc. You can add new locale files to this directory and add the locale key to the `availableLocales` value. To find more details about the adding new languages to the website, check the **Adding a new language** section below.
 

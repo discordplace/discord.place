@@ -26,8 +26,8 @@ export default function PurchasePolicy() {
       <h2>2. Purchase and Payment</h2>
       <ul>
         <li>All prices are listed in USD and are subject to change without notice.</li>
-        <li>Payments are processed through Lemon Squeezy, ensuring secure transactions.</li>
-        <li>By completing a purchase, you authorize Lemon Squeezy to charge your selected payment method for the total amount of your order.</li>
+        <li>Payments are processed through Gumroad, ensuring secure transactions.</li>
+        <li>By completing a purchase, you authorize Gumroad to charge your selected payment method for the total amount of your order.</li>
       </ul>
 
       <h2>3. Delivery of Services/Products</h2>
@@ -51,7 +51,7 @@ export default function PurchasePolicy() {
       <h2>5. Cancellations and Modifications</h2>
       <p><strong>Subscription Services</strong>:</p>
       <ul>
-        <li>You can cancel your subscription at any time through your Lemon Squeezy account.</li>
+        <li>You can cancel your subscription at any time through your Gumroad account.</li>
         <li>Cancellations will take effect at the end of the current billing period, and no partial refunds will be provided.</li>
       </ul>
       <p><strong>One-Time Purchases</strong>: Once a purchase is completed, it cannot be canceled or modified.</p>

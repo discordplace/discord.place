@@ -22,6 +22,15 @@ const PlanSchema = new Schema({
     type: String,
     required: true
   },
+  permalink: {
+    type: String,
+    required: false
+  },
+  billingCycle: {
+    type: String,
+    enum: ['monthly', 'annual', 'lifetime'],
+    required: false
+  },
   status: {
     type: String,
     required: true

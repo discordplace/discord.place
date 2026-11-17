@@ -107,7 +107,7 @@ const Endpoints = {
   SetServerWebhookSettings: id => `/servers/${id}/webhook-settings`,
   SoundMetadata: id => `/sounds/${id}/metadata`,
   Sounds: id => `/sounds/${id}`,
-  SyncLemonSqueezyPlans: '/payments/plans/sync',
+  SyncPaymentPlans: '/payments/plans/sync',
   TemplateMetadata: id => `/templates/${id}/metadata`,
   Templates: id => `/templates/${id}`,
   TestBotWebhook: id => `/bots/${id}/test-webhook`,

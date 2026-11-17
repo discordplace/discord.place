@@ -36,12 +36,11 @@ const environmentSchema = z.object({
   DISCORD_PORTAL_CHANNEL_WEBHOOK_URL: optionalUrl,
   FRONTEND_URL: optionalUrl,
   GITHUB_AUTO_SYNC_TRANSLATORS_SECRET: z.string().optional(),
+  GUMROAD_WEBHOOK_SECRET: z.string().optional(),
   INTERNAL_FRONTEND_URL: optionalUrl,
   JWT_SECRET: requiredString,
   KENERING_API_KEY: z.string().optional(),
   KENERING_INSTANCE_URL: optionalUrl,
-  LEMON_SQUEEZY_API_KEY: z.string().optional(),
-  LEMON_SQUEEZY_WEBHOOK_SECRET: z.string().optional(),
   MONGO_DB_NAME: z.string().min(1).optional(),
   MONGO_URL: requiredString,
   NODE_ENV: z.enum(['development', 'production', 'test', 'staging']).optional(),
@@ -66,10 +65,10 @@ const environmentSchema = z.object({
   WEBHOOKS_PROXY_SERVER_PROTOCOL: z.string().optional(),
   WEBHOOKS_PROXY_SERVER_USERNAME: z.string().optional()
 }).passthrough().superRefine((environment, context) => {
-  if (environment.LEMON_SQUEEZY_API_KEY && !environment.PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY) {
+  if (environment.GUMROAD_WEBHOOK_SECRET && !environment.PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY) {
     context.addIssue({
       code: 'custom',
-      message: 'Required when LEMON_SQUEEZY_API_KEY is set',
+      message: 'Required when GUMROAD_WEBHOOK_SECRET is set',
       path: ['PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY']
     });
   }

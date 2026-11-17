@@ -1,33 +1,17 @@
-const { createCheckout: createLemonSqueezyCheckout } = require('@lemonsqueezy/lemonsqueezy.js');
-const Plans = require('@/schemas/LemonSqueezy/Plan');
-const encrypt = require('@/utils/encryption/encrypt');
+const Plans = require('@/schemas/Plan');
+const createGumroadCheckout = require('@/utils/payments/createGumroadCheckout');
 
 async function createCheckout(user, planId) {
-  if (!process.env.LEMON_SQUEEZY_API_KEY) throw new Error('LEMON_SQUEEZY_API_KEY environment variable is not defined.');
-
-  const plan = await Plans.findOne({
-    id: planId
-  });
+  const plan = await Plans.findOne({ id: planId });
 
   if (!plan) throw new Error('Plan not found.');
+  if (!plan.permalink) throw new Error('Plan does not have a Gumroad permalink.');
 
-  const encryptedData = encrypt(user.id, process.env.PAYMENTS_CUSTOM_DATA_ENCRYPT_SECRET_KEY);
-  if (!encryptedData || !encryptedData.iv) throw new Error('Error encrypting user id.');
-
-  const tokenToEncrypt = `${encryptedData.iv}:${encryptedData.encryptedText}:${encryptedData.tag}`;
-  const token = Buffer.from(tokenToEncrypt).toString('base64');
-
-  const { data, error } = await createLemonSqueezyCheckout(plan.storeId, plan.variantId, {
-    checkoutData: {
-      custom: {
-        token
-      }
-    }
+  return createGumroadCheckout({
+    permalink: plan.permalink,
+    type: 'user',
+    targetId: user.id
   });
-
-  if (error) throw error;
-
-  return data;
 }
 
 module.exports = createCheckout;

@@ -103,7 +103,7 @@ permissions:
   canDeleteTimeoutsRoles:
     - '000000000000000000'
     - '000000000000000000'
-  canSyncLemonSqueezyPlans:
+  canSyncPaymentPlans:
     - '000000000000000000'
   canExecuteEval:
     - '000000000000000000'
@@ -150,11 +150,26 @@ defaultProfileHost: discord.place/p
 customHostnames:
   - yourdomain.com
 linkShortenerHostname: your.link
-lemonSqueezy:
-  variantIds:
-    tripledVotes:
-      servers: '000000'
-      bots: '000000'
-    standedOut:
-      servers: '000000'
-      bots: '000000'
+gumroad:
+  storeUrl: https://shop.discord.place
+  tripledVotesPermalink: tripled-votes
+  standedOutPermalink: standed-out
+  plans:
+    - id: 1
+      name: Premium Membership Monthly
+      permalink: premium-monthly
+      price: 300
+      price_formatted: '$3.00/month'
+      billingCycle: monthly
+    - id: 2
+      name: Premium Membership Yearly
+      permalink: premium-yearly
+      price: 2500
+      price_formatted: '$25.00/year'
+      billingCycle: annual
+    - id: 3
+      name: Lifetime Premium Membership
+      permalink: premium-lifetime
+      price: 6000
+      price_formatted: '$60.00'
+      billingCycle: lifetime

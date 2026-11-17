@@ -53,6 +53,10 @@ const UserSchema = new Schema({
       type: String,
       required: false
     },
+    subscriptionId: {
+      type: String,
+      required: false
+    },
     orderId: {
       type: String,
       required: false

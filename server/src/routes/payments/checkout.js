@@ -1,4 +1,4 @@
-const Plan = require('@/schemas/LemonSqueezy/Plan');
+const Plan = require('@/schemas/Plan');
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
 const { body, matchedData } = require('express-validator');
@@ -67,7 +67,7 @@ module.exports = {
             );
 
             return response.json({
-              url: data.data.attributes.url
+              url: data.url
             });
           } catch (error) {
             logger.error('There was an error creating a checkout:', error);
@@ -103,7 +103,7 @@ module.exports = {
             );
 
             return response.json({
-              url: data.data.attributes.url
+              url: data.url
             });
           } catch (error) {
             logger.error('There was an error creating a checkout:', error);
@@ -147,7 +147,7 @@ module.exports = {
             );
 
             return response.json({
-              url: data.data.attributes.url
+              url: data.url
             });
           } catch (error) {
             logger.error('There was an error creating a checkout:', error);
@@ -183,7 +183,7 @@ module.exports = {
             );
 
             return response.json({
-              url: data.data.attributes.url
+              url: data.url
             });
           } catch (error) {
             logger.error('There was an error creating a checkout:', error);
@@ -210,7 +210,7 @@ module.exports = {
           );
 
           return response.json({
-            url: data.data.attributes.url
+            url: data.url
           });
         })
         .catch(error => {

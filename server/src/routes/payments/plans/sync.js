@@ -1,6 +1,6 @@
 const checkAuthentication = require('@/utils/middlewares/checkAuthentication');
 const useRateLimiter = require('@/utils/useRateLimiter');
-const syncLemonSqueezyPlans = require('@/utils/payments/syncLemonSqueezyPlans');
+const syncGumroadPlans = require('@/utils/payments/syncGumroadPlans');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 
 module.exports = {
@@ -9,15 +9,15 @@ module.exports = {
     checkAuthentication,
     validateRequest,
     async (request, response) => {
-      const canSyncLemonSqueezyPlans = config.permissions.canSyncLemonSqueezyPlans.includes(request.user.id);
-      if (!canSyncLemonSqueezyPlans) return response.sendError('You are not allowed to sync Lemon Squeezy plans.', 403);
+      const canSyncPaymentPlans = config.permissions.canSyncPaymentPlans.includes(request.user.id);
+      if (!canSyncPaymentPlans) return response.sendError('You are not allowed to sync payment plans.', 403);
 
-      syncLemonSqueezyPlans()
+      syncGumroadPlans()
         .then(() => response.status(204).end())
         .catch(error => {
-          logger.error('There was an error syncing Lemon Squeezy plans:', error);
+          logger.error('There was an error syncing Gumroad plans:', error);
 
-          return response.sendError('Failed to sync Lemon Squeezy plans.', 500);
+          return response.sendError('Failed to sync Gumroad plans.', 500);
         });
     }
   ]

@@ -164,13 +164,14 @@ module.exports = class Server {
     };
 
     this.server.use((request, response, next) => {
-      const routesNeedRawBody = ['/payments/webhook', '/sync-translators'];
+      const routesNeedRawBody = ['/webhook', '/sync-translators'];
       const isRouteNeedRawBody = routesNeedRawBody.some(route => request.originalUrl.startsWith(route));
 
       if (isRouteNeedRawBody) {
         return bodyParser.raw({
           ...bodyParserOptions,
           type: request => {
+            if (request.originalUrl.startsWith('/webhook')) return true;
             if (request.headers['content-type'] === 'application/json') return true;
 
             return false;

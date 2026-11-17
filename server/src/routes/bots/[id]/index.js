@@ -19,7 +19,7 @@ const getPublicReview = require('@/utils/getPublicReview');
 const validateRequest = require('@/utils/middlewares/validateRequest');
 const isUserBotOwner = require('@/utils/bots/isUserBotOwner');
 const sendLog = require('@/utils/sendLog');
-const Plan = require('@/schemas/LemonSqueezy/Plan');
+const Plan = require('@/schemas/Plan');
 
 module.exports = {
   get: [
